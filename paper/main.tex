@@ -1,0 +1,189 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+
+\title{Benchmarking Rule-Based, Classical Machine Learning,\\
+and Deep Learning Anomaly Detectors\\
+in ETL Data Quality Pipelines}
+
+\author{\IEEEauthorblockN{Theo Bigand}
+\IEEEauthorblockA{\textit{ESILV --- M1 Data \& Artificial Intelligence} \\
+\textit{Léonard de Vinci Pôle Universitaire}\\
+Courbevoie, France \\
+theobigand@gmail.com}
+}
+
+\maketitle
+
+\begin{abstract}
+Modern data pipelines increasingly depend on automated data quality
+controls, yet Extract--Transform--Load (ETL) practitioners still rely
+mostly on hand-crafted declarative rules. Recent work has started to
+introduce machine learning (ML) anomaly detectors inside ETL workflows,
+but systematic, apples-to-apples comparisons between rule-based,
+classical ML, and deep learning approaches remain scarce---especially
+when evaluated within a realistic pipeline and broken down by the type
+of anomaly being injected. This paper presents an open-source ETL
+pipeline integrating three families of anomaly detectors: statistical
+rules (Z-score, IQR, Great Expectations), classical ML detectors
+(Isolation Forest, LOF, One-Class SVM), and deep learning detectors
+(Autoencoder, LSTM-Autoencoder). We evaluate the three families on
+three datasets---Kaggle Credit Card Fraud, UCI Water Quality, and a
+controlled synthetic dataset generated with Faker in which six distinct
+anomaly types are injected at controlled rates. Beyond aggregate
+precision, recall, F1, ROC-AUC and PR-AUC, we introduce a
+per-anomaly-type heatmap that maps each method to the anomaly
+categories it detects best. Our goal is to give practitioners a
+reproducible, pipeline-integrated benchmark that answers the practical
+question: \emph{which family of detectors should I use, for which kind
+of data quality problem, at what operational cost?}
+\end{abstract}
+
+\begin{IEEEkeywords}
+data quality, ETL, anomaly detection, benchmarking, machine learning,
+Great Expectations, Isolation Forest, autoencoder
+\end{IEEEkeywords}
+
+\section{Introduction}
+
+Extract--Transform--Load (ETL) pipelines are the backbone of modern data
+infrastructure: they move raw operational data into analytical stores
+where it feeds dashboards, reports, and machine-learning
+applications~\cite{khatri2010data}. The value delivered downstream is
+bounded by the quality of the data that reaches the destination, which
+is why data quality has long been a first-class concern for data
+engineers. Poor data quality has been estimated to cost organizations
+an average of \$12.9M per year~\cite{gopa2025aiaugmented}, making
+automated, continuous quality control a critical capability rather than
+an optional one.
+
+The dominant approach in industry remains rule-based: practitioners
+hand-write declarative expectations---``column \texttt{amount} must be
+positive'', ``column \texttt{email} must match a regex''---in
+frameworks such as Great Expectations, Deequ, or
+Soda~\cite{pipelinetoolssurvey2024}. These rules are auditable and
+cheap to run, but they scale poorly with schema complexity, detect only
+violations the author anticipated, and miss subtle multi-column or
+distributional anomalies. To address these limits, a recent line of
+work has proposed to complement or replace such rules with machine
+learning anomaly detectors embedded directly inside the ETL
+flow~\cite{gopa2025aiaugmented,marupaka2024mlpredictive,sokkula2024implementing}.
+The existing literature, however, suffers from three gaps.
+
+First, most published pipelines are conceptual
+architectures~\cite{gopa2025aiaugmented,marupaka2024mlpredictive} that
+do not ship with reproducible code or quantitative comparisons. When
+experiments are reported, they typically exercise a single algorithm on
+a single dataset---for instance, Isolation Forest on Credit Card
+Fraud~\cite{sokkula2024implementing}, which achieved a near-random
+ROC-AUC of 0.51 and thus offers limited insight into when ML-based
+quality control is actually worth adopting.
+
+Second, the anomaly detection community has produced excellent
+generic benchmarks---ADBench~\cite{han2022adbench} compares 30
+algorithms on 57 tabular datasets; PyOD~\cite{zhao2019pyod} provides a
+unified implementation of dozens of detectors---but these benchmarks
+evaluate algorithms \emph{in vacuum}, outside of an ETL context. They
+do not consider the declarative rule-based baselines that dominate
+production systems, and they do not measure end-to-end pipeline
+integration costs (latency, memory, operational overhead).
+
+Third, benchmarks typically report a single aggregated score per
+dataset, hiding the fact that different families of detectors excel at
+different kinds of anomalies. A Z-score detector is essentially unable
+to flag categorical format violations; Great Expectations trivially
+catches null-rate spikes but ignores multivariate
+outliers~\cite{goldstein2016comparative}; autoencoders learn joint
+distributions but can be fooled by concept drift. A practitioner
+choosing a detector today lacks a fine-grained, actionable map from
+anomaly type to recommended method.
+
+\paragraph{Contributions.} This paper addresses these three gaps. We
+present:
+\begin{enumerate}
+    \item \textbf{A reproducible ETL pipeline} integrating rule-based,
+    classical ML, and deep learning anomaly detectors in a single
+    unified framework, released as open-source code.
+    \item \textbf{A systematic head-to-head benchmark} of three
+    families---statistical rules (Z-score, IQR, Great Expectations),
+    classical ML (Isolation Forest, LOF, One-Class SVM), and deep
+    learning (Autoencoder, LSTM-Autoencoder)---on three datasets
+    (Credit Card Fraud, UCI Water Quality, synthetic Faker), reporting
+    precision, recall, F1, ROC-AUC, PR-AUC, and per-row latency.
+    \item \textbf{A per-anomaly-type analysis.} Using a synthetic
+    dataset in which six distinct anomaly categories (missing values,
+    duplicates, univariate outliers, multivariate outliers, temporal
+    drift, invalid formats) are injected at controlled rates, we
+    produce a method-by-type heatmap that guides the choice of
+    detector in production.
+\end{enumerate}
+
+The rest of the paper is organized as follows. Section~II reviews
+related work on data quality in ETL and on anomaly detection
+benchmarks. Section~III describes our pipeline architecture, the
+detectors we compare, and the datasets and metrics we use. Section~IV
+reports experimental results. Section~V discusses when rules, classical
+ML, and deep learning are each the right tool, and highlights practical
+trade-offs in latency and operational cost. Section~VI concludes and
+outlines future work.
+
+\section{Related Work}
+\label{sec:related}
+
+\emph{To be written. Planned subsections:}
+\begin{itemize}
+    \item Data quality in ETL pipelines (Khatri \& Brown
+    \cite{khatri2010data}; Data Quality
+    Survey~\cite{dataqualitysurvey2024})
+    \item Rule-based and declarative approaches (Great Expectations,
+    Deequ, Soda~\cite{pipelinetoolssurvey2024})
+    \item Classical ML for anomaly detection (Isolation Forest, LOF,
+    One-Class SVM; Goldstein \& Uchida~\cite{goldstein2016comparative};
+    PyOD~\cite{zhao2019pyod})
+    \item Deep learning (Autoencoder, LSTM-Autoencoder)
+    \item Existing benchmarks: ADBench~\cite{han2022adbench} and why
+    it does not cover rule-based baselines, ETL integration, or
+    per-anomaly-type analysis
+    \item ML in ETL pipelines: Gopa~\cite{gopa2025aiaugmented},
+    Marupaka \& Rangineni~\cite{marupaka2024mlpredictive},
+    Sokkula \& Vuppala~\cite{sokkula2024implementing} as illustrative
+    limitations
+\end{itemize}
+
+\section{Methodology}
+\label{sec:methodology}
+
+\emph{To be written. Planned content: pipeline architecture, detector
+families, datasets, metrics, experimental protocol.}
+
+\section{Experiments and Results}
+\label{sec:experiments}
+
+\emph{To be written after the benchmark runs complete.}
+
+\section{Discussion}
+\label{sec:discussion}
+
+\emph{To be written.}
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+\emph{To be written.}
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}
