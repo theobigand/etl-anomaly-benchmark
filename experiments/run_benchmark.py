@@ -33,24 +33,11 @@ from sklearn.metrics import (
 from etl_benchmark import config
 from etl_benchmark.logging_setup import setup_logging
 from etl_benchmark.pipeline import detect, extract, transform
-from etl_benchmark.quality import (
-    Detector,
-    GreatExpectationsDetector,
-    IQRDetector,
-    ZScoreDetector,
-)
+from etl_benchmark.registry import all_detectors
 
 log = logging.getLogger(__name__)
 
 LABEL_COLUMN = "Class"
-
-
-def build_detectors() -> list[Detector]:
-    return [
-        ZScoreDetector(threshold=config.ZSCORE_THRESHOLD),
-        IQRDetector(multiplier=config.IQR_MULTIPLIER),
-        GreatExpectationsDetector(),
-    ]
 
 
 def run(input_path: Path, limit: int | None) -> pd.DataFrame:
@@ -79,7 +66,7 @@ def run(input_path: Path, limit: int | None) -> pd.DataFrame:
     log.info("prevalence: %d positives (%.3f%%)", int(y_true.sum()), 100 * y_true.mean())
 
     rows = []
-    for detector in build_detectors():
+    for detector in all_detectors():
         log.info("evaluating %s", detector.name)
         res = detect(df, detector, label_column=LABEL_COLUMN)
         rows.append(
