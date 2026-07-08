@@ -176,20 +176,40 @@ PyOD~\cite{zhao2019pyod}, so that classical and deep models can later be
 dropped in without changing the harness.
 
 \subsection{Rule-based detectors}
-This stage compares three rule-based baselines.
+This stage compares three rule-based baselines. All three define a band of
+``normal'' values per column and flag a row when it leaves the band on at
+least one column; they differ in how the band is estimated and in how
+robust that estimate is to the very outliers being sought.
+
 \emph{Z-score} standardizes each numeric column on the fitted data and
-flags a row when any column exceeds $|z| > 3$.
+flags a row when any column exceeds $|z| > 3$. The threshold follows the
+empirical rule: under an approximately normal distribution about $99.7\%$
+of values lie within $3\sigma$, so beyond it is rare by construction. Its
+weakness is that the mean and standard deviation are themselves inflated
+by extreme values, so a large outlier can mask others.
+
 \emph{IQR} learns Tukey's fences $[Q_1 - 1.5\,\mathrm{IQR},\,
-Q_3 + 1.5\,\mathrm{IQR}]$ per column and flags a row falling outside any
-fence.
+Q_3 + 1.5\,\mathrm{IQR}]$ per column, where the interquartile range spans
+the central $50\%$ of the data, and flags a row falling outside any fence.
+Quartiles are robust: unlike the mean and standard deviation they barely
+move when extreme values are added, so the fences are not distorted by the
+outliers they are meant to catch. The $1.5$ multiplier corresponds to
+about $2.7\sigma$ under normality, isolating a comparable tail.
+
 \emph{Great Expectations} encodes a declarative expectation
-suite~\cite{pipelinetoolssurvey2024}: a not-null expectation on every
-column and a range expectation per numeric column, with bounds set to the
-$0.1$th and $99.9$th percentiles of the fitted data. A row is flagged
-when it violates at least one expectation; its score is the fraction of
-the suite it violates. The continuous scores of the statistical detectors
-are the worst standardized deviation (Z-score) and the largest fence
-exceedance in IQR units (IQR).
+suite~\cite{pipelinetoolssurvey2024} and makes no distributional
+assumption: a not-null expectation on every column and a range expectation
+per numeric column, with bounds set to the $0.1$th and $99.9$th
+percentiles of the fitted data. Using inner percentiles rather than the
+observed min/max is what turns the range check into a usable rule instead
+of a no-op on the fitting data. A row is flagged when it violates at least
+one expectation; its score is the fraction of the suite it violates.
+
+The continuous scores of the statistical detectors are the worst
+standardized deviation (Z-score) and the largest fence exceedance in IQR
+units (IQR). The axis of difference between the three is thus robustness
+and the assumption made about the shape of the data, which is precisely
+what the learned models of the next stage are meant to handle better.
 
 \subsection{Dataset and metrics}
 We report here on the Credit Card Fraud dataset (284{,}807 transactions,
