@@ -1,9 +1,11 @@
 """Compare the rule-based detectors on the Credit Card Fraud dataset.
 
-Each detector is fitted on the (cleaned) feature matrix, then its row
-predictions and continuous scores are scored against the ground-truth
-``Class`` label. Results go to a timestamped CSV and a Markdown table
-that can be pasted into the paper.
+Extract and transform run once; each detector is then scored through the
+pipeline's quality stage (:func:`etl_benchmark.pipeline.detect`), so every
+method sees the exact same data path and its in-pipeline latency is
+measured. Predictions and continuous scores are compared against the
+ground-truth ``Class`` label. Results go to a timestamped CSV and a
+Markdown table that can be pasted into the paper.
 
 Usage::
 
@@ -29,15 +31,14 @@ from sklearn.metrics import (
 )
 
 from etl_benchmark import config
-from etl_benchmark.extract import read_csv
 from etl_benchmark.logging_setup import setup_logging
+from etl_benchmark.pipeline import detect, extract, transform
 from etl_benchmark.quality import (
     Detector,
     GreatExpectationsDetector,
     IQRDetector,
     ZScoreDetector,
 )
-from etl_benchmark.transform import clean
 
 log = logging.getLogger(__name__)
 
@@ -52,44 +53,50 @@ def build_detectors() -> list[Detector]:
     ]
 
 
-def evaluate(detector: Detector, features: pd.DataFrame, y_true: pd.Series) -> dict[str, float]:
-    start = time.perf_counter()
-    detector.fit(features)
-    y_pred = detector.predict(features)
-    y_score = detector.score(features)
-    elapsed = time.perf_counter() - start
-
-    n_flagged = int(y_pred.sum())
-    return {
-        "detector": detector.name,
-        "precision": precision_score(y_true, y_pred, zero_division=0),
-        "recall": recall_score(y_true, y_pred, zero_division=0),
-        "f1": f1_score(y_true, y_pred, zero_division=0),
-        "roc_auc": roc_auc_score(y_true, y_score),
-        "pr_auc": average_precision_score(y_true, y_score),
-        "n_flagged": n_flagged,
-        "flagged_pct": 100.0 * n_flagged / len(y_true),
-        "time_s": elapsed,
-    }
-
-
 def run(input_path: Path, limit: int | None) -> pd.DataFrame:
-    log.info("loading %s", input_path)
-    df = clean(read_csv(input_path))
+    log.info("extract: loading %s", input_path)
+    t0 = time.perf_counter()
+    df = extract(input_path)
+    extract_s = time.perf_counter() - t0
+
+    t0 = time.perf_counter()
+    df = transform(df)
+    transform_s = time.perf_counter() - t0
+
     if limit is not None:
         df = df.sample(n=min(limit, len(df)), random_state=config.RANDOM_SEED).reset_index(
             drop=True
         )
-    log.info("%d rows x %d cols", len(df), df.shape[1])
+    log.info(
+        "%d rows x %d cols (extract %.2fs, transform %.2fs, shared)",
+        len(df),
+        df.shape[1],
+        extract_s,
+        transform_s,
+    )
 
     y_true = df[LABEL_COLUMN].astype(int)
-    features = df.drop(columns=[LABEL_COLUMN])
     log.info("prevalence: %d positives (%.3f%%)", int(y_true.sum()), 100 * y_true.mean())
 
     rows = []
     for detector in build_detectors():
         log.info("evaluating %s", detector.name)
-        rows.append(evaluate(detector, features, y_true))
+        res = detect(df, detector, label_column=LABEL_COLUMN)
+        rows.append(
+            {
+                "detector": detector.name,
+                "precision": precision_score(y_true, res.flags, zero_division=0),
+                "recall": recall_score(y_true, res.flags, zero_division=0),
+                "f1": f1_score(y_true, res.flags, zero_division=0),
+                "roc_auc": roc_auc_score(y_true, res.scores),
+                "pr_auc": average_precision_score(y_true, res.scores),
+                "n_flagged": int(res.flags.sum()),
+                "flagged_pct": 100.0 * float(res.flags.mean()),
+                "fit_s": res.fit_s,
+                "predict_s": res.predict_s,
+                "detect_s": res.detect_s,
+            }
+        )
     return pd.DataFrame(rows)
 
 
@@ -101,7 +108,9 @@ def to_markdown(results: pd.DataFrame) -> str:
         "roc_auc": "{:.3f}",
         "pr_auc": "{:.3f}",
         "flagged_pct": "{:.2f}",
-        "time_s": "{:.1f}",
+        "fit_s": "{:.3f}",
+        "predict_s": "{:.3f}",
+        "detect_s": "{:.3f}",
     }
     header = "| " + " | ".join(results.columns) + " |"
     sep = "| " + " | ".join("---" for _ in results.columns) + " |"
@@ -137,7 +146,7 @@ def main() -> None:
     results = run(args.input, args.limit)
     csv_path, md_path = save(results, config.RESULTS_DIR)
 
-    print("\n" + results.to_string(index=False))
+    print("\n" + to_markdown(results))
     log.info("saved -> %s", csv_path)
     log.info("saved -> %s", md_path)
 
