@@ -1,102 +1,104 @@
 # etl-anomaly-benchmark
 
-Pipeline ETL et benchmark reproductible comparant trois familles de détection d'anomalies — **règles statistiques**, **ML classique** et **deep learning** — pour la qualité des données.
+A reproducible benchmark comparing three families of anomaly detectors for data quality (rule-based, classical ML, deep learning), each run inside a small ETL pipeline rather than in isolation. This is the code for my master's thesis at ESILV.
 
-> Master Thesis · Theo Bigand · ESILV M1/M2 · 2026-2027
+The question it tries to answer: does adding machine learning to an ETL pipeline actually improve anomaly detection over plain rules, and if so, for which kinds of anomalies? The planned original contribution is a per-anomaly-type comparison (a method-by-type heatmap on a controlled synthetic dataset), which existing benchmarks such as ADBench measure only in aggregate.
 
-## État actuel
+> Theo Bigand, ESILV M1/M2, 2026-2027
 
-- [x] Pipeline ETL en étapes composables (extract → transform → detect → load)
-- [x] Interface `Detector` unifiée (fit / predict / score, compatible PyOD)
-- [x] Détecteurs à base de règles : Z-score, IQR, Great Expectations
-- [x] Benchmark reproductible sur Credit Card Fraud (métriques + latence)
-- [ ] Isolation Forest, LOF, One-Class SVM via PyOD
-- [ ] Dataset Faker synthétique (6 types d'anomalies) + heatmap méthode × type
+## Status
+
+- [x] ETL pipeline as composable stages (extract, transform, detect, load)
+- [x] Common `Detector` interface (fit / predict / score, PyOD-compatible)
+- [x] Rule-based detectors: Z-score, IQR, Great Expectations
+- [x] Reproducible benchmark on Credit Card Fraud (metrics + latency)
+- [ ] Isolation Forest, LOF, One-Class SVM through PyOD
+- [ ] Synthetic Faker dataset (6 anomaly types) and the method-by-type heatmap
 - [ ] Autoencoder, LSTM-Autoencoder (M2)
 
-## Installation (conda)
+## Install
 
 ```bash
 conda env create -f environment.yml
 conda activate etl-benchmark
 ```
 
-Le package est installé en mode éditable (`pip install -e .`) via `environment.yml`, donc les modifications sont prises en compte sans réinstallation.
+`environment.yml` installs the package in editable mode (`pip install -e .`), so code changes are picked up without reinstalling.
 
-## Télécharger Credit Card Fraud
+## Data
 
-Dataset non inclus (~150 Mo) :
+The Credit Card Fraud dataset (~150 MB) is not committed. Download it and drop the CSV in `data/`:
 
 1. https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud
-2. Placer `creditcard.csv` dans `data/`
+2. put `creditcard.csv` in `data/`
 
-## Commandes
+## Usage
 
 ```bash
-make pipeline    # démo ETL : un détecteur à travers le pipeline, écrit les CSV triés
-make benchmark   # compare tous les détecteurs, affiche et sauvegarde les métriques
-make run         # les deux (pipeline puis benchmark)
+make pipeline    # ETL demo: run one detector through the pipeline, write the sorted CSVs
+make benchmark   # score every detector, print and save the metrics
+make run         # both (pipeline then benchmark)
 make test        # pytest
 make lint        # ruff check + format check
-make clean       # supprime les artefacts générés
+make clean       # remove generated artifacts
 ```
 
-La démo tourne avec Z-score par défaut, mais accepte n'importe quel détecteur du registre :
+The demo runs Z-score by default and accepts any registered detector:
 
 ```bash
 python -m etl_benchmark --detector iqr
 python -m etl_benchmark --detector great_expectations
 ```
 
-Le benchmark accepte un mode rapide : `python experiments/run_benchmark.py --limit 20000`.
+The benchmark has a quick mode for iterating: `python experiments/run_benchmark.py --limit 20000`.
 
-## Résultats actuels (règles seules)
+## Current results (rules only)
 
-Credit Card Fraud complet, 283 726 lignes après déduplication, 0,167 % de fraudes. La latence est le temps fit+predict+score dans le pipeline.
+Full Credit Card Fraud dataset, 283,726 rows after dropping duplicates, 0.167% fraud. Latency is the in-pipeline fit+predict+score time.
 
-| Détecteur | Prec | Rec | F1 | ROC-AUC | PR-AUC | Flag % | Latence |
+| Detector | Prec | Rec | F1 | ROC-AUC | PR-AUC | Flag % | Latency |
 |---|---|---|---|---|---|---|---|
 | Z-score | 0.011 | 0.899 | 0.022 | 0.944 | 0.090 | 13.4 | 0.2 s |
 | IQR | 0.003 | 0.968 | 0.007 | 0.922 | 0.020 | 48.6 | 0.6 s |
 | Great Expectations | 0.039 | 0.710 | 0.075 | 0.848 | 0.206 | 3.0 | 13.2 s |
 
-Sur des données fortement déséquilibrées, PR-AUC est plus informatif que ROC-AUC. Aucune règle n'atteint une précision utilisable : c'est le trou que le ML doit combler.
+On a class this imbalanced, PR-AUC says more than ROC-AUC (both are reported; PR-AUC is not comparable across datasets, ROC-AUC is). None of the rules reach a precision you could put in production. That gap is what the ML detectors are meant to close.
 
-## Architecture
+## Layout
 
-Le pipeline est découpé en étapes réutilisables. La démo (`make pipeline`) et le benchmark (`make benchmark`) partagent les mêmes étapes : le benchmark fait passer chaque détecteur par l'étape `detect()`, ce qui mesure la latence sur le vrai chemin du pipeline.
+The pipeline is split into reusable stages. The demo (`make pipeline`) and the benchmark (`make benchmark`) share them: the benchmark sends each detector through the same `detect()` stage, which is what lets it measure latency on the real pipeline path.
 
 ```
 etl-anomaly-benchmark/
-├── pyproject.toml            # métadonnées & deps (PEP 621)
-├── environment.yml           # env conda
-├── Makefile                  # raccourcis
+├── pyproject.toml            # metadata and deps (PEP 621)
+├── environment.yml           # conda env
+├── Makefile                  # shortcuts
 ├── src/
-│   └── etl_benchmark/        # package principal (src-layout)
-│       ├── __main__.py       # python -m etl_benchmark (démo)
-│       ├── config.py         # chemins & seuils par défaut
+│   └── etl_benchmark/        # main package (src layout)
+│       ├── __main__.py       # python -m etl_benchmark (demo)
+│       ├── config.py         # paths and default thresholds
 │       ├── logging_setup.py
-│       ├── extract.py        # étape Extract (read_csv)
-│       ├── transform.py      # étape Transform (dédup)
-│       ├── load.py           # étape Load (write_csv)
-│       ├── pipeline.py       # étapes composables + detect() + run_pipeline()
-│       ├── registry.py       # registre des détecteurs (nom -> instance)
+│       ├── extract.py        # extract stage (read_csv)
+│       ├── transform.py      # transform stage (dedup)
+│       ├── load.py           # load stage (write_csv)
+│       ├── pipeline.py       # composable stages + detect() + run_pipeline()
+│       ├── registry.py       # detector registry (name -> instance)
 │       └── quality/
-│           ├── base.py       # Detector (ABC : fit/predict/score)
+│           ├── base.py       # Detector ABC (fit/predict/score)
 │           ├── rules.py      # ZScoreDetector, IQRDetector
 │           └── gx.py         # GreatExpectationsDetector
 ├── experiments/
-│   └── run_benchmark.py      # le benchmark
+│   └── run_benchmark.py      # the benchmark
 ├── tests/                    # pytest
-├── data/                     # datasets bruts (gitignored)
-├── experiments/results/      # sorties générées (gitignored)
-├── notebooks/                # analyses exploratoires (à venir)
-└── paper/                    # papier LaTeX IEEE
+├── data/                     # raw datasets (gitignored)
+├── experiments/results/      # generated output (gitignored)
+├── notebooks/                # exploratory analysis (later)
+└── paper/                    # LaTeX IEEE paper
 ```
 
-## Ajouter un nouveau détecteur
+## Adding a detector
 
-Tous les détecteurs héritent de `etl_benchmark.quality.base.Detector` et implémentent `fit` + `predict`. La méthode `score` (score continu, plus élevé = plus anormal) a une valeur par défaut binaire ; on la surcharge quand on peut produire un score gradué, ce qui rend ROC-AUC / PR-AUC pertinents.
+Every detector subclasses `etl_benchmark.quality.base.Detector` and implements `fit` and `predict`. The `score` method returns a continuous anomaly score (higher means more anomalous); it has a binary default, and you override it when a graded score is available so ROC-AUC and PR-AUC mean something.
 
 ```python
 from etl_benchmark.quality.base import Detector
@@ -105,20 +107,20 @@ class MyDetector(Detector):
     name = "my_detector"
 
     def fit(self, df):
-        # ... apprend les paramètres ...
+        # learn parameters
         return self
 
     def predict(self, df):
-        # retourne une Series booléenne (True = anormal)
+        # boolean Series, True where anomalous
         ...
 
-    def score(self, df):          # optionnel
-        # retourne une Series de scores continus
+    def score(self, df):          # optional
+        # continuous score Series
         ...
 ```
 
-Il suffit ensuite d'ajouter le détecteur à `build_detectors()` dans `experiments/run_benchmark.py`. Les wrappers PyOD (IF, LOF, OC-SVM) et deep (AE, LSTM-AE) suivront cette même interface.
+Then add one line to `src/etl_benchmark/registry.py`, and both the demo and the benchmark pick it up. The PyOD wrappers (IF, LOF, OC-SVM) and the deep models (AE, LSTM-AE) will follow the same interface.
 
-## Licence
+## License
 
-MIT (à ajouter avant publication).
+MIT (to add before any publication).
