@@ -26,8 +26,7 @@ experiments/results/*.csv
 experiments/results/*.md
 !experiments/results/.gitkeep
 
-# LaTeX
-paper/*.pdf
+# LaTeX (le PDF compilé du papier est versionné, cf. paper/main.pdf)
 paper/*.aux
 paper/*.log
 paper/*.out
