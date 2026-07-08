@@ -165,13 +165,75 @@ outlines future work.
 \section{Methodology}
 \label{sec:methodology}
 
-\emph{To be written. Planned content: pipeline architecture, detector
-families, datasets, metrics, experimental protocol.}
+\subsection{Pipeline}
+Detectors are evaluated inside a minimal Extract--Transform--Load
+pipeline rather than in isolation. The extract stage reads the raw table,
+the transform stage removes exact duplicate rows, and the quality stage
+applies a detector that assigns each row a boolean anomaly flag and a
+continuous anomaly score. All detectors share a common
+\texttt{fit}/\texttt{predict}/\texttt{score} interface modelled on
+PyOD~\cite{zhao2019pyod}, so that classical and deep models can later be
+dropped in without changing the harness.
+
+\subsection{Rule-based detectors}
+This stage compares three rule-based baselines.
+\emph{Z-score} standardizes each numeric column on the fitted data and
+flags a row when any column exceeds $|z| > 3$.
+\emph{IQR} learns Tukey's fences $[Q_1 - 1.5\,\mathrm{IQR},\,
+Q_3 + 1.5\,\mathrm{IQR}]$ per column and flags a row falling outside any
+fence.
+\emph{Great Expectations} encodes a declarative expectation
+suite~\cite{pipelinetoolssurvey2024}: a not-null expectation on every
+column and a range expectation per numeric column, with bounds set to the
+$0.1$th and $99.9$th percentiles of the fitted data. A row is flagged
+when it violates at least one expectation; its score is the fraction of
+the suite it violates. The continuous scores of the statistical detectors
+are the worst standardized deviation (Z-score) and the largest fence
+exceedance in IQR units (IQR).
+
+\subsection{Dataset and metrics}
+We report here on the Credit Card Fraud dataset (284{,}807 transactions,
+30 numeric features, $0.17\%$ labelled fraud), a standard and strongly
+imbalanced benchmark. Each detector is fitted and evaluated on the full
+feature matrix, and its output is scored against the ground-truth label.
+Because the detectors emit both a threshold decision and a graded score,
+we report threshold metrics (precision, recall, $F_1$) alongside
+threshold-independent ranking metrics (ROC-AUC and, given the class
+imbalance, PR-AUC, which is the more informative of the two here). We also
+report the fraction of rows flagged and wall-clock time. The synthetic
+per-anomaly-type dataset and the classical/deep detectors are the object
+of the next stages.
 
 \section{Experiments and Results}
 \label{sec:experiments}
 
-\emph{To be written after the benchmark runs complete.}
+Table~\ref{tab:rules} reports the three rule-based detectors on Credit
+Card Fraud. The picture is consistent across metrics: all three recover
+most frauds (recall $0.71$--$0.97$) but at unusable precision
+($\leq 0.04$), because a fixed statistical rule cannot separate a $0.17\%$
+positive class from the long tails of legitimate traffic. IQR is the most
+aggressive, flagging almost half of all rows, which collapses its PR-AUC.
+The declarative Great Expectations suite is the most selective (it flags
+$3\%$ of rows) and obtains the best precision and PR-AUC, while the
+Z-score gives the best ROC-AUC. No rule-based method reaches a precision
+that would be acceptable in production, which is the gap the classical and
+deep detectors introduced in the next stage are meant to close.
+
+\begin{table}[t]
+\caption{Rule-based detectors on Credit Card Fraud (full dataset,
+284{,}807 rows). Higher is better except for flagged rows and time.}
+\label{tab:rules}
+\centering
+\begin{tabular}{lrrrrrr}
+\toprule
+Detector & Prec. & Rec. & $F_1$ & ROC & PR & Flag.\% \\
+\midrule
+Z-score            & 0.011 & 0.899 & 0.022 & \textbf{0.944} & 0.090 & 13.4 \\
+IQR                & 0.003 & \textbf{0.968} & 0.007 & 0.922 & 0.020 & 48.6 \\
+Great Expectations & \textbf{0.039} & 0.710 & \textbf{0.075} & 0.848 & \textbf{0.206} & \textbf{3.0} \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{Discussion}
 \label{sec:discussion}
