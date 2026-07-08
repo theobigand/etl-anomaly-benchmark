@@ -21,11 +21,13 @@ env/
 data/*.csv
 !data/README.md
 
-# Résultats d'expériences — on ne versionne que les résumés validés
+# Résultats d'expériences — générés, on ne versionne que le .gitkeep
 experiments/results/*.csv
+experiments/results/*.md
 !experiments/results/.gitkeep
 
 # LaTeX
+paper/*.pdf
 paper/*.aux
 paper/*.log
 paper/*.out
