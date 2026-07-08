@@ -217,10 +217,17 @@ We report here on the Credit Card Fraud dataset (284{,}807 transactions,
 imbalanced benchmark. Each detector is fitted and evaluated on the full
 feature matrix, and its output is scored against the ground-truth label.
 Because the detectors emit both a threshold decision and a graded score,
-we report threshold metrics (precision, recall, $F_1$) alongside
-threshold-independent ranking metrics (ROC-AUC and, given the class
-imbalance, PR-AUC, which is the more informative of the two here). We also
-report the fraction of rows flagged and wall-clock time. The synthetic
+we report threshold metrics (precision, recall, $F_1$) alongside two
+threshold-independent ranking metrics, ROC-AUC and PR-AUC. On a dataset as
+imbalanced as this one PR-AUC is the more informative: the false-positive
+rate underlying ROC-AUC is diluted by the large pool of true negatives and
+stays optimistic, whereas precision reacts directly to false alarms. We
+report both, however, because the appropriate metric depends on each
+dataset's base rate --- PR-AUC's random baseline equals the prevalence and
+is therefore not comparable across datasets, while ROC-AUC's is always
+$0.5$ and is. As further datasets are added we keep both and read the one
+suited to each dataset's balance. We also report the fraction of rows
+flagged and wall-clock time. The synthetic
 per-anomaly-type dataset and the classical/deep detectors are the object
 of the next stages.
 
