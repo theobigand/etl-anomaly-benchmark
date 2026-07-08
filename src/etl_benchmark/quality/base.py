@@ -24,5 +24,14 @@ class Detector(ABC):
     def predict(self, df: pd.DataFrame) -> pd.Series:
         """Return a boolean Series: ``True`` where the row is anomalous."""
 
+    def score(self, df: pd.DataFrame) -> pd.Series:
+        """Continuous anomaly score, higher meaning more anomalous.
+
+        Used for threshold-independent metrics (ROC-AUC, PR-AUC). The
+        default derives a 0/1 score from :meth:`predict`; detectors that
+        can expose a graded score should override this.
+        """
+        return self.predict(df).astype(float)
+
     def fit_predict(self, df: pd.DataFrame) -> pd.Series:
         return self.fit(df).predict(df)
