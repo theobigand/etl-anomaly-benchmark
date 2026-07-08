@@ -41,6 +41,13 @@ make lint        # ruff check + format check
 make clean       # supprime les artefacts générés
 ```
 
+La démo tourne avec Z-score par défaut, mais accepte n'importe quel détecteur du registre :
+
+```bash
+python -m etl_benchmark --detector iqr
+python -m etl_benchmark --detector great_expectations
+```
+
 Le benchmark accepte un mode rapide : `python experiments/run_benchmark.py --limit 20000`.
 
 ## Résultats actuels (règles seules)
@@ -73,6 +80,7 @@ etl-anomaly-benchmark/
 │       ├── transform.py      # étape Transform (dédup)
 │       ├── load.py           # étape Load (write_csv)
 │       ├── pipeline.py       # étapes composables + detect() + run_pipeline()
+│       ├── registry.py       # registre des détecteurs (nom -> instance)
 │       └── quality/
 │           ├── base.py       # Detector (ABC : fit/predict/score)
 │           ├── rules.py      # ZScoreDetector, IQRDetector
