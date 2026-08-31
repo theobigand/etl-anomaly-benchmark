@@ -42,13 +42,13 @@ the same pipeline path: statistical rules (Z-score, IQR, Great
 Expectations) and classical ML detectors (Isolation Forest, LOF,
 One-Class SVM), with deep learning detectors (Autoencoder,
 LSTM-Autoencoder) planned behind the same interface. We evaluate the
-detectors, over five seeds on a stratified held-out split, on the Kaggle
-Credit Card Fraud dataset, a Water Quality dataset, and a controlled
-synthetic dataset generated with Faker in which six distinct anomaly
-types are injected at controlled rates. Beyond aggregate precision,
-recall, F1, ROC-AUC and PR-AUC, we report a per-anomaly-type recall and
-precision that map each method to the anomaly categories it actually
-catches. The aggregate metrics make the families look interchangeable;
+detectors, over five seeds on a stratified held-out split, on four
+datasets: Kaggle Credit Card Fraud, a rare-anomaly Cardio dataset, a
+common-class Water Quality dataset, and a controlled synthetic dataset
+generated with Faker in which six distinct anomaly types are injected at
+controlled rates. Beyond aggregate precision, recall, F1, ROC-AUC and
+PR-AUC, we report a per-anomaly-type recall and precision, precision-recall
+curves, and a sweep of the injection severity. The aggregate metrics make the families look interchangeable;
 the per-type view shows each has a narrow, largely non-overlapping
 competence, so broad coverage needs several families rather than the
 single best one. Our goal is a reproducible, pipeline-integrated
@@ -125,17 +125,17 @@ present:
     code, with deep-learning detectors planned behind the same interface.
     \item \textbf{A head-to-head benchmark} of statistical rules
     (Z-score, IQR, Great Expectations) and classical ML detectors
-    (Isolation Forest, LOF, One-Class SVM) on three datasets, with a
+    (Isolation Forest, LOF, One-Class SVM) on four datasets, with a
     stratified held-out split, five seeds, and the ML operating point
     read from the data, reporting precision, recall, F1, ROC-AUC, PR-AUC,
-    and in-pipeline latency.
+    precision-recall curves, and in-pipeline latency.
     \item \textbf{A per-anomaly-type analysis.} Using a synthetic
     dataset in which six distinct anomaly categories (missing values,
     duplicates, univariate outliers, multivariate outliers, temporal
-    drift, invalid formats) are injected at controlled rates, we produce
-    a method-by-type detection-rate matrix. The families turn out to have
-    narrow, largely non-overlapping competence that the aggregate metrics
-    hide.
+    drift, invalid formats) are injected at a tunable severity, we produce
+    a method-by-type recall and precision matrix and show it is stable
+    under a severity sweep. The families turn out to have narrow, largely
+    non-overlapping competence that the aggregate metrics hide.
 \end{enumerate}
 
 The rest of the paper is organized as follows. Section~II reviews
@@ -256,19 +256,30 @@ income and balance distribution has shifted upward by half), and
 \emph{invalid formats} (malformed e-mail, out-of-domain country code,
 impossible age). Because the category of every injected row is known, we
 report, per method and per type, both the detection rate (recall) and the
-precision on a stream made of clean rows plus that one type.
+precision on a stream made of clean rows plus that one type. The injection
+magnitudes are exposed as a single \emph{severity} multiplier so the
+choice of magnitude can be swept rather than fixed
+(Section~\ref{sec:severity}). We also add a time-aware detector,
+\emph{drift}, that learns a per-feature baseline from the oldest rows and
+flags recent rows that both sit in a window whose mean has moved and lean
+in the direction of that move; it is run on the synthetic dataset only, as
+the other detectors ignore the row order.
 
 \subsection{Datasets}
-We evaluate on three datasets. \emph{Credit Card Fraud} (Kaggle;
+We evaluate on four datasets. \emph{Credit Card Fraud} (Kaggle;
 $283{,}726$ transactions after de-duplication, $30$ numeric features,
-$0.17\%$ labelled fraud) is the standard strongly imbalanced benchmark.
-The \emph{synthetic} dataset above ($12{,}360$ rows, $17.5\%$ anomalous)
-carries the per-type labels. \emph{Water Quality} (a mirror of the
-UCI-style water-potability data; $3{,}276$ samples, $9$ numeric features)
-is a third real dataset in the thesis's application domain; here the
-target class (``not potable'') is common rather than rare ($61\%$) and the
-data has genuine missing values, so it probes the detectors outside the
-regime they are designed for.
+$0.17\%$ labelled fraud) is the standard strongly imbalanced benchmark,
+but its positive class mixes every kind of defect. The \emph{synthetic}
+dataset above ($12{,}360$ rows, $17.5\%$ anomalous) carries the per-type
+labels. \emph{Cardio} (a cardiotocography anomaly dataset as packaged for
+outlier-detection benchmarking; $1{,}831$ rows, $21$ standardized
+features, $9.6\%$ anomalies) is a \emph{genuinely imbalanced} real
+dataset: the anomalies are rare and distributionally distinct, the regime
+the unsupervised detectors are built for. \emph{Water Quality} (a mirror
+of the UCI-style water-potability data; $3{,}276$ samples, $9$ numeric
+features) is the opposite case: the target class (``not potable'') is
+common ($61\%$) rather than rare, and the data has genuine missing values,
+so it probes the detectors outside their regime.
 
 \subsection{Evaluation protocol}
 \label{sec:protocol}
@@ -290,8 +301,12 @@ true-negative pool and stays optimistic, whereas precision reacts directly
 to false alarms. We keep both because PR-AUC's random baseline equals the
 prevalence and is not comparable across datasets, while ROC-AUC's is
 always $0.5$ and is. We also report the fraction of rows flagged and the
-in-pipeline latency. The deep-learning detectors (Autoencoder,
-LSTM-Autoencoder) are the object of the next stage.
+in-pipeline latency. Because a single flag threshold hides the rest of the
+trade-off, we additionally draw the full precision-recall curve of every
+detector (Fig.~\ref{fig:prcurves}) and sweep Isolation Forest's
+contamination across each dataset (Table~\ref{tab:contamination}). The
+deep-learning detectors (Autoencoder, LSTM-Autoencoder) are the object of
+the next stage.
 
 \section{Experiments and Results}
 \label{sec:experiments}
@@ -329,6 +344,42 @@ Z-score            & 0.011 & 0.870 & 0.021 & 0.926 & 0.078 & 13.4 & \textbf{0.03
 IQR                & 0.003 & \textbf{0.966} & 0.007 & 0.911 & 0.018 & 48.6 & 0.12 \\
 Great Expectations & 0.037 & 0.676 & \textbf{0.070} & 0.830 & \textbf{0.182} & 3.1 & 1.37 \\
 Isolation Forest   & \textbf{0.202} & 0.206 & \textbf{0.203} & \textbf{0.934} & 0.120 & \textbf{0.2} & 1.78 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Genuinely imbalanced real data: Cardio}
+\label{sec:cardio}
+Table~\ref{tab:cardio} runs all six detectors on Cardio, where the
+anomalies are both rare ($9.6\%$) and distributionally distinct. Here the
+unsupervised detectors work: Isolation Forest reaches $F_1 = 0.62$,
+PR-AUC $0.70$ and ROC-AUC $0.95$, and the One-Class SVM is close behind.
+Z-score also does well on this dataset ($F_1 = 0.61$) because the $21$
+features are already standardized and the anomalies stand out on several
+of them at once. This is the counterpoint to Credit Card Fraud and Water
+Quality: the value of a learned detector shows when the anomalies are
+genuinely rare outliers, not when the positive class is a $0.17\%$
+mixed-defect label or a $61\%$ majority. All three ML detectors carry a
+wide seed spread on this small dataset ($F_1$ standard deviations of
+$0.14$--$0.17$).
+
+\begin{table}[t]
+\caption{All detectors on Cardio, mean over five seeds on the $15\%$ test
+split. $1{,}831$ rows, $9.6\%$ anomalies.}
+\label{tab:cardio}
+\centering
+\setlength{\tabcolsep}{4pt}
+\footnotesize
+\begin{tabular}{lrrrrrr}
+\toprule
+Detector & Prec. & Rec. & $F_1$ & ROC & PR & Flag.\% \\
+\midrule
+Z-score            & 0.49 & \textbf{0.82} & 0.61 & 0.93 & 0.61 & 16.6 \\
+IQR                & 0.21 & 0.90 & 0.34 & 0.78 & 0.30 & 43.4 \\
+Great Expectations & 0.51 & 0.21 & 0.29 & 0.59 & 0.19 & 4.6 \\
+Isolation Forest   & \textbf{0.64} & 0.62 & \textbf{0.62} & \textbf{0.95} & \textbf{0.70} & 9.9 \\
+LOF                & 0.25 & 0.27 & 0.26 & 0.62 & 0.24 & 10.7 \\
+One-Class SVM      & 0.56 & 0.61 & 0.58 & 0.94 & 0.63 & 10.7 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -390,8 +441,12 @@ every method has a narrow competence.
     numeric value they carry (IQR recall $1.00$, precision $0.39$; Z-score
     precision $1.00$); the malformed string fields are missed by all.
     \item \emph{Temporal drift} is the weakest column for every method
-    (best recall $0.49$, LOF), because the shifted values stay inside the
-    global range and no detector uses the timestamp.
+    (best recall $0.49$, LOF). The dedicated \emph{drift} detector scores
+    $0$ here too: at the reference magnitude the shifted values stay
+    inside the global range, and once diluted by the many clean recent
+    rows the window mean has moved by only about a tenth of a standard
+    deviation. Section~\ref{sec:severity} shows the recall climbing as the
+    injected shift grows.
 \end{itemize}
 The practical reading is a short decision list: null-rate problems to
 declarative rules, single-column outliers to any statistical rule,
@@ -441,6 +496,84 @@ One-Class SVM      & 0.57 & 0.45 & 0.50 & 0.46 & 0.57 & 48.4 \\
 \end{tabular}
 \end{table}
 
+\subsection{Precision-recall curves and the operating point}
+\label{sec:curves}
+Fig.~\ref{fig:prcurves} draws the full precision-recall curve of every
+detector on each dataset's test split. The curves make the aggregate
+tables concrete: on Cardio the Isolation Forest and One-Class SVM curves
+stay high (AP $0.80$ and $0.76$); on Water Quality every curve hugs the
+$0.61$ base-rate line; on Credit Card Fraud Great Expectations and
+Isolation Forest dominate but neither clears a precision of $0.4$ except
+at negligible recall. Table~\ref{tab:contamination} makes the point
+numerically for Isolation Forest: as the contamination moves from
+$0.001$ to $0.20$, its Credit Card Fraud precision falls from $0.37$ to
+$0.008$ while recall rises from $0.23$ to $0.92$; on Cardio the same
+sweep trades a precision of $1.00$ at recall $0.04$ for a recall of
+$0.93$ at precision $0.46$. The estimator is fixed; only the threshold
+moves. Reading the prevalence off the training split lands near the knee
+of the curve on the datasets where a knee exists.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/pr_curves.png}
+\caption{Precision-recall curves on the test split, one panel per
+dataset, average precision in the legend. The dashed line is the base
+rate.}
+\label{fig:prcurves}
+\end{figure}
+
+\begin{table}[t]
+\caption{Isolation Forest under a contamination sweep, test split, one
+seed. ``prev.'' is the training-split prevalence, the value the
+benchmarks use.}
+\label{tab:contamination}
+\centering
+\setlength{\tabcolsep}{4pt}
+\footnotesize
+\begin{tabular}{llrrr}
+\toprule
+Dataset & Contam. & Prec. & Rec. & Flag.\% \\
+\midrule
+Credit Card Fraud & 0.001       & 0.37 & 0.23 & 0.10 \\
+Credit Card Fraud & 0.10        & 0.01 & 0.90 & 10.2 \\
+Credit Card Fraud & prev.\ 0.002 & 0.28 & 0.32 & 0.20 \\
+\midrule
+Cardio            & 0.01        & 1.00 & 0.33 & 3.3 \\
+Cardio            & 0.20        & 0.46 & 0.93 & 19.7 \\
+Cardio            & prev.\ 0.096 & 0.72 & 0.67 & 9.1 \\
+\midrule
+Water Quality     & prev.\ 0.5   & 0.58 & 0.49 & 51.6 \\
+Synthetic         & prev.\ 0.175 & 0.52 & 0.49 & 16.5 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Detection rate versus injection severity}
+\label{sec:severity}
+The synthetic magnitudes are a design choice, so we sweep them. A single
+\emph{severity} multiplier scales the univariate factor, the multivariate
+percentile extremity and the temporal-drift multiplier ($1.0$ is the
+dataset used above). Fig.~\ref{fig:severity} plots per-type recall against
+severity. Univariate outliers are already saturated at severity $0.5$.
+Multivariate outliers show a threshold: Isolation Forest and the
+One-Class SVM climb smoothly to recall $1.0$, while IQR jumps from $0.02$
+to $1.0$ once the injected percentile crosses its fence. Temporal drift
+climbs roughly linearly for the distributional detectors (from $\le 0.3$
+at severity $1.0$ to $0.6$--$0.85$ at severity $3$), confirming that the
+reference drift is simply below every method's floor rather than a
+property of the methods. The per-type ranking of
+Section~\ref{sec:results-synthetic} is stable across the sweep: the same
+families lead the same columns at every severity.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/severity_curves.png}
+\caption{Per-type recall against injection severity ($1.0$ is the
+reference synthetic dataset), mean over three seeds. The dashed line
+marks severity $1.0$.}
+\label{fig:severity}
+\end{figure}
+
 \section{Discussion}
 \label{sec:discussion}
 
@@ -460,11 +593,22 @@ multivariate-outlier recall on the synthetic data from $0.41$ to $0.91$.
 The same estimator looks weak or strong depending on one number that a
 benchmark must choose deliberately.
 
-\paragraph{Aggregate metrics on a mixed label are misleading.} On all
-three datasets the aggregate table compresses different behaviour into
-similar $F_1$ and PR-AUC values. A method excellent on one anomaly type
-and blind to the rest scores like a mediocre all-rounder. The controlled
-per-type dataset is what makes the difference measurable.
+\paragraph{Unsupervised detection works in one of the three regimes.}
+The three real settings bracket the method: on Cardio, where anomalies
+are rare and distributionally distinct, Isolation Forest reaches
+$F_1 = 0.62$ and PR-AUC $0.70$; on Credit Card Fraud, where the positive
+class is a $0.17\%$ mixed-defect label, no method clears a usable
+precision at reasonable recall; on Water Quality, where the ``anomaly''
+is a $61\%$ majority, every method is at chance. The question is less
+``rules or ML'' than ``does this dataset have rare, outlying anomalies at
+all''.
+
+\paragraph{Aggregate metrics on a mixed label are misleading.} On every
+dataset the aggregate table compresses different behaviour into similar
+$F_1$ and PR-AUC values. A method excellent on one anomaly type and blind
+to the rest scores like a mediocre all-rounder. The controlled per-type
+dataset, and the severity sweep that shows the per-type ranking is stable,
+are what make the difference measurable.
 
 \paragraph{Pipeline integration changes the shortlist.} Latency and
 scaling are not secondary. Great Expectations is the slowest linear
@@ -472,13 +616,15 @@ method; the One-Class SVM's quadratic training and LOF's superlinear
 scoring keep both off the full fraud dataset. A benchmark scoring
 algorithms in isolation would not surface this.
 
-\paragraph{Threats to validity.} The synthetic dataset encodes our own
-assumptions about what each anomaly type looks like, and the injection
-magnitudes are choices. Water Quality shows the methods only outside
-their regime; a genuinely imbalanced second real dataset is still needed
-before the per-type ranking can be called general. Isolation Forest's
-seed variance on fraud ($F_1 = 0.20 \pm 0.07$) means its precision gain
-there should be read as a range, not a point.
+\paragraph{Threats to validity.} The synthetic dataset still encodes our
+own assumptions about what each anomaly type looks like; the severity
+sweep addresses the magnitude choice but not the shape of the
+injections. Cardio is a single genuinely-imbalanced dataset, so ``the
+per-type ranking generalises'' remains a claim about the synthetic data
+plus one real point. The ML detectors carry a wide seed spread on the
+small datasets (Cardio $F_1$ standard deviation up to $0.17$; Isolation
+Forest on fraud $F_1 = 0.20 \pm 0.07$), so those numbers should be read
+as ranges.
 
 \section{Conclusion}
 \label{sec:conclusion}
@@ -486,19 +632,23 @@ there should be read as a range, not a point.
 We built an ETL pipeline in which rule-based and classical
 machine-learning anomaly detectors share one interface and are scored on
 the same held-out path, over five seeds, with the operating point read
-from the data. A controlled dataset labels six anomaly types separately
-so detection can be measured per type. On aggregate metrics the families
-stay close on all three datasets. The per-type view is where they
-diverge: declarative rules own missing values, statistical rules own
-single-column outliers, tree- and boundary-based models are the only ones
-that catch implausible combinations, and duplicates and temporal drift
-need dedicated stages. The choice of contamination and the pipeline cost
-further constrain which detector fits a real flow.
+from the data. A controlled dataset labels six anomaly types separately,
+and a severity sweep shows the per-type ranking is stable as the
+injections are scaled. On aggregate metrics the detector families stay
+close on all four datasets. The per-type view is where they diverge:
+declarative rules own missing values, statistical rules own single-column
+outliers, tree- and boundary-based models are the only ones that catch
+implausible combinations, and duplicates and temporal drift need
+dedicated stages. Across the three real datasets, unsupervised detection
+pays off only on Cardio, where the anomalies are genuinely rare and
+outlying. The choice of contamination, the precision-recall trade-off it
+selects, and the pipeline cost further constrain which detector fits a
+real flow.
 
 The next steps are the deep-learning detectors (Autoencoder, then
-LSTM-Autoencoder) behind the same interface, a genuinely imbalanced
-second real dataset, and a detector that uses the timestamp so temporal
-drift stops being an empty column.
+LSTM-Autoencoder) behind the same interface, more genuinely imbalanced
+real datasets to firm up the per-type generalisation claim, and a
+windowed drift monitor rather than the per-row detector used here.
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}
