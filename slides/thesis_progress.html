@@ -6,187 +6,208 @@
 <title>ETL anomaly benchmark, thesis progress</title>
 <style>
   :root{
-    --paper:#f4f0e7; --paper-2:#ece5d8; --ink:#171614; --muted:#6f675f;
-    --rule:#d6ccbd; --rule-2:#c9bda9; --terra:#a64b34; --green:#536b68;
-    --ok:#4e695c; --warn:#916424;
-    --serif:"Iowan Old Style",Baskerville,"Palatino Linotype","Book Antiqua","Times New Roman",serif;
+    --bg:#eae4d9; --surface:#f2ede3; --ink:#1a1916; --ink-soft:#625d55;
+    --line:#1a191629; --line-strong:#1a191655;
+    --terra:#c25f43; --terra-text:#8d3e2b; --sage:#5f7748; --mineral:#4f6a74; --ochre:#8a6a2c;
+    --serif:"Iowan Old Style",Baskerville,"Palatino Linotype","Book Antiqua",Georgia,serif;
     --sans:"Avenir Next","Helvetica Neue",Helvetica,Arial,sans-serif;
-    --mono:"SFMono-Regular",Menlo,Monaco,Consolas,monospace;
+    --mono:"SFMono-Regular",Menlo,Monaco,Consolas,ui-monospace,monospace;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
-  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
-       -webkit-font-smoothing:antialiased;overflow:hidden}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);
+       -webkit-font-smoothing:antialiased;overflow:hidden;line-height:1.5}
   #deck{height:100vh;height:100dvh}
 
   .slide{position:absolute;inset:0;height:100vh;height:100dvh;
-    display:none;grid-template-columns:170px 1fr;column-gap:44px;
-    padding:48px 64px 34px;opacity:0;transition:opacity .24s ease}
+    display:none;grid-template-columns:172px 1fr;column-gap:46px;
+    padding:48px 62px 34px;opacity:0;transition:opacity .22s ease}
   .slide.on{display:grid;opacity:1}
   .slide.solo{grid-template-columns:1fr}
   @media(prefers-reduced-motion:reduce){.slide{transition:none}}
 
-  /* left rail, identical geometry on every content slide */
-  .rail{display:flex;flex-direction:column;gap:6px;font-family:var(--mono);
-    font-size:11px;color:var(--muted);letter-spacing:.02em;padding-top:4px}
-  .rail .n{font-size:15px;color:var(--terra)}
-  .rail .sec{text-transform:uppercase}
-  .rail .src{margin-top:auto;color:var(--rule-2);word-break:break-all}
+  .rail{display:flex;flex-direction:column;gap:5px;font-family:var(--mono);
+    font-size:11px;color:var(--ink-soft);letter-spacing:.03em}
+  .rail .n{font-size:14px;color:var(--terra-text)}
+  .rail .sec{text-transform:uppercase;letter-spacing:.09em;font-size:10px}
+  .rail .src{margin-top:auto;color:var(--line-strong);word-break:break-all;font-size:10px}
 
   .main{min-width:0;display:flex;flex-direction:column}
-  .main>h2{font-family:var(--serif);font-weight:600;
-    font-size:clamp(24px,2.9vw,33px);line-height:1.12;letter-spacing:-.01em;
-    max-width:30ch;hyphens:none}
-  .brule{height:2px;background:var(--terra);width:96px;margin:11px 0 22px}
-  .content{flex:1;min-height:0;display:flex;flex-direction:column;gap:18px;justify-content:flex-start}
-  .content.mid{justify-content:center}
+  .eyebrow{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.09em;
+    text-transform:uppercase;color:var(--terra-text);margin-bottom:9px}
+  .main>h2{font-family:var(--serif);font-weight:600;letter-spacing:-.02em;
+    font-size:clamp(23px,2.8vw,32px);line-height:1.14;max-width:32ch;hyphens:none}
+  h2 em,h1 em{font-style:italic;font-weight:600}
+  .brule{height:2px;background:var(--terra);width:88px;margin:12px 0 20px}
+  .content{flex:1;min-height:0;display:flex;flex-direction:column;gap:16px;justify-content:flex-start}
 
-  h1{font-family:var(--serif);font-weight:600;font-size:clamp(32px,4.6vw,52px);
-     line-height:1.07;letter-spacing:-.01em}
-  .lead{font-size:clamp(15px,1.5vw,19px);line-height:1.5;max-width:64ch;color:var(--ink)}
-  p{font-size:14.5px;line-height:1.5;max-width:70ch}
-  p.sm{font-size:13px;color:var(--muted);line-height:1.45}
+  h1{font-family:var(--serif);font-weight:600;letter-spacing:-.02em;
+     font-size:clamp(30px,4vw,46px);line-height:1.08}
+  .lede{font-size:clamp(15px,1.5vw,19px);line-height:1.5;max-width:60ch;color:var(--ink-soft)}
+  p{font-size:14px;line-height:1.5;max-width:70ch}
+  p.sm{font-size:12.5px;color:var(--ink-soft);line-height:1.45}
   p+p{margin-top:8px}
   b{font-weight:700}
-  .muted{color:var(--muted)}
-  .terra{color:var(--terra)}
+  .muted{color:var(--ink-soft)}
 
-  .content.grid2{display:grid;grid-template-columns:1.55fr 1fr;gap:44px;
-    align-items:start;align-content:start;justify-content:stretch}
-  .content.grid2.even{grid-template-columns:1fr 1fr;align-items:stretch}
+  .split{display:grid;grid-template-columns:1.5fr 1fr;gap:44px;align-items:start;align-content:start}
+  .split.even{grid-template-columns:1fr 1fr}
   .stack>*+*{margin-top:9px}
 
-  table{border-collapse:collapse;width:100%;font-size:13.5px}
+  table{border-collapse:collapse;width:100%;font-size:13px}
   .num td,.num th{font-variant-numeric:tabular-nums}
-  caption{caption-side:bottom;text-align:left;font-family:var(--mono);font-size:11px;
-    color:var(--muted);padding-top:12px}
-  th,td{text-align:right;padding:13px 9px;border-bottom:1px solid var(--rule)}
-  .content.grid2 th,.content.grid2 td{padding:10px 9px}
+  caption{caption-side:bottom;text-align:left;font-family:var(--mono);font-size:10.5px;
+    color:var(--ink-soft);padding-top:11px}
+  th,td{text-align:right;padding:12px 9px;border-bottom:1px solid var(--line)}
+  .split th,.split td{padding:9px 8px}
   th:first-child,td:first-child{text-align:left;padding-left:0}
   th:last-child,td:last-child{padding-right:0}
-  thead th{color:var(--muted);font-weight:600;border-bottom:1.5px solid var(--ink);
-    font-family:var(--sans)}
+  thead th{color:var(--ink-soft);font-weight:600;border-bottom:1.5px solid var(--ink);font-family:var(--sans)}
   tbody tr:last-child td{border-bottom:1.5px solid var(--ink)}
-  td.hi{color:var(--terra);font-weight:700}
+  td.hi{color:var(--terra-text);font-weight:700}
   tr.grp td{border-bottom:0;padding-top:13px;padding-bottom:3px;font-family:var(--mono);
-    font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
-  tr.grp+tr td{border-top:1px solid var(--rule)}
+    font-size:10px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em}
+  tr.grp+tr td{border-top:1px solid var(--line)}
+  tr.rule td{border-top:1px solid var(--line-strong)}
 
-  .defs{width:100%;font-size:13px}
-  .defs td{text-align:left;padding:9px 14px 9px 0;border-bottom:1px solid var(--rule);
-    vertical-align:top;line-height:1.45}
-  .defs td:first-child{white-space:nowrap;color:var(--terra);font-family:var(--mono);
-    font-size:12px;width:1%;padding-right:20px}
-  .defs td:last-child{padding-right:0}
-  .defs tr:last-child td{border-bottom:0}
+  dl.defs{width:100%;font-size:13px;display:grid;grid-template-columns:auto 1fr;column-gap:18px}
+  dl.defs dt{font-family:var(--mono);font-size:12px;color:var(--terra-text);white-space:nowrap;
+    padding:9px 0;border-top:1px solid var(--line)}
+  dl.defs dd{padding:9px 0;border-top:1px solid var(--line);line-height:1.45}
+  dl.defs dt:first-of-type,dl.defs dt:first-of-type + dd{border-top:0}
 
   ul{list-style:none}
-  li{font-size:13.5px;line-height:1.5;padding:11px 0;border-top:1px solid var(--rule);max-width:78ch}
+  li{font-size:13px;line-height:1.5;padding:10px 0;border-top:1px solid var(--line);max-width:78ch}
   li:first-child{border-top:0}
-  li .k{font-family:var(--mono);font-size:11px;color:var(--terra);display:block;margin-bottom:3px;
-    text-transform:uppercase;letter-spacing:.02em}
-  ul.two{column-count:2;column-gap:52px}
-  ul.two li{max-width:none;break-inside:avoid;-webkit-column-break-inside:avoid}
+  li .k{font-family:var(--mono);font-size:10.5px;color:var(--terra-text);display:block;
+    margin-bottom:2px;text-transform:uppercase;letter-spacing:.03em}
+  li .note{font-family:var(--mono);font-size:11px;color:var(--ink-soft)}
+  ul.two{column-count:2;column-gap:50px}
+  ul.two li{max-width:none;break-inside:avoid}
   ul.two li:first-child{border-top:0}
-  ul.two li.brk{border-top:1px solid var(--rule)}
+  ul.two li.brk{border-top:1px solid var(--line)}
 
-  figure.content{margin:0;display:flex;flex-direction:row;gap:32px;flex:1;min-height:0;
-    align-items:stretch;justify-content:flex-start}
-  figure.content img{flex:0 1 60%;min-height:0;min-width:0;width:auto;height:100%;
+  .badge{font-family:var(--mono);font-size:10px;letter-spacing:.03em;text-transform:uppercase;
+    padding:2px 7px;border:1px solid var(--line-strong);white-space:nowrap}
+  .badge.done{color:var(--sage);border-color:var(--sage)}
+  .badge.partial{color:var(--ochre);border-color:var(--ochre)}
+  .badge.open{color:var(--ink-soft)}
+
+  figure.content{margin:0;display:flex;flex-direction:row;gap:30px;flex:1;min-height:0;
+    align-items:stretch}
+  figure.content img{flex:0 1 58%;min-height:0;min-width:0;width:auto;height:100%;
     object-fit:contain;object-position:left center}
-  figcaption{flex:1 1 40%;font-size:13px;line-height:1.55;color:var(--ink);align-self:center}
-  figcaption .k{font-family:var(--mono);font-size:11px;color:var(--terra);
+  figcaption{flex:1 1 42%;font-size:12.5px;line-height:1.55;color:var(--ink);align-self:center}
+  figcaption .k{font-family:var(--mono);font-size:10.5px;color:var(--terra-text);
     text-transform:uppercase;display:block;margin:10px 0 3px}
   figcaption .k:first-child{margin-top:0}
+  .wide-fig{flex:1;min-height:0;display:flex;flex-direction:column;gap:14px}
+  .wide-fig .imgwrap{flex:1;min-height:0;display:flex;align-items:flex-start;justify-content:center}
+  .wide-fig .imgwrap img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+  .wide-fig>.split{flex:0 0 auto}
+  .wide-fig p.sm{font-size:11.5px;line-height:1.4}
 
   code{font-family:var(--mono);font-size:.9em}
-  pre.code{background:#171614;color:#eee8dd;font-family:var(--mono);font-size:12px;line-height:1.55;
-    padding:16px 18px;white-space:pre;overflow:auto;border-radius:2px}
-  pre.code .c{color:#aaa094}
-  pre.code .t{color:#cf745a}
-  pre.code .g{color:#8ba19e}
+  pre.code{background:var(--ink);color:#f2ede3;font-family:var(--mono);font-size:11.5px;
+    line-height:1.55;padding:15px 17px;white-space:pre;overflow:auto;border-radius:3px}
+  pre.code .c{color:#a49c8f}
+  pre.code .t{color:#e7896f}
+  pre.code .g{color:#a9be91}
 
-  .slide.dark{background:var(--ink);color:var(--paper)}
+  blockquote{font-family:var(--serif);font-weight:600;letter-spacing:-.02em;
+    font-size:clamp(26px,3.4vw,40px);line-height:1.18;max-width:24ch}
+  blockquote em{font-style:italic}
+
+  .slide.dark{background:var(--ink);color:#f2ede3}
   .slide.dark .brule{background:var(--terra)}
-  .slide.dark .muted,.slide.dark .rail{color:#aaa094}
-  .slide.dark .rail .src{color:#5f584e}
-  .slide.dark h1{color:var(--paper)}
-  .slide.dark .lead{color:#cfc7b9}
+  .slide.dark .muted,.slide.dark .rail,.slide.dark .lede{color:#b7afa2}
+  .slide.dark .rail .src{color:#5a5349}
+  .slide.dark .eyebrow{color:#e0977f}
+  .slide.dark h1,.slide.dark blockquote{color:#f2ede3}
 
-  .metaline{font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.9}
+  .metaline{font-family:var(--mono);font-size:12px;color:var(--ink-soft);line-height:1.9}
   .metaline b{color:var(--ink);font-weight:400}
-  .watermark{position:absolute;right:clamp(72px,9vw,150px);bottom:clamp(84px,13vh,140px);
-    font-family:var(--serif);font-size:clamp(80px,10vw,140px);line-height:.8;color:var(--ink);
-    opacity:.06;pointer-events:none;user-select:none}
+  .kv{font-family:var(--mono);font-size:12px;display:grid;grid-template-columns:auto 1fr;
+    column-gap:16px;row-gap:4px}
+  .kv .kk{color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;font-size:10.5px}
+  .watermark{position:absolute;right:clamp(72px,9vw,150px);bottom:clamp(80px,13vh,140px);
+    font-family:var(--serif);font-size:clamp(78px,10vw,138px);line-height:.8;color:var(--ink);
+    opacity:.055;pointer-events:none;user-select:none}
 
-  nav#dots{position:fixed;left:50%;bottom:13px;transform:translateX(-50%);display:flex;gap:6px;z-index:9}
-  nav#dots button{width:6px;height:6px;border-radius:50%;border:0;padding:0;cursor:pointer;background:var(--rule)}
+  nav#dots{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);display:flex;gap:6px;z-index:9}
+  nav#dots button{width:6px;height:6px;border-radius:50%;border:0;padding:0;cursor:pointer;background:var(--line-strong)}
   nav#dots button[aria-current="true"]{background:var(--terra)}
-  #count{position:fixed;right:14px;bottom:11px;font-family:var(--mono);font-size:11px;color:var(--muted);z-index:9}
+  #count{position:fixed;right:14px;bottom:11px;font-family:var(--mono);font-size:11px;color:var(--ink-soft);z-index:9}
 
   .foot{display:flex;justify-content:space-between;align-items:baseline;gap:24px;
-    font-family:var(--mono);font-size:10.5px;color:var(--rule-2);border-top:1px solid var(--rule);
+    font-family:var(--mono);font-size:10px;color:var(--line-strong);border-top:1px solid var(--line);
     padding-top:10px;margin-top:14px}
   .foot span:last-child{text-align:right}
-  .slide.dark .foot{color:#5f584e;border-color:#403a32}
+  .slide.dark .foot{color:#5a5349;border-color:#3a352d}
+
+  @media print{
+    @page{size:1280px 720px;margin:0}
+    html,body{overflow:visible;background:var(--bg)}
+    #deck{height:auto}
+    nav#dots,#count{display:none}
+    .slide{position:static;display:grid;opacity:1;height:720px;width:1280px;overflow:hidden;
+      page-break-after:always;break-after:page;page-break-inside:avoid;transition:none}
+    .slide:last-child{page-break-after:auto}
+  }
 </style>
 </head>
 <body>
 <main id="deck">
 
-<!-- 1 - cover -->
+<!-- 1 cover -->
 <section class="slide solo on" data-sec="Cover">
   <div style="display:flex;flex-direction:column;height:100%">
-    <div class="metaline">Master thesis bootcamp MSc1 &nbsp;/&nbsp; ESILV Data &amp; Artificial Intelligence</div>
-    <div class="brule" style="margin-top:14px"></div>
+    <div class="eyebrow">Master thesis bootcamp MSc1 &nbsp;/&nbsp; ESILV Data &amp; Artificial Intelligence</div>
+    <div class="brule" style="margin:6px 0 0"></div>
     <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
-      <h1 style="max-width:22ch;font-size:clamp(30px,4vw,46px)">Anomaly detection for data quality, measured inside the ETL pipeline</h1>
-      <p class="lead muted" style="margin-top:20px;max-width:58ch">
+      <h1 style="max-width:20ch">Anomaly detection for data quality, <em>measured inside</em> the ETL pipeline</h1>
+      <p class="lede" style="margin-top:20px;max-width:56ch">
         Progress review at the end of M1. Rule-based and classical machine-learning
-        detectors now run through one pipeline and are compared per anomaly type on a
-        controlled dataset.
+        detectors run through one pipeline and are compared per anomaly type, on a
+        held-out split, over five seeds.
       </p>
     </div>
-    <div class="metaline" style="border-top:1px solid var(--rule);padding-top:14px">
-      <b>Author</b> Theo Bigand &nbsp;&nbsp; <b>Date</b> 2026-08-31 &nbsp;&nbsp;
-      <b>Repo</b> github.com/theobigand/etl-anomaly-benchmark<br>
-      <b>Code</b> 1.3k LOC, 48 tests, 6 detectors &nbsp;&nbsp;
-      <b>Datasets</b> Credit Card Fraud (284k rows) + synthetic (12.4k rows, 6 anomaly types)
+    <div class="kv" style="border-top:1px solid var(--line);padding-top:14px">
+      <span class="kk">author</span><span>Theo Bigand &nbsp;&nbsp; 2026-08-31</span>
+      <span class="kk">repo</span><span>github.com/theobigand/etl-anomaly-benchmark</span>
+      <span class="kk">code</span><span>~1.7k LOC &nbsp;·&nbsp; 82 tests &nbsp;·&nbsp; CI green</span>
+      <span class="kk">datasets</span><span>Credit Card Fraud, Cardio, Water Quality, synthetic (6 anomaly types)</span>
     </div>
   </div>
   <div class="watermark">E</div>
 </section>
 
-<!-- 2 - question + gap -->
+<!-- 2 problem -->
 <section class="slide" data-sec="Problem">
-  <div class="rail"><span class="n">02</span><span class="sec">Problem</span><span class="src">docs/TD5/PLAN.md</span></div>
+  <div class="rail"><span class="n">02</span><span class="sec">Problem</span><span class="src">paper/main.tex</span></div>
   <div class="main">
-    <h2>Does machine learning in an ETL pipeline beat plain rules, and for which anomalies?</h2>
+    <div class="eyebrow">The question</div>
+    <h2>Does machine learning in an ETL pipeline <em>beat plain rules</em>, and for which anomalies?</h2>
     <div class="brule"></div>
-    <div class="content grid2">
+    <div class="content split">
       <div class="stack">
-        <p><b>Industry default is rule-based.</b> Declarative checks in tools such as Great
-        Expectations, Deequ or Soda are auditable and cheap, but they scale poorly with
-        schema complexity, only catch violations the author anticipated, and miss
-        multi-column or distributional anomalies.</p>
+        <p><b>The industry default is rule-based.</b> Declarative checks in tools such as
+        Great Expectations are auditable and cheap, but they scale poorly with schema
+        complexity, only catch violations the author anticipated, and miss multi-column
+        or distributional problems.</p>
         <p><b>Recent work adds ML detectors inside the ETL flow</b>, but the evidence is
-        thin. Published pipelines are mostly conceptual architectures with no reproducible
-        code; when an experiment is reported it is usually one algorithm on one dataset,
-        for instance Isolation Forest on Credit Card Fraud at a near-random ROC-AUC of
-        0.51.</p>
-        <p><b>The stakes are real.</b> Poor data quality is estimated to cost organisations
-        about $12.9M per year, which is why continuous automated checks matter.</p>
-        <p><b>This thesis</b> builds the missing head-to-head benchmark of rule-based and
-        classical ML detectors and, as its original contribution, breaks the result down by
-        the kind of anomaly.</p>
+        thin: mostly conceptual architectures with no reproducible code, and when an
+        experiment is reported it is one algorithm on one dataset.</p>
+        <p><b>This thesis</b> builds the missing head-to-head benchmark and, as its
+        original contribution, breaks the result down by the kind of anomaly.</p>
       </div>
       <div>
-        <p class="sm" style="margin-bottom:8px">Four gaps in the existing benchmarks</p>
+        <p class="sm" style="margin-bottom:6px">Four gaps in generic anomaly benchmarks</p>
         <ul>
-          <li><span class="k">ADBench, NeurIPS 2022</span>30 algorithms on 57 tabular datasets, and PyOD's unified implementations. Both evaluate algorithms in a vacuum, outside any ETL context.</li>
-          <li><span class="k">declarative rules</span>The baselines that dominate production systems are never compared head to head with ML detectors.</li>
-          <li><span class="k">pipeline integration</span>No end-to-end cost: latency, memory, where a detector can sit in the flow.</li>
-          <li><span class="k">per anomaly type</span>One aggregate score per dataset hides that each family catches a different kind of defect.</li>
+          <li><span class="k">evaluated in a vacuum</span>Algorithms scored outside any pipeline, no integration cost.</li>
+          <li><span class="k">no declarative baseline</span>The rules that dominate production are never in the comparison.</li>
+          <li><span class="k">one aggregate score</span>Per dataset, hiding which family is good at what.</li>
+          <li><span class="k">no operating point</span>A single flag threshold, not the precision-recall trade-off.</li>
         </ul>
       </div>
     </div>
@@ -194,64 +215,63 @@
   </div>
 </section>
 
-<!-- 3 - the contribution: six types -->
+<!-- 3 contribution -->
 <section class="slide" data-sec="Contribution">
-  <div class="rail"><span class="n">03</span><span class="sec">Contribution</span><span class="src">synthetic.py</span></div>
+  <div class="rail"><span class="n">03</span><span class="sec">Contribution</span><span class="src">src/etl_benchmark/synthetic.py</span></div>
   <div class="main">
-    <h2>A controlled dataset that labels six anomaly types separately</h2>
+    <div class="eyebrow">The original contribution</div>
+    <h2>A controlled dataset that <em>labels six anomaly types</em> separately</h2>
     <div class="brule"></div>
-    <div class="content grid2">
-      <table class="defs">
-        <tr><td>missing value</td><td>one or two feature cells set to null. Nulls are the most common real defect.</td></tr>
-        <tr><td>exact duplicate</td><td>a clean row copied, same business attributes. A re-ingestion artefact.</td></tr>
-        <tr><td>univariate outlier</td><td>one numeric field pushed 15 to 45 times out of range.</td></tr>
-        <tr><td>multivariate outlier</td><td>every field in range, the combination not: an 18-year-old with a 97th-percentile balance and income.</td></tr>
-        <tr><td>temporal drift</td><td>recent-signup rows whose income and balance distribution has shifted up by half.</td></tr>
-        <tr><td>invalid format</td><td>malformed e-mail, out-of-domain country code, impossible age.</td></tr>
-      </table>
+    <div class="content split">
+      <dl class="defs">
+        <dt>missing value</dt><dd>one or two feature cells set to null</dd>
+        <dt>exact duplicate</dt><dd>a clean row copied, same business attributes</dd>
+        <dt>univariate outlier</dt><dd>one numeric field pushed far out of range</dd>
+        <dt>multivariate outlier</dt><dd>every field in range, the combination not (an 18-year-old with a top-percentile balance)</dd>
+        <dt>temporal drift</dt><dd>recent-signup rows whose income and balance distribution has shifted up</dd>
+        <dt>invalid format</dt><dd>malformed e-mail, out-of-domain country code, impossible age</dd>
+      </dl>
       <div class="stack">
-        <p>12,360 customer records generated with Faker and NumPy. Income is correlated with
-        balance and transaction size; account age spans three years.</p>
-        <p>Each type is injected at <b>3%</b>. Every row carries its <code>anomaly_type</code>,
-        so detection can be measured per category, not only in aggregate.</p>
-        <p class="sm">This is the part existing benchmarks do not provide. It is what the
-        thesis argues for an IMRaD paper rather than a demo paper.</p>
+        <p>12,360 records generated with Faker and NumPy, six types injected at 3% each,
+        every row tagged with its category. Recall <b>and</b> precision are reported per
+        type.</p>
+        <p>The injection magnitudes are exposed as one <b>severity</b> multiplier, so the
+        choice of magnitude is swept rather than fixed.</p>
+        <p class="sm">A time-aware <code>drift</code> detector is added for the drift column;
+        it runs on the synthetic dataset only.</p>
       </div>
     </div>
-    <div class="foot"><span>make synthetic</span><span>generator is deterministic, dataset not committed</span></div>
+    <div class="foot"><span>make synthetic &nbsp;·&nbsp; make severity</span><span>generator is deterministic, dataset not committed</span></div>
   </div>
 </section>
 
-<!-- 4 - pipeline + interface -->
+<!-- 4 system -->
 <section class="slide" data-sec="System">
-  <div class="rail"><span class="n">04</span><span class="sec">System</span><span class="src">pipeline.py<br>quality/base.py</span></div>
+  <div class="rail"><span class="n">04</span><span class="sec">System</span><span class="src">src/etl_benchmark/pipeline.py<br>quality/base.py</span></div>
   <div class="main">
-    <h2>One interface, one measured path</h2>
+    <div class="eyebrow">The system</div>
+    <h2>One interface, <em>one measured path</em></h2>
     <div class="brule"></div>
-    <div class="content grid2 even">
+    <div class="content split even">
       <div>
         <svg viewBox="0 0 520 92" style="width:100%;max-width:520px" role="img" aria-label="extract, transform, detect, load">
-          <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="#a64b34"/></marker></defs>
-          <g font-family="Menlo,monospace" font-size="12" fill="#171614">
-            <rect x="1" y="28" width="96" height="40" fill="#ece5d8" stroke="#d6ccbd"/><text x="49" y="46" text-anchor="middle">extract</text><text x="49" y="60" text-anchor="middle" font-size="9" fill="#6f675f">read_csv</text>
-            <rect x="141" y="28" width="96" height="40" fill="#ece5d8" stroke="#d6ccbd"/><text x="189" y="46" text-anchor="middle">transform</text><text x="189" y="60" text-anchor="middle" font-size="9" fill="#6f675f">dedup</text>
-            <rect x="281" y="23" width="106" height="50" fill="#f4f0e7" stroke="#a64b34" stroke-width="1.5"/><text x="334" y="43" text-anchor="middle">detect</text><text x="334" y="58" text-anchor="middle" font-size="9" fill="#6f675f">fit·predict·score</text>
-            <rect x="431" y="28" width="88" height="40" fill="#ece5d8" stroke="#d6ccbd"/><text x="475" y="46" text-anchor="middle">load</text><text x="475" y="60" text-anchor="middle" font-size="9" fill="#6f675f">write_csv</text>
-            <line x1="99" y1="48" x2="137" y2="48" stroke="#a64b34" marker-end="url(#ar)"/>
-            <line x1="239" y1="48" x2="277" y2="48" stroke="#a64b34" marker-end="url(#ar)"/>
-            <line x1="389" y1="48" x2="427" y2="48" stroke="#a64b34" marker-end="url(#ar)"/>
+          <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="#c25f43"/></marker></defs>
+          <g font-family="Menlo,monospace" font-size="12" fill="#1a1916">
+            <rect x="1" y="28" width="96" height="40" fill="#f2ede3" stroke="#1a191629"/><text x="49" y="46" text-anchor="middle">extract</text><text x="49" y="60" text-anchor="middle" font-size="9" fill="#625d55">read_csv</text>
+            <rect x="141" y="28" width="96" height="40" fill="#f2ede3" stroke="#1a191629"/><text x="189" y="46" text-anchor="middle">transform</text><text x="189" y="60" text-anchor="middle" font-size="9" fill="#625d55">dedup</text>
+            <rect x="281" y="23" width="106" height="50" fill="#eae4d9" stroke="#c25f43" stroke-width="1.5"/><text x="334" y="43" text-anchor="middle">detect</text><text x="334" y="58" text-anchor="middle" font-size="9" fill="#625d55">fit·predict·score</text>
+            <rect x="431" y="28" width="88" height="40" fill="#f2ede3" stroke="#1a191629"/><text x="475" y="46" text-anchor="middle">load</text><text x="475" y="60" text-anchor="middle" font-size="9" fill="#625d55">write_csv</text>
+            <line x1="99" y1="48" x2="137" y2="48" stroke="#c25f43" marker-end="url(#ar)"/>
+            <line x1="239" y1="48" x2="277" y2="48" stroke="#c25f43" marker-end="url(#ar)"/>
+            <line x1="389" y1="48" x2="427" y2="48" stroke="#c25f43" marker-end="url(#ar)"/>
           </g>
         </svg>
-        <p style="margin-top:16px">The demo (<code>make pipeline</code>) and both benchmarks call the
-        same <code>detect()</code> stage. Latency is therefore the real in-pipeline
-        fit + predict + score time, not a lab measurement.</p>
-        <p>A continuous <code>score()</code> was added on top of the boolean
-        <code>predict()</code> so ROC-AUC and PR-AUC are computable, not only threshold F1.
-        <code>detect(fit_df=...)</code> lets an expensive model fit on a sample and still
-        score the whole stream.</p>
-        <p class="sm">Adding a detector is one subclass and one line in the registry, which
-        the demo and both benchmarks then pick up. The PyOD wrappers use the same path
-        through a small <code>PyODDetector</code> base; the M2 deep models will too.</p>
+        <p style="margin-top:14px">The demo and every benchmark call the same
+        <code>detect()</code> stage, so latency is the real in-pipeline
+        fit + predict + score time.</p>
+        <p class="sm">A continuous <code>score()</code> on top of the boolean
+        <code>predict()</code> makes ROC-AUC and PR-AUC computable.
+        <code>detect(fit_df=...)</code> fits on the train slice and scores the test set.</p>
       </div>
       <pre class="code"><span class="c"># every detector, one contract</span>
 <span class="t">class</span> Detector(ABC):
@@ -259,7 +279,7 @@
     <span class="t">def</span> fit(self, df) -> Self: ...
     <span class="t">def</span> predict(self, df) -> Series:   <span class="c"># bool per row</span>
         ...
-    <span class="t">def</span> score(self, df) -> Series:     <span class="c"># graded, higher = worse</span>
+    <span class="t">def</span> score(self, df) -> Series:     <span class="c"># graded score</span>
         <span class="t">return</span> self.predict(df).astype(float)
 
 <span class="c"># classical ML: adapt PyOD, do not reimplement</span>
@@ -270,108 +290,120 @@
         <span class="t">return</span> self
 
 <span class="c"># registry: one line, picked up everywhere</span>
-<span class="g">"isolation_forest"</span>: <span class="t">lambda</span>: IsolationForestDetector(),
-<span class="g">"lof"</span>:              <span class="t">lambda</span>: LOFDetector(),
-<span class="g">"ocsvm"</span>:            <span class="t">lambda</span>: OneClassSVMDetector(),</pre>
+<span class="g">"isolation_forest"</span>: <span class="t">lambda</span>: IsolationForestDetector(),</pre>
     </div>
-    <div class="foot"><span>src/etl_benchmark/</span><span>interface modelled on PyOD BaseDetector</span></div>
+    <div class="foot"><span>python -m etl_benchmark --detector &lt;name&gt;</span><span>interface modelled on PyOD BaseDetector</span></div>
   </div>
 </section>
 
-<!-- 5 - the three families -->
+<!-- 5 detectors -->
 <section class="slide" data-sec="Detectors">
-  <div class="rail"><span class="n">05</span><span class="sec">Detectors</span><span class="src">quality/rules.py<br>quality/gx.py<br>quality/ml.py</span></div>
+  <div class="rail"><span class="n">05</span><span class="sec">Detectors</span><span class="src">src/etl_benchmark/quality/</span></div>
   <div class="main">
-    <h2>Six detectors across three families</h2>
+    <div class="eyebrow">Two families now, a third planned</div>
+    <h2>Seven detectors, <em>one contract</em></h2>
     <div class="brule"></div>
     <div class="content">
       <table>
         <thead><tr><th>Detector</th><th>Family</th><th style="text-align:left">Principle</th><th style="text-align:left">Continuous score</th><th style="text-align:left">Main limit</th></tr></thead>
         <tbody>
-          <tr><td>Z-score</td><td>statistical rule</td><td style="text-align:left">flag <code>|z| &gt; 3</code> on any column</td><td style="text-align:left">worst <code>|z|</code> across columns</td><td style="text-align:left">mean and std inflated by the outliers</td></tr>
-          <tr><td>IQR</td><td>statistical rule</td><td style="text-align:left">Tukey fences, <code>k = 1.5</code></td><td style="text-align:left">largest fence exceedance, IQR units</td><td style="text-align:left">any-column rule fires often in high dim</td></tr>
+          <tr><td>Z-score</td><td>statistical rule</td><td style="text-align:left">flag <code>|z| &gt; 3</code> on any column</td><td style="text-align:left">worst <code>|z|</code> across columns</td><td style="text-align:left">mean and std inflated by outliers</td></tr>
+          <tr><td>IQR</td><td>statistical rule</td><td style="text-align:left">Tukey fences, <code>k = 1.5</code></td><td style="text-align:left">largest fence exceedance</td><td style="text-align:left">any-column rule fires often in high dim</td></tr>
           <tr><td>Great Expectations</td><td>declarative rule</td><td style="text-align:left">not-null + range at 0.1 / 99.9 pct</td><td style="text-align:left">fraction of the suite violated</td><td style="text-align:left">only checks what the suite declares</td></tr>
           <tr><td>Isolation Forest</td><td>classical ML</td><td style="text-align:left">isolation depth under random splits</td><td style="text-align:left">PyOD <code>decision_function</code></td><td style="text-align:left">axis-aligned splits, weak on nulls</td></tr>
           <tr><td>Local Outlier Factor</td><td>classical ML</td><td style="text-align:left">local density vs 20 neighbours</td><td style="text-align:left">PyOD <code>decision_function</code></td><td style="text-align:left">scoring cost grows with the scored set</td></tr>
           <tr><td>One-Class SVM</td><td>classical ML</td><td style="text-align:left">RBF boundary around the bulk</td><td style="text-align:left">PyOD <code>decision_function</code></td><td style="text-align:left">quadratic training</td></tr>
+          <tr class="rule"><td>drift</td><td>time-aware</td><td style="text-align:left">recent window mean shift, per-row lean</td><td style="text-align:left"><code>w · lean</code></td><td style="text-align:left">per-row, so diluted drift is invisible</td></tr>
         </tbody>
-        <caption>Classical ML detectors share preparation: numeric columns only, median imputation, standardisation. Flag threshold from contamination 0.10.</caption>
+        <caption>Classical ML detectors are wrapped from PyOD. Flag threshold from the train-set prevalence. Deep learning (Autoencoder, LSTM-AE) is M2.</caption>
       </table>
-      <p class="sm">All six subclass one <code>Detector</code> ABC. <code>predict()</code> is the
-      boolean decision used for precision, recall and F1; <code>score()</code> is the graded
-      value used for ROC-AUC and PR-AUC. Deep learning (Autoencoder, LSTM-Autoencoder) is
-      planned for M2 behind the same interface, with reconstruction error as the score.</p>
     </div>
-    <div class="foot"><span>python -m etl_benchmark --detector &lt;name&gt;</span><span>zscore · iqr · great_expectations · isolation_forest · lof · ocsvm</span></div>
+    <div class="foot"><span>zscore · iqr · great_expectations · isolation_forest · lof · ocsvm · drift</span><span>drift is opt-in, synthetic only</span></div>
   </div>
 </section>
 
-<!-- 6 - datasets -->
+<!-- 6 datasets -->
 <section class="slide" data-sec="Datasets">
-  <div class="rail"><span class="n">06</span><span class="sec">Datasets</span><span class="src">datasets.py<br>data/README.md</span></div>
+  <div class="rail"><span class="n">06</span><span class="sec">Datasets</span><span class="src">src/etl_benchmark/datasets.py<br>data/README.md</span></div>
   <div class="main">
-    <h2>Three datasets, one held-out protocol</h2>
+    <div class="eyebrow">Four datasets, one protocol</div>
+    <h2>Three real settings <em>bracket the method</em></h2>
     <div class="brule"></div>
-    <div class="content grid2">
+    <div class="content split">
       <div class="stack">
         <table class="num">
           <thead><tr><th>Dataset</th><th>Rows</th><th>Feat.</th><th>Anom.</th><th style="text-align:left">Role</th></tr></thead>
           <tbody>
-            <tr><td>Credit Card Fraud</td><td>283,726</td><td>30</td><td>0.17%</td><td style="text-align:left">real, heavy imbalance</td></tr>
+            <tr><td>Credit Card Fraud</td><td>283,726</td><td>30</td><td>0.17%</td><td style="text-align:left">rare, but a mixed-defect label</td></tr>
+            <tr><td>Cardio</td><td>1,831</td><td>21</td><td>9.6%</td><td style="text-align:left">rare and outlying, the fitting regime</td></tr>
+            <tr><td>Water Quality</td><td>3,276</td><td>9</td><td>61%</td><td style="text-align:left">target class is common, wrong regime</td></tr>
             <tr><td>Synthetic per-type</td><td>12,360</td><td>9</td><td>17.5%</td><td style="text-align:left">controlled, 6 labelled types</td></tr>
-            <tr><td>Water Quality</td><td>3,276</td><td>9</td><td>61%</td><td style="text-align:left">real, target class is common</td></tr>
           </tbody>
         </table>
       </div>
       <div class="stack">
         <p><b>Protocol.</b> Stratified 70 / 15 / 15 split, fit on train, every number
-        reported on the held-out test set. Repeated over 5 seeds, mean ± std.</p>
+        reported on the held-out test set. Five seeds, mean ± std.</p>
         <p>The ML contamination is read from the train-set prevalence, not fixed at 10%.
-        This one change moves Isolation Forest's fraud precision from 0.01 to 0.20.</p>
-        <p class="sm">Water Quality has real missing values and a common target class,
-        so it tests the detectors outside the regime they are built for.</p>
+        That one change moves Isolation Forest's fraud precision from 0.01 to 0.20.</p>
+        <p class="sm">LOF and One-Class SVM run everywhere except Credit Card Fraud, where
+        neither scales to 284k rows in the pipeline.</p>
       </div>
     </div>
     <div class="foot"><span>config.SPLIT_RATIOS, config.BENCHMARK_SEEDS</span><span>data/*.csv gitignored</span></div>
   </div>
 </section>
 
-<!-- 7 - synthetic construction detail -->
+<!-- 7 construction -->
 <section class="slide" data-sec="Construction">
-  <div class="rail"><span class="n">07</span><span class="sec">Construction</span><span class="src">synthetic.py</span></div>
+  <div class="rail"><span class="n">07</span><span class="sec">Construction</span><span class="src">src/etl_benchmark/synthetic.py</span></div>
   <div class="main">
-    <h2>How each anomaly type is injected</h2>
+    <div class="eyebrow">How each anomaly type is injected</div>
+    <h2>Magnitudes are a <em>swept parameter</em>, not a fixed choice</h2>
     <div class="brule"></div>
-    <div class="content grid2">
-      <table class="defs">
-        <tr><td>missing&nbsp;value</td><td>1&ndash;2 of {income, balance, avg amount, tenure, n&nbsp;txn, email, country} &rarr; null</td></tr>
-        <tr><td>duplicate</td><td>exact copy of a sampled clean row, appended (id included)</td></tr>
-        <tr><td>univariate</td><td>one numeric column &times; U(15, 45)</td></tr>
-        <tr><td>multivariate</td><td>age &isin; [18,22] with income and balance at the 97th percentile; or n&nbsp;txn at p97 with avg amount at p3</td></tr>
-        <tr><td>temporal&nbsp;drift</td><td>signup in the last 80 days; income &times;1.55, balance &times;1.6, avg amount &times;1.5</td></tr>
-        <tr><td>invalid&nbsp;format</td><td>email &rarr; malformed; age &rarr; {&minus;5, &minus;1, 0, 240, 999}; country &rarr; {ZZ, XX, ??, 1}</td></tr>
-      </table>
+    <div class="content split">
+      <dl class="defs">
+        <dt>missing&nbsp;value</dt><dd>1&ndash;2 of {income, balance, avg amount, tenure, n txn, email, country} &rarr; null</dd>
+        <dt>duplicate</dt><dd>exact copy of a sampled clean row, id included</dd>
+        <dt>univariate</dt><dd>one numeric column &times; U(15, 45) &times; severity</dd>
+        <dt>multivariate</dt><dd>marginals at the (1 &minus; 0.03/severity) percentile of the clean data</dd>
+        <dt>temporal&nbsp;drift</dt><dd>signup in the last 80 days; income &times; (1 + 0.55·severity), similar for balance and amount</dd>
+        <dt>invalid&nbsp;format</dt><dd>email &rarr; malformed; age &rarr; impossible; country &rarr; out of domain</dd>
+      </dl>
       <div class="stack">
-        <p><b>Base schema.</b> customer_id, age, annual_income, account_balance,
-        n_transactions_30d, avg_transaction_amount, tenure_days, signup_date, email, country.</p>
-        <p>Five types replace clean rows so the total stays fixed; duplicates are appended,
-        giving ~1.03&times; the requested row count.</p>
-        <p class="sm">The magnitudes are deliberate design choices and a stated threat to
-        validity. Drift is the subtle one on purpose: the shifted values still fall inside
-        the global range.</p>
+        <p><b>severity = 1.0</b> is the reference dataset. Missing values, duplicates and
+        invalid formats have no magnitude to scale.</p>
+        <p>The severity sweep (slide 15) turns "we picked the magnitudes" into a curve and
+        shows the per-type ranking is stable.</p>
+        <p class="sm">Five types replace clean rows; duplicates are appended.</p>
       </div>
     </div>
-    <div class="foot"><span>ANOMALY_TYPES, FEATURE_COLUMNS</span><span>seed-reproducible, tested in test_synthetic.py</span></div>
+    <div class="foot"><span>ANOMALY_TYPES, FEATURE_COLUMNS</span><span>seed-reproducible, tested</span></div>
   </div>
 </section>
 
-<!-- 8 - results: credit card fraud -->
+<!-- 8 transition -->
+<section class="slide solo" data-sec="Pivot">
+  <div style="display:flex;flex-direction:column;height:100%">
+    <div class="eyebrow">The pivot</div>
+    <div class="brule" style="margin:6px 0 0"></div>
+    <div style="flex:1;display:flex;align-items:center">
+      <blockquote>Aggregate metrics say the detector families are interchangeable.<br><em>Per anomaly type, they are not.</em></blockquote>
+    </div>
+    <div class="metaline" style="border-top:1px solid var(--line);padding-top:14px">
+      F1 spans 0.31 to 0.51 on the synthetic set &nbsp;·&nbsp; the per-type competences barely overlap
+    </div>
+  </div>
+</section>
+
+<!-- 9 results: fraud -->
 <section class="slide" data-sec="Results 1">
-  <div class="rail"><span class="n">08</span><span class="sec">Results 1</span><span class="src">run_benchmark.py</span></div>
+  <div class="rail"><span class="n">09</span><span class="sec">Results · fraud</span><span class="src">experiments/run_benchmark.py</span></div>
   <div class="main">
-    <h2>Real fraud data: the operating point decides the outcome</h2>
+    <div class="eyebrow">Real fraud data</div>
+    <h2>The <em>operating point</em> decides the outcome</h2>
     <div class="brule"></div>
-    <div class="content grid2">
+    <div class="content split">
       <div class="stack">
         <table class="num">
           <thead><tr><th>Detector</th><th>Prec</th><th>Rec</th><th>F1</th><th>ROC</th><th>PR</th><th>Flag%</th><th>Time</th></tr></thead>
@@ -381,7 +413,7 @@
             <tr><td>Great Expectations</td><td>0.037</td><td>0.676</td><td>0.070</td><td>0.830</td><td class="hi">0.182</td><td>3.1</td><td>1.37s</td></tr>
             <tr><td>Isolation Forest</td><td class="hi">0.202</td><td>0.206</td><td class="hi">0.203</td><td class="hi">0.934</td><td>0.120</td><td class="hi">0.2</td><td>1.78s</td></tr>
           </tbody>
-          <caption>Mean over 5 seeds, 15% held-out test split. std &le; 0.05 except where noted.</caption>
+          <caption>Mean over 5 seeds, 15% held-out test split.</caption>
         </table>
         <table class="num">
           <thead><tr><th>Isolation Forest, by contamination</th><th>Prec</th><th>Rec</th><th>Flag%</th></tr></thead>
@@ -392,29 +424,59 @@
         </table>
       </div>
       <div class="stack">
-        <p>The statistical rules recover most frauds at a precision below 0.04: a fixed
+        <p>The statistical rules recover most frauds at precision below 0.04: a fixed
         per-column rule cannot separate 0.17% positives from the tails of normal traffic.</p>
-        <p><b>Isolation Forest changes once its contamination matches the prevalence.</b>
-        It flags only 0.17% of rows and reaches a precision of <b>0.20</b>, the first
-        usable operating point in the table, though recall drops to 0.21 and both are
-        seed-sensitive (F1 = 0.20 ± 0.07).</p>
-        <p>Great Expectations still leads PR-AUC (0.182 ± 0.046) and is the slowest linear
-        method.</p>
-        <p class="sm">LOF and One-Class SVM are absent: neither scales to 284k rows in the
-        pipeline, which is itself a pipeline-integration finding.</p>
+        <p><b>Isolation Forest changes</b> once its contamination matches the prevalence:
+        precision <b>0.20</b>, the first usable operating point, at recall 0.21 and with
+        real seed variance (F1 = 0.20 ± 0.07).</p>
+        <p class="sm">Great Expectations leads PR-AUC (0.182 ± 0.046). LOF and One-Class SVM
+        do not scale to 284k rows here.</p>
       </div>
     </div>
     <div class="foot"><span>make benchmark</span><span>metric that matters here: PR-AUC</span></div>
   </div>
 </section>
 
-<!-- 9 - results: synthetic aggregate -->
+<!-- 10 results: cardio -->
 <section class="slide" data-sec="Results 2">
-  <div class="rail"><span class="n">09</span><span class="sec">Results 2</span><span class="src">run_synthetic_benchmark.py</span></div>
+  <div class="rail"><span class="n">10</span><span class="sec">Results · cardio</span><span class="src">experiments/run_benchmark.py<br>--dataset cardio</span></div>
   <div class="main">
-    <h2>Synthetic data: aggregate metrics make the families look interchangeable</h2>
+    <div class="eyebrow">Genuinely imbalanced real data</div>
+    <h2>When anomalies are <em>rare and outlying</em>, the learned detectors work</h2>
     <div class="brule"></div>
-    <div class="content grid2">
+    <div class="content split">
+      <table class="num">
+        <thead><tr><th>Detector</th><th>Prec</th><th>Rec</th><th>F1</th><th>ROC</th><th>PR</th><th>Flag%</th></tr></thead>
+        <tbody>
+          <tr><td>Z-score</td><td>0.49</td><td class="hi">0.82</td><td>0.61</td><td>0.93</td><td>0.61</td><td>16.6</td></tr>
+          <tr><td>IQR</td><td>0.21</td><td>0.90</td><td>0.34</td><td>0.78</td><td>0.30</td><td>43.4</td></tr>
+          <tr><td>Great Expectations</td><td>0.51</td><td>0.21</td><td>0.29</td><td>0.59</td><td>0.19</td><td>4.6</td></tr>
+          <tr><td>Isolation Forest</td><td class="hi">0.64</td><td>0.62</td><td class="hi">0.62</td><td class="hi">0.95</td><td class="hi">0.70</td><td>9.9</td></tr>
+          <tr><td>LOF</td><td>0.25</td><td>0.27</td><td>0.26</td><td>0.62</td><td>0.24</td><td>10.7</td></tr>
+          <tr><td>One-Class SVM</td><td>0.56</td><td>0.61</td><td>0.58</td><td>0.94</td><td>0.63</td><td>10.7</td></tr>
+        </tbody>
+        <caption>Cardiotocography, 1,831 rows, 9.6% anomalies. Mean over 5 seeds, test split.</caption>
+      </table>
+      <div class="stack">
+        <p>Isolation Forest reaches <b>F1 0.62</b> and <b>PR-AUC 0.70</b>. Z-score also does
+        well: the 21 features are standardized and anomalies stand out on several at once.</p>
+        <p>This is the counterpoint to the other two real datasets: value shows up when the
+        anomalies are genuinely rare outliers, not a 0.17% mixed label or a 61% majority.</p>
+        <p class="sm">Wide seed spread on this small set (ML F1 std up to 0.17).</p>
+      </div>
+    </div>
+    <div class="foot"><span>make benchmark-cardio</span><span>the regime the detectors are built for</span></div>
+  </div>
+</section>
+
+<!-- 11 results: synthetic aggregate -->
+<section class="slide" data-sec="Results 3">
+  <div class="rail"><span class="n">11</span><span class="sec">Results · synthetic</span><span class="src">experiments/<br>run_synthetic_benchmark.py</span></div>
+  <div class="main">
+    <div class="eyebrow">Synthetic dataset, aggregate</div>
+    <h2>Aggregate metrics make the families <em>look interchangeable</em></h2>
+    <div class="brule"></div>
+    <div class="content split">
       <table class="num">
         <thead><tr><th>Detector</th><th>Prec</th><th>Rec</th><th>F1</th><th>ROC</th><th>PR</th><th>Time</th></tr></thead>
         <tbody>
@@ -427,59 +489,56 @@
           <tr><td>Local Outlier Factor</td><td>0.380</td><td>0.390</td><td>0.385</td><td>0.646</td><td>0.437</td><td>0.14s</td></tr>
           <tr><td>One-Class SVM</td><td>0.488</td><td>0.478</td><td>0.483</td><td>0.729</td><td>0.531</td><td>2.61s</td></tr>
         </tbody>
-        <caption>Mean over 5 seeds, 15% test split. 12,360 rows, 17.5% anomalous.</caption>
+        <caption>Mean over 5 seeds, test split. 12,360 rows, 17.5% anomalous.</caption>
       </table>
       <div class="stack">
-        <p>F1 spans <b>0.31 to 0.51</b> and PR-AUC <b>0.33 to 0.56</b>. Isolation Forest now
-        has the best F1; no family is clearly ahead overall.</p>
+        <p>F1 spans <b>0.31 to 0.51</b>, PR-AUC <b>0.33 to 0.56</b>. Isolation Forest has
+        the best F1; no family is clearly ahead.</p>
         <p>Z-score keeps a perfect precision by firing only on the most extreme rows.
-        One-Class SVM matches Isolation Forest on quality at about <b>16&times;</b> the
-        latency.</p>
-        <p>The rule-based methods win ROC against PR here, the imbalance trap in miniature
-        even at 17.5% prevalence.</p>
-        <p class="sm">Read alone this table says the detector choice barely matters. The
-        per-type view on the next two slides shows the opposite.</p>
+        One-Class SVM matches Isolation Forest at about <b>16&times;</b> the latency.</p>
+        <p class="sm">The per-type view on the next two slides shows the opposite.</p>
       </div>
     </div>
     <div class="foot"><span>make heatmap</span><span>5 seeds, mean ± std</span></div>
   </div>
 </section>
 
-<!-- 10 - the heatmap -->
+<!-- 12 heatmap -->
 <section class="slide" data-sec="Results 3">
-  <div class="rail"><span class="n">10</span><span class="sec">Results 3</span><span class="src">paper/figures/<br>heatmap_synthetic.png</span></div>
+  <div class="rail"><span class="n">12</span><span class="sec">Results · heatmap</span><span class="src">paper/figures/<br>heatmap_synthetic.png</span></div>
   <div class="main">
-    <h2>Per anomaly type, each method has a narrow competence</h2>
+    <div class="eyebrow">Synthetic dataset, per type &mdash; the contribution</div>
+    <h2>Each method has a <em>narrow competence</em></h2>
     <div class="brule"></div>
     <figure class="content">
-      <img src="../paper/figures/heatmap_synthetic.png" alt="detection rate by anomaly type">
+      <img src="../paper/figures/heatmap_synthetic.png" alt="mean detection rate by anomaly type">
       <figcaption>
-        <span class="k">what the figure shows</span>
+        <span class="k">what it shows</span>
         Mean recall over 5 seeds of each method on each injected type. Darker is higher.
         <span class="k">reading it</span>
-        Z-score owns univariate outliers and nothing else. Great Expectations owns missing
-        values (recall 1.00, precision 0.90). Deduplication owns exact duplicates.
-        Isolation Forest (0.91) and One-Class SVM (0.84) are the only methods that catch
-        multivariate outliers, at about 0.24 precision. Temporal drift is the weakest
-        column for everyone, best 0.49.
+        Z-score owns univariate outliers. Great Expectations owns missing values (recall
+        1.00, precision 0.90). Deduplication owns exact duplicates. Isolation Forest (0.91)
+        and One-Class SVM (0.84) are the only methods that catch multivariate outliers, at
+        about 0.24 precision. Temporal drift is the weakest column for everyone.
         <span class="k">why it matters</span>
         The competences barely overlap. Broad coverage needs several families, not the
         single best one on aggregate.
       </figcaption>
     </figure>
-    <div class="foot"><span>transform_dedup = the transform-stage rule, shown for reference</span><span>central figure of the paper</span></div>
+    <div class="foot"><span>transform_dedup and drift shown for reference</span><span>central figure of the paper</span></div>
   </div>
 </section>
 
-<!-- 11 - per-type numbers -->
+<!-- 13 per-type numbers -->
 <section class="slide" data-sec="Results 3">
-  <div class="rail"><span class="n">11</span><span class="sec">Results 3</span><span class="src">synthetic_heatmap.csv</span></div>
+  <div class="rail"><span class="n">13</span><span class="sec">Results · per type</span><span class="src">experiments/results/<br>synthetic_recall / _precision</span></div>
   <div class="main">
-    <h2>Recall and precision, per type</h2>
+    <div class="eyebrow">Recall and precision, per type</div>
+    <h2>Detection rate alone <em>can be gamed</em></h2>
     <div class="brule"></div>
-    <div class="content grid2 even">
+    <div class="content split even">
       <div>
-        <p class="sm" style="margin-bottom:6px">recall (detection rate)</p>
+        <p class="sm" style="margin-bottom:5px">recall (detection rate)</p>
         <table class="num">
           <thead><tr><th>Method</th><th>miss</th><th>dup</th><th>uni</th><th>mul</th><th>drift</th><th>fmt</th></tr></thead>
           <tbody>
@@ -489,12 +548,13 @@
             <tr><td>Isolation Forest</td><td>0.09</td><td>0.11</td><td class="hi">0.99</td><td class="hi">0.91</td><td>0.33</td><td>0.59</td></tr>
             <tr><td>LOF</td><td>0.26</td><td>0.12</td><td>0.65</td><td>0.16</td><td class="hi">0.49</td><td>0.66</td></tr>
             <tr><td>One-Class SVM</td><td>0.08</td><td>0.12</td><td class="hi">0.99</td><td>0.84</td><td>0.34</td><td>0.50</td></tr>
+            <tr><td>drift</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td></tr>
             <tr><td>transform dedup</td><td>0.00</td><td class="hi">1.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td></tr>
           </tbody>
         </table>
       </div>
       <div>
-        <p class="sm" style="margin-bottom:6px">precision (clean rows as the only negatives)</p>
+        <p class="sm" style="margin-bottom:5px">precision (clean rows as the only negatives)</p>
         <table class="num">
           <thead><tr><th>Method</th><th>miss</th><th>dup</th><th>uni</th><th>mul</th><th>drift</th><th>fmt</th></tr></thead>
           <tbody>
@@ -504,24 +564,75 @@
             <tr><td>Isolation Forest</td><td>0.03</td><td>0.04</td><td>0.26</td><td>0.24</td><td>0.10</td><td>0.17</td></tr>
             <tr><td>LOF</td><td>0.06</td><td>0.03</td><td>0.15</td><td>0.04</td><td>0.11</td><td>0.15</td></tr>
             <tr><td>One-Class SVM</td><td>0.03</td><td>0.04</td><td>0.25</td><td>0.22</td><td>0.10</td><td>0.14</td></tr>
+            <tr><td>drift</td><td>&ndash;</td><td>&ndash;</td><td>&ndash;</td><td>&ndash;</td><td>&ndash;</td><td>&ndash;</td></tr>
             <tr><td>transform dedup</td><td>&ndash;</td><td>0.52</td><td>&ndash;</td><td>&ndash;</td><td>&ndash;</td><td>&ndash;</td></tr>
           </tbody>
         </table>
       </div>
-      <p class="sm" style="grid-column:1/-1;margin-top:4px">Recall alone can be gamed by
-      flagging widely. Isolation Forest catches 91% of multivariate outliers but at 0.24
-      precision: a wide net that also pulls in clean rows. Z-score fires only when it is
-      certain, so its precision is 1.00 on the two columns it covers.</p>
+      <p class="sm" style="grid-column:1/-1;margin-top:4px">Isolation Forest catches 91% of
+      multivariate outliers at only 0.24 precision: a wide net that also pulls in clean
+      rows. Z-score fires only when it is certain, so its precision is 1.00 on the two
+      columns it covers.</p>
     </div>
     <div class="foot"><span>synthetic_recall / synthetic_precision CSVs</span><span>5 seeds, mean</span></div>
   </div>
 </section>
 
-<!-- 12 - decision matrix -->
-<section class="slide" data-sec="Reading">
-  <div class="rail"><span class="n">12</span><span class="sec">Reading</span><span class="src">paper §V</span></div>
+<!-- 14 pr curves -->
+<section class="slide" data-sec="Results 4">
+  <div class="rail"><span class="n">14</span><span class="sec">Results · curves</span><span class="src">experiments/run_curves.py<br>paper/figures/pr_curves.png</span></div>
   <div class="main">
-    <h2>The practical output: anomaly type to method</h2>
+    <div class="eyebrow">Precision-recall curves and the operating point</div>
+    <h2>One threshold hides <em>the whole trade-off</em></h2>
+    <div class="brule"></div>
+    <figure class="content">
+      <img src="../paper/figures/pr_curves.png" alt="precision-recall curves per dataset">
+      <figcaption>
+        <span class="k">reading it</span>
+        On Cardio the Isolation Forest and One-Class SVM curves stay high (AP 0.80, 0.76).
+        On Water Quality every curve hugs the 0.61 base-rate line. On Credit Card Fraud
+        Great Expectations and Isolation Forest dominate but neither clears precision 0.4
+        except at negligible recall.
+        <span class="k">contamination sweep, Isolation Forest</span>
+        Fraud: precision 0.37 &rarr; 0.008 as recall goes 0.23 &rarr; 0.92. Cardio:
+        precision 1.00 at recall 0.04, or recall 0.93 at precision 0.46. Same estimator,
+        only the threshold moves. Reading the prevalence lands near the knee where one
+        exists.
+      </figcaption>
+    </figure>
+    <div class="foot"><span>make curves</span><span>reading prevalence lands near the knee where one exists</span></div>
+  </div>
+</section>
+
+<!-- 15 severity -->
+<section class="slide" data-sec="Results 5">
+  <div class="rail"><span class="n">15</span><span class="sec">Results · severity</span><span class="src">experiments/run_severity.py<br>paper/figures/severity_curves.png</span></div>
+  <div class="main">
+    <div class="eyebrow">Detection rate versus injection severity</div>
+    <h2>The per-type ranking is <em>stable</em> as the magnitudes scale</h2>
+    <div class="brule"></div>
+    <div class="content wide-fig">
+      <div class="imgwrap"><img src="../paper/figures/severity_curves.png" alt="per-type recall against injection severity"></div>
+      <div class="split even" style="align-items:start">
+        <p class="sm">Univariate outliers are saturated already at severity 0.5.
+        Multivariate outliers show a threshold: Isolation Forest and One-Class SVM climb
+        to 1.0; IQR jumps once the injected percentile crosses its fence.</p>
+        <p class="sm">Temporal drift climbs roughly linearly for the distributional
+        detectors, from ≤ 0.3 at severity 1.0 to 0.6&ndash;0.85 at severity 3. The
+        reference drift is simply below every method's floor, not a property of the
+        methods. The same families lead the same columns at every severity.</p>
+      </div>
+    </div>
+    <div class="foot"><span>make severity</span><span>answers the "we picked the magnitudes" threat</span></div>
+  </div>
+</section>
+
+<!-- 16 decision matrix -->
+<section class="slide" data-sec="Reading">
+  <div class="rail"><span class="n">16</span><span class="sec">Reading</span><span class="src">paper, discussion</span></div>
+  <div class="main">
+    <div class="eyebrow">The practical output</div>
+    <h2>Anomaly type <em>to method</em></h2>
     <div class="brule"></div>
     <div class="content">
       <table>
@@ -531,25 +642,26 @@
           <tr><td style="text-align:left">exact duplicate</td><td style="text-align:left">transform dedup stage</td><td class="num">1.00</td><td style="text-align:left">row equality, not a detector's job</td></tr>
           <tr><td style="text-align:left">univariate outlier</td><td style="text-align:left">any statistical rule</td><td class="num">0.92&ndash;0.99</td><td style="text-align:left">single-column band is enough</td></tr>
           <tr><td style="text-align:left">multivariate outlier</td><td style="text-align:left">Isolation Forest</td><td class="num">0.91</td><td style="text-align:left">only the joint models see it (precision 0.24)</td></tr>
-          <tr><td style="text-align:left">temporal drift</td><td style="text-align:left" class="muted">none yet</td><td class="num muted">0.49</td><td style="text-align:left">values stay in range, no detector uses the timestamp</td></tr>
+          <tr><td style="text-align:left">temporal drift</td><td style="text-align:left" class="muted">windowed monitor</td><td class="num muted">&le;0.49</td><td style="text-align:left">sub-threshold per row; needs a stage, not a detector</td></tr>
           <tr><td style="text-align:left">invalid format</td><td style="text-align:left">IQR, partially</td><td class="num">1.00 / none</td><td style="text-align:left">numeric part caught, string format missed</td></tr>
         </tbody>
       </table>
-      <p class="sm">Two of six types are not a detector problem at all: duplicates belong to
-      the transform stage, drift needs a time-aware check. That itself is a finding a
-      single aggregate ranking would never surface.</p>
+      <p class="sm">Two of six types are not a per-row detector problem at all: duplicates
+      belong to the transform stage, drift to a windowed monitor. That itself is a finding
+      a single aggregate ranking would never surface.</p>
     </div>
-    <div class="foot"><span>Discussion, paper section V</span><span>rules and ML are complementary, not competing</span></div>
+    <div class="foot"><span>paper, section V</span><span>rules and ML are complementary, not competing</span></div>
   </div>
 </section>
 
-<!-- 13 - cost & scale -->
+<!-- 17 cost -->
 <section class="slide" data-sec="Cost">
-  <div class="rail"><span class="n">13</span><span class="sec">Cost</span><span class="src">DetectionResult<br>.detect_s</span></div>
+  <div class="rail"><span class="n">17</span><span class="sec">Cost</span><span class="src">DetectionResult.detect_s</span></div>
   <div class="main">
-    <h2>Latency and scaling constrain the shortlist</h2>
+    <div class="eyebrow">Operational cost</div>
+    <h2>Latency and scaling <em>constrain the shortlist</em></h2>
     <div class="brule"></div>
-    <div class="content grid2">
+    <div class="content split">
       <table class="num">
         <thead><tr><th>Method</th><th>Fraud test</th><th>Synth. test</th><th style="text-align:left">Scaling</th></tr></thead>
         <tbody>
@@ -560,126 +672,121 @@
           <tr><td>Local Outlier Factor</td><td class="muted">n/a</td><td>0.14s</td><td style="text-align:left">superlinear in the scored set</td></tr>
           <tr><td>One-Class SVM</td><td class="muted">n/a</td><td>2.61s</td><td style="text-align:left">quadratic training</td></tr>
         </tbody>
-        <caption>Detect time on the 15% test split. On the full fraud dataset GX takes ~13s.</caption>
+        <caption>Detect time on the 15% test split. GX takes ~13s on the full fraud dataset.</caption>
       </table>
       <div class="stack">
-        <p>A detector has to sit in the flow, so wall-clock time is part of the comparison,
-        not an afterthought.</p>
+        <p>A detector has to sit in the flow, so wall-clock time is part of the comparison.</p>
         <p><b>Great Expectations</b> is the slowest linear method. <b>One-Class SVM</b> and
-        <b>LOF</b> do not survive contact with the full fraud dataset in the pipeline; they
-        run on the smaller datasets only.</p>
-        <p class="sm">A benchmark that scores algorithms in isolation would not surface this.
-        <code>detect(fit_df=...)</code> lets an expensive model fit on the train slice and
-        still score the test set.</p>
+        <b>LOF</b> do not survive contact with the full fraud dataset in the pipeline.</p>
+        <p class="sm">A benchmark scoring algorithms in isolation would not surface this.</p>
       </div>
     </div>
     <div class="foot"><span>measured on the shared detect() stage</span><span>same path the demo uses</span></div>
   </div>
 </section>
 
-<!-- 14 - findings from the build -->
+<!-- 18 findings -->
 <section class="slide" data-sec="Findings">
-  <div class="rail"><span class="n">14</span><span class="sec">Findings</span><span class="src">docs/TD5/NOTES.md</span></div>
+  <div class="rail"><span class="n">18</span><span class="sec">Findings</span><span class="src">paper, related notes</span></div>
   <div class="main">
-    <h2>What was harder than the plan assumed</h2>
+    <div class="eyebrow">What was harder than the plan assumed</div>
+    <h2>Findings <em>from the build</em></h2>
     <div class="brule"></div>
     <div class="content">
       <ul class="two">
-        <li><span class="k">Great Expectations 1.x is a full API rewrite</span>The planning notes assumed the 0.18 API. Getting per-row failures out of GX 1.18 needs the COMPLETE result format plus an explicit index column. The flow is ephemeral context, data source, asset, batch, validate. Figured out by running probe scripts against the installed library.</li>
-        <li class="brk"><span class="k">The operating point matters as much as the algorithm</span>Setting Isolation Forest's contamination to the data prevalence instead of a fixed 10% moves its fraud precision from 0.01 to 0.20 and its multivariate-outlier recall from 0.41 to 0.91. The same estimator, one number changed.</li>
-        <li class="brk"><span class="k">One-Class SVM does not scale to pipeline data</span>Training is quadratic and LOF scoring is superlinear in the scored set. Both are impractical at 284k rows, so on fraud only rules and Isolation Forest run; the other two are compared on the smaller datasets.</li>
-        <li class="brk"><span class="k">ML detectors are weak on missing values</span>Imputing before the model removes the signal a not-null rule catches for free: Great Expectations recall 1.00 on that type against 0.08 to 0.26 for the learned models. The clearest evidence that rules and ML are complementary.</li>
-        <li class="brk"><span class="k">IQR is trigger-happy in high dimensions</span>On 30 columns, "flag if any column leaves its fence" fires on 48.6% of Credit Card Fraud rows, which puts its PR-AUC (0.018) barely above the 0.0017 random baseline.</li>
-        <li class="brk"><span class="k">Water Quality is the wrong regime, on purpose</span>Target class 61%, so unsupervised detectors are at chance (ROC 0.45 to 0.51). A useful negative result and a real test of the null handling.</li>
-        <li class="brk"><span class="k">Check the installed version before writing library code</span>Not the version the notes assumed. The Great Expectations 1.x rewrite alone cost most of a session.</li>
+        <li><span class="k">The operating point matters as much as the algorithm</span>Setting Isolation Forest's contamination to the data prevalence instead of a fixed 10% moves its fraud precision from 0.01 to 0.20 and its multivariate-outlier recall from 0.41 to 0.91. The same estimator, one number changed.</li>
+        <li class="brk"><span class="k">Unsupervised detection works in one regime</span>Cardio (rare, outlying): Isolation Forest F1 0.62. Credit Card Fraud (0.17% mixed label): nothing usable. Water Quality (61% majority): everyone at chance. The question is less "rules or ML" than "does this dataset have rare outliers".</li>
+        <li class="brk"><span class="k">Great Expectations 1.x is a full API rewrite</span>The planning notes assumed the 0.18 API. Getting per-row failures out of GX 1.18 needs the COMPLETE result format plus an explicit index column. Figured out by probing the installed library.</li>
+        <li class="brk"><span class="k">One-Class SVM does not scale to pipeline data</span>Quadratic training, and LOF scoring is superlinear in the scored set. On the full fraud dataset only rules and Isolation Forest run.</li>
+        <li class="brk"><span class="k">ML detectors are weak on missing values</span>Imputing before the model removes the signal a not-null rule catches for free: GX recall 1.00 on that type against 0.08 to 0.26 for the learned models.</li>
+        <li class="brk"><span class="k">Drift is not a per-row problem</span>Once diluted by clean recent rows the window mean has moved by about a tenth of a standard deviation. The dedicated detector scores 0 at the reference severity; the severity sweep shows it needs a several-times-larger shift.</li>
       </ul>
     </div>
-    <div class="foot"><span>build notes kept per session in docs/TD5/</span><span>each became a paragraph in the paper</span></div>
+    <div class="foot"><span>build notes kept per session</span><span>each became a paragraph in the paper</span></div>
   </div>
 </section>
 
-<!-- 15 - implemented & tested -->
+<!-- 19 state -->
 <section class="slide" data-sec="State">
-  <div class="rail"><span class="n">15</span><span class="sec">State</span><span class="src">make test<br>make lint</span></div>
+  <div class="rail"><span class="n">19</span><span class="sec">State</span><span class="src">make test &nbsp; make lint<br>.github/workflows/ci.yml</span></div>
   <div class="main">
-    <h2>What is implemented and tested</h2>
+    <div class="eyebrow">Implemented and tested</div>
+    <h2>What the repository <em>holds today</em></h2>
     <div class="brule"></div>
-    <div class="content grid2">
+    <div class="content split">
       <table class="num">
         <thead><tr><th style="text-align:left">Module</th><th>Tests</th><th style="text-align:left">Covers</th></tr></thead>
         <tbody>
-          <tr><td style="text-align:left">quality/rules.py</td><td>9</td><td style="text-align:left">Z-score, IQR: flags, constant col, score, fit guard</td></tr>
-          <tr><td style="text-align:left">quality/gx.py</td><td>4</td><td style="text-align:left">null + range, index, score in [0,1]</td></tr>
-          <tr><td style="text-align:left">quality/ml.py</td><td>16</td><td style="text-align:left">3 detectors: planted outliers, ranking, imputation, guards</td></tr>
-          <tr><td style="text-align:left">split.py</td><td>7</td><td style="text-align:left">ratios, class balance, partition, reproducible</td></tr>
-          <tr><td style="text-align:left">registry.py</td><td>6</td><td style="text-align:left">named instances, contamination flows to ML only</td></tr>
-          <tr><td style="text-align:left">datasets.py</td><td>3</td><td style="text-align:left">specs, feature/label split, Water Quality loads</td></tr>
-          <tr><td style="text-align:left">pipeline.py</td><td>4</td><td style="text-align:left">label excluded, fit-sample, timings</td></tr>
-          <tr><td style="text-align:left">synthetic.py</td><td>10</td><td style="text-align:left">reproducible, all types present, flag/type match</td></tr>
-          <tr><td style="text-align:left">run_synthetic_benchmark</td><td>5</td><td style="text-align:left">split, multi-seed aggregate, per-type precision, figure</td></tr>
+          <tr><td style="text-align:left">quality/rules, gx</td><td>13</td><td style="text-align:left">flags, constant col, score, null + range</td></tr>
+          <tr><td style="text-align:left">quality/ml</td><td>16</td><td style="text-align:left">3 detectors: planted outliers, ranking, imputation</td></tr>
+          <tr><td style="text-align:left">quality/drift</td><td>5</td><td style="text-align:left">window shift, no-time no-op, index</td></tr>
+          <tr><td style="text-align:left">split, registry, datasets</td><td>16</td><td style="text-align:left">ratios, class balance, contamination flow, specs</td></tr>
+          <tr><td style="text-align:left">synthetic</td><td>12</td><td style="text-align:left">reproducible, all types, severity monotone</td></tr>
+          <tr><td style="text-align:left">run_benchmark, run_synthetic_benchmark</td><td>8</td><td style="text-align:left">mean ± std over seeds, per-type precision, figure</td></tr>
+          <tr><td style="text-align:left">pipeline</td><td>4</td><td style="text-align:left">label excluded, fit-sample, timings</td></tr>
         </tbody>
-        <caption>64 tests, ruff clean. conda env, Makefile, versioned paper PDF.</caption>
+        <caption>82 tests, ruff clean, CI on push. conda env, Makefile, versioned paper PDF.</caption>
       </table>
       <div class="stack">
-        <p class="sm" style="font-size:12px">Phase B, then the rigour pass:</p>
-        <ul style="font-size:11.5px">
-          <li style="padding:5px 0"><span class="k" style="margin:0">feat(quality)</span>Isolation Forest, LOF, One-Class SVM; contamination from prevalence</li>
-          <li style="padding:5px 0"><span class="k" style="margin:0">feat(data)</span>synthetic per-type dataset; Water Quality</li>
-          <li style="padding:5px 0"><span class="k" style="margin:0">feat(pipeline)</span>stratified train/val/test split</li>
-          <li style="padding:5px 0"><span class="k" style="margin:0">feat(experiments)</span>multi-seed benchmark, per-type recall + precision, heatmap</li>
-          <li style="padding:5px 0"><span class="k" style="margin:0">docs(paper)</span>protocol, three result tables, discussion</li>
+        <p class="sm" style="font-size:12px">Since the last review:</p>
+        <ul style="font-size:11px">
+          <li style="padding:5px 0"><span class="k" style="margin:0">feat(pipeline)</span>stratified split, prevalence contamination</li>
+          <li style="padding:5px 0"><span class="k" style="margin:0">feat(data)</span>Cardio, Water Quality, severity knob</li>
+          <li style="padding:5px 0"><span class="k" style="margin:0">feat(quality)</span>time-aware drift detector</li>
+          <li style="padding:5px 0"><span class="k" style="margin:0">feat(experiments)</span>multi-seed, per-type precision, PR + severity curves</li>
+          <li style="padding:5px 0"><span class="k" style="margin:0">ci</span>GitHub Actions: ruff + pytest</li>
         </ul>
       </div>
     </div>
-    <div class="foot"><span>github.com/theobigand/etl-anomaly-benchmark</span><span>main, 64 tests green</span></div>
+    <div class="foot"><span>github.com/theobigand/etl-anomaly-benchmark</span><span>main, 82 tests green</span></div>
   </div>
 </section>
 
-<!-- 16 - limitations & next -->
+<!-- 20 limitations -->
 <section class="slide" data-sec="Next">
-  <div class="rail"><span class="n">16</span><span class="sec">Next</span><span class="src">docs/TD5/PLAN.md</span></div>
+  <div class="rail"><span class="n">20</span><span class="sec">Next</span><span class="src">roadmap, plan</span></div>
   <div class="main">
-    <h2>Known limitations and the M2 plan</h2>
+    <div class="eyebrow">Where it stands</div>
+    <h2>Rigour gaps closed, <em>substance left for M2</em></h2>
     <div class="brule"></div>
     <div class="content">
       <table>
         <thead><tr><th style="text-align:left">Item</th><th style="text-align:left">Status</th><th style="text-align:left">Detail</th></tr></thead>
         <tbody>
-          <tr><td style="text-align:left">held-out split</td><td class="terra" style="text-align:left">done</td><td style="text-align:left">stratified 70 / 15 / 15, metrics on test only</td></tr>
-          <tr><td style="text-align:left">variance</td><td class="terra" style="text-align:left">done</td><td style="text-align:left">5 seeds, mean ± std reported</td></tr>
-          <tr><td style="text-align:left">contamination</td><td class="terra" style="text-align:left">done</td><td style="text-align:left">read from the train-set prevalence</td></tr>
-          <tr><td style="text-align:left">per-type precision</td><td class="terra" style="text-align:left">done</td><td style="text-align:left">alongside recall in the heatmap output</td></tr>
-          <tr><td style="text-align:left">second real dataset</td><td style="text-align:left" class="muted">partial</td><td style="text-align:left">Water Quality added, but wrong regime; a rare-class one is still needed</td></tr>
-          <tr><td style="text-align:left">deep learning</td><td style="text-align:left" class="muted">M2</td><td style="text-align:left">Autoencoder, then LSTM-Autoencoder, same interface</td></tr>
-          <tr><td style="text-align:left">temporal drift</td><td style="text-align:left" class="muted">open</td><td style="text-align:left">empty column; needs a detector that uses the timestamp</td></tr>
-          <tr><td style="text-align:left">Related Work section</td><td style="text-align:left" class="muted">M2</td><td style="text-align:left">plus bibliography checks, then final Discussion</td></tr>
+          <tr><td style="text-align:left">held-out split, 5 seeds, mean ± std</td><td><span class="badge done">done</span></td><td style="text-align:left">metrics on the test split only</td></tr>
+          <tr><td style="text-align:left">contamination from prevalence</td><td><span class="badge done">done</span></td><td style="text-align:left">plus a full contamination sweep</td></tr>
+          <tr><td style="text-align:left">per-type precision</td><td><span class="badge done">done</span></td><td style="text-align:left">alongside recall, stable under a severity sweep</td></tr>
+          <tr><td style="text-align:left">imbalanced real dataset</td><td><span class="badge done">done</span></td><td style="text-align:left">Cardio; more would firm up the generalisation claim</td></tr>
+          <tr><td style="text-align:left">CI</td><td><span class="badge done">done</span></td><td style="text-align:left">GitHub Actions, ruff + pytest</td></tr>
+          <tr><td style="text-align:left">deep learning</td><td><span class="badge partial">M2</span></td><td style="text-align:left">Autoencoder, then LSTM-Autoencoder, same interface</td></tr>
+          <tr><td style="text-align:left">temporal drift</td><td><span class="badge open">open</span></td><td style="text-align:left">a windowed monitor, not the per-row detector used here</td></tr>
+          <tr><td style="text-align:left">Related Work section</td><td><span class="badge partial">M2</span></td><td style="text-align:left">plus bibliography checks, then the final Discussion</td></tr>
         </tbody>
       </table>
-      <p class="sm">Four of the rigour gaps from the last review are closed. Deep learning
-      and a genuinely imbalanced second real dataset are the substance left for M2.
-      Defense July 2027.</p>
+      <p class="sm">Every rigour gap from the last review is closed. Deep learning and the
+      write-up are the work left for M2. Defense July 2027.</p>
     </div>
-    <div class="foot"><span>roadmap in docs/TD5/PLAN.md</span><span>phases C to F</span></div>
+    <div class="foot"><span>roadmap, phases C to F</span><span>fallback: demo paper if the M2 schedule slips</span></div>
   </div>
 </section>
 
-<!-- 17 - takeaway -->
+<!-- 21 takeaway -->
 <section class="slide dark solo" data-sec="Takeaway">
   <div style="display:flex;flex-direction:column;height:100%">
-    <div class="metaline">Takeaway</div>
-    <div class="brule" style="margin-top:14px"></div>
+    <div class="eyebrow">Takeaway</div>
+    <div class="brule" style="margin:6px 0 0"></div>
     <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
-      <h1 style="max-width:24ch;font-size:clamp(30px,3.8vw,44px)">Rules and machine learning are complementary by anomaly type.</h1>
-      <p class="lead" style="margin-top:22px;max-width:64ch">
-        The per-type heatmap is what makes that choice actionable, and it is the part
-        existing benchmarks do not provide. The pipeline, the six-type dataset and the
-        per-type benchmark are in place and tested; on aggregate metrics the detector
-        families look interchangeable, per type they are not. Deep learning, a second real
-        dataset, multi-seed runs and a held-out split are the work for M2.
+      <h1 style="max-width:24ch">Rules and machine learning are <em>complementary by anomaly type</em>.</h1>
+      <p class="lede" style="margin-top:22px;max-width:64ch;color:#cfc7b9">
+        The per-type heatmap is what makes that choice actionable. Across three real
+        datasets, unsupervised detection pays off only on Cardio, where the anomalies are
+        genuinely rare outliers. The pipeline, the four datasets, the held-out protocol,
+        the curves and the CI are in place and tested. Deep learning and the write-up are
+        the work for M2.
       </p>
     </div>
-    <div class="metaline" style="border-top:1px solid #403a32;padding-top:14px">
-      github.com/theobigand/etl-anomaly-benchmark &nbsp;/&nbsp; 48 tests &nbsp;/&nbsp; 2 datasets &nbsp;/&nbsp; 6 detectors
+    <div class="metaline" style="border-top:1px solid #3a352d;padding-top:14px;color:#b7afa2">
+      github.com/theobigand/etl-anomaly-benchmark &nbsp;/&nbsp; 82 tests &nbsp;/&nbsp; 4 datasets &nbsp;/&nbsp; 7 detectors
     </div>
   </div>
 </section>

@@ -1,6 +1,8 @@
 CONDA_ENV := etl-benchmark
+# any Chromium-family binary that supports --print-to-pdf (chrome, chromium, chrome-headless-shell)
+CHROME ?= chromium
 
-.PHONY: help env update test lint pipeline benchmark benchmark-water benchmark-cardio synthetic heatmap severity curves run clean
+.PHONY: help env update test lint pipeline benchmark benchmark-water benchmark-cardio synthetic heatmap severity curves slides run clean
 
 help:
 	@echo "Available targets:"
@@ -16,6 +18,7 @@ help:
 	@echo "  make heatmap         Multi-seed method-by-anomaly-type benchmark, render the heatmap"
 	@echo "  make severity        Detection-rate versus injection-severity curves"
 	@echo "  make curves          Precision-recall curves + contamination sweep"
+	@echo "  make slides          Render slides/thesis_progress.pdf from the HTML deck"
 	@echo "  make run        Run everything (pipeline then benchmark)"
 	@echo "  make clean      Remove generated artifacts"
 
@@ -53,6 +56,11 @@ heatmap: synthetic
 
 severity:
 	python experiments/run_severity.py
+
+slides:
+	$(CHROME) --headless --no-pdf-header-footer \
+	  --print-to-pdf=slides/thesis_progress.pdf \
+	  "file://$(CURDIR)/slides/thesis_progress.html"
 
 curves:
 	python experiments/run_curves.py
