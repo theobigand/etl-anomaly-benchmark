@@ -17,9 +17,12 @@ The question it tries to answer: does adding machine learning to an ETL pipeline
 - [x] Synthetic dataset (6 anomaly types), per-type recall + precision, heatmap
 - [x] Evaluation protocol: stratified 70/15/15 split, 5 seeds, mean ± std
 - [x] ML contamination read from the train-set prevalence
-- [x] Three datasets: Credit Card Fraud, synthetic, Water Quality
+- [x] Four datasets: Credit Card Fraud, Cardio (rare anomalies), Water Quality, synthetic
+- [x] Time-aware `drift` detector; injection severity is a tunable multiplier
+- [x] Precision-recall curves, contamination sweep, detection-vs-severity curves
+- [x] CI (GitHub Actions: ruff + pytest)
 - [ ] Autoencoder, LSTM-Autoencoder (M2)
-- [ ] A genuinely imbalanced second real dataset
+- [ ] A windowed drift monitor; more imbalanced real datasets
 
 ## Install
 
@@ -47,14 +50,17 @@ make synthetic   # writes data/synthetic.csv from src/etl_benchmark/synthetic.py
 ## Usage
 
 ```bash
-make pipeline         # ETL demo: run one detector through the pipeline, write sorted CSVs
-make benchmark        # Credit Card Fraud, 5 seeds, stratified split
-make benchmark-water  # Water Quality
-make synthetic        # generate the per-anomaly-type dataset
-make heatmap          # multi-seed per-type benchmark, renders paper/figures/heatmap_synthetic.png
-make test             # pytest
-make lint             # ruff check + format check
-make clean            # remove generated artifacts
+make pipeline          # ETL demo: run one detector through the pipeline
+make benchmark         # Credit Card Fraud, 5 seeds, stratified split
+make benchmark-water   # Water Quality
+make benchmark-cardio  # fetch + benchmark the rare-anomaly Cardio dataset
+make synthetic         # generate the per-anomaly-type dataset
+make heatmap           # multi-seed per-type benchmark -> paper/figures/heatmap_synthetic.png
+make curves            # precision-recall curves + Isolation Forest contamination sweep
+make severity          # detection-rate versus injection-severity curves
+make test              # pytest
+make lint              # ruff check + format check
+make clean             # remove generated artifacts
 ```
 
 The demo runs Z-score by default and accepts any registered detector:
@@ -64,7 +70,8 @@ python -m etl_benchmark --detector iqr
 python -m etl_benchmark --detector isolation_forest
 ```
 
-Registered detectors: `zscore`, `iqr`, `great_expectations`, `isolation_forest`, `lof`, `ocsvm`.
+Registered detectors: `zscore`, `iqr`, `great_expectations`, `isolation_forest`, `lof`,
+`ocsvm`, plus `drift` (time-aware, opt-in, synthetic dataset only).
 
 Every benchmark uses a stratified 70/15/15 split (fit on train, metrics on the held-out
 test set), repeats over the seeds in `config.BENCHMARK_SEEDS`, and reports mean ± std.
@@ -93,6 +100,20 @@ reaches a precision of 0.20 (the first usable operating point), at a recall of 0
 with real seed variance (F1 = 0.20 ± 0.07). LOF and One-Class SVM do not scale to 284k
 rows in the pipeline.
 
+### Cardio (1,831 rows, 9.6% anomalies) — the regime that fits
+
+| Detector | Prec | Rec | F1 | ROC-AUC | PR-AUC | Flag % |
+|---|---|---|---|---|---|---|
+| Z-score | 0.49 | 0.82 | 0.61 | 0.93 | 0.61 | 16.6 |
+| Great Expectations | 0.51 | 0.21 | 0.29 | 0.59 | 0.19 | 4.6 |
+| Isolation Forest | 0.64 | 0.62 | 0.62 | 0.95 | 0.70 | 9.9 |
+| One-Class SVM | 0.56 | 0.61 | 0.58 | 0.94 | 0.63 | 10.7 |
+
+When the anomalies are genuinely rare and distributionally distinct, the unsupervised
+detectors work: Isolation Forest reaches F1 ≈ 0.62 and PR-AUC ≈ 0.70. This is the
+counterpoint to Credit Card Fraud (0.17% mixed-defect label) and Water Quality (61%
+majority target).
+
 ### Synthetic dataset, mean recall by anomaly type
 
 | Method | missing | duplicate | univ. outlier | multiv. outlier | drift | invalid fmt |
@@ -103,17 +124,21 @@ rows in the pipeline.
 | Isolation Forest | 0.09 | 0.11 | 0.99 | 0.91 | 0.33 | 0.59 |
 | LOF | 0.26 | 0.12 | 0.65 | 0.16 | 0.49 | 0.66 |
 | One-Class SVM | 0.08 | 0.12 | 0.99 | 0.84 | 0.34 | 0.50 |
+| drift | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
 | transform dedup | 0.00 | 1.00 | 0.00 | 0.00 | 0.00 | 0.00 |
 
 Per-type precision (clean rows as the only negatives) is also reported: Z-score has
 precision 1.00 on its two columns, Great Expectations 0.90 on missing values, while
-Isolation Forest catches 91% of multivariate outliers at only 0.24 precision.
+Isolation Forest catches 91% of multivariate outliers at only 0.24 precision. The
+`drift` detector scores 0 at the reference severity; `make severity` shows recall on the
+drift column climbing as the injected shift is scaled up (`make curves` draws the
+precision-recall curves and the contamination sweep).
 
 ### Water Quality (3,276 rows, 61% "not potable")
 
-All six detectors run here. Every ROC-AUC is 0.45–0.51 and every PR-AUC sits at the
-0.61 base rate: the target class is common, not rare, so the unsupervised detectors are
-at chance. A useful negative result, and it exercises the pipeline on real missing data.
+Every ROC-AUC is 0.45–0.51 and every PR-AUC sits at the 0.61 base rate: the target class
+is common, not rare, so the unsupervised detectors are at chance. A useful negative
+result, and it exercises the pipeline on real missing data.
 
 ## Layout
 
@@ -135,17 +160,22 @@ etl-anomaly-benchmark/
 │       ├── pipeline.py       # composable stages + detect() + run_pipeline()
 │       ├── split.py          # stratified train/val/test split
 │       ├── registry.py       # detector registry + contamination handling
-│       ├── datasets.py       # real-dataset specs (Credit Card, Water Quality)
-│       ├── synthetic.py      # per-anomaly-type dataset generator
+│       ├── datasets.py       # real-dataset specs (Credit Card, Cardio, Water Quality)
+│       ├── synthetic.py      # per-anomaly-type dataset generator (severity knob)
 │       └── quality/
 │           ├── base.py       # Detector ABC (fit/predict/score)
 │           ├── rules.py      # ZScoreDetector, IQRDetector
 │           ├── gx.py         # GreatExpectationsDetector
-│           └── ml.py         # IsolationForest / LOF / OneClassSVM (PyOD)
+│           ├── ml.py         # IsolationForest / LOF / OneClassSVM (PyOD)
+│           └── drift.py      # TemporalDriftDetector (time-aware)
 ├── experiments/
 │   ├── run_benchmark.py           # real-dataset benchmark (--dataset)
+│   ├── fetch_cardio.py            # download data/cardio.csv
 │   ├── generate_synthetic.py      # write data/synthetic.csv
-│   └── run_synthetic_benchmark.py # multi-seed per-type + heatmap
+│   ├── run_synthetic_benchmark.py # multi-seed per-type + heatmap
+│   ├── run_curves.py              # precision-recall curves + contamination sweep
+│   └── run_severity.py            # detection-vs-severity curves
+├── .github/workflows/ci.yml       # ruff + pytest on push / PR
 ├── slides/                   # thesis progress presentation (HTML)
 ├── tests/                    # pytest
 ├── data/                     # raw datasets (gitignored)
