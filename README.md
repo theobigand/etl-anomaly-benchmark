@@ -11,11 +11,13 @@ The question it tries to answer: does adding machine learning to an ETL pipeline
 - [x] ETL pipeline as composable stages (extract, transform, detect, load)
 - [x] Common `Detector` interface (fit / predict / score, PyOD-compatible)
 - [x] Rule-based detectors: Z-score, IQR, Great Expectations
-- [x] Reproducible benchmark on Credit Card Fraud (metrics + latency)
 - [x] Classical ML detectors: Isolation Forest, LOF, One-Class SVM (via PyOD)
-- [x] Synthetic dataset (6 anomaly types) and the method-by-type heatmap
+- [x] Synthetic dataset (6 anomaly types), per-type recall + precision, heatmap
+- [x] Evaluation protocol: stratified 70/15/15 split, 5 seeds, mean ± std
+- [x] ML contamination read from the train-set prevalence
+- [x] Three datasets: Credit Card Fraud, synthetic, Water Quality
 - [ ] Autoencoder, LSTM-Autoencoder (M2)
-- [ ] Third dataset (UCI Water Quality)
+- [ ] A genuinely imbalanced second real dataset
 
 ## Install
 
@@ -33,7 +35,8 @@ The Credit Card Fraud dataset (~150 MB) is not committed. Download it and drop t
 1. https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud
 2. put `creditcard.csv` in `data/`
 
-The synthetic per-anomaly-type dataset is generated locally (deterministic, not committed):
+The synthetic dataset is generated locally (deterministic, not committed). The Water
+Quality CSV is a small download, also not committed (see `data/README.md`).
 
 ```bash
 make synthetic   # writes data/synthetic.csv from src/etl_benchmark/synthetic.py
@@ -42,14 +45,14 @@ make synthetic   # writes data/synthetic.csv from src/etl_benchmark/synthetic.py
 ## Usage
 
 ```bash
-make pipeline    # ETL demo: run one detector through the pipeline, write the sorted CSVs
-make benchmark   # score every detector on Credit Card Fraud, print and save the metrics
-make synthetic   # generate the per-anomaly-type dataset
-make heatmap     # method-by-anomaly-type benchmark, renders paper/figures/heatmap_synthetic.png
-make run         # pipeline then benchmark
-make test        # pytest
-make lint        # ruff check + format check
-make clean       # remove generated artifacts
+make pipeline         # ETL demo: run one detector through the pipeline, write sorted CSVs
+make benchmark        # Credit Card Fraud, 5 seeds, stratified split
+make benchmark-water  # Water Quality
+make synthetic        # generate the per-anomaly-type dataset
+make heatmap          # multi-seed per-type benchmark, renders paper/figures/heatmap_synthetic.png
+make test             # pytest
+make lint             # ruff check + format check
+make clean            # remove generated artifacts
 ```
 
 The demo runs Z-score by default and accepts any registered detector:
@@ -61,50 +64,54 @@ python -m etl_benchmark --detector isolation_forest
 
 Registered detectors: `zscore`, `iqr`, `great_expectations`, `isolation_forest`, `lof`, `ocsvm`.
 
-The benchmark has a quick mode for iterating (`--limit 20000`), and can fit the
-detectors on a sample while still scoring every row, which keeps the quadratic
-One-Class SVM tractable on the full dataset:
+Every benchmark uses a stratified 70/15/15 split (fit on train, metrics on the held-out
+test set), repeats over the seeds in `config.BENCHMARK_SEEDS`, and reports mean ± std.
+The ML contamination is set to the train-set anomaly prevalence, not a fixed value.
 
 ```bash
-python experiments/run_benchmark.py --fit-sample 20000
+python experiments/run_benchmark.py --dataset water_quality --seeds 42
+python experiments/run_synthetic_benchmark.py --seeds 42 --rows 3000   # quick
 ```
 
 ## Current results
 
-### Credit Card Fraud (full dataset, 283,726 rows after dedup, 0.167% fraud)
+Mean over 5 seeds on the 15% held-out test split.
 
-Latency is the in-pipeline fit+predict+score time. Isolation Forest is fitted on a
-20,000-row sample and scored on every row.
+### Credit Card Fraud (283,726 rows, 0.167% fraud)
 
-| Detector | Prec | Rec | F1 | ROC-AUC | PR-AUC | Flag % | Latency |
+| Detector | Prec | Rec | F1 | ROC-AUC | PR-AUC | Flag % | detect |
 |---|---|---|---|---|---|---|---|
-| Z-score | 0.011 | 0.899 | 0.022 | 0.944 | 0.090 | 13.4 | 0.2 s |
-| IQR | 0.003 | 0.968 | 0.007 | 0.922 | 0.020 | 48.6 | 0.6 s |
-| Great Expectations | 0.039 | 0.710 | 0.075 | 0.848 | 0.206 | 3.0 | 13.2 s |
-| Isolation Forest | 0.014 | 0.882 | 0.028 | 0.949 | 0.157 | 10.4 | 3.2 s |
+| Z-score | 0.011 | 0.870 | 0.021 | 0.926 | 0.078 | 13.4 | 0.03 s |
+| IQR | 0.003 | 0.966 | 0.007 | 0.911 | 0.018 | 48.6 | 0.12 s |
+| Great Expectations | 0.037 | 0.676 | 0.070 | 0.830 | 0.182 | 3.1 | 1.37 s |
+| Isolation Forest | 0.202 | 0.206 | 0.203 | 0.934 | 0.120 | 0.2 | 1.78 s |
 
-LOF (superlinear scoring) and One-Class SVM (quadratic training) do not run at this
-scale in the pipeline, so they are compared with the rest on the synthetic dataset.
-No method reaches a precision you could put in production on a class this imbalanced.
+With contamination set to the prevalence, Isolation Forest flags only 0.17% of rows and
+reaches a precision of 0.20 (the first usable operating point), at a recall of 0.21 and
+with real seed variance (F1 = 0.20 ± 0.07). LOF and One-Class SVM do not scale to 284k
+rows in the pipeline.
 
-### Synthetic dataset, detection rate by anomaly type
-
-Full run: `make heatmap`. Renders `paper/figures/heatmap_synthetic.png`.
+### Synthetic dataset, mean recall by anomaly type
 
 | Method | missing | duplicate | univ. outlier | multiv. outlier | drift | invalid fmt |
 |---|---|---|---|---|---|---|
-| Z-score | 0.00 | 0.00 | 0.91 | 0.00 | 0.00 | 0.21 |
-| IQR | 0.05 | 0.06 | 0.99 | 0.05 | 0.26 | 1.00 |
-| Great Expectations | 1.00 | 0.00 | 0.22 | 0.00 | 0.00 | 0.21 |
-| Isolation Forest | 0.02 | 0.06 | 0.95 | 0.41 | 0.21 | 0.40 |
-| LOF | 0.14 | 0.03 | 0.39 | 0.10 | 0.35 | 0.61 |
-| One-Class SVM | 0.02 | 0.05 | 0.99 | 0.31 | 0.22 | 0.42 |
+| Z-score | 0.00 | 0.00 | 0.92 | 0.00 | 0.00 | 0.17 |
+| IQR | 0.05 | 0.07 | 0.99 | 0.02 | 0.27 | 1.00 |
+| Great Expectations | 1.00 | 0.00 | 0.23 | 0.00 | 0.00 | 0.00 |
+| Isolation Forest | 0.09 | 0.11 | 0.99 | 0.91 | 0.33 | 0.59 |
+| LOF | 0.26 | 0.12 | 0.65 | 0.16 | 0.49 | 0.66 |
+| One-Class SVM | 0.08 | 0.12 | 0.99 | 0.84 | 0.34 | 0.50 |
 | transform dedup | 0.00 | 1.00 | 0.00 | 0.00 | 0.00 | 0.00 |
 
-Aggregate metrics make the families look interchangeable; this view shows each has a
-narrow competence. Missing values go to declarative rules, single-column outliers to
-any statistical rule, implausible combinations to Isolation Forest or One-Class SVM,
-duplicates to the transform stage. Temporal drift is caught well by none of them yet.
+Per-type precision (clean rows as the only negatives) is also reported: Z-score has
+precision 1.00 on its two columns, Great Expectations 0.90 on missing values, while
+Isolation Forest catches 91% of multivariate outliers at only 0.24 precision.
+
+### Water Quality (3,276 rows, 61% "not potable")
+
+All six detectors run here. Every ROC-AUC is 0.45–0.51 and every PR-AUC sits at the
+0.61 base rate: the target class is common, not rare, so the unsupervised detectors are
+at chance. A useful negative result, and it exercises the pipeline on real missing data.
 
 ## Layout
 
@@ -124,7 +131,9 @@ etl-anomaly-benchmark/
 │       ├── transform.py      # transform stage (dedup)
 │       ├── load.py           # load stage (write_csv)
 │       ├── pipeline.py       # composable stages + detect() + run_pipeline()
-│       ├── registry.py       # detector registry (name -> instance)
+│       ├── split.py          # stratified train/val/test split
+│       ├── registry.py       # detector registry + contamination handling
+│       ├── datasets.py       # real-dataset specs (Credit Card, Water Quality)
 │       ├── synthetic.py      # per-anomaly-type dataset generator
 │       └── quality/
 │           ├── base.py       # Detector ABC (fit/predict/score)
@@ -132,9 +141,9 @@ etl-anomaly-benchmark/
 │           ├── gx.py         # GreatExpectationsDetector
 │           └── ml.py         # IsolationForest / LOF / OneClassSVM (PyOD)
 ├── experiments/
-│   ├── run_benchmark.py           # Credit Card Fraud benchmark
+│   ├── run_benchmark.py           # real-dataset benchmark (--dataset)
 │   ├── generate_synthetic.py      # write data/synthetic.csv
-│   └── run_synthetic_benchmark.py # method-by-anomaly-type + heatmap
+│   └── run_synthetic_benchmark.py # multi-seed per-type + heatmap
 ├── slides/                   # thesis progress presentation (HTML)
 ├── tests/                    # pytest
 ├── data/                     # raw datasets (gitignored)
