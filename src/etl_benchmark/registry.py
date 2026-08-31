@@ -14,6 +14,9 @@ from etl_benchmark.quality import (
     Detector,
     GreatExpectationsDetector,
     IQRDetector,
+    IsolationForestDetector,
+    LOFDetector,
+    OneClassSVMDetector,
     ZScoreDetector,
 )
 
@@ -21,6 +24,9 @@ _FACTORIES: dict[str, Callable[[], Detector]] = {
     "zscore": lambda: ZScoreDetector(threshold=config.ZSCORE_THRESHOLD),
     "iqr": lambda: IQRDetector(multiplier=config.IQR_MULTIPLIER),
     "great_expectations": lambda: GreatExpectationsDetector(),
+    "isolation_forest": lambda: IsolationForestDetector(contamination=config.ML_CONTAMINATION),
+    "lof": lambda: LOFDetector(contamination=config.ML_CONTAMINATION),
+    "ocsvm": lambda: OneClassSVMDetector(contamination=config.ML_CONTAMINATION),
 }
 
 DETECTOR_NAMES: list[str] = list(_FACTORIES)

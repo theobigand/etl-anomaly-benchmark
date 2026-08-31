@@ -15,3 +15,8 @@ CREDIT_CARD_CSV: Path = DATA_DIR / "creditcard.csv"
 RANDOM_SEED: int = 42
 ZSCORE_THRESHOLD: float = 3.0
 IQR_MULTIPLIER: float = 1.5
+
+# Classical ML detectors (PyOD). ``contamination`` is the expected share of
+# anomalies; it only sets the flag threshold, not the continuous score used
+# for ROC-AUC / PR-AUC.
+ML_CONTAMINATION: float = 0.1
