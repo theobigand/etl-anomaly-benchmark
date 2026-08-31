@@ -18,6 +18,27 @@ def test_make_synthetic_changes_with_seed():
     assert not a.equals(b)
 
 
+def test_default_severity_is_the_reference_dataset():
+    a = make_synthetic(n_rows=2_000, seed=7)
+    b = make_synthetic(n_rows=2_000, seed=7, severity=1.0)
+
+    pd.testing.assert_frame_equal(a, b)
+
+
+def test_higher_severity_pushes_injections_further():
+    lo = make_synthetic(n_rows=3_000, seed=1, severity=1.0)
+    hi = make_synthetic(n_rows=3_000, seed=1, severity=3.0)
+
+    for t in ("univariate_outlier", "temporal_drift"):
+        lo_mag = lo.loc[lo["anomaly_type"] == t, "annual_income"].abs().mean()
+        hi_mag = hi.loc[hi["anomaly_type"] == t, "annual_income"].abs().mean()
+        assert hi_mag > lo_mag
+    # types without a magnitude are unaffected
+    lo_miss = lo["anomaly_type"].eq("missing_value").sum()
+    hi_miss = hi["anomaly_type"].eq("missing_value").sum()
+    assert lo_miss == hi_miss
+
+
 def test_every_anomaly_type_is_present():
     df = make_synthetic(n_rows=4_000, seed=1)
 

@@ -117,10 +117,12 @@ def _inject_missing_value(block: pd.DataFrame, rng: np.random.Generator) -> pd.D
     return block
 
 
-def _inject_univariate_outlier(block: pd.DataFrame, rng: np.random.Generator) -> pd.DataFrame:
+def _inject_univariate_outlier(
+    block: pd.DataFrame, rng: np.random.Generator, severity: float = 1.0
+) -> pd.DataFrame:
     for pos in range(len(block)):
         col = rng.choice(NUMERIC_FEATURES)
-        factor = rng.uniform(15, 45)
+        factor = rng.uniform(15, 45) * severity
         block.iloc[pos, block.columns.get_loc(col)] = (
             float(block.iloc[pos, block.columns.get_loc(col)]) * factor + factor
         )
@@ -128,12 +130,15 @@ def _inject_univariate_outlier(block: pd.DataFrame, rng: np.random.Generator) ->
 
 
 def _inject_multivariate_outlier(
-    block: pd.DataFrame, rng: np.random.Generator, clean: pd.DataFrame
+    block: pd.DataFrame, rng: np.random.Generator, clean: pd.DataFrame, severity: float = 1.0
 ) -> pd.DataFrame:
-    hi_income = clean["annual_income"].quantile(0.97)
-    hi_balance = clean["account_balance"].quantile(0.97)
-    hi_txn = clean["n_transactions_30d"].quantile(0.97)
-    lo_amount = clean["avg_transaction_amount"].quantile(0.03)
+    # more severe -> a more extreme percentile of the clean marginals
+    hi_q = min(1.0 - 0.03 / severity, 0.999)
+    lo_q = max(0.03 / severity, 0.001)
+    hi_income = clean["annual_income"].quantile(hi_q)
+    hi_balance = clean["account_balance"].quantile(hi_q)
+    hi_txn = clean["n_transactions_30d"].quantile(hi_q)
+    lo_amount = clean["avg_transaction_amount"].quantile(lo_q)
     for pos in range(len(block)):
         if pos % 2 == 0:
             # young but top-percentile wealth: each value seen in clean data
@@ -147,15 +152,18 @@ def _inject_multivariate_outlier(
     return block
 
 
-def _inject_temporal_drift(block: pd.DataFrame, rng: np.random.Generator) -> pd.DataFrame:
+def _inject_temporal_drift(
+    block: pd.DataFrame, rng: np.random.Generator, severity: float = 1.0
+) -> pd.DataFrame:
     for pos in range(len(block)):
         recent = _REFERENCE_DATE - pd.Timedelta(days=int(rng.integers(1, 80)))
         block.iloc[pos, block.columns.get_loc("signup_date")] = recent.strftime("%Y-%m-%d")
-        for col, mult in (
+        for col, base in (
             ("annual_income", 1.55),
             ("account_balance", 1.6),
             ("avg_transaction_amount", 1.5),
         ):
+            mult = 1.0 + (base - 1.0) * severity
             block.iloc[pos, block.columns.get_loc(col)] = (
                 float(block.iloc[pos, block.columns.get_loc(col)]) * mult
             )
@@ -177,6 +185,7 @@ def make_synthetic(
     n_rows: int = config.SYNTHETIC_ROWS,
     anomaly_rate: float = config.SYNTHETIC_ANOMALY_RATE,
     seed: int = config.RANDOM_SEED,
+    severity: float = 1.0,
 ) -> pd.DataFrame:
     """Build the labelled synthetic dataset.
 
@@ -184,6 +193,12 @@ def make_synthetic(
     replace clean rows (the total stays ``n_rows``); ``duplicate`` rows
     are appended, so the frame has about ``n_rows * (1 + anomaly_rate)``
     rows in the end.
+
+    ``severity`` scales the magnitude of the injections that have a
+    magnitude (univariate factor, multivariate percentile extremity,
+    temporal-drift multiplier). ``severity=1.0`` is the reference dataset;
+    ``missing_value``, ``duplicate`` and ``invalid_format`` do not depend
+    on it.
     """
     rng = np.random.default_rng(seed)
     Faker.seed(seed)
@@ -200,9 +215,9 @@ def make_synthetic(
     cursor = n_clean
     injectors = {
         "missing_value": lambda b: _inject_missing_value(b, rng),
-        "univariate_outlier": lambda b: _inject_univariate_outlier(b, rng),
-        "multivariate_outlier": lambda b: _inject_multivariate_outlier(b, rng, clean),
-        "temporal_drift": lambda b: _inject_temporal_drift(b, rng),
+        "univariate_outlier": lambda b: _inject_univariate_outlier(b, rng, severity),
+        "multivariate_outlier": lambda b: _inject_multivariate_outlier(b, rng, clean, severity),
+        "temporal_drift": lambda b: _inject_temporal_drift(b, rng, severity),
         "invalid_format": lambda b: _inject_invalid_format(b, rng),
     }
 

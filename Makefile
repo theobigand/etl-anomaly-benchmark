@@ -1,6 +1,6 @@
 CONDA_ENV := etl-benchmark
 
-.PHONY: help env update test lint pipeline benchmark benchmark-water benchmark-cardio synthetic heatmap run clean
+.PHONY: help env update test lint pipeline benchmark benchmark-water benchmark-cardio synthetic heatmap severity run clean
 
 help:
 	@echo "Available targets:"
@@ -14,6 +14,7 @@ help:
 	@echo "  make benchmark-cardio Fetch the Cardio dataset and benchmark on it"
 	@echo "  make synthetic       Generate the per-anomaly-type dataset (data/synthetic.csv)"
 	@echo "  make heatmap         Multi-seed method-by-anomaly-type benchmark, render the heatmap"
+	@echo "  make severity        Detection-rate versus injection-severity curves"
 	@echo "  make run        Run everything (pipeline then benchmark)"
 	@echo "  make clean      Remove generated artifacts"
 
@@ -48,6 +49,9 @@ synthetic:
 
 heatmap: synthetic
 	python experiments/run_synthetic_benchmark.py
+
+severity:
+	python experiments/run_severity.py
 
 run: pipeline benchmark
 
