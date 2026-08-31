@@ -3,6 +3,7 @@ import pytest
 from etl_benchmark import config
 from etl_benchmark.quality import Detector
 from etl_benchmark.registry import (
+    ALL_NAMES,
     DETECTOR_NAMES,
     ML_NAMES,
     RULE_NAMES,
@@ -27,6 +28,13 @@ def test_get_detector_unknown_raises():
 def test_all_detectors_covers_registry():
     assert {d.name for d in all_detectors()} == set(DETECTOR_NAMES)
     assert set(RULE_NAMES) | set(ML_NAMES) == set(DETECTOR_NAMES)
+
+
+def test_drift_is_opt_in_not_in_the_default_sweep():
+    assert "drift" not in DETECTOR_NAMES
+    assert ALL_NAMES[-1] == "drift"
+    assert ALL_NAMES[:-1] == DETECTOR_NAMES
+    assert get_detector("drift").name == "drift"
 
 
 def test_all_detectors_can_select_a_subset():

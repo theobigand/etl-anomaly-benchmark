@@ -1,4 +1,5 @@
 from etl_benchmark.quality.base import Detector
+from etl_benchmark.quality.drift import TemporalDriftDetector
 from etl_benchmark.quality.gx import GreatExpectationsDetector
 from etl_benchmark.quality.ml import (
     IsolationForestDetector,
@@ -15,4 +16,5 @@ __all__ = [
     "IsolationForestDetector",
     "LOFDetector",
     "OneClassSVMDetector",
+    "TemporalDriftDetector",
 ]

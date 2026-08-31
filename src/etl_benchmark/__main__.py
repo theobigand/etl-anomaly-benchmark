@@ -14,14 +14,14 @@ from pathlib import Path
 from etl_benchmark import config
 from etl_benchmark.logging_setup import setup_logging
 from etl_benchmark.pipeline import run_pipeline
-from etl_benchmark.registry import DETECTOR_NAMES, get_detector
+from etl_benchmark.registry import ALL_NAMES, get_detector
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--detector",
-        choices=DETECTOR_NAMES,
+        choices=ALL_NAMES,
         default="zscore",
         help="which detector to run (default: zscore)",
     )
