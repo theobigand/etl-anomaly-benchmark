@@ -42,11 +42,12 @@ the same pipeline path: statistical rules (Z-score, IQR, Great
 Expectations) and classical ML detectors (Isolation Forest, LOF,
 One-Class SVM), with deep learning detectors (Autoencoder,
 LSTM-Autoencoder) planned behind the same interface. We evaluate the
-detectors on the Kaggle Credit Card Fraud dataset and on a controlled
+detectors, over five seeds on a stratified held-out split, on the Kaggle
+Credit Card Fraud dataset, a Water Quality dataset, and a controlled
 synthetic dataset generated with Faker in which six distinct anomaly
 types are injected at controlled rates. Beyond aggregate precision,
-recall, F1, ROC-AUC and PR-AUC, we report a per-anomaly-type detection
-rate that maps each method to the anomaly categories it actually
+recall, F1, ROC-AUC and PR-AUC, we report a per-anomaly-type recall and
+precision that map each method to the anomaly categories it actually
 catches. The aggregate metrics make the families look interchangeable;
 the per-type view shows each has a narrow, largely non-overlapping
 competence, so broad coverage needs several families rather than the
@@ -124,9 +125,10 @@ present:
     code, with deep-learning detectors planned behind the same interface.
     \item \textbf{A head-to-head benchmark} of statistical rules
     (Z-score, IQR, Great Expectations) and classical ML detectors
-    (Isolation Forest, LOF, One-Class SVM) on Credit Card Fraud and on a
-    controlled synthetic dataset, reporting precision, recall, F1,
-    ROC-AUC, PR-AUC, and in-pipeline latency.
+    (Isolation Forest, LOF, One-Class SVM) on three datasets, with a
+    stratified held-out split, five seeds, and the ML operating point
+    read from the data, reporting precision, recall, F1, ROC-AUC, PR-AUC,
+    and in-pipeline latency.
     \item \textbf{A per-anomaly-type analysis.} Using a synthetic
     dataset in which six distinct anomaly categories (missing values,
     duplicates, univariate outliers, multivariate outliers, temporal
@@ -230,9 +232,11 @@ the bulk of the training data. All three receive the same preparation:
 non-numeric columns are dropped, missing cells are median-imputed, and
 every feature is standardized, since LOF and the One-Class SVM are
 distance-based. The PyOD \texttt{decision\_function} provides the
-continuous score; the boolean flag uses a contamination of $0.10$, so
-each model marks its top $10\%$ most anomalous rows. Contamination sets
-only the flag threshold and leaves ROC-AUC and PR-AUC unaffected.
+continuous score; the boolean flag uses a \emph{contamination} equal to
+the anomaly prevalence of the training split (clamped to PyOD's valid
+range), so each model marks about as many rows as the data actually
+contains rather than a fixed share. Contamination sets only the flag
+threshold and leaves ROC-AUC and PR-AUC unaffected.
 
 \subsection{Synthetic per-anomaly-type dataset}
 \label{sec:synthetic}
@@ -251,60 +255,69 @@ balance and income), \emph{temporal drift} (recent-signup rows whose
 income and balance distribution has shifted upward by half), and
 \emph{invalid formats} (malformed e-mail, out-of-domain country code,
 impossible age). Because the category of every injected row is known, we
-report a detection rate per method and per type.
+report, per method and per type, both the detection rate (recall) and the
+precision on a stream made of clean rows plus that one type.
 
-\subsection{Datasets and metrics}
-The real-data results below use the Credit Card Fraud dataset
-(284{,}807 transactions, $30$ numeric features, $0.17\%$ labelled fraud),
-a standard and strongly imbalanced benchmark. Each detector is fitted and
-evaluated on the feature matrix, and its output is scored against the
-ground-truth label.
+\subsection{Datasets}
+We evaluate on three datasets. \emph{Credit Card Fraud} (Kaggle;
+$283{,}726$ transactions after de-duplication, $30$ numeric features,
+$0.17\%$ labelled fraud) is the standard strongly imbalanced benchmark.
+The \emph{synthetic} dataset above ($12{,}360$ rows, $17.5\%$ anomalous)
+carries the per-type labels. \emph{Water Quality} (a mirror of the
+UCI-style water-potability data; $3{,}276$ samples, $9$ numeric features)
+is a third real dataset in the thesis's application domain; here the
+target class (``not potable'') is common rather than rare ($61\%$) and the
+data has genuine missing values, so it probes the detectors outside the
+regime they are designed for.
+
+\subsection{Evaluation protocol}
+\label{sec:protocol}
+Each dataset is split $70/15/15$ (train/validation/test), stratified on
+the label. Detectors are fitted on the train split and every reported
+number is computed on the held-out test split; the validation split is
+reserved for later tuning. The ML contamination is read from the train
+split's prevalence. The whole procedure is repeated over five random
+seeds and we report the mean and standard deviation. LOF and the
+One-Class SVM are run on Water Quality and the synthetic dataset but not
+on Credit Card Fraud, where LOF's superlinear scoring and the One-Class
+SVM's quadratic training do not fit inside the pipeline at $284$k rows.
+
 Because the detectors emit both a threshold decision and a graded score,
-we report threshold metrics (precision, recall, $F_1$) alongside two
-threshold-independent ranking metrics, ROC-AUC and PR-AUC. On a dataset as
-imbalanced as this one PR-AUC is the more informative: the false-positive
-rate underlying ROC-AUC is diluted by the large pool of true negatives and
-stays optimistic, whereas precision reacts directly to false alarms. We
-report both, however, because the appropriate metric depends on each
-dataset's base rate --- PR-AUC's random baseline equals the prevalence and
-is therefore not comparable across datasets, while ROC-AUC's is always
-$0.5$ and is. As further datasets are added we keep both and read the one
-suited to each dataset's balance. We also report the fraction of rows
-flagged and wall-clock time. On the synthetic dataset the same aggregate
-metrics are reported, complemented by the per-anomaly-type detection rate
-of Section~\ref{sec:results-synthetic}. The deep-learning detectors
-(Autoencoder, LSTM-Autoencoder) are the object of the next stage.
+we report threshold metrics (precision, recall, $F_1$) alongside
+ROC-AUC and PR-AUC. On imbalanced data PR-AUC is the more informative
+metric: the false-positive rate underlying ROC-AUC is diluted by the large
+true-negative pool and stays optimistic, whereas precision reacts directly
+to false alarms. We keep both because PR-AUC's random baseline equals the
+prevalence and is not comparable across datasets, while ROC-AUC's is
+always $0.5$ and is. We also report the fraction of rows flagged and the
+in-pipeline latency. The deep-learning detectors (Autoencoder,
+LSTM-Autoencoder) are the object of the next stage.
 
 \section{Experiments and Results}
 \label{sec:experiments}
+All numbers below are the mean over five seeds on the held-out test
+split (Section~\ref{sec:protocol}); standard deviations are $\le 0.05$
+unless the text says otherwise.
 
-\subsection{Real fraud data: rules and Isolation Forest}
-Table~\ref{tab:rules} reports the detectors on Credit Card Fraud. The
-picture is consistent across metrics: every method recovers most frauds
-(recall $0.71$--$0.97$) but at unusable precision ($\leq 0.04$), because
-neither a fixed statistical rule nor an unsupervised model tuned to flag
-$10\%$ of rows can separate a $0.17\%$ positive class from the long tails
-of legitimate traffic. IQR is the most aggressive, flagging almost half
-of all rows, which collapses its PR-AUC. The declarative Great
-Expectations suite is the most selective ($3\%$ of rows) and obtains the
-best PR-AUC; Isolation Forest obtains the best ROC-AUC and improves PR-AUC
-over both statistical rules, at $0.157$, without reaching the declarative
-suite. Measuring detection inside the pipeline also exposes a cost gap:
-the Great Expectations suite is about $60\times$ slower than the
-statistical rules ($13.2$\,s vs $0.2$--$0.6$\,s on the full dataset).
-Local Outlier Factor and the One-Class SVM are omitted from this table:
-LOF scoring is superlinear in the number of rows scored and the One-Class
-SVM has quadratic training, so neither runs at this dataset's scale
-inside the pipeline. They are compared with the other methods on the
-smaller synthetic dataset below, which is itself a pipeline-integration
-finding.
+\subsection{Real fraud data}
+Table~\ref{tab:fraud} reports the detectors on Credit Card Fraud. The
+statistical rules recover most frauds (recall $0.87$--$0.97$) at a
+precision below $0.04$: a fixed per-column rule cannot separate a
+$0.17\%$ positive class from the tails of legitimate traffic. Great
+Expectations is the most selective ($3\%$ of rows) and leads PR-AUC at
+$0.182 \pm 0.046$. Isolation Forest behaves differently now that its
+contamination matches the prevalence: it flags only $0.17\%$ of rows and
+reaches a precision of $0.20$, the first usable operating point in the
+table, but its recall drops to $0.21$ and both are seed-sensitive
+($F_1 = 0.20 \pm 0.07$). It keeps the best ROC-AUC ($0.934$). Great
+Expectations remains the slowest linear method ($1.4$\,s on the test
+split against $0.03$--$0.12$\,s for the statistical rules). LOF and the
+One-Class SVM are absent: neither scales to $284$k rows in the pipeline.
 
 \begin{table}[t]
-\caption{Detectors on Credit Card Fraud (full dataset). Higher is better
-except for flagged rows and time. Time is the in-pipeline
-fit+predict+score latency. Isolation Forest is fitted on a $20{,}000$-row
-sample and scored on all $283{,}726$ rows.}
-\label{tab:rules}
+\caption{Detectors on Credit Card Fraud, mean over five seeds on the
+$15\%$ test split. Higher is better except flagged rows and time.}
+\label{tab:fraud}
 \centering
 \setlength{\tabcolsep}{3pt}
 \footnotesize
@@ -312,29 +325,27 @@ sample and scored on all $283{,}726$ rows.}
 \toprule
 Detector & Prec. & Rec. & $F_1$ & ROC & PR & Flag.\% & Time (s) \\
 \midrule
-Z-score            & 0.011 & 0.899 & 0.022 & 0.944 & 0.090 & 13.4 & \textbf{0.2} \\
-IQR                & 0.003 & \textbf{0.968} & 0.007 & 0.922 & 0.020 & 48.6 & 0.6 \\
-Great Expectations & \textbf{0.039} & 0.710 & \textbf{0.075} & 0.848 & \textbf{0.206} & \textbf{3.0} & 13.2 \\
-Isolation Forest   & 0.014 & 0.882 & 0.028 & \textbf{0.949} & 0.157 & 10.4 & 3.2 \\
+Z-score            & 0.011 & 0.870 & 0.021 & 0.926 & 0.078 & 13.4 & \textbf{0.03} \\
+IQR                & 0.003 & \textbf{0.966} & 0.007 & 0.911 & 0.018 & 48.6 & 0.12 \\
+Great Expectations & 0.037 & 0.676 & \textbf{0.070} & 0.830 & \textbf{0.182} & 3.1 & 1.37 \\
+Isolation Forest   & \textbf{0.202} & 0.206 & \textbf{0.203} & \textbf{0.934} & 0.120 & \textbf{0.2} & 1.78 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \subsection{Synthetic dataset: aggregate metrics}
 Table~\ref{tab:synthetic} reports all six detectors on the synthetic
-dataset ($12{,}360$ rows, $17.5\%$ anomalous). On aggregate metrics the
-three families look interchangeable: F1 ranges only from $0.32$ to $0.48$
-and PR-AUC from $0.36$ to $0.54$, with no family strictly ahead. Z-score
-reaches perfect precision by firing only on the most extreme rows;
-Isolation Forest and the One-Class SVM lead PR-AUC among the learned
-models. The One-Class SVM again pays for it in latency ($9.8$\,s, about
-$20\times$ Isolation Forest). Read on their own, these numbers would
-suggest the choice of detector barely matters. The per-type breakdown
-shows the opposite.
+dataset. Aggregate metrics still compress the families together: $F_1$
+ranges from $0.31$ to $0.51$ and PR-AUC from $0.33$ to $0.56$. Isolation
+Forest now has the best $F_1$ ($0.51$) and Z-score keeps a perfect
+precision by firing only on the most extreme rows. The One-Class SVM
+matches Isolation Forest on quality at about $16\times$ the latency. Read
+alone, these numbers suggest the detector choice barely matters; the
+per-type breakdown shows the opposite.
 
 \begin{table}[t]
-\caption{All detectors on the synthetic dataset ($12{,}360$ rows,
-$17.5\%$ anomalous). Time is the in-pipeline fit+predict+score latency.}
+\caption{All detectors on the synthetic dataset, mean over five seeds on
+the $15\%$ test split. Time is the in-pipeline fit+predict+score latency.}
 \label{tab:synthetic}
 \centering
 \setlength{\tabcolsep}{4pt}
@@ -343,58 +354,92 @@ $17.5\%$ anomalous). Time is the in-pipeline fit+predict+score latency.}
 \toprule
 Detector & Prec. & Rec. & $F_1$ & ROC & PR & Time (s) \\
 \midrule
-Z-score            & \textbf{1.000} & 0.188 & 0.316 & 0.733 & 0.540 & \textbf{0.003} \\
-IQR                & 0.581 & \textbf{0.402} & \textbf{0.475} & 0.677 & 0.451 & 0.005 \\
-Great Expectations & 0.952 & 0.238 & 0.381 & 0.618 & 0.361 & 0.893 \\
-Isolation Forest   & 0.599 & 0.343 & 0.436 & \textbf{0.738} & 0.505 & 0.528 \\
-LOF                & 0.529 & 0.269 & 0.356 & 0.619 & 0.394 & 0.412 \\
-One-Class SVM      & 0.583 & 0.334 & 0.425 & 0.712 & \textbf{0.512} & 9.826 \\
+Z-score            & \textbf{1.000} & 0.182 & 0.308 & \textbf{0.748} & \textbf{0.560} & \textbf{0.002} \\
+IQR                & 0.603 & 0.399 & 0.481 & 0.678 & 0.460 & 0.004 \\
+Great Expectations & 0.920 & 0.205 & 0.335 & 0.601 & 0.332 & 0.29 \\
+Isolation Forest   & 0.515 & \textbf{0.503} & \textbf{0.509} & 0.745 & 0.501 & 0.16 \\
+LOF                & 0.380 & 0.390 & 0.385 & 0.646 & 0.437 & 0.14 \\
+One-Class SVM      & 0.488 & 0.478 & 0.483 & 0.729 & 0.531 & 2.61 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{Synthetic dataset: detection rate by anomaly type}
+\subsection{Synthetic dataset: by anomaly type}
 \label{sec:results-synthetic}
-Fig.~\ref{fig:heatmap} gives the recall of each method on each injected
-anomaly type. The structure that the aggregate table hid is now visible:
+Fig.~\ref{fig:heatmap} gives the mean recall of each method on each
+injected type. The structure the aggregate table hides is now clear:
 every method has a narrow competence.
 \begin{itemize}
     \item \emph{Univariate outliers} are caught by every distributional
-    method (recall $0.91$--$0.99$), and only by those.
+    method (recall $0.92$--$0.99$) and only by those. Z-score's precision
+    on them is $1.00$: it never fires on a clean row.
     \item \emph{Missing values} are caught only by the Great Expectations
-    not-null expectations ($1.00$ against $\leq 0.14$ for every other
-    method), because the statistical rules propagate \texttt{NaN} to a
-    non-flag and the learned models see imputed values.
-    \item \emph{Exact duplicates} are invisible to every detector: a copy
-    of a normal row looks normal. The deduplication rule in the transform
-    stage is the only thing that catches them, which is the argument for
-    keeping that stage.
+    not-null expectations (recall $1.00$, precision $0.90$), because the
+    statistical rules propagate \texttt{NaN} to a non-flag and the learned
+    models see imputed values.
+    \item \emph{Exact duplicates} are invisible to every detector. The
+    deduplication rule of the transform stage is the only thing that
+    catches them, at precision $0.52$ because it also flags each row's
+    clean original.
     \item \emph{Multivariate outliers} separate the families: Isolation
-    Forest ($0.41$) and the One-Class SVM ($0.31$) are the only methods
-    with non-trivial recall, since they are the only ones that model the
-    joint distribution.
+    Forest ($0.91$) and the One-Class SVM ($0.84$) are the only methods
+    with real recall, since they are the only ones that model the joint
+    distribution. Their precision on this type is only about $0.24$: they
+    cast a wide net that also catches clean rows.
     \item \emph{Invalid formats} are caught mainly through the impossible
-    numeric values they carry (IQR $1.00$ via the out-of-range age); the
-    malformed e-mail and country code are missed by all current
-    detectors.
+    numeric value they carry (IQR recall $1.00$, precision $0.39$; Z-score
+    precision $1.00$); the malformed string fields are missed by all.
     \item \emph{Temporal drift} is the weakest column for every method
-    (best recall $0.35$, LOF), because the shifted values still fall
-    inside the global range and no detector uses the timestamp.
+    (best recall $0.49$, LOF), because the shifted values stay inside the
+    global range and no detector uses the timestamp.
 \end{itemize}
-The practical reading is a short decision list: null-rate problems go to
+The practical reading is a short decision list: null-rate problems to
 declarative rules, single-column outliers to any statistical rule,
 implausible combinations to a tree- or boundary-based model, and
-duplicates and drift to dedicated stages that none of these detectors
-replace.
+duplicates and drift to dedicated stages the detectors do not replace.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{figures/heatmap_synthetic.png}
-\caption{Detection rate (recall) of each method on each injected anomaly
-type, synthetic dataset. Darker is higher. \texttt{transform\_dedup} is
-the deduplication rule of the transform stage, shown for reference.}
+\caption{Mean detection rate (recall) over five seeds of each method on
+each injected anomaly type, synthetic test split. Darker is higher.
+\texttt{transform\_dedup} is the deduplication rule of the transform
+stage, shown for reference.}
 \label{fig:heatmap}
 \end{figure}
+
+\subsection{Third real dataset: Water Quality}
+Table~\ref{tab:water} runs all six detectors on Water Quality, where
+``not potable'' is the target and covers $61\%$ of the rows. Every
+detector's ROC-AUC sits between $0.45$ and $0.51$ and every PR-AUC is at
+or just above the $0.61$ base rate: the unsupervised detectors are
+essentially at chance. This is the expected outcome and a useful negative
+result. When the target class is common and not distributionally distinct
+from the rest, ``anomaly'' detection has nothing to key on. The dataset
+still exercises the pipeline on real missing data: Great Expectations
+flags $40\%$ of rows on its not-null expectations, but the nulls here are
+uncorrelated with potability, so that recall buys no precision.
+
+\begin{table}[t]
+\caption{All detectors on Water Quality, mean over five seeds on the
+$15\%$ test split. Target: ``not potable'', base rate $0.61$.}
+\label{tab:water}
+\centering
+\setlength{\tabcolsep}{4pt}
+\footnotesize
+\begin{tabular}{lrrrrrr}
+\toprule
+Detector & Prec. & Rec. & $F_1$ & ROC & PR & Flag.\% \\
+\midrule
+Z-score            & 0.41 & 0.03 & 0.05 & 0.46 & 0.58 & 3.5 \\
+IQR                & 0.57 & 0.09 & 0.16 & 0.49 & 0.60 & 10.0 \\
+Great Expectations & 0.62 & 0.41 & 0.49 & 0.51 & 0.62 & 40.1 \\
+Isolation Forest   & 0.57 & 0.47 & 0.51 & 0.45 & 0.58 & 49.7 \\
+LOF                & 0.58 & 0.46 & 0.52 & 0.46 & 0.58 & 48.7 \\
+One-Class SVM      & 0.57 & 0.45 & 0.50 & 0.46 & 0.57 & 48.4 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{Discussion}
 \label{sec:discussion}
@@ -403,52 +448,57 @@ the deduplication rule of the transform stage, shown for reference.}
 The per-type heatmap shows almost no overlap between what the declarative
 rules catch (missing values), what the statistical rules catch
 (single-column outliers), and what the learned models add (implausible
-combinations). A pipeline that wants broad coverage needs more than one
-family, not the single best one. This is a different conclusion from
-aggregate benchmarks, where a single ranking invites picking one winner.
+combinations, recall $0.91$ for Isolation Forest against $\le 0.02$ for
+the rules). Broad coverage needs more than one family, not the single
+best one on aggregate. This is a different conclusion from benchmarks
+that publish a single ranking.
 
-\paragraph{Aggregate metrics on a mixed label are misleading.} On both
-datasets the aggregate table compresses very different behaviour into
-similar F1 and PR-AUC values. The Credit Card Fraud label mixes every
-defect type together, so a method that is excellent on one kind of
-anomaly and blind to the rest scores the same as a mediocre all-rounder.
-The controlled dataset is what makes the difference measurable.
+\paragraph{The operating point matters as much as the algorithm.} Setting
+Isolation Forest's contamination to the data prevalence rather than a
+fixed $0.10$ moves its fraud precision from $0.01$ to $0.20$ and its
+multivariate-outlier recall on the synthetic data from $0.41$ to $0.91$.
+The same estimator looks weak or strong depending on one number that a
+benchmark must choose deliberately.
+
+\paragraph{Aggregate metrics on a mixed label are misleading.} On all
+three datasets the aggregate table compresses different behaviour into
+similar $F_1$ and PR-AUC values. A method excellent on one anomaly type
+and blind to the rest scores like a mediocre all-rounder. The controlled
+per-type dataset is what makes the difference measurable.
 
 \paragraph{Pipeline integration changes the shortlist.} Latency and
-scaling are not secondary. Great Expectations is accurate but $60\times$
-slower than the statistical rules; the One-Class SVM has quadratic
-training and Local Outlier Factor has superlinear scoring, so neither
-survives contact with a full-size dataset in the pipeline. A benchmark
-that scores algorithms in isolation would not surface this.
+scaling are not secondary. Great Expectations is the slowest linear
+method; the One-Class SVM's quadratic training and LOF's superlinear
+scoring keep both off the full fraud dataset. A benchmark scoring
+algorithms in isolation would not surface this.
 
 \paragraph{Threats to validity.} The synthetic dataset encodes our own
 assumptions about what each anomaly type looks like, and the injection
-rates and magnitudes are choices. The ML detectors use a fixed
-contamination of $0.10$ rather than a tuned operating point, which
-depresses their precision on the highly imbalanced fraud data. Results on
-a second real dataset are needed before the per-type ranking can be
-presented as general.
+magnitudes are choices. Water Quality shows the methods only outside
+their regime; a genuinely imbalanced second real dataset is still needed
+before the per-type ranking can be called general. Isolation Forest's
+seed variance on fraud ($F_1 = 0.20 \pm 0.07$) means its precision gain
+there should be read as a range, not a point.
 
 \section{Conclusion}
 \label{sec:conclusion}
 
 We built an ETL pipeline in which rule-based and classical
 machine-learning anomaly detectors share one interface and are scored on
-the same path, and a controlled dataset that labels six anomaly types
-separately so detection can be measured per type. On aggregate metrics
-the detector families are close on both Credit Card Fraud and the
-synthetic dataset. The per-type view is where they diverge: declarative
-rules own missing values, statistical rules own single-column outliers,
-tree- and boundary-based models are the only ones that catch implausible
-combinations, and duplicates and temporal drift are caught by neither and
-need dedicated handling. Latency and scaling further constrain which
-detector can sit in a real pipeline.
+the same held-out path, over five seeds, with the operating point read
+from the data. A controlled dataset labels six anomaly types separately
+so detection can be measured per type. On aggregate metrics the families
+stay close on all three datasets. The per-type view is where they
+diverge: declarative rules own missing values, statistical rules own
+single-column outliers, tree- and boundary-based models are the only ones
+that catch implausible combinations, and duplicates and temporal drift
+need dedicated stages. The choice of contamination and the pipeline cost
+further constrain which detector fits a real flow.
 
-The immediate next steps are the deep-learning detectors (Autoencoder,
-then LSTM-Autoencoder) behind the same interface, a second real dataset
-(UCI Water Quality) to test whether the per-type ranking generalises, a
-contamination set from each dataset's prevalence, and a detector that
-uses the timestamp so temporal drift stops being an empty column.
+The next steps are the deep-learning detectors (Autoencoder, then
+LSTM-Autoencoder) behind the same interface, a genuinely imbalanced
+second real dataset, and a detector that uses the timestamp so temporal
+drift stops being an empty column.
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}
