@@ -1,5 +1,7 @@
 # etl-anomaly-benchmark
 
+![ci](https://github.com/theobigand/etl-anomaly-benchmark/actions/workflows/ci.yml/badge.svg)
+
 A reproducible benchmark comparing three families of anomaly detectors for data quality (rule-based, classical ML, deep learning), each run inside a small ETL pipeline rather than in isolation. This is the code for my master's thesis at ESILV.
 
 The question it tries to answer: does adding machine learning to an ETL pipeline actually improve anomaly detection over plain rules, and if so, for which kinds of anomalies? The planned original contribution is a per-anomaly-type comparison (a method-by-type heatmap on a controlled synthetic dataset), which existing benchmarks such as ADBench measure only in aggregate.
