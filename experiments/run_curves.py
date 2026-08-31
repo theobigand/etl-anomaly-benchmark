@@ -1,0 +1,174 @@
+"""Precision-recall curves and a contamination-sensitivity table.
+
+Every detector emits a graded score, so a single reported operating point
+hides the whole precision-recall trade-off. This script fits each
+detector on the train split, takes its continuous scores on the test
+split, and draws the full precision-recall curve per detector and per
+dataset. It also sweeps Isolation Forest's contamination on each dataset,
+to show quantitatively how much that one number moves the operating
+point.
+
+    python experiments/run_curves.py
+    python experiments/run_curves.py --seed 1
+"""
+
+from __future__ import annotations
+
+import argparse
+import logging
+import os
+from datetime import UTC, datetime
+from pathlib import Path
+
+os.environ.setdefault("TQDM_DISABLE", "1")
+
+import matplotlib  # noqa: E402
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+from sklearn.metrics import average_precision_score, precision_recall_curve  # noqa: E402
+
+from etl_benchmark import config  # noqa: E402
+from etl_benchmark.datasets import ANOMALY_COLUMN, DATASETS  # noqa: E402
+from etl_benchmark.logging_setup import setup_logging  # noqa: E402
+from etl_benchmark.pipeline import detect  # noqa: E402
+from etl_benchmark.quality import IsolationForestDetector  # noqa: E402
+from etl_benchmark.registry import all_detectors, clip_contamination  # noqa: E402
+from etl_benchmark.split import stratified_split  # noqa: E402
+from etl_benchmark.synthetic import FEATURE_COLUMNS, make_synthetic  # noqa: E402
+
+log = logging.getLogger(__name__)
+
+PAPER_FIGURE = config.PROJECT_ROOT / "paper" / "figures" / "pr_curves.png"
+CONTAMINATION_GRID = [0.001, 0.01, 0.05, 0.10, 0.20]
+
+
+def _split_real(name: str, seed: int):
+    spec = DATASETS[name]
+    df = spec.load()
+    train, _val, test = stratified_split(df, ANOMALY_COLUMN, config.SPLIT_RATIOS, seed)
+    return (
+        spec.features(train),
+        spec.features(test),
+        test[ANOMALY_COLUMN].to_numpy(),
+        float(train[ANOMALY_COLUMN].mean()),
+        spec.detector_names,
+        float(df[ANOMALY_COLUMN].mean()),
+    )
+
+
+def _split_synth(seed: int):
+    df = make_synthetic(seed=seed)
+    train, _val, test = stratified_split(df, "anomaly_type", config.SPLIT_RATIOS, seed)
+    y = test["anomaly"].to_numpy().astype(int)
+    from etl_benchmark.registry import DETECTOR_NAMES
+
+    return (
+        train[FEATURE_COLUMNS],
+        test[FEATURE_COLUMNS],
+        y,
+        float(train["anomaly"].mean()),
+        DETECTOR_NAMES,
+        float(df["anomaly"].mean()),
+    )
+
+
+def scores_for(dataset: str, seed: int) -> dict:
+    if dataset == "synthetic":
+        train_x, test_x, y, contamination, names, base = _split_synth(seed)
+    else:
+        train_x, test_x, y, contamination, names, base = _split_real(dataset, seed)
+
+    out = {"y": y, "base_rate": base, "scores": {}}
+    for det in all_detectors(ml_contamination=contamination, names=names):
+        res = detect(test_x, det, fit_df=train_x)
+        out["scores"][det.name] = np.asarray(res.scores, dtype=float)
+        log.info("%s: %s scored", dataset, det.name)
+    return out
+
+
+def render_pr(results: dict[str, dict], path: Path) -> Path:
+    fig, axes = plt.subplots(2, 2, figsize=(10, 8))
+    cmap = plt.get_cmap("tab10")
+    for ax, (name, data) in zip(axes.flat, results.items(), strict=False):
+        for i, (method, s) in enumerate(data["scores"].items()):
+            prec, rec, _ = precision_recall_curve(data["y"], s)
+            ap = average_precision_score(data["y"], s)
+            ax.plot(rec, prec, linewidth=1.4, color=cmap(i % 10), label=f"{method} ({ap:.2f})")
+        ax.axhline(data["base_rate"], color="0.7", linewidth=0.8, linestyle="--")
+        ax.set_title(name)
+        ax.set_xlabel("recall")
+        ax.set_ylabel("precision")
+        ax.set_xlim(-0.02, 1.02)
+        ax.set_ylim(-0.02, 1.02)
+        ax.legend(fontsize=7, loc="upper right")
+    fig.suptitle("Precision-recall curves on the test split (AP in the legend)")
+    fig.tight_layout()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(path, dpi=150)
+    plt.close(fig)
+    return path
+
+
+def contamination_sweep(seed: int) -> pd.DataFrame:
+    from sklearn.metrics import precision_score, recall_score
+
+    rows = []
+    for dataset in ("credit_card", "water_quality", "cardio", "synthetic"):
+        try:
+            if dataset == "synthetic":
+                train_x, test_x, y, prevalence, _n, _b = _split_synth(seed)
+            else:
+                train_x, test_x, y, prevalence, _n, _b = _split_real(dataset, seed)
+        except FileNotFoundError:
+            log.warning("skipping %s (dataset not present)", dataset)
+            continue
+        for c in [*CONTAMINATION_GRID, prevalence]:
+            det = IsolationForestDetector(contamination=clip_contamination(c))
+            res = detect(test_x, det, fit_df=train_x)
+            rows.append(
+                {
+                    "dataset": dataset,
+                    "contamination": round(clip_contamination(c), 4),
+                    "is_prevalence": abs(c - prevalence) < 1e-9,
+                    "precision": precision_score(y, res.flags, zero_division=0),
+                    "recall": recall_score(y, res.flags, zero_division=0),
+                    "flagged_pct": 100.0 * float(res.flags.mean()),
+                }
+            )
+    return pd.DataFrame(rows)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--seed", type=int, default=config.RANDOM_SEED)
+    parser.add_argument("--figure", type=Path, default=PAPER_FIGURE)
+    args = parser.parse_args()
+
+    setup_logging()
+    logging.getLogger("great_expectations").setLevel(logging.WARNING)
+    logging.getLogger("matplotlib").setLevel(logging.WARNING)
+
+    results: dict[str, dict] = {}
+    for dataset in ("credit_card", "water_quality", "cardio", "synthetic"):
+        try:
+            results[dataset] = scores_for(dataset, args.seed)
+        except FileNotFoundError:
+            log.warning("skipping %s (dataset not present)", dataset)
+
+    figure = render_pr(results, args.figure)
+    sweep = contamination_sweep(args.seed)
+
+    config.RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    stamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
+    sweep.to_csv(config.RESULTS_DIR / f"contamination_sweep_{stamp}.csv", index=False)
+
+    print("\nIsolation Forest, contamination sweep (test split):\n")
+    print(sweep.to_string(index=False))
+    log.info("figure -> %s", figure)
+
+
+if __name__ == "__main__":
+    main()
