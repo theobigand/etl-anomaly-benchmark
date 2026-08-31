@@ -24,6 +24,7 @@ data/*.csv
 # Résultats d'expériences — générés, on ne versionne que le .gitkeep
 experiments/results/*.csv
 experiments/results/*.md
+experiments/results/*.png
 !experiments/results/.gitkeep
 
 # LaTeX (le PDF compilé du papier est versionné, cf. paper/main.pdf)

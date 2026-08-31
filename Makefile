@@ -11,6 +11,7 @@ help:
 	@echo "  make pipeline   Run the ETL pipeline demo (sorts data with one detector)"
 	@echo "  make benchmark  Compare all detectors on Credit Card Fraud, print/save metrics"
 	@echo "  make synthetic  Generate the per-anomaly-type dataset (data/synthetic.csv)"
+	@echo "  make heatmap    Run the method-by-anomaly-type benchmark and render the heatmap"
 	@echo "  make run        Run everything (pipeline then benchmark)"
 	@echo "  make clean      Remove generated artifacts"
 
@@ -35,6 +36,9 @@ benchmark:
 
 synthetic:
 	python experiments/generate_synthetic.py
+
+heatmap: synthetic
+	python experiments/run_synthetic_benchmark.py
 
 run: pipeline benchmark
 
