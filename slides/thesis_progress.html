@@ -308,25 +308,31 @@
 
 <!-- 6 - datasets -->
 <section class="slide" data-sec="Datasets">
-  <div class="rail"><span class="n">06</span><span class="sec">Datasets</span><span class="src">data/README.md</span></div>
+  <div class="rail"><span class="n">06</span><span class="sec">Datasets</span><span class="src">datasets.py<br>data/README.md</span></div>
   <div class="main">
-    <h2>One real and imbalanced, one controlled by construction</h2>
+    <h2>Three datasets, one held-out protocol</h2>
     <div class="brule"></div>
-    <div class="content">
-      <table class="num">
-        <thead><tr><th>Dataset</th><th>Rows</th><th>Features</th><th>Anomalies</th><th>Label</th><th style="text-align:left">Role</th></tr></thead>
-        <tbody>
-          <tr><td>Credit Card Fraud (Kaggle)</td><td>283,726</td><td>30 numeric</td><td>0.167%</td><td>binary</td><td style="text-align:left">real, heavy imbalance, mixed defect types</td></tr>
-          <tr><td>Synthetic per-type</td><td>12,360</td><td>9 mixed</td><td>17.5%</td><td>binary + type</td><td style="text-align:left">controlled, six labelled anomaly types</td></tr>
-          <tr><td>UCI Water Quality</td><td class="muted">~3,300</td><td class="muted">9 numeric</td><td class="muted">planned</td><td class="muted">binary</td><td style="text-align:left" class="muted">second real domain, summer 2026</td></tr>
-        </tbody>
-      </table>
-      <p class="sm">Credit Card Fraud is a standard strongly imbalanced benchmark; on it the
-      base-rate PR-AUC is 0.0017, so PR-AUC is the metric that matters. The synthetic set
-      is balanced enough (17.5%) that every method clears the random baseline, which lets
-      the per-type differences show.</p>
+    <div class="content grid2">
+      <div class="stack">
+        <table class="num">
+          <thead><tr><th>Dataset</th><th>Rows</th><th>Feat.</th><th>Anom.</th><th style="text-align:left">Role</th></tr></thead>
+          <tbody>
+            <tr><td>Credit Card Fraud</td><td>283,726</td><td>30</td><td>0.17%</td><td style="text-align:left">real, heavy imbalance</td></tr>
+            <tr><td>Synthetic per-type</td><td>12,360</td><td>9</td><td>17.5%</td><td style="text-align:left">controlled, 6 labelled types</td></tr>
+            <tr><td>Water Quality</td><td>3,276</td><td>9</td><td>61%</td><td style="text-align:left">real, target class is common</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="stack">
+        <p><b>Protocol.</b> Stratified 70 / 15 / 15 split, fit on train, every number
+        reported on the held-out test set. Repeated over 5 seeds, mean ± std.</p>
+        <p>The ML contamination is read from the train-set prevalence, not fixed at 10%.
+        This one change moves Isolation Forest's fraud precision from 0.01 to 0.20.</p>
+        <p class="sm">Water Quality has real missing values and a common target class,
+        so it tests the detectors outside the regime they are built for.</p>
+      </div>
     </div>
-    <div class="foot"><span>data/*.csv gitignored</span><span>synthetic regenerated with `make synthetic`</span></div>
+    <div class="foot"><span>config.SPLIT_RATIOS, config.BENCHMARK_SEEDS</span><span>data/*.csv gitignored</span></div>
   </div>
 </section>
 
@@ -363,47 +369,42 @@
 <section class="slide" data-sec="Results 1">
   <div class="rail"><span class="n">08</span><span class="sec">Results 1</span><span class="src">run_benchmark.py</span></div>
   <div class="main">
-    <h2>Real fraud data: high recall, precision no one could deploy</h2>
+    <h2>Real fraud data: the operating point decides the outcome</h2>
     <div class="brule"></div>
     <div class="content grid2">
       <div class="stack">
         <table class="num">
           <thead><tr><th>Detector</th><th>Prec</th><th>Rec</th><th>F1</th><th>ROC</th><th>PR</th><th>Flag%</th><th>Time</th></tr></thead>
           <tbody>
-            <tr><td>Z-score</td><td>0.011</td><td>0.899</td><td>0.022</td><td>0.944</td><td>0.090</td><td>13.4</td><td class="hi">0.2s</td></tr>
-            <tr><td>IQR</td><td>0.003</td><td class="hi">0.968</td><td>0.007</td><td>0.922</td><td>0.020</td><td>48.6</td><td>0.6s</td></tr>
-            <tr><td>Great Expectations</td><td class="hi">0.039</td><td>0.710</td><td class="hi">0.075</td><td>0.848</td><td class="hi">0.206</td><td class="hi">3.0</td><td>13.2s</td></tr>
-            <tr><td>Isolation Forest</td><td>0.014</td><td>0.882</td><td>0.028</td><td class="hi">0.949</td><td>0.157</td><td>10.4</td><td>3.2s</td></tr>
+            <tr><td>Z-score</td><td>0.011</td><td>0.870</td><td>0.021</td><td>0.926</td><td>0.078</td><td>13.4</td><td class="hi">0.03s</td></tr>
+            <tr><td>IQR</td><td>0.003</td><td class="hi">0.966</td><td>0.007</td><td>0.911</td><td>0.018</td><td>48.6</td><td>0.12s</td></tr>
+            <tr><td>Great Expectations</td><td>0.037</td><td>0.676</td><td>0.070</td><td>0.830</td><td class="hi">0.182</td><td>3.1</td><td>1.37s</td></tr>
+            <tr><td>Isolation Forest</td><td class="hi">0.202</td><td>0.206</td><td class="hi">0.203</td><td class="hi">0.934</td><td>0.120</td><td class="hi">0.2</td><td>1.78s</td></tr>
           </tbody>
-          <caption>Full dataset, 283,726 rows, 473 frauds. Isolation Forest fitted on a 20k sample, scored on all rows.</caption>
+          <caption>Mean over 5 seeds, 15% held-out test split. std &le; 0.05 except where noted.</caption>
         </table>
         <table class="num">
-          <thead><tr><th>Great Expectations, operationally</th><th>Rows</th></tr></thead>
+          <thead><tr><th>Isolation Forest, by contamination</th><th>Prec</th><th>Rec</th><th>Flag%</th></tr></thead>
           <tbody>
-            <tr><td>flagged for review</td><td>8,509</td></tr>
-            <tr><td>&nbsp;&nbsp;of which real fraud (TP)</td><td>332</td></tr>
-            <tr><td>&nbsp;&nbsp;false alarms (FP)</td><td>8,177</td></tr>
-            <tr><td>frauds missed (FN)</td><td>141</td></tr>
-            <tr><td>rows an analyst reads per fraud found</td><td class="hi">26</td></tr>
+            <tr><td>fixed 0.10 (before)</td><td>0.014</td><td class="hi">0.88</td><td>10.4</td></tr>
+            <tr><td>= train prevalence (now)</td><td class="hi">0.202</td><td>0.21</td><td>0.2</td></tr>
           </tbody>
         </table>
       </div>
       <div class="stack">
-        <p>No method separates a 0.17% positive class from the tails of normal traffic.
-        Great Expectations is the most selective and wins PR-AUC; Isolation Forest wins
-        ROC-AUC and lifts PR-AUC above both statistical rules but still flags one row in
-        ten.</p>
-        <p>The best PR-AUC on this dataset, 0.206, still means an analyst reviews about
-        26 rows to find one fraud. None of these is a production operating point on its own.</p>
-        <p>Measuring inside the pipeline exposes a cost gap: Great Expectations is about
-        <b>60&times;</b> slower than the statistical rules, 13.2s against 0.2 to 0.6s.</p>
-        <p class="sm">LOF and One-Class SVM are absent here. LOF scoring is superlinear in
-        the scored set and OC-SVM training is quadratic, so neither runs at 284k rows in
-        the pipeline. Both are compared on the synthetic set instead, which is itself a
-        pipeline-integration finding.</p>
+        <p>The statistical rules recover most frauds at a precision below 0.04: a fixed
+        per-column rule cannot separate 0.17% positives from the tails of normal traffic.</p>
+        <p><b>Isolation Forest changes once its contamination matches the prevalence.</b>
+        It flags only 0.17% of rows and reaches a precision of <b>0.20</b>, the first
+        usable operating point in the table, though recall drops to 0.21 and both are
+        seed-sensitive (F1 = 0.20 ± 0.07).</p>
+        <p>Great Expectations still leads PR-AUC (0.182 ± 0.046) and is the slowest linear
+        method.</p>
+        <p class="sm">LOF and One-Class SVM are absent: neither scales to 284k rows in the
+        pipeline, which is itself a pipeline-integration finding.</p>
       </div>
     </div>
-    <div class="foot"><span>python experiments/run_benchmark.py --fit-sample 20000</span><span>metric that matters here: PR-AUC</span></div>
+    <div class="foot"><span>make benchmark</span><span>metric that matters here: PR-AUC</span></div>
   </div>
 </section>
 
@@ -418,30 +419,29 @@
         <thead><tr><th>Detector</th><th>Prec</th><th>Rec</th><th>F1</th><th>ROC</th><th>PR</th><th>Time</th></tr></thead>
         <tbody>
           <tr class="grp"><td colspan="7">rule-based</td></tr>
-          <tr><td>Z-score</td><td class="hi">1.000</td><td>0.188</td><td>0.316</td><td>0.733</td><td class="hi">0.540</td><td class="hi">0.003s</td></tr>
-          <tr><td>IQR</td><td>0.581</td><td class="hi">0.402</td><td class="hi">0.475</td><td>0.677</td><td>0.451</td><td>0.005s</td></tr>
-          <tr><td>Great Expectations</td><td>0.952</td><td>0.238</td><td>0.381</td><td>0.618</td><td>0.361</td><td>0.89s</td></tr>
+          <tr><td>Z-score</td><td class="hi">1.000</td><td>0.182</td><td>0.308</td><td class="hi">0.748</td><td class="hi">0.560</td><td class="hi">0.002s</td></tr>
+          <tr><td>IQR</td><td>0.603</td><td>0.399</td><td>0.481</td><td>0.678</td><td>0.460</td><td>0.004s</td></tr>
+          <tr><td>Great Expectations</td><td>0.920</td><td>0.205</td><td>0.335</td><td>0.601</td><td>0.332</td><td>0.29s</td></tr>
           <tr class="grp"><td colspan="7">classical ML</td></tr>
-          <tr><td>Isolation Forest</td><td>0.599</td><td>0.343</td><td>0.436</td><td class="hi">0.738</td><td>0.505</td><td>0.53s</td></tr>
-          <tr><td>Local Outlier Factor</td><td>0.529</td><td>0.269</td><td>0.356</td><td>0.619</td><td>0.394</td><td>0.41s</td></tr>
-          <tr><td>One-Class SVM</td><td>0.583</td><td>0.334</td><td>0.425</td><td>0.712</td><td>0.512</td><td>9.83s</td></tr>
+          <tr><td>Isolation Forest</td><td>0.515</td><td class="hi">0.503</td><td class="hi">0.509</td><td>0.745</td><td>0.501</td><td>0.16s</td></tr>
+          <tr><td>Local Outlier Factor</td><td>0.380</td><td>0.390</td><td>0.385</td><td>0.646</td><td>0.437</td><td>0.14s</td></tr>
+          <tr><td>One-Class SVM</td><td>0.488</td><td>0.478</td><td>0.483</td><td>0.729</td><td>0.531</td><td>2.61s</td></tr>
         </tbody>
-        <caption>12,360 rows, 17.5% anomalous. Time is in-pipeline fit + predict + score.</caption>
+        <caption>Mean over 5 seeds, 15% test split. 12,360 rows, 17.5% anomalous.</caption>
       </table>
       <div class="stack">
-        <p>F1 spans only <b>0.32 to 0.48</b> and PR-AUC <b>0.36 to 0.54</b>, with the random
-        PR-AUC baseline at 0.175. No family is strictly ahead.</p>
-        <p>Z-score buys perfect precision by firing only on the most extreme rows, at a
-        recall of 0.19. IQR is the opposite trade: the widest net and the best F1.</p>
-        <p>Among the learned models, Isolation Forest and One-Class SVM lead PR-AUC, but
-        One-Class SVM costs about <b>20&times;</b> the time for no quality gain.</p>
-        <p>The rule-based methods also win ROC against PR here, which is the imbalance trap
-        in miniature even at 17.5% prevalence.</p>
+        <p>F1 spans <b>0.31 to 0.51</b> and PR-AUC <b>0.33 to 0.56</b>. Isolation Forest now
+        has the best F1; no family is clearly ahead overall.</p>
+        <p>Z-score keeps a perfect precision by firing only on the most extreme rows.
+        One-Class SVM matches Isolation Forest on quality at about <b>16&times;</b> the
+        latency.</p>
+        <p>The rule-based methods win ROC against PR here, the imbalance trap in miniature
+        even at 17.5% prevalence.</p>
         <p class="sm">Read alone this table says the detector choice barely matters. The
         per-type view on the next two slides shows the opposite.</p>
       </div>
     </div>
-    <div class="foot"><span>make heatmap</span><span>single run, seed 42</span></div>
+    <div class="foot"><span>make heatmap</span><span>5 seeds, mean ± std</span></div>
   </div>
 </section>
 
@@ -455,13 +455,13 @@
       <img src="../paper/figures/heatmap_synthetic.png" alt="detection rate by anomaly type">
       <figcaption>
         <span class="k">what the figure shows</span>
-        Recall of each method on each injected type. Darker is higher.
+        Mean recall over 5 seeds of each method on each injected type. Darker is higher.
         <span class="k">reading it</span>
         Z-score owns univariate outliers and nothing else. Great Expectations owns missing
-        values (1.00 vs &le;0.14 elsewhere). Deduplication owns exact duplicates.
-        Isolation Forest and One-Class SVM are the only methods with real recall on
-        multivariate outliers. Temporal drift is the weakest column for everyone,
-        best 0.35.
+        values (recall 1.00, precision 0.90). Deduplication owns exact duplicates.
+        Isolation Forest (0.91) and One-Class SVM (0.84) are the only methods that catch
+        multivariate outliers, at about 0.24 precision. Temporal drift is the weakest
+        column for everyone, best 0.49.
         <span class="k">why it matters</span>
         The competences barely overlap. Broad coverage needs several families, not the
         single best one on aggregate.
@@ -475,28 +475,45 @@
 <section class="slide" data-sec="Results 3">
   <div class="rail"><span class="n">11</span><span class="sec">Results 3</span><span class="src">synthetic_heatmap.csv</span></div>
   <div class="main">
-    <h2>The same result as numbers</h2>
+    <h2>Recall and precision, per type</h2>
     <div class="brule"></div>
-    <div class="content">
-      <table class="num">
-        <thead><tr><th>Method</th><th>missing</th><th>duplicate</th><th>univ.<br>outlier</th><th>multiv.<br>outlier</th><th>temporal<br>drift</th><th>invalid<br>format</th></tr></thead>
-        <tbody>
-          <tr><td>Z-score</td><td>0.00</td><td>0.00</td><td class="hi">0.91</td><td>0.00</td><td>0.00</td><td>0.21</td></tr>
-          <tr><td>IQR</td><td>0.05</td><td>0.06</td><td class="hi">0.99</td><td>0.05</td><td>0.26</td><td class="hi">1.00</td></tr>
-          <tr><td>Great Expectations</td><td class="hi">1.00</td><td>0.00</td><td>0.22</td><td>0.00</td><td>0.00</td><td>0.21</td></tr>
-          <tr><td>Isolation Forest</td><td>0.02</td><td>0.06</td><td class="hi">0.95</td><td class="hi">0.41</td><td>0.21</td><td>0.40</td></tr>
-          <tr><td>Local Outlier Factor</td><td>0.14</td><td>0.03</td><td>0.39</td><td>0.10</td><td class="hi">0.35</td><td>0.61</td></tr>
-          <tr><td>One-Class SVM</td><td>0.02</td><td>0.05</td><td class="hi">0.99</td><td>0.31</td><td>0.22</td><td>0.42</td></tr>
-          <tr><td>transform dedup</td><td>0.00</td><td class="hi">1.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td></tr>
-        </tbody>
-        <caption>Detection rate (recall) per anomaly type. Per-type precision is a planned addition.</caption>
-      </table>
-      <p class="sm">Detection rate alone can be inflated by flagging widely, which is why the
-      aggregate precision column on slide 9 matters and why per-type precision is next on
-      the list. IQR reaching 1.00 on invalid format is the impossible age being caught by
-      the numeric fence; the malformed string fields are still missed by everyone.</p>
+    <div class="content grid2 even">
+      <div>
+        <p class="sm" style="margin-bottom:6px">recall (detection rate)</p>
+        <table class="num">
+          <thead><tr><th>Method</th><th>miss</th><th>dup</th><th>uni</th><th>mul</th><th>drift</th><th>fmt</th></tr></thead>
+          <tbody>
+            <tr><td>Z-score</td><td>0.00</td><td>0.00</td><td class="hi">0.92</td><td>0.00</td><td>0.00</td><td>0.17</td></tr>
+            <tr><td>IQR</td><td>0.05</td><td>0.07</td><td class="hi">0.99</td><td>0.02</td><td>0.27</td><td class="hi">1.00</td></tr>
+            <tr><td>Great Exp.</td><td class="hi">1.00</td><td>0.00</td><td>0.23</td><td>0.00</td><td>0.00</td><td>0.00</td></tr>
+            <tr><td>Isolation Forest</td><td>0.09</td><td>0.11</td><td class="hi">0.99</td><td class="hi">0.91</td><td>0.33</td><td>0.59</td></tr>
+            <tr><td>LOF</td><td>0.26</td><td>0.12</td><td>0.65</td><td>0.16</td><td class="hi">0.49</td><td>0.66</td></tr>
+            <tr><td>One-Class SVM</td><td>0.08</td><td>0.12</td><td class="hi">0.99</td><td>0.84</td><td>0.34</td><td>0.50</td></tr>
+            <tr><td>transform dedup</td><td>0.00</td><td class="hi">1.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>0.00</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <p class="sm" style="margin-bottom:6px">precision (clean rows as the only negatives)</p>
+        <table class="num">
+          <thead><tr><th>Method</th><th>miss</th><th>dup</th><th>uni</th><th>mul</th><th>drift</th><th>fmt</th></tr></thead>
+          <tbody>
+            <tr><td>Z-score</td><td>&ndash;</td><td>&ndash;</td><td class="hi">1.00</td><td>&ndash;</td><td>&ndash;</td><td class="hi">1.00</td></tr>
+            <tr><td>IQR</td><td>0.03</td><td>0.04</td><td>0.39</td><td>0.01</td><td>0.15</td><td>0.39</td></tr>
+            <tr><td>Great Exp.</td><td class="hi">0.90</td><td>&ndash;</td><td class="hi">0.70</td><td>&ndash;</td><td>&ndash;</td><td>0.05</td></tr>
+            <tr><td>Isolation Forest</td><td>0.03</td><td>0.04</td><td>0.26</td><td>0.24</td><td>0.10</td><td>0.17</td></tr>
+            <tr><td>LOF</td><td>0.06</td><td>0.03</td><td>0.15</td><td>0.04</td><td>0.11</td><td>0.15</td></tr>
+            <tr><td>One-Class SVM</td><td>0.03</td><td>0.04</td><td>0.25</td><td>0.22</td><td>0.10</td><td>0.14</td></tr>
+            <tr><td>transform dedup</td><td>&ndash;</td><td>0.52</td><td>&ndash;</td><td>&ndash;</td><td>&ndash;</td><td>&ndash;</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="sm" style="grid-column:1/-1;margin-top:4px">Recall alone can be gamed by
+      flagging widely. Isolation Forest catches 91% of multivariate outliers but at 0.24
+      precision: a wide net that also pulls in clean rows. Z-score fires only when it is
+      certain, so its precision is 1.00 on the two columns it covers.</p>
     </div>
-    <div class="foot"><span>experiments/results/synthetic_heatmap_*.csv</span><span>seed 42</span></div>
+    <div class="foot"><span>synthetic_recall / synthetic_precision CSVs</span><span>5 seeds, mean</span></div>
   </div>
 </section>
 
@@ -512,9 +529,9 @@
         <tbody>
           <tr><td style="text-align:left">missing value</td><td style="text-align:left">Great Expectations</td><td class="num">1.00</td><td style="text-align:left">not-null expectation, exact</td></tr>
           <tr><td style="text-align:left">exact duplicate</td><td style="text-align:left">transform dedup stage</td><td class="num">1.00</td><td style="text-align:left">row equality, not a detector's job</td></tr>
-          <tr><td style="text-align:left">univariate outlier</td><td style="text-align:left">any statistical rule</td><td class="num">0.91&ndash;0.99</td><td style="text-align:left">single-column band is enough</td></tr>
-          <tr><td style="text-align:left">multivariate outlier</td><td style="text-align:left">Isolation Forest</td><td class="num">0.41</td><td style="text-align:left">only the joint models see it</td></tr>
-          <tr><td style="text-align:left">temporal drift</td><td style="text-align:left" class="muted">none yet</td><td class="num muted">0.35</td><td style="text-align:left">values stay in range, no detector uses the timestamp</td></tr>
+          <tr><td style="text-align:left">univariate outlier</td><td style="text-align:left">any statistical rule</td><td class="num">0.92&ndash;0.99</td><td style="text-align:left">single-column band is enough</td></tr>
+          <tr><td style="text-align:left">multivariate outlier</td><td style="text-align:left">Isolation Forest</td><td class="num">0.91</td><td style="text-align:left">only the joint models see it (precision 0.24)</td></tr>
+          <tr><td style="text-align:left">temporal drift</td><td style="text-align:left" class="muted">none yet</td><td class="num muted">0.49</td><td style="text-align:left">values stay in range, no detector uses the timestamp</td></tr>
           <tr><td style="text-align:left">invalid format</td><td style="text-align:left">IQR, partially</td><td class="num">1.00 / none</td><td style="text-align:left">numeric part caught, string format missed</td></tr>
         </tbody>
       </table>
@@ -534,25 +551,26 @@
     <div class="brule"></div>
     <div class="content grid2">
       <table class="num">
-        <thead><tr><th>Method</th><th>Fraud, 284k</th><th>Synthetic, 12k</th><th style="text-align:left">Scaling</th></tr></thead>
+        <thead><tr><th>Method</th><th>Fraud test</th><th>Synth. test</th><th style="text-align:left">Scaling</th></tr></thead>
         <tbody>
-          <tr><td>Z-score</td><td>0.2s</td><td>0.003s</td><td style="text-align:left">linear</td></tr>
-          <tr><td>IQR</td><td>0.6s</td><td>0.005s</td><td style="text-align:left">linear</td></tr>
-          <tr><td>Great Expectations</td><td>13.2s</td><td>0.89s</td><td style="text-align:left">linear, one pass per expectation</td></tr>
-          <tr><td>Isolation Forest</td><td>3.2s</td><td>0.53s</td><td style="text-align:left">linear with a sampled fit</td></tr>
-          <tr><td>Local Outlier Factor</td><td class="muted">n/a</td><td>0.41s</td><td style="text-align:left">superlinear in the scored set</td></tr>
-          <tr><td>One-Class SVM</td><td class="muted">n/a</td><td>9.83s</td><td style="text-align:left">quadratic training</td></tr>
+          <tr><td>Z-score</td><td>0.03s</td><td>0.002s</td><td style="text-align:left">linear</td></tr>
+          <tr><td>IQR</td><td>0.12s</td><td>0.004s</td><td style="text-align:left">linear</td></tr>
+          <tr><td>Great Expectations</td><td>1.37s</td><td>0.29s</td><td style="text-align:left">linear, one pass per expectation</td></tr>
+          <tr><td>Isolation Forest</td><td>1.78s</td><td>0.16s</td><td style="text-align:left">linear</td></tr>
+          <tr><td>Local Outlier Factor</td><td class="muted">n/a</td><td>0.14s</td><td style="text-align:left">superlinear in the scored set</td></tr>
+          <tr><td>One-Class SVM</td><td class="muted">n/a</td><td>2.61s</td><td style="text-align:left">quadratic training</td></tr>
         </tbody>
+        <caption>Detect time on the 15% test split. On the full fraud dataset GX takes ~13s.</caption>
       </table>
       <div class="stack">
         <p>A detector has to sit in the flow, so wall-clock time is part of the comparison,
         not an afterthought.</p>
-        <p><b>Great Expectations</b> is accurate but the slowest linear method.
-        <b>One-Class SVM</b> and <b>LOF</b> do not survive contact with a full-size dataset
-        in the pipeline.</p>
+        <p><b>Great Expectations</b> is the slowest linear method. <b>One-Class SVM</b> and
+        <b>LOF</b> do not survive contact with the full fraud dataset in the pipeline; they
+        run on the smaller datasets only.</p>
         <p class="sm">A benchmark that scores algorithms in isolation would not surface this.
-        The <code>--fit-sample</code> option was added so a model can be fitted on a slice
-        and still scored on the whole stream.</p>
+        <code>detect(fit_df=...)</code> lets an expensive model fit on the train slice and
+        still score the test set.</p>
       </div>
     </div>
     <div class="foot"><span>measured on the shared detect() stage</span><span>same path the demo uses</span></div>
@@ -568,11 +586,12 @@
     <div class="content">
       <ul class="two">
         <li><span class="k">Great Expectations 1.x is a full API rewrite</span>The planning notes assumed the 0.18 API. Getting per-row failures out of GX 1.18 needs the COMPLETE result format plus an explicit index column. The flow is ephemeral context, data source, asset, batch, validate. Figured out by running probe scripts against the installed library.</li>
-        <li class="brk"><span class="k">One-Class SVM does not scale to pipeline data</span>Training is quadratic and Local Outlier Factor scoring is superlinear in the scored set. On the full fraud dataset both are impractical, so the cross-method comparison runs on the controlled dataset, and Isolation Forest on fraud uses a fitted 20k sample.</li>
-        <li class="brk"><span class="k">ML detectors are weak on missing values</span>Imputing before the model removes the signal a not-null rule catches for free: Great Expectations 1.00 on that type against 0.02 to 0.14 for the learned models. The clearest evidence that rules and ML are complementary, not competing.</li>
-        <li class="brk"><span class="k">IQR is trigger-happy in high dimensions</span>On 30 columns, the rule "flag if any column leaves its fence" fires on 48.6% of Credit Card Fraud rows, which puts its PR-AUC (0.020) barely above the 0.0017 random baseline.</li>
-        <li class="brk"><span class="k">Keeping flag and score consistent</span>Each detector derives its boolean and its graded score from one internal computation, so a row can never be flagged with score 0 or scored high without being flagged.</li>
-        <li class="brk"><span class="k">Check the installed version before writing library code</span>Not the version the notes assumed. The GX rewrite alone cost most of a session.</li>
+        <li class="brk"><span class="k">The operating point matters as much as the algorithm</span>Setting Isolation Forest's contamination to the data prevalence instead of a fixed 10% moves its fraud precision from 0.01 to 0.20 and its multivariate-outlier recall from 0.41 to 0.91. The same estimator, one number changed.</li>
+        <li class="brk"><span class="k">One-Class SVM does not scale to pipeline data</span>Training is quadratic and LOF scoring is superlinear in the scored set. Both are impractical at 284k rows, so on fraud only rules and Isolation Forest run; the other two are compared on the smaller datasets.</li>
+        <li class="brk"><span class="k">ML detectors are weak on missing values</span>Imputing before the model removes the signal a not-null rule catches for free: Great Expectations recall 1.00 on that type against 0.08 to 0.26 for the learned models. The clearest evidence that rules and ML are complementary.</li>
+        <li class="brk"><span class="k">IQR is trigger-happy in high dimensions</span>On 30 columns, "flag if any column leaves its fence" fires on 48.6% of Credit Card Fraud rows, which puts its PR-AUC (0.018) barely above the 0.0017 random baseline.</li>
+        <li class="brk"><span class="k">Water Quality is the wrong regime, on purpose</span>Target class 61%, so unsupervised detectors are at chance (ROC 0.45 to 0.51). A useful negative result and a real test of the null handling.</li>
+        <li class="brk"><span class="k">Check the installed version before writing library code</span>Not the version the notes assumed. The Great Expectations 1.x rewrite alone cost most of a session.</li>
       </ul>
     </div>
     <div class="foot"><span>build notes kept per session in docs/TD5/</span><span>each became a paragraph in the paper</span></div>
@@ -592,25 +611,27 @@
           <tr><td style="text-align:left">quality/rules.py</td><td>9</td><td style="text-align:left">Z-score, IQR: flags, constant col, score, fit guard</td></tr>
           <tr><td style="text-align:left">quality/gx.py</td><td>4</td><td style="text-align:left">null + range, index, score in [0,1]</td></tr>
           <tr><td style="text-align:left">quality/ml.py</td><td>16</td><td style="text-align:left">3 detectors: planted outliers, ranking, imputation, guards</td></tr>
+          <tr><td style="text-align:left">split.py</td><td>7</td><td style="text-align:left">ratios, class balance, partition, reproducible</td></tr>
+          <tr><td style="text-align:left">registry.py</td><td>6</td><td style="text-align:left">named instances, contamination flows to ML only</td></tr>
+          <tr><td style="text-align:left">datasets.py</td><td>3</td><td style="text-align:left">specs, feature/label split, Water Quality loads</td></tr>
           <tr><td style="text-align:left">pipeline.py</td><td>4</td><td style="text-align:left">label excluded, fit-sample, timings</td></tr>
           <tr><td style="text-align:left">synthetic.py</td><td>10</td><td style="text-align:left">reproducible, all types present, flag/type match</td></tr>
-          <tr><td style="text-align:left">run_synthetic_benchmark</td><td>2</td><td style="text-align:left">matrix in [0,1], figure renders</td></tr>
-          <tr><td style="text-align:left">registry.py</td><td>3</td><td style="text-align:left">named instances, unknown raises</td></tr>
+          <tr><td style="text-align:left">run_synthetic_benchmark</td><td>5</td><td style="text-align:left">split, multi-seed aggregate, per-type precision, figure</td></tr>
         </tbody>
-        <caption>48 tests, ruff clean. conda env, Makefile, versioned paper PDF.</caption>
+        <caption>64 tests, ruff clean. conda env, Makefile, versioned paper PDF.</caption>
       </table>
       <div class="stack">
-        <p class="sm" style="font-size:12px">Done this phase, 10 commits:</p>
+        <p class="sm" style="font-size:12px">Phase B, then the rigour pass:</p>
         <ul style="font-size:11.5px">
-          <li style="padding:5px 0"><span class="k" style="margin:0">feat(quality)</span>Isolation Forest, LOF, One-Class SVM</li>
-          <li style="padding:5px 0"><span class="k" style="margin:0">feat(data)</span>synthetic per-anomaly-type dataset</li>
-          <li style="padding:5px 0"><span class="k" style="margin:0">feat(experiments)</span>method-by-type benchmark + heatmap</li>
-          <li style="padding:5px 0"><span class="k" style="margin:0">feat(benchmark)</span>fit on a sample, score the full stream</li>
-          <li style="padding:5px 0"><span class="k" style="margin:0">docs(paper)</span>ML results, discussion, conclusion</li>
+          <li style="padding:5px 0"><span class="k" style="margin:0">feat(quality)</span>Isolation Forest, LOF, One-Class SVM; contamination from prevalence</li>
+          <li style="padding:5px 0"><span class="k" style="margin:0">feat(data)</span>synthetic per-type dataset; Water Quality</li>
+          <li style="padding:5px 0"><span class="k" style="margin:0">feat(pipeline)</span>stratified train/val/test split</li>
+          <li style="padding:5px 0"><span class="k" style="margin:0">feat(experiments)</span>multi-seed benchmark, per-type recall + precision, heatmap</li>
+          <li style="padding:5px 0"><span class="k" style="margin:0">docs(paper)</span>protocol, three result tables, discussion</li>
         </ul>
       </div>
     </div>
-    <div class="foot"><span>github.com/theobigand/etl-anomaly-benchmark</span><span>main, 48 tests green</span></div>
+    <div class="foot"><span>github.com/theobigand/etl-anomaly-benchmark</span><span>main, 64 tests green</span></div>
   </div>
 </section>
 
@@ -622,19 +643,21 @@
     <div class="brule"></div>
     <div class="content">
       <table>
-        <thead><tr><th style="text-align:left">Limitation now</th><th style="text-align:left">Effect</th><th style="text-align:left">Planned fix</th></tr></thead>
+        <thead><tr><th style="text-align:left">Item</th><th style="text-align:left">Status</th><th style="text-align:left">Detail</th></tr></thead>
         <tbody>
-          <tr><td style="text-align:left">one real dataset fully benchmarked</td><td style="text-align:left">per-type ranking not shown to generalise</td><td style="text-align:left">add UCI Water Quality</td></tr>
-          <tr><td style="text-align:left">fixed contamination 0.10</td><td style="text-align:left">depresses ML precision on imbalanced data</td><td style="text-align:left">set from prevalence, sweep PR curves</td></tr>
-          <tr><td style="text-align:left">single run per config</td><td style="text-align:left">no variance reported</td><td style="text-align:left">5 seeds, mean and std</td></tr>
-          <tr><td style="text-align:left">no held-out split</td><td style="text-align:left">fit set equals eval set, optimistic</td><td style="text-align:left">stratified 70 / 15 / 15</td></tr>
-          <tr><td style="text-align:left">LOF and OC-SVM do not scale</td><td style="text-align:left">real-data comparison incomplete</td><td style="text-align:left">subsample protocol, document it</td></tr>
-          <tr><td style="text-align:left">no deep learning</td><td style="text-align:left">one family missing</td><td style="text-align:left">Autoencoder then LSTM-AE, M2</td></tr>
-          <tr><td style="text-align:left">temporal drift caught by none</td><td style="text-align:left">empty column in the heatmap</td><td style="text-align:left">time-aware detector on signup_date</td></tr>
+          <tr><td style="text-align:left">held-out split</td><td class="terra" style="text-align:left">done</td><td style="text-align:left">stratified 70 / 15 / 15, metrics on test only</td></tr>
+          <tr><td style="text-align:left">variance</td><td class="terra" style="text-align:left">done</td><td style="text-align:left">5 seeds, mean ± std reported</td></tr>
+          <tr><td style="text-align:left">contamination</td><td class="terra" style="text-align:left">done</td><td style="text-align:left">read from the train-set prevalence</td></tr>
+          <tr><td style="text-align:left">per-type precision</td><td class="terra" style="text-align:left">done</td><td style="text-align:left">alongside recall in the heatmap output</td></tr>
+          <tr><td style="text-align:left">second real dataset</td><td style="text-align:left" class="muted">partial</td><td style="text-align:left">Water Quality added, but wrong regime; a rare-class one is still needed</td></tr>
+          <tr><td style="text-align:left">deep learning</td><td style="text-align:left" class="muted">M2</td><td style="text-align:left">Autoencoder, then LSTM-Autoencoder, same interface</td></tr>
+          <tr><td style="text-align:left">temporal drift</td><td style="text-align:left" class="muted">open</td><td style="text-align:left">empty column; needs a detector that uses the timestamp</td></tr>
+          <tr><td style="text-align:left">Related Work section</td><td style="text-align:left" class="muted">M2</td><td style="text-align:left">plus bibliography checks, then final Discussion</td></tr>
         </tbody>
       </table>
-      <p class="sm">M2 also covers the Related Work section, the bibliography checks, and then
-      the final Discussion and Conclusion around the completed heatmap. Defense July 2027.</p>
+      <p class="sm">Four of the rigour gaps from the last review are closed. Deep learning
+      and a genuinely imbalanced second real dataset are the substance left for M2.
+      Defense July 2027.</p>
     </div>
     <div class="foot"><span>roadmap in docs/TD5/PLAN.md</span><span>phases C to F</span></div>
   </div>
