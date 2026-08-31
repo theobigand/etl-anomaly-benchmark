@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ETL anomaly benchmark, thesis progress</title>
+<style>
+  :root{
+    --paper:#f4f0e7; --paper-secondary:#ece5d8; --ink:#171614; --muted-ink:#6f675f;
+    --rule:#d6ccbd; --terracotta:#a64b34; --mineral-green:#536b68;
+    --success:#4e695c; --warning:#916424;
+    --serif:"Iowan Old Style",Baskerville,"Palatino Linotype","Book Antiqua","Times New Roman",serif;
+    --sans:"Avenir Next","Helvetica Neue",Helvetica,Arial,sans-serif;
+    --mono:"SFMono-Regular",Menlo,Monaco,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:var(--paper);color:var(--ink);font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;overflow:hidden;
+  }
+  #deck{height:100vh;height:100dvh}
+  .slide{
+    position:absolute;inset:0;height:100vh;height:100dvh;
+    padding:6.5vh 6.5vw 5vh;display:none;flex-direction:column;
+    opacity:0;transition:opacity .28s ease;
+  }
+  .slide.current{display:flex;opacity:1}
+  @media(prefers-reduced-motion:reduce){.slide{transition:none}}
+
+  .meta{font-family:var(--mono);font-size:12px;letter-spacing:.02em;color:var(--muted-ink);
+        text-transform:uppercase}
+  .rule{height:2px;width:132px;background:var(--terracotta);margin:14px 0 26px}
+  .rule.thin{height:1px;width:100%;background:var(--rule);margin:0}
+
+  h1{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5.2vw,56px);line-height:1.08;
+     letter-spacing:-.01em;max-width:20ch}
+  h2{font-family:var(--serif);font-weight:600;font-size:clamp(26px,3.4vw,38px);line-height:1.12;
+     letter-spacing:-.01em;max-width:30ch;hyphens:none}
+  .lead{font-size:clamp(17px,1.7vw,22px);line-height:1.5;max-width:60ch;color:var(--ink)}
+  .body{font-size:clamp(15px,1.35vw,18px);line-height:1.55;max-width:66ch;color:var(--ink)}
+  .muted{color:var(--muted-ink)}
+  p+p{margin-top:12px}
+  .fill{flex:1 1 auto}
+  .foot{display:flex;justify-content:space-between;align-items:baseline;
+        font-family:var(--mono);font-size:11px;color:var(--muted-ink);padding-top:14px}
+
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start}
+  .cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;align-items:start}
+  .stack>*+*{margin-top:10px}
+  ul{list-style:none}
+  li{font-size:clamp(15px,1.35vw,18px);line-height:1.5;padding:9px 0;border-top:1px solid var(--rule)}
+  li:first-child{border-top:0}
+  li .k{font-family:var(--mono);font-size:12px;color:var(--terracotta);display:block;margin-bottom:2px}
+
+  .kicker{font-family:var(--mono);font-size:12px;color:var(--muted-ink);text-transform:uppercase;
+          letter-spacing:.03em;margin-bottom:8px}
+
+  table{border-collapse:collapse;width:100%;font-size:clamp(13px,1.15vw,16px)}
+  caption{caption-side:bottom;text-align:left;font-size:12px;color:var(--muted-ink);
+          font-family:var(--mono);padding-top:10px}
+  th,td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--rule)}
+  th:first-child,td:first-child{text-align:left}
+  thead th{color:var(--muted-ink);font-weight:600;border-bottom:1.5px solid var(--ink)}
+  tbody tr:last-child td{border-bottom:1.5px solid var(--ink)}
+  td.best{color:var(--terracotta);font-weight:700}
+  td.grp{font-family:var(--mono);font-size:12px;color:var(--muted-ink);border-bottom:0;padding-top:16px}
+  .num{font-variant-numeric:tabular-nums}
+
+  figure{margin:0;display:flex;flex-direction:column;gap:12px;min-height:0;flex:1}
+  figure img{flex:1;min-height:0;width:100%;height:auto;object-fit:contain;object-position:left center}
+  figcaption{flex:0 0 auto;font-size:13px;color:var(--muted-ink);line-height:1.45;max-width:64ch}
+
+  code,.mono{font-family:var(--mono);font-size:.92em}
+  .code{background:#171614;color:#eee8dd;font-family:var(--mono);font-size:clamp(12px,1.1vw,15px);
+        line-height:1.5;padding:18px 20px;white-space:pre;overflow:auto;border-radius:2px;max-width:70ch}
+  .code .c{color:#aaa094}
+  .code .t{color:#cf745a}
+
+  .slide.dark{background:var(--ink);color:var(--paper)}
+  .slide.dark .rule{background:var(--terracotta)}
+  .slide.dark .muted,.slide.dark .foot,.slide.dark .meta{color:#aaa094}
+  .slide.dark h1,.slide.dark h2{color:var(--paper)}
+
+  .mono-mark{position:absolute;right:clamp(80px,11vw,180px);bottom:clamp(88px,14vh,150px);
+    font-family:var(--serif);font-size:clamp(84px,11vw,150px);line-height:.8;color:var(--ink);
+    opacity:.06;pointer-events:none;user-select:none}
+
+  nav#dots{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);display:flex;gap:7px;z-index:10}
+  nav#dots button{width:7px;height:7px;border-radius:50%;border:0;padding:0;cursor:pointer;
+    background:var(--rule)}
+  nav#dots button[aria-current="true"]{background:var(--terracotta)}
+  #counter{position:fixed;right:14px;bottom:12px;font-family:var(--mono);font-size:11px;
+    color:var(--muted-ink);z-index:10}
+
+  .tag{display:inline-block;font-family:var(--mono);font-size:11px;padding:2px 7px;border:1px solid var(--rule);
+    color:var(--muted-ink);margin-right:6px}
+  .tag.done{color:var(--success);border-color:var(--success)}
+  .tag.next{color:var(--warning);border-color:var(--warning)}
+</style>
+</head>
+<body>
+<main id="deck">
+
+  <!-- 1 -->
+  <section class="slide current" data-title="Title">
+    <div class="meta">Master Thesis Bootcamp MSc1 &nbsp;·&nbsp; ESILV Data &amp; AI</div>
+    <div class="rule"></div>
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center">
+      <h1>Anomaly detection for data quality, measured inside the ETL pipeline</h1>
+      <p class="lead muted" style="margin-top:22px">
+        Progress review. Rule-based and classical machine-learning detectors now run
+        in one pipeline and are compared per anomaly type on a controlled dataset.
+      </p>
+    </div>
+    <div class="foot"><span>Theo Bigand</span><span>2026-08-31</span></div>
+    <div class="mono-mark">E</div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide" data-title="Question">
+    <div class="kicker">The question</div>
+    <h2>Does machine learning in an ETL pipeline detect anomalies better than plain rules, and for which kinds of anomaly?</h2>
+    <div class="rule"></div>
+    <div class="cols fill">
+      <div class="stack">
+        <p class="body"><b>Rules are the industry default.</b> Declarative checks in tools
+        like Great Expectations are auditable and cheap, but they only catch what the
+        author anticipated.</p>
+        <p class="body"><b>The claim to test.</b> Learned detectors should add coverage on
+        anomalies that no fixed per-column rule describes, such as implausible
+        combinations of otherwise normal values.</p>
+      </div>
+      <div class="stack">
+        <p class="body muted">Deliverable of the thesis: a method by anomaly-type map that
+        tells a practitioner which detector family to reach for, at what operational cost.</p>
+        <p class="body muted">Format: IMRaD experimental paper, with a demo paper as the
+        fallback if the M2 schedule slips.</p>
+      </div>
+    </div>
+    <div class="foot"><span>etl-anomaly-benchmark</span></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide" data-title="Gap">
+    <div class="kicker">Where this sits</div>
+    <h2>Existing benchmarks measure algorithms in isolation and report one score per dataset</h2>
+    <div class="rule"></div>
+    <ul class="fill" style="align-self:stretch;max-width:none">
+      <li><span class="k">ADBench, NeurIPS 2022</span>30 algorithms on 57 tabular datasets, the reference to extend rather than repeat. Evaluates outside any pipeline.</li>
+      <li><span class="k">Not covered: declarative rules</span>Great Expectations and similar tools are never compared head to head with ML detectors.</li>
+      <li><span class="k">Not covered: pipeline integration</span>No measurement of in-pipeline latency or where a detector can sit in the flow.</li>
+      <li><span class="k">Not covered: per anomaly type</span>Aggregate scores hide that each detector family is good at a different kind of defect.</li>
+    </ul>
+    <div class="foot"><span>Related work</span></div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide" data-title="Contribution">
+    <div class="kicker">The original contribution</div>
+    <h2>A controlled dataset with six labelled anomaly types, and a detection rate for every method on every type</h2>
+    <div class="rule"></div>
+    <div class="cols fill">
+      <div>
+        <p class="body">Six categories are injected at a fixed rate into a base
+        population of customer records generated with Faker and NumPy:</p>
+        <ul style="margin-top:12px;max-width:none">
+          <li>missing values</li>
+          <li>exact duplicates</li>
+          <li>univariate outliers</li>
+          <li>multivariate outliers, each field in range, the combination not</li>
+          <li>temporal drift</li>
+          <li>invalid formats</li>
+        </ul>
+      </div>
+      <p class="body muted">Because the category of every injected row is known, the
+      benchmark reports a recall per type. That matrix is the paper's central figure and
+      the part that is new relative to ADBench.</p>
+    </div>
+    <div class="foot"><span>synthetic.py</span></div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide" data-title="Pipeline">
+    <div class="kicker">The system</div>
+    <h2>Detectors run inside a real pipeline, not on a bare matrix</h2>
+    <div class="rule"></div>
+    <div class="fill" style="display:flex;flex-direction:column;gap:26px;justify-content:center">
+      <svg viewBox="0 0 980 150" style="width:100%;max-width:960px" role="img" aria-label="pipeline stages">
+        <defs><marker id="a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+          <path d="M0 0L9 4.5L0 9z" fill="#a64b34"/></marker></defs>
+        <g font-family="Menlo,Monaco,Consolas,monospace" font-size="15" fill="#171614">
+          <rect x="4" y="46" width="150" height="58" fill="#ece5d8" stroke="#d6ccbd"/>
+          <text x="79" y="72" text-anchor="middle">extract</text>
+          <text x="79" y="92" text-anchor="middle" font-size="11" fill="#6f675f">read_csv</text>
+          <rect x="234" y="46" width="150" height="58" fill="#ece5d8" stroke="#d6ccbd"/>
+          <text x="309" y="72" text-anchor="middle">transform</text>
+          <text x="309" y="92" text-anchor="middle" font-size="11" fill="#6f675f">dedup</text>
+          <rect x="464" y="40" width="170" height="70" fill="#f4f0e7" stroke="#a64b34" stroke-width="1.5"/>
+          <text x="549" y="70" text-anchor="middle">detect</text>
+          <text x="549" y="90" text-anchor="middle" font-size="11" fill="#6f675f">fit · predict · score</text>
+          <rect x="714" y="46" width="150" height="58" fill="#ece5d8" stroke="#d6ccbd"/>
+          <text x="789" y="72" text-anchor="middle">load</text>
+          <text x="789" y="92" text-anchor="middle" font-size="11" fill="#6f675f">write_csv</text>
+          <line x1="158" y1="75" x2="228" y2="75" stroke="#a64b34" marker-end="url(#a)"/>
+          <line x1="388" y1="75" x2="458" y2="75" stroke="#a64b34" marker-end="url(#a)"/>
+          <line x1="638" y1="75" x2="708" y2="75" stroke="#a64b34" marker-end="url(#a)"/>
+        </g>
+      </svg>
+      <div class="cols">
+        <p class="body">Every detector implements the same <code>fit / predict / score</code>
+        interface, modelled on PyOD. The demo and the benchmark share the exact
+        <code>detect()</code> stage, so latency is measured on the real path.</p>
+        <p class="body muted">A continuous <code>score()</code> was added so ROC-AUC and
+        PR-AUC are computable, not only threshold F1.</p>
+      </div>
+    </div>
+    <div class="foot"><span>pipeline.py</span></div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide" data-title="Families">
+    <div class="kicker">Three families, one interface</div>
+    <h2>What is implemented today</h2>
+    <div class="rule"></div>
+    <div class="cols3 fill">
+      <div class="stack">
+        <div class="meta" style="color:var(--terracotta)">Rule-based</div>
+        <p class="body">Z-score, IQR (Tukey fences), Great Expectations suite (not-null plus per-column range at the 0.1 / 99.9 percentiles).</p>
+        <p class="body muted">A per-column band. Differ in robustness and distributional assumption.</p>
+      </div>
+      <div class="stack">
+        <div class="meta" style="color:var(--terracotta)">Classical ML</div>
+        <p class="body">Isolation Forest, Local Outlier Factor, One-Class SVM, wrapped from PyOD. Numeric features, median imputation, standardized.</p>
+        <p class="body muted">A joint model of the feature space.</p>
+      </div>
+      <div class="stack">
+        <div class="meta muted">Deep learning</div>
+        <p class="body muted">Autoencoder, LSTM-Autoencoder. Scheduled for M2, kept behind the same interface.</p>
+      </div>
+    </div>
+    <div class="foot"><span>quality/</span></div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide" data-title="Datasets">
+    <div class="kicker">Datasets</div>
+    <h2>One real and strongly imbalanced, one controlled by construction</h2>
+    <div class="rule"></div>
+    <ul class="fill" style="max-width:none">
+      <li><span class="k">Credit Card Fraud, Kaggle</span>283,726 transactions after dedup, 0.167% fraud. Real, heavily imbalanced, single binary label.</li>
+      <li><span class="k">Synthetic per type</span>12,360 records, six anomaly types at 3% each, every bad row tagged with its category.</li>
+      <li><span class="k">UCI Water Quality</span>Planned for the summer, to test whether the per-type findings hold in another domain.</li>
+    </ul>
+    <div class="foot"><span>data/</span></div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide" data-title="Rules on fraud">
+    <div class="kicker">Evidence, part 1</div>
+    <h2>On real fraud data, rules recover most positives at a precision no one could deploy</h2>
+    <div class="rule"></div>
+    <div class="cols fill" style="align-items:center">
+      <table class="num">
+        <caption>Credit Card Fraud, full dataset. Time is in-pipeline fit+predict+score.</caption>
+        <thead><tr><th>Detector</th><th>Prec.</th><th>Rec.</th><th>PR-AUC</th><th>Flag %</th><th>Time</th></tr></thead>
+        <tbody>
+          <tr><td>Z-score</td><td>0.011</td><td>0.899</td><td>0.090</td><td>13.4</td><td>0.2 s</td></tr>
+          <tr><td>IQR</td><td>0.003</td><td class="best">0.968</td><td>0.020</td><td>48.6</td><td>0.6 s</td></tr>
+          <tr><td>Great Expectations</td><td class="best">0.039</td><td>0.710</td><td class="best">0.206</td><td class="best">3.0</td><td>13.2 s</td></tr>
+        </tbody>
+      </table>
+      <div class="stack">
+        <p class="body">A fixed rule cannot separate a 0.17% positive class from the tails
+        of legitimate traffic. Great Expectations is the most selective and wins PR-AUC;
+        it is also about 60 times slower than the statistical rules.</p>
+        <p class="body muted">This gap is what the learned detectors are meant to close.</p>
+      </div>
+    </div>
+    <div class="foot"><span>run_benchmark.py</span></div>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide" data-title="Synthetic aggregate">
+    <div class="kicker">Evidence, part 2</div>
+    <h2>On the synthetic dataset, no single family dominates on aggregate metrics</h2>
+    <div class="rule"></div>
+    <div class="cols fill" style="align-items:center">
+      <table class="num">
+        <caption>Synthetic dataset, 12,360 rows, 17.5% anomalous. detect = fit+predict+score.</caption>
+        <thead><tr><th>Method</th><th>Prec.</th><th>Rec.</th><th>F1</th><th>PR-AUC</th><th>detect</th></tr></thead>
+        <tbody>
+          <tr><td class="grp" colspan="6">rule-based</td></tr>
+          <tr><td>Z-score</td><td class="best">1.000</td><td>0.188</td><td>0.316</td><td class="best">0.540</td><td>0.00 s</td></tr>
+          <tr><td>IQR</td><td>0.581</td><td class="best">0.402</td><td class="best">0.475</td><td>0.451</td><td>0.01 s</td></tr>
+          <tr><td>Great Expectations</td><td>0.952</td><td>0.238</td><td>0.381</td><td>0.361</td><td>0.89 s</td></tr>
+          <tr><td class="grp" colspan="6">classical ML</td></tr>
+          <tr><td>Isolation Forest</td><td>0.599</td><td>0.343</td><td>0.436</td><td>0.505</td><td>0.53 s</td></tr>
+          <tr><td>LOF</td><td>0.529</td><td>0.269</td><td>0.356</td><td>0.394</td><td>0.41 s</td></tr>
+          <tr><td>One-Class SVM</td><td>0.583</td><td>0.334</td><td>0.425</td><td>0.512</td><td>9.83 s</td></tr>
+        </tbody>
+      </table>
+      <p class="body muted">Read alone, these numbers would suggest the families are
+      interchangeable. The per-type view shows they are not.</p>
+    </div>
+    <div class="foot"><span>run_synthetic_benchmark.py</span></div>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide" data-title="Heatmap">
+    <div class="kicker">Evidence, part 3, the contribution</div>
+    <h2>Each family has a spike; only the learned models cover multivariate outliers</h2>
+    <div class="rule"></div>
+    <figure class="fill">
+      <img src="../paper/figures/heatmap_synthetic.png" alt="detection rate by anomaly type">
+      <figcaption>
+        Z-score owns univariate outliers and nothing else. Great Expectations owns missing
+        values. Deduplication owns exact duplicates. Isolation Forest and One-Class SVM are
+        the only methods with real recall on multivariate outliers. No method handles
+        temporal drift well yet, at most 0.35.
+      </figcaption>
+    </figure>
+    <div class="foot"><span>paper/figures/heatmap_synthetic.png</span></div>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide" data-title="Difficult points">
+    <div class="kicker">What was harder than expected</div>
+    <h2>Three findings from the build</h2>
+    <div class="rule"></div>
+    <ul class="fill" style="max-width:none">
+      <li><span class="k">Great Expectations 1.x is a full API rewrite</span>The planning notes assumed the 0.18 API. Getting per-row failures out of GX 1.18 needs COMPLETE result format plus an explicit index column.</li>
+      <li><span class="k">One-Class SVM does not scale to pipeline data</span>Training is quadratic. On the full fraud dataset it is impractical, so the cross-method comparison runs on the controlled dataset and a fitted sample.</li>
+      <li><span class="k">ML detectors are weak on missing values</span>Imputing before the model removes the signal a not-null rule catches for free. Rules and ML are complementary, not competing.</li>
+    </ul>
+    <div class="foot"><span>docs/TD5/NOTES.md</span></div>
+  </section>
+
+  <!-- 12 -->
+  <section class="slide" data-title="Cost">
+    <div class="kicker">Operational cost</div>
+    <h2>Latency is part of the comparison, because a detector has to sit in the flow</h2>
+    <div class="rule"></div>
+    <div class="cols fill" style="align-items:center">
+      <div class="stack">
+        <p class="body">The statistical rules cost milliseconds. Great Expectations is
+        roughly 60 times slower on the fraud dataset because it runs one pass per
+        expectation. One-Class SVM is the slowest learned model at about 10 seconds on
+        12,000 rows.</p>
+        <p class="body muted">Measured on the same <code>detect()</code> stage the demo
+        uses, so the numbers reflect the real pipeline path.</p>
+      </div>
+      <table class="num">
+        <caption>In-pipeline detect time.</caption>
+        <thead><tr><th>Method</th><th>Fraud, full</th><th>Synthetic, 12k</th></tr></thead>
+        <tbody>
+          <tr><td>Z-score</td><td>0.2 s</td><td>0.003 s</td></tr>
+          <tr><td>IQR</td><td>0.6 s</td><td>0.005 s</td></tr>
+          <tr><td>Great Expectations</td><td>13.2 s</td><td>0.9 s</td></tr>
+          <tr><td>Isolation Forest</td><td>&mdash;</td><td>0.5 s</td></tr>
+          <tr><td>One-Class SVM</td><td>&mdash;</td><td>9.8 s</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="foot"><span>DetectionResult.detect_s</span></div>
+  </section>
+
+  <!-- 13 -->
+  <section class="slide" data-title="State">
+    <div class="kicker">Current state</div>
+    <h2>Where the repository stands</h2>
+    <div class="rule"></div>
+    <div class="cols fill">
+      <div class="stack">
+        <p class="body"><span class="tag done">done</span> ETL pipeline as composable stages</p>
+        <p class="body"><span class="tag done">done</span> Rule-based detectors and benchmark on Credit Card Fraud</p>
+        <p class="body"><span class="tag done">done</span> Isolation Forest, LOF, One-Class SVM via PyOD</p>
+        <p class="body"><span class="tag done">done</span> Synthetic six-type dataset and the method-by-type heatmap</p>
+      </div>
+      <div class="stack">
+        <p class="body"><span class="tag next">next</span> Autoencoder and LSTM-Autoencoder, M2</p>
+        <p class="body"><span class="tag next">next</span> UCI Water Quality as a third dataset</p>
+        <p class="body"><span class="tag next">next</span> Related Work section, bibliography checks</p>
+        <p class="body muted" style="margin-top:14px">Reproducible: conda env, Makefile,
+        pytest suite, versioned paper PDF, on GitHub.</p>
+      </div>
+    </div>
+    <div class="foot"><span>README.md</span></div>
+  </section>
+
+  <!-- 14 -->
+  <section class="slide" data-title="Next">
+    <div class="kicker">Next steps, concrete</div>
+    <h2>The M2 plan</h2>
+    <div class="rule"></div>
+    <ul class="fill" style="max-width:none">
+      <li><span class="k">Deep learning</span>A plain Autoencoder first, then LSTM-Autoencoder, both behind the existing interface. Reconstruction error as the score.</li>
+      <li><span class="k">Third dataset</span>UCI Water Quality, to check whether the per-type ranking generalises to another domain.</li>
+      <li><span class="k">Tune the operating point</span>Set each ML detector's contamination from the dataset prevalence instead of a fixed 0.10.</li>
+      <li><span class="k">Temporal drift</span>The one type nothing handles well. Add a detector that uses the signup timestamp explicitly.</li>
+      <li><span class="k">Write-up</span>Related Work, then Discussion and Conclusion around the heatmap.</li>
+    </ul>
+    <div class="foot"><span>docs/TD5/PLAN.md</span></div>
+  </section>
+
+  <!-- 15 -->
+  <section class="slide dark" data-title="Takeaway">
+    <div class="meta">Takeaway</div>
+    <div class="rule"></div>
+    <div class="fill" style="display:flex;flex-direction:column;justify-content:center">
+      <h1 style="max-width:26ch">Rules and machine learning are complementary by anomaly type, and the heatmap is what makes that choice actionable.</h1>
+      <p class="lead muted" style="margin-top:24px">
+        The pipeline, the six-type dataset, and the per-type benchmark are in place.
+        Deep learning and a second real dataset are the remaining work for M2.
+      </p>
+    </div>
+    <div class="foot"><span>github.com/theobigand/etl-anomaly-benchmark</span></div>
+  </section>
+
+</main>
+
+<nav id="dots" aria-label="slides"></nav>
+<div id="counter"></div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dots = document.getElementById('dots');
+  const counter = document.getElementById('counter');
+  let i = 0;
+  slides.forEach((s, n) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('aria-label', 'Slide ' + (n + 1) + (s.dataset.title ? ', ' + s.dataset.title : ''));
+    b.addEventListener('click', () => go(n));
+    dots.appendChild(b);
+  });
+  function go(n){
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('current', k === i));
+    Array.from(dots.children).forEach((d, k) => d.setAttribute('aria-current', k === i ? 'true' : 'false'));
+    counter.textContent = (i + 1) + ' / ' + slides.length;
+    location.hash = i + 1;
+  }
+  function next(){ go(i + 1); }
+  function prev(){ go(i - 1); }
+  window.addEventListener('keydown', e => {
+    if (['ArrowRight', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); next(); }
+    else if (['ArrowLeft', 'PageUp'].includes(e.key)) { e.preventDefault(); prev(); }
+    else if (e.key === 'Home') go(0);
+    else if (e.key === 'End') go(slides.length - 1);
+  });
+  let tX = null;
+  window.addEventListener('touchstart', e => tX = e.changedTouches[0].clientX, {passive:true});
+  window.addEventListener('touchend', e => {
+    if (tX === null) return;
+    const d = e.changedTouches[0].clientX - tX;
+    if (Math.abs(d) > 50) (d < 0 ? next : prev)();
+    tX = null;
+  }, {passive:true});
+  go(parseInt(location.hash.slice(1)) - 1 || 0);
+</script>
+</body>
+</html>
