@@ -22,10 +22,11 @@ from etl_benchmark.quality import (
     IsolationForestDetector,
     LOFDetector,
     OneClassSVMDetector,
+    TemporalDriftDetector,
     ZScoreDetector,
 )
 
-# Each factory takes the ML contamination to use (rule-based detectors ignore it).
+# Each factory takes the ML contamination to use (other detectors ignore it).
 _FACTORIES: dict[str, Callable[[float], Detector]] = {
     "zscore": lambda c: ZScoreDetector(threshold=config.ZSCORE_THRESHOLD),
     "iqr": lambda c: IQRDetector(multiplier=config.IQR_MULTIPLIER),
@@ -33,11 +34,16 @@ _FACTORIES: dict[str, Callable[[float], Detector]] = {
     "isolation_forest": lambda c: IsolationForestDetector(contamination=c),
     "lof": lambda c: LOFDetector(contamination=c),
     "ocsvm": lambda c: OneClassSVMDetector(contamination=c),
+    "drift": lambda c: TemporalDriftDetector(),
 }
 
-DETECTOR_NAMES: list[str] = list(_FACTORIES)
 RULE_NAMES: list[str] = ["zscore", "iqr", "great_expectations"]
 ML_NAMES: list[str] = ["isolation_forest", "lof", "ocsvm"]
+# The core comparison set. ``drift`` needs a timestamp column, so it is opt-in
+# (the synthetic benchmark adds it) rather than part of the default sweep.
+DETECTOR_NAMES: list[str] = [*RULE_NAMES, *ML_NAMES]
+DRIFT_NAME: str = "drift"
+ALL_NAMES: list[str] = [*DETECTOR_NAMES, DRIFT_NAME]
 
 
 def clip_contamination(prevalence: float | None) -> float:

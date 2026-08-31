@@ -47,7 +47,7 @@ from sklearn.metrics import (  # noqa: E402
 from etl_benchmark import config  # noqa: E402
 from etl_benchmark.logging_setup import setup_logging  # noqa: E402
 from etl_benchmark.pipeline import detect  # noqa: E402
-from etl_benchmark.registry import all_detectors  # noqa: E402
+from etl_benchmark.registry import ALL_NAMES, all_detectors  # noqa: E402
 from etl_benchmark.split import stratified_split  # noqa: E402
 from etl_benchmark.synthetic import ANOMALY_TYPES, FEATURE_COLUMNS, make_synthetic  # noqa: E402
 
@@ -100,7 +100,7 @@ def evaluate(df: pd.DataFrame, seed: int) -> dict[str, pd.DataFrame]:
     type_test = test["anomaly_type"]
 
     metrics, recall, precision = [], [], []
-    detectors = all_detectors(ml_contamination=contamination)
+    detectors = all_detectors(ml_contamination=contamination, names=ALL_NAMES)
     for det in detectors + ["transform_dedup"]:
         if det == "transform_dedup":
             name, flags, scores = "transform_dedup", _dedup_flags_for(test), _dedup_flags_for(test)
