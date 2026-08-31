@@ -36,19 +36,24 @@ but systematic, apples-to-apples comparisons between rule-based,
 classical ML, and deep learning approaches remain scarce---especially
 when evaluated within a realistic pipeline and broken down by the type
 of anomaly being injected. This paper presents an open-source ETL
-pipeline integrating three families of anomaly detectors: statistical
-rules (Z-score, IQR, Great Expectations), classical ML detectors
-(Isolation Forest, LOF, One-Class SVM), and deep learning detectors
-(Autoencoder, LSTM-Autoencoder). We evaluate the three families on
-three datasets---Kaggle Credit Card Fraud, UCI Water Quality, and a
-controlled synthetic dataset generated with Faker in which six distinct
-anomaly types are injected at controlled rates. Beyond aggregate
-precision, recall, F1, ROC-AUC and PR-AUC, we introduce a
-per-anomaly-type heatmap that maps each method to the anomaly
-categories it detects best. Our goal is to give practitioners a
-reproducible, pipeline-integrated benchmark that answers the practical
-question: \emph{which family of detectors should I use, for which kind
-of data quality problem, at what operational cost?}
+pipeline in which anomaly detectors from different families share one
+\texttt{fit}/\texttt{predict}/\texttt{score} interface and are scored on
+the same pipeline path: statistical rules (Z-score, IQR, Great
+Expectations) and classical ML detectors (Isolation Forest, LOF,
+One-Class SVM), with deep learning detectors (Autoencoder,
+LSTM-Autoencoder) planned behind the same interface. We evaluate the
+detectors on the Kaggle Credit Card Fraud dataset and on a controlled
+synthetic dataset generated with Faker in which six distinct anomaly
+types are injected at controlled rates. Beyond aggregate precision,
+recall, F1, ROC-AUC and PR-AUC, we report a per-anomaly-type detection
+rate that maps each method to the anomaly categories it actually
+catches. The aggregate metrics make the families look interchangeable;
+the per-type view shows each has a narrow, largely non-overlapping
+competence, so broad coverage needs several families rather than the
+single best one. Our goal is a reproducible, pipeline-integrated
+benchmark that answers the practical question: \emph{which family of
+detectors should I use, for which kind of data quality problem, at what
+operational cost?}
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -113,21 +118,22 @@ anomaly type to recommended method.
 \paragraph{Contributions.} This paper addresses these three gaps. We
 present:
 \begin{enumerate}
-    \item \textbf{A reproducible ETL pipeline} integrating rule-based,
-    classical ML, and deep learning anomaly detectors in a single
-    unified framework, released as open-source code.
-    \item \textbf{A systematic head-to-head benchmark} of three
-    families---statistical rules (Z-score, IQR, Great Expectations),
-    classical ML (Isolation Forest, LOF, One-Class SVM), and deep
-    learning (Autoencoder, LSTM-Autoencoder)---on three datasets
-    (Credit Card Fraud, UCI Water Quality, synthetic Faker), reporting
-    precision, recall, F1, ROC-AUC, PR-AUC, and per-row latency.
+    \item \textbf{A reproducible ETL pipeline} in which rule-based and
+    classical ML anomaly detectors share one interface and are scored on
+    the same extract--transform--detect path, released as open-source
+    code, with deep-learning detectors planned behind the same interface.
+    \item \textbf{A head-to-head benchmark} of statistical rules
+    (Z-score, IQR, Great Expectations) and classical ML detectors
+    (Isolation Forest, LOF, One-Class SVM) on Credit Card Fraud and on a
+    controlled synthetic dataset, reporting precision, recall, F1,
+    ROC-AUC, PR-AUC, and in-pipeline latency.
     \item \textbf{A per-anomaly-type analysis.} Using a synthetic
     dataset in which six distinct anomaly categories (missing values,
     duplicates, univariate outliers, multivariate outliers, temporal
-    drift, invalid formats) are injected at controlled rates, we
-    produce a method-by-type heatmap that guides the choice of
-    detector in production.
+    drift, invalid formats) are injected at controlled rates, we produce
+    a method-by-type detection-rate matrix. The families turn out to have
+    narrow, largely non-overlapping competence that the aggregate metrics
+    hide.
 \end{enumerate}
 
 The rest of the paper is organized as follows. Section~II reviews
@@ -211,11 +217,48 @@ units (IQR). The axis of difference between the three is thus robustness
 and the assumption made about the shape of the data, which is precisely
 what the learned models of the next stage are meant to handle better.
 
-\subsection{Dataset and metrics}
-We report here on the Credit Card Fraud dataset (284{,}807 transactions,
-30 numeric features, $0.17\%$ labelled fraud), a standard and strongly
-imbalanced benchmark. Each detector is fitted and evaluated on the full
-feature matrix, and its output is scored against the ground-truth label.
+\subsection{Classical machine-learning detectors}
+The second family replaces the per-column band with a learned model of
+the joint feature space, so that a row can be flagged for an implausible
+\emph{combination} of otherwise-normal values. Three unsupervised
+detectors are taken from PyOD~\cite{zhao2019pyod} rather than
+reimplemented: \emph{Isolation Forest}, which scores a row by how few
+random axis-aligned splits are needed to isolate it; \emph{Local Outlier
+Factor} (LOF), which compares a point's local density to that of its
+neighbours; and a \emph{One-Class SVM}, which fits a boundary enclosing
+the bulk of the training data. All three receive the same preparation:
+non-numeric columns are dropped, missing cells are median-imputed, and
+every feature is standardized, since LOF and the One-Class SVM are
+distance-based. The PyOD \texttt{decision\_function} provides the
+continuous score; the boolean flag uses a contamination of $0.10$, so
+each model marks its top $10\%$ most anomalous rows. Contamination sets
+only the flag threshold and leaves ROC-AUC and PR-AUC unaffected.
+
+\subsection{Synthetic per-anomaly-type dataset}
+\label{sec:synthetic}
+The real datasets carry a single binary label that mixes every kind of
+defect together, so they cannot say \emph{which} problem a detector is
+good at. We therefore generate a controlled dataset of $12{,}360$
+customer records with Faker and NumPy, in which income is correlated with
+balance and transaction size and account age is spread over three years.
+Into this clean population we inject six anomaly types, each at a rate of
+$3\%$ and each row tagged with its category: \emph{missing values} (one
+or two cells nulled), \emph{exact duplicates} (a clean row copied),
+\emph{univariate outliers} (one numeric field pushed far out of range),
+\emph{multivariate outliers} (every field individually in range but the
+combination implausible, e.g.\ an $18$-year-old with a top-percentile
+balance and income), \emph{temporal drift} (recent-signup rows whose
+income and balance distribution has shifted upward by half), and
+\emph{invalid formats} (malformed e-mail, out-of-domain country code,
+impossible age). Because the category of every injected row is known, we
+report a detection rate per method and per type.
+
+\subsection{Datasets and metrics}
+The real-data results below use the Credit Card Fraud dataset
+(284{,}807 transactions, $30$ numeric features, $0.17\%$ labelled fraud),
+a standard and strongly imbalanced benchmark. Each detector is fitted and
+evaluated on the feature matrix, and its output is scored against the
+ground-truth label.
 Because the detectors emit both a threshold decision and a graded score,
 we report threshold metrics (precision, recall, $F_1$) alongside two
 threshold-independent ranking metrics, ROC-AUC and PR-AUC. On a dataset as
@@ -227,55 +270,185 @@ dataset's base rate --- PR-AUC's random baseline equals the prevalence and
 is therefore not comparable across datasets, while ROC-AUC's is always
 $0.5$ and is. As further datasets are added we keep both and read the one
 suited to each dataset's balance. We also report the fraction of rows
-flagged and wall-clock time. The synthetic
-per-anomaly-type dataset and the classical/deep detectors are the object
-of the next stages.
+flagged and wall-clock time. On the synthetic dataset the same aggregate
+metrics are reported, complemented by the per-anomaly-type detection rate
+of Section~\ref{sec:results-synthetic}. The deep-learning detectors
+(Autoencoder, LSTM-Autoencoder) are the object of the next stage.
 
 \section{Experiments and Results}
 \label{sec:experiments}
 
-Table~\ref{tab:rules} reports the three rule-based detectors on Credit
-Card Fraud. The picture is consistent across metrics: all three recover
-most frauds (recall $0.71$--$0.97$) but at unusable precision
-($\leq 0.04$), because a fixed statistical rule cannot separate a $0.17\%$
-positive class from the long tails of legitimate traffic. IQR is the most
-aggressive, flagging almost half of all rows, which collapses its PR-AUC.
-The declarative Great Expectations suite is the most selective (it flags
-$3\%$ of rows) and obtains the best precision and PR-AUC, while the
-Z-score gives the best ROC-AUC. No rule-based method reaches a precision
-that would be acceptable in production, which is the gap the classical and
-deep detectors introduced in the next stage are meant to close.
-Measuring detection inside the pipeline also exposes a cost gap: the
-declarative Great Expectations suite is about $60\times$ slower than the
-statistical rules ($13.2$\,s vs $0.2$--$0.6$\,s on the full dataset),
-which matters for its placement in a latency-sensitive ETL flow.
+\subsection{Real fraud data: rules and Isolation Forest}
+Table~\ref{tab:rules} reports the detectors on Credit Card Fraud. The
+picture is consistent across metrics: every method recovers most frauds
+(recall $0.71$--$0.97$) but at unusable precision ($\leq 0.04$), because
+neither a fixed statistical rule nor an unsupervised model tuned to flag
+$10\%$ of rows can separate a $0.17\%$ positive class from the long tails
+of legitimate traffic. IQR is the most aggressive, flagging almost half
+of all rows, which collapses its PR-AUC. The declarative Great
+Expectations suite is the most selective ($3\%$ of rows) and obtains the
+best PR-AUC; Isolation Forest obtains the best ROC-AUC and improves PR-AUC
+over both statistical rules, at $0.157$, without reaching the declarative
+suite. Measuring detection inside the pipeline also exposes a cost gap:
+the Great Expectations suite is about $60\times$ slower than the
+statistical rules ($13.2$\,s vs $0.2$--$0.6$\,s on the full dataset).
+Local Outlier Factor and the One-Class SVM are omitted from this table:
+LOF scoring is superlinear in the number of rows scored and the One-Class
+SVM has quadratic training, so neither runs at this dataset's scale
+inside the pipeline. They are compared with the other methods on the
+smaller synthetic dataset below, which is itself a pipeline-integration
+finding.
 
 \begin{table}[t]
-\caption{Rule-based detectors on Credit Card Fraud (full dataset,
-284{,}807 rows). Higher is better except for flagged rows and time.
-Time is the in-pipeline fit+predict+score latency.}
+\caption{Detectors on Credit Card Fraud (full dataset). Higher is better
+except for flagged rows and time. Time is the in-pipeline
+fit+predict+score latency. Isolation Forest is fitted on a $20{,}000$-row
+sample and scored on all $283{,}726$ rows.}
 \label{tab:rules}
 \centering
+\setlength{\tabcolsep}{3pt}
+\footnotesize
 \begin{tabular}{lrrrrrrr}
 \toprule
 Detector & Prec. & Rec. & $F_1$ & ROC & PR & Flag.\% & Time (s) \\
 \midrule
-Z-score            & 0.011 & 0.899 & 0.022 & \textbf{0.944} & 0.090 & 13.4 & \textbf{0.2} \\
+Z-score            & 0.011 & 0.899 & 0.022 & 0.944 & 0.090 & 13.4 & \textbf{0.2} \\
 IQR                & 0.003 & \textbf{0.968} & 0.007 & 0.922 & 0.020 & 48.6 & 0.6 \\
 Great Expectations & \textbf{0.039} & 0.710 & \textbf{0.075} & 0.848 & \textbf{0.206} & \textbf{3.0} & 13.2 \\
+Isolation Forest   & 0.014 & 0.882 & 0.028 & \textbf{0.949} & 0.157 & 10.4 & 3.2 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
+\subsection{Synthetic dataset: aggregate metrics}
+Table~\ref{tab:synthetic} reports all six detectors on the synthetic
+dataset ($12{,}360$ rows, $17.5\%$ anomalous). On aggregate metrics the
+three families look interchangeable: F1 ranges only from $0.32$ to $0.48$
+and PR-AUC from $0.36$ to $0.54$, with no family strictly ahead. Z-score
+reaches perfect precision by firing only on the most extreme rows;
+Isolation Forest and the One-Class SVM lead PR-AUC among the learned
+models. The One-Class SVM again pays for it in latency ($9.8$\,s, about
+$20\times$ Isolation Forest). Read on their own, these numbers would
+suggest the choice of detector barely matters. The per-type breakdown
+shows the opposite.
+
+\begin{table}[t]
+\caption{All detectors on the synthetic dataset ($12{,}360$ rows,
+$17.5\%$ anomalous). Time is the in-pipeline fit+predict+score latency.}
+\label{tab:synthetic}
+\centering
+\setlength{\tabcolsep}{4pt}
+\footnotesize
+\begin{tabular}{lrrrrrr}
+\toprule
+Detector & Prec. & Rec. & $F_1$ & ROC & PR & Time (s) \\
+\midrule
+Z-score            & \textbf{1.000} & 0.188 & 0.316 & 0.733 & 0.540 & \textbf{0.003} \\
+IQR                & 0.581 & \textbf{0.402} & \textbf{0.475} & 0.677 & 0.451 & 0.005 \\
+Great Expectations & 0.952 & 0.238 & 0.381 & 0.618 & 0.361 & 0.893 \\
+Isolation Forest   & 0.599 & 0.343 & 0.436 & \textbf{0.738} & 0.505 & 0.528 \\
+LOF                & 0.529 & 0.269 & 0.356 & 0.619 & 0.394 & 0.412 \\
+One-Class SVM      & 0.583 & 0.334 & 0.425 & 0.712 & \textbf{0.512} & 9.826 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Synthetic dataset: detection rate by anomaly type}
+\label{sec:results-synthetic}
+Fig.~\ref{fig:heatmap} gives the recall of each method on each injected
+anomaly type. The structure that the aggregate table hid is now visible:
+every method has a narrow competence.
+\begin{itemize}
+    \item \emph{Univariate outliers} are caught by every distributional
+    method (recall $0.91$--$0.99$), and only by those.
+    \item \emph{Missing values} are caught only by the Great Expectations
+    not-null expectations ($1.00$ against $\leq 0.14$ for every other
+    method), because the statistical rules propagate \texttt{NaN} to a
+    non-flag and the learned models see imputed values.
+    \item \emph{Exact duplicates} are invisible to every detector: a copy
+    of a normal row looks normal. The deduplication rule in the transform
+    stage is the only thing that catches them, which is the argument for
+    keeping that stage.
+    \item \emph{Multivariate outliers} separate the families: Isolation
+    Forest ($0.41$) and the One-Class SVM ($0.31$) are the only methods
+    with non-trivial recall, since they are the only ones that model the
+    joint distribution.
+    \item \emph{Invalid formats} are caught mainly through the impossible
+    numeric values they carry (IQR $1.00$ via the out-of-range age); the
+    malformed e-mail and country code are missed by all current
+    detectors.
+    \item \emph{Temporal drift} is the weakest column for every method
+    (best recall $0.35$, LOF), because the shifted values still fall
+    inside the global range and no detector uses the timestamp.
+\end{itemize}
+The practical reading is a short decision list: null-rate problems go to
+declarative rules, single-column outliers to any statistical rule,
+implausible combinations to a tree- or boundary-based model, and
+duplicates and drift to dedicated stages that none of these detectors
+replace.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/heatmap_synthetic.png}
+\caption{Detection rate (recall) of each method on each injected anomaly
+type, synthetic dataset. Darker is higher. \texttt{transform\_dedup} is
+the deduplication rule of the transform stage, shown for reference.}
+\label{fig:heatmap}
+\end{figure}
+
 \section{Discussion}
 \label{sec:discussion}
 
-\emph{To be written.}
+\paragraph{Rules and learned models are complementary, not competing.}
+The per-type heatmap shows almost no overlap between what the declarative
+rules catch (missing values), what the statistical rules catch
+(single-column outliers), and what the learned models add (implausible
+combinations). A pipeline that wants broad coverage needs more than one
+family, not the single best one. This is a different conclusion from
+aggregate benchmarks, where a single ranking invites picking one winner.
+
+\paragraph{Aggregate metrics on a mixed label are misleading.} On both
+datasets the aggregate table compresses very different behaviour into
+similar F1 and PR-AUC values. The Credit Card Fraud label mixes every
+defect type together, so a method that is excellent on one kind of
+anomaly and blind to the rest scores the same as a mediocre all-rounder.
+The controlled dataset is what makes the difference measurable.
+
+\paragraph{Pipeline integration changes the shortlist.} Latency and
+scaling are not secondary. Great Expectations is accurate but $60\times$
+slower than the statistical rules; the One-Class SVM has quadratic
+training and Local Outlier Factor has superlinear scoring, so neither
+survives contact with a full-size dataset in the pipeline. A benchmark
+that scores algorithms in isolation would not surface this.
+
+\paragraph{Threats to validity.} The synthetic dataset encodes our own
+assumptions about what each anomaly type looks like, and the injection
+rates and magnitudes are choices. The ML detectors use a fixed
+contamination of $0.10$ rather than a tuned operating point, which
+depresses their precision on the highly imbalanced fraud data. Results on
+a second real dataset are needed before the per-type ranking can be
+presented as general.
 
 \section{Conclusion}
 \label{sec:conclusion}
 
-\emph{To be written.}
+We built an ETL pipeline in which rule-based and classical
+machine-learning anomaly detectors share one interface and are scored on
+the same path, and a controlled dataset that labels six anomaly types
+separately so detection can be measured per type. On aggregate metrics
+the detector families are close on both Credit Card Fraud and the
+synthetic dataset. The per-type view is where they diverge: declarative
+rules own missing values, statistical rules own single-column outliers,
+tree- and boundary-based models are the only ones that catch implausible
+combinations, and duplicates and temporal drift are caught by neither and
+need dedicated handling. Latency and scaling further constrain which
+detector can sit in a real pipeline.
+
+The immediate next steps are the deep-learning detectors (Autoencoder,
+then LSTM-Autoencoder) behind the same interface, a second real dataset
+(UCI Water Quality) to test whether the per-type ranking generalises, a
+contamination set from each dataset's prevalence, and a detector that
+uses the timestamp so temporal drift stops being an empty column.
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}
