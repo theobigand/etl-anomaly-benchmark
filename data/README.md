@@ -27,5 +27,13 @@
 - Régime différent des deux autres : la classe cible est fréquente, pas rare.
   Sert à tester les détecteurs hors de leur domaine d'emploi, sur des nulls réels.
 
+## Cardio (anomalies rares, régime cible)
+- Source : `experiments/fetch_cardio.py` (télécharge un `.npz` cardiotocographie)
+- Fichier attendu : `data/cardio.csv` (non versionné)
+- 1 831 lignes × 22 colonnes, 21 features déjà standardisées
+- Label : colonne `label` (1 = anomalie), 9.6 % d'anomalies
+- Le dataset vraiment déséquilibré du benchmark : le régime pour lequel les
+  détecteurs non supervisés sont conçus.
+
 ## À venir
 - rien de bloquant
