@@ -33,3 +33,15 @@ def test_water_quality_loads_when_present():
     assert df[ANOMALY_COLUMN].isin((0, 1)).all()
     assert 0.3 < df[ANOMALY_COLUMN].mean() < 0.8  # "not potable" is the common class
     assert "Potability" not in spec.features(df).columns
+
+
+def test_cardio_is_the_imbalanced_dataset():
+    spec = DATASETS["cardio"]
+    if not spec.csv.exists():
+        pytest.skip("cardio.csv not downloaded (run experiments/fetch_cardio.py)")
+
+    df = spec.load()
+    assert df[ANOMALY_COLUMN].isin((0, 1)).all()
+    assert 0.03 < df[ANOMALY_COLUMN].mean() < 0.20  # genuinely rare
+    assert "label" not in spec.features(df).columns
+    assert spec.features(df).shape[1] == 21

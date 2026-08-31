@@ -57,4 +57,13 @@ DATASETS: dict[str, DatasetSpec] = {
         note="3.3k rows, 61% not-potable. The target class is common, not rare: "
         "this tests the detectors outside their intended regime, on real missing data.",
     ),
+    "cardio": DatasetSpec(
+        name="cardio",
+        csv=config.CARDIO_CSV,
+        label_column="label",
+        positive_value=1,
+        detector_names=list(DETECTOR_NAMES),
+        note="1.8k rows, 21 features, 9.6% anomalies. A genuinely imbalanced "
+        "cardiotocography dataset: the regime the detectors are built for.",
+    ),
 }

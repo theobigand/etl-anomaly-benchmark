@@ -13,6 +13,7 @@ RESULTS_DIR: Path = PROJECT_ROOT / "experiments" / "results"
 CREDIT_CARD_CSV: Path = DATA_DIR / "creditcard.csv"
 SYNTHETIC_CSV: Path = DATA_DIR / "synthetic.csv"
 WATER_QUALITY_CSV: Path = DATA_DIR / "water_quality.csv"
+CARDIO_CSV: Path = DATA_DIR / "cardio.csv"
 
 RANDOM_SEED: int = 42
 ZSCORE_THRESHOLD: float = 3.0
