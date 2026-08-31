@@ -74,20 +74,30 @@ def run(input_path: Path, limit: int | None, fit_sample: int | None = None) -> p
     for detector in all_detectors():
         log.info("evaluating %s", detector.name)
         res = detect(df, detector, label_column=LABEL_COLUMN, fit_df=fit_df)
-        rows.append(
-            {
-                "detector": detector.name,
-                "precision": precision_score(y_true, res.flags, zero_division=0),
-                "recall": recall_score(y_true, res.flags, zero_division=0),
-                "f1": f1_score(y_true, res.flags, zero_division=0),
-                "roc_auc": roc_auc_score(y_true, res.scores),
-                "pr_auc": average_precision_score(y_true, res.scores),
-                "n_flagged": int(res.flags.sum()),
-                "flagged_pct": 100.0 * float(res.flags.mean()),
-                "fit_s": res.fit_s,
-                "predict_s": res.predict_s,
-                "detect_s": res.detect_s,
-            }
+        row = {
+            "detector": detector.name,
+            "precision": precision_score(y_true, res.flags, zero_division=0),
+            "recall": recall_score(y_true, res.flags, zero_division=0),
+            "f1": f1_score(y_true, res.flags, zero_division=0),
+            "roc_auc": roc_auc_score(y_true, res.scores),
+            "pr_auc": average_precision_score(y_true, res.scores),
+            "n_flagged": int(res.flags.sum()),
+            "flagged_pct": 100.0 * float(res.flags.mean()),
+            "fit_s": res.fit_s,
+            "predict_s": res.predict_s,
+            "detect_s": res.detect_s,
+        }
+        rows.append(row)
+        log.info(
+            "  %s: P=%.3f R=%.3f F1=%.3f ROC=%.3f PR=%.3f flagged=%.2f%% detect=%.2fs",
+            detector.name,
+            row["precision"],
+            row["recall"],
+            row["f1"],
+            row["roc_auc"],
+            row["pr_auc"],
+            row["flagged_pct"],
+            row["detect_s"],
         )
     return pd.DataFrame(rows)
 
