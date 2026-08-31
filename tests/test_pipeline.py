@@ -32,3 +32,17 @@ def test_detect_timings_are_consistent():
 
     assert res.fit_s >= 0 and res.predict_s >= 0 and res.score_s >= 0
     assert res.detect_s == res.fit_s + res.predict_s + res.score_s
+
+
+def test_detect_fits_on_sample_but_scores_every_row():
+    # fit frame: mild spread, no gross outlier
+    fit_df = pd.DataFrame({"x": [9.0, 10.0, 11.0] * 100, "label": [0] * 300})
+    full = pd.DataFrame({"x": [9.0, 10.0, 11.0] * 100 + [10_000.0], "label": [0] * 301})
+    det = ZScoreDetector(threshold=3.0)
+
+    res = detect(full, det, label_column="label", fit_df=fit_df)
+
+    assert list(det._means.index) == ["x"]  # label kept out of the fit features
+    assert len(res.flags) == len(full)  # scored on the full frame
+    assert bool(res.flags.iloc[-1])  # the row absent from the fit sample is still flagged
+    assert not res.flags.iloc[:-1].any()

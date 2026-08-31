@@ -51,20 +51,29 @@ class DetectionResult:
         return self.fit_s + self.predict_s + self.score_s
 
 
+def _features(df: pd.DataFrame, label_column: str | None) -> pd.DataFrame:
+    return df.drop(columns=[label_column]) if label_column in df.columns else df
+
+
 def detect(
     df: pd.DataFrame,
     detector: Detector,
     label_column: str | None = None,
+    fit_df: pd.DataFrame | None = None,
 ) -> DetectionResult:
     """Run the quality stage: fit, predict and score ``detector`` on ``df``.
 
     ``label_column`` (the ground-truth label) is dropped from the features
-    so it never leaks into detection.
+    so it never leaks into detection. When ``fit_df`` is given the detector
+    is fitted on it instead of on ``df`` (used to fit an expensive model on
+    a sample while still scoring the whole stream); flags and scores are
+    always produced for every row of ``df``.
     """
-    features = df.drop(columns=[label_column]) if label_column in df.columns else df
+    features = _features(df, label_column)
+    fit_features = features if fit_df is None else _features(fit_df, label_column)
 
     t0 = time.perf_counter()
-    detector.fit(features)
+    detector.fit(fit_features)
     t1 = time.perf_counter()
     flags = detector.predict(features)
     t2 = time.perf_counter()
