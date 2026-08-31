@@ -1,0 +1,75 @@
+import pandas as pd
+import pytest
+
+from etl_benchmark.synthetic import ANOMALY_TYPES, FEATURE_COLUMNS, make_synthetic
+
+
+def test_make_synthetic_is_reproducible():
+    a = make_synthetic(n_rows=2_000, seed=7)
+    b = make_synthetic(n_rows=2_000, seed=7)
+
+    pd.testing.assert_frame_equal(a, b)
+
+
+def test_make_synthetic_changes_with_seed():
+    a = make_synthetic(n_rows=2_000, seed=7)
+    b = make_synthetic(n_rows=2_000, seed=8)
+
+    assert not a.equals(b)
+
+
+def test_every_anomaly_type_is_present():
+    df = make_synthetic(n_rows=4_000, seed=1)
+
+    present = set(df["anomaly_type"].unique())
+    assert present == {"clean", *ANOMALY_TYPES}
+    # each injected type is a small minority, none absent
+    counts = df.loc[df["anomaly_type"] != "clean", "anomaly_type"].value_counts()
+    assert (counts >= 10).all()
+
+
+def test_anomaly_flag_matches_type():
+    df = make_synthetic(n_rows=3_000, seed=2)
+
+    assert (df["anomaly"] == (df["anomaly_type"] != "clean")).all()
+
+
+def test_clean_rows_dominate():
+    df = make_synthetic(n_rows=5_000, seed=3, anomaly_rate=0.03)
+
+    assert df["anomaly"].mean() < 0.25
+    assert df["anomaly_type"].eq("clean").mean() > 0.7
+
+
+def test_feature_columns_exist_and_exclude_ground_truth():
+    df = make_synthetic(n_rows=1_500, seed=4)
+
+    for col in FEATURE_COLUMNS:
+        assert col in df.columns
+    assert "anomaly" not in FEATURE_COLUMNS
+    assert "anomaly_type" not in FEATURE_COLUMNS
+
+
+def test_duplicate_rows_are_exact_copies_on_features():
+    df = make_synthetic(n_rows=3_000, seed=5)
+    dups = df[df["anomaly_type"] == "duplicate"]
+
+    assert len(dups) > 0
+    # every injected duplicate matches some other row on all feature columns
+    others = df[df["anomaly_type"] != "duplicate"][FEATURE_COLUMNS].drop_duplicates()
+    merged = dups[FEATURE_COLUMNS].merge(others, how="left", indicator=True)
+    assert (merged["_merge"] == "both").all()
+
+
+def test_missing_value_rows_have_nulls_in_features():
+    df = make_synthetic(n_rows=3_000, seed=6)
+    mv = df[df["anomaly_type"] == "missing_value"]
+
+    assert mv[FEATURE_COLUMNS].isna().any(axis=1).all()
+
+
+@pytest.mark.parametrize("n", [500, 20_000])
+def test_row_count_is_close_to_requested(n):
+    df = make_synthetic(n_rows=n, seed=0)
+    # clean + 6 injected groups, duplicates append rather than replace
+    assert n <= len(df) <= int(n * 1.2)

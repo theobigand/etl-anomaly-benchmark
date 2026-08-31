@@ -1,6 +1,6 @@
 CONDA_ENV := etl-benchmark
 
-.PHONY: help env update test lint pipeline benchmark run clean
+.PHONY: help env update test lint pipeline benchmark synthetic heatmap run clean
 
 help:
 	@echo "Available targets:"
@@ -9,7 +9,8 @@ help:
 	@echo "  make test       Run pytest"
 	@echo "  make lint       Run ruff check + format"
 	@echo "  make pipeline   Run the ETL pipeline demo (sorts data with one detector)"
-	@echo "  make benchmark  Compare all detectors and print/save the metrics"
+	@echo "  make benchmark  Compare all detectors on Credit Card Fraud, print/save metrics"
+	@echo "  make synthetic  Generate the per-anomaly-type dataset (data/synthetic.csv)"
 	@echo "  make run        Run everything (pipeline then benchmark)"
 	@echo "  make clean      Remove generated artifacts"
 
@@ -32,9 +33,12 @@ pipeline:
 benchmark:
 	python experiments/run_benchmark.py
 
+synthetic:
+	python experiments/generate_synthetic.py
+
 run: pipeline benchmark
 
 clean:
-	rm -rf experiments/results/*.csv experiments/results/*.md
+	rm -rf experiments/results/*.csv experiments/results/*.md experiments/results/*.png
 	find . -type d -name __pycache__ -exec rm -rf {} +
 	rm -rf .pytest_cache .ruff_cache
