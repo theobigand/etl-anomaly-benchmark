@@ -1,8 +1,8 @@
 """Pipeline demo: run one detector through the full ETL pipeline.
 
-    python -m etl_benchmark                       # Z-score (default)
-    python -m etl_benchmark --detector iqr
-    python -m etl_benchmark --detector great_expectations
+python -m etl_benchmark                       # Z-score (default)
+python -m etl_benchmark --detector iqr
+python -m etl_benchmark --detector great_expectations
 """
 
 from __future__ import annotations

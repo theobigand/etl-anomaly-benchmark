@@ -31,9 +31,7 @@ def get_detector(name: str) -> Detector:
     try:
         return _FACTORIES[name]()
     except KeyError:
-        raise ValueError(
-            f"unknown detector {name!r}; choose from {DETECTOR_NAMES}"
-        ) from None
+        raise ValueError(f"unknown detector {name!r}; choose from {DETECTOR_NAMES}") from None
 
 
 def all_detectors() -> list[Detector]:
