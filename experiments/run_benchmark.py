@@ -40,7 +40,7 @@ log = logging.getLogger(__name__)
 LABEL_COLUMN = "Class"
 
 
-def run(input_path: Path, limit: int | None) -> pd.DataFrame:
+def run(input_path: Path, limit: int | None, fit_sample: int | None = None) -> pd.DataFrame:
     log.info("extract: loading %s", input_path)
     t0 = time.perf_counter()
     df = extract(input_path)
@@ -62,13 +62,18 @@ def run(input_path: Path, limit: int | None) -> pd.DataFrame:
         transform_s,
     )
 
+    fit_df = None
+    if fit_sample is not None and fit_sample < len(df):
+        fit_df = df.sample(n=fit_sample, random_state=config.RANDOM_SEED)
+        log.info("fitting detectors on a %d-row sample, scoring all %d rows", fit_sample, len(df))
+
     y_true = df[LABEL_COLUMN].astype(int)
     log.info("prevalence: %d positives (%.3f%%)", int(y_true.sum()), 100 * y_true.mean())
 
     rows = []
     for detector in all_detectors():
         log.info("evaluating %s", detector.name)
-        res = detect(df, detector, label_column=LABEL_COLUMN)
+        res = detect(df, detector, label_column=LABEL_COLUMN, fit_df=fit_df)
         rows.append(
             {
                 "detector": detector.name,
@@ -125,12 +130,20 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", type=Path, default=config.CREDIT_CARD_CSV)
     parser.add_argument("--limit", type=int, default=None, help="subsample N rows for a quick run")
+    parser.add_argument(
+        "--fit-sample",
+        type=int,
+        default=None,
+        help="fit each detector on N rows but score the whole dataset "
+        "(keeps every labelled positive in the evaluation while bounding "
+        "the cost of quadratic models such as One-Class SVM)",
+    )
     args = parser.parse_args()
 
     setup_logging()
     logging.getLogger("great_expectations").setLevel(logging.WARNING)
 
-    results = run(args.input, args.limit)
+    results = run(args.input, args.limit, args.fit_sample)
     csv_path, md_path = save(results, config.RESULTS_DIR)
 
     print("\n" + to_markdown(results))
