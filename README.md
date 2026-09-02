@@ -191,6 +191,7 @@ Every detector subclasses `etl_benchmark.quality.base.Detector` and implements `
 ```python
 from etl_benchmark.quality.base import Detector
 
+
 class MyDetector(Detector):
     name = "my_detector"
 
@@ -202,7 +203,7 @@ class MyDetector(Detector):
         # boolean Series, True where anomalous
         ...
 
-    def score(self, df):          # optional
+    def score(self, df):  # optional
         # continuous score Series
         ...
 ```
