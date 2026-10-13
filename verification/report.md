@@ -44,9 +44,10 @@ du benchmark stratifié.
 | `python verification/scaling.py` | Réussite locale | 27 mesures sur trois tailles, hors FAST. |
 | `make verify-all` | Échec | Reprend les échecs de FAST et DEEP. |
 
-FAST mesure **962/1324 lignes (72,66 %)** et **173/262 branches (66,03 %)**.
-Les scripts `fetch_cardio.py`, `generate_synthetic.py` et `run_severity.py`
-ne sont pas parcourus par FAST ; `run_curves.py` l'est peu. Le détail par
+FAST mesure **1174/1324 lignes (88,67 %)** et **211/262 branches (80,53 %)**.
+La mesure inclut désormais les commandes lancées en sous-processus. Les
+scripts `fetch_cardio.py`, `generate_synthetic.py` et l'entrée principale
+ne sont toujours pas parcourus par FAST. Le détail par
 fichier est dans le profil généré `verification/profile.json` et
 `coverage.json`. Aucune ligne
 ni branche n'est exclue.

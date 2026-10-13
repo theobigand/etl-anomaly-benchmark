@@ -14,8 +14,9 @@ sont pas tous remplis.
   le même contrôle reste à étendre aux commandes en sous-processus.
 - **#5** : le déroulé test en échec, correction, puis régression est documenté
   dans `README.md`.
-- **#6** : FAST mesure lignes et branches et échoue si elles ne sont pas toutes
-  couvertes. La couverture actuelle est de 962/1324 lignes et 173/262 branches.
+- **#6** : FAST mesure lignes et branches, y compris dans les commandes en
+  sous-processus, et échoue si elles ne sont pas toutes couvertes. La
+  couverture actuelle est de 1174/1324 lignes et 211/262 branches.
 - **#7** : le premier essai de mutation porte sur `metrics.py` ; 23 mutants
   survivent. La campagne sur le reste du code n'a pas été lancée.
 

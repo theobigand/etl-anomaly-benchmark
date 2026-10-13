@@ -13,6 +13,8 @@ se lancent à la racine du dépôt.
 
 FAST produit `coverage.json`, `experiments/results/pytest.xml`,
 `experiments/results/verification_fast.json` et `verification/profile.json`.
+La configuration coverage suit aussi les processus Python lancés par les
+tests de commandes ; leurs lignes et branches sont réunies dans le rapport.
 Le profil est reconstruit depuis `profile.template.json` avec la révision et
 les dénominateurs du moment ; le fichier produit reste hors Git. La CI conserve
 ces rapports en pièces jointes. Les données réelles ne sont pas nécessaires à
