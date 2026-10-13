@@ -23,6 +23,11 @@ Les trois CSV de recherche ne sont pas versionnés. Les tables, figures et
 enregistrements des essais conservés sont dans `evidence/`, avec leur manifeste.
 Les sommes de contrôle de ce manifeste servent aux tests de traçabilité ; il
 n'est pas nécessaire de les recopier dans les pages de lecture.
+`function_matrix.md` recense les fonctions, leurs tests principaux et les
+lacunes connues. Les jeux construits dans `tests/conftest.py` retournent des
+copies indépendantes ; le même fichier bloque les connexions réseau dans le
+processus pytest. Les commandes lancées dans un sous-processus reçoivent des
+chemins temporaires, mais ne bénéficient pas de ce blocage de socket.
 
 ## Points contrôlés
 
