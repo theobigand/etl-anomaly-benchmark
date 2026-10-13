@@ -60,6 +60,9 @@ make curves            # precision-recall curves + Isolation Forest contaminatio
 make severity          # detection-rate versus injection-severity curves
 make test              # pytest
 make lint              # ruff check + format check
+make verify-fast       # offline tests, coverage and evidence
+make verify-deep       # focused mutation pilot
+make verify-real       # inspect locally available real datasets
 make clean             # remove generated artifacts
 ```
 
@@ -73,9 +76,16 @@ python -m etl_benchmark --detector isolation_forest
 Registered detectors: `zscore`, `iqr`, `great_expectations`, `isolation_forest`, `lof`,
 `ocsvm`, plus `drift` (time-aware, opt-in, synthetic dataset only).
 
-Every benchmark uses a stratified 70/15/15 split (fit on train, metrics on the held-out
+Every benchmark uses a 70/15/15 split (fit on train, metrics on the held-out
 test set), repeats over the seeds in `config.BENCHMARK_SEEDS`, and reports mean ± std.
-The ML contamination is set to the train-set anomaly prevalence, not a fixed value.
+Real datasets are stratified by label; the synthetic dataset groups rows by
+`customer_id` before stratification so copies cannot cross partitions. The ML
+contamination is set to the train-set anomaly prevalence, a label-informed
+operating-point choice. `PR-AUC` is average precision.
+
+The [verification protocol](verification/README.md) records current coverage,
+the mutation pilot and the checks required before a thesis release. The
+repository-wide verification status is currently **INCOMPLETE**.
 
 ```bash
 python experiments/run_benchmark.py --dataset water_quality --seeds 42
@@ -90,23 +100,23 @@ Mean over 5 seeds on the 15% held-out test split.
 
 | Detector | Prec | Rec | F1 | ROC-AUC | PR-AUC | Flag % | detect |
 |---|---|---|---|---|---|---|---|
-| Z-score | 0.011 | 0.870 | 0.021 | 0.926 | 0.078 | 13.4 | 0.03 s |
-| IQR | 0.003 | 0.966 | 0.007 | 0.911 | 0.018 | 48.6 | 0.12 s |
-| Great Expectations | 0.037 | 0.676 | 0.070 | 0.830 | 0.182 | 3.1 | 1.37 s |
-| Isolation Forest | 0.202 | 0.206 | 0.203 | 0.934 | 0.120 | 0.2 | 1.78 s |
+| Z-score | 0.011 | 0.870 | 0.021 | 0.926 | 0.078 | 13.4 | 0.05 s |
+| IQR | 0.003 | 0.966 | 0.007 | 0.911 | 0.018 | 48.6 | 0.14 s |
+| Great Expectations | 0.037 | 0.676 | 0.070 | 0.830 | 0.182 | 3.1 | 1.66 s |
+| Isolation Forest | 0.202 | 0.206 | 0.203 | 0.934 | 0.120 | 0.2 | 2.17 s |
 
 With contamination set to the prevalence, Isolation Forest flags only 0.17% of rows and
 reaches a precision of 0.20 (the first usable operating point), at a recall of 0.21 and
 with real seed variance (F1 = 0.20 ± 0.07). LOF and One-Class SVM do not scale to 284k
 rows in the pipeline.
 
-### Cardio (1,831 rows, 9.6% anomalies) — the regime that fits
+### Cardio (1,831 raw rows; 1,822 after deduplication, 9.6% anomalies)
 
 | Detector | Prec | Rec | F1 | ROC-AUC | PR-AUC | Flag % |
 |---|---|---|---|---|---|---|
-| Z-score | 0.49 | 0.82 | 0.61 | 0.93 | 0.61 | 16.6 |
-| Great Expectations | 0.51 | 0.21 | 0.29 | 0.59 | 0.19 | 4.6 |
-| Isolation Forest | 0.64 | 0.62 | 0.62 | 0.95 | 0.70 | 9.9 |
+| Z-score | 0.49 | 0.81 | 0.61 | 0.93 | 0.61 | 16.6 |
+| Great Expectations | 0.50 | 0.21 | 0.29 | 0.59 | 0.19 | 4.6 |
+| Isolation Forest | 0.64 | 0.61 | 0.62 | 0.94 | 0.70 | 9.9 |
 | One-Class SVM | 0.56 | 0.61 | 0.58 | 0.94 | 0.63 | 10.7 |
 
 When the anomalies are genuinely rare and distributionally distinct, the unsupervised
@@ -118,21 +128,21 @@ majority target).
 
 | Method | missing | duplicate | univ. outlier | multiv. outlier | drift | invalid fmt |
 |---|---|---|---|---|---|---|
-| Z-score | 0.00 | 0.00 | 0.92 | 0.00 | 0.00 | 0.17 |
-| IQR | 0.05 | 0.07 | 0.99 | 0.02 | 0.27 | 1.00 |
-| Great Expectations | 1.00 | 0.00 | 0.23 | 0.00 | 0.00 | 0.00 |
-| Isolation Forest | 0.09 | 0.11 | 0.99 | 0.91 | 0.33 | 0.59 |
-| LOF | 0.26 | 0.12 | 0.65 | 0.16 | 0.49 | 0.66 |
-| One-Class SVM | 0.08 | 0.12 | 0.99 | 0.84 | 0.34 | 0.50 |
+| Z-score | 0.00 | 0.00 | 0.93 | 0.00 | 0.00 | 0.24 |
+| IQR | 0.05 | 0.04 | 0.99 | 0.04 | 0.25 | 1.00 |
+| Great Expectations | 1.00 | 0.00 | 0.21 | 0.00 | 0.00 | 0.00 |
+| Isolation Forest | 0.09 | 0.11 | 0.99 | 0.89 | 0.33 | 0.60 |
+| LOF | 0.28 | 0.16 | 0.70 | 0.21 | 0.50 | 0.67 |
+| One-Class SVM | 0.07 | 0.10 | 1.00 | 0.90 | 0.29 | 0.54 |
 | drift | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
 | transform dedup | 0.00 | 1.00 | 0.00 | 0.00 | 0.00 | 0.00 |
 
 Per-type precision (clean rows as the only negatives) is also reported: Z-score has
-precision 1.00 on its two columns, Great Expectations 0.90 on missing values, while
-Isolation Forest catches 91% of multivariate outliers at only 0.24 precision. The
-`drift` detector scores 0 at the reference severity; `make severity` shows recall on the
-drift column climbing as the injected shift is scaled up (`make curves` draws the
-precision-recall curves and the contamination sweep).
+precision 1.00 on its two columns, Great Expectations 0.94 on missing values, while
+Isolation Forest catches 89% of multivariate outliers at only 0.23 precision. The
+row-level `drift` detector scores 0 throughout the tested severity sweep; IQR,
+Isolation Forest and One-Class SVM respond more as the shift grows. `make curves`
+draws the precision-recall curves and the contamination sweep.
 
 ### Water Quality (3,276 rows, 61% "not potable")
 
@@ -191,6 +201,7 @@ Every detector subclasses `etl_benchmark.quality.base.Detector` and implements `
 ```python
 from etl_benchmark.quality.base import Detector
 
+
 class MyDetector(Detector):
     name = "my_detector"
 
@@ -202,7 +213,7 @@ class MyDetector(Detector):
         # boolean Series, True where anomalous
         ...
 
-    def score(self, df):          # optional
+    def score(self, df):  # optional
         # continuous score Series
         ...
 ```

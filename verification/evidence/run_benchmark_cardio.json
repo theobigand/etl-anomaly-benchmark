@@ -1,0 +1,76 @@
+{
+  "captured_at": "2026-10-13T19:37:19.603130+00:00",
+  "dataset": {
+    "bytes": 770024,
+    "identity": "cardio",
+    "path": "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/data/cardio.csv",
+    "sha256": "28bb4f67afca256f0cebe3cc6ca75a13be0bfc062e21efcaf40f1d3d80688eff"
+  },
+  "experiment": "real_benchmark",
+  "outputs": [
+    "benchmark_cardio_20261013_193719.csv",
+    "benchmark_cardio_20261013_193719.md"
+  ],
+  "packages": {
+    "great-expectations": "1.24.0",
+    "numpy": "2.4.6",
+    "pandas": "3.0.6",
+    "pyod": "3.6.7",
+    "scikit-learn": "1.9.1"
+  },
+  "platform": "macOS-27.0-arm64-arm-64bit",
+  "python": "3.11.17",
+  "schema_version": 1,
+  "seeds": [
+    42,
+    1,
+    2,
+    3,
+    4
+  ],
+  "settings": {
+    "calibration": "train_label_prevalence",
+    "detectors": [
+      "zscore",
+      "iqr",
+      "great_expectations",
+      "isolation_forest",
+      "lof",
+      "ocsvm"
+    ],
+    "features": [
+      "f00",
+      "f01",
+      "f02",
+      "f03",
+      "f04",
+      "f05",
+      "f06",
+      "f07",
+      "f08",
+      "f09",
+      "f10",
+      "f11",
+      "f12",
+      "f13",
+      "f14",
+      "f15",
+      "f16",
+      "f17",
+      "f18",
+      "f19",
+      "f20"
+    ],
+    "fit_sample": null,
+    "pr_auc_definition": "average_precision",
+    "split_ratios": [
+      0.7,
+      0.15,
+      0.15
+    ],
+    "split_strategy": "stratified"
+  },
+  "source_fingerprint": "e8db74927f00c4ca8718853f5d2d919731e617295710104f9484d93434668ab8",
+  "source_revision": "7c19f0d7f095f11681f0233df2792df29abf0f00",
+  "worktree_dirty": true
+}
