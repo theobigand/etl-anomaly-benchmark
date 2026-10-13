@@ -31,5 +31,6 @@ jobs:
             coverage.json
             experiments/results/pytest.xml
             experiments/results/verification_fast.json
+            verification/profile.json
           if-no-files-found: warn
           retention-days: 30

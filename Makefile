@@ -44,9 +44,12 @@ verify-fast: lint
 	@set +e; pytest -m 'not real' --cov=src/etl_benchmark --cov=experiments --cov-branch \
 		--cov-report=term-missing:skip-covered --cov-report=json:coverage.json \
 		--junitxml=experiments/results/pytest.xml; tests_status=$$?; \
+		python verification/refresh_profile.py --coverage coverage.json \
+		--template verification/profile.template.json --output verification/profile.json; \
+		profile_status=$$?; \
 		python experiments/verification_report.py --coverage coverage.json \
 		--junit experiments/results/pytest.xml --output experiments/results/verification_fast.json; \
-		report_status=$$?; test $$tests_status -eq 0 -a $$report_status -eq 0
+		report_status=$$?; test $$tests_status -eq 0 -a $$profile_status -eq 0 -a $$report_status -eq 0
 
 verify-deep:
 	mutmut run
