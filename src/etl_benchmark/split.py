@@ -10,6 +10,8 @@ held back for hyper-parameter work.
 
 from __future__ import annotations
 
+from math import isfinite
+
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
@@ -28,10 +30,21 @@ def stratified_split(
     must be three positive fractions that sum to one. Each returned frame
     has a fresh 0..n-1 index.
     """
-    if len(ratios) != 3 or abs(sum(ratios) - 1.0) > 1e-6 or any(r <= 0 for r in ratios):
+    if (
+        len(ratios) != 3
+        or any(not isfinite(r) or r <= 0 for r in ratios)
+        or abs(sum(ratios) - 1.0) > 1e-6
+    ):
         raise ValueError(f"ratios must be three positive fractions summing to 1, got {ratios}")
 
-    strat = df[stratify_on] if isinstance(stratify_on, str) else stratify_on
+    if not df.index.is_unique:
+        raise ValueError("input index must be unique so rows can be aligned")
+    if isinstance(stratify_on, str):
+        strat = df[stratify_on]
+    else:
+        if not stratify_on.index.is_unique or set(stratify_on.index) != set(df.index):
+            raise ValueError("stratification Series index must match the input index")
+        strat = stratify_on.reindex(df.index)
     train_frac, val_frac, test_frac = ratios
 
     train_df, rest_df = train_test_split(

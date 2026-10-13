@@ -20,6 +20,7 @@ import time
 from dataclasses import dataclass
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 from etl_benchmark import config
@@ -71,6 +72,8 @@ def detect(
     """
     features = _features(df, label_column)
     fit_features = features if fit_df is None else _features(fit_df, label_column)
+    if list(features.columns) != list(fit_features.columns):
+        raise ValueError("fit and evaluation feature schema must match in order")
 
     t0 = time.perf_counter()
     detector.fit(fit_features)
@@ -79,6 +82,15 @@ def detect(
     t2 = time.perf_counter()
     scores = detector.score(features)
     t3 = time.perf_counter()
+
+    if not isinstance(flags, pd.Series) or not flags.index.equals(df.index):
+        raise ValueError("detector flags must be a Series with the input index")
+    if not isinstance(scores, pd.Series) or not scores.index.equals(df.index):
+        raise ValueError("detector scores must be a Series with the input index")
+    if not pd.api.types.is_bool_dtype(flags):
+        raise ValueError("detector flags must be boolean")
+    if not np.isfinite(scores.to_numpy(dtype=float)).all():
+        raise ValueError("detector scores must be finite")
 
     return DetectionResult(flags, scores, t1 - t0, t2 - t1, t3 - t2)
 

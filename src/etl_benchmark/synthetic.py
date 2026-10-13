@@ -200,12 +200,21 @@ def make_synthetic(
     ``missing_value``, ``duplicate`` and ``invalid_format`` do not depend
     on it.
     """
+    if not isinstance(n_rows, int) or n_rows < 90:
+        raise ValueError("n_rows must be an integer of at least 90")
+    if not np.isfinite(anomaly_rate) or not 0 <= anomaly_rate <= 1 / 6:
+        raise ValueError("anomaly_rate must be finite and between 0 and 1/6")
+    if not np.isfinite(severity) or severity <= 0:
+        raise ValueError("severity must be finite and positive")
+    k = 0 if anomaly_rate == 0 else max(int(round(anomaly_rate * n_rows)), 15)
+    if 6 * k > n_rows:
+        raise ValueError("n_rows cannot hold six anomaly groups of the requested size")
+
     rng = np.random.default_rng(seed)
     Faker.seed(seed)
     fake = Faker("en_US")
 
-    k = max(int(round(anomaly_rate * n_rows)), 15)
-    n_clean = max(n_rows - 5 * k, k)
+    n_clean = n_rows - 5 * k
 
     pop = _clean_population(n_rows, rng, fake)
     pop.insert(0, "customer_id", np.arange(1, n_rows + 1))

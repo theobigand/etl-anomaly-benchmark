@@ -3,10 +3,11 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "experiments"))
 
-from run_benchmark import METRIC_COLUMNS, run, to_markdown  # noqa: E402
+from run_benchmark import METRIC_COLUMNS, evaluate, run, to_markdown  # noqa: E402
 
 from etl_benchmark.datasets import DatasetSpec  # noqa: E402
 
@@ -58,3 +59,20 @@ def test_to_markdown_has_one_row_per_detector(tmp_path):
     for name in spec.detector_names:
         assert f"| {name} |" in md
     assert md.count(" ± ") == len(spec.detector_names) * len(METRIC_COLUMNS)
+
+
+def test_one_seed_does_not_claim_zero_uncertainty(tmp_path):
+    spec = _toy_spec(tmp_path)
+    _mean, std = run(spec, seeds=[0])
+    assert std["precision"].isna().all()
+    assert "n/a" in to_markdown(_mean, std)
+
+
+def test_two_seed_mean_and_sample_standard_deviation(tmp_path):
+    spec = _toy_spec(tmp_path)
+    frame = spec.load()
+    a = evaluate(spec, frame, 0, None).loc["zscore", "recall"]
+    b = evaluate(spec, frame, 1, None).loc["zscore", "recall"]
+    mean, std = run(spec, seeds=[0, 1])
+    assert mean.loc["zscore", "recall"] == (a + b) / 2
+    assert std.loc["zscore", "recall"] == pytest.approx(abs(a - b) / np.sqrt(2))

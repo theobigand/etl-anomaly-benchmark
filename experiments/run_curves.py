@@ -28,6 +28,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
+from provenance import write_record  # noqa: E402
+from run_synthetic_benchmark import _split_synthetic  # noqa: E402
 from sklearn.metrics import average_precision_score, precision_recall_curve  # noqa: E402
 
 from etl_benchmark import config  # noqa: E402
@@ -59,9 +61,10 @@ def _split_real(name: str, seed: int):
     )
 
 
-def _split_synth(seed: int):
-    df = make_synthetic(seed=seed)
-    train, _val, test = stratified_split(df, "anomaly_type", config.SPLIT_RATIOS, seed)
+def _split_synth(seed: int, rows: int | None = None):
+    options = {"n_rows": rows} if rows is not None else {}
+    df = make_synthetic(seed=seed, **options)
+    train, _val, test = _split_synthetic(df, seed)
     y = test["anomaly"].to_numpy().astype(int)
     from etl_benchmark.registry import DETECTOR_NAMES
 
@@ -75,9 +78,9 @@ def _split_synth(seed: int):
     )
 
 
-def scores_for(dataset: str, seed: int) -> dict:
+def scores_for(dataset: str, seed: int, rows: int | None = None) -> dict:
     if dataset == "synthetic":
-        train_x, test_x, y, contamination, names, base = _split_synth(seed)
+        train_x, test_x, y, contamination, names, base = _split_synth(seed, rows)
     else:
         train_x, test_x, y, contamination, names, base = _split_real(dataset, seed)
 
@@ -112,14 +115,16 @@ def render_pr(results: dict[str, dict], path: Path) -> Path:
     return path
 
 
-def contamination_sweep(seed: int) -> pd.DataFrame:
+def contamination_sweep(
+    seed: int, datasets: list[str] | None = None, rows: int | None = None
+) -> pd.DataFrame:
     from sklearn.metrics import precision_score, recall_score
 
-    rows = []
-    for dataset in ("credit_card", "water_quality", "cardio", "synthetic"):
+    records = []
+    for dataset in datasets or ["credit_card", "water_quality", "cardio", "synthetic"]:
         try:
             if dataset == "synthetic":
-                train_x, test_x, y, prevalence, _n, _b = _split_synth(seed)
+                train_x, test_x, y, prevalence, _n, _b = _split_synth(seed, rows)
             else:
                 train_x, test_x, y, prevalence, _n, _b = _split_real(dataset, seed)
         except FileNotFoundError:
@@ -128,7 +133,7 @@ def contamination_sweep(seed: int) -> pd.DataFrame:
         for c in [*CONTAMINATION_GRID, prevalence]:
             det = IsolationForestDetector(contamination=clip_contamination(c))
             res = detect(test_x, det, fit_df=train_x)
-            rows.append(
+            records.append(
                 {
                     "dataset": dataset,
                     "contamination": round(clip_contamination(c), 4),
@@ -138,13 +143,21 @@ def contamination_sweep(seed: int) -> pd.DataFrame:
                     "flagged_pct": 100.0 * float(res.flags.mean()),
                 }
             )
-    return pd.DataFrame(rows)
+    return pd.DataFrame(records)
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--seed", type=int, default=config.RANDOM_SEED)
     parser.add_argument("--figure", type=Path, default=PAPER_FIGURE)
+    parser.add_argument(
+        "--datasets",
+        nargs="+",
+        choices=[*DATASETS, "synthetic"],
+        default=["credit_card", "water_quality", "cardio", "synthetic"],
+    )
+    parser.add_argument("--rows", type=int, help="synthetic row count for an offline smoke run")
+    parser.add_argument("--results-dir", type=Path, default=config.RESULTS_DIR)
     args = parser.parse_args()
 
     setup_logging()
@@ -152,18 +165,37 @@ def main() -> None:
     logging.getLogger("matplotlib").setLevel(logging.WARNING)
 
     results: dict[str, dict] = {}
-    for dataset in ("credit_card", "water_quality", "cardio", "synthetic"):
+    for dataset in args.datasets:
         try:
-            results[dataset] = scores_for(dataset, args.seed)
+            results[dataset] = scores_for(dataset, args.seed, args.rows)
         except FileNotFoundError:
             log.warning("skipping %s (dataset not present)", dataset)
 
     figure = render_pr(results, args.figure)
-    sweep = contamination_sweep(args.seed)
+    sweep = contamination_sweep(args.seed, args.datasets, args.rows)
 
-    config.RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    args.results_dir.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
-    sweep.to_csv(config.RESULTS_DIR / f"contamination_sweep_{stamp}.csv", index=False)
+    csv_out = args.results_dir / f"contamination_sweep_{stamp}.csv"
+    sweep.to_csv(csv_out, index=False)
+    write_record(
+        args.results_dir / f"run_curves_{stamp}.json",
+        experiment="precision_recall_and_contamination",
+        seeds=[args.seed],
+        dataset=",".join(args.datasets),
+        data_path=None,
+        settings={
+            "datasets": args.datasets,
+            "synthetic_rows": args.rows,
+            "split_ratios": list(config.SPLIT_RATIOS),
+            "synthetic_split_strategy": "customer_identity_grouped_stratified",
+            "real_split_strategy": "stratified",
+            "calibration": "train_label_prevalence",
+            "contamination_grid": CONTAMINATION_GRID,
+            "pr_auc_definition": "average_precision",
+        },
+        outputs=[csv_out.name, str(figure)],
+    )
 
     print("\nIsolation Forest, contamination sweep (test split):\n")
     print(sweep.to_string(index=False))

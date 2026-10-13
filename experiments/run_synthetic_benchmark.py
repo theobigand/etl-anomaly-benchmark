@@ -3,7 +3,7 @@
 Protocol, for each of ``--seeds`` random seeds:
 
     1. generate the labelled synthetic dataset with that seed;
-    2. stratified 70 / 15 / 15 split on ``anomaly_type``;
+    2. identity-grouped 70 / 15 / 15 split, stratified on the group type;
     3. fit every detector on ``train`` (ML contamination = the train-set
        anomaly prevalence), score ``test``;
     4. record aggregate metrics on ``test`` and, per anomaly type, the
@@ -11,8 +11,8 @@ Protocol, for each of ``--seeds`` random seeds:
 
 Results are averaged over the seeds (mean and standard deviation). The
 mean recall matrix is rendered as the paper's heatmap. Exact duplicates
-are a transform-stage concern, so the deduplication rule is carried as an
-extra reference row.
+are a transform-stage concern, so a partition-local deduplication rule is
+carried as an extra reference row.
 
 Usage::
 
@@ -36,16 +36,12 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
-from sklearn.metrics import (  # noqa: E402
-    average_precision_score,
-    f1_score,
-    precision_score,
-    recall_score,
-    roc_auc_score,
-)
+from provenance import write_record  # noqa: E402
+from sklearn.metrics import precision_score, recall_score  # noqa: E402
 
 from etl_benchmark import config  # noqa: E402
 from etl_benchmark.logging_setup import setup_logging  # noqa: E402
+from etl_benchmark.metrics import compute_metrics  # noqa: E402
 from etl_benchmark.pipeline import detect  # noqa: E402
 from etl_benchmark.registry import ALL_NAMES, all_detectors  # noqa: E402
 from etl_benchmark.split import stratified_split  # noqa: E402
@@ -54,8 +50,6 @@ from etl_benchmark.synthetic import ANOMALY_TYPES, FEATURE_COLUMNS, make_synthet
 log = logging.getLogger(__name__)
 
 PAPER_FIGURE = config.PROJECT_ROOT / "paper" / "figures" / "heatmap_synthetic.png"
-_DEDUP = "__dedup__"
-
 _TYPE_LABELS = {
     "missing_value": "missing\nvalue",
     "duplicate": "duplicate",
@@ -66,34 +60,49 @@ _TYPE_LABELS = {
 }
 
 
-def _prepare(df: pd.DataFrame) -> pd.DataFrame:
-    """Attach the whole-stream deduplication flag before the split."""
-    df = df.copy()
-    df[_DEDUP] = df.duplicated(subset=FEATURE_COLUMNS, keep=False).to_numpy()
-    return df
+def _split_synthetic(
+    df: pd.DataFrame, seed: int
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """Stratify identities so a copied customer never spans train and test."""
+    groups = (
+        df.groupby("customer_id", sort=False)["anomaly_type"]
+        .agg(lambda types: "duplicate" if "duplicate" in types.values else types.iloc[0])
+        .reset_index(name="stratum")
+    )
+    group_parts = stratified_split(groups, "stratum", config.SPLIT_RATIOS, seed)
+    return tuple(
+        df[df["customer_id"].isin(group_part["customer_id"])].reset_index(drop=True)
+        for group_part in group_parts
+    )
 
 
 def _per_type(flags: pd.Series, anomaly_type: pd.Series) -> tuple[dict, dict]:
     """Recall and precision per type, negatives restricted to clean rows."""
+    if not flags.index.equals(anomaly_type.index):
+        raise ValueError("flags and anomaly_type must have the same index")
     recall, precision = {}, {}
     clean = anomaly_type == "clean"
     for name in ANOMALY_TYPES:
         is_type = anomaly_type == name
+        if not is_type.any():
+            recall[name] = np.nan
+            precision[name] = np.nan
+            continue
         keep = is_type | clean
         y = is_type[keep].astype(int)
         f = flags[keep]
-        recall[name] = recall_score(y, f, zero_division=0) if is_type.any() else np.nan
+        recall[name] = recall_score(y, f, zero_division=0)
         precision[name] = precision_score(y, f, zero_division=0)
     return recall, precision
 
 
 def _dedup_flags_for(part: pd.DataFrame) -> pd.Series:
-    return part[_DEDUP].astype(bool)
+    return part.duplicated(subset=FEATURE_COLUMNS, keep=False)
 
 
 def evaluate(df: pd.DataFrame, seed: int) -> dict[str, pd.DataFrame]:
-    """One split: fit on train, score test. ``df`` must be :func:`_prepare` d."""
-    train, _val, test = stratified_split(df, "anomaly_type", config.SPLIT_RATIOS, seed)
+    """One identity-disjoint split: fit on train, score test."""
+    train, _val, test = _split_synthetic(df, seed)
     contamination = float(train["anomaly"].mean())
     train_x, test_x = train[FEATURE_COLUMNS], test[FEATURE_COLUMNS]
     y_test = test["anomaly"].astype(int)
@@ -111,16 +120,7 @@ def evaluate(df: pd.DataFrame, seed: int) -> dict[str, pd.DataFrame]:
             flags, scores, detect_s = res.flags, res.scores, res.detect_s
         log.info("  seed %d: %s done", seed, name)
         metrics.append(
-            {
-                "method": name,
-                "precision": precision_score(y_test, flags, zero_division=0),
-                "recall": recall_score(y_test, flags, zero_division=0),
-                "f1": f1_score(y_test, flags, zero_division=0),
-                "roc_auc": roc_auc_score(y_test, scores),
-                "pr_auc": average_precision_score(y_test, scores),
-                "flagged_pct": 100.0 * float(np.mean(flags)),
-                "detect_s": detect_s,
-            }
+            {"method": name, **compute_metrics(y_test, flags, scores), "detect_s": detect_s}
         )
         r, p = _per_type(pd.Series(np.asarray(flags), index=test.index), type_test)
         recall.append({"method": name, **r})
@@ -136,13 +136,13 @@ def evaluate(df: pd.DataFrame, seed: int) -> dict[str, pd.DataFrame]:
 def run(seeds: list[int], rows: int | None = None) -> dict[str, pd.DataFrame]:
     """Repeat :func:`evaluate` over ``seeds`` and average."""
     kw = {"n_rows": rows} if rows else {}
-    per_seed = [evaluate(_prepare(make_synthetic(seed=s, **kw)), s) for s in seeds]
+    per_seed = [evaluate(make_synthetic(seed=s, **kw), s) for s in seeds]
     out: dict[str, pd.DataFrame] = {}
     for key in ("metrics", "recall", "precision"):
         stack = pd.concat([p[key] for p in per_seed], keys=range(len(seeds)))
         grouped = stack.groupby(level=1, sort=False)
         out[f"{key}_mean"] = grouped.mean()
-        out[f"{key}_std"] = grouped.std().fillna(0.0)
+        out[f"{key}_std"] = grouped.std()
     return out
 
 
@@ -188,7 +188,7 @@ def _combined_md(mean: pd.DataFrame, std: pd.DataFrame, cols: list[str]) -> str:
         cells = []
         for c in cols:
             m, s = mean.loc[method, c], std.loc[method, c]
-            cells.append("-" if pd.isna(m) else f"{m:.3f} ± {s:.3f}")
+            cells.append("-" if pd.isna(m) else f"{m:.3f} ± {'n/a' if pd.isna(s) else f'{s:.3f}'}")
         lines.append(f"| {method} | " + " | ".join(cells) + " |")
     return "\n".join(lines) + "\n"
 
@@ -198,6 +198,7 @@ def main() -> None:
     parser.add_argument("--seeds", type=int, nargs="+", default=list(config.BENCHMARK_SEEDS))
     parser.add_argument("--rows", type=int, default=None, help="smaller dataset for a quick run")
     parser.add_argument("--figure", type=Path, default=PAPER_FIGURE)
+    parser.add_argument("--results-dir", type=Path, default=config.RESULTS_DIR)
     args = parser.parse_args()
 
     setup_logging()
@@ -207,17 +208,17 @@ def main() -> None:
     log.info("seeds: %s", args.seeds)
     r = run(args.seeds, args.rows)
 
-    config.RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    args.results_dir.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
     metric_cols = ["precision", "recall", "f1", "roc_auc", "pr_auc", "flagged_pct", "detect_s"]
-    r["metrics_mean"].join(r["metrics_std"], lsuffix="_mean", rsuffix="_std").to_csv(
-        config.RESULTS_DIR / f"synthetic_metrics_{stamp}.csv"
-    )
-    r["recall_mean"].join(r["recall_std"], lsuffix="_mean", rsuffix="_std").to_csv(
-        config.RESULTS_DIR / f"synthetic_recall_{stamp}.csv"
-    )
+    metric_out = args.results_dir / f"synthetic_metrics_{stamp}.csv"
+    recall_out = args.results_dir / f"synthetic_recall_{stamp}.csv"
+    precision_out = args.results_dir / f"synthetic_precision_{stamp}.csv"
+    md_out = args.results_dir / f"synthetic_{stamp}.md"
+    r["metrics_mean"].join(r["metrics_std"], lsuffix="_mean", rsuffix="_std").to_csv(metric_out)
+    r["recall_mean"].join(r["recall_std"], lsuffix="_mean", rsuffix="_std").to_csv(recall_out)
     r["precision_mean"].join(r["precision_std"], lsuffix="_mean", rsuffix="_std").to_csv(
-        config.RESULTS_DIR / f"synthetic_precision_{stamp}.csv"
+        precision_out
     )
     md = (
         f"Synthetic dataset, {len(args.seeds)} seeds, mean ± std on the 15% test split.\n\n"
@@ -228,8 +229,27 @@ def main() -> None:
         + "\n### Precision by anomaly type (clean rows as the only negatives)\n\n"
         + _combined_md(r["precision_mean"], r["precision_std"], ANOMALY_TYPES)
     )
-    (config.RESULTS_DIR / f"synthetic_{stamp}.md").write_text(md)
+    md_out.write_text(md)
     figure = render_heatmap(r["recall_mean"], args.figure)
+    write_record(
+        args.results_dir / f"run_synthetic_{stamp}.json",
+        experiment="synthetic_benchmark",
+        seeds=args.seeds,
+        dataset="synthetic",
+        data_path=None,
+        settings={
+            "rows": args.rows or config.SYNTHETIC_ROWS,
+            "anomaly_rate_per_type": config.SYNTHETIC_ANOMALY_RATE,
+            "split_ratios": list(config.SPLIT_RATIOS),
+            "split_strategy": "customer_identity_grouped_stratified",
+            "features": FEATURE_COLUMNS,
+            "detectors": ALL_NAMES,
+            "calibration": "train_label_prevalence",
+            "pr_auc_definition": "average_precision",
+            "per_type_precision": "clean_plus_target_type",
+        },
+        outputs=[metric_out.name, recall_out.name, precision_out.name, md_out.name, str(figure)],
+    )
 
     print("\n" + md)
     log.info("figure -> %s", figure)
