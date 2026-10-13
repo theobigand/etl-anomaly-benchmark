@@ -38,7 +38,7 @@ du benchmark stratifié.
 
 | Commande | Résultat | Détail |
 | --- | --- | --- |
-| `make verify-fast` | Échec | 163 tests réussis, 2 tests réels exclus ; couverture incomplète. |
+| `make verify-fast` | Échec | 166 tests réussis, 2 tests réels exclus ; couverture incomplète. |
 | `make verify-deep` | Échec | 74 mutants éliminés sur 97 dans `metrics.py` ; seuil de 95 % non atteint. |
 | `make verify-real` | Réussite locale | 2 tests et contrôle des trois CSV présents. |
 | `python verification/scaling.py` | Réussite locale | 27 mesures sur trois tailles, hors FAST. |
@@ -64,7 +64,8 @@ Les tests unitaires, de contrat, d'intégration, de propriété et de CLI
 utilisent de petits jeux construits dans des répertoires temporaires. FAST ne
 lit pas les CSV de recherche et ne demande pas d'accès réseau. Les deux tests
 sur données complètes sont marqués `real` et passent par `make verify-real`.
-Un contrôle d'interdiction du réseau dans les tests manque encore.
+Les connexions réseau sont bloquées dans le processus pytest ; ce contrôle
+ne s'étend pas aux commandes lancées en sous-processus.
 
 Le vérificateur échoue lorsqu'un rapport de couverture manque, lorsqu'aucun
 test n'a été exécuté ou lorsque les résultats de mutation sont incohérents.
