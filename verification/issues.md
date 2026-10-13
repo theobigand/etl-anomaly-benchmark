@@ -13,7 +13,7 @@ sont pas tous remplis.
 - **#5** : le déroulé test en échec, correction, puis régression est documenté
   dans `README.md`.
 - **#6** : FAST mesure lignes et branches et échoue si elles ne sont pas toutes
-  couvertes. La couverture actuelle est de 944/1304 lignes et 165/252 branches.
+  couvertes. La couverture actuelle est de 962/1324 lignes et 173/262 branches.
 - **#7** : le premier essai de mutation porte sur `metrics.py` ; 23 mutants
   survivent. La campagne sur le reste du code n'a pas été lancée.
 
@@ -67,8 +67,10 @@ sont pas tous remplis.
   manquent à l'archive.
 - **#28** : mener des mesures de croissance en temps et en mémoire, avec des
   tailles d'entrée et une machine documentées.
-- **#29** : compléter les essais sur classes extrêmes, schémas changeants,
-  timestamps invalides et valeurs non finies.
+- **#29** : les règles et Isolation Forest rejettent les colonnes
+  d'entraînement vides, les infinis et les colonnes requises absentes ; les
+  colonnes constantes ont des sorties finies. Il reste les classes extrêmes,
+  les schémas changeants et les timestamps invalides dans les expériences.
 - **#30** : attendre la résolution des points précédents, puis refaire les
   vérifications et les comparaisons publiées sur un état unique du dépôt.
 

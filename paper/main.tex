@@ -330,8 +330,8 @@ contamination matches the prevalence: it flags only $0.17\%$ of rows and
 reaches a precision of $0.20$, the first usable operating point in the
 table, but its recall drops to $0.21$ and both are seed-sensitive
 ($F_1 = 0.20 \pm 0.07$). It keeps the best ROC-AUC ($0.934$). Great
-Expectations remains the slowest linear method ($1.7$\,s on the test
-split against $0.05$--$0.14$\,s for the statistical rules). LOF and the
+Expectations took $3.0$\,s on this run, against $0.07$--$0.24$\,s for the
+statistical rules; these times vary between runs. LOF and the
 One-Class SVM are absent: neither scales to $284$k rows in the pipeline.
 
 \begin{table}[t]
@@ -345,10 +345,10 @@ $15\%$ test split. Higher is better except flagged rows and time.}
 \toprule
 Detector & Prec. & Rec. & $F_1$ & ROC & PR & Flag.\% & Time (s) \\
 \midrule
-Z-score            & 0.011 & 0.870 & 0.021 & 0.926 & 0.078 & 13.4 & \textbf{0.05} \\
-IQR                & 0.003 & \textbf{0.966} & 0.007 & 0.911 & 0.018 & 48.6 & 0.14 \\
-Great Expectations & 0.037 & 0.676 & 0.070 & 0.830 & \textbf{0.182} & 3.1 & 1.66 \\
-Isolation Forest   & \textbf{0.202} & 0.206 & \textbf{0.203} & \textbf{0.934} & 0.120 & \textbf{0.2} & 2.17 \\
+Z-score            & 0.011 & 0.870 & 0.021 & 0.926 & 0.078 & 13.4 & \textbf{0.07} \\
+IQR                & 0.003 & \textbf{0.966} & 0.007 & 0.911 & 0.018 & 48.6 & 0.24 \\
+Great Expectations & 0.037 & 0.676 & 0.070 & 0.830 & \textbf{0.182} & 3.1 & 3.02 \\
+Isolation Forest   & \textbf{0.202} & 0.206 & \textbf{0.203} & \textbf{0.934} & 0.120 & \textbf{0.2} & 3.60 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -395,7 +395,7 @@ dataset. Aggregate metrics still compress the families together: $F_1$
 ranges from $0.33$ to $0.50$ and PR-AUC from $0.33$ to $0.54$. Isolation
 Forest has the best $F_1$ ($0.50$) and Z-score keeps a perfect
 precision by firing only on the most extreme rows. The One-Class SVM
-approaches Isolation Forest on quality at about $12\times$ the latency. Read
+approaches Isolation Forest on quality while taking longer in this run. Read
 alone, these numbers suggest the detector choice barely matters; the
 per-type breakdown shows the opposite.
 
@@ -411,11 +411,11 @@ the $15\%$ test split. Time is the in-pipeline fit+predict+score latency.}
 Detector & Prec. & Rec. & $F_1$ & ROC & PR & Time (s) \\
 \midrule
 Z-score            & \textbf{1.000} & 0.196 & 0.328 & \textbf{0.742} & \textbf{0.544} & \textbf{0.002} \\
-IQR                & 0.584 & 0.396 & 0.472 & 0.675 & 0.452 & 0.003 \\
-Great Expectations & 0.951 & 0.202 & 0.333 & 0.600 & 0.333 & 0.28 \\
-Isolation Forest   & 0.495 & \textbf{0.499} & \textbf{0.497} & 0.735 & 0.485 & 0.22 \\
+IQR                & 0.584 & 0.396 & 0.472 & 0.675 & 0.452 & 0.004 \\
+Great Expectations & 0.951 & 0.202 & 0.333 & 0.600 & 0.333 & 0.25 \\
+Isolation Forest   & 0.495 & \textbf{0.499} & \textbf{0.497} & 0.735 & 0.485 & 0.16 \\
 LOF                & 0.388 & 0.420 & 0.404 & 0.659 & 0.437 & 0.14 \\
-One-Class SVM      & 0.478 & 0.485 & 0.481 & 0.722 & 0.520 & 2.58 \\
+One-Class SVM      & 0.478 & 0.485 & 0.481 & 0.722 & 0.520 & 2.62 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -617,10 +617,11 @@ dataset, and the severity sweep that tests the sensitivity of that ranking,
 are what make the difference measurable.
 
 \paragraph{Pipeline integration changes the shortlist.} Latency and
-scaling are not secondary. Great Expectations is the slowest linear
-method; the One-Class SVM's quadratic training and LOF's superlinear
-scoring keep both off the full fraud dataset. A benchmark scoring
-algorithms in isolation would not surface this.
+scaling matter, but the timing in these runs is too variable to establish
+a reliable speed ranking. The One-Class SVM and LOF were omitted from the
+full fraud dataset because their computational costs need a separate
+scaling study. A benchmark scoring algorithms in isolation would not
+capture the full pipeline cost.
 
 \paragraph{Threats to validity.} The synthetic dataset still encodes our
 own assumptions about what each anomaly type looks like; the severity

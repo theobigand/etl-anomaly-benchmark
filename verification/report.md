@@ -19,9 +19,11 @@ regardait les données avant ce découpage, une série de stratification réordo
 était utilisée par position, et un taux d'injection nul créait encore des
 anomalies. Nous avons aussi corrigé la normalisation silencieuse des labels
 manquants, les métriques non définies et l'acceptation de sorties de détecteur
-mal alignées. Les cas de régression sont dans `tests/test_scientific_contracts.py`,
+mal alignées. Une colonne d'entraînement entièrement vide ou infinie pouvait
+aussi produire des scores nuls dans les règles statistiques ; ces entrées sont
+maintenant rejetées. Les cas de régression sont dans `tests/test_scientific_contracts.py`,
 `test_split.py`, `test_dataset_contract.py`, `test_metric_contract.py` et
-`test_detector_protocol.py`. Chaque correctif a été précédé d'un échec ciblé,
+`test_detector_protocol.py` et `test_adverse_schemas.py`. Chaque correctif a été précédé d'un échec ciblé,
 puis contrôlé avec le même test après modification.
 
 Les expériences synthétiques ont été relancées après ces changements. Les
@@ -36,12 +38,12 @@ du benchmark stratifié.
 
 | Commande | Résultat | Détail |
 | --- | --- | --- |
-| `make verify-fast` | Échec | 144 tests réussis, 2 tests réels exclus ; couverture incomplète. |
+| `make verify-fast` | Échec | 159 tests réussis, 2 tests réels exclus ; couverture incomplète. |
 | `make verify-deep` | Échec | 74 mutants éliminés sur 97 dans `metrics.py` ; seuil de 95 % non atteint. |
 | `make verify-real` | Réussite locale | 2 tests et contrôle des trois CSV présents. |
 | `make verify-all` | Échec | Reprend les échecs de FAST et DEEP. |
 
-FAST mesure **944/1304 lignes (72,39 %)** et **165/252 branches (65,48 %)**.
+FAST mesure **962/1324 lignes (72,66 %)** et **173/262 branches (66,03 %)**.
 Les scripts `fetch_cardio.py`, `generate_synthetic.py` et `run_severity.py`
 ne sont pas parcourus par FAST ; `run_curves.py` l'est peu. Le détail par
 fichier est dans le profil généré `verification/profile.json` et
@@ -70,8 +72,8 @@ les enregistrements d'expérience correspondent au code scientifique courant.
 Les essais de mutation ont conduit à renforcer les tests sur la dimension des
 vecteurs, les longueurs incompatibles et l'absence de prédictions positives.
 
-Les tests de panne d'écriture, de redémarrage et de robustesse face aux schémas
-extrêmes restent à faire. Le pipeline s'exécute séquentiellement ; il n'a ni
+Les tests de panne d'écriture, de redémarrage et plusieurs schémas extrêmes
+restent à faire. Le pipeline s'exécute séquentiellement ; il n'a ni
 API, ni interface interactive, ni état partagé entre processus. Un contrôle de
 types sera utile avant les nouveaux modèles ; aucun outil de typage n'est
 encore configuré. Les seuils numériques des durées ne sont pas utilisés comme
