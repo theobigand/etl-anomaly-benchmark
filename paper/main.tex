@@ -133,7 +133,7 @@ present:
     dataset in which six distinct anomaly categories (missing values,
     duplicates, univariate outliers, multivariate outliers, temporal
     drift, invalid formats) are injected at a tunable severity, we produce
-    a method-by-type recall and precision matrix and show it is stable
+    a method-by-type recall and precision matrix and test its sensitivity
     under a severity sweep. The families turn out to have narrow, largely
     non-overlapping competence that the aggregate metrics hide.
 \end{enumerate}
@@ -284,10 +284,14 @@ so it probes the detectors outside their regime.
 \subsection{Evaluation protocol}
 \label{sec:protocol}
 Each dataset is split $70/15/15$ (train/validation/test), stratified on
-the label. Detectors are fitted on the train split and every reported
+the label. For the synthetic dataset, rows are grouped by customer identity
+before stratification so an original and its exact copy cannot cross
+partitions. Detectors are fitted on the train split and every reported
 number is computed on the held-out test split; the validation split is
 reserved for later tuning. The ML contamination is read from the train
-split's prevalence. The whole procedure is repeated over five random
+split's prevalence. This is a label-informed operating-point choice,
+although estimator fitting itself does not use the labels. The whole
+procedure is repeated over five random
 seeds and we report the mean and standard deviation. LOF and the
 One-Class SVM are run on Water Quality and the synthetic dataset but not
 on Credit Card Fraud, where LOF's superlinear scoring and the One-Class
@@ -295,7 +299,8 @@ SVM's quadratic training do not fit inside the pipeline at $284$k rows.
 
 Because the detectors emit both a threshold decision and a graded score,
 we report threshold metrics (precision, recall, $F_1$) alongside
-ROC-AUC and PR-AUC. On imbalanced data PR-AUC is the more informative
+ROC-AUC and PR-AUC (computed as average precision, not trapezoidal
+area). On imbalanced data PR-AUC is the more informative
 metric: the false-positive rate underlying ROC-AUC is diluted by the large
 true-negative pool and stays optimistic, whereas precision reacts directly
 to false alarms. We keep both because PR-AUC's random baseline equals the
@@ -310,9 +315,9 @@ the next stage.
 
 \section{Experiments and Results}
 \label{sec:experiments}
-All numbers below are the mean over five seeds on the held-out test
-split (Section~\ref{sec:protocol}); standard deviations are $\le 0.05$
-unless the text says otherwise.
+Benchmark tables report means over five seeds on the held-out test
+split (Section~\ref{sec:protocol}). Seed variability is reported in the
+archived result tables; timing also depends on the execution environment.
 
 \subsection{Real fraud data}
 Table~\ref{tab:fraud} reports the detectors on Credit Card Fraud. The
@@ -325,8 +330,8 @@ contamination matches the prevalence: it flags only $0.17\%$ of rows and
 reaches a precision of $0.20$, the first usable operating point in the
 table, but its recall drops to $0.21$ and both are seed-sensitive
 ($F_1 = 0.20 \pm 0.07$). It keeps the best ROC-AUC ($0.934$). Great
-Expectations remains the slowest linear method ($1.4$\,s on the test
-split against $0.03$--$0.12$\,s for the statistical rules). LOF and the
+Expectations remains the slowest linear method ($1.7$\,s on the test
+split against $0.05$--$0.14$\,s for the statistical rules). LOF and the
 One-Class SVM are absent: neither scales to $284$k rows in the pipeline.
 
 \begin{table}[t]
@@ -340,10 +345,10 @@ $15\%$ test split. Higher is better except flagged rows and time.}
 \toprule
 Detector & Prec. & Rec. & $F_1$ & ROC & PR & Flag.\% & Time (s) \\
 \midrule
-Z-score            & 0.011 & 0.870 & 0.021 & 0.926 & 0.078 & 13.4 & \textbf{0.03} \\
-IQR                & 0.003 & \textbf{0.966} & 0.007 & 0.911 & 0.018 & 48.6 & 0.12 \\
-Great Expectations & 0.037 & 0.676 & \textbf{0.070} & 0.830 & \textbf{0.182} & 3.1 & 1.37 \\
-Isolation Forest   & \textbf{0.202} & 0.206 & \textbf{0.203} & \textbf{0.934} & 0.120 & \textbf{0.2} & 1.78 \\
+Z-score            & 0.011 & 0.870 & 0.021 & 0.926 & 0.078 & 13.4 & \textbf{0.05} \\
+IQR                & 0.003 & \textbf{0.966} & 0.007 & 0.911 & 0.018 & 48.6 & 0.14 \\
+Great Expectations & 0.037 & 0.676 & 0.070 & 0.830 & \textbf{0.182} & 3.1 & 1.66 \\
+Isolation Forest   & \textbf{0.202} & 0.206 & \textbf{0.203} & \textbf{0.934} & 0.120 & \textbf{0.2} & 2.17 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -353,7 +358,7 @@ Isolation Forest   & \textbf{0.202} & 0.206 & \textbf{0.203} & \textbf{0.934} & 
 Table~\ref{tab:cardio} runs all six detectors on Cardio, where the
 anomalies are both rare ($9.6\%$) and distributionally distinct. Here the
 unsupervised detectors work: Isolation Forest reaches $F_1 = 0.62$,
-PR-AUC $0.70$ and ROC-AUC $0.95$, and the One-Class SVM is close behind.
+PR-AUC $0.70$ and ROC-AUC $0.94$, and the One-Class SVM is close behind.
 Z-score also does well on this dataset ($F_1 = 0.61$) because the $21$
 features are already standardized and the anomalies stand out on several
 of them at once. This is the counterpoint to Credit Card Fraud and Water
@@ -365,7 +370,7 @@ $0.14$--$0.17$).
 
 \begin{table}[t]
 \caption{All detectors on Cardio, mean over five seeds on the $15\%$ test
-split. $1{,}831$ rows, $9.6\%$ anomalies.}
+split. $1{,}831$ raw rows ($1{,}822$ after deduplication), $9.6\%$ anomalies.}
 \label{tab:cardio}
 \centering
 \setlength{\tabcolsep}{4pt}
@@ -374,10 +379,10 @@ split. $1{,}831$ rows, $9.6\%$ anomalies.}
 \toprule
 Detector & Prec. & Rec. & $F_1$ & ROC & PR & Flag.\% \\
 \midrule
-Z-score            & 0.49 & \textbf{0.82} & 0.61 & 0.93 & 0.61 & 16.6 \\
-IQR                & 0.21 & 0.90 & 0.34 & 0.78 & 0.30 & 43.4 \\
-Great Expectations & 0.51 & 0.21 & 0.29 & 0.59 & 0.19 & 4.6 \\
-Isolation Forest   & \textbf{0.64} & 0.62 & \textbf{0.62} & \textbf{0.95} & \textbf{0.70} & 9.9 \\
+Z-score            & 0.49 & \textbf{0.81} & 0.61 & 0.93 & 0.61 & 16.6 \\
+IQR                & 0.21 & 0.90 & 0.33 & 0.78 & 0.30 & 43.4 \\
+Great Expectations & 0.50 & 0.21 & 0.29 & 0.59 & 0.19 & 4.6 \\
+Isolation Forest   & \textbf{0.64} & 0.61 & \textbf{0.62} & \textbf{0.94} & \textbf{0.70} & 9.9 \\
 LOF                & 0.25 & 0.27 & 0.26 & 0.62 & 0.24 & 10.7 \\
 One-Class SVM      & 0.56 & 0.61 & 0.58 & 0.94 & 0.63 & 10.7 \\
 \bottomrule
@@ -385,12 +390,12 @@ One-Class SVM      & 0.56 & 0.61 & 0.58 & 0.94 & 0.63 & 10.7 \\
 \end{table}
 
 \subsection{Synthetic dataset: aggregate metrics}
-Table~\ref{tab:synthetic} reports all six detectors on the synthetic
+Table~\ref{tab:synthetic} reports the six core detectors on the synthetic
 dataset. Aggregate metrics still compress the families together: $F_1$
-ranges from $0.31$ to $0.51$ and PR-AUC from $0.33$ to $0.56$. Isolation
-Forest now has the best $F_1$ ($0.51$) and Z-score keeps a perfect
+ranges from $0.33$ to $0.50$ and PR-AUC from $0.33$ to $0.54$. Isolation
+Forest has the best $F_1$ ($0.50$) and Z-score keeps a perfect
 precision by firing only on the most extreme rows. The One-Class SVM
-matches Isolation Forest on quality at about $16\times$ the latency. Read
+approaches Isolation Forest on quality at about $12\times$ the latency. Read
 alone, these numbers suggest the detector choice barely matters; the
 per-type breakdown shows the opposite.
 
@@ -405,12 +410,12 @@ the $15\%$ test split. Time is the in-pipeline fit+predict+score latency.}
 \toprule
 Detector & Prec. & Rec. & $F_1$ & ROC & PR & Time (s) \\
 \midrule
-Z-score            & \textbf{1.000} & 0.182 & 0.308 & \textbf{0.748} & \textbf{0.560} & \textbf{0.002} \\
-IQR                & 0.603 & 0.399 & 0.481 & 0.678 & 0.460 & 0.004 \\
-Great Expectations & 0.920 & 0.205 & 0.335 & 0.601 & 0.332 & 0.29 \\
-Isolation Forest   & 0.515 & \textbf{0.503} & \textbf{0.509} & 0.745 & 0.501 & 0.16 \\
-LOF                & 0.380 & 0.390 & 0.385 & 0.646 & 0.437 & 0.14 \\
-One-Class SVM      & 0.488 & 0.478 & 0.483 & 0.729 & 0.531 & 2.61 \\
+Z-score            & \textbf{1.000} & 0.196 & 0.328 & \textbf{0.742} & \textbf{0.544} & \textbf{0.002} \\
+IQR                & 0.584 & 0.396 & 0.472 & 0.675 & 0.452 & 0.003 \\
+Great Expectations & 0.951 & 0.202 & 0.333 & 0.600 & 0.333 & 0.28 \\
+Isolation Forest   & 0.495 & \textbf{0.499} & \textbf{0.497} & 0.735 & 0.485 & 0.22 \\
+LOF                & 0.388 & 0.420 & 0.404 & 0.659 & 0.437 & 0.14 \\
+One-Class SVM      & 0.478 & 0.485 & 0.481 & 0.722 & 0.520 & 2.58 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -422,31 +427,32 @@ injected type. The structure the aggregate table hides is now clear:
 every method has a narrow competence.
 \begin{itemize}
     \item \emph{Univariate outliers} are caught by every distributional
-    method (recall $0.92$--$0.99$) and only by those. Z-score's precision
+    method (recall $0.70$--$1.00$) and only by those. Z-score's precision
     on them is $1.00$: it never fires on a clean row.
     \item \emph{Missing values} are caught only by the Great Expectations
-    not-null expectations (recall $1.00$, precision $0.90$), because the
+    not-null expectations (recall $1.00$, precision $0.94$), because the
     statistical rules propagate \texttt{NaN} to a non-flag and the learned
     models see imputed values.
     \item \emph{Exact duplicates} are invisible to every detector. The
     deduplication rule of the transform stage is the only thing that
-    catches them, at precision $0.52$ because it also flags each row's
-    clean original.
+    catches them, at precision $0.50$ because it also flags each row's
+    clean original. In this grouped split the rule is evaluated within
+    the held-out partition; it is a stream-level reference, not a model.
     \item \emph{Multivariate outliers} separate the families: Isolation
-    Forest ($0.91$) and the One-Class SVM ($0.84$) are the only methods
+    Forest ($0.89$) and the One-Class SVM ($0.90$) are the only methods
     with real recall, since they are the only ones that model the joint
     distribution. Their precision on this type is only about $0.24$: they
     cast a wide net that also catches clean rows.
     \item \emph{Invalid formats} are caught mainly through the impossible
-    numeric value they carry (IQR recall $1.00$, precision $0.39$; Z-score
+    numeric value they carry (IQR recall $1.00$, precision $0.37$; Z-score
     precision $1.00$); the malformed string fields are missed by all.
     \item \emph{Temporal drift} is the weakest column for every method
-    (best recall $0.49$, LOF). The dedicated \emph{drift} detector scores
+    (best recall $0.50$, LOF). The dedicated \emph{drift} detector scores
     $0$ here too: at the reference magnitude the shifted values stay
     inside the global range, and once diluted by the many clean recent
     rows the window mean has moved by only about a tenth of a standard
-    deviation. Section~\ref{sec:severity} shows the recall climbing as the
-    injected shift grows.
+    deviation. The present row-level drift detector remains at zero even
+    in the severity sweep; the windowed-monitoring extension is separate.
 \end{itemize}
 The practical reading is a short decision list: null-rate problems to
 declarative rules, single-column outliers to any statistical rule,
@@ -486,10 +492,10 @@ $15\%$ test split. Target: ``not potable'', base rate $0.61$.}
 \toprule
 Detector & Prec. & Rec. & $F_1$ & ROC & PR & Flag.\% \\
 \midrule
-Z-score            & 0.41 & 0.03 & 0.05 & 0.46 & 0.58 & 3.5 \\
+Z-score            & 0.41 & 0.02 & 0.05 & 0.46 & 0.58 & 3.5 \\
 IQR                & 0.57 & 0.09 & 0.16 & 0.49 & 0.60 & 10.0 \\
-Great Expectations & 0.62 & 0.41 & 0.49 & 0.51 & 0.62 & 40.1 \\
-Isolation Forest   & 0.57 & 0.47 & 0.51 & 0.45 & 0.58 & 49.7 \\
+Great Expectations & 0.62 & 0.41 & 0.49 & 0.51 & 0.61 & 40.1 \\
+Isolation Forest   & 0.57 & 0.46 & 0.51 & 0.45 & 0.57 & 49.7 \\
 LOF                & 0.58 & 0.46 & 0.52 & 0.46 & 0.58 & 48.7 \\
 One-Class SVM      & 0.57 & 0.45 & 0.50 & 0.46 & 0.57 & 48.4 \\
 \bottomrule
@@ -543,7 +549,7 @@ Cardio            & 0.20        & 0.46 & 0.93 & 19.7 \\
 Cardio            & prev.\ 0.096 & 0.72 & 0.67 & 9.1 \\
 \midrule
 Water Quality     & prev.\ 0.5   & 0.58 & 0.49 & 51.6 \\
-Synthetic         & prev.\ 0.175 & 0.52 & 0.49 & 16.5 \\
+Synthetic         & prev.\ 0.175 & 0.53 & 0.51 & 16.8 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -556,14 +562,13 @@ percentile extremity and the temporal-drift multiplier ($1.0$ is the
 dataset used above). Fig.~\ref{fig:severity} plots per-type recall against
 severity. Univariate outliers are already saturated at severity $0.5$.
 Multivariate outliers show a threshold: Isolation Forest and the
-One-Class SVM climb smoothly to recall $1.0$, while IQR jumps from $0.02$
+One-Class SVM climb to recall $1.0$, while IQR jumps from $0.04$
 to $1.0$ once the injected percentile crosses its fence. Temporal drift
-climbs roughly linearly for the distributional detectors (from $\le 0.3$
-at severity $1.0$ to $0.6$--$0.85$ at severity $3$), confirming that the
-reference drift is simply below every method's floor rather than a
-property of the methods. The per-type ranking of
-Section~\ref{sec:results-synthetic} is stable across the sweep: the same
-families lead the same columns at every severity.
+becomes easier for IQR, Isolation Forest and One-Class SVM (roughly
+$0.2$--$0.3$ recall at severity $1.0$ and $0.6$--$0.7$ at severity $3$),
+while LOF peaks earlier and then falls. The row-level drift detector
+does not respond in this sweep. The ranking therefore changes with
+severity, limiting claims based on one injection magnitude.
 
 \begin{figure}[t]
 \centering
@@ -578,10 +583,10 @@ marks severity $1.0$.}
 \label{sec:discussion}
 
 \paragraph{Rules and learned models are complementary, not competing.}
-The per-type heatmap shows almost no overlap between what the declarative
+The per-type heatmap shows limited overlap between what the declarative
 rules catch (missing values), what the statistical rules catch
 (single-column outliers), and what the learned models add (implausible
-combinations, recall $0.91$ for Isolation Forest against $\le 0.02$ for
+combinations, recall $0.89$ for Isolation Forest against $\le 0.04$ for
 the rules). Broad coverage needs more than one family, not the single
 best one on aggregate. This is a different conclusion from benchmarks
 that publish a single ranking.
@@ -589,7 +594,8 @@ that publish a single ranking.
 \paragraph{The operating point matters as much as the algorithm.} Setting
 Isolation Forest's contamination to the data prevalence rather than a
 fixed $0.10$ moves its fraud precision from $0.01$ to $0.20$ and its
-multivariate-outlier recall on the synthetic data from $0.41$ to $0.91$.
+multivariate-outlier recall on the synthetic data from approximately $0.4$
+to $0.9$.
 The same estimator looks weak or strong depending on one number that a
 benchmark must choose deliberately.
 
@@ -607,7 +613,7 @@ all''.
 dataset the aggregate table compresses different behaviour into similar
 $F_1$ and PR-AUC values. A method excellent on one anomaly type and blind
 to the rest scores like a mediocre all-rounder. The controlled per-type
-dataset, and the severity sweep that shows the per-type ranking is stable,
+dataset, and the severity sweep that tests the sensitivity of that ranking,
 are what make the difference measurable.
 
 \paragraph{Pipeline integration changes the shortlist.} Latency and
@@ -633,7 +639,7 @@ We built an ETL pipeline in which rule-based and classical
 machine-learning anomaly detectors share one interface and are scored on
 the same held-out path, over five seeds, with the operating point read
 from the data. A controlled dataset labels six anomaly types separately,
-and a severity sweep shows the per-type ranking is stable as the
+and a severity sweep shows where the per-type ranking changes as the
 injections are scaled. On aggregate metrics the detector families stay
 close on all four datasets. The per-type view is where they diverge:
 declarative rules own missing values, statistical rules own single-column

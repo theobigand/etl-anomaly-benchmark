@@ -6,6 +6,7 @@
 - Taille : 284 807 lignes × 31 colonnes
 - Anomalies : 492 fraudes (0.172%)
 - Label : colonne `Class` (0 = normal, 1 = fraude)
+- Après suppression des doublons exacts : 283 726 lignes, 473 fraudes.
 
 ## Synthétique par type d'anomalie
 - Généré par : `python experiments/generate_synthetic.py` (déterministe)
@@ -24,6 +25,7 @@
 - Label : colonne `Potability` (1 = potable, 0 = non potable)
 - Anomalie retenue : `Potability == 0` (non potable), 61 % des lignes
 - Valeurs manquantes réelles : `ph` (491), `Sulfate` (781), `Trihalomethanes` (162)
+- La transformation conserve 3 276 lignes, dont 1 998 positives.
 - Régime différent des deux autres : la classe cible est fréquente, pas rare.
   Sert à tester les détecteurs hors de leur domaine d'emploi, sur des nulls réels.
 
@@ -34,6 +36,12 @@
 - Label : colonne `label` (1 = anomalie), 9.6 % d'anomalies
 - Le dataset vraiment déséquilibré du benchmark : le régime pour lequel les
   détecteurs non supervisés sont conçus.
+- Après suppression des doublons exacts : 1 822 lignes, 175 anomalies.
+
+Les sommes de contrôle des copies utilisées pour les expériences sont dans
+`verification/evidence/manifest.json`. `make verify-real` contrôle les fichiers
+présents sur la machine. La provenance des sources et les conditions d'usage
+restent à confirmer avant publication.
 
 ## À venir
 - rien de bloquant

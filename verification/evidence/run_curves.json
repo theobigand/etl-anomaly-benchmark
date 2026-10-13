@@ -1,0 +1,52 @@
+{
+  "captured_at": "2026-10-13T19:36:35.305892+00:00",
+  "dataset": {
+    "identity": "credit_card,water_quality,cardio,synthetic"
+  },
+  "experiment": "precision_recall_and_contamination",
+  "outputs": [
+    "contamination_sweep_20261013_193635.csv",
+    "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/paper/figures/pr_curves.png"
+  ],
+  "packages": {
+    "great-expectations": "1.24.0",
+    "numpy": "2.4.6",
+    "pandas": "3.0.6",
+    "pyod": "3.6.7",
+    "scikit-learn": "1.9.1"
+  },
+  "platform": "macOS-27.0-arm64-arm-64bit",
+  "python": "3.11.17",
+  "schema_version": 1,
+  "seeds": [
+    42
+  ],
+  "settings": {
+    "calibration": "train_label_prevalence",
+    "contamination_grid": [
+      0.001,
+      0.01,
+      0.05,
+      0.1,
+      0.2
+    ],
+    "datasets": [
+      "credit_card",
+      "water_quality",
+      "cardio",
+      "synthetic"
+    ],
+    "pr_auc_definition": "average_precision",
+    "real_split_strategy": "stratified",
+    "split_ratios": [
+      0.7,
+      0.15,
+      0.15
+    ],
+    "synthetic_rows": null,
+    "synthetic_split_strategy": "customer_identity_grouped_stratified"
+  },
+  "source_fingerprint": "e8db74927f00c4ca8718853f5d2d919731e617295710104f9484d93434668ab8",
+  "source_revision": "7c19f0d7f095f11681f0233df2792df29abf0f00",
+  "worktree_dirty": true
+}

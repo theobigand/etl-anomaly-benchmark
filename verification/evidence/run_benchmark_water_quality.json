@@ -1,0 +1,64 @@
+{
+  "captured_at": "2026-10-13T19:37:10.009462+00:00",
+  "dataset": {
+    "bytes": 525187,
+    "identity": "water_quality",
+    "path": "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/data/water_quality.csv",
+    "sha256": "904004bde729bfe3d2e195f46343bceead09e32a0eb95bb8184e7e20e029b2bf"
+  },
+  "experiment": "real_benchmark",
+  "outputs": [
+    "benchmark_water_quality_20261013_193709.csv",
+    "benchmark_water_quality_20261013_193709.md"
+  ],
+  "packages": {
+    "great-expectations": "1.24.0",
+    "numpy": "2.4.6",
+    "pandas": "3.0.6",
+    "pyod": "3.6.7",
+    "scikit-learn": "1.9.1"
+  },
+  "platform": "macOS-27.0-arm64-arm-64bit",
+  "python": "3.11.17",
+  "schema_version": 1,
+  "seeds": [
+    42,
+    1,
+    2,
+    3,
+    4
+  ],
+  "settings": {
+    "calibration": "train_label_prevalence",
+    "detectors": [
+      "zscore",
+      "iqr",
+      "great_expectations",
+      "isolation_forest",
+      "lof",
+      "ocsvm"
+    ],
+    "features": [
+      "ph",
+      "Hardness",
+      "Solids",
+      "Chloramines",
+      "Sulfate",
+      "Conductivity",
+      "Organic_carbon",
+      "Trihalomethanes",
+      "Turbidity"
+    ],
+    "fit_sample": null,
+    "pr_auc_definition": "average_precision",
+    "split_ratios": [
+      0.7,
+      0.15,
+      0.15
+    ],
+    "split_strategy": "stratified"
+  },
+  "source_fingerprint": "e8db74927f00c4ca8718853f5d2d919731e617295710104f9484d93434668ab8",
+  "source_revision": "7c19f0d7f095f11681f0233df2792df29abf0f00",
+  "worktree_dirty": true
+}

@@ -1,0 +1,60 @@
+{
+  "artifacts": {
+    "paper/figures/heatmap_synthetic.png": "d6bbba783775ef1c5371bf8c226f83f0d0cf68935c6f2ac3ca569558d70b3d1a",
+    "paper/figures/pr_curves.png": "21e9b7a59ab7ea485b7a959ea6c4cfa3903d7d118d709e0c9cc036f81f34bf06",
+    "paper/figures/severity_curves.png": "6bc50cb8eac4834e698758555d9cc6d2293365a50b33c6cb6270d804dec4b4a5",
+    "paper/main.pdf": "cd75a7c2784bdb880b5f4f8f6504e15c0878e1337bc447e7903f9ddc305b3f4c",
+    "paper/main.tex": "09846ddfdeb4e2099985fbfb50bb4d4187d704c50aea44a182f8bf4571de69e4",
+    "verification/evidence/benchmark_cardio.csv": "313a41a8c3e7474ee03ff232fd1704757ebcc4f08863065058e70cc387dcf5c0",
+    "verification/evidence/benchmark_cardio.md": "2569c05560a89fe3117bf83c926a1862f6cde03c2458783826c48da5a8ea7e9f",
+    "verification/evidence/benchmark_credit_card.csv": "851982ce0c160635b8a58e5f09ad5e16bab208cd213a118cd8ff26be06260a60",
+    "verification/evidence/benchmark_credit_card.md": "6914b2ef46efab9c3e20ad4be485660950789598658a5c8157137b8dc022e43d",
+    "verification/evidence/benchmark_water_quality.csv": "7aa8d32d27fb8e2626c1a1813761ffda1c57b10738bae81eb8baf648cfec302e",
+    "verification/evidence/benchmark_water_quality.md": "7ad0b6ace4f0bbab666b76f9966d2bdb8a78553d04b9dcddd431e884b6bd5eb4",
+    "verification/evidence/contamination_sweep.csv": "03e598f79a9e4d1f9a99cd4386a5081e972fe40bd60ead320e361850598a8343",
+    "verification/evidence/run_benchmark_cardio.json": "daf91f0c6c38428f8b22f80c3ebbd00de35e1ae14dd0e8ed4155828195a53973",
+    "verification/evidence/run_benchmark_credit_card.json": "03a9719850d8ac220f75bc3492976161cae20467c2918d052d6b7386e9390fad",
+    "verification/evidence/run_benchmark_water_quality.json": "08a14b00077431a1a85f4ceafe9452d8ea50da089b03b6a421f1774c11030bad",
+    "verification/evidence/run_curves.json": "f71ef7a0da469471a619df960cfebff7d02069b04fe061869822ceec589214d9",
+    "verification/evidence/run_severity.json": "e7b85c0b3d5cf5f6f28e2f63564c55d9605bcedbf5560ba344010a3b56889c3a",
+    "verification/evidence/run_synthetic.json": "9dd1c203ea8e542344caa5da8b341c85335a2a835f6e50684a8db89d0ac733ae",
+    "verification/evidence/severity.csv": "718db28cb414540422a7e21149d302906bcfb3c94918a6105aeba90e51b1e0a8",
+    "verification/evidence/synthetic_metrics.csv": "a23aed29c6c8056b11b60317cc60e8fa8bf84bc9c0a54b3fddf504bd8cedaa41",
+    "verification/evidence/synthetic_precision.csv": "72d9f42a6b021e89caca75ff530324e62d947e7cfcdc069b2d6178f83bd9f2c3",
+    "verification/evidence/synthetic_recall.csv": "4f086470091c8340b7903ae9c14081038252acbbdef0d5b3ccc2e1311b100212"
+  },
+  "commands": {
+    "cardio": "python experiments/run_benchmark.py --dataset cardio",
+    "credit_card": "python experiments/run_benchmark.py --dataset credit_card",
+    "curves": "python experiments/run_curves.py --seed 42",
+    "real": "make verify-real",
+    "severity": "python experiments/run_severity.py",
+    "synthetic": "python experiments/run_synthetic_benchmark.py --seeds 42 1 2 3 4",
+    "water_quality": "python experiments/run_benchmark.py --dataset water_quality"
+  },
+  "datasets": {
+    "cardio": {
+      "anomalies": 175,
+      "raw_rows": 1831,
+      "rows_after_transform": 1822,
+      "sha256": "28bb4f67afca256f0cebe3cc6ca75a13be0bfc062e21efcaf40f1d3d80688eff"
+    },
+    "credit_card": {
+      "anomalies": 473,
+      "raw_rows": 284807,
+      "rows_after_transform": 283726,
+      "sha256": "76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89"
+    },
+    "water_quality": {
+      "anomalies": 1998,
+      "raw_rows": 3276,
+      "rows_after_transform": 3276,
+      "sha256": "904004bde729bfe3d2e195f46343bceead09e32a0eb95bb8184e7e20e029b2bf"
+    }
+  },
+  "platform": "macOS-27.0-arm64-arm-64bit",
+  "python": "3.11.17",
+  "schema_version": 1,
+  "source_revision": "75146a558efa3f25099639c8975ea2fd48141fd2",
+  "worktree_dirty": true
+}
