@@ -18,6 +18,8 @@
     "verification/evidence/run_curves.json": "3a45a916293cc81654abb7a1606c2fedee1ab2d3c10dbbb117d4d634aa3a58b1",
     "verification/evidence/run_severity.json": "ff3ac027b814af36a01c007848b028cf1c9e50f338d0a1ccc327098cd2c16ecc",
     "verification/evidence/run_synthetic.json": "237447553f33dd0576c8036112f1818efeb1fbae663d00eabcb68fc1b71d6804",
+    "verification/evidence/scaling.csv": "3dbee7c3e3acbb62f2ede2cbccd05a6f842ef8b0af39f5269bbf382ae15b82c7",
+    "verification/evidence/scaling.json": "d8979b87af6ca62c6cde86ab6ad591ab301cafbcb209b1e34aac8b7a0cf0db32",
     "verification/evidence/severity.csv": "718db28cb414540422a7e21149d302906bcfb3c94918a6105aeba90e51b1e0a8",
     "verification/evidence/synthetic_metrics.csv": "3a1bd3889ef7589ae2354457540877b1a6d5dc04300e1f2ca4225a6f52a196a2",
     "verification/evidence/synthetic_precision.csv": "72d9f42a6b021e89caca75ff530324e62d947e7cfcdc069b2d6178f83bd9f2c3",
@@ -28,6 +30,7 @@
     "credit_card": "python experiments/run_benchmark.py --dataset credit_card",
     "curves": "python experiments/run_curves.py --seed 42",
     "real": "make verify-real",
+    "scaling": "python verification/scaling.py",
     "severity": "python experiments/run_severity.py",
     "synthetic": "python experiments/run_synthetic_benchmark.py --seeds 42 1 2 3 4",
     "water_quality": "python experiments/run_benchmark.py --dataset water_quality"

@@ -38,9 +38,10 @@ du benchmark stratifié.
 
 | Commande | Résultat | Détail |
 | --- | --- | --- |
-| `make verify-fast` | Échec | 159 tests réussis, 2 tests réels exclus ; couverture incomplète. |
+| `make verify-fast` | Échec | 163 tests réussis, 2 tests réels exclus ; couverture incomplète. |
 | `make verify-deep` | Échec | 74 mutants éliminés sur 97 dans `metrics.py` ; seuil de 95 % non atteint. |
 | `make verify-real` | Réussite locale | 2 tests et contrôle des trois CSV présents. |
+| `python verification/scaling.py` | Réussite locale | 27 mesures sur trois tailles, hors FAST. |
 | `make verify-all` | Échec | Reprend les échecs de FAST et DEEP. |
 
 FAST mesure **962/1324 lignes (72,66 %)** et **173/262 branches (66,03 %)**.
@@ -71,6 +72,9 @@ Le test de filiation compare les fichiers archivés au manifeste et vérifie que
 les enregistrements d'expérience correspondent au code scientifique courant.
 Les essais de mutation ont conduit à renforcer les tests sur la dimension des
 vecteurs, les longueurs incompatibles et l'absence de prédictions positives.
+Un essai local de croissance sur 100, 300 et 900 lignes est décrit dans
+`scaling.md`. Les tests contrôlent les étapes chronométrées et la taille des
+entrées, sans seuil fixe sur la durée.
 
 Les tests de panne d'écriture, de redémarrage et plusieurs schémas extrêmes
 restent à faire. Le pipeline s'exécute séquentiellement ; il n'a ni
@@ -99,7 +103,8 @@ Il faut couvrir les chemins manquants, examiner les 23 mutants survivants puis
 étendre la mutation à tous les modules concernés. Il manque également des
 tests de panne et de schéma défavorable, un protocole temporel séparé du
 benchmark stratifié, une évaluation temporelle sur données réelles, les
-détecteurs profonds et une étude de coût avec tailles d'entrée contrôlées.
+détecteurs profonds et une étude de coût plus large dans un environnement
+contrôlé.
 Le tableau de suivi `verification/issues.md` relie ces
 travaux aux tickets. Aucun résultat de ce rapport ne valide une livraison
 finale du mémoire.
@@ -119,5 +124,6 @@ python experiments/run_curves.py --seed 42
 python experiments/run_benchmark.py --dataset credit_card
 python experiments/run_benchmark.py --dataset water_quality
 python experiments/run_benchmark.py --dataset cardio
+make verify-scale
 latexmk -pdf -interaction=nonstopmode -halt-on-error -output-directory=paper paper/main.tex
 ```

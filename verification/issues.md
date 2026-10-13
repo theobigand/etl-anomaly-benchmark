@@ -65,8 +65,9 @@ sont pas tous remplis.
 - **#27** : les trois jeux réels présents ont été rejoués avec cinq graines.
   Les recettes d'acquisition, les droits d'usage et les partitions exactes
   manquent à l'archive.
-- **#28** : mener des mesures de croissance en temps et en mémoire, avec des
-  tailles d'entrée et une machine documentées.
+- **#28** : un essai borné sur 100, 300 et 900 lignes enregistre temps,
+  allocation Python, tailles d'entrée et machine (`scaling.md`). Il manque
+  une étude contrôlée plus large et la mémoire native.
 - **#29** : les règles et Isolation Forest rejettent les colonnes
   d'entraînement vides, les infinis et les colonnes requises absentes ; les
   colonnes constantes ont des sorties finies. Il reste les classes extrêmes,
