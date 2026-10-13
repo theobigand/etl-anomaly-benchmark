@@ -53,3 +53,6 @@ paper/*.fdb_latexmk
 .idea/
 *.swp
 .DS_Store
+
+# Generated verification snapshot; policy lives in profile.template.json
+verification/profile.json
