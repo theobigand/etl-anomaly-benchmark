@@ -23,22 +23,19 @@ from __future__ import annotations
 import argparse
 import logging
 import os
+from dataclasses import replace
 from datetime import UTC, datetime
+from pathlib import Path
 
 os.environ.setdefault("TQDM_DISABLE", "1")
 
 import pandas as pd  # noqa: E402
-from sklearn.metrics import (  # noqa: E402
-    average_precision_score,
-    f1_score,
-    precision_score,
-    recall_score,
-    roc_auc_score,
-)
+from provenance import write_record  # noqa: E402
 
 from etl_benchmark import config  # noqa: E402
 from etl_benchmark.datasets import ANOMALY_COLUMN, DATASETS, DatasetSpec  # noqa: E402
 from etl_benchmark.logging_setup import setup_logging  # noqa: E402
+from etl_benchmark.metrics import compute_metrics  # noqa: E402
 from etl_benchmark.pipeline import detect  # noqa: E402
 from etl_benchmark.registry import all_detectors  # noqa: E402
 from etl_benchmark.split import stratified_split  # noqa: E402
@@ -65,12 +62,7 @@ def evaluate(
         res = detect(test_x, det, fit_df=fit_df)
         row = {
             "detector": det.name,
-            "precision": precision_score(y_test, res.flags, zero_division=0),
-            "recall": recall_score(y_test, res.flags, zero_division=0),
-            "f1": f1_score(y_test, res.flags, zero_division=0),
-            "roc_auc": roc_auc_score(y_test, res.scores),
-            "pr_auc": average_precision_score(y_test, res.scores),
-            "flagged_pct": 100.0 * float(res.flags.mean()),
+            **compute_metrics(y_test, res.flags, res.scores),
             "detect_s": res.detect_s,
         }
         rows.append(row)
@@ -105,7 +97,7 @@ def run(
     per_seed = [evaluate(spec, df, s, fit_sample) for s in seeds]
     stack = pd.concat(per_seed, keys=range(len(seeds)))
     grouped = stack.groupby(level=1, sort=False)
-    return grouped.mean(), grouped.std().fillna(0.0)
+    return grouped.mean(), grouped.std()
 
 
 def to_markdown(mean: pd.DataFrame, std: pd.DataFrame) -> str:
@@ -114,7 +106,11 @@ def to_markdown(mean: pd.DataFrame, std: pd.DataFrame) -> str:
         "| --- | " + " | ".join("---" for _ in METRIC_COLUMNS) + " |",
     ]
     for name in mean.index:
-        cells = [f"{mean.loc[name, c]:.3f} ± {std.loc[name, c]:.3f}" for c in METRIC_COLUMNS]
+        cells = [
+            f"{mean.loc[name, c]:.3f} ± "
+            + ("n/a" if pd.isna(std.loc[name, c]) else f"{std.loc[name, c]:.3f}")
+            for c in METRIC_COLUMNS
+        ]
         lines.append(f"| {name} | " + " | ".join(cells) + " |")
     return "\n".join(lines) + "\n"
 
@@ -122,6 +118,9 @@ def to_markdown(mean: pd.DataFrame, std: pd.DataFrame) -> str:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dataset", choices=sorted(DATASETS), default="credit_card")
+    parser.add_argument("--csv", type=Path, help="local CSV override for a declared dataset schema")
+    parser.add_argument("--detectors", nargs="+", help="subset of this dataset's detectors")
+    parser.add_argument("--results-dir", type=Path, default=config.RESULTS_DIR)
     parser.add_argument("--seeds", type=int, nargs="+", default=list(config.BENCHMARK_SEEDS))
     parser.add_argument(
         "--fit-sample",
@@ -135,17 +134,42 @@ def main() -> None:
     logging.getLogger("great_expectations").setLevel(logging.WARNING)
 
     spec = DATASETS[args.dataset]
+    if args.detectors:
+        unknown = set(args.detectors) - set(spec.detector_names)
+        if unknown:
+            parser.error(f"detectors not eligible for {spec.name}: {sorted(unknown)}")
+        spec = replace(spec, detector_names=args.detectors)
+    if args.csv is not None:
+        spec = replace(spec, csv=args.csv)
     log.info("dataset %s: %s", spec.name, spec.note)
     mean, std = run(spec, args.seeds, args.fit_sample)
 
-    config.RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    args.results_dir.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
-    mean.join(std, lsuffix="_mean", rsuffix="_std").to_csv(
-        config.RESULTS_DIR / f"benchmark_{spec.name}_{stamp}.csv"
-    )
+    csv_out = args.results_dir / f"benchmark_{spec.name}_{stamp}.csv"
+    md_out = args.results_dir / f"benchmark_{spec.name}_{stamp}.md"
+    mean.join(std, lsuffix="_mean", rsuffix="_std").to_csv(csv_out)
     header = f"{spec.name}, {len(args.seeds)} seeds, mean ± std on the 15% test split.\n\n"
     md = header + to_markdown(mean, std)
-    (config.RESULTS_DIR / f"benchmark_{spec.name}_{stamp}.md").write_text(md)
+    md_out.write_text(md)
+    feature_names = list(spec.features(pd.read_csv(spec.csv, nrows=0)).columns)
+    write_record(
+        args.results_dir / f"run_benchmark_{spec.name}_{stamp}.json",
+        experiment="real_benchmark",
+        seeds=args.seeds,
+        dataset=spec.name,
+        data_path=spec.csv,
+        settings={
+            "split_ratios": list(config.SPLIT_RATIOS),
+            "split_strategy": "stratified",
+            "fit_sample": args.fit_sample,
+            "detectors": spec.detector_names,
+            "features": feature_names,
+            "calibration": "train_label_prevalence",
+            "pr_auc_definition": "average_precision",
+        },
+        outputs=[csv_out.name, md_out.name],
+    )
 
     print("\n" + md)
     log.info("saved -> experiments/results/benchmark_%s_%s.csv", spec.name, stamp)

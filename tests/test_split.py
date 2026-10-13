@@ -58,7 +58,23 @@ def test_split_accepts_a_series_to_stratify_on():
     assert sum(len(p) for p in parts) == len(df)
 
 
+def test_split_aligns_series_by_original_index():
+    df = _frame(300, pos_rate=0.25, seed=6)
+    df.index = np.arange(1000, 1300)
+    ordered = stratified_split(df, df["label"], seed=12)
+    shuffled_label = df["label"].sample(frac=1, random_state=99)
+    aligned = stratified_split(df, shuffled_label, seed=12)
+    for expected, actual in zip(ordered, aligned, strict=True):
+        pd.testing.assert_frame_equal(expected, actual)
+
+
 def test_split_rejects_bad_ratios():
     df = _frame(500)
     with pytest.raises(ValueError):
         stratified_split(df, "label", ratios=(0.5, 0.3, 0.3))
+
+
+@pytest.mark.parametrize("ratios", [(float("nan"), 0.2, 0.8), (float("inf"), 0.1, 0.1)])
+def test_split_rejects_nonfinite_ratios(ratios):
+    with pytest.raises(ValueError, match="ratios"):
+        stratified_split(_frame(500), "label", ratios=ratios)

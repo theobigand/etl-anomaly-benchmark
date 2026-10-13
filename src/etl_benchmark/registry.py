@@ -13,6 +13,7 @@ for the flag threshold). The benchmarks pass the train-set prevalence;
 from __future__ import annotations
 
 from collections.abc import Callable
+from math import isfinite
 
 from etl_benchmark import config
 from etl_benchmark.quality import (
@@ -50,6 +51,8 @@ def clip_contamination(prevalence: float | None) -> float:
     """Clamp a prevalence into the range PyOD accepts for ``contamination``."""
     if prevalence is None:
         prevalence = config.ML_CONTAMINATION
+    if not isfinite(prevalence) or prevalence < 0 or prevalence > 1:
+        raise ValueError("prevalence must be finite and between 0 and 1")
     lo, hi = config.ML_CONTAMINATION_BOUNDS
     return float(min(max(prevalence, lo), hi))
 
