@@ -2,7 +2,7 @@ CONDA_ENV := etl-benchmark
 # any Chromium-family binary that supports --print-to-pdf (chrome, chromium, chrome-headless-shell)
 CHROME ?= chromium
 
-.PHONY: help env update test lint verify-fast verify-deep verify-real verify-all pipeline benchmark benchmark-water benchmark-cardio synthetic heatmap severity curves slides run clean
+.PHONY: help env update test lint verify-fast verify-deep verify-real verify-scale verify-all pipeline benchmark benchmark-water benchmark-cardio synthetic heatmap severity curves slides run clean
 
 help:
 	@echo "Available targets:"
@@ -13,6 +13,7 @@ help:
 	@echo "  make verify-fast  Lint, test, measure exact line/branch coverage, write evidence"
 	@echo "  make verify-deep  Run the focused mutation pilot and enforce 95%"
 	@echo "  make verify-real  Inspect available full datasets and record provenance"
+	@echo "  make verify-scale Measure bounded detector growth outside FAST"
 	@echo "  make verify-all   Run all three verification profiles"
 	@echo "  make pipeline   Run the ETL pipeline demo (sorts data with one detector)"
 	@echo "  make benchmark       Benchmark on Credit Card Fraud (5 seeds, stratified split)"
@@ -59,6 +60,9 @@ verify-deep:
 verify-real:
 	pytest -m real
 	python experiments/verify_real.py --output experiments/results/real_verification.json
+
+verify-scale:
+	python verification/scaling.py
 
 verify-all:
 	@set +e; $(MAKE) verify-fast; fast=$$?; $(MAKE) verify-deep; deep=$$?; \

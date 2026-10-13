@@ -8,6 +8,7 @@ se lancent à la racine du dépôt.
 | `make verify-fast` | Ruff, tests hors données réelles, couverture des lignes et branches. |
 | `make verify-deep` | Mutations de `metrics.py` avec mutmut ; seuil de 95 %. |
 | `make verify-real` | Tests sur les trois CSV locaux et contrôle de leurs tailles, labels et sommes de contrôle. |
+| `make verify-scale` | Étude locale de croissance sur trois tailles ; aucune limite de temps n'est imposée à FAST. |
 | `make verify-all` | Lance les trois commandes et conserve leurs échecs. |
 
 FAST produit `coverage.json`, `experiments/results/pytest.xml`,
@@ -37,6 +38,8 @@ n'est pas nécessaire de les recopier dans les pages de lecture.
   aux quatre tableaux du manuscrit.
 - `test_temporal_protocol.py` traite séparément les partitions chronologiques
   et les alertes par fenêtre. Sa méthode est décrite dans `temporal.md`.
+- `test_scaling_study.py` vérifie les étapes chronométrées et la taille des
+  entrées. `scaling.md` décrit l'essai local de croissance.
 
 Pour changer une mesure publiée, commencer par un cas qui montre l'erreur,
 exécuter le test avant la correction, puis relancer le même test après. Lancer
