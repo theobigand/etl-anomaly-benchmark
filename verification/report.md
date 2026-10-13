@@ -38,8 +38,8 @@ du benchmark stratifié.
 
 | Commande | Résultat | Détail |
 | --- | --- | --- |
-| `make verify-fast` | Échec | 168 tests réussis, 2 tests réels exclus ; couverture incomplète. |
-| `make verify-deep` | Échec | 74 mutants éliminés sur 97 dans `metrics.py` ; seuil de 95 % non atteint. |
+| `make verify-fast` | Échec | 170 tests réussis, 2 tests réels exclus ; couverture incomplète. |
+| `make verify-deep` | Échec | 86 mutants éliminés sur 97 dans `metrics.py` ; seuil de 95 % non atteint. |
 | `make verify-real` | Réussite locale | 2 tests et contrôle des trois CSV présents. |
 | `python verification/scaling.py` | Réussite locale | 27 mesures sur trois tailles, hors FAST. |
 | `make verify-all` | Échec | Reprend les échecs de FAST et DEEP. |
@@ -53,8 +53,8 @@ fichier est dans le profil généré `verification/profile.json` et
 ni branche n'est exclue.
 
 La campagne de mutation n'a porté que sur `src/etl_benchmark/metrics.py` avec
-mutmut 3.8.0 : 97 mutants produits, 74 éliminés, 23 survivants, aucun cas
-classé sans test, ignoré, expiré ou en erreur. Le taux mesuré est **76,29 %**
+mutmut 3.8.0 : 97 mutants produits, 86 éliminés, 11 survivants, aucun cas
+classé sans test, ignoré, expiré ou en erreur. Le taux mesuré est **88,66 %**
 sur ce seul module. Le reste du code n'a pas de score de mutation. Le profil
 indique donc `NOT_RUN` pour la portée complète ; sa valeur numérique zéro
 n'est pas une mesure de performance.

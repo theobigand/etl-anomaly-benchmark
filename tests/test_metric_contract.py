@@ -1,8 +1,10 @@
 import sys
+import warnings
 from pathlib import Path
 
 import numpy as np
 import pytest
+from sklearn.exceptions import UndefinedMetricWarning
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "experiments"))
 
@@ -67,3 +69,26 @@ def test_precision_with_no_flags_is_zero():
 def test_integer_flags_are_rejected_even_when_they_are_zero_or_one():
     with pytest.raises(ValueError, match="boolean"):
         run_benchmark.compute_metrics([0, 1], [0, 1], [0.1, 0.9])
+
+
+def test_invalid_metric_inputs_report_the_failed_contract():
+    with pytest.raises(ValueError, match="one-dimensional"):
+        run_benchmark.compute_metrics([[0], [1]], [False, True], [0.1, 0.9])
+    with pytest.raises(ValueError, match="equal nonzero length"):
+        run_benchmark.compute_metrics([0, 1], [False], [0.1, 0.9])
+    with pytest.raises(ValueError, match="equal nonzero length"):
+        run_benchmark.compute_metrics([0, 1], [False, True], [0.1])
+    with pytest.raises(ValueError, match="equal nonzero length"):
+        run_benchmark.compute_metrics([], [False], [0.1])
+    with pytest.raises(ValueError, match="both binary classes"):
+        run_benchmark.compute_metrics([1], [True], [0.9])
+    with pytest.raises(ValueError, match="scores must be finite"):
+        run_benchmark.compute_metrics([0, 1], [False, True], [0.1, float("inf")])
+
+
+def test_no_positive_predictions_do_not_emit_undefined_metric_warnings():
+    with warnings.catch_warnings(record=True) as recorded:
+        warnings.simplefilter("always")
+        result = run_benchmark.compute_metrics([0, 1], [False, False], [0.1, 0.9])
+    assert result["precision"] == 0.0
+    assert not any(issubclass(item.category, UndefinedMetricWarning) for item in recorded)

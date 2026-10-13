@@ -17,8 +17,9 @@ sont pas tous remplis.
 - **#6** : FAST mesure lignes et branches, y compris dans les commandes en
   sous-processus, et échoue si elles ne sont pas toutes couvertes. La
   couverture actuelle est de 1184/1342 lignes et 218/274 branches.
-- **#7** : le premier essai de mutation porte sur `metrics.py` ; 23 mutants
-  survivent. La campagne sur le reste du code n'a pas été lancée.
+- **#7** : l'essai de mutation porte sur `metrics.py` ; 11 mutants survivent
+  encore. `mutation_notes.md` les classe. La campagne sur le reste du code
+  n'a pas été lancée.
 
 ## Protocole et mesures (#8 à #15)
 
