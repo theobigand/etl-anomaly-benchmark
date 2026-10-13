@@ -12,6 +12,7 @@ from __future__ import annotations
 
 from math import isfinite
 
+import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
@@ -64,4 +65,43 @@ def stratified_split(
         train_df.reset_index(drop=True),
         val_df.reset_index(drop=True),
         test_df.reset_index(drop=True),
+    )
+
+
+def chronological_split(
+    df: pd.DataFrame,
+    time_column: str,
+    ratios: tuple[float, float, float] = config.SPLIT_RATIOS,
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """Split by event time, keeping equal timestamps in the same partition."""
+    if (
+        len(ratios) != 3
+        or any(not isfinite(r) or r <= 0 for r in ratios)
+        or abs(sum(ratios) - 1.0) > 1e-6
+    ):
+        raise ValueError("ratios must be three positive fractions summing to 1")
+    if time_column not in df:
+        raise ValueError(f"missing timestamp column {time_column!r}")
+    try:
+        times = pd.to_datetime(df[time_column], errors="raise", utc=True)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("invalid timestamp") from exc
+    if times.isna().any():
+        raise ValueError("missing timestamp")
+
+    positions = np.argsort(times.to_numpy(), kind="stable")
+    sorted_times = times.iloc[positions].to_numpy()
+    boundaries = np.flatnonzero(sorted_times[1:] != sorted_times[:-1]) + 1
+    if len(boundaries) < 2:
+        raise ValueError("three distinct timestamp groups are required")
+
+    target_train = len(df) * ratios[0]
+    first = int(boundaries[:-1][np.abs(boundaries[:-1] - target_train).argmin()])
+    later = boundaries[boundaries > first]
+    target_val = len(df) * (ratios[0] + ratios[1])
+    second = int(later[np.abs(later - target_val).argmin()])
+    ordered = df.iloc[positions]
+    return tuple(
+        part.reset_index(drop=True)
+        for part in (ordered.iloc[:first], ordered.iloc[first:second], ordered.iloc[second:])
     )
