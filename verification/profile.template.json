@@ -113,7 +113,7 @@
     {
       "activation_condition": "Expand mutation configuration and certify all eligible files",
       "affected_scope": "src/etl_benchmark/ and experiments/",
-      "description": "Full mutation certification; current 74/97 killed pilot covers metrics.py only",
+      "description": "Full mutation certification; current 86/97 killed pilot covers metrics.py only",
       "promotion_boundary": "DEEP",
       "reason": "The first campaign is scoped to one scientific module; a full-scope result has not been run. Zero in the mutation field means NOT_RUN, not a measured zero-percent score."
     },
