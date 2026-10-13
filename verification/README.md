@@ -30,6 +30,8 @@ n'est pas nécessaire de les recopier dans les pages de lecture.
 - `test_detector_protocol.py` et `test_metric_contract.py` contrôlent les
   entrées des détecteurs, l'alignement des sorties et les définitions des
   mesures, y compris les cas où une mesure est indéfinie.
+- `test_adverse_schemas.py` couvre les colonnes d'entraînement vides, les
+  infinis, les colonnes absentes et les colonnes constantes.
 - `test_cli_smoke.py` exécute quatre commandes sur de petits fichiers.
   `test_artifact_lineage.py` et `test_publication_tables.py` relient l'archive
   aux quatre tableaux du manuscrit.

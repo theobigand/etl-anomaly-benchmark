@@ -100,10 +100,10 @@ Mean over 5 seeds on the 15% held-out test split.
 
 | Detector | Prec | Rec | F1 | ROC-AUC | PR-AUC | Flag % | detect |
 |---|---|---|---|---|---|---|---|
-| Z-score | 0.011 | 0.870 | 0.021 | 0.926 | 0.078 | 13.4 | 0.05 s |
-| IQR | 0.003 | 0.966 | 0.007 | 0.911 | 0.018 | 48.6 | 0.14 s |
-| Great Expectations | 0.037 | 0.676 | 0.070 | 0.830 | 0.182 | 3.1 | 1.66 s |
-| Isolation Forest | 0.202 | 0.206 | 0.203 | 0.934 | 0.120 | 0.2 | 2.17 s |
+| Z-score | 0.011 | 0.870 | 0.021 | 0.926 | 0.078 | 13.4 | 0.07 s |
+| IQR | 0.003 | 0.966 | 0.007 | 0.911 | 0.018 | 48.6 | 0.24 s |
+| Great Expectations | 0.037 | 0.676 | 0.070 | 0.830 | 0.182 | 3.1 | 3.02 s |
+| Isolation Forest | 0.202 | 0.206 | 0.203 | 0.934 | 0.120 | 0.2 | 3.60 s |
 
 With contamination set to the prevalence, Isolation Forest flags only 0.17% of rows and
 reaches a precision of 0.20 (the first usable operating point), at a recall of 0.21 and

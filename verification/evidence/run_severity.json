@@ -1,11 +1,11 @@
 {
-  "captured_at": "2026-10-13T19:35:59.853638+00:00",
+  "captured_at": "2026-10-13T19:46:15.105874+00:00",
   "dataset": {
     "identity": "synthetic"
   },
   "experiment": "synthetic_severity",
   "outputs": [
-    "severity_20261013_193559.csv",
+    "severity_20261013_194614.csv",
     "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/paper/figures/severity_curves.png"
   ],
   "packages": {
@@ -40,7 +40,7 @@
     ],
     "split_strategy": "customer_identity_grouped_stratified"
   },
-  "source_fingerprint": "e8db74927f00c4ca8718853f5d2d919731e617295710104f9484d93434668ab8",
-  "source_revision": "7c19f0d7f095f11681f0233df2792df29abf0f00",
+  "source_fingerprint": "389af7afd9d387620a7565008fa7e67d394ebd5ae8bd5444d66a69be00f3d914",
+  "source_revision": "04dc0506165562c68a533bd33fd90d1db3b712b2",
   "worktree_dirty": true
 }
