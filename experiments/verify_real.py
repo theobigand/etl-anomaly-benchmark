@@ -13,8 +13,10 @@ import pandas as pd
 from etl_benchmark import config
 from etl_benchmark.datasets import ANOMALY_COLUMN, DATASETS, DatasetSpec
 
+MANIFEST = config.PROJECT_ROOT / "verification" / "evidence" / "manifest.json"
 
-def inspect_dataset(spec: DatasetSpec) -> dict:
+
+def inspect_dataset(spec: DatasetSpec, expected: dict | None = None) -> dict:
     """Record file identity, label convention and the post-transform population."""
     if not spec.csv.is_file():
         return {
@@ -33,7 +35,7 @@ def inspect_dataset(spec: DatasetSpec) -> dict:
         features = spec.features(frame)
         if frame.empty or features.empty or frame[ANOMALY_COLUMN].nunique() != 2:
             raise ValueError("dataset must have rows, features and both label classes")
-        return {
+        record = {
             "dataset": spec.name,
             "status": "PASS",
             "path": str(spec.csv),
@@ -48,6 +50,14 @@ def inspect_dataset(spec: DatasetSpec) -> dict:
             "features": list(features.columns),
             "missing_by_feature": {key: int(value) for key, value in features.isna().sum().items()},
         }
+        if expected is not None:
+            for field, value in expected.items():
+                if field not in record:
+                    raise ValueError(f"unknown reference field {field}")
+                if record[field] != value:
+                    label = "checksum" if field == "sha256" else field
+                    raise ValueError(f"{label} differs from the reference")
+        return record
     except (OSError, ValueError, KeyError, pd.errors.ParserError) as exc:
         return {"dataset": spec.name, "status": "FAIL", "reason": str(exc), "path": str(spec.csv)}
 
@@ -58,7 +68,22 @@ def main() -> int:
         "--output", type=Path, default=config.RESULTS_DIR / "real_verification.json"
     )
     args = parser.parse_args()
-    records = [inspect_dataset(spec) for spec in DATASETS.values()]
+    try:
+        reference = json.loads(MANIFEST.read_text())["datasets"]
+        required = {"sha256", "raw_rows", "rows_after_transform", "anomalies", "positive_value"}
+        for spec in DATASETS.values():
+            missing = required - reference[spec.name].keys()
+            if missing:
+                raise ValueError(f"{spec.name}: reference missing {sorted(missing)}")
+        records = [
+            inspect_dataset(spec, expected={key: reference[spec.name][key] for key in required})
+            for spec in DATASETS.values()
+        ]
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        records = [
+            {"dataset": spec.name, "status": "FAIL", "reason": f"reference unavailable: {exc}"}
+            for spec in DATASETS.values()
+        ]
     report = {"captured_at": datetime.now(UTC).isoformat(), "datasets": records}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")

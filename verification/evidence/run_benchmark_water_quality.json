@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-13T20:08:40.777791+00:00",
+  "captured_at": "2026-10-13T20:15:53.980011+00:00",
   "dataset": {
     "bytes": 525187,
     "identity": "water_quality",
@@ -8,8 +8,8 @@
   },
   "experiment": "real_benchmark",
   "outputs": [
-    "benchmark_water_quality_20261013_200840.csv",
-    "benchmark_water_quality_20261013_200840.md"
+    "benchmark_water_quality_20261013_201553.csv",
+    "benchmark_water_quality_20261013_201553.md"
   ],
   "packages": {
     "great-expectations": "1.24.0",
@@ -58,7 +58,7 @@
     ],
     "split_strategy": "stratified"
   },
-  "source_fingerprint": "a7290e22779ba6af069f8152daa09319747a37324e8a20d2b274745084c12961",
-  "source_revision": "44f5a58cf6389ba11e9c2f7280803b3728f082a0",
+  "source_fingerprint": "35458386d1c15a74591a5b5f2a65d8634276850c310b930c587911e436ab2f6a",
+  "source_revision": "55a9c04435c3095f2c66c8660c25047b0725f9b7",
   "worktree_dirty": true
 }
