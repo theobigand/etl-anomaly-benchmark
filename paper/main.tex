@@ -19,7 +19,7 @@ and Deep Learning Anomaly Detectors\\
 in ETL Data Quality Pipelines}
 
 \author{\IEEEauthorblockN{Theo Bigand}
-\IEEEauthorblockA{\textit{ESILV --- M1 Data \& Artificial Intelligence} \\
+\IEEEauthorblockA{\textit{ESILV --- M2 Data \& Artificial Intelligence} \\
 \textit{Léonard de Vinci Pôle Universitaire}\\
 Courbevoie, France \\
 theobigand@gmail.com}
@@ -313,6 +313,41 @@ contamination across each dataset (Table~\ref{tab:contamination}). The
 deep-learning detectors (Autoencoder, LSTM-Autoencoder) are the object of
 the next stage.
 
+\subsection{Verification and reproducibility}
+\label{sec:verification}
+The experimental code is checked at three levels. A routine test suite
+exercises numerical contracts on small, generated tables and measures
+line and branch coverage across the pipeline and experiment scripts. Its
+regression cases include partition disjointness by customer identity,
+training-only preprocessing, the exclusion of labels from detector inputs,
+score direction and index alignment, undefined binary metrics, and the
+construction of each synthetic anomaly type. Separate command-line tests
+run the four figure and table generators on temporary data. They check the
+output schema without comparing images pixel by pixel or imposing a fixed
+wall-clock duration.
+
+A second, manually invoked level probes the strength of these assertions
+through mutation testing and longer synthetic checks. The present mutation
+campaign is limited to the metric calculations; its measured denominator
+therefore cannot be interpreted as a score for the repository. A third
+level uses the locally available full datasets. Before a real-data run,
+the source file, expected columns, positive-class mapping, row count and
+class prevalence are checked. The scripts record the dataset fingerprint,
+software versions, random seeds, split policy and output names alongside
+their results. Archived tables and figures are checked against their
+manifest, and the four numerical tables in this manuscript are compared
+with the archived CSV values at the precision shown. This establishes
+traceability between the reported values and the recorded experiment;
+it does not establish that another machine will reproduce the same timings.
+
+We treat a failed or missing check as a limitation of the evidence, not as
+a successful experiment. In particular, complete line and branch coverage
+and a mutation score of at least $95\%$ remain targets. The quantitative
+status of these checks is reported with the results below. The
+chronological split and the window-based drift monitor have a separate
+protocol: their alert and delay measures are not pooled with the row-level
+metrics from the stratified benchmark.
+
 \section{Experiments and Results}
 \label{sec:experiments}
 Benchmark tables report means over five seeds on the held-out test
@@ -579,6 +614,31 @@ marks severity $1.0$.}
 \label{fig:severity}
 \end{figure}
 
+\subsection{Verification outcomes and computation cost}
+\label{sec:verification-results}
+At the current revision, the routine suite executes 163 tests successfully
+and excludes two tests that require the full real datasets. Its exact
+coverage is 962 of 1,324 executable lines ($72.66\%$) and 173 of 262
+branches ($66.03\%$). The coverage gate consequently fails. An initial
+mutation campaign on the metric module eliminates 74 of 97 generated
+mutants ($76.29\%$); 23 survive, and no repository-wide mutation score is
+available. The deeper gate also fails. These figures expose unfinished
+verification work rather than a change in the detector rankings. The
+real-data checks pass locally for all three available CSV files, and the
+four manuscript tables agree with the archived numerical results.
+
+Detector timing in Tables~\ref{tab:fraud} and~\ref{tab:synthetic} sums
+\texttt{fit}, \texttt{predict} and \texttt{score} inside the detection
+stage; CSV loading, deduplication and figure rendering are excluded. A
+separate local growth experiment ran Isolation Forest, LOF and One-Class
+SVM on 100, 300 and 900 generated rows, with eight features and three
+repetitions per size. All 27 runs completed. At 900 rows, median measured
+detection times were 0.388, 0.021 and 0.050 seconds, respectively, on the
+recorded macOS/ARM environment. This small in-memory experiment measures
+neither native-library peak memory nor the scaling of the 284,000-row
+fraud dataset. It supports reporting the workload and omissions explicitly,
+but not a general speed ranking.
+
 \section{Discussion}
 \label{sec:discussion}
 
@@ -632,6 +692,13 @@ plus one real point. The ML detectors carry a wide seed spread on the
 small datasets (Cardio $F_1$ standard deviation up to $0.17$; Isolation
 Forest on fraud $F_1 = 0.20 \pm 0.07$), so those numbers should be read
 as ranges.
+Verification has its own limits: the routine suite has uncovered paths in
+data acquisition, plotting and experiment entry points, while mutation
+testing has so far covered only the metric module. The complete real-data
+checks were performed with the three files available locally; their source
+versions and usage terms must be confirmed before a final release. These
+gaps leave some implementation errors capable of changing a published
+result without being caught by the current gates.
 
 \section{Conclusion}
 \label{sec:conclusion}
