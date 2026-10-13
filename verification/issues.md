@@ -16,7 +16,7 @@ sont pas tous remplis.
   dans `README.md`.
 - **#6** : FAST mesure lignes et branches, y compris dans les commandes en
   sous-processus, et échoue si elles ne sont pas toutes couvertes. La
-  couverture actuelle est de 1174/1324 lignes et 211/262 branches.
+  couverture actuelle est de 1184/1342 lignes et 218/274 branches.
 - **#7** : le premier essai de mutation porte sur `metrics.py` ; 23 mutants
   survivent. La campagne sur le reste du code n'a pas été lancée.
 
@@ -66,8 +66,10 @@ sont pas tous remplis.
 - **#26** : définir et tester les contrats CPU des autoencodeurs et des
   séquences avant d'ajouter leurs résultats aux comparaisons.
 - **#27** : les trois jeux réels présents ont été rejoués avec cinq graines.
-  Les recettes d'acquisition, les droits d'usage et les partitions exactes
-  manquent à l'archive.
+  Water Quality et Cardio ont été comparés à leurs sources ; les copies locales
+  sont maintenant contrôlées contre le manifeste. La révision du fichier
+  Credit Card, les droits sous-jacents de Cardio et les partitions exactes
+  restent à établir.
 - **#28** : un essai borné sur 100, 300 et 900 lignes enregistre temps,
   allocation Python, tailles d'entrée et machine (`scaling.md`). Il manque
   une étude contrôlée plus large et la mémoire native.

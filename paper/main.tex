@@ -266,7 +266,8 @@ in the direction of that move; it is run on the synthetic dataset only, as
 the other detectors ignore the row order.
 
 \subsection{Datasets}
-We evaluate on four datasets. \emph{Credit Card Fraud} (Kaggle;
+We evaluate on four datasets. \emph{Credit Card Fraud}~\cite{mlgulbcredit}
+(Kaggle;
 $283{,}726$ transactions after de-duplication, $30$ numeric features,
 $0.17\%$ labelled fraud) is the standard strongly imbalanced benchmark,
 but its positive class mixes every kind of defect. The \emph{synthetic}
@@ -274,11 +275,11 @@ dataset above ($12{,}360$ rows, $17.5\%$ anomalous) carries the per-type
 labels. \emph{Cardio} (a cardiotocography anomaly dataset as packaged for
 outlier-detection benchmarking; $1{,}831$ rows, $21$ standardized
 features, $9.6\%$ anomalies) is a \emph{genuinely imbalanced} real
-dataset: the anomalies are rare and distributionally distinct, the regime
-the unsupervised detectors are built for. \emph{Water Quality} (a mirror
-of the UCI-style water-potability data; $3{,}276$ samples, $9$ numeric
-features) is the opposite case: the target class (``not potable'') is
-common ($61\%$) rather than rare, and the data has genuine missing values,
+dataset~\cite{han2022adbench}: the anomalies are rare and distributionally
+distinct, the regime the unsupervised detectors are built for.
+\emph{Water Quality}~\cite{kadiwal2021water} ($3{,}276$ samples,
+$9$ numeric features) is the opposite case: the target class
+(``not potable'') is common ($61\%$) rather than rare, and the data has genuine missing values,
 so it probes the detectors outside their regime.
 
 \subsection{Evaluation protocol}
@@ -332,7 +333,7 @@ campaign is limited to the metric calculations; its measured denominator
 therefore cannot be interpreted as a score for the repository. A third
 level uses the locally available full datasets. Before a real-data run,
 the source file, expected columns, positive-class mapping, row count and
-class prevalence are checked. The scripts record the dataset fingerprint,
+class prevalence are checked against an archived manifest. The scripts record the dataset fingerprint,
 software versions, random seeds, split policy and output names alongside
 their results. Archived tables and figures are checked against their
 manifest, and the four numerical tables in this manuscript are compared
@@ -365,7 +366,7 @@ contamination matches the prevalence: it flags only $0.17\%$ of rows and
 reaches a precision of $0.20$, the first usable operating point in the
 table, but its recall drops to $0.21$ and both are seed-sensitive
 ($F_1 = 0.20 \pm 0.07$). It keeps the best ROC-AUC ($0.934$). Great
-Expectations took $1.7$\,s on this run, against $0.06$--$0.16$\,s for the
+Expectations took $1.6$\,s on this run, against $0.04$--$0.15$\,s for the
 statistical rules; these times vary between runs. LOF and the
 One-Class SVM are absent: neither scales to $284$k rows in the pipeline.
 
@@ -380,10 +381,10 @@ $15\%$ test split. Higher is better except flagged rows and time.}
 \toprule
 Detector & Prec. & Rec. & $F_1$ & ROC & PR & Flag.\% & Time (s) \\
 \midrule
-Z-score            & 0.011 & 0.870 & 0.021 & 0.926 & 0.078 & 13.4 & \textbf{0.06} \\
-IQR                & 0.003 & \textbf{0.966} & 0.007 & 0.911 & 0.018 & 48.6 & 0.16 \\
-Great Expectations & 0.037 & 0.676 & 0.070 & 0.830 & \textbf{0.182} & 3.1 & 1.68 \\
-Isolation Forest   & \textbf{0.202} & 0.206 & \textbf{0.203} & \textbf{0.934} & 0.120 & \textbf{0.2} & 2.28 \\
+Z-score            & 0.011 & 0.870 & 0.021 & 0.926 & 0.078 & 13.4 & \textbf{0.04} \\
+IQR                & 0.003 & \textbf{0.966} & 0.007 & 0.911 & 0.018 & 48.6 & 0.15 \\
+Great Expectations & 0.037 & 0.676 & 0.070 & 0.830 & \textbf{0.182} & 3.1 & 1.61 \\
+Isolation Forest   & \textbf{0.202} & 0.206 & \textbf{0.203} & \textbf{0.934} & 0.120 & \textbf{0.2} & 2.10 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -445,12 +446,12 @@ the $15\%$ test split. Time is the in-pipeline fit+predict+score latency.}
 \toprule
 Detector & Prec. & Rec. & $F_1$ & ROC & PR & Time (s) \\
 \midrule
-Z-score            & \textbf{1.000} & 0.196 & 0.328 & \textbf{0.742} & \textbf{0.544} & \textbf{0.003} \\
-IQR                & 0.584 & 0.396 & 0.472 & 0.675 & 0.452 & 0.006 \\
-Great Expectations & 0.951 & 0.202 & 0.333 & 0.600 & 0.333 & 0.46 \\
-Isolation Forest   & 0.495 & \textbf{0.499} & \textbf{0.497} & 0.735 & 0.485 & 0.33 \\
-LOF                & 0.388 & 0.420 & 0.404 & 0.659 & 0.437 & 0.33 \\
-One-Class SVM      & 0.478 & 0.485 & 0.481 & 0.722 & 0.520 & 5.87 \\
+Z-score            & \textbf{1.000} & 0.196 & 0.328 & \textbf{0.742} & \textbf{0.544} & \textbf{0.002} \\
+IQR                & 0.584 & 0.396 & 0.472 & 0.675 & 0.452 & 0.004 \\
+Great Expectations & 0.951 & 0.202 & 0.333 & 0.600 & 0.333 & 0.27 \\
+Isolation Forest   & 0.495 & \textbf{0.499} & \textbf{0.497} & 0.735 & 0.485 & 0.16 \\
+LOF                & 0.388 & 0.420 & 0.404 & 0.659 & 0.437 & 0.14 \\
+One-Class SVM      & 0.478 & 0.485 & 0.481 & 0.722 & 0.520 & 2.57 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -616,10 +617,10 @@ marks severity $1.0$.}
 
 \subsection{Verification outcomes and computation cost}
 \label{sec:verification-results}
-At the current revision, the routine suite executes 166 tests successfully
+At the current revision, the routine suite executes 168 tests successfully
 and excludes two tests that require the full real datasets. Its exact
-coverage is 1,174 of 1,324 executable lines ($88.67\%$) and 211 of 262
-branches ($80.53\%$). The coverage gate consequently fails. An initial
+coverage is 1,184 of 1,342 executable lines ($88.23\%$) and 218 of 274
+branches ($79.56\%$). The coverage gate consequently fails. An initial
 mutation campaign on the metric module eliminates 74 of 97 generated
 mutants ($76.29\%$); 23 survive, and no repository-wide mutation score is
 available. The deeper gate also fails. These figures expose unfinished
@@ -695,8 +696,10 @@ as ranges.
 Verification has its own limits: the routine suite has uncovered paths in
 data acquisition, plotting and experiment entry points, while mutation
 testing has so far covered only the metric module. The complete real-data
-checks were performed with the three files available locally; their source
-versions and usage terms must be confirmed before a final release. These
+checks were performed with the three files available locally. The Water
+Quality file matches its named mirror, and the Cardio CSV can be reproduced
+from the current ADBench archive. The exact revision of the Credit Card
+download and the underlying Cardio data rights remain unresolved. These
 gaps leave some implementation errors capable of changing a published
 result without being caught by the current gates.
 

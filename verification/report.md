@@ -38,13 +38,13 @@ du benchmark stratifié.
 
 | Commande | Résultat | Détail |
 | --- | --- | --- |
-| `make verify-fast` | Échec | 166 tests réussis, 2 tests réels exclus ; couverture incomplète. |
+| `make verify-fast` | Échec | 168 tests réussis, 2 tests réels exclus ; couverture incomplète. |
 | `make verify-deep` | Échec | 74 mutants éliminés sur 97 dans `metrics.py` ; seuil de 95 % non atteint. |
 | `make verify-real` | Réussite locale | 2 tests et contrôle des trois CSV présents. |
 | `python verification/scaling.py` | Réussite locale | 27 mesures sur trois tailles, hors FAST. |
 | `make verify-all` | Échec | Reprend les échecs de FAST et DEEP. |
 
-FAST mesure **1174/1324 lignes (88,67 %)** et **211/262 branches (80,53 %)**.
+FAST mesure **1184/1342 lignes (88,23 %)** et **218/274 branches (79,56 %)**.
 La mesure inclut désormais les commandes lancées en sous-processus. Les
 scripts `fetch_cardio.py`, `generate_synthetic.py` et l'entrée principale
 ne sont toujours pas parcourus par FAST. Le détail par
@@ -91,8 +91,11 @@ Le contrôle local retrouve 283 726 lignes et 473 fraudes après déduplication
 pour Credit Card Fraud, 3 276 lignes et 1 998 positives pour Water Quality,
 1 822 lignes et 175 anomalies pour Cardio. Les sommes de contrôle et les
 commandes de rejeu sont conservées dans `verification/evidence/manifest.json`.
-Les CSV bruts ne sont pas archivés ici. Leur source exacte et leurs conditions
-d'usage demandent encore une vérification avant publication.
+Les CSV bruts ne sont pas archivés ici. Le CSV Water Quality correspond au
+miroir annoncé, et la conversion du fichier ADBench reproduit le CSV Cardio.
+`make verify-real` compare maintenant les copies locales aux valeurs attendues
+du manifeste. La révision du téléchargement Credit Card et les droits propres
+au jeu Cardio restent non établis pour une redistribution brute.
 
 La CI lance FAST et conserve ses rapports. Le job est actuellement rouge à
 cause de la couverture. Les règles de protection de la branche distante n'ont
