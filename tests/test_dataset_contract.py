@@ -26,6 +26,20 @@ def test_missing_labels_are_not_silently_normalized(tmp_path):
         DatasetSpec("toy", csv, "Class", 1).load()
 
 
+@pytest.mark.parametrize(
+    ("columns", "message"),
+    [
+        ({"measure": [1.0, 2.0]}, "missing label column"),
+        ({"measure": [1.0, 2.0], "Class": [0, 2]}, "only 0 and 1"),
+    ],
+)
+def test_dataset_rejects_missing_or_nonbinary_ground_truth(tmp_path, columns, message):
+    csv = tmp_path / "invalid.csv"
+    pd.DataFrame(columns).to_csv(csv, index=False)
+    with pytest.raises(ValueError, match=message):
+        DatasetSpec("toy", csv, "Class", 1).load()
+
+
 def test_features_exclude_every_ground_truth_and_identity_column(tmp_path):
     spec = DatasetSpec("toy", tmp_path / "irrelevant.csv", "Class", 1)
     frame = pd.DataFrame(

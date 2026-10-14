@@ -16,7 +16,7 @@ sont pas tous remplis.
   dans `README.md`.
 - **#6** : FAST mesure lignes et branches, y compris dans les commandes en
   sous-processus, et échoue si elles ne sont pas toutes couvertes. La
-  couverture actuelle est de 1334/1392 lignes et 250/296 branches. Les
+  couverture actuelle est de 1357/1392 lignes et 272/296 branches. Les
   commandes locales de génération, de conversion Cardio et de démonstration
   ont désormais des tests dédiés.
 - **#7** : l'essai de mutation porte sur `metrics.py` ; 11 mutants survivent
@@ -69,7 +69,8 @@ sont pas tous remplis.
 ## Suite du travail (#25 à #30)
 
 - **#25** : le découpage chronologique et un suivi par fenêtre ont des tests
-  sans accès au futur (`test_temporal_protocol.py`). La saisonnalité, les
+  sans accès au futur (`test_temporal_protocol.py`). Les entrées temporelles
+  invalides et les résultats sans événement sont maintenant contrôlés. La saisonnalité, les
   métriques sur plusieurs changements et l'évaluation sur données réelles
   restent à étudier.
 - **#26** : définir et tester les contrats CPU des autoencodeurs et des

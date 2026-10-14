@@ -48,6 +48,14 @@ def test_chronological_split_rejects_insufficient_distinct_times():
         chronological_split(frame, "time")
 
 
+def test_chronological_split_rejects_missing_column_and_invalid_ratios():
+    frame = _timeline(12)
+    with pytest.raises(ValueError, match="timestamp column"):
+        chronological_split(frame.drop(columns="time"), "time")
+    with pytest.raises(ValueError, match="ratios"):
+        chronological_split(frame, "time", ratios=(0.5, 0.5, 0.5))
+
+
 def test_window_monitor_detects_abrupt_change_without_reference_updates():
     frame = _timeline(120)
     train, val, test = chronological_split(frame, "time")
@@ -139,3 +147,47 @@ def test_event_metrics_report_delay_and_false_alarms_by_window():
     assert result["false_alarm_rate"] == 1.0
     assert result["detected"] is True
     assert result["detection_delay"] == pd.Timedelta(days=1)
+
+
+@pytest.mark.parametrize(
+    ("change", "message"),
+    [
+        (lambda f: f.drop(columns="time"), "timestamp column"),
+        (lambda f: f.assign(time=pd.NaT), "missing timestamp"),
+        (lambda f: f.assign(value="bad"), "numeric"),
+        (lambda f: f.assign(value=float("inf")), "finite"),
+    ],
+)
+def test_window_monitor_rejects_adverse_reference_schema(change, message):
+    with pytest.raises(ValueError, match=message):
+        WindowDriftMonitor("time", ["value"]).fit(change(_timeline(12)))
+
+
+@pytest.mark.parametrize("window_size,threshold", [(1, 2.0), (5, 0.0), (5, float("nan"))])
+def test_window_monitor_rejects_invalid_configuration(window_size, threshold):
+    with pytest.raises(ValueError):
+        WindowDriftMonitor("time", ["value"], window_size=window_size, threshold=threshold)
+
+
+def test_window_monitor_rejects_short_reference_and_empty_future():
+    monitor = WindowDriftMonitor("time", ["value"], window_size=5)
+    with pytest.raises(ValueError, match="reference needs"):
+        monitor.fit(_timeline(1))
+    monitor.fit(_timeline(12))
+    with pytest.raises(ValueError, match="future period is empty"):
+        monitor.evaluate(_timeline(0))
+
+
+def test_event_metrics_reject_invalid_windows_and_expose_missing_events():
+    with pytest.raises(ValueError, match="window results"):
+        event_metrics(pd.DataFrame(), pd.Timestamp("2024-01-02"))
+    windows = pd.DataFrame(
+        {"window_end": pd.to_datetime(["2024-01-03", "2024-01-04"]), "alert": [0, 1]}
+    )
+    with pytest.raises(ValueError, match="boolean"):
+        event_metrics(windows, pd.Timestamp("2024-01-02"))
+    windows["alert"] = [False, False]
+    result = event_metrics(windows, pd.Timestamp("2024-01-02"))
+    assert pd.isna(result["false_alarm_rate"])
+    assert result["detected"] is False
+    assert pd.isna(result["detection_delay"])
