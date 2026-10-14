@@ -626,10 +626,10 @@ marks severity $1.0$.}
 
 \subsection{Verification outcomes and computation cost}
 \label{sec:verification-results}
-At the current revision, the routine suite executes 182 tests successfully
+At the current revision, the routine suite executes 185 tests successfully
 and excludes two tests that require the full real datasets. Its exact
-coverage is 1,227 of 1,392 executable lines ($88.15\%$) and 235 of 296
-branches ($79.39\%$). The coverage gate consequently fails. An initial
+coverage is 1,293 of 1,392 executable lines ($92.89\%$) and 240 of 296
+branches ($81.08\%$). The coverage gate consequently fails. An initial
 mutation campaign on the metric module eliminates 86 of 97 generated
 mutants ($88.66\%$); 11 survive, and no repository-wide mutation score is
 available. The deeper gate also fails. These figures expose unfinished
@@ -703,7 +703,7 @@ small datasets (Cardio $F_1$ standard deviation up to $0.17$; Isolation
 Forest on fraud $F_1 = 0.20 \pm 0.07$), so those numbers should be read
 as ranges.
 Verification has its own limits: the routine suite has uncovered paths in
-data acquisition, plotting and experiment entry points, while mutation
+plotting and experiment entry points, while mutation
 testing has so far covered only the metric module. The complete real-data
 checks were performed with the three files available locally. The Water
 Quality file matches its named mirror, and the Cardio CSV can be reproduced
