@@ -61,3 +61,10 @@ def test_gx_preserves_index():
     flags = det.predict(df)
 
     assert flags.index.equals(df.index)
+
+
+def test_constant_feature_has_no_spurious_range_expectation():
+    frame = pd.DataFrame({"constant": [2.0] * 30})
+    detector = GreatExpectationsDetector().fit(frame)
+    assert detector._bounds == {}
+    assert not detector.predict(frame).any()

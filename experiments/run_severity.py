@@ -29,7 +29,8 @@ import matplotlib.pyplot as plt  # noqa: E402
 import pandas as pd  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from run_synthetic_benchmark import _prepare, evaluate  # noqa: E402
+from provenance import write_record  # noqa: E402
+from run_synthetic_benchmark import evaluate  # noqa: E402
 
 from etl_benchmark import config  # noqa: E402
 from etl_benchmark.logging_setup import setup_logging  # noqa: E402
@@ -49,7 +50,7 @@ def run(severities: list[float], seeds: list[int], rows: int | None) -> pd.DataF
         per_seed = []
         for s in seeds:
             kw = {"n_rows": rows} if rows else {}
-            df = _prepare(make_synthetic(seed=s, severity=sev, **kw))
+            df = make_synthetic(seed=s, severity=sev, **kw)
             per_seed.append(evaluate(df, s)["recall"])
             log.info("severity %.2f seed %d done", sev, s)
         mean_recall = pd.concat(per_seed).groupby(level=0, sort=False).mean()
@@ -100,6 +101,7 @@ def main() -> None:
     parser.add_argument("--seeds", type=int, nargs="+", default=[42, 1, 2])
     parser.add_argument("--rows", type=int, default=None)
     parser.add_argument("--figure", type=Path, default=PAPER_FIGURE)
+    parser.add_argument("--results-dir", type=Path, default=config.RESULTS_DIR)
     args = parser.parse_args()
 
     setup_logging()
@@ -108,10 +110,26 @@ def main() -> None:
 
     curves = run(args.severities, args.seeds, args.rows)
 
-    config.RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    args.results_dir.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
-    curves.to_csv(config.RESULTS_DIR / f"severity_{stamp}.csv", index=False)
+    csv_out = args.results_dir / f"severity_{stamp}.csv"
+    curves.to_csv(csv_out, index=False)
     figure = render(curves, args.figure)
+    write_record(
+        args.results_dir / f"run_severity_{stamp}.json",
+        experiment="synthetic_severity",
+        seeds=args.seeds,
+        dataset="synthetic",
+        data_path=None,
+        settings={
+            "rows": args.rows or config.SYNTHETIC_ROWS,
+            "severities": args.severities,
+            "split_ratios": list(config.SPLIT_RATIOS),
+            "split_strategy": "customer_identity_grouped_stratified",
+            "calibration": "train_label_prevalence",
+        },
+        outputs=[csv_out.name, str(figure)],
+    )
 
     wide = curves[curves["anomaly_type"].isin(MAGNITUDE_TYPES)].pivot_table(
         index=["anomaly_type", "method"], columns="severity", values="recall"

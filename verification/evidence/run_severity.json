@@ -1,0 +1,46 @@
+{
+  "captured_at": "2026-10-14T09:06:42.753217+00:00",
+  "dataset": {
+    "identity": "synthetic"
+  },
+  "experiment": "synthetic_severity",
+  "outputs": [
+    "severity_20261014_090642.csv",
+    "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/paper/figures/severity_curves.png"
+  ],
+  "packages": {
+    "great-expectations": "1.24.0",
+    "numpy": "2.4.6",
+    "pandas": "3.0.6",
+    "pyod": "3.6.7",
+    "scikit-learn": "1.9.1"
+  },
+  "platform": "macOS-27.0-arm64-arm-64bit",
+  "python": "3.11.17",
+  "schema_version": 1,
+  "seeds": [
+    42,
+    1,
+    2
+  ],
+  "settings": {
+    "calibration": "train_label_prevalence",
+    "rows": 12000,
+    "severities": [
+      0.5,
+      1.0,
+      2.0,
+      3.0,
+      5.0
+    ],
+    "split_ratios": [
+      0.7,
+      0.15,
+      0.15
+    ],
+    "split_strategy": "customer_identity_grouped_stratified"
+  },
+  "source_fingerprint": "2dd09773a41675b4ec7051cecea8609ab69135ebd06f1b04340d2a3cd92a60a0",
+  "source_revision": "cd531741f869ca94b90334c507eecc81633f644c",
+  "worktree_dirty": false
+}

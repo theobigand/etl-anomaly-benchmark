@@ -16,7 +16,7 @@ from typing import Self
 import numpy as np
 import pandas as pd
 
-from etl_benchmark.quality.base import Detector
+from etl_benchmark.quality.base import Detector, numeric_features
 
 
 class ZScoreDetector(Detector):
@@ -30,17 +30,19 @@ class ZScoreDetector(Detector):
 
     def fit(self, df: pd.DataFrame) -> Self:
         cols = self._user_columns or df.select_dtypes(include=np.number).columns.tolist()
-        self._means = df[cols].mean()
-        self._stds = df[cols].std().replace(0, np.nan)
+        values = numeric_features(df, cols, training=True)
+        self._means = values.mean()
+        self._stds = values.std().replace(0, np.nan)
         return self
 
     def _zscores(self, df: pd.DataFrame) -> pd.DataFrame:
         if self._means is None or self._stds is None:
             raise RuntimeError(f"{self.name} detector not fitted. Call fit() first.")
-        return (df[self._means.index] - self._means).abs() / self._stds
+        values = numeric_features(df, list(self._means.index), training=False)
+        return (values - self._means).abs() / self._stds
 
     def predict(self, df: pd.DataFrame) -> pd.Series:
-        return self._zscores(df).gt(self.threshold).any(axis=1).fillna(False)
+        return self._zscores(df).gt(self.threshold).any(axis=1)
 
     def score(self, df: pd.DataFrame) -> pd.Series:
         # Worst standardized deviation across columns; NaN (constant column) -> 0.
@@ -61,8 +63,9 @@ class IQRDetector(Detector):
 
     def fit(self, df: pd.DataFrame) -> Self:
         cols = self._user_columns or df.select_dtypes(include=np.number).columns.tolist()
-        q1 = df[cols].quantile(0.25)
-        q3 = df[cols].quantile(0.75)
+        values = numeric_features(df, cols, training=True)
+        q1 = values.quantile(0.25)
+        q3 = values.quantile(0.75)
         iqr = q3 - q1
         self._lower = q1 - self.multiplier * iqr
         self._upper = q3 + self.multiplier * iqr
@@ -74,13 +77,14 @@ class IQRDetector(Detector):
         if self._lower is None or self._upper is None:
             raise RuntimeError(f"{self.name} detector not fitted. Call fit() first.")
         cols = self._lower.index
-        below = self._lower - df[cols]
-        above = df[cols] - self._upper
+        values = numeric_features(df, list(cols), training=False)
+        below = self._lower - values
+        above = values - self._upper
         # How far outside the fence, in IQR units; <=0 when inside.
         return np.maximum(below, above).div(self._scale)
 
     def predict(self, df: pd.DataFrame) -> pd.Series:
-        return self._exceedance(df).gt(0).any(axis=1).fillna(False)
+        return self._exceedance(df).gt(0).any(axis=1)
 
     def score(self, df: pd.DataFrame) -> pd.Series:
         return self._exceedance(df).clip(lower=0).max(axis=1).fillna(0.0)

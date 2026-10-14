@@ -33,7 +33,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
 
 from etl_benchmark import config
-from etl_benchmark.quality.base import Detector
+from etl_benchmark.quality.base import Detector, numeric_features
 
 
 class PyODDetector(Detector):
@@ -81,7 +81,7 @@ class PyODDetector(Detector):
     def _matrix(self, df: pd.DataFrame) -> np.ndarray:
         if self._model is None or self._imputer is None or self._scaler is None:
             raise RuntimeError(f"{self.name} detector not fitted. Call fit() first.")
-        x = df[self.feature_names_].to_numpy(dtype=float)
+        x = numeric_features(df, self.feature_names_, training=False).to_numpy(dtype=float)
         return self._scaler.transform(self._imputer.transform(x))
 
     def _fitted_model(self):
@@ -91,7 +91,7 @@ class PyODDetector(Detector):
 
     def fit(self, df: pd.DataFrame) -> Self:
         self.feature_names_ = self._numeric_columns(df)
-        x = df[self.feature_names_].to_numpy(dtype=float)
+        x = numeric_features(df, self.feature_names_, training=True).to_numpy(dtype=float)
 
         self._imputer = SimpleImputer(strategy="median").fit(x)
         self._scaler = StandardScaler().fit(self._imputer.transform(x))

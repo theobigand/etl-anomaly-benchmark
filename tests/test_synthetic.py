@@ -11,6 +11,11 @@ def test_make_synthetic_is_reproducible():
     pd.testing.assert_frame_equal(a, b)
 
 
+def test_requested_population_must_hold_each_injected_group():
+    with pytest.raises(ValueError, match="cannot hold six anomaly groups"):
+        make_synthetic(n_rows=94, anomaly_rate=1 / 6)
+
+
 def test_make_synthetic_changes_with_seed():
     a = make_synthetic(n_rows=2_000, seed=7)
     b = make_synthetic(n_rows=2_000, seed=8)

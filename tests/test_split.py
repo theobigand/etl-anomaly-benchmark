@@ -58,7 +58,58 @@ def test_split_accepts_a_series_to_stratify_on():
     assert sum(len(p) for p in parts) == len(df)
 
 
-def test_split_rejects_bad_ratios():
-    df = _frame(500)
-    with pytest.raises(ValueError):
-        stratified_split(df, "label", ratios=(0.5, 0.3, 0.3))
+def test_split_aligns_series_by_original_index():
+    df = _frame(300, pos_rate=0.25, seed=6)
+    df.index = np.arange(1000, 1300)
+    ordered = stratified_split(df, df["label"], seed=12)
+    shuffled_label = df["label"].sample(frac=1, random_state=99)
+    aligned = stratified_split(df, shuffled_label, seed=12)
+    for expected, actual in zip(ordered, aligned, strict=True):
+        pd.testing.assert_frame_equal(expected, actual)
+
+
+def test_split_keeps_exact_counts_of_a_rare_class_for_every_seed():
+    df = pd.DataFrame({"x": np.arange(1000), "label": [1] * 10 + [0] * 990})
+    for seed in range(20):
+        train, val, test = stratified_split(df, "label", seed=seed)
+        assert train["label"].sum() == 7
+        assert val["label"].sum() >= 1
+        assert test["label"].sum() >= 1
+        assert val["label"].sum() + test["label"].sum() == 3
+
+
+@pytest.mark.parametrize("ratios", [(0.5, 0.3, 0.3), (0.0, 0.5, 0.5), (0.5, 0.5)])
+def test_split_rejects_bad_ratios(ratios):
+    with pytest.raises(ValueError, match="^ratios must be three positive fractions summing to 1"):
+        stratified_split(_frame(500), "label", ratios=ratios)
+
+
+@pytest.mark.parametrize("ratios", [(float("nan"), 0.2, 0.8), (float("inf"), 0.1, 0.1)])
+def test_split_rejects_nonfinite_ratios(ratios):
+    with pytest.raises(ValueError, match="ratios"):
+        stratified_split(_frame(500), "label", ratios=ratios)
+
+
+def test_split_rejects_ambiguous_row_alignment():
+    frame = _frame(500)
+    duplicated = frame.copy()
+    duplicated.index = [0] * len(duplicated)
+    with pytest.raises(ValueError, match="^input index must be unique so rows can be aligned$"):
+        stratified_split(duplicated, "label")
+    labels = frame["label"].iloc[:-1]
+    with pytest.raises(
+        ValueError, match="^stratification Series index must match the input index$"
+    ):
+        stratified_split(frame, labels)
+    labels = frame["label"].copy()
+    labels.index = [0] * len(labels)
+    with pytest.raises(
+        ValueError, match="^stratification Series index must match the input index$"
+    ):
+        stratified_split(frame, labels)
+
+
+def test_a_class_too_rare_to_stratify_is_an_error_not_a_random_fallback():
+    df = pd.DataFrame({"x": np.arange(200.0), "label": [1] + [0] * 199})
+    with pytest.raises(ValueError, match="least populated class"):
+        stratified_split(df, "label", seed=0)
