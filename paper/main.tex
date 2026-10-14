@@ -334,11 +334,18 @@ run the four figure and table generators on temporary data. They check the
 output schema without comparing images pixel by pixel or imposing a fixed
 wall-clock duration.
 
-A second, manually invoked level probes the strength of these assertions
-through mutation testing and longer synthetic checks. The present mutation
-campaign is limited to the metric calculations; its measured denominator
-therefore cannot be interpreted as a score for the repository. A third
-level uses the locally available full datasets. Before a real-data run,
+A second, manually invoked level asks whether these checks can fail.
+Mutation testing generates small source-level changes (a reversed
+comparison, an altered constant, a modified message) and counts how many
+make the routine suite fail; we apply it to the modules that compute a
+result, not to the experiment scripts. In addition, fourteen deliberate
+scientific defects are applied one at a time to a temporary copy of the
+code, and a named test must fail on each: a scaler refitted on the rows
+being scored, the label passed to the detector as a feature, a contamination
+threshold read from the test labels, a training row copied into the test
+partition, an inverted score orientation, ranking metrics computed from the
+binary flags, a seed aggregate that keeps only the first seed, and a
+detector missing from the results table, among others. A third level uses the locally available full datasets. Before a real-data run,
 the source file, expected columns, positive-class mapping, row count and
 class prevalence are checked against an archived manifest. The scripts record the dataset fingerprint,
 software versions, random seeds, split policy and output names alongside
@@ -351,9 +358,10 @@ traceability between the reported values and the recorded experiment;
 it does not establish that another machine will reproduce the same timings.
 
 We treat a failed or missing check as a limitation of the evidence, not as
-a successful experiment. In particular, complete line and branch coverage
-and a mutation score of at least $95\%$ remain targets. The quantitative
-status of these checks is reported with the results below. The
+a successful experiment. Complete line and branch coverage and a mutation
+score of at least $95\%$ over the modules above are the targets, and the
+measured values, with what they leave out, are reported with the results
+below. The
 chronological split and the window-based drift monitor have a separate
 protocol: their alert and delay measures are not pooled with the row-level
 metrics from the stratified benchmark.
@@ -375,7 +383,7 @@ contamination matches the prevalence: it flags only $0.17\%$ of rows and
 reaches a precision of $0.20$, the first usable operating point in the
 table, but its recall drops to $0.21$ and both are seed-sensitive
 ($F_1 = 0.20 \pm 0.07$). It keeps the best ROC-AUC ($0.934$). Great
-Expectations took $1.3$\,s on this run, against $0.03$--$0.12$\,s for the
+Expectations took $1.2$\,s on this run, against $0.04$--$0.12$\,s for the
 statistical rules; these times vary between runs. LOF and the
 One-Class SVM are absent: neither scales to $284$k rows in the pipeline.
 
@@ -390,10 +398,10 @@ $15\%$ test split. Higher is better except flagged rows and time.}
 \toprule
 Detector & Prec. & Rec. & $F_1$ & ROC & PR & Flag.\% & Time (s) \\
 \midrule
-Z-score            & 0.011 & 0.870 & 0.021 & 0.926 & 0.078 & 13.4 & \textbf{0.07} \\
-IQR                & 0.003 & \textbf{0.966} & 0.007 & 0.911 & 0.018 & 48.6 & 0.20 \\
-Great Expectations & 0.037 & 0.676 & 0.070 & 0.830 & \textbf{0.182} & 3.1 & 2.19 \\
-Isolation Forest   & \textbf{0.202} & 0.206 & \textbf{0.203} & \textbf{0.934} & 0.120 & \textbf{0.2} & 2.75 \\
+Z-score            & 0.011 & 0.870 & 0.021 & 0.926 & 0.078 & 13.4 & \textbf{0.04} \\
+IQR                & 0.003 & \textbf{0.966} & 0.007 & 0.911 & 0.018 & 48.6 & 0.12 \\
+Great Expectations & 0.037 & 0.676 & 0.070 & 0.830 & \textbf{0.182} & 3.1 & 1.24 \\
+Isolation Forest   & \textbf{0.202} & 0.206 & \textbf{0.203} & \textbf{0.934} & 0.120 & \textbf{0.2} & 1.71 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -456,11 +464,11 @@ the $15\%$ test split. Time is the in-pipeline fit+predict+score latency.}
 Detector & Prec. & Rec. & $F_1$ & ROC & PR & Time (s) \\
 \midrule
 Z-score            & \textbf{1.000} & 0.196 & 0.328 & \textbf{0.742} & \textbf{0.544} & \textbf{0.002} \\
-IQR                & 0.584 & 0.396 & 0.472 & 0.675 & 0.452 & 0.004 \\
-Great Expectations & 0.951 & 0.202 & 0.333 & 0.600 & 0.333 & 0.27 \\
-Isolation Forest   & 0.495 & \textbf{0.499} & \textbf{0.497} & 0.735 & 0.485 & 0.18 \\
-LOF                & 0.388 & 0.420 & 0.404 & 0.659 & 0.437 & 0.15 \\
-One-Class SVM      & 0.478 & 0.485 & 0.481 & 0.722 & 0.520 & 2.99 \\
+IQR                & 0.584 & 0.396 & 0.472 & 0.675 & 0.452 & 0.003 \\
+Great Expectations & 0.951 & 0.202 & 0.333 & 0.600 & 0.333 & 0.24 \\
+Isolation Forest   & 0.495 & \textbf{0.499} & \textbf{0.497} & 0.735 & 0.485 & 0.15 \\
+LOF                & 0.388 & 0.420 & 0.404 & 0.659 & 0.437 & 0.14 \\
+One-Class SVM      & 0.478 & 0.485 & 0.481 & 0.722 & 0.520 & 2.58 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -662,15 +670,30 @@ marks severity $1.0$.}
 
 \subsection{Verification outcomes and computation cost}
 \label{sec:verification-results}
-At the current revision, the routine suite executes 247 tests successfully
-and excludes two tests that require the full real datasets. Its exact
-coverage is 1,394 of 1,394 executable lines and 298 of 298 branches
-($100\%$ in both measures). The routine gate consequently passes. An initial
-mutation campaign on the metric module eliminates 86 of 97 generated
-mutants ($88.66\%$); 11 survive, and no repository-wide mutation score is
-available. The deeper gate also fails. These figures expose unfinished
-verification work rather than a change in the detector rankings. The
-real-data checks pass locally for all three available CSV files, and the
+At the current revision, the routine suite executes 437 tests
+successfully and excludes two that require the full real datasets. Its exact
+coverage is 1,460 of 1,460 executable lines and 300 of 300 branches ($100\%$
+in both measures). The mutation campaign eliminates 1,824 of the 1,900
+mutants generated in the pipeline modules ($96.00\%$). The 76 survivors stay
+in the denominator; those we classified leave the observable result
+unchanged, for instance a default \texttt{dtype}. The campaign started at
+$88.66\%$ on the metric module alone and at $74.5\%$ once widened to every
+pipeline module with the original tests. The gain came from new tests (split
+sizes, tie ordering, error contracts, generator quantiles, detector
+boundaries) and from removing redundant code, not from excluding any file.
+The experiment scripts are not mutated, so the score does not describe the
+whole repository.
+
+The fourteen deliberate defects are all detected. Four of them passed every
+existing test at the first attempt: a scaler or imputer refitted on the
+batch being scored, ranking metrics fed with binary flags, a detector
+silently absent from the results, and a contamination threshold of the
+synthetic benchmark taken from its own test partition. An inverted Z-score
+orientation was seen only by a test added during the mutation campaign.
+None of these defects was present in the code; they were gaps in the tests.
+Replaying every experiment afterwards reproduced all detection metrics of
+the previous run exactly; only the wall-clock times differ.
+The real-data checks pass locally for all three available CSV files, and the
 five manuscript tables agree with the archived numerical results.
 
 Detector timing in Tables~\ref{tab:fraud} and~\ref{tab:synthetic} sums
@@ -679,7 +702,7 @@ stage; CSV loading, deduplication and figure rendering are excluded. A
 separate local growth experiment ran Isolation Forest, LOF and One-Class
 SVM on 100, 300 and 900 generated rows, with eight features and three
 repetitions per size. All 27 runs completed. At 900 rows, median measured
-detection times were 0.388, 0.021 and 0.050 seconds, respectively, on the
+detection times were 0.384, 0.020 and 0.049 seconds, respectively, on the
 recorded macOS/ARM environment. This small in-memory experiment measures
 neither native-library peak memory nor the scaling of the 284,000-row
 fraud dataset. It supports reporting the workload and omissions explicitly,
@@ -740,7 +763,7 @@ Forest on fraud $F_1 = 0.20 \pm 0.07$), so those numbers should be read
 as ranges.
 Verification has its own limits: complete line and branch coverage does not
 establish that the scientific assertions detect every defect. Mutation
-testing has so far covered only the metric module. The complete real-data
+testing covers the pipeline modules but not the experiment scripts. The complete real-data
 checks were performed with the three files available locally. The Water
 Quality file matches its named mirror, and the Cardio CSV can be reproduced
 from the current ADBench archive. The exact revision of the Credit Card
@@ -767,10 +790,12 @@ outlying. The choice of contamination, the precision-recall trade-off it
 selects, and the pipeline cost further constrain which detector fits a
 real flow.
 
-The next steps are the deep-learning detectors (Autoencoder, then
-LSTM-Autoencoder) behind the same interface, more genuinely imbalanced
-real datasets to firm up the per-type generalisation claim, and a
-windowed drift monitor rather than the per-row detector used here.
+The next steps are the evaluation of the deep-learning detectors behind
+the same interface (a CPU autoencoder and the causal windows an
+LSTM-Autoencoder needs are implemented and tested but not yet compared),
+more genuinely imbalanced real datasets to firm up the per-type
+generalisation claim, and the evaluation of the windowed drift monitor on
+real data rather than the per-row detector used here.
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}
