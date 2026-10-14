@@ -32,28 +32,85 @@ def test_chronological_split_is_order_independent_and_never_splits_a_timestamp()
     ]
 
 
-@pytest.mark.parametrize("bad", ["not-a-date", None])
-def test_chronological_split_rejects_bad_timestamps(bad):
+@pytest.mark.parametrize(
+    ("bad", "message"),
+    [("not-a-date", "invalid timestamp"), (None, "missing timestamp")],
+)
+def test_chronological_split_rejects_bad_timestamps(bad, message):
     frame = _timeline(12)
     frame["time"] = frame["time"].astype(object)
     frame.loc[4, "time"] = bad
-    with pytest.raises(ValueError, match="timestamp"):
+    with pytest.raises(ValueError, match=f"^{message}$"):
         chronological_split(frame, "time")
 
 
 def test_chronological_split_rejects_insufficient_distinct_times():
     frame = _timeline(12)
     frame["time"] = ["2024-01-01"] * 11 + ["2024-01-02"]
-    with pytest.raises(ValueError, match="distinct"):
+    with pytest.raises(ValueError, match="^three distinct timestamp groups are required$"):
         chronological_split(frame, "time")
+
+
+def test_chronological_split_accepts_exactly_three_timestamp_groups():
+    frame = pd.DataFrame({"time": ["2024-01-01"] * 4 + ["2024-01-02"] * 3 + ["2024-01-03"] * 3})
+    sizes = [len(part) for part in chronological_split(frame, "time")]
+    assert sizes == [4, 3, 3]
+
+
+def test_chronological_split_hits_the_requested_sizes_on_distinct_times():
+    frame = pd.DataFrame({"time": pd.date_range("2024-01-01", periods=100, freq="h")})
+    assert [len(p) for p in chronological_split(frame, "time")] == [70, 15, 15]
+    sizes = [len(p) for p in chronological_split(frame, "time", ratios=(0.6, 0.3, 0.1))]
+    assert sizes == [60, 30, 10]
+
+
+def test_chronological_split_leaves_every_partition_a_timestamp_group():
+    late = pd.DataFrame({"time": [1, 2, 3] + [4] * 97})
+    assert [len(p) for p in chronological_split(late, "time", ratios=(0.8, 0.1, 0.1))] == [2, 1, 97]
+    big_groups = pd.DataFrame({"time": [1] * 50 + [2] * 10 + [3] * 40})
+    sizes = [len(p) for p in chronological_split(big_groups, "time", ratios=(0.5, 0.02, 0.48))]
+    assert sizes == [50, 10, 40]
+
+
+def test_chronological_split_orders_instants_across_utc_offsets():
+    frame = pd.DataFrame(
+        {
+            "time": [
+                "2024-01-01T03:00:00+02:00",
+                "2024-01-01T00:30:00Z",
+                "2024-01-01T02:00:00+00:00",
+                "2024-01-01T01:30:00+00:00",
+            ],
+            "id": [0, 1, 2, 3],
+        }
+    )
+    train, val, test = chronological_split(frame, "time", ratios=(0.25, 0.5, 0.25))
+    assert [train["id"].tolist(), val["id"].tolist(), test["id"].tolist()] == [[1], [0, 3], [2]]
+
+
+def test_chronological_split_keeps_input_order_inside_equal_timestamps():
+    n = 120
+    times = ["2024-01-01"] * 30 + ["2024-01-02"] * 60 + ["2024-01-03"] * 30
+    frame = pd.DataFrame({"time": times, "id": np.random.default_rng(1).permutation(n)})
+    for part in chronological_split(frame, "time"):
+        positions = [frame.index[frame["id"] == i][0] for i in part["id"]]
+        assert positions == sorted(positions)
+
+
+def test_chronological_split_returns_fresh_indices_and_the_original_columns():
+    frame = _timeline(30)
+    for part in chronological_split(frame.sample(frac=1, random_state=5), "time"):
+        assert part.index.tolist() == list(range(len(part)))
+        assert part.columns.tolist() == frame.columns.tolist()
 
 
 def test_chronological_split_rejects_missing_column_and_invalid_ratios():
     frame = _timeline(12)
-    with pytest.raises(ValueError, match="timestamp column"):
+    with pytest.raises(ValueError, match="^missing timestamp column 'time'$"):
         chronological_split(frame.drop(columns="time"), "time")
-    with pytest.raises(ValueError, match="ratios"):
-        chronological_split(frame, "time", ratios=(0.5, 0.5, 0.5))
+    for ratios in [(0.5, 0.5, 0.5), (0.0, 0.5, 0.5), (float("nan"), 0.5, 0.5), (0.5, 0.5)]:
+        with pytest.raises(ValueError, match="^ratios must be three positive fractions"):
+            chronological_split(frame, "time", ratios=ratios)
 
 
 def test_window_monitor_detects_abrupt_change_without_reference_updates():
