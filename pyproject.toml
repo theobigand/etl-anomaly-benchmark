@@ -45,6 +45,7 @@ markers = [
     "property: bounded generative scientific checks",
     "integration: ETL and persistence checks",
     "end_to_end: experiment artifact lineage checks",
+    "fault: deliberate defects run on a temporary copy of the code (verify-faults)",
 ]
 
 [tool.ruff]
@@ -85,6 +86,8 @@ pytest_add_cli_args_test_selection = [
     "--ignore=tests/test_scaling_study.py",
     "--ignore=tests/test_real_verification.py",
     "--ignore=tests/test_test_support.py",
+    "--ignore=tests/test_fault_matrix.py",
+    "--ignore=tests/test_verification_policy.py",
 ]
 also_copy = ["experiments", "verification"]
 on_dependency_change = "rerun"
