@@ -189,6 +189,7 @@ def main() -> None:
         data_path=None,
         settings={
             "datasets": args.datasets,
+            "skipped_datasets": [name for name in args.datasets if name not in results],
             "synthetic_rows": args.rows,
             "split_ratios": list(config.SPLIT_RATIOS),
             "synthetic_split_strategy": "customer_identity_grouped_stratified",
