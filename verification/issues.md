@@ -16,7 +16,7 @@ sont pas tous remplis.
   dans `README.md`.
 - **#6** : FAST mesure lignes et branches, y compris dans les commandes en
   sous-processus, et échoue si elles ne sont pas toutes couvertes. La
-  couverture actuelle est de 1184/1342 lignes et 218/274 branches.
+  couverture actuelle est de 1210/1371 lignes et 225/284 branches.
 - **#7** : l'essai de mutation porte sur `metrics.py` ; 11 mutants survivent
   encore. `mutation_notes.md` les classe. La campagne sur le reste du code
   n'a pas été lancée.
@@ -44,8 +44,9 @@ sont pas tous remplis.
   du générateur passent. Il manque les pannes d'écriture et les cas extrêmes.
 - **#18–19** : les quatre commandes d'expérience enregistrent graines,
   paramètres et fichiers produits ; les écarts types à une seule graine sont
-  non définis. Il reste à conserver les identifiants de partition et les
-  échecs de détecteur dans chaque essai.
+  non définis. Les trois benchmarks réels conservent maintenant les positions
+  exactes des partitions après déduplication. Il reste à faire de même pour
+  les essais synthétiques et à consigner les échecs de détecteur par essai.
 - **#20** : quatre commandes CLI, les fichiers archivés et les quatre tableaux
   du manuscrit sont contrôlés. La relecture des légendes et des affirmations
   dans le texte reste à faire.

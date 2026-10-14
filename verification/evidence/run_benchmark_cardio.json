@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-13T20:15:59.514607+00:00",
+  "captured_at": "2026-10-14T04:17:19.267234+00:00",
   "dataset": {
     "bytes": 770024,
     "identity": "cardio",
@@ -8,8 +8,9 @@
   },
   "experiment": "real_benchmark",
   "outputs": [
-    "benchmark_cardio_20261013_201559.csv",
-    "benchmark_cardio_20261013_201559.md"
+    "benchmark_cardio_20261014_041719.csv",
+    "benchmark_cardio_20261014_041719.md",
+    "split_ids_cardio_20261014_041719.json.gz"
   ],
   "packages": {
     "great-expectations": "1.24.0",
@@ -70,7 +71,7 @@
     ],
     "split_strategy": "stratified"
   },
-  "source_fingerprint": "35458386d1c15a74591a5b5f2a65d8634276850c310b930c587911e436ab2f6a",
-  "source_revision": "55a9c04435c3095f2c66c8660c25047b0725f9b7",
+  "source_fingerprint": "0c0a34ae85e0de923931f8aea094dd1a85bee2a75b9d9269f3790ec34ddf431b",
+  "source_revision": "6ebb5083e71226eb8e86af61e69300b58db3d026",
   "worktree_dirty": true
 }

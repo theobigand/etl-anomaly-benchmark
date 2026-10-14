@@ -33,6 +33,7 @@ experiments/results/*.png
 experiments/results/*.json
 experiments/results/*.xml
 experiments/results/*.log
+experiments/results/*.gz
 !experiments/results/.gitkeep
 
 # LaTeX (le PDF compilé du papier est versionné, cf. paper/main.pdf)
