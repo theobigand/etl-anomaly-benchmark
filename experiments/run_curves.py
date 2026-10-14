@@ -171,6 +171,9 @@ def main() -> None:
         except FileNotFoundError:
             log.warning("skipping %s (dataset not present)", dataset)
 
+    if not results:
+        raise RuntimeError("no datasets available for curve evaluation")
+
     figure = render_pr(results, args.figure)
     sweep = contamination_sweep(args.seed, args.datasets, args.rows)
 

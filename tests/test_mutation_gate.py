@@ -1,4 +1,5 @@
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -51,3 +52,26 @@ def test_mutation_command_exit_matches_recorded_outcomes(tmp_path, monkeypatch):
     result.update(killed=18, survived=2)
     stats.write_text(json.dumps(result))
     assert check_mutation.main() == 1
+
+
+def test_mutation_gate_rejects_zero_or_inconsistent_campaign(tmp_path):
+    result = {key: 0 for key in check_mutation.OUTCOMES}
+    result["total"] = 0
+    with pytest.raises(ValueError, match="incomplete"):
+        check_mutation.classify(result)
+    result["total"] = 2
+    result["killed"] = 1
+    with pytest.raises(ValueError, match="incomplete"):
+        check_mutation.classify(result)
+
+    stats = tmp_path / "mutation.json"
+    result["survived"] = 1
+    stats.write_text(json.dumps(result))
+    command = subprocess.run(
+        [sys.executable, str(Path(check_mutation.__file__)), str(stats)],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert command.returncode == 1
+    assert "FAIL" in command.stdout

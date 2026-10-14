@@ -28,3 +28,11 @@ def test_pipeline_reads_deduplicates_and_persists_partition(tmp_path):
 def test_pipeline_reports_missing_input_path(tmp_path):
     with pytest.raises(FileNotFoundError, match="Dataset not found"):
         run_pipeline(tmp_path / "absent.csv", ZScoreDetector())
+
+
+def test_pipeline_can_return_results_without_writing_files(tmp_path):
+    source = tmp_path / "input.csv"
+    pd.DataFrame({"x": [0.0, 1.0, 2.0, 100.0], "Class": [0, 0, 0, 1]}).to_csv(source, index=False)
+    cleaned, result = run_pipeline(source, ZScoreDetector(threshold=1), dump_dir=None)
+    assert len(cleaned) == len(result.flags) == 4
+    assert not list(tmp_path.glob("pipeline_*.csv"))

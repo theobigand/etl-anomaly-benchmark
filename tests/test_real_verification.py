@@ -1,13 +1,16 @@
 import hashlib
 import json
+import runpy
 import sys
 from pathlib import Path
 
 import pandas as pd
+import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "experiments"))
 import verify_real  # noqa: E402
 
+from etl_benchmark import config, datasets  # noqa: E402
 from etl_benchmark.datasets import DatasetSpec  # noqa: E402
 
 
@@ -50,6 +53,16 @@ def test_real_dataset_rejects_changed_population_or_positive_mapping(tmp_path):
     assert "positive_value" in changed["reason"]
 
 
+def test_real_dataset_rejects_unknown_reference_field(tmp_path):
+    csv = tmp_path / "present.csv"
+    pd.DataFrame({"x": [1.0, 2.0], "Class": [0, 1]}).to_csv(csv, index=False)
+    result = verify_real.inspect_dataset(
+        DatasetSpec("toy", csv, "Class", 1), expected={"not_a_record_field": 1}
+    )
+    assert result["status"] == "FAIL"
+    assert "unknown reference field" in result["reason"]
+
+
 def test_real_verification_command_fails_closed_on_reference_errors(tmp_path, monkeypatch):
     csv = tmp_path / "present.csv"
     pd.DataFrame({"x": [1.0, 2.0], "Class": [0, 1]}).to_csv(csv, index=False)
@@ -80,3 +93,27 @@ def test_real_verification_command_fails_closed_on_reference_errors(tmp_path, mo
     csv.write_text("x,Class\n1,0\n2,0\n")
     assert verify_real.main() == 1
     assert json.loads(output.read_text())["datasets"][0]["status"] == "FAIL"
+
+
+def test_real_verification_module_entrypoint_uses_local_reference(tmp_path, monkeypatch):
+    csv = tmp_path / "toy.csv"
+    pd.DataFrame({"measure": [1.0, 2.0], "Class": [0, 1]}).to_csv(csv, index=False)
+    spec = DatasetSpec("toy", csv, "Class", 1)
+    reference = {
+        "sha256": hashlib.sha256(csv.read_bytes()).hexdigest(),
+        "raw_rows": 2,
+        "rows_after_transform": 2,
+        "anomalies": 1,
+        "positive_value": 1,
+    }
+    manifest = tmp_path / "verification/evidence/manifest.json"
+    manifest.parent.mkdir(parents=True)
+    manifest.write_text(json.dumps({"datasets": {"toy": reference}}))
+    output = tmp_path / "real.json"
+    monkeypatch.setattr(config, "PROJECT_ROOT", tmp_path)
+    monkeypatch.setattr(datasets, "DATASETS", {"toy": spec})
+    monkeypatch.setattr(sys, "argv", ["verify_real", "--output", str(output)])
+    with pytest.raises(SystemExit) as stopped:
+        runpy.run_path(str(Path(verify_real.__file__)), run_name="__main__")
+    assert stopped.value.code == 0
+    assert json.loads(output.read_text())["datasets"][0]["status"] == "PASS"

@@ -3,6 +3,7 @@
 import gzip
 import io
 import json
+import runpy
 import subprocess
 import sys
 from pathlib import Path
@@ -26,6 +27,28 @@ def _run(script, *args):
     )
     assert completed.returncode == 0, completed.stderr[-1500:]
     return completed
+
+
+@pytest.mark.parametrize(
+    ("args", "message"),
+    [
+        (("--detectors", "unknown"), "detectors not eligible"),
+        (("--fit-sample", "0"), "must be positive"),
+        (("--calibration", "fixed"), "fixed contamination"),
+        (("--calibration", "fixed", "--fixed-contamination", "0.9"), "fixed contamination"),
+        (("--fixed-contamination", "0.02"), "requires --calibration fixed"),
+    ],
+)
+def test_real_benchmark_cli_rejects_invalid_calibration_and_selection(args, message):
+    result = subprocess.run(
+        [sys.executable, str(ROOT / "experiments/run_benchmark.py"), *args],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode != 0
+    assert message in result.stderr
 
 
 def test_real_benchmark_cli_on_tiny_local_csv(tmp_path):
@@ -99,16 +122,47 @@ def test_synthetic_generation_is_repeatable_and_has_declared_types(tmp_path):
     assert {"clean", "univariate_outlier", "missing_value"} <= set(frame.anomaly_type)
 
 
+def test_generation_commands_reject_impossible_population(tmp_path, monkeypatch):
+    import generate_synthetic
+    import run_severity
+
+    output = tmp_path / "invalid.csv"
+    monkeypatch.setattr(
+        sys, "argv", ["generate_synthetic", "--rows", "10", "--output", str(output)]
+    )
+    with pytest.raises(ValueError, match="at least 90"):
+        generate_synthetic.main()
+    assert not output.exists()
+
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "run_severity",
+            "--rows",
+            "10",
+            "--severities",
+            "1",
+            "--seeds",
+            "1",
+            "--results-dir",
+            str(tmp_path / "results"),
+        ],
+    )
+    with pytest.raises(ValueError, match="at least 90"):
+        run_severity.main()
+    assert not (tmp_path / "results").exists()
+
+
 def test_pipeline_demo_writes_sorted_rows_to_configured_directory(tmp_path, monkeypatch):
     from etl_benchmark import config
-    from etl_benchmark.__main__ import main
 
     source = tmp_path / "input.csv"
     pd.DataFrame({"V1": [0.0, 1.0, 2.0, 100.0], "Class": [0, 0, 0, 1]}).to_csv(source, index=False)
     output = tmp_path / "out"
     monkeypatch.setattr(config, "RESULTS_DIR", output)
     monkeypatch.setattr(sys, "argv", ["etl-benchmark", "--input", str(source), "--detector", "iqr"])
-    main()
+    runpy.run_module("etl_benchmark", run_name="__main__")
     clean = pd.read_csv(output / "pipeline_clean.csv")
     anomalies = pd.read_csv(output / "pipeline_anomalies.csv")
     assert sorted(pd.concat([clean, anomalies]).V1.tolist()) == [0.0, 1.0, 2.0, 100.0]
@@ -127,7 +181,7 @@ def test_cardio_fetch_converts_source_arrays_without_network(tmp_path, monkeypat
     )
     target = tmp_path / "cardio.csv"
     monkeypatch.setattr(config, "CARDIO_CSV", target)
-    fetch_cardio.main()
+    runpy.run_path(str(Path(fetch_cardio.__file__)), run_name="__main__")
     actual = pd.read_csv(target)
     assert actual.columns.tolist() == ["f00", "f01", "label"]
     assert actual.to_numpy().tolist() == [[1.0, 2.0, 0.0], [3.0, 4.0, 1.0]]
