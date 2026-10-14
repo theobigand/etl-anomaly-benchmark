@@ -2,7 +2,7 @@ CONDA_ENV := etl-benchmark
 # any Chromium-family binary that supports --print-to-pdf (chrome, chromium, chrome-headless-shell)
 CHROME ?= chromium
 
-.PHONY: help env update test lint verify-fast verify-deep verify-real verify-scale verify-all pipeline benchmark benchmark-water benchmark-cardio synthetic heatmap severity curves slides run clean
+.PHONY: help env update test lint verify-fast verify-deep verify-faults verify-real verify-scale verify-all pipeline benchmark benchmark-water benchmark-cardio synthetic heatmap severity curves slides run clean
 
 help:
 	@echo "Available targets:"
@@ -12,6 +12,7 @@ help:
 	@echo "  make lint       Run ruff check + format"
 	@echo "  make verify-fast  Lint, test, measure exact line/branch coverage, write evidence"
 	@echo "  make verify-deep  Mutation campaign on src/etl_benchmark, enforce 95%"
+	@echo "  make verify-faults Apply deliberate scientific defects to a temporary copy and require a failure"
 	@echo "  make verify-real  Inspect available full datasets and record provenance"
 	@echo "  make verify-scale Measure bounded detector growth outside FAST"
 	@echo "  make verify-all   Run all three verification profiles"
@@ -42,7 +43,7 @@ lint:
 
 verify-fast: lint
 	@mkdir -p experiments/results
-	@set +e; pytest -m 'not real' --cov=src/etl_benchmark --cov=experiments --cov-branch \
+	@set +e; pytest -m 'not real and not fault' --cov=src/etl_benchmark --cov=experiments --cov-branch \
 		--cov-report=term-missing:skip-covered --cov-report=json:coverage.json \
 		--junitxml=experiments/results/pytest.xml; tests_status=$$?; \
 		python verification/refresh_profile.py --coverage coverage.json \
@@ -57,6 +58,9 @@ verify-deep:
 	mutmut export-cicd-stats
 	python experiments/check_mutation.py mutants/mutmut-cicd-stats.json
 
+verify-faults:
+	pytest -m fault tests/test_fault_matrix.py
+
 verify-real:
 	pytest -m real
 	python experiments/verify_real.py --output experiments/results/real_verification.json
@@ -66,7 +70,8 @@ verify-scale:
 
 verify-all:
 	@set +e; $(MAKE) verify-fast; fast=$$?; $(MAKE) verify-deep; deep=$$?; \
-		$(MAKE) verify-real; real=$$?; test $$fast -eq 0 -a $$deep -eq 0 -a $$real -eq 0
+		$(MAKE) verify-faults; faults=$$?; $(MAKE) verify-real; real=$$?; \
+		test $$fast -eq 0 -a $$deep -eq 0 -a $$faults -eq 0 -a $$real -eq 0
 
 pipeline:
 	python -m etl_benchmark

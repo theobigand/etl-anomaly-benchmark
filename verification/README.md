@@ -7,9 +7,10 @@ se lancent à la racine du dépôt.
 | --- | --- |
 | `make verify-fast` | Ruff, tests hors données réelles, couverture des lignes et branches. |
 | `make verify-deep` | Mutations de `src/etl_benchmark` avec mutmut (environ six minutes) ; seuil de 95 %. |
+| `make verify-faults` | Quatorze défauts scientifiques appliqués à une copie temporaire ; chacun doit faire échouer un test prévu (environ une minute). |
 | `make verify-real` | Tests sur les trois CSV locaux et contrôle de leurs tailles, labels et sommes de contrôle. |
 | `make verify-scale` | Étude locale de croissance sur trois tailles ; aucune limite de temps n'est imposée à FAST. |
-| `make verify-all` | Lance les trois commandes et conserve leurs échecs. |
+| `make verify-all` | Lance FAST, DEEP, les défauts introduits et REAL, et conserve leurs échecs. |
 
 FAST produit `coverage.json`, `experiments/results/pytest.xml`,
 `experiments/results/verification_fast.json` et `verification/profile.json`.
@@ -53,6 +54,11 @@ Ce contrôle porte sur les processus Python lancés depuis pytest.
   aux quatre tableaux du manuscrit.
 - `test_temporal_protocol.py` traite séparément les partitions chronologiques
   et les alertes par fenêtre. Sa méthode est décrite dans `temporal.md`.
+- `test_fault_matrix.py` applique des défauts scientifiques à une copie
+  temporaire et exige qu'un test prévu échoue (`fault_matrix.md`).
+  `test_verification_policy.py` interdit les skips hors tests `real`, les
+  exclusions de couverture, les erreurs avalées et les mocks des bibliothèques
+  de calcul.
 - `test_scaling_study.py` vérifie les étapes chronométrées et la taille des
   entrées. `scaling.md` décrit l'essai local de croissance.
 

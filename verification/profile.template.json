@@ -141,7 +141,8 @@
       "ci_enforced_remotely": false,
       "ci_wired": false,
       "commands": [
-        "make verify-deep"
+        "make verify-deep",
+        "make verify-faults"
       ]
     },
     "FAST": {

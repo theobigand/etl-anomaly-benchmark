@@ -62,8 +62,12 @@ sont pas tous remplis.
   reconstruit à chaque FAST avec la révision courante. FAST et DEEP restent
   rouges. Les règles de protection
   distantes et l'historique des dénominateurs ne sont pas établis.
-- **#22** : les contre-exemples de fuite et de métrique ont été ajoutés aux
-  tests. La matrice complète des défauts introduits volontairement manque.
+- **#22** : `make verify-faults` introduit quatorze défauts scientifiques, un
+  par un, dans une copie temporaire du code et exige un échec du test prévu
+  (`fault_matrix.md`). Il a révélé cinq lacunes, maintenant couvertes. Des
+  règles vérifient qu'aucun skip, exclusion de couverture, erreur avalée ou
+  mock des bibliothèques de calcul n'est introduit. Les défauts non injectés
+  sont listés dans la matrice.
 - **#24** : README, notes de données, figures et manuscrit ont été mis à jour
   après les nouveaux essais. La revue finale du mémoire reste ouverte.
 
