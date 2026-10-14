@@ -1,6 +1,8 @@
 """Check the isolation guarantees used by scientific protocol tests."""
 
 import socket
+import subprocess
+import sys
 
 import pandas as pd
 import pytest
@@ -40,3 +42,18 @@ def test_network_is_rejected_before_dns_or_connection():
         pytest.raises(RuntimeError, match="network access is disabled"),
     ):
         connection.connect(("127.0.0.1", 1))
+
+
+def test_python_subprocess_cannot_open_a_connection():
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-c",
+            'import socket; socket.create_connection(("127.0.0.1", 1))',
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode != 0
+    assert "network access is disabled during pytest" in result.stderr

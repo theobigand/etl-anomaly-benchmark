@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import os
 import socket
+from pathlib import Path
 
 import pandas as pd
 import pytest
@@ -10,7 +12,7 @@ import pytest
 
 @pytest.fixture(autouse=True)
 def forbid_network_connections(monkeypatch):
-    """Keep in-process tests offline, including accidental library calls."""
+    """Keep Python tests and their child interpreters offline."""
 
     def denied(*_args, **_kwargs):
         raise RuntimeError("network access is disabled during pytest")
@@ -18,6 +20,9 @@ def forbid_network_connections(monkeypatch):
     monkeypatch.setattr(socket.socket, "connect", denied)
     monkeypatch.setattr(socket.socket, "connect_ex", denied)
     monkeypatch.setattr(socket, "create_connection", denied)
+    support = Path(__file__).parent / "offline_subprocess"
+    inherited = os.environ.get("PYTHONPATH", "")
+    monkeypatch.setenv("PYTHONPATH", os.pathsep.join(filter(None, (str(support), inherited))))
 
 
 @pytest.fixture
