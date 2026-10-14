@@ -19,6 +19,15 @@ from sklearn.model_selection import train_test_split
 from etl_benchmark import config
 
 
+def _check_ratios(ratios: tuple[float, float, float]) -> None:
+    if (
+        len(ratios) != 3
+        or any(not isfinite(r) or r <= 0 for r in ratios)
+        or abs(sum(ratios) - 1.0) > 1e-6
+    ):
+        raise ValueError(f"ratios must be three positive fractions summing to 1, got {ratios}")
+
+
 def stratified_split(
     df: pd.DataFrame,
     stratify_on: str | pd.Series,
@@ -31,12 +40,7 @@ def stratified_split(
     must be three positive fractions that sum to one. Each returned frame
     has a fresh 0..n-1 index.
     """
-    if (
-        len(ratios) != 3
-        or any(not isfinite(r) or r <= 0 for r in ratios)
-        or abs(sum(ratios) - 1.0) > 1e-6
-    ):
-        raise ValueError(f"ratios must be three positive fractions summing to 1, got {ratios}")
+    _check_ratios(ratios)
 
     if not df.index.is_unique:
         raise ValueError("input index must be unique so rows can be aligned")
@@ -74,16 +78,11 @@ def chronological_split(
     ratios: tuple[float, float, float] = config.SPLIT_RATIOS,
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     """Split by event time, keeping equal timestamps in the same partition."""
-    if (
-        len(ratios) != 3
-        or any(not isfinite(r) or r <= 0 for r in ratios)
-        or abs(sum(ratios) - 1.0) > 1e-6
-    ):
-        raise ValueError("ratios must be three positive fractions summing to 1")
+    _check_ratios(ratios)
     if time_column not in df:
         raise ValueError(f"missing timestamp column {time_column!r}")
     try:
-        times = pd.to_datetime(df[time_column], errors="raise", utc=True)
+        times = pd.to_datetime(df[time_column], utc=True)
     except (TypeError, ValueError) as exc:
         raise ValueError("invalid timestamp") from exc
     if times.isna().any():
