@@ -46,6 +46,7 @@ archivés séparément et leurs chiffres sont rapprochés du manuscrit par un te
 | --- | --- | --- |
 | `make verify-fast` | Réussite locale | 247 tests réussis, 2 tests réels exclus ; lignes et branches couvertes. |
 | `make verify-deep` | Réussite locale | 1661 mutants éliminés sur 1726 dans `src/etl_benchmark` (96,23 %) ; les scripts d'`experiments/` ne sont pas mutés. |
+| `make verify-faults` | Réussite locale | 14 défauts introduits dans une copie temporaire, tous détectés par un test prévu. |
 | `make verify-real` | Réussite locale | 2 tests et contrôle des trois CSV présents. |
 | `python verification/scaling.py` | Réussite locale | 27 mesures sur trois tailles, hors FAST. |
 | `make verify-all` | Réussite locale sur `src/` | DEEP ne couvre pas `experiments/` ; le statut reste INCOMPLETE. |
