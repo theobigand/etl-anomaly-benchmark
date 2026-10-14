@@ -390,10 +390,10 @@ $15\%$ test split. Higher is better except flagged rows and time.}
 \toprule
 Detector & Prec. & Rec. & $F_1$ & ROC & PR & Flag.\% & Time (s) \\
 \midrule
-Z-score            & 0.011 & 0.870 & 0.021 & 0.926 & 0.078 & 13.4 & \textbf{0.05} \\
-IQR                & 0.003 & \textbf{0.966} & 0.007 & 0.911 & 0.018 & 48.6 & 0.12 \\
-Great Expectations & 0.037 & 0.676 & 0.070 & 0.830 & \textbf{0.182} & 3.1 & 1.28 \\
-Isolation Forest   & \textbf{0.202} & 0.206 & \textbf{0.203} & \textbf{0.934} & 0.120 & \textbf{0.2} & 1.73 \\
+Z-score            & 0.011 & 0.870 & 0.021 & 0.926 & 0.078 & 13.4 & \textbf{0.07} \\
+IQR                & 0.003 & \textbf{0.966} & 0.007 & 0.911 & 0.018 & 48.6 & 0.20 \\
+Great Expectations & 0.037 & 0.676 & 0.070 & 0.830 & \textbf{0.182} & 3.1 & 2.19 \\
+Isolation Forest   & \textbf{0.202} & 0.206 & \textbf{0.203} & \textbf{0.934} & 0.120 & \textbf{0.2} & 2.75 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -456,11 +456,11 @@ the $15\%$ test split. Time is the in-pipeline fit+predict+score latency.}
 Detector & Prec. & Rec. & $F_1$ & ROC & PR & Time (s) \\
 \midrule
 Z-score            & \textbf{1.000} & 0.196 & 0.328 & \textbf{0.742} & \textbf{0.544} & \textbf{0.002} \\
-IQR                & 0.584 & 0.396 & 0.472 & 0.675 & 0.452 & 0.003 \\
-Great Expectations & 0.951 & 0.202 & 0.333 & 0.600 & 0.333 & 0.25 \\
-Isolation Forest   & 0.495 & \textbf{0.499} & \textbf{0.497} & 0.735 & 0.485 & 0.15 \\
-LOF                & 0.388 & 0.420 & 0.404 & 0.659 & 0.437 & 0.14 \\
-One-Class SVM      & 0.478 & 0.485 & 0.481 & 0.722 & 0.520 & 2.60 \\
+IQR                & 0.584 & 0.396 & 0.472 & 0.675 & 0.452 & 0.004 \\
+Great Expectations & 0.951 & 0.202 & 0.333 & 0.600 & 0.333 & 0.27 \\
+Isolation Forest   & 0.495 & \textbf{0.499} & \textbf{0.497} & 0.735 & 0.485 & 0.18 \\
+LOF                & 0.388 & 0.420 & 0.404 & 0.659 & 0.437 & 0.15 \\
+One-Class SVM      & 0.478 & 0.485 & 0.481 & 0.722 & 0.520 & 2.99 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -662,16 +662,16 @@ marks severity $1.0$.}
 
 \subsection{Verification outcomes and computation cost}
 \label{sec:verification-results}
-At the current revision, the routine suite executes 221 tests successfully
+At the current revision, the routine suite executes 247 tests successfully
 and excludes two tests that require the full real datasets. Its exact
-coverage is 1,357 of 1,392 executable lines ($97.49\%$) and 272 of 296
-branches ($91.89\%$). The coverage gate consequently fails. An initial
+coverage is 1,394 of 1,394 executable lines and 298 of 298 branches
+($100\%$ in both measures). The routine gate consequently passes. An initial
 mutation campaign on the metric module eliminates 86 of 97 generated
 mutants ($88.66\%$); 11 survive, and no repository-wide mutation score is
 available. The deeper gate also fails. These figures expose unfinished
 verification work rather than a change in the detector rankings. The
 real-data checks pass locally for all three available CSV files, and the
-four manuscript tables agree with the archived numerical results.
+five manuscript tables agree with the archived numerical results.
 
 Detector timing in Tables~\ref{tab:fraud} and~\ref{tab:synthetic} sums
 \texttt{fit}, \texttt{predict} and \texttt{score} inside the detection
@@ -738,8 +738,8 @@ plus one real point. The ML detectors carry a wide seed spread on the
 small datasets (Cardio $F_1$ standard deviation up to $0.17$; Isolation
 Forest on fraud $F_1 = 0.20 \pm 0.07$), so those numbers should be read
 as ranges.
-Verification has its own limits: the routine suite has uncovered paths in
-plotting and experiment entry points, while mutation
+Verification has its own limits: complete line and branch coverage does not
+establish that the scientific assertions detect every defect. Mutation
 testing has so far covered only the metric module. The complete real-data
 checks were performed with the three files available locally. The Water
 Quality file matches its named mirror, and the Cardio CSV can be reproduced

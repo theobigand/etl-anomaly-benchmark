@@ -16,9 +16,9 @@ sont pas tous remplis.
   dans `README.md`.
 - **#6** : FAST mesure lignes et branches, y compris dans les commandes en
   sous-processus, et échoue si elles ne sont pas toutes couvertes. La
-  couverture actuelle est de 1357/1392 lignes et 272/296 branches. Les
-  commandes locales de génération, de conversion Cardio et de démonstration
-  ont désormais des tests dédiés.
+  couverture actuelle est de 1394/1394 lignes et 298/298 branches, sans
+  exclusion. Les commandes locales de génération, de conversion Cardio et de
+  démonstration ont des tests dédiés.
 - **#7** : l'essai de mutation porte sur `metrics.py` ; 11 mutants survivent
   encore. `mutation_notes.md` les classe. La campagne sur le reste du code
   n'a pas été lancée.

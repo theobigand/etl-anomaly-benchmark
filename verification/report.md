@@ -2,8 +2,8 @@
 
 Le dépôt contient le pipeline Python (`src/etl_benchmark`), les expériences
 (`experiments`) et le manuscrit. Le résultat global reste **INCOMPLETE** : les
-tests exécutés passent, mais les seuils de couverture et de mutation ne sont
-pas atteints. Le suivi chronologique a maintenant un premier protocole testé ;
+tests exécutés et le seuil de couverture passent, mais la mutation reste
+insuffisante et limitée à un module. Le suivi chronologique a maintenant un premier protocole testé ;
 son évaluation sur données réelles, les modèles profonds et la montée en charge
 restent ouverts.
 
@@ -28,7 +28,7 @@ puis contrôlé avec le même test après modification.
 
 Les expériences synthétiques ont été relancées après ces changements. Les
 trois benchmarks réels ont ensuite été rejoués avec cinq graines chacun. Les
-quatre tableaux du manuscrit sont comparés aux CSV archivés par
+quatre tableaux principaux du manuscrit sont comparés aux CSV archivés par
 `test_publication_tables.py` ; ce contrôle a révélé neuf arrondis à corriger.
 Les figures et le PDF ont été reconstruits. Le découpage chronologique et le
 suivi par fenêtres ont leurs propres tests ; ils ne changent pas les métriques
@@ -43,13 +43,13 @@ archivés séparément et leurs chiffres sont rapprochés du manuscrit par un te
 
 | Commande | Résultat | Détail |
 | --- | --- | --- |
-| `make verify-fast` | Échec | 221 tests réussis, 2 tests réels exclus ; couverture incomplète. |
+| `make verify-fast` | Réussite locale | 247 tests réussis, 2 tests réels exclus ; lignes et branches couvertes. |
 | `make verify-deep` | Échec | 86 mutants éliminés sur 97 dans `metrics.py` ; seuil de 95 % non atteint. |
 | `make verify-real` | Réussite locale | 2 tests et contrôle des trois CSV présents. |
 | `python verification/scaling.py` | Réussite locale | 27 mesures sur trois tailles, hors FAST. |
-| `make verify-all` | Échec | Reprend les échecs de FAST et DEEP. |
+| `make verify-all` | Échec | DEEP reste sous son seuil et hors portée complète. |
 
-FAST mesure **1357/1392 lignes (97,49 %)** et **272/296 branches (91,89 %)**.
+FAST mesure **1394/1394 lignes et 298/298 branches (100 % chacune)**.
 La mesure inclut désormais les commandes lancées en sous-processus. Les
 scripts `fetch_cardio.py`, `generate_synthetic.py` et l'entrée principale
 sont désormais parcourus par FAST avec des données construites localement. Le détail par
@@ -102,8 +102,8 @@ miroir annoncé, et la conversion du fichier ADBench reproduit le CSV Cardio.
 du manifeste. La révision du téléchargement Credit Card et les droits propres
 au jeu Cardio restent non établis pour une redistribution brute.
 
-La CI lance FAST et conserve ses rapports. Le job est actuellement rouge à
-cause de la couverture. Les règles de protection de la branche distante n'ont
+La CI lance FAST et conserve ses rapports. Le profil passe localement sur
+cette révision ; le résultat distant reste à vérifier. Les règles de protection de la branche distante n'ont
 pas été inspectées. DEEP et REAL restent des commandes locales ; elles ne
 bloquent pas encore une publication distante.
 
