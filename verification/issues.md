@@ -10,8 +10,8 @@ sont pas tous remplis.
   sont consignés. `function_matrix.md` relie maintenant les fonctions aux
   tests principaux et indique les trous encore visibles.
 - **#4** : les petits jeux de test et les marqueurs FAST/REAL sont en place.
-  Des fixtures indépendantes sont ajoutées. Le réseau est bloqué dans pytest ;
-  le même contrôle reste à étendre aux commandes en sous-processus.
+  Des fixtures indépendantes sont ajoutées. Le réseau est bloqué dans pytest
+  et dans les sous-processus Python lancés par ses tests de commandes.
 - **#5** : le déroulé test en échec, correction, puis régression est documenté
   dans `README.md`.
 - **#6** : FAST mesure lignes et branches, y compris dans les commandes en
