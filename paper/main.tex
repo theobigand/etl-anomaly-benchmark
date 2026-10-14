@@ -340,26 +340,29 @@ wall-clock duration.
 A second, manually invoked level asks whether these checks can fail.
 Mutation testing generates small source-level changes (a reversed
 comparison, an altered constant, a modified message) and counts how many
-make the routine suite fail; we apply it to the modules that compute a
+make the routine suite fail. We apply it to the modules that compute a
 result, not to the experiment scripts. In addition, fourteen deliberate
 scientific defects are applied one at a time to a temporary copy of the
 code, and a named test must fail on each: a scaler refitted on the rows
 being scored, the label passed to the detector as a feature, a contamination
 threshold read from the test labels, a training row copied into the test
 partition, an inverted score orientation, ranking metrics computed from the
-binary flags, a seed aggregate that keeps only the first seed, and a
-detector missing from the results table, among others. A third level uses the locally available full datasets. A separate
-command compares, for each CSV present, the file checksum, the raw and
+binary flags, a seed aggregate that keeps only the first seed, a detector
+missing from the results table, and a few others.
+
+A third level uses the locally available full datasets. A separate command
+compares, for each CSV present, the file checksum, the raw and
 post-deduplication row counts, the number of anomalies and the positive-class
-value with an archived manifest, and reports an absent file as not run. The scripts record the dataset fingerprint,
-software versions, random seeds, split policy and output names alongside
-their results. For each real-data seed, an archive stores the positions of
-the train, validation and test rows after deduplication; a capped fit also
-records the selected training positions. Archived tables and figures are checked against their
-manifest, and the six numerical tables in this manuscript are compared
-with the archived CSV values at the precision shown. This establishes
-traceability between the reported values and the recorded experiment;
-it does not establish that another machine will reproduce the same timings.
+value with an archived manifest, and reports an absent file as not run. The
+scripts record the dataset fingerprint, software versions, random seeds,
+split policy and output names alongside their results. For each real-data
+seed, an archive stores the positions of the train, validation and test rows
+after deduplication; a capped fit also records the selected training
+positions. Archived tables and figures are checked against their manifest,
+and the six numerical tables in this manuscript are compared with the
+archived CSV values at the precision shown. This establishes traceability
+between the reported values and the recorded experiment; it does not
+establish that another machine will reproduce the same timings.
 
 We treat a failed or missing check as a limitation of the evidence, not as
 a successful experiment. Complete line and branch coverage and a mutation
@@ -509,8 +512,9 @@ every method has a narrow competence.
     $0$ here too: at the reference magnitude the shifted values stay
     inside the global range, and once diluted by the many clean recent
     rows the window mean has moved by less than a tenth of a standard
-    deviation on average ($0.04$ to $0.11$ over the five test splits). The present row-level drift detector remains at zero even
-    in the severity sweep; the windowed-monitoring extension is separate.
+    deviation on average ($0.04$ to $0.11$ over the five test splits). The
+    present row-level drift detector remains at zero even in the severity
+    sweep; the windowed-monitoring extension is separate.
 \end{itemize}
 The practical reading is a short decision list: null-rate problems to
 declarative rules, single-column outliers to any statistical rule,
@@ -675,31 +679,25 @@ marks severity $1.0$.}
 
 \subsection{Verification outcomes and computation cost}
 \label{sec:verification-results}
-At the current revision, the routine suite executes 443 tests
-successfully and excludes two that require the full real datasets. Its exact
-coverage is 1,463 of 1,463 executable lines and 300 of 300 branches ($100\%$
-in both measures). The mutation campaign eliminates 1,824 of the 1,900
-mutants generated in the pipeline modules ($96.00\%$). The 76 survivors stay
-in the denominator; those we classified leave the observable result
-unchanged, for instance a default \texttt{dtype}. The campaign started at
-$88.66\%$ on the metric module alone and at $74.5\%$ once widened to every
-pipeline module with the original tests. The gain came from new tests (split
-sizes, tie ordering, error contracts, generator quantiles, detector
-boundaries) and from removing redundant code, not from excluding any file.
-The experiment scripts are not mutated, so the score does not describe the
-whole repository.
+At the current revision the routine suite runs 443 tests, plus two that need
+the full datasets and are run separately. Coverage is complete: 1,463 of
+1,463 executable lines and 300 of 300 branches. The mutation campaign on the
+pipeline modules kills 1,824 of 1,900 mutants ($96.00\%$). The 76 survivors
+count as failures; the ones we examined do not change any observable output
+(passing a default \texttt{dtype} explicitly, for instance). The experiment
+scripts are not mutated, so this score does not describe the whole
+repository.
 
-The fourteen deliberate defects are all detected. Four of them passed every
-existing test at the first attempt: a scaler or imputer refitted on the
-batch being scored, ranking metrics fed with binary flags, a detector
-silently absent from the results, and a contamination threshold of the
-synthetic benchmark taken from its own test partition. An inverted Z-score
-orientation was seen only by a test added during the mutation campaign.
-None of these defects was present in the code; they were gaps in the tests.
-Replaying every experiment afterwards reproduced all detection metrics of
-the previous run exactly; only the wall-clock times differ.
-The real-data checks pass locally for all three available CSV files, and the
-six manuscript tables agree with the archived numerical results.
+All fourteen deliberate defects are caught, but not always by the tests we
+started with. Four went through every existing test: a scaler refitted on
+the scored batch, ranking metrics fed with binary flags, a detector missing
+from the results, and a contamination threshold read from the synthetic test
+partition. A fifth, an inverted Z-score, was caught only by a test added
+during the mutation work. None of these defects was in the code; the tests
+were missing. After adding them we reran every experiment: all detection
+metrics are unchanged and only the timings differ. The real-data checks pass
+locally on the three CSV files, and the six tables of this manuscript match
+the archived results.
 
 Detector timing in Tables~\ref{tab:fraud} and~\ref{tab:synthetic} sums
 \texttt{fit}, \texttt{predict} and \texttt{score} inside the detection
@@ -769,8 +767,9 @@ Forest on fraud $F_1 = 0.20 \pm 0.07$), so those numbers should be read
 as ranges.
 Verification has its own limits: complete line and branch coverage does not
 establish that the scientific assertions detect every defect. Mutation
-testing covers the pipeline modules but not the experiment scripts. The complete real-data
-checks were performed with the three files available locally. The Water
+testing covers the pipeline modules but not the experiment scripts. The
+complete real-data checks were performed with the three files available
+locally. The Water
 Quality file matches its named mirror, and the Cardio CSV can be reproduced
 from the current ADBench archive. The exact revision of the Credit Card
 download and the underlying Cardio data rights remain unresolved. These
