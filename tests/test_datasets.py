@@ -20,6 +20,7 @@ def test_features_drops_label_and_anomaly_columns(tmp_path):
     df = spec.load()
     assert ANOMALY_COLUMN in df.columns
     assert list(df[ANOMALY_COLUMN]) == [0, 1, 0]
+    assert pd.api.types.is_integer_dtype(df[ANOMALY_COLUMN])
     assert list(spec.features(df).columns) == ["a", "b"]
 
 
