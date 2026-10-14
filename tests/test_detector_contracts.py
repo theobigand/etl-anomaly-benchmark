@@ -10,6 +10,7 @@ from etl_benchmark.quality import (
     IQRDetector,
     IsolationForestDetector,
     LOFDetector,
+    OneClassSVMDetector,
     ZScoreDetector,
 )
 from etl_benchmark.quality.base import numeric_features
@@ -161,3 +162,19 @@ def test_pyod_scores_rows_whose_feature_is_missing_after_fitting():
     detector = IsolationForestDetector(contamination=0.1).fit(train)
     assert np.isfinite(detector.score(probe)).all()
     assert detector.predict(probe).dtype == bool
+
+
+@pytest.mark.parametrize(
+    "make",
+    [ZScoreDetector, IQRDetector, IsolationForestDetector, LOFDetector, OneClassSVMDetector],
+)
+def test_a_rows_score_does_not_depend_on_the_rest_of_the_evaluated_batch(make):
+    rng = np.random.default_rng(2)
+    train = pd.DataFrame(rng.normal(size=(120, 3)), columns=list("abc"))
+    batch = pd.DataFrame(rng.normal(3.0, 2.0, size=(10, 3)), columns=list("abc"))
+    detector = make().fit(train)
+    together = detector.score(batch)
+    alone = pd.concat([detector.score(batch.iloc[[i]]) for i in range(len(batch))])
+    np.testing.assert_allclose(together.to_numpy(), alone.to_numpy())
+    reordered = detector.score(batch.iloc[::-1])
+    np.testing.assert_allclose(together.to_numpy(), reordered.to_numpy()[::-1])

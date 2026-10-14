@@ -63,3 +63,25 @@ def test_per_type_golden_denominators():
     assert precision["invalid_format"] == 0.5
     assert np.isnan(recall["temporal_drift"])
     assert np.isnan(precision["temporal_drift"])
+
+
+def test_synthetic_calibration_ignores_held_out_labels(monkeypatch):
+    frame = make_synthetic(n_rows=600, seed=3)
+    train, val, test = synthetic_benchmark._split_synthetic(frame, seed=3)
+    flipped = test.assign(anomaly=~test["anomaly"])
+    observed = []
+    build = synthetic_benchmark.all_detectors
+
+    def capture(*, ml_contamination, names):
+        observed.append(ml_contamination)
+        return build(ml_contamination=ml_contamination, names=["zscore"])
+
+    monkeypatch.setattr(synthetic_benchmark, "all_detectors", capture)
+    for held_out in (test, flipped):
+        monkeypatch.setattr(
+            synthetic_benchmark,
+            "_split_synthetic",
+            lambda *_args, held_out=held_out: (train, val, held_out),
+        )
+        synthetic_benchmark.evaluate(frame, seed=3)
+    assert observed == [pytest.approx(train["anomaly"].mean())] * 2

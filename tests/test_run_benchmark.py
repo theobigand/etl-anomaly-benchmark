@@ -46,6 +46,13 @@ def test_run_returns_mean_and_std_over_seeds(tmp_path):
     assert (std.to_numpy() >= 0).all()
 
 
+def test_every_requested_detector_appears_in_the_results(tmp_path):
+    spec = _toy_spec(tmp_path)
+    per_split = evaluate(spec, spec.load(), 0, None)
+    assert per_split.index.tolist() == spec.detector_names
+    assert not per_split.isna().any().any()
+
+
 def test_isolation_forest_separates_the_planted_positives(tmp_path):
     spec = _toy_spec(tmp_path)
     mean, _std = run(spec, seeds=[0, 1])
