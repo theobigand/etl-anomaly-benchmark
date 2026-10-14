@@ -4,7 +4,7 @@ Protocol, for each of ``--seeds`` random seeds:
 
     1. stratified 70 / 15 / 15 split on the (normalised) anomaly label;
     2. fit every detector for this dataset on ``train`` (ML contamination
-       = the train-set anomaly prevalence), score ``test`` through the
+       = the train-set anomaly prevalence by default, or a fixed preset), score ``test`` through the
        pipeline's :func:`~etl_benchmark.pipeline.detect` stage;
     3. record precision, recall, F1, ROC-AUC, PR-AUC, flagged %, and the
        in-pipeline latency, all on ``test``.
@@ -37,7 +37,7 @@ from etl_benchmark.datasets import ANOMALY_COLUMN, DATASETS, DatasetSpec  # noqa
 from etl_benchmark.logging_setup import setup_logging  # noqa: E402
 from etl_benchmark.metrics import compute_metrics  # noqa: E402
 from etl_benchmark.pipeline import detect  # noqa: E402
-from etl_benchmark.registry import all_detectors  # noqa: E402
+from etl_benchmark.registry import all_detectors, calibrate_contamination  # noqa: E402
 from etl_benchmark.split import stratified_split  # noqa: E402
 
 log = logging.getLogger(__name__)
@@ -46,11 +46,18 @@ METRIC_COLUMNS = ["precision", "recall", "f1", "roc_auc", "pr_auc", "flagged_pct
 
 
 def evaluate(
-    spec: DatasetSpec, df: pd.DataFrame, seed: int, fit_sample: int | None
+    spec: DatasetSpec,
+    df: pd.DataFrame,
+    seed: int,
+    fit_sample: int | None,
+    calibration: str = "train_prevalence",
+    fixed_contamination: float | None = None,
 ) -> pd.DataFrame:
     """One split: fit on train, score test, one row per detector."""
     train, _val, test = stratified_split(df, ANOMALY_COLUMN, config.SPLIT_RATIOS, seed)
-    contamination = float(train[ANOMALY_COLUMN].mean())
+    contamination = calibrate_contamination(
+        train[ANOMALY_COLUMN], policy=calibration, fixed=fixed_contamination
+    )
     fit_df = spec.features(train)
     if fit_sample is not None and fit_sample < len(fit_df):
         fit_df = fit_df.sample(n=fit_sample, random_state=seed)
@@ -81,7 +88,11 @@ def evaluate(
 
 
 def run(
-    spec: DatasetSpec, seeds: list[int], fit_sample: int | None = None
+    spec: DatasetSpec,
+    seeds: list[int],
+    fit_sample: int | None = None,
+    calibration: str = "train_prevalence",
+    fixed_contamination: float | None = None,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     log.info("loading %s", spec.csv)
     df = spec.load()
@@ -94,7 +105,7 @@ def run(
         100 * prevalence,
     )
 
-    per_seed = [evaluate(spec, df, s, fit_sample) for s in seeds]
+    per_seed = [evaluate(spec, df, s, fit_sample, calibration, fixed_contamination) for s in seeds]
     stack = pd.concat(per_seed, keys=range(len(seeds)))
     grouped = stack.groupby(level=1, sort=False)
     return grouped.mean(), grouped.std()
@@ -123,6 +134,10 @@ def main() -> None:
     parser.add_argument("--results-dir", type=Path, default=config.RESULTS_DIR)
     parser.add_argument("--seeds", type=int, nargs="+", default=list(config.BENCHMARK_SEEDS))
     parser.add_argument(
+        "--calibration", choices=("train_prevalence", "fixed"), default="train_prevalence"
+    )
+    parser.add_argument("--fixed-contamination", type=float)
+    parser.add_argument(
         "--fit-sample",
         type=int,
         default=None,
@@ -143,8 +158,15 @@ def main() -> None:
         spec = replace(spec, csv=args.csv)
     if args.fit_sample is not None and args.fit_sample <= 0:
         parser.error("--fit-sample must be positive")
+    if args.calibration == "fixed":
+        try:
+            calibrate_contamination([], policy="fixed", fixed=args.fixed_contamination)
+        except ValueError as exc:
+            parser.error(str(exc))
+    elif args.fixed_contamination is not None:
+        parser.error("--fixed-contamination requires --calibration fixed")
     log.info("dataset %s: %s", spec.name, spec.note)
-    mean, std = run(spec, args.seeds, args.fit_sample)
+    mean, std = run(spec, args.seeds, args.fit_sample, args.calibration, args.fixed_contamination)
 
     args.results_dir.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
@@ -176,7 +198,8 @@ def main() -> None:
             "fit_sample": args.fit_sample,
             "detectors": spec.detector_names,
             "features": feature_names,
-            "calibration": "train_label_prevalence",
+            "calibration": args.calibration,
+            "fixed_contamination": args.fixed_contamination,
             "pr_auc_definition": "average_precision",
         },
         outputs=[csv_out.name, md_out.name, split_out.name],

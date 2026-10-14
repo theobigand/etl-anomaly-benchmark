@@ -26,8 +26,10 @@ sont pas tous remplis.
 - **#8–9** : les copies synthétiques restent dans la même partition et les
   détecteurs apprennent sur le train. Les cas temporels demandent un protocole
   distinct ; il reste des entrées limites à tester.
-- **#10** : la contamination invalide est rejetée. Un calibrage sans labels
-  d'entraînement reste à comparer au calibrage actuel.
+- **#10** : la contamination invalide est rejetée. Le benchmark réel accepte
+  désormais un préréglage fixe sans labels et enregistre la politique choisie.
+  Les tableaux publiés gardent le calibrage sur la prévalence du train ; la
+  comparaison numérique entre politiques reste à produire.
 - **#11** : taille de population, taux nul et types injectés ont des tests.
   Il manque des contrôles fins des champs non modifiés et des sévérités.
 - **#12** : labels, valeurs manquantes et tailles des trois CSV locaux sont

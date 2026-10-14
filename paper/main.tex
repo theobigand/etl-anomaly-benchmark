@@ -291,7 +291,14 @@ partitions. Detectors are fitted on the train split and every reported
 number is computed on the held-out test split; the validation split is
 reserved for later tuning. The ML contamination is read from the train
 split's prevalence. This is a label-informed operating-point choice,
-although estimator fitting itself does not use the labels. The whole
+although estimator fitting itself does not use the labels. The real-data
+benchmark also permits a contamination value specified before evaluation,
+independent of every split's labels. This label-free preset forms a distinct
+comparison protocol; the numerical results in this manuscript retain the
+train-prevalence baseline. In the sensitivity sweep, contamination follows a
+fixed grid and no value is selected from the test metrics. Threshold or
+hyperparameter selection for a later confirmatory experiment would use
+training or validation data only. The whole
 procedure is repeated over five random
 seeds and we report the mean and standard deviation. LOF and the
 One-Class SVM are run on Water Quality and the synthetic dataset but not
