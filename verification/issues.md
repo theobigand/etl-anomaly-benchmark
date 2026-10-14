@@ -69,7 +69,9 @@ sont pas tous remplis.
   mock des bibliothèques de calcul n'est introduit. Les défauts non injectés
   sont listés dans la matrice.
 - **#24** : README, notes de données, figures et manuscrit ont été mis à jour
-  après les nouveaux essais. La revue finale du mémoire reste ouverte.
+  après les nouveaux essais. Une relecture factuelle du manuscrit contre le code
+  et les archives a corrigé onze affirmations (`manuscript_check.md`) ; les six
+  tableaux sont comparés automatiquement aux CSV.
 
 ## Suite du travail (#25 à #30)
 

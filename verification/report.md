@@ -44,7 +44,7 @@ archivés séparément et leurs chiffres sont rapprochés du manuscrit par un te
 
 | Commande | Résultat | Détail |
 | --- | --- | --- |
-| `make verify-fast` | Réussite locale | 438 tests réussis, 2 tests réels et 14 essais de défauts exclus ; lignes et branches couvertes. |
+| `make verify-fast` | Réussite locale | 443 tests réussis, 2 tests réels et 14 essais de défauts exclus ; lignes et branches couvertes. |
 | `make verify-deep` | Réussite locale | 1824 mutants éliminés sur 1900 dans `src/etl_benchmark` (96,00 %) ; les scripts d'`experiments/` ne sont pas mutés. |
 | `make verify-faults` | Réussite locale | 14 défauts introduits dans une copie temporaire, tous détectés par un test prévu. |
 | `make verify-real` | Réussite locale | 2 tests et contrôle des trois CSV présents. |
