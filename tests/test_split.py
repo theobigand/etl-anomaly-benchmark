@@ -78,3 +78,18 @@ def test_split_rejects_bad_ratios():
 def test_split_rejects_nonfinite_ratios(ratios):
     with pytest.raises(ValueError, match="ratios"):
         stratified_split(_frame(500), "label", ratios=ratios)
+
+
+def test_split_rejects_ambiguous_row_alignment():
+    frame = _frame(500)
+    duplicated = frame.copy()
+    duplicated.index = [0] * len(duplicated)
+    with pytest.raises(ValueError, match="input index must be unique"):
+        stratified_split(duplicated, "label")
+    labels = frame["label"].iloc[:-1]
+    with pytest.raises(ValueError, match="Series index must match"):
+        stratified_split(frame, labels)
+    labels = frame["label"].copy()
+    labels.index = [0] * len(labels)
+    with pytest.raises(ValueError, match="Series index must match"):
+        stratified_split(frame, labels)

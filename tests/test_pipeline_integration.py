@@ -23,3 +23,8 @@ def test_pipeline_reads_deduplicates_and_persists_partition(tmp_path):
     assert anomalies["x"].tolist() == [100.0]
     assert anomalies["Class"].tolist() == [1]
     assert result.detect_s >= 0
+
+
+def test_pipeline_reports_missing_input_path(tmp_path):
+    with pytest.raises(FileNotFoundError, match="Dataset not found"):
+        run_pipeline(tmp_path / "absent.csv", ZScoreDetector())
