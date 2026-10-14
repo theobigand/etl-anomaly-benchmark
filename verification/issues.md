@@ -94,8 +94,10 @@ sont pas tous remplis.
   une étude contrôlée plus large et la mémoire native.
 - **#29** : les règles et Isolation Forest rejettent les colonnes
   d'entraînement vides, les infinis et les colonnes requises absentes ; les
-  colonnes constantes ont des sorties finies. Il reste les classes extrêmes,
-  les schémas changeants et les timestamps invalides dans les expériences.
+  colonnes constantes ont des sorties finies ; colonnes en plus ou réordonnées
+  sont sans effet. La politique est dans `verification/README.md` avec les cas
+  non résolus (schéma changeant en cours de flux, horodatages invalides de
+  bout en bout).
 - **#30** : attendre la résolution des points précédents, puis refaire les
   vérifications et les comparaisons publiées sur un état unique du dépôt.
 
