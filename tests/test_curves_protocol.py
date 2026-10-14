@@ -1,3 +1,4 @@
+import json
 import sys
 from pathlib import Path
 
@@ -90,3 +91,33 @@ def test_curves_command_rejects_all_datasets_absent(tmp_path, monkeypatch):
         run_curves.main()
     assert not figure.exists()
     assert not output.exists()
+
+
+def test_curves_record_which_requested_datasets_were_skipped(tmp_path, monkeypatch):
+    monkeypatch.setitem(
+        run_curves.DATASETS,
+        "credit_card",
+        DatasetSpec("credit_card", tmp_path / "absent.csv", "Class", 1),
+    )
+    output = tmp_path / "results"
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "run_curves",
+            "--datasets",
+            "credit_card",
+            "synthetic",
+            "--rows",
+            "600",
+            "--figure",
+            str(tmp_path / "curves.png"),
+            "--results-dir",
+            str(output),
+        ],
+    )
+    run_curves.main()
+    record = json.loads(next(output.glob("run_curves_*.json")).read_text())
+    assert record["settings"]["datasets"] == ["credit_card", "synthetic"]
+    assert record["settings"]["skipped_datasets"] == ["credit_card"]
+    assert set(pd.read_csv(next(output.glob("contamination_sweep_*.csv"))).dataset) == {"synthetic"}
