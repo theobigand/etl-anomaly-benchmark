@@ -2,8 +2,9 @@
 
 Le dépôt contient le pipeline Python (`src/etl_benchmark`), les expériences
 (`experiments`) et le manuscrit. Le résultat global reste **INCOMPLETE** : les
-tests exécutés et le seuil de couverture passent, mais la mutation reste
-insuffisante et limitée à un module. Le suivi chronologique a maintenant un premier protocole testé ;
+tests exécutés et le seuil de couverture passent et la mutation du code de
+`src/etl_benchmark` dépasse 95 %, mais les scripts d'`experiments/` n'ont pas
+de campagne de mutation. Le suivi chronologique a un premier protocole testé ;
 son évaluation sur données réelles, les modèles profonds et la montée en charge
 restent ouverts.
 
@@ -44,10 +45,10 @@ archivés séparément et leurs chiffres sont rapprochés du manuscrit par un te
 | Commande | Résultat | Détail |
 | --- | --- | --- |
 | `make verify-fast` | Réussite locale | 247 tests réussis, 2 tests réels exclus ; lignes et branches couvertes. |
-| `make verify-deep` | Échec | 86 mutants éliminés sur 97 dans `metrics.py` ; seuil de 95 % non atteint. |
+| `make verify-deep` | Réussite locale | 1661 mutants éliminés sur 1726 dans `src/etl_benchmark` (96,23 %) ; les scripts d'`experiments/` ne sont pas mutés. |
 | `make verify-real` | Réussite locale | 2 tests et contrôle des trois CSV présents. |
 | `python verification/scaling.py` | Réussite locale | 27 mesures sur trois tailles, hors FAST. |
-| `make verify-all` | Échec | DEEP reste sous son seuil et hors portée complète. |
+| `make verify-all` | Réussite locale sur `src/` | DEEP ne couvre pas `experiments/` ; le statut reste INCOMPLETE. |
 
 FAST mesure **1394/1394 lignes et 298/298 branches (100 % chacune)**.
 La mesure inclut désormais les commandes lancées en sous-processus. Les
@@ -57,12 +58,15 @@ fichier est dans le profil généré `verification/profile.json` et
 `coverage.json`. Aucune ligne
 ni branche n'est exclue.
 
-La campagne de mutation n'a porté que sur `src/etl_benchmark/metrics.py` avec
-mutmut 3.8.0 : 97 mutants produits, 86 éliminés, 11 survivants, aucun cas
-classé sans test, ignoré, expiré ou en erreur. Le taux mesuré est **88,66 %**
-sur ce seul module. Le reste du code n'a pas de score de mutation. Le profil
-indique donc `NOT_RUN` pour la portée complète ; sa valeur numérique zéro
-n'est pas une mesure de performance.
+La campagne de mutation porte sur les modules de `src/etl_benchmark` qui
+calculent un résultat (mutmut 3.8.0) : 1726 mutants produits, 1661 éliminés,
+65 survivants, aucun cas classé sans test, ignoré, expiré ou en erreur. Le
+taux mesuré est **96,23 %** sur ce périmètre. Elle avait commencé à 88,66 %
+sur `metrics.py` seul et à 74,5 % une fois élargie sans nouveaux tests.
+`mutation_notes.md` classe les survivants (états intermédiaires, `dtype`
+équivalents, noms internes). Les scripts d'`experiments/` n'ont pas de score
+de mutation ; le profil indique donc `NOT_RUN` pour la portée complète et sa
+valeur numérique zéro n'est pas une mesure.
 
 ## Ce que les contrôles couvrent
 
@@ -70,8 +74,8 @@ Les tests unitaires, de contrat, d'intégration, de propriété et de CLI
 utilisent de petits jeux construits dans des répertoires temporaires. FAST ne
 lit pas les CSV de recherche et ne demande pas d'accès réseau. Les deux tests
 sur données complètes sont marqués `real` et passent par `make verify-real`.
-Les connexions réseau sont bloquées dans le processus pytest ; ce contrôle
-ne s'étend pas aux commandes lancées en sous-processus.
+Les connexions réseau sont bloquées dans le processus pytest et, par un
+module chargé au démarrage, dans les commandes Python qu'il lance.
 
 Le vérificateur échoue lorsqu'un rapport de couverture manque, lorsqu'aucun
 test n'a été exécuté ou lorsque les résultats de mutation sont incohérents.
@@ -109,8 +113,8 @@ bloquent pas encore une publication distante.
 
 ## Travail restant
 
-Il faut couvrir les chemins manquants, examiner les 11 mutants survivants puis
-étendre la mutation à tous les modules concernés. Il manque également des
+Il faut étendre la mutation aux scripts d'`experiments/` et revoir les 65
+survivants si un module change. Il manque également des
 tests de panne et de schéma défavorable, une évaluation temporelle sur données réelles, les
 détecteurs profonds et une étude de coût plus large dans un environnement
 contrôlé.

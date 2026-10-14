@@ -6,7 +6,7 @@ se lancent à la racine du dépôt.
 | Commande | Ce qu'elle fait |
 | --- | --- |
 | `make verify-fast` | Ruff, tests hors données réelles, couverture des lignes et branches. |
-| `make verify-deep` | Mutations de `metrics.py` avec mutmut ; seuil de 95 %. |
+| `make verify-deep` | Mutations de `src/etl_benchmark` avec mutmut (environ six minutes) ; seuil de 95 %. |
 | `make verify-real` | Tests sur les trois CSV locaux et contrôle de leurs tailles, labels et sommes de contrôle. |
 | `make verify-scale` | Étude locale de croissance sur trois tailles ; aucune limite de temps n'est imposée à FAST. |
 | `make verify-all` | Lance les trois commandes et conserve leurs échecs. |
@@ -62,5 +62,6 @@ ensuite le gate concerné et refaire les tables ou figures touchées. Les tests
 sur durées ne doivent pas dépendre d'un nombre précis de secondes.
 
 Les résultats actuels et les travaux encore ouverts sont dans `report.md` et
-`issues.md`. FAST passe sur l'ensemble mesuré ; DEEP reste sous son seuil et
-ne couvre qu'un module. Le statut général reste **INCOMPLETE**.
+`issues.md`. FAST passe sur l'ensemble mesuré ; DEEP dépasse son seuil sur
+`src/etl_benchmark` mais ne couvre pas `experiments/`. Le statut général reste
+**INCOMPLETE**.
