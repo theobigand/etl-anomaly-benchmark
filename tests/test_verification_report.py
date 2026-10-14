@@ -1,5 +1,7 @@
 import json
+import subprocess
 import sys
+from importlib.metadata import PackageNotFoundError
 from pathlib import Path
 
 import pytest
@@ -122,3 +124,75 @@ def test_report_rejects_malformed_and_uninstrumented_evidence(tmp_path):
     )
     with pytest.raises(ValueError, match="zero instrumented"):
         verification_report.build_report(coverage, junit)
+
+
+def test_report_records_missing_git_and_package_metadata(tmp_path, monkeypatch):
+    coverage = tmp_path / "coverage.json"
+    junit = tmp_path / "junit.xml"
+    coverage.write_text(
+        json.dumps(
+            {
+                "totals": {
+                    "covered_lines": 1,
+                    "num_statements": 1,
+                    "covered_branches": 1,
+                    "num_branches": 1,
+                }
+            }
+        )
+    )
+    junit.write_text('<testsuite tests="1" failures="0" errors="0" skipped="0"/>')
+
+    def unavailable_git(*_args, **_kwargs):
+        raise subprocess.CalledProcessError(1, "git")
+
+    monkeypatch.setattr(verification_report.subprocess, "check_output", unavailable_git)
+    original = verification_report.version
+
+    def version_or_missing(name):
+        if name == "pyod":
+            raise PackageNotFoundError(name)
+        return original(name)
+
+    monkeypatch.setattr(verification_report, "version", version_or_missing)
+    report = verification_report.build_report(coverage, junit)
+    assert report["status"] == "PASS"
+    assert report["source_revision"] is None
+    assert report["dirty"] is None
+    assert report["packages"]["pyod"] is None
+
+
+def test_report_command_main_guard_preserves_failure_exit(tmp_path):
+    coverage = tmp_path / "coverage.json"
+    junit = tmp_path / "junit.xml"
+    output = tmp_path / "report.json"
+    coverage.write_text(
+        json.dumps(
+            {
+                "totals": {
+                    "covered_lines": 0,
+                    "num_statements": 1,
+                    "covered_branches": 0,
+                    "num_branches": 1,
+                }
+            }
+        )
+    )
+    junit.write_text('<testsuite tests="1" failures="0" errors="0" skipped="0"/>')
+    command = subprocess.run(
+        [
+            sys.executable,
+            str(Path(verification_report.__file__)),
+            "--coverage",
+            str(coverage),
+            "--junit",
+            str(junit),
+            "--output",
+            str(output),
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert command.returncode == 1
+    assert json.loads(output.read_text())["status"] == "FAIL"

@@ -1,9 +1,11 @@
 import hashlib
 import json
 import sys
+from importlib.metadata import PackageNotFoundError
 from pathlib import Path
 
 import pandas as pd
+import pytest
 
 from etl_benchmark.split import stratified_split
 
@@ -62,3 +64,43 @@ def test_split_archive_records_fit_sample_inside_train(tmp_path):
     parts = provenance.read_split_ids(path)["seeds"]["3"]
     assert len(parts["fit"]) == 10
     assert set(parts["fit"]) <= set(parts["train"])
+
+
+def test_split_archive_rejects_invalid_sample_and_reserved_marker(tmp_path):
+    frame = pd.DataFrame({"is_anomaly": [0] * 80 + [1] * 20})
+    path = tmp_path / "splits.json.gz"
+    with pytest.raises(ValueError, match="fit_sample"):
+        provenance.write_split_ids(path, frame, "is_anomaly", [3], (0.7, 0.15, 0.15), 0)
+    with pytest.raises(ValueError, match="reserved split marker"):
+        provenance.write_split_ids(
+            path,
+            frame.assign(_split_row_id=range(100)),
+            "is_anomaly",
+            [3],
+            (0.7, 0.15, 0.15),
+        )
+    assert not path.exists()
+
+
+def test_record_marks_unavailable_package_version_explicitly(tmp_path, monkeypatch):
+    original = provenance.version
+
+    def version_or_missing(name):
+        if name == "pyod":
+            raise PackageNotFoundError(name)
+        return original(name)
+
+    monkeypatch.setattr(provenance, "version", version_or_missing)
+    output = tmp_path / "run.json"
+    provenance.write_record(
+        output,
+        experiment="toy",
+        seeds=[1],
+        dataset="toy",
+        data_path=None,
+        settings={},
+        outputs=[],
+    )
+    record = json.loads(output.read_text())
+    assert record["packages"]["pyod"] is None
+    assert record["dataset"] == {"identity": "toy"}
