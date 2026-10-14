@@ -16,11 +16,11 @@ sont pas tous remplis.
   dans `README.md`.
 - **#6** : FAST mesure lignes et branches, y compris dans les commandes en
   sous-processus, et échoue si elles ne sont pas toutes couvertes. La
-  couverture actuelle est de 1394/1394 lignes et 298/298 branches, sans
+  couverture actuelle est de 1460/1460 lignes et 300/300 branches, sans
   exclusion. Les commandes locales de génération, de conversion Cardio et de
   démonstration ont des tests dédiés.
 - **#7** : la campagne porte sur tous les modules calculants de
-  `src/etl_benchmark` : 1661 mutants éliminés sur 1726 (96,23 %). Les 65
+  `src/etl_benchmark` : 1824 mutants éliminés sur 1900 (96,00 %). Les 76
   survivants sont classés dans `mutation_notes.md`. Les scripts d'`experiments/`
   n'ont pas de campagne, donc le ticket reste ouvert.
 

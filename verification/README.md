@@ -6,7 +6,7 @@ se lancent à la racine du dépôt.
 | Commande | Ce qu'elle fait |
 | --- | --- |
 | `make verify-fast` | Ruff, tests hors données réelles, couverture des lignes et branches. |
-| `make verify-deep` | Mutations de `src/etl_benchmark` avec mutmut (environ six minutes) ; seuil de 95 %. |
+| `make verify-deep` | Mutations de `src/etl_benchmark` avec mutmut (environ neuf minutes) ; seuil de 95 %. |
 | `make verify-faults` | Quatorze défauts scientifiques appliqués à une copie temporaire ; chacun doit faire échouer un test prévu (environ une minute). |
 | `make verify-real` | Tests sur les trois CSV locaux et contrôle de leurs tailles, labels et sommes de contrôle. |
 | `make verify-scale` | Étude locale de croissance sur trois tailles ; aucune limite de temps n'est imposée à FAST. |
@@ -61,6 +61,55 @@ Ce contrôle porte sur les processus Python lancés depuis pytest.
   de calcul.
 - `test_scaling_study.py` vérifie les étapes chronométrées et la taille des
   entrées. `scaling.md` décrit l'essai local de croissance.
+
+## Prêt et terminé
+
+Avant de commencer un changement qui touche un résultat :
+
+- le comportement attendu et son sens scientifique tiennent en une phrase ;
+- le test qui devra échouer est nommé, sur de petites données générées ;
+- aucun CSV réel n'est nécessaire pour ce test.
+
+Le changement est terminé quand :
+
+- le test a d'abord échoué pour la bonne raison, puis passe avec la même
+  assertion ;
+- `make verify-fast` passe ;
+- `make verify-deep` et `make verify-faults` passent si le code scientifique
+  ou une protection a changé ;
+- les résultats archivés et le manuscrit sont rejoués ensemble si un chiffre
+  publié change (`python verification/archive_evidence.py` après les
+  commandes de `report.md`) ;
+- ce qui reste non vérifié est écrit dans `issues.md`.
+
+Exemple pour un défaut de découpage :
+
+```bash
+pytest tests/test_split.py -k rare_class    # échoue : le défaut est reproduit
+# corriger src/etl_benchmark/split.py
+pytest tests/test_split.py -k rare_class    # passe : même assertion
+make verify-fast
+```
+
+Sont admis sans test préalable : la documentation, la mise en forme, un
+refactor pur (un test de caractérisation vert existe d'abord) et une
+exploration jetable. Un changement de comportement exécutable sans test
+préalable se signale comme exception dans le message de validation.
+
+## Transformations permises et interdites
+
+Les propriétés de `test_properties.py` et les tests de lot s'appuient sur
+cette liste.
+
+| Transformation | Effet attendu |
+| --- | --- |
+| Permuter les lignes d'un lot évalué (détecteurs par ligne) | Les scores suivent les lignes ; rien d'autre ne change. |
+| Évaluer une ligne seule ou dans un lot | Même score (aucune statistique du lot). |
+| Renuméroter l'index | Les sorties portent le nouvel index ; les valeurs sont les mêmes. |
+| Permuter les lignes d'un jeu à horodatage | Les partitions chronologiques et les fenêtres sont les mêmes (l'ordre vient du temps). |
+| Changer l'ordre des colonnes entre ajustement et évaluation | Interdit : rejeté par `detect`. |
+| Changer les labels du test | Interdit d'influencer le seuil ou l'ajustement ; seules les métriques changent. |
+| Modifier une ligne future | Ne change aucune fenêtre ni aucun score antérieur. |
 
 Pour changer une mesure publiée, commencer par un cas qui montre l'erreur,
 exécuter le test avant la correction, puis relancer le même test après. Lancer
