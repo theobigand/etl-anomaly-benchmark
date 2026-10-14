@@ -96,6 +96,28 @@ refactor pur (un test de caractérisation vert existe d'abord) et une
 exploration jetable. Un changement de comportement exécutable sans test
 préalable se signale comme exception dans le message de validation.
 
+## Évolution du schéma et cas limites
+
+- Avec `pipeline.detect`, les colonnes d'évaluation doivent être les mêmes que
+  celles d'ajustement, dans le même ordre ; sinon l'appel échoue.
+- Un détecteur appelé directement lit ses variables par nom : une colonne en
+  plus ou un ordre différent ne change aucun score, une colonne requise absente
+  est une erreur.
+- Une colonne d'entraînement vide, une valeur infinie ou une colonne non
+  numérique est une erreur ; une colonne constante donne des sorties finies.
+- Un type d'anomalie sans ligne dans une partition donne `NaN` dans les
+  tableaux par type, jamais une colonne absente. Un jeu demandé mais absent est
+  listé dans `skipped_datasets` de l'enregistrement, un détecteur non exécuté
+  dans `not_run` avec sa raison.
+- Une classe trop rare pour être stratifiée fait échouer le découpage, sans
+  repli vers un tirage aléatoire.
+
+Cas non résolus : un schéma qui change en cours de flux réel n'est pas géré (le
+benchmark lit un fichier figé) ; les horodatages invalides sont rejetés par le
+découpage chronologique mais pas testés de bout en bout dans les scripts
+d'expérience ; les classes à une seule observation positive sont refusées au
+lieu d'être traitées.
+
 ## Transformations permises et interdites
 
 Les propriétés de `test_properties.py` et les tests de lot s'appuient sur
