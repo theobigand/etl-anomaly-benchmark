@@ -36,3 +36,23 @@ def test_pipeline_can_return_results_without_writing_files(tmp_path):
     cleaned, result = run_pipeline(source, ZScoreDetector(threshold=1), dump_dir=None)
     assert len(cleaned) == len(result.flags) == 4
     assert not list(tmp_path.glob("pipeline_*.csv"))
+
+
+def test_unwritable_output_location_fails_loudly(tmp_path):
+    source = tmp_path / "input.csv"
+    pd.DataFrame({"x": [0.0, 1.0, 2.0, 100.0], "Class": [0, 0, 0, 1]}).to_csv(source, index=False)
+    blocker = tmp_path / "occupied"
+    blocker.write_text("a file where a directory is needed")
+    with pytest.raises(OSError):
+        run_pipeline(source, ZScoreDetector(threshold=1), dump_dir=blocker / "out")
+    assert blocker.read_text() == "a file where a directory is needed"
+
+
+def test_pipeline_does_not_write_when_the_detector_fails(tmp_path):
+    source = tmp_path / "input.csv"
+    pd.DataFrame({"x": [0.0, 1.0, 2.0], "Class": [0, 0, 1]}).to_csv(source, index=False)
+    broken = pd.DataFrame({"name": ["a", "b", "c"]})
+    broken.to_csv(source, index=False)
+    with pytest.raises(ValueError, match="at least one numeric feature"):
+        run_pipeline(source, ZScoreDetector(), dump_dir=tmp_path / "out")
+    assert not (tmp_path / "out").exists()

@@ -107,3 +107,9 @@ def test_split_rejects_ambiguous_row_alignment():
         ValueError, match="^stratification Series index must match the input index$"
     ):
         stratified_split(frame, labels)
+
+
+def test_a_class_too_rare_to_stratify_is_an_error_not_a_random_fallback():
+    df = pd.DataFrame({"x": np.arange(200.0), "label": [1] + [0] * 199})
+    with pytest.raises(ValueError, match="least populated class"):
+        stratified_split(df, "label", seed=0)
