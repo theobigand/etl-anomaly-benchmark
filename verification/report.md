@@ -33,18 +33,23 @@ quatre tableaux du manuscrit sont comparés aux CSV archivés par
 Les figures et le PDF ont été reconstruits. Le découpage chronologique et le
 suivi par fenêtres ont leurs propres tests ; ils ne changent pas les métriques
 du benchmark stratifié.
+Une comparaison supplémentaire emploie une contamination fixe de 0,02 pour
+les détecteurs classiques sur les trois jeux réels. Elle réutilise les mêmes
+partitions, mais demeure exploratoire : sa valeur a été fixée après lecture
+des résultats du protocole principal. Les fichiers correspondants sont
+archivés séparément et leurs chiffres sont rapprochés du manuscrit par un test.
 
 ## Résultats des commandes
 
 | Commande | Résultat | Détail |
 | --- | --- | --- |
-| `make verify-fast` | Échec | 189 tests réussis, 2 tests réels exclus ; couverture incomplète. |
+| `make verify-fast` | Échec | 199 tests réussis, 2 tests réels exclus ; couverture incomplète. |
 | `make verify-deep` | Échec | 86 mutants éliminés sur 97 dans `metrics.py` ; seuil de 95 % non atteint. |
 | `make verify-real` | Réussite locale | 2 tests et contrôle des trois CSV présents. |
 | `python verification/scaling.py` | Réussite locale | 27 mesures sur trois tailles, hors FAST. |
 | `make verify-all` | Échec | Reprend les échecs de FAST et DEEP. |
 
-FAST mesure **1332/1392 lignes (95,69 %)** et **248/296 branches (83,78 %)**.
+FAST mesure **1334/1392 lignes (95,83 %)** et **250/296 branches (84,46 %)**.
 La mesure inclut désormais les commandes lancées en sous-processus. Les
 scripts `fetch_cardio.py`, `generate_synthetic.py` et l'entrée principale
 sont désormais parcourus par FAST avec des données construites localement. Le détail par
@@ -104,10 +109,9 @@ bloquent pas encore une publication distante.
 
 ## Travail restant
 
-Il faut couvrir les chemins manquants, examiner les 23 mutants survivants puis
+Il faut couvrir les chemins manquants, examiner les 11 mutants survivants puis
 étendre la mutation à tous les modules concernés. Il manque également des
-tests de panne et de schéma défavorable, un protocole temporel séparé du
-benchmark stratifié, une évaluation temporelle sur données réelles, les
+tests de panne et de schéma défavorable, une évaluation temporelle sur données réelles, les
 détecteurs profonds et une étude de coût plus large dans un environnement
 contrôlé.
 Le tableau de suivi `verification/issues.md` relie ces

@@ -90,6 +90,15 @@ the main curves use that same baseline; the contamination sweep deliberately
 varies the threshold on a fixed grid to show sensitivity, without choosing a
 winner from the test scores. `PR-AUC` is average precision.
 
+The fixed 0.02 comparator has now been run on the three real datasets with
+the same seeds and splits. Its tables are archived in
+`verification/evidence/fixed_benchmark_*.csv`. The value was fixed before
+these runs, but after the baseline results were known; this is an exploratory
+sensitivity check, not an independent confirmatory test. For Isolation
+Forest, F1 changes from 0.203 to 0.102 on Credit Card Fraud, 0.618 to 0.406
+on Cardio, and 0.512 to 0.023 on Water Quality. The score ranking and PR-AUC
+do not change with the threshold.
+
 The [verification protocol](verification/README.md) records current coverage,
 the mutation pilot and the checks required before a thesis release. The
 repository-wide verification status is currently **INCOMPLETE**.

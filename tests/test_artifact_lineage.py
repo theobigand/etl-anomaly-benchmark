@@ -56,3 +56,25 @@ def test_archived_real_split_ids_cover_each_post_transform_population():
             )
             if "fit" in parts:
                 assert set(parts["fit"]) <= set(parts["train"])
+
+
+def test_fixed_calibration_reuses_baseline_partitions_and_current_source():
+    root = Path(__file__).resolve().parents[1]
+    sys.path.insert(0, str(root / "experiments"))
+    from provenance import _source_fingerprint
+
+    for name in ("credit_card", "water_quality", "cardio"):
+        base = root / "verification/evidence"
+        fixed = json.loads((base / f"run_fixed_benchmark_{name}.json").read_text())
+        baseline = json.loads((base / f"run_benchmark_{name}.json").read_text())
+        assert fixed["settings"]["calibration"] == "fixed"
+        assert fixed["settings"]["fixed_contamination"] == 0.02
+        assert baseline["settings"]["calibration"] == "train_prevalence"
+        assert fixed["seeds"] == baseline["seeds"]
+        assert (
+            fixed["source_fingerprint"] == baseline["source_fingerprint"] == _source_fingerprint()
+        )
+        with gzip.open(base / f"fixed_split_ids_{name}.json.gz", "rb") as stream:
+            fixed_ids = stream.read()
+        with gzip.open(base / f"split_ids_{name}.json.gz", "rb") as stream:
+            assert fixed_ids == stream.read()

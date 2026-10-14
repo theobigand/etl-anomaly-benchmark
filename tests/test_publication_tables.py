@@ -66,3 +66,37 @@ def test_published_numbers_match_archived_runs(label, archive, columns):
             assert abs(actual - shown) <= tolerance, (label, method, column, shown, actual)
     extra = {"drift", "transform_dedup"} if label == "synthetic" else set()
     assert seen == set(source.index) - extra
+
+
+def test_fixed_calibration_table_matches_both_archived_protocols():
+    manuscript = (ROOT / "paper/main.tex").read_text()
+    table = re.search(r"\\label\{tab:fixed-calibration\}(.*?)\\end\{table\}", manuscript, re.S)
+    assert table
+    datasets = {
+        "Credit Card Fraud": "credit_card",
+        "Cardio": "cardio",
+        "Water Quality": "water_quality",
+    }
+    seen = set()
+    for line in table.group(1).splitlines():
+        title = line.split("&", 1)[0].strip()
+        if title not in datasets:
+            continue
+        name = datasets[title]
+        seen.add(name)
+        baseline = pd.read_csv(ROOT / "verification/evidence" / f"benchmark_{name}.csv")
+        fixed = pd.read_csv(ROOT / "verification/evidence" / f"fixed_benchmark_{name}.csv")
+        baseline = baseline.set_index("detector").loc["isolation_forest"]
+        fixed = fixed.set_index("detector").loc["isolation_forest"]
+        shown = [Decimal(cell.strip().removesuffix(r"\\")) for cell in line.split("&")[1:]]
+        actual = [
+            baseline.f1_mean,
+            fixed.f1_mean,
+            baseline.flagged_pct_mean,
+            fixed.flagged_pct_mean,
+        ]
+        assert len(shown) == len(actual)
+        for rounded, value in zip(shown, actual, strict=True):
+            assert abs(Decimal(str(value)) - rounded) <= Decimal("0.0005")
+        assert baseline.pr_auc_mean == pytest.approx(fixed.pr_auc_mean)
+    assert seen == set(datasets.values())
