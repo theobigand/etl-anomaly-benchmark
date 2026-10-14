@@ -30,7 +30,7 @@ from pathlib import Path
 os.environ.setdefault("TQDM_DISABLE", "1")
 
 import pandas as pd  # noqa: E402
-from provenance import write_record  # noqa: E402
+from provenance import write_record, write_split_ids  # noqa: E402
 
 from etl_benchmark import config  # noqa: E402
 from etl_benchmark.datasets import ANOMALY_COLUMN, DATASETS, DatasetSpec  # noqa: E402
@@ -141,6 +141,8 @@ def main() -> None:
         spec = replace(spec, detector_names=args.detectors)
     if args.csv is not None:
         spec = replace(spec, csv=args.csv)
+    if args.fit_sample is not None and args.fit_sample <= 0:
+        parser.error("--fit-sample must be positive")
     log.info("dataset %s: %s", spec.name, spec.note)
     mean, std = run(spec, args.seeds, args.fit_sample)
 
@@ -152,6 +154,15 @@ def main() -> None:
     header = f"{spec.name}, {len(args.seeds)} seeds, mean ± std on the 15% test split.\n\n"
     md = header + to_markdown(mean, std)
     md_out.write_text(md)
+    split_out = args.results_dir / f"split_ids_{spec.name}_{stamp}.json.gz"
+    write_split_ids(
+        split_out,
+        spec.load(),
+        ANOMALY_COLUMN,
+        args.seeds,
+        config.SPLIT_RATIOS,
+        fit_sample=args.fit_sample,
+    )
     feature_names = list(spec.features(pd.read_csv(spec.csv, nrows=0)).columns)
     write_record(
         args.results_dir / f"run_benchmark_{spec.name}_{stamp}.json",
@@ -168,7 +179,7 @@ def main() -> None:
             "calibration": "train_label_prevalence",
             "pr_auc_definition": "average_precision",
         },
-        outputs=[csv_out.name, md_out.name],
+        outputs=[csv_out.name, md_out.name, split_out.name],
     )
 
     print("\n" + md)

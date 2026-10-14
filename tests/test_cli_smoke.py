@@ -1,5 +1,6 @@
 """Offline experiment entry points write only inside an explicit result directory."""
 
+import gzip
 import json
 import subprocess
 import sys
@@ -49,6 +50,12 @@ def test_real_benchmark_cli_on_tiny_local_csv(tmp_path):
     record = json.loads(next(output.glob("run_benchmark_*.json")).read_text())
     assert record["seeds"] == [1]
     assert record["settings"]["detectors"] == ["zscore"]
+    split_archive = next(output.glob("split_ids_*.json.gz"))
+    with gzip.open(split_archive, "rt") as stream:
+        splits = json.load(stream)
+    assert splits["row_count"] == len(values)
+    assert sorted(sum(splits["seeds"]["1"].values(), [])) == list(range(len(values)))
+    assert split_archive.name in record["outputs"]
 
 
 def test_synthetic_cli_writes_tables_and_heatmap(tmp_path):

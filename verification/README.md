@@ -23,6 +23,9 @@ avant DEEP.
 
 Les trois CSV de recherche ne sont pas versionnés. Les tables, figures et
 enregistrements des essais conservés sont dans `evidence/`, avec leur manifeste.
+Les archives `split_ids_*.json.gz` des jeux réels contiennent les positions
+train, validation et test après déduplication pour chaque graine, ainsi que
+le sous-échantillon d'apprentissage lorsqu'il est plafonné.
 Les sommes de contrôle de ce manifeste servent aux tests de traçabilité ; il
 n'est pas nécessaire de les recopier dans les pages de lecture.
 `function_matrix.md` recense les fonctions, leurs tests principaux et les
