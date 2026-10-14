@@ -1,6 +1,6 @@
 import pytest
 
-from etl_benchmark import config
+from etl_benchmark import config, registry
 from etl_benchmark.quality import Detector
 from etl_benchmark.registry import (
     ALL_NAMES,
@@ -56,3 +56,15 @@ def test_clip_contamination_stays_in_pyod_bounds():
     assert clip_contamination(0.9) == hi
     assert clip_contamination(None) == config.ML_CONTAMINATION
     assert clip_contamination(0.017) == pytest.approx(0.017)
+
+
+def test_fixed_calibration_does_not_use_training_labels():
+    assert registry.calibrate_contamination([0, 1, 1, 1], policy="fixed", fixed=0.02) == 0.02
+    assert registry.calibrate_contamination([0, 0, 0, 1], policy="fixed", fixed=0.02) == 0.02
+    assert registry.calibrate_contamination([0, 1, 1, 1], policy="train_prevalence") == 0.5
+
+
+@pytest.mark.parametrize("value", [None, 0, -0.1, 0.9, float("nan")])
+def test_fixed_calibration_rejects_missing_or_out_of_range_value(value):
+    with pytest.raises(ValueError, match="fixed contamination"):
+        registry.calibrate_contamination([0, 1], policy="fixed", fixed=value)

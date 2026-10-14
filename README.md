@@ -81,7 +81,14 @@ test set), repeats over the seeds in `config.BENCHMARK_SEEDS`, and reports mean 
 Real datasets are stratified by label; the synthetic dataset groups rows by
 `customer_id` before stratification so copies cannot cross partitions. The ML
 contamination is set to the train-set anomaly prevalence, a label-informed
-operating-point choice. `PR-AUC` is average precision.
+operating-point choice. The real-data CLI also accepts
+`--calibration fixed --fixed-contamination 0.02` as a label-free preset. This
+setting is chosen before evaluation and does not use the training, validation
+or test labels to set the flag threshold. It is a separate comparator: the
+tables below retain the train-prevalence policy. The synthetic benchmark and
+the main curves use that same baseline; the contamination sweep deliberately
+varies the threshold on a fixed grid to show sensitivity, without choosing a
+winner from the test scores. `PR-AUC` is average precision.
 
 The [verification protocol](verification/README.md) records current coverage,
 the mutation pilot and the checks required before a thesis release. The

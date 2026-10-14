@@ -58,6 +58,32 @@ def test_real_benchmark_cli_on_tiny_local_csv(tmp_path):
     assert split_archive.name in record["outputs"]
 
 
+def test_real_benchmark_cli_records_fixed_calibration(tmp_path):
+    csv = tmp_path / "toy.csv"
+    pd.DataFrame({"V1": np.arange(200), "Class": [0] * 180 + [1] * 20}).to_csv(csv, index=False)
+    output = tmp_path / "out"
+    _run(
+        "run_benchmark.py",
+        "--dataset",
+        "credit_card",
+        "--csv",
+        csv,
+        "--detectors",
+        "zscore",
+        "--seeds",
+        1,
+        "--results-dir",
+        output,
+        "--calibration",
+        "fixed",
+        "--fixed-contamination",
+        0.02,
+    )
+    settings = json.loads(next(output.glob("run_benchmark_*.json")).read_text())["settings"]
+    assert settings["calibration"] == "fixed"
+    assert settings["fixed_contamination"] == 0.02
+
+
 def test_synthetic_cli_writes_tables_and_heatmap(tmp_path):
     output = tmp_path / "out"
     figure = tmp_path / "heatmap.png"

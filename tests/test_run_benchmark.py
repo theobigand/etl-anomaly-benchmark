@@ -7,9 +7,12 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "experiments"))
 
+import run_benchmark  # noqa: E402
 from run_benchmark import METRIC_COLUMNS, evaluate, run, to_markdown  # noqa: E402
 
-from etl_benchmark.datasets import DatasetSpec  # noqa: E402
+from etl_benchmark import config  # noqa: E402
+from etl_benchmark.datasets import ANOMALY_COLUMN, DatasetSpec  # noqa: E402
+from etl_benchmark.split import stratified_split  # noqa: E402
 
 
 def _toy_spec(tmp_path: Path) -> DatasetSpec:
@@ -76,3 +79,22 @@ def test_two_seed_mean_and_sample_standard_deviation(tmp_path):
     mean, std = run(spec, seeds=[0, 1])
     assert mean.loc["zscore", "recall"] == (a + b) / 2
     assert std.loc["zscore", "recall"] == pytest.approx(abs(a - b) / np.sqrt(2))
+
+
+def test_calibration_uses_train_only_and_ignores_fit_sample(tmp_path, monkeypatch):
+    spec = _toy_spec(tmp_path)
+    frame = spec.load()
+    observed = []
+    build = run_benchmark.all_detectors
+
+    def capture(*, ml_contamination, names):
+        observed.append(ml_contamination)
+        return build(ml_contamination=ml_contamination, names=["zscore"])
+
+    monkeypatch.setattr(run_benchmark, "all_detectors", capture)
+    train, _, _ = stratified_split(frame, ANOMALY_COLUMN, config.SPLIT_RATIOS, 0)
+    expected = train[ANOMALY_COLUMN].mean()
+    evaluate(spec, frame, 0, 20)
+    assert observed[-1] == pytest.approx(expected)
+    evaluate(spec, frame, 0, 20, calibration="fixed", fixed_contamination=0.02)
+    assert observed[-1] == 0.02
