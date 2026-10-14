@@ -44,14 +44,14 @@ archivés séparément et leurs chiffres sont rapprochés du manuscrit par un te
 
 | Commande | Résultat | Détail |
 | --- | --- | --- |
-| `make verify-fast` | Réussite locale | 437 tests réussis, 2 tests réels et 14 essais de défauts exclus ; lignes et branches couvertes. |
+| `make verify-fast` | Réussite locale | 438 tests réussis, 2 tests réels et 14 essais de défauts exclus ; lignes et branches couvertes. |
 | `make verify-deep` | Réussite locale | 1824 mutants éliminés sur 1900 dans `src/etl_benchmark` (96,00 %) ; les scripts d'`experiments/` ne sont pas mutés. |
 | `make verify-faults` | Réussite locale | 14 défauts introduits dans une copie temporaire, tous détectés par un test prévu. |
 | `make verify-real` | Réussite locale | 2 tests et contrôle des trois CSV présents. |
 | `python verification/scaling.py` | Réussite locale | 27 mesures sur trois tailles, hors FAST. |
 | `make verify-all` | Réussite locale sur `src/` | DEEP ne couvre pas `experiments/` ; le statut reste INCOMPLETE. |
 
-FAST mesure **1460/1460 lignes et 300/300 branches (100 % chacune)**.
+FAST mesure **1463/1463 lignes et 300/300 branches (100 % chacune)**.
 La mesure inclut désormais les commandes lancées en sous-processus. Les
 scripts `fetch_cardio.py`, `generate_synthetic.py` et l'entrée principale
 sont désormais parcourus par FAST avec des données construites localement. Le détail par
@@ -75,8 +75,10 @@ Tous les essais archivés ont été rejoués sur le code courant (banc synthéti
 sévérité, courbes, trois jeux réels, trois calibrages fixes, étude de
 croissance). Toutes les métriques de détection, les courbes, les scores par
 type et les partitions exactes (contenu des archives décompressées) sont
-identiques à l'archive précédente, au dernier chiffre. Seuls les temps de calcul (`detect_s`) et l'allocation Python
-mesurée par l'étude de croissance varient. Les deux tableaux du manuscrit qui
+identiques à l'archive précédente (écart inférieur à 1e-9). Seuls les temps de
+calcul (`detect_s`) et l'allocation Python mesurée par l'étude de croissance
+varient. Les enregistrements des essais gardent maintenant les détecteurs non exécutés avec leur raison (`not_run`) et les jeux
+demandés mais absents (`skipped_datasets`). Les deux tableaux du manuscrit qui
 affichent des temps et le paragraphe sur la montée en charge ont été mis à
 jour ; les figures sont identiques octet pour octet.
 
