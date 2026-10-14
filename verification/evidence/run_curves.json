@@ -1,11 +1,11 @@
 {
-  "captured_at": "2026-10-14T04:49:54.534046+00:00",
+  "captured_at": "2026-10-14T08:40:38.381801+00:00",
   "dataset": {
     "identity": "credit_card,water_quality,cardio,synthetic"
   },
   "experiment": "precision_recall_and_contamination",
   "outputs": [
-    "contamination_sweep_20261014_044954.csv",
+    "contamination_sweep_20261014_084038.csv",
     "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/paper/figures/pr_curves.png"
   ],
   "packages": {
@@ -46,7 +46,7 @@
     "synthetic_rows": null,
     "synthetic_split_strategy": "customer_identity_grouped_stratified"
   },
-  "source_fingerprint": "92176af8b86acf13092bdb2cf7645cc4aa941ab0523fa7d67b9e10ad27efb8d0",
-  "source_revision": "df41e0a56da295c8e07ad72319d783391161070a",
+  "source_fingerprint": "4bb12bc9db2c76ea91af4913d90642821e6008e2b7c91bcb15c582959fc053b5",
+  "source_revision": "bedd5e797b1b5d9c048b4b484d55228b5f14d882",
   "worktree_dirty": false
 }
