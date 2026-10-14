@@ -169,6 +169,21 @@ def test_pipeline_demo_writes_sorted_rows_to_configured_directory(tmp_path, monk
     assert anomalies.V1.tolist() == [100.0]
 
 
+def test_pipeline_demo_defaults_to_zscore(tmp_path, monkeypatch):
+    from etl_benchmark import config
+    from etl_benchmark.__main__ import main
+
+    source = tmp_path / "input.csv"
+    values = list(range(50)) + [1000]
+    pd.DataFrame({"V1": values, "Class": [0] * 50 + [1]}).to_csv(source, index=False)
+    output = tmp_path / "out"
+    monkeypatch.setattr(config, "RESULTS_DIR", output)
+    monkeypatch.setattr(sys, "argv", ["etl-benchmark", "--input", str(source)])
+    main()
+    anomalies = pd.read_csv(output / "pipeline_anomalies.csv")
+    assert anomalies.V1.tolist() == [1000]
+
+
 def test_cardio_fetch_converts_source_arrays_without_network(tmp_path, monkeypatch):
     import fetch_cardio
 
