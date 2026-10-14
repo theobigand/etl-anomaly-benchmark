@@ -1,8 +1,10 @@
 # Avancement des tickets
 
-Les corrections du protocole et le rejeu des résultats sont dans la branche
-courante. Les tickets restent ouverts tant que leurs critères de réception ne
-sont pas tous remplis.
+Au 14 octobre 2026, les tickets #3 à #11 et #13 à #29 sont fermés. Restent
+ouverts : #2 (coordination), #12 (révision du fichier Credit Card et droits de
+Cardio), #30 (vérification finale) et #31 (mutation des scripts
+d'`experiments/`, suite de #7). Les entrées ci-dessous gardent l'historique de
+chaque ticket et les limites qui subsistent après sa fermeture.
 
 ## Vérification du socle (#3 à #7)
 
