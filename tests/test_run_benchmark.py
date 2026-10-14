@@ -98,3 +98,26 @@ def test_calibration_uses_train_only_and_ignores_fit_sample(tmp_path, monkeypatc
     assert observed[-1] == pytest.approx(expected)
     evaluate(spec, frame, 0, 20, calibration="fixed", fixed_contamination=0.02)
     assert observed[-1] == 0.02
+
+
+def test_test_labels_cannot_change_detector_calibration(tmp_path, monkeypatch):
+    spec = _toy_spec(tmp_path)
+    frame = spec.load()
+    train, val, test = stratified_split(frame, ANOMALY_COLUMN, config.SPLIT_RATIOS, 0)
+    labels = test[ANOMALY_COLUMN].copy()
+    observed = []
+    build = run_benchmark.all_detectors
+
+    def capture(*, ml_contamination, names):
+        observed.append(ml_contamination)
+        return build(ml_contamination=ml_contamination, names=["zscore"])
+
+    def fixed_partitions(_frame, _label, _ratios, _seed):
+        return train.copy(), val.copy(), test.assign(**{ANOMALY_COLUMN: labels})
+
+    monkeypatch.setattr(run_benchmark, "all_detectors", capture)
+    monkeypatch.setattr(run_benchmark, "stratified_split", fixed_partitions)
+    evaluate(spec, frame, 0, None)
+    labels = 1 - labels
+    evaluate(spec, frame, 0, None)
+    assert observed == [pytest.approx(train[ANOMALY_COLUMN].mean())] * 2
