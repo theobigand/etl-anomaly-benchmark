@@ -44,14 +44,14 @@ archivés séparément et leurs chiffres sont rapprochés du manuscrit par un te
 
 | Commande | Résultat | Détail |
 | --- | --- | --- |
-| `make verify-fast` | Réussite locale | 247 tests réussis, 2 tests réels exclus ; lignes et branches couvertes. |
-| `make verify-deep` | Réussite locale | 1661 mutants éliminés sur 1726 dans `src/etl_benchmark` (96,23 %) ; les scripts d'`experiments/` ne sont pas mutés. |
+| `make verify-fast` | Réussite locale | 437 tests réussis, 2 tests réels et 14 essais de défauts exclus ; lignes et branches couvertes. |
+| `make verify-deep` | Réussite locale | 1824 mutants éliminés sur 1900 dans `src/etl_benchmark` (96,00 %) ; les scripts d'`experiments/` ne sont pas mutés. |
 | `make verify-faults` | Réussite locale | 14 défauts introduits dans une copie temporaire, tous détectés par un test prévu. |
 | `make verify-real` | Réussite locale | 2 tests et contrôle des trois CSV présents. |
 | `python verification/scaling.py` | Réussite locale | 27 mesures sur trois tailles, hors FAST. |
 | `make verify-all` | Réussite locale sur `src/` | DEEP ne couvre pas `experiments/` ; le statut reste INCOMPLETE. |
 
-FAST mesure **1394/1394 lignes et 298/298 branches (100 % chacune)**.
+FAST mesure **1460/1460 lignes et 300/300 branches (100 % chacune)**.
 La mesure inclut désormais les commandes lancées en sous-processus. Les
 scripts `fetch_cardio.py`, `generate_synthetic.py` et l'entrée principale
 sont désormais parcourus par FAST avec des données construites localement. Le détail par
@@ -60,14 +60,25 @@ fichier est dans le profil généré `verification/profile.json` et
 ni branche n'est exclue.
 
 La campagne de mutation porte sur les modules de `src/etl_benchmark` qui
-calculent un résultat (mutmut 3.8.0) : 1726 mutants produits, 1661 éliminés,
-65 survivants, aucun cas classé sans test, ignoré, expiré ou en erreur. Le
-taux mesuré est **96,23 %** sur ce périmètre. Elle avait commencé à 88,66 %
+calculent un résultat (mutmut 3.8.0) : 1900 mutants produits, 1824 éliminés,
+76 survivants, aucun cas classé sans test, ignoré, expiré ou en erreur. Le
+taux mesuré est **96,00 %** sur ce périmètre. Elle avait commencé à 88,66 %
 sur `metrics.py` seul et à 74,5 % une fois élargie sans nouveaux tests.
 `mutation_notes.md` classe les survivants (états intermédiaires, `dtype`
 équivalents, noms internes). Les scripts d'`experiments/` n'ont pas de score
 de mutation ; le profil indique donc `NOT_RUN` pour la portée complète et sa
 valeur numérique zéro n'est pas une mesure.
+
+## Rejeu du 14 octobre 2026
+
+Tous les essais archivés ont été rejoués sur le code courant (banc synthétique,
+sévérité, courbes, trois jeux réels, trois calibrages fixes, étude de
+croissance). Toutes les métriques de détection, les courbes, les scores par
+type et les partitions exactes (contenu des archives décompressées) sont
+identiques à l'archive précédente, au dernier chiffre. Seuls les temps de calcul (`detect_s`) et l'allocation Python
+mesurée par l'étude de croissance varient. Les deux tableaux du manuscrit qui
+affichent des temps et le paragraphe sur la montée en charge ont été mis à
+jour ; les figures sont identiques octet pour octet.
 
 ## Ce que les contrôles couvrent
 
@@ -114,7 +125,7 @@ bloquent pas encore une publication distante.
 
 ## Travail restant
 
-Il faut étendre la mutation aux scripts d'`experiments/` et revoir les 65
+Il faut étendre la mutation aux scripts d'`experiments/` et revoir les 76
 survivants si un module change. Il manque également des
 tests de panne et de schéma défavorable, une évaluation temporelle sur données réelles, les
 détecteurs profonds et une étude de coût plus large dans un environnement
