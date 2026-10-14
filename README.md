@@ -21,8 +21,11 @@ The question it tries to answer: does adding machine learning to an ETL pipeline
 - [x] Time-aware `drift` detector; injection severity is a tunable multiplier
 - [x] Precision-recall curves, contamination sweep, detection-vs-severity curves
 - [x] CI (GitHub Actions: ruff + pytest)
-- [ ] Autoencoder, LSTM-Autoencoder (M2)
-- [ ] A windowed drift monitor; more imbalanced real datasets
+- [x] CPU reconstruction autoencoder (opt-in: registered, not yet in the thesis tables)
+- [x] Chronological split and a windowed drift monitor, tested separately from the row-level metrics
+- [x] Causal sliding windows with leakage and alignment tests, ready for a sequence model
+- [ ] LSTM-Autoencoder (M2)
+- [ ] More imbalanced real datasets
 
 ## Install
 
@@ -194,7 +197,10 @@ etl-anomaly-benchmark/
 │           ├── rules.py      # ZScoreDetector, IQRDetector
 │           ├── gx.py         # GreatExpectationsDetector
 │           ├── ml.py         # IsolationForest / LOF / OneClassSVM (PyOD)
-│           └── drift.py      # TemporalDriftDetector (time-aware)
+│           ├── autoencoder.py # AutoencoderDetector (CPU reconstruction error, opt-in)
+│           ├── drift.py      # TemporalDriftDetector (time-aware)
+│           ├── window_drift.py # WindowDriftMonitor (chronological windows)
+│           └── windows.py    # causal sliding windows for sequence models
 ├── experiments/
 │   ├── run_benchmark.py           # real-dataset benchmark (--dataset)
 │   ├── fetch_cardio.py            # download data/cardio.csv
@@ -235,7 +241,7 @@ class MyDetector(Detector):
         ...
 ```
 
-Then add one line to `src/etl_benchmark/registry.py`, and both the demo and the benchmark pick it up. The PyOD wrappers (`quality/ml.py`) follow this interface through a small `PyODDetector` base; the deep models (AE, LSTM-AE) will do the same.
+Then add one line to `src/etl_benchmark/registry.py`, and both the demo and the benchmark pick it up. The PyOD wrappers (`quality/ml.py`) follow this interface through a small `PyODDetector` base; `AutoencoderDetector` reuses that base, and the LSTM-AE will do the same through `quality/windows.py`. A detector listed in the registry is checked by `tests/test_registry_contract.py`, so a new one cannot be added without passing the common fit / predict / score and leakage checks. Learned models stay opt-in (`DEEP_NAMES`) until `verification/deep_models.md` is satisfied.
 
 ## License
 

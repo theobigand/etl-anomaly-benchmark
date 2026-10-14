@@ -17,6 +17,7 @@ from math import isfinite
 
 from etl_benchmark import config
 from etl_benchmark.quality import (
+    AutoencoderDetector,
     Detector,
     GreatExpectationsDetector,
     IQRDetector,
@@ -36,6 +37,7 @@ _FACTORIES: dict[str, Callable[[float], Detector]] = {
     "lof": lambda c: LOFDetector(contamination=c),
     "ocsvm": lambda c: OneClassSVMDetector(contamination=c),
     "drift": lambda c: TemporalDriftDetector(),
+    "autoencoder": lambda c: AutoencoderDetector(contamination=c),
 }
 
 RULE_NAMES: list[str] = ["zscore", "iqr", "great_expectations"]
@@ -45,6 +47,9 @@ ML_NAMES: list[str] = ["isolation_forest", "lof", "ocsvm"]
 DETECTOR_NAMES: list[str] = [*RULE_NAMES, *ML_NAMES]
 DRIFT_NAME: str = "drift"
 ALL_NAMES: list[str] = [*DETECTOR_NAMES, DRIFT_NAME]
+# Learned reconstruction models are opt-in too: their results enter the thesis
+# tables only after the protocol-parity checks in verification/deep_models.md.
+DEEP_NAMES: list[str] = ["autoencoder"]
 
 
 def clip_contamination(prevalence: float | None) -> float:
@@ -86,7 +91,9 @@ def get_detector(name: str, ml_contamination: float | None = None) -> Detector:
     try:
         factory = _FACTORIES[name]
     except KeyError:
-        raise ValueError(f"unknown detector {name!r}; choose from {DETECTOR_NAMES}") from None
+        raise ValueError(
+            f"unknown detector {name!r}; choose from {[*ALL_NAMES, *DEEP_NAMES]}"
+        ) from None
     return factory(clip_contamination(ml_contamination))
 
 

@@ -78,8 +78,12 @@ sont pas tous remplis.
   invalides et les résultats sans événement sont maintenant contrôlés. La saisonnalité, les
   métriques sur plusieurs changements et l'évaluation sur données réelles
   restent à étudier.
-- **#26** : définir et tester les contrats CPU des autoencodeurs et des
-  séquences avant d'ajouter leurs résultats aux comparaisons.
+- **#26** : le contrat commun du registre s'applique à tout détecteur
+  enregistré (`test_registry_contract.py`). Un autoencodeur CPU
+  (`quality/autoencoder.py`) et des fenêtres causales (`quality/windows.py`)
+  ont leurs tests de fuite, d'alignement et de reproductibilité ; le protocole
+  est dans `deep_models.md`. Le modèle LSTM lui-même et tout résultat de
+  tableau restent à faire (hors du périmètre de ce ticket).
 - **#27** : les trois jeux réels présents ont été rejoués avec cinq graines.
   Water Quality et Cardio ont été comparés à leurs sources ; les copies locales
   sont maintenant contrôlées contre le manifeste. La révision du fichier
