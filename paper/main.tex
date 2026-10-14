@@ -300,7 +300,9 @@ fixed grid and no value is selected from the test metrics. Threshold or
 hyperparameter selection for a later confirmatory experiment would use
 training or validation data only. The whole
 procedure is repeated over five random
-seeds and we report the mean and standard deviation. LOF and the
+seeds and we report the mean and standard deviation. This spread measures
+the sensitivity to the split and to model randomness on a fixed dataset; it
+is not a confidence interval for performance on new data. LOF and the
 One-Class SVM are run on Water Quality and the synthetic dataset but not
 on Credit Card Fraud, where LOF's superlinear scoring and the One-Class
 SVM's quadratic training do not fit inside the pipeline at $284$k rows.
