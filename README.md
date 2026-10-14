@@ -21,8 +21,11 @@ The question it tries to answer: does adding machine learning to an ETL pipeline
 - [x] Time-aware `drift` detector; injection severity is a tunable multiplier
 - [x] Precision-recall curves, contamination sweep, detection-vs-severity curves
 - [x] CI (GitHub Actions: ruff + pytest)
-- [ ] Autoencoder, LSTM-Autoencoder (M2)
-- [ ] A windowed drift monitor; more imbalanced real datasets
+- [x] CPU reconstruction autoencoder (opt-in: registered, not yet in the thesis tables)
+- [x] Chronological split and a windowed drift monitor, tested separately from the row-level metrics
+- [x] Causal sliding windows with leakage and alignment tests, ready for a sequence model
+- [ ] LSTM-Autoencoder (M2)
+- [ ] More imbalanced real datasets
 
 ## Install
 
@@ -60,6 +63,10 @@ make curves            # precision-recall curves + Isolation Forest contaminatio
 make severity          # detection-rate versus injection-severity curves
 make test              # pytest
 make lint              # ruff check + format check
+make verify-fast       # offline tests, coverage and evidence
+make verify-deep       # mutation campaign on src/etl_benchmark (95% gate)
+make verify-faults     # deliberate defects on a temporary copy must fail a test
+make verify-real       # inspect locally available real datasets
 make clean             # remove generated artifacts
 ```
 
@@ -73,9 +80,32 @@ python -m etl_benchmark --detector isolation_forest
 Registered detectors: `zscore`, `iqr`, `great_expectations`, `isolation_forest`, `lof`,
 `ocsvm`, plus `drift` (time-aware, opt-in, synthetic dataset only).
 
-Every benchmark uses a stratified 70/15/15 split (fit on train, metrics on the held-out
+Every benchmark uses a 70/15/15 split (fit on train, metrics on the held-out
 test set), repeats over the seeds in `config.BENCHMARK_SEEDS`, and reports mean ± std.
-The ML contamination is set to the train-set anomaly prevalence, not a fixed value.
+Real datasets are stratified by label; the synthetic dataset groups rows by
+`customer_id` before stratification so copies cannot cross partitions. The ML
+contamination is set to the train-set anomaly prevalence, a label-informed
+operating-point choice. The real-data CLI also accepts
+`--calibration fixed --fixed-contamination 0.02` as a label-free preset. This
+setting is chosen before evaluation and does not use the training, validation
+or test labels to set the flag threshold. It is a separate comparator: the
+tables below retain the train-prevalence policy. The synthetic benchmark and
+the main curves use that same baseline; the contamination sweep deliberately
+varies the threshold on a fixed grid to show sensitivity, without choosing a
+winner from the test scores. `PR-AUC` is average precision.
+
+The fixed 0.02 comparator has now been run on the three real datasets with
+the same seeds and splits. Its tables are archived in
+`verification/evidence/fixed_benchmark_*.csv`. The value was fixed before
+these runs, but after the baseline results were known; this is an exploratory
+sensitivity check, not an independent confirmatory test. For Isolation
+Forest, F1 changes from 0.203 to 0.102 on Credit Card Fraud, 0.618 to 0.406
+on Cardio, and 0.512 to 0.023 on Water Quality. The score ranking and PR-AUC
+do not change with the threshold.
+
+The [verification protocol](verification/README.md) records current coverage,
+the mutation campaign and the checks required before a thesis release. The
+repository-wide verification status is currently **INCOMPLETE**.
 
 ```bash
 python experiments/run_benchmark.py --dataset water_quality --seeds 42
@@ -90,23 +120,23 @@ Mean over 5 seeds on the 15% held-out test split.
 
 | Detector | Prec | Rec | F1 | ROC-AUC | PR-AUC | Flag % | detect |
 |---|---|---|---|---|---|---|---|
-| Z-score | 0.011 | 0.870 | 0.021 | 0.926 | 0.078 | 13.4 | 0.03 s |
-| IQR | 0.003 | 0.966 | 0.007 | 0.911 | 0.018 | 48.6 | 0.12 s |
-| Great Expectations | 0.037 | 0.676 | 0.070 | 0.830 | 0.182 | 3.1 | 1.37 s |
-| Isolation Forest | 0.202 | 0.206 | 0.203 | 0.934 | 0.120 | 0.2 | 1.78 s |
+| Z-score | 0.011 | 0.870 | 0.021 | 0.926 | 0.078 | 13.4 | 0.07 s |
+| IQR | 0.003 | 0.966 | 0.007 | 0.911 | 0.018 | 48.6 | 0.20 s |
+| Great Expectations | 0.037 | 0.676 | 0.070 | 0.830 | 0.182 | 3.1 | 2.19 s |
+| Isolation Forest | 0.202 | 0.206 | 0.203 | 0.934 | 0.120 | 0.2 | 2.75 s |
 
 With contamination set to the prevalence, Isolation Forest flags only 0.17% of rows and
 reaches a precision of 0.20 (the first usable operating point), at a recall of 0.21 and
 with real seed variance (F1 = 0.20 ± 0.07). LOF and One-Class SVM do not scale to 284k
 rows in the pipeline.
 
-### Cardio (1,831 rows, 9.6% anomalies) — the regime that fits
+### Cardio (1,831 raw rows; 1,822 after deduplication, 9.6% anomalies)
 
 | Detector | Prec | Rec | F1 | ROC-AUC | PR-AUC | Flag % |
 |---|---|---|---|---|---|---|
-| Z-score | 0.49 | 0.82 | 0.61 | 0.93 | 0.61 | 16.6 |
-| Great Expectations | 0.51 | 0.21 | 0.29 | 0.59 | 0.19 | 4.6 |
-| Isolation Forest | 0.64 | 0.62 | 0.62 | 0.95 | 0.70 | 9.9 |
+| Z-score | 0.49 | 0.81 | 0.61 | 0.93 | 0.61 | 16.6 |
+| Great Expectations | 0.50 | 0.21 | 0.29 | 0.59 | 0.19 | 4.6 |
+| Isolation Forest | 0.64 | 0.61 | 0.62 | 0.94 | 0.70 | 9.9 |
 | One-Class SVM | 0.56 | 0.61 | 0.58 | 0.94 | 0.63 | 10.7 |
 
 When the anomalies are genuinely rare and distributionally distinct, the unsupervised
@@ -118,21 +148,21 @@ majority target).
 
 | Method | missing | duplicate | univ. outlier | multiv. outlier | drift | invalid fmt |
 |---|---|---|---|---|---|---|
-| Z-score | 0.00 | 0.00 | 0.92 | 0.00 | 0.00 | 0.17 |
-| IQR | 0.05 | 0.07 | 0.99 | 0.02 | 0.27 | 1.00 |
-| Great Expectations | 1.00 | 0.00 | 0.23 | 0.00 | 0.00 | 0.00 |
-| Isolation Forest | 0.09 | 0.11 | 0.99 | 0.91 | 0.33 | 0.59 |
-| LOF | 0.26 | 0.12 | 0.65 | 0.16 | 0.49 | 0.66 |
-| One-Class SVM | 0.08 | 0.12 | 0.99 | 0.84 | 0.34 | 0.50 |
+| Z-score | 0.00 | 0.00 | 0.93 | 0.00 | 0.00 | 0.24 |
+| IQR | 0.05 | 0.04 | 0.99 | 0.04 | 0.25 | 1.00 |
+| Great Expectations | 1.00 | 0.00 | 0.21 | 0.00 | 0.00 | 0.00 |
+| Isolation Forest | 0.09 | 0.11 | 0.99 | 0.89 | 0.33 | 0.60 |
+| LOF | 0.28 | 0.16 | 0.70 | 0.21 | 0.50 | 0.67 |
+| One-Class SVM | 0.07 | 0.10 | 1.00 | 0.90 | 0.29 | 0.54 |
 | drift | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
 | transform dedup | 0.00 | 1.00 | 0.00 | 0.00 | 0.00 | 0.00 |
 
 Per-type precision (clean rows as the only negatives) is also reported: Z-score has
-precision 1.00 on its two columns, Great Expectations 0.90 on missing values, while
-Isolation Forest catches 91% of multivariate outliers at only 0.24 precision. The
-`drift` detector scores 0 at the reference severity; `make severity` shows recall on the
-drift column climbing as the injected shift is scaled up (`make curves` draws the
-precision-recall curves and the contamination sweep).
+precision 1.00 on its two columns, Great Expectations 0.94 on missing values, while
+Isolation Forest catches 89% of multivariate outliers at only 0.23 precision. The
+row-level `drift` detector scores 0 throughout the tested severity sweep; IQR,
+Isolation Forest and One-Class SVM respond more as the shift grows. `make curves`
+draws the precision-recall curves and the contamination sweep.
 
 ### Water Quality (3,276 rows, 61% "not potable")
 
@@ -167,7 +197,10 @@ etl-anomaly-benchmark/
 │           ├── rules.py      # ZScoreDetector, IQRDetector
 │           ├── gx.py         # GreatExpectationsDetector
 │           ├── ml.py         # IsolationForest / LOF / OneClassSVM (PyOD)
-│           └── drift.py      # TemporalDriftDetector (time-aware)
+│           ├── autoencoder.py # AutoencoderDetector (CPU reconstruction error, opt-in)
+│           ├── drift.py      # TemporalDriftDetector (time-aware)
+│           ├── window_drift.py # WindowDriftMonitor (chronological windows)
+│           └── windows.py    # causal sliding windows for sequence models
 ├── experiments/
 │   ├── run_benchmark.py           # real-dataset benchmark (--dataset)
 │   ├── fetch_cardio.py            # download data/cardio.csv
@@ -208,7 +241,7 @@ class MyDetector(Detector):
         ...
 ```
 
-Then add one line to `src/etl_benchmark/registry.py`, and both the demo and the benchmark pick it up. The PyOD wrappers (`quality/ml.py`) follow this interface through a small `PyODDetector` base; the deep models (AE, LSTM-AE) will do the same.
+Then add one line to `src/etl_benchmark/registry.py`, and both the demo and the benchmark pick it up. The PyOD wrappers (`quality/ml.py`) follow this interface through a small `PyODDetector` base; `AutoencoderDetector` reuses that base, and the LSTM-AE will do the same through `quality/windows.py`. A detector listed in the registry is checked by `tests/test_registry_contract.py`, so a new one cannot be added without passing the common fit / predict / score and leakage checks. Learned models stay opt-in (`DEEP_NAMES`) until `verification/deep_models.md` is satisfied.
 
 ## License
 

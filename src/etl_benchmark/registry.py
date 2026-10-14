@@ -5,17 +5,19 @@ the benchmarks build detectors from here, so adding a new detector (e.g. a
 PyOD wrapper) is a single entry that every entry point picks up.
 
 The ML detectors take a ``contamination`` (the expected anomaly share used
-for the flag threshold). The benchmarks pass the train-set prevalence;
+for the flag threshold). The benchmarks usually pass the train-set prevalence;
 :func:`get_detector` / :func:`all_detectors` fall back to
 ``config.ML_CONTAMINATION`` when none is given.
 """
 
 from __future__ import annotations
 
-from collections.abc import Callable
+from collections.abc import Callable, Iterable
+from math import isfinite
 
 from etl_benchmark import config
 from etl_benchmark.quality import (
+    AutoencoderDetector,
     Detector,
     GreatExpectationsDetector,
     IQRDetector,
@@ -35,6 +37,7 @@ _FACTORIES: dict[str, Callable[[float], Detector]] = {
     "lof": lambda c: LOFDetector(contamination=c),
     "ocsvm": lambda c: OneClassSVMDetector(contamination=c),
     "drift": lambda c: TemporalDriftDetector(),
+    "autoencoder": lambda c: AutoencoderDetector(contamination=c),
 }
 
 RULE_NAMES: list[str] = ["zscore", "iqr", "great_expectations"]
@@ -44,14 +47,39 @@ ML_NAMES: list[str] = ["isolation_forest", "lof", "ocsvm"]
 DETECTOR_NAMES: list[str] = [*RULE_NAMES, *ML_NAMES]
 DRIFT_NAME: str = "drift"
 ALL_NAMES: list[str] = [*DETECTOR_NAMES, DRIFT_NAME]
+# Learned reconstruction models are opt-in too: their results enter the thesis
+# tables only after the protocol-parity checks in verification/deep_models.md.
+DEEP_NAMES: list[str] = ["autoencoder"]
 
 
 def clip_contamination(prevalence: float | None) -> float:
     """Clamp a prevalence into the range PyOD accepts for ``contamination``."""
     if prevalence is None:
         prevalence = config.ML_CONTAMINATION
+    if not isfinite(prevalence) or prevalence < 0 or prevalence > 1:
+        raise ValueError("prevalence must be finite and between 0 and 1")
     lo, hi = config.ML_CONTAMINATION_BOUNDS
     return float(min(max(prevalence, lo), hi))
+
+
+def calibrate_contamination(
+    train_labels: Iterable[int],
+    *,
+    policy: str = "train_prevalence",
+    fixed: float | None = None,
+) -> float:
+    """Choose the detector threshold without consulting validation or test labels."""
+    if policy == "fixed":
+        lo, hi = config.ML_CONTAMINATION_BOUNDS
+        if fixed is None or not isfinite(fixed) or not lo <= fixed <= hi:
+            raise ValueError(f"fixed contamination must be between {lo} and {hi}")
+        return float(fixed)
+    if policy != "train_prevalence":
+        raise ValueError(f"unknown calibration policy {policy!r}")
+    labels = list(train_labels)
+    if not labels or set(labels) - {0, 1}:
+        raise ValueError("training labels must be nonempty and binary")
+    return clip_contamination(sum(labels) / len(labels))
 
 
 def get_detector(name: str, ml_contamination: float | None = None) -> Detector:
@@ -63,7 +91,9 @@ def get_detector(name: str, ml_contamination: float | None = None) -> Detector:
     try:
         factory = _FACTORIES[name]
     except KeyError:
-        raise ValueError(f"unknown detector {name!r}; choose from {DETECTOR_NAMES}") from None
+        raise ValueError(
+            f"unknown detector {name!r}; choose from {[*ALL_NAMES, *DEEP_NAMES]}"
+        ) from None
     return factory(clip_contamination(ml_contamination))
 
 

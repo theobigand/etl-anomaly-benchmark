@@ -20,9 +20,11 @@ def test_features_drops_label_and_anomaly_columns(tmp_path):
     df = spec.load()
     assert ANOMALY_COLUMN in df.columns
     assert list(df[ANOMALY_COLUMN]) == [0, 1, 0]
+    assert pd.api.types.is_integer_dtype(df[ANOMALY_COLUMN])
     assert list(spec.features(df).columns) == ["a", "b"]
 
 
+@pytest.mark.real
 def test_water_quality_loads_when_present():
     spec = DATASETS["water_quality"]
     if not spec.csv.exists():
@@ -35,6 +37,7 @@ def test_water_quality_loads_when_present():
     assert "Potability" not in spec.features(df).columns
 
 
+@pytest.mark.real
 def test_cardio_is_the_imbalanced_dataset():
     spec = DATASETS["cardio"]
     if not spec.csv.exists():

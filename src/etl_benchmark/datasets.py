@@ -32,11 +32,18 @@ class DatasetSpec:
     def load(self) -> pd.DataFrame:
         """Extract, transform, and add a normalised ``is_anomaly`` column."""
         df = transform(extract(self.csv))
+        if self.label_column not in df.columns:
+            raise ValueError(f"{self.name}: missing label column {self.label_column!r}")
+        if df[self.label_column].isna().any():
+            raise ValueError(f"{self.name}: label column contains missing values")
+        if not df[self.label_column].isin([0, 1]).all():
+            raise ValueError(f"{self.name}: label column must contain only 0 and 1")
         df[ANOMALY_COLUMN] = (df[self.label_column] == self.positive_value).astype(int)
         return df
 
     def features(self, df: pd.DataFrame) -> pd.DataFrame:
-        return df.drop(columns=[self.label_column, ANOMALY_COLUMN])
+        excluded = {self.label_column, ANOMALY_COLUMN, "anomaly", "anomaly_type", "customer_id"}
+        return df.drop(columns=[column for column in df if column in excluded])
 
 
 DATASETS: dict[str, DatasetSpec] = {

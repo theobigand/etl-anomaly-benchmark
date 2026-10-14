@@ -1,0 +1,230 @@
+{
+  "coverage": {
+    "branch": {
+      "coverable": 0,
+      "covered": 0
+    },
+    "line": {
+      "coverable": 0,
+      "covered": 0
+    },
+    "per_unit": []
+  },
+  "coverage_exclusions": [],
+  "defense_in_depth": {
+    "api_testing": {
+      "classification": "not_applicable",
+      "reason": "No HTTP or RPC API exists."
+    },
+    "branch_coverage": {
+      "classification": "required"
+    },
+    "browser_ui_testing": {
+      "classification": "not_applicable",
+      "reason": "The slide deck is a static presentation; no interactive browser behavior is part of the research pipeline."
+    },
+    "build_package_install_testing": {
+      "classification": "required"
+    },
+    "ci_enforcement": {
+      "classification": "required"
+    },
+    "cli_testing": {
+      "classification": "required"
+    },
+    "concurrency_race_testing": {
+      "classification": "not_applicable",
+      "reason": "The benchmark executes detectors sequentially and has no shared concurrent state."
+    },
+    "contract_testing": {
+      "classification": "required"
+    },
+    "controlled_subprocess_integration": {
+      "classification": "not_applicable",
+      "reason": "Production benchmark code does not spawn subprocesses."
+    },
+    "crash_recovery_testing": {
+      "classification": "not_applicable",
+      "reason": "Each experiment is a one-shot batch process with timestamped independent outputs; no resumable state exists."
+    },
+    "dependency_lock_consistency": {
+      "classification": "required"
+    },
+    "deterministic_formatting": {
+      "classification": "required"
+    },
+    "executable_invariants": {
+      "classification": "required"
+    },
+    "fault_injection": {
+      "classification": "required"
+    },
+    "fuzz_hostile_input_testing": {
+      "classification": "required"
+    },
+    "idempotence_testing": {
+      "classification": "required"
+    },
+    "integration_testing": {
+      "classification": "required"
+    },
+    "line_coverage": {
+      "classification": "required"
+    },
+    "lint_static_quality": {
+      "classification": "required"
+    },
+    "mutation_testing": {
+      "classification": "required"
+    },
+    "property_based_testing": {
+      "classification": "required"
+    },
+    "real_environment_validation": {
+      "classification": "required"
+    },
+    "repeatability_flakiness_detection": {
+      "classification": "required"
+    },
+    "schema_conformance_testing": {
+      "classification": "required"
+    },
+    "security_static_hardening": {
+      "classification": "not_applicable",
+      "reason": "The repository is an offline research pipeline without untrusted service endpoints."
+    },
+    "test_isolation_host_protection": {
+      "classification": "required"
+    },
+    "type_compiler_checking": {
+      "activation_condition": "before M2 release",
+      "affected_scope": "src/ and experiments/",
+      "classification": "deferred",
+      "reason": "The current Python code has partial annotations and no configured type checker."
+    },
+    "unit_testing": {
+      "classification": "required"
+    },
+    "verifier_self_testing": {
+      "classification": "required"
+    }
+  },
+  "deferred_work": [
+    {
+      "activation_condition": "Extend the mutation configuration to experiments/ and certify all eligible files",
+      "affected_scope": "experiments/",
+      "description": "Full mutation certification; the 1824/1900 killed campaign covers src/etl_benchmark only",
+      "promotion_boundary": "DEEP",
+      "reason": "The campaign covers the computing modules of src/etl_benchmark; the experiments/ scripts have no mutation result. Zero in the mutation field means NOT_RUN, not a measured zero-percent score."
+    },
+    {
+      "activation_condition": "M2 models and chronological study are implemented",
+      "affected_scope": "quality/ and experiments/",
+      "description": "M2 deep detectors and real-data temporal study",
+      "promotion_boundary": "REAL_ENVIRONMENT",
+      "reason": "A chronological split and fixed-reference window monitor have CPU tests, but deep models, seasonal calibration and real-data window evaluation are not complete."
+    }
+  ],
+  "evidence": [],
+  "external_blockers": [],
+  "gates": {
+    "ALL": {
+      "blocking": true,
+      "ci_enforced_remotely": false,
+      "ci_wired": false,
+      "commands": [
+        "make verify-all"
+      ]
+    },
+    "DEEP": {
+      "blocking": true,
+      "ci_enforced_remotely": false,
+      "ci_wired": false,
+      "commands": [
+        "make verify-deep",
+        "make verify-faults"
+      ]
+    },
+    "FAST": {
+      "blocking": true,
+      "ci_enforced_remotely": false,
+      "ci_wired": true,
+      "commands": [
+        "make verify-fast"
+      ]
+    },
+    "REAL_ENVIRONMENT": {
+      "blocking": true,
+      "ci_enforced_remotely": false,
+      "ci_wired": false,
+      "commands": [
+        "make verify-real"
+      ]
+    }
+  },
+  "generated_at": "1970-01-01T00:00:00+00:00",
+  "mutation": {
+    "effective_score": 0,
+    "exclusions": [],
+    "outcomes": {
+      "equivalent": 0,
+      "error": 0,
+      "invalid": 0,
+      "killed": 0,
+      "no_tests": 0,
+      "survived": 0,
+      "timeout": 0,
+      "tooling_limitation": 0,
+      "total": 0,
+      "unreachable": 0,
+      "untested": 0
+    },
+    "scope": [
+      "src/etl_benchmark/*.py",
+      "src/etl_benchmark/quality/*.py",
+      "experiments/*.py"
+    ],
+    "tool": "mutmut 3.8.0"
+  },
+  "production_surfaces": [
+    {
+      "coverage_instrumented": true,
+      "language": "python",
+      "mutation_eligible": true,
+      "path": "src/etl_benchmark/*.py",
+      "purpose": "dataset, split, metrics, pipeline, registry and synthetic generation",
+      "real_environment_required": false,
+      "risk": "critical",
+      "testable": true
+    },
+    {
+      "coverage_instrumented": true,
+      "language": "python",
+      "mutation_eligible": true,
+      "path": "src/etl_benchmark/quality/*.py",
+      "purpose": "rule, PyOD, Great Expectations and temporal detectors",
+      "real_environment_required": false,
+      "risk": "critical",
+      "testable": true
+    },
+    {
+      "coverage_instrumented": true,
+      "language": "python",
+      "mutation_eligible": true,
+      "path": "experiments/*.py",
+      "purpose": "benchmark and verification CLIs, result files and figures",
+      "real_environment_required": true,
+      "risk": "high",
+      "testable": true
+    }
+  ],
+  "repository": {
+    "identity": "git@github.com:theobigand/etl-anomaly-benchmark.git",
+    "primary_languages": [
+      "python"
+    ]
+  },
+  "schema_version": "1.0.0",
+  "source_revision": "GENERATED_BY_VERIFY_FAST",
+  "status": "INCOMPLETE"
+}

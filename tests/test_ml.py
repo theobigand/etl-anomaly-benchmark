@@ -46,6 +46,20 @@ def test_ml_detector_predict_before_fit_raises(cls):
 
 
 @pytest.mark.parametrize("cls", ML_DETECTORS)
+def test_ml_detector_score_before_fit_raises(cls):
+    with pytest.raises(RuntimeError, match="not fitted"):
+        cls().score(_blob_with_outliers())
+
+
+def test_ml_detector_rejects_missing_preprocessing_state():
+    frame = _blob_with_outliers()
+    detector = IsolationForestDetector().fit(frame)
+    detector._scaler = None
+    with pytest.raises(RuntimeError, match="not fitted"):
+        detector.score(frame)
+
+
+@pytest.mark.parametrize("cls", ML_DETECTORS)
 def test_ml_detector_ignores_non_numeric_and_imputes_nans(cls):
     df = _blob_with_outliers()
     df["label"] = "keep"  # non-numeric, must be dropped silently

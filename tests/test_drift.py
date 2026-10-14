@@ -56,3 +56,16 @@ def test_score_is_index_aligned_and_continuous():
 
     assert scores.index.equals(df.index)
     assert scores.min() >= 0.0
+
+
+def test_drift_score_requires_a_complete_recent_window():
+    frame = _timeline(100)
+    detector = TemporalDriftDetector(time_column="ts").fit(frame)
+    assert detector.score(frame.tail(10)).eq(0.0).all()
+
+
+def test_constant_reference_does_not_create_spurious_drift():
+    frame = _timeline(100)
+    frame["value"] = 2.0
+    detector = TemporalDriftDetector(time_column="ts", columns=["value"]).fit(frame)
+    assert detector.score(frame).eq(0.0).all()

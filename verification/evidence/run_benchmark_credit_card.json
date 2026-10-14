@@ -1,0 +1,89 @@
+{
+  "captured_at": "2026-10-14T09:07:36.592671+00:00",
+  "dataset": {
+    "bytes": 150828752,
+    "identity": "credit_card",
+    "path": "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/data/creditcard.csv",
+    "sha256": "76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89"
+  },
+  "experiment": "real_benchmark",
+  "outputs": [
+    "benchmark_credit_card_20261014_090734.csv",
+    "benchmark_credit_card_20261014_090734.md",
+    "split_ids_credit_card_20261014_090734.json.gz"
+  ],
+  "packages": {
+    "great-expectations": "1.24.0",
+    "numpy": "2.4.6",
+    "pandas": "3.0.6",
+    "pyod": "3.6.7",
+    "scikit-learn": "1.9.1"
+  },
+  "platform": "macOS-27.0-arm64-arm-64bit",
+  "python": "3.11.17",
+  "schema_version": 1,
+  "seeds": [
+    42,
+    1,
+    2,
+    3,
+    4
+  ],
+  "settings": {
+    "calibration": "train_prevalence",
+    "detectors": [
+      "zscore",
+      "iqr",
+      "great_expectations",
+      "isolation_forest"
+    ],
+    "features": [
+      "Time",
+      "V1",
+      "V2",
+      "V3",
+      "V4",
+      "V5",
+      "V6",
+      "V7",
+      "V8",
+      "V9",
+      "V10",
+      "V11",
+      "V12",
+      "V13",
+      "V14",
+      "V15",
+      "V16",
+      "V17",
+      "V18",
+      "V19",
+      "V20",
+      "V21",
+      "V22",
+      "V23",
+      "V24",
+      "V25",
+      "V26",
+      "V27",
+      "V28",
+      "Amount"
+    ],
+    "fit_sample": null,
+    "fixed_contamination": null,
+    "not_run": {
+      "lof": "ineligible: 284k rows, 0.17% fraud. LOF/OC-SVM omitted: they do not scale to this size.",
+      "ocsvm": "ineligible: 284k rows, 0.17% fraud. LOF/OC-SVM omitted: they do not scale to this size."
+    },
+    "pr_auc_definition": "average_precision",
+    "split_ratios": [
+      0.7,
+      0.15,
+      0.15
+    ],
+    "split_strategy": "stratified"
+  },
+  "source_fingerprint": "2dd09773a41675b4ec7051cecea8609ab69135ebd06f1b04340d2a3cd92a60a0",
+  "source_revision": "cd531741f869ca94b90334c507eecc81633f644c",
+  "worktree_dirty": false
+}

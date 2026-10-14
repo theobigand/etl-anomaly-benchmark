@@ -4,6 +4,11 @@ __pycache__/
 *$py.class
 .pytest_cache/
 .ruff_cache/
+.hypothesis/
+.coverage
+.coverage.*
+coverage.json
+mutants/
 .mypy_cache/
 
 # Build artefacts
@@ -25,6 +30,10 @@ data/*.csv
 experiments/results/*.csv
 experiments/results/*.md
 experiments/results/*.png
+experiments/results/*.json
+experiments/results/*.xml
+experiments/results/*.log
+experiments/results/*.gz
 !experiments/results/.gitkeep
 
 # LaTeX (le PDF compilé du papier est versionné, cf. paper/main.pdf)
@@ -46,3 +55,6 @@ paper/*.fdb_latexmk
 .idea/
 *.swp
 .DS_Store
+
+# Generated verification snapshot; policy lives in profile.template.json
+verification/profile.json
