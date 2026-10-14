@@ -100,3 +100,35 @@ def test_fixed_calibration_table_matches_both_archived_protocols():
             assert abs(Decimal(str(value)) - rounded) <= Decimal("0.0005")
         assert baseline.pr_auc_mean == pytest.approx(fixed.pr_auc_mean)
     assert seen == set(datasets.values())
+
+
+def test_contamination_sweep_table_matches_the_archived_sweep():
+    manuscript = (ROOT / "paper/main.tex").read_text()
+    table = re.search(r"\\label\{tab:contamination\}(.*?)\\end\{table\}", manuscript, re.S)
+    assert table
+    datasets = {
+        "Credit Card Fraud": "credit_card",
+        "Cardio": "cardio",
+        "Water Quality": "water_quality",
+        "Synthetic": "synthetic",
+    }
+    sweep = pd.read_csv(ROOT / "verification/evidence/contamination_sweep.csv")
+    checked = 0
+    for line in table.group(1).splitlines():
+        if "&" not in line:
+            continue
+        title, contamination, *cells = (cell.strip() for cell in line.split("&"))
+        if title not in datasets:
+            continue
+        is_prevalence = contamination.startswith("prev.")
+        value = Decimal(re.search(r"\d+\.\d+", contamination).group())
+        rows = sweep[(sweep.dataset == datasets[title]) & (sweep.is_prevalence == is_prevalence)]
+        rows = rows[(rows.contamination.map(Decimal.from_float) - value).abs() < Decimal("0.0006")]
+        assert len(rows) == 1, (title, contamination)
+        for column, cell in zip(("precision", "recall", "flagged_pct"), cells, strict=True):
+            shown = Decimal(re.sub(r"[^0-9.]", "", cell))
+            actual = Decimal(str(rows.iloc[0][column]))
+            tolerance = Decimal("0.5") * Decimal(10) ** shown.as_tuple().exponent
+            assert abs(actual - shown) <= tolerance, (title, contamination, column, shown, actual)
+        checked += 1
+    assert checked == 8
