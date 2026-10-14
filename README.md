@@ -61,7 +61,7 @@ make severity          # detection-rate versus injection-severity curves
 make test              # pytest
 make lint              # ruff check + format check
 make verify-fast       # offline tests, coverage and evidence
-make verify-deep       # focused mutation pilot
+make verify-deep       # mutation campaign on src/etl_benchmark (95% gate)
 make verify-real       # inspect locally available real datasets
 make clean             # remove generated artifacts
 ```
@@ -100,7 +100,7 @@ on Cardio, and 0.512 to 0.023 on Water Quality. The score ranking and PR-AUC
 do not change with the threshold.
 
 The [verification protocol](verification/README.md) records current coverage,
-the mutation pilot and the checks required before a thesis release. The
+the mutation campaign and the checks required before a thesis release. The
 repository-wide verification status is currently **INCOMPLETE**.
 
 ```bash

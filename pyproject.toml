@@ -59,7 +59,32 @@ patch = ["subprocess"]
 
 [tool.mutmut]
 source_paths = ["src/etl_benchmark"]
-only_mutate = ["src/etl_benchmark/metrics.py"]
-pytest_add_cli_args_test_selection = ["tests/test_metric_contract.py"]
-also_copy = ["experiments"]
+only_mutate = [
+    "src/etl_benchmark/datasets.py",
+    "src/etl_benchmark/extract.py",
+    "src/etl_benchmark/load.py",
+    "src/etl_benchmark/metrics.py",
+    "src/etl_benchmark/pipeline.py",
+    "src/etl_benchmark/registry.py",
+    "src/etl_benchmark/split.py",
+    "src/etl_benchmark/synthetic.py",
+    "src/etl_benchmark/transform.py",
+    "src/etl_benchmark/quality/*.py",
+]
+pytest_add_cli_args_test_selection = [
+    "tests",
+    "-m",
+    "not real",
+    "--ignore=tests/test_artifact_lineage.py",
+    "--ignore=tests/test_publication_tables.py",
+    "--ignore=tests/test_profile_refresh.py",
+    "--ignore=tests/test_provenance.py",
+    "--ignore=tests/test_verification_report.py",
+    "--ignore=tests/test_mutation_gate.py",
+    "--ignore=tests/test_cli_smoke.py",
+    "--ignore=tests/test_scaling_study.py",
+    "--ignore=tests/test_real_verification.py",
+    "--ignore=tests/test_test_support.py",
+]
+also_copy = ["experiments", "verification"]
 on_dependency_change = "rerun"

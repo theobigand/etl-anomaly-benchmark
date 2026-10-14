@@ -111,18 +111,11 @@
   },
   "deferred_work": [
     {
-      "activation_condition": "Expand mutation configuration and certify all eligible files",
-      "affected_scope": "src/etl_benchmark/ and experiments/",
-      "description": "Full mutation certification; current 86/97 killed pilot covers metrics.py only",
+      "activation_condition": "Extend the mutation configuration to experiments/ and certify all eligible files",
+      "affected_scope": "experiments/",
+      "description": "Full mutation certification; the 1661/1726 killed campaign covers src/etl_benchmark only",
       "promotion_boundary": "DEEP",
-      "reason": "The first campaign is scoped to one scientific module; a full-scope result has not been run. Zero in the mutation field means NOT_RUN, not a measured zero-percent score."
-    },
-    {
-      "activation_condition": "Meaningful tests cover every testable line and branch",
-      "affected_scope": "src/etl_benchmark/ and experiments/",
-      "description": "Complete line and branch coverage",
-      "promotion_boundary": "FAST",
-      "reason": "Current measured totals are below the exact target."
+      "reason": "The campaign covers the computing modules of src/etl_benchmark; the experiments/ scripts have no mutation result. Zero in the mutation field means NOT_RUN, not a measured zero-percent score."
     },
     {
       "activation_condition": "M2 models and chronological study are implemented",

@@ -33,8 +33,8 @@ def compute_metrics(y, flags, scores) -> dict[str, float]:
         raise ValueError("scores must be finite")
     return {
         "precision": float(precision_score(y, flags, zero_division=0)),
-        "recall": float(recall_score(y, flags, zero_division=0)),
-        "f1": float(f1_score(y, flags, zero_division=0)),
+        "recall": float(recall_score(y, flags)),
+        "f1": float(f1_score(y, flags)),
         "roc_auc": float(roc_auc_score(y, scores)),
         "pr_auc": float(average_precision_score(y, scores)),
         "flagged_pct": 100.0 * float(np.mean(flags)),

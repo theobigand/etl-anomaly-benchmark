@@ -12,7 +12,7 @@ def _times(frame: pd.DataFrame, column: str) -> pd.Series:
     if column not in frame:
         raise ValueError(f"missing timestamp column {column!r}")
     try:
-        times = pd.to_datetime(frame[column], errors="raise", utc=True, format="mixed")
+        times = pd.to_datetime(frame[column], utc=True, format="mixed")
     except (TypeError, ValueError) as exc:
         raise ValueError("invalid timestamp") from exc
     if times.isna().any():
@@ -81,11 +81,11 @@ class WindowDriftMonitor:
 
         ordered = values.copy()
         ordered["_event_time"] = times.to_numpy()
-        ordered = ordered.sort_values(["_event_time", *self.columns], kind="stable")
+        ordered = ordered.sort_values(["_event_time", *self.columns])
         rows = []
         groups = []
         count = 0
-        for _, group in ordered.groupby("_event_time", sort=True):
+        for _, group in ordered.groupby("_event_time"):
             groups.append(group)
             count += len(group)
             if count < self.window_size:
@@ -120,9 +120,9 @@ def event_metrics(windows: pd.DataFrame, change_time: pd.Timestamp) -> dict:
     ends = pd.to_datetime(windows["window_end"], utc=True)
     before = ends < cutoff
     after_alert = ends[(~before) & windows["alert"]]
-    first = after_alert.min() if not after_alert.empty else pd.NaT
+    first = after_alert.min()  # NaT when no window alerted after the change
     return {
-        "false_alarm_rate": float(windows.loc[before, "alert"].mean()) if before.any() else np.nan,
+        "false_alarm_rate": float(windows.loc[before, "alert"].mean()),  # NaN without windows
         "detected": bool(not pd.isna(first)),
-        "detection_delay": first - cutoff if not pd.isna(first) else pd.NaT,
+        "detection_delay": first - cutoff,
     }
