@@ -1,3 +1,4 @@
+import json
 import sys
 from pathlib import Path
 
@@ -38,3 +39,15 @@ def test_mutation_gate_rejects_missing_incomplete_and_low_score():
             "segfault": 0,
         }
     ) == ("FAIL", 90.0)
+
+
+def test_mutation_command_exit_matches_recorded_outcomes(tmp_path, monkeypatch):
+    stats = tmp_path / "mutation.json"
+    monkeypatch.setattr(sys, "argv", ["check_mutation", str(stats)])
+    result = {key: 0 for key in check_mutation.OUTCOMES}
+    result.update(total=20, killed=19, survived=1)
+    stats.write_text(json.dumps(result))
+    assert check_mutation.main() == 0
+    result.update(killed=18, survived=2)
+    stats.write_text(json.dumps(result))
+    assert check_mutation.main() == 1
