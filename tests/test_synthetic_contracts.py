@@ -188,3 +188,58 @@ def test_reference_dataset_is_pinned_for_published_tables():
     text = df.round(2).to_csv(index=False)
     digest = hashlib.sha256(text.encode()).hexdigest()
     assert digest == "fa4803391a5e2c4e141508b4b2cb0d2b9ad9caacce232254c67868a8aeed8603"
+
+
+def _block(n=40):
+    pop = _population(n, seed=11)
+    pop["customer_id"] = np.arange(n)
+    return pop
+
+
+_NULLABLE = {
+    "annual_income",
+    "account_balance",
+    "avg_transaction_amount",
+    "tenure_days",
+    "n_transactions_30d",
+    "email",
+    "country",
+}
+
+
+@pytest.mark.parametrize(
+    ("inject", "allowed"),
+    [
+        (lambda b, rng, clean: synthetic._inject_missing_value(b, rng), _NULLABLE),
+        (
+            lambda b, rng, clean: synthetic._inject_univariate_outlier(b, rng, 1.0),
+            set(NUMERIC_FEATURES),
+        ),
+        (
+            lambda b, rng, clean: synthetic._inject_multivariate_outlier(b, rng, clean, 1.0),
+            {"age", "annual_income", "account_balance", "n_transactions_30d"}
+            | {"avg_transaction_amount"},
+        ),
+        (
+            lambda b, rng, clean: synthetic._inject_temporal_drift(b, rng, 1.0),
+            {"signup_date", "annual_income", "account_balance", "avg_transaction_amount"},
+        ),
+        (
+            lambda b, rng, clean: synthetic._inject_invalid_format(b, rng),
+            {"email", "age", "country"},
+        ),
+    ],
+    ids=["missing", "univariate", "multivariate", "drift", "invalid"],
+)
+def test_each_injector_leaves_the_columns_outside_its_scope_untouched(inject, allowed):
+    original = _block()
+    changed = inject(original.copy(), np.random.default_rng(5), original)
+    differing = {
+        column
+        for column in original.columns
+        if not original[column].equals(changed[column])
+        and not (original[column].isna() & changed[column].isna()).all()
+    }
+    assert differing, "the injector changed nothing"
+    assert differing <= allowed
+    assert original["customer_id"].equals(changed["customer_id"])
