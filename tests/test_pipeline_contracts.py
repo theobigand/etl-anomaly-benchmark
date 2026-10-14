@@ -70,6 +70,15 @@ def test_detect_names_the_failed_output_contract():
         detect(frame, _Detector(), fit_df=frame.assign(y=1.0))
 
 
+def test_detect_keeps_the_graded_scores_of_the_detector():
+    frame = _frame()
+    flags = pd.Series([False, False, True], index=frame.index)
+    scores = pd.Series([0.1, 0.5, 0.9], index=frame.index)
+    result = detect(frame, _Detector(flags=flags, scores=scores))
+    assert result.scores.tolist() == [0.1, 0.5, 0.9]
+    assert result.flags.tolist() == [False, False, True]
+
+
 def test_detect_rejects_non_numeric_scores():
     frame = _frame()
     with pytest.raises(ValueError):
