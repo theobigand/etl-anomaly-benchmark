@@ -133,6 +133,9 @@ cette liste.
 | Changer les labels du test | Interdit d'influencer le seuil ou l'ajustement ; seules les métriques changent. |
 | Modifier une ligne future | Ne change aucune fenêtre ni aucun score antérieur. |
 
+`manuscript_check.md` consigne la relecture factuelle du manuscrit contre le
+code et les archives, avec les corrections apportées.
+
 Pour changer une mesure publiée, commencer par un cas qui montre l'erreur,
 exécuter le test avant la correction, puis relancer le même test après. Lancer
 ensuite le gate concerné et refaire les tables ou figures touchées. Les tests

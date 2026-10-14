@@ -1,8 +1,10 @@
 # Avancement des tickets
 
-Les corrections du protocole et le rejeu des résultats sont dans la branche
-courante. Les tickets restent ouverts tant que leurs critères de réception ne
-sont pas tous remplis.
+Au 14 octobre 2026, les tickets #3 à #11 et #13 à #29 sont fermés. Restent
+ouverts : #2 (coordination), #12 (révision du fichier Credit Card et droits de
+Cardio), #30 (vérification finale) et #31 (mutation des scripts
+d'`experiments/`, suite de #7). Les entrées ci-dessous gardent l'historique de
+chaque ticket et les limites qui subsistent après sa fermeture.
 
 ## Vérification du socle (#3 à #7)
 
@@ -69,7 +71,9 @@ sont pas tous remplis.
   mock des bibliothèques de calcul n'est introduit. Les défauts non injectés
   sont listés dans la matrice.
 - **#24** : README, notes de données, figures et manuscrit ont été mis à jour
-  après les nouveaux essais. La revue finale du mémoire reste ouverte.
+  après les nouveaux essais. Une relecture factuelle du manuscrit contre le code
+  et les archives a corrigé onze affirmations (`manuscript_check.md`) ; les six
+  tableaux sont comparés automatiquement aux CSV.
 
 ## Suite du travail (#25 à #30)
 
