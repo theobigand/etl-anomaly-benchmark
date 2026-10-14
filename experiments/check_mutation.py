@@ -34,7 +34,7 @@ def main() -> int:
     parser.add_argument("stats", type=Path)
     args = parser.parse_args()
     status, score = classify(json.loads(args.stats.read_text()))
-    print(f"mutation pilot: {status} ({score:.2f}% killed)")
+    print(f"mutation gate: {status} ({score:.2f}% killed)")
     return 0 if status == "PASS" else 1
 
 

@@ -19,9 +19,10 @@ sont pas tous remplis.
   couverture actuelle est de 1394/1394 lignes et 298/298 branches, sans
   exclusion. Les commandes locales de génération, de conversion Cardio et de
   démonstration ont des tests dédiés.
-- **#7** : l'essai de mutation porte sur `metrics.py` ; 11 mutants survivent
-  encore. `mutation_notes.md` les classe. La campagne sur le reste du code
-  n'a pas été lancée.
+- **#7** : la campagne porte sur tous les modules calculants de
+  `src/etl_benchmark` : 1661 mutants éliminés sur 1726 (96,23 %). Les 65
+  survivants sont classés dans `mutation_notes.md`. Les scripts d'`experiments/`
+  n'ont pas de campagne, donc le ticket reste ouvert.
 
 ## Protocole et mesures (#8 à #15)
 
