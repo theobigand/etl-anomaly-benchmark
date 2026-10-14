@@ -11,7 +11,7 @@ help:
 	@echo "  make test       Run pytest"
 	@echo "  make lint       Run ruff check + format"
 	@echo "  make verify-fast  Lint, test, measure exact line/branch coverage, write evidence"
-	@echo "  make verify-deep  Run the focused mutation pilot and enforce 95%"
+	@echo "  make verify-deep  Mutation campaign on src/etl_benchmark, enforce 95%"
 	@echo "  make verify-real  Inspect available full datasets and record provenance"
 	@echo "  make verify-scale Measure bounded detector growth outside FAST"
 	@echo "  make verify-all   Run all three verification profiles"

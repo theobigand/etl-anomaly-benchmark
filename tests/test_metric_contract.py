@@ -1,3 +1,4 @@
+import re
 import sys
 import warnings
 from pathlib import Path
@@ -71,18 +72,28 @@ def test_integer_flags_are_rejected_even_when_they_are_zero_or_one():
         run_benchmark.compute_metrics([0, 1], [0, 1], [0.1, 0.9])
 
 
+def _message(text):
+    return f"^{re.escape(text)}$"
+
+
 def test_invalid_metric_inputs_report_the_failed_contract():
-    with pytest.raises(ValueError, match="one-dimensional"):
+    shape = _message("labels, flags and scores must be one-dimensional")
+    length = _message("labels, flags and scores must have equal nonzero length")
+    with pytest.raises(ValueError, match=shape):
         run_benchmark.compute_metrics([[0], [1]], [False, True], [0.1, 0.9])
-    with pytest.raises(ValueError, match="equal nonzero length"):
+    with pytest.raises(ValueError, match=length):
         run_benchmark.compute_metrics([0, 1], [False], [0.1, 0.9])
-    with pytest.raises(ValueError, match="equal nonzero length"):
+    with pytest.raises(ValueError, match=length):
         run_benchmark.compute_metrics([0, 1], [False, True], [0.1])
-    with pytest.raises(ValueError, match="equal nonzero length"):
+    with pytest.raises(ValueError, match=length):
         run_benchmark.compute_metrics([], [False], [0.1])
-    with pytest.raises(ValueError, match="both binary classes"):
+    with pytest.raises(
+        ValueError, match=_message("ROC-AUC and average precision require both binary classes")
+    ):
         run_benchmark.compute_metrics([1], [True], [0.9])
-    with pytest.raises(ValueError, match="scores must be finite"):
+    with pytest.raises(ValueError, match=_message("flags must be boolean")):
+        run_benchmark.compute_metrics([0, 1], [0, 1], [0.1, 0.9])
+    with pytest.raises(ValueError, match=_message("scores must be finite")):
         run_benchmark.compute_metrics([0, 1], [False, True], [0.1, float("inf")])
 
 

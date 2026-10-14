@@ -76,7 +76,7 @@ def _clean_population(n: int, rng: np.random.Generator, fake: Faker) -> pd.DataF
     account_balance = annual_income * rng.uniform(0.03, 0.55, n) + rng.normal(0, 800, n)
     account_balance = np.clip(account_balance, 0, None)
     n_transactions_30d = rng.poisson(np.clip(annual_income / 4_000, 2, 90)).astype(float)
-    avg_transaction_amount = np.clip(annual_income / 1_200 * rng.uniform(0.5, 1.6, n), 1, None)
+    avg_transaction_amount = annual_income / 1_200 * rng.uniform(0.5, 1.6, n)
     tenure_days = rng.integers(30, 3 * 365, n).astype(float)
     offsets = rng.integers(90, 3 * 365, n)
     signup_date = [
@@ -113,12 +113,12 @@ def _inject_missing_value(block: pd.DataFrame, rng: np.random.Generator) -> pd.D
     for pos in range(len(block)):
         cols = rng.choice(nullable, size=int(rng.integers(1, 3)), replace=False)
         for col in cols:
-            block.iloc[pos, block.columns.get_loc(col)] = np.nan if col != "email" else None
+            block.iloc[pos, block.columns.get_loc(col)] = np.nan
     return block
 
 
 def _inject_univariate_outlier(
-    block: pd.DataFrame, rng: np.random.Generator, severity: float = 1.0
+    block: pd.DataFrame, rng: np.random.Generator, severity: float
 ) -> pd.DataFrame:
     for pos in range(len(block)):
         col = rng.choice(NUMERIC_FEATURES)
@@ -130,7 +130,7 @@ def _inject_univariate_outlier(
 
 
 def _inject_multivariate_outlier(
-    block: pd.DataFrame, rng: np.random.Generator, clean: pd.DataFrame, severity: float = 1.0
+    block: pd.DataFrame, rng: np.random.Generator, clean: pd.DataFrame, severity: float
 ) -> pd.DataFrame:
     # more severe -> a more extreme percentile of the clean marginals
     hi_q = min(1.0 - 0.03 / severity, 0.999)
@@ -153,7 +153,7 @@ def _inject_multivariate_outlier(
 
 
 def _inject_temporal_drift(
-    block: pd.DataFrame, rng: np.random.Generator, severity: float = 1.0
+    block: pd.DataFrame, rng: np.random.Generator, severity: float
 ) -> pd.DataFrame:
     for pos in range(len(block)):
         recent = _REFERENCE_DATE - pd.Timedelta(days=int(rng.integers(1, 80)))
@@ -217,7 +217,7 @@ def make_synthetic(
     n_clean = n_rows - 5 * k
 
     pop = _clean_population(n_rows, rng, fake)
-    pop.insert(0, "customer_id", np.arange(1, n_rows + 1))
+    pop["customer_id"] = np.arange(1, n_rows + 1)
     pop["anomaly_type"] = "clean"
 
     clean = pop.iloc[:n_clean].copy()
@@ -242,8 +242,8 @@ def make_synthetic(
     dups["anomaly_type"] = "duplicate"
     parts.append(dups)
 
-    df = pd.concat(parts, ignore_index=True)
+    df = pd.concat(parts)
     df["anomaly"] = df["anomaly_type"] != "clean"
 
-    df = df.sample(frac=1.0, random_state=seed).reset_index(drop=True)
+    df = df.sample(frac=1.0, random_state=seed, ignore_index=True)
     return df[["customer_id", *FEATURE_COLUMNS, "anomaly", "anomaly_type"]]
