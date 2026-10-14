@@ -75,6 +75,16 @@ def test_real_benchmark_cli_on_tiny_local_csv(tmp_path):
     record = json.loads(next(output.glob("run_benchmark_*.json")).read_text())
     assert record["seeds"] == [1]
     assert record["settings"]["detectors"] == ["zscore"]
+    ineligible = (
+        "ineligible: 284k rows, 0.17% fraud. LOF/OC-SVM omitted: they do not scale to this size."
+    )
+    assert record["settings"]["not_run"] == {
+        "iqr": "not requested",
+        "great_expectations": "not requested",
+        "isolation_forest": "not requested",
+        "lof": ineligible,
+        "ocsvm": ineligible,
+    }
     split_archive = next(output.glob("split_ids_*.json.gz"))
     with gzip.open(split_archive, "rt") as stream:
         splits = json.load(stream)
