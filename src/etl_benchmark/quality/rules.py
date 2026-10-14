@@ -42,7 +42,7 @@ class ZScoreDetector(Detector):
         return (values - self._means).abs() / self._stds
 
     def predict(self, df: pd.DataFrame) -> pd.Series:
-        return self._zscores(df).gt(self.threshold).any(axis=1).fillna(False)
+        return self._zscores(df).gt(self.threshold).any(axis=1)
 
     def score(self, df: pd.DataFrame) -> pd.Series:
         # Worst standardized deviation across columns; NaN (constant column) -> 0.
@@ -84,7 +84,7 @@ class IQRDetector(Detector):
         return np.maximum(below, above).div(self._scale)
 
     def predict(self, df: pd.DataFrame) -> pd.Series:
-        return self._exceedance(df).gt(0).any(axis=1).fillna(False)
+        return self._exceedance(df).gt(0).any(axis=1)
 
     def score(self, df: pd.DataFrame) -> pd.Series:
         return self._exceedance(df).clip(lower=0).max(axis=1).fillna(0.0)
