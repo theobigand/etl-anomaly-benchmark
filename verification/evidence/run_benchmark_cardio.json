@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-14T04:17:19.267234+00:00",
+  "captured_at": "2026-10-14T04:24:44.642430+00:00",
   "dataset": {
     "bytes": 770024,
     "identity": "cardio",
@@ -8,9 +8,9 @@
   },
   "experiment": "real_benchmark",
   "outputs": [
-    "benchmark_cardio_20261014_041719.csv",
-    "benchmark_cardio_20261014_041719.md",
-    "split_ids_cardio_20261014_041719.json.gz"
+    "benchmark_cardio_20261014_042444.csv",
+    "benchmark_cardio_20261014_042444.md",
+    "split_ids_cardio_20261014_042444.json.gz"
   ],
   "packages": {
     "great-expectations": "1.24.0",
@@ -30,7 +30,7 @@
     4
   ],
   "settings": {
-    "calibration": "train_label_prevalence",
+    "calibration": "train_prevalence",
     "detectors": [
       "zscore",
       "iqr",
@@ -63,6 +63,7 @@
       "f20"
     ],
     "fit_sample": null,
+    "fixed_contamination": null,
     "pr_auc_definition": "average_precision",
     "split_ratios": [
       0.7,
@@ -71,7 +72,7 @@
     ],
     "split_strategy": "stratified"
   },
-  "source_fingerprint": "0c0a34ae85e0de923931f8aea094dd1a85bee2a75b9d9269f3790ec34ddf431b",
-  "source_revision": "6ebb5083e71226eb8e86af61e69300b58db3d026",
-  "worktree_dirty": true
+  "source_fingerprint": "0232488f00ae61e3fc6b580a87fb6abda6b73a7a4f216461c2ee2fc32b0d5609",
+  "source_revision": "9248fbf0afa67c47a83e8d7783c8084944067716",
+  "worktree_dirty": false
 }
