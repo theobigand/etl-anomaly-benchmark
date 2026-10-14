@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-14T04:33:16.102065+00:00",
+  "captured_at": "2026-10-14T04:51:07.693594+00:00",
   "dataset": {
     "bytes": 150828752,
     "identity": "credit_card",
@@ -8,9 +8,9 @@
   },
   "experiment": "real_benchmark",
   "outputs": [
-    "benchmark_credit_card_20261014_043314.csv",
-    "benchmark_credit_card_20261014_043314.md",
-    "split_ids_credit_card_20261014_043314.json.gz"
+    "benchmark_credit_card_20261014_045105.csv",
+    "benchmark_credit_card_20261014_045105.md",
+    "split_ids_credit_card_20261014_045105.json.gz"
   ],
   "packages": {
     "great-expectations": "1.24.0",
@@ -79,7 +79,7 @@
     ],
     "split_strategy": "stratified"
   },
-  "source_fingerprint": "0232488f00ae61e3fc6b580a87fb6abda6b73a7a4f216461c2ee2fc32b0d5609",
-  "source_revision": "8481264355d61da4e1aad27564e88ed51e33b608",
+  "source_fingerprint": "92176af8b86acf13092bdb2cf7645cc4aa941ab0523fa7d67b9e10ad27efb8d0",
+  "source_revision": "df41e0a56da295c8e07ad72319d783391161070a",
   "worktree_dirty": false
 }

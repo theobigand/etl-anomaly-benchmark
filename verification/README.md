@@ -62,5 +62,5 @@ ensuite le gate concerné et refaire les tables ou figures touchées. Les tests
 sur durées ne doivent pas dépendre d'un nombre précis de secondes.
 
 Les résultats actuels et les travaux encore ouverts sont dans `report.md` et
-`issues.md`. FAST et DEEP échouent toujours à leurs seuils ; le statut général
-reste **INCOMPLETE**.
+`issues.md`. FAST passe sur l'ensemble mesuré ; DEEP reste sous son seuil et
+ne couvre qu'un module. Le statut général reste **INCOMPLETE**.
