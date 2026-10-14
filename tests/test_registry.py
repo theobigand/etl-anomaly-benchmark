@@ -68,3 +68,20 @@ def test_fixed_calibration_does_not_use_training_labels():
 def test_fixed_calibration_rejects_missing_or_out_of_range_value(value):
     with pytest.raises(ValueError, match="fixed contamination"):
         registry.calibrate_contamination([0, 1], policy="fixed", fixed=value)
+
+
+@pytest.mark.parametrize("labels", [[], [2], [0, float("nan")]])
+def test_train_prevalence_rejects_empty_or_nonbinary_labels(labels):
+    with pytest.raises(ValueError, match="training labels"):
+        registry.calibrate_contamination(labels, policy="train_prevalence")
+
+
+def test_calibration_rejects_unknown_policy():
+    with pytest.raises(ValueError, match="unknown calibration policy"):
+        registry.calibrate_contamination([0, 1], policy="test_prevalence")
+
+
+@pytest.mark.parametrize("prevalence", [-0.1, 1.1, float("nan"), float("inf")])
+def test_clip_contamination_rejects_invalid_prevalence(prevalence):
+    with pytest.raises(ValueError, match="prevalence"):
+        clip_contamination(prevalence)

@@ -1,0 +1,85 @@
+{
+  "captured_at": "2026-10-14T04:33:16.102065+00:00",
+  "dataset": {
+    "bytes": 150828752,
+    "identity": "credit_card",
+    "path": "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/data/creditcard.csv",
+    "sha256": "76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89"
+  },
+  "experiment": "real_benchmark",
+  "outputs": [
+    "benchmark_credit_card_20261014_043314.csv",
+    "benchmark_credit_card_20261014_043314.md",
+    "split_ids_credit_card_20261014_043314.json.gz"
+  ],
+  "packages": {
+    "great-expectations": "1.24.0",
+    "numpy": "2.4.6",
+    "pandas": "3.0.6",
+    "pyod": "3.6.7",
+    "scikit-learn": "1.9.1"
+  },
+  "platform": "macOS-27.0-arm64-arm-64bit",
+  "python": "3.11.17",
+  "schema_version": 1,
+  "seeds": [
+    42,
+    1,
+    2,
+    3,
+    4
+  ],
+  "settings": {
+    "calibration": "fixed",
+    "detectors": [
+      "zscore",
+      "iqr",
+      "great_expectations",
+      "isolation_forest"
+    ],
+    "features": [
+      "Time",
+      "V1",
+      "V2",
+      "V3",
+      "V4",
+      "V5",
+      "V6",
+      "V7",
+      "V8",
+      "V9",
+      "V10",
+      "V11",
+      "V12",
+      "V13",
+      "V14",
+      "V15",
+      "V16",
+      "V17",
+      "V18",
+      "V19",
+      "V20",
+      "V21",
+      "V22",
+      "V23",
+      "V24",
+      "V25",
+      "V26",
+      "V27",
+      "V28",
+      "Amount"
+    ],
+    "fit_sample": null,
+    "fixed_contamination": 0.02,
+    "pr_auc_definition": "average_precision",
+    "split_ratios": [
+      0.7,
+      0.15,
+      0.15
+    ],
+    "split_strategy": "stratified"
+  },
+  "source_fingerprint": "0232488f00ae61e3fc6b580a87fb6abda6b73a7a4f216461c2ee2fc32b0d5609",
+  "source_revision": "8481264355d61da4e1aad27564e88ed51e33b608",
+  "worktree_dirty": false
+}

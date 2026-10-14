@@ -16,7 +16,7 @@ sont pas tous remplis.
   dans `README.md`.
 - **#6** : FAST mesure lignes et branches, y compris dans les commandes en
   sous-processus, et échoue si elles ne sont pas toutes couvertes. La
-  couverture actuelle est de 1332/1392 lignes et 248/296 branches. Les
+  couverture actuelle est de 1334/1392 lignes et 250/296 branches. Les
   commandes locales de génération, de conversion Cardio et de démonstration
   ont désormais des tests dédiés.
 - **#7** : l'essai de mutation porte sur `metrics.py` ; 11 mutants survivent
@@ -30,8 +30,9 @@ sont pas tous remplis.
   distinct ; il reste des entrées limites à tester.
 - **#10** : la contamination invalide est rejetée. Le benchmark réel accepte
   désormais un préréglage fixe sans labels et enregistre la politique choisie.
-  Les tableaux publiés gardent le calibrage sur la prévalence du train ; la
-  comparaison numérique entre politiques reste à produire.
+  Les tableaux principaux gardent le calibrage sur la prévalence du train ;
+  une analyse de sensibilité avec le préréglage 0,02 sur les trois jeux réels
+  est archivée séparément et présentée comme exploratoire.
 - **#11** : taille de population, taux nul et types injectés ont des tests.
   Il manque des contrôles fins des champs non modifiés et des sévérités.
 - **#12** : labels, valeurs manquantes et tailles des trois CSV locaux sont

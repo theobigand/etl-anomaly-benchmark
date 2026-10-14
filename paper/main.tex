@@ -599,6 +599,42 @@ Synthetic         & prev.\ 0.175 & 0.53 & 0.51 & 16.8 \\
 \end{tabular}
 \end{table}
 
+\subsection{Fixed-contamination sensitivity analysis}
+The train-prevalence operating point uses labels from the training
+partition. To measure its influence, we reran the three real datasets
+with the same five seeds and partitions, replacing that value by a
+constant contamination of $0.02$ for the ML detectors. Table~\ref{tab:fixed-calibration}
+shows Isolation Forest, the only learned detector run on all three
+datasets. The ranking score and its average precision are unchanged;
+only the binary decision threshold moves. On Credit Card Fraud, the
+fixed setting raises recall from $0.206$ to $0.682$ but lowers precision
+from $0.202$ to $0.055$. On Cardio, it raises precision from $0.639$ to
+$0.983$ but lowers recall from $0.615$ to $0.267$. The Water Quality
+target is a majority class, so a $2\%$ outlier budget leaves almost all
+positive rows unflagged. The fixed value was chosen before these
+comparator runs but after the baseline results were available. These
+numbers are therefore a post-hoc sensitivity analysis, not a new
+confirmatory estimate on an untouched test set.
+
+\begin{table}[t]
+\caption{Isolation Forest with train-prevalence and fixed $0.02$
+contamination, same five real-data splits. Entries are means; ``flag''
+is the fraction of test rows predicted anomalous.}
+\label{tab:fixed-calibration}
+\centering
+\setlength{\tabcolsep}{4pt}
+\footnotesize
+\begin{tabular}{lrrrr}
+\toprule
+Dataset & $F_1$ train & $F_1$ fixed & Flag train\% & Flag fixed\% \\
+\midrule
+Credit Card Fraud & 0.203 & 0.102 & 0.168 & 2.063 \\
+Cardio & 0.618 & 0.406 & 9.854 & 2.701 \\
+Water Quality & 0.512 & 0.023 & 49.675 & 1.789 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \subsection{Detection rate versus injection severity}
 \label{sec:severity}
 The synthetic magnitudes are a design choice, so we sweep them. A single
@@ -626,10 +662,10 @@ marks severity $1.0$.}
 
 \subsection{Verification outcomes and computation cost}
 \label{sec:verification-results}
-At the current revision, the routine suite executes 189 tests successfully
+At the current revision, the routine suite executes 199 tests successfully
 and excludes two tests that require the full real datasets. Its exact
-coverage is 1,332 of 1,392 executable lines ($95.69\%$) and 248 of 296
-branches ($83.78\%$). The coverage gate consequently fails. An initial
+coverage is 1,334 of 1,392 executable lines ($95.83\%$) and 250 of 296
+branches ($84.46\%$). The coverage gate consequently fails. An initial
 mutation campaign on the metric module eliminates 86 of 97 generated
 mutants ($88.66\%$); 11 survive, and no repository-wide mutation score is
 available. The deeper gate also fails. These figures expose unfinished

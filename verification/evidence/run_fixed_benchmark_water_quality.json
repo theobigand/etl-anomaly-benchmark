@@ -1,0 +1,66 @@
+{
+  "captured_at": "2026-10-14T04:33:20.263051+00:00",
+  "dataset": {
+    "bytes": 525187,
+    "identity": "water_quality",
+    "path": "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/data/water_quality.csv",
+    "sha256": "904004bde729bfe3d2e195f46343bceead09e32a0eb95bb8184e7e20e029b2bf"
+  },
+  "experiment": "real_benchmark",
+  "outputs": [
+    "benchmark_water_quality_20261014_043320.csv",
+    "benchmark_water_quality_20261014_043320.md",
+    "split_ids_water_quality_20261014_043320.json.gz"
+  ],
+  "packages": {
+    "great-expectations": "1.24.0",
+    "numpy": "2.4.6",
+    "pandas": "3.0.6",
+    "pyod": "3.6.7",
+    "scikit-learn": "1.9.1"
+  },
+  "platform": "macOS-27.0-arm64-arm-64bit",
+  "python": "3.11.17",
+  "schema_version": 1,
+  "seeds": [
+    42,
+    1,
+    2,
+    3,
+    4
+  ],
+  "settings": {
+    "calibration": "fixed",
+    "detectors": [
+      "zscore",
+      "iqr",
+      "great_expectations",
+      "isolation_forest",
+      "lof",
+      "ocsvm"
+    ],
+    "features": [
+      "ph",
+      "Hardness",
+      "Solids",
+      "Chloramines",
+      "Sulfate",
+      "Conductivity",
+      "Organic_carbon",
+      "Trihalomethanes",
+      "Turbidity"
+    ],
+    "fit_sample": null,
+    "fixed_contamination": 0.02,
+    "pr_auc_definition": "average_precision",
+    "split_ratios": [
+      0.7,
+      0.15,
+      0.15
+    ],
+    "split_strategy": "stratified"
+  },
+  "source_fingerprint": "0232488f00ae61e3fc6b580a87fb6abda6b73a7a4f216461c2ee2fc32b0d5609",
+  "source_revision": "8481264355d61da4e1aad27564e88ed51e33b608",
+  "worktree_dirty": false
+}
