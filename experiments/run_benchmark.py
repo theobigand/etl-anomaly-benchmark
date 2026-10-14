@@ -37,7 +37,11 @@ from etl_benchmark.datasets import ANOMALY_COLUMN, DATASETS, DatasetSpec  # noqa
 from etl_benchmark.logging_setup import setup_logging  # noqa: E402
 from etl_benchmark.metrics import compute_metrics  # noqa: E402
 from etl_benchmark.pipeline import detect  # noqa: E402
-from etl_benchmark.registry import all_detectors, calibrate_contamination  # noqa: E402
+from etl_benchmark.registry import (  # noqa: E402
+    DETECTOR_NAMES,
+    all_detectors,
+    calibrate_contamination,
+)
 from etl_benchmark.split import stratified_split  # noqa: E402
 
 log = logging.getLogger(__name__)
@@ -85,6 +89,15 @@ def evaluate(
             row["flagged_pct"],
         )
     return pd.DataFrame(rows).set_index("detector")
+
+
+def not_run(spec: DatasetSpec, eligible: list[str]) -> dict[str, str]:
+    """Registered detectors absent from a run, each with the reason."""
+    return {
+        name: "not requested" if name in eligible else f"ineligible: {spec.note}"
+        for name in DETECTOR_NAMES
+        if name not in spec.detector_names
+    }
 
 
 def run(
@@ -149,6 +162,7 @@ def main() -> None:
     logging.getLogger("great_expectations").setLevel(logging.WARNING)
 
     spec = DATASETS[args.dataset]
+    eligible = spec.detector_names
     if args.detectors:
         unknown = set(args.detectors) - set(spec.detector_names)
         if unknown:
@@ -197,6 +211,7 @@ def main() -> None:
             "split_strategy": "stratified",
             "fit_sample": args.fit_sample,
             "detectors": spec.detector_names,
+            "not_run": not_run(spec, eligible),
             "features": feature_names,
             "calibration": args.calibration,
             "fixed_contamination": args.fixed_contamination,

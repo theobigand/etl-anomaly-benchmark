@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-14T08:41:16.251676+00:00",
+  "captured_at": "2026-10-14T09:07:45.415134+00:00",
   "dataset": {
     "bytes": 770024,
     "identity": "cardio",
@@ -8,9 +8,9 @@
   },
   "experiment": "real_benchmark",
   "outputs": [
-    "benchmark_cardio_20261014_084116.csv",
-    "benchmark_cardio_20261014_084116.md",
-    "split_ids_cardio_20261014_084116.json.gz"
+    "benchmark_cardio_20261014_090745.csv",
+    "benchmark_cardio_20261014_090745.md",
+    "split_ids_cardio_20261014_090745.json.gz"
   ],
   "packages": {
     "great-expectations": "1.24.0",
@@ -64,6 +64,7 @@
     ],
     "fit_sample": null,
     "fixed_contamination": 0.02,
+    "not_run": {},
     "pr_auc_definition": "average_precision",
     "split_ratios": [
       0.7,
@@ -72,7 +73,7 @@
     ],
     "split_strategy": "stratified"
   },
-  "source_fingerprint": "4bb12bc9db2c76ea91af4913d90642821e6008e2b7c91bcb15c582959fc053b5",
-  "source_revision": "bedd5e797b1b5d9c048b4b484d55228b5f14d882",
+  "source_fingerprint": "2dd09773a41675b4ec7051cecea8609ab69135ebd06f1b04340d2a3cd92a60a0",
+  "source_revision": "cd531741f869ca94b90334c507eecc81633f644c",
   "worktree_dirty": false
 }
