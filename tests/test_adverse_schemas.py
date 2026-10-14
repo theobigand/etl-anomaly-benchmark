@@ -43,3 +43,22 @@ def test_constant_feature_has_finite_output(factory):
     result = detect(frame, factory())
     assert result.flags.index.equals(frame.index)
     assert np.isfinite(result.scores).all()
+
+
+@pytest.mark.parametrize("factory", [ZScoreDetector, IQRDetector, IsolationForestDetector])
+def test_detectors_read_features_by_name_so_extra_and_reordered_columns_are_harmless(factory):
+    rng = np.random.default_rng(1)
+    train = pd.DataFrame({"a": rng.normal(size=40), "b": rng.normal(size=40)})
+    probe = pd.DataFrame({"a": [0.1, 5.0], "b": [-0.2, 4.0]})
+    detector = factory().fit(train)
+    expected = detector.score(probe)
+    rearranged = probe[["b", "a"]].assign(note=["x", "y"], extra=[1.0, 2.0])
+    pd.testing.assert_series_equal(detector.score(rearranged), expected)
+
+
+def test_the_pipeline_still_refuses_a_changed_schema_between_fit_and_evaluation():
+    train = pd.DataFrame({"a": [1.0, 2.0, 3.0], "b": [3.0, 2.0, 1.0]})
+    with pytest.raises(ValueError, match="schema must match in order"):
+        detect(train[["b", "a"]], ZScoreDetector(), fit_df=train)
+    with pytest.raises(ValueError, match="schema must match in order"):
+        detect(train.assign(c=0.0), ZScoreDetector(), fit_df=train)
