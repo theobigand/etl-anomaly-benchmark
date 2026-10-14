@@ -390,9 +390,9 @@ $15\%$ test split. Higher is better except flagged rows and time.}
 \toprule
 Detector & Prec. & Rec. & $F_1$ & ROC & PR & Flag.\% & Time (s) \\
 \midrule
-Z-score            & 0.011 & 0.870 & 0.021 & 0.926 & 0.078 & 13.4 & \textbf{0.03} \\
+Z-score            & 0.011 & 0.870 & 0.021 & 0.926 & 0.078 & 13.4 & \textbf{0.05} \\
 IQR                & 0.003 & \textbf{0.966} & 0.007 & 0.911 & 0.018 & 48.6 & 0.12 \\
-Great Expectations & 0.037 & 0.676 & 0.070 & 0.830 & \textbf{0.182} & 3.1 & 1.27 \\
+Great Expectations & 0.037 & 0.676 & 0.070 & 0.830 & \textbf{0.182} & 3.1 & 1.28 \\
 Isolation Forest   & \textbf{0.202} & 0.206 & \textbf{0.203} & \textbf{0.934} & 0.120 & \textbf{0.2} & 1.73 \\
 \bottomrule
 \end{tabular}
@@ -455,12 +455,12 @@ the $15\%$ test split. Time is the in-pipeline fit+predict+score latency.}
 \toprule
 Detector & Prec. & Rec. & $F_1$ & ROC & PR & Time (s) \\
 \midrule
-Z-score            & \textbf{1.000} & 0.196 & 0.328 & \textbf{0.742} & \textbf{0.544} & \textbf{0.003} \\
+Z-score            & \textbf{1.000} & 0.196 & 0.328 & \textbf{0.742} & \textbf{0.544} & \textbf{0.002} \\
 IQR                & 0.584 & 0.396 & 0.472 & 0.675 & 0.452 & 0.003 \\
-Great Expectations & 0.951 & 0.202 & 0.333 & 0.600 & 0.333 & 0.29 \\
-Isolation Forest   & 0.495 & \textbf{0.499} & \textbf{0.497} & 0.735 & 0.485 & 0.19 \\
+Great Expectations & 0.951 & 0.202 & 0.333 & 0.600 & 0.333 & 0.25 \\
+Isolation Forest   & 0.495 & \textbf{0.499} & \textbf{0.497} & 0.735 & 0.485 & 0.15 \\
 LOF                & 0.388 & 0.420 & 0.404 & 0.659 & 0.437 & 0.14 \\
-One-Class SVM      & 0.478 & 0.485 & 0.481 & 0.722 & 0.520 & 2.57 \\
+One-Class SVM      & 0.478 & 0.485 & 0.481 & 0.722 & 0.520 & 2.60 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -626,10 +626,10 @@ marks severity $1.0$.}
 
 \subsection{Verification outcomes and computation cost}
 \label{sec:verification-results}
-At the current revision, the routine suite executes 173 tests successfully
+At the current revision, the routine suite executes 181 tests successfully
 and excludes two tests that require the full real datasets. Its exact
-coverage is 1,210 of 1,371 executable lines ($88.26\%$) and 225 of 284
-branches ($79.23\%$). The coverage gate consequently fails. An initial
+coverage is 1,227 of 1,392 executable lines ($88.15\%$) and 235 of 296
+branches ($79.39\%$). The coverage gate consequently fails. An initial
 mutation campaign on the metric module eliminates 86 of 97 generated
 mutants ($88.66\%$); 11 survive, and no repository-wide mutation score is
 available. The deeper gate also fails. These figures expose unfinished

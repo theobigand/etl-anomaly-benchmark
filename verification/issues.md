@@ -16,7 +16,7 @@ sont pas tous remplis.
   dans `README.md`.
 - **#6** : FAST mesure lignes et branches, y compris dans les commandes en
   sous-processus, et échoue si elles ne sont pas toutes couvertes. La
-  couverture actuelle est de 1210/1371 lignes et 225/284 branches.
+  couverture actuelle est de 1227/1392 lignes et 235/296 branches.
 - **#7** : l'essai de mutation porte sur `metrics.py` ; 11 mutants survivent
   encore. `mutation_notes.md` les classe. La campagne sur le reste du code
   n'a pas été lancée.
