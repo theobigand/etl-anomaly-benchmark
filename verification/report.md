@@ -43,7 +43,7 @@ archivés séparément et leurs chiffres sont rapprochés du manuscrit par un te
 
 | Commande | Résultat | Détail |
 | --- | --- | --- |
-| `make verify-fast` | Échec | 199 tests réussis, 2 tests réels exclus ; couverture incomplète. |
+| `make verify-fast` | Échec | 200 tests réussis, 2 tests réels exclus ; couverture incomplète. |
 | `make verify-deep` | Échec | 86 mutants éliminés sur 97 dans `metrics.py` ; seuil de 95 % non atteint. |
 | `make verify-real` | Réussite locale | 2 tests et contrôle des trois CSV présents. |
 | `python verification/scaling.py` | Réussite locale | 27 mesures sur trois tailles, hors FAST. |

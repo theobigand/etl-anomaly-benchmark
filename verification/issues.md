@@ -32,7 +32,9 @@ sont pas tous remplis.
   désormais un préréglage fixe sans labels et enregistre la politique choisie.
   Les tableaux principaux gardent le calibrage sur la prévalence du train ;
   une analyse de sensibilité avec le préréglage 0,02 sur les trois jeux réels
-  est archivée séparément et présentée comme exploratoire.
+  est archivée séparément et présentée comme exploratoire. Un test modifie
+  uniquement les labels du test et vérifie que le paramètre transmis aux
+  détecteurs reste celui du train.
 - **#11** : taille de population, taux nul et types injectés ont des tests.
   Il manque des contrôles fins des champs non modifiés et des sévérités.
 - **#12** : labels, valeurs manquantes et tailles des trois CSV locaux sont
