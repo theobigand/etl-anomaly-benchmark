@@ -1,6 +1,7 @@
 """Offline experiment entry points write only inside an explicit result directory."""
 
 import gzip
+import io
 import json
 import subprocess
 import sys
@@ -11,6 +12,7 @@ import pandas as pd
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "experiments"))
 pytestmark = pytest.mark.end_to_end
 
 
@@ -82,6 +84,53 @@ def test_real_benchmark_cli_records_fixed_calibration(tmp_path):
     settings = json.loads(next(output.glob("run_benchmark_*.json")).read_text())["settings"]
     assert settings["calibration"] == "fixed"
     assert settings["fixed_contamination"] == 0.02
+
+
+def test_synthetic_generation_is_repeatable_and_has_declared_types(tmp_path):
+    first = tmp_path / "first.csv"
+    again = tmp_path / "again.csv"
+    changed = tmp_path / "changed.csv"
+    for output, seed in ((first, 7), (again, 7), (changed, 8)):
+        _run("generate_synthetic.py", "--output", output, "--rows", 120, "--seed", seed)
+    assert first.read_bytes() == again.read_bytes()
+    assert first.read_bytes() != changed.read_bytes()
+    frame = pd.read_csv(first)
+    assert len(frame) >= 120
+    assert {"clean", "univariate_outlier", "missing_value"} <= set(frame.anomaly_type)
+
+
+def test_pipeline_demo_writes_sorted_rows_to_configured_directory(tmp_path, monkeypatch):
+    from etl_benchmark import config
+    from etl_benchmark.__main__ import main
+
+    source = tmp_path / "input.csv"
+    pd.DataFrame({"V1": [0.0, 1.0, 2.0, 100.0], "Class": [0, 0, 0, 1]}).to_csv(source, index=False)
+    output = tmp_path / "out"
+    monkeypatch.setattr(config, "RESULTS_DIR", output)
+    monkeypatch.setattr(sys, "argv", ["etl-benchmark", "--input", str(source), "--detector", "iqr"])
+    main()
+    clean = pd.read_csv(output / "pipeline_clean.csv")
+    anomalies = pd.read_csv(output / "pipeline_anomalies.csv")
+    assert sorted(pd.concat([clean, anomalies]).V1.tolist()) == [0.0, 1.0, 2.0, 100.0]
+    assert anomalies.V1.tolist() == [100.0]
+
+
+def test_cardio_fetch_converts_source_arrays_without_network(tmp_path, monkeypatch):
+    import fetch_cardio
+
+    from etl_benchmark import config
+
+    payload = io.BytesIO()
+    np.savez(payload, X=np.array([[1.0, 2.0], [3.0, 4.0]]), y=np.array([0, 1]))
+    monkeypatch.setattr(
+        fetch_cardio.urllib.request, "urlopen", lambda url, timeout: io.BytesIO(payload.getvalue())
+    )
+    target = tmp_path / "cardio.csv"
+    monkeypatch.setattr(config, "CARDIO_CSV", target)
+    fetch_cardio.main()
+    actual = pd.read_csv(target)
+    assert actual.columns.tolist() == ["f00", "f01", "label"]
+    assert actual.to_numpy().tolist() == [[1.0, 2.0, 0.0], [3.0, 4.0, 1.0]]
 
 
 def test_synthetic_cli_writes_tables_and_heatmap(tmp_path):
