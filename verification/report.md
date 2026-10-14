@@ -38,13 +38,13 @@ du benchmark stratifié.
 
 | Commande | Résultat | Détail |
 | --- | --- | --- |
-| `make verify-fast` | Échec | 185 tests réussis, 2 tests réels exclus ; couverture incomplète. |
+| `make verify-fast` | Échec | 189 tests réussis, 2 tests réels exclus ; couverture incomplète. |
 | `make verify-deep` | Échec | 86 mutants éliminés sur 97 dans `metrics.py` ; seuil de 95 % non atteint. |
 | `make verify-real` | Réussite locale | 2 tests et contrôle des trois CSV présents. |
 | `python verification/scaling.py` | Réussite locale | 27 mesures sur trois tailles, hors FAST. |
 | `make verify-all` | Échec | Reprend les échecs de FAST et DEEP. |
 
-FAST mesure **1293/1392 lignes (92,89 %)** et **240/296 branches (81,08 %)**.
+FAST mesure **1332/1392 lignes (95,69 %)** et **248/296 branches (83,78 %)**.
 La mesure inclut désormais les commandes lancées en sous-processus. Les
 scripts `fetch_cardio.py`, `generate_synthetic.py` et l'entrée principale
 sont désormais parcourus par FAST avec des données construites localement. Le détail par

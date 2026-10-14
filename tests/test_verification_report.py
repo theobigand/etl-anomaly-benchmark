@@ -61,3 +61,64 @@ def test_report_keeps_exact_denominators_and_failure_state(tmp_path):
     assert report["tests"] == {"total": 2, "failures": 1, "errors": 0, "skipped": 0}
     assert report["coverage"]["line"] == {"covered": 7, "coverable": 10}
     assert report["coverage"]["branch"] == {"covered": 3, "coverable": 5}
+
+
+def test_report_command_emits_pass_only_for_complete_evidence(tmp_path, monkeypatch):
+    coverage = tmp_path / "coverage.json"
+    junit = tmp_path / "junit.xml"
+    output = tmp_path / "report.json"
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "verification_report",
+            "--coverage",
+            str(coverage),
+            "--junit",
+            str(junit),
+            "--output",
+            str(output),
+        ],
+    )
+    coverage.write_text(
+        json.dumps(
+            {
+                "totals": {
+                    "covered_lines": 2,
+                    "num_statements": 2,
+                    "covered_branches": 1,
+                    "num_branches": 1,
+                }
+            }
+        )
+    )
+    junit.write_text('<testsuite tests="2" failures="0" errors="0" skipped="0"/>')
+    assert verification_report.main() == 0
+    assert json.loads(output.read_text())["status"] == "PASS"
+
+    junit.write_text('<testsuite tests="2" failures="0" errors="0" skipped="1"/>')
+    assert verification_report.main() == 1
+    assert json.loads(output.read_text())["status"] == "FAIL"
+
+
+def test_report_rejects_malformed_and_uninstrumented_evidence(tmp_path):
+    coverage = tmp_path / "coverage.json"
+    junit = tmp_path / "junit.xml"
+    junit.write_text('<testsuite tests="1" failures="0" errors="0" skipped="0"/>')
+    coverage.write_text("not json")
+    with pytest.raises(ValueError, match="malformed"):
+        verification_report.build_report(coverage, junit)
+    coverage.write_text(
+        json.dumps(
+            {
+                "totals": {
+                    "covered_lines": 0,
+                    "num_statements": 0,
+                    "covered_branches": 0,
+                    "num_branches": 0,
+                }
+            }
+        )
+    )
+    with pytest.raises(ValueError, match="zero instrumented"):
+        verification_report.build_report(coverage, junit)

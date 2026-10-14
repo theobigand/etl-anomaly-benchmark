@@ -1,4 +1,5 @@
 import hashlib
+import json
 import sys
 from pathlib import Path
 
@@ -47,3 +48,35 @@ def test_real_dataset_rejects_changed_population_or_positive_mapping(tmp_path):
     changed = verify_real.inspect_dataset(spec, expected={"positive_value": 0})
     assert changed["status"] == "FAIL"
     assert "positive_value" in changed["reason"]
+
+
+def test_real_verification_command_fails_closed_on_reference_errors(tmp_path, monkeypatch):
+    csv = tmp_path / "present.csv"
+    pd.DataFrame({"x": [1.0, 2.0], "Class": [0, 1]}).to_csv(csv, index=False)
+    monkeypatch.setattr(verify_real, "DATASETS", {"toy": DatasetSpec("toy", csv, "Class", 1)})
+    manifest = tmp_path / "manifest.json"
+    output = tmp_path / "report.json"
+    monkeypatch.setattr(verify_real, "MANIFEST", manifest)
+    monkeypatch.setattr(sys, "argv", ["verify_real", "--output", str(output)])
+
+    assert verify_real.main() == 1
+    assert json.loads(output.read_text())["datasets"][0]["status"] == "FAIL"
+
+    manifest.write_text(json.dumps({"datasets": {"toy": {"sha256": "wrong"}}}))
+    assert verify_real.main() == 1
+    assert "reference missing" in json.loads(output.read_text())["datasets"][0]["reason"]
+
+    expected = {
+        "sha256": hashlib.sha256(csv.read_bytes()).hexdigest(),
+        "raw_rows": 2,
+        "rows_after_transform": 2,
+        "anomalies": 1,
+        "positive_value": 1,
+    }
+    manifest.write_text(json.dumps({"datasets": {"toy": expected}}))
+    assert verify_real.main() == 0
+    assert json.loads(output.read_text())["datasets"][0]["status"] == "PASS"
+
+    csv.write_text("x,Class\n1,0\n2,0\n")
+    assert verify_real.main() == 1
+    assert json.loads(output.read_text())["datasets"][0]["status"] == "FAIL"
