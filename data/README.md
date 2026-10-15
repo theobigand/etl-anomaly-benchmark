@@ -2,9 +2,12 @@
 
 ## Credit Card Fraud (Kaggle)
 - Source : https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud
-- La fiche Kaggle indique « Open Database / Database Contents ». La révision
-  exacte téléchargée n'a pas été conservée ; la copie locale est identifiée
-  par le manifeste et reste hors dépôt.
+- La fiche Kaggle indique « Open Database / Database Contents ». Sa version
+  courante est la 3 (23 mars 2018, « Fixed preview » ; les versions 1 et 2 de
+  2016 sont les formats Rdata puis CSV). La copie locale pèse 150 828 752
+  octets, comme le total de la fiche, vérifié le 15 octobre 2026. Son hash n'a
+  pas pu être comparé à un nouveau téléchargement (compte Kaggle nécessaire) ;
+  il est dans le manifeste, et la copie reste hors dépôt.
 - Fichier attendu : `data/creditcard.csv`
 - Taille : 284 807 lignes × 31 colonnes
 - Anomalies : 492 fraudes (0.172%)
@@ -40,8 +43,10 @@
 - Source : `experiments/fetch_cardio.py` (télécharge un `.npz` cardiotocographie)
 - Source exacte : `adbench/datasets/Classical/6_cardio.npz` dans ADBench.
   La conversion du fichier source vérifié le 13 octobre 2026 reproduit
-  exactement le CSV local. ADBench publie son dépôt sous BSD-2-Clause ;
-  les droits du jeu Cardio sous-jacent ne sont pas précisés séparément.
+  exactement le CSV local. ADBench publie son dépôt sous BSD-2-Clause.
+  Le jeu sous-jacent est « Cardiotocography » de l'UCI (Campos et Bernardes,
+  2000, DOI 10.24432/C51S4N), sous licence CC BY 4.0 : l'attribution est
+  obligatoire.
 - Fichier attendu : `data/cardio.csv` (non versionné)
 - 1 831 lignes × 22 colonnes, 21 features déjà standardisées
 - Label : colonne `label` (1 = anomalie), 9.6 % d'anomalies
@@ -51,9 +56,8 @@
 
 Les sommes de contrôle des copies utilisées pour les expériences sont dans
 `verification/evidence/manifest.json`. `make verify-real` compare les fichiers
-présents sur la machine à ce manifeste. La révision exacte du téléchargement
-Credit Card et les droits sous-jacents de Cardio restent à établir avant une
-redistribution des données brutes ; celles-ci ne sont pas archivées ici.
+présents sur la machine à ce manifeste. Les données brutes ne sont pas archivées ici ; avant de les redistribuer, il
+faudrait comparer le hash du fichier Credit Card à un nouveau téléchargement.
 
 ## À venir
 - rien de bloquant

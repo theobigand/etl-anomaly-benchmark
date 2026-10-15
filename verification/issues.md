@@ -1,8 +1,7 @@
 # Avancement des tickets
 
 Au 14 octobre 2026, les tickets #3 à #11 et #13 à #29 sont fermés. Restent
-ouverts : #2 (coordination), #12 (révision du fichier Credit Card et droits de
-Cardio), #30 (vérification finale) et #31 (mutation des scripts
+ouverts : #2 (coordination), #30 (vérification finale) et #31 (mutation des scripts
 d'`experiments/`, suite de #7 : 24,3 % mesuré, voir `mutation_notes.md`). Les entrées ci-dessous gardent l'historique de
 chaque ticket et les limites qui subsistent après sa fermeture.
 
@@ -92,9 +91,9 @@ chaque ticket et les limites qui subsistent après sa fermeture.
   tableau restent à faire (hors du périmètre de ce ticket).
 - **#27** : les trois jeux réels présents ont été rejoués avec cinq graines.
   Water Quality et Cardio ont été comparés à leurs sources ; les copies locales
-  sont maintenant contrôlées contre le manifeste. La révision du fichier
-  Credit Card, les droits sous-jacents de Cardio et les partitions exactes
-  restent à établir.
+  sont maintenant contrôlées contre le manifeste. Le fichier Credit Card
+  correspond à la version 3 de la fiche Kaggle (taille) ; Cardio est sous
+  licence CC BY 4.0.
 - **#28** : un essai borné sur 100, 300 et 900 lignes enregistre temps,
   allocation Python, tailles d'entrée et machine (`scaling.md`). Il manque
   une étude contrôlée plus large et la mémoire native.

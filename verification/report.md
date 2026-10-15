@@ -120,8 +120,9 @@ commandes de rejeu sont conservées dans `verification/evidence/manifest.json`.
 Les CSV bruts ne sont pas archivés ici. Le CSV Water Quality correspond au
 miroir annoncé, et la conversion du fichier ADBench reproduit le CSV Cardio.
 `make verify-real` compare maintenant les copies locales aux valeurs attendues
-du manifeste. La révision du téléchargement Credit Card et les droits propres
-au jeu Cardio restent non établis pour une redistribution brute.
+du manifeste. Le fichier Credit Card a la taille de la version 3 de la fiche Kaggle
+(mars 2018) ; son hash n'a pas pu être comparé à un nouveau téléchargement.
+Cardio vient de l'UCI sous licence CC BY 4.0 (`data/README.md`).
 
 La CI lance FAST et conserve ses rapports. Le profil passe localement sur
 cette révision ; le résultat distant reste à vérifier. Les règles de protection de la branche distante n'ont
