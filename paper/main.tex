@@ -341,7 +341,7 @@ A second, manually invoked level asks whether these checks can fail.
 Mutation testing generates small source-level changes (a reversed
 comparison, an altered constant, a modified message) and counts how many
 make the routine suite fail. We apply it to the modules that compute a
-result, not to the experiment scripts. In addition, fourteen deliberate
+result and to the experiment scripts. In addition, fourteen deliberate
 scientific defects are applied one at a time to a temporary copy of the
 code, and a named test must fail on each: a scaler refitted on the rows
 being scored, the label passed to the detector as a feature, a contamination
@@ -366,7 +366,7 @@ establish that another machine will reproduce the same timings.
 
 We treat a failed or missing check as a limitation of the evidence, not as
 a successful experiment. Complete line and branch coverage and a mutation
-score of at least $95\%$ over the modules above are the targets, and the
+score of at least $95\%$ over the pipeline and the scripts are the targets, and the
 measured values, with what they leave out, are reported with the results
 below. The
 chronological split and the window-based drift monitor have a separate
@@ -390,7 +390,7 @@ contamination matches the prevalence: it flags only $0.17\%$ of rows and
 reaches a precision of $0.20$, the first usable operating point in the
 table, but its recall drops to $0.21$ and both are seed-sensitive
 ($F_1 = 0.20 \pm 0.07$). It keeps the best ROC-AUC ($0.934$). Great
-Expectations took $1.3$\,s on this run, against $0.03$--$0.11$\,s for the
+Expectations took $2.0$\,s on this run, against $0.06$--$0.19$\,s for the
 statistical rules; these times vary between runs. LOF and the
 One-Class SVM were not run at $284$k rows, where their cost was expected to
 be prohibitive; we did not measure it.
@@ -406,10 +406,10 @@ $15\%$ test split. Higher is better except flagged rows and time.}
 \toprule
 Detector & Prec. & Rec. & $F_1$ & ROC & PR & Flag.\% & Time (s) \\
 \midrule
-Z-score            & 0.011 & 0.870 & 0.021 & 0.926 & 0.078 & 13.4 & \textbf{0.03} \\
-IQR                & 0.003 & \textbf{0.966} & 0.007 & 0.911 & 0.018 & 48.6 & 0.11 \\
-Great Expectations & 0.037 & 0.676 & 0.070 & 0.830 & \textbf{0.182} & 3.1 & 1.27 \\
-Isolation Forest   & \textbf{0.202} & 0.206 & \textbf{0.203} & \textbf{0.934} & 0.120 & \textbf{0.2} & 1.70 \\
+Z-score            & 0.011 & 0.870 & 0.021 & 0.926 & 0.078 & 13.4 & \textbf{0.06} \\
+IQR                & 0.003 & \textbf{0.966} & 0.007 & 0.911 & 0.018 & 48.6 & 0.19 \\
+Great Expectations & 0.037 & 0.676 & 0.070 & 0.830 & \textbf{0.182} & 3.1 & 2.01 \\
+Isolation Forest   & \textbf{0.202} & 0.206 & \textbf{0.203} & \textbf{0.934} & 0.120 & \textbf{0.2} & 2.65 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -472,11 +472,11 @@ the $15\%$ test split. Time is the in-pipeline fit+predict+score latency.}
 Detector & Prec. & Rec. & $F_1$ & ROC & PR & Time (s) \\
 \midrule
 Z-score            & \textbf{1.000} & 0.196 & 0.328 & \textbf{0.742} & \textbf{0.544} & \textbf{0.002} \\
-IQR                & 0.584 & 0.396 & 0.472 & 0.675 & 0.452 & 0.003 \\
-Great Expectations & 0.951 & 0.202 & 0.333 & 0.600 & 0.333 & 0.25 \\
-Isolation Forest   & 0.495 & \textbf{0.499} & \textbf{0.497} & 0.735 & 0.485 & 0.17 \\
+IQR                & 0.584 & 0.396 & 0.472 & 0.675 & 0.452 & 0.004 \\
+Great Expectations & 0.951 & 0.202 & 0.333 & 0.600 & 0.333 & 0.26 \\
+Isolation Forest   & 0.495 & \textbf{0.499} & \textbf{0.497} & 0.735 & 0.485 & 0.16 \\
 LOF                & 0.388 & 0.420 & 0.404 & 0.659 & 0.437 & 0.14 \\
-One-Class SVM      & 0.478 & 0.485 & 0.481 & 0.722 & 0.520 & 2.57 \\
+One-Class SVM      & 0.478 & 0.485 & 0.481 & 0.722 & 0.520 & 2.63 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -679,14 +679,14 @@ marks severity $1.0$.}
 
 \subsection{Verification outcomes and computation cost}
 \label{sec:verification-results}
-At the current revision the routine suite runs 447 tests, plus two that need
-the full datasets and are run separately. Coverage is complete: 1,466 of
-1,466 executable lines and 300 of 300 branches. The mutation campaign on the
-pipeline modules kills 1,824 of 1,900 mutants ($96.00\%$). The 76 survivors
-count as failures; the ones we examined do not change any observable output
-(passing a default \texttt{dtype} explicitly, for instance). A first,
-separate run on the experiment scripts kills only $24\%$ of their $4{,}666$
-mutants, so this score does not describe the whole repository.
+At the current revision the routine suite runs 561 tests, plus two that need
+the full datasets and are run separately. Coverage is complete: 1,467 of
+1,467 executable lines and 294 of 294 branches. The mutation campaign on the
+pipeline modules and the experiment scripts kills 4,487 of 4,594 mutants
+($97.67\%$): 1,824 of 1,900 in the pipeline and 2,663 of 2,694 in the
+scripts. The 107 survivors count as failures; each one we examined leaves
+the observable result unchanged (passing a default \texttt{dtype} or
+\texttt{index} explicitly, for instance).
 
 All fourteen deliberate defects are caught, but not always by the tests we
 started with. Four went through every existing test: a scaler refitted on
@@ -705,7 +705,7 @@ stage; CSV loading, deduplication and figure rendering are excluded. A
 separate local growth experiment ran Isolation Forest, LOF and One-Class
 SVM on 100, 300 and 900 generated rows, with eight features and three
 repetitions per size. All 27 runs completed. At 900 rows, median measured
-detection times were 0.380, 0.020 and 0.048 seconds, respectively, on the
+detection times were 0.827, 0.038 and 0.099 seconds, respectively, on the
 recorded macOS/ARM environment. This small in-memory experiment measures
 neither native-library peak memory nor the scaling of the 284,000-row
 fraud dataset. It supports reporting the workload and omissions explicitly,
@@ -767,9 +767,9 @@ Forest on fraud $F_1 = 0.20 \pm 0.07$), so those numbers should be read
 as ranges.
 Verification has its own limits: complete line and branch coverage does not
 establish that the scientific assertions detect every defect. Mutation
-testing reaches the target on the pipeline modules but not on the experiment
-scripts. The
-complete real-data checks were performed with the three files available
+testing reaches the target on the pipeline modules and the scripts, but it
+cannot tell us whether the injected defects and the tests cover every way an
+experiment can go wrong. The complete real-data checks were performed with the three files available
 locally. The Water
 Quality file matches its named mirror, and the Cardio CSV can be reproduced
 from the current ADBench archive. The Credit Card file has the size of the

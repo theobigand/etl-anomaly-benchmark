@@ -96,3 +96,14 @@ def test_calibration_rejects_unknown_policy():
 def test_clip_contamination_rejects_invalid_prevalence(prevalence):
     with pytest.raises(ValueError, match="^prevalence must be finite and between 0 and 1$"):
         clip_contamination(prevalence)
+
+
+def test_a_fixed_contamination_is_validated_without_any_labels():
+    lo, hi = config.ML_CONTAMINATION_BOUNDS
+    assert registry.fixed_contamination(0.02) == 0.02
+    assert registry.fixed_contamination(lo) == lo and registry.fixed_contamination(hi) == hi
+    for bad in (None, float("nan"), float("inf"), lo / 2, hi * 2):
+        with pytest.raises(
+            ValueError, match=f"^fixed contamination must be between {lo} and {hi}$"
+        ):
+            registry.fixed_contamination(bad)

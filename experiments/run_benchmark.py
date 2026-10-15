@@ -41,6 +41,7 @@ from etl_benchmark.registry import (  # noqa: E402
     DETECTOR_NAMES,
     all_detectors,
     calibrate_contamination,
+    fixed_contamination,
 )
 from etl_benchmark.split import stratified_split  # noqa: E402
 
@@ -153,7 +154,6 @@ def main() -> None:
     parser.add_argument(
         "--fit-sample",
         type=int,
-        default=None,
         help="cap the train set at N rows before fitting (bounds quadratic models)",
     )
     args = parser.parse_args()
@@ -174,7 +174,7 @@ def main() -> None:
         parser.error("--fit-sample must be positive")
     if args.calibration == "fixed":
         try:
-            calibrate_contamination([], policy="fixed", fixed=args.fixed_contamination)
+            fixed_contamination(args.fixed_contamination)
         except ValueError as exc:
             parser.error(str(exc))
     elif args.fixed_contamination is not None:
@@ -191,15 +191,16 @@ def main() -> None:
     md = header + to_markdown(mean, std)
     md_out.write_text(md)
     split_out = args.results_dir / f"split_ids_{spec.name}_{stamp}.json.gz"
+    frame = spec.load()
     write_split_ids(
         split_out,
-        spec.load(),
+        frame,
         ANOMALY_COLUMN,
         args.seeds,
         config.SPLIT_RATIOS,
         fit_sample=args.fit_sample,
     )
-    feature_names = list(spec.features(pd.read_csv(spec.csv, nrows=0)).columns)
+    feature_names = list(spec.features(frame).columns)
     write_record(
         args.results_dir / f"run_benchmark_{spec.name}_{stamp}.json",
         experiment="real_benchmark",

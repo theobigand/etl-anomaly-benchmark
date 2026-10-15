@@ -26,10 +26,8 @@ def inspect_dataset(spec: DatasetSpec, expected: dict | None = None) -> dict:
             "path": str(spec.csv),
         }
     try:
-        digest = hashlib.sha256()
         with spec.csv.open("rb") as stream:
-            for block in iter(lambda: stream.read(1024 * 1024), b""):
-                digest.update(block)
+            digest = hashlib.file_digest(stream, hashlib.sha256)
         raw = pd.read_csv(spec.csv)
         frame = spec.load()
         features = spec.features(frame)

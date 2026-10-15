@@ -111,13 +111,6 @@
   },
   "deferred_work": [
     {
-      "activation_condition": "Extend the mutation configuration to experiments/ and certify all eligible files",
-      "affected_scope": "experiments/",
-      "description": "Full mutation certification; the 1824/1900 killed campaign covers src/etl_benchmark only",
-      "promotion_boundary": "DEEP",
-      "reason": "The campaign covers the computing modules of src/etl_benchmark; the experiments/ scripts have no mutation result. Zero in the mutation field means NOT_RUN, not a measured zero-percent score."
-    },
-    {
       "activation_condition": "M2 models and chronological study are implemented",
       "affected_scope": "quality/ and experiments/",
       "description": "M2 deep detectors and real-data temporal study",

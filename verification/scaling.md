@@ -16,10 +16,12 @@ versions, les réglages et les échecs éventuels ; `scaling.csv` conserve chaqu
 répétition. Une méthode qui échoue reçoit une ligne `FAIL` avec sa raison.
 
 Sur l'essai local du 15 octobre 2026, les médianes de `detect_s` pour
-100/300/900 lignes sont respectivement 0,368/0,375/0,380 s pour Isolation
-Forest, 0,008/0,009/0,020 s pour LOF et 0,006/0,011/0,048 s pour One-Class
-SVM. Les pics d'allocations Python à 900 lignes sont d'environ 0,66 Mo,
-1,07 Mo et 0,32 Mo dans le même ordre. Les 27 exécutions ont réussi.
+100/300/900 lignes sont respectivement 0,669/0,861/0,827 s pour Isolation
+Forest, 0,013/0,018/0,038 s pour LOF et 0,013/0,022/0,099 s pour One-Class
+SVM. La machine exécutait alors d'autres tâches, ce qui a pu allonger ces
+temps par rapport à l'essai précédent. Les pics
+d'allocations Python à 900 lignes sont d'environ 0,65 Mo, 1,07 Mo et 0,32 Mo
+dans le même ordre. Les 27 exécutions ont réussi.
 
 Ces petites tailles ne permettent pas d'extrapoler aux 284 000 lignes du jeu
 de fraude. Les durées ont aussi varié lors des rejeux du benchmark principal.

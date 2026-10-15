@@ -99,7 +99,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--severities", type=float, nargs="+", default=[0.5, 1.0, 2.0, 3.0, 5.0])
     parser.add_argument("--seeds", type=int, nargs="+", default=[42, 1, 2])
-    parser.add_argument("--rows", type=int, default=None)
+    parser.add_argument("--rows", type=int)
     parser.add_argument("--figure", type=Path, default=PAPER_FIGURE)
     parser.add_argument("--results-dir", type=Path, default=config.RESULTS_DIR)
     args = parser.parse_args()
