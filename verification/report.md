@@ -44,14 +44,14 @@ archivés séparément et leurs chiffres sont rapprochés du manuscrit par un te
 
 | Commande | Résultat | Détail |
 | --- | --- | --- |
-| `make verify-fast` | Réussite locale | 443 tests réussis, 2 tests réels et 14 essais de défauts exclus ; lignes et branches couvertes. |
+| `make verify-fast` | Réussite locale | 447 tests réussis, 2 tests réels et 14 essais de défauts exclus ; lignes et branches couvertes. |
 | `make verify-deep` | Réussite locale | 1824 mutants éliminés sur 1900 dans `src/etl_benchmark` (96,00 %) ; les scripts d'`experiments/` ne sont pas mutés. |
 | `make verify-faults` | Réussite locale | 14 défauts introduits dans une copie temporaire, tous détectés par un test prévu. |
 | `make verify-real` | Réussite locale | 2 tests et contrôle des trois CSV présents. |
 | `python verification/scaling.py` | Réussite locale | 27 mesures sur trois tailles, hors FAST. |
 | `make verify-all` | Réussite locale sur `src/` | DEEP ne couvre pas `experiments/` ; le statut reste INCOMPLETE. |
 
-FAST mesure **1463/1463 lignes et 300/300 branches (100 % chacune)**.
+FAST mesure **1466/1466 lignes et 300/300 branches (100 % chacune)**.
 La mesure inclut désormais les commandes lancées en sous-processus. Les
 scripts `fetch_cardio.py`, `generate_synthetic.py` et l'entrée principale
 sont désormais parcourus par FAST avec des données construites localement. Le détail par
@@ -69,7 +69,7 @@ sur `metrics.py` seul et à 74,5 % une fois élargie sans nouveaux tests.
 de mutation ; le profil indique donc `NOT_RUN` pour la portée complète et sa
 valeur numérique zéro n'est pas une mesure.
 
-## Rejeu du 14 octobre 2026
+## Rejeu du 15 octobre 2026
 
 Tous les essais archivés ont été rejoués sur le code courant (banc synthétique,
 sévérité, courbes, trois jeux réels, trois calibrages fixes, étude de
