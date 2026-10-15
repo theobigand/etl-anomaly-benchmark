@@ -1,9 +1,12 @@
 # Avancement des tickets
 
-Au 14 octobre 2026, les tickets #3 à #11 et #13 à #29 sont fermés. Restent
-ouverts : #2 (coordination), #30 (vérification finale) et #31 (mutation des scripts
-d'`experiments/`, suite de #7 : 24,3 % mesuré, voir `mutation_notes.md`). Les entrées ci-dessous gardent l'historique de
-chaque ticket et les limites qui subsistent après sa fermeture.
+Au 15 octobre 2026, tous les tickets de la feuille de route sont fermés (#2 à
+#31). Les entrées ci-dessous gardent l'historique de chaque ticket et les
+limites qui subsistent après sa fermeture. Le statut général de la
+vérification reste **INCOMPLETE** (voir « Travail restant » dans `report.md`) :
+modèle LSTM, évaluation chronologique sur données réelles, étude de coût dans un
+environnement contrôlé, hash du fichier Credit Card face à un nouveau
+téléchargement, et absence de règle de protection sur la branche `main`.
 
 ## Vérification du socle (#3 à #7)
 
@@ -103,7 +106,8 @@ chaque ticket et les limites qui subsistent après sa fermeture.
   sont sans effet. La politique est dans `verification/README.md` avec les cas
   non résolus (schéma changeant en cours de flux, horodatages invalides de
   bout en bout).
-- **#30** : attendre la résolution des points précédents, puis refaire les
-  vérifications et les comparaisons publiées sur un état unique du dépôt.
+- **#30** : les vérifications et les comparaisons publiées ont été refaites
+  sur un état unique du dépôt (rejeu complet, FAST, DEEP, défauts introduits,
+  REAL, CI distante) ; les limites restantes sont énumérées dans `report.md`.
 
 Le ticket de coordination **#2** reste ouvert.
