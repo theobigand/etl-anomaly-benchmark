@@ -424,3 +424,46 @@ def test_help_texts_stand_alone(monkeypatch, capsys):
         run_curves.main()
     text = " ".join(capsys.readouterr().out.split())
     assert re.search(r"(^|\s)synthetic row count for an offline smoke run(\s|$)", text)
+
+
+def test_curve_points_are_the_precision_recall_pairs_of_the_scores(tmp_path, captured_figures):
+    from matplotlib.colors import to_hex
+    from sklearn.metrics import precision_recall_curve
+
+    y = np.array([0] * 30 + [1] * 10)
+    methods = {f"m{i}": np.random.default_rng(i).random(40) for i in range(12)}
+    results = {"one": {"y": y, "base_rate": 0.25, "scores": methods}}
+    run_curves.render_pr(results, tmp_path / "pr.png")
+    ax = captured_figures[-1].axes[0]
+    curves = [line for line in ax.get_lines() if line.get_linestyle() != "--"]
+    for line, scores in zip(curves, methods.values(), strict=True):
+        precision, recall, _ = precision_recall_curve(y, scores)
+        assert list(line.get_xdata()) == list(recall) and list(line.get_ydata()) == list(precision)
+    palette = plt.get_cmap("tab10")
+    assert [to_hex(line.get_color()) for line in curves] == [
+        to_hex(palette(i % 10)) for i in range(12)
+    ]
+
+
+def test_main_forwards_the_row_count_to_scores_and_to_the_sweep(toy, tmp_path, monkeypatch):
+    seen = {}
+    real_scores, real_sweep = run_curves.scores_for, run_curves.contamination_sweep
+
+    def scores(dataset, seed, rows):
+        seen["scores"] = (dataset, seed, rows)
+        return real_scores(dataset, seed, 300)
+
+    def sweep(seed, datasets, rows):
+        seen["sweep"] = (seed, datasets, rows)
+        return real_sweep(seed, datasets, 300)
+
+    monkeypatch.setattr(run_curves, "scores_for", scores)
+    monkeypatch.setattr(run_curves, "contamination_sweep", sweep)
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        ["run_curves", "--datasets", "synthetic", "--rows", "250", "--seed", "6"]
+        + ["--figure", str(tmp_path / "f.png"), "--results-dir", str(tmp_path / "r")],
+    )
+    run_curves.main()
+    assert seen == {"scores": ("synthetic", 6, 250), "sweep": (6, ["synthetic"], 250)}

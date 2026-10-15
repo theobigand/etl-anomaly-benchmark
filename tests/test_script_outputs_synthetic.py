@@ -381,17 +381,19 @@ def test_synthetic_partitions_are_pinned_for_the_published_tables():
     )
     assert [len(part) for part in parts] == [432, 93, 93]
     assert all(part.index.equals(pd.RangeIndex(len(part))) for part in parts)
+    frame = make_synthetic(n_rows=600, seed=3)
+    assert all(part.columns.tolist() == frame.columns.tolist() for part in parts)
 
 
 def test_per_type_scores_keep_clean_rows_as_the_only_extra_negatives():
     types = pd.Series(["clean", "clean", "missing_value", "duplicate", "duplicate"])
-    flags = pd.Series([False, True, True, True, False])
+    flags = pd.Series([False, False, True, True, True])
     recall, precision = bench._per_type(flags, types)
-    assert recall["missing_value"] == 1.0 and precision["missing_value"] == 0.5
-    assert recall["duplicate"] == 0.5 and precision["duplicate"] == 0.5
+    # the other anomaly type (duplicate) must not count as a negative for missing_value
+    assert recall["missing_value"] == 1.0 and precision["missing_value"] == 1.0
+    assert recall["duplicate"] == 1.0 and precision["duplicate"] == 1.0
     assert np.isnan(recall["temporal_drift"]) and np.isnan(precision["temporal_drift"])
-    none_flagged = pd.Series([False] * 5)
-    recall, precision = bench._per_type(none_flagged, types)
+    recall, precision = bench._per_type(pd.Series([False] * 5), types)
     assert recall["duplicate"] == 0.0 and precision["duplicate"] == 0.0
 
 
@@ -565,3 +567,65 @@ def test_severity_rows_default_to_none_and_help_is_standalone(monkeypatch, capsy
     with pytest.raises(SystemExit):
         run_severity.main()
     assert "--rows ROWS" in " ".join(capsys.readouterr().out.split())
+
+
+def test_heatmap_colour_bar_is_a_thin_strip_close_to_the_matrix(tmp_path, captured_figures):
+    recall = pd.DataFrame(
+        np.random.default_rng(0).random((8, 6)), index=list("abcdefgh"), columns=ANOMALY_TYPES
+    )
+    bench.render_heatmap(recall, tmp_path / "h.png")
+    matrix, strip = captured_figures[-1].axes
+    a, c = matrix.get_position(), strip.get_position()
+    assert 0.020 < c.width / (a.width + c.width) < 0.030
+    gap = c.x0 - a.x1
+    assert 0.025 < gap / (a.width + c.width + gap) < 0.035
+
+
+def test_heatmap_cells_show_the_values_they_colour(tmp_path, captured_figures):
+    recall = pd.DataFrame([[0.1, 0.2, 0.3, 0.4, 0.5, 0.6]], index=["m"], columns=ANOMALY_TYPES)
+    bench.render_heatmap(recall, tmp_path / "h.png")
+    ax = captured_figures[-1].axes[0]
+    assert ax.images[0].get_array().tolist() == [recall.iloc[0].tolist()]
+    assert sorted(t.get_text() for t in ax.texts) == [
+        "0.10",
+        "0.20",
+        "0.30",
+        "0.40",
+        "0.50",
+        "0.60",
+    ]
+
+
+def test_colours_wrap_after_ten_methods(tmp_path, captured_figures):
+    from matplotlib.colors import to_hex
+
+    curves = pd.DataFrame(
+        [
+            {"severity": s, "method": f"m{i}", "anomaly_type": t, "recall": 0.5}
+            for s in (1.0, 2.0)
+            for i in range(12)
+            for t in run_severity.MAGNITUDE_TYPES
+        ]
+    )
+    run_severity.render(curves, tmp_path / "s.png")
+    ax = captured_figures[-1].axes[0]
+    lines = [line for line in ax.get_lines() if line.get_linestyle() == "-"]
+    palette = plt.get_cmap("tab10")
+    assert [to_hex(line.get_color()) for line in lines] == [
+        to_hex(palette(i % 10)) for i in range(12)
+    ]
+
+
+def test_severity_panels_sit_side_by_side(tmp_path, captured_figures):
+    curves = pd.DataFrame(
+        [
+            {"severity": s, "method": "a", "anomaly_type": t, "recall": 0.5}
+            for s in (1.0, 2.0)
+            for t in run_severity.MAGNITUDE_TYPES
+        ]
+    )
+    run_severity.render(curves, tmp_path / "s.png")
+    axes = captured_figures[-1].axes
+    tops = {round(a.get_position().y0, 3) for a in axes}
+    lefts = [a.get_position().x0 for a in axes]
+    assert len(tops) == 1 and lefts == sorted(lefts)
