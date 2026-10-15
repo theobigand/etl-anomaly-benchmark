@@ -82,6 +82,7 @@ def test_one_split_reports_every_method_and_the_reference_rule():
     assert result["recall"].loc["transform_dedup", "duplicate"] == 1.0
 
 
+@pytest.mark.filterwarnings("ignore:Mean of empty slice")  # the dedup rule has no latency
 def test_run_aggregates_each_table_over_seeds():
     result = bench.run([1, 2], rows=300)
     assert set(result) == {
