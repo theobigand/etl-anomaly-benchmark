@@ -28,18 +28,32 @@ def test_generation_writes_the_requested_population_and_reports_its_composition(
     monkeypatch.setattr(
         sys,
         "argv",
-        ["generate_synthetic", "--output", str(output), "--rows", "150", "--rate", "0.05"]
+        ["generate_synthetic", "--output", str(output), "--rows", "1000", "--rate", "0.05"]
         + ["--seed", "9"],
     )
     with caplog.at_level(logging.INFO):
         generate_synthetic.main()
-    expected = make_synthetic(n_rows=150, anomaly_rate=0.05, seed=9)
+    expected = make_synthetic(n_rows=1000, anomaly_rate=0.05, seed=9)
     assert output.read_text() == expected.to_csv(index=False)
     counts = expected["anomaly_type"].value_counts()
     messages = _messages(caplog, "generate_synthetic")
     assert messages[0] == f"wrote {len(expected)} rows x {expected.shape[1]} cols -> {output}"
     assert messages[1] == f"clean: {counts['clean']}"
     assert messages[2:] == [f"  {name:<22} {counts[name]}" for name in ANOMALY_TYPES]
+
+
+def test_a_population_without_anomalies_reports_zero_for_every_type(tmp_path, monkeypatch, caplog):
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        ["generate_synthetic", "--output", str(tmp_path / "clean.csv"), "--rows", "100"]
+        + ["--rate", "0"],
+    )
+    with caplog.at_level(logging.INFO):
+        generate_synthetic.main()
+    messages = _messages(caplog, "generate_synthetic")
+    assert messages[1] == "clean: 100"
+    assert messages[2:] == [f"  {name:<22} 0" for name in ANOMALY_TYPES]
 
 
 def test_generation_defaults_come_from_the_configuration(tmp_path, monkeypatch):
@@ -77,7 +91,7 @@ def test_cardio_download_uses_the_declared_source_and_reports_the_result(
         return io.BytesIO(payload.getvalue())
 
     monkeypatch.setattr(fetch_cardio.urllib.request, "urlopen", fake_urlopen)
-    target = tmp_path / "deep" / "cardio.csv"
+    target = tmp_path / "deep" / "er" / "cardio.csv"
     monkeypatch.setattr(config, "CARDIO_CSV", target)
     with caplog.at_level(logging.INFO):
         fetch_cardio.main()
@@ -86,8 +100,21 @@ def test_cardio_download_uses_the_declared_source_and_reports_the_result(
     frame = pd.read_csv(target)
     assert frame.columns.tolist() == ["f00", "f01", "f02", "label"]
     assert frame["label"].tolist() == [0, 1, 0, 0]
+    assert target.read_text().splitlines()[2].endswith(",1")  # integer labels, no index column
     assert frame[["f00", "f01", "f02"]].to_numpy().tolist() == x.tolist()
     assert _messages(caplog, "fetch_cardio") == [
         f"downloading {url}",
         f"wrote 4 rows x 4 cols -> {target} (1 anomalies, 25.0%)",
     ]
+
+
+def test_cardio_download_accepts_an_existing_directory(tmp_path, monkeypatch):
+    payload = io.BytesIO()
+    np.savez(payload, X=np.zeros((2, 1)), y=np.array([0, 1]))
+    monkeypatch.setattr(
+        fetch_cardio.urllib.request, "urlopen", lambda url, timeout: io.BytesIO(payload.getvalue())
+    )
+    monkeypatch.setattr(config, "CARDIO_CSV", tmp_path / "cardio.csv")
+    fetch_cardio.main()
+    fetch_cardio.main()
+    assert (tmp_path / "cardio.csv").is_file()

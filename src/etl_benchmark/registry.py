@@ -62,6 +62,14 @@ def clip_contamination(prevalence: float | None) -> float:
     return float(min(max(prevalence, lo), hi))
 
 
+def fixed_contamination(value: float | None) -> float:
+    """Validate a contamination chosen before looking at any labels."""
+    lo, hi = config.ML_CONTAMINATION_BOUNDS
+    if value is None or not isfinite(value) or not lo <= value <= hi:
+        raise ValueError(f"fixed contamination must be between {lo} and {hi}")
+    return float(value)
+
+
 def calibrate_contamination(
     train_labels: Iterable[int],
     *,
@@ -70,10 +78,7 @@ def calibrate_contamination(
 ) -> float:
     """Choose the detector threshold without consulting validation or test labels."""
     if policy == "fixed":
-        lo, hi = config.ML_CONTAMINATION_BOUNDS
-        if fixed is None or not isfinite(fixed) or not lo <= fixed <= hi:
-            raise ValueError(f"fixed contamination must be between {lo} and {hi}")
-        return float(fixed)
+        return fixed_contamination(fixed)
     if policy != "train_prevalence":
         raise ValueError(f"unknown calibration policy {policy!r}")
     labels = list(train_labels)
