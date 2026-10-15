@@ -29,7 +29,8 @@ comparés automatiquement par `tests/test_publication_tables.py`.
 
 - Les affirmations sur des sources externes (ADBench : 30 algorithmes et 57
   jeux ; AUC de 0,51 chez Sokkula et Vuppala ; coût de 12,9 M$ par an).
-- Les droits sous-jacents de Cardio et la révision du fichier Credit Card.
+- Le hash du fichier Credit Card face à un nouveau téléchargement (compte
+  Kaggle nécessaire) ; sa taille correspond à la version 3 de la fiche.
 - La note du code et de l'enregistrement des essais selon laquelle LOF et
   One-Class SVM « ne passent pas à l'échelle » à cette taille : elle n'est pas
   mesurée, comme le manuscrit le dit désormais. Le texte du code n'a pas été
