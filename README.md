@@ -64,7 +64,7 @@ make severity          # detection-rate versus injection-severity curves
 make test              # pytest
 make lint              # ruff check + format check
 make verify-fast       # offline tests, coverage and evidence
-make verify-deep       # mutation campaign on src/etl_benchmark (95% gate)
+make verify-deep       # mutation campaign on src/ and experiments/ (95% gate)
 make verify-faults     # deliberate defects on a temporary copy must fail a test
 make verify-real       # inspect locally available real datasets
 make clean             # remove generated artifacts
