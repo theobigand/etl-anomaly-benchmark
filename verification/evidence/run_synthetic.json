@@ -1,14 +1,14 @@
 {
-  "captured_at": "2026-10-14T09:05:40.806539+00:00",
+  "captured_at": "2026-10-15T06:17:39.793312+00:00",
   "dataset": {
     "identity": "synthetic"
   },
   "experiment": "synthetic_benchmark",
   "outputs": [
-    "synthetic_metrics_20261014_090540.csv",
-    "synthetic_recall_20261014_090540.csv",
-    "synthetic_precision_20261014_090540.csv",
-    "synthetic_20261014_090540.md",
+    "synthetic_metrics_20261015_061739.csv",
+    "synthetic_recall_20261015_061739.csv",
+    "synthetic_precision_20261015_061739.csv",
+    "synthetic_20261015_061739.md",
     "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/paper/figures/heatmap_synthetic.png"
   ],
   "packages": {
@@ -61,7 +61,7 @@
     ],
     "split_strategy": "customer_identity_grouped_stratified"
   },
-  "source_fingerprint": "2dd09773a41675b4ec7051cecea8609ab69135ebd06f1b04340d2a3cd92a60a0",
-  "source_revision": "cd531741f869ca94b90334c507eecc81633f644c",
-  "worktree_dirty": false
+  "source_fingerprint": "7cc3bf4fb9d009b3046f066357f880d044009ae6acdbd465c82500595859695e",
+  "source_revision": "b838c74f23ca5805b14bc3b9f58fc3127eeac07f",
+  "worktree_dirty": true
 }
