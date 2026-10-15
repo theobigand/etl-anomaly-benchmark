@@ -376,3 +376,48 @@ def test_a_fit_sample_of_one_row_is_accepted(tmp_path, monkeypatch):
         json.loads(next(out.glob("run_benchmark_*.json")).read_text())["settings"]["fit_sample"]
         == 1
     )
+
+
+def test_error_lines_are_exactly_the_documented_sentences(tmp_path, monkeypatch, capsys):
+    for extra, sentence in (
+        (["--fit-sample", "0"], "--fit-sample must be positive"),
+        (["--fixed-contamination", "0.02"], "--fixed-contamination requires --calibration fixed"),
+        (["--detectors", "lof"], "detectors not eligible for credit_card: ['lof']"),
+    ):
+        _argv(monkeypatch, "--dataset", "credit_card", *extra, "--results-dir", tmp_path / "x")
+        with pytest.raises(SystemExit):
+            run_benchmark.main()
+        last = capsys.readouterr().err.strip().splitlines()[-1]
+        assert last == f"run_benchmark: error: {sentence}"
+
+
+def test_option_help_is_not_embedded_in_longer_text(monkeypatch, capsys):
+    _argv(monkeypatch, "--help")
+    with pytest.raises(SystemExit):
+        run_benchmark.main()
+    text = " ".join(capsys.readouterr().out.split())
+    for sentence in (
+        "local CSV override for a declared dataset schema",
+        "subset of this dataset's detectors",
+        "cap the train set at N rows before fitting (bounds quadratic models)",
+    ):
+        assert re.search(rf"(^|\s){re.escape(sentence)}(\s|$)", text)
+
+
+def test_the_command_hands_its_options_to_the_run(tmp_path, monkeypatch):
+    seen = {}
+    real = run_benchmark.run
+
+    def spy(spec, seeds, fit_sample=None, calibration="train_prevalence", fixed=None):
+        seen.update(seeds=seeds, fit=fit_sample, calibration=calibration, fixed=fixed)
+        return real(spec, seeds, fit_sample, calibration, fixed)
+
+    monkeypatch.setattr(run_benchmark, "run", spy)
+    _argv(
+        monkeypatch,
+        *("--csv", _toy(tmp_path), "--detectors", "zscore", "--seeds", 2, 3),
+        *("--results-dir", tmp_path / "r", "--fit-sample", 40, "--calibration", "fixed"),
+        *("--fixed-contamination", 0.03),
+    )
+    run_benchmark.main()
+    assert seen == {"seeds": [2, 3], "fit": 40, "calibration": "fixed", "fixed": 0.03}

@@ -91,7 +91,7 @@ def _per_type(flags: pd.Series, anomaly_type: pd.Series) -> tuple[dict, dict]:
         keep = is_type | clean
         y = is_type[keep].astype(int)
         f = flags[keep]
-        recall[name] = recall_score(y, f, zero_division=0)
+        recall[name] = recall_score(y, f)
         precision[name] = precision_score(y, f, zero_division=0)
     return recall, precision
 
@@ -196,7 +196,7 @@ def _combined_md(mean: pd.DataFrame, std: pd.DataFrame, cols: list[str]) -> str:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--seeds", type=int, nargs="+", default=list(config.BENCHMARK_SEEDS))
-    parser.add_argument("--rows", type=int, default=None, help="smaller dataset for a quick run")
+    parser.add_argument("--rows", type=int, help="smaller dataset for a quick run")
     parser.add_argument("--figure", type=Path, default=PAPER_FIGURE)
     parser.add_argument("--results-dir", type=Path, default=config.RESULTS_DIR)
     args = parser.parse_args()

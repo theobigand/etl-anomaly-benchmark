@@ -240,3 +240,187 @@ def test_main_help_and_defaults(monkeypatch, capsys, tmp_path):
         (name, config.RANDOM_SEED, None)
         for name in ("credit_card", "water_quality", "cardio", "synthetic")
     ]
+
+
+def test_scores_use_the_requested_seed_rows_and_the_training_frame(toy, monkeypatch):
+    calls = []
+    real = run_curves._split_synth
+
+    def spy(seed, rows):
+        calls.append((seed, rows))
+        return real(seed, 300)
+
+    monkeypatch.setattr(run_curves, "_split_synth", spy)
+    run_curves.scores_for("synthetic", 4, 250)
+    assert calls == [(4, 250)]
+
+
+def test_scores_come_from_a_detector_fitted_on_train_and_are_floats(
+    toy, monkeypatch, tracking_detector
+):
+    class IntegerScores:
+        name = "ints"
+
+        def fit(self, frame):
+            tracking_detector.fit(frame)
+            return self
+
+        def predict(self, frame):
+            return tracking_detector.predict(frame)
+
+        def score(self, frame):
+            return pd.Series(1, index=frame.index)
+
+    detector = IntegerScores()
+    monkeypatch.setattr(run_curves, "all_detectors", lambda **_: [detector])
+    train_x, test_x, *_ = run_curves._split_real("toy", 4)
+    out = run_curves.scores_for("toy", 4)
+    pd.testing.assert_frame_equal(tracking_detector.fit_input, train_x)
+    pd.testing.assert_frame_equal(tracking_detector.predict_input, test_x)
+    assert out["scores"]["ints"].dtype == float
+
+
+def test_curves_are_drawn_with_the_documented_styling(tmp_path, captured_figures):
+    from matplotlib.colors import to_hex
+    from PIL import Image
+
+    y = np.array([0] * 40 + [1] * 10)
+    scores = {"a": np.linspace(0, 1, 50), "b": np.linspace(1, 0, 50), "c": np.zeros(50)}
+    results = {"one": {"y": y, "base_rate": 0.2, "scores": scores}}
+    path = run_curves.render_pr(results, tmp_path / "pr.png")
+    fig = captured_figures[-1]
+    assert len(fig.axes) == 4
+    ax = fig.axes[0]
+    curves = [line for line in ax.get_lines() if line.get_linestyle() != "--"]
+    assert [line.get_linewidth() for line in curves] == [1.4, 1.4, 1.4]
+    palette = plt.get_cmap("tab10")
+    assert [to_hex(line.get_color()) for line in curves] == [to_hex(palette(i)) for i in range(3)]
+    dashed = [line for line in ax.get_lines() if line.get_linestyle() == "--"][0]
+    assert dashed.get_linewidth() == 0.8 and to_hex(dashed.get_color()) == to_hex("0.7")
+    assert {t.get_fontsize() for t in ax.get_legend().get_texts()} == {7.0}
+    assert Image.open(path).info["dpi"] == pytest.approx((150, 150), abs=0.5)
+
+
+def test_the_default_sweep_visits_the_four_datasets_in_order(monkeypatch):
+    visited = []
+
+    def absent_real(name, seed):
+        visited.append((name, seed))
+        raise FileNotFoundError(name)
+
+    def absent_synthetic(seed, rows):
+        visited.append(("synthetic", seed, rows))
+        raise FileNotFoundError("synthetic")
+
+    monkeypatch.setattr(run_curves, "_split_real", absent_real)
+    monkeypatch.setattr(run_curves, "_split_synth", absent_synthetic)
+    assert run_curves.contamination_sweep(9, rows=120).empty
+    assert visited == [
+        ("credit_card", 9),
+        ("water_quality", 9),
+        ("cardio", 9),
+        ("synthetic", 9, 120),
+    ]
+
+
+def test_a_missing_dataset_is_announced_by_name(monkeypatch, caplog):
+    def absent(name, seed):
+        raise FileNotFoundError(name)
+
+    monkeypatch.setattr(run_curves, "_split_real", absent)
+    with caplog.at_level(logging.WARNING):
+        run_curves.contamination_sweep(1, datasets=["cardio"])
+    assert _messages(caplog) == ["skipping cardio (dataset not present)"]
+
+
+def test_a_sweep_point_that_flags_nothing_has_zero_precision_and_no_positive_means_zero_recall(
+    monkeypatch,
+):
+    class Silent:
+        def __init__(self, contamination):
+            self.contamination = contamination
+
+        def fit(self, frame):
+            return self
+
+        def predict(self, frame):
+            return pd.Series(False, index=frame.index)
+
+        def score(self, frame):
+            return pd.Series(0.0, index=frame.index)
+
+    frame = pd.DataFrame({"a": range(10)})
+    monkeypatch.setattr(run_curves, "IsolationForestDetector", Silent)
+    monkeypatch.setattr(
+        run_curves, "_split_real", lambda *_: (frame, frame, np.array([0, 1] * 5), 0.5, [], 0.5)
+    )
+    sweep = run_curves.contamination_sweep(1, datasets=["credit_card"])
+    assert (sweep.precision == 0.0).all() and (sweep.recall == 0.0).all()
+    assert (sweep.flagged_pct == 0.0).all()
+
+
+def test_prevalence_is_rounded_to_four_decimals_in_the_table(monkeypatch):
+    frame = pd.DataFrame({"a": range(20)})
+    monkeypatch.setattr(
+        run_curves,
+        "_split_real",
+        lambda *_: (frame, frame, np.array([0, 1] * 10), 0.0857142, [], 0.1),
+    )
+    sweep = run_curves.contamination_sweep(1, datasets=["credit_card"])
+    assert sweep.contamination.iloc[-1] == 0.0857
+
+
+def test_main_forwards_rows_and_defaults_and_joins_dataset_names(
+    toy, tmp_path, monkeypatch, caplog
+):
+    monkeypatch.setattr(config, "RESULTS_DIR", tmp_path / "configured")
+    monkeypatch.setattr(run_curves, "PAPER_FIGURE", tmp_path / "paper" / "pr.png")
+    monkeypatch.setattr(
+        sys, "argv", ["run_curves", "--datasets", "toy", "synthetic", "--rows", "300"]
+    )
+    logging.getLogger("great_expectations").setLevel(logging.NOTSET)
+    logging.getLogger("matplotlib").setLevel(logging.NOTSET)
+    run_curves.main()
+    run_curves.main()  # the result directory may already exist
+    assert (tmp_path / "paper" / "pr.png").is_file()
+    csv = sorted((tmp_path / "configured").glob("contamination_sweep_*.csv"))[0]
+    sweep = pd.read_csv(csv)
+    assert set(sweep.dataset) == {"toy", "synthetic"}
+    record = json.loads(next((tmp_path / "configured").glob("run_curves_*.json")).read_text())
+    assert record["dataset"]["identity"] == "toy,synthetic"
+    assert record["settings"]["synthetic_rows"] == 300
+    assert record["seeds"] == [config.RANDOM_SEED]
+    assert logging.getLogger("great_expectations").level == logging.WARNING
+    assert logging.getLogger("matplotlib").level == logging.WARNING
+    assert csv.read_text().splitlines()[1].count(",") == 5  # no index column
+    from datetime import UTC, datetime
+
+    stamp = re.search(r"\d{8}_\d{6}", csv.name).group()
+    written = datetime.strptime(stamp, "%Y%m%d_%H%M%S")
+    assert abs((datetime.now(UTC).replace(tzinfo=None) - written).total_seconds()) < 180
+
+
+def test_main_warns_about_a_missing_dataset_by_name(tmp_path, monkeypatch, caplog):
+    monkeypatch.setitem(
+        run_curves.DATASETS,
+        "credit_card",
+        DatasetSpec("credit_card", tmp_path / "no.csv", "Class", 1),
+    )
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        ["run_curves", "--datasets", "credit_card", "synthetic", "--rows", "300"]
+        + ["--figure", str(tmp_path / "f.png"), "--results-dir", str(tmp_path / "r")],
+    )
+    with caplog.at_level(logging.WARNING):
+        run_curves.main()
+    assert "skipping credit_card (dataset not present)" in _messages(caplog)
+    assert _messages(caplog).count("skipping credit_card (dataset not present)") == 2
+
+
+def test_help_texts_stand_alone(monkeypatch, capsys):
+    monkeypatch.setattr(sys, "argv", ["run_curves", "--help"])
+    with pytest.raises(SystemExit):
+        run_curves.main()
+    text = " ".join(capsys.readouterr().out.split())
+    assert re.search(r"(^|\s)synthetic row count for an offline smoke run(\s|$)", text)
