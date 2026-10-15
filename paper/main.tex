@@ -275,7 +275,7 @@ dataset above ($12{,}360$ rows, $17.5\%$ anomalous) carries the per-type
 labels. \emph{Cardio} (a cardiotocography anomaly dataset as packaged for
 outlier-detection benchmarking; $1{,}831$ rows, $21$ standardized
 features, $9.6\%$ anomalies) is a \emph{genuinely imbalanced} real
-dataset~\cite{han2022adbench}: the anomalies are rare and distributionally
+dataset~\cite{han2022adbench,campos2000cardio}: the anomalies are rare and distributionally
 distinct, the regime the unsupervised detectors are built for.
 \emph{Water Quality}~\cite{kadiwal2021water} ($3{,}276$ samples,
 $9$ numeric features) is the opposite case: the target class
@@ -772,8 +772,9 @@ scripts. The
 complete real-data checks were performed with the three files available
 locally. The Water
 Quality file matches its named mirror, and the Cardio CSV can be reproduced
-from the current ADBench archive. The exact revision of the Credit Card
-download and the underlying Cardio data rights remain unresolved. These
+from the current ADBench archive. The Credit Card file has the size of the
+current Kaggle version (3, March 2018), but we could not compare its content
+hash with a fresh download. These
 gaps leave some implementation errors capable of changing a published
 result without being caught by the current gates.
 
