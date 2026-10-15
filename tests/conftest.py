@@ -2,12 +2,30 @@
 
 from __future__ import annotations
 
+import importlib
 import os
 import socket
+import sys
 from pathlib import Path
 
 import pandas as pd
 import pytest
+
+# Mutation testing identifies a function by its module name. The experiment
+# scripts are imported flat in the tests (``import run_benchmark``), so load
+# them once as ``experiments.<name>`` and register that module under the flat
+# name as well. Scripts run from the command line are not affected.
+for _name in ("provenance", "verify_real", "verification_report", "check_mutation"):
+    sys.modules[_name] = importlib.import_module(f"experiments.{_name}")
+for _name in (
+    "run_benchmark",
+    "run_synthetic_benchmark",
+    "run_curves",
+    "run_severity",
+    "fetch_cardio",
+    "generate_synthetic",
+):
+    sys.modules[_name] = importlib.import_module(f"experiments.{_name}")
 
 
 @pytest.fixture(autouse=True)

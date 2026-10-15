@@ -104,3 +104,37 @@ def test_record_marks_unavailable_package_version_explicitly(tmp_path, monkeypat
     record = json.loads(output.read_text())
     assert record["packages"]["pyod"] is None
     assert record["dataset"] == {"identity": "toy"}
+
+
+def _tree(root, dependencies="pandas", tooling="x = 1"):
+    (root / "src" / "pkg").mkdir(parents=True)
+    (root / "src" / "pkg" / "mod.py").write_text("VALUE = 1\n")
+    (root / "experiments").mkdir()
+    (root / "experiments" / "run.py").write_text("pass\n")
+    (root / "environment.yml").write_text("name: env\n")
+    (root / "pyproject.toml").write_text(
+        f'[project]\nname = "p"\ndependencies = ["{dependencies}"]\n\n[tool.mutmut]\n{tooling}\n'
+    )
+
+
+def test_source_fingerprint_follows_dependencies_but_not_tool_settings(tmp_path, monkeypatch):
+    monkeypatch.setattr(provenance, "ROOT", tmp_path)
+    _tree(tmp_path)
+    base = provenance._source_fingerprint()
+    (tmp_path / "pyproject.toml").write_text(
+        (tmp_path / "pyproject.toml").read_text().replace("x = 1", "x = 2\ny = 3")
+    )
+    assert provenance._source_fingerprint() == base
+    (tmp_path / "pyproject.toml").write_text(
+        (tmp_path / "pyproject.toml").read_text().replace("pandas", "pandas>=2")
+    )
+    assert provenance._source_fingerprint() != base
+
+
+@pytest.mark.parametrize("path", ["src/pkg/mod.py", "experiments/run.py", "environment.yml"])
+def test_source_fingerprint_follows_code_and_environment(tmp_path, monkeypatch, path):
+    monkeypatch.setattr(provenance, "ROOT", tmp_path)
+    _tree(tmp_path)
+    base = provenance._source_fingerprint()
+    (tmp_path / path).write_text("changed\n")
+    assert provenance._source_fingerprint() != base
