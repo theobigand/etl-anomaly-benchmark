@@ -154,7 +154,6 @@ def main() -> None:
     parser.add_argument(
         "--fit-sample",
         type=int,
-        default=None,
         help="cap the train set at N rows before fitting (bounds quadratic models)",
     )
     args = parser.parse_args()

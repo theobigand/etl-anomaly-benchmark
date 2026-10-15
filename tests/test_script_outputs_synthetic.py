@@ -364,3 +364,204 @@ def test_severity_defaults_and_row_count_in_the_record(tmp_path, monkeypatch, ca
     with pytest.raises(RuntimeError, match="^stop$"):
         run_severity.main()
     assert seen == {"severities": [0.5, 1.0, 2.0, 3.0, 5.0], "seeds": [42, 1, 2], "rows": None}
+
+
+# --- additional contracts: split identity, figure styling, options ------------
+
+
+def test_synthetic_partitions_are_pinned_for_the_published_tables():
+    # The identity-grouped split decides which customers are scored in every
+    # published synthetic number; a change must come with a replay.
+    import hashlib
+
+    parts = bench._split_synthetic(make_synthetic(n_rows=600, seed=3), 3)
+    text = "|".join(",".join(map(str, part.customer_id.tolist())) for part in parts)
+    assert hashlib.sha256(text.encode()).hexdigest() == (
+        "24d4c99b91c5be14b31e4855e57b9113e2708fbd09af4be4fcf5427b78a4277b"
+    )
+    assert [len(part) for part in parts] == [432, 93, 93]
+    assert all(part.index.equals(pd.RangeIndex(len(part))) for part in parts)
+
+
+def test_per_type_scores_keep_clean_rows_as_the_only_extra_negatives():
+    types = pd.Series(["clean", "clean", "missing_value", "duplicate", "duplicate"])
+    flags = pd.Series([False, True, True, True, False])
+    recall, precision = bench._per_type(flags, types)
+    assert recall["missing_value"] == 1.0 and precision["missing_value"] == 0.5
+    assert recall["duplicate"] == 0.5 and precision["duplicate"] == 0.5
+    assert np.isnan(recall["temporal_drift"]) and np.isnan(precision["temporal_drift"])
+    none_flagged = pd.Series([False] * 5)
+    recall, precision = bench._per_type(none_flagged, types)
+    assert recall["duplicate"] == 0.0 and precision["duplicate"] == 0.0
+
+
+def test_per_type_reports_misaligned_indices_in_its_own_words():
+    with pytest.raises(ValueError, match="^flags and anomaly_type must have the same index$"):
+        bench._per_type(pd.Series([True], index=[1]), pd.Series(["clean"], index=[2]))
+
+
+def test_evaluation_scores_every_method_on_the_test_rows_after_fitting_on_train(
+    monkeypatch, tracking_detector, caplog
+):
+    frame = make_synthetic(n_rows=300, seed=2)
+    train, _, test = bench._split_synthetic(frame, 2)
+    monkeypatch.setattr(bench, "all_detectors", lambda **_: [tracking_detector])
+    with caplog.at_level(logging.INFO):
+        result = bench.evaluate(frame, 2)
+    pd.testing.assert_frame_equal(
+        tracking_detector.fit_input, train[FEATURE_COLUMNS].reset_index(drop=True)
+    )
+    pd.testing.assert_frame_equal(
+        tracking_detector.predict_input, test[FEATURE_COLUMNS].reset_index(drop=True)
+    )
+    assert result["metrics"]["detect_s"].dtype == float
+    assert _messages(caplog, "run_synthetic_benchmark") == [
+        "  seed 2: tracking done",
+        "  seed 2: transform_dedup done",
+    ]
+
+
+def test_csv_files_keep_mean_and_spread_columns_for_every_table(tmp_path, monkeypatch):
+    out = tmp_path / "r"
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        ["run_synthetic_benchmark", "--seeds", "1", "--rows", "300", "--results-dir", str(out)]
+        + ["--figure", str(tmp_path / "h.png")],
+    )
+    bench.main()
+    metrics = pd.read_csv(next(out.glob("synthetic_metrics_*.csv")), index_col="method")
+    columns = ["precision", "recall", "f1", "roc_auc", "pr_auc", "flagged_pct", "detect_s"]
+    assert metrics.columns.tolist() == [f"{c}_mean" for c in columns] + [
+        f"{c}_std" for c in columns
+    ]
+    precision = pd.read_csv(next(out.glob("synthetic_precision_*.csv")), index_col="method")
+    assert precision.columns.tolist() == [f"{t}_mean" for t in ANOMALY_TYPES] + [
+        f"{t}_std" for t in ANOMALY_TYPES
+    ]
+    text = next(out.glob("synthetic_[0-9]*.md")).read_text()
+    assert "\n### Recall by anomaly type\n\n| method |" in text
+    assert (
+        "\n### Precision by anomaly type (clean rows as the only negatives)\n\n| method |" in text
+    )
+
+
+def test_command_options_are_forwarded_and_described(tmp_path, monkeypatch, capsys):
+    seen = {}
+
+    def spy(seeds, rows):
+        seen.update(seeds=seeds, rows=rows)
+        return {}
+
+    monkeypatch.setattr(bench, "run", spy)
+    monkeypatch.setattr(sys, "argv", ["run_synthetic_benchmark", "--rows", "321", "--seeds", "8"])
+    with pytest.raises(KeyError):
+        bench.main()
+    assert seen == {"seeds": [8], "rows": 321}
+    monkeypatch.setattr(sys, "argv", ["run_synthetic_benchmark", "--help"])
+    with pytest.raises(SystemExit):
+        bench.main()
+    text = " ".join(capsys.readouterr().out.split())
+    assert re.search(r"(^|\s)smaller dataset for a quick run(\s|$)", text)
+
+
+def test_command_uses_the_configured_directory_and_quiets_noisy_loggers(tmp_path, monkeypatch):
+    monkeypatch.setattr(config, "RESULTS_DIR", tmp_path / "configured")
+    monkeypatch.setattr(bench, "PAPER_FIGURE", tmp_path / "paper" / "heat.png")
+    monkeypatch.setattr(sys, "argv", ["run_synthetic_benchmark", "--seeds", "1", "--rows", "300"])
+    logging.getLogger("great_expectations").setLevel(logging.NOTSET)
+    logging.getLogger("matplotlib").setLevel(logging.NOTSET)
+    bench.main()
+    bench.main()
+    assert (tmp_path / "paper" / "heat.png").is_file()
+    assert len(list((tmp_path / "configured").glob("run_synthetic_*.json"))) >= 1
+    assert logging.getLogger("great_expectations").level == logging.WARNING
+    assert logging.getLogger("matplotlib").level == logging.WARNING
+    from datetime import UTC, datetime
+
+    name = next((tmp_path / "configured").glob("synthetic_metrics_*.csv")).name
+    written = datetime.strptime(re.search(STAMP, name).group(), "%Y%m%d_%H%M%S")
+    assert abs((datetime.now(UTC).replace(tzinfo=None) - written).total_seconds()) < 300
+
+
+def test_heatmap_text_style_and_boundary_colour(tmp_path, captured_figures):
+    from PIL import Image
+
+    recall = pd.DataFrame([[0.55, 0.56] + [0.1] * 4], index=["m"], columns=ANOMALY_TYPES)
+    path = bench.render_heatmap(recall, tmp_path / "h.png")
+    ax = captured_figures[-1].axes[0]
+    by_text = {t.get_text(): t for t in ax.texts}
+    assert by_text["0.55"].get_color() == "black" and by_text["0.56"].get_color() == "white"
+    assert {t.get_fontsize() for t in ax.texts} == {9.0}
+    assert {(t.get_ha(), t.get_va()) for t in ax.texts} == {("center", "center")}
+    assert ax.get_aspect() == "auto"
+    assert ax.images[0].get_clim() == (0.0, 1.0)
+    assert Image.open(path).info["dpi"] == pytest.approx((150, 150), abs=0.5)
+
+
+# --- run_severity: figure styling and options -----------------------------------
+
+
+def test_severity_lines_and_reference_marker_follow_the_style(tmp_path, captured_figures):
+    from matplotlib.colors import to_hex
+    from PIL import Image
+
+    curves = pd.DataFrame(
+        [
+            {"severity": s, "method": m, "anomaly_type": t, "recall": 0.5}
+            for s in (1.0, 2.0)
+            for m in ("a", "b")
+            for t in run_severity.MAGNITUDE_TYPES
+        ]
+    )
+    out = tmp_path / "ready"
+    out.mkdir()
+    path = run_severity.render(curves, out / "s.png")  # existing directory is fine
+    fig = captured_figures[-1]
+    ax = fig.axes[0]
+    solid = [line for line in ax.get_lines() if line.get_linestyle() == "-"]
+    palette = plt.get_cmap("tab10")
+    assert [line.get_marker() for line in solid] == ["o", "o"]
+    assert [line.get_markersize() for line in solid] == [3.0, 3.0]
+    assert [line.get_linewidth() for line in solid] == [1.4, 1.4]
+    assert [to_hex(line.get_color()) for line in solid] == [to_hex(palette(0)), to_hex(palette(1))]
+    marker = [line for line in ax.get_lines() if line.get_linestyle() == "--"]
+    assert len(marker) == 1 and list(marker[0].get_xdata()) == [1.0, 1.0]
+    assert marker[0].get_linewidth() == 0.8 and to_hex(marker[0].get_color()) == to_hex("0.7")
+    legend = fig.axes[-1].get_legend()
+    assert legend._loc == 4 and {t.get_fontsize() for t in legend.get_texts()} == {7.0}
+    assert Image.open(path).info["dpi"] == pytest.approx((150, 150), abs=0.5)
+    assert len(fig.axes) == 3
+
+
+def test_severity_command_options_are_described_and_applied(tmp_path, monkeypatch, capsys):
+    monkeypatch.setattr(config, "RESULTS_DIR", tmp_path / "configured")
+    monkeypatch.setattr(run_severity, "PAPER_FIGURE", tmp_path / "paper" / "sev.png")
+    monkeypatch.setattr(
+        sys, "argv", ["run_severity", "--severities", "1", "2", "--seeds", "1", "--rows", "300"]
+    )
+    logging.getLogger("great_expectations").setLevel(logging.NOTSET)
+    logging.getLogger("matplotlib").setLevel(logging.NOTSET)
+    run_severity.main()
+    run_severity.main()
+    assert (tmp_path / "paper" / "sev.png").is_file()
+    csv = sorted((tmp_path / "configured").glob("severity_*.csv"))[0]
+    assert csv.read_text().splitlines()[1].count(",") == 3  # no index column
+    assert logging.getLogger("great_expectations").level == logging.WARNING
+    assert logging.getLogger("matplotlib").level == logging.WARNING
+    from datetime import UTC, datetime
+
+    written = datetime.strptime(re.search(STAMP, csv.name).group(), "%Y%m%d_%H%M%S")
+    assert abs((datetime.now(UTC).replace(tzinfo=None) - written).total_seconds()) < 300
+    curves = pd.read_csv(csv)
+    wide = curves[curves["anomaly_type"].isin(run_severity.MAGNITUDE_TYPES)].pivot_table(
+        index=["anomaly_type", "method"], columns="severity", values="recall"
+    )
+    assert capsys.readouterr().out.endswith("\n" + wide.round(3).to_string() + "\n")
+
+
+def test_severity_rows_default_to_none_and_help_is_standalone(monkeypatch, capsys):
+    monkeypatch.setattr(sys, "argv", ["run_severity", "--help"])
+    with pytest.raises(SystemExit):
+        run_severity.main()
+    assert "--rows ROWS" in " ".join(capsys.readouterr().out.split())

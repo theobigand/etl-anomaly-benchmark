@@ -37,7 +37,7 @@ def main() -> None:
 
     counts = df["anomaly_type"].value_counts()
     log.info("wrote %d rows x %d cols -> %s", len(df), df.shape[1], args.output)
-    log.info("clean: %d", int(counts.get("clean", 0)))
+    log.info("clean: %d", int(counts["clean"]))
     for name in ANOMALY_TYPES:
         log.info("  %-22s %d", name, int(counts.get(name, 0)))
 
