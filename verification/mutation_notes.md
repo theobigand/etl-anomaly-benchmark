@@ -1,18 +1,27 @@
 # Mutations du code scientifique
 
 La campagne porte sur les modules de `src/etl_benchmark` qui calculent un
-résultat : chargement, découpage, métriques, pipeline, registre, générateur
-synthétique et détecteurs (`quality/`). Elle utilise mutmut 3.8.0 et les tests
-qui exercent ces modules ; les tests qui contrôlent des fichiers archivés
-(filiation, tableaux du manuscrit, CLI en sous-processus) ne sont pas lancés
-pour chaque mutant. `config.py`, `logging_setup.py`, `__main__.py` et les
-fichiers `__init__.py` ne sont pas mutés. Les scripts de `experiments/` ont
-une mesure séparée, plus bas.
+résultat (chargement, découpage, métriques, pipeline, registre, générateur
+synthétique, détecteurs) et sur les dix scripts de `experiments/`. Elle utilise
+mutmut 3.8.0 et les tests qui exercent ces fichiers ; les tests qui contrôlent
+des archives (filiation, tableaux du manuscrit) ne sont pas lancés pour chaque
+mutant. `config.py`, `logging_setup.py`, `__main__.py` et les fichiers
+`__init__.py` ne sont pas mutés.
 
-Résultat : 1824 mutants éliminés sur 1900, soit **96,00 %**, sans mutant
-ignoré, expiré, en erreur ou sans test. La première campagne, limitée à
-`metrics.py`, donnait 86/97 (88,66 %) ; élargie aux autres modules sans test
-supplémentaire, elle tombait à 1323/1775 (74,5 %).
+Résultat de `make verify-deep` : **4 487 mutants éliminés sur 4 594 (97,67 %)**,
+sans mutant ignoré, expiré, en erreur ou sans test.
+
+| Périmètre | Éliminés | Total | Taux |
+| --- | --- | --- | --- |
+| `src/etl_benchmark` | 1 824 | 1 900 | 96,00 % |
+| `experiments/*.py` | 2 663 | 2 694 | 98,85 % |
+
+La première campagne, limitée à `metrics.py`, donnait 86/97 (88,66 %) ; élargie
+aux autres modules de `src/` sans test supplémentaire, elle tombait à 74,5 %.
+Les scripts partaient de 24,3 % (1 136/4 666) avant les tests de sorties
+décrits plus bas. Le chargement des scripts sous le nom `experiments.<script>`
+(`tests/conftest.py`) est ce qui permet à mutmut de relier leurs fonctions aux
+tests.
 
 ## Ce qui a été corrigé
 
@@ -42,7 +51,7 @@ supplémentaire, elle tombait à 1323/1775 (74,5 %).
 
 ## Survivants
 
-Les 76 mutants restants ne sont pas retirés du dénominateur et aucun n'a été
+Les 76 mutants restants de `src/` ne sont pas retirés du dénominateur et aucun n'a été
 exclu. Leur classement est une lecture des diffs, pas une preuve formelle.
 
 | Mutants | Ce qui change | Raison |
@@ -55,41 +64,39 @@ exclu. Leur classement est une lecture des diffs, pas une preuve formelle.
 | 2 | Plafond du taux de Poisson à 91 ou supprimé | Atteint seulement pour un revenu annuel supérieur à 360 000, soit plus de 4,5 écarts types de la loi utilisée ; aucun test n'impose un tirage de queue de cette taille. |
 | 2 | `training=None` au lieu de `False` | `None` est évalué comme faux. |
 
-## Scripts d'`experiments/` (mesure de référence, hors porte)
+## Scripts d'`experiments/`
 
-Une campagne séparée a été lancée le 15 octobre 2026 sur les dix scripts :
-4 666 mutants, 1 136 tués (**24,3 %**), 882 survivants, 742 sans test et 6
-expirés. Elle n'entre pas dans `make verify-deep`, qui exige 95 % et porterait
-sur un périmètre où ce seuil n'est pas atteint. `tests/conftest.py` charge
-désormais les scripts sous le nom `experiments.<script>`, ce qui permet à
-mutmut de relier chaque fonction à ses tests.
+Les tests des scripts vérifient, pour chacun, ce qu'il lit, journalise et écrit :
+fichiers produits et noms horodatés, contenu exact des tableaux et de
+l'enregistrement de provenance, lignes de journal, options et textes d'aide,
+messages d'erreur, valeurs par défaut, et propriétés des figures (titres,
+légendes, données tracées, couleurs, résolution, géométrie de la barre de
+couleur). Ils s'appuient sur `main()` appelé dans le processus, sans
+sous-processus, avec un faux `git` ou un faux `urlopen` quand c'est nécessaire.
+Du code redondant a été retiré (lecture par blocs remplacée par
+`hashlib.file_digest`, archive `gzip.compress(..., mtime=0)`, table des
+compteurs de couverture, aide `_git` partagée, validation de la contamination
+fixe dans le registre).
 
-| Script | Tués | Survivants | Sans test | Expirés |
-| --- | --- | --- | --- | --- |
-| `check_mutation.py` | 47 | 7 | 0 | 0 |
-| `fetch_cardio.py` | 0 | 0 | 60 | 0 |
-| `generate_synthetic.py` | 20 | 75 | 0 | 0 |
-| `provenance.py` | 154 | 85 | 0 | 2 |
-| `run_benchmark.py` | 108 | 68 | 272 | 0 |
-| `run_curves.py` | 217 | 235 | 0 | 0 |
-| `run_severity.py` | 42 | 163 | 123 | 0 |
-| `run_synthetic_benchmark.py` | 210 | 102 | 287 | 2 |
-| `verification_report.py` | 208 | 94 | 0 | 0 |
-| `verify_real.py` | 130 | 53 | 0 | 2 |
+Les 31 survivants des scripts :
 
-Les mutants « sans test » sont dans des fonctions que seuls les tests en
-sous-processus (`test_cli_smoke.py`) exécutent : la couverture que mutmut
-observe ne les voit pas. Pour refaire la mesure, ajouter `"experiments"` à
-`source_paths`, `"experiments/*.py"` à `only_mutate`, retirer les `--ignore`
-des tests de scripts et ajouter `"environment.yml"` à `also_copy`, puis lancer
-`mutmut run "experiments*"` (environ cinq minutes). Cette mesure n'a pas été
-analysée mutant par mutant.
+| Mutants | Ce qui change | Raison |
+| --- | --- | --- |
+| 5 | `index=None` dans `to_csv` ou `to_string` | pandas traite `None` comme `False`. |
+| 5 | `strict` de `zip` absent ou valant `None`, `False` | Les deux listes ont toujours la même longueur. |
+| 4 | `sort=None` dans un `groupby` | pandas traite `None` comme `False`. |
+| 4 | `color=None` ou absent pour une courbe | Le cycle de couleurs par défaut de matplotlib est `tab10`. |
+| 3 | `colorbar(None)`, `ax=None` ou `ax` absent | matplotlib retombe sur l'image et les axes courants. |
+| 2 | `values=None` ou absent dans `pivot_table` | `recall` est la seule colonne numérique restante. |
+| 2 | `zero_division` omis pour la précision | La valeur par défaut renvoie aussi 0 (avec un avertissement). |
+| 2 | `astype(None)` au lieu de `astype(int)` | scikit-learn accepte les booléens sans conversion. |
+| 2 | `index=None` ou omis dans `pd.Series(flags, index=...)` | Les deux séries ont déjà le même index. |
+| 1 | `detect_s = None` à la place de `np.nan` | La colonne reste numérique et manquante. |
+| 1 | `<=` au lieu de `<` dans la comparaison à 1e-9 | Égalité exacte entre flottants inatteignable. |
 
 ## Limites
 
-- Les scripts de `experiments/` ne sont pas dans la porte de 95 % ; leur
-  mesure de référence est ci-dessus.
 - Un mutant éliminé par le test d'empreinte du jeu de référence prouve que le
   jeu publié ne change pas, pas que chaque paramètre a le bon sens
   statistique ; les moments et les bornes sont contrôlés à part.
-- La campagne complète dure environ neuf minutes sur cette machine.
+- La campagne complète dure environ vingt-cinq minutes sur cette machine.

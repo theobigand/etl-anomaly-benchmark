@@ -139,7 +139,7 @@ def contamination_sweep(
                     "contamination": round(clip_contamination(c), 4),
                     "is_prevalence": abs(c - prevalence) < 1e-9,
                     "precision": precision_score(y, res.flags, zero_division=0),
-                    "recall": recall_score(y, res.flags, zero_division=0),
+                    "recall": recall_score(y, res.flags),
                     "flagged_pct": 100.0 * float(res.flags.mean()),
                 }
             )

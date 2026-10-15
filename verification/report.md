@@ -3,8 +3,10 @@
 Le dépôt contient le pipeline Python (`src/etl_benchmark`), les expériences
 (`experiments`) et le manuscrit. Le résultat global reste **INCOMPLETE** : les
 tests exécutés et le seuil de couverture passent et la mutation du code de
-`src/etl_benchmark` dépasse 95 %, mais les scripts d'`experiments/` n'ont pas
-de campagne de mutation. Le suivi chronologique a un premier protocole testé ;
+`src/etl_benchmark` et d'`experiments/` dépasse 95 %. Restent ouverts le
+modèle LSTM, l'évaluation chronologique sur données réelles, l'étude de coût
+dans un environnement contrôlé et les points de la section « Travail restant ».
+Le suivi chronologique a un premier protocole testé ;
 son évaluation sur données réelles, les modèles profonds et la montée en charge
 restent ouverts.
 
@@ -44,14 +46,14 @@ archivés séparément et leurs chiffres sont rapprochés du manuscrit par un te
 
 | Commande | Résultat | Détail |
 | --- | --- | --- |
-| `make verify-fast` | Réussite locale | 447 tests réussis, 2 tests réels et 14 essais de défauts exclus ; lignes et branches couvertes. |
-| `make verify-deep` | Réussite locale | 1824 mutants éliminés sur 1900 dans `src/etl_benchmark` (96,00 %) ; les scripts d'`experiments/` ne sont pas mutés. |
+| `make verify-fast` | Réussite locale | 561 tests réussis, 2 tests réels et 14 essais de défauts exclus ; lignes et branches couvertes. |
+| `make verify-deep` | Réussite locale | 4 487 mutants éliminés sur 4 594 (97,67 %) dans `src/etl_benchmark` et `experiments/` ; 107 survivants classés. |
 | `make verify-faults` | Réussite locale | 14 défauts introduits dans une copie temporaire, tous détectés par un test prévu. |
 | `make verify-real` | Réussite locale | 2 tests et contrôle des trois CSV présents. |
 | `python verification/scaling.py` | Réussite locale | 27 mesures sur trois tailles, hors FAST. |
-| `make verify-all` | Réussite locale sur `src/` | DEEP ne couvre pas `experiments/` ; le statut reste INCOMPLETE. |
+| `make verify-all` | Réussite locale | FAST, DEEP, défauts introduits et REAL passent ; le statut reste INCOMPLETE (travail restant ci-dessous). |
 
-FAST mesure **1466/1466 lignes et 300/300 branches (100 % chacune)**.
+FAST mesure **1467/1467 lignes et 294/294 branches (100 % chacune)**.
 La mesure inclut désormais les commandes lancées en sous-processus. Les
 scripts `fetch_cardio.py`, `generate_synthetic.py` et l'entrée principale
 sont désormais parcourus par FAST avec des données construites localement. Le détail par
@@ -60,14 +62,15 @@ fichier est dans le profil généré `verification/profile.json` et
 ni branche n'est exclue.
 
 La campagne de mutation porte sur les modules de `src/etl_benchmark` qui
-calculent un résultat (mutmut 3.8.0) : 1900 mutants produits, 1824 éliminés,
-76 survivants, aucun cas classé sans test, ignoré, expiré ou en erreur. Le
-taux mesuré est **96,00 %** sur ce périmètre. Elle avait commencé à 88,66 %
-sur `metrics.py` seul et à 74,5 % une fois élargie sans nouveaux tests.
-`mutation_notes.md` classe les survivants (états intermédiaires, `dtype`
-équivalents, noms internes). Les scripts d'`experiments/` n'ont pas de score
-de mutation ; le profil indique donc `NOT_RUN` pour la portée complète et sa
-valeur numérique zéro n'est pas une mesure.
+calculent un résultat et sur les dix scripts de `experiments/` (mutmut 3.8.0) :
+4 594 mutants produits, 4 487 éliminés, 107 survivants, aucun cas classé sans
+test, ignoré, expiré ou en erreur. Le taux mesuré est **97,67 %** (96,00 % sur
+`src/`, 98,85 % sur les scripts). Elle avait commencé à 88,66 % sur
+`metrics.py` seul, à 74,5 % une fois élargie à `src/` sans nouveaux tests et à
+24,3 % sur les scripts. `mutation_notes.md` classe les 107 survivants
+(équivalents, valeurs par défaut de bibliothèques, noms internes). Le profil
+généré par FAST garde un champ de mutation à zéro : il signifie « non lancé
+par FAST », pas un score nul ; le résultat de DEEP est dans ce rapport.
 
 ## Rejeu du 15 octobre 2026
 
@@ -128,8 +131,7 @@ bloquent pas encore une publication distante.
 
 ## Travail restant
 
-Il faut étendre la mutation aux scripts d'`experiments/` et revoir les 76
-survivants si un module change. Il manque également des
+Il faut revoir les 107 survivants si un module change. Il manque également des
 tests de panne et de schéma défavorable, une évaluation temporelle sur données réelles, les
 détecteurs profonds et une étude de coût plus large dans un environnement
 contrôlé.

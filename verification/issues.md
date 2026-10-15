@@ -17,13 +17,15 @@ chaque ticket et les limites qui subsistent après sa fermeture.
   dans `README.md`.
 - **#6** : FAST mesure lignes et branches, y compris dans les commandes en
   sous-processus, et échoue si elles ne sont pas toutes couvertes. La
-  couverture actuelle est de 1466/1466 lignes et 300/300 branches, sans
+  couverture actuelle est de 1467/1467 lignes et 294/294 branches, sans
   exclusion. Les commandes locales de génération, de conversion Cardio et de
   démonstration ont des tests dédiés.
 - **#7** : la campagne porte sur tous les modules calculants de
   `src/etl_benchmark` : 1824 mutants éliminés sur 1900 (96,00 %). Les 76
-  survivants sont classés dans `mutation_notes.md`. Les scripts d'`experiments/`
-  n'ont pas de campagne, donc le ticket reste ouvert.
+  survivants sont classés dans `mutation_notes.md`. Le suivi des scripts
+  d'`experiments/` est dans #31.
+- **#31** : les scripts sont mutés avec le reste : 2663 mutants éliminés sur
+  2694 (98,85 %), 4487 sur 4594 (97,67 %) pour l'ensemble de `make verify-deep`.
 
 ## Protocole et mesures (#8 à #15)
 

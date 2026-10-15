@@ -37,33 +37,34 @@ def write_split_ids(
     marked = frame.assign(**{marker: range(len(frame))})
     partitions = {}
     for seed in seeds:
-        parts = stratified_split(marked, label_column, ratios, seed)
+        train, validation, test = stratified_split(marked, label_column, ratios, seed)
         membership = {
             name: part[marker].astype(int).tolist()
-            for name, part in zip(("train", "validation", "test"), parts, strict=True)
+            for name, part in (("train", train), ("validation", validation), ("test", test))
         }
-        if fit_sample is not None and fit_sample < len(parts[0]):
-            membership["fit"] = parts[0][marker].sample(n=fit_sample, random_state=seed).tolist()
+        if fit_sample is not None and fit_sample < len(train):
+            membership["fit"] = train[marker].sample(n=fit_sample, random_state=seed).tolist()
         partitions[str(seed)] = membership
     record = {"schema_version": 1, "row_count": len(frame), "seeds": partitions}
     path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("wb") as stream, gzip.GzipFile(fileobj=stream, mode="wb", mtime=0) as zipped:
-        zipped.write(json.dumps(record, sort_keys=True, separators=(",", ":")).encode())
+    document = json.dumps(record, sort_keys=True, separators=(",", ":")).encode()
+    path.write_bytes(gzip.compress(document, mtime=0))
     return path
 
 
 def read_split_ids(path: Path) -> dict:
     """Read an archive produced by :func:`write_split_ids`."""
-    with gzip.open(path, "rt") as stream:
+    with gzip.open(path) as stream:
         return json.load(stream)
 
 
+def _git(*args: str) -> str:
+    return subprocess.check_output(["git", *args], cwd=ROOT, text=True).strip()
+
+
 def _hash_file(path: Path) -> str:
-    digest = hashlib.sha256()
     with path.open("rb") as stream:
-        for block in iter(lambda: stream.read(1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
+        return hashlib.file_digest(stream, hashlib.sha256).hexdigest()
 
 
 def _source_fingerprint() -> str:
@@ -97,7 +98,7 @@ def write_record(
     outputs: list[str],
 ) -> Path:
     """Write the code, data and protocol identity beside experiment outputs."""
-    revision = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+    revision = _git("rev-parse", "HEAD")
     packages = {}
     for name in ("numpy", "pandas", "scikit-learn", "pyod", "great-expectations"):
         try:
@@ -119,9 +120,7 @@ def write_record(
         "captured_at": datetime.now(UTC).isoformat(),
         "source_revision": revision,
         "source_fingerprint": _source_fingerprint(),
-        "worktree_dirty": bool(
-            subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True).strip()
-        ),
+        "worktree_dirty": bool(_git("status", "--porcelain")),
         "python": sys.version.split()[0],
         "platform": platform.platform(),
         "packages": packages,
