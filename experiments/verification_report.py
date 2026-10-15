@@ -12,13 +12,19 @@ from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 from xml.etree import ElementTree
 
+_COUNTS = {
+    "line": ("covered_lines", "num_statements"),
+    "branch": ("covered_branches", "num_branches"),
+}
+
 
 def _metric(summary: dict, kind: str) -> dict[str, int]:
-    if kind == "line":
-        keys = ("covered_lines", "num_statements")
-    else:
-        keys = ("covered_branches", "num_branches")
-    return {"covered": int(summary[keys[0]]), "coverable": int(summary[keys[1]])}
+    covered, coverable = _COUNTS[kind]
+    return {"covered": int(summary[covered]), "coverable": int(summary[coverable])}
+
+
+def _git(*args: str) -> str:
+    return subprocess.check_output(["git", *args], text=True).strip()
 
 
 def build_report(coverage_path: Path, junit_path: Path) -> dict:
@@ -48,8 +54,8 @@ def build_report(coverage_path: Path, junit_path: Path) -> dict:
         else "FAIL"
     )
     try:
-        revision = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
-        dirty = bool(subprocess.check_output(["git", "status", "--porcelain"], text=True).strip())
+        revision = _git("rev-parse", "HEAD")
+        dirty = bool(_git("status", "--porcelain"))
     except (OSError, subprocess.CalledProcessError):
         revision, dirty = None, None
     packages = {}
