@@ -3,9 +3,9 @@
     "paper/figures/heatmap_synthetic.png": "d6bbba783775ef1c5371bf8c226f83f0d0cf68935c6f2ac3ca569558d70b3d1a",
     "paper/figures/pr_curves.png": "21e9b7a59ab7ea485b7a959ea6c4cfa3903d7d118d709e0c9cc036f81f34bf06",
     "paper/figures/severity_curves.png": "6bc50cb8eac4834e698758555d9cc6d2293365a50b33c6cb6270d804dec4b4a5",
-    "paper/main.pdf": "e3367df7468dedaddc59eaa4e905d774b13121f45822b4afc699dd891eb5ed42",
-    "paper/main.tex": "62a974e2bd656280a43275801ceeeb96ed669797f8e0ac1a2b2bb5af62d2b731",
-    "paper/references.bib": "f17d8e14788d4bc605b8e863d75bab42ec64739e6a6148df7b7e8bd15ad4e554",
+    "paper/main.pdf": "a1219e66760724995280e6f9f30a02671ddf7a562f2bf202b9f2102ab1908cd2",
+    "paper/main.tex": "f8090a7236303a668aa3f3a8620df32ed6130e69392f5c6814a43857fc98c927",
+    "paper/references.bib": "4498ba64baf1fbb8c1ce131799c3177e68e54965a3983f5d8fb1c75b964165d4",
     "verification/evidence/benchmark_cardio.csv": "66dbddb17c0a74171c22e08c3088ff0de07fc5c4bfca30fbd0ef286ffd77228b",
     "verification/evidence/benchmark_cardio.md": "5763b9dfa81990cc78115eab44b0ecdb437ebb5a2380f0a86a99368a1f86a702",
     "verification/evidence/benchmark_credit_card.csv": "b356f349d147a7e49eb5e0496167d1b1ec75979b258e23330aa0e1c1ebfdeabb",
@@ -65,7 +65,7 @@
       "source_file_sha256": "bc5009bde6930b4d298b594f31b34485a9a17210cff0e8fb00a8c3068b885a2d",
       "source_revision": "ADBench main file checked 2026-10-13; source commit not recorded at acquisition",
       "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/main/adbench/datasets/Classical/6_cardio.npz",
-      "usage_terms": "ADBench repository is BSD-2-Clause; underlying Cardio data rights not separately documented"
+      "usage_terms": "Underlying data: UCI Cardiotocography (Campos and Bernardes, 2000, DOI 10.24432/C51S4N), CC BY 4.0, donated 2010-09-06; packaged by ADBench (BSD-2-Clause)"
     },
     "credit_card": {
       "anomalies": 473,
@@ -73,9 +73,9 @@
       "raw_rows": 284807,
       "rows_after_transform": 283726,
       "sha256": "76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89",
-      "source_revision": "not recorded at acquisition",
+      "source_revision": "Kaggle listing, version 3 (2018-03-23, notes: 'Fixed preview'); local file size 150828752 bytes equals the listing's total size, checked 2026-10-15; content hash not compared with a fresh download (login required)",
       "source_url": "https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud",
-      "usage_terms": "Kaggle listing: Open Database / Database Contents; raw CSV kept local"
+      "usage_terms": "Kaggle listing: Database: Open Database, Contents: Database Contents; raw CSV kept local"
     },
     "synthetic": {
       "anomalies": 2160,
@@ -97,6 +97,6 @@
   "platform": "macOS-27.0-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "source_revision": "b838c74f23ca5805b14bc3b9f58fc3127eeac07f",
+  "source_revision": "85c09ecc29d471cbe4d7c235e8bb620b64399829",
   "worktree_dirty": true
 }
