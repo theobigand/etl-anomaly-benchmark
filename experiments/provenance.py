@@ -8,6 +8,7 @@ import json
 import platform
 import subprocess
 import sys
+import tomllib
 from datetime import UTC, datetime
 from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
@@ -66,16 +67,22 @@ def _hash_file(path: Path) -> str:
 
 
 def _source_fingerprint() -> str:
+    """Hash the code, the environment file and the project metadata.
+
+    Only the ``[project]`` table of ``pyproject.toml`` counts (name,
+    dependencies); settings of test and mutation tools do not change a result.
+    """
     digest = hashlib.sha256()
     paths = [
         *ROOT.glob("src/**/*.py"),
         *ROOT.glob("experiments/*.py"),
-        ROOT / "pyproject.toml",
         ROOT / "environment.yml",
     ]
     for path in sorted(paths):
         digest.update(str(path.relative_to(ROOT)).encode())
         digest.update(path.read_bytes())
+    project = tomllib.loads((ROOT / "pyproject.toml").read_text())["project"]
+    digest.update(json.dumps(project, sort_keys=True).encode())
     return digest.hexdigest()
 
 

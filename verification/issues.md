@@ -3,7 +3,7 @@
 Au 14 octobre 2026, les tickets #3 à #11 et #13 à #29 sont fermés. Restent
 ouverts : #2 (coordination), #12 (révision du fichier Credit Card et droits de
 Cardio), #30 (vérification finale) et #31 (mutation des scripts
-d'`experiments/`, suite de #7). Les entrées ci-dessous gardent l'historique de
+d'`experiments/`, suite de #7 : 24,3 % mesuré, voir `mutation_notes.md`). Les entrées ci-dessous gardent l'historique de
 chaque ticket et les limites qui subsistent après sa fermeture.
 
 ## Vérification du socle (#3 à #7)
@@ -18,7 +18,7 @@ chaque ticket et les limites qui subsistent après sa fermeture.
   dans `README.md`.
 - **#6** : FAST mesure lignes et branches, y compris dans les commandes en
   sous-processus, et échoue si elles ne sont pas toutes couvertes. La
-  couverture actuelle est de 1463/1463 lignes et 300/300 branches, sans
+  couverture actuelle est de 1466/1466 lignes et 300/300 branches, sans
   exclusion. Les commandes locales de génération, de conversion Cardio et de
   démonstration ont des tests dédiés.
 - **#7** : la campagne porte sur tous les modules calculants de
