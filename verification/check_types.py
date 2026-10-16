@@ -3,8 +3,10 @@
 mypy runs over ``src/etl_benchmark``, ``experiments`` and ``verification``.
 Errors under ``verification/`` always fail. For the scientific code the known
 errors are listed in ``typing_baseline.txt`` (one ``path: message [code]`` per
-line, no line numbers): a new error fails, and so does a baseline entry that no
-longer occurs, so the list can only shrink. Annotating the scientific code is
+line, no line numbers; generate it with ``--write-baseline`` in the same
+environment recipe as CI, because installed stubs change what mypy reports): a
+new error fails, and so does a baseline entry that no longer occurs, so the
+list can only shrink. Annotating the scientific code is
 deferred because any edit there changes the provenance fingerprint of the
 archived runs.
 """
@@ -64,7 +66,26 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--mypy", nargs="+", default=["mypy"], help="mypy command")
     parser.add_argument("--baseline", type=Path, default=BASELINE)
+    parser.add_argument(
+        "--write-baseline",
+        action="store_true",
+        help="record the current errors of the scientific code (never those of verification/)",
+    )
     args = parser.parse_args(argv)
+    if args.write_baseline:
+        try:
+            found = parse(run_mypy(args.mypy))
+        except RuntimeError as exc:
+            print(f"typing: INCOMPLETE ({exc})")
+            return 1
+        refused = sorted(key for key in found if key.startswith("verification/"))
+        for key in refused:
+            print(f"typing: error in verification/ cannot be baselined: {key}")
+        if refused:
+            return 1
+        args.baseline.write_text("".join(f"{key}\n" for key in sorted(found)))
+        print(f"typing: wrote {len(found)} entries to {args.baseline}")
+        return 0
     try:
         found = parse(run_mypy(args.mypy))
         baseline = {line for line in args.baseline.read_text().splitlines() if line}
