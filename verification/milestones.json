@@ -14,16 +14,17 @@
       "DEEP 97.67% and FAULTS 14/14 not re-executed at M00",
       "REAL not re-executed at M00"
     ],
-    "constraint": "experiments/*.py and src/**/*.py are in the provenance fingerprint: any edit there invalidates test_artifact_lineage until archives are replayed once (see memory thesis-workflow-preferences). New verification tooling goes in verification/ to avoid this."
+    "constraint": "experiments/*.py and src/**/*.py are in the provenance fingerprint: any edit there invalidates test_artifact_lineage until archives are replayed once (see memory thesis-workflow-preferences). New verification tooling goes in verification/ to avoid this.",
+    "decision_2026_10_16": "User decision: versioned scientific fingerprint v2 (excludes verify_real, check_mutation, verification_report), v1 preserved, legacy records validated against anchor 7977dee without restamping, one clean replay at M13; release stays INCOMPLETE until then."
   },
   "milestones": [
     {
       "id": "M00",
       "title": "Baseline audit",
-      "status": "IN_PROGRESS",
+      "status": "COMPLETED",
       "dependencies": [],
       "start_commit": "7977dee",
-      "end_commit": null,
+      "end_commit": "397a35a",
       "files_changed": [],
       "tests": [
         {
@@ -34,19 +35,35 @@
       ],
       "evidence": [],
       "blockers": [],
-      "next_action": "commit tracker, then M01"
+      "next_action": null
     },
     {
       "id": "M01",
       "title": "Fail-closed REAL",
-      "status": "NOT_STARTED",
+      "status": "COMPLETED",
       "dependencies": [
         "M00"
       ],
-      "start_commit": null,
-      "end_commit": null,
-      "files_changed": [],
-      "tests": [],
+      "start_commit": "397a35a",
+      "end_commit": "c24f3c2",
+      "files_changed": [
+        "experiments/verify_real.py",
+        "tests/test_real_verification.py",
+        "tests/test_script_outputs_gate.py"
+      ],
+      "tests": [
+        {
+          "command": "pytest tests/test_real_verification.py",
+          "red": "4 new tests failed before the fix (empty registry exit 0, no status field)",
+          "green": "pass",
+          "exit_code": 0
+        },
+        {
+          "command": "python experiments/verify_real.py (real data present)",
+          "exit_code": 0,
+          "result": "credit_card, water_quality, cardio PASS"
+        }
+      ],
       "evidence": [],
       "blockers": [],
       "next_action": null
@@ -54,16 +71,28 @@
     {
       "id": "M02",
       "title": "Mutation gate integrity",
-      "status": "NOT_STARTED",
+      "status": "COMPLETED",
       "dependencies": [
         "M00"
       ],
-      "start_commit": null,
-      "end_commit": null,
-      "files_changed": [],
-      "tests": [],
+      "start_commit": "c24f3c2",
+      "end_commit": "95b8f4c",
+      "files_changed": [
+        "experiments/check_mutation.py",
+        "tests/test_mutation_gate.py"
+      ],
+      "tests": [
+        {
+          "command": "pytest tests/test_mutation_gate.py",
+          "red": "19 new cases failed before the fix",
+          "green": "24 passed",
+          "exit_code": 0
+        }
+      ],
       "evidence": [],
-      "blockers": [],
+      "blockers": [
+        "No local mutation campaign result exists (mutants/ absent); DEEP not re-executed yet. The new gate rejects skipped/no_tests/interrupted/segfault outcomes, so the next real campaign may be INVALID if the old one had any."
+      ],
       "next_action": null
     },
     {
@@ -100,17 +129,30 @@
     {
       "id": "M05",
       "title": "Dependency locking and provenance",
-      "status": "NOT_STARTED",
+      "status": "PARTIAL",
       "dependencies": [
         "M03"
       ],
-      "start_commit": null,
+      "start_commit": "95b8f4c",
       "end_commit": null,
-      "files_changed": [],
-      "tests": [],
+      "files_changed": [
+        "experiments/provenance.py",
+        "verification/lineage.py",
+        "verification/evidence/lineage.json",
+        ".github/workflows/ci.yml",
+        "tests/test_scientific_fingerprint.py",
+        "tests/test_artifact_lineage.py"
+      ],
+      "tests": [
+        {
+          "command": "make verify-fast",
+          "exit_code": 0,
+          "result": "607 passed, 100% line and branch"
+        }
+      ],
       "evidence": [],
       "blockers": [],
-      "next_action": null
+      "next_action": "dependency locking; dirty-worktree labelling; environment capture. Scientific fingerprint v2 and legacy lineage done."
     },
     {
       "id": "M06",
