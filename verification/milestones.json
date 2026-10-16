@@ -253,15 +253,25 @@
     {
       "id": "M08",
       "title": "Fault-injection expansion",
-      "status": "NOT_STARTED",
+      "status": "COMPLETED",
       "dependencies": [
         "M01",
         "M02"
       ],
-      "start_commit": null,
+      "start_commit": "c478939",
       "end_commit": null,
-      "files_changed": [],
-      "tests": [],
+      "files_changed": [
+        "tests/test_fault_matrix.py",
+        "verification/fault_matrix.md",
+        "tests/test_evidence_schema.py"
+      ],
+      "tests": [
+        {
+          "command": "make verify-faults",
+          "exit_code": 0,
+          "result": "23 passed in 110s (14 original + 9 new, all detected by named tests, control passes); faults evidence PASS"
+        }
+      ],
       "evidence": [],
       "blockers": [],
       "next_action": null
