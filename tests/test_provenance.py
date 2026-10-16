@@ -138,3 +138,27 @@ def test_source_fingerprint_follows_code_and_environment(tmp_path, monkeypatch, 
     base = provenance._source_fingerprint()
     (tmp_path / path).write_text("changed\n")
     assert provenance._source_fingerprint() != base
+
+
+def test_record_names_the_environment_lock_and_its_hash(tmp_path, monkeypatch):
+    lock = tmp_path / "verification" / "environment"
+    lock.mkdir(parents=True)
+    import platform
+
+    name = f"conda-{platform.system().lower()}-{platform.machine()}.explicit.txt"
+    (lock / name).write_text("@EXPLICIT\n")
+    monkeypatch.setattr(provenance, "ROOT", tmp_path)
+    found = provenance._environment_lock()
+    assert found == {
+        "file": f"verification/environment/{name}",
+        "sha256": hashlib.sha256(b"@EXPLICIT\n").hexdigest(),
+    }
+    (lock / name).unlink()
+    assert provenance._environment_lock()["sha256"] is None
+
+
+def test_the_repository_lock_is_found_for_this_platform():
+    # The lock is recorded on arm64 macOS only; elsewhere the hash is explicitly None.
+    found = provenance._environment_lock()
+    assert found["file"].startswith("verification/environment/conda-")
+    assert found["sha256"] is None or len(found["sha256"]) == 64

@@ -96,6 +96,7 @@ def test_record_lists_every_field_of_the_run(tmp_path, monkeypatch):
             name: installed_version(name)
             for name in ("numpy", "pandas", "scikit-learn", "pyod", "great-expectations")
         },
+        "environment_lock": provenance._environment_lock(),
         "dataset": {
             "identity": "toy",
             "path": str(data),
