@@ -67,6 +67,7 @@ def test_real_verification_command_fails_closed_on_reference_errors(tmp_path, mo
     csv = tmp_path / "present.csv"
     pd.DataFrame({"x": [1.0, 2.0], "Class": [0, 1]}).to_csv(csv, index=False)
     monkeypatch.setattr(verify_real, "DATASETS", {"toy": DatasetSpec("toy", csv, "Class", 1)})
+    monkeypatch.setattr(verify_real, "REQUIRED_DATASETS", ("toy",))
     manifest = tmp_path / "manifest.json"
     output = tmp_path / "report.json"
     monkeypatch.setattr(verify_real, "MANIFEST", manifest)
@@ -96,9 +97,53 @@ def test_real_verification_command_fails_closed_on_reference_errors(tmp_path, mo
 
 
 def test_real_verification_module_entrypoint_uses_local_reference(tmp_path, monkeypatch):
+    names = ("credit_card", "water_quality", "cardio")
+    specs, reference = {}, {}
+    for name in names:
+        csv = tmp_path / f"{name}.csv"
+        pd.DataFrame({"measure": [1.0, 2.0], "Class": [0, 1]}).to_csv(csv, index=False)
+        specs[name] = DatasetSpec(name, csv, "Class", 1)
+        reference[name] = {
+            "sha256": hashlib.sha256(csv.read_bytes()).hexdigest(),
+            "raw_rows": 2,
+            "rows_after_transform": 2,
+            "anomalies": 1,
+            "positive_value": 1,
+        }
+    manifest = tmp_path / "verification/evidence/manifest.json"
+    manifest.parent.mkdir(parents=True)
+    manifest.write_text(json.dumps({"datasets": reference}))
+    output = tmp_path / "real.json"
+    monkeypatch.setattr(config, "PROJECT_ROOT", tmp_path)
+    monkeypatch.setattr(datasets, "DATASETS", specs)
+    monkeypatch.setattr(sys, "argv", ["verify_real", "--output", str(output)])
+    with pytest.raises(SystemExit) as stopped:
+        runpy.run_path(str(Path(verify_real.__file__)), run_name="__main__")
+    assert stopped.value.code == 0
+    report = json.loads(output.read_text())
+    assert report["status"] == "PASS"
+    assert [item["status"] for item in report["datasets"]] == ["PASS"] * 3
+
+
+def _run_main(monkeypatch, tmp_path, registry, manifest_datasets=None):
+    manifest = tmp_path / "manifest.json"
+    manifest.write_text(json.dumps({"datasets": manifest_datasets or {}}))
+    output = tmp_path / "report.json"
+    monkeypatch.setattr(verify_real, "DATASETS", registry)
+    monkeypatch.setattr(verify_real, "MANIFEST", manifest)
+    monkeypatch.setattr(sys, "argv", ["verify_real", "--output", str(output)])
+    return verify_real.main(), json.loads(output.read_text())
+
+
+def test_real_verification_fails_on_an_empty_registry(tmp_path, monkeypatch):
+    code, report = _run_main(monkeypatch, tmp_path, {})
+    assert code == 1
+    assert report["status"] == "FAIL"
+
+
+def test_real_verification_requires_every_research_dataset(tmp_path, monkeypatch):
     csv = tmp_path / "toy.csv"
-    pd.DataFrame({"measure": [1.0, 2.0], "Class": [0, 1]}).to_csv(csv, index=False)
-    spec = DatasetSpec("toy", csv, "Class", 1)
+    pd.DataFrame({"x": [1.0, 2.0], "Class": [0, 1]}).to_csv(csv, index=False)
     reference = {
         "sha256": hashlib.sha256(csv.read_bytes()).hexdigest(),
         "raw_rows": 2,
@@ -106,14 +151,32 @@ def test_real_verification_module_entrypoint_uses_local_reference(tmp_path, monk
         "anomalies": 1,
         "positive_value": 1,
     }
-    manifest = tmp_path / "verification/evidence/manifest.json"
-    manifest.parent.mkdir(parents=True)
-    manifest.write_text(json.dumps({"datasets": {"toy": reference}}))
-    output = tmp_path / "real.json"
-    monkeypatch.setattr(config, "PROJECT_ROOT", tmp_path)
-    monkeypatch.setattr(datasets, "DATASETS", {"toy": spec})
-    monkeypatch.setattr(sys, "argv", ["verify_real", "--output", str(output)])
-    with pytest.raises(SystemExit) as stopped:
-        runpy.run_path(str(Path(verify_real.__file__)), run_name="__main__")
-    assert stopped.value.code == 0
-    assert json.loads(output.read_text())["datasets"][0]["status"] == "PASS"
+    registry = {"toy": DatasetSpec("toy", csv, "Class", 1)}
+    # "toy" passes on its own, but it is not the set of required datasets.
+    code, report = _run_main(monkeypatch, tmp_path, registry, {"toy": reference})
+    assert code == 1
+    assert report["status"] == "FAIL"
+    assert "required" in report["reason"]
+
+
+def test_real_verification_report_records_the_required_set_and_status(tmp_path, monkeypatch):
+    csv = tmp_path / "toy.csv"
+    pd.DataFrame({"x": [1.0, 2.0], "Class": [0, 1]}).to_csv(csv, index=False)
+    reference = {
+        "sha256": hashlib.sha256(csv.read_bytes()).hexdigest(),
+        "raw_rows": 2,
+        "rows_after_transform": 2,
+        "anomalies": 1,
+        "positive_value": 1,
+    }
+    monkeypatch.setattr(verify_real, "REQUIRED_DATASETS", ("toy",))
+    registry = {"toy": DatasetSpec("toy", csv, "Class", 1)}
+    code, report = _run_main(monkeypatch, tmp_path, registry, {"toy": reference})
+    assert code == 0
+    assert report["status"] == "PASS"
+    assert report["required"] == ["toy"]
+
+
+def test_the_required_datasets_are_the_three_research_files():
+    assert set(verify_real.REQUIRED_DATASETS) == {"credit_card", "water_quality", "cardio"}
+    assert set(verify_real.REQUIRED_DATASETS) <= set(datasets.DATASETS)

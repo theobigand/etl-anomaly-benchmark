@@ -14,6 +14,9 @@ from etl_benchmark import config
 from etl_benchmark.datasets import ANOMALY_COLUMN, DATASETS, DatasetSpec
 
 MANIFEST = config.PROJECT_ROOT / "verification" / "evidence" / "manifest.json"
+# The research files REAL must verify. A registry that lists fewer, more or
+# other datasets cannot produce a PASS.
+REQUIRED_DATASETS = ("credit_card", "water_quality", "cardio")
 
 
 def inspect_dataset(spec: DatasetSpec, expected: dict | None = None) -> dict:
@@ -66,28 +69,46 @@ def main() -> int:
         "--output", type=Path, default=config.RESULTS_DIR / "real_verification.json"
     )
     args = parser.parse_args()
-    try:
-        reference = json.loads(MANIFEST.read_text())["datasets"]
-        required = {"sha256", "raw_rows", "rows_after_transform", "anomalies", "positive_value"}
-        for spec in DATASETS.values():
-            missing = required - reference[spec.name].keys()
-            if missing:
-                raise ValueError(f"{spec.name}: reference missing {sorted(missing)}")
-        records = [
-            inspect_dataset(spec, expected={key: reference[spec.name][key] for key in required})
-            for spec in DATASETS.values()
-        ]
-    except (OSError, ValueError, KeyError, TypeError) as exc:
-        records = [
-            {"dataset": spec.name, "status": "FAIL", "reason": f"reference unavailable: {exc}"}
-            for spec in DATASETS.values()
-        ]
-    report = {"captured_at": datetime.now(UTC).isoformat(), "datasets": records}
+    reason = None
+    if set(DATASETS) != set(REQUIRED_DATASETS):
+        reason = (
+            f"registry {sorted(DATASETS)} differs from the required {sorted(REQUIRED_DATASETS)}"
+        )
+        records = []
+    else:
+        try:
+            reference = json.loads(MANIFEST.read_text())["datasets"]
+            required = {"sha256", "raw_rows", "rows_after_transform", "anomalies", "positive_value"}
+            for spec in DATASETS.values():
+                missing = required - reference[spec.name].keys()
+                if missing:
+                    raise ValueError(f"{spec.name}: reference missing {sorted(missing)}")
+            records = [
+                inspect_dataset(spec, expected={key: reference[spec.name][key] for key in required})
+                for spec in DATASETS.values()
+            ]
+        except (OSError, ValueError, KeyError, TypeError) as exc:
+            records = [
+                {"dataset": spec.name, "status": "FAIL", "reason": f"reference unavailable: {exc}"}
+                for spec in DATASETS.values()
+            ]
+    passed = [item["dataset"] for item in records if item["status"] == "PASS"]
+    ok = reason is None and sorted(passed) == sorted(REQUIRED_DATASETS)
+    report = {
+        "captured_at": datetime.now(UTC).isoformat(),
+        "required": list(REQUIRED_DATASETS),
+        "status": "PASS" if ok else "FAIL",
+        "datasets": records,
+    }
+    if reason is not None:
+        report["reason"] = reason
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     for item in records:
         print(f"{item['dataset']}: {item['status']}")
-    return 0 if all(item["status"] == "PASS" for item in records) else 1
+    if reason is not None:
+        print(f"REAL: FAIL ({reason})")
+    return 0 if ok else 1
 
 
 if __name__ == "__main__":
