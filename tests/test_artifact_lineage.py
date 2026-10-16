@@ -77,3 +77,13 @@ def test_fixed_calibration_reuses_baseline_partitions_and_current_source():
             fixed_ids = stream.read()
         with gzip.open(base / f"split_ids_{name}.json.gz", "rb") as stream:
             assert fixed_ids == stream.read()
+
+
+def test_lineage_anchor_is_a_commit_that_reproduces_the_archived_recipe_1_fingerprint():
+    from verification import lineage
+
+    root = Path(__file__).resolve().parents[1]
+    anchor = lineage.files_at(lineage.anchor_revision())
+    stored = json.loads((root / "verification/evidence/run_benchmark_cardio.json").read_text())
+    assert stored.get("fingerprint_recipe", 1) == 1
+    assert lineage.fingerprint_v1_of(anchor) == stored["source_fingerprint"]

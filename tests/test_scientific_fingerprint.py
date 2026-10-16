@@ -159,13 +159,6 @@ def test_unknown_recipe_and_missing_fields_are_rejected():
     assert lineage.check_record({}, current, current)
 
 
-def test_lineage_anchor_is_a_commit_that_reproduces_the_archived_recipe_1_fingerprint():
-    anchor = lineage.files_at(lineage.anchor_revision())
-    stored = json.loads((ROOT / "verification/evidence/run_benchmark_cardio.json").read_text())
-    assert stored.get("fingerprint_recipe", 1) == 1
-    assert lineage.fingerprint_v1_of(anchor) == stored["source_fingerprint"]
-
-
 def test_files_at_reads_a_committed_tree_not_the_worktree(tmp_path):
     import subprocess
 
