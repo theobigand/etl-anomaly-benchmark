@@ -1,0 +1,248 @@
+{
+  "schema_version": 1,
+  "baseline": {
+    "head": "7977deed9f7a8f3688d74109d7e13d7c0188d895",
+    "branch_at_start": "main",
+    "worktree_clean": true,
+    "python_env": "/Users/theo/miniconda3/envs/etl-benchmark (python is not on the default PATH)",
+    "confirmed_defects": [
+      "verify_real.main exits 0 with an empty dataset registry (all([]) is True); reproduced",
+      "check_mutation.classify accepts negative counts that offset the sum (killed=100, survived=-5, total=95 gives PASS at 105%); reproduced",
+      "check_mutation.classify accepts float and bool counts; reproduced"
+    ],
+    "unverified_hypotheses": [
+      "DEEP 97.67% and FAULTS 14/14 not re-executed at M00",
+      "REAL not re-executed at M00"
+    ],
+    "constraint": "experiments/*.py and src/**/*.py are in the provenance fingerprint: any edit there invalidates test_artifact_lineage until archives are replayed once (see memory thesis-workflow-preferences). New verification tooling goes in verification/ to avoid this."
+  },
+  "milestones": [
+    {
+      "id": "M00",
+      "title": "Baseline audit",
+      "status": "IN_PROGRESS",
+      "dependencies": [],
+      "start_commit": "7977dee",
+      "end_commit": null,
+      "files_changed": [],
+      "tests": [
+        {
+          "command": "make verify-fast (env etl-benchmark, python 3.11.17)",
+          "exit_code": 0,
+          "result": "561 passed, 16 deselected; 1467 stmts 0 miss, 294 branches 0 partial; ruff clean"
+        }
+      ],
+      "evidence": [],
+      "blockers": [],
+      "next_action": "commit tracker, then M01"
+    },
+    {
+      "id": "M01",
+      "title": "Fail-closed REAL",
+      "status": "NOT_STARTED",
+      "dependencies": [
+        "M00"
+      ],
+      "start_commit": null,
+      "end_commit": null,
+      "files_changed": [],
+      "tests": [],
+      "evidence": [],
+      "blockers": [],
+      "next_action": null
+    },
+    {
+      "id": "M02",
+      "title": "Mutation gate integrity",
+      "status": "NOT_STARTED",
+      "dependencies": [
+        "M00"
+      ],
+      "start_commit": null,
+      "end_commit": null,
+      "files_changed": [],
+      "tests": [],
+      "evidence": [],
+      "blockers": [],
+      "next_action": null
+    },
+    {
+      "id": "M03",
+      "title": "Evidence schema and status contracts",
+      "status": "NOT_STARTED",
+      "dependencies": [
+        "M01",
+        "M02"
+      ],
+      "start_commit": null,
+      "end_commit": null,
+      "files_changed": [],
+      "tests": [],
+      "evidence": [],
+      "blockers": [],
+      "next_action": null
+    },
+    {
+      "id": "M04",
+      "title": "Release certification gate",
+      "status": "NOT_STARTED",
+      "dependencies": [
+        "M03"
+      ],
+      "start_commit": null,
+      "end_commit": null,
+      "files_changed": [],
+      "tests": [],
+      "evidence": [],
+      "blockers": [],
+      "next_action": null
+    },
+    {
+      "id": "M05",
+      "title": "Dependency locking and provenance",
+      "status": "NOT_STARTED",
+      "dependencies": [
+        "M03"
+      ],
+      "start_commit": null,
+      "end_commit": null,
+      "files_changed": [],
+      "tests": [],
+      "evidence": [],
+      "blockers": [],
+      "next_action": null
+    },
+    {
+      "id": "M06",
+      "title": "CI/CD enforcement",
+      "status": "NOT_STARTED",
+      "dependencies": [
+        "M04"
+      ],
+      "start_commit": null,
+      "end_commit": null,
+      "files_changed": [],
+      "tests": [],
+      "evidence": [],
+      "blockers": [],
+      "next_action": null
+    },
+    {
+      "id": "M07",
+      "title": "Verifier self-testing",
+      "status": "NOT_STARTED",
+      "dependencies": [
+        "M03"
+      ],
+      "start_commit": null,
+      "end_commit": null,
+      "files_changed": [],
+      "tests": [],
+      "evidence": [],
+      "blockers": [],
+      "next_action": null
+    },
+    {
+      "id": "M08",
+      "title": "Fault-injection expansion",
+      "status": "NOT_STARTED",
+      "dependencies": [
+        "M01",
+        "M02"
+      ],
+      "start_commit": null,
+      "end_commit": null,
+      "files_changed": [],
+      "tests": [],
+      "evidence": [],
+      "blockers": [],
+      "next_action": null
+    },
+    {
+      "id": "M09",
+      "title": "Independent oracles and survivors",
+      "status": "NOT_STARTED",
+      "dependencies": [
+        "M00"
+      ],
+      "start_commit": null,
+      "end_commit": null,
+      "files_changed": [],
+      "tests": [],
+      "evidence": [],
+      "blockers": [],
+      "next_action": null
+    },
+    {
+      "id": "M10",
+      "title": "Reproducibility",
+      "status": "NOT_STARTED",
+      "dependencies": [
+        "M05"
+      ],
+      "start_commit": null,
+      "end_commit": null,
+      "files_changed": [],
+      "tests": [],
+      "evidence": [],
+      "blockers": [],
+      "next_action": null
+    },
+    {
+      "id": "M11",
+      "title": "Robustness, typing, scaling",
+      "status": "NOT_STARTED",
+      "dependencies": [
+        "M00"
+      ],
+      "start_commit": null,
+      "end_commit": null,
+      "files_changed": [],
+      "tests": [],
+      "evidence": [],
+      "blockers": [],
+      "next_action": null
+    },
+    {
+      "id": "M12",
+      "title": "Manuscript consistency",
+      "status": "NOT_STARTED",
+      "dependencies": [
+        "M09"
+      ],
+      "start_commit": null,
+      "end_commit": null,
+      "files_changed": [],
+      "tests": [],
+      "evidence": [],
+      "blockers": [],
+      "next_action": null
+    },
+    {
+      "id": "M13",
+      "title": "Final audit and certification",
+      "status": "NOT_STARTED",
+      "dependencies": [
+        "M01",
+        "M02",
+        "M03",
+        "M04",
+        "M05",
+        "M06",
+        "M07",
+        "M08",
+        "M09",
+        "M10",
+        "M11",
+        "M12"
+      ],
+      "start_commit": null,
+      "end_commit": null,
+      "files_changed": [],
+      "tests": [],
+      "evidence": [],
+      "blockers": [],
+      "next_action": null
+    }
+  ]
+}
