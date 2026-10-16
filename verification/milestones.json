@@ -333,16 +333,35 @@
     {
       "id": "M10",
       "title": "Reproducibility",
-      "status": "NOT_STARTED",
+      "status": "COMPLETED",
       "dependencies": [
         "M05"
       ],
-      "start_commit": null,
+      "start_commit": "3c2f038",
       "end_commit": null,
-      "files_changed": [],
-      "tests": [],
+      "files_changed": [
+        "verification/reproduce.py",
+        "tests/test_reproduce.py",
+        "verification/reproducibility.md",
+        "pyproject.toml"
+      ],
+      "tests": [
+        {
+          "command": "python -m verification.reproduce --levels archive same_environment locked_environment version_sensitivity",
+          "exit_code": 0,
+          "result": "cardio: archive PASS numerical (diff 0.0, splits identical); same env PASS numerical; locked env rebuilt from conda lock + pip lock PASS numerical; scikit-learn 1.8.0 MEASURED numerical (diff 0.0)"
+        },
+        {
+          "command": "make verify-tools",
+          "exit_code": 0,
+          "result": "verifier 683 stmts/208 branches 100%"
+        }
+      ],
       "evidence": [],
-      "blockers": [],
+      "blockers": [
+        "Only cardio reproduced; credit_card, water_quality, synthetic, curves, severity not rerun",
+        "Lock is osx-arm64 only; rebuild needs network"
+      ],
       "next_action": null
     },
     {
