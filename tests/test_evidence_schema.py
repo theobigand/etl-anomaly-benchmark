@@ -379,9 +379,11 @@ def test_command_line_builders_write_validated_envelopes(tmp_path):
     assert not (tmp_path / "z.json").exists()
 
 
-def test_fault_names_are_the_fourteen_scientific_defects():
+def test_fault_names_are_the_twenty_three_scientific_defects():
     names = evidence.fault_names()
-    assert len(names) == 14 and len(set(names)) == 14
+    assert len(names) == 23 and len(set(names)) == 23
+    # the original fourteen stay in the matrix
+    assert {"fit_on_evaluation_data", "dropped_detector_run"} <= set(names)
 
 
 def test_relative_artifact_paths_are_recorded_relative_to_the_root(tmp_path, monkeypatch):
