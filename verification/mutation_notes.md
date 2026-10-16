@@ -130,6 +130,20 @@ ignore la casse. Deux survivants de `_environment_lock` (`"VERIFICATION"`,
 `"ENVIRONMENT"`) sont dans le même cas. Ces trois mutants seraient éliminés sur
 Linux, donc par la CI (non vérifié) ; ils restent comptés comme survivants.
 
+## Écart Linux / macOS observé en CI
+
+La campagne DEEP exécutée sur Linux (run 38967428334, `421ea6f`) a donné 109
+survivants contre 108 en local. Comparaison des listes : trois survivants
+propres à macOS (les trois mutants de casse ci-dessus, éliminés sur Linux) et
+quatre propres à Linux, les mutants `datetime.now(UTC)` -> `datetime.now(None)`
+de `main` dans `run_benchmark`, `run_curves`, `run_severity` et
+`run_synthetic_benchmark`. Sur un exécuteur dont le fuseau local est UTC, ces
+mutants sont équivalents ; ils n'étaient éliminés en local que grâce au fuseau
+de la machine. Une fixture de `tests/conftest.py` impose désormais un fuseau
+décalé (Asia/Kolkata), et les quatre mutants sont éliminés y compris avec
+`TZ=UTC`. Les chiffres du manuscrit (4 643 / 4 751) restent ceux de la mesure
+locale à `3779905` ; la campagne Linux corrigée n'a pas encore été rejouée.
+
 ## Équivalences invoquées
 
 Aucune équivalence n'est prouvée formellement. Deux familles se vérifient dans
