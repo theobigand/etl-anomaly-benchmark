@@ -17,7 +17,8 @@
     "constraint": "experiments/*.py and src/**/*.py are in the provenance fingerprint: any edit there invalidates test_artifact_lineage until archives are replayed once (see memory thesis-workflow-preferences). New verification tooling goes in verification/ to avoid this.",
     "decision_2026_10_16": "User decision: versioned scientific fingerprint v2 (excludes verify_real, check_mutation, verification_report), v1 preserved, legacy records validated against anchor 7977dee without restamping, one clean replay at M13; release stays INCOMPLETE until then.",
     "deep_note": "DEEP was run on a clean tree at 0359ce1 plus later test-only commits; M13 must rerun on the final commit.",
-    "final_note": "M13 done on the branch chain verify/m00..m12 (tip contains all work). Not merged, not pushed."
+    "final_note": "M13 done on the branch chain verify/m00..m12 (tip contains all work). Not merged, not pushed.",
+    "remote_validation": "Draft PR #37 (verify/m12-manuscript-consistency -> main), not merged. CI evidence is bound to GitHub's PR merge commit; its tree equals the branch tip's tree."
   },
   "milestones": [
     {
@@ -231,11 +232,24 @@
         {
           "command": "gh run list; gh api branches/main/protection; gh api rulesets",
           "result": "last 5 runs on main/PR succeeded before this work; main is NOT protected (HTTP 404), no rulesets. Inspected read-only."
+        },
+        {
+          "command": "remote ci, PR #37, run 38933480557 at 3779905",
+          "result": "FAILED: test_release_gate leaked GITHUB_ACTIONS from the CI environment (RED reproduced locally with the variable set); fixed by isolating the test"
+        },
+        {
+          "command": "remote ci, PR #37, run 38934341984 at 25597b0",
+          "result": "FAST (Linux) and FAULTS passed; mypy step FAILED: baseline built without pandas-stubs in the project environment (17 errors vs 10 baselined). Reproduced locally in a fresh venv with the CI install recipe; baseline regenerated with the new --write-baseline"
+        },
+        {
+          "command": "remote ci, PR #37, run 38935261309 at 81f5c55 (merge commit a9928dc, tree identical to the branch tip)",
+          "result": "success: FAST 774 tests 100% line/branch on Linux, verifier coverage 100%, mypy PASS, FAULTS 23/23. Linux scientific fingerprint equals the macOS one."
         }
       ],
       "evidence": [],
       "blockers": [
-        "New workflows have not run remotely (nothing pushed); branch protection not enabled and not changed (needs user authorization)"
+        "verify-release workflow runs on PR #37 (its own file is in the PR); see the PR checks for the run at the final tip. REAL cannot run on hosted runners (datasets are not in the repository), so a remote release verdict is INCOMPLETE by design",
+        "Branch protection not enabled; a proposal is in verification/branch_protection_proposal.md"
       ],
       "next_action": "After the user pushes: confirm ci.yml and a verify-release dispatch run; ask whether to require the ci checks on main."
     },

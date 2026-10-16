@@ -70,13 +70,15 @@ jobs:
       - name: Scientific fault injection
         run: make verify-faults
 
+      - name: Bundle fault evidence with its repository-relative paths
+        if: always()
+        run: tar czf evidence-faults.tgz --ignore-failed-read experiments/results/fault_matrix.json experiments/results/evidence/faults.json
+
       - name: Preserve fault evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: verification-faults
-          path: |
-            experiments/results/fault_matrix.json
-            experiments/results/evidence/faults.json
+          path: evidence-faults.tgz
           if-no-files-found: warn
           retention-days: 30
