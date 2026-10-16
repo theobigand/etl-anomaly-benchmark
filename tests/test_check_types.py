@@ -107,3 +107,32 @@ def test_the_real_mypy_command_line_carries_the_project_scope(monkeypatch):
     assert check_types.run_mypy(["mypy"]) == ""
     assert seen["command"][-3:] == ["src/etl_benchmark", "experiments", "verification"]
     assert seen["env"]["MYPYPATH"].split(":") == ["src", "experiments", "."]
+
+
+def test_write_baseline_records_scientific_errors_only_and_sorts_them(tmp_path, capsys):
+    baseline = tmp_path / "baseline.txt"
+    out = "src/b.py:2: error: Two\nsrc/a.py:9: error: One\nsrc/a.py:3: error: One\n"
+    mypy = _fake_mypy(tmp_path, out)
+    assert check_types.main(["--mypy", mypy, "--baseline", str(baseline), "--write-baseline"]) == 0
+    assert baseline.read_text() == "src/a.py: One\nsrc/b.py: Two\n"
+    assert "wrote 2 entries" in capsys.readouterr().out
+    assert check_types.main(["--mypy", mypy, "--baseline", str(baseline)]) == 0
+
+
+def test_write_baseline_refuses_verifier_errors_and_leaves_the_file_alone(tmp_path, capsys):
+    baseline = tmp_path / "baseline.txt"
+    baseline.write_text("src/a.py: Old\n")
+    mypy = _fake_mypy(tmp_path, "verification/t.py:1: error: Bad\n")
+    assert check_types.main(["--mypy", mypy, "--baseline", str(baseline), "--write-baseline"]) == 1
+    assert baseline.read_text() == "src/a.py: Old\n"
+    assert "cannot be baselined: verification/t.py: Bad" in capsys.readouterr().out
+
+
+def test_write_baseline_reports_a_mypy_crash_as_incomplete(tmp_path, capsys):
+    crash = tmp_path / "crash"
+    crash.write_text("#!/bin/sh\nexit 2\n")
+    crash.chmod(crash.stat().st_mode | stat.S_IEXEC)
+    baseline = tmp_path / "baseline.txt"
+    args = ["--mypy", str(crash), "--baseline", str(baseline), "--write-baseline"]
+    assert check_types.main(args) == 1
+    assert "INCOMPLETE" in capsys.readouterr().out and not baseline.exists()

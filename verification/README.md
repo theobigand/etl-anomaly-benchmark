@@ -12,7 +12,7 @@ se lancent à la racine du dépôt.
 | `make verify-scale` | Étude locale de croissance sur trois tailles ; aucune limite de temps n'est imposée à FAST. |
 | `make verify-all` | Lance FAST, DEEP, les défauts introduits et REAL, et conserve leurs échecs. |
 | `make verify-tools` | Couverture ligne et branche de `verification/` (100 % exigé), à part de FAST. |
-| `make verify-types` | mypy (version épinglée dans la CI) : `verification/` sans erreur, le reste sans nouvelle erreur par rapport à `typing_baseline.txt`. |
+| `make verify-types` | mypy (version épinglée dans la CI ; à lancer avec mypy et pandas-stubs installés dans l'environnement actif, sinon le résultat diffère) : `verification/` sans erreur, le reste sans nouvelle erreur par rapport à `typing_baseline.txt`. |
 | `make verify-release` | Réunit les quatre preuves et décide CERTIFIED, INCOMPLETE ou REJECTED ; le rapport est produit localement et n'est pas une attestation indépendante. |
 | `make lock` | Enregistre les paquets conda et pip exacts de l'environnement actif. |
 | `python -m verification.reproduce` | Rejoue Cardio et classe l'accord (voir `reproducibility.md`). |
