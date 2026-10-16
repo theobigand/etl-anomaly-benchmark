@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import ast
 import gzip
 import hashlib
 import json
@@ -18,6 +19,19 @@ import pandas as pd
 from etl_benchmark.split import stratified_split
 
 ROOT = Path(__file__).resolve().parents[1]
+
+# Recipe 2 binds only what can change a result. Recipe 1 (``_source_fingerprint``)
+# also hashed the verification gates, so editing a gate invalidated every run.
+SCIENTIFIC_RECIPE = 2
+VERIFICATION_ONLY = frozenset(
+    {
+        "experiments/verify_real.py",
+        "experiments/check_mutation.py",
+        "experiments/verification_report.py",
+    }
+)
+# This module only shapes the split archives; its other functions write metadata.
+RESULT_FUNCTIONS = ("write_split_ids", "read_split_ids")
 
 
 def write_split_ids(
@@ -87,6 +101,55 @@ def _source_fingerprint() -> str:
     return digest.hexdigest()
 
 
+def is_scientific_path(relative: str) -> bool:
+    """Whether a repository-relative path is part of the recipe-2 fingerprint."""
+    parts = relative.split("/")
+    if relative in VERIFICATION_ONLY:
+        return False
+    if parts[0] == "src":
+        return relative.endswith(".py")
+    if parts[0] == "experiments":
+        return len(parts) == 2 and relative.endswith(".py")
+    return relative == "environment.yml"
+
+
+def _result_functions(source: bytes) -> bytes:
+    text = source.decode()
+    nodes = [
+        node
+        for node in ast.parse(text).body
+        if isinstance(node, ast.FunctionDef) and node.name in RESULT_FUNCTIONS
+    ]
+    return "\n".join(ast.get_source_segment(text, node) for node in nodes).encode()
+
+
+def scientific_fingerprint_of(files: dict[str, bytes]) -> str:
+    """Recipe-2 hash of a ``{relative path: content}`` mapping of a source tree.
+
+    Counts the code under ``src/`` and the experiment scripts (not the
+    verification gates), the split-archive functions of this module, the
+    environment file and the ``[project]`` table of ``pyproject.toml``.
+    """
+    digest = hashlib.sha256(f"scientific-recipe:{SCIENTIFIC_RECIPE}\n".encode())
+    for relative in sorted(path for path in files if is_scientific_path(path)):
+        content = files[relative]
+        if relative == "experiments/provenance.py":
+            content = _result_functions(content)
+        digest.update(relative.encode())
+        digest.update(content)
+    project = tomllib.loads(files["pyproject.toml"].decode())["project"]
+    digest.update(json.dumps(project, sort_keys=True).encode())
+    return digest.hexdigest()
+
+
+def scientific_fingerprint() -> str:
+    """Recipe-2 hash of the working tree."""
+    paths = [*ROOT.glob("src/**/*.py"), *ROOT.glob("experiments/*.py"), ROOT / "environment.yml"]
+    files = {str(path.relative_to(ROOT)): path.read_bytes() for path in paths}
+    files["pyproject.toml"] = (ROOT / "pyproject.toml").read_bytes()
+    return scientific_fingerprint_of(files)
+
+
 def write_record(
     path: Path,
     *,
@@ -120,6 +183,8 @@ def write_record(
         "captured_at": datetime.now(UTC).isoformat(),
         "source_revision": revision,
         "source_fingerprint": _source_fingerprint(),
+        "fingerprint_recipe": SCIENTIFIC_RECIPE,
+        "scientific_fingerprint": scientific_fingerprint(),
         "worktree_dirty": bool(_git("status", "--porcelain")),
         "python": sys.version.split()[0],
         "platform": platform.platform(),
