@@ -46,7 +46,7 @@ archivés séparément et leurs chiffres sont rapprochés du manuscrit par un te
 
 | Commande | Résultat | Détail |
 | --- | --- | --- |
-| `make verify-fast` | Réussite locale | 763 tests réussis, 3 tests réels et 23 essais de défauts exclus ; lignes et branches couvertes. |
+| `make verify-fast` | Réussite locale | 771 tests réussis, 3 tests réels et 23 essais de défauts exclus ; lignes et branches couvertes. |
 | `make verify-deep` | Réussite locale | 4 626 mutants éliminés sur 4 732 (97,76 %) dans `src/etl_benchmark` et `experiments/` ; 106 survivants, dont 1 propre à macOS. |
 | `make verify-faults` | Réussite locale | 23 défauts introduits dans une copie temporaire, tous détectés par un test prévu. |
 | `make verify-real` | Réussite locale | 2 tests et contrôle des trois CSV requis ; échoue si l'un manque ou si le registre est vide. |
@@ -88,6 +88,19 @@ varient. Les enregistrements des essais gardent maintenant les détecteurs non e
 demandés mais absents (`skipped_datasets`). Les deux tableaux du manuscrit qui
 affichent des temps et le paragraphe sur la montée en charge ont été mis à
 jour ; les figures sont identiques octet pour octet.
+
+## Rejeu du 16 octobre 2026
+
+Les mêmes essais (banc synthétique, sévérité, courbes, trois jeux réels avec
+calibrage sur la prévalence puis fixe, étude de croissance) ont été rejoués depuis
+le commit propre `93b6fe8`, arbre de travail vierge avant et après. Le seul
+écart par rapport à l'archive du 15 octobre concerne les temps : toutes les
+mesures de détection, les courbes, les partitions et les figures sont
+identiques (écart maximal 0,0 sur chaque CSV archivé). Les enregistrements
+portent désormais la recette d'empreinte 2, `worktree_dirty: false` et le
+condensé du verrou d'environnement. Les deux tableaux de temps et le paragraphe
+de croissance du manuscrit ont été mis à jour avec les nouvelles mesures ; les
+anciens enregistrements restent dans l'historique git (commit `7977dee`).
 
 ## Ce que les contrôles couvrent
 

@@ -15,9 +15,9 @@ bibliothèques ne sont pas incluses. `scaling.json` conserve la machine, les
 versions, les réglages et les échecs éventuels ; `scaling.csv` conserve chaque
 répétition. Une méthode qui échoue reçoit une ligne `FAIL` avec sa raison.
 
-Sur l'essai local du 15 octobre 2026, les médianes de `detect_s` pour
-100/300/900 lignes sont respectivement 0,669/0,861/0,827 s pour Isolation
-Forest, 0,013/0,018/0,038 s pour LOF et 0,013/0,022/0,099 s pour One-Class
+Sur l'essai local du 16 octobre 2026, les médianes de `detect_s` pour
+100/300/900 lignes sont respectivement 0,376/0,384/0,392 s pour Isolation
+Forest, 0,008/0,010/0,020 s pour LOF et 0,006/0,011/0,049 s pour One-Class
 SVM. La machine exécutait alors d'autres tâches, ce qui a pu allonger ces
 temps par rapport à l'essai précédent. Les pics
 d'allocations Python à 900 lignes sont d'environ 0,65 Mo, 1,07 Mo et 0,32 Mo
