@@ -15,7 +15,8 @@
       "REAL not re-executed at M00"
     ],
     "constraint": "experiments/*.py and src/**/*.py are in the provenance fingerprint: any edit there invalidates test_artifact_lineage until archives are replayed once (see memory thesis-workflow-preferences). New verification tooling goes in verification/ to avoid this.",
-    "decision_2026_10_16": "User decision: versioned scientific fingerprint v2 (excludes verify_real, check_mutation, verification_report), v1 preserved, legacy records validated against anchor 7977dee without restamping, one clean replay at M13; release stays INCOMPLETE until then."
+    "decision_2026_10_16": "User decision: versioned scientific fingerprint v2 (excludes verify_real, check_mutation, verification_report), v1 preserved, legacy records validated against anchor 7977dee without restamping, one clean replay at M13; release stays INCOMPLETE until then.",
+    "deep_note": "DEEP was run on a clean tree at 0359ce1 plus later test-only commits; M13 must rerun on the final commit."
   },
   "milestones": [
     {
@@ -279,16 +280,41 @@
     {
       "id": "M09",
       "title": "Independent oracles and survivors",
-      "status": "NOT_STARTED",
+      "status": "COMPLETED",
       "dependencies": [
         "M00"
       ],
-      "start_commit": null,
+      "start_commit": "0359ce1",
       "end_commit": null,
-      "files_changed": [],
-      "tests": [],
+      "files_changed": [
+        "tests/test_mutation_gate.py",
+        "tests/test_real_verification.py",
+        "tests/test_scientific_fingerprint.py",
+        "tests/test_split.py",
+        "tests/test_synthetic.py",
+        "verification/mutation_notes.md"
+      ],
+      "tests": [
+        {
+          "command": "mutmut run (full, 4732 mutants)",
+          "exit_code": 0,
+          "result": "4612 killed, 120 survived (97.46%), 0 skipped/interrupted/no_tests"
+        },
+        {
+          "command": "targeted mutmut reruns + export-cicd-stats",
+          "result": "4626/4732 killed (97.76%); scientific-computation scope 1647/1720 (95.76%); orchestration scope 2979/3012 (98.90%); 106 survivors"
+        },
+        {
+          "command": "make verify-fast",
+          "exit_code": 0,
+          "result": "711 passed, 100% line/branch"
+        }
+      ],
       "evidence": [],
-      "blockers": [],
+      "blockers": [
+        "Oracle review was targeted (metrics, split sizes, contamination, publication tables, generator bounds), not a line-by-line audit of all tests",
+        "1 survivor is macOS case-insensitivity only (killed on Linux CI, unverified)"
+      ],
       "next_action": null
     },
     {

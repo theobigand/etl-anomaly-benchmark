@@ -1,5 +1,6 @@
 """The v2 fingerprint binds result-affecting code; the v1 recipe stays as it was."""
 
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -181,3 +182,43 @@ def test_files_at_reads_a_committed_tree_not_the_worktree(tmp_path):
     assert "README.md" not in committed
     assert provenance.scientific_fingerprint_of(committed) == _fp()
     assert lineage.worktree_files(tmp_path)["src/pkg/mod.py"] == b"uncommitted\n"
+
+
+def test_only_top_level_experiment_scripts_and_the_environment_file_count():
+    for path in (
+        "experiments/sub/deep.py",
+        "experiments/notes.txt",
+        "src/pkg/data.csv",
+        "tests/test_x.py",
+        "pyproject.toml",
+        "environment.yaml",
+    ):
+        assert not provenance.is_scientific_path(path), path
+    for path in ("experiments/run_benchmark.py", "src/pkg/sub/mod.py", "environment.yml"):
+        assert provenance.is_scientific_path(path), path
+
+
+def test_recipe_two_matches_an_independent_recomputation():
+    files = _files()
+    files["pyproject.toml"] = (
+        b'[project]\nname = "p"\ndependencies = ["pandas"]\nversion = "1"\n[tool.mutmut]\nx = 1\n'
+    )
+    files["experiments/provenance.py"] = (
+        b"def write_split_ids():\n    return 1\n\n\ndef other():\n    return 0\n\n\n"
+        b"def read_split_ids():\n    return 2\n"
+    )
+    expected = hashlib.sha256(b"scientific-recipe:2\n")
+    for path, content in (
+        ("environment.yml", files["environment.yml"]),
+        (
+            "experiments/provenance.py",
+            b"def write_split_ids():\n    return 1\ndef read_split_ids():\n    return 2",
+        ),
+        ("experiments/run_benchmark.py", files["experiments/run_benchmark.py"]),
+        ("src/pkg/mod.py", files["src/pkg/mod.py"]),
+    ):
+        expected.update(path.encode())
+        expected.update(content)
+    # keys are written sorted: dependencies, name, version
+    expected.update(b'{"dependencies": ["pandas"], "name": "p", "version": "1"}')
+    assert provenance.scientific_fingerprint_of(files) == expected.hexdigest()

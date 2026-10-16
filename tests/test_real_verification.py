@@ -180,3 +180,12 @@ def test_real_verification_report_records_the_required_set_and_status(tmp_path, 
 def test_the_required_datasets_are_the_three_research_files():
     assert set(verify_real.REQUIRED_DATASETS) == {"credit_card", "water_quality", "cardio"}
     assert set(verify_real.REQUIRED_DATASETS) <= set(datasets.DATASETS)
+
+
+def test_real_verification_states_why_the_registry_was_refused(tmp_path, monkeypatch, capsys):
+    code, _ = _run_main(monkeypatch, tmp_path, {})
+    assert code == 1
+    assert capsys.readouterr().out == (
+        "REAL: FAIL (registry [] differs from the required "
+        "['cardio', 'credit_card', 'water_quality'])\n"
+    )

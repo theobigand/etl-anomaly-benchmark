@@ -151,3 +151,28 @@ def test_mutation_command_rejects_an_interrupted_campaign(tmp_path):
     )
     assert command.returncode == 1
     assert "INVALID" in command.stdout
+
+
+def test_classify_reports_each_contract_with_its_exact_message():
+    with pytest.raises(ValueError) as error:
+        check_mutation.classify([])
+    assert str(error.value) == "incomplete mutation outcomes: not a mapping"
+    with pytest.raises(ValueError) as error:
+        check_mutation.classify(_stats(killed=-1, survived=101))
+    assert str(error.value) == "invalid mutation count for killed: -1"
+    with pytest.raises(ValueError) as error:
+        check_mutation.classify(_stats(killed=99, skipped=1))
+    assert str(error.value) == "unreliable campaign: skipped=1"
+
+
+def test_main_prints_the_reason_and_exits_with_one_in_process(tmp_path, monkeypatch, capsys):
+    stats = tmp_path / "mutation.json"
+    monkeypatch.setattr(sys, "argv", ["check_mutation", str(stats)])
+    assert check_mutation.main() == 1
+    assert capsys.readouterr().out.startswith("mutation gate: INVALID (")
+    stats.write_text(json.dumps(_stats(killed=99, segfault=1)))
+    assert check_mutation.main() == 1
+    assert capsys.readouterr().out == "mutation gate: INVALID (unreliable campaign: segfault=1)\n"
+    stats.write_text(json.dumps(_stats(killed=98, survived=2)))
+    assert check_mutation.main() == 0
+    assert capsys.readouterr().out == "mutation gate: PASS (98.00% killed)\n"
