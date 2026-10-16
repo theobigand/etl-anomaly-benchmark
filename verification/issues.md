@@ -111,3 +111,7 @@ téléchargement, et absence de règle de protection sur la branche `main`.
   REAL, CI distante) ; les limites restantes sont énumérées dans `report.md`.
 
 Le ticket de coordination **#2** reste ouvert.
+
+Note d'octobre 2026 : les chiffres de ce journal (couverture, mutants) sont ceux
+des dates indiquées. Les valeurs actuelles sont dans `report.md` et
+`claims.json`.
