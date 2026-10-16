@@ -367,16 +367,47 @@
     {
       "id": "M11",
       "title": "Robustness, typing, scaling",
-      "status": "NOT_STARTED",
+      "status": "COMPLETED",
       "dependencies": [
         "M00"
       ],
-      "start_commit": null,
+      "start_commit": "f723500",
       "end_commit": null,
-      "files_changed": [],
-      "tests": [],
+      "files_changed": [
+        "tests/test_robustness.py",
+        "verification/check_types.py",
+        "verification/typing_baseline.txt",
+        "tests/test_check_types.py",
+        "verification/evidence_schema.py",
+        "verification/reproduce.py",
+        "Makefile",
+        ".github/workflows/ci.yml",
+        "pyproject.toml"
+      ],
+      "tests": [
+        {
+          "command": "make verify-fast",
+          "exit_code": 0,
+          "result": "763 passed, 100% line/branch"
+        },
+        {
+          "command": "make verify-tools",
+          "exit_code": 0,
+          "result": "verifier 100%"
+        },
+        {
+          "command": "python verification/check_types.py --mypy <mypy 2.4.0 + pandas-stubs 3.0.5>",
+          "exit_code": 0,
+          "result": "verification/ clean; 10 baselined errors in src/ and experiments/"
+        }
+      ],
       "evidence": [],
-      "blockers": [],
+      "blockers": [
+        "mypy is not a declared dependency (adding it would change the fingerprinted [project] table); CI installs a pinned copy, never run remotely",
+        "10 typing errors in scientific code are baselined, not fixed (annotating changes the fingerprint)",
+        "Robustness tests characterize current behavior; write_csv is not atomic and a header-only CSV loads as an empty frame (rejected later by split and by REAL), recorded not changed",
+        "Scaling study unchanged: already bounded and threshold-free"
+      ],
       "next_action": null
     },
     {

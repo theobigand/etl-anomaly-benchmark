@@ -29,6 +29,11 @@ jobs:
       - name: FAST verification
         run: make verify-fast
 
+      - name: Static typing (mypy is pinned here, not in pyproject)
+        run: |
+          pip install mypy==2.4.0 pandas-stubs==3.0.5.260914
+          make verify-types
+
       - name: Verifier coverage (verification/, reported apart from FAST)
         run: make verify-tools
 

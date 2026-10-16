@@ -57,7 +57,7 @@ def collect_source(root: Path = ROOT) -> dict:
 
 
 def collect_environment() -> dict:
-    packages = {}
+    packages: dict[str, str | None] = {}
     for name in PACKAGES:
         try:
             packages[name] = version(name)
