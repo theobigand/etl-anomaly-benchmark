@@ -82,3 +82,20 @@ def test_verifier_coverage_is_enforced_and_reported_apart_from_fast():
     assert "make verify-tools" in _text("ci.yml")
     makefile = (WORKFLOWS.parents[1] / "Makefile").read_text()
     assert "--cov=verification" in makefile and "--cov-fail-under=100" in makefile
+
+
+def test_the_release_job_keeps_downloaded_bundles_outside_the_checkout():
+    # An untracked download folder inside the workspace made the worktree
+    # look dirty, and the release gate rejects a dirty worktree.
+    text = _text("verify-release.yml")
+    release = text[text.index("  release:") :]
+    assert "path: bundles" not in release
+    assert "path: ${{ runner.temp }}/bundles" in release
+    assert '"$RUNNER_TEMP"/bundles/*.tgz' in release
+
+
+def test_the_deep_job_exports_its_surviving_mutants_for_inspection():
+    text = _text("verify-release.yml")
+    deep = text[text.index("  deep:") : text.index("  real:")]
+    assert "mutmut results --all true > mutants/results.txt" in deep
+    assert "mutants/results.txt" in deep.split("Bundle deep evidence")[1]

@@ -98,9 +98,13 @@ jobs:
       - name: Run deep profile
         run: make verify-deep
 
+      - name: List every mutant with its outcome
+        if: always()
+        run: mutmut results --all true > mutants/results.txt
+
       - name: Bundle deep evidence
         if: always()
-        run: tar czf evidence-deep.tgz --ignore-failed-read mutants/mutmut-cicd-stats.json experiments/results/evidence/deep.json
+        run: tar czf evidence-deep.tgz --ignore-failed-read mutants/mutmut-cicd-stats.json mutants/results.txt experiments/results/evidence/deep.json
 
       - name: Preserve deep evidence
         if: always()
@@ -164,11 +168,11 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           pattern: evidence-*
-          path: bundles
+          path: ${{ runner.temp }}/bundles
           merge-multiple: true
 
       - name: Unpack the evidence at the repository root
-        run: for bundle in bundles/*.tgz; do tar xzf "$bundle"; done
+        run: for bundle in "$RUNNER_TEMP"/bundles/*.tgz; do tar xzf "$bundle"; done
 
       - name: Release gate
         run: make verify-release
