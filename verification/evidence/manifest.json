@@ -4,7 +4,7 @@
     "paper/figures/pr_curves.png": "21e9b7a59ab7ea485b7a959ea6c4cfa3903d7d118d709e0c9cc036f81f34bf06",
     "paper/figures/severity_curves.png": "6bc50cb8eac4834e698758555d9cc6d2293365a50b33c6cb6270d804dec4b4a5",
     "paper/main.pdf": "64d2ccb55ac793d9687171f1f28d43359674bab2922322809e33b65999b1b615",
-    "paper/main.tex": "f46b35dcc55388b71494f50f473908443e872ca5ba0942d4d5f21fec6bca1b5d",
+    "paper/main.tex": "ef061dfcc37eba3412ac3eea13acd3e4fb6c30ad864a21b6606c2d6a635a9d7d",
     "paper/references.bib": "4498ba64baf1fbb8c1ce131799c3177e68e54965a3983f5d8fb1c75b964165d4",
     "verification/evidence/benchmark_cardio.csv": "8f63a6318be35ec7da08b5329b28dac1183e9732c526bfd736ae87fe52361d66",
     "verification/evidence/benchmark_cardio.md": "cc9eeb6ffb47018d760178ced7e5223625fe6c990a8199cc97fa45e2c222137c",
@@ -97,6 +97,6 @@
   "platform": "macOS-27.0-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "source_revision": "93b6fe896715f308575620db6a6bb3de5b4c7f77",
-  "worktree_dirty": true
+  "source_revision": "f75ad8f01a56fc410d4ed7f5ffad2a3e9b509b9e",
+  "worktree_dirty": false
 }
