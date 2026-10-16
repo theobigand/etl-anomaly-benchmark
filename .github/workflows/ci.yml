@@ -4,6 +4,10 @@ on:
   push:
     branches: [main]
   pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
 
 jobs:
   test:
@@ -34,6 +38,36 @@ jobs:
             coverage.json
             experiments/results/pytest.xml
             experiments/results/verification_fast.json
+            experiments/results/evidence/fast.json
             verification/profile.json
+          if-no-files-found: warn
+          retention-days: 30
+
+  faults:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install
+        run: pip install -e ".[dev]"
+
+      - name: Scientific fault injection
+        run: make verify-faults
+
+      - name: Preserve fault evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verification-faults
+          path: |
+            experiments/results/fault_matrix.json
+            experiments/results/evidence/faults.json
           if-no-files-found: warn
           retention-days: 30
