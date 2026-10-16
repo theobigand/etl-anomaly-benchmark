@@ -8,13 +8,15 @@ des archives (filiation, tableaux du manuscrit) ne sont pas lancés pour chaque
 mutant. `config.py`, `logging_setup.py`, `__main__.py` et les fichiers
 `__init__.py` ne sont pas mutés.
 
-Résultat de `make verify-deep` au 16 octobre 2026 : **4 626 mutants éliminés
-sur 4 732 (97,76 %)**, sans mutant ignoré, expiré, en erreur, interrompu ou
+Résultat de `make verify-deep` au 16 octobre 2026 : **4 643 mutants éliminés
+sur 4 751 (97,73 %)**, sans mutant ignoré, expiré, en erreur, interrompu ou
 sans test (la barrière `check_mutation.py` refuse ces cas). La campagne
 complète a donné 4 612 sur 4 732 (97,46 %) ; quatorze survivants ont ensuite
 été éliminés par de nouveaux tests et rejoués un par un
 (`mutmut run <mutants>`), puis les compteurs ont été réunis par
-`mutmut export-cicd-stats`. Les chiffres précédents (4 487 sur 4 594, 97,67 %)
+`mutmut export-cicd-stats`. Une dernière exécution de `make verify-deep` sur le commit final a ajouté 19
+mutants (la fonction de verrou d'environnement) et donné le résultat de tête.
+Les chiffres précédents (4 487 sur 4 594, 97,67 %)
 datent d'avant l'ajout des outils de certification, qui sont eux aussi mutés.
 
 La note ci-dessous sépare le calcul scientifique de l'orchestration, sans
@@ -23,8 +25,8 @@ retirer aucun mutant du dénominateur :
 | Périmètre | Éliminés | Total | Taux |
 | --- | --- | --- | --- |
 | Calcul scientifique : `split`, `metrics`, `synthetic`, `datasets`, `registry`, `transform`, `quality/` | 1 647 | 1 720 | 95,76 % |
-| Orchestration, entrées-sorties, scripts : `extract`, `load`, `pipeline`, `experiments/*.py` | 2 979 | 3 012 | 98,90 % |
-| Ensemble | 4 626 | 4 732 | 97,76 % |
+| Orchestration, entrées-sorties, scripts : `extract`, `load`, `pipeline`, `experiments/*.py` | 2 996 | 3 031 | 98,85 % |
+| Ensemble | 4 643 | 4 751 | 97,73 % |
 
 Le calcul scientifique reste au-dessus de 95 %, mais avec une marge plus
 faible que l'ensemble : l'agrégat ne doit pas être lu comme la garantie des
@@ -124,8 +126,9 @@ lacunes (texte des messages, code de sortie, opérateur booléen, tri des clés,
 séparateur) et sont éliminés par des tests ; le dernier,
 `x_scientific_fingerprint__mutmut_19` (`"PYPROJECT.TOML"` au lieu de
 `"pyproject.toml"`), survit seulement parce que le système de fichiers de macOS
-ignore la casse. Il serait éliminé sur Linux, donc par la CI ; il reste compté
-comme survivant.
+ignore la casse. Deux survivants de `_environment_lock` (`"VERIFICATION"`,
+`"ENVIRONMENT"`) sont dans le même cas. Ces trois mutants seraient éliminés sur
+Linux, donc par la CI (non vérifié) ; ils restent comptés comme survivants.
 
 ## Équivalences invoquées
 

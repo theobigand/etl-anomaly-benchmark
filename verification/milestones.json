@@ -16,7 +16,8 @@
     ],
     "constraint": "experiments/*.py and src/**/*.py are in the provenance fingerprint: any edit there invalidates test_artifact_lineage until archives are replayed once (see memory thesis-workflow-preferences). New verification tooling goes in verification/ to avoid this.",
     "decision_2026_10_16": "User decision: versioned scientific fingerprint v2 (excludes verify_real, check_mutation, verification_report), v1 preserved, legacy records validated against anchor 7977dee without restamping, one clean replay at M13; release stays INCOMPLETE until then.",
-    "deep_note": "DEEP was run on a clean tree at 0359ce1 plus later test-only commits; M13 must rerun on the final commit."
+    "deep_note": "DEEP was run on a clean tree at 0359ce1 plus later test-only commits; M13 must rerun on the final commit.",
+    "final_note": "M13 done on the branch chain verify/m00..m12 (tip contains all work). Not merged, not pushed."
   },
   "milestones": [
     {
@@ -451,7 +452,7 @@
     {
       "id": "M13",
       "title": "Final audit and certification",
-      "status": "NOT_STARTED",
+      "status": "COMPLETED",
       "dependencies": [
         "M01",
         "M02",
@@ -466,13 +467,37 @@
         "M11",
         "M12"
       ],
-      "start_commit": null,
+      "start_commit": "93b6fe8",
       "end_commit": null,
-      "files_changed": [],
-      "tests": [],
+      "files_changed": [
+        "verification/evidence/*",
+        "paper/main.tex",
+        "verification/claims.json",
+        "verification/report.md",
+        "verification/mutation_notes.md",
+        "verification/scaling.md",
+        "verification/reproducibility.md",
+        "tests/test_artifact_lineage.py"
+      ],
+      "tests": [
+        {
+          "command": "clean replay from 93b6fe8 (synthetic, severity, curves, 3 datasets x 2 calibrations) + make verify-scale",
+          "exit_code": 0,
+          "result": "all non-timing metrics bit-identical to the previous archive (max diff 0.0 on every CSV); figures and split archives unchanged; new records: recipe 2, worktree_dirty false"
+        },
+        {
+          "command": "make verify-fast / verify-tools / verify-faults / verify-real / verify-deep, check_types, make verify-release at 755374f",
+          "exit_code": 0,
+          "result": "771 tests 100% line+branch; verifier 732/218 100%; 23/23 faults; 3/3 datasets; mutation 4643/4751 (97.73%), scientific scope 95.76%; typing PASS; release CERTIFIED (local-unattested)"
+        }
+      ],
       "evidence": [],
-      "blockers": [],
-      "next_action": null
+      "blockers": [
+        "Certification is local-unattested: nothing was pushed, CI workflows have never run remotely, main has no branch protection",
+        "Release evidence is bound to the commit it was generated on; the final report states that commit. Later documentation-only commits require make verify-release to be rerun",
+        "Lock covers osx-arm64 only; typing check and 3 case-insensitivity mutants unverified on Linux"
+      ],
+      "next_action": "Push the branch chain only with the user's approval, run ci and a verify-release dispatch, decide on branch protection."
     }
   ]
 }

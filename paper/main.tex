@@ -693,11 +693,11 @@ Coverage of the pipeline modules and the experiment scripts is complete: 1,531 o
 checks (the evidence and release scripts under \texttt{verification/}) are
 measured apart, at 732 of 732 lines and 218 of 218 branches, and are not part of
 that figure. The mutation campaign on the pipeline modules and the experiment
-scripts kills 4,626 of 4,732 mutants ($97.76\%$). Split by what the code does,
+scripts kills 4,643 of 4,751 mutants ($97.73\%$). Split by what the code does,
 the modules that compute a result (splitting, metrics, the synthetic generator,
 the detectors) kill 1,647 of 1,720 ($95.76\%$) and the input, output and script
-code kills 2,979 of 3,012 ($98.90\%$), so the aggregate is higher than the score
-of the scientific computation alone. The 106 survivors count as failures. We
+code kills 2,996 of 3,031 ($98.85\%$), so the aggregate is higher than the score
+of the scientific computation alone. The 108 survivors count as failures. We
 classified them by reading the changes, not by proof: most pass an explicit
 default (\texttt{dtype}, \texttt{index}) or change an internal label. Two that
 we first took for unreachable, a cap on a simulated transaction rate, turned out
