@@ -138,17 +138,32 @@
     {
       "id": "M04",
       "title": "Release certification gate",
-      "status": "NOT_STARTED",
+      "status": "COMPLETED",
       "dependencies": [
         "M03"
       ],
-      "start_commit": null,
+      "start_commit": "5456a70",
       "end_commit": null,
-      "files_changed": [],
-      "tests": [],
+      "files_changed": [
+        "verification/release.py",
+        "tests/test_release_gate.py",
+        "Makefile"
+      ],
+      "tests": [
+        {
+          "command": "pytest tests/test_release_gate.py",
+          "exit_code": 0,
+          "result": "20 passed (fixture releases: valid certified; missing, malformed, stale, dirty, tampered, wrong-dataset, legacy-lineage all non-certified)"
+        },
+        {
+          "command": "make verify-release (current tree)",
+          "exit_code": 2,
+          "result": "REJECTED/local-unattested: dirty tree, stale revisions, DEEP missing, legacy records need replay - expected"
+        }
+      ],
       "evidence": [],
       "blockers": [],
-      "next_action": null
+      "next_action": "Real certification only possible after M13 replay and a DEEP run on a clean commit."
     },
     {
       "id": "M05",
