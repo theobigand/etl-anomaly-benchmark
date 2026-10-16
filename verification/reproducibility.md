@@ -32,15 +32,14 @@ autres paquets ni des autres jeux.
 
 ## Ce qui n'a pas été exécuté
 
-- `credit_card` et `water_quality` : non rejoués ; aucune affirmation de
-  reproductibilité pour ces deux jeux, ni pour la section synthétique, les
-  courbes et la sévérité.
+- Le rejeu complet du 16 octobre 2026 (voir `report.md`) n'a pas été refait dans
+  un second environnement : seul Cardio l'a été (tableau ci-dessus).
 - Un autre système d'exploitation ou une autre architecture : le verrou
   `conda-darwin-arm64.explicit.txt` est propre à macOS arm64. La reconstruction
   a besoin d'un accès réseau aux index conda-forge et PyPI ; sans réseau le
   niveau est `NOT_RUN`, jamais `PASS`.
 - Le verrou pip n'épingle pas de sommes de contrôle.
-- Les archives publiées ont été produites sur un arbre de travail modifié
-  (révision `841c3aa4`, `worktree_dirty: true`) ; ce que le nouvel essai
-  montre est que le code actuel produit les mêmes nombres, pas que l'arbre de
-  l'époque est reconstructible. Le rejeu complet reste prévu au jalon final.
+- Les archives du 15 octobre avaient été produites sur un arbre de travail
+  modifié (révision `841c3aa4`, `worktree_dirty: true`) ; elles ont été
+  remplacées par un rejeu depuis le commit propre `93b6fe8` (voir `report.md`).
+  Les anciens enregistrements restent dans l'historique git au commit d'ancrage.

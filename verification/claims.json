@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "note": "Verification figures quoted in paper/main.tex. They were measured at the revision named below; test_manuscript_claims.py keeps the paper and this file in step, and the fault count is checked against the live matrix.",
-  "measured_at_revision": "bd1e27d",
-  "fast": {"tests": 763, "line_covered": 1531, "line_coverable": 1531, "branch_covered": 320, "branch_coverable": 320},
+  "measured_at_revision": "93b6fe8 plus the replayed archive",
+  "fast": {"tests": 771, "line_covered": 1531, "line_coverable": 1531, "branch_covered": 320, "branch_coverable": 320},
   "verifier": {"line": 732, "branch": 218},
   "mutation": {
     "killed": 4626, "total": 4732, "survived": 106,

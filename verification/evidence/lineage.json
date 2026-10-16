@@ -3,6 +3,6 @@
   "legacy_anchor": {
     "recipe": 1,
     "revision": "7977deed9f7a8f3688d74109d7e13d7c0188d895",
-    "note": "Last committed tree whose recipe-1 fingerprint equals the one stored in the archived runs. The runs themselves were made on a dirty worktree at 841c3aa4; only the fingerprint is reproduced here, not the exact working tree. Records are not restamped."
+    "note": "Last committed tree whose recipe-1 fingerprint equals the one stored in the archived runs. The runs themselves were made on a dirty worktree at 841c3aa4; only the fingerprint is reproduced here, not the exact working tree. Records are not restamped. On 2026-10-16 the archived runs were replayed from the clean commit 93b6fe8 and replaced (recipe 2, clean worktree); the recipe-1 originals remain in git history at the anchor."
   }
 }

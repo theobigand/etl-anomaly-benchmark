@@ -1,16 +1,21 @@
 {
-  "captured_at": "2026-10-15T11:38:33.338041+00:00",
+  "captured_at": "2026-10-16T14:46:26.983069+00:00",
   "dataset": {
     "bytes": 150828752,
     "identity": "credit_card",
     "path": "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/data/creditcard.csv",
     "sha256": "76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89"
   },
+  "environment_lock": {
+    "file": "verification/environment/conda-darwin-arm64.explicit.txt",
+    "sha256": "88f9518425e499f8930b1710baf86442e7885a6dc85c70e0b823aa1ccad76355"
+  },
   "experiment": "real_benchmark",
+  "fingerprint_recipe": 2,
   "outputs": [
-    "benchmark_credit_card_20261015_113830.csv",
-    "benchmark_credit_card_20261015_113830.md",
-    "split_ids_credit_card_20261015_113830.json.gz"
+    "benchmark_credit_card_20261016_144625.csv",
+    "benchmark_credit_card_20261016_144625.md",
+    "split_ids_credit_card_20261016_144625.json.gz"
   ],
   "packages": {
     "great-expectations": "1.24.0",
@@ -22,6 +27,7 @@
   "platform": "macOS-27.0-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
+  "scientific_fingerprint": "44faa1f99393490fc25dbcea06ee4c8371bbb032f591e4203253c26d65da6a23",
   "seeds": [
     42,
     1,
@@ -83,7 +89,7 @@
     ],
     "split_strategy": "stratified"
   },
-  "source_fingerprint": "10430de0e779ed59bca6b51b4dd9225869f17eea939353106e0f5f435bc3ac9f",
-  "source_revision": "841c3aa4d9d939bee2d77785f1ac10abe93abd35",
-  "worktree_dirty": true
+  "source_fingerprint": "352b9d2c38d0bd7820ec1daad2536bad7967e2430f7e9e1b3a6bf565489e3e8e",
+  "source_revision": "93b6fe896715f308575620db6a6bb3de5b4c7f77",
+  "worktree_dirty": false
 }

@@ -1,6 +1,7 @@
 import gzip
 import hashlib
 import json
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -83,7 +84,15 @@ def test_lineage_anchor_is_a_commit_that_reproduces_the_archived_recipe_1_finger
     from verification import lineage
 
     root = Path(__file__).resolve().parents[1]
-    anchor = lineage.files_at(lineage.anchor_revision())
-    stored = json.loads((root / "verification/evidence/run_benchmark_cardio.json").read_text())
+    # The recipe-1 records were replaced by a clean replay; the originals stay in
+    # the history of the anchor commit and must still be reproduced by its tree.
+    revision = lineage.anchor_revision()
+    anchor = lineage.files_at(revision)
+    old = subprocess.check_output(
+        ["git", "show", f"{revision}:verification/evidence/run_benchmark_cardio.json"], cwd=root
+    )
+    stored = json.loads(old)
     assert stored.get("fingerprint_recipe", 1) == 1
     assert lineage.fingerprint_v1_of(anchor) == stored["source_fingerprint"]
+    current = json.loads((root / "verification/evidence/run_benchmark_cardio.json").read_text())
+    assert current["fingerprint_recipe"] == 2 and current["worktree_dirty"] is False
