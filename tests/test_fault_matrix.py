@@ -236,6 +236,7 @@ def test_deliberate_defect_is_caught(fault, tmp_path):
             "expected": list(fault.expected),
             "observed_failures": sorted(failed),
             "caught_by_expected_test": bool(detected),
+            "control_passed": control_code == 0 and not control_failed,
         }
     )
     assert control_code == 0 and not control_failed, "the unmodified copy must pass"

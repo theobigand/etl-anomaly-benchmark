@@ -98,17 +98,41 @@
     {
       "id": "M03",
       "title": "Evidence schema and status contracts",
-      "status": "NOT_STARTED",
+      "status": "COMPLETED",
       "dependencies": [
         "M01",
         "M02"
       ],
-      "start_commit": null,
+      "start_commit": "1d5da9a",
       "end_commit": null,
-      "files_changed": [],
-      "tests": [],
+      "files_changed": [
+        "verification/evidence_schema.py",
+        "tests/test_evidence_schema.py",
+        "tests/test_fault_matrix.py",
+        "Makefile",
+        ".gitignore"
+      ],
+      "tests": [
+        {
+          "command": "make verify-fast",
+          "exit_code": 0,
+          "result": "652 passed, 100% line/branch"
+        },
+        {
+          "command": "make verify-faults",
+          "exit_code": 0,
+          "result": "14 passed, faults evidence PASS"
+        },
+        {
+          "command": "make verify-real",
+          "exit_code": 0,
+          "result": "3 datasets PASS, real evidence PASS"
+        }
+      ],
       "evidence": [],
-      "blockers": [],
+      "blockers": [
+        "DEEP envelope builder tested on fixtures only; no real campaign run yet"
+      ],
       "next_action": null
     },
     {
