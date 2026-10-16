@@ -41,7 +41,12 @@ def test_evidence_is_uploaded_even_when_a_profile_fails():
 def test_release_workflow_is_manual_and_runs_every_profile():
     text = _text("verify-release.yml")
     assert "workflow_dispatch:" in text
-    assert "push:" not in text and "pull_request:" not in text
+    assert "push:" not in text
+    # the only automatic trigger is a change to this very file
+    triggers = text[text.index("on:") : text.index("permissions:")]
+    assert triggers.count("pull_request:") == 1
+    assert triggers.count('- ".github/workflows/verify-release.yml"') == 1
+    assert triggers.count("paths:") == 1
     for target in (
         "make verify-fast",
         "make verify-faults",

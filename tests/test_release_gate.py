@@ -16,6 +16,9 @@ KINDS = ("fast", "deep", "faults", "real")
 @pytest.fixture(autouse=True)
 def _two_required_datasets(monkeypatch):
     monkeypatch.setattr(evidence_schema, "REQUIRED_DATASETS", ("a", "b"))
+    # the verdict must not depend on whether the suite itself runs under CI
+    monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
+    monkeypatch.delenv("GITHUB_RUN_ID", raising=False)
 
 
 def _docs(tmp_path):

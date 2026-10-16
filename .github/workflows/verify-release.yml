@@ -9,6 +9,12 @@ on:
         description: "Label of a runner that holds the research datasets (empty skips REAL)"
         required: false
         default: ""
+  # A workflow_dispatch workflow cannot be started from a branch until it is on
+  # the default branch, so a change to this file also runs it on its own pull
+  # request. Edits to any other file never start it.
+  pull_request:
+    paths:
+      - ".github/workflows/verify-release.yml"
 
 permissions:
   contents: read
