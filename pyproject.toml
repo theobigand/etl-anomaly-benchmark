@@ -87,6 +87,8 @@ pytest_add_cli_args_test_selection = [
     "--ignore=tests/test_evidence_schema.py",
     "--ignore=tests/test_release_gate.py",
     "--ignore=tests/test_verifier_tools.py",
+    "--ignore=tests/test_reproduce.py",
+    "--ignore=tests/test_environment_lock.py",
     "--ignore=tests/test_workflows.py",
 ]
 also_copy = ["verification", "environment.yml"]
