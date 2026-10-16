@@ -227,14 +227,25 @@
     {
       "id": "M07",
       "title": "Verifier self-testing",
-      "status": "NOT_STARTED",
+      "status": "COMPLETED",
       "dependencies": [
         "M03"
       ],
-      "start_commit": null,
+      "start_commit": "ae0ee1f",
       "end_commit": null,
-      "files_changed": [],
-      "tests": [],
+      "files_changed": [
+        "tests/test_verifier_tools.py",
+        "Makefile",
+        ".github/workflows/ci.yml",
+        "tests/test_workflows.py"
+      ],
+      "tests": [
+        {
+          "command": "make verify-tools",
+          "exit_code": 0,
+          "result": "verification/ 531 stmts, 178 branches, 100% line and branch (was 89% before M07 tests); measured apart from the scientific 100%"
+        }
+      ],
       "evidence": [],
       "blockers": [],
       "next_action": null
