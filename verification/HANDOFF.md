@@ -1,10 +1,9 @@
 # Reprise de la mission de vérification
 
-État détaillé dans `milestones.json` (source de vérité). Ce fichier donne le point de reprise.
+État détaillé dans `milestones.json` (source de vérité).
 
 - Environnement : `export PATH=/Users/theo/miniconda3/envs/etl-benchmark/bin:$PATH` (python 3.11.17).
-- Jalon courant : M00 terminé côté mesure (FAST : 561 tests, 100 % lignes et branches). Suite : M01.
-- Piège : toute modification de `src/` ou `experiments/*.py` change l'empreinte de provenance et fait
-  échouer `tests/test_artifact_lineage.py` jusqu'au rejeu des archives. Regrouper ces modifications,
-  rejouer une seule fois (`python verification/archive_evidence.py`).
-- Ne pas pousser ni fusionner sans accord.
+- Jalons M00 à M13 terminés sur la chaîne de branches `verify/m00-baseline` ... `verify/m12-manuscript-consistency` (la pointe contient tout). Rien n'est fusionné ni poussé.
+- Certification : `make verify-release` rend CERTIFIED (non attesté, local) quand les quatre profils ont tourné sur le commit courant propre. Après tout nouveau commit, relancer `make verify-fast verify-faults verify-real verify-deep verify-release`.
+- Toute modification de `src/` ou de `experiments/*.py` hors barrières de vérification change l'empreinte scientifique v2 : rejouer les archives (voir `report.md`).
+- Reste à faire avec l'accord de l'utilisateur : pousser, vérifier la CI distante et la protection de branche.

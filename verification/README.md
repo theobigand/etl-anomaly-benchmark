@@ -148,5 +148,5 @@ sur durées ne doivent pas dépendre d'un nombre précis de secondes.
 
 Les résultats actuels et les travaux encore ouverts sont dans `report.md` et
 `issues.md`. FAST passe sur l'ensemble mesuré ; DEEP dépasse son seuil sur
-`src/etl_benchmark` et `experiments/` (97,76 %). Le statut général reste
+`src/etl_benchmark` et `experiments/` (97,73 %). Le statut général reste
 **INCOMPLETE**.

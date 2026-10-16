@@ -47,7 +47,7 @@ archivés séparément et leurs chiffres sont rapprochés du manuscrit par un te
 | Commande | Résultat | Détail |
 | --- | --- | --- |
 | `make verify-fast` | Réussite locale | 771 tests réussis, 3 tests réels et 23 essais de défauts exclus ; lignes et branches couvertes. |
-| `make verify-deep` | Réussite locale | 4 626 mutants éliminés sur 4 732 (97,76 %) dans `src/etl_benchmark` et `experiments/` ; 106 survivants, dont 1 propre à macOS. |
+| `make verify-deep` | Réussite locale | 4 643 mutants éliminés sur 4 751 (97,73 %) dans `src/etl_benchmark` et `experiments/` ; 108 survivants, dont 3 propres à macOS. |
 | `make verify-faults` | Réussite locale | 23 défauts introduits dans une copie temporaire, tous détectés par un test prévu. |
 | `make verify-real` | Réussite locale | 2 tests et contrôle des trois CSV requis ; échoue si l'un manque ou si le registre est vide. |
 | `python verification/scaling.py` | Réussite locale | 27 mesures sur trois tailles, hors FAST. |
@@ -65,9 +65,9 @@ ni branche n'est exclue.
 
 La campagne de mutation porte sur les modules de `src/etl_benchmark` qui
 calculent un résultat et sur les dix scripts de `experiments/` (mutmut 3.8.0) :
-4 732 mutants produits, 4 626 éliminés, 106 survivants, aucun cas classé sans
-test, ignoré, expiré ou interrompu. Le taux mesuré est **97,76 %**, dont 95,76 %
-sur le calcul scientifique seul et 98,90 % sur l'orchestration et les scripts
+4 751 mutants produits, 4 643 éliminés, 108 survivants, aucun cas classé sans
+test, ignoré, expiré ou interrompu. Le taux mesuré est **97,73 %**, dont 95,76 %
+sur le calcul scientifique seul et 98,85 % sur l'orchestration et les scripts
 (voir `mutation_notes.md`). Elle avait commencé à 88,66 % sur
 `metrics.py` seul, à 74,5 % une fois élargie à `src/` sans nouveaux tests et à
 24,3 % sur les scripts. `mutation_notes.md` classe les survivants par lecture des
@@ -148,7 +148,7 @@ bloquent pas encore une publication distante.
 
 ## Travail restant
 
-Il faut revoir les 106 survivants si un module change. Il manque également des
+Il faut revoir les 108 survivants si un module change. Il manque également des
 tests de panne et de schéma défavorable, une évaluation temporelle sur données réelles, les
 détecteurs profonds et une étude de coût plus large dans un environnement
 contrôlé.
