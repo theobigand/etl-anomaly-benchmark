@@ -113,3 +113,18 @@ def test_a_class_too_rare_to_stratify_is_an_error_not_a_random_fallback():
     df = pd.DataFrame({"x": np.arange(200.0), "label": [1] + [0] * 199})
     with pytest.raises(ValueError, match="least populated class"):
         stratified_split(df, "label", seed=0)
+
+
+@pytest.mark.parametrize(
+    ("ratios", "sizes", "positives"),
+    [
+        ((0.7, 0.15, 0.15), (700, 150, 150), (70, 15, 15)),
+        ((0.6, 0.2, 0.2), (600, 200, 200), (60, 20, 20)),
+    ],
+)
+def test_split_gives_the_hand_computed_sizes_and_class_counts(ratios, sizes, positives):
+    # 1000 rows with 10% positives: sizes and positives follow by arithmetic.
+    df = pd.DataFrame({"x": range(1000), "label": [1] * 100 + [0] * 900})
+    parts = stratified_split(df, "label", ratios, seed=3)
+    assert tuple(len(part) for part in parts) == sizes
+    assert tuple(int(part["label"].sum()) for part in parts) == positives

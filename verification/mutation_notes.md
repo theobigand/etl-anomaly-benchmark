@@ -8,13 +8,27 @@ des archives (filiation, tableaux du manuscrit) ne sont pas lancés pour chaque
 mutant. `config.py`, `logging_setup.py`, `__main__.py` et les fichiers
 `__init__.py` ne sont pas mutés.
 
-Résultat de `make verify-deep` : **4 487 mutants éliminés sur 4 594 (97,67 %)**,
-sans mutant ignoré, expiré, en erreur ou sans test.
+Résultat de `make verify-deep` au 16 octobre 2026 : **4 626 mutants éliminés
+sur 4 732 (97,76 %)**, sans mutant ignoré, expiré, en erreur, interrompu ou
+sans test (la barrière `check_mutation.py` refuse ces cas). La campagne
+complète a donné 4 612 sur 4 732 (97,46 %) ; quatorze survivants ont ensuite
+été éliminés par de nouveaux tests et rejoués un par un
+(`mutmut run <mutants>`), puis les compteurs ont été réunis par
+`mutmut export-cicd-stats`. Les chiffres précédents (4 487 sur 4 594, 97,67 %)
+datent d'avant l'ajout des outils de certification, qui sont eux aussi mutés.
+
+La note ci-dessous sépare le calcul scientifique de l'orchestration, sans
+retirer aucun mutant du dénominateur :
 
 | Périmètre | Éliminés | Total | Taux |
 | --- | --- | --- | --- |
-| `src/etl_benchmark` | 1 824 | 1 900 | 96,00 % |
-| `experiments/*.py` | 2 663 | 2 694 | 98,85 % |
+| Calcul scientifique : `split`, `metrics`, `synthetic`, `datasets`, `registry`, `transform`, `quality/` | 1 647 | 1 720 | 95,76 % |
+| Orchestration, entrées-sorties, scripts : `extract`, `load`, `pipeline`, `experiments/*.py` | 2 979 | 3 012 | 98,90 % |
+| Ensemble | 4 626 | 4 732 | 97,76 % |
+
+Le calcul scientifique reste au-dessus de 95 %, mais avec une marge plus
+faible que l'ensemble : l'agrégat ne doit pas être lu comme la garantie des
+seules fonctions de calcul.
 
 La première campagne, limitée à `metrics.py`, donnait 86/97 (88,66 %) ; élargie
 aux autres modules de `src/` sans test supplémentaire, elle tombait à 74,5 %.
@@ -51,8 +65,9 @@ tests.
 
 ## Survivants
 
-Les 76 mutants restants de `src/` ne sont pas retirés du dénominateur et aucun n'a été
-exclu. Leur classement est une lecture des diffs, pas une preuve formelle.
+Les 74 mutants restants de `src/` ne sont pas retirés du dénominateur et aucun n'a été
+exclu. Leur classement est une lecture des diffs, pas une preuve formelle ;
+la colonne « Raison » est une hypothèse, sauf mention d'un test.
 
 | Mutants | Ce qui change | Raison |
 | --- | --- | --- |
@@ -61,7 +76,7 @@ exclu. Leur classement est une lecture des diffs, pas une preuve formelle.
 | 19 | `replace=None` et `NaN` remplacé par `None` (génération), `index=None` (`to_csv`), `reset_index(drop=None ou False)` et `mode=None` (GX), `kind="STABLE"`, `tz_localize("utc")` (2), tolérance `>=` 1e-6, bornes `>=` de `moved` et `outlier_z`, `/ direction` à la place de `*`, `row[gross] = None`, `reshape(None)`, `warnings.simplefilter("ignore")` sans catégorie, nom de paquet en majuscules dans `importlib.metadata.version` (2) | Même sortie observable : valeur fausse équivalente, casse acceptée par la bibliothèque, égalité exacte entre flottants inatteignable, signe valant ±1, `NaN` remis à 0 ensuite. |
 | 6 | Noms internes `pandas`, `asset`, `batch` du contexte Great Expectations | Étiquettes sans effet sur les lignes signalées. |
 | 3 | `Faker("en_US")` : `None`, `en_us`, `EN_US` | La locale par défaut est `en_US` et Faker normalise la casse. |
-| 2 | Plafond du taux de Poisson à 91 ou supprimé | Atteint seulement pour un revenu annuel supérieur à 360 000, soit plus de 4,5 écarts types de la loi utilisée ; aucun test n'impose un tirage de queue de cette taille. |
+| 0 | Plafond du taux de Poisson à 91 ou supprimé | Cités à tort comme inatteignables : un revenu supérieur à 360 000 est possible (environ 5 écarts types, probabilité de l'ordre de 5·10⁻⁷ par ligne). Éliminés par `test_the_transaction_rate_never_exceeds_ninety`, qui force le tirage de revenu. |
 | 2 | `training=None` au lieu de `False` | `None` est évalué comme faux. |
 
 ## Scripts d'`experiments/`
@@ -100,3 +115,23 @@ Les 31 survivants des scripts :
   jeu publié ne change pas, pas que chaque paramètre a le bon sens
   statistique ; les moments et les bornes sont contrôlés à part.
 - La campagne complète dure environ vingt-cinq minutes sur cette machine.
+
+## Survivants des outils de certification
+
+Les outils ajoutés (`check_mutation.py`, `provenance.py`, `verify_real.py`)
+ont produit treize survivants à leur première campagne. Douze étaient de vraies
+lacunes (texte des messages, code de sortie, opérateur booléen, tri des clés,
+séparateur) et sont éliminés par des tests ; le dernier,
+`x_scientific_fingerprint__mutmut_19` (`"PYPROJECT.TOML"` au lieu de
+`"pyproject.toml"`), survit seulement parce que le système de fichiers de macOS
+ignore la casse. Il serait éliminé sur Linux, donc par la CI ; il reste compté
+comme survivant.
+
+## Équivalences invoquées
+
+Aucune équivalence n'est prouvée formellement. Deux familles se vérifient dans
+la documentation des bibliothèques : `dtype=None` signifie le type flottant par
+défaut de numpy, et `index=None` de `to_csv` est traité comme faux. La tolérance
+`>=` 1e-6 de `_check_ratios` est inatteignable en arithmétique binaire (la
+somme moins un est un multiple de 2⁻⁵², jamais égal à 1e-6). Les autres lignes
+du tableau restent des hypothèses de lecture.
