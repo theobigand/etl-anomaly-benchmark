@@ -76,6 +76,12 @@ def assess(docs, *, current, root, manifest, lineage) -> dict:  # noqa: PLR0912
             "experiment records predate the scientific fingerprint "
             f"({', '.join(sorted(lineage['legacy']))}); a clean replay is required"
         )
+    if lineage.get("dirty"):
+        incomplete.append(
+            "archived runs were made on a dirty worktree "
+            f"({', '.join(sorted(lineage['dirty']))}); kept as labelled history, "
+            "a clean replay is required"
+        )
     status = "REJECTED" if rejected else "INCOMPLETE" if incomplete else "CERTIFIED"
     return {
         "schema_version": 1,
@@ -101,15 +107,17 @@ def load_docs(directory: Path) -> dict:
 def archive_lineage(archive: Path = ARCHIVE) -> dict:
     anchor = lineage.files_at(lineage.anchor_revision())
     current = lineage.worktree_files()
-    legacy, problems = [], {}
+    legacy, dirty, problems = [], [], {}
     for path in sorted(archive.glob("run_*.json")):
         record = json.loads(path.read_text())
         if record.get("fingerprint_recipe", 1) == 1:
             legacy.append(path.stem)
+        if record.get("worktree_dirty"):
+            dirty.append(path.stem)
         found = lineage.check_record(record, anchor, current)
         if found:
             problems[path.stem] = found
-    return {"legacy": legacy, "problems": problems}
+    return {"legacy": legacy, "dirty": dirty, "problems": problems}
 
 
 def reference_hashes(archive: Path = ARCHIVE) -> dict:

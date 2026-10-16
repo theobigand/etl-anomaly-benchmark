@@ -169,7 +169,7 @@
     {
       "id": "M05",
       "title": "Dependency locking and provenance",
-      "status": "PARTIAL",
+      "status": "COMPLETED",
       "dependencies": [
         "M03"
       ],
@@ -181,18 +181,31 @@
         "verification/evidence/lineage.json",
         ".github/workflows/ci.yml",
         "tests/test_scientific_fingerprint.py",
-        "tests/test_artifact_lineage.py"
+        "tests/test_artifact_lineage.py",
+        "verification/lock_environment.py",
+        "verification/environment/",
+        "tests/test_environment_lock.py",
+        "experiments/provenance.py",
+        "verification/release.py"
       ],
       "tests": [
         {
           "command": "make verify-fast",
           "exit_code": 0,
           "result": "607 passed, 100% line and branch"
+        },
+        {
+          "command": "make verify-fast + make verify-tools",
+          "exit_code": 0,
+          "result": "720 passed, 100% scientific; verifier 100%"
         }
       ],
       "evidence": [],
-      "blockers": [],
-      "next_action": "dependency locking; dirty-worktree labelling; environment capture. Scientific fingerprint v2 and legacy lineage done."
+      "blockers": [
+        "Lock exists for osx-arm64 only; the Linux CI environment is not locked (pip resolves loose bounds)",
+        "Archived runs remain recipe-1, dirty-worktree, labelled historical; clean replay deferred to M13 per user decision"
+      ],
+      "next_action": null
     },
     {
       "id": "M06",

@@ -2,7 +2,7 @@ CONDA_ENV := etl-benchmark
 # any Chromium-family binary that supports --print-to-pdf (chrome, chromium, chrome-headless-shell)
 CHROME ?= chromium
 
-.PHONY: help env update test lint verify-fast verify-deep verify-faults verify-real verify-scale verify-tools verify-release verify-all pipeline benchmark benchmark-water benchmark-cardio synthetic heatmap severity curves slides run clean
+.PHONY: help env update test lint verify-fast verify-deep verify-faults verify-real verify-scale lock verify-tools verify-release verify-all pipeline benchmark benchmark-water benchmark-cardio synthetic heatmap severity curves slides run clean
 
 help:
 	@echo "Available targets:"
@@ -15,6 +15,7 @@ help:
 	@echo "  make verify-faults Apply deliberate scientific defects to a temporary copy and require a failure"
 	@echo "  make verify-real  Inspect available full datasets and record provenance"
 	@echo "  make verify-scale Measure bounded detector growth outside FAST"
+	@echo "  make lock       Record the exact conda and pip packages of the active environment"
 	@echo "  make verify-tools Measure line/branch coverage of the verifier code in verification/ (separate from FAST)"
 	@echo "  make verify-release Certify the evidence of the four profiles for the current clean revision"
 	@echo "  make verify-all   Run all three verification profiles"
@@ -89,6 +90,9 @@ verify-real:
 		gate=$$?; python -m verification.evidence_schema real \
 		--report experiments/results/real_verification.json --output $(EVIDENCE)/real.json; \
 		evidence_status=$$?; test $$gate -eq 0 -a $$evidence_status -eq 0
+
+lock:
+	python verification/lock_environment.py
 
 verify-tools:
 	pytest -m 'not real and not fault' -q --cov=verification --cov-branch --cov-fail-under=100 \

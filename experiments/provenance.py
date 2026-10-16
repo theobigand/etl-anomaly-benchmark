@@ -150,6 +150,16 @@ def scientific_fingerprint() -> str:
     return scientific_fingerprint_of(files)
 
 
+def _environment_lock() -> dict[str, str | None]:
+    """Hash of the recorded conda lock for this platform, or None when absent."""
+    system = f"{platform.system().lower()}-{platform.machine()}"
+    path = ROOT / "verification" / "environment" / f"conda-{system}.explicit.txt"
+    return {
+        "file": f"verification/environment/{path.name}",
+        "sha256": _hash_file(path) if path.is_file() else None,
+    }
+
+
 def write_record(
     path: Path,
     *,
@@ -189,6 +199,7 @@ def write_record(
         "python": sys.version.split()[0],
         "platform": platform.platform(),
         "packages": packages,
+        "environment_lock": _environment_lock(),
         "dataset": source,
         "seeds": seeds,
         "settings": settings,

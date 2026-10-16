@@ -165,3 +165,11 @@ def test_command_writes_a_report_and_fails_unless_certified(tmp_path):
     assert report["status"] in ("INCOMPLETE", "REJECTED")
     assert "release: " in done.stdout
     assert ENVIRONMENT  # fixtures imported for the shared builders
+
+
+def test_dirty_worktree_runs_are_kept_as_history_but_block_certification(tmp_path):
+    report = _assess(tmp_path, lineage={"legacy": [], "dirty": ["run_curves"], "problems": {}})
+    assert report["status"] == "INCOMPLETE"
+    assert any(
+        "dirty worktree" in reason and "run_curves" in reason for reason in report["reasons"]
+    )

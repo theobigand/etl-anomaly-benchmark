@@ -230,10 +230,14 @@ def test_archive_lineage_separates_legacy_records_from_broken_ones(tmp_path):
         ).scientific_fingerprint(),
     }
     (tmp_path / "run_new.json").write_text(json.dumps(good_v2))
-    (tmp_path / "run_old.json").write_text(json.dumps({"source_fingerprint": "0" * 64}))
+    (tmp_path / "run_old.json").write_text(
+        json.dumps({"source_fingerprint": "0" * 64, "worktree_dirty": False})
+    )
+    (tmp_path / "run_dirty.json").write_text(json.dumps({**good_v2, "worktree_dirty": True}))
     result = release.archive_lineage(tmp_path)
     assert result["legacy"] == ["run_old"]
-    assert "run_new" not in result["problems"]
+    assert result["dirty"] == ["run_dirty"]
+    assert "run_new" not in result["problems"] and "run_dirty" not in result["problems"]
     assert result["problems"]["run_old"]
 
 
