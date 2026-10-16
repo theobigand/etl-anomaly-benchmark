@@ -39,7 +39,7 @@ LEVELS = ("archive", "same_environment", "locked_environment", "version_sensitiv
 
 def _metrics(path: Path) -> tuple[pd.DataFrame, pd.DataFrame]:
     frame = pd.read_csv(path, index_col=0)
-    timing = [column for column in frame if column.startswith("detect_s")]
+    timing = [column for column in frame if str(column).startswith("detect_s")]
     return frame.drop(columns=timing), frame[timing]
 
 
@@ -50,8 +50,8 @@ def compare(candidate: Path, reference: Path) -> dict:
     if list(new.index) != list(old.index) or list(new.columns) != list(old.columns):
         return {"kind": "DIFFERENT_SHAPE", "max_abs_diff": None, "timing_max_rel_diff": None}
     diff = (new - old).abs()
-    means = [column for column in new if column.endswith("_mean")]
-    spread = old[[column.replace("_mean", "_std") for column in means]]
+    means = [column for column in new if str(column).endswith("_mean")]
+    spread = old[[str(column).replace("_mean", "_std") for column in means]]
     spread.columns = means
     inside = bool((diff[means] <= spread.fillna(0.0)).all().all())
     timing = (
