@@ -413,16 +413,39 @@
     {
       "id": "M12",
       "title": "Manuscript consistency",
-      "status": "NOT_STARTED",
+      "status": "COMPLETED",
       "dependencies": [
         "M09"
       ],
-      "start_commit": null,
+      "start_commit": "bd1e27d",
       "end_commit": null,
-      "files_changed": [],
-      "tests": [],
+      "files_changed": [
+        "paper/main.tex",
+        "verification/claims.json",
+        "tests/test_manuscript_claims.py",
+        "verification/report.md",
+        "verification/README.md",
+        "verification/issues.md",
+        "README.md",
+        "pyproject.toml"
+      ],
+      "tests": [
+        {
+          "command": "pytest tests/test_manuscript_claims.py",
+          "exit_code": 0,
+          "result": "8 passed (paper figures == claims.json; fault count == live matrix; stale figures absent)"
+        },
+        {
+          "command": "latexmk -pdf paper/main.tex",
+          "exit_code": 0,
+          "result": "compiles"
+        }
+      ],
       "evidence": [],
-      "blockers": [],
+      "blockers": [
+        "ADBench statements checked against the arXiv v2 PDF text (runtime analysis and local/global/dependency/clustered types exist; no rule-based baselines found). Other bibliography claims (e.g. the 0.51 ROC-AUC attributed to sokkula2024implementing) were NOT re-verified.",
+        "claims.json holds figures measured at bd1e27d; M13 refreshes them"
+      ],
       "next_action": null
     },
     {
