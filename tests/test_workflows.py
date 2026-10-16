@@ -71,3 +71,9 @@ def test_workflows_request_read_only_permissions():
     for path in WORKFLOWS.glob("*.yml"):
         text = path.read_text()
         assert "permissions:\n  contents: read" in text, path.name
+
+
+def test_verifier_coverage_is_enforced_and_reported_apart_from_fast():
+    assert "make verify-tools" in _text("ci.yml")
+    makefile = (WORKFLOWS.parents[1] / "Makefile").read_text()
+    assert "--cov=verification" in makefile and "--cov-fail-under=100" in makefile

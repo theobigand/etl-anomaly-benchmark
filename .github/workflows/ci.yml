@@ -29,6 +29,9 @@ jobs:
       - name: FAST verification
         run: make verify-fast
 
+      - name: Verifier coverage (verification/, reported apart from FAST)
+        run: make verify-tools
+
       - name: Preserve verification evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -39,6 +42,7 @@ jobs:
             experiments/results/pytest.xml
             experiments/results/verification_fast.json
             experiments/results/evidence/fast.json
+            experiments/results/verifier_coverage.json
             verification/profile.json
           if-no-files-found: warn
           retention-days: 30
