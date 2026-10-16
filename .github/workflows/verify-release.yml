@@ -1,0 +1,177 @@
+name: verify-release
+
+# Manual run of every profile, then the release gate. Nothing here publishes
+# anything: the result is a report that says CERTIFIED, INCOMPLETE or REJECTED.
+on:
+  workflow_dispatch:
+    inputs:
+      real_runner:
+        description: "Label of a runner that holds the research datasets (empty skips REAL)"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  fast:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: pip install -e ".[dev]"
+
+      - name: Run fast profile
+        run: make verify-fast
+
+      - name: Bundle fast evidence
+        if: always()
+        run: tar czf evidence-fast.tgz --ignore-failed-read coverage.json experiments/results/pytest.xml experiments/results/verification_fast.json experiments/results/evidence/fast.json
+
+      - name: Preserve fast evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-fast
+          path: evidence-fast.tgz
+          if-no-files-found: warn
+          retention-days: 90
+
+  faults:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: pip install -e ".[dev]"
+
+      - name: Run faults profile
+        run: make verify-faults
+
+      - name: Bundle faults evidence
+        if: always()
+        run: tar czf evidence-faults.tgz --ignore-failed-read experiments/results/fault_matrix.json experiments/results/evidence/faults.json
+
+      - name: Preserve faults evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-faults
+          path: evidence-faults.tgz
+          if-no-files-found: warn
+          retention-days: 90
+
+  deep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: pip install -e ".[dev,deep]"
+
+      - name: Run deep profile
+        run: make verify-deep
+
+      - name: Bundle deep evidence
+        if: always()
+        run: tar czf evidence-deep.tgz --ignore-failed-read mutants/mutmut-cicd-stats.json experiments/results/evidence/deep.json
+
+      - name: Preserve deep evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-deep
+          path: evidence-deep.tgz
+          if-no-files-found: warn
+          retention-days: 90
+
+  real:
+    if: inputs.real_runner != ''
+    runs-on: ${{ inputs.real_runner }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: pip install -e ".[dev]"
+
+      - name: Run real profile
+        run: make verify-real
+
+      - name: Bundle real evidence
+        if: always()
+        run: tar czf evidence-real.tgz --ignore-failed-read experiments/results/real_verification.json experiments/results/evidence/real.json
+
+      - name: Preserve real evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-real
+          path: evidence-real.tgz
+          if-no-files-found: warn
+          retention-days: 90
+
+  release:
+    needs: [fast, faults, deep, real]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: pip install -e ".[dev]"
+
+      - name: Refuse a release when a profile job failed
+        run: test "${{ contains(needs.*.result, 'failure') }}" = false
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: evidence-*
+          path: bundles
+          merge-multiple: true
+
+      - name: Unpack the evidence at the repository root
+        run: for bundle in bundles/*.tgz; do tar xzf "$bundle"; done
+
+      - name: Release gate
+        run: make verify-release
+
+      - name: Preserve the release report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-report
+          path: experiments/results/evidence/release.json
+          if-no-files-found: warn
+          retention-days: 90

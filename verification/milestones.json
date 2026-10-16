@@ -196,17 +196,33 @@
     {
       "id": "M06",
       "title": "CI/CD enforcement",
-      "status": "NOT_STARTED",
+      "status": "PARTIAL",
       "dependencies": [
         "M04"
       ],
-      "start_commit": null,
+      "start_commit": "3f4a2a0",
       "end_commit": null,
-      "files_changed": [],
-      "tests": [],
+      "files_changed": [
+        ".github/workflows/ci.yml",
+        ".github/workflows/verify-release.yml",
+        "tests/test_workflows.py"
+      ],
+      "tests": [
+        {
+          "command": "pytest tests/test_workflows.py",
+          "exit_code": 0,
+          "result": "8 passed (text-level structure checks); YAML parses"
+        },
+        {
+          "command": "gh run list; gh api branches/main/protection; gh api rulesets",
+          "result": "last 5 runs on main/PR succeeded before this work; main is NOT protected (HTTP 404), no rulesets. Inspected read-only."
+        }
+      ],
       "evidence": [],
-      "blockers": [],
-      "next_action": null
+      "blockers": [
+        "New workflows have not run remotely (nothing pushed); branch protection not enabled and not changed (needs user authorization)"
+      ],
+      "next_action": "After the user pushes: confirm ci.yml and a verify-release dispatch run; ask whether to require the ci checks on main."
     },
     {
       "id": "M07",
