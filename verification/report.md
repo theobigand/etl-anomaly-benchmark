@@ -46,14 +46,16 @@ archivés séparément et leurs chiffres sont rapprochés du manuscrit par un te
 
 | Commande | Résultat | Détail |
 | --- | --- | --- |
-| `make verify-fast` | Réussite locale | 561 tests réussis, 2 tests réels et 14 essais de défauts exclus ; lignes et branches couvertes. |
-| `make verify-deep` | Réussite locale | 4 487 mutants éliminés sur 4 594 (97,67 %) dans `src/etl_benchmark` et `experiments/` ; 107 survivants classés. |
-| `make verify-faults` | Réussite locale | 14 défauts introduits dans une copie temporaire, tous détectés par un test prévu. |
-| `make verify-real` | Réussite locale | 2 tests et contrôle des trois CSV présents. |
+| `make verify-fast` | Réussite locale | 763 tests réussis, 3 tests réels et 23 essais de défauts exclus ; lignes et branches couvertes. |
+| `make verify-deep` | Réussite locale | 4 626 mutants éliminés sur 4 732 (97,76 %) dans `src/etl_benchmark` et `experiments/` ; 106 survivants, dont 1 propre à macOS. |
+| `make verify-faults` | Réussite locale | 23 défauts introduits dans une copie temporaire, tous détectés par un test prévu. |
+| `make verify-real` | Réussite locale | 2 tests et contrôle des trois CSV requis ; échoue si l'un manque ou si le registre est vide. |
 | `python verification/scaling.py` | Réussite locale | 27 mesures sur trois tailles, hors FAST. |
 | `make verify-all` | Réussite locale | FAST, DEEP, défauts introduits et REAL passent ; le statut reste INCOMPLETE (travail restant ci-dessous). |
 
-FAST mesure **1467/1467 lignes et 294/294 branches (100 % chacune)**.
+FAST mesure **1531/1531 lignes et 320/320 branches (100 % chacune)**. Le code de
+vérification de `verification/` est mesuré à part (`make verify-tools` : 732/732
+lignes et 218/218 branches).
 La mesure inclut désormais les commandes lancées en sous-processus. Les
 scripts `fetch_cardio.py`, `generate_synthetic.py` et l'entrée principale
 sont désormais parcourus par FAST avec des données construites localement. Le détail par
@@ -63,12 +65,14 @@ ni branche n'est exclue.
 
 La campagne de mutation porte sur les modules de `src/etl_benchmark` qui
 calculent un résultat et sur les dix scripts de `experiments/` (mutmut 3.8.0) :
-4 594 mutants produits, 4 487 éliminés, 107 survivants, aucun cas classé sans
-test, ignoré, expiré ou en erreur. Le taux mesuré est **97,67 %** (96,00 % sur
-`src/`, 98,85 % sur les scripts). Elle avait commencé à 88,66 % sur
+4 732 mutants produits, 4 626 éliminés, 106 survivants, aucun cas classé sans
+test, ignoré, expiré ou interrompu. Le taux mesuré est **97,76 %**, dont 95,76 %
+sur le calcul scientifique seul et 98,90 % sur l'orchestration et les scripts
+(voir `mutation_notes.md`). Elle avait commencé à 88,66 % sur
 `metrics.py` seul, à 74,5 % une fois élargie à `src/` sans nouveaux tests et à
-24,3 % sur les scripts. `mutation_notes.md` classe les 107 survivants
-(équivalents, valeurs par défaut de bibliothèques, noms internes). Le profil
+24,3 % sur les scripts. `mutation_notes.md` classe les survivants par lecture des
+diffs (valeurs par défaut de bibliothèques, noms internes) ; ce classement est
+une hypothèse, pas une preuve. Le profil
 généré par FAST garde un champ de mutation à zéro : il signifie « non lancé
 par FAST », pas un score nul ; le résultat de DEEP est dans ce rapport.
 
@@ -131,7 +135,7 @@ bloquent pas encore une publication distante.
 
 ## Travail restant
 
-Il faut revoir les 107 survivants si un module change. Il manque également des
+Il faut revoir les 106 survivants si un module change. Il manque également des
 tests de panne et de schéma défavorable, une évaluation temporelle sur données réelles, les
 détecteurs profonds et une étude de coût plus large dans un environnement
 contrôlé.
@@ -157,3 +161,23 @@ python experiments/run_benchmark.py --dataset cardio
 make verify-scale
 latexmk -pdf -interaction=nonstopmode -halt-on-error -output-directory=paper paper/main.tex
 ```
+
+## Ajouts de la mission de renforcement (octobre 2026)
+
+| Élément | Où |
+| --- | --- |
+| REAL échoue si les trois jeux requis ne passent pas tous | `experiments/verify_real.py` |
+| La barrière de mutation refuse comptes invalides, campagne interrompue, mutants sans test ou ignorés | `experiments/check_mutation.py` |
+| Enveloppe de preuve validée pour FAST, DEEP, FAULTS, REAL | `verification/evidence_schema.py` |
+| Certification de version (`make verify-release`) : CERTIFIED, INCOMPLETE ou REJECTED, rapport « local, non attesté » | `verification/release.py` |
+| Empreinte scientifique v2 (sans les barrières de vérification) et filiation des archives historiques | `experiments/provenance.py`, `verification/lineage.py`, `evidence/lineage.json` |
+| Verrou d'environnement (`make lock`) | `verification/environment/` |
+| Reproductibilité par niveaux | `reproducibility.md` |
+| Couverture du code de vérification (`make verify-tools`) | 732/732 lignes, 218/218 branches |
+| Typage : `verification/` propre, code scientifique sans nouvelle erreur (`make verify-types`) | `check_types.py`, `typing_baseline.txt` |
+| Chiffres cités par le manuscrit | `claims.json`, `tests/test_manuscript_claims.py` |
+
+Le statut général reste **INCOMPLETE** : les archives des expériences datent d'un
+arbre de travail modifié et d'une empreinte de première génération ; seul
+Cardio a été rejoué avec le code actuel (identique). Un rejeu complet sur une
+révision propre est nécessaire avant toute certification.
