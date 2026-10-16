@@ -41,8 +41,11 @@ lint:
 	ruff check .
 	ruff format --check .
 
+EVIDENCE := experiments/results/evidence
+
 verify-fast: lint
-	@mkdir -p experiments/results
+	@mkdir -p experiments/results $(EVIDENCE)
+	@rm -f experiments/results/verification_fast.json $(EVIDENCE)/fast.json
 	@set +e; pytest -m 'not real and not fault' --cov=src/etl_benchmark --cov=experiments --cov-branch \
 		--cov-report=term-missing:skip-covered --cov-report=json:coverage.json \
 		--junitxml=experiments/results/pytest.xml; tests_status=$$?; \
@@ -51,19 +54,39 @@ verify-fast: lint
 		profile_status=$$?; \
 		python experiments/verification_report.py --coverage coverage.json \
 		--junit experiments/results/pytest.xml --output experiments/results/verification_fast.json; \
-		report_status=$$?; test $$tests_status -eq 0 -a $$profile_status -eq 0 -a $$report_status -eq 0
+		report_status=$$?; \
+		python -m verification.evidence_schema fast --coverage coverage.json \
+		--junit experiments/results/pytest.xml --output $(EVIDENCE)/fast.json; \
+		evidence_status=$$?; \
+		test $$tests_status -eq 0 -a $$profile_status -eq 0 -a $$report_status -eq 0 \
+		-a $$evidence_status -eq 0
 
 verify-deep:
+	@mkdir -p $(EVIDENCE)
+	@rm -f $(EVIDENCE)/deep.json mutants/mutmut-cicd-stats.json
 	mutmut run
 	mutmut export-cicd-stats
-	python experiments/check_mutation.py mutants/mutmut-cicd-stats.json
+	@set +e; python experiments/check_mutation.py mutants/mutmut-cicd-stats.json; gate=$$?; \
+		python -m verification.evidence_schema deep --stats mutants/mutmut-cicd-stats.json \
+		--output $(EVIDENCE)/deep.json; evidence_status=$$?; \
+		test $$gate -eq 0 -a $$evidence_status -eq 0
 
 verify-faults:
-	pytest -m fault tests/test_fault_matrix.py
+	@mkdir -p $(EVIDENCE)
+	@rm -f $(EVIDENCE)/faults.json experiments/results/fault_matrix.json
+	@set +e; pytest -m fault tests/test_fault_matrix.py; tests_status=$$?; \
+		python -m verification.evidence_schema faults \
+		--matrix experiments/results/fault_matrix.json --output $(EVIDENCE)/faults.json; \
+		evidence_status=$$?; test $$tests_status -eq 0 -a $$evidence_status -eq 0
 
 verify-real:
+	@mkdir -p $(EVIDENCE)
+	@rm -f $(EVIDENCE)/real.json experiments/results/real_verification.json
 	pytest -m real
-	python experiments/verify_real.py --output experiments/results/real_verification.json
+	@set +e; python experiments/verify_real.py --output experiments/results/real_verification.json; \
+		gate=$$?; python -m verification.evidence_schema real \
+		--report experiments/results/real_verification.json --output $(EVIDENCE)/real.json; \
+		evidence_status=$$?; test $$gate -eq 0 -a $$evidence_status -eq 0
 
 verify-scale:
 	python verification/scaling.py
