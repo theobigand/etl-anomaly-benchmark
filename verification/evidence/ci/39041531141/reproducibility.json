@@ -1,0 +1,90 @@
+{
+  "archived_run": {
+    "dataset_sha256": "28bb4f67afca256f0cebe3cc6ca75a13be0bfc062e21efcaf40f1d3d80688eff",
+    "file": "verification/evidence/run_benchmark_cardio.json",
+    "source_revision": "93b6fe896715f308575620db6a6bb3de5b4c7f77",
+    "split_ids_sha256": "3c8f3ca4703db0a4b719e58da9b12b22b4294d874f9ece643073d32692b35ffe"
+  },
+  "captured_at": "2026-10-17T14:40:01.038708+00:00",
+  "dataset": "cardio",
+  "environment": {
+    "packages": {
+      "mutmut": null,
+      "mypy": null,
+      "numpy": "2.4.6",
+      "pandas": "3.0.6",
+      "pandas-stubs": null,
+      "pyod": "3.6.7",
+      "pytest": "9.1.1",
+      "pytest-cov": "7.1.0",
+      "scikit-learn": "1.9.1"
+    },
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.11.17"
+  },
+  "levels": {
+    "archive": {
+      "artifact_bytes_identical": false,
+      "artifact_identical": true,
+      "kind": "STATISTICAL",
+      "max_abs_diff": 6.496665315131045e-05,
+      "required": true,
+      "status": "PASS",
+      "timing_max_rel_diff": 1.9154736036712754
+    },
+    "locked_environment": {
+      "artifact_bytes_identical": true,
+      "artifact_identical": true,
+      "kind": "NUMERICAL",
+      "max_abs_diff": 0.0,
+      "required": true,
+      "status": "PASS",
+      "timing_max_rel_diff": 7.413576810478898
+    },
+    "same_environment": {
+      "artifact_bytes_identical": true,
+      "artifact_identical": true,
+      "kind": "NUMERICAL",
+      "max_abs_diff": 0.0,
+      "required": true,
+      "status": "PASS",
+      "timing_max_rel_diff": 0.29398596189815623
+    },
+    "version_sensitivity": {
+      "artifact_bytes_identical": true,
+      "artifact_identical": true,
+      "changed": "scikit-learn==1.8.0",
+      "kind": "NUMERICAL",
+      "max_abs_diff": 0.0,
+      "required": false,
+      "status": "MEASURED",
+      "timing_max_rel_diff": 0.45514890774726624
+    }
+  },
+  "lock": {
+    "file": "verification/environment/linux-x86_64-py311.lock.txt",
+    "sha256": "251cc7526004bac885c805ab10f1851c17741799d9b3e150045736bed2f00fd1",
+    "strategy": "pip-hashes"
+  },
+  "outcome": "PASS",
+  "reasons": [],
+  "schema_version": 1,
+  "seeds": [
+    42,
+    1,
+    2,
+    3,
+    4
+  ],
+  "source": {
+    "revision": "79ac45083645eb2dc8e90b1ec3fea98c512378f9",
+    "scientific_fingerprint": "44faa1f99393490fc25dbcea06ee4c8371bbb032f591e4203253c26d65da6a23",
+    "worktree_dirty": false
+  },
+  "tolerance": {
+    "artifact": "the split-id archive is byte-identical",
+    "numerical": "every non-timing metric is bit-identical",
+    "statistical": "each mean differs by less than one reference standard deviation",
+    "timing": "detect_s columns are a relative spread and never decide a status; they are not deterministic across machines"
+  }
+}
