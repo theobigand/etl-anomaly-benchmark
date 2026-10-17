@@ -24,7 +24,8 @@ but a run that requested no mandatory level certifies nothing and is
 
 Four things are kept apart. *Numerical*: every metric is bit-identical.
 *Statistical*: metrics differ but each mean stays within one reference
-standard deviation. *Artifact*: the archived split-id file is byte-identical.
+standard deviation. *Artifact*: the archived split-id file has the same members (the
+compressed bytes depend on the zlib build and are reported apart).
 *Timing*: ``detect_s`` columns are compared as a relative spread only and never
 decide a status.
 """
@@ -32,6 +33,7 @@ decide a status.
 from __future__ import annotations
 
 import argparse
+import gzip
 import hashlib
 import json
 import os
@@ -179,17 +181,36 @@ def run_dataset(python: str, dataset: str, results_dir: Path) -> dict[str, Path 
     return {"table": next(results_dir.glob(target["table"])), "splits": splits}
 
 
+def _same_partitions(candidate: Path, reference: Path) -> tuple[bool, bool]:
+    """(same members, same bytes) of two split-id archives.
+
+    The members are what identifies a partition. The compressed bytes also depend on the
+    zlib build that wrote them, so equal members with other bytes are the same partitions.
+    """
+    raw_candidate, raw_reference = candidate.read_bytes(), reference.read_bytes()
+    if raw_candidate == raw_reference:
+        return True, True
+    try:
+        members = [json.loads(gzip.decompress(raw)) for raw in (raw_candidate, raw_reference)]
+    except (OSError, EOFError, ValueError):
+        return False, False
+    return members[0] == members[1], False
+
+
 def _level(candidate: dict[str, Any], reference: dict[str, Any]) -> dict:
     result = compare(candidate["table"], reference["table"])
     if reference["splits"] is None:
         same_splits = True  # this experiment archives no split ids
         result["artifact_identical"] = None
+        result["artifact_bytes_identical"] = None
     elif candidate["splits"] is None:
         same_splits = False  # the archive has split ids and the replay wrote none
         result["artifact_identical"] = False
+        result["artifact_bytes_identical"] = False
     else:
-        same_splits = candidate["splits"].read_bytes() == reference["splits"].read_bytes()
+        same_splits, same_bytes = _same_partitions(candidate["splits"], reference["splits"])
         result["artifact_identical"] = same_splits
+        result["artifact_bytes_identical"] = same_bytes
     result["status"] = "PASS" if result["kind"] in ("NUMERICAL", "STATISTICAL") else "FAIL"
     if not same_splits:
         result["status"] = "FAIL"
