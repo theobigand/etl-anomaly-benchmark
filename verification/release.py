@@ -16,7 +16,7 @@ import os
 from datetime import UTC, datetime
 from pathlib import Path
 
-from verification import evidence_schema, lineage
+from verification import evidence_schema, lineage, mutation_scope
 
 ROOT = Path(__file__).resolve().parents[1]
 KINDS = evidence_schema.KINDS
@@ -107,7 +107,7 @@ def check_environments(docs: dict, locked: dict) -> tuple[list[str], list[str], 
     }  # fmt: skip
 
 
-def assess(docs, *, current, root, manifest, lineage, locked) -> dict:  # noqa: PLR0912
+def assess(docs, *, current, root, manifest, lineage, locked, scope) -> dict:  # noqa: PLR0912
     """Pure decision over the loaded evidence; see the module docstring."""
     rejected: list[str] = []
     incomplete: list[str] = []
@@ -142,6 +142,13 @@ def assess(docs, *, current, root, manifest, lineage, locked) -> dict:  # noqa: 
         for kind, doc in docs.items()
         if doc is not None and profiles[kind] not in ("INVALID",)
     }
+    if "deep" in valid:
+        rejected += [
+            f"deep scope: {problem}"
+            for problem in mutation_scope.check_evidence(
+                valid["deep"]["result"], scope["inventory"], scope["config"]
+            )
+        ]
     env_rejected, env_incomplete, environment = check_environments(valid, locked)
     rejected += env_rejected
     incomplete += env_incomplete
@@ -216,6 +223,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--evidence", type=Path, default=EVIDENCE_DIR)
     parser.add_argument("--output", type=Path, default=EVIDENCE_DIR / "release.json")
     args = parser.parse_args(argv)
+    config = mutation_scope.load()
     report = assess(
         load_docs(args.evidence),
         current=evidence_schema.collect_source(),
@@ -223,6 +231,7 @@ def main(argv: list[str] | None = None) -> int:
         manifest=reference_hashes(),
         lineage=archive_lineage(),
         locked=locked_versions(),
+        scope={"inventory": mutation_scope.inventory(ROOT, config), "config": config},
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")

@@ -130,6 +130,19 @@ ignore la casse. Deux survivants de `_environment_lock` (`"VERIFICATION"`,
 `"ENVIRONMENT"`) sont dans le même cas. Ces trois mutants seraient éliminés sur
 Linux, donc par la CI (non vérifié) ; ils restent comptés comme survivants.
 
+## Périmètre contrôlé
+
+Le périmètre de mutation n'est plus seulement celui de `pyproject.toml`.
+`verification/mutation_scope.json` nomme les racines (`src/etl_benchmark`,
+`experiments`), les quatre exclusions justifiées (`__init__.py`, `__main__.py`,
+`config.py`, `logging_setup.py`) et le fichier qui ne reçoit aucun mutant
+(`quality/__init__.py`). `verification/mutation_scope.py` découvre les
+fichiers éligibles dans l'arbre ; un test de FAST compare ce relevé aux motifs
+de `pyproject.toml`, et la porte de certification le compare aux fichiers
+réellement mutés (`mutants/results.txt`, enregistrés dans le résultat DEEP).
+Un module ajouté sans être mué, ou retiré du périmètre, fait échouer le test
+puis la certification, quel que soit le score.
+
 ## Écart Linux / macOS observé en CI
 
 La campagne DEEP exécutée sur Linux (run 38967428334, `421ea6f`) a donné 109

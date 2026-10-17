@@ -98,10 +98,6 @@ jobs:
       - name: Run deep profile
         run: make verify-deep
 
-      - name: List every mutant with its outcome
-        if: always()
-        run: mutmut results --all true > mutants/results.txt
-
       - name: Bundle deep evidence
         if: always()
         run: tar czf evidence-deep.tgz --ignore-failed-read mutants/mutmut-cicd-stats.json mutants/results.txt experiments/results/evidence/deep.json

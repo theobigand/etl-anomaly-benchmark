@@ -16,7 +16,6 @@ import platform
 import re
 import subprocess
 import sys
-import tomllib
 from datetime import UTC, datetime
 from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
@@ -27,6 +26,8 @@ import check_mutation  # noqa: E402
 import provenance  # noqa: E402
 import verification_report  # noqa: E402
 import verify_real  # noqa: E402
+
+from verification import mutation_scope  # noqa: E402
 
 SCHEMA_VERSION = 2
 KINDS = ("fast", "deep", "faults", "real")
@@ -104,7 +105,9 @@ def _deep_status(result: dict) -> str:
         status, _ = check_mutation.classify(result["stats"])
     except ValueError:
         return "INCOMPLETE"
-    return status if result["scope"] else "INCOMPLETE"
+    if not result["scope"] or not result.get("scope_files"):
+        return "INCOMPLETE"
+    return status if isinstance(result.get("mutated_files"), list) else "INCOMPLETE"
 
 
 def _faults_status(result: dict) -> str:
@@ -148,14 +151,25 @@ def build_fast(coverage: Path, junit: Path, *, root: Path = ROOT, source=None, e
     )
 
 
-def mutation_scope(pyproject: Path) -> list[str]:
-    settings = tomllib.loads(pyproject.read_text())["tool"]["mutmut"]
-    return list(settings["only_mutate"])
-
-
-def build_deep(stats: Path, *, root: Path = ROOT, scope=None, source=None, environment=None):
-    scope = mutation_scope(ROOT / "pyproject.toml") if scope is None else scope
-    result = {"scope": scope, "threshold": check_mutation.THRESHOLD}
+def build_deep(
+    stats: Path, results: Path | None = None, *, root: Path = ROOT, scope=None, source=None,
+    environment=None,
+):  # fmt: skip
+    """Wrap the mutation counts; ``results`` lists the mutants (``mutmut results --all``)."""
+    scope = mutation_scope.configured_patterns(ROOT / "pyproject.toml") if scope is None else scope
+    result = {
+        "scope": scope,
+        "scope_files": mutation_scope.resolve(scope, root),
+        "mutated_files": None,
+        "threshold": check_mutation.THRESHOLD,
+    }
+    artifacts = [stats]
+    if results is not None:
+        artifacts.append(results)
+        try:
+            result["mutated_files"] = mutation_scope.mutated_files(results.read_text(), root)
+        except OSError as exc:
+            result["reason"] = str(exc)
     try:
         counts = json.loads(stats.read_text())
         check_mutation.classify(counts)
@@ -163,10 +177,10 @@ def build_deep(stats: Path, *, root: Path = ROOT, scope=None, source=None, envir
     except (OSError, ValueError) as exc:
         result["stats"] = {}
         result["reason"] = str(exc)
-        return _envelope("deep", "INCOMPLETE", result, [stats], root, source, environment)
+        return _envelope("deep", "INCOMPLETE", result, artifacts, root, source, environment)
     status = _deep_status(result)
     result["score"] = 100.0 * counts["killed"] / counts["total"]
-    return _envelope("deep", status, result, [stats], root, source, environment)
+    return _envelope("deep", status, result, artifacts, root, source, environment)
 
 
 def build_faults(matrix: Path, expected, *, root: Path = ROOT, source=None, environment=None):
@@ -315,7 +329,7 @@ def main(argv: list[str] | None = None) -> int:
     check.add_argument("--root", type=Path, default=None, help="verify artifact hashes here")
     for name, inputs in (
         ("fast", ("coverage", "junit")),
-        ("deep", ("stats",)),
+        ("deep", ("stats", "results")),
         ("faults", ("matrix",)),
         ("real", ("report",)),
     ):
@@ -332,7 +346,7 @@ def main(argv: list[str] | None = None) -> int:
             if args.command == "fast":
                 doc = build_fast(args.coverage, args.junit, root=args.root)
             elif args.command == "deep":
-                doc = build_deep(args.stats, root=args.root)
+                doc = build_deep(args.stats, args.results, root=args.root)
             elif args.command == "faults":
                 doc = build_faults(args.matrix, fault_names(), root=args.root)
             else:
