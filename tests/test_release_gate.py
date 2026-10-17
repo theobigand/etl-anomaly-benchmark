@@ -7,7 +7,7 @@ import sys
 
 import pytest
 
-from tests.test_evidence_schema import ENVIRONMENT, SOURCE, _deep, _fast, _matrix, _real
+from tests.test_evidence_schema import ENVIRONMENT, RESULT_VERSIONS, SOURCE, _deep, _fast, _matrix, _real
 from verification import evidence_schema, release
 
 KINDS = ("fast", "deep", "faults", "real")
@@ -33,6 +33,7 @@ def _docs(tmp_path):
 def _assess(tmp_path, docs=None, current=None, **kwargs):
     kwargs.setdefault("manifest", {"a": "1" * 64, "b": "2" * 64})
     kwargs.setdefault("lineage", {"legacy": [], "problems": {}})
+    kwargs.setdefault("locked", dict(RESULT_VERSIONS))
     return release.assess(
         docs if docs is not None else _docs(tmp_path),
         current=current or copy.deepcopy(SOURCE),
@@ -176,3 +177,85 @@ def test_dirty_worktree_runs_are_kept_as_history_but_block_certification(tmp_pat
     assert any(
         "dirty worktree" in reason and "run_curves" in reason for reason in report["reasons"]
     )
+
+
+# --- scientific environment compatibility (#40) ---
+
+
+def _retarget(docs, kind, **changes):
+    environment = docs[kind]["environment"]
+    for key, value in changes.items():
+        if key in ("python", "platform"):
+            environment[key] = value
+        else:
+            environment["packages"][key] = value
+
+
+def test_every_profile_must_record_each_result_affecting_version(tmp_path):
+    docs = _docs(tmp_path)
+    _retarget(docs, "faults", pyod=None)
+    report = _assess(tmp_path, docs)
+    assert report["status"] == "REJECTED"
+    assert any("faults" in r and "pyod" in r and "version" in r for r in report["reasons"])
+
+
+def test_profiles_with_different_result_versions_are_not_aggregated(tmp_path):
+    docs = _docs(tmp_path)
+    _retarget(docs, "deep", **{"scikit-learn": "1.8"})
+    report = _assess(tmp_path, docs)
+    assert report["status"] == "REJECTED"
+    reason = next(r for r in report["reasons"] if "scikit-learn" in r)
+    assert "deep=1.8" in reason and "fast=1.9" in reason
+
+
+def test_python_minor_versions_must_agree_but_patch_levels_may_differ(tmp_path):
+    docs = _docs(tmp_path)
+    _retarget(docs, "real", python="3.11.9")
+    assert _assess(tmp_path, docs)["status"] == "CERTIFIED"
+    _retarget(docs, "real", python="3.12.1")
+    report = _assess(tmp_path, docs)
+    assert report["status"] == "REJECTED"
+    assert any("python" in r and "3.12" in r for r in report["reasons"])
+
+
+def test_cross_platform_evidence_is_accepted_and_labelled(tmp_path):
+    docs = _docs(tmp_path)
+    _retarget(docs, "deep", platform="Linux-6.17")
+    report = _assess(tmp_path, docs)
+    assert report["status"] == "CERTIFIED", report["reasons"]
+    assert report["environment"]["mode"] == "cross-platform"
+    assert sorted(report["environment"]["platforms"]) == ["Linux-6.17", "test"]
+
+
+def test_one_platform_with_locked_versions_is_an_exact_environment(tmp_path):
+    report = _assess(tmp_path)
+    assert report["environment"]["mode"] == "exact-environment"
+    assert report["environment"]["packages"]["numpy"] == "2.0"
+
+
+def test_versions_that_differ_from_the_recorded_lock_are_incomplete(tmp_path):
+    report = _assess(tmp_path, locked={**RESULT_VERSIONS, "numpy": "2.4.6"})
+    assert report["status"] == "INCOMPLETE"
+    assert any("numpy" in r and "2.0" in r and "2.4.6" in r for r in report["reasons"])
+
+
+def test_a_missing_lock_is_incomplete_not_ignored(tmp_path):
+    report = _assess(tmp_path, locked={})
+    assert report["status"] == "INCOMPLETE"
+    assert any("lock" in r and "pandas" in r for r in report["reasons"])
+
+
+def test_the_lock_versions_are_read_from_the_recorded_files(tmp_path):
+    (tmp_path / "conda-test.explicit.txt").write_text(
+        "@EXPLICIT\n"
+        "https://conda.anaconda.org/conda-forge/osx-arm64/numpy-2.4.6-py311hbd_0.conda#abc\n"
+        "https://conda.anaconda.org/conda-forge/osx-arm64/scikit-learn-1.9.1-np2py311_1.conda#d\n"
+    )
+    (tmp_path / "pip-freeze.txt").write_text("# comment\npyod==3.6.7\nrich==1.0\n")
+    found = release.locked_versions(tmp_path)
+    assert found == {"numpy": "2.4.6", "scikit-learn": "1.9.1", "pyod": "3.6.7"}
+    assert release.locked_versions(tmp_path / "none") == {}
+
+
+def test_the_recorded_lock_covers_every_result_affecting_package():
+    assert set(release.locked_versions()) >= set(release.RESULT_PACKAGES)
