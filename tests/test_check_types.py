@@ -174,3 +174,16 @@ def test_the_report_marks_an_unrunnable_check_incomplete(tmp_path):
     assert check_types.main(["--mypy", ok, "--baseline", missing, "--output", str(report)]) == 1
     written = json.loads(report.read_text())
     assert written["status"] == "INCOMPLETE" and written["reason"]
+
+
+def test_the_pins_are_read_whether_or_not_the_checker_is_installed(monkeypatch):
+    # the coverage of this module must not depend on what happens to be installed
+    from importlib.metadata import PackageNotFoundError
+
+    def missing(name):
+        raise PackageNotFoundError(name)
+
+    monkeypatch.setattr(check_types, "version", missing)
+    assert check_types._pins() == {"mypy": None, "pandas-stubs": None}
+    monkeypatch.setattr(check_types, "version", lambda name: f"{name}-9")
+    assert check_types._pins() == {"mypy": "mypy-9", "pandas-stubs": "pandas-stubs-9"}
