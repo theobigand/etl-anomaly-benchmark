@@ -3,7 +3,7 @@
     "mutants/mutmut-cicd-stats.json": "1d635348b3744d13014d611bb142d4b825e588fd3b57e55f93ca225496b0509c",
     "mutants/results.txt": "e31ec59368ad1bab8b860f204ac36e2636573b77f15cdf66438bb32435e5c312"
   },
-  "captured_at": "2026-10-17T10:56:20.245042+00:00",
+  "captured_at": "2026-10-17T13:15:08.103771+00:00",
   "environment": {
     "packages": {
       "mutmut": "3.8.0",
@@ -115,7 +115,7 @@
   },
   "schema_version": 2,
   "source": {
-    "revision": "631b159ede5d6a3c760e55265a7806c9a0b1bf8a",
+    "revision": "55ad398885e528cf47f87020d9ef0d359181fca6",
     "scientific_fingerprint": "44faa1f99393490fc25dbcea06ee4c8371bbb032f591e4203253c26d65da6a23",
     "worktree_dirty": false
   },
