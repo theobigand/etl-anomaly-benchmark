@@ -513,5 +513,10 @@
       ],
       "next_action": "Push the branch chain only with the user's approval, run ci and a verify-release dispatch, decide on branch protection."
     }
-  ]
+  ],
+  "post_audit_remediation": {
+    "tracker": "verification/remediation.md",
+    "issues": "38-49",
+    "note": "Remediation of the independent audit; see remediation.md for the evidence of each issue."
+  }
 }
