@@ -156,6 +156,7 @@ def test_scaling_command_writes_csv_and_json_for_a_small_study(tmp_path, monkeyp
     record = json.loads((tmp_path / "scaling.json").read_text())
     assert [row["status"] for row in record["results"]] == ["PASS"]
     assert record["sizes"] == [30] and len(record["source_revision"]) == 40
+    assert record["measurement_recipe"] == 1 and len(record["measurement_fingerprint"]) == 64
     assert (tmp_path / "scaling.csv").read_text().startswith("method,")
 
 
@@ -239,6 +240,25 @@ def test_archive_lineage_separates_legacy_records_from_broken_ones(tmp_path):
     assert result["dirty"] == ["run_dirty"]
     assert "run_new" not in result["problems"] and "run_dirty" not in result["problems"]
     assert result["problems"]["run_old"]
+
+
+def test_archive_lineage_judges_performance_evidence_by_the_measurement_fingerprint(tmp_path):
+    provenance = __import__("experiments.provenance", fromlist=["x"])
+    bound = {
+        "measurement_recipe": 1,
+        "measurement_fingerprint": provenance.measurement_fingerprint(),
+    }
+    (tmp_path / "scaling.json").write_text(json.dumps(bound))
+    assert release.archive_lineage(tmp_path)["performance"] == {"scaling": ("BOUND", [])}
+    (tmp_path / "scaling.json").write_text(
+        json.dumps({**bound, "measurement_fingerprint": "0" * 64})
+    )
+    state, reasons = release.archive_lineage(tmp_path)["performance"]["scaling"]
+    assert state == "STALE" and reasons
+    (tmp_path / "scaling.json").write_text(json.dumps({"source_revision": "a" * 40}))
+    assert release.archive_lineage(tmp_path)["performance"]["scaling"] == ("LEGACY", [])
+    (tmp_path / "scaling.json").unlink()
+    assert release.archive_lineage(tmp_path)["performance"] == {}
 
 
 def test_reference_hashes_read_the_manifest(tmp_path):

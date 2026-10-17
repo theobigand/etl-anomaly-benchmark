@@ -27,3 +27,23 @@ Ces petites tailles ne permettent pas d'extrapoler aux 284 000 lignes du jeu
 de fraude. Les durées ont aussi varié lors des rejeux du benchmark principal.
 Il faut une machine réservée, davantage de tailles et une mesure de mémoire
 native avant de publier un classement de coût ou un seuil de régression.
+
+## Empreinte de la méthode de mesure
+
+Les tableaux de détection sont liés à l'empreinte scientifique (recette 2).
+Les mesures de coût ont leur propre empreinte, `measurement_fingerprint`
+(recette 1 de mesure, `experiments/provenance.py`) : elle couvre
+`verification/scaling.py` et le code de chronométrage de `pipeline.detect`
+(`DetectionResult` et `detect`), et rien d'autre. Modifier la méthode de mesure
+rend l'empreinte des nouvelles mesures différente et fait passer
+`scaling.json` à l'état `STALE` dans `verification.release` (la certification
+reste alors `INCOMPLETE`) ; modifier une porte de vérification ne change ni
+l'une ni l'autre empreinte. Un nouveau script qui mesure du temps ou de la
+mémoire doit être ajouté à `MEASUREMENT_FILES` : un test cherche dans l'arbre
+les primitives de chronométrage et échoue sur un fichier non enregistré.
+
+`scaling.json` archivé date d'avant cette empreinte. Il n'a pas été
+réécrit : il est `LEGACY` (signalé, sans conséquence sur la certification, la
+mesure de coût n'étant pas obligatoire). Les prochaines exécutions de
+`make verify-scale` et les prochains enregistrements `run_*.json` portent
+`measurement_recipe` et `measurement_fingerprint`.

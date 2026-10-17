@@ -294,3 +294,28 @@ def test_a_file_without_mutant_needs_a_declared_reason(tmp_path):
     assert _assess(tmp_path, docs)["status"] == "REJECTED"
     scope = {"inventory": ["src/x.py"], "config": {"no_mutants": {"src/x.py": "re-exports"}}}
     assert _assess(tmp_path, docs, scope=scope)["status"] == "CERTIFIED"
+
+
+# --- performance evidence follows the measurement fingerprint (#43) ---
+
+
+def _performance(state, reasons=()):
+    return {"legacy": [], "problems": {}, "performance": {"scaling": (state, list(reasons))}}
+
+
+def test_stale_performance_evidence_blocks_certification_but_not_through_the_science(tmp_path):
+    report = _assess(tmp_path, lineage=_performance("STALE", ["the measurement method changed"]))
+    assert report["status"] == "INCOMPLETE"
+    assert any("scaling" in r and "measurement method changed" in r for r in report["reasons"])
+
+
+def test_bound_and_legacy_performance_evidence_do_not_block(tmp_path):
+    assert _assess(tmp_path, lineage=_performance("BOUND"))["status"] == "CERTIFIED"
+    report = _assess(tmp_path, lineage=_performance("LEGACY"))
+    assert report["status"] == "CERTIFIED"
+    assert report["performance"] == {"scaling": "LEGACY"}
+
+
+def test_a_gate_only_change_leaves_the_scientific_lineage_untouched(tmp_path):
+    report = _assess(tmp_path, lineage=_performance("STALE", ["x"]))
+    assert not any("lineage" in r for r in report["reasons"])
