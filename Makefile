@@ -2,7 +2,7 @@ CONDA_ENV := etl-benchmark
 # any Chromium-family binary that supports --print-to-pdf (chrome, chromium, chrome-headless-shell)
 CHROME ?= chromium
 
-.PHONY: help env update test lint verify-fast verify-deep verify-faults verify-real verify-scale lock verify-types verify-tools verify-release verify-all pipeline benchmark benchmark-water benchmark-cardio synthetic heatmap severity curves slides run clean
+.PHONY: help env update test lint verify-fast verify-deep verify-faults verify-real verify-scale lock verify-types verify-tools verify-reproduce verify-release verify-all pipeline benchmark benchmark-water benchmark-cardio synthetic heatmap severity curves slides run clean
 
 help:
 	@echo "Available targets:"
@@ -18,7 +18,8 @@ help:
 	@echo "  make lock       Record the exact conda and pip packages of the active environment"
 	@echo "  make verify-types mypy: verification/ clean, scientific code may not add errors"
 	@echo "  make verify-tools Measure line/branch coverage of the verifier code in verification/ (separate from FAST)"
-	@echo "  make verify-release Certify the evidence of the four profiles for the current clean revision"
+	@echo "  make verify-reproduce Controlled cardio reproduction (archive, same and locked environment), write evidence"
+	@echo "  make verify-release Certify the evidence required by verification/release_policy.json for the current clean revision"
 	@echo "  make verify-all   Run all three verification profiles"
 	@echo "  make pipeline   Run the ETL pipeline demo (sorts data with one detector)"
 	@echo "  make benchmark       Benchmark on Credit Card Fraud (5 seeds, stratified split)"
@@ -97,11 +98,30 @@ lock:
 	python verification/lock_environment.py
 
 verify-types:
-	python verification/check_types.py
+	@mkdir -p $(EVIDENCE) experiments/results
+	@rm -f $(EVIDENCE)/types.json experiments/results/types_report.json
+	@set +e; python verification/check_types.py --output experiments/results/types_report.json; \
+		gate=$$?; python -m verification.evidence_schema types \
+		--report experiments/results/types_report.json --output $(EVIDENCE)/types.json; \
+		evidence_status=$$?; test $$gate -eq 0 -a $$evidence_status -eq 0
 
 verify-tools:
-	pytest -m 'not real and not fault' -q --cov=verification --cov-branch --cov-fail-under=100 \
-		--cov-report=term-missing:skip-covered --cov-report=json:experiments/results/verifier_coverage.json
+	@mkdir -p $(EVIDENCE) experiments/results
+	@rm -f $(EVIDENCE)/tools.json experiments/results/verifier_coverage.json
+	@set +e; pytest -m 'not real and not fault' -q --cov=verification --cov-branch --cov-fail-under=100 \
+		--cov-report=term-missing:skip-covered --cov-report=json:experiments/results/verifier_coverage.json; \
+		tests_status=$$?; python -m verification.evidence_schema tools \
+		--coverage experiments/results/verifier_coverage.json --output $(EVIDENCE)/tools.json; \
+		evidence_status=$$?; test $$tests_status -eq 0 -a $$evidence_status -eq 0
+
+verify-reproduce:
+	@mkdir -p $(EVIDENCE) experiments/results
+	@rm -f $(EVIDENCE)/reproduction.json experiments/results/reproducibility.json
+	@set +e; python -m verification.reproduce --levels archive same_environment locked_environment \
+		version_sensitivity --output experiments/results/reproducibility.json; gate=$$?; \
+		python -m verification.evidence_schema reproduction \
+		--report experiments/results/reproducibility.json --output $(EVIDENCE)/reproduction.json; \
+		evidence_status=$$?; test $$gate -eq 0 -a $$evidence_status -eq 0
 
 verify-release:
 	python -m verification.release

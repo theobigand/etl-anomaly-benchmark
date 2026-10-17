@@ -47,6 +47,9 @@ jobs:
             experiments/results/pytest.xml
             experiments/results/verification_fast.json
             experiments/results/evidence/fast.json
+            experiments/results/evidence/tools.json
+            experiments/results/evidence/types.json
+            experiments/results/types_report.json
             experiments/results/verifier_coverage.json
             verification/profile.json
           if-no-files-found: warn

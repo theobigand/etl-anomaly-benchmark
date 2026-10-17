@@ -50,6 +50,41 @@ jobs:
           if-no-files-found: warn
           retention-days: 90
 
+  static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: pip install -e ".[dev]"
+
+      - name: Verifier coverage
+        run: make verify-tools
+
+      - name: Static typing (checker and stubs are pinned in verification/release_policy.json)
+        run: |
+          pip install mypy==2.4.0 pandas-stubs==3.0.5.260914
+          make verify-types
+
+      - name: Bundle static evidence
+        if: always()
+        run: tar czf evidence-static.tgz --ignore-failed-read experiments/results/verifier_coverage.json experiments/results/types_report.json experiments/results/evidence/tools.json experiments/results/evidence/types.json
+
+      - name: Preserve static evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-static
+          path: evidence-static.tgz
+          if-no-files-found: warn
+          retention-days: 90
+
   faults:
     runs-on: ubuntu-latest
     steps:
@@ -143,7 +178,7 @@ jobs:
           retention-days: 90
 
   release:
-    needs: [fast, faults, deep, real]
+    needs: [fast, static, faults, deep, real]
     if: always()
     runs-on: ubuntu-latest
     steps:

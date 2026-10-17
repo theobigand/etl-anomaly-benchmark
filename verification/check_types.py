@@ -14,10 +14,12 @@ archived runs.
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import re
 import subprocess
 import sys
+from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -62,10 +64,28 @@ def run_mypy(mypy: list[str]) -> str:
     return done.stdout
 
 
+def _pins() -> dict[str, str | None]:
+    """Versions of the checker and its stubs: a baseline is only valid for these."""
+    pins: dict[str, str | None] = {}
+    for name in ("mypy", "pandas-stubs"):
+        try:
+            pins[name] = version(name)
+        except PackageNotFoundError:
+            pins[name] = None
+    return pins
+
+
+def _write_report(path: Path | None, **fields) -> None:
+    if path is not None:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps({**fields, **_pins()}, indent=2, sort_keys=True) + "\n")
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--mypy", nargs="+", default=["mypy"], help="mypy command")
     parser.add_argument("--baseline", type=Path, default=BASELINE)
+    parser.add_argument("--output", type=Path, help="write a machine-readable report here")
     parser.add_argument(
         "--write-baseline",
         action="store_true",
@@ -90,9 +110,17 @@ def main(argv: list[str] | None = None) -> int:
         found = parse(run_mypy(args.mypy))
         baseline = {line for line in args.baseline.read_text().splitlines() if line}
     except (OSError, RuntimeError) as exc:
+        _write_report(args.output, status="INCOMPLETE", reason=str(exc), problems=[])
         print(f"typing: INCOMPLETE ({exc})")
         return 1
     problems = judge(found, baseline)
+    _write_report(
+        args.output,
+        status="FAIL" if problems else "PASS",
+        errors=len(found),
+        baseline_entries=len(baseline),
+        problems=problems,
+    )
     for problem in problems:
         print(f"typing: {problem}")
     print(f"typing: {'FAIL' if problems else 'PASS'} ({len(found)} known errors in the baseline)")
