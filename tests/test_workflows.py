@@ -66,7 +66,7 @@ def test_real_runs_only_on_a_runner_the_operator_names():
 def test_release_job_waits_for_all_profiles_and_fails_when_any_failed():
     text = _text("verify-release.yml")
     release = text[text.index("  release:") :]
-    assert "needs: [fast, static, faults, deep, real]" in release
+    assert "needs: [fast, static, reproduce, faults, deep, real]" in release
     assert "if: always()" in release
     assert "contains(needs.*.result, 'failure')" in release
     assert "make verify-release" in release
@@ -110,13 +110,11 @@ def test_the_release_workflow_produces_every_evidence_kind_the_policy_requires()
     policy = json.loads((WORKFLOWS.parents[1] / "verification" / "release_policy.json").read_text())
     text = _text("verify-release.yml")
     release = text[text.index("  release:") :]
-    # reproduction needs the controlled cardio run and a Linux lock (issue 45): it is
-    # required by the policy, so its absence keeps the remote release INCOMPLETE
-    produced = {"fast", "deep", "faults", "real", "tools", "types"}
+    produced = {"fast", "deep", "faults", "real", "tools", "types", "reproduction"}
     for kind in produced:
         assert f"evidence/{kind}.json" in text, kind
-    assert set(policy["required"]) - produced == {"reproduction"}
-    assert "needs: [fast, static, faults, deep, real]" in release
+    assert set(policy["required"]) <= produced
+    assert "needs: [fast, static, reproduce, faults, deep, real]" in release
     assert "mypy==2.4.0" in text and "pandas-stubs==3.0.5.260914" in text
     assert policy["typing_pins"] == {"mypy": "2.4.0", "pandas-stubs": "3.0.5.260914"}
 
@@ -134,3 +132,13 @@ def test_the_certification_matrix_documents_every_policy_entry():
     assert "local-unattested" in text
     for reason in (*policy["deferred"].values(), *policy["optional"].values()):
         assert reason.strip()
+
+
+def test_the_reproduction_job_replays_public_data_only_and_uses_the_locked_linux_environment():
+    text = _text("verify-release.yml")
+    job = text[text.index("  reproduce:") : text.index("  faults:")]
+    assert "python experiments/fetch_cardio.py" in job
+    assert "make verify-reproduce" in job
+    assert "data/" not in job.replace("python experiments/fetch_cardio.py", "")
+    lock = (WORKFLOWS.parents[1] / "verification/environment/linux-x86_64-py311.lock.txt").exists()
+    assert lock and 'python-version: "3.11"' in job

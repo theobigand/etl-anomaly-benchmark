@@ -54,3 +54,54 @@ autres paquets ni des autres jeux.
   modifié (révision `841c3aa4`, `worktree_dirty: true`) ; elles ont été
   remplacées par un rejeu depuis le commit propre `93b6fe8` (voir `report.md`).
   Les anciens enregistrements restent dans l'historique git au commit d'ancrage.
+
+## Autres jeux et environnement Linux
+
+`--dataset` choisit `cardio` (défaut), `water_quality`, `credit_card` ou
+`synthetic`. Chaque rejeu reprend les graines (et, pour le synthétique, le
+nombre de lignes) de l'exécution archivée `run_*.json`, écrit dans un dossier
+temporaire (la figure du manuscrit n'est jamais réécrite) et se compare au
+tableau archivé ; les partitions sont comparées octet pour octet quand
+l'archive en contient (`synthetic` n'en archive pas : `artifact_identical`
+vaut alors `null`). Le rapport (`experiments/results/reproducibility*.json`)
+consigne le jeu, les graines, la révision et l'empreinte du jeu de l'exécution
+archivée, les empreintes des partitions, les tolérances, la plateforme, les
+versions exactes et le verrou utilisé. Un jeu absent de la machine, ou dont
+l'empreinte diffère de celle de l'exécution archivée, met chaque niveau
+demandé à `NOT_RUN` et la commande sort en erreur : rien n'est alors déclaré
+reproduit. Les jeux `water_quality` et `credit_card` ne quittent jamais la
+machine du chercheur ; ils ne sont pas rejoués en CI.
+
+Budgets observés sur un portable (macOS arm64) pour le niveau `archive` :
+cardio environ 6 s, water_quality quelques dizaines de secondes, synthétique et
+credit_card quelques minutes.
+
+Rejeux du 17 octobre 2026 (macOS arm64, Python 3.11.17, empreinte scientifique
+`44faa1f9`, arbre de travail modifié après `14fc288` : seuls des fichiers de
+vérification avaient changé), niveau `archive` seul :
+
+| Jeu | Statut | Détail |
+| --- | --- | --- |
+| cardio | PASS, numérique | écart 0,0 ; partitions identiques (niveau `same_environment` aussi) |
+| water_quality | PASS, numérique | écart 0,0 ; partitions identiques |
+| credit_card | PASS, numérique | écart 0,0 ; partitions identiques |
+| synthetic | PASS, numérique | écart 0,0 ; pas de partitions archivées |
+
+Les niveaux `locked_environment` de ces trois jeux n'ont pas été exécutés
+(l'environnement reconstruit a seulement été testé avec cardio, voir plus haut) ;
+ils restent en attente.
+
+### Verrou Linux
+
+Le verrou conda ne couvre que osx-arm64. Pour Linux x86_64 (CPython 3.11), la
+stratégie unique est un fichier pip avec empreintes,
+`verification/environment/linux-x86_64-py311.lock.txt`, produit par
+`python -m verification.lock_environment --linux` : pip résout les exigences du
+projet (dépendances et extras) pour les roues manylinux cp311 sans les
+installer (`--platform`, `--abi`, `--only-binary=:all:`), avec numpy, pandas,
+scikit-learn et pyod fixés aux versions du verrou macOS, et chaque roue est
+épinglée par version et sha256. `reproduce.build_environment` le reconstruit
+sur Linux avec `python -m venv` puis `pip install --require-hashes --no-deps -r`.
+Le fichier n'a pas été produit sur une machine Linux : sa validité sur un
+exécuteur propre est établie par le job `reproduce` du workflow
+`verify-release` (voir `remediation.md` pour le run).
