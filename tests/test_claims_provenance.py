@@ -4,6 +4,7 @@ import copy
 import hashlib
 import json
 import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -20,6 +21,9 @@ from tests.test_evidence_schema import (
     _types,
 )
 from verification import claims, evidence_schema, mutation_scope
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "experiments"))
+import verify_real  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 GIT = {"GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@x", "GIT_COMMITTER_NAME": "t"}
@@ -283,7 +287,8 @@ def test_archiving_refuses_envelopes_from_different_revisions(tmp_path):
         )  # fmt: skip
 
 
-def test_the_repository_claims_name_a_run_that_exists_in_the_history():
+def test_the_repository_claims_name_a_run_that_exists_in_the_history(monkeypatch):
+    monkeypatch.setattr(evidence_schema, "REQUIRED_DATASETS", verify_real.REQUIRED_DATASETS)
     doc = claims.load()
     run = doc["published_run"]
     fingerprint = evidence_schema.collect_source()["scientific_fingerprint"]

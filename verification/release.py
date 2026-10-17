@@ -13,10 +13,11 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import subprocess
 from datetime import UTC, datetime
 from pathlib import Path
 
-from verification import evidence_schema, lineage, mutation_scope
+from verification import claims, evidence_schema, lineage, mutation_scope
 
 ROOT = Path(__file__).resolve().parents[1]
 POLICY = ROOT / "verification" / "release_policy.json"
@@ -126,7 +127,28 @@ def check_environments(docs: dict, locked: dict) -> tuple[list[str], list[str], 
     }  # fmt: skip
 
 
-def assess(docs, *, current, root, manifest, lineage, locked, scope, policy) -> dict:  # noqa: PLR0912
+def freshness(root: Path = ROOT):
+    """Predicate: is evidence of that revision still current at HEAD?
+
+    It is when the revision is an ancestor of HEAD and no code or configuration changed
+    since (``claims.is_code``); documentation and archived evidence do not age it.
+    """
+
+    def fresh(revision: str) -> bool:
+        def git(*args):
+            return subprocess.run(
+                ["git", *args], cwd=root, capture_output=True, text=True, check=False
+            )
+
+        if git("merge-base", "--is-ancestor", revision, "HEAD").returncode != 0:
+            return False
+        changed = git("diff", "--name-only", revision, "HEAD").stdout.split()
+        return not any(claims.is_code(path) for path in changed)
+
+    return fresh
+
+
+def assess(docs, *, current, root, manifest, lineage, locked, scope, policy, fresh=None) -> dict:  # noqa: PLR0912
     """Pure decision over the loaded evidence; see the module docstring."""
     rejected: list[str] = []
     incomplete: list[str] = []
@@ -150,8 +172,12 @@ def assess(docs, *, current, root, manifest, lineage, locked, scope, policy) -> 
         elif doc["status"] != "PASS":
             incomplete.append(f"{kind} profile is {doc['status']}")
         source = doc["source"]
-        if source["revision"] != current["revision"]:
-            rejected.append(f"{kind}: revision {source['revision'][:8]} is not the current one")
+        moved = source["revision"] != current["revision"]
+        if moved and (fresh is None or fresh(source["revision"]) is not True):
+            reason = "is not the current one"
+            if fresh is not None:
+                reason += " (not an ancestor, or code changed since)"
+            rejected.append(f"{kind}: revision {source['revision'][:8]} {reason}")
         if source["scientific_fingerprint"] != current["scientific_fingerprint"]:
             rejected.append(f"{kind}: scientific fingerprint differs from the current source")
         if source["worktree_dirty"]:
@@ -295,6 +321,7 @@ def main(argv: list[str] | None = None) -> int:
         locked=locked_versions(),
         scope={"inventory": mutation_scope.inventory(ROOT, config), "config": config},
         policy=policy,
+        fresh=freshness(),
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
