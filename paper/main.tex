@@ -67,19 +67,18 @@ Great Expectations, Isolation Forest, autoencoder
 Extract--Transform--Load (ETL) pipelines are the backbone of modern data
 infrastructure: they move raw operational data into analytical stores
 where it feeds dashboards, reports, and machine-learning
-applications~\cite{khatri2010data}. The value delivered downstream is
-bounded by the quality of the data that reaches the destination, which
-is why data quality has long been a first-class concern for data
-engineers. Poor data quality has been estimated to cost organizations
-an average of \$12.9M per year~\cite{gopa2025aiaugmented}, making
-automated, continuous quality control a critical capability rather than
-an optional one.
+applications. Organizations increasingly manage data as an asset that
+must be governed~\cite{khatri2010data}, and the value delivered
+downstream is bounded by the quality of the data that reaches the
+destination. This is why data quality has long been a first-class
+concern for data engineers, and why automated, continuous quality
+control is a capability rather than an option.
 
 The dominant approach in industry remains rule-based: practitioners
 hand-write declarative expectations---``column \texttt{amount} must be
 positive'', ``column \texttt{email} must match a regex''---in
 frameworks such as Great Expectations, Deequ, or
-Soda~\cite{pipelinetoolssurvey2024}. These rules are auditable and
+Soda~\cite{dataqualitysurvey2024}. These rules are auditable and
 cheap to run, but they scale poorly with schema complexity, detect only
 violations the author anticipated, and miss subtle multi-column or
 distributional anomalies. To address these limits, a recent line of
@@ -88,19 +87,22 @@ learning anomaly detectors embedded directly inside the ETL
 flow~\cite{gopa2025aiaugmented,marupaka2024mlpredictive,sokkula2024implementing}.
 The existing literature, however, suffers from three gaps.
 
-First, most published pipelines are conceptual
-architectures~\cite{gopa2025aiaugmented,marupaka2024mlpredictive} that
-do not ship with reproducible code or quantitative comparisons. When
-experiments are reported, they typically exercise a single algorithm on
-a single dataset---for instance, Isolation Forest on Credit Card
-Fraud~\cite{sokkula2024implementing}, which achieved a near-random
-ROC-AUC of 0.51 and thus offers limited insight into when ML-based
-quality control is actually worth adopting.
+First, the pipelines we reviewed are mostly presented as
+architectures. Gopa~\cite{gopa2025aiaugmented} reports aggregate gains
+taken from other implementations and releases no code, and the abstract
+of Marupaka and Rangineni~\cite{marupaka2024mlpredictive} announces
+accuracy gains without naming a dataset or a baseline. When an
+experiment is reported, it exercises a single algorithm on a single
+dataset: Sokkula and Vuppala~\cite{sokkula2024implementing} run
+Isolation Forest on Credit Card Fraud after oversampling the training
+data with SMOTE, and report an ROC-AUC of 0.51 with a fraud recall of
+0.02. A near-random score on one dataset offers limited insight into
+when ML-based quality control is actually worth adopting.
 
 Second, the anomaly detection community has produced excellent
 generic benchmarks---ADBench~\cite{han2022adbench} compares 30
 algorithms on 57 tabular datasets; PyOD~\cite{zhao2019pyod} provides a
-unified implementation of dozens of detectors---but these benchmarks
+unified implementation of a wide range of detectors---but these benchmarks
 evaluate algorithms on their own, outside of an ETL context. ADBench
 reports training and inference times for each algorithm, but it has no
 declarative rule-based baseline of the kind that dominates production
@@ -109,13 +111,13 @@ pipeline (latency, memory, operational overhead).
 
 Third, benchmarks typically report a single aggregated score per
 dataset, hiding the fact that different families of detectors excel at
-different kinds of anomalies. ADBench does look at anomaly types, but
+different kinds of anomalies~\cite{goldstein2016comparative}. ADBench does look at anomaly types, but
 as geometric types generated on synthetic data (local, global,
 dependency and clustered anomalies), not as the data quality faults an
 ETL pipeline meets. A Z-score detector is essentially unable
 to flag categorical format violations; Great Expectations trivially
 catches null-rate spikes but ignores multivariate
-outliers~\cite{goldstein2016comparative}; autoencoders learn joint
+outliers; autoencoders learn joint
 distributions but can be fooled by concept drift. A practitioner
 choosing a detector today lacks a fine-grained, actionable map from
 anomaly type to recommended method.
@@ -159,9 +161,10 @@ outlines future work.
 \begin{itemize}
     \item Data quality in ETL pipelines (Khatri \& Brown
     \cite{khatri2010data}; Data Quality
-    Survey~\cite{dataqualitysurvey2024})
+    Survey~\cite{dataqualitysurvey2024}; pipeline tools
+    survey~\cite{pipelinetoolssurvey2024})
     \item Rule-based and declarative approaches (Great Expectations,
-    Deequ, Soda~\cite{pipelinetoolssurvey2024})
+    Deequ, Soda~\cite{dataqualitysurvey2024})
     \item Classical ML for anomaly detection (Isolation Forest, LOF,
     One-Class SVM; Goldstein \& Uchida~\cite{goldstein2016comparative};
     PyOD~\cite{zhao2019pyod})
@@ -211,7 +214,7 @@ outliers they are meant to catch. The $1.5$ multiplier corresponds to
 about $2.7\sigma$ under normality, isolating a comparable tail.
 
 \emph{Great Expectations} encodes a declarative expectation
-suite~\cite{pipelinetoolssurvey2024} and makes no distributional
+suite~\cite{dataqualitysurvey2024} and makes no distributional
 assumption: a not-null expectation on every column and a range expectation
 per numeric column, with bounds set to the $0.1$th and $99.9$th
 percentiles of the fitted data. Using inner percentiles rather than the
