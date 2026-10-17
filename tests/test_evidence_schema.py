@@ -19,6 +19,7 @@ ENVIRONMENT = {
     "platform": "test",
     "packages": {**RESULT_VERSIONS, "mutmut": None},
 }
+EXECUTION = {"ci": False, "run_id": None, "runner_environment": None, "runner_name": None}
 FAULT_NAMES = ["f1", "f2", "f3"]
 
 
@@ -43,7 +44,12 @@ def _fast(tmp_path, failures=0, covered=10):
         "</testsuites>"
     )
     return evidence.build_fast(
-        coverage, junit, root=tmp_path, source=SOURCE, environment=ENVIRONMENT
+        coverage,
+        junit,
+        root=tmp_path,
+        source=SOURCE,
+        environment=ENVIRONMENT,
+        execution=EXECUTION,
     )
 
 
@@ -80,7 +86,12 @@ def _matrix(tmp_path, names=FAULT_NAMES, caught=True, control=True):
     ]
     path.write_text(json.dumps(rows))
     return evidence.build_faults(
-        path, FAULT_NAMES, root=tmp_path, source=SOURCE, environment=ENVIRONMENT
+        path,
+        FAULT_NAMES,
+        root=tmp_path,
+        source=SOURCE,
+        environment=ENVIRONMENT,
+        execution=EXECUTION,
     )
 
 
@@ -89,7 +100,7 @@ def _two_required_datasets(monkeypatch):
     monkeypatch.setattr(evidence, "REQUIRED_DATASETS", ("a", "b"))
 
 
-def _real(tmp_path, datasets=None, required=("a", "b")):
+def _real(tmp_path, datasets=None, required=("a", "b"), execution=EXECUTION):
     path = tmp_path / "real.json"
     datasets = (
         datasets
@@ -102,7 +113,9 @@ def _real(tmp_path, datasets=None, required=("a", "b")):
     path.write_text(
         json.dumps({"required": list(required), "status": "PASS", "datasets": datasets})
     )
-    return evidence.build_real(path, root=tmp_path, source=SOURCE, environment=ENVIRONMENT)
+    return evidence.build_real(
+        path, root=tmp_path, source=SOURCE, environment=ENVIRONMENT, execution=execution
+    )
 
 
 def test_every_kind_builds_a_valid_passing_envelope(tmp_path):
@@ -223,11 +236,21 @@ def test_deep_unreadable_stats_are_incomplete_not_a_crash(tmp_path):
     stats = tmp_path / "stats.json"
     stats.write_text("not json")
     doc = evidence.build_deep(
-        stats, root=tmp_path, scope=["x"], source=SOURCE, environment=ENVIRONMENT
+        stats,
+        root=tmp_path,
+        scope=["x"],
+        source=SOURCE,
+        environment=ENVIRONMENT,
+        execution=EXECUTION,
     )
     assert doc["status"] == "INCOMPLETE"
     missing = evidence.build_deep(
-        tmp_path / "gone.json", root=tmp_path, scope=["x"], source=SOURCE, environment=ENVIRONMENT
+        tmp_path / "gone.json",
+        root=tmp_path,
+        scope=["x"],
+        source=SOURCE,
+        environment=ENVIRONMENT,
+        execution=EXECUTION,
     )
     assert missing["status"] == "INCOMPLETE"
 
@@ -256,11 +279,21 @@ def test_faults_unreadable_matrix_is_incomplete(tmp_path):
     path = tmp_path / "fault_matrix.json"
     path.write_text('{"not": "a list"}')
     doc = evidence.build_faults(
-        path, FAULT_NAMES, root=tmp_path, source=SOURCE, environment=ENVIRONMENT
+        path,
+        FAULT_NAMES,
+        root=tmp_path,
+        source=SOURCE,
+        environment=ENVIRONMENT,
+        execution=EXECUTION,
     )
     assert doc["status"] == "INCOMPLETE"
     gone = evidence.build_faults(
-        tmp_path / "gone.json", FAULT_NAMES, root=tmp_path, source=SOURCE, environment=ENVIRONMENT
+        tmp_path / "gone.json",
+        FAULT_NAMES,
+        root=tmp_path,
+        source=SOURCE,
+        environment=ENVIRONMENT,
+        execution=EXECUTION,
     )
     assert gone["status"] == "INCOMPLETE"
 
@@ -293,7 +326,9 @@ def test_real_doctored_results_cannot_keep_a_pass(tmp_path):
 def test_real_unreadable_report_is_not_a_pass(tmp_path):
     path = tmp_path / "real.json"
     path.write_text("[")
-    doc = evidence.build_real(path, root=tmp_path, source=SOURCE, environment=ENVIRONMENT)
+    doc = evidence.build_real(
+        path, root=tmp_path, source=SOURCE, environment=ENVIRONMENT, execution=EXECUTION
+    )
     assert doc["status"] == "INCOMPLETE"
 
 
@@ -410,7 +445,11 @@ def test_relative_artifact_paths_are_recorded_relative_to_the_root(tmp_path, mon
     _real(tmp_path)
     monkeypatch.chdir(tmp_path)
     doc = evidence.build_real(
-        Path("real.json"), root=tmp_path, source=SOURCE, environment=ENVIRONMENT
+        Path("real.json"),
+        root=tmp_path,
+        source=SOURCE,
+        environment=ENVIRONMENT,
+        execution=EXECUTION,
     )
     assert list(doc["artifacts"]) == ["real.json"]
 
@@ -464,7 +503,9 @@ def _tools(tmp_path, covered_lines=10, covered_branches=4, lines=10, branches=4)
             }
         )
     )
-    return evidence.build_tools(path, root=tmp_path, source=SOURCE, environment=ENVIRONMENT)
+    return evidence.build_tools(
+        path, root=tmp_path, source=SOURCE, environment=ENVIRONMENT, execution=EXECUTION
+    )
 
 
 def _types_report(tmp_path, **changes):
@@ -484,7 +525,11 @@ def _types_report(tmp_path, **changes):
 
 def _types(tmp_path, **changes):
     return evidence.build_types(
-        _types_report(tmp_path, **changes), root=tmp_path, source=SOURCE, environment=ENVIRONMENT
+        _types_report(tmp_path, **changes),
+        root=tmp_path,
+        source=SOURCE,
+        environment=ENVIRONMENT,
+        execution=EXECUTION,
     )
 
 
@@ -505,7 +550,9 @@ def _reproduction(tmp_path, levels=None, outcome="PASS"):
             }
         )
     )
-    return evidence.build_reproduction(path, root=tmp_path, source=SOURCE, environment=ENVIRONMENT)
+    return evidence.build_reproduction(
+        path, root=tmp_path, source=SOURCE, environment=ENVIRONMENT, execution=EXECUTION
+    )
 
 
 def test_the_new_kinds_build_valid_passing_envelopes(tmp_path):
@@ -530,7 +577,9 @@ def test_a_tools_pass_cannot_be_forged_by_editing_the_status(tmp_path):
 def test_unreadable_tools_coverage_is_incomplete(tmp_path):
     path = tmp_path / "bad.json"
     path.write_text("{}")
-    doc = evidence.build_tools(path, root=tmp_path, source=SOURCE, environment=ENVIRONMENT)
+    doc = evidence.build_tools(
+        path, root=tmp_path, source=SOURCE, environment=ENVIRONMENT, execution=EXECUTION
+    )
     assert doc["status"] == "INCOMPLETE"
 
 
@@ -606,12 +655,64 @@ def test_the_command_line_wraps_the_new_kinds(tmp_path):
 def test_unreadable_typing_and_reproduction_reports_are_incomplete(tmp_path, text):
     report = tmp_path / "bad.json"
     report.write_text(text)
-    typed = evidence.build_types(report, root=tmp_path, source=SOURCE, environment=ENVIRONMENT)
+    typed = evidence.build_types(
+        report, root=tmp_path, source=SOURCE, environment=ENVIRONMENT, execution=EXECUTION
+    )
     again = evidence.build_reproduction(
-        report, root=tmp_path, source=SOURCE, environment=ENVIRONMENT
+        report,
+        root=tmp_path,
+        source=SOURCE,
+        environment=ENVIRONMENT,
+        execution=EXECUTION,
     )
     assert typed["status"] == again["status"] == "INCOMPLETE"
     assert typed["result"]["reason"] and again["result"]["reason"]
     missing = tmp_path / "gone.json"
     assert evidence.build_types(missing, root=tmp_path)["status"] == "INCOMPLETE"
     assert evidence.build_reproduction(missing, root=tmp_path)["status"] == "INCOMPLETE"
+
+
+# --- where the evidence was produced (#44) ---
+
+
+def test_the_execution_context_is_read_from_the_runner_environment():
+    hosted = {
+        "GITHUB_ACTIONS": "true",
+        "GITHUB_RUN_ID": "77",
+        "RUNNER_ENVIRONMENT": "github-hosted",
+        "RUNNER_NAME": "GitHub Actions 3",
+    }
+    assert evidence.collect_execution(hosted) == {
+        "ci": True,
+        "run_id": "77",
+        "runner_environment": "github-hosted",
+        "runner_name": "GitHub Actions 3",
+    }
+    assert evidence.collect_execution({}) == {
+        "ci": False,
+        "run_id": None,
+        "runner_environment": None,
+        "runner_name": None,
+    }
+    assert evidence.collect_execution({"GITHUB_ACTIONS": "false"})["ci"] is False
+
+
+def test_every_builder_records_the_execution_it_was_given(tmp_path):
+    other = {"ci": True, "run_id": "9", "runner_environment": "self-hosted", "runner_name": "lab"}
+    assert _real(tmp_path, execution=other)["execution"] == other
+    assert _fast(tmp_path)["execution"] == EXECUTION
+
+
+@pytest.mark.parametrize(
+    "bad",
+    [
+        "self-hosted",
+        {"ci": "yes", "run_id": None, "runner_environment": None, "runner_name": None},
+        {"ci": True, "run_id": 5, "runner_environment": None, "runner_name": None},
+        {"ci": True},
+    ],
+)
+def test_a_malformed_execution_context_is_invalid(tmp_path, bad):
+    doc = _real(tmp_path)
+    doc["execution"] = bad
+    assert any("execution" in problem for problem in evidence.validate(doc))

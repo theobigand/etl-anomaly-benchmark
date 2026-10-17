@@ -420,3 +420,64 @@ def test_an_unknown_policy_version_is_refused(tmp_path):
     path.write_text(json.dumps({"version": 7, "required": {}}))
     with pytest.raises(ValueError, match="version"):
         release.load_policy(path)
+
+
+# --- the trust boundary of REAL evidence (#44) ---
+
+SELF_HOSTED = {"ci": True, "run_id": "5", "runner_environment": "self-hosted", "runner_name": "lab"}
+HOSTED = {"ci": True, "run_id": "6", "runner_environment": "github-hosted", "runner_name": "gh"}
+
+
+def test_real_evidence_from_an_authorized_self_hosted_runner_is_accepted(tmp_path):
+    docs = _docs(tmp_path)
+    docs["real"] = _real(tmp_path, execution=SELF_HOSTED)
+    report = _assess(tmp_path, docs)
+    assert report["status"] == "CERTIFIED", report["reasons"]
+    assert report["executions"]["real"] == "self-hosted"
+
+
+def test_real_evidence_claiming_a_hosted_runner_is_rejected(tmp_path):
+    docs = _docs(tmp_path)
+    docs["real"] = _real(tmp_path, execution=HOSTED)
+    report = _assess(tmp_path, docs)
+    assert report["status"] == "REJECTED"
+    assert any("real" in r and "hosted" in r for r in report["reasons"])
+
+
+def test_real_evidence_that_does_not_say_where_it_ran_is_rejected(tmp_path):
+    docs = _docs(tmp_path)
+    del docs["real"]["execution"]
+    report = _assess(tmp_path, docs)
+    assert report["status"] == "REJECTED"
+    assert any("real" in r and "execution context" in r for r in report["reasons"])
+
+
+def test_a_local_real_run_is_accepted_but_stays_unattested(tmp_path):
+    report = _assess(tmp_path)
+    assert report["status"] == "CERTIFIED"
+    assert report["executions"]["real"] == "local"
+    assert report["attestation"] == "local-unattested"
+
+
+def test_other_profiles_may_run_on_hosted_runners(tmp_path):
+    docs = _docs(tmp_path)
+    docs["fast"]["execution"] = HOSTED
+    assert _assess(tmp_path, docs)["status"] == "CERTIFIED"
+
+
+def test_forged_real_evidence_is_refused(tmp_path):
+    docs = _docs(tmp_path)
+    docs["real"]["result"]["datasets"][0]["sha256"] = "9" * 64
+    report = _assess(tmp_path, docs)
+    assert report["status"] == "REJECTED"
+    assert any("dataset a" in r for r in report["reasons"])
+    docs = _docs(tmp_path)
+    docs["real"]["result"]["datasets"][0]["status"] = "NOT_RUN"
+    docs["real"]["status"] = "PASS"
+    assert _assess(tmp_path, docs)["status"] == "REJECTED"
+    docs = _docs(tmp_path)
+    docs["real"]["source"]["revision"] = "c" * 40
+    assert _assess(tmp_path, docs)["status"] == "REJECTED"
+    docs = _docs(tmp_path)
+    docs["real"] = None
+    assert _assess(tmp_path, docs)["status"] == "INCOMPLETE"

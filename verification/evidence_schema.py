@@ -12,6 +12,7 @@ import argparse
 import copy
 import hashlib
 import json
+import os
 import platform
 import re
 import subprocess
@@ -81,7 +82,18 @@ def collect_environment() -> dict:
     }
 
 
-def _envelope(kind, status, result, artifacts, root, source, environment) -> dict:
+def collect_execution(env=None) -> dict:
+    """Where this process runs: locally, or on which kind of CI runner."""
+    env = os.environ if env is None else env
+    return {
+        "ci": env.get("GITHUB_ACTIONS") == "true",
+        "run_id": env.get("GITHUB_RUN_ID"),
+        "runner_environment": env.get("RUNNER_ENVIRONMENT"),
+        "runner_name": env.get("RUNNER_NAME"),
+    }
+
+
+def _envelope(kind, status, result, artifacts, root, source, environment, execution=None) -> dict:
     return {
         "schema_version": SCHEMA_VERSION,
         "kind": kind,
@@ -91,6 +103,7 @@ def _envelope(kind, status, result, artifacts, root, source, environment) -> dic
         "environment": (
             copy.deepcopy(environment) if environment is not None else collect_environment()
         ),
+        "execution": copy.deepcopy(execution) if execution is not None else collect_execution(),
         "artifacts": {
             str(path.resolve().relative_to(root.resolve())): _sha256(path)
             for path in artifacts
@@ -179,7 +192,9 @@ _RULES = {
 # --- builders ---
 
 
-def build_fast(coverage: Path, junit: Path, *, root: Path = ROOT, source=None, environment=None):
+def build_fast(
+    coverage: Path, junit: Path, *, root: Path = ROOT, source=None, environment=None, execution=None
+):
     raw = verification_report.build_report(coverage, junit)
     result = {"tests": raw["tests"], "coverage": raw["coverage"]}
     return _envelope(
@@ -189,7 +204,7 @@ def build_fast(coverage: Path, junit: Path, *, root: Path = ROOT, source=None, e
 
 def build_deep(
     stats: Path, results: Path | None = None, *, root: Path = ROOT, scope=None, source=None,
-    environment=None,
+    environment=None, execution=None,
 ):  # fmt: skip
     """Wrap the mutation counts; ``results`` lists the mutants (``mutmut results --all``)."""
     scope = mutation_scope.configured_patterns(ROOT / "pyproject.toml") if scope is None else scope
@@ -213,13 +228,17 @@ def build_deep(
     except (OSError, ValueError) as exc:
         result["stats"] = {}
         result["reason"] = str(exc)
-        return _envelope("deep", "INCOMPLETE", result, artifacts, root, source, environment)
+        return _envelope(
+            "deep", "INCOMPLETE", result, artifacts, root, source, environment, execution
+        )
     status = _deep_status(result)
     result["score"] = 100.0 * counts["killed"] / counts["total"]
-    return _envelope("deep", status, result, artifacts, root, source, environment)
+    return _envelope("deep", status, result, artifacts, root, source, environment, execution)
 
 
-def build_faults(matrix: Path, expected, *, root: Path = ROOT, source=None, environment=None):
+def build_faults(
+    matrix: Path, expected, *, root: Path = ROOT, source=None, environment=None, execution=None
+):
     result = {"expected": sorted(expected), "faults": [], "control_passed": False}
     try:
         rows = json.loads(matrix.read_text())
@@ -232,11 +251,15 @@ def build_faults(matrix: Path, expected, *, root: Path = ROOT, source=None, envi
         result["control_passed"] = bool(rows) and all(row["control_passed"] is True for row in rows)
     except (OSError, ValueError, KeyError, TypeError) as exc:
         result["reason"] = str(exc)
-        return _envelope("faults", "INCOMPLETE", result, [matrix], root, source, environment)
-    return _envelope("faults", _faults_status(result), result, [matrix], root, source, environment)
+        return _envelope(
+            "faults", "INCOMPLETE", result, [matrix], root, source, environment, execution
+        )
+    return _envelope(
+        "faults", _faults_status(result), result, [matrix], root, source, environment, execution
+    )
 
 
-def build_real(report: Path, *, root: Path = ROOT, source=None, environment=None):
+def build_real(report: Path, *, root: Path = ROOT, source=None, environment=None, execution=None):
     try:
         raw = json.loads(report.read_text())
         result = {
@@ -248,11 +271,17 @@ def build_real(report: Path, *, root: Path = ROOT, source=None, environment=None
         }
     except (OSError, ValueError, KeyError, TypeError) as exc:
         result = {"required": [], "datasets": [], "reason": str(exc)}
-        return _envelope("real", "INCOMPLETE", result, [report], root, source, environment)
-    return _envelope("real", _real_status(result), result, [report], root, source, environment)
+        return _envelope(
+            "real", "INCOMPLETE", result, [report], root, source, environment, execution
+        )
+    return _envelope(
+        "real", _real_status(result), result, [report], root, source, environment, execution
+    )
 
 
-def build_tools(coverage: Path, *, root: Path = ROOT, source=None, environment=None):
+def build_tools(
+    coverage: Path, *, root: Path = ROOT, source=None, environment=None, execution=None
+):
     """Line and branch coverage of the verifier code (``make verify-tools``)."""
     try:
         totals = json.loads(coverage.read_text())["totals"]
@@ -267,11 +296,15 @@ def build_tools(coverage: Path, *, root: Path = ROOT, source=None, environment=N
         }
     except (OSError, ValueError, KeyError, TypeError) as exc:
         result = {"coverage": {}, "reason": str(exc)}
-        return _envelope("tools", "INCOMPLETE", result, [coverage], root, source, environment)
-    return _envelope("tools", _tools_status(result), result, [coverage], root, source, environment)
+        return _envelope(
+            "tools", "INCOMPLETE", result, [coverage], root, source, environment, execution
+        )
+    return _envelope(
+        "tools", _tools_status(result), result, [coverage], root, source, environment, execution
+    )
 
 
-def build_types(report: Path, *, root: Path = ROOT, source=None, environment=None):
+def build_types(report: Path, *, root: Path = ROOT, source=None, environment=None, execution=None):
     """The typing gate's report (``check_types.py --output``)."""
     try:
         raw = json.loads(report.read_text())
@@ -288,10 +321,12 @@ def build_types(report: Path, *, root: Path = ROOT, source=None, environment=Non
         status = _types_status(result)
     except (OSError, ValueError, KeyError, TypeError) as exc:
         result, status = {"state": "INCOMPLETE", "problems": [], "reason": str(exc)}, "INCOMPLETE"
-    return _envelope("types", status, result, [report], root, source, environment)
+    return _envelope("types", status, result, [report], root, source, environment, execution)
 
 
-def build_reproduction(report: Path, *, root: Path = ROOT, source=None, environment=None):
+def build_reproduction(
+    report: Path, *, root: Path = ROOT, source=None, environment=None, execution=None
+):
     """The controlled reproduction report (``python -m verification.reproduce``)."""
     try:
         raw = json.loads(report.read_text())
@@ -304,7 +339,7 @@ def build_reproduction(report: Path, *, root: Path = ROOT, source=None, environm
         status = _reproduction_status(result)
     except (OSError, ValueError, KeyError, TypeError, AttributeError) as exc:
         result, status = {"levels": {}, "reason": str(exc)}, "INCOMPLETE"
-    return _envelope("reproduction", status, result, [report], root, source, environment)
+    return _envelope("reproduction", status, result, [report], root, source, environment, execution)
 
 
 # --- validation ---
@@ -350,6 +385,18 @@ def _check_envelope(doc: dict, problems: list[str]) -> None:
             not isinstance(v, str) and v is not None for v in packages.values()
         ):
             problems.append("environment.packages must map names to versions")
+    if "execution" in doc:
+        execution = doc["execution"]
+        text = {"run_id", "runner_environment", "runner_name"}
+        if (
+            not isinstance(execution, dict)
+            or set(execution) != {"ci", *text}
+            or not isinstance(execution["ci"], bool)
+            or any(not isinstance(execution[key], str | None) for key in text)
+        ):
+            problems.append(
+                "execution must give ci (a boolean), run_id, runner_environment, runner_name"
+            )
     artifacts = doc.get("artifacts")
     if not isinstance(artifacts, dict):
         problems.append("artifacts must be a mapping")

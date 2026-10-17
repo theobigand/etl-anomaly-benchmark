@@ -178,7 +178,27 @@ def assess(docs, *, current, root, manifest, lineage, locked, scope, policy) -> 
     revisions = {d["source"]["revision"] for d in docs.values() if d and "source" in d}
     if len(revisions) > 1:
         rejected.append("revision: the profiles were produced on different revisions")
+    executions = {}
+    for kind, doc in docs.items():
+        if doc is None or profiles.get(kind) == "INVALID":
+            continue
+        where = doc.get("execution")
+        executions[kind] = (
+            "unrecorded"
+            if where is None
+            else where["runner_environment"] or "ci"
+            if where["ci"]
+            else "local"
+        )
     real = docs.get("real")
+    if real is not None and profiles["real"] != "INVALID":
+        if "execution" not in real:
+            rejected.append("real: the execution context is not recorded")
+        elif real["execution"]["ci"] and real["execution"]["runner_environment"] != "self-hosted":
+            rejected.append(
+                "real: produced by a CI run on a hosted runner, which cannot hold the research "
+                "datasets"
+            )
     if real and profiles["real"] == "PASS":
         recorded = {item["dataset"]: item.get("sha256") for item in real["result"]["datasets"]}
         for name in real["result"]["required"]:
@@ -211,6 +231,7 @@ def assess(docs, *, current, root, manifest, lineage, locked, scope, policy) -> 
         "status": status,
         "reasons": [*rejected, *incomplete],
         "profiles": profiles,
+        "executions": executions,
         "policy": {
             key: policy[key]
             for key in ("version", "required", "optional", "deferred", "not_applicable")
