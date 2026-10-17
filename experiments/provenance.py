@@ -208,7 +208,7 @@ def _hash_outputs(outputs: list[str], directory: Path) -> dict[str, str]:
     """sha256 of every output a record lists; a missing or empty output is an error."""
     hashes = {}
     for name in outputs:
-        target = Path(name) if Path(name).is_absolute() else directory / name
+        target = directory / name  # an absolute name replaces the directory
         if not target.is_file():
             raise FileNotFoundError(f"output {name} was not written")
         if target.stat().st_size == 0:

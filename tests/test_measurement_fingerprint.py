@@ -163,3 +163,19 @@ def test_the_archived_scaling_record_is_legacy_and_was_not_restamped():
     record = json.loads((ROOT / "verification/evidence/scaling.json").read_text())
     assert "measurement_fingerprint" not in record
     assert lineage.check_measurement(record, lineage.worktree_files())[0] == "LEGACY"
+
+
+def test_the_segments_are_joined_by_one_newline_in_source_order():
+    source = b"def a():\n    return 1\n\nx = 3\n\nclass B:\n    pass\n"
+    assert provenance._segments(source, ("B", "a")) == b"def a():\n    return 1\nclass B:\n    pass"
+
+
+def test_a_missing_measurement_file_does_not_stop_the_hash_of_the_others():
+    without_pipeline = {
+        "verification/scaling.py": b"s = 1\n",
+        "pyproject.toml": b'[project]\nname = "p"\n',
+    }
+    changed = {**without_pipeline, "verification/scaling.py": b"s = 2\n"}
+    assert provenance.measurement_fingerprint_of(changed) != provenance.measurement_fingerprint_of(
+        without_pipeline
+    )
