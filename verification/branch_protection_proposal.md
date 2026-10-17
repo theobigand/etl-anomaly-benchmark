@@ -55,6 +55,19 @@ Charge utile pour `gh api -X PUT repos/theobigand/etl-anomaly-benchmark/branches
 }
 ```
 
+## Application autorisée (à faire par le propriétaire)
+
+```
+python -m verification.protection print | gh api -X PUT \
+  repos/theobigand/etl-anomaly-benchmark/branches/main/protection --input -
+python -m verification.protection check
+```
+
+Les contextes `test` et `faults` sont ceux des seuls travaux de `ci.yml` ; ceux
+de `verify-release` s'appellent `release-*`, donc chaque contexte requis désigne
+un seul travail. Le `check` doit afficher « the applied protection matches the
+proposal ».
+
 ## Vérification et retour arrière
 
 - Avant : `python -m verification.protection print` affiche la charge utile ;

@@ -174,3 +174,51 @@ def test_the_documented_real_procedure_matches_the_workflow():
     text = (root / "real_evidence.md").read_text()
     for needle in ("real_runner", "self-hosted", "RUNNER_ENVIRONMENT", "verification.bundles"):
         assert needle in text, needle
+
+
+def test_the_real_job_runs_only_a_reviewed_revision_from_the_default_branch():
+    text = _text("verify-release.yml")
+    job = text[text.index("  real:") : text.index("  release:")]
+    # The private datasets are only exposed to code that is on the default branch
+    # and whose commit the operator names in the dispatch.
+    assert "approved_sha:" in text[: text.index("jobs:")]
+    assert "github.event.repository.default_branch" in job
+    assert job.index("approved_sha") < job.index("actions/checkout")
+    assert "persist-credentials: false" in job
+    assert "pull_request" not in job
+    assert "real_preflight" in job
+    assert job.index("python -m venv") < job.index("install -e") < job.index("real_preflight")
+
+
+def test_the_real_job_links_the_datasets_from_the_runner_and_never_copies_them():
+    text = _text("verify-release.yml")
+    job = text[text.index("  real:") : text.index("  release:")]
+    assert 'test -n "$THESIS_DATA_DIR"' in job
+    assert "ln -s" in job and " cp " not in job and "rsync" not in job
+    assert job.index("ln -s") < job.index("real_preflight") < job.index("make verify-real")
+
+
+def test_the_runner_provisioning_script_is_safe_by_default_and_holds_no_secret(tmp_path):
+    import subprocess
+
+    script = WORKFLOWS.parents[1] / "verification" / "runner" / "provision_runner.sh"
+    text = script.read_text()
+    assert text.startswith("#!/usr/bin/env bash") and "set -euo pipefail" in text
+    assert "sudo " not in text.replace("run with sudo", "") and "curl" not in text
+    assert "--token <token" in text and "ghp_" not in text and "AAAA" not in text
+    assert "0400" in text and "0700" in text and "--ephemeral" in text
+    archive = tmp_path / "runner.tgz"
+    archive.write_bytes(b"x")
+    done = subprocess.run(
+        ["bash", str(script)],
+        env={
+            "PATH": "/usr/bin:/bin",
+            "RUNNER_ARCHIVE": str(archive),
+            "RUNNER_SHA256": "0" * 64,
+            "DATA_SOURCE": str(tmp_path),
+        },
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert done.returncode == 1 and "checksum differs" in done.stderr
