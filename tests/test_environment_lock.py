@@ -65,7 +65,10 @@ def test_the_module_prints_usage():
 
 
 def _locked():
-    text = "".join(path.read_text() for path in LOCK.iterdir())
+    # the macOS lock; the Linux lock is checked on its own below
+    text = "".join(
+        path.read_text() for path in LOCK.iterdir() if not path.name.startswith("linux-")
+    )
     return {
         re.sub(r"[-_.]+", "-", name.lower()): version
         for name, version in re.findall(r"/([A-Za-z0-9_.+-]+?)-(\d[^-]*)-[^/]*\.conda#", text)
@@ -93,3 +96,93 @@ def test_the_lock_matches_the_versions_the_archived_runs_recorded():
     record = json.loads((ROOT / "verification/evidence/run_benchmark_cardio.json").read_text())
     for name, version in record["packages"].items():
         assert locked[name] == version, name
+
+
+# --- Linux lock by cross-platform resolution (#45) ---
+
+REPORT = {
+    "install": [
+        {
+            "metadata": {"name": "Zeta_Pkg", "version": "2.0"},
+            "download_info": {"archive_info": {"hashes": {"sha256": "b" * 64}}},
+        },
+        {
+            "metadata": {"name": "alpha", "version": "1.0"},
+            "download_info": {"archive_info": {"hashes": {"sha256": "a" * 64}}},
+        },
+    ]
+}
+
+
+def test_requirements_cover_the_project_and_every_extra():
+    requirements = lock_environment.project_requirements(ROOT / "pyproject.toml")
+    names = {re.split(r"[<>=!~ ]", item, maxsplit=1)[0].lower() for item in requirements}
+    assert {"pandas", "numpy", "scikit-learn", "pyod", "pytest", "mutmut"} <= names
+    assert len(requirements) == len(set(requirements))
+
+
+def test_the_lock_text_pins_every_wheel_by_version_and_hash_in_name_order():
+    text = lock_environment.format_linux_lock(REPORT, {"alpha": "1.0"})
+    lines = [line for line in text.splitlines() if not line.startswith("#")]
+    assert lines == [
+        f"alpha==1.0 --hash=sha256:{'a' * 64}",
+        f"zeta-pkg==2.0 --hash=sha256:{'b' * 64}",
+    ]
+    assert "linux" in text and "cp311" in text and "alpha==1.0" in text
+
+
+def test_a_package_without_a_hash_cannot_be_locked():
+    broken = {"install": [{"metadata": {"name": "x", "version": "1"}, "download_info": {}}]}
+    import pytest
+
+    with pytest.raises(ValueError, match="hash"):
+        lock_environment.format_linux_lock(broken, {})
+
+
+def test_the_resolver_is_asked_for_linux_wheels_of_the_supported_python(monkeypatch, tmp_path):
+    seen = {}
+
+    def fake(command, **kwargs):
+        seen["command"] = command
+        report = command[command.index("--report") + 1]
+        Path(report).write_text(json.dumps(REPORT))
+
+    monkeypatch.setattr(lock_environment.subprocess, "run", fake)
+    found = lock_environment.resolve_linux(["alpha"], {"alpha": "1.0"}, tmp_path)
+    assert found == REPORT
+    command = seen["command"]
+    assert "--only-binary=:all:" in command and "--dry-run" in command
+    assert command[command.index("--python-version") + 1] == "3.11"
+    assert command[command.index("--abi") + 1] == "cp311"
+    assert command.count("--platform") == 3
+    constraint = Path(command[command.index("-c") + 1]).read_text()
+    assert constraint == "alpha==1.0\n"
+
+
+def test_the_command_writes_the_linux_lock_with_the_result_versions_held_to_the_recorded_ones(
+    tmp_path, monkeypatch
+):
+    seen = {}
+
+    def fake(requirements, held, workdir):
+        seen["held"] = held
+        return REPORT
+
+    monkeypatch.setattr(lock_environment, "resolve_linux", fake)
+    assert lock_environment.main(["--linux", "--output", str(tmp_path)]) == 0
+    assert set(seen["held"]) == {"numpy", "pandas", "scikit-learn", "pyod"}
+    written = (tmp_path / lock_environment.LINUX_LOCK).read_text()
+    assert "alpha==1.0" in written
+
+
+def test_the_committed_linux_lock_is_hashed_and_agrees_with_the_macos_result_versions():
+    from verification import release
+
+    text = (LOCK / lock_environment.LINUX_LOCK).read_text()
+    entries = [line for line in text.splitlines() if line and not line.startswith("#")]
+    assert entries and all(
+        re.fullmatch(r"[\w.-]+==[\w.!+-]+ --hash=sha256:[0-9a-f]{64}", e) for e in entries
+    )
+    pinned = {line.split("==")[0]: line.split("==")[1].split()[0] for line in entries}
+    for package, found in release.locked_versions().items():
+        assert pinned[package] == found, package

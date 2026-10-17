@@ -85,6 +85,41 @@ jobs:
           if-no-files-found: warn
           retention-days: 90
 
+  reproduce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: pip install -e ".[dev]"
+
+      # Cardio is a public ADBench file; nothing is uploaded, and the replay
+      # refuses to run when the download differs from the archived run.
+      - name: Fetch the public Cardio dataset
+        run: python experiments/fetch_cardio.py
+
+      - name: Controlled reproduction (archive, same environment, locked Linux environment)
+        run: make verify-reproduce
+
+      - name: Bundle reproduction evidence
+        if: always()
+        run: tar czf evidence-reproduction.tgz --ignore-failed-read experiments/results/reproducibility.json experiments/results/evidence/reproduction.json
+
+      - name: Preserve reproduction evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-reproduction
+          path: evidence-reproduction.tgz
+          if-no-files-found: warn
+          retention-days: 90
+
   faults:
     runs-on: ubuntu-latest
     steps:
@@ -178,7 +213,7 @@ jobs:
           retention-days: 90
 
   release:
-    needs: [fast, static, faults, deep, real]
+    needs: [fast, static, reproduce, faults, deep, real]
     if: always()
     runs-on: ubuntu-latest
     steps:
