@@ -21,6 +21,7 @@ permissions:
 
 jobs:
   fast:
+    name: release-fast
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -51,6 +52,7 @@ jobs:
           retention-days: 90
 
   static:
+    name: release-static
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -86,6 +88,7 @@ jobs:
           retention-days: 90
 
   reproduce:
+    name: release-reproduce
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -121,6 +124,7 @@ jobs:
           retention-days: 90
 
   faults:
+    name: release-faults
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -151,6 +155,7 @@ jobs:
           retention-days: 90
 
   deep:
+    name: release-deep
     runs-on: ubuntu-latest
     timeout-minutes: 180
     steps:
@@ -182,6 +187,7 @@ jobs:
           retention-days: 90
 
   real:
+    name: release-real
     if: inputs.real_runner != ''
     runs-on: ${{ inputs.real_runner }}
     steps:
@@ -218,6 +224,7 @@ jobs:
           retention-days: 90
 
   release:
+    name: release-gate
     needs: [fast, static, reproduce, faults, deep, real]
     if: always()
     runs-on: ubuntu-latest
