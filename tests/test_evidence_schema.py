@@ -445,3 +445,173 @@ def test_deep_with_an_unreadable_mutant_listing_is_incomplete_with_a_reason(tmp_
         environment=ENVIRONMENT,
     )
     assert doc["status"] == "INCOMPLETE" and "gone.txt" in doc["result"]["reason"]
+
+
+# --- tools, types and reproduction evidence (#39) ---
+
+
+def _tools(tmp_path, covered_lines=10, covered_branches=4, lines=10, branches=4):
+    path = tmp_path / "verifier_coverage.json"
+    path.write_text(
+        json.dumps(
+            {
+                "totals": {
+                    "covered_lines": covered_lines,
+                    "num_statements": lines,
+                    "covered_branches": covered_branches,
+                    "num_branches": branches,
+                }
+            }
+        )
+    )
+    return evidence.build_tools(path, root=tmp_path, source=SOURCE, environment=ENVIRONMENT)
+
+
+def _types_report(tmp_path, **changes):
+    report = {
+        "status": "PASS",
+        "errors": 17,
+        "baseline_entries": 17,
+        "problems": [],
+        "mypy": "2.4.0",
+        "pandas-stubs": "3.0.5.260914",
+    }
+    report.update(changes)
+    path = tmp_path / "types.json"
+    path.write_text(json.dumps(report))
+    return path
+
+
+def _types(tmp_path, **changes):
+    return evidence.build_types(
+        _types_report(tmp_path, **changes), root=tmp_path, source=SOURCE, environment=ENVIRONMENT
+    )
+
+
+def _reproduction(tmp_path, levels=None, outcome="PASS"):
+    levels = levels or {
+        "archive": "PASS",
+        "same_environment": "PASS",
+        "locked_environment": "PASS",
+        "version_sensitivity": "MEASURED",
+    }
+    path = tmp_path / "reproducibility.json"
+    path.write_text(
+        json.dumps(
+            {
+                "outcome": outcome,
+                "dataset": "cardio",
+                "levels": {name: {"status": status} for name, status in levels.items()},
+            }
+        )
+    )
+    return evidence.build_reproduction(path, root=tmp_path, source=SOURCE, environment=ENVIRONMENT)
+
+
+def test_the_new_kinds_build_valid_passing_envelopes(tmp_path):
+    for doc in (_tools(tmp_path), _types(tmp_path), _reproduction(tmp_path)):
+        assert doc["status"] == "PASS", doc
+        assert evidence.validate(doc, root=tmp_path) == []
+    assert set(evidence.KINDS) >= {"tools", "types", "reproduction"}
+
+
+def test_verifier_coverage_must_be_complete(tmp_path):
+    assert _tools(tmp_path, covered_lines=9)["status"] == "FAIL"
+    assert _tools(tmp_path, covered_branches=3)["status"] == "FAIL"
+    assert _tools(tmp_path, lines=0, covered_lines=0)["status"] == "FAIL"
+
+
+def test_a_tools_pass_cannot_be_forged_by_editing_the_status(tmp_path):
+    doc = _tools(tmp_path, covered_lines=9)
+    doc["status"] = "PASS"
+    assert any("not supported" in p for p in evidence.validate(doc))
+
+
+def test_unreadable_tools_coverage_is_incomplete(tmp_path):
+    path = tmp_path / "bad.json"
+    path.write_text("{}")
+    doc = evidence.build_tools(path, root=tmp_path, source=SOURCE, environment=ENVIRONMENT)
+    assert doc["status"] == "INCOMPLETE"
+
+
+def test_typing_follows_the_report_and_never_the_claimed_status(tmp_path):
+    assert _types(tmp_path, status="FAIL", problems=["new typing error: x"])["status"] == "FAIL"
+    assert (
+        _types(tmp_path, status="INCOMPLETE", reason="mypy did not run")["status"] == "INCOMPLETE"
+    )
+    assert _types(tmp_path, status="PASS", problems=["new typing error: x"])["status"] == "FAIL"
+    doc = _types(tmp_path, status="FAIL", problems=["x"])
+    doc["status"] = "PASS"
+    assert evidence.validate(doc)
+
+
+def test_the_typing_pins_are_recorded_for_the_baseline_to_be_judged(tmp_path):
+    doc = _types(tmp_path)
+    assert doc["result"]["mypy"] == "2.4.0" and doc["result"]["pandas-stubs"] == "3.0.5.260914"
+
+
+def test_reproduction_needs_every_mandatory_level_to_pass(tmp_path):
+    assert _reproduction(tmp_path)["status"] == "PASS"
+    not_run = {"archive": "PASS", "same_environment": "PASS", "locked_environment": "NOT_RUN"}
+    assert _reproduction(tmp_path, not_run, outcome="INCOMPLETE")["status"] == "INCOMPLETE"
+    assert _reproduction(tmp_path, {"archive": "PASS", "same_environment": "PASS"})["status"] == (
+        "INCOMPLETE"
+    )
+    failed = {"archive": "FAIL", "same_environment": "PASS", "locked_environment": "PASS"}
+    assert _reproduction(tmp_path, failed, outcome="FAIL")["status"] == "FAIL"
+
+
+def test_reproduction_status_is_recomputed_from_the_levels_not_the_claimed_outcome(tmp_path):
+    liar = {"archive": "PASS", "same_environment": "PASS", "locked_environment": "NOT_RUN"}
+    assert _reproduction(tmp_path, liar, outcome="PASS")["status"] == "INCOMPLETE"
+
+
+def test_a_sensitivity_run_does_not_replace_a_mandatory_level(tmp_path):
+    only = {"version_sensitivity": "MEASURED"}
+    assert _reproduction(tmp_path, only, outcome="PASS")["status"] == "INCOMPLETE"
+
+
+def test_the_command_line_wraps_the_new_kinds(tmp_path):
+    _tools(tmp_path)
+    _types_report(tmp_path)
+    _reproduction(tmp_path)
+    for name, option, source in (
+        ("tools", "--coverage", "verifier_coverage.json"),
+        ("types", "--report", "types.json"),
+        ("reproduction", "--report", "reproducibility.json"),
+    ):
+        done = subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "verification.evidence_schema",
+                name,
+                option,
+                str(tmp_path / source),
+                "--output",
+                str(tmp_path / f"{name}.json"),
+                "--root",
+                str(tmp_path),
+            ],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        assert done.returncode == 0, done.stdout + done.stderr
+        assert json.loads((tmp_path / f"{name}.json").read_text())["kind"] == name
+
+
+@pytest.mark.parametrize("text", ["not json", "{}", '{"status": "PASS"}', '{"levels": 3}'])
+def test_unreadable_typing_and_reproduction_reports_are_incomplete(tmp_path, text):
+    report = tmp_path / "bad.json"
+    report.write_text(text)
+    typed = evidence.build_types(report, root=tmp_path, source=SOURCE, environment=ENVIRONMENT)
+    again = evidence.build_reproduction(
+        report, root=tmp_path, source=SOURCE, environment=ENVIRONMENT
+    )
+    assert typed["status"] == again["status"] == "INCOMPLETE"
+    assert typed["result"]["reason"] and again["result"]["reason"]
+    missing = tmp_path / "gone.json"
+    assert evidence.build_types(missing, root=tmp_path)["status"] == "INCOMPLETE"
+    assert evidence.build_reproduction(missing, root=tmp_path)["status"] == "INCOMPLETE"

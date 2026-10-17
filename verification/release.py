@@ -19,13 +19,22 @@ from pathlib import Path
 from verification import evidence_schema, lineage, mutation_scope
 
 ROOT = Path(__file__).resolve().parents[1]
-KINDS = evidence_schema.KINDS
+POLICY = ROOT / "verification" / "release_policy.json"
+POLICY_VERSION = 1
 EVIDENCE_DIR = ROOT / "experiments" / "results" / "evidence"
 ARCHIVE = ROOT / "verification" / "evidence"
 LOCK = ROOT / "verification" / "environment"
 # Packages whose version can change a scientific result. Every profile must
 # record them and they must agree across profiles and with the recorded lock.
 RESULT_PACKAGES = ("numpy", "pandas", "scikit-learn", "pyod")
+
+
+def load_policy(path: Path = POLICY) -> dict:
+    """The versioned list of evidence a release needs (and what it does not)."""
+    policy = json.loads(path.read_text())
+    if policy.get("version") != POLICY_VERSION:
+        raise ValueError(f"release policy version must be {POLICY_VERSION}")
+    return policy
 
 
 def attestation() -> str:
@@ -54,6 +63,16 @@ def locked_versions(directory: Path = LOCK) -> dict[str, str]:
 
 def _minor(version: str) -> str:
     return ".".join(version.split(".")[:2])
+
+
+def check_typing(doc: dict, pins: dict) -> list[str]:
+    """The typing baseline is only valid for the pinned checker and stubs."""
+    problems = []
+    for package, pinned in pins.items():
+        found = doc["result"].get(package)
+        if found != pinned:
+            problems.append(f"types: {package} {found} is not the pinned {pinned}")
+    return problems
 
 
 def check_environments(docs: dict, locked: dict) -> tuple[list[str], list[str], dict]:
@@ -107,14 +126,14 @@ def check_environments(docs: dict, locked: dict) -> tuple[list[str], list[str], 
     }  # fmt: skip
 
 
-def assess(docs, *, current, root, manifest, lineage, locked, scope) -> dict:  # noqa: PLR0912
+def assess(docs, *, current, root, manifest, lineage, locked, scope, policy) -> dict:  # noqa: PLR0912
     """Pure decision over the loaded evidence; see the module docstring."""
     rejected: list[str] = []
     incomplete: list[str] = []
     profiles = {}
     if current.get("worktree_dirty"):
         rejected.append("the worktree is dirty: a release needs a clean source")
-    for kind in KINDS:
+    for kind in policy["required"]:
         doc = docs.get(kind)
         if doc is None:
             profiles[kind] = "MISSING"
@@ -140,8 +159,10 @@ def assess(docs, *, current, root, manifest, lineage, locked, scope) -> dict:  #
     valid = {
         kind: doc
         for kind, doc in docs.items()
-        if doc is not None and profiles[kind] not in ("INVALID",)
+        if kind in profiles and doc is not None and profiles[kind] != "INVALID"
     }
+    if "types" in valid:
+        rejected += check_typing(valid["types"], policy["typing_pins"])
     if "deep" in valid:
         rejected += [
             f"deep scope: {problem}"
@@ -149,7 +170,9 @@ def assess(docs, *, current, root, manifest, lineage, locked, scope) -> dict:  #
                 valid["deep"]["result"], scope["inventory"], scope["config"]
             )
         ]
-    env_rejected, env_incomplete, environment = check_environments(valid, locked)
+    env_rejected, env_incomplete, environment = check_environments(
+        {k: d for k, d in valid.items() if k != "types"}, locked
+    )
     rejected += env_rejected
     incomplete += env_incomplete
     revisions = {d["source"]["revision"] for d in docs.values() if d and "source" in d}
@@ -188,6 +211,10 @@ def assess(docs, *, current, root, manifest, lineage, locked, scope) -> dict:  #
         "status": status,
         "reasons": [*rejected, *incomplete],
         "profiles": profiles,
+        "policy": {
+            key: policy[key]
+            for key in ("version", "required", "optional", "deferred", "not_applicable")
+        },
         "environment": environment,
         "performance": performance,
         "revision": current["revision"],
@@ -196,9 +223,9 @@ def assess(docs, *, current, root, manifest, lineage, locked, scope) -> dict:  #
     }
 
 
-def load_docs(directory: Path) -> dict:
+def load_docs(directory: Path, kinds) -> dict:
     docs = {}
-    for kind in KINDS:
+    for kind in kinds:
         try:
             docs[kind] = json.loads((directory / f"{kind}.json").read_text())
         except (OSError, ValueError):
@@ -237,14 +264,16 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output", type=Path, default=EVIDENCE_DIR / "release.json")
     args = parser.parse_args(argv)
     config = mutation_scope.load()
+    policy = load_policy()
     report = assess(
-        load_docs(args.evidence),
+        load_docs(args.evidence, policy["required"]),
         current=evidence_schema.collect_source(),
         root=ROOT,
         manifest=reference_hashes(),
         lineage=archive_lineage(),
         locked=locked_versions(),
         scope={"inventory": mutation_scope.inventory(ROOT, config), "config": config},
+        policy=policy,
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")

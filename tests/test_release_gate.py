@@ -15,10 +15,13 @@ from tests.test_evidence_schema import (
     _fast,
     _matrix,
     _real,
+    _reproduction,
+    _tools,
+    _types,
 )
 from verification import evidence_schema, release
 
-KINDS = ("fast", "deep", "faults", "real")
+KINDS = tuple(release.load_policy()["required"])
 
 
 @pytest.fixture(autouse=True)
@@ -35,6 +38,9 @@ def _docs(tmp_path):
         "deep": _deep(tmp_path),
         "faults": _matrix(tmp_path),
         "real": _real(tmp_path),
+        "tools": _tools(tmp_path),
+        "types": _types(tmp_path),
+        "reproduction": _reproduction(tmp_path),
     }
 
 
@@ -42,6 +48,7 @@ def _assess(tmp_path, docs=None, current=None, **kwargs):
     kwargs.setdefault("manifest", {"a": "1" * 64, "b": "2" * 64})
     kwargs.setdefault("lineage", {"legacy": [], "problems": {}})
     kwargs.setdefault("locked", dict(RESULT_VERSIONS))
+    kwargs.setdefault("policy", release.load_policy())
     kwargs.setdefault("scope", {"inventory": ["src/x.py"], "config": {"no_mutants": {}}})
     return release.assess(
         docs if docs is not None else _docs(tmp_path),
@@ -319,3 +326,97 @@ def test_bound_and_legacy_performance_evidence_do_not_block(tmp_path):
 def test_a_gate_only_change_leaves_the_scientific_lineage_untouched(tmp_path):
     report = _assess(tmp_path, lineage=_performance("STALE", ["x"]))
     assert not any("lineage" in r for r in report["reasons"])
+
+
+# --- the complete certification contract (#39) ---
+
+NEW_KINDS = ("tools", "types", "reproduction")
+
+
+def test_the_contract_requires_the_seven_evidence_kinds_and_not_performance():
+    policy = release.load_policy()
+    assert set(policy["required"]) == {"fast", "deep", "faults", "real", *NEW_KINDS}
+    assert "performance" in policy["optional"] and "performance" not in policy["required"]
+    assert set(policy["required"]) == set(evidence_schema.KINDS)
+
+
+@pytest.mark.parametrize("kind", NEW_KINDS)
+def test_omitting_a_newly_mandatory_check_is_incomplete(tmp_path, kind):
+    docs = _docs(tmp_path)
+    docs[kind] = None
+    report = _assess(tmp_path, docs)
+    assert report["status"] == "INCOMPLETE"
+    assert any(kind in r and "missing" in r for r in report["reasons"])
+    assert report["profiles"][kind] == "MISSING"
+
+
+@pytest.mark.parametrize("kind", NEW_KINDS)
+def test_a_tampered_newly_mandatory_document_is_rejected(tmp_path, kind):
+    docs = _docs(tmp_path)
+    docs[kind]["status"] = "OK"
+    assert _assess(tmp_path, docs)["status"] == "REJECTED"
+    docs = _docs(tmp_path)
+    docs[kind]["source"]["revision"] = "c" * 40
+    assert _assess(tmp_path, docs)["status"] == "REJECTED"
+    docs = _docs(tmp_path)
+    docs[kind]["source"]["scientific_fingerprint"] = "e" * 64
+    assert _assess(tmp_path, docs)["status"] == "REJECTED"
+
+
+@pytest.mark.parametrize("kind", NEW_KINDS)
+def test_a_changed_artifact_of_a_newly_mandatory_check_is_rejected(tmp_path, kind):
+    docs = _docs(tmp_path)
+    name = next(iter(docs[kind]["artifacts"]))
+    (tmp_path / name).write_text("{}")
+    report = _assess(tmp_path, docs)
+    assert report["status"] == "REJECTED"
+    assert any(kind in r and "hash" in r for r in report["reasons"])
+
+
+def test_failed_typing_or_verifier_coverage_rejects(tmp_path):
+    docs = _docs(tmp_path)
+    docs["types"] = _types(tmp_path, status="FAIL", problems=["new typing error: x"])
+    assert _assess(tmp_path, docs)["status"] == "REJECTED"
+    docs = _docs(tmp_path)
+    docs["tools"] = _tools(tmp_path, covered_lines=9)
+    assert _assess(tmp_path, docs)["status"] == "REJECTED"
+
+
+def test_an_unrun_locked_reproduction_keeps_the_release_incomplete(tmp_path):
+    docs = _docs(tmp_path)
+    levels = {"archive": "PASS", "same_environment": "PASS", "locked_environment": "NOT_RUN"}
+    docs["reproduction"] = _reproduction(tmp_path, levels, outcome="INCOMPLETE")
+    report = _assess(tmp_path, docs)
+    assert report["status"] == "INCOMPLETE"
+    assert any("reproduction profile is INCOMPLETE" in r for r in report["reasons"])
+
+
+def test_typing_evidence_from_other_tool_versions_is_rejected(tmp_path):
+    docs = _docs(tmp_path)
+    docs["types"] = _types(tmp_path, mypy="1.0.0")
+    report = _assess(tmp_path, docs)
+    assert report["status"] == "REJECTED"
+    assert any("mypy" in r and "1.0.0" in r and "2.4.0" in r for r in report["reasons"])
+    docs["types"] = _types(tmp_path, **{"pandas-stubs": None})
+    assert any("pandas-stubs" in r for r in _assess(tmp_path, docs)["reasons"])
+
+
+def test_typing_evidence_does_not_need_the_scientific_package_versions(tmp_path):
+    docs = _docs(tmp_path)
+    for package in release.RESULT_PACKAGES:
+        docs["types"]["environment"]["packages"][package] = None
+    assert _assess(tmp_path, docs)["status"] == "CERTIFIED"
+
+
+def test_the_report_states_the_policy_it_applied(tmp_path):
+    report = _assess(tmp_path)
+    assert report["policy"]["version"] == 1
+    assert set(report["policy"]["required"]) == set(KINDS)
+    assert "independent_attestation" in report["policy"]["deferred"]
+
+
+def test_an_unknown_policy_version_is_refused(tmp_path):
+    path = tmp_path / "policy.json"
+    path.write_text(json.dumps({"version": 7, "required": {}}))
+    with pytest.raises(ValueError, match="version"):
+        release.load_policy(path)

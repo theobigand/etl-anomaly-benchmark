@@ -136,3 +136,41 @@ def test_write_baseline_reports_a_mypy_crash_as_incomplete(tmp_path, capsys):
     args = ["--mypy", str(crash), "--baseline", str(baseline), "--write-baseline"]
     assert check_types.main(args) == 1
     assert "INCOMPLETE" in capsys.readouterr().out and not baseline.exists()
+
+
+def test_the_command_writes_a_machine_readable_report(tmp_path):
+    import json
+
+    baseline = tmp_path / "baseline.txt"
+    baseline.write_text("src/a.py: Bad thing  [attr-defined]\n")
+    report = tmp_path / "types.json"
+    worse = _fake_mypy(
+        tmp_path, "src/a.py:1: error: Bad thing  [attr-defined]\nsrc/b.py:1: error: New\n"
+    )
+    assert (
+        check_types.main(["--mypy", worse, "--baseline", str(baseline), "--output", str(report)])
+        == 1
+    )
+    written = json.loads(report.read_text())
+    assert (
+        written["status"] == "FAIL" and written["errors"] == 2 and written["baseline_entries"] == 1
+    )
+    assert written["problems"] == ["new typing error: src/b.py: New"]
+    clean = _fake_mypy(tmp_path, "src/a.py:1: error: Bad thing  [attr-defined]\n")
+    assert (
+        check_types.main(["--mypy", clean, "--baseline", str(baseline), "--output", str(report)])
+        == 0
+    )
+    written = json.loads(report.read_text())
+    assert written["status"] == "PASS" and written["problems"] == []
+
+
+def test_the_report_marks_an_unrunnable_check_incomplete(tmp_path):
+    import json
+
+    report = tmp_path / "types.json"
+    ok = _fake_mypy(tmp_path, "", code=0)
+    missing = str(tmp_path / "none.txt")
+    assert check_types.main(["--mypy", ok, "--baseline", missing, "--output", str(report)]) == 1
+    written = json.loads(report.read_text())
+    assert written["status"] == "INCOMPLETE" and written["reason"]

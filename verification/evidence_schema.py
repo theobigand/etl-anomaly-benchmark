@@ -30,12 +30,22 @@ import verify_real  # noqa: E402
 from verification import mutation_scope  # noqa: E402
 
 SCHEMA_VERSION = 2
-KINDS = ("fast", "deep", "faults", "real")
+KINDS = ("fast", "deep", "faults", "real", "tools", "types", "reproduction")
 STATUSES = ("PASS", "FAIL", "INCOMPLETE", "NOT_RUN")
 OUTCOMES = check_mutation.OUTCOMES
 # The datasets REAL must verify come from the gate itself, never from a report.
 REQUIRED_DATASETS = verify_real.REQUIRED_DATASETS
-PACKAGES = ("pytest", "pytest-cov", "mutmut", "numpy", "pandas", "scikit-learn", "pyod")
+PACKAGES = (
+    "pytest",
+    "pytest-cov",
+    "mutmut",
+    "numpy",
+    "pandas",
+    "scikit-learn",
+    "pyod",
+    "mypy",
+    "pandas-stubs",
+)
 _HEX40 = re.compile(r"[0-9a-f]{40}")
 _HEX64 = re.compile(r"[0-9a-f]{64}")
 
@@ -132,11 +142,37 @@ def _real_status(result: dict) -> str:
     return "NOT_RUN" if states <= {"PASS", "NOT_RUN"} else "FAIL"
 
 
+def _tools_status(result: dict) -> str:
+    line, branch = result["coverage"]["line"], result["coverage"]["branch"]
+    full = all(m["coverable"] > 0 and m["covered"] == m["coverable"] for m in (line, branch))
+    return "PASS" if full else "FAIL"
+
+
+def _types_status(result: dict) -> str:
+    if result["state"] == "INCOMPLETE":
+        return "INCOMPLETE"
+    return "PASS" if result["state"] == "PASS" and not result["problems"] else "FAIL"
+
+
+# the levels a reproduction must have passed; ``version_sensitivity`` is a measurement
+REPRODUCTION_LEVELS = ("archive", "same_environment", "locked_environment")
+
+
+def _reproduction_status(result: dict) -> str:
+    states = {name: result["levels"].get(name) for name in REPRODUCTION_LEVELS}
+    if "FAIL" in states.values():
+        return "FAIL"
+    return "PASS" if set(states.values()) == {"PASS"} else "INCOMPLETE"
+
+
 _RULES = {
     "fast": _fast_status,
     "deep": _deep_status,
     "faults": _faults_status,
     "real": _real_status,
+    "tools": _tools_status,
+    "types": _types_status,
+    "reproduction": _reproduction_status,
 }
 
 
@@ -214,6 +250,61 @@ def build_real(report: Path, *, root: Path = ROOT, source=None, environment=None
         result = {"required": [], "datasets": [], "reason": str(exc)}
         return _envelope("real", "INCOMPLETE", result, [report], root, source, environment)
     return _envelope("real", _real_status(result), result, [report], root, source, environment)
+
+
+def build_tools(coverage: Path, *, root: Path = ROOT, source=None, environment=None):
+    """Line and branch coverage of the verifier code (``make verify-tools``)."""
+    try:
+        totals = json.loads(coverage.read_text())["totals"]
+        result = {
+            "coverage": {
+                "line": {"covered": totals["covered_lines"], "coverable": totals["num_statements"]},
+                "branch": {
+                    "covered": totals["covered_branches"],
+                    "coverable": totals["num_branches"],
+                },
+            }
+        }
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        result = {"coverage": {}, "reason": str(exc)}
+        return _envelope("tools", "INCOMPLETE", result, [coverage], root, source, environment)
+    return _envelope("tools", _tools_status(result), result, [coverage], root, source, environment)
+
+
+def build_types(report: Path, *, root: Path = ROOT, source=None, environment=None):
+    """The typing gate's report (``check_types.py --output``)."""
+    try:
+        raw = json.loads(report.read_text())
+        result = {
+            "state": raw["status"],
+            "errors": raw.get("errors"),
+            "baseline_entries": raw.get("baseline_entries"),
+            "problems": list(raw["problems"]),
+            "mypy": raw.get("mypy"),
+            "pandas-stubs": raw.get("pandas-stubs"),
+        }
+        if "reason" in raw:
+            result["reason"] = raw["reason"]
+        status = _types_status(result)
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        result, status = {"state": "INCOMPLETE", "problems": [], "reason": str(exc)}, "INCOMPLETE"
+    return _envelope("types", status, result, [report], root, source, environment)
+
+
+def build_reproduction(report: Path, *, root: Path = ROOT, source=None, environment=None):
+    """The controlled reproduction report (``python -m verification.reproduce``)."""
+    try:
+        raw = json.loads(report.read_text())
+        levels = {name: item["status"] for name, item in raw["levels"].items()}
+        result = {
+            "dataset": raw["dataset"],
+            "levels": levels,
+            "claimed_outcome": raw.get("outcome"),
+        }
+        status = _reproduction_status(result)
+    except (OSError, ValueError, KeyError, TypeError, AttributeError) as exc:
+        result, status = {"levels": {}, "reason": str(exc)}, "INCOMPLETE"
+    return _envelope("reproduction", status, result, [report], root, source, environment)
 
 
 # --- validation ---
@@ -332,6 +423,9 @@ def main(argv: list[str] | None = None) -> int:
         ("deep", ("stats", "results")),
         ("faults", ("matrix",)),
         ("real", ("report",)),
+        ("tools", ("coverage",)),
+        ("types", ("report",)),
+        ("reproduction", ("report",)),
     ):
         build = sub.add_parser(name, help=f"wrap the raw {name} results in an envelope")
         for item in inputs:
@@ -349,6 +443,12 @@ def main(argv: list[str] | None = None) -> int:
                 doc = build_deep(args.stats, args.results, root=args.root)
             elif args.command == "faults":
                 doc = build_faults(args.matrix, fault_names(), root=args.root)
+            elif args.command == "tools":
+                doc = build_tools(args.coverage, root=args.root)
+            elif args.command == "types":
+                doc = build_types(args.report, root=args.root)
+            elif args.command == "reproduction":
+                doc = build_reproduction(args.report, root=args.root)
             else:
                 doc = build_real(args.report, root=args.root)
         except (OSError, ValueError, subprocess.CalledProcessError) as exc:
