@@ -13,7 +13,12 @@ from verification import evidence_schema as evidence
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = {"revision": "a" * 40, "worktree_dirty": False, "scientific_fingerprint": "b" * 64}
-ENVIRONMENT = {"python": "3.11.0", "platform": "test", "packages": {"numpy": "2.0", "pyod": None}}
+RESULT_VERSIONS = {"numpy": "2.0", "pandas": "3.0", "scikit-learn": "1.9", "pyod": "3.6"}
+ENVIRONMENT = {
+    "python": "3.11.0",
+    "platform": "test",
+    "packages": {**RESULT_VERSIONS, "mutmut": None},
+}
 FAULT_NAMES = ["f1", "f2", "f3"]
 
 

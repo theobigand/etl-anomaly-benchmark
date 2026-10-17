@@ -6,3 +6,4 @@ qu'après exécution des contrôles listés ici, sur le commit indiqué.
 | Issue | État | Commit | Preuves |
 | --- | --- | --- | --- |
 | #38 reproduction : niveau demandé NOT_RUN | code terminé, en attente de CI | voir `git log` (`#38`) | RED : 6 tests de `tests/test_reproduce.py` en échec (pas de champ `outcome`, plantage sans rapport) ; GREEN : 20 tests ; FAST 783 passed ; verify-tools 100 % |
+| #40 environnements scientifiques | code terminé, en attente de CI | voir `git log` (`#40`) | RED : 15 tests en échec (`assess()` sans argument `locked`, aucune vérification d'environnement) ; GREEN : `tests/test_release_gate.py` 30 passed ; verify-tools 100 % |

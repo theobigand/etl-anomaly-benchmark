@@ -22,6 +22,10 @@ ROOT = Path(__file__).resolve().parents[1]
 KINDS = evidence_schema.KINDS
 EVIDENCE_DIR = ROOT / "experiments" / "results" / "evidence"
 ARCHIVE = ROOT / "verification" / "evidence"
+LOCK = ROOT / "verification" / "environment"
+# Packages whose version can change a scientific result. Every profile must
+# record them and they must agree across profiles and with the recorded lock.
+RESULT_PACKAGES = ("numpy", "pandas", "scikit-learn", "pyod")
 
 
 def attestation() -> str:
@@ -30,7 +34,80 @@ def attestation() -> str:
     return "local-unattested"
 
 
-def assess(docs, *, current, root, manifest, lineage) -> dict:  # noqa: PLR0912
+def locked_versions(directory: Path = LOCK) -> dict[str, str]:
+    """Result-affecting package versions pinned by the recorded environment lock."""
+    pinned: dict[str, str] = {}
+    for explicit in sorted(directory.glob("conda-*.explicit.txt")):
+        for line in explicit.read_text().splitlines():
+            if line.startswith("http"):
+                stem = line.rsplit("/", 1)[1].split("#")[0]
+                name, found, _ = stem.rsplit("-", 2)
+                pinned.setdefault(name, found)
+    freeze = directory / "pip-freeze.txt"
+    if freeze.is_file():
+        for line in freeze.read_text().splitlines():
+            name, sep, found = line.partition("==")
+            if sep:
+                pinned.setdefault(name.strip().lower(), found.strip())
+    return {name: pinned[name] for name in RESULT_PACKAGES if name in pinned}
+
+
+def _minor(version: str) -> str:
+    return ".".join(version.split(".")[:2])
+
+
+def check_environments(docs: dict, locked: dict) -> tuple[list[str], list[str], dict]:
+    """Compare the environments of the valid profiles; see ``assess``.
+
+    Rejected: a result-affecting version missing, or two profiles disagreeing
+    on a result-affecting version or on the Python minor version. Incomplete:
+    the versions are consistent but differ from the recorded lock (or no lock
+    exists), so exact-environment certification is not demonstrated. The
+    operating system may differ between profiles: that is cross-platform
+    evidence and is labelled as such, not rejected.
+    """
+    rejected: list[str] = []
+    incomplete: list[str] = []
+    seen = {kind: doc["environment"] for kind, doc in docs.items() if doc is not None}
+    for kind, environment in seen.items():
+        for package in RESULT_PACKAGES:
+            if not environment["packages"].get(package):
+                rejected.append(f"{kind}: the {package} version is not recorded")
+    for package in RESULT_PACKAGES:
+        versions = {k: e["packages"].get(package) for k, e in seen.items()}
+        if len({v for v in versions.values() if v}) > 1:
+            listing = ", ".join(f"{k}={v}" for k, v in versions.items() if v)
+            rejected.append(f"{package}: the profiles ran different versions ({listing})")
+    minors = {kind: _minor(e["python"]) for kind, e in seen.items()}
+    if len(set(minors.values())) > 1:
+        listing = ", ".join(f"{k}={v}" for k, v in minors.items())
+        rejected.append(f"python: the profiles ran different minor versions ({listing})")
+    packages = {}
+    for package in RESULT_PACKAGES:
+        found = [e["packages"][package] for e in seen.values() if e["packages"].get(package)]
+        packages[package] = found[0] if found else None
+    drift = [
+        f"{package} {found} (lock {locked.get(package)})"
+        for package, found in packages.items()
+        if found and locked.get(package) != found
+    ]
+    if drift:
+        incomplete.append(
+            "the environment differs from the recorded lock: " + ", ".join(drift)
+            if locked
+            else "no environment lock is recorded for " + ", ".join(RESULT_PACKAGES)
+        )
+    platforms = sorted({e["platform"] for e in seen.values()})
+    exact = not drift and len(platforms) == 1 and len(set(minors.values())) == 1
+    return rejected, incomplete, {
+        "mode": "exact-environment" if exact else "cross-platform",
+        "platforms": platforms,
+        "packages": packages,
+        "locked": locked,
+    }  # fmt: skip
+
+
+def assess(docs, *, current, root, manifest, lineage, locked) -> dict:  # noqa: PLR0912
     """Pure decision over the loaded evidence; see the module docstring."""
     rejected: list[str] = []
     incomplete: list[str] = []
@@ -60,6 +137,14 @@ def assess(docs, *, current, root, manifest, lineage) -> dict:  # noqa: PLR0912
             rejected.append(f"{kind}: scientific fingerprint differs from the current source")
         if source["worktree_dirty"]:
             rejected.append(f"{kind}: produced from a dirty worktree")
+    valid = {
+        kind: doc
+        for kind, doc in docs.items()
+        if doc is not None and profiles[kind] not in ("INVALID",)
+    }
+    env_rejected, env_incomplete, environment = check_environments(valid, locked)
+    rejected += env_rejected
+    incomplete += env_incomplete
     revisions = {d["source"]["revision"] for d in docs.values() if d and "source" in d}
     if len(revisions) > 1:
         rejected.append("revision: the profiles were produced on different revisions")
@@ -88,6 +173,7 @@ def assess(docs, *, current, root, manifest, lineage) -> dict:  # noqa: PLR0912
         "status": status,
         "reasons": [*rejected, *incomplete],
         "profiles": profiles,
+        "environment": environment,
         "revision": current["revision"],
         "attestation": attestation(),
         "generated_at": datetime.now(UTC).isoformat(),
@@ -136,6 +222,7 @@ def main(argv: list[str] | None = None) -> int:
         root=ROOT,
         manifest=reference_hashes(),
         lineage=archive_lineage(),
+        locked=locked_versions(),
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
