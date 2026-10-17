@@ -92,6 +92,10 @@ pytest_add_cli_args_test_selection = [
     "--ignore=tests/test_check_types.py",
     "--ignore=tests/test_environment_lock.py",
     "--ignore=tests/test_workflows.py",
+    "--ignore=tests/test_branch_protection.py",
+    "--ignore=tests/test_claims_provenance.py",
+    "--ignore=tests/test_evidence_bundles.py",
+    "--ignore=tests/test_mutation_scope.py",
 ]
 also_copy = ["verification", "environment.yml"]
 on_dependency_change = "rerun"
