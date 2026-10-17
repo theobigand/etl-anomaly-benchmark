@@ -14,6 +14,17 @@ une référence. Quatre notions sont séparées :
   relatif et ne décident d'aucun statut (elles varient d'une exécution à
   l'autre, de quelques dizaines de pour cent à plusieurs fois la valeur).
 
+## Politique de sortie
+
+Les trois premiers niveaux (`archive`, `same_environment`, `locked_environment`)
+sont obligatoires. Si l'un d'eux est demandé, tout état autre que `PASS`
+(`FAIL`, `NOT_RUN`, plantage du benchmark) donne un code de sortie 1 et un
+champ `outcome` valant `FAIL` ou `INCOMPLETE` dans `reproducibility.json`, avec
+la liste des raisons. Le niveau `version_sensitivity` reste une mesure
+(`MEASURED` ou `NOT_RUN`) : il ne change jamais le résultat, mais une commande
+qui ne demande aucun niveau obligatoire est `INCOMPLETE`. Le rapport est écrit
+dans tous ces cas.
+
 ## Résultats du 16 octobre 2026
 
 Exécutés sur cette machine (macOS arm64, Python 3.11.17), code au dépôt

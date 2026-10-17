@@ -9,6 +9,13 @@ Levels, from the cheapest:
 * ``version_sensitivity``: the same run after changing one package version.
   This one measures a difference and is never a pass/fail gate.
 
+The first three levels are mandatory: when one is requested, anything other
+than ``PASS`` (``FAIL``, ``NOT_RUN``, a crash) makes the command exit 1 and the
+report ``outcome`` ``FAIL`` or ``INCOMPLETE``. The sensitivity level reports
+``MEASURED`` or ``NOT_RUN`` and cannot change the outcome in either direction,
+but a run that requested no mandatory level certifies nothing and is
+``INCOMPLETE``. The report is written on every one of these paths.
+
 Four things are kept apart. *Numerical*: every metric is bit-identical.
 *Statistical*: metrics differ but each mean stays within one reference
 standard deviation. *Artifact*: the archived split-id file is byte-identical.
@@ -35,6 +42,7 @@ ROOT = Path(__file__).resolve().parents[1]
 LOCK = ROOT / "verification" / "environment"
 ARCHIVED = ROOT / "verification" / "evidence"
 LEVELS = ("archive", "same_environment", "locked_environment", "version_sensitivity")
+MANDATORY = ("archive", "same_environment", "locked_environment")
 
 
 def _metrics(path: Path) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -113,34 +121,71 @@ def _not_run(reason: str) -> dict:
     return {"status": "NOT_RUN", "reason": reason}
 
 
+def _failed(reason: str) -> dict:
+    return {"status": "FAIL", "reason": reason}
+
+
 def reproduce(levels: list[str], workdir: Path, sensitivity_pin: str) -> dict:
     reference = {
         "table": ARCHIVED / "benchmark_cardio.csv",
         "splits": ARCHIVED / "split_ids_cardio.json.gz",
     }
     report: dict = {}
-    first = run_cardio(sys.executable, workdir / "first")
-    if "archive" in levels:
-        report["archive"] = _level(first, reference)
-    if "same_environment" in levels:
-        second = run_cardio(sys.executable, workdir / "second")
-        report["same_environment"] = _level(second, first)
-    if "locked_environment" in levels:
-        try:
-            python = build_environment(workdir / "locked")
-            report["locked_environment"] = _level(run_cardio(python, workdir / "locked_run"), first)
-        except (OSError, subprocess.SubprocessError, RuntimeError) as exc:
-            report["locked_environment"] = _not_run(f"environment could not be rebuilt: {exc}")
-    if "version_sensitivity" in levels:
-        try:
-            python = build_environment(workdir / "changed", [sensitivity_pin])
-            changed = _level(run_cardio(python, workdir / "changed_run"), first)
-            changed["status"] = "MEASURED"
-            changed["changed"] = sensitivity_pin
-            report["version_sensitivity"] = changed
-        except (OSError, subprocess.SubprocessError, RuntimeError) as exc:
-            report["version_sensitivity"] = _not_run(f"changed environment failed: {exc}")
+    first = None
+    try:
+        first = run_cardio(sys.executable, workdir / "first")
+    except (OSError, RuntimeError, subprocess.SubprocessError, StopIteration) as exc:
+        for name in levels:
+            report[name] = _failed(f"the reference run failed: {exc}")
+    if first is not None:
+        if "archive" in levels:
+            report["archive"] = _level(first, reference)
+        if "same_environment" in levels:
+            try:
+                report["same_environment"] = _level(
+                    run_cardio(sys.executable, workdir / "second"), first
+                )
+            except (OSError, RuntimeError, subprocess.SubprocessError, StopIteration) as exc:
+                report["same_environment"] = _failed(f"the second run failed: {exc}")
+        if "locked_environment" in levels:
+            try:
+                python = build_environment(workdir / "locked")
+                report["locked_environment"] = _level(
+                    run_cardio(python, workdir / "locked_run"), first
+                )
+            except (OSError, subprocess.SubprocessError, RuntimeError) as exc:
+                report["locked_environment"] = _not_run(f"environment could not be rebuilt: {exc}")
+        if "version_sensitivity" in levels:
+            try:
+                python = build_environment(workdir / "changed", [sensitivity_pin])
+                changed = _level(run_cardio(python, workdir / "changed_run"), first)
+                changed["status"] = "MEASURED"
+                changed["changed"] = sensitivity_pin
+                report["version_sensitivity"] = changed
+            except (OSError, subprocess.SubprocessError, RuntimeError) as exc:
+                report["version_sensitivity"] = _not_run(f"changed environment failed: {exc}")
+    for name, level in report.items():
+        level["required"] = name in MANDATORY
     return report
+
+
+def judge(report: dict) -> tuple[str, list[str]]:
+    """Return the outcome and the reasons it is not a pass."""
+    reasons = []
+    outcome = "PASS"
+    if not any(name in MANDATORY for name in report):
+        return "INCOMPLETE", ["no mandatory level was requested"]
+    for name in MANDATORY:
+        if name not in report or report[name]["status"] == "PASS":
+            continue
+        level = report[name]
+        detail = level.get("reason") or level.get("kind") or ""
+        reasons.append(f"{name} is {level['status']}" + (f": {detail}" if detail else ""))
+        if level["status"] == "FAIL":
+            outcome = "FAIL"
+        elif outcome == "PASS":
+            outcome = "INCOMPLETE"
+    return outcome, reasons
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -154,8 +199,11 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     workdir = args.workdir or Path(tempfile.mkdtemp(prefix="repro-"))
     report = reproduce(args.levels, workdir, args.sensitivity_pin)
+    outcome, reasons = judge(report)
     document = {
         "schema_version": 1,
+        "outcome": outcome,
+        "reasons": reasons,
         "captured_at": datetime.now(UTC).isoformat(),
         "source": evidence_schema.collect_source(),
         "environment": evidence_schema.collect_environment(),
@@ -164,11 +212,10 @@ def main(argv: list[str] | None = None) -> int:
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(document, indent=2, sort_keys=True) + "\n")
-    failed = False
     for name, level in report.items():
         print(f"{name}: {level['status']} {level.get('kind', level.get('reason', ''))}")
-        failed |= level["status"] == "FAIL"
-    return 1 if failed else 0
+    print(f"outcome: {outcome}" + "".join(f"\n  - {reason}" for reason in reasons))
+    return 0 if outcome == "PASS" else 1
 
 
 if __name__ == "__main__":
