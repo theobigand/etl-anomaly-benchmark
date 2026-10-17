@@ -1,8 +1,8 @@
 {
   "artifacts": {
-    "experiments/results/verifier_coverage.json": "41370963a662c8e445fb460576d253507ba6e9566b4a6980b221537cb4a209a0"
+    "experiments/results/reproducibility.json": "8d25aaf60849a3c5b1e081155a73899652308e51ba1efad744bf2c65f8d9e02e"
   },
-  "captured_at": "2026-10-17T10:52:37.357499+00:00",
+  "captured_at": "2026-10-17T13:13:00.856533+00:00",
   "environment": {
     "packages": {
       "mutmut": "3.8.0",
@@ -24,22 +24,20 @@
     "runner_environment": null,
     "runner_name": null
   },
-  "kind": "tools",
+  "kind": "reproduction",
   "result": {
-    "coverage": {
-      "branch": {
-        "coverable": 572,
-        "covered": 572
-      },
-      "line": {
-        "coverable": 1546,
-        "covered": 1546
-      }
+    "claimed_outcome": "PASS",
+    "dataset": "cardio",
+    "levels": {
+      "archive": "PASS",
+      "locked_environment": "PASS",
+      "same_environment": "PASS",
+      "version_sensitivity": "MEASURED"
     }
   },
   "schema_version": 2,
   "source": {
-    "revision": "631b159ede5d6a3c760e55265a7806c9a0b1bf8a",
+    "revision": "55ad398885e528cf47f87020d9ef0d359181fca6",
     "scientific_fingerprint": "44faa1f99393490fc25dbcea06ee4c8371bbb032f591e4203253c26d65da6a23",
     "worktree_dirty": false
   },

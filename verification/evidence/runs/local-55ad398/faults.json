@@ -2,7 +2,7 @@
   "artifacts": {
     "experiments/results/fault_matrix.json": "035bb512eff708d5572d7fb2eca773202fafafad5edfdd6c403737b8936e5033"
   },
-  "captured_at": "2026-10-17T10:54:41.779851+00:00",
+  "captured_at": "2026-10-17T12:58:13.410647+00:00",
   "environment": {
     "packages": {
       "mutmut": "3.8.0",
@@ -149,7 +149,7 @@
   },
   "schema_version": 2,
   "source": {
-    "revision": "631b159ede5d6a3c760e55265a7806c9a0b1bf8a",
+    "revision": "55ad398885e528cf47f87020d9ef0d359181fca6",
     "scientific_fingerprint": "44faa1f99393490fc25dbcea06ee4c8371bbb032f591e4203253c26d65da6a23",
     "worktree_dirty": false
   },
