@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "roots": [
+    "src/etl_benchmark",
+    "experiments"
+  ],
+  "exclusions": {
+    "src/etl_benchmark/__init__.py": "package marker holding only the version string",
+    "src/etl_benchmark/__main__.py": "command-line entry point that dispatches to pipeline.run; exercised by the end-to-end tests",
+    "src/etl_benchmark/config.py": "module of constants (seeds, thresholds, paths); a changed constant is caught by the protocol and lineage tests, and mutating assignments produces no meaningful behavioural mutants",
+    "src/etl_benchmark/logging_setup.py": "logging handler configuration, no experimental result depends on it"
+  },
+  "no_mutants": {
+    "src/etl_benchmark/quality/__init__.py": "re-exports the detector classes; the code has no operation mutmut can change"
+  }
+}

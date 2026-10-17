@@ -97,5 +97,8 @@ def test_the_release_job_keeps_downloaded_bundles_outside_the_checkout():
 def test_the_deep_job_exports_its_surviving_mutants_for_inspection():
     text = _text("verify-release.yml")
     deep = text[text.index("  deep:") : text.index("  real:")]
-    assert "mutmut results --all true > mutants/results.txt" in deep
     assert "mutants/results.txt" in deep.split("Bundle deep evidence")[1]
+    makefile = (WORKFLOWS.parents[1] / "Makefile").read_text()
+    target = makefile[makefile.index("verify-deep:") : makefile.index("verify-faults:")]
+    assert "mutmut results --all true > mutants/results.txt" in target
+    assert "--results mutants/results.txt" in target

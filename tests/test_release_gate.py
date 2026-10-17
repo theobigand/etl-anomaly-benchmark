@@ -7,7 +7,15 @@ import sys
 
 import pytest
 
-from tests.test_evidence_schema import ENVIRONMENT, RESULT_VERSIONS, SOURCE, _deep, _fast, _matrix, _real
+from tests.test_evidence_schema import (
+    ENVIRONMENT,
+    RESULT_VERSIONS,
+    SOURCE,
+    _deep,
+    _fast,
+    _matrix,
+    _real,
+)
 from verification import evidence_schema, release
 
 KINDS = ("fast", "deep", "faults", "real")
@@ -34,6 +42,7 @@ def _assess(tmp_path, docs=None, current=None, **kwargs):
     kwargs.setdefault("manifest", {"a": "1" * 64, "b": "2" * 64})
     kwargs.setdefault("lineage", {"legacy": [], "problems": {}})
     kwargs.setdefault("locked", dict(RESULT_VERSIONS))
+    kwargs.setdefault("scope", {"inventory": ["src/x.py"], "config": {"no_mutants": {}}})
     return release.assess(
         docs if docs is not None else _docs(tmp_path),
         current=current or copy.deepcopy(SOURCE),
@@ -259,3 +268,29 @@ def test_the_lock_versions_are_read_from_the_recorded_files(tmp_path):
 
 def test_the_recorded_lock_covers_every_result_affecting_package():
     assert set(release.locked_versions()) >= set(release.RESULT_PACKAGES)
+
+
+# --- mutation scope completeness (#41) ---
+
+
+def test_a_mutation_scope_that_shrank_is_rejected_whatever_the_score(tmp_path):
+    scope = {"inventory": ["src/x.py", "src/y.py"], "config": {"no_mutants": {}}}
+    report = _assess(tmp_path, scope=scope)
+    assert report["status"] == "REJECTED"
+    assert any("src/y.py" in r and "not mutated" in r for r in report["reasons"])
+
+
+def test_a_mutated_file_outside_the_recorded_scope_is_rejected(tmp_path):
+    docs = _docs(tmp_path)
+    docs["deep"]["result"]["mutated_files"] = ["src/x.py", "src/z.py"]
+    report = _assess(tmp_path, docs)
+    assert report["status"] == "REJECTED"
+    assert any("src/z.py" in r for r in report["reasons"])
+
+
+def test_a_file_without_mutant_needs_a_declared_reason(tmp_path):
+    docs = _docs(tmp_path)
+    docs["deep"]["result"]["mutated_files"] = []
+    assert _assess(tmp_path, docs)["status"] == "REJECTED"
+    scope = {"inventory": ["src/x.py"], "config": {"no_mutants": {"src/x.py": "re-exports"}}}
+    assert _assess(tmp_path, docs, scope=scope)["status"] == "CERTIFIED"

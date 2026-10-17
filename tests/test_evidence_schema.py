@@ -54,11 +54,21 @@ def _stats(**changes):
     return result
 
 
-def _deep(tmp_path, **changes):
+def _deep(tmp_path, results="    x.x_f__mutmut_1: killed\n", **changes):
     stats = tmp_path / "stats.json"
     stats.write_text(json.dumps(_stats(**changes)))
+    (tmp_path / "src").mkdir(exist_ok=True)
+    (tmp_path / "src/x.py").write_text("x = 1\n")
+    listing = tmp_path / "results.txt"
+    if results is not None:
+        listing.write_text(results)
     return evidence.build_deep(
-        stats, root=tmp_path, scope=["src/x.py"], source=SOURCE, environment=ENVIRONMENT
+        stats,
+        listing if results is not None else None,
+        root=tmp_path,
+        scope=["src/x.py"],
+        source=SOURCE,
+        environment=ENVIRONMENT,
     )
 
 
@@ -365,9 +375,14 @@ def test_command_line_builders_write_validated_envelopes(tmp_path):
     assert json.loads((tmp_path / "o/fast.json").read_text())["kind"] == "fast"
 
     _deep(tmp_path)
-    done = run("deep", "--stats", p("stats.json"), "--output", p("d.json"))
-    assert done.returncode == 0
-    assert json.loads((tmp_path / "d.json").read_text())["result"]["scope"]  # from pyproject
+    done = run(
+        "deep", "--stats", p("stats.json"), "--results", p("results.txt"), "--output", p("d.json")
+    )
+    # the scope comes from pyproject.toml but resolves to no file under the temporary root
+    assert done.returncode == 1
+    deep = json.loads((tmp_path / "d.json").read_text())
+    assert deep["result"]["scope"] and deep["result"]["scope_files"] == []
+    assert deep["status"] == "INCOMPLETE"
 
     _real(tmp_path)
     done = run("real", "--report", p("real.json"), "--output", p("r.json"))
@@ -398,3 +413,35 @@ def test_relative_artifact_paths_are_recorded_relative_to_the_root(tmp_path, mon
         Path("real.json"), root=tmp_path, source=SOURCE, environment=ENVIRONMENT
     )
     assert list(doc["artifacts"]) == ["real.json"]
+
+
+def test_deep_records_the_files_in_scope_and_the_files_that_were_mutated(tmp_path):
+    doc = _deep(tmp_path)
+    assert doc["result"]["scope_files"] == ["src/x.py"]
+    assert doc["result"]["mutated_files"] == ["src/x.py"]
+    assert "results.txt" in doc["artifacts"]
+
+
+def test_deep_without_the_mutant_listing_is_incomplete(tmp_path):
+    doc = _deep(tmp_path, results=None)
+    assert doc["status"] == "INCOMPLETE" and doc["result"]["mutated_files"] is None
+
+
+def test_deep_with_a_scope_that_matches_no_file_is_incomplete(tmp_path):
+    doc = _deep(tmp_path)
+    doc["result"]["scope_files"] = []
+    assert evidence.validate(doc), "a PASS needs a non-empty resolved scope"
+
+
+def test_deep_with_an_unreadable_mutant_listing_is_incomplete_with_a_reason(tmp_path):
+    stats = tmp_path / "stats.json"
+    stats.write_text(json.dumps(_stats()))
+    doc = evidence.build_deep(
+        stats,
+        tmp_path / "gone.txt",
+        root=tmp_path,
+        scope=["src/x.py"],
+        source=SOURCE,
+        environment=ENVIRONMENT,
+    )
+    assert doc["status"] == "INCOMPLETE" and "gone.txt" in doc["result"]["reason"]

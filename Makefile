@@ -70,9 +70,10 @@ verify-deep:
 	@rm -f $(EVIDENCE)/deep.json mutants/mutmut-cicd-stats.json
 	mutmut run
 	mutmut export-cicd-stats
+	mutmut results --all true > mutants/results.txt
 	@set +e; python experiments/check_mutation.py mutants/mutmut-cicd-stats.json; gate=$$?; \
 		python -m verification.evidence_schema deep --stats mutants/mutmut-cicd-stats.json \
-		--output $(EVIDENCE)/deep.json; evidence_status=$$?; \
+		--results mutants/results.txt --output $(EVIDENCE)/deep.json; evidence_status=$$?; \
 		test $$gate -eq 0 -a $$evidence_status -eq 0
 
 verify-faults:
