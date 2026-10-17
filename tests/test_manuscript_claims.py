@@ -29,9 +29,9 @@ def test_the_fault_count_in_the_claims_is_the_live_matrix():
 
 def test_fast_figures_match():
     fast = CLAIMS["fast"]
-    assert f"runs {fast['tests']} tests" in PAPER
+    assert f"runs {_n(fast['tests'])} tests" in PAPER
     assert f"{_n(fast['line_covered'])} of\n{_n(fast['line_coverable'])} executable lines" in PAPER
-    assert f"{fast['branch_covered']} of {fast['branch_coverable']} branches" in PAPER
+    assert f"{_n(fast['branch_covered'])} of {_n(fast['branch_coverable'])} branches" in PAPER
     assert fast["line_covered"] == fast["line_coverable"]
     assert fast["branch_covered"] == fast["branch_coverable"]
     assert f"plus {WORDS[CLAIMS['real_tests']]} that need" in PAPER
@@ -39,8 +39,8 @@ def test_fast_figures_match():
 
 def test_verifier_figures_are_reported_apart_from_the_scientific_coverage():
     verifier = CLAIMS["verifier"]
-    assert f"{verifier['line']} of {verifier['line']} lines" in PAPER
-    assert f"{verifier['branch']} of {verifier['branch']} branches" in PAPER
+    assert f"{_n(verifier['line'])} of {_n(verifier['line'])} lines" in PAPER
+    assert f"{_n(verifier['branch'])} of {_n(verifier['branch'])} branches" in PAPER
 
 
 def test_mutation_figures_match_and_add_up():

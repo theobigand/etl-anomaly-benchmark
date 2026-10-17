@@ -49,6 +49,7 @@ def _assess(tmp_path, docs=None, current=None, **kwargs):
     kwargs.setdefault("lineage", {"legacy": [], "problems": {}})
     kwargs.setdefault("locked", dict(RESULT_VERSIONS))
     kwargs.setdefault("policy", release.load_policy())
+    kwargs.setdefault("fresh", None)
     kwargs.setdefault("scope", {"inventory": ["src/x.py"], "config": {"no_mutants": {}}})
     return release.assess(
         docs if docs is not None else _docs(tmp_path),
@@ -481,3 +482,65 @@ def test_forged_real_evidence_is_refused(tmp_path):
     docs = _docs(tmp_path)
     docs["real"] = None
     assert _assess(tmp_path, docs)["status"] == "INCOMPLETE"
+
+
+# --- evidence stays current across documentation-only commits ---
+
+
+def _git_repo(tmp_path):
+    root = tmp_path / "repo"
+    (root / "src").mkdir(parents=True)
+    (root / "src/m.py").write_text("x = 1\n")
+    (root / "README.md").write_text("doc\n")
+    env = {"GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@x", "GIT_COMMITTER_NAME": "t"}
+    env |= {"GIT_COMMITTER_EMAIL": "t@x", "PATH": "/usr/bin:/bin"}
+
+    def git(*args):
+        done = subprocess.run(
+            ["git", *args], cwd=root, env=env, check=True, capture_output=True, text=True
+        )
+        return done.stdout.strip()
+
+    git("init", "-q")
+    git("add", ".")
+    git("commit", "-q", "-m", "first")
+    return root, git
+
+
+def test_the_evidence_revision_may_be_an_ancestor_when_only_documentation_changed(tmp_path):
+    root, git = _git_repo(tmp_path)
+    old = git("rev-parse", "HEAD")
+    (root / "README.md").write_text("more\n")
+    git("commit", "-qam", "docs")
+    fresh = release.freshness(root)
+    assert fresh(old) is True
+    assert fresh(git("rev-parse", "HEAD")) is True
+    (root / "src/m.py").write_text("x = 2\n")
+    git("commit", "-qam", "code")
+    assert fresh(old) is False
+    assert fresh("d" * 40) is False
+
+
+def test_documentation_commits_after_the_run_keep_the_release_certifiable(tmp_path):
+    ancestor = "c" * 40
+    docs = _docs(tmp_path)
+    for doc in docs.values():
+        doc["source"]["revision"] = ancestor
+    stale = _assess(tmp_path, docs)
+    assert stale["status"] == "REJECTED"
+    assert any("not the current one" in r for r in stale["reasons"])
+    report = _assess(tmp_path, docs, fresh=lambda revision: revision == ancestor)
+    assert report["status"] == "CERTIFIED", report["reasons"]
+    still = _assess(tmp_path, docs, fresh=lambda revision: False)
+    assert still["status"] == "REJECTED"
+    assert any("code changed since" in r for r in still["reasons"])
+
+
+def test_a_different_scientific_fingerprint_is_rejected_even_when_the_revision_is_fresh(tmp_path):
+    docs = _docs(tmp_path)
+    for doc in docs.values():
+        doc["source"]["revision"] = "c" * 40
+    other = {**SOURCE, "scientific_fingerprint": "e" * 64}
+    report = _assess(tmp_path, docs, current=other, fresh=lambda revision: True)
+    assert report["status"] == "REJECTED"
+    assert any("fingerprint" in r for r in report["reasons"])
