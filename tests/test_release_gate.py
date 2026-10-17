@@ -50,6 +50,7 @@ def _assess(tmp_path, docs=None, current=None, **kwargs):
     kwargs.setdefault("locked", dict(RESULT_VERSIONS))
     kwargs.setdefault("policy", release.load_policy())
     kwargs.setdefault("fresh", None)
+    kwargs.setdefault("claims", [])
     kwargs.setdefault("scope", {"inventory": ["src/x.py"], "config": {"no_mutants": {}}})
     return release.assess(
         docs if docs is not None else _docs(tmp_path),
@@ -544,3 +545,17 @@ def test_a_different_scientific_fingerprint_is_rejected_even_when_the_revision_i
     report = _assess(tmp_path, docs, current=other, fresh=lambda revision: True)
     assert report["status"] == "REJECTED"
     assert any("fingerprint" in r for r in report["reasons"])
+
+
+# --- published figures must describe the code being certified ---
+
+
+def test_published_figures_that_describe_older_code_keep_the_release_incomplete(tmp_path):
+    stale = ["tests/test_x.py changed since the run, so its figures may be stale"]
+    report = _assess(tmp_path, claims=stale)
+    assert report["status"] == "INCOMPLETE"
+    assert any("published figures" in r and "tests/test_x.py" in r for r in report["reasons"])
+
+
+def test_current_published_figures_do_not_block_the_release(tmp_path):
+    assert _assess(tmp_path, claims=[])["status"] == "CERTIFIED"
