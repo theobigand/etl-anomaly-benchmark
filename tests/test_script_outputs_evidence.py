@@ -89,6 +89,8 @@ def test_record_lists_every_field_of_the_run(tmp_path, monkeypatch):
         "source_fingerprint": provenance._source_fingerprint(),
         "fingerprint_recipe": 2,
         "scientific_fingerprint": provenance.scientific_fingerprint(),
+        "measurement_recipe": provenance.MEASUREMENT_RECIPE,
+        "measurement_fingerprint": provenance.measurement_fingerprint(),
         "worktree_dirty": True,  # data.csv and out/ are not committed
         "python": sys.version.split()[0],
         "platform": platform.platform(),

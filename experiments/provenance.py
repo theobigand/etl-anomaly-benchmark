@@ -33,6 +33,18 @@ VERIFICATION_ONLY = frozenset(
 # This module only shapes the split archives; its other functions write metadata.
 RESULT_FUNCTIONS = ("write_split_ids", "read_split_ids")
 
+# The measurement fingerprint binds how time and memory are measured, apart from
+# what is detected. It covers the scaling harness and the timing code of
+# ``pipeline.detect``. A new script that measures time or memory must be added
+# here (or listed with a reason in ``TIMING_NOT_MEASUREMENT``): a test searches
+# the tree for timing primitives and fails on an unregistered file.
+MEASUREMENT_RECIPE = 1
+MEASUREMENT_FILES = ("verification/scaling.py",)
+MEASUREMENT_FUNCTIONS = {"src/etl_benchmark/pipeline.py": ("DetectionResult", "detect")}
+TIMING_NOT_MEASUREMENT = {
+    "verification/reproduce.py": "compares timing columns as a spread and never decides a status",
+}
+
 
 def write_split_ids(
     path: Path,
@@ -142,6 +154,37 @@ def scientific_fingerprint_of(files: dict[str, bytes]) -> str:
     return digest.hexdigest()
 
 
+def _segments(source: bytes, names: tuple[str, ...]) -> bytes:
+    text = source.decode()
+    nodes = [
+        node
+        for node in ast.parse(text).body
+        if isinstance(node, ast.FunctionDef | ast.ClassDef) and node.name in names
+    ]
+    return "\n".join(ast.get_source_segment(text, node) for node in nodes).encode()
+
+
+def measurement_fingerprint_of(files: dict[str, bytes]) -> str:
+    """Recipe-1 hash of the measurement method over a ``{path: content}`` mapping."""
+    digest = hashlib.sha256(f"measurement-recipe:{MEASUREMENT_RECIPE}\n".encode())
+    for relative in sorted({*MEASUREMENT_FILES, *MEASUREMENT_FUNCTIONS}):
+        if relative not in files:
+            continue
+        content = files[relative]
+        if relative in MEASUREMENT_FUNCTIONS:
+            content = _segments(content, MEASUREMENT_FUNCTIONS[relative])
+        digest.update(relative.encode())
+        digest.update(content)
+    return digest.hexdigest()
+
+
+def measurement_fingerprint() -> str:
+    """Recipe-1 measurement hash of the working tree."""
+    wanted = {*MEASUREMENT_FILES, *MEASUREMENT_FUNCTIONS}
+    files = {name: (ROOT / name).read_bytes() for name in wanted if (ROOT / name).is_file()}
+    return measurement_fingerprint_of(files)
+
+
 def scientific_fingerprint() -> str:
     """Recipe-2 hash of the working tree."""
     paths = [*ROOT.glob("src/**/*.py"), *ROOT.glob("experiments/*.py"), ROOT / "environment.yml"]
@@ -195,6 +238,8 @@ def write_record(
         "source_fingerprint": _source_fingerprint(),
         "fingerprint_recipe": SCIENTIFIC_RECIPE,
         "scientific_fingerprint": scientific_fingerprint(),
+        "measurement_recipe": MEASUREMENT_RECIPE,
+        "measurement_fingerprint": measurement_fingerprint(),
         "worktree_dirty": bool(_git("status", "--porcelain")),
         "python": sys.version.split()[0],
         "platform": platform.platform(),

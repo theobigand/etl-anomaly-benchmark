@@ -53,12 +53,14 @@ def files_at(revision: str, root: Path = ROOT) -> dict[str, bytes]:
     names = git("ls-tree", "-r", "--name-only", revision).decode().splitlines()
     wanted = [n for n in names if n.endswith(".py") and n.split("/")[0] in ("src", "experiments")]
     wanted += [n for n in names if n in ("environment.yml", "pyproject.toml")]
+    wanted += [n for n in names if n in provenance.MEASUREMENT_FILES]
     return {name: git("show", f"{revision}:{name}") for name in wanted}
 
 
 def worktree_files(root: Path = ROOT) -> dict[str, bytes]:
     paths = [*root.glob("src/**/*.py"), *root.glob("experiments/*.py")]
     paths += [root / "environment.yml", root / "pyproject.toml"]
+    paths += [root / n for n in provenance.MEASUREMENT_FILES if (root / n).is_file()]
     return {str(path.relative_to(root)): path.read_bytes() for path in paths}
 
 
@@ -80,6 +82,27 @@ def check_record(record: dict, anchor: dict[str, bytes], current: dict[str, byte
             return ["scientific fingerprint differs from the current source"]
         return []
     return [f"unknown fingerprint recipe {recipe!r}"]
+
+
+def check_measurement(record: dict, current: dict[str, bytes]) -> tuple[str, list[str]]:
+    """State of a performance record against the current measurement method.
+
+    ``BOUND``: the record carries a measurement fingerprint equal to the current
+    one. ``STALE``: it carries one that differs, or one that cannot be read.
+    ``LEGACY``: it predates the measurement fingerprint; it is reported as such
+    and never restamped, because the method it used cannot be recovered from
+    the record.
+    """
+    if "measurement_fingerprint" not in record and "measurement_recipe" not in record:
+        return "LEGACY", []
+    if record.get("measurement_recipe") != provenance.MEASUREMENT_RECIPE:
+        return "STALE", [f"unknown measurement recipe {record.get('measurement_recipe')!r}"]
+    stored = record.get("measurement_fingerprint")
+    if not isinstance(stored, str) or not stored:
+        return "STALE", ["the measurement fingerprint is missing or malformed"]
+    if stored != provenance.measurement_fingerprint_of(current):
+        return "STALE", ["the measurement method changed since this record was produced"]
+    return "BOUND", []
 
 
 def anchor_revision() -> str:

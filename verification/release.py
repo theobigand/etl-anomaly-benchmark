@@ -168,6 +168,14 @@ def assess(docs, *, current, root, manifest, lineage, locked, scope) -> dict:  #
             "experiment records predate the scientific fingerprint "
             f"({', '.join(sorted(lineage['legacy']))}); a clean replay is required"
         )
+    performance = {}
+    for name, (state, reasons) in sorted(lineage.get("performance", {}).items()):
+        performance[name] = state
+        if state == "STALE":
+            incomplete.append(
+                f"performance evidence {name} is stale: {'; '.join(reasons)}; "
+                "re-measure it or withdraw it from the publication"
+            )
     if lineage.get("dirty"):
         incomplete.append(
             "archived runs were made on a dirty worktree "
@@ -181,6 +189,7 @@ def assess(docs, *, current, root, manifest, lineage, locked, scope) -> dict:  #
         "reasons": [*rejected, *incomplete],
         "profiles": profiles,
         "environment": environment,
+        "performance": performance,
         "revision": current["revision"],
         "attestation": attestation(),
         "generated_at": datetime.now(UTC).isoformat(),
@@ -210,7 +219,11 @@ def archive_lineage(archive: Path = ARCHIVE) -> dict:
         found = lineage.check_record(record, anchor, current)
         if found:
             problems[path.stem] = found
-    return {"legacy": legacy, "dirty": dirty, "problems": problems}
+    performance = {}
+    scaling = archive / "scaling.json"
+    if scaling.is_file():
+        performance["scaling"] = lineage.check_measurement(json.loads(scaling.read_text()), current)
+    return {"legacy": legacy, "dirty": dirty, "problems": problems, "performance": performance}
 
 
 def reference_hashes(archive: Path = ARCHIVE) -> dict:
