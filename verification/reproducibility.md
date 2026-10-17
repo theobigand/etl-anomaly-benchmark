@@ -8,8 +8,9 @@ une référence. Quatre notions sont séparées :
 - numérique : toutes les mesures sont identiques bit à bit ;
 - statistique : les mesures diffèrent, mais chaque moyenne reste à moins d'un
   écart type de la référence ;
-- artefact : l'archive des partitions (`split_ids_cardio.json.gz`) est
-  identique octet pour octet ;
+- artefact : l'archive des partitions (`split_ids_cardio.json.gz`) contient les
+  mêmes membres. Les octets compressés dépendent de la version de zlib qui les a
+  écrits ; `artifact_bytes_identical` les rapporte à part ;
 - durée : les colonnes `detect_s` sont comparées seulement comme écart
   relatif et ne décident d'aucun statut (elles varient d'une exécution à
   l'autre, de quelques dizaines de pour cent à plusieurs fois la valeur).

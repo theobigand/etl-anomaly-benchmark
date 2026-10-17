@@ -199,7 +199,14 @@ def build_fast(
     raw = verification_report.build_report(coverage, junit)
     result = {"tests": raw["tests"], "coverage": raw["coverage"]}
     return _envelope(
-        "fast", _fast_status(result), result, [coverage, junit], root, source, environment
+        "fast",
+        _fast_status(result),
+        result,
+        [coverage, junit],
+        root,
+        source,
+        environment,
+        execution,
     )
 
 

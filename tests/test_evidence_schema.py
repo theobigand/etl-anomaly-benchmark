@@ -23,7 +23,7 @@ EXECUTION = {"ci": False, "run_id": None, "runner_environment": None, "runner_na
 FAULT_NAMES = ["f1", "f2", "f3"]
 
 
-def _fast(tmp_path, failures=0, covered=10):
+def _fast(tmp_path, failures=0, covered=10, execution=EXECUTION):
     coverage = tmp_path / "coverage.json"
     coverage.write_text(
         json.dumps(
@@ -49,7 +49,7 @@ def _fast(tmp_path, failures=0, covered=10):
         root=tmp_path,
         source=SOURCE,
         environment=ENVIRONMENT,
-        execution=EXECUTION,
+        execution=execution,
     )
 
 
@@ -60,7 +60,7 @@ def _stats(**changes):
     return result
 
 
-def _deep(tmp_path, results="    x.x_f__mutmut_1: killed\n", **changes):
+def _deep(tmp_path, results="    x.x_f__mutmut_1: killed\n", execution=EXECUTION, **changes):
     stats = tmp_path / "stats.json"
     stats.write_text(json.dumps(_stats(**changes)))
     (tmp_path / "src").mkdir(exist_ok=True)
@@ -75,10 +75,11 @@ def _deep(tmp_path, results="    x.x_f__mutmut_1: killed\n", **changes):
         scope=["src/x.py"],
         source=SOURCE,
         environment=ENVIRONMENT,
+        execution=execution,
     )
 
 
-def _matrix(tmp_path, names=FAULT_NAMES, caught=True, control=True):
+def _matrix(tmp_path, names=FAULT_NAMES, caught=True, control=True, execution=EXECUTION):
     path = tmp_path / "fault_matrix.json"
     rows = [
         {"defect": name, "caught_by_expected_test": caught, "control_passed": control}
@@ -91,7 +92,7 @@ def _matrix(tmp_path, names=FAULT_NAMES, caught=True, control=True):
         root=tmp_path,
         source=SOURCE,
         environment=ENVIRONMENT,
-        execution=EXECUTION,
+        execution=execution,
     )
 
 
@@ -489,7 +490,9 @@ def test_deep_with_an_unreadable_mutant_listing_is_incomplete_with_a_reason(tmp_
 # --- tools, types and reproduction evidence (#39) ---
 
 
-def _tools(tmp_path, covered_lines=10, covered_branches=4, lines=10, branches=4):
+def _tools(
+    tmp_path, covered_lines=10, covered_branches=4, lines=10, branches=4, execution=EXECUTION
+):
     path = tmp_path / "verifier_coverage.json"
     path.write_text(
         json.dumps(
@@ -504,7 +507,7 @@ def _tools(tmp_path, covered_lines=10, covered_branches=4, lines=10, branches=4)
         )
     )
     return evidence.build_tools(
-        path, root=tmp_path, source=SOURCE, environment=ENVIRONMENT, execution=EXECUTION
+        path, root=tmp_path, source=SOURCE, environment=ENVIRONMENT, execution=execution
     )
 
 
@@ -523,17 +526,17 @@ def _types_report(tmp_path, **changes):
     return path
 
 
-def _types(tmp_path, **changes):
+def _types(tmp_path, execution=EXECUTION, **changes):
     return evidence.build_types(
         _types_report(tmp_path, **changes),
         root=tmp_path,
         source=SOURCE,
         environment=ENVIRONMENT,
-        execution=EXECUTION,
+        execution=execution,
     )
 
 
-def _reproduction(tmp_path, levels=None, outcome="PASS"):
+def _reproduction(tmp_path, levels=None, outcome="PASS", execution=EXECUTION):
     levels = levels or {
         "archive": "PASS",
         "same_environment": "PASS",
@@ -551,7 +554,7 @@ def _reproduction(tmp_path, levels=None, outcome="PASS"):
         )
     )
     return evidence.build_reproduction(
-        path, root=tmp_path, source=SOURCE, environment=ENVIRONMENT, execution=EXECUTION
+        path, root=tmp_path, source=SOURCE, environment=ENVIRONMENT, execution=execution
     )
 
 
@@ -697,10 +700,37 @@ def test_the_execution_context_is_read_from_the_runner_environment():
     assert evidence.collect_execution({"GITHUB_ACTIONS": "false"})["ci"] is False
 
 
-def test_every_builder_records_the_execution_it_was_given(tmp_path):
-    other = {"ci": True, "run_id": "9", "runner_environment": "self-hosted", "runner_name": "lab"}
-    assert _real(tmp_path, execution=other)["execution"] == other
-    assert _fast(tmp_path)["execution"] == EXECUTION
+OTHER_EXECUTION = {
+    "ci": True,
+    "run_id": "9",
+    "runner_environment": "self-hosted",
+    "runner_name": "lab",
+}
+
+
+def _build_with(tmp_path, kind, execution):
+    if kind == "fast":
+        return _fast(tmp_path, execution=execution)
+    if kind == "real":
+        return _real(tmp_path, execution=execution)
+    if kind == "deep":
+        return _deep(tmp_path, execution=execution)
+    if kind == "faults":
+        return _matrix(tmp_path, execution=execution)
+    if kind == "tools":
+        return _tools(tmp_path, execution=execution)
+    if kind == "types":
+        return _types(tmp_path, execution=execution)
+    return _reproduction(tmp_path, execution=execution)
+
+
+@pytest.mark.parametrize("kind", evidence.KINDS)
+def test_every_builder_records_the_execution_it_was_given(tmp_path, kind, monkeypatch):
+    # run as on a hosted runner: the given context must win over the process environment
+    monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    monkeypatch.setenv("RUNNER_ENVIRONMENT", "github-hosted")
+    assert _build_with(tmp_path, kind, OTHER_EXECUTION)["execution"] == OTHER_EXECUTION
+    assert _build_with(tmp_path, kind, EXECUTION)["execution"] == EXECUTION
 
 
 @pytest.mark.parametrize(

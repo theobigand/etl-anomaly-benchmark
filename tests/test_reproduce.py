@@ -451,3 +451,34 @@ def test_a_replay_that_wrote_no_split_ids_fails_when_the_archive_has_them(tmp_pa
     a, b = _run(tmp_path, "a"), _run(tmp_path, "b")
     level = reproduce._level({**a, "splits": None}, b)
     assert level["status"] == "FAIL" and level["artifact_identical"] is False
+
+
+def _gz(path, content, level):
+    import gzip
+
+    path.write_bytes(gzip.compress(json.dumps(content).encode(), compresslevel=level, mtime=0))
+    return path
+
+
+def test_partitions_with_the_same_content_but_other_compression_are_the_same_partitions(tmp_path):
+    members = {"seeds": {"42": {"train": list(range(500)), "test": list(range(500, 600))}}}
+    a, b = _run(tmp_path, "a"), _run(tmp_path, "b")
+    a["splits"] = _gz(tmp_path / "a" / "s.json.gz", members, 1)
+    b["splits"] = _gz(tmp_path / "b" / "s.json.gz", members, 9)
+    assert a["splits"].read_bytes() != b["splits"].read_bytes()
+    level = reproduce._level(a, b)
+    assert level["status"] == "PASS"
+    assert level["artifact_identical"] is True and level["artifact_bytes_identical"] is False
+
+
+def test_partitions_with_other_members_fail_even_if_the_archive_decodes(tmp_path):
+    a, b = _run(tmp_path, "a"), _run(tmp_path, "b")
+    a["splits"] = _gz(tmp_path / "a" / "s.json.gz", {"train": [1, 2, 3]}, 6)
+    b["splits"] = _gz(tmp_path / "b" / "s.json.gz", {"train": [1, 2, 4]}, 6)
+    level = reproduce._level(a, b)
+    assert level["status"] == "FAIL" and level["artifact_identical"] is False
+
+
+def test_identical_archives_are_identical_in_content_and_in_bytes(tmp_path):
+    level = reproduce._level(_run(tmp_path, "a"), _run(tmp_path, "b"))
+    assert level["artifact_identical"] is True and level["artifact_bytes_identical"] is True
