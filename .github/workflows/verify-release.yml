@@ -9,6 +9,10 @@ on:
         description: "Label of a runner that holds the research datasets (empty skips REAL)"
         required: false
         default: ""
+      approved_sha:
+        description: "Full commit SHA the operator reviewed; REAL refuses any other revision"
+        required: false
+        default: ""
   # A workflow_dispatch workflow cannot be started from a branch until it is on
   # the default branch, so a change to this file also runs it on its own pull
   # request. Edits to any other file never start it.
@@ -188,7 +192,8 @@ jobs:
 
   real:
     name: release-real
-    if: inputs.real_runner != ''
+    # Code that sees the private datasets must already be on the default branch.
+    if: inputs.real_runner != '' && github.ref_name == github.event.repository.default_branch
     runs-on: ${{ inputs.real_runner }}
     steps:
       # The research datasets live on the operator's own machine. A hosted
@@ -196,16 +201,43 @@ jobs:
       - name: Refuse a runner that is not self-hosted
         run: test "$RUNNER_ENVIRONMENT" = self-hosted
 
+      # The operator names the commit they reviewed; any other revision is refused
+      # before its code is fetched.
+      - name: Refuse a revision the operator did not approve
+        env:
+          APPROVED_SHA: ${{ inputs.approved_sha }}
+        run: test -n "$APPROVED_SHA" && test "$GITHUB_SHA" = "$APPROVED_SHA"
+
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
+      # A throwaway environment keeps the dependencies off the host interpreter.
       - name: Install
-        run: pip install -e ".[dev]"
+        run: |
+          python -m venv "$RUNNER_TEMP/real-venv"
+          "$RUNNER_TEMP/real-venv/bin/pip" install -e ".[dev]"
+          echo "$RUNNER_TEMP/real-venv/bin" >> "$GITHUB_PATH"
+
+      # The runner's own environment names the directory that holds the files
+      # (THESIS_DATA_DIR in the runner's .env). They are linked, never copied.
+      - name: Link the local datasets
+        run: |
+          test -n "$THESIS_DATA_DIR"
+          cd "$GITHUB_WORKSPACE/data"
+          for name in creditcard water_quality cardio; do
+            ln -s "$THESIS_DATA_DIR/$name.csv" "$name.csv"
+          done
+
+      - name: Preflight (read-only, no benchmark)
+        env:
+          APPROVED_SHA: ${{ inputs.approved_sha }}
+        run: python -m verification.real_preflight --expect-sha "$APPROVED_SHA"
 
       - name: Run real profile
         run: make verify-real
