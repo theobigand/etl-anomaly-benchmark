@@ -39,7 +39,7 @@ jobs:
 
       - name: Bundle fast evidence
         if: always()
-        run: tar czf evidence-fast.tgz --ignore-failed-read coverage.json experiments/results/pytest.xml experiments/results/verification_fast.json experiments/results/evidence/fast.json
+        run: python -m verification.bundles pack fast --allow-missing --output evidence-fast.tgz
 
       - name: Preserve fast evidence
         if: always()
@@ -74,7 +74,7 @@ jobs:
 
       - name: Bundle static evidence
         if: always()
-        run: tar czf evidence-static.tgz --ignore-failed-read experiments/results/verifier_coverage.json experiments/results/types_report.json experiments/results/evidence/tools.json experiments/results/evidence/types.json
+        run: python -m verification.bundles pack static --allow-missing --output evidence-static.tgz
 
       - name: Preserve static evidence
         if: always()
@@ -109,7 +109,7 @@ jobs:
 
       - name: Bundle reproduction evidence
         if: always()
-        run: tar czf evidence-reproduction.tgz --ignore-failed-read experiments/results/reproducibility.json experiments/results/evidence/reproduction.json
+        run: python -m verification.bundles pack reproduction --allow-missing --output evidence-reproduction.tgz
 
       - name: Preserve reproduction evidence
         if: always()
@@ -139,7 +139,7 @@ jobs:
 
       - name: Bundle faults evidence
         if: always()
-        run: tar czf evidence-faults.tgz --ignore-failed-read experiments/results/fault_matrix.json experiments/results/evidence/faults.json
+        run: python -m verification.bundles pack faults --allow-missing --output evidence-faults.tgz
 
       - name: Preserve faults evidence
         if: always()
@@ -170,7 +170,7 @@ jobs:
 
       - name: Bundle deep evidence
         if: always()
-        run: tar czf evidence-deep.tgz --ignore-failed-read mutants/mutmut-cicd-stats.json mutants/results.txt experiments/results/evidence/deep.json
+        run: python -m verification.bundles pack deep --allow-missing --output evidence-deep.tgz
 
       - name: Preserve deep evidence
         if: always()
@@ -185,6 +185,11 @@ jobs:
     if: inputs.real_runner != ''
     runs-on: ${{ inputs.real_runner }}
     steps:
+      # The research datasets live on the operator's own machine. A hosted
+      # runner cannot hold them, so a label that resolves to one is refused.
+      - name: Refuse a runner that is not self-hosted
+        run: test "$RUNNER_ENVIRONMENT" = self-hosted
+
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -201,7 +206,7 @@ jobs:
 
       - name: Bundle real evidence
         if: always()
-        run: tar czf evidence-real.tgz --ignore-failed-read experiments/results/real_verification.json experiments/results/evidence/real.json
+        run: python -m verification.bundles pack real --allow-missing --output evidence-real.tgz
 
       - name: Preserve real evidence
         if: always()
@@ -237,8 +242,10 @@ jobs:
           path: ${{ runner.temp }}/bundles
           merge-multiple: true
 
+      # Only the allowlisted evidence files can be unpacked: any other member
+      # (a dataset, a path outside the checkout) refuses the whole bundle.
       - name: Unpack the evidence at the repository root
-        run: for bundle in "$RUNNER_TEMP"/bundles/*.tgz; do tar xzf "$bundle"; done
+        run: for bundle in "$RUNNER_TEMP"/bundles/*.tgz; do python -m verification.bundles unpack "$bundle"; done
 
       - name: Release gate
         run: make verify-release
