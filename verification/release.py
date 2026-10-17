@@ -148,7 +148,9 @@ def freshness(root: Path = ROOT):
     return fresh
 
 
-def assess(docs, *, current, root, manifest, lineage, locked, scope, policy, fresh=None) -> dict:  # noqa: PLR0912
+def assess(  # noqa: PLR0913
+    docs, *, current, root, manifest, lineage, locked, scope, policy, fresh=None, claims=()
+) -> dict:  # noqa: PLR0912
     """Pure decision over the loaded evidence; see the module docstring."""
     rejected: list[str] = []
     incomplete: list[str] = []
@@ -245,6 +247,7 @@ def assess(docs, *, current, root, manifest, lineage, locked, scope, policy, fre
                 f"performance evidence {name} is stale: {'; '.join(reasons)}; "
                 "re-measure it or withdraw it from the publication"
             )
+    incomplete += [f"published figures: {problem}" for problem in claims]
     if lineage.get("dirty"):
         incomplete.append(
             "archived runs were made on a dirty worktree "
@@ -312,9 +315,18 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     config = mutation_scope.load()
     policy = load_policy()
+    current = evidence_schema.collect_source()
+    published = claims.load()
+    problems = claims.check_run(
+        published,
+        root=ROOT,
+        scientific_fingerprint=current["scientific_fingerprint"],
+        scope=config,
+    )
+    problems += claims.check_paper(published, (ROOT / "paper" / "main.tex").read_text())
     report = assess(
         load_docs(args.evidence, policy["required"]),
-        current=evidence_schema.collect_source(),
+        current=current,
         root=ROOT,
         manifest=reference_hashes(),
         lineage=archive_lineage(),
@@ -322,6 +334,7 @@ def main(argv: list[str] | None = None) -> int:
         scope={"inventory": mutation_scope.inventory(ROOT, config), "config": config},
         policy=policy,
         fresh=freshness(),
+        claims=problems,
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")

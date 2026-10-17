@@ -293,9 +293,10 @@ def test_the_repository_claims_name_a_run_that_exists_in_the_history(monkeypatch
     run = doc["published_run"]
     fingerprint = evidence_schema.collect_source()["scientific_fingerprint"]
     scope = mutation_scope.load()
-    assert (
-        claims.check_run(doc, root=ROOT, scientific_fingerprint=fingerprint, scope=scope) == []
-    ), run
+    problems = claims.check_run(
+        doc, root=ROOT, scientific_fingerprint=fingerprint, scope=scope, current=False
+    )
+    assert problems == [], run
 
 
 def test_the_paper_of_this_repository_names_its_run():
@@ -431,7 +432,7 @@ def test_the_module_checks_the_repository_claims_from_the_command_line():
     import sys
 
     done = subprocess.run(
-        [sys.executable, "-m", "verification.claims", "check"],
+        [sys.executable, "-m", "verification.claims", "check", "--structure-only"],
         cwd=ROOT,
         capture_output=True,
         text=True,
@@ -439,3 +440,18 @@ def test_the_module_checks_the_repository_claims_from_the_command_line():
     )
     assert done.returncode == 0, done.stdout
     assert "claims: PASS" in done.stdout
+
+
+def test_fast_does_not_ask_whether_code_changed_since_the_run(tmp_path):
+    root, _, doc = _valid(tmp_path)
+    (root / "src/m.py").write_text("x = 2\n")
+    _git(root, "commit", "-qam", "code")
+    scope = {"scientific": ["src/etl_benchmark/split.py"]}
+    fingerprint = SOURCE["scientific_fingerprint"]
+    assert (
+        claims.check_run(
+            doc, root=root, scientific_fingerprint=fingerprint, scope=scope, current=False
+        )
+        == []
+    )
+    assert claims.check_run(doc, root=root, scientific_fingerprint=fingerprint, scope=scope)

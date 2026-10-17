@@ -140,8 +140,15 @@ def _check_identity(run: dict) -> list[str]:
     return problems
 
 
-def check_run(doc: dict, *, root: Path, scientific_fingerprint: str, scope: dict) -> list[str]:
-    """Reasons the claims are not a faithful, current account of one run."""
+def check_run(
+    doc: dict, *, root: Path, scientific_fingerprint: str, scope: dict, current: bool = True
+) -> list[str]:
+    """Reasons the claims are not a faithful account of one run.
+
+    ``current`` also requires that no code changed since the run. FAST does not ask for it
+    (it would fail on the very commit the run measures, before the claims are updated); the
+    release gate and ``claims check`` do.
+    """
     run = doc.get("published_run")
     if not isinstance(run, dict):
         return ["published_run is missing: the figures do not say which run they describe"]
@@ -173,12 +180,13 @@ def check_run(doc: dict, *, root: Path, scientific_fingerprint: str, scope: dict
         envelope = json.loads((directory / f"{kind}.json").read_text())
         problems += [f"{kind}: {p}" for p in evidence_schema.validate(envelope)]
         problems += _check_envelope(kind, envelope, revision, scientific_fingerprint)
-    changed = _git(root, "diff", "--name-only", revision, "HEAD").stdout.split()
-    problems += [
-        f"{path} changed since the run, so its figures may be stale"
-        for path in changed
-        if is_code(path)
-    ]
+    if current:
+        changed = _git(root, "diff", "--name-only", revision, "HEAD").stdout.split()
+        problems += [
+            f"{path} changed since the run, so its figures may be stale"
+            for path in changed
+            if is_code(path)
+        ]
     if problems:
         return problems
     derived = figures_from_run(directory, scope)
@@ -239,7 +247,12 @@ def archive(
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
-    sub.add_parser("check", help="check claims.json against its run and the manuscript")
+    check = sub.add_parser("check", help="check claims.json against its run and the manuscript")
+    check.add_argument(
+        "--structure-only",
+        action="store_true",
+        help="do not ask whether code changed since the run (the release gate does)",
+    )
     make = sub.add_parser("archive", help="seal a finished run into the repository")
     make.add_argument("--id", required=True)
     make.add_argument("--source", default="local-unattested")
@@ -262,6 +275,7 @@ def main(argv: list[str] | None = None) -> int:
         root=ROOT,
         scientific_fingerprint=evidence_schema.collect_source()["scientific_fingerprint"],
         scope=scope,
+        current=not args.structure_only,
     )
     problems += check_paper(doc, (ROOT / "paper" / "main.tex").read_text())
     for problem in problems:
