@@ -103,6 +103,29 @@ installer (`--platform`, `--abi`, `--only-binary=:all:`), avec numpy, pandas,
 scikit-learn et pyod fixés aux versions du verrou macOS, et chaque roue est
 épinglée par version et sha256. `reproduce.build_environment` le reconstruit
 sur Linux avec `python -m venv` puis `pip install --require-hashes --no-deps -r`.
-Le fichier n'a pas été produit sur une machine Linux : sa validité sur un
-exécuteur propre est établie par le job `reproduce` du workflow
-`verify-release` (voir `remediation.md` pour le run).
+Le fichier n'a pas été produit sur une machine Linux ; sa validité est établie par
+le job `release-reproduce` du workflow `verify-release`.
+
+### Rejeu Linux en CI (cardio, run 39035871741)
+
+Exécuteur hébergé GitHub (`ubuntu-latest`, noyau Linux-6.17 azure, x86_64), Python
+3.11.17, commit de fusion synthétique de la PR n° 37 dont l'arbre est celui du
+commit `e4c5cd40`. Le jeu cardio a été téléchargé depuis ADBench puis comparé à
+l'empreinte de l'exécution archivée (identique, sinon le rejeu n'aurait pas
+démarré). Rapport complet : artefact `evidence-reproduction` du run.
+
+| Niveau | Statut | Détail |
+| --- | --- | --- |
+| Archive macOS de `evidence/` contre un essai Linux | PASS, statistique | écart maximal 6,5e-5 sur les métriques, moyennes à moins d'un écart type ; partitions identiques par leurs membres, octets compressés différents (version de zlib) |
+| Deux essais Linux, même environnement | PASS, numérique | écart 0,0 ; partitions identiques |
+| Environnement Linux reconstruit depuis le verrou à empreintes (`venv`, `pip install --require-hashes`) | PASS, numérique | écart 0,0 par rapport à l'essai précédent |
+| Sensibilité : scikit-learn 1.8.0 au lieu de 1.9.1 | mesuré, numérique | écart 0,0 |
+
+Ce qui en résulte : le verrou Linux se reconstruit sur un exécuteur propre et
+reproduit exactement, sur Linux, les mesures obtenues sur Linux ; les mesures
+d'une archive faite sous macOS ne sont retrouvées que statistiquement sous Linux
+(arithmétique flottante des bibliothèques numériques), ce qui est la limite
+documentée de la reproductibilité entre systèmes. Les durées `detect_s` ne sont
+jamais comparées comme égales. Les jeux water_quality et credit_card ne sont pas
+rejoués en CI (données non publiables) ; le rejeu local des quatre jeux est
+décrit plus haut.

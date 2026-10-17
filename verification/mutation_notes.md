@@ -8,9 +8,9 @@ des archives (filiation, tableaux du manuscrit) ne sont pas lancés pour chaque
 mutant. `config.py`, `logging_setup.py`, `__main__.py` et les fichiers
 `__init__.py` ne sont pas mutés.
 
-Résultat de `make verify-deep` du run local `local-55ad398` (commit
-`55ad3988`, macOS arm64, 17 octobre 2026, non attesté ; preuves scellées dans
-`evidence/runs/local-55ad398/`) : **4 707 mutants éliminés sur 4 815
+Résultat de `make verify-deep` du run local `local-ffa02b2` (commit
+`ffa02b2f`, macOS arm64, 17 octobre 2026, non attesté ; preuves scellées dans
+`evidence/runs/local-ffa02b2/`) : **4 707 mutants éliminés sur 4 815
 (97,76 %)**, 108 survivants, sans mutant ignoré, expiré, en erreur, interrompu
 ou sans test (la barrière `check_mutation.py` refuse ces cas). Le périmètre est
 contrôlé par un relevé indépendant (voir « Périmètre contrôlé ») : 28 fichiers
@@ -162,7 +162,7 @@ décalé (Asia/Kolkata), et les quatre mutants sont éliminés y compris avec
 mutants) donne 105 survivants (4 646 / 4 751, soit 97,79 %) : exactement les
 108 survivants locaux de l'époque moins les trois mutants de casse, sans
 survivant propre à Linux. Cette mesure décrit un état antérieur du code et n'est
-pas citée par le manuscrit, qui cite le run local `local-55ad398` (voir
+pas citée par le manuscrit, qui cite le run local `local-ffa02b2` (voir
 `claims.json`).
 
 ## Mutant sensible au temps
@@ -174,7 +174,7 @@ classé tantôt « tué », tantôt « expiré » quand la machine était charg�
 campagnes locales qui comptent des expirations (cinq mutants dont celui-ci, sur
 une exécution concurrente d'autres tâches) ont été rejouées pour ces mutants
 seulement (`mutmut run <noms>`) ; le résultat retenu, 108 survivants sans
-expiration, est celui du run `local-55ad398`.
+expiration, est celui du run `local-ffa02b2`.
 
 ## Équivalences invoquées
 
