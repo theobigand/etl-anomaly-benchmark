@@ -142,7 +142,10 @@ mutants sont équivalents ; ils n'étaient éliminés en local que grâce au fus
 de la machine. Une fixture de `tests/conftest.py` impose désormais un fuseau
 décalé (Asia/Kolkata), et les quatre mutants sont éliminés y compris avec
 `TZ=UTC`. Les chiffres du manuscrit (4 643 / 4 751) restent ceux de la mesure
-locale à `3779905` ; la campagne Linux corrigée n'a pas encore été rejouée.
+locale à `3779905` ; la campagne Linux corrigée (run 38974460893, `292648a`) donne 105 survivants
+(4 646 / 4 751, soit 97,79 %) : exactement les 108 survivants locaux moins les
+trois mutants de casse, sans survivant propre à Linux. Cette mesure CI n'est
+pas utilisée pour le manuscrit.
 
 ## Équivalences invoquées
 
