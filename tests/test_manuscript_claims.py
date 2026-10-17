@@ -79,3 +79,38 @@ def test_the_benchmark_comparison_does_not_misstate_adbench():
 def test_latency_is_described_as_the_detection_stage_only():
     assert "extraction, transformation and loading are not timed" in PAPER
     assert "not the latency of a whole ETL run" in PAPER
+
+
+# --- external references (#47) ---
+
+PAPER_DIR = ROOT / "paper"
+
+
+def _bib_keys():
+    return re.findall(r"^@\w+\{([^,]+),", (PAPER_DIR / "references.bib").read_text(), flags=re.M)
+
+
+def test_every_citation_resolves_and_every_entry_is_cited():
+    tex = (PAPER_DIR / "main.tex").read_text()
+    cited = {
+        key.strip() for group in re.findall(r"\\cite\{([^}]*)\}", tex) for key in group.split(",")
+    }
+    assert cited == set(_bib_keys())
+
+
+def test_no_bibliography_entry_hides_its_authors():
+    bib = (PAPER_DIR / "references.bib").read_text()
+    assert "Various Authors" not in bib
+    assert "Srinivasa" not in bib  # authors checked against the publisher page
+
+
+def test_every_entry_has_a_verification_record():
+    record = (ROOT / "verification" / "references.md").read_text()
+    for key in _bib_keys():
+        assert f"`{key}`" in record, key
+
+
+def test_the_unsupported_cost_figure_is_not_attributed_to_the_cited_paper():
+    tex = (PAPER_DIR / "main.tex").read_text()
+    assert "12.9" not in tex
+    assert "0.5094" not in tex and "SMOTE" in tex  # the 0.51 is qualified, not alone
