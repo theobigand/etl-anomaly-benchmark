@@ -6,6 +6,7 @@ import ast
 import gzip
 import hashlib
 import json
+import os
 import platform
 import subprocess
 import sys
@@ -203,6 +204,19 @@ def _environment_lock() -> dict[str, str | None]:
     }
 
 
+def _hash_outputs(outputs: list[str], directory: Path) -> dict[str, str]:
+    """sha256 of every output a record lists; a missing or empty output is an error."""
+    hashes = {}
+    for name in outputs:
+        target = Path(name) if Path(name).is_absolute() else directory / name
+        if not target.is_file():
+            raise FileNotFoundError(f"output {name} was not written")
+        if target.stat().st_size == 0:
+            raise ValueError(f"output {name} is empty")
+        hashes[name] = _hash_file(target)
+    return hashes
+
+
 def write_record(
     path: Path,
     *,
@@ -230,6 +244,9 @@ def write_record(
                 "bytes": data_path.stat().st_size,
             }
         )
+    # The record is written last and says which outputs it covers, with their hashes: a
+    # run that stopped before this point has no record and cannot be taken for finished.
+    output_sha256 = _hash_outputs(outputs, path.parent)
     record = {
         "schema_version": 1,
         "experiment": experiment,
@@ -249,7 +266,18 @@ def write_record(
         "seeds": seeds,
         "settings": settings,
         "outputs": outputs,
+        "output_sha256": output_sha256,
     }
+    text = json.dumps(record, indent=2, sort_keys=True) + "\n"
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
+    temporary = path.with_name(f"{path.name}.tmp-{os.getpid()}")
+    try:
+        with temporary.open("w") as stream:
+            stream.write(text)
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(temporary, path)
+    except BaseException:
+        temporary.unlink(missing_ok=True)
+        raise
     return path

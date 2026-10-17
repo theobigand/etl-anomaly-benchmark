@@ -17,6 +17,7 @@ def test_record_binds_data_seed_protocol_and_outputs(tmp_path):
     dataset = tmp_path / "data.csv"
     dataset.write_text("x,label\n1,0\n2,1\n")
     output = tmp_path / "run.json"
+    (tmp_path / "metrics.csv").write_text("f1\n0.5\n")
     provenance.write_record(
         output,
         experiment="benchmark",
@@ -31,6 +32,7 @@ def test_record_binds_data_seed_protocol_and_outputs(tmp_path):
     assert record["dataset"]["sha256"] == hashlib.sha256(dataset.read_bytes()).hexdigest()
     assert record["settings"]["split"] == [0.7, 0.15, 0.15]
     assert record["outputs"] == ["metrics.csv"]
+    assert record["output_sha256"] == {"metrics.csv": hashlib.sha256(b"f1\n0.5\n").hexdigest()}
     assert record["source_revision"]
     assert record["python"]
 

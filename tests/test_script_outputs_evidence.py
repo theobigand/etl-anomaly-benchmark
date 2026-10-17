@@ -69,6 +69,8 @@ def test_record_lists_every_field_of_the_run(tmp_path, monkeypatch):
     data = tmp_path / "data.csv"
     data.write_text("x,label\n1,0\n2,1\n")
     output = tmp_path / "out" / "more" / "run.json"
+    (output.parent).mkdir(parents=True)
+    (output.parent / "metrics.csv").write_text("a\n1\n")
     provenance.write_record(
         output,
         experiment="benchmark",
@@ -108,6 +110,7 @@ def test_record_lists_every_field_of_the_run(tmp_path, monkeypatch):
         "seeds": [4, 5],
         "settings": {"split": [0.7, 0.15, 0.15]},
         "outputs": ["metrics.csv"],
+        "output_sha256": {"metrics.csv": hashlib.sha256(b"a\n1\n").hexdigest()},
     }
 
 
