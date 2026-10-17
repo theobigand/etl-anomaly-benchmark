@@ -12,5 +12,14 @@
   },
   "no_mutants": {
     "src/etl_benchmark/quality/__init__.py": "re-exports the detector classes; the code has no operation mutmut can change"
-  }
+  },
+  "scientific": [
+    "src/etl_benchmark/split.py",
+    "src/etl_benchmark/metrics.py",
+    "src/etl_benchmark/synthetic.py",
+    "src/etl_benchmark/datasets.py",
+    "src/etl_benchmark/registry.py",
+    "src/etl_benchmark/transform.py",
+    "src/etl_benchmark/quality/"
+  ]
 }

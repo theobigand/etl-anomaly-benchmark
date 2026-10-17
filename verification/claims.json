@@ -1,7 +1,15 @@
 {
-  "schema_version": 1,
-  "note": "Verification figures quoted in paper/main.tex. They were measured at the revision named below; test_manuscript_claims.py keeps the paper and this file in step, and the fault count is checked against the live matrix.",
-  "measured_at_revision": "755374f (clean replay commit); documentation-only commits follow",
+  "schema_version": 2,
+  "note": "Verification figures quoted in paper/main.tex, with the run they describe. tests/test_manuscript_claims.py keeps the paper and this file in step; tests/test_claims_provenance.py checks the run (revision, sealed envelopes, staleness).",
+  "published_run": {
+    "id": "local-3779905",
+    "revision": "3779905b0beca34a08a22369ef0bb5dbb2961c63",
+    "source": "local-unattested",
+    "platform": "macOS 27.0 arm64, Python 3.11.17",
+    "captured": "2026-10-16",
+    "historical": true,
+    "note": "Figures of the local certification run made before the post-audit remediation (issues 38 to 49). Its envelopes were not kept in the repository; the run that replaces it is archived under evidence/runs/."
+  },
   "fast": {
     "tests": 771,
     "line_covered": 1531,
