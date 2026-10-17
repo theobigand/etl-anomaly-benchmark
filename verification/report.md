@@ -163,18 +163,35 @@ Cardio vient de l'UCI sous licence CC BY 4.0 (`data/README.md`).
 
 ## Exécutions en CI
 
-La CI (`ci.yml`, sur chaque PR) lance FAST, le typage, la couverture du code de
-vérification et les défauts introduits sous Linux ; la PR #37 les passe
-(commit `292648a`, run `ci` en succès). Le workflow `verify-release`
-(déclenché à la demande, et sur une PR qui modifie son propre fichier) exécute en
-plus DEEP, la reproduction cardio et l'agrégation. Au commit `292648a`
-(run 38974460893) : FAST, FAULTS et DEEP réussis sous Linux (DEEP : 4 646 sur
-4 751, 97,79 %), REAL ignoré faute d'exécuteur autorisé, et le verdict
-`INCOMPLETE` avec pour seule raison « real evidence is missing ». Ces
-résultats CI sont des exécutions du dépôt, non une attestation indépendante.
+Lues dans les artefacts et les journaux des exécutions, copiées sous
+`evidence/ci/39041531141/` (enveloppes, liste des mutants, rapport de
+certification, rapport de reproduction, `INDEX.json` avec les empreintes).
+Aucune de ces exécutions n'est une attestation indépendante.
+
+Run `ci` 39041531123 sur le commit `a8644e7` (PR n° 37) : `test` et `faults`
+réussis (ruff, FAST, typage, couverture du code de vérification, défauts).
+
+Run `verify-release` 39041531141, même commit (exécuteurs `ubuntu-latest`,
+Python 3.11.17, commit de fusion `79ac4508` dont l'arbre est celui de
+`a8644e7`) :
+
+| Travail | Résultat | Détail |
+| --- | --- | --- |
+| `release-fast` | succès | 1 030 tests, 1 576/1 576 lignes, 332/332 branches |
+| `release-static` | succès | code de vérification 1 566/1 566 lignes et 576/576 branches ; typage : 17 erreurs connues, aucune nouvelle (mypy 2.4.0, pandas-stubs 3.0.5.260914) |
+| `release-faults` | succès | 23/23 défauts détectés |
+| `release-deep` | succès | 4 710 mutants éliminés sur 4 815 (97,82 %), 105 survivants, aucun expiré |
+| `release-reproduce` | succès | cardio sur Linux : archive macOS retrouvée statistiquement (écart 6,5e-5), deux essais et environnement reconstruit depuis le verrou à empreintes : écart 0,0 (voir `reproducibility.md`) |
+| `release-real` | ignoré | aucun exécuteur auto-hébergé autorisé |
+| `release-gate` | échec voulu | verdict **INCOMPLETE**, seule raison : « real evidence is missing » ; environnement `exact-environment` |
+
+Les 105 survivants de Linux sont les 108 survivants locaux moins les trois
+mutants de casse (voir `mutation_notes.md`). Chaque tentative précédente a
+révélé un défaut corrigé avant celle-ci (`remediation.md`) : contexte
+d'exécution omis par le constructeur FAST, comparaison des partitions par octets
+compressés, couverture du module de typage dépendant du paquet installé.
 Les règles de protection de `main` ne sont pas appliquées (voir
-`branch_protection_proposal.md`) ; les mesures de CI plus récentes sont dans
-`remediation.md`.
+`branch_protection_proposal.md`).
 
 ## Travail restant
 

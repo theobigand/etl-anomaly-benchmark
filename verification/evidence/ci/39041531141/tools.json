@@ -1,0 +1,47 @@
+{
+  "artifacts": {
+    "experiments/results/verifier_coverage.json": "e9befa1496b9f1c57104a5b19833f1c42a908a7f89d1e6b7ca4322885d2619bf"
+  },
+  "captured_at": "2026-10-17T14:42:41.567704+00:00",
+  "environment": {
+    "packages": {
+      "mutmut": null,
+      "mypy": null,
+      "numpy": "2.4.6",
+      "pandas": "3.0.6",
+      "pandas-stubs": null,
+      "pyod": "3.6.7",
+      "pytest": "9.1.1",
+      "pytest-cov": "7.1.0",
+      "scikit-learn": "1.9.1"
+    },
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.11.17"
+  },
+  "execution": {
+    "ci": true,
+    "run_id": "39041531141",
+    "runner_environment": "github-hosted",
+    "runner_name": "GitHub Actions 1000005792"
+  },
+  "kind": "tools",
+  "result": {
+    "coverage": {
+      "branch": {
+        "coverable": 576,
+        "covered": 576
+      },
+      "line": {
+        "coverable": 1566,
+        "covered": 1566
+      }
+    }
+  },
+  "schema_version": 2,
+  "source": {
+    "revision": "79ac45083645eb2dc8e90b1ec3fea98c512378f9",
+    "scientific_fingerprint": "44faa1f99393490fc25dbcea06ee4c8371bbb032f591e4203253c26d65da6a23",
+    "worktree_dirty": false
+  },
+  "status": "PASS"
+}

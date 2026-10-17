@@ -1,0 +1,70 @@
+{
+  "attestation": "ci-run:39041531141 (not independently attested)",
+  "environment": {
+    "locked": {
+      "numpy": "2.4.6",
+      "pandas": "3.0.6",
+      "pyod": "3.6.7",
+      "scikit-learn": "1.9.1"
+    },
+    "mode": "exact-environment",
+    "packages": {
+      "numpy": "2.4.6",
+      "pandas": "3.0.6",
+      "pyod": "3.6.7",
+      "scikit-learn": "1.9.1"
+    },
+    "platforms": [
+      "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39"
+    ]
+  },
+  "executions": {
+    "deep": "github-hosted",
+    "fast": "github-hosted",
+    "faults": "github-hosted",
+    "reproduction": "github-hosted",
+    "tools": "github-hosted",
+    "types": "github-hosted"
+  },
+  "generated_at": "2026-10-17T16:31:12.210599+00:00",
+  "performance": {
+    "scaling": "LEGACY"
+  },
+  "policy": {
+    "deferred": {
+      "independent_attestation": "no independent attester exists; CERTIFIED states where the evidence was produced and never that it was attested",
+      "linux_environment_lock": "the recorded environment lock covers osx-arm64 only (issue 45)"
+    },
+    "not_applicable": {
+      "manuscript_claims": "checked inside FAST by tests/test_manuscript_claims.py, so it has no separate evidence"
+    },
+    "optional": {
+      "performance": "scaling and timing measurements; reported and bound to the measurement fingerprint, never a gate"
+    },
+    "required": {
+      "deep": "mutation score of at least 95 % over the whole eligible scope, with the scope inventory checked",
+      "fast": "tests, 100 % line and branch coverage of the scientific code, manuscript figures and claims",
+      "faults": "every deliberate scientific defect is detected and the control run passes",
+      "real": "the three full research datasets exist locally, match the reference hashes and pass their checks",
+      "reproduction": "cardio is reproduced against the archive, between two runs and in an environment rebuilt from the lock",
+      "tools": "100 % line and branch coverage of the verifier code in verification/",
+      "types": "the typing gate with the pinned checker and stubs, no new error and no stale baseline entry"
+    },
+    "version": 1
+  },
+  "profiles": {
+    "deep": "PASS",
+    "fast": "PASS",
+    "faults": "PASS",
+    "real": "MISSING",
+    "reproduction": "PASS",
+    "tools": "PASS",
+    "types": "PASS"
+  },
+  "reasons": [
+    "real evidence is missing"
+  ],
+  "revision": "79ac45083645eb2dc8e90b1ec3fea98c512378f9",
+  "schema_version": 1,
+  "status": "INCOMPLETE"
+}
