@@ -1,14 +1,20 @@
 # État des vérifications
 
 Le dépôt contient le pipeline Python (`src/etl_benchmark`), les expériences
-(`experiments`) et le manuscrit. Le résultat global reste **INCOMPLETE** : les
-tests exécutés et le seuil de couverture passent et la mutation du code de
-`src/etl_benchmark` et d'`experiments/` dépasse 95 %. Restent ouverts le
-modèle LSTM, l'évaluation chronologique sur données réelles, l'étude de coût
-dans un environnement contrôlé et les points de la section « Travail restant ».
-Le suivi chronologique a un premier protocole testé ;
-son évaluation sur données réelles, les modèles profonds et la montée en charge
-restent ouverts.
+(`experiments`) et le manuscrit. Les chiffres ci-dessous décrivent chacun une
+exécution identifiée (révision, lieu, date) ; ils sont recopiés dans
+`claims.json`, dont les preuves sont scellées sous `evidence/runs/`, et
+`tests/test_claims_provenance.py` refuse un chiffre dont le code a changé
+depuis. Les chiffres plus anciens sont marqués historiques.
+
+Le statut de certification est **INCOMPLETE à distance** et **CERTIFIED en
+local, non attesté** : toutes les preuves exigées par `release_policy.json`
+existent pour le commit `631b159e` sur la machine du chercheur, mais la preuve
+REAL (jeux complets) ne peut pas être produite par un exécuteur hébergé et
+aucun exécuteur autorisé n'est enregistré. Voir `certification.md` pour ce que
+ce verdict prouve et ne prouve pas. Restent ouverts le modèle LSTM,
+l'évaluation chronologique sur données réelles, l'étude de coût en environnement
+contrôlé et les points de la section « Travail restant ».
 
 ## Point de départ et corrections
 
@@ -44,37 +50,47 @@ archivés séparément et leurs chiffres sont rapprochés du manuscrit par un te
 
 ## Résultats des commandes
 
+Run local `local-631b159` : commit `631b159e`, macOS 27.0 arm64, Python 3.11.17
+(environnement conda `etl-benchmark`, typage dans un venv avec mypy 2.4.0 et
+pandas-stubs 3.0.5.260914), 17 octobre 2026. Résultats non attestés
+indépendamment ; enveloppes de preuve scellées dans `evidence/runs/local-631b159/`.
+
 | Commande | Résultat | Détail |
 | --- | --- | --- |
-| `make verify-fast` | Réussite locale | 771 tests réussis, 3 tests réels et 23 essais de défauts exclus ; lignes et branches couvertes. |
-| `make verify-deep` | Réussite locale | 4 643 mutants éliminés sur 4 751 (97,73 %) dans `src/etl_benchmark` et `experiments/` ; 108 survivants, dont 3 propres à macOS. |
+| `make verify-fast` | Réussite locale | 1 017 tests réussis, 3 tests réels et 23 essais de défauts exclus ; 1 576/1 576 lignes et 332/332 branches. |
+| `make verify-tools` | Réussite locale | 1 546/1 546 lignes et 572/572 branches du code de `verification/`. |
+| `make verify-types` | Réussite locale | mypy 2.4.0, `verification/` sans erreur, 17 erreurs connues du code scientifique, aucune nouvelle. |
+| `make verify-deep` | Réussite locale | 4 707 mutants éliminés sur 4 815 (97,76 %) ; 108 survivants, dont 3 propres à macOS. |
 | `make verify-faults` | Réussite locale | 23 défauts introduits dans une copie temporaire, tous détectés par un test prévu. |
-| `make verify-real` | Réussite locale | 2 tests et contrôle des trois CSV requis ; échoue si l'un manque ou si le registre est vide. |
-| `python verification/scaling.py` | Réussite locale | 27 mesures sur trois tailles, hors FAST. |
-| `make verify-all` | Réussite locale | FAST, DEEP, défauts introduits et REAL passent ; le statut reste INCOMPLETE (travail restant ci-dessous). |
+| `make verify-real` | Réussite locale | 3 tests et contrôle des trois CSV requis ; échoue si l'un manque ou si le registre est vide. |
+| `make verify-reproduce` | Réussite locale | cardio : archive, deux essais, environnement reconstruit depuis le verrou : numérique, écart 0,0 ; sensibilité à scikit-learn 1.8.0 mesurée. |
+| `make verify-release` | CERTIFIED (local, non attesté) | les sept preuves de `release_policy.json` pour ce commit ; mesure de coût `LEGACY`. |
 
-FAST mesure **1531/1531 lignes et 320/320 branches (100 % chacune)**. Le code de
-vérification de `verification/` est mesuré à part (`make verify-tools` : 732/732
-lignes et 218/218 branches).
-La mesure inclut désormais les commandes lancées en sous-processus. Les
-scripts `fetch_cardio.py`, `generate_synthetic.py` et l'entrée principale
-sont désormais parcourus par FAST avec des données construites localement. Le détail par
-fichier est dans le profil généré `verification/profile.json` et
-`coverage.json`. Aucune ligne
-ni branche n'est exclue.
+FAST mesure **1 576/1 576 lignes et 332/332 branches (100 % chacune)** ; le code
+de vérification de `verification/` est mesuré à part (`make verify-tools`). La
+mesure inclut les commandes lancées en sous-processus. Le détail par fichier
+est dans le profil généré `verification/profile.json` et `coverage.json`. Aucune
+ligne ni branche n'est exclue.
 
 La campagne de mutation porte sur les modules de `src/etl_benchmark` qui
-calculent un résultat et sur les dix scripts de `experiments/` (mutmut 3.8.0) :
-4 751 mutants produits, 4 643 éliminés, 108 survivants, aucun cas classé sans
-test, ignoré, expiré ou interrompu. Le taux mesuré est **97,73 %**, dont 95,76 %
-sur le calcul scientifique seul et 98,85 % sur l'orchestration et les scripts
-(voir `mutation_notes.md`). Elle avait commencé à 88,66 % sur
-`metrics.py` seul, à 74,5 % une fois élargie à `src/` sans nouveaux tests et à
-24,3 % sur les scripts. `mutation_notes.md` classe les survivants par lecture des
-diffs (valeurs par défaut de bibliothèques, noms internes) ; ce classement est
-une hypothèse, pas une preuve. Le profil
-généré par FAST garde un champ de mutation à zéro : il signifie « non lancé
-par FAST », pas un score nul ; le résultat de DEEP est dans ce rapport.
+calculent un résultat et sur les dix scripts de `experiments/` (mutmut 3.8.0),
+soit 28 fichiers dont 27 reçoivent des mutants (relevé indépendant dans
+`mutation_scope.json`) : 4 815 mutants produits, 4 707 éliminés, 108 survivants,
+aucun cas classé sans test, ignoré, expiré ou interrompu. Le taux mesuré est
+**97,76 %**, dont 95,76 % sur le calcul scientifique seul (1 647/1 720) et
+98,87 % sur l'orchestration et les scripts (3 060/3 095) ; voir
+`mutation_notes.md`. La campagne avait commencé à 88,66 % sur `metrics.py` seul,
+à 74,5 % une fois élargie à `src/` sans nouveaux tests et à 24,3 % sur les
+scripts. `mutation_notes.md` classe les survivants par lecture des diffs
+(valeurs par défaut de bibliothèques, noms internes) ; ce classement est une
+hypothèse, pas une preuve. Le profil généré par FAST garde un champ de mutation
+à zéro : il signifie « non lancé par FAST », pas un score nul.
+
+Chiffres historiques, à ne pas confondre avec les précédents : 771 tests,
+1 531 lignes et 320 branches, 732/218 pour le code de vérification, 4 643 sur
+4 751 mutants (97,73 %) décrivaient le run local du commit `3779905` (16 octobre
+2026), avant la remédiation des anomalies 38 à 49. Les mesures Linux de la CI
+(run 38974460893, commit `292648a`) sont rapportées dans « Exécutions en CI ».
 
 ## Rejeu du 15 octobre 2026
 
@@ -121,12 +137,16 @@ Un essai local de croissance sur 100, 300 et 900 lignes est décrit dans
 `scaling.md`. Les tests contrôlent les étapes chronométrées et la taille des
 entrées, sans seuil fixe sur la durée.
 
-Les tests de panne d'écriture, de redémarrage et plusieurs schémas extrêmes
-restent à faire. Le pipeline s'exécute séquentiellement ; il n'a ni
-API, ni interface interactive, ni état partagé entre processus. Un contrôle de
-types sera utile avant les nouveaux modèles ; aucun outil de typage n'est
-encore configuré. Les seuils numériques des durées ne sont pas utilisés comme
-critères de correction.
+Des tests de panne d'écriture et de sorties incomplètes existent
+(`tests/test_atomic_outputs.py`, `tests/test_robustness.py`, voir `outputs.md`) ;
+des schémas extrêmes supplémentaires et le redémarrage d'une expérience
+interrompue restent à faire. Le pipeline s'exécute séquentiellement ; il n'a ni
+API, ni interface interactive, ni état partagé entre processus. Le typage est
+contrôlé par `make verify-types` (mypy 2.4.0 et pandas-stubs épinglés dans
+`release_policy.json`) : `verification/` sans erreur, le code scientifique sans
+nouvelle erreur, 17 erreurs connues listées dans `typing_baseline.txt`. Les
+seuils numériques des durées ne sont pas utilisés comme critères de
+correction.
 
 ## Données, résultats et CI
 
@@ -141,18 +161,34 @@ du manifeste. Le fichier Credit Card a la taille de la version 3 de la fiche Kag
 (mars 2018) ; son hash n'a pas pu être comparé à un nouveau téléchargement.
 Cardio vient de l'UCI sous licence CC BY 4.0 (`data/README.md`).
 
-La CI lance FAST et conserve ses rapports. Le profil passe localement sur
-cette révision ; le résultat distant reste à vérifier. Les règles de protection de la branche distante n'ont
-pas été inspectées. DEEP et REAL restent des commandes locales ; elles ne
-bloquent pas encore une publication distante.
+## Exécutions en CI
+
+La CI (`ci.yml`, sur chaque PR) lance FAST, le typage, la couverture du code de
+vérification et les défauts introduits sous Linux ; la PR #37 les passe
+(commit `292648a`, run `ci` en succès). Le workflow `verify-release`
+(déclenché à la demande, et sur une PR qui modifie son propre fichier) exécute en
+plus DEEP, la reproduction cardio et l'agrégation. Au commit `292648a`
+(run 38974460893) : FAST, FAULTS et DEEP réussis sous Linux (DEEP : 4 646 sur
+4 751, 97,79 %), REAL ignoré faute d'exécuteur autorisé, et le verdict
+`INCOMPLETE` avec pour seule raison « real evidence is missing ». Ces
+résultats CI sont des exécutions du dépôt, non une attestation indépendante.
+Les règles de protection de `main` ne sont pas appliquées (voir
+`branch_protection_proposal.md`) ; les mesures de CI plus récentes sont dans
+`remediation.md`.
 
 ## Travail restant
 
-Il faut revoir les 108 survivants si un module change. Il manque également des
-tests de panne et de schéma défavorable, une évaluation temporelle sur données réelles, les
-détecteurs profonds et une étude de coût plus large dans un environnement
-contrôlé.
-Le tableau de suivi `verification/issues.md` relie ces
+- Preuve REAL à distance : il faut un exécuteur auto-hébergé autorisé par le
+  propriétaire (`real_evidence.md`).
+- Rejeu indépendant sur d'autres jeux et dans l'environnement Linux verrouillé
+  (`reproducibility.md`) ; seul cardio a été rejoué dans un environnement
+  reconstruit.
+- Revue des 108 survivants si un module change ; évaluation temporelle sur
+  données réelles, détecteurs profonds, étude de coût plus large dans un
+  environnement contrôlé.
+- Protection de `main` en attente du propriétaire.
+
+Le tableau de suivi `verification/issues.md` et `remediation.md` relient ces
 travaux aux tickets. Aucun résultat de ce rapport ne valide une livraison
 finale du mémoire.
 
@@ -181,16 +217,19 @@ latexmk -pdf -interaction=nonstopmode -halt-on-error -output-directory=paper pap
 | --- | --- |
 | REAL échoue si les trois jeux requis ne passent pas tous | `experiments/verify_real.py` |
 | La barrière de mutation refuse comptes invalides, campagne interrompue, mutants sans test ou ignorés | `experiments/check_mutation.py` |
-| Enveloppe de preuve validée pour FAST, DEEP, FAULTS, REAL | `verification/evidence_schema.py` |
-| Certification de version (`make verify-release`) : CERTIFIED, INCOMPLETE ou REJECTED, rapport « local, non attesté » | `verification/release.py` |
-| Empreinte scientifique v2 (sans les barrières de vérification) et filiation des archives historiques | `experiments/provenance.py`, `verification/lineage.py`, `evidence/lineage.json` |
-| Verrou d'environnement (`make lock`) | `verification/environment/` |
-| Reproductibilité par niveaux | `reproducibility.md` |
-| Couverture du code de vérification (`make verify-tools`) | 732/732 lignes, 218/218 branches |
-| Typage : `verification/` propre, code scientifique sans nouvelle erreur (`make verify-types`) | `check_types.py`, `typing_baseline.txt` |
-| Chiffres cités par le manuscrit | `claims.json`, `tests/test_manuscript_claims.py` |
+| Enveloppe de preuve validée (FAST, DEEP, FAULTS, REAL, tools, types, reproduction) | `verification/evidence_schema.py` |
+| Certification de version (`make verify-release`) selon une politique versionnée : CERTIFIED, INCOMPLETE ou REJECTED, rapport « local, non attesté » | `verification/release.py`, `release_policy.json`, `certification.md` |
+| Empreinte scientifique v2, empreinte de la méthode de mesure et filiation des archives historiques | `experiments/provenance.py`, `verification/lineage.py`, `evidence/lineage.json` |
+| Périmètre de mutation contrôlé par un relevé indépendant | `mutation_scope.py`, `mutation_scope.json` |
+| Verrous d'environnement macOS (conda) et Linux (pip avec empreintes) | `verification/environment/`, `lock_environment.py` |
+| Reproductibilité par niveaux, sortie en échec si un niveau obligatoire n'est pas `PASS` | `reproduce.py`, `reproducibility.md` |
+| Preuve REAL à distance : exécuteur auto-hébergé, archives à liste blanche | `bundles.py`, `real_evidence.md` |
+| Sorties complètes et écrites sans état partiel | `outputs.md` |
+| Références du manuscrit vérifiées sur sources primaires | `references.md` |
+| Chiffres cités par le manuscrit liés à un run scellé | `claims.json`, `claims.py`, `evidence/runs/` |
+| Protection de `main` proposée, vérifiée, non appliquée | `branch_protection_proposal.md`, `protection.py` |
 
-Le statut général reste **INCOMPLETE** : les archives des expériences datent d'un
-arbre de travail modifié et d'une empreinte de première génération ; seul
-Cardio a été rejoué avec le code actuel (identique). Un rejeu complet sur une
-révision propre est nécessaire avant toute certification.
+Le statut général reste **INCOMPLETE à distance** : la preuve REAL n'existe que
+localement. Les archives des expériences viennent d'un rejeu propre sur le
+commit `93b6fe8` (voir « Rejeu du 16 octobre 2026 »), avec l'empreinte
+scientifique v2 `44faa1f9`.

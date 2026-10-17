@@ -2,33 +2,43 @@
   "schema_version": 2,
   "note": "Verification figures quoted in paper/main.tex, with the run they describe. tests/test_manuscript_claims.py keeps the paper and this file in step; tests/test_claims_provenance.py checks the run (revision, sealed envelopes, staleness).",
   "published_run": {
-    "id": "local-3779905",
-    "revision": "3779905b0beca34a08a22369ef0bb5dbb2961c63",
+    "id": "local-631b159",
+    "revision": "631b159ede5d6a3c760e55265a7806c9a0b1bf8a",
     "source": "local-unattested",
-    "platform": "macOS 27.0 arm64, Python 3.11.17",
-    "captured": "2026-10-16",
-    "historical": true,
-    "note": "Figures of the local certification run made before the post-audit remediation (issues 38 to 49). Its envelopes were not kept in the repository; the run that replaces it is archived under evidence/runs/."
+    "platform": "macOS 27.0 arm64, Python 3.11.17 (conda etl-benchmark; typing in a venv with mypy 2.4.0)",
+    "captured": "2026-10-17",
+    "historical": false,
+    "evidence_dir": "verification/evidence/runs/local-631b159",
+    "files": {
+      "deep.json": "fe8a836e7b1f642124da1b42684cd1147f111a9051be96cda11dae400e9e1cfe",
+      "fast.json": "5798399aa85b4c910db5da5f58b8e39f7752f8b852a9662bec698f5d459e9fe6",
+      "faults.json": "6895c30c9f3b5606f31d59a3ba8b4a640522215a2b7c1bbd41a6f6fe105b98f6",
+      "real.json": "eb8cabd26467d93d9740b05330571acf165fa933ac46e250c4bba72ea2b72fea",
+      "reproduction.json": "d11979f3d2e91169423db3820e072445abe324bbafd04427d8717a32703a997e",
+      "results.txt": "e31ec59368ad1bab8b860f204ac36e2636573b77f15cdf66438bb32435e5c312",
+      "tools.json": "e834468d55b8f99998bd75983958096d6c9f9d34868d0228f21c3373d0d2a68c",
+      "types.json": "5903b268dd2e96fab602dcafa9f2bff1310edd1d9c4f12457747a65adbb09654"
+    }
   },
   "fast": {
-    "tests": 771,
-    "line_covered": 1531,
-    "line_coverable": 1531,
-    "branch_covered": 320,
-    "branch_coverable": 320
+    "tests": 1017,
+    "line_covered": 1576,
+    "line_coverable": 1576,
+    "branch_covered": 332,
+    "branch_coverable": 332
   },
   "verifier": {
-    "line": 732,
-    "branch": 218
+    "line": 1546,
+    "branch": 572
   },
   "mutation": {
-    "killed": 4643,
-    "total": 4751,
+    "killed": 4707,
+    "total": 4815,
     "survived": 108,
     "scientific_killed": 1647,
     "scientific_total": 1720,
-    "other_killed": 2996,
-    "other_total": 3031
+    "other_killed": 3060,
+    "other_total": 3095
   },
   "faults": 23,
   "real_tests": 3

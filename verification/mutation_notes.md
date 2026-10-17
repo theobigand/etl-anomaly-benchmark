@@ -8,16 +8,20 @@ des archives (filiation, tableaux du manuscrit) ne sont pas lancés pour chaque
 mutant. `config.py`, `logging_setup.py`, `__main__.py` et les fichiers
 `__init__.py` ne sont pas mutés.
 
-Résultat de `make verify-deep` au 16 octobre 2026 : **4 643 mutants éliminés
-sur 4 751 (97,73 %)**, sans mutant ignoré, expiré, en erreur, interrompu ou
-sans test (la barrière `check_mutation.py` refuse ces cas). La campagne
-complète a donné 4 612 sur 4 732 (97,46 %) ; quatorze survivants ont ensuite
-été éliminés par de nouveaux tests et rejoués un par un
-(`mutmut run <mutants>`), puis les compteurs ont été réunis par
-`mutmut export-cicd-stats`. Une dernière exécution de `make verify-deep` sur le commit final a ajouté 19
-mutants (la fonction de verrou d'environnement) et donné le résultat de tête.
-Les chiffres précédents (4 487 sur 4 594, 97,67 %)
-datent d'avant l'ajout des outils de certification, qui sont eux aussi mutés.
+Résultat de `make verify-deep` du run local `local-631b159` (commit
+`631b159e`, macOS arm64, 17 octobre 2026, non attesté ; preuves scellées dans
+`evidence/runs/local-631b159/`) : **4 707 mutants éliminés sur 4 815
+(97,76 %)**, 108 survivants, sans mutant ignoré, expiré, en erreur, interrompu
+ou sans test (la barrière `check_mutation.py` refuse ces cas). Le périmètre est
+contrôlé par un relevé indépendant (voir « Périmètre contrôlé ») : 28 fichiers
+dans le périmètre, 27 ayant reçu des mutants. Les 68 mutants de plus que la
+campagne précédente (4 751) viennent des fonctions de provenance, d'empreinte de
+mesure et d'écriture atomique des enregistrements, qui sont mutées ; trois
+survivants qui y apparaissaient ont été éliminés par des tests (séparateur des
+segments, arrêt au premier fichier manquant) ou supprimés parce qu'équivalents
+(`directory / name` avec un nom absolu donne déjà ce nom). Les chiffres de la
+campagne du 16 octobre (4 643 sur 4 751, 97,73 %, commit `3779905`) sont
+historiques.
 
 La note ci-dessous sépare le calcul scientifique de l'orchestration, sans
 retirer aucun mutant du dénominateur :
@@ -25,8 +29,8 @@ retirer aucun mutant du dénominateur :
 | Périmètre | Éliminés | Total | Taux |
 | --- | --- | --- | --- |
 | Calcul scientifique : `split`, `metrics`, `synthetic`, `datasets`, `registry`, `transform`, `quality/` | 1 647 | 1 720 | 95,76 % |
-| Orchestration, entrées-sorties, scripts : `extract`, `load`, `pipeline`, `experiments/*.py` | 2 996 | 3 031 | 98,85 % |
-| Ensemble | 4 643 | 4 751 | 97,73 % |
+| Orchestration, entrées-sorties, scripts : `extract`, `load`, `pipeline`, `experiments/*.py` | 3 060 | 3 095 | 98,87 % |
+| Ensemble | 4 707 | 4 815 | 97,76 % |
 
 Le calcul scientifique reste au-dessus de 95 %, mais avec une marge plus
 faible que l'ensemble : l'agrégat ne doit pas être lu comme la garantie des
@@ -154,11 +158,12 @@ de `main` dans `run_benchmark`, `run_curves`, `run_severity` et
 mutants sont équivalents ; ils n'étaient éliminés en local que grâce au fuseau
 de la machine. Une fixture de `tests/conftest.py` impose désormais un fuseau
 décalé (Asia/Kolkata), et les quatre mutants sont éliminés y compris avec
-`TZ=UTC`. Les chiffres du manuscrit (4 643 / 4 751) restent ceux de la mesure
-locale à `3779905` ; la campagne Linux corrigée (run 38974460893, `292648a`) donne 105 survivants
-(4 646 / 4 751, soit 97,79 %) : exactement les 108 survivants locaux moins les
-trois mutants de casse, sans survivant propre à Linux. Cette mesure CI n'est
-pas utilisée pour le manuscrit.
+`TZ=UTC`. La campagne Linux corrigée (run 38974460893, commit `292648a`, 4 751
+mutants) donne 105 survivants (4 646 / 4 751, soit 97,79 %) : exactement les
+108 survivants locaux de l'époque moins les trois mutants de casse, sans
+survivant propre à Linux. Cette mesure décrit un état antérieur du code et n'est
+pas citée par le manuscrit, qui cite le run local `local-631b159` (voir
+`claims.json`).
 
 ## Équivalences invoquées
 
