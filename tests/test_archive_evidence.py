@@ -8,7 +8,12 @@ from verification import archive_evidence
 
 def _record(results, name, experiment, **fields):
     path = results / name
-    path.write_text(json.dumps({"experiment": experiment, **fields}))
+    hashes = {
+        n: hashlib.sha256((results / n).read_bytes()).hexdigest()
+        for n in fields.get("outputs", [])
+        if (results / n).is_file()
+    }
+    path.write_text(json.dumps({"experiment": experiment, "output_sha256": hashes, **fields}))
     return path
 
 
@@ -74,7 +79,12 @@ def test_single_runs_are_copied_under_their_fixed_names(tmp_path):
     evidence.mkdir()
     (results / "severity_20260101_000001.csv").write_text("old")
     (results / "severity_20260101_000002.csv").write_text("new")
-    _record(results, "run_severity_20260101_000002.json", "severity")
+    _record(
+        results,
+        "run_severity_20260101_000002.json",
+        "severity",
+        outputs=["severity_20260101_000002.csv"],
+    )
     runs = [("run_severity_*.json", "run_severity.json"), ("severity_*.csv", "severity.csv")]
     archive_evidence.archive_single_runs(results, evidence, runs)
     assert (evidence / "severity.csv").read_text() == "new"
