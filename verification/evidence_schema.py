@@ -20,6 +20,7 @@ import sys
 from datetime import UTC, datetime
 from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "experiments"))
@@ -283,6 +284,7 @@ def build_tools(
     coverage: Path, *, root: Path = ROOT, source=None, environment=None, execution=None
 ):
     """Line and branch coverage of the verifier code (``make verify-tools``)."""
+    result: dict[str, Any]
     try:
         totals = json.loads(coverage.read_text())["totals"]
         result = {

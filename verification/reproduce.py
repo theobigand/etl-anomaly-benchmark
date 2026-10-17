@@ -41,6 +41,7 @@ import sys
 import tempfile
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import Any
 
 import pandas as pd
 
@@ -52,7 +53,7 @@ ARCHIVED = ROOT / "verification" / "evidence"
 LEVELS = ("archive", "same_environment", "locked_environment", "version_sensitivity")
 MANDATORY = ("archive", "same_environment", "locked_environment")
 # What a replay runs, which archived files it is compared with, and where its input lives.
-TARGETS = {
+TARGETS: dict[str, dict[str, Any]] = {
     "cardio": {
         "script": "run_benchmark.py",
         "args": ["--dataset", "cardio"],
@@ -133,7 +134,7 @@ def compare(candidate: Path, reference: Path) -> dict:
 
 
 def _archived_record(dataset: str, archived: Path = ARCHIVED) -> dict:
-    return json.loads((archived / TARGETS[dataset]["record"]).read_text())
+    return json.loads((archived / str(TARGETS[dataset]["record"])).read_text())
 
 
 def command_for(dataset: str, python: str, results_dir: Path, archived: Path = ARCHIVED) -> list:
@@ -178,7 +179,7 @@ def run_dataset(python: str, dataset: str, results_dir: Path) -> dict[str, Path 
     return {"table": next(results_dir.glob(target["table"])), "splits": splits}
 
 
-def _level(candidate: dict[str, Path], reference: dict[str, Path]) -> dict:
+def _level(candidate: dict[str, Any], reference: dict[str, Any]) -> dict:
     result = compare(candidate["table"], reference["table"])
     if reference["splits"] is None:
         same_splits = True  # this experiment archives no split ids
@@ -195,21 +196,21 @@ def _level(candidate: dict[str, Path], reference: dict[str, Path]) -> dict:
     return result
 
 
-def lock_strategy() -> dict | None:
+def lock_strategy() -> dict[str, Any] | None:
     """How this platform rebuilds the recorded environment, or None when it cannot."""
     system, machine = platform.system(), platform.machine()
     conda = LOCK / f"conda-{system.lower()}-{machine}.explicit.txt"
     if conda.is_file():
-        found = {"strategy": "conda-explicit", "path": conda}
+        strategy, path = "conda-explicit", conda
     elif (system, machine) == ("Linux", "x86_64"):
-        found = {"strategy": "pip-hashes", "path": LOCK / lock_environment.LINUX_LOCK}
+        strategy, path = "pip-hashes", LOCK / lock_environment.LINUX_LOCK
     else:
         return None
     return {
-        "strategy": found["strategy"],
-        "file": f"verification/environment/{found['path'].name}",
-        "sha256": hashlib.sha256(found["path"].read_bytes()).hexdigest(),
-        "path": found["path"],
+        "strategy": strategy,
+        "file": f"verification/environment/{path.name}",
+        "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+        "path": path,
     }
 
 
@@ -218,7 +219,7 @@ def build_environment(prefix: Path, extra_pip: list[str] | None = None) -> str:
     strategy = lock_strategy()
     if strategy is None:
         raise RuntimeError(f"no recorded lock for {platform.system()} {platform.machine()}")
-    run = {"check": True, "capture_output": True, "text": True, "timeout": 1800}
+    run: dict[str, Any] = {"check": True, "capture_output": True, "text": True, "timeout": 1800}
     python = str(prefix / "bin" / "python")
     if strategy["strategy"] == "conda-explicit":
         subprocess.run(

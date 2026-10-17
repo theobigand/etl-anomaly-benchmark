@@ -75,7 +75,7 @@ def check(patterns: list[str], root: Path, config: dict) -> list[str]:
     return problems
 
 
-def mutated_files(results: str, root: Path, bases: list[str] = ("src", ".")) -> list[str]:
+def mutated_files(results: str, root: Path, bases: tuple[str, ...] = ("src", ".")) -> list[str]:
     """Source files that received at least one mutant, from ``mutmut results --all``."""
     found: set[str] = set()
     for line in results.splitlines():

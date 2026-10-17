@@ -14,6 +14,7 @@ import argparse
 import json
 import tarfile
 from pathlib import Path
+from typing import IO, cast
 
 ROOT = Path(__file__).resolve().parents[1]
 MAX_MEMBER = 5 * 1024 * 1024
@@ -95,7 +96,7 @@ def unpack(bundle: Path, root: Path, kind: str | None = None) -> list[str]:
             for member in members:
                 target = root / member.name
                 target.parent.mkdir(parents=True, exist_ok=True)
-                target.write_bytes(archive.extractfile(member).read())
+                target.write_bytes(cast(IO[bytes], archive.extractfile(member)).read())
     except (tarfile.TarError, OSError, EOFError) as exc:
         raise BundleError(f"{bundle} is not a readable archive: {exc}") from exc
     return [member.name for member in members]
