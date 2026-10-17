@@ -183,10 +183,76 @@ def test_command_writes_the_report_and_fails_on_a_failed_level(tmp_path, monkeyp
     assert "archive: FAIL DIFFERENT" in capsys.readouterr().out
 
 
-def test_command_exits_zero_when_every_level_passes_or_is_not_run(tmp_path, monkeypatch):
-    _stub_runs(monkeypatch, tmp_path)
+def _broken_builds(monkeypatch):
+    def broken(prefix, extra=None):
+        raise subprocess.CalledProcessError(1, "conda")
+
+    monkeypatch.setattr(reproduce, "build_environment", broken)
+
+
+def _run_main(tmp_path, *levels):
     out = tmp_path / "r.json"
-    assert reproduce.main(["--levels", "archive", "same_environment", "--output", str(out)]) == 0
+    code = reproduce.main(
+        ["--levels", *levels, "--workdir", str(tmp_path / "w"), "--output", str(out)]
+    )
+    return code, json.loads(out.read_text())
+
+
+def test_command_exits_zero_when_every_mandatory_level_passes(tmp_path, monkeypatch):
+    _stub_runs(monkeypatch, tmp_path)
+    code, document = _run_main(tmp_path, "archive", "same_environment")
+    assert code == 0
+    assert document["outcome"] == "PASS" and document["reasons"] == []
+
+
+def test_a_requested_locked_environment_that_was_not_run_is_not_a_pass(
+    tmp_path, monkeypatch, capsys
+):
+    _stub_runs(monkeypatch, tmp_path)
+    _broken_builds(monkeypatch)
+    code, document = _run_main(tmp_path, "archive", "same_environment", "locked_environment")
+    assert code == 1
+    assert document["outcome"] == "INCOMPLETE"
+    assert document["levels"]["locked_environment"]["status"] == "NOT_RUN"
+    assert any("locked_environment" in reason for reason in document["reasons"])
+    assert "outcome: INCOMPLETE" in capsys.readouterr().out
+
+
+def test_every_mandatory_level_passing_including_the_locked_one_exits_zero(tmp_path, monkeypatch):
+    _stub_runs(monkeypatch, tmp_path)
+    monkeypatch.setattr(reproduce, "build_environment", lambda prefix, extra=None: "python")
+    code, document = _run_main(tmp_path, "archive", "same_environment", "locked_environment")
+    assert code == 0 and document["outcome"] == "PASS"
+    assert document["levels"]["locked_environment"]["required"] is True
+
+
+def test_the_sensitivity_experiment_never_decides_the_outcome(tmp_path, monkeypatch):
+    _stub_runs(monkeypatch, tmp_path)
+    _broken_builds(monkeypatch)
+    code, document = _run_main(tmp_path, "archive", "version_sensitivity")
+    assert code == 0 and document["outcome"] == "PASS"
+    level = document["levels"]["version_sensitivity"]
+    assert level["status"] == "NOT_RUN" and level["required"] is False
+
+
+def test_a_sensitivity_run_alone_certifies_nothing(tmp_path, monkeypatch):
+    _stub_runs(monkeypatch, tmp_path)
+    monkeypatch.setattr(reproduce, "build_environment", lambda prefix, extra=None: "python")
+    code, document = _run_main(tmp_path, "version_sensitivity")
+    assert code == 1 and document["outcome"] == "INCOMPLETE"
+    assert document["levels"]["version_sensitivity"]["status"] == "MEASURED"
+
+
+def test_a_crashed_benchmark_still_writes_a_failing_report(tmp_path, monkeypatch):
+    def crash(python, directory):
+        raise RuntimeError("benchmark failed: boom")
+
+    monkeypatch.setattr(reproduce, "run_cardio", crash)
+    code, document = _run_main(tmp_path, "archive", "same_environment")
+    assert code == 1 and document["outcome"] == "FAIL"
+    assert document["levels"]["archive"]["status"] == "FAIL"
+    assert "boom" in document["levels"]["archive"]["reason"]
+    assert document["levels"]["same_environment"]["status"] == "FAIL"
 
 
 def test_the_module_prints_usage():
@@ -205,3 +271,35 @@ def test_cardio_is_reproduced_against_the_archive_with_the_local_data(tmp_path):
     report = reproduce.reproduce(["archive", "same_environment"], tmp_path, "")
     assert report["archive"]["kind"] == "NUMERICAL" and report["archive"]["status"] == "PASS"
     assert report["same_environment"]["status"] == "PASS"
+
+
+def test_a_crash_of_the_second_run_fails_only_that_level(tmp_path, monkeypatch):
+    calls = []
+
+    def second_crashes(python, directory):
+        calls.append(directory.name)
+        if directory.name == "second":
+            raise RuntimeError("benchmark failed: second")
+        return _run(tmp_path, directory.name)
+
+    _stub_runs(monkeypatch, tmp_path)
+    monkeypatch.setattr(reproduce, "run_cardio", second_crashes)
+    code, document = _run_main(tmp_path, "archive", "same_environment")
+    assert code == 1 and document["outcome"] == "FAIL"
+    assert document["levels"]["archive"]["status"] == "PASS"
+    assert "second" in document["levels"]["same_environment"]["reason"]
+
+
+def test_a_failure_outranks_a_level_that_was_not_run_whatever_the_order():
+    not_run = {"status": "NOT_RUN", "reason": "no network"}
+    failed = {"status": "FAIL", "kind": "DIFFERENT"}
+    passed = {"status": "PASS"}
+    report = {"archive": failed, "same_environment": not_run, "locked_environment": not_run}
+    outcome, reasons = reproduce.judge(report)
+    assert outcome == "FAIL" and len(reasons) == 3
+    outcome, _ = reproduce.judge({"archive": not_run, "same_environment": failed})
+    assert outcome == "FAIL"
+    outcome, reasons = reproduce.judge(
+        {"archive": not_run, "same_environment": not_run, "locked_environment": passed}
+    )
+    assert outcome == "INCOMPLETE" and len(reasons) == 2
