@@ -9,7 +9,7 @@ depuis. Les chiffres plus anciens sont marqués historiques.
 
 Le statut de certification est **INCOMPLETE à distance** et **CERTIFIED en
 local, non attesté** : toutes les preuves exigées par `release_policy.json`
-existent pour le commit `43831f00` sur la machine du chercheur, mais la preuve
+existent pour le commit `605a9cf4` sur la machine du chercheur, mais la preuve
 REAL (jeux complets) ne peut pas être produite par un exécuteur hébergé et
 aucun exécuteur autorisé n'est enregistré. Voir `certification.md` pour ce que
 ce verdict prouve et ne prouve pas. Restent ouverts le modèle LSTM,
@@ -50,15 +50,15 @@ archivés séparément et leurs chiffres sont rapprochés du manuscrit par un te
 
 ## Résultats des commandes
 
-Run local `local-43831f0` : commit `43831f00`, macOS 27.0 arm64, Python 3.11.17
+Run local `local-605a9cf` : commit `605a9cf4`, macOS 27.0 arm64, Python 3.11.17
 (environnement conda `etl-benchmark`, typage dans un venv avec mypy 2.4.0 et
 pandas-stubs 3.0.5.260914), 18 octobre 2026. Résultats non attestés
-indépendamment ; enveloppes de preuve scellées dans `evidence/runs/local-43831f0/`.
+indépendamment ; enveloppes de preuve scellées dans `evidence/runs/local-605a9cf/`.
 
 | Commande | Résultat | Détail |
 | --- | --- | --- |
-| `make verify-fast` | Réussite locale | 1 081 tests réussis, 3 tests réels et 23 essais de défauts exclus ; 1 628/1 628 lignes et 336/336 branches. |
-| `make verify-tools` | Réussite locale | 1 775/1 775 lignes et 656/656 branches du code de `verification/`. |
+| `make verify-fast` | Réussite locale | 1 105 tests réussis, 3 tests réels et 23 essais de défauts exclus ; 1 628/1 628 lignes et 336/336 branches. |
+| `make verify-tools` | Réussite locale | 1 883/1 883 lignes et 690/690 branches du code de `verification/`. |
 | `make verify-types` | Réussite locale | mypy 2.4.0, `verification/` sans erreur, 17 erreurs connues du code scientifique, aucune nouvelle. |
 | `make verify-deep` | Réussite locale | 4 700 mutants éliminés sur 4 808 (97,75 %) ; 108 survivants, dont 3 propres à macOS. |
 | `make verify-faults` | Réussite locale | 23 défauts introduits dans une copie temporaire, tous détectés par un test prévu. |
