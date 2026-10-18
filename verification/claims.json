@@ -2,44 +2,43 @@
   "schema_version": 2,
   "note": "Verification figures quoted in paper/main.tex, with the run they describe. tests/test_manuscript_claims.py keeps the paper and this file in step; tests/test_claims_provenance.py checks the run (revision, sealed envelopes, staleness).",
   "published_run": {
-    "id": "local-ffa02b2",
-    "revision": "ffa02b2f803831514cb4f1ec15a50fd6f4d10fe3",
+    "id": "local-43831f0",
+    "revision": "43831f00eb2d1d618c18a53203620b286d4e8851",
     "source": "local-unattested",
     "platform": "macOS 27.0 arm64, Python 3.11.17 (conda etl-benchmark; typing in a venv with mypy 2.4.0)",
-    "captured": "2026-10-17",
-    "historical": true,
-    "evidence_dir": "verification/evidence/runs/local-ffa02b2",
+    "captured": "2026-10-18",
+    "historical": false,
+    "evidence_dir": "verification/evidence/runs/local-43831f0",
     "files": {
-      "deep.json": "77931b992c54f398ff3eedafce1d3bbae71d8862433778ea67b1d4af6bd4bc92",
-      "fast.json": "8a00786cccfb22ecb313675c9da5ca238bd6af24881cb230970da5084c249479",
-      "faults.json": "ce0c52c07c72e6677b28212fb18d73a0e6927ddd52f2874b72c3ee3822d69118",
-      "real.json": "2a0b96b2983d1af854fdf54f0722edb6edcd5aa7b322c11202a3017d75f302a3",
-      "reproduction.json": "c5b476567a1f14e01e1501c882c5662a19e018ddc1fd65424c8704f20c2f7e06",
-      "results.txt": "e31ec59368ad1bab8b860f204ac36e2636573b77f15cdf66438bb32435e5c312",
-      "tools.json": "f42908d0db1f3d11c8aa14c90ac7e634315eaf6e0721bbd23f78ddb15414bfff",
-      "types.json": "71f03961a74b4fe1b2d692d688a6682f1e2ee8bd2f5a2b5166490e5fd88932c0"
-    },
-    "note": "Run made before the atomic result writers (issue 48) changed the scientific fingerprint from 44faa1f9 to cecbed00. The figures are kept until the run on the final revision is sealed."
+      "deep.json": "e656f092a692c7bfe01b5165bdb259edd621b88b9eb3494f35c8eb111d094be1",
+      "fast.json": "98268c5734ce86b03229883f68a9c465e3dbc9cf32d7046e17aa8941bb226e11",
+      "faults.json": "a285fddc6aee400e2dd03a8340f3b2907d3875cb8d6d55cc9a610ae69802a2be",
+      "real.json": "935a569af6d12418449e879c108325a010849db0e7fea72190b31f812f77e52a",
+      "reproduction.json": "853445f41a689dc90a9da0c06a77cacc9d2a86bb64c3409f27753a322aaa708f",
+      "results.txt": "b6fa57dfb077a47e76a6b290ba3cd8ca59dd901b09a61c3ab9bcdf0625112832",
+      "tools.json": "5c600072d0b95a91d35d5469fe451c6df29f8dc2f52001709d359f2891fd7532",
+      "types.json": "e95a9a0942a898bfd427df8006505c26a6979f5c5f38316fb4a41c81b345e064"
+    }
   },
   "fast": {
-    "tests": 1030,
-    "line_covered": 1576,
-    "line_coverable": 1576,
-    "branch_covered": 332,
-    "branch_coverable": 332
+    "tests": 1081,
+    "line_covered": 1628,
+    "line_coverable": 1628,
+    "branch_covered": 336,
+    "branch_coverable": 336
   },
   "verifier": {
-    "line": 1566,
-    "branch": 576
+    "line": 1775,
+    "branch": 656
   },
   "mutation": {
-    "killed": 4707,
-    "total": 4815,
+    "killed": 4700,
+    "total": 4808,
     "survived": 108,
     "scientific_killed": 1647,
     "scientific_total": 1720,
-    "other_killed": 3060,
-    "other_total": 3095
+    "other_killed": 3053,
+    "other_total": 3088
   },
   "faults": 23,
   "real_tests": 3

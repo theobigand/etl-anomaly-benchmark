@@ -15,7 +15,7 @@ qu'après exécution des contrôles listés ici, sur le commit indiqué.
 | #45 reproduction étendue et verrou Linux | terminé | `7d7e6f4`, `8df5b71`, `a8644e7` | verrou Linux à empreintes validé sur un exécuteur propre (cardio : écart 0,0 contre l'essai Linux, 6,5e-5 contre l'archive macOS) ; rejeux locaux des quatre jeux ; rejeux verrouillés de water_quality, credit_card et synthetic en attente |
 | #46 protection de `main` | **ouvert** : `AWAITING_OWNER_APPROVAL` | `69054d5` | contextes `test` et `faults` relevés, homonymie levée, charge utile validée, `verification.protection check` en lecture seule ; rien appliqué |
 | #47 références externes | terminé | `3fe3505` | 12 entrées vérifiées (`references.md`) ; 12,9 M$ retiré ; AUC 0,5094 confirmée ; auteurs corrigés |
-| #48 sorties atomiques | **ouvert** : écriture atomique sur place des CSV/figures non faite | `58556e5`, `80b6310` | enregistrement atomique, sorties hachées, archivage atomique et fermé ; la réécriture des écrivains CSV changerait l'empreinte scientifique et exige un rejeu complet décidé par le propriétaire (`outputs.md`) |
+| #48 sorties atomiques | implémenté et vérifié en local ; clôture après la CI distante du dernier commit | `58556e5`, `80b6310`, `367e3ac`, `dfe1ba0`, `74d2178` | RED : 7 cas de disque plein sur les points d'entrée (fichiers tronqués, figure précédente écrasée) ; GREEN : `etl_benchmark.atomic.atomic_path` (fichier caché voisin, refus du vide, `fsync`, `os.replace`, nettoyage sur erreur et interruption), test d'arbre syntaxique interdisant toute écriture directe ; empreinte `44faa1f9` vers `cecbed00`, rejeu complet depuis `367e3ac` (écart 0,0, partitions et figures identiques), run scellé `local-43831f0` |
 | #49 clôture indépendante | **ouvert** : preuve REAL à distance et protection absentes | voir le commentaire de l'issue | état exact du commit `a8644e7` dans le commentaire |
 
 
@@ -33,9 +33,21 @@ qu'après exécution des contrôles listés ici, sur le commit indiqué.
 - Lecture du contrôle préalable sur la machine de recherche (macOS arm64) : python,
   dépendances et hachages des trois jeux conformes au manifeste ; permissions 644
   (avertissement) ; aucun exécuteur `thesis-real`.
-- Les figures publiées du manuscrit sont liées au run scellé `local-ffa02b2`. Ces
-  changements touchent du code de vérification : la porte de certification
-  signalera ces figures périmées. Le rescellement complet (profils, `claims
-  archive`, chiffres du manuscrit) est à faire une seule fois, sur le commit à
-  certifier, juste avant l'exécution REAL ; le refaire maintenant serait périmé
-  à la prochaine modification.
+- Les figures publiées du manuscrit sont liées au run scellé `local-43831f0`
+  (commit `43831f00`, après l'écriture atomique et le rejeu complet) ; le run
+  précédent `local-ffa02b2` reste archivé sous `evidence/runs/`.
+
+## Compléments demandés après la clôture initiale
+
+- Étiquettes de l'exécuteur : le script n'utilise plus `--no-default-labels` ;
+  l'exécuteur porte `self-hosted`, `Linux`, `X64` et `thesis-real`, le job
+  demande `[self-hosted, thesis-real]` et le contrôle d'enregistrement exige les
+  deux étiquettes. Un test interdit à tout autre workflow de citer `self-hosted`.
+- Installation du job REAL : depuis le verrou Linux à empreintes
+  (`runner/install_locked.sh`), plus de `pip install -e ".[dev]"`. Vérifiée sur
+  un conteneur Linux amd64 propre et par le job hébergé `release-real-readiness`
+  (installation, contrôle des 70 versions du verrou, préflight sans jeux).
+- Sécurité de l'exécuteur : `runner_security.md` (ce que le dépôt impose, ce que
+  l'opérateur doit faire, absence de garantie contre l'exfiltration par des
+  liens symboliques).
+- Rejeu complet après l'écriture atomique : voir `report.md`.

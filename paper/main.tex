@@ -689,17 +689,17 @@ marks severity $1.0$.}
 
 \subsection{Verification outcomes and computation cost}
 \label{sec:verification-results}
-At commit ffa02b2f (local run, not independently attested) the routine suite runs 1,030 tests, plus three that need
+At commit 43831f00 (local run, not independently attested) the routine suite runs 1,081 tests, plus three that need
 the full datasets and twenty-three fault-injection runs, all run separately.
-Coverage of the pipeline modules and the experiment scripts is complete: 1,576 of
-1,576 executable lines and 332 of 332 branches. The tools that check the
+Coverage of the pipeline modules and the experiment scripts is complete: 1,628 of
+1,628 executable lines and 336 of 336 branches. The tools that check the
 checks (the evidence and release scripts under \texttt{verification/}) are
-measured apart, at 1,566 of 1,566 lines and 576 of 576 branches, and are not part of
+measured apart, at 1,775 of 1,775 lines and 656 of 656 branches, and are not part of
 that figure. The mutation campaign on the pipeline modules and the experiment
-scripts kills 4,707 of 4,815 mutants ($97.76\%$). Split by what the code does,
+scripts kills 4,700 of 4,808 mutants ($97.75\%$). Split by what the code does,
 the modules that compute a result (splitting, metrics, the synthetic generator,
 the detectors) kill 1,647 of 1,720 ($95.76\%$) and the input, output and script
-code kills 3,060 of 3,095 ($98.87\%$), so the aggregate is higher than the score
+code kills 3,053 of 3,088 ($98.87\%$), so the aggregate is higher than the score
 of the scientific computation alone. The 108 survivors count as failures. We
 classified them by reading the changes, not by proof: most pass an explicit
 default (\texttt{dtype}, \texttt{index}) or change an internal label. Two that
