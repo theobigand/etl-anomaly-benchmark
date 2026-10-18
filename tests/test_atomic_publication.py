@@ -177,6 +177,16 @@ runpy.run_path(script, run_name="__main__")
 """
 
 
+def _without_coverage_hooks():
+    # Coverage keeps its data in a SQLite file, which the file-size limit would break
+    # before the experiment writes anything.
+    return {
+        key: value
+        for key, value in os.environ.items()
+        if not key.startswith(("COV_CORE", "COVERAGE"))
+    }
+
+
 def _run_full_disk(limit, script, *args):
     return subprocess.run(
         [
@@ -188,6 +198,7 @@ def _run_full_disk(limit, script, *args):
             *map(str, args),
         ],
         cwd=ROOT,
+        env=_without_coverage_hooks(),
         capture_output=True,
         text=True,
         check=False,
