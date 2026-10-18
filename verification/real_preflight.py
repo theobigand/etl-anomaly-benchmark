@@ -282,8 +282,11 @@ def run_checks(args: argparse.Namespace) -> list[Result]:
     else:
         paths = {name: spec.csv for name, spec in DATASETS.items() if name in reference}
         results += check_datasets(paths, reference)
+    if args.install_only:
+        results.append(Result("resources", "SKIP", "--install-only: sized for the full datasets"))
+    else:
+        results.append(check_resources(measure_resources(ROOT)))
     results += [
-        check_resources(measure_resources(ROOT)),
         check_revision(head, args.expect_sha, dirty),
         check_bundle_allowlist(),
         check_upload_paths(WORKFLOW.read_text()),

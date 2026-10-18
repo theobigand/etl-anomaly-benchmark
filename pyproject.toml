@@ -61,6 +61,7 @@ patch = ["subprocess"]
 [tool.mutmut]
 source_paths = ["src/etl_benchmark", "experiments"]
 only_mutate = [
+    "src/etl_benchmark/atomic.py",
     "src/etl_benchmark/datasets.py",
     "src/etl_benchmark/extract.py",
     "src/etl_benchmark/load.py",

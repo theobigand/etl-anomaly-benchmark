@@ -15,14 +15,17 @@ aucun. État relevé en lecture le 17 octobre 2026 :
 
 ### Où l'installer
 
-- Recommandé : une machine virtuelle Linux x86_64 dédiée, Python 3.11, qui ne
-  contient que l'exécuteur et les trois CSV. C'est la plateforme du verrou
-  `environment/linux-x86_64-py311.lock.txt` ; la correspondance avec l'archive
-  y est statistique, et l'exécution est reproductible d'un lancement à l'autre.
-- Possible : la machine de recherche (macOS arm64, celle de l'archive). Les
-  résultats y sont numériquement identiques, mais l'exécution n'apporte alors
-  aucune indépendance : la preuve est étiquetée `ci-run:<id> (not independently
-  attested)`, comme pour toute exécution auto-hébergée, jamais « attestée ».
+- Obligatoire : une machine Linux x86_64, Python 3.11 (une machine virtuelle
+  dédiée, qui ne contient que l'exécuteur et les trois CSV). Le job installe
+  l'environnement depuis le verrou `environment/linux-x86_64-py311.lock.txt`
+  (roues fixées par version et sha256, `--require-hashes --no-deps`) ; sur macOS
+  ou une autre plateforme, `verification/runner/install_locked.sh` refuse de
+  continuer. La correspondance avec l'archive macOS y est statistique.
+- Indépendance : une exécution sur la machine de recherche (macOS, celle de
+  l'archive) n'est plus acceptée par ce job ; `make verify-real` local garde sa
+  valeur `local-unattested`. Même sur la VM, la preuve reste étiquetée
+  `ci-run:<id> (not independently attested)` : le propriétaire est à la fois
+  l'opérateur et l'auteur.
 - Dans tous les cas : un compte système dédié sans droit d'administration, des
   fichiers lisibles par ce seul compte, un exécuteur éphémère (une tâche, puis
   désenregistrement), aucun secret du dépôt ni identifiant personnel sur la
@@ -44,8 +47,11 @@ sudo env RUNNER_ARCHIVE=... RUNNER_SHA256=... DATA_SOURCE=... \
 
 Puis, en tant que `thesis-runner`, dans `~/actions-runner` :
 `./config.sh --url https://github.com/theobigand/etl-anomaly-benchmark
---labels thesis-real --no-default-labels --ephemeral --token <jeton>` et
-`./run.sh`. L'étiquette `thesis-real` n'est portée par aucun exécuteur hébergé.
+--labels thesis-real --ephemeral --token <jeton>` et
+`./run.sh`. L'exécuteur garde ses étiquettes par défaut (`self-hosted`, `Linux`, `X64`) et
+porte en plus `thesis-real`. Le job demande `[self-hosted, thesis-real]` : un
+exécuteur hébergé par GitHub ne peut jamais le prendre, et le contrôle
+`--check-registration` exige les deux étiquettes. Voir `runner_security.md`.
 Le fichier `.env` de l'exécuteur définit `THESIS_DATA_DIR=/srv/thesis-data`
 (répertoire en mode 0700, fichiers en 0400).
 
@@ -62,7 +68,10 @@ approuvée et l'arbre propre, la liste blanche du paquet REAL (deux rapports
 JSON), les chemins téléversés par le job `real` (le seul `evidence-real.tgz`),
 `RUNNER_ENVIRONMENT` et, si l'API le permet, l'enregistrement de l'exécuteur
 (une lecture refusée est « inconnu », pas « absent »). Le workflow l'exécute
-avant `make verify-real`.
+avant `make verify-real`. L'option `--install-only` (sans jeux ni exécuteur)
+est utilisée par le job hébergé `release-real-readiness`, qui rejoue
+l'installation depuis le verrou et le contrôle sur une machine Linux propre à
+chaque lancement.
 
 ### Garde-fous du job `real`
 
@@ -72,8 +81,9 @@ avant `make verify-real`.
 - le commit lancé doit être égal à l'entrée `approved_sha` (SHA complet que le
   propriétaire a relu), sinon le job s'arrête avant de récupérer le code ;
 - `RUNNER_ENVIRONMENT` doit valoir `self-hosted` ;
-- le code est récupéré sans identifiants persistants, installé dans un
-  environnement virtuel jetable ; les CSV sont liés par `ln -s` depuis
+- le code est récupéré sans identifiants persistants ; l'environnement vient du
+  verrou à empreintes (`install_locked.sh`, aucune résolution de dépendance, le
+  projet n'est pas installé, `PYTHONPATH` désigne `src/`) ; les CSV sont liés par `ln -s` depuis
   `THESIS_DATA_DIR`, jamais copiés ;
 - seuls `real_verification.json` et `evidence/real.json` sont emballés
   (`verification.bundles`, liste blanche, 5 Mio par membre) et téléversés.

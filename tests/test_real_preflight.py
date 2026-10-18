@@ -240,6 +240,7 @@ def test_install_only_skips_the_checks_a_machine_without_datasets_cannot_pass(mo
     results = pf.run_checks(args)
     assert _status(results, "datasets") == "SKIP"
     assert _status(results, "runner") == "SKIP"
+    assert _status(results, "resources") == "SKIP"
     assert _status(results, "revision") == "PASS"
     assert not [r for r in results if r.name.startswith("dataset ")]
     assert "SKIP datasets" in "\n".join(f"{r.status} {r.name}" for r in results)
