@@ -7,7 +7,7 @@
     "source": "local-unattested",
     "platform": "macOS 27.0 arm64, Python 3.11.17 (conda etl-benchmark; typing in a venv with mypy 2.4.0)",
     "captured": "2026-10-17",
-    "historical": false,
+    "historical": true,
     "evidence_dir": "verification/evidence/runs/local-ffa02b2",
     "files": {
       "deep.json": "77931b992c54f398ff3eedafce1d3bbae71d8862433778ea67b1d4af6bd4bc92",
@@ -18,7 +18,8 @@
       "results.txt": "e31ec59368ad1bab8b860f204ac36e2636573b77f15cdf66438bb32435e5c312",
       "tools.json": "f42908d0db1f3d11c8aa14c90ac7e634315eaf6e0721bbd23f78ddb15414bfff",
       "types.json": "71f03961a74b4fe1b2d692d688a6682f1e2ee8bd2f5a2b5166490e5fd88932c0"
-    }
+    },
+    "note": "Run made before the atomic result writers (issue 48) changed the scientific fingerprint from 44faa1f9 to cecbed00. The figures are kept until the run on the final revision is sealed."
   },
   "fast": {
     "tests": 1030,
