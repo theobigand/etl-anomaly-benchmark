@@ -210,3 +210,36 @@ def test_the_module_runs_as_a_script(monkeypatch):
     with pytest.raises(SystemExit) as stop:
         runpy.run_path(str(Path(pf.__file__)), run_name="__main__")
     assert stop.value.code == 0
+
+
+def test_the_linux_lock_is_parsed_into_name_version_pairs(tmp_path):
+    lock = tmp_path / "lock.txt"
+    lock.write_text(
+        "# header\nnumpy==2.4.6 --hash=sha256:aa\nscikit-learn==1.9.1 \\\n    --hash=sha256:bb\n"
+    )
+    assert pf.linux_lock_pins(lock) == {"numpy": "2.4.6", "scikit-learn": "1.9.1"}
+    assert len(pf.linux_lock_pins()) > 50
+
+
+def test_every_pinned_package_must_be_installed_at_the_pinned_version():
+    pins = {"numpy": "2.4.6", "pandas": "3.0.6", "tqdm": "4.70.1"}
+    assert pf.check_lock(pins, pins).status == "PASS"
+    result = pf.check_lock({"numpy": "2.4.6", "pandas": "3.0.5", "tqdm": None}, pins)
+    assert result.status == "FAIL"
+    assert "pandas 3.0.5 != 3.0.6" in result.detail and "tqdm not installed" in result.detail
+
+
+def test_the_lock_check_is_advisory_off_linux():
+    assert pf.check_lock_for("Darwin", {}, {"numpy": "1"}).status == "WARN"
+    assert pf.check_lock_for("Linux", {"numpy": "1"}, {"numpy": "1"}).status == "PASS"
+
+
+def test_install_only_skips_the_checks_a_machine_without_datasets_cannot_pass(monkeypatch):
+    monkeypatch.setattr(pf, "git_state", lambda root: ("a" * 40, False))
+    args = pf.parse_args(["--install-only", "--expect-sha", "a" * 40])
+    results = pf.run_checks(args)
+    assert _status(results, "datasets") == "SKIP"
+    assert _status(results, "runner") == "SKIP"
+    assert _status(results, "revision") == "PASS"
+    assert not [r for r in results if r.name.startswith("dataset ")]
+    assert "SKIP datasets" in "\n".join(f"{r.status} {r.name}" for r in results)

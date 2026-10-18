@@ -17,6 +17,7 @@ from pathlib import Path
 
 import pandas as pd
 
+from etl_benchmark.atomic import atomic_path
 from etl_benchmark.split import stratified_split
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -75,7 +76,8 @@ def write_split_ids(
     record = {"schema_version": 1, "row_count": len(frame), "seeds": partitions}
     path.parent.mkdir(parents=True, exist_ok=True)
     document = json.dumps(record, sort_keys=True, separators=(",", ":")).encode()
-    path.write_bytes(gzip.compress(document, mtime=0))
+    with atomic_path(path) as partial:
+        partial.write_bytes(gzip.compress(document, mtime=0))
     return path
 
 

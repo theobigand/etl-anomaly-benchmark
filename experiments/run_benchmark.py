@@ -33,6 +33,7 @@ import pandas as pd  # noqa: E402
 from provenance import write_record, write_split_ids  # noqa: E402
 
 from etl_benchmark import config  # noqa: E402
+from etl_benchmark.atomic import atomic_path  # noqa: E402
 from etl_benchmark.datasets import ANOMALY_COLUMN, DATASETS, DatasetSpec  # noqa: E402
 from etl_benchmark.logging_setup import setup_logging  # noqa: E402
 from etl_benchmark.metrics import compute_metrics  # noqa: E402
@@ -186,10 +187,12 @@ def main() -> None:
     stamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
     csv_out = args.results_dir / f"benchmark_{spec.name}_{stamp}.csv"
     md_out = args.results_dir / f"benchmark_{spec.name}_{stamp}.md"
-    mean.join(std, lsuffix="_mean", rsuffix="_std").to_csv(csv_out)
+    with atomic_path(csv_out) as partial:
+        mean.join(std, lsuffix="_mean", rsuffix="_std").to_csv(partial)
     header = f"{spec.name}, {len(args.seeds)} seeds, mean ± std on the 15% test split.\n\n"
     md = header + to_markdown(mean, std)
-    md_out.write_text(md)
+    with atomic_path(md_out) as partial:
+        partial.write_text(md)
     split_out = args.results_dir / f"split_ids_{spec.name}_{stamp}.json.gz"
     frame = spec.load()
     write_split_ids(
