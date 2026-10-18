@@ -4,12 +4,19 @@ on:
   push:
     branches: [main]
   pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # the lineage test reads the committed anchor tree
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -22,6 +29,14 @@ jobs:
       - name: FAST verification
         run: make verify-fast
 
+      - name: Static typing (mypy is pinned here, not in pyproject)
+        run: |
+          pip install mypy==2.4.0 pandas-stubs==3.0.5.260914
+          make verify-types
+
+      - name: Verifier coverage (verification/, reported apart from FAST)
+        run: make verify-tools
+
       - name: Preserve verification evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -31,6 +46,42 @@ jobs:
             coverage.json
             experiments/results/pytest.xml
             experiments/results/verification_fast.json
+            experiments/results/evidence/fast.json
+            experiments/results/evidence/tools.json
+            experiments/results/evidence/types.json
+            experiments/results/types_report.json
+            experiments/results/verifier_coverage.json
             verification/profile.json
+          if-no-files-found: warn
+          retention-days: 30
+
+  faults:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install
+        run: pip install -e ".[dev]"
+
+      - name: Scientific fault injection
+        run: make verify-faults
+
+      - name: Bundle fault evidence with its repository-relative paths
+        if: always()
+        run: tar czf evidence-faults.tgz --ignore-failed-read experiments/results/fault_matrix.json experiments/results/evidence/faults.json
+
+      - name: Preserve fault evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verification-faults
+          path: evidence-faults.tgz
           if-no-files-found: warn
           retention-days: 30

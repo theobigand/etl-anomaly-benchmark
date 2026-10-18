@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -32,6 +33,29 @@ SINGLE_RUNS = [
 ]
 
 
+class IncompleteRun(Exception):
+    """A run whose record does not prove that all its outputs were written intact."""
+
+
+def verify_run(record_path: Path, results: Path) -> dict:
+    """Load a run record and check that every output it lists matches its recorded hash."""
+    record = json.loads(record_path.read_text())
+    hashes = record.get("output_sha256")
+    if not isinstance(hashes, dict):
+        raise IncompleteRun(
+            f"{record_path.name} has no output_sha256: the run is not proven complete"
+        )
+    for name in record["outputs"]:
+        if name not in hashes:
+            raise IncompleteRun(f"{record_path.name} has no output_sha256 entry for {name}")
+        source = results / name
+        if not source.is_file():
+            raise FileNotFoundError(source)
+        if hashlib.sha256(source.read_bytes()).hexdigest() != hashes[name]:
+            raise IncompleteRun(f"{name} hash differs from {record_path.name}: partial or changed")
+    return record
+
+
 def _stable(name: str) -> str:
     return STAMP.sub("", name)
 
@@ -44,20 +68,32 @@ def _newest(results: Path, pattern: str) -> Path:
 
 
 def _copy_all(pairs: list[tuple[Path, Path]]) -> None:
+    """Stage every copy next to its target, then replace; a failure leaves the archive as it was."""
     for source, _ in pairs:
         if not source.is_file():
             raise FileNotFoundError(source)
-    for source, target in pairs:
-        shutil.copyfile(source, target)
+    staged = []
+    try:
+        for source, target in pairs:
+            temporary = target.with_name(f"{target.name}.tmp-{os.getpid()}")
+            staged.append((temporary, target))
+            shutil.copyfile(source, temporary)
+        for temporary, target in staged:
+            os.replace(temporary, target)
+    finally:
+        for temporary, _ in staged:
+            temporary.unlink(missing_ok=True)
 
 
 def archive_real_runs(results: Path, evidence: Path) -> None:
     """Keep the newest baseline and fixed-calibration run of each real dataset."""
     newest: dict[tuple[str, str], Path] = {}
     for path in sorted(results.glob("run_benchmark_*.json")):
-        record = json.loads(path.read_text())
+        record = verify_run(path, results)
         key = (record["dataset"]["identity"], record["settings"]["calibration"])
         newest[key] = path
+    if not newest:
+        raise IncompleteRun(f"no run record in {results}: nothing proves a run finished")
     pairs = []
     for (dataset, calibration), record_path in newest.items():
         prefix = "fixed_" if calibration == "fixed" else ""
@@ -69,7 +105,19 @@ def archive_real_runs(results: Path, evidence: Path) -> None:
 
 
 def archive_single_runs(results: Path, evidence: Path, runs=SINGLE_RUNS) -> None:
-    _copy_all([(_newest(results, pattern), evidence / name) for pattern, name in runs])
+    """Archive the newest file of each kind, provided a verified record lists it."""
+    chosen = [(_newest(results, pattern), name) for pattern, name in runs]
+    records = [
+        verify_run(source, results)
+        for source, _ in chosen
+        if source.name.startswith("run_") and source.suffix == ".json"
+    ]
+    listed = {Path(output).name for record in records for output in record["outputs"]}
+    for source, _ in chosen:
+        is_record = source.suffix == ".json" and source.name.startswith("run_")
+        if not is_record and source.name not in listed:
+            raise IncompleteRun(f"{source.name} is not listed by the newest run record")
+    _copy_all([(source, evidence / name) for source, name in chosen])
 
 
 def refresh_manifest(manifest: Path, root: Path, *, revision: str, dirty: bool) -> None:
@@ -80,7 +128,13 @@ def refresh_manifest(manifest: Path, root: Path, *, revision: str, dirty: bool) 
     }
     data["source_revision"] = revision
     data["worktree_dirty"] = dirty
-    manifest.write_text(json.dumps(data, indent=2, sort_keys=True, ensure_ascii=False) + "\n")
+    text = json.dumps(data, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
+    temporary = manifest.with_name(f"{manifest.name}.tmp-{os.getpid()}")
+    try:
+        temporary.write_text(text)
+        os.replace(temporary, manifest)
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 def _git(*args: str) -> str:

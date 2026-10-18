@@ -1,0 +1,19 @@
+{
+  "run": "https://github.com/theobigand/etl-anomaly-benchmark/actions/runs/39041531141",
+  "workflow": "verify-release",
+  "pull_request": 37,
+  "branch_head": "a8644e7a",
+  "merge_commit": "79ac45083645eb2dc8e90b1ec3fea98c512378f9",
+  "note": "Evidence downloaded from the artifacts of the run; the merge commit has the tree of the branch head. REAL is absent: no authorized runner. Not an independent attestation.",
+  "files": {
+    "deep.json": "c53acc61bbdb2d84a89ca93d555aeb45a0ea8877709b48ac78b7bd5de666adcf",
+    "fast.json": "d0b6d0258dc6305107a12f88abd05b76029f674b6cfabaf318b8deb21f84eab9",
+    "faults.json": "f59887566aeb8e9b79459da9ca2ba8b4856fd7016eb27a0df3566ccb71f888d3",
+    "release.json": "a85668a2170d9dc8a674929b1ed59873839ac27daa726cf5f614caf2884cdd39",
+    "reproducibility.json": "2e798ab9f36f20e6c9e7b19e687dc175e9596d4012e7e42c4ef8a87d5a6bba03",
+    "reproduction.json": "5cbe74ea37c2dc101acec1addc652e119e2d5e094ed5879f61aad8180e3d27fb",
+    "results.txt": "f6daa45f1b4e3107c3ab3bb236771a0d981721a55d4594604fd6f9e0c63144a4",
+    "tools.json": "1f2404cfb2bbbcff6a2410d682a39357aaa7a08326ea50683526c8064c8ddbdb",
+    "types.json": "3d88f8e97eb3c5163a1f90387edab48a24359a946986d5235b836c7075ec3dec"
+  }
+}

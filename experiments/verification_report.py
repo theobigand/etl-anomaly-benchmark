@@ -12,6 +12,8 @@ from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 from xml.etree import ElementTree
 
+from etl_benchmark.atomic import atomic_path
+
 _COUNTS = {
     "line": ("covered_lines", "num_statements"),
     "branch": ("covered_branches", "num_branches"),
@@ -101,7 +103,8 @@ def main() -> int:
     args = parser.parse_args()
     report = build_report(args.coverage, args.junit)
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
+    with atomic_path(args.output) as partial:
+        partial.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     print(f"verification: {report['status']} ({report['tests']['total']} tests)")
     return 0 if report["status"] == "PASS" else 1
 

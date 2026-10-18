@@ -33,6 +33,7 @@ from provenance import write_record  # noqa: E402
 from run_synthetic_benchmark import evaluate  # noqa: E402
 
 from etl_benchmark import config  # noqa: E402
+from etl_benchmark.atomic import atomic_path  # noqa: E402
 from etl_benchmark.logging_setup import setup_logging  # noqa: E402
 from etl_benchmark.synthetic import make_synthetic  # noqa: E402
 
@@ -90,7 +91,8 @@ def render(curves: pd.DataFrame, path: Path) -> Path:
     fig.tight_layout()
 
     path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(path, dpi=150)
+    with atomic_path(path) as partial:
+        fig.savefig(partial, dpi=150)
     plt.close(fig)
     return path
 
@@ -113,7 +115,8 @@ def main() -> None:
     args.results_dir.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
     csv_out = args.results_dir / f"severity_{stamp}.csv"
-    curves.to_csv(csv_out, index=False)
+    with atomic_path(csv_out) as partial:
+        curves.to_csv(partial, index=False)
     figure = render(curves, args.figure)
     write_record(
         args.results_dir / f"run_severity_{stamp}.json",

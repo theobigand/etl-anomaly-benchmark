@@ -1,0 +1,20 @@
+{
+  "datasets": {
+    "cardio": {
+      "bytes": 770024,
+      "sha256": "28bb4f67afca256f0cebe3cc6ca75a13be0bfc062e21efcaf40f1d3d80688eff",
+      "url": "https://raw.githubusercontent.com/Minqi824/ADBench/main/adbench/datasets/Classical/6_cardio.npz"
+    },
+    "credit_card": {
+      "bytes": 150828752,
+      "sha256": "76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89",
+      "url": "https://storage.googleapis.com/download.tensorflow.org/data/creditcard.csv"
+    },
+    "water_quality": {
+      "bytes": 525187,
+      "sha256": "904004bde729bfe3d2e195f46343bceead09e32a0eb95bb8184e7e20e029b2bf",
+      "url": "https://raw.githubusercontent.com/MainakRepositor/Datasets/master/water_potability.csv"
+    }
+  },
+  "method": "public-download"
+}

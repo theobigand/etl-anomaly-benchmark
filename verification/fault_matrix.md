@@ -24,6 +24,35 @@ Ces essais durent environ une minute ; ils ne font pas partie de FAST.
 | L'agrégat sur les graines renvoie la première graine au lieu de la moyenne. (`first_seed_only`) | `test_two_seed_mean_and_sample_standard_deviation` | détecté ; 1 test(s) en échec |
 | Un détecteur disparaît silencieusement du tableau de résultats. (`dropped_detector_run`) | `test_every_requested_detector_appears_in_the_results` | détecté ; 3 test(s) en échec |
 
+## Défauts ajoutés ensuite
+
+Neuf défauts complètent les quatorze premiers ; chacun est détecté par un
+test nommé, la copie intacte passant les mêmes tests :
+
+| Défaut | Test attendu |
+| --- | --- |
+| Découpage chronologique inversé : l'entraînement voit les événements récents (`temporal_future_in_training`) | `test_chronological_split_orders_instants_across_utc_offsets` |
+| Les lignes de validation sont aussi dans l'entraînement (`validation_leaks_into_train`) | `test_split_is_a_partition` |
+| Précision sans alerte rapportée comme 1 (`undefined_precision_as_perfect`) | `test_precision_with_no_flags_is_zero` |
+| Scores ML d'orientation inversée (`ml_score_orientation_inverted`) | `test_ml_detector_score_ranks_outliers_highest` |
+| Scores réordonnés avant la comparaison aux labels (`scores_misaligned_with_labels`) | `test_isolation_forest_separates_the_planted_positives` |
+| Contamination lue sur les labels d'entraînement et de test (`calibration_includes_test_labels`) | `test_test_labels_cannot_change_detector_calibration` |
+| Une seule graine évaluée, les autres disparaissent (`seeds_silently_truncated`) | `test_run_returns_mean_and_std_over_seeds` |
+| REAL réussit sans contrôler les trois jeux (`empty_real_registry_passes`) | `test_real_verification_fails_on_an_empty_registry` |
+| Campagne de mutation interrompue acceptée (`interrupted_mutation_run_accepted`) | `test_mutation_gate_rejects_an_unreliable_campaign_despite_a_high_score` |
+
+## Défauts différés
+
+Un défaut est différé tant que sa condition d'activation n'est pas remplie :
+
+- altération d'un CSV réel (valeur de label, ligne supprimée) : exige REAL, donc
+  les trois fichiers locaux ; activable avec `make verify-real` dans un
+  environnement qui les contient ;
+- écart de version d'une dépendance numérique : exige l'environnement
+  alternatif du jalon de reproductibilité ;
+- durée d'exécution déformée : aucune borne de durée n'est contrôlée, il n'y a
+  donc rien à détecter.
+
 ## Lacunes que cette matrice a révélées
 
 Au premier essai de la matrice, quatre défauts passaient tous les tests

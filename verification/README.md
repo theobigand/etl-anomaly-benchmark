@@ -7,10 +7,17 @@ se lancent à la racine du dépôt.
 | --- | --- |
 | `make verify-fast` | Ruff, tests hors données réelles, couverture des lignes et branches. |
 | `make verify-deep` | Mutations de `src/etl_benchmark` et `experiments/` avec mutmut (environ vingt-cinq minutes) ; seuil de 95 %. |
-| `make verify-faults` | Quatorze défauts scientifiques appliqués à une copie temporaire ; chacun doit faire échouer un test prévu (environ une minute). |
+| `make verify-faults` | Vingt-trois défauts scientifiques appliqués à une copie temporaire ; chacun doit faire échouer un test prévu (environ deux minutes). |
 | `make verify-real` | Tests sur les trois CSV locaux et contrôle de leurs tailles, labels et sommes de contrôle. |
 | `make verify-scale` | Étude locale de croissance sur trois tailles ; aucune limite de temps n'est imposée à FAST. |
 | `make verify-all` | Lance FAST, DEEP, les défauts introduits et REAL, et conserve leurs échecs. |
+| `make verify-tools` | Couverture ligne et branche de `verification/` (100 % exigé), à part de FAST. |
+| `make verify-types` | mypy (version épinglée dans la CI ; à lancer avec mypy et pandas-stubs installés dans l'environnement actif, sinon le résultat diffère) : `verification/` sans erreur, le reste sans nouvelle erreur par rapport à `typing_baseline.txt`. |
+| `real_evidence.md` | Procédure et frontière de confiance de la preuve REAL à distance (exécuteur auto-hébergé, archives à liste blanche). |
+| `make verify-reproduce` | Reproduction contrôlée de cardio (archive, deux essais, environnement verrouillé, sensibilité) et preuve `reproduction`. |
+| `make verify-release` | Réunit les preuves exigées par `release_policy.json` (voir `certification.md`) et décide CERTIFIED, INCOMPLETE ou REJECTED ; le rapport est produit localement et n'est pas une attestation indépendante. |
+| `make lock` | Enregistre les paquets conda et pip exacts de l'environnement actif. |
+| `python -m verification.reproduce` | Rejoue Cardio et classe l'accord (voir `reproducibility.md`). |
 
 FAST produit `coverage.json`, `experiments/results/pytest.xml`,
 `experiments/results/verification_fast.json` et `verification/profile.json`.
@@ -143,5 +150,6 @@ sur durées ne doivent pas dépendre d'un nombre précis de secondes.
 
 Les résultats actuels et les travaux encore ouverts sont dans `report.md` et
 `issues.md`. FAST passe sur l'ensemble mesuré ; DEEP dépasse son seuil sur
-`src/etl_benchmark` et `experiments/` (97,67 %). Le statut général reste
-**INCOMPLETE**.
+`src/etl_benchmark` et `experiments/` (97,75 % au run `local-605a9cf`). Le statut
+général est **CERTIFIED en local, non attesté**, et **CERTIFIED en CI, non attesté indépendamment** (run 39112662862, REAL
+hébergé à partir de téléchargements publics vérifiés) ; voir `certification.md`.

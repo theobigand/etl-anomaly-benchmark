@@ -1,0 +1,376 @@
+{
+  "artifacts": {
+    "coverage.json": "0f3f3aa9c8c0dc035a9f815e9018273033f3825d42d5dd479494533e346cc247",
+    "experiments/results/pytest.xml": "34b80e688ce620c0365d661933d3919d9a21e9333c894b6a358b0d1abaa35d89"
+  },
+  "captured_at": "2026-10-17T14:42:45.572537+00:00",
+  "environment": {
+    "packages": {
+      "mutmut": null,
+      "mypy": null,
+      "numpy": "2.4.6",
+      "pandas": "3.0.6",
+      "pandas-stubs": null,
+      "pyod": "3.6.7",
+      "pytest": "9.1.1",
+      "pytest-cov": "7.1.0",
+      "scikit-learn": "1.9.1"
+    },
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.11.17"
+  },
+  "execution": {
+    "ci": true,
+    "run_id": "39041531141",
+    "runner_environment": "github-hosted",
+    "runner_name": "GitHub Actions 1000005791"
+  },
+  "kind": "fast",
+  "result": {
+    "coverage": {
+      "branch": {
+        "coverable": 332,
+        "covered": 332
+      },
+      "line": {
+        "coverable": 1576,
+        "covered": 1576
+      },
+      "per_file": {
+        "experiments/check_mutation.py": {
+          "branch": {
+            "coverable": 16,
+            "covered": 16
+          },
+          "line": {
+            "coverable": 38,
+            "covered": 38
+          }
+        },
+        "experiments/fetch_cardio.py": {
+          "branch": {
+            "coverable": 2,
+            "covered": 2
+          },
+          "line": {
+            "coverable": 24,
+            "covered": 24
+          }
+        },
+        "experiments/generate_synthetic.py": {
+          "branch": {
+            "coverable": 4,
+            "covered": 4
+          },
+          "line": {
+            "coverable": 26,
+            "covered": 26
+          }
+        },
+        "experiments/provenance.py": {
+          "branch": {
+            "coverable": 36,
+            "covered": 36
+          },
+          "line": {
+            "coverable": 147,
+            "covered": 147
+          }
+        },
+        "experiments/run_benchmark.py": {
+          "branch": {
+            "coverable": 20,
+            "covered": 20
+          },
+          "line": {
+            "coverable": 101,
+            "covered": 101
+          }
+        },
+        "experiments/run_curves.py": {
+          "branch": {
+            "coverable": 20,
+            "covered": 20
+          },
+          "line": {
+            "coverable": 116,
+            "covered": 116
+          }
+        },
+        "experiments/run_severity.py": {
+          "branch": {
+            "coverable": 14,
+            "covered": 14
+          },
+          "line": {
+            "coverable": 79,
+            "covered": 79
+          }
+        },
+        "experiments/run_synthetic_benchmark.py": {
+          "branch": {
+            "coverable": 22,
+            "covered": 22
+          },
+          "line": {
+            "coverable": 136,
+            "covered": 136
+          }
+        },
+        "experiments/verification_report.py": {
+          "branch": {
+            "coverable": 10,
+            "covered": 10
+          },
+          "line": {
+            "coverable": 58,
+            "covered": 58
+          }
+        },
+        "experiments/verify_real.py": {
+          "branch": {
+            "coverable": 26,
+            "covered": 26
+          },
+          "line": {
+            "coverable": 65,
+            "covered": 65
+          }
+        },
+        "src/etl_benchmark/__init__.py": {
+          "branch": {
+            "coverable": 0,
+            "covered": 0
+          },
+          "line": {
+            "coverable": 1,
+            "covered": 1
+          }
+        },
+        "src/etl_benchmark/__main__.py": {
+          "branch": {
+            "coverable": 2,
+            "covered": 2
+          },
+          "line": {
+            "coverable": 18,
+            "covered": 18
+          }
+        },
+        "src/etl_benchmark/config.py": {
+          "branch": {
+            "coverable": 0,
+            "covered": 0
+          },
+          "line": {
+            "coverable": 18,
+            "covered": 18
+          }
+        },
+        "src/etl_benchmark/datasets.py": {
+          "branch": {
+            "coverable": 6,
+            "covered": 6
+          },
+          "line": {
+            "coverable": 30,
+            "covered": 30
+          }
+        },
+        "src/etl_benchmark/extract.py": {
+          "branch": {
+            "coverable": 2,
+            "covered": 2
+          },
+          "line": {
+            "coverable": 8,
+            "covered": 8
+          }
+        },
+        "src/etl_benchmark/load.py": {
+          "branch": {
+            "coverable": 0,
+            "covered": 0
+          },
+          "line": {
+            "coverable": 8,
+            "covered": 8
+          }
+        },
+        "src/etl_benchmark/logging_setup.py": {
+          "branch": {
+            "coverable": 0,
+            "covered": 0
+          },
+          "line": {
+            "coverable": 4,
+            "covered": 4
+          }
+        },
+        "src/etl_benchmark/metrics.py": {
+          "branch": {
+            "coverable": 10,
+            "covered": 10
+          },
+          "line": {
+            "coverable": 18,
+            "covered": 18
+          }
+        },
+        "src/etl_benchmark/pipeline.py": {
+          "branch": {
+            "coverable": 12,
+            "covered": 12
+          },
+          "line": {
+            "coverable": 66,
+            "covered": 66
+          }
+        },
+        "src/etl_benchmark/quality/__init__.py": {
+          "branch": {
+            "coverable": 0,
+            "covered": 0
+          },
+          "line": {
+            "coverable": 7,
+            "covered": 7
+          }
+        },
+        "src/etl_benchmark/quality/autoencoder.py": {
+          "branch": {
+            "coverable": 0,
+            "covered": 0
+          },
+          "line": {
+            "coverable": 43,
+            "covered": 43
+          }
+        },
+        "src/etl_benchmark/quality/base.py": {
+          "branch": {
+            "coverable": 10,
+            "covered": 10
+          },
+          "line": {
+            "coverable": 30,
+            "covered": 30
+          }
+        },
+        "src/etl_benchmark/quality/drift.py": {
+          "branch": {
+            "coverable": 12,
+            "covered": 12
+          },
+          "line": {
+            "coverable": 67,
+            "covered": 67
+          }
+        },
+        "src/etl_benchmark/quality/gx.py": {
+          "branch": {
+            "coverable": 10,
+            "covered": 10
+          },
+          "line": {
+            "coverable": 48,
+            "covered": 48
+          }
+        },
+        "src/etl_benchmark/quality/ml.py": {
+          "branch": {
+            "coverable": 8,
+            "covered": 8
+          },
+          "line": {
+            "coverable": 65,
+            "covered": 65
+          }
+        },
+        "src/etl_benchmark/quality/rules.py": {
+          "branch": {
+            "coverable": 4,
+            "covered": 4
+          },
+          "line": {
+            "coverable": 57,
+            "covered": 57
+          }
+        },
+        "src/etl_benchmark/quality/window_drift.py": {
+          "branch": {
+            "coverable": 30,
+            "covered": 30
+          },
+          "line": {
+            "coverable": 84,
+            "covered": 84
+          }
+        },
+        "src/etl_benchmark/quality/windows.py": {
+          "branch": {
+            "coverable": 4,
+            "covered": 4
+          },
+          "line": {
+            "coverable": 20,
+            "covered": 20
+          }
+        },
+        "src/etl_benchmark/registry.py": {
+          "branch": {
+            "coverable": 12,
+            "covered": 12
+          },
+          "line": {
+            "coverable": 42,
+            "covered": 42
+          }
+        },
+        "src/etl_benchmark/split.py": {
+          "branch": {
+            "coverable": 14,
+            "covered": 14
+          },
+          "line": {
+            "coverable": 45,
+            "covered": 45
+          }
+        },
+        "src/etl_benchmark/synthetic.py": {
+          "branch": {
+            "coverable": 26,
+            "covered": 26
+          },
+          "line": {
+            "coverable": 103,
+            "covered": 103
+          }
+        },
+        "src/etl_benchmark/transform.py": {
+          "branch": {
+            "coverable": 0,
+            "covered": 0
+          },
+          "line": {
+            "coverable": 4,
+            "covered": 4
+          }
+        }
+      }
+    },
+    "tests": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "total": 1030
+    }
+  },
+  "schema_version": 2,
+  "source": {
+    "revision": "79ac45083645eb2dc8e90b1ec3fea98c512378f9",
+    "scientific_fingerprint": "44faa1f99393490fc25dbcea06ee4c8371bbb032f591e4203253c26d65da6a23",
+    "worktree_dirty": false
+  },
+  "status": "PASS"
+}

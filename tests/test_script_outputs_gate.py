@@ -151,6 +151,7 @@ def test_command_writes_a_stable_report_and_prints_one_line_per_dataset(
     manifest.write_text(json.dumps({"datasets": {"toy": _reference(csv)}}))
     output = tmp_path / "nested" / "deeper" / "report.json"
     monkeypatch.setattr(verify_real, "DATASETS", {"toy": DatasetSpec("toy", csv, "Class", 1)})
+    monkeypatch.setattr(verify_real, "REQUIRED_DATASETS", ("toy",))
     monkeypatch.setattr(verify_real, "MANIFEST", manifest)
     monkeypatch.setattr(sys, "argv", ["verify_real", "--output", str(output)])
     assert verify_real.main() == 0
@@ -169,6 +170,7 @@ def test_command_compares_every_run_with_the_reference(tmp_path, monkeypatch):
     manifest.write_text(json.dumps({"datasets": {"toy": _reference(csv, anomalies=2)}}))
     output = tmp_path / "report.json"
     monkeypatch.setattr(verify_real, "DATASETS", {"toy": DatasetSpec("toy", csv, "Class", 1)})
+    monkeypatch.setattr(verify_real, "REQUIRED_DATASETS", ("toy",))
     monkeypatch.setattr(verify_real, "MANIFEST", manifest)
     monkeypatch.setattr(sys, "argv", ["verify_real", "--output", str(output)])
     assert verify_real.main() == 1
@@ -182,7 +184,7 @@ def test_command_defaults_to_the_results_directory(tmp_path, monkeypatch):
     monkeypatch.setattr(verify_real, "DATASETS", {})
     monkeypatch.setattr(verify_real, "MANIFEST", tmp_path / "absent.json")
     monkeypatch.setattr(sys, "argv", ["verify_real"])
-    assert verify_real.main() == 0
+    assert verify_real.main() == 1  # an empty registry never passes
     assert [path.name for path in (tmp_path / "results").iterdir()] == ["real_verification.json"]
 
 

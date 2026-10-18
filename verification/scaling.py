@@ -24,6 +24,10 @@ from etl_benchmark.quality.ml import (
     OneClassSVMDetector,
 )
 
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "experiments"))
+import provenance  # noqa: E402
+
 METHODS = {
     "isolation_forest": IsolationForestDetector,
     "lof": LOFDetector,
@@ -116,6 +120,8 @@ def main() -> None:
         "worktree_dirty": bool(
             subprocess.check_output(["git", "status", "--porcelain"], text=True).strip()
         ),
+        "measurement_recipe": provenance.MEASUREMENT_RECIPE,
+        "measurement_fingerprint": provenance.measurement_fingerprint(),
         "platform": platform.platform(),
         "processor": platform.processor(),
         "logical_cpus": os.cpu_count(),

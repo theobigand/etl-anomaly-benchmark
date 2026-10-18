@@ -93,3 +93,20 @@ def tracking_detector():
             return pd.Series(0.0, index=frame.index)
 
     return TrackingDetector()
+
+
+@pytest.fixture(autouse=True)
+def _offset_local_timezone(monkeypatch):
+    """Run every test in a zone that is never UTC.
+
+    Result files are stamped in UTC. On a runner whose local zone is UTC a
+    stamp taken from the local clock would be identical, so the tests could
+    not tell the two apart.
+    """
+    import time
+
+    monkeypatch.setenv("TZ", "Asia/Kolkata")
+    time.tzset()
+    yield
+    monkeypatch.undo()
+    time.tzset()
