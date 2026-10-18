@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-16T14:44:13.867920+00:00",
+  "captured_at": "2026-10-18T04:20:02.221151+00:00",
   "dataset": {
     "identity": "synthetic"
   },
@@ -9,11 +9,20 @@
   },
   "experiment": "synthetic_benchmark",
   "fingerprint_recipe": 2,
+  "measurement_fingerprint": "9cd603c619d15e17d3cbd9d14986b6f62bdb5611a5ba78fbd4d10ae8f4d7285d",
+  "measurement_recipe": 1,
+  "output_sha256": {
+    "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/paper/figures/heatmap_synthetic.png": "d6bbba783775ef1c5371bf8c226f83f0d0cf68935c6f2ac3ca569558d70b3d1a",
+    "synthetic_20261018_042001.md": "ade8ccce366877bdc8debc88ffa53c9c50f8fdfa1063ad8215faa6220134d7f8",
+    "synthetic_metrics_20261018_042001.csv": "7ca6d93cbf98be4085e031e76187fccf2d6314019e6925739f4d7ea4120780f4",
+    "synthetic_precision_20261018_042001.csv": "72d9f42a6b021e89caca75ff530324e62d947e7cfcdc069b2d6178f83bd9f2c3",
+    "synthetic_recall_20261018_042001.csv": "4f086470091c8340b7903ae9c14081038252acbbdef0d5b3ccc2e1311b100212"
+  },
   "outputs": [
-    "synthetic_metrics_20261016_144413.csv",
-    "synthetic_recall_20261016_144413.csv",
-    "synthetic_precision_20261016_144413.csv",
-    "synthetic_20261016_144413.md",
+    "synthetic_metrics_20261018_042001.csv",
+    "synthetic_recall_20261018_042001.csv",
+    "synthetic_precision_20261018_042001.csv",
+    "synthetic_20261018_042001.md",
     "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/paper/figures/heatmap_synthetic.png"
   ],
   "packages": {
@@ -26,7 +35,7 @@
   "platform": "macOS-27.0-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "scientific_fingerprint": "44faa1f99393490fc25dbcea06ee4c8371bbb032f591e4203253c26d65da6a23",
+  "scientific_fingerprint": "cecbed00f8228b25707199f820d62f28fa1c13f543a0bbb5d56f94716b6a17b9",
   "seeds": [
     42,
     1,
@@ -67,7 +76,7 @@
     ],
     "split_strategy": "customer_identity_grouped_stratified"
   },
-  "source_fingerprint": "352b9d2c38d0bd7820ec1daad2536bad7967e2430f7e9e1b3a6bf565489e3e8e",
-  "source_revision": "93b6fe896715f308575620db6a6bb3de5b4c7f77",
+  "source_fingerprint": "d8c8a6a857073b22384213e66d0d2773e2d58c9d6ead796483e610ecd60f0ab4",
+  "source_revision": "367e3acc0e96b9e2bef3c748de3f1958d20acf85",
   "worktree_dirty": false
 }

@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-16T14:46:26.983069+00:00",
+  "captured_at": "2026-10-18T04:23:44.066964+00:00",
   "dataset": {
     "bytes": 150828752,
     "identity": "credit_card",
@@ -12,10 +12,17 @@
   },
   "experiment": "real_benchmark",
   "fingerprint_recipe": 2,
+  "measurement_fingerprint": "9cd603c619d15e17d3cbd9d14986b6f62bdb5611a5ba78fbd4d10ae8f4d7285d",
+  "measurement_recipe": 1,
+  "output_sha256": {
+    "benchmark_credit_card_20261018_042341.csv": "0594d25952417040436e7451936cdb46454c33459f76599377ded6a36de6718b",
+    "benchmark_credit_card_20261018_042341.md": "108d8704579f31b434b87aade1a932617f3dd0eea28c32748d2c15d4411a911d",
+    "split_ids_credit_card_20261018_042341.json.gz": "589bb4cc4d74f6ed7b4201d7be010e942f61117a5b7a69a50246f5caea4475cf"
+  },
   "outputs": [
-    "benchmark_credit_card_20261016_144625.csv",
-    "benchmark_credit_card_20261016_144625.md",
-    "split_ids_credit_card_20261016_144625.json.gz"
+    "benchmark_credit_card_20261018_042341.csv",
+    "benchmark_credit_card_20261018_042341.md",
+    "split_ids_credit_card_20261018_042341.json.gz"
   ],
   "packages": {
     "great-expectations": "1.24.0",
@@ -27,7 +34,7 @@
   "platform": "macOS-27.0-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "scientific_fingerprint": "44faa1f99393490fc25dbcea06ee4c8371bbb032f591e4203253c26d65da6a23",
+  "scientific_fingerprint": "cecbed00f8228b25707199f820d62f28fa1c13f543a0bbb5d56f94716b6a17b9",
   "seeds": [
     42,
     1,
@@ -89,7 +96,7 @@
     ],
     "split_strategy": "stratified"
   },
-  "source_fingerprint": "352b9d2c38d0bd7820ec1daad2536bad7967e2430f7e9e1b3a6bf565489e3e8e",
-  "source_revision": "93b6fe896715f308575620db6a6bb3de5b4c7f77",
+  "source_fingerprint": "d8c8a6a857073b22384213e66d0d2773e2d58c9d6ead796483e610ecd60f0ab4",
+  "source_revision": "367e3acc0e96b9e2bef3c748de3f1958d20acf85",
   "worktree_dirty": false
 }
