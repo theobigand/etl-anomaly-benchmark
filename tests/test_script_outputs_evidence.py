@@ -69,6 +69,8 @@ def test_record_lists_every_field_of_the_run(tmp_path, monkeypatch):
     data = tmp_path / "data.csv"
     data.write_text("x,label\n1,0\n2,1\n")
     output = tmp_path / "out" / "more" / "run.json"
+    (output.parent).mkdir(parents=True)
+    (output.parent / "metrics.csv").write_text("a\n1\n")
     provenance.write_record(
         output,
         experiment="benchmark",
@@ -87,6 +89,10 @@ def test_record_lists_every_field_of_the_run(tmp_path, monkeypatch):
         "experiment": "benchmark",
         "source_revision": revision,
         "source_fingerprint": provenance._source_fingerprint(),
+        "fingerprint_recipe": 2,
+        "scientific_fingerprint": provenance.scientific_fingerprint(),
+        "measurement_recipe": provenance.MEASUREMENT_RECIPE,
+        "measurement_fingerprint": provenance.measurement_fingerprint(),
         "worktree_dirty": True,  # data.csv and out/ are not committed
         "python": sys.version.split()[0],
         "platform": platform.platform(),
@@ -94,6 +100,7 @@ def test_record_lists_every_field_of_the_run(tmp_path, monkeypatch):
             name: installed_version(name)
             for name in ("numpy", "pandas", "scikit-learn", "pyod", "great-expectations")
         },
+        "environment_lock": provenance._environment_lock(),
         "dataset": {
             "identity": "toy",
             "path": str(data),
@@ -103,6 +110,7 @@ def test_record_lists_every_field_of_the_run(tmp_path, monkeypatch):
         "seeds": [4, 5],
         "settings": {"split": [0.7, 0.15, 0.15]},
         "outputs": ["metrics.csv"],
+        "output_sha256": {"metrics.csv": hashlib.sha256(b"a\n1\n").hexdigest()},
     }
 
 

@@ -174,6 +174,96 @@ FAULTS = [
         ("tests/test_scientific_contracts.py", "tests/test_synthetic_benchmark.py"),
         ("test_synthetic_calibration_ignores_held_out_labels",),
     ),
+    Fault(
+        "temporal_future_in_training",
+        "the chronological split trains on the latest events and tests on the earliest",
+        "src/etl_benchmark/split.py",
+        '    positions = np.argsort(times.to_numpy(), kind="stable")\n',
+        '    positions = np.argsort(times.to_numpy(), kind="stable")[::-1]\n',
+        ("tests/test_split.py", "tests/test_temporal_protocol.py"),
+        (
+            "test_chronological_split_orders_instants_across_utc_offsets",
+            "test_chronological_split_is_order_independent_and_never_splits_a_timestamp",
+        ),
+    ),
+    Fault(
+        "validation_leaks_into_train",
+        "the validation rows are also returned inside the training partition",
+        "src/etl_benchmark/split.py",
+        "    return (\n        train_df.reset_index(drop=True),\n"
+        "        val_df.reset_index(drop=True),",
+        "    return (\n        pd.concat([train_df, val_df]).reset_index(drop=True),\n"
+        "        val_df.reset_index(drop=True),",
+        ("tests/test_split.py", "tests/test_scientific_contracts.py"),
+        ("test_split_is_a_partition", "test_split_sizes_match_ratios"),
+    ),
+    Fault(
+        "undefined_precision_as_perfect",
+        "precision with no flagged row is reported as 1 instead of 0",
+        "src/etl_benchmark/metrics.py",
+        "zero_division=0",
+        "zero_division=1",
+        ("tests/test_metric_contract.py",),
+        ("test_precision_with_no_flags_is_zero",),
+    ),
+    Fault(
+        "ml_score_orientation_inverted",
+        "the ML detectors report high scores for normal rows",
+        "src/etl_benchmark/quality/ml.py",
+        "        scores = self._fitted_model().decision_function(self._matrix(df))",
+        "        scores = -self._fitted_model().decision_function(self._matrix(df))",
+        ("tests/test_ml.py", "tests/test_detector_contracts.py"),
+        ("test_ml_detector_score_ranks_outliers_highest",),
+    ),
+    Fault(
+        "scores_misaligned_with_labels",
+        "the scores are reordered before they are compared with the test labels",
+        "experiments/run_benchmark.py",
+        "compute_metrics(y_test, res.flags, res.scores)",
+        "compute_metrics(y_test, res.flags, res.scores.sort_values())",
+        ("tests/test_run_benchmark.py",),
+        ("test_isolation_forest_separates_the_planted_positives",),
+    ),
+    Fault(
+        "calibration_includes_test_labels",
+        "the contamination is read from train and test labels together",
+        "experiments/run_benchmark.py",
+        "        train[ANOMALY_COLUMN], policy=calibration, fixed=fixed_contamination",
+        "        pd.concat([train, test])[ANOMALY_COLUMN],\n"
+        "        policy=calibration,\n        fixed=fixed_contamination,",
+        ("tests/test_run_benchmark.py", "tests/test_scientific_contracts.py"),
+        ("test_test_labels_cannot_change_detector_calibration",),
+    ),
+    Fault(
+        "seeds_silently_truncated",
+        "only the first requested seed is evaluated and the others vanish",
+        "experiments/run_benchmark.py",
+        "for s in seeds]",
+        "for s in seeds[:1]]",
+        ("tests/test_run_benchmark.py",),
+        (
+            "test_run_returns_mean_and_std_over_seeds",
+            "test_seed_mean_and_spread_are_taken_per_detector_across_seeds",
+        ),
+    ),
+    Fault(
+        "empty_real_registry_passes",
+        "REAL verification passes whenever the datasets it happened to check passed",
+        "experiments/verify_real.py",
+        "    ok = reason is None and sorted(passed) == sorted(REQUIRED_DATASETS)",
+        '    ok = all(item["status"] == "PASS" for item in records)',
+        ("tests/test_real_verification.py",),
+        ("test_real_verification_fails_on_an_empty_registry",),
+    ),
+    Fault(
+        "interrupted_mutation_run_accepted",
+        "a mutation campaign that was interrupted still counts if its score is high",
+        "experiments/check_mutation.py",
+        "    for key in UNRELIABLE:\n        if stats[key]:",
+        "    for key in UNRELIABLE:\n        if False:",
+        ("tests/test_mutation_gate.py",),
+        ("test_mutation_gate_rejects_an_unreliable_campaign_despite_a_high_score",),
+    ),
 ]
 
 _RESULTS: list[dict] = []
@@ -236,6 +326,7 @@ def test_deliberate_defect_is_caught(fault, tmp_path):
             "expected": list(fault.expected),
             "observed_failures": sorted(failed),
             "caught_by_expected_test": bool(detected),
+            "control_passed": control_code == 0 and not control_failed,
         }
     )
     assert control_code == 0 and not control_failed, "the unmodified copy must pass"

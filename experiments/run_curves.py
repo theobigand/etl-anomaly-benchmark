@@ -33,6 +33,7 @@ from run_synthetic_benchmark import _split_synthetic  # noqa: E402
 from sklearn.metrics import average_precision_score, precision_recall_curve  # noqa: E402
 
 from etl_benchmark import config  # noqa: E402
+from etl_benchmark.atomic import atomic_path  # noqa: E402
 from etl_benchmark.datasets import ANOMALY_COLUMN, DATASETS  # noqa: E402
 from etl_benchmark.logging_setup import setup_logging  # noqa: E402
 from etl_benchmark.pipeline import detect  # noqa: E402
@@ -110,7 +111,8 @@ def render_pr(results: dict[str, dict], path: Path) -> Path:
     fig.suptitle("Precision-recall curves on the test split (AP in the legend)")
     fig.tight_layout()
     path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(path, dpi=150)
+    with atomic_path(path) as partial:
+        fig.savefig(partial, dpi=150)
     plt.close(fig)
     return path
 
@@ -180,7 +182,8 @@ def main() -> None:
     args.results_dir.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
     csv_out = args.results_dir / f"contamination_sweep_{stamp}.csv"
-    sweep.to_csv(csv_out, index=False)
+    with atomic_path(csv_out) as partial:
+        sweep.to_csv(partial, index=False)
     write_record(
         args.results_dir / f"run_curves_{stamp}.json",
         experiment="precision_recall_and_contamination",

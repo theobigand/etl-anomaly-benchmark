@@ -58,3 +58,4 @@ paper/*.fdb_latexmk
 
 # Generated verification snapshot; policy lives in profile.template.json
 verification/profile.json
+experiments/results/evidence/

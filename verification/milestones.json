@@ -1,0 +1,522 @@
+{
+  "schema_version": 1,
+  "baseline": {
+    "head": "7977deed9f7a8f3688d74109d7e13d7c0188d895",
+    "branch_at_start": "main",
+    "worktree_clean": true,
+    "python_env": "/Users/theo/miniconda3/envs/etl-benchmark (python is not on the default PATH)",
+    "confirmed_defects": [
+      "verify_real.main exits 0 with an empty dataset registry (all([]) is True); reproduced",
+      "check_mutation.classify accepts negative counts that offset the sum (killed=100, survived=-5, total=95 gives PASS at 105%); reproduced",
+      "check_mutation.classify accepts float and bool counts; reproduced"
+    ],
+    "unverified_hypotheses": [
+      "DEEP 97.67% and FAULTS 14/14 not re-executed at M00",
+      "REAL not re-executed at M00"
+    ],
+    "constraint": "experiments/*.py and src/**/*.py are in the provenance fingerprint: any edit there invalidates test_artifact_lineage until archives are replayed once (see memory thesis-workflow-preferences). New verification tooling goes in verification/ to avoid this.",
+    "decision_2026_10_16": "User decision: versioned scientific fingerprint v2 (excludes verify_real, check_mutation, verification_report), v1 preserved, legacy records validated against anchor 7977dee without restamping, one clean replay at M13; release stays INCOMPLETE until then.",
+    "deep_note": "DEEP was run on a clean tree at 0359ce1 plus later test-only commits; M13 must rerun on the final commit.",
+    "final_note": "M13 done on the branch chain verify/m00..m12 (tip contains all work). Not merged, not pushed.",
+    "remote_validation": "Draft PR #37 (verify/m12-manuscript-consistency -> main), not merged. CI evidence is bound to GitHub's PR merge commit; its tree equals the branch tip's tree."
+  },
+  "milestones": [
+    {
+      "id": "M00",
+      "title": "Baseline audit",
+      "status": "COMPLETED",
+      "dependencies": [],
+      "start_commit": "7977dee",
+      "end_commit": "397a35a",
+      "files_changed": [],
+      "tests": [
+        {
+          "command": "make verify-fast (env etl-benchmark, python 3.11.17)",
+          "exit_code": 0,
+          "result": "561 passed, 16 deselected; 1467 stmts 0 miss, 294 branches 0 partial; ruff clean"
+        }
+      ],
+      "evidence": [],
+      "blockers": [],
+      "next_action": null
+    },
+    {
+      "id": "M01",
+      "title": "Fail-closed REAL",
+      "status": "COMPLETED",
+      "dependencies": [
+        "M00"
+      ],
+      "start_commit": "397a35a",
+      "end_commit": "c24f3c2",
+      "files_changed": [
+        "experiments/verify_real.py",
+        "tests/test_real_verification.py",
+        "tests/test_script_outputs_gate.py"
+      ],
+      "tests": [
+        {
+          "command": "pytest tests/test_real_verification.py",
+          "red": "4 new tests failed before the fix (empty registry exit 0, no status field)",
+          "green": "pass",
+          "exit_code": 0
+        },
+        {
+          "command": "python experiments/verify_real.py (real data present)",
+          "exit_code": 0,
+          "result": "credit_card, water_quality, cardio PASS"
+        }
+      ],
+      "evidence": [],
+      "blockers": [],
+      "next_action": null
+    },
+    {
+      "id": "M02",
+      "title": "Mutation gate integrity",
+      "status": "COMPLETED",
+      "dependencies": [
+        "M00"
+      ],
+      "start_commit": "c24f3c2",
+      "end_commit": "95b8f4c",
+      "files_changed": [
+        "experiments/check_mutation.py",
+        "tests/test_mutation_gate.py"
+      ],
+      "tests": [
+        {
+          "command": "pytest tests/test_mutation_gate.py",
+          "red": "19 new cases failed before the fix",
+          "green": "24 passed",
+          "exit_code": 0
+        }
+      ],
+      "evidence": [],
+      "blockers": [
+        "No local mutation campaign result exists (mutants/ absent); DEEP not re-executed yet. The new gate rejects skipped/no_tests/interrupted/segfault outcomes, so the next real campaign may be INVALID if the old one had any."
+      ],
+      "next_action": null
+    },
+    {
+      "id": "M03",
+      "title": "Evidence schema and status contracts",
+      "status": "COMPLETED",
+      "dependencies": [
+        "M01",
+        "M02"
+      ],
+      "start_commit": "1d5da9a",
+      "end_commit": null,
+      "files_changed": [
+        "verification/evidence_schema.py",
+        "tests/test_evidence_schema.py",
+        "tests/test_fault_matrix.py",
+        "Makefile",
+        ".gitignore"
+      ],
+      "tests": [
+        {
+          "command": "make verify-fast",
+          "exit_code": 0,
+          "result": "652 passed, 100% line/branch"
+        },
+        {
+          "command": "make verify-faults",
+          "exit_code": 0,
+          "result": "14 passed, faults evidence PASS"
+        },
+        {
+          "command": "make verify-real",
+          "exit_code": 0,
+          "result": "3 datasets PASS, real evidence PASS"
+        }
+      ],
+      "evidence": [],
+      "blockers": [
+        "DEEP envelope builder tested on fixtures only; no real campaign run yet"
+      ],
+      "next_action": null
+    },
+    {
+      "id": "M04",
+      "title": "Release certification gate",
+      "status": "COMPLETED",
+      "dependencies": [
+        "M03"
+      ],
+      "start_commit": "5456a70",
+      "end_commit": null,
+      "files_changed": [
+        "verification/release.py",
+        "tests/test_release_gate.py",
+        "Makefile"
+      ],
+      "tests": [
+        {
+          "command": "pytest tests/test_release_gate.py",
+          "exit_code": 0,
+          "result": "20 passed (fixture releases: valid certified; missing, malformed, stale, dirty, tampered, wrong-dataset, legacy-lineage all non-certified)"
+        },
+        {
+          "command": "make verify-release (current tree)",
+          "exit_code": 2,
+          "result": "REJECTED/local-unattested: dirty tree, stale revisions, DEEP missing, legacy records need replay - expected"
+        }
+      ],
+      "evidence": [],
+      "blockers": [],
+      "next_action": "Real certification only possible after M13 replay and a DEEP run on a clean commit."
+    },
+    {
+      "id": "M05",
+      "title": "Dependency locking and provenance",
+      "status": "COMPLETED",
+      "dependencies": [
+        "M03"
+      ],
+      "start_commit": "95b8f4c",
+      "end_commit": null,
+      "files_changed": [
+        "experiments/provenance.py",
+        "verification/lineage.py",
+        "verification/evidence/lineage.json",
+        ".github/workflows/ci.yml",
+        "tests/test_scientific_fingerprint.py",
+        "tests/test_artifact_lineage.py",
+        "verification/lock_environment.py",
+        "verification/environment/",
+        "tests/test_environment_lock.py",
+        "experiments/provenance.py",
+        "verification/release.py"
+      ],
+      "tests": [
+        {
+          "command": "make verify-fast",
+          "exit_code": 0,
+          "result": "607 passed, 100% line and branch"
+        },
+        {
+          "command": "make verify-fast + make verify-tools",
+          "exit_code": 0,
+          "result": "720 passed, 100% scientific; verifier 100%"
+        }
+      ],
+      "evidence": [],
+      "blockers": [
+        "Lock exists for osx-arm64 only; the Linux CI environment is not locked (pip resolves loose bounds)",
+        "Archived runs remain recipe-1, dirty-worktree, labelled historical; clean replay deferred to M13 per user decision"
+      ],
+      "next_action": null
+    },
+    {
+      "id": "M06",
+      "title": "CI/CD enforcement",
+      "status": "PARTIAL",
+      "dependencies": [
+        "M04"
+      ],
+      "start_commit": "3f4a2a0",
+      "end_commit": null,
+      "files_changed": [
+        ".github/workflows/ci.yml",
+        ".github/workflows/verify-release.yml",
+        "tests/test_workflows.py"
+      ],
+      "tests": [
+        {
+          "command": "pytest tests/test_workflows.py",
+          "exit_code": 0,
+          "result": "8 passed (text-level structure checks); YAML parses"
+        },
+        {
+          "command": "gh run list; gh api branches/main/protection; gh api rulesets",
+          "result": "last 5 runs on main/PR succeeded before this work; main is NOT protected (HTTP 404), no rulesets. Inspected read-only."
+        },
+        {
+          "command": "remote ci, PR #37, run 38933480557 at 3779905",
+          "result": "FAILED: test_release_gate leaked GITHUB_ACTIONS from the CI environment (RED reproduced locally with the variable set); fixed by isolating the test"
+        },
+        {
+          "command": "remote ci, PR #37, run 38934341984 at 25597b0",
+          "result": "FAST (Linux) and FAULTS passed; mypy step FAILED: baseline built without pandas-stubs in the project environment (17 errors vs 10 baselined). Reproduced locally in a fresh venv with the CI install recipe; baseline regenerated with the new --write-baseline"
+        },
+        {
+          "command": "remote ci, PR #37, run 38935261309 at 81f5c55 (merge commit a9928dc, tree identical to the branch tip)",
+          "result": "success: FAST 774 tests 100% line/branch on Linux, verifier coverage 100%, mypy PASS, FAULTS 23/23. Linux scientific fingerprint equals the macOS one."
+        }
+      ],
+      "evidence": [],
+      "blockers": [
+        "verify-release workflow runs on PR #37 (its own file is in the PR); see the PR checks for the run at the final tip. REAL cannot run on hosted runners (datasets are not in the repository), so a remote release verdict is INCOMPLETE by design",
+        "Branch protection not enabled; a proposal is in verification/branch_protection_proposal.md"
+      ],
+      "next_action": "After the user pushes: confirm ci.yml and a verify-release dispatch run; ask whether to require the ci checks on main."
+    },
+    {
+      "id": "M07",
+      "title": "Verifier self-testing",
+      "status": "COMPLETED",
+      "dependencies": [
+        "M03"
+      ],
+      "start_commit": "ae0ee1f",
+      "end_commit": null,
+      "files_changed": [
+        "tests/test_verifier_tools.py",
+        "Makefile",
+        ".github/workflows/ci.yml",
+        "tests/test_workflows.py"
+      ],
+      "tests": [
+        {
+          "command": "make verify-tools",
+          "exit_code": 0,
+          "result": "verification/ 531 stmts, 178 branches, 100% line and branch (was 89% before M07 tests); measured apart from the scientific 100%"
+        }
+      ],
+      "evidence": [],
+      "blockers": [],
+      "next_action": null
+    },
+    {
+      "id": "M08",
+      "title": "Fault-injection expansion",
+      "status": "COMPLETED",
+      "dependencies": [
+        "M01",
+        "M02"
+      ],
+      "start_commit": "c478939",
+      "end_commit": null,
+      "files_changed": [
+        "tests/test_fault_matrix.py",
+        "verification/fault_matrix.md",
+        "tests/test_evidence_schema.py"
+      ],
+      "tests": [
+        {
+          "command": "make verify-faults",
+          "exit_code": 0,
+          "result": "23 passed in 110s (14 original + 9 new, all detected by named tests, control passes); faults evidence PASS"
+        }
+      ],
+      "evidence": [],
+      "blockers": [],
+      "next_action": null
+    },
+    {
+      "id": "M09",
+      "title": "Independent oracles and survivors",
+      "status": "COMPLETED",
+      "dependencies": [
+        "M00"
+      ],
+      "start_commit": "0359ce1",
+      "end_commit": null,
+      "files_changed": [
+        "tests/test_mutation_gate.py",
+        "tests/test_real_verification.py",
+        "tests/test_scientific_fingerprint.py",
+        "tests/test_split.py",
+        "tests/test_synthetic.py",
+        "verification/mutation_notes.md"
+      ],
+      "tests": [
+        {
+          "command": "mutmut run (full, 4732 mutants)",
+          "exit_code": 0,
+          "result": "4612 killed, 120 survived (97.46%), 0 skipped/interrupted/no_tests"
+        },
+        {
+          "command": "targeted mutmut reruns + export-cicd-stats",
+          "result": "4626/4732 killed (97.76%); scientific-computation scope 1647/1720 (95.76%); orchestration scope 2979/3012 (98.90%); 106 survivors"
+        },
+        {
+          "command": "make verify-fast",
+          "exit_code": 0,
+          "result": "711 passed, 100% line/branch"
+        }
+      ],
+      "evidence": [],
+      "blockers": [
+        "Oracle review was targeted (metrics, split sizes, contamination, publication tables, generator bounds), not a line-by-line audit of all tests",
+        "1 survivor is macOS case-insensitivity only (killed on Linux CI, unverified)"
+      ],
+      "next_action": null
+    },
+    {
+      "id": "M10",
+      "title": "Reproducibility",
+      "status": "COMPLETED",
+      "dependencies": [
+        "M05"
+      ],
+      "start_commit": "3c2f038",
+      "end_commit": null,
+      "files_changed": [
+        "verification/reproduce.py",
+        "tests/test_reproduce.py",
+        "verification/reproducibility.md",
+        "pyproject.toml"
+      ],
+      "tests": [
+        {
+          "command": "python -m verification.reproduce --levels archive same_environment locked_environment version_sensitivity",
+          "exit_code": 0,
+          "result": "cardio: archive PASS numerical (diff 0.0, splits identical); same env PASS numerical; locked env rebuilt from conda lock + pip lock PASS numerical; scikit-learn 1.8.0 MEASURED numerical (diff 0.0)"
+        },
+        {
+          "command": "make verify-tools",
+          "exit_code": 0,
+          "result": "verifier 683 stmts/208 branches 100%"
+        }
+      ],
+      "evidence": [],
+      "blockers": [
+        "Only cardio reproduced; credit_card, water_quality, synthetic, curves, severity not rerun",
+        "Lock is osx-arm64 only; rebuild needs network"
+      ],
+      "next_action": null
+    },
+    {
+      "id": "M11",
+      "title": "Robustness, typing, scaling",
+      "status": "COMPLETED",
+      "dependencies": [
+        "M00"
+      ],
+      "start_commit": "f723500",
+      "end_commit": null,
+      "files_changed": [
+        "tests/test_robustness.py",
+        "verification/check_types.py",
+        "verification/typing_baseline.txt",
+        "tests/test_check_types.py",
+        "verification/evidence_schema.py",
+        "verification/reproduce.py",
+        "Makefile",
+        ".github/workflows/ci.yml",
+        "pyproject.toml"
+      ],
+      "tests": [
+        {
+          "command": "make verify-fast",
+          "exit_code": 0,
+          "result": "763 passed, 100% line/branch"
+        },
+        {
+          "command": "make verify-tools",
+          "exit_code": 0,
+          "result": "verifier 100%"
+        },
+        {
+          "command": "python verification/check_types.py --mypy <mypy 2.4.0 + pandas-stubs 3.0.5>",
+          "exit_code": 0,
+          "result": "verification/ clean; 10 baselined errors in src/ and experiments/"
+        }
+      ],
+      "evidence": [],
+      "blockers": [
+        "mypy is not a declared dependency (adding it would change the fingerprinted [project] table); CI installs a pinned copy, never run remotely",
+        "10 typing errors in scientific code are baselined, not fixed (annotating changes the fingerprint)",
+        "Robustness tests characterize current behavior; write_csv is not atomic and a header-only CSV loads as an empty frame (rejected later by split and by REAL), recorded not changed",
+        "Scaling study unchanged: already bounded and threshold-free"
+      ],
+      "next_action": null
+    },
+    {
+      "id": "M12",
+      "title": "Manuscript consistency",
+      "status": "COMPLETED",
+      "dependencies": [
+        "M09"
+      ],
+      "start_commit": "bd1e27d",
+      "end_commit": null,
+      "files_changed": [
+        "paper/main.tex",
+        "verification/claims.json",
+        "tests/test_manuscript_claims.py",
+        "verification/report.md",
+        "verification/README.md",
+        "verification/issues.md",
+        "README.md",
+        "pyproject.toml"
+      ],
+      "tests": [
+        {
+          "command": "pytest tests/test_manuscript_claims.py",
+          "exit_code": 0,
+          "result": "8 passed (paper figures == claims.json; fault count == live matrix; stale figures absent)"
+        },
+        {
+          "command": "latexmk -pdf paper/main.tex",
+          "exit_code": 0,
+          "result": "compiles"
+        }
+      ],
+      "evidence": [],
+      "blockers": [
+        "ADBench statements checked against the arXiv v2 PDF text (runtime analysis and local/global/dependency/clustered types exist; no rule-based baselines found). Other bibliography claims (e.g. the 0.51 ROC-AUC attributed to sokkula2024implementing) were NOT re-verified.",
+        "claims.json holds figures measured at bd1e27d; M13 refreshes them"
+      ],
+      "next_action": null
+    },
+    {
+      "id": "M13",
+      "title": "Final audit and certification",
+      "status": "COMPLETED",
+      "dependencies": [
+        "M01",
+        "M02",
+        "M03",
+        "M04",
+        "M05",
+        "M06",
+        "M07",
+        "M08",
+        "M09",
+        "M10",
+        "M11",
+        "M12"
+      ],
+      "start_commit": "93b6fe8",
+      "end_commit": null,
+      "files_changed": [
+        "verification/evidence/*",
+        "paper/main.tex",
+        "verification/claims.json",
+        "verification/report.md",
+        "verification/mutation_notes.md",
+        "verification/scaling.md",
+        "verification/reproducibility.md",
+        "tests/test_artifact_lineage.py"
+      ],
+      "tests": [
+        {
+          "command": "clean replay from 93b6fe8 (synthetic, severity, curves, 3 datasets x 2 calibrations) + make verify-scale",
+          "exit_code": 0,
+          "result": "all non-timing metrics bit-identical to the previous archive (max diff 0.0 on every CSV); figures and split archives unchanged; new records: recipe 2, worktree_dirty false"
+        },
+        {
+          "command": "make verify-fast / verify-tools / verify-faults / verify-real / verify-deep, check_types, make verify-release at 755374f",
+          "exit_code": 0,
+          "result": "771 tests 100% line+branch; verifier 732/218 100%; 23/23 faults; 3/3 datasets; mutation 4643/4751 (97.73%), scientific scope 95.76%; typing PASS; release CERTIFIED (local-unattested)"
+        }
+      ],
+      "evidence": [],
+      "blockers": [
+        "Certification is local-unattested: nothing was pushed, CI workflows have never run remotely, main has no branch protection",
+        "Release evidence is bound to the commit it was generated on; the final report states that commit. Later documentation-only commits require make verify-release to be rerun",
+        "Lock covers osx-arm64 only; typing check and 3 case-insensitivity mutants unverified on Linux"
+      ],
+      "next_action": "Push the branch chain only with the user's approval, run ci and a verify-release dispatch, decide on branch protection."
+    }
+  ],
+  "post_audit_remediation": {
+    "tracker": "verification/remediation.md",
+    "issues": "38-49",
+    "note": "Remediation of the independent audit; see remediation.md for the evidence of each issue."
+  }
+}

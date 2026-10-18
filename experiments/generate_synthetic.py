@@ -15,6 +15,7 @@ import logging
 from pathlib import Path
 
 from etl_benchmark import config
+from etl_benchmark.atomic import atomic_path
 from etl_benchmark.logging_setup import setup_logging
 from etl_benchmark.synthetic import ANOMALY_TYPES, make_synthetic
 
@@ -33,7 +34,8 @@ def main() -> None:
 
     df = make_synthetic(n_rows=args.rows, anomaly_rate=args.rate, seed=args.seed)
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    df.to_csv(args.output, index=False)
+    with atomic_path(args.output) as partial:
+        df.to_csv(partial, index=False)
 
     counts = df["anomaly_type"].value_counts()
     log.info("wrote %d rows x %d cols -> %s", len(df), df.shape[1], args.output)

@@ -17,6 +17,7 @@ def test_record_binds_data_seed_protocol_and_outputs(tmp_path):
     dataset = tmp_path / "data.csv"
     dataset.write_text("x,label\n1,0\n2,1\n")
     output = tmp_path / "run.json"
+    (tmp_path / "metrics.csv").write_text("f1\n0.5\n")
     provenance.write_record(
         output,
         experiment="benchmark",
@@ -31,6 +32,7 @@ def test_record_binds_data_seed_protocol_and_outputs(tmp_path):
     assert record["dataset"]["sha256"] == hashlib.sha256(dataset.read_bytes()).hexdigest()
     assert record["settings"]["split"] == [0.7, 0.15, 0.15]
     assert record["outputs"] == ["metrics.csv"]
+    assert record["output_sha256"] == {"metrics.csv": hashlib.sha256(b"f1\n0.5\n").hexdigest()}
     assert record["source_revision"]
     assert record["python"]
 
@@ -138,3 +140,27 @@ def test_source_fingerprint_follows_code_and_environment(tmp_path, monkeypatch, 
     base = provenance._source_fingerprint()
     (tmp_path / path).write_text("changed\n")
     assert provenance._source_fingerprint() != base
+
+
+def test_record_names_the_environment_lock_and_its_hash(tmp_path, monkeypatch):
+    lock = tmp_path / "verification" / "environment"
+    lock.mkdir(parents=True)
+    import platform
+
+    name = f"conda-{platform.system().lower()}-{platform.machine()}.explicit.txt"
+    (lock / name).write_text("@EXPLICIT\n")
+    monkeypatch.setattr(provenance, "ROOT", tmp_path)
+    found = provenance._environment_lock()
+    assert found == {
+        "file": f"verification/environment/{name}",
+        "sha256": hashlib.sha256(b"@EXPLICIT\n").hexdigest(),
+    }
+    (lock / name).unlink()
+    assert provenance._environment_lock()["sha256"] is None
+
+
+def test_the_repository_lock_is_found_for_this_platform():
+    # The lock is recorded on arm64 macOS only; elsewhere the hash is explicitly None.
+    found = provenance._environment_lock()
+    assert found["file"].startswith("verification/environment/conda-")
+    assert found["sha256"] is None or len(found["sha256"]) == 64

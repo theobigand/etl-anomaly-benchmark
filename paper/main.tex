@@ -67,19 +67,18 @@ Great Expectations, Isolation Forest, autoencoder
 Extract--Transform--Load (ETL) pipelines are the backbone of modern data
 infrastructure: they move raw operational data into analytical stores
 where it feeds dashboards, reports, and machine-learning
-applications~\cite{khatri2010data}. The value delivered downstream is
-bounded by the quality of the data that reaches the destination, which
-is why data quality has long been a first-class concern for data
-engineers. Poor data quality has been estimated to cost organizations
-an average of \$12.9M per year~\cite{gopa2025aiaugmented}, making
-automated, continuous quality control a critical capability rather than
-an optional one.
+applications. Organizations increasingly manage data as an asset that
+must be governed~\cite{khatri2010data}, and the value delivered
+downstream is bounded by the quality of the data that reaches the
+destination. This is why data quality has long been a first-class
+concern for data engineers, and why automated, continuous quality
+control is a capability rather than an option.
 
 The dominant approach in industry remains rule-based: practitioners
 hand-write declarative expectations---``column \texttt{amount} must be
 positive'', ``column \texttt{email} must match a regex''---in
 frameworks such as Great Expectations, Deequ, or
-Soda~\cite{pipelinetoolssurvey2024}. These rules are auditable and
+Soda~\cite{dataqualitysurvey2024}. These rules are auditable and
 cheap to run, but they scale poorly with schema complexity, detect only
 violations the author anticipated, and miss subtle multi-column or
 distributional anomalies. To address these limits, a recent line of
@@ -88,30 +87,37 @@ learning anomaly detectors embedded directly inside the ETL
 flow~\cite{gopa2025aiaugmented,marupaka2024mlpredictive,sokkula2024implementing}.
 The existing literature, however, suffers from three gaps.
 
-First, most published pipelines are conceptual
-architectures~\cite{gopa2025aiaugmented,marupaka2024mlpredictive} that
-do not ship with reproducible code or quantitative comparisons. When
-experiments are reported, they typically exercise a single algorithm on
-a single dataset---for instance, Isolation Forest on Credit Card
-Fraud~\cite{sokkula2024implementing}, which achieved a near-random
-ROC-AUC of 0.51 and thus offers limited insight into when ML-based
-quality control is actually worth adopting.
+First, the pipelines we reviewed are mostly presented as
+architectures. Gopa~\cite{gopa2025aiaugmented} reports aggregate gains
+taken from other implementations and releases no code, and the abstract
+of Marupaka and Rangineni~\cite{marupaka2024mlpredictive} announces
+accuracy gains without naming a dataset or a baseline. When an
+experiment is reported, it exercises a single algorithm on a single
+dataset: Sokkula and Vuppala~\cite{sokkula2024implementing} run
+Isolation Forest on Credit Card Fraud after oversampling the training
+data with SMOTE, and report an ROC-AUC of 0.51 with a fraud recall of
+0.02. A near-random score on one dataset offers limited insight into
+when ML-based quality control is actually worth adopting.
 
 Second, the anomaly detection community has produced excellent
 generic benchmarks---ADBench~\cite{han2022adbench} compares 30
 algorithms on 57 tabular datasets; PyOD~\cite{zhao2019pyod} provides a
-unified implementation of dozens of detectors---but these benchmarks
-evaluate algorithms \emph{in vacuum}, outside of an ETL context. They
-do not consider the declarative rule-based baselines that dominate
-production systems, and they do not measure end-to-end pipeline
-integration costs (latency, memory, operational overhead).
+unified implementation of a wide range of detectors---but these benchmarks
+evaluate algorithms on their own, outside of an ETL context. ADBench
+reports training and inference times for each algorithm, but it has no
+declarative rule-based baseline of the kind that dominates production
+systems, and it does not measure what a detector costs inside a running
+pipeline (latency, memory, operational overhead).
 
 Third, benchmarks typically report a single aggregated score per
 dataset, hiding the fact that different families of detectors excel at
-different kinds of anomalies. A Z-score detector is essentially unable
+different kinds of anomalies~\cite{goldstein2016comparative}. ADBench does look at anomaly types, but
+as geometric types generated on synthetic data (local, global,
+dependency and clustered anomalies), not as the data quality faults an
+ETL pipeline meets. A Z-score detector is essentially unable
 to flag categorical format violations; Great Expectations trivially
 catches null-rate spikes but ignores multivariate
-outliers~\cite{goldstein2016comparative}; autoencoders learn joint
+outliers; autoencoders learn joint
 distributions but can be fooled by concept drift. A practitioner
 choosing a detector today lacks a fine-grained, actionable map from
 anomaly type to recommended method.
@@ -128,7 +134,8 @@ present:
     (Isolation Forest, LOF, One-Class SVM) on four datasets, with a
     stratified held-out split, five seeds, and the ML operating point
     read from the data, reporting precision, recall, F1, ROC-AUC, PR-AUC,
-    precision-recall curves, and in-pipeline latency.
+    precision-recall curves, and detection-stage latency (fit, predict and
+    score; extraction, transformation and loading are not timed).
     \item \textbf{A per-anomaly-type analysis.} Using a synthetic
     dataset in which six distinct anomaly categories (missing values,
     duplicates, univariate outliers, multivariate outliers, temporal
@@ -154,16 +161,18 @@ outlines future work.
 \begin{itemize}
     \item Data quality in ETL pipelines (Khatri \& Brown
     \cite{khatri2010data}; Data Quality
-    Survey~\cite{dataqualitysurvey2024})
+    Survey~\cite{dataqualitysurvey2024}; pipeline tools
+    survey~\cite{pipelinetoolssurvey2024})
     \item Rule-based and declarative approaches (Great Expectations,
-    Deequ, Soda~\cite{pipelinetoolssurvey2024})
+    Deequ, Soda~\cite{dataqualitysurvey2024})
     \item Classical ML for anomaly detection (Isolation Forest, LOF,
     One-Class SVM; Goldstein \& Uchida~\cite{goldstein2016comparative};
     PyOD~\cite{zhao2019pyod})
     \item Deep learning (Autoencoder, LSTM-Autoencoder)
-    \item Existing benchmarks: ADBench~\cite{han2022adbench} and why
-    it does not cover rule-based baselines, ETL integration, or
-    per-anomaly-type analysis
+    \item Existing benchmarks: ADBench~\cite{han2022adbench}, which
+    covers 30 algorithms, 57 datasets, geometric anomaly types and
+    standalone run times, and what it leaves out (rule-based baselines,
+    ETL integration, data quality fault categories)
     \item ML in ETL pipelines: Gopa~\cite{gopa2025aiaugmented},
     Marupaka \& Rangineni~\cite{marupaka2024mlpredictive},
     Sokkula \& Vuppala~\cite{sokkula2024implementing} as illustrative
@@ -205,7 +214,7 @@ outliers they are meant to catch. The $1.5$ multiplier corresponds to
 about $2.7\sigma$ under normality, isolating a comparable tail.
 
 \emph{Great Expectations} encodes a declarative expectation
-suite~\cite{pipelinetoolssurvey2024} and makes no distributional
+suite~\cite{dataqualitysurvey2024} and makes no distributional
 assumption: a not-null expectation on every column and a range expectation
 per numeric column, with bounds set to the $0.1$th and $99.9$th
 percentiles of the fitted data. Using inner percentiles rather than the
@@ -341,7 +350,7 @@ A second, manually invoked level asks whether these checks can fail.
 Mutation testing generates small source-level changes (a reversed
 comparison, an altered constant, a modified message) and counts how many
 make the routine suite fail. We apply it to the modules that compute a
-result and to the experiment scripts. In addition, fourteen deliberate
+result and to the experiment scripts. In addition, twenty-three deliberate
 scientific defects are applied one at a time to a temporary copy of the
 code, and a named test must fail on each: a scaler refitted on the rows
 being scored, the label passed to the detector as a feature, a contamination
@@ -351,9 +360,10 @@ binary flags, a seed aggregate that keeps only the first seed, a detector
 missing from the results table, and a few others.
 
 A third level uses the locally available full datasets. A separate command
-compares, for each CSV present, the file checksum, the raw and
-post-deduplication row counts, the number of anomalies and the positive-class
-value with an archived manifest, and reports an absent file as not run. The
+compares, for each of the three research CSV files, the file checksum, the raw
+and post-deduplication row counts, the number of anomalies and the
+positive-class value with an archived manifest. An absent file is reported as
+not run, and the command as a whole passes only if all three files pass. The
 scripts record the dataset fingerprint, software versions, random seeds,
 split policy and output names alongside their results. For each real-data
 seed, an archive stores the positions of the train, validation and test rows
@@ -390,7 +400,7 @@ contamination matches the prevalence: it flags only $0.17\%$ of rows and
 reaches a precision of $0.20$, the first usable operating point in the
 table, but its recall drops to $0.21$ and both are seed-sensitive
 ($F_1 = 0.20 \pm 0.07$). It keeps the best ROC-AUC ($0.934$). Great
-Expectations took $2.0$\,s on this run, against $0.06$--$0.19$\,s for the
+Expectations took $1.3$\,s on this run, against $0.03$--$0.12$\,s for the
 statistical rules; these times vary between runs. LOF and the
 One-Class SVM were not run at $284$k rows, where their cost was expected to
 be prohibitive; we did not measure it.
@@ -406,10 +416,10 @@ $15\%$ test split. Higher is better except flagged rows and time.}
 \toprule
 Detector & Prec. & Rec. & $F_1$ & ROC & PR & Flag.\% & Time (s) \\
 \midrule
-Z-score            & 0.011 & 0.870 & 0.021 & 0.926 & 0.078 & 13.4 & \textbf{0.06} \\
-IQR                & 0.003 & \textbf{0.966} & 0.007 & 0.911 & 0.018 & 48.6 & 0.19 \\
-Great Expectations & 0.037 & 0.676 & 0.070 & 0.830 & \textbf{0.182} & 3.1 & 2.01 \\
-Isolation Forest   & \textbf{0.202} & 0.206 & \textbf{0.203} & \textbf{0.934} & 0.120 & \textbf{0.2} & 2.65 \\
+Z-score            & 0.011 & 0.870 & 0.021 & 0.926 & 0.078 & 13.4 & \textbf{0.04} \\
+IQR                & 0.003 & \textbf{0.966} & 0.007 & 0.911 & 0.018 & 48.6 & 0.16 \\
+Great Expectations & 0.037 & 0.676 & 0.070 & 0.830 & \textbf{0.182} & 3.1 & 1.91 \\
+Isolation Forest   & \textbf{0.202} & 0.206 & \textbf{0.203} & \textbf{0.934} & 0.120 & \textbf{0.2} & 2.42 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -471,12 +481,12 @@ the $15\%$ test split. Time is the in-pipeline fit+predict+score latency.}
 \toprule
 Detector & Prec. & Rec. & $F_1$ & ROC & PR & Time (s) \\
 \midrule
-Z-score            & \textbf{1.000} & 0.196 & 0.328 & \textbf{0.742} & \textbf{0.544} & \textbf{0.002} \\
-IQR                & 0.584 & 0.396 & 0.472 & 0.675 & 0.452 & 0.004 \\
-Great Expectations & 0.951 & 0.202 & 0.333 & 0.600 & 0.333 & 0.26 \\
-Isolation Forest   & 0.495 & \textbf{0.499} & \textbf{0.497} & 0.735 & 0.485 & 0.16 \\
-LOF                & 0.388 & 0.420 & 0.404 & 0.659 & 0.437 & 0.14 \\
-One-Class SVM      & 0.478 & 0.485 & 0.481 & 0.722 & 0.520 & 2.63 \\
+Z-score            & \textbf{1.000} & 0.196 & 0.328 & \textbf{0.742} & \textbf{0.544} & \textbf{0.004} \\
+IQR                & 0.584 & 0.396 & 0.472 & 0.675 & 0.452 & 0.007 \\
+Great Expectations & 0.951 & 0.202 & 0.333 & 0.600 & 0.333 & 0.46 \\
+Isolation Forest   & 0.495 & \textbf{0.499} & \textbf{0.497} & 0.735 & 0.485 & 0.34 \\
+LOF                & 0.388 & 0.420 & 0.404 & 0.659 & 0.437 & 0.22 \\
+One-Class SVM      & 0.478 & 0.485 & 0.481 & 0.722 & 0.520 & 4.20 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -679,23 +689,38 @@ marks severity $1.0$.}
 
 \subsection{Verification outcomes and computation cost}
 \label{sec:verification-results}
-At the current revision the routine suite runs 561 tests, plus two that need
-the full datasets and are run separately. Coverage is complete: 1,467 of
-1,467 executable lines and 294 of 294 branches. The mutation campaign on the
-pipeline modules and the experiment scripts kills 4,487 of 4,594 mutants
-($97.67\%$): 1,824 of 1,900 in the pipeline and 2,663 of 2,694 in the
-scripts. The 107 survivors count as failures; each one we examined leaves
-the observable result unchanged (passing a default \texttt{dtype} or
-\texttt{index} explicitly, for instance).
+At commit 605a9cf4 (local run, not independently attested) the routine suite runs 1,105 tests, plus three that need
+the full datasets and twenty-three fault-injection runs, all run separately.
+Coverage of the pipeline modules and the experiment scripts is complete: 1,628 of
+1,628 executable lines and 336 of 336 branches. The tools that check the
+checks (the evidence and release scripts under \texttt{verification/}) are
+measured apart, at 1,883 of 1,883 lines and 690 of 690 branches, and are not part of
+that figure. The mutation campaign on the pipeline modules and the experiment
+scripts kills 4,700 of 4,808 mutants ($97.75\%$). Split by what the code does,
+the modules that compute a result (splitting, metrics, the synthetic generator,
+the detectors) kill 1,647 of 1,720 ($95.76\%$) and the input, output and script
+code kills 3,053 of 3,088 ($98.87\%$), so the aggregate is higher than the score
+of the scientific computation alone. The 108 survivors count as failures. We
+classified them by reading the changes, not by proof: most pass an explicit
+default (\texttt{dtype}, \texttt{index}) or change an internal label. Two that
+we first took for unreachable, a cap on a simulated transaction rate, turned out
+to be reachable by a very rich customer and are now killed by a test.
 
-All fourteen deliberate defects are caught, but not always by the tests we
-started with. Four went through every existing test: a scaler refitted on
-the scored batch, ranking metrics fed with binary flags, a detector missing
-from the results, and a contamination threshold read from the synthetic test
-partition. A fifth, an inverted Z-score, was caught only by a test added
-during the mutation work. None of these defects was in the code; the tests
-were missing. After adding them we reran every experiment: all detection
-metrics are unchanged and only the timings differ. The real-data checks pass
+All twenty-three deliberate defects are caught. The first fourteen were not
+always caught by the tests we started with: four went through every existing test
+(a scaler refitted on the scored batch, ranking metrics fed with binary flags, a
+detector missing from the results, and a contamination threshold read from the
+synthetic test partition), and a fifth, an inverted Z-score, was caught only by a
+test added during the mutation work. None of these defects was in the code; the
+tests were missing. After adding them we reran every experiment: all detection
+metrics are unchanged and only the timings differ. The nine defects added later
+(a chronological split that trains on the latest events, validation rows copied
+into training, an undefined precision reported as one, inverted machine-learning
+scores, scores reordered before the comparison with the labels, a contamination
+read from train and test labels, a silently dropped seed, a real-data check that
+passes without checking the files, and an interrupted mutation campaign accepted
+on its score) were each caught by a named test.
+The real-data checks pass
 locally on the three CSV files, and the six tables of this manuscript match
 the archived results.
 
@@ -705,7 +730,7 @@ stage; CSV loading, deduplication and figure rendering are excluded. A
 separate local growth experiment ran Isolation Forest, LOF and One-Class
 SVM on 100, 300 and 900 generated rows, with eight features and three
 repetitions per size. All 27 runs completed. At 900 rows, median measured
-detection times were 0.827, 0.038 and 0.099 seconds, respectively, on the
+detection times were 0.392, 0.020 and 0.049 seconds, respectively, on the
 recorded macOS/ARM environment. This small in-memory experiment measures
 neither native-library peak memory nor the scaling of the 284,000-row
 fraud dataset. It supports reporting the workload and omissions explicitly,
@@ -753,8 +778,9 @@ are what make the difference measurable.
 scaling matter, but the timing in these runs is too variable to establish
 a reliable speed ranking. The One-Class SVM and LOF were omitted from the
 full fraud dataset because their computational costs need a separate
-scaling study. A benchmark scoring algorithms in isolation would not
-capture the full pipeline cost.
+scaling study. We time only the detection stage (fit, predict and score)
+inside the pipeline; extraction, transformation and loading are outside the
+measurement, so these figures are not the latency of a whole ETL run.
 
 \paragraph{Threats to validity.} The synthetic dataset still encodes our
 own assumptions about what each anomaly type looks like; the severity
@@ -766,7 +792,14 @@ small datasets (Cardio $F_1$ standard deviation up to $0.17$; Isolation
 Forest on fraud $F_1 = 0.20 \pm 0.07$), so those numbers should be read
 as ranges.
 Verification has its own limits: complete line and branch coverage does not
-establish that the scientific assertions detect every defect. Mutation
+establish that the scientific assertions detect every defect. The previous
+archive was made on a working tree with uncommitted changes (revision
+\texttt{841c3aa}). The archived runs were therefore replayed from a clean
+commit (\texttt{93b6fe8}): every detection metric, curve and partition is
+identical to the previous archive and only the timings changed, which is why
+the two timing tables and the scaling figures above were updated. The new
+records name that commit and mark the working tree as clean, but they were
+produced on one machine and the timings do not transfer to another. Mutation
 testing reaches the target on the pipeline modules and the scripts, but it
 cannot tell us whether the injected defects and the tests cover every way an
 experiment can go wrong. The complete real-data checks were performed with the three files available

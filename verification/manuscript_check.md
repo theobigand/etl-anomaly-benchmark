@@ -25,10 +25,16 @@ comparés automatiquement par `tests/test_publication_tables.py`.
 | Contrôles « avant un essai réel » sur colonnes attendues et prévalence | C'est une commande séparée qui compare empreinte, nombres de lignes, anomalies et classe positive. | Description réécrite. |
 | « Quatre tableaux » comparés aux archives | Cinq l'étaient, le tableau de contamination ne l'était pas. | Test ajouté ; six tableaux. |
 
+## Références externes
+
+Contrôlées le 17 octobre 2026 ; le détail, source par source, est dans
+`references.md`. Le chiffre de 12,9 M$ par an a été retiré (absent de l'article
+cité), l'AUC de 0,51 de Sokkula et Vuppala est confirmée (0,5094, après
+SMOTE), les auteurs de quatre entrées bibliographiques ont été corrigés et
+deux citations déplacées vers des sources qui étayent réellement la phrase.
+
 ## Non vérifiables ici
 
-- Les affirmations sur des sources externes (ADBench : 30 algorithmes et 57
-  jeux ; AUC de 0,51 chez Sokkula et Vuppala ; coût de 12,9 M$ par an).
 - Le hash du fichier Credit Card face à un nouveau téléchargement (compte
   Kaggle nécessaire) ; sa taille correspond à la version 3 de la fiche.
 - La note du code et de l'enregistrement des essais selon laquelle LOF et

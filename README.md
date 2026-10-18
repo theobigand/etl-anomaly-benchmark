@@ -66,7 +66,8 @@ make lint              # ruff check + format check
 make verify-fast       # offline tests, coverage and evidence
 make verify-deep       # mutation campaign on src/ and experiments/ (95% gate)
 make verify-faults     # deliberate defects on a temporary copy must fail a test
-make verify-real       # inspect locally available real datasets
+make verify-real       # all three research datasets must match the manifest
+make verify-release    # certify the evidence required by verification/release_policy.json (local report, not an attestation)
 make clean             # remove generated artifacts
 ```
 

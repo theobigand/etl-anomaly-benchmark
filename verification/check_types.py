@@ -1,0 +1,131 @@
+"""Static typing gate: ``verification/`` must be clean, other code may not get worse.
+
+mypy runs over ``src/etl_benchmark``, ``experiments`` and ``verification``.
+Errors under ``verification/`` always fail. For the scientific code the known
+errors are listed in ``typing_baseline.txt`` (one ``path: message [code]`` per
+line, no line numbers; generate it with ``--write-baseline`` in the same
+environment recipe as CI, because installed stubs change what mypy reports): a
+new error fails, and so does a baseline entry that no longer occurs, so the
+list can only shrink. Annotating the scientific code is
+deferred because any edit there changes the provenance fingerprint of the
+archived runs.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import re
+import subprocess
+import sys
+from importlib.metadata import PackageNotFoundError, version
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+BASELINE = ROOT / "verification" / "typing_baseline.txt"
+TARGETS = ["src/etl_benchmark", "experiments", "verification"]
+LINE = re.compile(r"^(?P<path>[^:\s]+):\d+: error: (?P<message>.*)$")
+
+
+def parse(output: str) -> set[str]:
+    """Errors as ``path: message`` keys, without line numbers."""
+    keys = set()
+    for line in output.splitlines():
+        found = LINE.match(line)
+        if found:
+            keys.add(f"{found['path']}: {found['message']}")
+    return keys
+
+
+def judge(found: set[str], baseline: set[str]) -> list[str]:
+    """Reasons the typing gate fails (empty when it passes)."""
+    problems = [
+        f"error in verification/ cannot be baselined: {key}"
+        for key in sorted(found)
+        if key.startswith("verification/")
+    ]
+    problems += [
+        f"new typing error: {key}"
+        for key in sorted(found - baseline)
+        if not key.startswith("verification/")
+    ]
+    problems += [f"baseline entry no longer occurs: {key}" for key in sorted(baseline - found)]
+    return problems
+
+
+def run_mypy(mypy: list[str]) -> str:
+    env = {**os.environ, "MYPYPATH": os.pathsep.join(["src", "experiments", "."])}
+    command = [*mypy, "--python-executable", sys.executable, "--ignore-missing-imports"]
+    command += ["--explicit-package-bases", "--no-error-summary", *TARGETS]
+    done = subprocess.run(command, cwd=ROOT, env=env, capture_output=True, text=True, check=False)
+    if done.returncode not in (0, 1):
+        raise RuntimeError(f"mypy did not run: {done.stderr.strip() or done.stdout.strip()}")
+    return done.stdout
+
+
+def _pins() -> dict[str, str | None]:
+    """Versions of the checker and its stubs: a baseline is only valid for these."""
+    pins: dict[str, str | None] = {}
+    for name in ("mypy", "pandas-stubs"):
+        try:
+            pins[name] = version(name)
+        except PackageNotFoundError:
+            pins[name] = None
+    return pins
+
+
+def _write_report(path: Path | None, **fields) -> None:
+    if path is not None:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps({**fields, **_pins()}, indent=2, sort_keys=True) + "\n")
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--mypy", nargs="+", default=["mypy"], help="mypy command")
+    parser.add_argument("--baseline", type=Path, default=BASELINE)
+    parser.add_argument("--output", type=Path, help="write a machine-readable report here")
+    parser.add_argument(
+        "--write-baseline",
+        action="store_true",
+        help="record the current errors of the scientific code (never those of verification/)",
+    )
+    args = parser.parse_args(argv)
+    if args.write_baseline:
+        try:
+            found = parse(run_mypy(args.mypy))
+        except RuntimeError as exc:
+            print(f"typing: INCOMPLETE ({exc})")
+            return 1
+        refused = sorted(key for key in found if key.startswith("verification/"))
+        for key in refused:
+            print(f"typing: error in verification/ cannot be baselined: {key}")
+        if refused:
+            return 1
+        args.baseline.write_text("".join(f"{key}\n" for key in sorted(found)))
+        print(f"typing: wrote {len(found)} entries to {args.baseline}")
+        return 0
+    try:
+        found = parse(run_mypy(args.mypy))
+        baseline = {line for line in args.baseline.read_text().splitlines() if line}
+    except (OSError, RuntimeError) as exc:
+        _write_report(args.output, status="INCOMPLETE", reason=str(exc), problems=[])
+        print(f"typing: INCOMPLETE ({exc})")
+        return 1
+    problems = judge(found, baseline)
+    _write_report(
+        args.output,
+        status="FAIL" if problems else "PASS",
+        errors=len(found),
+        baseline_entries=len(baseline),
+        problems=problems,
+    )
+    for problem in problems:
+        print(f"typing: {problem}")
+    print(f"typing: {'FAIL' if problems else 'PASS'} ({len(found)} known errors in the baseline)")
+    return 1 if problems else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

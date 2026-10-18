@@ -1,0 +1,809 @@
+"""Evidence envelopes: every kind validates, and every doctored one is rejected."""
+
+import copy
+import hashlib
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+import pytest
+
+from verification import evidence_schema as evidence
+
+ROOT = Path(__file__).resolve().parents[1]
+SOURCE = {"revision": "a" * 40, "worktree_dirty": False, "scientific_fingerprint": "b" * 64}
+RESULT_VERSIONS = {"numpy": "2.0", "pandas": "3.0", "scikit-learn": "1.9", "pyod": "3.6"}
+ENVIRONMENT = {
+    "python": "3.11.0",
+    "platform": "test",
+    "packages": {**RESULT_VERSIONS, "mutmut": None},
+}
+EXECUTION = {"ci": False, "run_id": None, "runner_environment": None, "runner_name": None}
+FAULT_NAMES = ["f1", "f2", "f3"]
+
+
+def _fast(tmp_path, failures=0, covered=10, execution=EXECUTION):
+    coverage = tmp_path / "coverage.json"
+    coverage.write_text(
+        json.dumps(
+            {
+                "totals": {
+                    "covered_lines": covered,
+                    "num_statements": 10,
+                    "covered_branches": 4,
+                    "num_branches": 4,
+                },
+                "files": {},
+            }
+        )
+    )
+    junit = tmp_path / "pytest.xml"
+    junit.write_text(
+        f'<testsuites><testsuite tests="5" failures="{failures}" errors="0" skipped="0"/>'
+        "</testsuites>"
+    )
+    return evidence.build_fast(
+        coverage,
+        junit,
+        root=tmp_path,
+        source=SOURCE,
+        environment=ENVIRONMENT,
+        execution=execution,
+    )
+
+
+def _stats(**changes):
+    result = {key: 0 for key in evidence.OUTCOMES}
+    result.update(total=100, killed=98, survived=2)
+    result.update(changes)
+    return result
+
+
+def _deep(tmp_path, results="    x.x_f__mutmut_1: killed\n", execution=EXECUTION, **changes):
+    stats = tmp_path / "stats.json"
+    stats.write_text(json.dumps(_stats(**changes)))
+    (tmp_path / "src").mkdir(exist_ok=True)
+    (tmp_path / "src/x.py").write_text("x = 1\n")
+    listing = tmp_path / "results.txt"
+    if results is not None:
+        listing.write_text(results)
+    return evidence.build_deep(
+        stats,
+        listing if results is not None else None,
+        root=tmp_path,
+        scope=["src/x.py"],
+        source=SOURCE,
+        environment=ENVIRONMENT,
+        execution=execution,
+    )
+
+
+def _matrix(tmp_path, names=FAULT_NAMES, caught=True, control=True, execution=EXECUTION):
+    path = tmp_path / "fault_matrix.json"
+    rows = [
+        {"defect": name, "caught_by_expected_test": caught, "control_passed": control}
+        for name in names
+    ]
+    path.write_text(json.dumps(rows))
+    return evidence.build_faults(
+        path,
+        FAULT_NAMES,
+        root=tmp_path,
+        source=SOURCE,
+        environment=ENVIRONMENT,
+        execution=execution,
+    )
+
+
+@pytest.fixture(autouse=True)
+def _two_required_datasets(monkeypatch):
+    monkeypatch.setattr(evidence, "REQUIRED_DATASETS", ("a", "b"))
+
+
+def _real(tmp_path, datasets=None, required=("a", "b"), execution=EXECUTION):
+    path = tmp_path / "real.json"
+    datasets = (
+        datasets
+        if datasets is not None
+        else [
+            {"dataset": "a", "status": "PASS", "sha256": "1" * 64},
+            {"dataset": "b", "status": "PASS", "sha256": "2" * 64},
+        ]
+    )
+    path.write_text(
+        json.dumps({"required": list(required), "status": "PASS", "datasets": datasets})
+    )
+    return evidence.build_real(
+        path, root=tmp_path, source=SOURCE, environment=ENVIRONMENT, execution=execution
+    )
+
+
+def test_every_kind_builds_a_valid_passing_envelope(tmp_path):
+    for doc in (_fast(tmp_path), _deep(tmp_path), _matrix(tmp_path), _real(tmp_path)):
+        assert doc["status"] == "PASS", doc
+        assert evidence.validate(doc, root=tmp_path) == []
+
+
+def test_the_default_source_and_environment_describe_this_repository():
+    source = evidence.collect_source(ROOT)
+    assert len(source["revision"]) == 40
+    assert isinstance(source["worktree_dirty"], bool)
+    assert len(source["scientific_fingerprint"]) == 64
+    environment = evidence.collect_environment()
+    assert environment["python"].count(".") == 2
+    assert "numpy" in environment["packages"]
+
+
+@pytest.mark.parametrize(
+    "key",
+    [
+        "schema_version",
+        "kind",
+        "status",
+        "captured_at",
+        "source",
+        "environment",
+        "artifacts",
+        "result",
+    ],
+)
+def test_a_missing_envelope_field_is_rejected(tmp_path, key):
+    doc = _fast(tmp_path)
+    del doc[key]
+    assert evidence.validate(doc)
+
+
+@pytest.mark.parametrize(
+    "path,value",
+    [
+        (("schema_version",), 1),
+        (("schema_version",), "2"),
+        (("kind",), "slow"),
+        (("status",), "OK"),
+        (("status",), True),
+        (("captured_at",), "yesterday"),
+        (("captured_at",), "2026-10-16T12:00:00"),  # no timezone
+        (("source", "revision"), "abc"),
+        (("source", "revision"), None),
+        (("source", "worktree_dirty"), "no"),
+        (("source", "scientific_fingerprint"), "z" * 64),
+        (("environment", "python"), 3),
+        (("environment", "packages"), []),
+        (("artifacts",), []),
+        (("artifacts", "coverage.json"), "short"),
+        (("result",), []),
+    ],
+)
+def test_a_malformed_envelope_field_is_rejected(tmp_path, path, value):
+    doc = _fast(tmp_path)
+    target = doc
+    for step in path[:-1]:
+        target = target[step]
+    target[path[-1]] = value
+    assert evidence.validate(doc), path
+
+
+def test_a_non_mapping_document_is_rejected():
+    assert evidence.validate([])
+    assert evidence.validate(None)
+
+
+def test_fast_status_is_recomputed_from_the_results(tmp_path):
+    assert _fast(tmp_path, failures=1)["status"] == "FAIL"
+    assert _fast(tmp_path, covered=9)["status"] == "FAIL"
+    doc = _fast(tmp_path)
+    doc["result"]["tests"]["failures"] = 1
+    assert any("status PASS" in problem for problem in evidence.validate(doc))
+    doc = _fast(tmp_path)
+    doc["result"]["coverage"]["line"]["covered"] = 3
+    assert any("status PASS" in problem for problem in evidence.validate(doc))
+    doc = _fast(tmp_path)
+    doc["result"]["tests"]["total"] = 0
+    assert any("status PASS" in problem for problem in evidence.validate(doc))
+    doc = _fast(tmp_path)
+    doc["result"]["coverage"]["branch"] = {"covered": 0, "coverable": 0}
+    assert any("status PASS" in problem for problem in evidence.validate(doc))
+
+
+def test_fast_builder_rejects_missing_evidence(tmp_path):
+    with pytest.raises(ValueError):
+        evidence.build_fast(tmp_path / "no.json", tmp_path / "no.xml", root=tmp_path)
+
+
+def test_deep_status_follows_the_mutation_gate(tmp_path):
+    assert _deep(tmp_path, killed=94, survived=6)["status"] == "FAIL"
+    interrupted = _deep(tmp_path, killed=99, survived=0, check_was_interrupted_by_user=1)
+    assert interrupted["status"] == "INCOMPLETE"
+    assert "interrupted" in interrupted["result"]["reason"]
+    assert _deep(tmp_path, total=0, killed=0, survived=0)["status"] == "INCOMPLETE"
+
+
+def test_deep_doctored_counts_cannot_keep_a_pass(tmp_path):
+    doc = _deep(tmp_path)
+    doc["result"]["stats"]["killed"] = 90
+    doc["result"]["stats"]["survived"] = 10
+    assert any("status PASS" in problem for problem in evidence.validate(doc))
+    doc = _deep(tmp_path)
+    doc["result"]["stats"]["survived"] = -2
+    doc["result"]["stats"]["killed"] = 102
+    assert evidence.validate(doc)
+    doc = _deep(tmp_path)
+    doc["result"]["scope"] = []
+    assert any("scope" in problem for problem in evidence.validate(doc))
+
+
+def test_deep_unreadable_stats_are_incomplete_not_a_crash(tmp_path):
+    stats = tmp_path / "stats.json"
+    stats.write_text("not json")
+    doc = evidence.build_deep(
+        stats,
+        root=tmp_path,
+        scope=["x"],
+        source=SOURCE,
+        environment=ENVIRONMENT,
+        execution=EXECUTION,
+    )
+    assert doc["status"] == "INCOMPLETE"
+    missing = evidence.build_deep(
+        tmp_path / "gone.json",
+        root=tmp_path,
+        scope=["x"],
+        source=SOURCE,
+        environment=ENVIRONMENT,
+        execution=EXECUTION,
+    )
+    assert missing["status"] == "INCOMPLETE"
+
+
+def test_faults_require_every_fault_caught_with_a_passing_control(tmp_path):
+    assert _matrix(tmp_path, names=FAULT_NAMES[:2])["status"] == "INCOMPLETE"
+    assert _matrix(tmp_path, names=[])["status"] == "INCOMPLETE"
+    assert _matrix(tmp_path, caught=False)["status"] == "FAIL"
+    assert _matrix(tmp_path, control=False)["status"] == "FAIL"
+    assert _matrix(tmp_path, names=[*FAULT_NAMES, "extra"])["status"] == "INCOMPLETE"
+
+
+def test_faults_doctored_results_cannot_keep_a_pass(tmp_path):
+    doc = _matrix(tmp_path)
+    doc["result"]["faults"][0]["detected"] = False
+    assert any("status PASS" in problem for problem in evidence.validate(doc))
+    doc = _matrix(tmp_path)
+    doc["result"]["faults"].pop()
+    assert any("status PASS" in problem for problem in evidence.validate(doc))
+    doc = _matrix(tmp_path)
+    doc["result"]["control_passed"] = False
+    assert any("status PASS" in problem for problem in evidence.validate(doc))
+
+
+def test_faults_unreadable_matrix_is_incomplete(tmp_path):
+    path = tmp_path / "fault_matrix.json"
+    path.write_text('{"not": "a list"}')
+    doc = evidence.build_faults(
+        path,
+        FAULT_NAMES,
+        root=tmp_path,
+        source=SOURCE,
+        environment=ENVIRONMENT,
+        execution=EXECUTION,
+    )
+    assert doc["status"] == "INCOMPLETE"
+    gone = evidence.build_faults(
+        tmp_path / "gone.json",
+        FAULT_NAMES,
+        root=tmp_path,
+        source=SOURCE,
+        environment=ENVIRONMENT,
+        execution=EXECUTION,
+    )
+    assert gone["status"] == "INCOMPLETE"
+
+
+def test_real_requires_the_exact_required_datasets_all_passing(tmp_path):
+    assert _real(tmp_path, datasets=[])["status"] == "FAIL"
+    only_a = [{"dataset": "a", "status": "PASS", "sha256": "1" * 64}]
+    assert _real(tmp_path, datasets=only_a)["status"] == "FAIL"
+    absent = [
+        {"dataset": "a", "status": "PASS", "sha256": "1" * 64},
+        {"dataset": "b", "status": "NOT_RUN"},
+    ]
+    assert _real(tmp_path, datasets=absent)["status"] == "NOT_RUN"
+    # a report that claims fewer requirements does not lower the bar
+    assert _real(tmp_path, datasets=only_a, required=("a",))["status"] == "FAIL"
+
+
+def test_real_doctored_results_cannot_keep_a_pass(tmp_path):
+    doc = _real(tmp_path)
+    doc["result"]["datasets"].pop()
+    assert any("status PASS" in problem for problem in evidence.validate(doc))
+    doc = _real(tmp_path)
+    doc["result"]["required"] = []
+    assert any("status PASS" in problem for problem in evidence.validate(doc))
+    doc = _real(tmp_path)
+    doc["result"]["datasets"][0]["status"] = "FAIL"
+    assert any("status PASS" in problem for problem in evidence.validate(doc))
+
+
+def test_real_unreadable_report_is_not_a_pass(tmp_path):
+    path = tmp_path / "real.json"
+    path.write_text("[")
+    doc = evidence.build_real(
+        path, root=tmp_path, source=SOURCE, environment=ENVIRONMENT, execution=EXECUTION
+    )
+    assert doc["status"] == "INCOMPLETE"
+
+
+def test_artifact_hashes_are_checked_against_the_files(tmp_path):
+    doc = _fast(tmp_path)
+    assert (
+        doc["artifacts"]["coverage.json"]
+        == hashlib.sha256((tmp_path / "coverage.json").read_bytes()).hexdigest()
+    )
+    (tmp_path / "coverage.json").write_text("{}")
+    assert any("hash" in problem for problem in evidence.validate(doc, root=tmp_path))
+    (tmp_path / "coverage.json").unlink()
+    assert any("missing" in problem for problem in evidence.validate(doc, root=tmp_path))
+
+
+def test_a_passing_envelope_must_list_its_artifacts(tmp_path):
+    doc = _fast(tmp_path)
+    doc["artifacts"] = {}
+    assert any("artifact" in problem for problem in evidence.validate(doc))
+
+
+def test_validation_does_not_mutate_its_input(tmp_path):
+    doc = _fast(tmp_path)
+    before = copy.deepcopy(doc)
+    evidence.validate(doc, root=tmp_path)
+    assert doc == before
+
+
+def test_command_line_validate_and_write(tmp_path):
+    doc = _fast(tmp_path)
+    good = tmp_path / "good.json"
+    good.write_text(json.dumps(doc))
+    bad = tmp_path / "bad.json"
+    doc["status"] = "OK"
+    bad.write_text(json.dumps(doc))
+
+    def run(path):
+        return subprocess.run(
+            [sys.executable, "-m", "verification.evidence_schema", "validate", str(path)],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
+    assert run(good).returncode == 0
+    failed = run(bad)
+    assert failed.returncode == 1 and "status" in failed.stdout
+    garbage = tmp_path / "garbage.json"
+    garbage.write_text("{")
+    assert run(garbage).returncode == 1
+    assert run(tmp_path / "gone.json").returncode == 1
+
+
+def test_command_line_builders_write_validated_envelopes(tmp_path):
+    def run(*args):
+        return subprocess.run(
+            [sys.executable, "-m", "verification.evidence_schema", *args, "--root", str(tmp_path)],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
+    def p(name):
+        return str(tmp_path / name)
+
+    _fast(tmp_path)
+    done = run(
+        "fast",
+        "--coverage",
+        p("coverage.json"),
+        "--junit",
+        p("pytest.xml"),
+        "--output",
+        p("o/fast.json"),
+    )
+    assert done.returncode == 0 and "fast evidence: PASS" in done.stdout
+    assert json.loads((tmp_path / "o/fast.json").read_text())["kind"] == "fast"
+
+    _deep(tmp_path)
+    done = run(
+        "deep", "--stats", p("stats.json"), "--results", p("results.txt"), "--output", p("d.json")
+    )
+    # the scope comes from pyproject.toml but resolves to no file under the temporary root
+    assert done.returncode == 1
+    deep = json.loads((tmp_path / "d.json").read_text())
+    assert deep["result"]["scope"] and deep["result"]["scope_files"] == []
+    assert deep["status"] == "INCOMPLETE"
+
+    _real(tmp_path)
+    done = run("real", "--report", p("real.json"), "--output", p("r.json"))
+    assert done.returncode == 1  # required set {a, b} is not the real one, but it was recorded
+    assert json.loads((tmp_path / "r.json").read_text())["kind"] == "real"
+
+    (tmp_path / "fault_matrix.json").write_text("[]")
+    done = run("faults", "--matrix", p("fault_matrix.json"), "--output", p("f.json"))
+    assert done.returncode == 1
+    assert json.loads((tmp_path / "f.json").read_text())["status"] == "INCOMPLETE"
+
+    done = run("fast", "--coverage", p("x.json"), "--junit", p("y.xml"), "--output", p("z.json"))
+    assert done.returncode == 1 and "INVALID" in done.stdout
+    assert not (tmp_path / "z.json").exists()
+
+
+def test_fault_names_are_the_twenty_three_scientific_defects():
+    names = evidence.fault_names()
+    assert len(names) == 23 and len(set(names)) == 23
+    # the original fourteen stay in the matrix
+    assert {"fit_on_evaluation_data", "dropped_detector_run"} <= set(names)
+
+
+def test_relative_artifact_paths_are_recorded_relative_to_the_root(tmp_path, monkeypatch):
+    _real(tmp_path)
+    monkeypatch.chdir(tmp_path)
+    doc = evidence.build_real(
+        Path("real.json"),
+        root=tmp_path,
+        source=SOURCE,
+        environment=ENVIRONMENT,
+        execution=EXECUTION,
+    )
+    assert list(doc["artifacts"]) == ["real.json"]
+
+
+def test_deep_records_the_files_in_scope_and_the_files_that_were_mutated(tmp_path):
+    doc = _deep(tmp_path)
+    assert doc["result"]["scope_files"] == ["src/x.py"]
+    assert doc["result"]["mutated_files"] == ["src/x.py"]
+    assert "results.txt" in doc["artifacts"]
+
+
+def test_deep_without_the_mutant_listing_is_incomplete(tmp_path):
+    doc = _deep(tmp_path, results=None)
+    assert doc["status"] == "INCOMPLETE" and doc["result"]["mutated_files"] is None
+
+
+def test_deep_with_a_scope_that_matches_no_file_is_incomplete(tmp_path):
+    doc = _deep(tmp_path)
+    doc["result"]["scope_files"] = []
+    assert evidence.validate(doc), "a PASS needs a non-empty resolved scope"
+
+
+def test_deep_with_an_unreadable_mutant_listing_is_incomplete_with_a_reason(tmp_path):
+    stats = tmp_path / "stats.json"
+    stats.write_text(json.dumps(_stats()))
+    doc = evidence.build_deep(
+        stats,
+        tmp_path / "gone.txt",
+        root=tmp_path,
+        scope=["src/x.py"],
+        source=SOURCE,
+        environment=ENVIRONMENT,
+    )
+    assert doc["status"] == "INCOMPLETE" and "gone.txt" in doc["result"]["reason"]
+
+
+# --- tools, types and reproduction evidence (#39) ---
+
+
+def _tools(
+    tmp_path, covered_lines=10, covered_branches=4, lines=10, branches=4, execution=EXECUTION
+):
+    path = tmp_path / "verifier_coverage.json"
+    path.write_text(
+        json.dumps(
+            {
+                "totals": {
+                    "covered_lines": covered_lines,
+                    "num_statements": lines,
+                    "covered_branches": covered_branches,
+                    "num_branches": branches,
+                }
+            }
+        )
+    )
+    return evidence.build_tools(
+        path, root=tmp_path, source=SOURCE, environment=ENVIRONMENT, execution=execution
+    )
+
+
+def _types_report(tmp_path, **changes):
+    report = {
+        "status": "PASS",
+        "errors": 17,
+        "baseline_entries": 17,
+        "problems": [],
+        "mypy": "2.4.0",
+        "pandas-stubs": "3.0.5.260914",
+    }
+    report.update(changes)
+    path = tmp_path / "types.json"
+    path.write_text(json.dumps(report))
+    return path
+
+
+def _types(tmp_path, execution=EXECUTION, **changes):
+    return evidence.build_types(
+        _types_report(tmp_path, **changes),
+        root=tmp_path,
+        source=SOURCE,
+        environment=ENVIRONMENT,
+        execution=execution,
+    )
+
+
+def _reproduction(tmp_path, levels=None, outcome="PASS", execution=EXECUTION):
+    levels = levels or {
+        "archive": "PASS",
+        "same_environment": "PASS",
+        "locked_environment": "PASS",
+        "version_sensitivity": "MEASURED",
+    }
+    path = tmp_path / "reproducibility.json"
+    path.write_text(
+        json.dumps(
+            {
+                "outcome": outcome,
+                "dataset": "cardio",
+                "levels": {name: {"status": status} for name, status in levels.items()},
+            }
+        )
+    )
+    return evidence.build_reproduction(
+        path, root=tmp_path, source=SOURCE, environment=ENVIRONMENT, execution=execution
+    )
+
+
+def test_the_new_kinds_build_valid_passing_envelopes(tmp_path):
+    for doc in (_tools(tmp_path), _types(tmp_path), _reproduction(tmp_path)):
+        assert doc["status"] == "PASS", doc
+        assert evidence.validate(doc, root=tmp_path) == []
+    assert set(evidence.KINDS) >= {"tools", "types", "reproduction"}
+
+
+def test_verifier_coverage_must_be_complete(tmp_path):
+    assert _tools(tmp_path, covered_lines=9)["status"] == "FAIL"
+    assert _tools(tmp_path, covered_branches=3)["status"] == "FAIL"
+    assert _tools(tmp_path, lines=0, covered_lines=0)["status"] == "FAIL"
+
+
+def test_a_tools_pass_cannot_be_forged_by_editing_the_status(tmp_path):
+    doc = _tools(tmp_path, covered_lines=9)
+    doc["status"] = "PASS"
+    assert any("not supported" in p for p in evidence.validate(doc))
+
+
+def test_unreadable_tools_coverage_is_incomplete(tmp_path):
+    path = tmp_path / "bad.json"
+    path.write_text("{}")
+    doc = evidence.build_tools(
+        path, root=tmp_path, source=SOURCE, environment=ENVIRONMENT, execution=EXECUTION
+    )
+    assert doc["status"] == "INCOMPLETE"
+
+
+def test_typing_follows_the_report_and_never_the_claimed_status(tmp_path):
+    assert _types(tmp_path, status="FAIL", problems=["new typing error: x"])["status"] == "FAIL"
+    assert (
+        _types(tmp_path, status="INCOMPLETE", reason="mypy did not run")["status"] == "INCOMPLETE"
+    )
+    assert _types(tmp_path, status="PASS", problems=["new typing error: x"])["status"] == "FAIL"
+    doc = _types(tmp_path, status="FAIL", problems=["x"])
+    doc["status"] = "PASS"
+    assert evidence.validate(doc)
+
+
+def test_the_typing_pins_are_recorded_for_the_baseline_to_be_judged(tmp_path):
+    doc = _types(tmp_path)
+    assert doc["result"]["mypy"] == "2.4.0" and doc["result"]["pandas-stubs"] == "3.0.5.260914"
+
+
+def test_reproduction_needs_every_mandatory_level_to_pass(tmp_path):
+    assert _reproduction(tmp_path)["status"] == "PASS"
+    not_run = {"archive": "PASS", "same_environment": "PASS", "locked_environment": "NOT_RUN"}
+    assert _reproduction(tmp_path, not_run, outcome="INCOMPLETE")["status"] == "INCOMPLETE"
+    assert _reproduction(tmp_path, {"archive": "PASS", "same_environment": "PASS"})["status"] == (
+        "INCOMPLETE"
+    )
+    failed = {"archive": "FAIL", "same_environment": "PASS", "locked_environment": "PASS"}
+    assert _reproduction(tmp_path, failed, outcome="FAIL")["status"] == "FAIL"
+
+
+def test_reproduction_status_is_recomputed_from_the_levels_not_the_claimed_outcome(tmp_path):
+    liar = {"archive": "PASS", "same_environment": "PASS", "locked_environment": "NOT_RUN"}
+    assert _reproduction(tmp_path, liar, outcome="PASS")["status"] == "INCOMPLETE"
+
+
+def test_a_sensitivity_run_does_not_replace_a_mandatory_level(tmp_path):
+    only = {"version_sensitivity": "MEASURED"}
+    assert _reproduction(tmp_path, only, outcome="PASS")["status"] == "INCOMPLETE"
+
+
+def test_the_command_line_wraps_the_new_kinds(tmp_path):
+    _tools(tmp_path)
+    _types_report(tmp_path)
+    _reproduction(tmp_path)
+    for name, option, source in (
+        ("tools", "--coverage", "verifier_coverage.json"),
+        ("types", "--report", "types.json"),
+        ("reproduction", "--report", "reproducibility.json"),
+    ):
+        done = subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "verification.evidence_schema",
+                name,
+                option,
+                str(tmp_path / source),
+                "--output",
+                str(tmp_path / f"{name}.json"),
+                "--root",
+                str(tmp_path),
+            ],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        assert done.returncode == 0, done.stdout + done.stderr
+        assert json.loads((tmp_path / f"{name}.json").read_text())["kind"] == name
+
+
+@pytest.mark.parametrize("text", ["not json", "{}", '{"status": "PASS"}', '{"levels": 3}'])
+def test_unreadable_typing_and_reproduction_reports_are_incomplete(tmp_path, text):
+    report = tmp_path / "bad.json"
+    report.write_text(text)
+    typed = evidence.build_types(
+        report, root=tmp_path, source=SOURCE, environment=ENVIRONMENT, execution=EXECUTION
+    )
+    again = evidence.build_reproduction(
+        report,
+        root=tmp_path,
+        source=SOURCE,
+        environment=ENVIRONMENT,
+        execution=EXECUTION,
+    )
+    assert typed["status"] == again["status"] == "INCOMPLETE"
+    assert typed["result"]["reason"] and again["result"]["reason"]
+    missing = tmp_path / "gone.json"
+    assert evidence.build_types(missing, root=tmp_path)["status"] == "INCOMPLETE"
+    assert evidence.build_reproduction(missing, root=tmp_path)["status"] == "INCOMPLETE"
+
+
+# --- where the evidence was produced (#44) ---
+
+
+def test_the_execution_context_is_read_from_the_runner_environment():
+    hosted = {
+        "GITHUB_ACTIONS": "true",
+        "GITHUB_RUN_ID": "77",
+        "RUNNER_ENVIRONMENT": "github-hosted",
+        "RUNNER_NAME": "GitHub Actions 3",
+    }
+    assert evidence.collect_execution(hosted) == {
+        "ci": True,
+        "run_id": "77",
+        "runner_environment": "github-hosted",
+        "runner_name": "GitHub Actions 3",
+    }
+    assert evidence.collect_execution({}) == {
+        "ci": False,
+        "run_id": None,
+        "runner_environment": None,
+        "runner_name": None,
+    }
+    assert evidence.collect_execution({"GITHUB_ACTIONS": "false"})["ci"] is False
+
+
+OTHER_EXECUTION = {
+    "ci": True,
+    "run_id": "9",
+    "runner_environment": "self-hosted",
+    "runner_name": "lab",
+}
+
+
+def _build_with(tmp_path, kind, execution):
+    if kind == "fast":
+        return _fast(tmp_path, execution=execution)
+    if kind == "real":
+        return _real(tmp_path, execution=execution)
+    if kind == "deep":
+        return _deep(tmp_path, execution=execution)
+    if kind == "faults":
+        return _matrix(tmp_path, execution=execution)
+    if kind == "tools":
+        return _tools(tmp_path, execution=execution)
+    if kind == "types":
+        return _types(tmp_path, execution=execution)
+    return _reproduction(tmp_path, execution=execution)
+
+
+@pytest.mark.parametrize("kind", evidence.KINDS)
+def test_every_builder_records_the_execution_it_was_given(tmp_path, kind, monkeypatch):
+    # run as on a hosted runner: the given context must win over the process environment
+    monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    monkeypatch.setenv("RUNNER_ENVIRONMENT", "github-hosted")
+    assert _build_with(tmp_path, kind, OTHER_EXECUTION)["execution"] == OTHER_EXECUTION
+    assert _build_with(tmp_path, kind, EXECUTION)["execution"] == EXECUTION
+
+
+@pytest.mark.parametrize(
+    "bad",
+    [
+        "self-hosted",
+        {"ci": "yes", "run_id": None, "runner_environment": None, "runner_name": None},
+        {"ci": True, "run_id": 5, "runner_environment": None, "runner_name": None},
+        {"ci": True},
+    ],
+)
+def test_a_malformed_execution_context_is_invalid(tmp_path, bad):
+    doc = _real(tmp_path)
+    doc["execution"] = bad
+    assert any("execution" in problem for problem in evidence.validate(doc))
+
+
+def _acquisition(tmp_path, sha_a="1" * 64, sha_b="2" * 64):
+    path = tmp_path / "real_acquisition.json"
+    path.write_text(
+        json.dumps(
+            {
+                "method": "public-download",
+                "datasets": {
+                    "a": {"url": "https://storage.googleapis.com/a", "sha256": sha_a, "bytes": 3},
+                    "b": {
+                        "url": "https://raw.githubusercontent.com/b",
+                        "sha256": sha_b,
+                        "bytes": 4,
+                    },
+                },
+            }
+        )
+    )
+    return path
+
+
+def test_the_real_envelope_carries_the_acquisition_report_and_hashes_it(tmp_path):
+    report = tmp_path / "real.json"
+    report.write_text(
+        json.dumps(
+            {
+                "datasets": [
+                    {"dataset": "a", "status": "PASS", "sha256": "1" * 64},
+                    {"dataset": "b", "status": "PASS", "sha256": "2" * 64},
+                ]
+            }
+        )
+    )
+    acquisition = _acquisition(tmp_path)
+    doc = evidence.build_real(
+        report,
+        acquisition=acquisition,
+        root=tmp_path,
+        source=SOURCE,
+        environment=ENVIRONMENT,
+        execution=EXECUTION,
+    )
+    assert doc["status"] == "PASS"
+    assert doc["result"]["acquisition"]["method"] == "public-download"
+    assert "real_acquisition.json" in doc["artifacts"]
+    assert evidence.validate(doc, root=tmp_path) == []
+
+
+def test_an_unreadable_acquisition_report_makes_the_real_envelope_incomplete(tmp_path):
+    report = tmp_path / "real.json"
+    report.write_text(json.dumps({"datasets": []}))
+    doc = evidence.build_real(
+        report,
+        acquisition=tmp_path / "absent.json",
+        root=tmp_path,
+        source=SOURCE,
+        environment=ENVIRONMENT,
+        execution=EXECUTION,
+    )
+    assert doc["status"] == "INCOMPLETE"

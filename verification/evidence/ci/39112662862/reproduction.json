@@ -1,0 +1,45 @@
+{
+  "artifacts": {
+    "experiments/results/reproducibility.json": "d68a0cb9059b93ae138f8aad3f0b1fd2b4d14f0aa95345dc6f9e6660d46cf218"
+  },
+  "captured_at": "2026-10-18T08:47:36.001969+00:00",
+  "environment": {
+    "packages": {
+      "mutmut": null,
+      "mypy": null,
+      "numpy": "2.4.6",
+      "pandas": "3.0.6",
+      "pandas-stubs": null,
+      "pyod": "3.6.7",
+      "pytest": "9.1.1",
+      "pytest-cov": "7.1.0",
+      "scikit-learn": "1.9.1"
+    },
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.11.17"
+  },
+  "execution": {
+    "ci": true,
+    "run_id": "39112662862",
+    "runner_environment": "github-hosted",
+    "runner_name": "GitHub Actions 1000005909"
+  },
+  "kind": "reproduction",
+  "result": {
+    "claimed_outcome": "PASS",
+    "dataset": "cardio",
+    "levels": {
+      "archive": "PASS",
+      "locked_environment": "PASS",
+      "same_environment": "PASS",
+      "version_sensitivity": "MEASURED"
+    }
+  },
+  "schema_version": 2,
+  "source": {
+    "revision": "65575e8d24e45173f70a0e83b63305630451883c",
+    "scientific_fingerprint": "cecbed00f8228b25707199f820d62f28fa1c13f543a0bbb5d56f94716b6a17b9",
+    "worktree_dirty": false
+  },
+  "status": "PASS"
+}

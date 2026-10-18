@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "required": {
+    "fast": "tests, 100 % line and branch coverage of the scientific code, manuscript figures and claims",
+    "deep": "mutation score of at least 95 % over the whole eligible scope, with the scope inventory checked",
+    "faults": "every deliberate scientific defect is detected and the control run passes",
+    "real": "the three full research datasets exist locally, match the reference hashes and pass their checks",
+    "tools": "100 % line and branch coverage of the verifier code in verification/",
+    "types": "the typing gate with the pinned checker and stubs, no new error and no stale baseline entry",
+    "reproduction": "cardio is reproduced against the archive, between two runs and in an environment rebuilt from the lock"
+  },
+  "optional": {
+    "performance": "scaling and timing measurements; reported and bound to the measurement fingerprint, never a gate"
+  },
+  "deferred": {
+    "independent_attestation": "no independent attester exists; CERTIFIED states where the evidence was produced and never that it was attested",
+    "linux_environment_lock": "the recorded environment lock covers osx-arm64 only (issue 45)"
+  },
+  "not_applicable": {
+    "manuscript_claims": "checked inside FAST by tests/test_manuscript_claims.py, so it has no separate evidence"
+  },
+  "typing_pins": {
+    "mypy": "2.4.0",
+    "pandas-stubs": "3.0.5.260914"
+  }
+}

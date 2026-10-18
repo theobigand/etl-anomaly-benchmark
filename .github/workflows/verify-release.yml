@@ -1,0 +1,371 @@
+name: verify-release
+
+# Manual run of every profile, then the release gate. Nothing here publishes
+# anything: the result is a report that says CERTIFIED, INCOMPLETE or REJECTED.
+on:
+  workflow_dispatch:
+    inputs:
+      real_runner:
+        description: "Label of a runner that holds the research datasets (empty skips REAL)"
+        required: false
+        default: ""
+      approved_sha:
+        description: "Full commit SHA the operator reviewed; REAL refuses any other revision"
+        required: false
+        default: ""
+  # A workflow_dispatch workflow cannot be started from a branch until it is on
+  # the default branch, so a change to this file also runs it on its own pull
+  # request. Edits to any other file never start it.
+  pull_request:
+    paths:
+      - ".github/workflows/verify-release.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  fast:
+    name: release-fast
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: pip install -e ".[dev]"
+
+      - name: Run fast profile
+        run: make verify-fast
+
+      - name: Bundle fast evidence
+        if: always()
+        run: python -m verification.bundles pack fast --allow-missing --output evidence-fast.tgz
+
+      - name: Preserve fast evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-fast
+          path: evidence-fast.tgz
+          if-no-files-found: warn
+          retention-days: 90
+
+  static:
+    name: release-static
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: pip install -e ".[dev]"
+
+      - name: Verifier coverage
+        run: make verify-tools
+
+      - name: Static typing (checker and stubs are pinned in verification/release_policy.json)
+        run: |
+          pip install mypy==2.4.0 pandas-stubs==3.0.5.260914
+          make verify-types
+
+      - name: Bundle static evidence
+        if: always()
+        run: python -m verification.bundles pack static --allow-missing --output evidence-static.tgz
+
+      - name: Preserve static evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-static
+          path: evidence-static.tgz
+          if-no-files-found: warn
+          retention-days: 90
+
+  reproduce:
+    name: release-reproduce
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: pip install -e ".[dev]"
+
+      # Cardio is a public ADBench file; nothing is uploaded, and the replay
+      # refuses to run when the download differs from the archived run.
+      - name: Fetch the public Cardio dataset
+        run: python experiments/fetch_cardio.py
+
+      - name: Controlled reproduction (archive, same environment, locked Linux environment)
+        run: make verify-reproduce
+
+      - name: Bundle reproduction evidence
+        if: always()
+        run: python -m verification.bundles pack reproduction --allow-missing --output evidence-reproduction.tgz
+
+      - name: Preserve reproduction evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-reproduction
+          path: evidence-reproduction.tgz
+          if-no-files-found: warn
+          retention-days: 90
+
+  faults:
+    name: release-faults
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: pip install -e ".[dev]"
+
+      - name: Run faults profile
+        run: make verify-faults
+
+      - name: Bundle faults evidence
+        if: always()
+        run: python -m verification.bundles pack faults --allow-missing --output evidence-faults.tgz
+
+      - name: Preserve faults evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-faults
+          path: evidence-faults.tgz
+          if-no-files-found: warn
+          retention-days: 90
+
+  deep:
+    name: release-deep
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: pip install -e ".[dev,deep]"
+
+      - name: Run deep profile
+        run: make verify-deep
+
+      - name: Bundle deep evidence
+        if: always()
+        run: python -m verification.bundles pack deep --allow-missing --output evidence-deep.tgz
+
+      - name: Preserve deep evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-deep
+          path: evidence-deep.tgz
+          if-no-files-found: warn
+          retention-days: 90
+
+  real-readiness:
+    name: release-real-readiness
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # The same install the REAL job runs, on a clean hosted Linux machine, with the
+      # dataset and runner checks left out (this machine holds no dataset).
+      - name: Install from the validated lock
+        run: |
+          bash verification/runner/install_locked.sh "$RUNNER_TEMP/real-venv"
+          echo "$RUNNER_TEMP/real-venv/bin" >> "$GITHUB_PATH"
+          echo "PYTHONPATH=$GITHUB_WORKSPACE/src" >> "$GITHUB_ENV"
+
+      - name: Preflight without datasets
+        run: python -m verification.real_preflight --install-only --expect-sha "$GITHUB_SHA"
+
+  real:
+    name: release-real
+    # Code that sees the private datasets must already be on the default branch.
+    if: inputs.real_runner != '' && github.ref_name == github.event.repository.default_branch
+    # `self-hosted` is part of the label set, so no GitHub-hosted runner can take the job.
+    runs-on: [self-hosted, "${{ inputs.real_runner }}"]
+    steps:
+      # The research datasets live on the operator's own machine. A hosted
+      # runner cannot hold them, so a label that resolves to one is refused.
+      - name: Refuse a runner that is not self-hosted
+        run: test "$RUNNER_ENVIRONMENT" = self-hosted
+
+      # The operator names the commit they reviewed; any other revision is refused
+      # before its code is fetched.
+      - name: Refuse a revision the operator did not approve
+        env:
+          APPROVED_SHA: ${{ inputs.approved_sha }}
+        run: test -n "$APPROVED_SHA" && test "$GITHUB_SHA" = "$APPROVED_SHA"
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # Hash-pinned wheels from the recorded Linux lock, nothing resolved at run time.
+      # The project itself is not installed: PYTHONPATH points at its source.
+      - name: Install from the validated lock
+        run: |
+          bash verification/runner/install_locked.sh "$RUNNER_TEMP/real-venv"
+          echo "$RUNNER_TEMP/real-venv/bin" >> "$GITHUB_PATH"
+          echo "PYTHONPATH=$GITHUB_WORKSPACE/src" >> "$GITHUB_ENV"
+
+      # The runner's own environment names the directory that holds the files
+      # (THESIS_DATA_DIR in the runner's .env). They are linked, never copied.
+      - name: Link the local datasets
+        run: |
+          test -n "$THESIS_DATA_DIR"
+          cd "$GITHUB_WORKSPACE/data"
+          for name in creditcard water_quality cardio; do
+            ln -s "$THESIS_DATA_DIR/$name.csv" "$name.csv"
+          done
+
+      - name: Preflight (read-only, no benchmark)
+        env:
+          APPROVED_SHA: ${{ inputs.approved_sha }}
+        run: python -m verification.real_preflight --expect-sha "$APPROVED_SHA"
+
+      - name: Run real profile
+        run: make verify-real
+
+      - name: Bundle real evidence
+        if: always()
+        run: python -m verification.bundles pack real --allow-missing --output evidence-real.tgz
+
+      - name: Preserve real evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-real
+          path: evidence-real.tgz
+          if-no-files-found: warn
+          retention-days: 90
+
+  real-hosted:
+    name: release-real-hosted
+    # Without a private runner the datasets are fetched here from their public sources.
+    # Each file must match the reference checksum before it is used; nothing is uploaded
+    # but the JSON reports, and no private data or secret is involved.
+    if: inputs.real_runner == ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install from the validated lock
+        run: |
+          bash verification/runner/install_locked.sh "$RUNNER_TEMP/real-venv"
+          echo "$RUNNER_TEMP/real-venv/bin" >> "$GITHUB_PATH"
+          echo "PYTHONPATH=$GITHUB_WORKSPACE/src" >> "$GITHUB_ENV"
+
+      - name: Download the datasets and verify their checksums
+        run: python -m verification.real_acquire --output experiments/results/real_acquisition.json
+
+      - name: Preflight (read-only, no benchmark)
+        run: python -m verification.real_preflight --hosted-download --expect-sha "$GITHUB_SHA"
+
+      - name: Run real profile
+        run: make verify-real REAL_ACQUISITION=experiments/results/real_acquisition.json
+
+      - name: Bundle real evidence
+        if: always()
+        run: python -m verification.bundles pack real-hosted --allow-missing --output evidence-real-hosted.tgz
+
+      - name: Preserve real evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-real-hosted
+          path: evidence-real-hosted.tgz
+          if-no-files-found: warn
+          retention-days: 90
+
+  release:
+    name: release-gate
+    needs: [fast, static, reproduce, faults, deep, real, real-hosted, real-readiness]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: pip install -e ".[dev]"
+
+      - name: Refuse a release when a profile job failed
+        run: test "${{ contains(needs.*.result, 'failure') }}" = false
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: evidence-*
+          path: ${{ runner.temp }}/bundles
+          merge-multiple: true
+
+      # Only the allowlisted evidence files can be unpacked: any other member
+      # (a dataset, a path outside the checkout) refuses the whole bundle.
+      - name: Unpack the evidence at the repository root
+        run: for bundle in "$RUNNER_TEMP"/bundles/*.tgz; do python -m verification.bundles unpack "$bundle"; done
+
+      - name: Release gate
+        run: make verify-release
+
+      - name: Preserve the release report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-report
+          path: experiments/results/evidence/release.json
+          if-no-files-found: warn
+          retention-days: 90
