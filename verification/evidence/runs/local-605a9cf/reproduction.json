@@ -1,0 +1,45 @@
+{
+  "artifacts": {
+    "experiments/results/reproducibility.json": "76ecec8626c08371bb8775cbfe5352e771afecbc2c465f5d26de23d610e02599"
+  },
+  "captured_at": "2026-10-18T08:44:12.596781+00:00",
+  "environment": {
+    "packages": {
+      "mutmut": "3.8.0",
+      "mypy": null,
+      "numpy": "2.4.6",
+      "pandas": "3.0.6",
+      "pandas-stubs": null,
+      "pyod": "3.6.7",
+      "pytest": "9.1.1",
+      "pytest-cov": "7.1.0",
+      "scikit-learn": "1.9.1"
+    },
+    "platform": "macOS-27.0-arm64-arm-64bit",
+    "python": "3.11.17"
+  },
+  "execution": {
+    "ci": false,
+    "run_id": null,
+    "runner_environment": null,
+    "runner_name": null
+  },
+  "kind": "reproduction",
+  "result": {
+    "claimed_outcome": "PASS",
+    "dataset": "cardio",
+    "levels": {
+      "archive": "PASS",
+      "locked_environment": "PASS",
+      "same_environment": "PASS",
+      "version_sensitivity": "MEASURED"
+    }
+  },
+  "schema_version": 2,
+  "source": {
+    "revision": "605a9cf4b0ebcc706b4fc7b824983951cc83926e",
+    "scientific_fingerprint": "cecbed00f8228b25707199f820d62f28fa1c13f543a0bbb5d56f94716b6a17b9",
+    "worktree_dirty": false
+  },
+  "status": "PASS"
+}

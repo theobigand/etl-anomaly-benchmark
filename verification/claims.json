@@ -2,34 +2,34 @@
   "schema_version": 2,
   "note": "Verification figures quoted in paper/main.tex, with the run they describe. tests/test_manuscript_claims.py keeps the paper and this file in step; tests/test_claims_provenance.py checks the run (revision, sealed envelopes, staleness).",
   "published_run": {
-    "id": "local-43831f0",
-    "revision": "43831f00eb2d1d618c18a53203620b286d4e8851",
+    "id": "local-605a9cf",
+    "revision": "605a9cf4b0ebcc706b4fc7b824983951cc83926e",
     "source": "local-unattested",
     "platform": "macOS 27.0 arm64, Python 3.11.17 (conda etl-benchmark; typing in a venv with mypy 2.4.0)",
     "captured": "2026-10-18",
     "historical": false,
-    "evidence_dir": "verification/evidence/runs/local-43831f0",
+    "evidence_dir": "verification/evidence/runs/local-605a9cf",
     "files": {
-      "deep.json": "e656f092a692c7bfe01b5165bdb259edd621b88b9eb3494f35c8eb111d094be1",
-      "fast.json": "98268c5734ce86b03229883f68a9c465e3dbc9cf32d7046e17aa8941bb226e11",
-      "faults.json": "a285fddc6aee400e2dd03a8340f3b2907d3875cb8d6d55cc9a610ae69802a2be",
-      "real.json": "935a569af6d12418449e879c108325a010849db0e7fea72190b31f812f77e52a",
-      "reproduction.json": "853445f41a689dc90a9da0c06a77cacc9d2a86bb64c3409f27753a322aaa708f",
+      "deep.json": "63dbbd80fd4ba5e512b084e81571851473c3e9b5762ada4e53a86f53b6d772c0",
+      "fast.json": "ee20239f3a32bef4f63cb5b425ff8cdc0ae070b261f64f57426301921eb3b797",
+      "faults.json": "01c64cbde2644afcf83524e19e36991e1118edb228a45285f354817d6d27e5df",
+      "real.json": "fa23ca5a4b4d47220315cb511a7bb6aa4d2ddd1ddd7624f25cffafd2685678a5",
+      "reproduction.json": "e21ad31c91f744b33a1b8876b94f7ea3db29b03f0425e9fa0a2bcf15929224d0",
       "results.txt": "b6fa57dfb077a47e76a6b290ba3cd8ca59dd901b09a61c3ab9bcdf0625112832",
-      "tools.json": "5c600072d0b95a91d35d5469fe451c6df29f8dc2f52001709d359f2891fd7532",
-      "types.json": "e95a9a0942a898bfd427df8006505c26a6979f5c5f38316fb4a41c81b345e064"
+      "tools.json": "db907d29a7e62ef2b2c95c4dda6156ece54936403c4da934cba495152a0d3630",
+      "types.json": "76227cfa1819b740f0ad67343b740dc7d58696f3fe3c2812e79b41db675ffbb1"
     }
   },
   "fast": {
-    "tests": 1081,
+    "tests": 1105,
     "line_covered": 1628,
     "line_coverable": 1628,
     "branch_covered": 336,
     "branch_coverable": 336
   },
   "verifier": {
-    "line": 1775,
-    "branch": 656
+    "line": 1883,
+    "branch": 690
   },
   "mutation": {
     "killed": 4700,

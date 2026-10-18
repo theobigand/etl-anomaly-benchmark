@@ -8,9 +8,9 @@ des archives (filiation, tableaux du manuscrit) ne sont pas lancés pour chaque
 mutant. `config.py`, `logging_setup.py`, `__main__.py` et les fichiers
 `__init__.py` ne sont pas mutés.
 
-Résultat de `make verify-deep` du run local `local-43831f0` (commit
-`43831f00`, macOS arm64, 18 octobre 2026, non attesté ; preuves scellées dans
-`evidence/runs/local-43831f0/`) : **4 700 mutants éliminés sur 4 808
+Résultat de `make verify-deep` du run local `local-605a9cf` (commit
+`605a9cf4`, macOS arm64, 18 octobre 2026, non attesté ; preuves scellées dans
+`evidence/runs/local-605a9cf/`) : **4 700 mutants éliminés sur 4 808
 (97,75 %)**, 108 survivants, sans mutant ignoré, expiré, en erreur, interrompu
 ou sans test (la barrière `check_mutation.py` refuse ces cas). Le périmètre est
 contrôlé par un relevé indépendant (voir « Périmètre contrôlé ») : 28 fichiers
@@ -162,7 +162,7 @@ décalé (Asia/Kolkata), et les quatre mutants sont éliminés y compris avec
 mutants) donne 105 survivants (4 646 / 4 751, soit 97,79 %) : exactement les
 108 survivants locaux de l'époque moins les trois mutants de casse, sans
 survivant propre à Linux. Cette mesure décrit un état antérieur du code et n'est
-pas citée par le manuscrit, qui cite le run local `local-43831f0` (voir
+pas citée par le manuscrit, qui cite le run local `local-605a9cf` (voir
 `claims.json`).
 
 ## Mutant sensible au temps
@@ -174,7 +174,7 @@ classé tantôt « tué », tantôt « expiré » quand la machine était charg�
 campagnes locales qui comptent des expirations (cinq mutants dont celui-ci, sur
 une exécution concurrente d'autres tâches) ont été rejouées pour ces mutants
 seulement (`mutmut run <noms>`) ; le résultat retenu, 108 survivants sans
-expiration, est celui du run `local-43831f0` (deux mutants classés « suspect » par la charge de la machine ont été rejoués seuls et éliminés ou survivants selon le cas ; aucun n'a été retiré du dénominateur).
+expiration, est celui du run `local-605a9cf` (deux mutants classés « suspect » par la charge de la machine ont été rejoués seuls et éliminés ou survivants selon le cas ; aucun n'a été retiré du dénominateur).
 
 ## Équivalences invoquées
 
