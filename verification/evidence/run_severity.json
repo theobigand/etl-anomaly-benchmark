@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-16T14:45:17.954844+00:00",
+  "captured_at": "2026-10-18T04:21:43.596501+00:00",
   "dataset": {
     "identity": "synthetic"
   },
@@ -9,8 +9,14 @@
   },
   "experiment": "synthetic_severity",
   "fingerprint_recipe": 2,
+  "measurement_fingerprint": "9cd603c619d15e17d3cbd9d14986b6f62bdb5611a5ba78fbd4d10ae8f4d7285d",
+  "measurement_recipe": 1,
+  "output_sha256": {
+    "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/paper/figures/severity_curves.png": "6bc50cb8eac4834e698758555d9cc6d2293365a50b33c6cb6270d804dec4b4a5",
+    "severity_20261018_042143.csv": "718db28cb414540422a7e21149d302906bcfb3c94918a6105aeba90e51b1e0a8"
+  },
   "outputs": [
-    "severity_20261016_144517.csv",
+    "severity_20261018_042143.csv",
     "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/paper/figures/severity_curves.png"
   ],
   "packages": {
@@ -23,7 +29,7 @@
   "platform": "macOS-27.0-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "scientific_fingerprint": "44faa1f99393490fc25dbcea06ee4c8371bbb032f591e4203253c26d65da6a23",
+  "scientific_fingerprint": "cecbed00f8228b25707199f820d62f28fa1c13f543a0bbb5d56f94716b6a17b9",
   "seeds": [
     42,
     1,
@@ -46,7 +52,7 @@
     ],
     "split_strategy": "customer_identity_grouped_stratified"
   },
-  "source_fingerprint": "352b9d2c38d0bd7820ec1daad2536bad7967e2430f7e9e1b3a6bf565489e3e8e",
-  "source_revision": "93b6fe896715f308575620db6a6bb3de5b4c7f77",
+  "source_fingerprint": "d8c8a6a857073b22384213e66d0d2773e2d58c9d6ead796483e610ecd60f0ab4",
+  "source_revision": "367e3acc0e96b9e2bef3c748de3f1958d20acf85",
   "worktree_dirty": false
 }

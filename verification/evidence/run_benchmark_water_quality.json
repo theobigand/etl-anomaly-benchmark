@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-16T14:46:31.111612+00:00",
+  "captured_at": "2026-10-18T04:22:41.341823+00:00",
   "dataset": {
     "bytes": 525187,
     "identity": "water_quality",
@@ -12,10 +12,17 @@
   },
   "experiment": "real_benchmark",
   "fingerprint_recipe": 2,
+  "measurement_fingerprint": "9cd603c619d15e17d3cbd9d14986b6f62bdb5611a5ba78fbd4d10ae8f4d7285d",
+  "measurement_recipe": 1,
+  "output_sha256": {
+    "benchmark_water_quality_20261018_042241.csv": "ce7cd6586dd1446c0e0597e5c0fadc9a67b4cbdf242d92719337d840aaa24a26",
+    "benchmark_water_quality_20261018_042241.md": "1ba348d671424d265ade587578625a326f8e4d2ef38672dee393b43298a58c47",
+    "split_ids_water_quality_20261018_042241.json.gz": "bde870d2862f314501e1d38bb5aa614fb11c73eb775ab5acef42c44403bb8720"
+  },
   "outputs": [
-    "benchmark_water_quality_20261016_144631.csv",
-    "benchmark_water_quality_20261016_144631.md",
-    "split_ids_water_quality_20261016_144631.json.gz"
+    "benchmark_water_quality_20261018_042241.csv",
+    "benchmark_water_quality_20261018_042241.md",
+    "split_ids_water_quality_20261018_042241.json.gz"
   ],
   "packages": {
     "great-expectations": "1.24.0",
@@ -27,7 +34,7 @@
   "platform": "macOS-27.0-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "scientific_fingerprint": "44faa1f99393490fc25dbcea06ee4c8371bbb032f591e4203253c26d65da6a23",
+  "scientific_fingerprint": "cecbed00f8228b25707199f820d62f28fa1c13f543a0bbb5d56f94716b6a17b9",
   "seeds": [
     42,
     1,
@@ -67,7 +74,7 @@
     ],
     "split_strategy": "stratified"
   },
-  "source_fingerprint": "352b9d2c38d0bd7820ec1daad2536bad7967e2430f7e9e1b3a6bf565489e3e8e",
-  "source_revision": "93b6fe896715f308575620db6a6bb3de5b4c7f77",
+  "source_fingerprint": "d8c8a6a857073b22384213e66d0d2773e2d58c9d6ead796483e610ecd60f0ab4",
+  "source_revision": "367e3acc0e96b9e2bef3c748de3f1958d20acf85",
   "worktree_dirty": false
 }

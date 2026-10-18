@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-16T14:46:39.481971+00:00",
+  "captured_at": "2026-10-18T04:22:27.387524+00:00",
   "dataset": {
     "bytes": 770024,
     "identity": "cardio",
@@ -12,10 +12,17 @@
   },
   "experiment": "real_benchmark",
   "fingerprint_recipe": 2,
+  "measurement_fingerprint": "9cd603c619d15e17d3cbd9d14986b6f62bdb5611a5ba78fbd4d10ae8f4d7285d",
+  "measurement_recipe": 1,
+  "output_sha256": {
+    "benchmark_cardio_20261018_042227.csv": "26a79a6f6c1bc971a487076b22274bfdfbe90ec2df10952d962d3afb8d9c5f18",
+    "benchmark_cardio_20261018_042227.md": "8c5d244a62c0de3a74fef49d7c5356a4d27d3cc4ebb711ece35888a5c741ea84",
+    "split_ids_cardio_20261018_042227.json.gz": "3c8f3ca4703db0a4b719e58da9b12b22b4294d874f9ece643073d32692b35ffe"
+  },
   "outputs": [
-    "benchmark_cardio_20261016_144639.csv",
-    "benchmark_cardio_20261016_144639.md",
-    "split_ids_cardio_20261016_144639.json.gz"
+    "benchmark_cardio_20261018_042227.csv",
+    "benchmark_cardio_20261018_042227.md",
+    "split_ids_cardio_20261018_042227.json.gz"
   ],
   "packages": {
     "great-expectations": "1.24.0",
@@ -27,7 +34,7 @@
   "platform": "macOS-27.0-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "scientific_fingerprint": "44faa1f99393490fc25dbcea06ee4c8371bbb032f591e4203253c26d65da6a23",
+  "scientific_fingerprint": "cecbed00f8228b25707199f820d62f28fa1c13f543a0bbb5d56f94716b6a17b9",
   "seeds": [
     42,
     1,
@@ -79,7 +86,7 @@
     ],
     "split_strategy": "stratified"
   },
-  "source_fingerprint": "352b9d2c38d0bd7820ec1daad2536bad7967e2430f7e9e1b3a6bf565489e3e8e",
-  "source_revision": "93b6fe896715f308575620db6a6bb3de5b4c7f77",
+  "source_fingerprint": "d8c8a6a857073b22384213e66d0d2773e2d58c9d6ead796483e610ecd60f0ab4",
+  "source_revision": "367e3acc0e96b9e2bef3c748de3f1958d20acf85",
   "worktree_dirty": false
 }
