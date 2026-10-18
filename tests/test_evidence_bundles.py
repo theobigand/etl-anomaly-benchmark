@@ -165,3 +165,18 @@ def test_text_listings_are_packed_without_a_json_check(tmp_path):
     out = bundles.pack("deep", tmp_path / "src", tmp_path / "d.tgz", allow_missing=True)
     with tarfile.open(out) as archive:
         assert archive.getnames() == ["mutants/results.txt"]
+
+
+HOSTED = (*REAL, "experiments/results/real_acquisition.json")
+
+
+def test_the_hosted_real_bundle_adds_only_the_acquisition_report(tmp_path):
+    assert sorted(bundles.KINDS["real-hosted"]) == sorted(HOSTED)
+    for name in HOSTED:
+        _write(tmp_path / "src", name)
+    _write(tmp_path / "src", "data/creditcard.csv", "a,b\n1,2\n")
+    out = bundles.pack("real-hosted", tmp_path / "src", tmp_path / "h.tgz")
+    with tarfile.open(out) as archive:
+        assert sorted(archive.getnames()) == sorted(HOSTED)
+    names = bundles.unpack(out, tmp_path / "dest")
+    assert sorted(names) == sorted(HOSTED)

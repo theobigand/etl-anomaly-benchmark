@@ -96,6 +96,8 @@ def test_the_real_bundle_carries_only_the_two_reports():
     assert pf.check_bundle_allowlist().status == "PASS"
     assert pf.check_bundle_allowlist({"real": ("data/cardio.csv",)}).status == "FAIL"
     assert pf.check_bundle_allowlist({"real": ("x.json", "y.gz")}).status == "FAIL"
+    hosted_leak = {"real": tuple(pf.REAL_REPORTS), "real-hosted": ("data/creditcard.csv",)}
+    assert pf.check_bundle_allowlist(hosted_leak).status == "FAIL"
     assert pf.check_bundle_allowlist({}).status == "FAIL"
 
 
@@ -110,6 +112,15 @@ def test_the_real_job_uploads_nothing_but_the_evidence_bundle():
     )
     assert pf.check_upload_paths(leaking).status == "FAIL"
     assert pf.check_upload_paths("jobs:\n").status == "FAIL"
+    only_real = "  real:\n    path: evidence-real.tgz\n  release:\n"
+    assert pf.check_upload_paths(only_real).status == "FAIL"
+    both = only_real + "  real-hosted:\n    path: data/\n  release:\n"
+    assert (
+        pf.check_upload_paths(
+            both.replace("  release:\n    path", "  real-hosted:\n    path")
+        ).status
+        == "FAIL"
+    )
 
 
 def test_the_runner_must_be_self_hosted_when_inside_one():
@@ -244,3 +255,12 @@ def test_install_only_skips_the_checks_a_machine_without_datasets_cannot_pass(mo
     assert _status(results, "revision") == "PASS"
     assert not [r for r in results if r.name.startswith("dataset ")]
     assert "SKIP datasets" in "\n".join(f"{r.status} {r.name}" for r in results)
+
+
+def test_a_hosted_run_checks_the_downloaded_datasets_but_not_the_runner(monkeypatch):
+    monkeypatch.setattr(pf, "git_state", lambda root: ("a" * 40, False))
+    args = pf.parse_args(["--hosted-download", "--expect-sha", "a" * 40])
+    results = pf.run_checks(args)
+    assert _status(results, "runner") == "SKIP"
+    assert any(r.name.startswith("dataset ") for r in results)
+    assert _status(results, "resources") in {"PASS", "FAIL"}

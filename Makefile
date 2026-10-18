@@ -91,7 +91,8 @@ verify-real:
 	pytest -m real
 	@set +e; python experiments/verify_real.py --output experiments/results/real_verification.json; \
 		gate=$$?; python -m verification.evidence_schema real \
-		--report experiments/results/real_verification.json --output $(EVIDENCE)/real.json; \
+		--report experiments/results/real_verification.json \
+		$(if $(REAL_ACQUISITION),--acquisition $(REAL_ACQUISITION)) --output $(EVIDENCE)/real.json; \
 		evidence_status=$$?; test $$gate -eq 0 -a $$evidence_status -eq 0
 
 lock:

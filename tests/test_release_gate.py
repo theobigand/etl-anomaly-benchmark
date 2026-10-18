@@ -559,3 +559,47 @@ def test_published_figures_that_describe_older_code_keep_the_release_incomplete(
 
 def test_current_published_figures_do_not_block_the_release(tmp_path):
     assert _assess(tmp_path, claims=[])["status"] == "CERTIFIED"
+
+
+def _hosted_real(tmp_path, acquisition):
+    doc = _real(tmp_path, execution=HOSTED)
+    if acquisition is not None:
+        doc["result"]["acquisition"] = acquisition
+    return doc
+
+
+def _download(**override):
+    base = {
+        "a": {"url": "https://storage.googleapis.com/a", "sha256": "1" * 64, "bytes": 3},
+        "b": {"url": "https://raw.githubusercontent.com/b", "sha256": "2" * 64, "bytes": 4},
+    }
+    base.update(override)
+    return {"method": "public-download", "datasets": base}
+
+
+def test_real_evidence_from_a_hosted_runner_is_accepted_when_the_datasets_were_downloaded(tmp_path):
+    docs = _docs(tmp_path)
+    docs["real"] = _hosted_real(tmp_path, _download())
+    report = _assess(tmp_path, docs)
+    assert report["status"] == "CERTIFIED", report["reasons"]
+    assert report["executions"]["real"] == "github-hosted"
+
+
+@pytest.mark.parametrize(
+    ("acquisition", "needle"),
+    [
+        (None, "hosted runner"),
+        ({"method": "copied", "datasets": {}}, "public-download"),
+        (_download(b={"url": "https://raw.githubusercontent.com/b", "sha256": "9" * 64}), "b"),
+        (_download(a={"url": "http://storage.googleapis.com/a", "sha256": "1" * 64}), "https"),
+        ({"method": "public-download", "datasets": {"a": _download()["datasets"]["a"]}}, "b"),
+    ],
+)
+def test_hosted_real_evidence_without_a_verified_download_is_rejected(
+    tmp_path, acquisition, needle
+):
+    docs = _docs(tmp_path)
+    docs["real"] = _hosted_real(tmp_path, acquisition)
+    report = _assess(tmp_path, docs)
+    assert report["status"] == "REJECTED"
+    assert any("real" in r and needle in r for r in report["reasons"]), report["reasons"]
