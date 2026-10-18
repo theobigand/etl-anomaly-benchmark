@@ -1,10 +1,16 @@
 # Proposition de protection de `main`
 
 Statut : `AWAITING_OWNER_APPROVAL`. Rien de ceci n'est appliqué. État vérifié le
-17 octobre 2026 par lecture : `main` n'est pas protégée (HTTP 404), aucun
+18 octobre 2026 par lecture : `main` n'est pas protégée (HTTP 404), aucun
 ruleset (`[]`), un seul collaborateur (le propriétaire, administrateur), dépôt
-privé, fusion par commit de fusion, squash et rebase autorisés. La PR #37 n'est
-pas fusionnée.
+**public**, fusion par commit de fusion, squash et rebase autorisés. La PR #37
+n'est pas fusionnée.
+
+Stratégie de fusion : **commit de fusion** (« Create a merge commit »). Le squash
+et le rebase sont à éviter pour cette PR : ils réécrivent les SHA, et la
+filiation vérifiée par `claims.py` (la révision d'un run scellé doit être un
+ancêtre de `HEAD`) comme les ancres de `evidence/lineage.json` cesseraient d'être
+des ancêtres de `main`.
 
 ## Contrôles obligatoires avant fusion
 
@@ -85,15 +91,24 @@ proposal ».
 
 ## Publication d'une version
 
-1. Fusionner par PR, `test` et `faults` verts.
-2. Lancer `verify-release` depuis `main` (`workflow_dispatch`). Sans exécuteur
-   portant les trois CSV (`real_runner`), REAL est ignoré et le verdict est
-   INCOMPLETE : c'est voulu, une version ne se certifie pas sans REAL.
-3. Lancer `make verify-release` en local sur le même commit, avec les trois CSV :
-   le résultat reste « local, non attesté ».
-4. Étiqueter (`v*`) seulement un commit pour lequel les deux verdicts existent.
-   Si un jour un ruleset d'étiquettes est voulu, restreindre `v*` au
+1. Fusionner par PR (commit de fusion), `test` et `faults` verts.
+2. Lancer `verify-release` depuis `main` (`gh workflow run verify-release.yml
+   --ref main`, sans entrée). Le job hébergé `release-real-hosted` télécharge les
+   trois jeux publics, vérifie leur sha256 contre le manifeste et exécute REAL ;
+   le verdict attendu est CERTIFIED avec l'étiquette
+   `ci-run:<id> (not independently attested)`. Un exécuteur privé n'est requis
+   que si ce chemin devient indisponible (`real_evidence.md`, option B).
+3. Lire le rapport et les artefacts du run (révision, empreintes), pas seulement
+   la couleur du travail. Ne pas ajouter de commit sur `main` pour archiver le
+   rapport : une preuve est liée à une révision. Les artefacts du run, ses liens
+   et leurs condensés sont consignés dans l'issue 49.
+4. Étiqueter (`v*`) seulement le commit certifié, avec l'autorisation du
+   propriétaire. Si un ruleset d'étiquettes est voulu, restreindre `v*` au
    propriétaire.
 
-Limites : les CSV de recherche ne sont pas dans le dépôt et ne doivent jamais
-être envoyés ; aucun exécuteur auto-hébergé n'existe aujourd'hui.
+Limites : l'exécution REAL hébergée repose sur des sources publiques dont le
+sha256 est contrôlé avant usage ; elle n'est pas une attestation indépendante.
+Les téléchargements suivent la liste d'hôtes de `real_acquire.py` ; un
+redirigement vers un autre hôte n'est pas filtré, mais tout contenu différent est
+refusé par le contrôle du sha256 avant d'être écrit (aucun secret n'existe dans
+ces jobs).
