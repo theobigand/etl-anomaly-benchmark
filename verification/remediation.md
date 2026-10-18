@@ -11,11 +11,11 @@ qu'après exécution des contrôles listés ici, sur le commit indiqué.
 | #41 périmètre de mutation | terminé | `540b2fd`, `80b6310` | RED : module absent puis 5 tests en échec ; GREEN : relevé indépendant, 28 fichiers dont 27 mutés ; DEEP local 4 707/4 815, Linux 4 710/4 815 |
 | #42 chiffres et manuscrit | terminé | `6e30e9b`, `631b159`, `55ad398`, `e4c5cd4`, `ffa02b2`, `a8644e7` | chiffres liés à un run scellé (`claims.json`, `evidence/runs/local-ffa02b2/`), péremption refusée par la porte de certification, rapport réécrit, chiffres CI copiés de `evidence/ci/39041531141/` |
 | #43 provenance de la mesure | terminé | `7526de2` | RED : 24 tests ; GREEN : empreinte de mesure distincte de l'empreinte scientifique (`44faa1f9` inchangée), `scaling.json` archivé laissé `LEGACY` |
-| #44 preuve REAL à distance | **ouvert** : aucun exécuteur auto-hébergé (API : `total_count: 0`, 17 oct. 2026) | `30bd929`, `8df5b71`, voir ci-dessous | mécanisme testé ; job `real` durci (branche par défaut, `approved_sha`, venv jetable, jeux liés sans copie), contrôle préalable `verification.real_preflight`, script de provisionnement, procédure `real_evidence.md` ; exécution distante non démontrée |
+| #44 preuve REAL à distance | **ouvert** : aucun exécuteur auto-hébergé (API : `total_count: 0`, 17 oct. 2026) | `30bd929`, `8df5b71`, `d6096d2`, `367e3ac`, voir ci-dessous | mécanisme testé ; job `real` durci (branche par défaut, `approved_sha`, venv jetable, jeux liés sans copie), contrôle préalable `verification.real_preflight`, script de provisionnement, procédure `real_evidence.md` ; exécution distante non démontrée |
 | #45 reproduction étendue et verrou Linux | terminé | `7d7e6f4`, `8df5b71`, `a8644e7` | verrou Linux à empreintes validé sur un exécuteur propre (cardio : écart 0,0 contre l'essai Linux, 6,5e-5 contre l'archive macOS) ; rejeux locaux des quatre jeux ; rejeux verrouillés de water_quality, credit_card et synthetic en attente |
 | #46 protection de `main` | **ouvert** : `AWAITING_OWNER_APPROVAL` | `69054d5` | contextes `test` et `faults` relevés, homonymie levée, charge utile validée, `verification.protection check` en lecture seule ; rien appliqué |
 | #47 références externes | terminé | `3fe3505` | 12 entrées vérifiées (`references.md`) ; 12,9 M$ retiré ; AUC 0,5094 confirmée ; auteurs corrigés |
-| #48 sorties atomiques | implémenté et vérifié en local ; clôture après la CI distante du dernier commit | `58556e5`, `80b6310`, `367e3ac`, `dfe1ba0`, `74d2178` | RED : 7 cas de disque plein sur les points d'entrée (fichiers tronqués, figure précédente écrasée) ; GREEN : `etl_benchmark.atomic.atomic_path` (fichier caché voisin, refus du vide, `fsync`, `os.replace`, nettoyage sur erreur et interruption), test d'arbre syntaxique interdisant toute écriture directe ; empreinte `44faa1f9` vers `cecbed00`, rejeu complet depuis `367e3ac` (écart 0,0, partitions et figures identiques), run scellé `local-43831f0` |
+| #48 sorties atomiques | terminé (CI Linux sur `43831f0`, identique en code au dernier commit) | `58556e5`, `80b6310`, `367e3ac`, `dfe1ba0`, `74d2178` | RED : 7 cas de disque plein sur les points d'entrée (fichiers tronqués, figure précédente écrasée) ; GREEN : `etl_benchmark.atomic.atomic_path` (fichier caché voisin, refus du vide, `fsync`, `os.replace`, nettoyage sur erreur et interruption), test d'arbre syntaxique interdisant toute écriture directe ; empreinte `44faa1f9` vers `cecbed00`, rejeu complet depuis `367e3ac` (écart 0,0, partitions et figures identiques), run scellé `local-43831f0` |
 | #49 clôture indépendante | **ouvert** : preuve REAL à distance et protection absentes | voir le commentaire de l'issue | état exact du commit `a8644e7` dans le commentaire |
 
 
@@ -51,3 +51,19 @@ qu'après exécution des contrôles listés ici, sur le commit indiqué.
   l'opérateur doit faire, absence de garantie contre l'exfiltration par des
   liens symboliques).
 - Rejeu complet après l'écriture atomique : voir `report.md`.
+
+## CI distante des derniers commits
+
+- Commit `43831f0` (code final) : `ci` en succès (`test`, `faults`). `verify-release`
+  (run 39098313819) : `release-fast` (1 081 tests, 1 628/1 628 lignes, 336/336
+  branches), `release-static` (code de vérification 1 775/1 775 lignes, 656/656
+  branches ; typage), `release-faults`, `release-deep` (97,82 %),
+  `release-reproduce` (cardio : archive, deux essais, environnement verrouillé),
+  `release-real-readiness` (installation depuis le verrou et préflight sur une
+  machine Linux propre) en succès ; `release-real` ignoré ; `release-gate` en
+  échec faute de preuve REAL.
+- Commit `3e73fd0` (documents, preuves scellées et manuscrit seulement ; aucun
+  fichier de code ne change depuis `43831f0`) : les travaux ne démarrent pas, GitHub
+  répond « recent account payments have failed or your spending limit needs to be
+  increased ». Aucune preuve distante n'existe donc pour ce commit : à relancer
+  après correction de la facturation par le propriétaire.
