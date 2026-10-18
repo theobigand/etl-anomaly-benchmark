@@ -100,16 +100,22 @@ def test_text_and_bytes_helpers(tmp_path):
     assert (tmp_path / "b.bin").read_bytes() == b"\x00\x01"
 
 
-def test_the_load_stage_publishes_atomically(tmp_path, monkeypatch):
+class _FailingFrame:
+    """A frame stand-in whose CSV writer dies after writing a fragment."""
+
+    def to_csv(self, path, index=False):
+        Path(path).write_text("half")
+        raise OSError("disk full")
+
+
+def test_the_load_stage_publishes_atomically(tmp_path):
     from etl_benchmark import load
 
-    frame = pd.DataFrame({"a": [1, 2]})
-    out = load.write_csv(frame, tmp_path / "deep" / "x.csv")
+    out = load.write_csv(pd.DataFrame({"a": [1, 2]}), tmp_path / "deep" / "x.csv")
     assert pd.read_csv(out).a.tolist() == [1, 2]
-    monkeypatch.setattr(pd.DataFrame, "to_csv", _broken("csv"))
     (tmp_path / "keep.csv").write_text("old")
     with pytest.raises(OSError, match="disk full"):
-        load.write_csv(frame, tmp_path / "keep.csv")
+        load.write_csv(_FailingFrame(), tmp_path / "keep.csv")
     assert (tmp_path / "keep.csv").read_text() == "old" and _hidden(tmp_path) == []
 
 
@@ -154,46 +160,33 @@ def test_every_result_write_goes_through_the_atomic_helper():
     assert offenders == []
 
 
-# -- failure injection in the experiment entry points -------------------------
+# -- failure injection in the experiment entry points ------------------------
+#
+# The disk is made to fill up for real: the process may not write a file larger than
+# LIMIT bytes (RLIMIT_FSIZE), so the first file that grows past it is cut short and
+# the write raises. No library is replaced.
 
+LIMIT = 4099
 DRIVER = """
-import runpy, sys
-from pathlib import Path
-import pandas as pd
-from matplotlib.figure import Figure
-
-kind, script = sys.argv[1], sys.argv[2]
+import resource, runpy, sys
+limit, script = int(sys.argv[1]), sys.argv[2]
+resource.setrlimit(resource.RLIMIT_FSIZE, (limit, limit))
 sys.argv = [script, *sys.argv[3:]]
-sys.path.insert(0, str(Path(script).parent))
-
-def broken(target, *args, **kwargs):
-    with open(target, "wb") as stream:
-        stream.write(b"half")
-    raise OSError("disk full")
-
-if kind == "csv":
-    pd.DataFrame.to_csv = lambda self, path=None, *a, **k: broken(path)
-elif kind == "figure":
-    Figure.savefig = lambda self, path, *a, **k: broken(path)
-elif kind == "bytes":
-    Path.write_bytes = lambda self, *a, **k: broken(self)
-elif kind == "text":
-    Path.write_text = lambda self, *a, **k: broken(self)
+sys.path.insert(0, __import__("os").path.dirname(script))
 runpy.run_path(script, run_name="__main__")
 """
 
 
-def _broken(kind):
-    def writer(self, path=None, *args, **kwargs):
-        Path(path).write_bytes(b"half")
-        raise OSError("disk full")
-
-    return writer
-
-
-def _run_broken(kind, script, *args):
+def _run_full_disk(limit, script, *args):
     return subprocess.run(
-        [sys.executable, "-c", DRIVER, kind, str(ROOT / "experiments" / script), *map(str, args)],
+        [
+            sys.executable,
+            "-c",
+            DRIVER,
+            str(limit),
+            str(ROOT / "experiments" / script),
+            *map(str, args),
+        ],
         cwd=ROOT,
         capture_output=True,
         text=True,
@@ -206,33 +199,20 @@ def _toy_csv(path):
     pd.DataFrame({"V1": values, "Class": [0] * 180 + [1] * 20}).to_csv(path, index=False)
 
 
-CASES = {
-    "benchmark-csv": ("csv", "run_benchmark.py"),
-    "benchmark-table": ("text", "run_benchmark.py"),
-    "benchmark-splits": ("bytes", "run_benchmark.py"),
-    "generate-csv": ("csv", "generate_synthetic.py"),
-    "synthetic-csv": ("csv", "run_synthetic_benchmark.py"),
-    "synthetic-figure": ("figure", "run_synthetic_benchmark.py"),
-    "severity-csv": ("csv", "run_severity.py"),
-    "severity-figure": ("figure", "run_severity.py"),
-    "curves-figure": ("figure", "run_curves.py"),
-}
-
-
 def _arguments(name, tmp_path, figure):
     out = tmp_path / "out"
-    if name.startswith("benchmark"):
+    if name == "benchmark":
         csv = tmp_path / "toy.csv"
         _toy_csv(csv)
         return [
             *("--dataset", "credit_card", "--csv", csv, "--detectors", "zscore", "--seeds", 1),
             *("--results-dir", out),
         ]
-    if name.startswith("generate"):
-        return ["--rows", 300, "--output", tmp_path / "out" / "synthetic.csv"]
-    if name.startswith("synthetic"):
+    if name == "generate":
+        return ["--rows", 300, "--output", out / "synthetic.csv"]
+    if name == "synthetic":
         return [*("--rows", 300, "--seeds", 1), *("--results-dir", out, "--figure", figure)]
-    if name.startswith("severity"):
+    if name == "severity":
         sev = ("--rows", 300, "--severities", 1, "--seeds", 1)
         return [*sev, *("--results-dir", out, "--figure", figure)]
     return [
@@ -241,17 +221,41 @@ def _arguments(name, tmp_path, figure):
     ]
 
 
-@pytest.mark.parametrize("name", sorted(CASES))
-def test_an_interrupted_write_leaves_no_partial_result_and_no_run_record(tmp_path, name):
-    kind, script = CASES[name]
-    figure = tmp_path / "figure.png"
-    figure.write_bytes(b"PREVIOUS-FIGURE")
-    done = _run_broken(kind, script, *_arguments(name, tmp_path, figure))
-    assert done.returncode != 0 and "disk full" in done.stderr
+SCRIPTS = {
+    "benchmark": "run_benchmark.py",
+    "generate": "generate_synthetic.py",
+    "synthetic": "run_synthetic_benchmark.py",
+    "severity": "run_severity.py",
+    "curves": "run_curves.py",
+}
+
+
+def _assert_nothing_partial_survived(tmp_path, figure, limit):
     out = tmp_path / "out"
     produced = [p for p in out.rglob("*") if p.is_file()] if out.exists() else []
     assert not [p for p in produced if p.name.startswith("run_")], "a record marks a finished run"
     assert not [p for p in produced if p.name.startswith(".")], "a partial file was left behind"
-    for path in produced + [figure]:
-        assert b"half" not in path.read_bytes(), path
+    assert [p.name for p in produced if p.stat().st_size == limit] == [], "a file was cut short"
     assert figure.read_bytes() == b"PREVIOUS-FIGURE"
+
+
+# The limit falls below the first file that cannot fit: for the benchmark the table (274
+# bytes), the note (307) or the split archive (437); elsewhere the first figure or table.
+CASES = [
+    ("benchmark", 200),
+    ("benchmark", 300),
+    ("benchmark", 400),
+    ("generate", LIMIT),
+    ("synthetic", LIMIT),
+    ("severity", LIMIT),
+    ("curves", LIMIT),
+]
+
+
+@pytest.mark.parametrize(("name", "limit"), CASES)
+def test_a_full_disk_leaves_no_partial_result_and_no_run_record(tmp_path, name, limit):
+    figure = tmp_path / "figure.png"
+    figure.write_bytes(b"PREVIOUS-FIGURE")
+    done = _run_full_disk(limit, SCRIPTS[name], *_arguments(name, tmp_path, figure))
+    assert done.returncode != 0 and "too large" in done.stderr.lower(), done.stderr[-600:]
+    _assert_nothing_partial_survived(tmp_path, figure, limit)

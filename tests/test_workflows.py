@@ -248,3 +248,19 @@ def test_the_install_script_refuses_anything_but_hash_pinned_wheels():
     assert "--require-hashes" in body and "--no-deps" in body and "--only-binary=:all:" in body
     assert "linux-x86_64-py311.lock.txt" in body
     assert ".[dev]" not in body and "install -e" not in body
+
+
+def test_only_the_real_job_can_reach_a_self_hosted_runner():
+    # A runner registered for the repository accepts any workflow that asks for its labels,
+    # so the guarded job is the only place in the repository allowed to ask.
+    for workflow in sorted(WORKFLOWS.glob("*.yml")):
+        text = workflow.read_text()
+        mentions = [m.start() for m in re.finditer(r"self-hosted|thesis-real", text)]
+        if workflow.name != "verify-release.yml":
+            assert mentions == [], workflow.name
+            continue
+        job = text[text.index("  real:") : text.index("  release:")]
+        start = text.index("  real:")
+        assert all(start <= m < start + len(job) or m < text.index("jobs:") for m in mentions)
+    triggers = _text("verify-release.yml")[: _text("verify-release.yml").index("jobs:")]
+    assert "pull_request_target" not in triggers and "workflow_run" not in triggers
