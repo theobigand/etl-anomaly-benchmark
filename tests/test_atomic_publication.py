@@ -177,28 +177,44 @@ runpy.run_path(script, run_name="__main__")
 """
 
 
-def _without_coverage_hooks():
-    # Coverage keeps its data in a SQLite file, which the file-size limit would break
-    # before the experiment writes anything.
-    return {
+def _isolated_env(cache):
+    """The environment of a run that is about to meet a full disk.
+
+    Coverage keeps its data in a SQLite file and Python and matplotlib write caches
+    under the same size limit; none of them may be what fills the disk, so the
+    hooks are removed, bytecode is not written and the matplotlib cache is warmed
+    beforehand and kept elsewhere.
+    """
+    env = {
         key: value
         for key, value in os.environ.items()
         if not key.startswith(("COV_CORE", "COVERAGE"))
     }
+    env.update(PYTHONDONTWRITEBYTECODE="1", MPLCONFIGDIR=str(cache), XDG_CACHE_HOME=str(cache))
+    return env
 
 
-def _run_full_disk(limit, script, *args):
-    return subprocess.run(
-        [
-            sys.executable,
-            "-c",
-            DRIVER,
-            str(limit),
-            str(ROOT / "experiments" / script),
-            *map(str, args),
-        ],
+@pytest.fixture(scope="module")
+def cache(tmp_path_factory):
+    """A cache directory with the matplotlib font cache already built."""
+    where = tmp_path_factory.mktemp("cache")
+    warmed = subprocess.run(
+        [sys.executable, "-c", "import matplotlib.pyplot"],
         cwd=ROOT,
-        env=_without_coverage_hooks(),
+        env=_isolated_env(where),
+        capture_output=True,
+        check=False,
+    )
+    assert warmed.returncode == 0, warmed.stderr[-400:]
+    return where
+
+
+def _run_full_disk(cache, limit, script, *args):
+    command = [sys.executable, "-c", DRIVER, str(limit), str(ROOT / "experiments" / script)]
+    return subprocess.run(
+        [*command, *map(str, args)],
+        cwd=ROOT,
+        env=_isolated_env(cache),
         capture_output=True,
         text=True,
         check=False,
@@ -264,9 +280,10 @@ CASES = [
 
 
 @pytest.mark.parametrize(("name", "limit"), CASES)
-def test_a_full_disk_leaves_no_partial_result_and_no_run_record(tmp_path, name, limit):
+def test_a_full_disk_leaves_no_partial_result_and_no_run_record(tmp_path, cache, name, limit):
     figure = tmp_path / "figure.png"
     figure.write_bytes(b"PREVIOUS-FIGURE")
-    done = _run_full_disk(limit, SCRIPTS[name], *_arguments(name, tmp_path, figure))
+    done = _run_full_disk(cache, limit, SCRIPTS[name], *_arguments(name, tmp_path, figure))
     assert done.returncode != 0 and "too large" in done.stderr.lower(), done.stderr[-600:]
+    assert "importlib" not in done.stderr, "the disk filled while importing, not while writing"
     _assert_nothing_partial_survived(tmp_path, figure, limit)
