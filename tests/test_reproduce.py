@@ -1,6 +1,7 @@
 """The reproduction report must distinguish numerical, statistical and artifact agreement."""
 
 import json
+import platform
 import stat
 import subprocess
 import sys
@@ -275,7 +276,14 @@ def test_the_module_prints_usage():
 @pytest.mark.real
 def test_cardio_is_reproduced_against_the_archive_with_the_local_data(tmp_path):
     report = reproduce.reproduce(["archive", "same_environment"], tmp_path, "")
-    assert report["archive"]["kind"] == "NUMERICAL" and report["archive"]["status"] == "PASS"
+    archived = json.loads((ROOT / "verification/evidence/run_benchmark_cardio.json").read_text())
+    # On the platform of the archive the replay is bit-identical; on another one (Linux CI,
+    # 6.5e-5 apart) it can only be statistical, which the archive level still accepts.
+    same_platform = platform.platform().split("-")[0] == archived["platform"].split("-")[0] and (
+        platform.machine() in archived["platform"]
+    )
+    allowed = {"NUMERICAL"} if same_platform else {"NUMERICAL", "STATISTICAL"}
+    assert report["archive"]["kind"] in allowed and report["archive"]["status"] == "PASS"
     assert report["same_environment"]["status"] == "PASS"
 
 
