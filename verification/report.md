@@ -7,12 +7,15 @@ exécution identifiée (révision, lieu, date) ; ils sont recopiés dans
 `tests/test_claims_provenance.py` refuse un chiffre dont le code a changé
 depuis. Les chiffres plus anciens sont marqués historiques.
 
-Le statut de certification est **INCOMPLETE à distance** et **CERTIFIED en
-local, non attesté** : toutes les preuves exigées par `release_policy.json`
-existent pour le commit `605a9cf4` sur la machine du chercheur, mais la preuve
-REAL (jeux complets) ne peut pas être produite par un exécuteur hébergé et
-aucun exécuteur autorisé n'est enregistré. Voir `certification.md` pour ce que
-ce verdict prouve et ne prouve pas. Restent ouverts le modèle LSTM,
+Le statut de certification est **CERTIFIED en local, non attesté** (commit
+`605a9cf4`, machine du chercheur) et **CERTIFIED en CI, non attesté
+indépendamment** : le run `verify-release` 39112662862 (tête de branche
+`440dcee`) rend CERTIFIED avec l'étiquette
+`ci-run:39112662862 (not independently attested)`, REAL compris, produit par le
+job hébergé `release-real-hosted` à partir de téléchargements publics vérifiés
+par sha256 (`real_evidence.md`). Aucune attestation indépendante n'existe ; la
+version scientifique n'est ni étiquetée ni publiée. Voir `certification.md` pour
+ce que ce verdict prouve et ne prouve pas. Restent ouverts le modèle LSTM,
 l'évaluation chronologique sur données réelles, l'étude de coût en environnement
 contrôlé et les points de la section « Travail restant ».
 
@@ -180,6 +183,15 @@ Cardio vient de l'UCI sous licence CC BY 4.0 (`data/README.md`).
 
 ## Exécutions en CI
 
+Run `verify-release` 39112662862 sur la tête `440dcee` (fusion
+`65575e8d`), copié sous `evidence/ci/39112662862/` : `release-fast`,
+`release-static`, `release-faults`, `release-deep` (97,73 %),
+`release-reproduce`, `release-real-readiness` et `release-real-hosted`
+(crédit, eau, cardio : sha256 conformes au manifeste, trois PASS) réussis,
+`release-real` (exécuteur privé) ignoré, `release-gate` CERTIFIED. Le run `ci`
+39112662907 (`test`, `faults`) réussit sur le même commit. Les paragraphes
+suivants décrivent l'exécution précédente (39041531141), avant REAL hébergé.
+
 Lues dans les artefacts et les journaux des exécutions, copiées sous
 `evidence/ci/39041531141/` (enveloppes, liste des mutants, rapport de
 certification, rapport de reproduction, `INDEX.json` avec les empreintes).
@@ -263,7 +275,8 @@ latexmk -pdf -interaction=nonstopmode -halt-on-error -output-directory=paper pap
 | Chiffres cités par le manuscrit liés à un run scellé | `claims.json`, `claims.py`, `evidence/runs/` |
 | Protection de `main` proposée, vérifiée, non appliquée | `branch_protection_proposal.md`, `protection.py` |
 
-Le statut général reste **INCOMPLETE à distance** : la preuve REAL n'existe que
-localement. Les archives des expériences viennent d'un rejeu propre sur le
+Le statut général est **CERTIFIED en CI sur la branche** (run 39112662862,
+non attesté indépendamment) ; la certification de la version se refait sur le
+commit de `main` après fusion. Les archives des expériences viennent d'un rejeu propre sur le
 commit `93b6fe8` (voir « Rejeu du 16 octobre 2026 »), avec l'empreinte
 scientifique v2 `44faa1f9`.

@@ -1,0 +1,22 @@
+{
+  "run": "https://github.com/theobigand/etl-anomaly-benchmark/actions/runs/39112662862",
+  "workflow": "verify-release",
+  "pull_request": 37,
+  "branch_head": "440dcee",
+  "merge_commit": "65575e8d24e45173f70a0e83b63305630451883c",
+  "note": "Evidence downloaded from the artifacts of the run. REAL was executed by release-real-hosted on a GitHub-hosted runner from checksum-verified public downloads (real_acquisition.json); the gate reports CERTIFIED with the label ci-run:39112662862 (not independently attested).",
+  "files": {
+    "deep.json": "996eed38dd3a83b45e327f2eee64a9fd45a9154f31cdb3117aa84c93d7b85c6f",
+    "fast.json": "c7d0be03914f9455753ecb15b0e5935f8c21f378543849837183ba914478f7ee",
+    "faults.json": "b893f16721741ac875523a53c0cd56773f609aa345eecc5769324af0680a2aff",
+    "real.json": "0465b0339b2ed6d5a45fd3d900860be1d80f1d37f9fa9340d92b8dad1ffa1c73",
+    "real_acquisition.json": "aba1410ca80891cda645524fe835afd3dc6538433d7975041b6e03b43a337342",
+    "real_verification.json": "d0dc05257273a0114f8a5041b220bc5200522aa4ed0a6aac2413ca1bd7e06730",
+    "release.json": "414b0d5ae799988429804d6c997abee51b5a1c4d42b806e05aabcd5716dfd141",
+    "reproducibility.json": "d68a0cb9059b93ae138f8aad3f0b1fd2b4d14f0aa95345dc6f9e6660d46cf218",
+    "reproduction.json": "a8ef712546684801879c2554754ede9f9e258e9f4a33b7f4f5b3679398fb6103",
+    "results.txt": "3d960e2d1d2fcd01419cf04926c00e6dce17b51ffa9a032a916e4ec258170075",
+    "tools.json": "26f2b1a371ba30f436d4cb7c006902a5095b9757b92c998285fb9c9bcac6557e",
+    "types.json": "d022bcd3a796ea3d5ab00a425f04550ac65dded8fef2296ee7c6f14c41f716d5"
+  }
+}

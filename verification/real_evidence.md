@@ -173,6 +173,8 @@ exécution distante et n'est jamais présentée comme telle.
 
 ## État
 
-Aucun exécuteur auto-hébergé n'est enregistré (lecture API du 17 octobre
-2026) : la preuve REAL n'a pas été produite à distance. L'issue 44 reste ouverte tant qu'un exécuteur autorisé
-n'a pas exécuté le workflow.
+Aucun exécuteur auto-hébergé n'est enregistré (lecture API du 18 octobre
+2026). La preuve REAL a été produite à distance par l'option A : run 39112662862,
+job `release-real-hosted`, trois jeux vérifiés par sha256, enveloppe acceptée par
+la porte de certification (CERTIFIED, `ci-run:39112662862 (not independently
+attested)`). Les preuves sont copiées sous `evidence/ci/39112662862/`.
