@@ -281,9 +281,55 @@ jobs:
           if-no-files-found: warn
           retention-days: 90
 
+  real-hosted:
+    name: release-real-hosted
+    # Without a private runner the datasets are fetched here from their public sources.
+    # Each file must match the reference checksum before it is used; nothing is uploaded
+    # but the JSON reports, and no private data or secret is involved.
+    if: inputs.real_runner == ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install from the validated lock
+        run: |
+          bash verification/runner/install_locked.sh "$RUNNER_TEMP/real-venv"
+          echo "$RUNNER_TEMP/real-venv/bin" >> "$GITHUB_PATH"
+          echo "PYTHONPATH=$GITHUB_WORKSPACE/src" >> "$GITHUB_ENV"
+
+      - name: Download the datasets and verify their checksums
+        run: python -m verification.real_acquire --output experiments/results/real_acquisition.json
+
+      - name: Preflight (read-only, no benchmark)
+        run: python -m verification.real_preflight --hosted-download --expect-sha "$GITHUB_SHA"
+
+      - name: Run real profile
+        run: make verify-real REAL_ACQUISITION=experiments/results/real_acquisition.json
+
+      - name: Bundle real evidence
+        if: always()
+        run: python -m verification.bundles pack real-hosted --allow-missing --output evidence-real-hosted.tgz
+
+      - name: Preserve real evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-real-hosted
+          path: evidence-real-hosted.tgz
+          if-no-files-found: warn
+          retention-days: 90
+
   release:
     name: release-gate
-    needs: [fast, static, reproduce, faults, deep, real, real-readiness]
+    needs: [fast, static, reproduce, faults, deep, real, real-hosted, real-readiness]
     if: always()
     runs-on: ubuntu-latest
     steps:

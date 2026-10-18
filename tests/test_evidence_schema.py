@@ -746,3 +746,64 @@ def test_a_malformed_execution_context_is_invalid(tmp_path, bad):
     doc = _real(tmp_path)
     doc["execution"] = bad
     assert any("execution" in problem for problem in evidence.validate(doc))
+
+
+def _acquisition(tmp_path, sha_a="1" * 64, sha_b="2" * 64):
+    path = tmp_path / "real_acquisition.json"
+    path.write_text(
+        json.dumps(
+            {
+                "method": "public-download",
+                "datasets": {
+                    "a": {"url": "https://storage.googleapis.com/a", "sha256": sha_a, "bytes": 3},
+                    "b": {
+                        "url": "https://raw.githubusercontent.com/b",
+                        "sha256": sha_b,
+                        "bytes": 4,
+                    },
+                },
+            }
+        )
+    )
+    return path
+
+
+def test_the_real_envelope_carries_the_acquisition_report_and_hashes_it(tmp_path):
+    report = tmp_path / "real.json"
+    report.write_text(
+        json.dumps(
+            {
+                "datasets": [
+                    {"dataset": "a", "status": "PASS", "sha256": "1" * 64},
+                    {"dataset": "b", "status": "PASS", "sha256": "2" * 64},
+                ]
+            }
+        )
+    )
+    acquisition = _acquisition(tmp_path)
+    doc = evidence.build_real(
+        report,
+        acquisition=acquisition,
+        root=tmp_path,
+        source=SOURCE,
+        environment=ENVIRONMENT,
+        execution=EXECUTION,
+    )
+    assert doc["status"] == "PASS"
+    assert doc["result"]["acquisition"]["method"] == "public-download"
+    assert "real_acquisition.json" in doc["artifacts"]
+    assert evidence.validate(doc, root=tmp_path) == []
+
+
+def test_an_unreadable_acquisition_report_makes_the_real_envelope_incomplete(tmp_path):
+    report = tmp_path / "real.json"
+    report.write_text(json.dumps({"datasets": []}))
+    doc = evidence.build_real(
+        report,
+        acquisition=tmp_path / "absent.json",
+        root=tmp_path,
+        source=SOURCE,
+        environment=ENVIRONMENT,
+        execution=EXECUTION,
+    )
+    assert doc["status"] == "INCOMPLETE"

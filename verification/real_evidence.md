@@ -6,7 +6,47 @@ obligatoire pour une certification complète ; sans elle, `verify-release` rend
 `INCOMPLETE` (`real evidence is missing`). Aucun exécuteur hébergé par GitHub
 ne peut la produire.
 
-## Chemin autorisé : un exécuteur auto-hébergé dédié
+## Stratégie retenue depuis le passage du dépôt en public (18 octobre 2026)
+
+Les trois jeux sont des jeux de recherche publics. Contrôle fait le 18 octobre
+2026 : le fichier Credit Card publié par TensorFlow
+(`storage.googleapis.com/download.tensorflow.org/data/creditcard.csv`) et le
+miroir Water Quality (`raw.githubusercontent.com/MainakRepositor/...`) ont
+exactement le sha256 du manifeste ; Cardio est reconstruit par
+`experiments/fetch_cardio.py` depuis le fichier ADBench. Le téléchargement
+Credit Card règle aussi le point resté ouvert dans `data/README.md` (hash non
+comparé à un téléchargement neuf, connexion Kaggle exigée).
+
+Choix, dans l'ordre demandé :
+
+1. **Option A, retenue** : le job hébergé `release-real-hosted` télécharge les
+   trois jeux (`verification/real_acquire.py` : https, deux hôtes autorisés,
+   100 Mio maximum, sha256 comparé au manifeste avant d'écrire un octet,
+   aucun écrasement), exécute `make verify-real` et n'envoie que trois JSON.
+   Aucune donnée n'est redistribuée par le dépôt : le fichier est téléchargé
+   chez GitHub à l'exécution, puis détruit avec la machine. Les conditions
+   d'usage sont celles du manifeste (ODbL pour Credit Card, CC0 annoncé pour
+   Water Quality sans conditions propres au miroir, CC BY 4.0 pour Cardio avec
+   attribution). Aucun secret, aucun exécuteur privé, aucun coût en dépôt
+   public. La porte de certification accepte une preuve REAL produite sur un
+   exécuteur hébergé seulement si l'enveloppe contient la trace de
+   téléchargement (méthode `public-download`, https, sha256 égal au manifeste
+   pour chaque jeu) ; sinon elle reste rejetée.
+2. **Option B, conservée mais déconseillée** : l'exécuteur auto-hébergé décrit
+   plus bas. Dans un dépôt public, un exécuteur de dépôt est exposé aux
+   workflows de n'importe quelle branche ou pull request que le propriétaire
+   approuve : voir `runner_security.md`. À réserver à des données réellement
+   privées, ce qui n'est pas le cas ici.
+3. **Option C** : `make verify-real` local reste une preuve distincte,
+   `local-unattested`.
+
+La preuve du job hébergé est étiquetée `ci-run:<id> (not independently
+attested)` : le propriétaire écrit le code et déclenche le run. Elle prouve que
+des fichiers ayant les sha256 du manifeste, obtenus de sources publiques, passent
+les contrôles dans un environnement verrouillé et propre ; elle ne prouve pas
+qu'une autre personne a rejoué le travail.
+
+## Option B : un exécuteur auto-hébergé dédié (déconseillé en dépôt public)
 
 Le propriétaire du dépôt enregistre l'exécuteur ; ce travail n'en enregistre
 aucun. État relevé en lecture le 17 octobre 2026 :

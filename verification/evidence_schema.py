@@ -267,7 +267,15 @@ def build_faults(
     )
 
 
-def build_real(report: Path, *, root: Path = ROOT, source=None, environment=None, execution=None):
+def build_real(
+    report: Path,
+    *,
+    acquisition: Path | None = None,
+    root: Path = ROOT,
+    source=None,
+    environment=None,
+    execution=None,
+):
     try:
         raw = json.loads(report.read_text())
         result = {
@@ -277,13 +285,17 @@ def build_real(report: Path, *, root: Path = ROOT, source=None, environment=None
                 for item in raw["datasets"]
             ],
         }
+        artifacts = [report]
+        if acquisition is not None:
+            result["acquisition"] = json.loads(acquisition.read_text())
+            artifacts.append(acquisition)
     except (OSError, ValueError, KeyError, TypeError) as exc:
         result = {"required": [], "datasets": [], "reason": str(exc)}
         return _envelope(
             "real", "INCOMPLETE", result, [report], root, source, environment, execution
         )
     return _envelope(
-        "real", _real_status(result), result, [report], root, source, environment, execution
+        "real", _real_status(result), result, artifacts, root, source, environment, execution
     )
 
 
@@ -486,6 +498,8 @@ def main(argv: list[str] | None = None) -> int:
         build = sub.add_parser(name, help=f"wrap the raw {name} results in an envelope")
         for item in inputs:
             build.add_argument(f"--{item}", type=Path, required=True)
+        if name == "real":
+            build.add_argument("--acquisition", type=Path, default=None)
         build.add_argument("--output", type=Path, required=True)
         build.add_argument(
             "--root", type=Path, default=ROOT, help="artifact paths are relative to it"
@@ -506,7 +520,7 @@ def main(argv: list[str] | None = None) -> int:
             elif args.command == "reproduction":
                 doc = build_reproduction(args.report, root=args.root)
             else:
-                doc = build_real(args.report, root=args.root)
+                doc = build_real(args.report, acquisition=args.acquisition, root=args.root)
         except (OSError, ValueError, subprocess.CalledProcessError) as exc:
             print(f"INVALID: {exc}")
             return 1

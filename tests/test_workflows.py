@@ -66,7 +66,10 @@ def test_real_runs_only_on_a_runner_the_operator_names():
 def test_release_job_waits_for_all_profiles_and_fails_when_any_failed():
     text = _text("verify-release.yml")
     release = text[text.index("  release:") :]
-    assert "needs: [fast, static, reproduce, faults, deep, real, real-readiness]" in release
+    assert (
+        "needs: [fast, static, reproduce, faults, deep, real, real-hosted, real-readiness]"
+        in release
+    )
     assert "if: always()" in release
     assert "contains(needs.*.result, 'failure')" in release
     assert "make verify-release" in release
@@ -120,7 +123,10 @@ def test_the_release_workflow_produces_every_evidence_kind_the_policy_requires()
     for kind in produced:
         assert f"experiments/results/evidence/{kind}.json" in packed, kind
     assert set(policy["required"]) <= produced
-    assert "needs: [fast, static, reproduce, faults, deep, real, real-readiness]" in release
+    assert (
+        "needs: [fast, static, reproduce, faults, deep, real, real-hosted, real-readiness]"
+        in release
+    )
     assert "mypy==2.4.0" in text and "pandas-stubs==3.0.5.260914" in text
     assert policy["typing_pins"] == {"mypy": "2.4.0", "pandas-stubs": "3.0.5.260914"}
 
@@ -239,7 +245,9 @@ def test_a_hosted_job_proves_the_locked_install_and_preflight_on_clean_linux():
     assert "runs-on: ubuntu-latest" in job
     assert "verification/runner/install_locked.sh" in job
     assert "real_preflight --install-only" in job
-    assert "needs: [fast, static, reproduce, faults, deep, real, real-readiness]" in text
+    assert (
+        "needs: [fast, static, reproduce, faults, deep, real, real-hosted, real-readiness]" in text
+    )
 
 
 def test_the_install_script_refuses_anything_but_hash_pinned_wheels():
@@ -264,3 +272,18 @@ def test_only_the_real_job_can_reach_a_self_hosted_runner():
         assert all(start <= m < start + len(job) or m < text.index("jobs:") for m in mentions)
     triggers = _text("verify-release.yml")[: _text("verify-release.yml").index("jobs:")]
     assert "pull_request_target" not in triggers and "workflow_run" not in triggers
+
+
+def test_the_hosted_real_job_downloads_verifies_and_uploads_only_reports():
+    text = _text("verify-release.yml")
+    job = text[text.index("  real-hosted:") : text.index("  release:")]
+    assert "runs-on: ubuntu-latest" in job and "if: inputs.real_runner == ''" in job
+    assert (
+        job.index("install_locked.sh") < job.index("real_acquire") < job.index("make verify-real")
+    )
+    assert job.index("real_preflight --hosted-download") < job.index("make verify-real")
+    assert "persist-credentials: false" in job and "secrets." not in job
+    assert "pack real-hosted" in job and "evidence-real-hosted.tgz" in job
+    uploads = [line.split("path:")[1].strip() for line in job.splitlines() if "path:" in line]
+    assert uploads == ["evidence-real-hosted.tgz"]
+    assert "self-hosted" not in job and "pip install" not in job

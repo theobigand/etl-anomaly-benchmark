@@ -62,6 +62,30 @@ def locked_versions(directory: Path = LOCK) -> dict[str, str]:
     return {name: pinned[name] for name in RESULT_PACKAGES if name in pinned}
 
 
+def _hosted_download_problems(result: dict, manifest: dict) -> list[str]:
+    """A hosted runner holds no research file: REAL there must have downloaded each one."""
+    acquisition = result.get("acquisition")
+    if not isinstance(acquisition, dict):
+        return [
+            "produced by a CI run on a hosted runner without a record of where the datasets "
+            "came from"
+        ]
+    if acquisition.get("method") != "public-download":
+        return ["the datasets on a hosted runner must come from a public-download"]
+    problems = []
+    fetched = acquisition.get("datasets", {})
+    for name in result["required"]:
+        item = fetched.get(name)
+        if not isinstance(item, dict):
+            problems.append(f"dataset {name}: no download is recorded")
+            continue
+        if not str(item.get("url", "")).startswith("https://"):
+            problems.append(f"dataset {name}: the source must be an https URL")
+        if item.get("sha256") != manifest.get(name):
+            problems.append(f"dataset {name}: the downloaded file differs from the manifest")
+    return problems
+
+
 def _minor(version: str) -> str:
     return ".".join(version.split(".")[:2])
 
@@ -223,10 +247,10 @@ def assess(  # noqa: PLR0913
         if "execution" not in real:
             rejected.append("real: the execution context is not recorded")
         elif real["execution"]["ci"] and real["execution"]["runner_environment"] != "self-hosted":
-            rejected.append(
-                "real: produced by a CI run on a hosted runner, which cannot hold the research "
-                "datasets"
-            )
+            rejected += [
+                f"real: {problem}"
+                for problem in _hosted_download_problems(real["result"], manifest)
+            ]
     if real and profiles["real"] == "PASS":
         recorded = {item["dataset"]: item.get("sha256") for item in real["result"]["datasets"]}
         for name in real["result"]["required"]:

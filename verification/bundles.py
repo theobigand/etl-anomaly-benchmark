@@ -41,6 +41,12 @@ KINDS = {
         _EVIDENCE + "deep.json",
     ),
     "real": (_RESULTS + "real_verification.json", _EVIDENCE + "real.json"),
+    # REAL on a hosted runner: the same reports plus the record of the verified download
+    "real-hosted": (
+        _RESULTS + "real_verification.json",
+        _RESULTS + "real_acquisition.json",
+        _EVIDENCE + "real.json",
+    ),
 }
 
 

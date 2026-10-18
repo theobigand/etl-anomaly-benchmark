@@ -95,6 +95,7 @@ pytest_add_cli_args_test_selection = [
     "--ignore=tests/test_workflows.py",
     "--ignore=tests/test_branch_protection.py",
     "--ignore=tests/test_real_preflight.py",
+    "--ignore=tests/test_real_acquire.py",
     "--ignore=tests/test_claims_provenance.py",
     "--ignore=tests/test_evidence_bundles.py",
     "--ignore=tests/test_mutation_scope.py",

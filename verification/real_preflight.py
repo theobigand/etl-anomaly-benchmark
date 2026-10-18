@@ -17,6 +17,7 @@ import hashlib
 import json
 import os
 import platform
+import re
 import shutil
 import subprocess
 import sys
@@ -41,6 +42,7 @@ REAL_REPORTS = {
     "experiments/results/real_verification.json",
     "experiments/results/evidence/real.json",
 }
+HOSTED_REPORTS = REAL_REPORTS | {"experiments/results/real_acquisition.json"}
 
 
 @dataclass(frozen=True)
@@ -190,25 +192,37 @@ def check_revision(head: str, expected: str, dirty: bool) -> Result:
 
 
 def check_bundle_allowlist(kinds: Mapping[str, Sequence[str]] | None = None) -> Result:
-    members = set((kinds if kinds is not None else bundles.KINDS).get("real", ()))
-    if members != REAL_REPORTS:
-        return Result("bundle allowlist", "FAIL", f"the real bundle allows {sorted(members)}")
-    return Result("bundle allowlist", "PASS", "the real bundle allows the two JSON reports only")
+    found = kinds if kinds is not None else bundles.KINDS
+    for kind, expected in (("real", REAL_REPORTS), ("real-hosted", HOSTED_REPORTS)):
+        members = set(found.get(kind, ()))
+        if members != expected:
+            return Result("bundle allowlist", "FAIL", f"the {kind} bundle allows {sorted(members)}")
+    return Result("bundle allowlist", "PASS", "the real bundles allow their JSON reports only")
+
+
+def _job_text(workflow: str, name: str) -> str | None:
+    match = re.search(
+        rf"^  {re.escape(name)}:\n(.*?)(?=^  [a-z][a-z-]*:\n|\Z)", workflow, re.M | re.S
+    )
+    return match.group(1) if match else None
 
 
 def check_upload_paths(workflow: str) -> Result:
-    start = workflow.find("  real:")
-    if start < 0:
-        return Result("upload paths", "FAIL", "no real job in the workflow")
-    job = workflow[start : workflow.find("  release:", start)]
-    paths = [
-        line.split("path:", 1)[1].strip()
-        for line in job.splitlines()
-        if line.strip().startswith("path:")
-    ]
-    if paths != ["evidence-real.tgz"]:
-        return Result("upload paths", "FAIL", f"the real job uploads {paths}")
-    return Result("upload paths", "PASS", "the real job uploads evidence-real.tgz only")
+    for name, expected in (
+        ("real", "evidence-real.tgz"),
+        ("real-hosted", "evidence-real-hosted.tgz"),
+    ):
+        job = _job_text(workflow, name)
+        if job is None:
+            return Result("upload paths", "FAIL", f"no {name} job in the workflow")
+        paths = [
+            line.split("path:", 1)[1].strip()
+            for line in job.splitlines()
+            if line.strip().startswith("path:")
+        ]
+        if paths != [expected]:
+            return Result("upload paths", "FAIL", f"the {name} job uploads {paths}")
+    return Result("upload paths", "PASS", "the real jobs upload their evidence bundle only")
 
 
 def check_runner(env: Mapping[str, str]) -> Result:
@@ -259,6 +273,11 @@ def parse_args(argv: Sequence[str] | None) -> argparse.Namespace:
         action="store_true",
         help="install check on a machine without datasets (dataset, runner checks skipped)",
     )
+    parser.add_argument(
+        "--hosted-download",
+        action="store_true",
+        help="the datasets were just downloaded on a GitHub-hosted runner (no runner check)",
+    )
     parser.add_argument("--repo", default=REPO)
     return parser.parse_args(argv)
 
@@ -291,8 +310,8 @@ def run_checks(args: argparse.Namespace) -> list[Result]:
         check_bundle_allowlist(),
         check_upload_paths(WORKFLOW.read_text()),
     ]
-    if args.install_only:
-        results.append(Result("runner", "SKIP", "--install-only: not a REAL runner"))
+    if args.install_only or args.hosted_download:
+        results.append(Result("runner", "SKIP", "hosted run: no private runner is involved"))
     else:
         results.append(check_runner(os.environ))
     if args.check_registration:

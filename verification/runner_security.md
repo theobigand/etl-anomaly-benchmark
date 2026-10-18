@@ -51,3 +51,35 @@ Une exécution REAL sur la VM dédiée est une exécution distante du propriéta
 ont les empreintes du manifeste et passent les contrôles, avec un environnement
 verrouillé et un code relu. Elle ne prouve pas qu'une autre personne a rejoué le
 travail.
+
+## Dépôt public (constat du 18 octobre 2026)
+
+Passer le dépôt en public déplace la frontière de sécurité.
+
+- Sondage de l'historique (toutes les branches) : aucun jeton, clé privée ni
+  fichier `.env` ; la seule correspondance du motif `ghp_` est la chaîne de test
+  qui vérifie son absence. Aucun CSV de données brutes n'a jamais été validé
+  (`data/` est ignoré) ; les archives de partitions contiennent des positions de
+  lignes, pas de valeurs. Les fichiers de plus de 1 Mio de l'historique sont ces
+  archives.
+- Chemins absolus : les enregistrements `evidence/run_*.json` contiennent le
+  chemin du poste de recherche (`/Users/theo/Developer/...`), ainsi que
+  `HANDOFF.md` et `milestones.json`. C'est une fuite mineure (nom de compte et
+  arborescence). Elle n'est pas corrigée : les réécrire modifierait la
+  provenance historique et, pour les enregistrements, l'historique git la
+  conserve de toute façon. Les prochains rejeux pourraient écrire des chemins
+  relatifs ; ce changement toucherait `experiments/` et imposerait un rejeu.
+- Réglages du dépôt (propriétaire) : la recherche de secrets est
+  désactivée (`secret_scanning: disabled`) ; l'approbation des workflows de
+  contributeurs extérieurs est « premiers contributeurs » seulement. Je
+  recommande `gh api -X PUT repos/theobigand/etl-anomaly-benchmark/actions/permissions/fork-pr-contributor-approval -f approval_policy=all_external_contributors`
+  et l'activation de la recherche de secrets. Rien n'a été modifié.
+- Jeton par défaut en lecture seule, aucun secret utilisé par les workflows, un
+  seul collaborateur. Les pull requests de forks s'exécutent sans secret avec un
+  jeton en lecture ; seul `ci.yml` s'exécute sur toute pull request, et
+  `verify-release.yml` seulement quand elle modifie ce fichier.
+- Exécuteur auto-hébergé : GitHub déconseille d'en lier un à un dépôt public,
+  car un workflow écrit dans une branche ou une pull request approuvée s'exécute
+  dessus. Un SHA approuvé dans une entrée de `workflow_dispatch` ne protège que
+  le job `real`, pas un autre workflow qu'un tiers ferait approuver. D'où le
+  choix de l'option A.
