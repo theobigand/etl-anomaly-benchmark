@@ -60,13 +60,13 @@ def test_release_workflow_is_manual_and_runs_every_profile():
 def test_real_runs_only_on_a_runner_the_operator_names():
     text = _text("verify-release.yml")
     assert "inputs.real_runner != ''" in text
-    assert re.search(r"runs-on: \$\{\{ inputs\.real_runner \}\}", text)
+    assert re.search(r'runs-on: \[self-hosted, "\$\{\{ inputs\.real_runner \}\}"\]', text)
 
 
 def test_release_job_waits_for_all_profiles_and_fails_when_any_failed():
     text = _text("verify-release.yml")
     release = text[text.index("  release:") :]
-    assert "needs: [fast, static, reproduce, faults, deep, real]" in release
+    assert "needs: [fast, static, reproduce, faults, deep, real, real-readiness]" in release
     assert "if: always()" in release
     assert "contains(needs.*.result, 'failure')" in release
     assert "make verify-release" in release
@@ -120,7 +120,7 @@ def test_the_release_workflow_produces_every_evidence_kind_the_policy_requires()
     for kind in produced:
         assert f"experiments/results/evidence/{kind}.json" in packed, kind
     assert set(policy["required"]) <= produced
-    assert "needs: [fast, static, reproduce, faults, deep, real]" in release
+    assert "needs: [fast, static, reproduce, faults, deep, real, real-readiness]" in release
     assert "mypy==2.4.0" in text and "pandas-stubs==3.0.5.260914" in text
     assert policy["typing_pins"] == {"mypy": "2.4.0", "pandas-stubs": "3.0.5.260914"}
 
@@ -186,8 +186,7 @@ def test_the_real_job_runs_only_a_reviewed_revision_from_the_default_branch():
     assert job.index("approved_sha") < job.index("actions/checkout")
     assert "persist-credentials: false" in job
     assert "pull_request" not in job
-    assert "real_preflight" in job
-    assert job.index("python -m venv") < job.index("install -e") < job.index("real_preflight")
+    assert job.index("install_locked.sh") < job.index("real_preflight")
 
 
 def test_the_real_job_links_the_datasets_from_the_runner_and_never_copies_them():
@@ -207,6 +206,7 @@ def test_the_runner_provisioning_script_is_safe_by_default_and_holds_no_secret(t
     assert "sudo " not in text.replace("run with sudo", "") and "curl" not in text
     assert "--token <token" in text and "ghp_" not in text and "AAAA" not in text
     assert "0400" in text and "0700" in text and "--ephemeral" in text
+    assert "--no-default-labels" not in text and "--labels thesis-real" in text
     archive = tmp_path / "runner.tgz"
     archive.write_bytes(b"x")
     done = subprocess.run(
@@ -222,3 +222,29 @@ def test_the_runner_provisioning_script_is_safe_by_default_and_holds_no_secret(t
         check=False,
     )
     assert done.returncode == 1 and "checksum differs" in done.stderr
+
+
+def test_the_real_job_installs_from_the_hash_locked_environment_only():
+    text = _text("verify-release.yml")
+    job = text[text.index("  real:") : text.index("  release:")]
+    assert "pip install" not in job and "install -e" not in job
+    assert "verification/runner/install_locked.sh" in job
+    assert "PYTHONPATH" in job
+    assert "--install-only" not in job
+
+
+def test_a_hosted_job_proves_the_locked_install_and_preflight_on_clean_linux():
+    text = _text("verify-release.yml")
+    job = text[text.index("  real-readiness:") : text.index("  real:")]
+    assert "runs-on: ubuntu-latest" in job
+    assert "verification/runner/install_locked.sh" in job
+    assert "real_preflight --install-only" in job
+    assert "needs: [fast, static, reproduce, faults, deep, real, real-readiness]" in text
+
+
+def test_the_install_script_refuses_anything_but_hash_pinned_wheels():
+    script = WORKFLOWS.parents[1] / "verification" / "runner" / "install_locked.sh"
+    body = script.read_text()
+    assert "--require-hashes" in body and "--no-deps" in body and "--only-binary=:all:" in body
+    assert "linux-x86_64-py311.lock.txt" in body
+    assert ".[dev]" not in body and "install -e" not in body

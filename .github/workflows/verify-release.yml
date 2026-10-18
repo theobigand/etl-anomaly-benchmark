@@ -190,11 +190,36 @@ jobs:
           if-no-files-found: warn
           retention-days: 90
 
+  real-readiness:
+    name: release-real-readiness
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # The same install the REAL job runs, on a clean hosted Linux machine, with the
+      # dataset and runner checks left out (this machine holds no dataset).
+      - name: Install from the validated lock
+        run: |
+          bash verification/runner/install_locked.sh "$RUNNER_TEMP/real-venv"
+          echo "$RUNNER_TEMP/real-venv/bin" >> "$GITHUB_PATH"
+          echo "PYTHONPATH=$GITHUB_WORKSPACE/src" >> "$GITHUB_ENV"
+
+      - name: Preflight without datasets
+        run: python -m verification.real_preflight --install-only --expect-sha "$GITHUB_SHA"
+
   real:
     name: release-real
     # Code that sees the private datasets must already be on the default branch.
     if: inputs.real_runner != '' && github.ref_name == github.event.repository.default_branch
-    runs-on: ${{ inputs.real_runner }}
+    # `self-hosted` is part of the label set, so no GitHub-hosted runner can take the job.
+    runs-on: [self-hosted, "${{ inputs.real_runner }}"]
     steps:
       # The research datasets live on the operator's own machine. A hosted
       # runner cannot hold them, so a label that resolves to one is refused.
@@ -217,12 +242,13 @@ jobs:
         with:
           python-version: "3.11"
 
-      # A throwaway environment keeps the dependencies off the host interpreter.
-      - name: Install
+      # Hash-pinned wheels from the recorded Linux lock, nothing resolved at run time.
+      # The project itself is not installed: PYTHONPATH points at its source.
+      - name: Install from the validated lock
         run: |
-          python -m venv "$RUNNER_TEMP/real-venv"
-          "$RUNNER_TEMP/real-venv/bin/pip" install -e ".[dev]"
+          bash verification/runner/install_locked.sh "$RUNNER_TEMP/real-venv"
           echo "$RUNNER_TEMP/real-venv/bin" >> "$GITHUB_PATH"
+          echo "PYTHONPATH=$GITHUB_WORKSPACE/src" >> "$GITHUB_ENV"
 
       # The runner's own environment names the directory that holds the files
       # (THESIS_DATA_DIR in the runner's .env). They are linked, never copied.
@@ -257,7 +283,7 @@ jobs:
 
   release:
     name: release-gate
-    needs: [fast, static, reproduce, faults, deep, real]
+    needs: [fast, static, reproduce, faults, deep, real, real-readiness]
     if: always()
     runs-on: ubuntu-latest
     steps:

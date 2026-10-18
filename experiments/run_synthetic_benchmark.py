@@ -40,6 +40,7 @@ from provenance import write_record  # noqa: E402
 from sklearn.metrics import precision_score, recall_score  # noqa: E402
 
 from etl_benchmark import config  # noqa: E402
+from etl_benchmark.atomic import atomic_path  # noqa: E402
 from etl_benchmark.logging_setup import setup_logging  # noqa: E402
 from etl_benchmark.metrics import compute_metrics  # noqa: E402
 from etl_benchmark.pipeline import detect  # noqa: E402
@@ -174,7 +175,8 @@ def render_heatmap(recall_mean: pd.DataFrame, path: Path) -> Path:
     fig.tight_layout()
 
     path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(path, dpi=150)
+    with atomic_path(path) as partial:
+        fig.savefig(partial, dpi=150)
     plt.close(fig)
     return path
 
@@ -215,11 +217,15 @@ def main() -> None:
     recall_out = args.results_dir / f"synthetic_recall_{stamp}.csv"
     precision_out = args.results_dir / f"synthetic_precision_{stamp}.csv"
     md_out = args.results_dir / f"synthetic_{stamp}.md"
-    r["metrics_mean"].join(r["metrics_std"], lsuffix="_mean", rsuffix="_std").to_csv(metric_out)
-    r["recall_mean"].join(r["recall_std"], lsuffix="_mean", rsuffix="_std").to_csv(recall_out)
-    r["precision_mean"].join(r["precision_std"], lsuffix="_mean", rsuffix="_std").to_csv(
-        precision_out
-    )
+    for table, out in (
+        ("metrics", metric_out),
+        ("recall", recall_out),
+        ("precision", precision_out),
+    ):
+        with atomic_path(out) as partial:
+            r[f"{table}_mean"].join(r[f"{table}_std"], lsuffix="_mean", rsuffix="_std").to_csv(
+                partial
+            )
     md = (
         f"Synthetic dataset, {len(args.seeds)} seeds, mean ± std on the 15% test split.\n\n"
         "### Aggregate metrics\n\n"
@@ -229,7 +235,8 @@ def main() -> None:
         + "\n### Precision by anomaly type (clean rows as the only negatives)\n\n"
         + _combined_md(r["precision_mean"], r["precision_std"], ANOMALY_TYPES)
     )
-    md_out.write_text(md)
+    with atomic_path(md_out) as partial:
+        partial.write_text(md)
     figure = render_heatmap(r["recall_mean"], args.figure)
     write_record(
         args.results_dir / f"run_synthetic_{stamp}.json",

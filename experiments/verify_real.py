@@ -11,6 +11,7 @@ from pathlib import Path
 import pandas as pd
 
 from etl_benchmark import config
+from etl_benchmark.atomic import atomic_path
 from etl_benchmark.datasets import ANOMALY_COLUMN, DATASETS, DatasetSpec
 
 MANIFEST = config.PROJECT_ROOT / "verification" / "evidence" / "manifest.json"
@@ -103,7 +104,8 @@ def main() -> int:
     if reason is not None:
         report["reason"] = reason
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
+    with atomic_path(args.output) as partial:
+        partial.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     for item in records:
         print(f"{item['dataset']}: {item['status']}")
     if reason is not None:

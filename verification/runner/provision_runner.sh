@@ -57,5 +57,5 @@ fi
 
 say "next, as $ACCOUNT, in $HOME_DIR/actions-runner:"
 say "  ./config.sh --url https://github.com/theobigand/etl-anomaly-benchmark \\"
-say "      --labels thesis-real --no-default-labels --ephemeral --token <token from the settings page>"
+say "      --labels thesis-real --ephemeral --token <token from the settings page>"
 say "  ./run.sh"

@@ -19,6 +19,7 @@ import numpy as np
 import pandas as pd
 
 from etl_benchmark import config
+from etl_benchmark.atomic import atomic_path
 from etl_benchmark.logging_setup import setup_logging
 
 log = logging.getLogger(__name__)
@@ -38,7 +39,8 @@ def main() -> None:
     frame["label"] = y
 
     config.CARDIO_CSV.parent.mkdir(parents=True, exist_ok=True)
-    frame.to_csv(config.CARDIO_CSV, index=False)
+    with atomic_path(config.CARDIO_CSV) as partial:
+        frame.to_csv(partial, index=False)
     log.info(
         "wrote %d rows x %d cols -> %s (%d anomalies, %.1f%%)",
         len(frame),

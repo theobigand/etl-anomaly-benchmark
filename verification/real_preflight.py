@@ -30,6 +30,7 @@ from verification import bundles, release
 
 ROOT = Path(__file__).resolve().parents[1]
 REPO = "theobigand/etl-anomaly-benchmark"
+LINUX_LOCK = ROOT / "verification" / "environment" / "linux-x86_64-py311.lock.txt"
 WORKFLOW = ROOT / ".github" / "workflows" / "verify-release.yml"
 MANIFEST = ROOT / "verification" / "evidence" / "manifest.json"
 PYTHON_MINOR = "3.11"
@@ -84,6 +85,37 @@ def check_dependencies(installed: Mapping[str, str | None], locked: Mapping[str,
     if problems:
         return Result("dependencies", "FAIL", "; ".join(problems))
     return Result("dependencies", "PASS", ", ".join(f"{k} {v}" for k, v in locked.items()))
+
+
+def linux_lock_pins(path: Path = LINUX_LOCK) -> dict[str, str]:
+    """``{name: version}`` of every wheel the hash-pinned Linux lock installs."""
+    pins = {}
+    for line in path.read_text().splitlines():
+        name, sep, rest = line.partition("==")
+        if sep and not line.startswith("#"):
+            pins[name.strip()] = rest.split()[0]
+    return pins
+
+
+def check_lock(installed: Mapping[str, str | None], pins: Mapping[str, str]) -> Result:
+    problems = []
+    for name, wanted in pins.items():
+        found = installed.get(name)
+        if found is None:
+            problems.append(f"{name} not installed")
+        elif found != wanted:
+            problems.append(f"{name} {found} != {wanted}")
+    if problems:
+        return Result("environment lock", "FAIL", "; ".join(problems[:10]))
+    return Result("environment lock", "PASS", f"all {len(pins)} pinned packages match")
+
+
+def check_lock_for(
+    system: str, installed: Mapping[str, str | None], pins: Mapping[str, str]
+) -> Result:
+    if system != "Linux":
+        return Result("environment lock", "WARN", "the hash-pinned lock describes Linux only")
+    return check_lock(installed, pins)
 
 
 def _sha256(path: Path) -> str:
@@ -222,6 +254,11 @@ def parse_args(argv: Sequence[str] | None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--expect-sha", default="", help="commit the operator approved")
     parser.add_argument("--check-registration", metavar="LABEL", help="read the runner list")
+    parser.add_argument(
+        "--install-only",
+        action="store_true",
+        help="install check on a machine without datasets (dataset, runner checks skipped)",
+    )
     parser.add_argument("--repo", default=REPO)
     return parser.parse_args(argv)
 
@@ -231,20 +268,30 @@ def run_checks(args: argparse.Namespace) -> list[Result]:
 
     reference = json.loads(MANIFEST.read_text())["datasets"]
     locked = release.locked_versions()
+    pins = linux_lock_pins()
     head, dirty = git_state(ROOT)
+    system = platform.system()
     results = [
         check_python(tuple(sys.version_info[:3]), PYTHON_MINOR),
-        check_platform(platform.system(), platform.machine()),
+        check_platform(system, platform.machine()),
         check_dependencies(_installed(list(locked)), locked),
-        *check_datasets(
-            {name: spec.csv for name, spec in DATASETS.items() if name in reference}, reference
-        ),
+        check_lock_for(system, _installed(list(pins)), pins),
+    ]
+    if args.install_only:
+        results.append(Result("datasets", "SKIP", "--install-only: no dataset is expected here"))
+    else:
+        paths = {name: spec.csv for name, spec in DATASETS.items() if name in reference}
+        results += check_datasets(paths, reference)
+    results += [
         check_resources(measure_resources(ROOT)),
         check_revision(head, args.expect_sha, dirty),
         check_bundle_allowlist(),
         check_upload_paths(WORKFLOW.read_text()),
-        check_runner(os.environ),
     ]
+    if args.install_only:
+        results.append(Result("runner", "SKIP", "--install-only: not a REAL runner"))
+    else:
+        results.append(check_runner(os.environ))
     if args.check_registration:
         results.append(check_registration(args.check_registration, fetch_registrations(args.repo)))
     return results
