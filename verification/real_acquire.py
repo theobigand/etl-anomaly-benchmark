@@ -24,7 +24,7 @@ import urllib.request
 from collections.abc import Callable, Mapping
 from pathlib import Path
 from typing import IO, Any
-from urllib.parse import urlparse
+from urllib.parse import urljoin, urlparse
 
 from etl_benchmark.atomic import atomic_path
 
@@ -51,14 +51,30 @@ class AcquisitionError(Exception):
 
 def allowed(url: str) -> bool:
     parts = urlparse(url)
-    return parts.scheme == "https" and parts.hostname in HOSTS
+    return parts.scheme == "https" and parts.hostname in HOSTS and "@" not in parts.netloc
 
 
-def open_url(url: str, limit: int) -> IO[bytes]:
+class GuardedRedirects(urllib.request.HTTPRedirectHandler):
+    """Follow a redirect only to an https URL on an allowed host (at most 10 hops)."""
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):  # type: ignore[no-untyped-def]
+        target = urljoin(req.full_url, newurl)
+        if not allowed(target):
+            raise AcquisitionError(f"redirect to {target!r} is not allowed")
+        return super().redirect_request(req, fp, code, msg, headers, target)
+
+
+def open_url(
+    url: str, limit: int, opener: urllib.request.OpenerDirector | None = None
+) -> IO[bytes]:
     """The response body, cut one byte past ``limit`` so an oversized file is noticed."""
+    opener = opener or urllib.request.build_opener(GuardedRedirects)
     request = urllib.request.Request(url, headers={"User-Agent": "etl-benchmark-verification"})
-    with urllib.request.urlopen(request, timeout=60) as response:  # noqa: S310 - https only
-        return io.BytesIO(response.read(limit + 1))
+    try:
+        with opener.open(request, timeout=60) as response:
+            return io.BytesIO(response.read(limit + 1))
+    except ValueError as exc:  # a redirect target urllib cannot parse
+        raise AcquisitionError(f"redirect to a malformed URL: {exc}") from exc
 
 
 def run_fetch_cardio(destination: Path) -> None:

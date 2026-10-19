@@ -1,9 +1,13 @@
 """REAL on a hosted runner downloads the research datasets and refuses any substitute."""
 
+import email
 import hashlib
 import io
 import json
 import runpy
+import urllib.error
+import urllib.request
+import urllib.response
 from pathlib import Path
 
 import pytest
@@ -139,23 +143,10 @@ def test_an_oversized_download_is_refused(tmp_path):
         )
 
 
-def test_the_real_opener_reads_at_most_the_limit(monkeypatch):
-    class Response(io.BytesIO):
-        def __enter__(self):
-            return self
-
-        def __exit__(self, *args):
-            self.close()
-
-    seen = {}
-
-    def fake(request, timeout):
-        seen["url"], seen["timeout"] = request.full_url, timeout
-        return Response(b"abcdef")
-
-    monkeypatch.setattr(ra.urllib.request, "urlopen", fake)
-    stream = ra.open_url("https://raw.githubusercontent.com/x/y", 4)
-    assert stream.read() == b"abcd" + b"e" and seen["timeout"] == 60
+def test_the_real_opener_reads_at_most_the_limit():
+    table = {"https://raw.githubusercontent.com/x/y": (200, b"abcdef")}
+    body, _ = _fetch(table, start="https://raw.githubusercontent.com/x/y", limit=4)
+    assert body == b"abcd" + b"e"
 
 
 def test_the_repository_sources_cover_the_manifest_datasets():
@@ -201,3 +192,106 @@ def test_the_cardio_conversion_runs_the_repository_script(tmp_path, monkeypatch)
     ra.run_fetch_cardio(tmp_path)
     command, _ = calls[0]
     assert command[-1].endswith("experiments/fetch_cardio.py")
+
+
+# --- redirects stay on the allowed hosts over https (#50) ---
+
+
+class _Scripted(urllib.request.BaseHandler):
+    """Answers each https URL from a table: ``(status, location-or-body)``."""
+
+    handler_order = 100  # before the real HTTPS handler
+
+    def __init__(self, table):
+        self.table, self.seen = table, []
+
+    def https_open(self, request):
+        self.seen.append(request.full_url)
+        status, payload = self.table[request.full_url]
+        headers = email.message_from_string("")
+        if status != 200:
+            headers["Location"] = payload
+        body = payload if status == 200 else b""
+        response = urllib.response.addinfourl(io.BytesIO(body), headers, request.full_url, status)
+        response.msg = "scripted"
+        return response
+
+
+def _fetch(table, start="https://storage.googleapis.com/a", limit=100):
+    scripted = _Scripted(table)
+    opener = urllib.request.build_opener(ra.GuardedRedirects, scripted)
+    return ra.open_url(start, limit, opener=opener).read(), scripted.seen
+
+
+def test_a_redirect_inside_the_allowed_hosts_is_followed_over_several_hops():
+    table = {
+        "https://storage.googleapis.com/a": (302, "https://raw.githubusercontent.com/b"),
+        "https://raw.githubusercontent.com/b": (301, "/c"),
+        "https://raw.githubusercontent.com/c": (200, b"data"),
+    }
+    body, seen = _fetch(table)
+    assert body == b"data"
+    assert seen == [
+        "https://storage.googleapis.com/a",
+        "https://raw.githubusercontent.com/b",
+        "https://raw.githubusercontent.com/c",
+    ]
+
+
+@pytest.mark.parametrize(
+    "target",
+    [
+        "https://evil.example/x",
+        "http://storage.googleapis.com/x",
+        "ftp://storage.googleapis.com/x",
+        "file:///etc/passwd",
+        "https://storage.googleapis.com.evil.example/x",
+        "https://user@evil.example/x",
+        "//evil.example/x",
+    ],
+)
+def test_a_redirect_to_an_unapproved_or_downgraded_destination_is_refused(target):
+    table = {
+        "https://storage.googleapis.com/a": (302, target),
+        "https://evil.example/x": (200, b"stolen"),
+    }
+    # urllib itself refuses schemes such as file: with an HTTPError before our guard is asked
+    with pytest.raises((ra.AcquisitionError, urllib.error.HTTPError), match="[Rr]edirect"):
+        _fetch(table)
+
+
+def test_a_bad_hop_after_a_good_one_is_refused():
+    table = {
+        "https://storage.googleapis.com/a": (302, "https://raw.githubusercontent.com/b"),
+        "https://raw.githubusercontent.com/b": (302, "http://raw.githubusercontent.com/c"),
+    }
+    with pytest.raises(ra.AcquisitionError, match="redirect"):
+        _fetch(table)
+
+
+def test_a_redirect_loop_is_cut_by_the_hop_limit():
+    table = {"https://storage.googleapis.com/a": (302, "https://storage.googleapis.com/a")}
+    with pytest.raises(urllib.error.HTTPError):
+        _fetch(table)
+
+
+def test_a_malformed_redirect_target_is_refused():
+    table = {"https://storage.googleapis.com/a": (302, "https://[bad")}
+    with pytest.raises(ra.AcquisitionError, match="redirect"):
+        _fetch(table)
+
+
+def test_the_default_opener_uses_the_redirect_guard(monkeypatch):
+    built = []
+    real = urllib.request.build_opener
+
+    def spy(*handlers):
+        built.append(handlers)
+        return real(*handlers)
+
+    monkeypatch.setattr(urllib.request, "build_opener", spy)
+    with pytest.raises(
+        (OSError, RuntimeError)
+    ):  # no network in the suite: only the handler list matters
+        ra.open_url("https://storage.googleapis.com/a", 10)
+    assert built and ra.GuardedRedirects in built[0]
