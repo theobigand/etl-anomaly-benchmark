@@ -1,0 +1,157 @@
+{
+  "artifacts": {
+    "experiments/results/fault_matrix.json": "035bb512eff708d5572d7fb2eca773202fafafad5edfdd6c403737b8936e5033"
+  },
+  "captured_at": "2026-10-19T09:01:29.247212+00:00",
+  "environment": {
+    "packages": {
+      "mutmut": "3.8.0",
+      "mypy": null,
+      "numpy": "2.4.6",
+      "pandas": "3.0.6",
+      "pandas-stubs": null,
+      "pyod": "3.6.7",
+      "pytest": "9.1.1",
+      "pytest-cov": "7.1.0",
+      "scikit-learn": "1.9.1"
+    },
+    "platform": "macOS-27.0-arm64-arm-64bit",
+    "python": "3.11.17"
+  },
+  "execution": {
+    "ci": false,
+    "run_id": null,
+    "runner_environment": null,
+    "runner_name": null
+  },
+  "kind": "faults",
+  "result": {
+    "control_passed": true,
+    "expected": [
+      "binary_flags_as_scores",
+      "calibration_includes_test_labels",
+      "customer_copies_cross_partitions",
+      "dropped_detector_run",
+      "empty_real_registry_passes",
+      "first_seed_only",
+      "fit_ignores_training_frame",
+      "fit_on_evaluation_data",
+      "flags_as_pr_auc_input",
+      "interrupted_mutation_run_accepted",
+      "inverted_score_orientation",
+      "label_as_feature",
+      "ml_score_orientation_inverted",
+      "per_type_denominator",
+      "scores_misaligned_with_labels",
+      "seeds_silently_truncated",
+      "synthetic_calibration_on_test",
+      "temporal_future_in_training",
+      "test_labels_set_contamination",
+      "train_test_overlap",
+      "undefined_precision_as_perfect",
+      "validation_leaks_into_train",
+      "wrong_positive_class"
+    ],
+    "faults": [
+      {
+        "defect": "fit_on_evaluation_data",
+        "detected": true
+      },
+      {
+        "defect": "fit_ignores_training_frame",
+        "detected": true
+      },
+      {
+        "defect": "label_as_feature",
+        "detected": true
+      },
+      {
+        "defect": "test_labels_set_contamination",
+        "detected": true
+      },
+      {
+        "defect": "train_test_overlap",
+        "detected": true
+      },
+      {
+        "defect": "customer_copies_cross_partitions",
+        "detected": true
+      },
+      {
+        "defect": "wrong_positive_class",
+        "detected": true
+      },
+      {
+        "defect": "binary_flags_as_scores",
+        "detected": true
+      },
+      {
+        "defect": "inverted_score_orientation",
+        "detected": true
+      },
+      {
+        "defect": "per_type_denominator",
+        "detected": true
+      },
+      {
+        "defect": "first_seed_only",
+        "detected": true
+      },
+      {
+        "defect": "dropped_detector_run",
+        "detected": true
+      },
+      {
+        "defect": "flags_as_pr_auc_input",
+        "detected": true
+      },
+      {
+        "defect": "synthetic_calibration_on_test",
+        "detected": true
+      },
+      {
+        "defect": "temporal_future_in_training",
+        "detected": true
+      },
+      {
+        "defect": "validation_leaks_into_train",
+        "detected": true
+      },
+      {
+        "defect": "undefined_precision_as_perfect",
+        "detected": true
+      },
+      {
+        "defect": "ml_score_orientation_inverted",
+        "detected": true
+      },
+      {
+        "defect": "scores_misaligned_with_labels",
+        "detected": true
+      },
+      {
+        "defect": "calibration_includes_test_labels",
+        "detected": true
+      },
+      {
+        "defect": "seeds_silently_truncated",
+        "detected": true
+      },
+      {
+        "defect": "empty_real_registry_passes",
+        "detected": true
+      },
+      {
+        "defect": "interrupted_mutation_run_accepted",
+        "detected": true
+      }
+    ]
+  },
+  "schema_version": 2,
+  "source": {
+    "revision": "561ac38090c19749765bd7c00f7dbeea5e309008",
+    "scientific_fingerprint": "cecbed00f8228b25707199f820d62f28fa1c13f543a0bbb5d56f94716b6a17b9",
+    "worktree_dirty": false
+  },
+  "status": "PASS"
+}
