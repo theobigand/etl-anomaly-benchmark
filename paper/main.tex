@@ -687,6 +687,65 @@ marks severity $1.0$.}
 \label{fig:severity}
 \end{figure}
 
+\subsection{Chronological pilot on Credit Card}
+\label{sec:chrono}
+The results above use a random stratified split. Of the three real datasets,
+only Credit Card has a time variable (seconds since the first transaction,
+about two days); Cardio and Water Quality have none, so their row order says
+nothing about time. We therefore ran one small pilot on Credit Card, with the
+protocol written down before any score was computed on held-out data
+(\texttt{verification/temporal\_pilot.md}). It is a separate experiment and
+does not replace the benchmark.
+
+The rows are the same cleaned rows, and the detectors are the same four with
+default settings, but the clock variable is removed from the features. The
+chronological split uses the usual $70/15/15$ ratios by time: the detectors
+are fitted on the first $198{,}609$ rows ($366$ frauds) and scored on the last
+$42{,}557$ rows ($52$ frauds, $0.12\%$). The control uses the stratified split
+of the main benchmark with the same rows and features, over five seeds.
+Intervals for the chronological arm come from a block bootstrap over
+30-minute blocks of the test period.
+
+\begin{table}[t]
+\caption{Average precision on the test split, stratified control versus
+chronological split (95\% block-bootstrap interval), and the share of future
+rows flagged at the training-prevalence threshold.}
+\label{tab:chrono}
+\centering
+\footnotesize
+\begin{tabular}{lrrrr}
+\toprule
+Detector & PR, stratified & PR, chronological & ROC, chron. & Flag.\% \\
+\midrule
+Z-score            & $0.078 \pm 0.015$ & $0.048$ [0.020, 0.087] & 0.935 & 12.8 \\
+IQR                & $0.018 \pm 0.003$ & $0.013$ [0.007, 0.023] & 0.917 & 47.1 \\
+Great Expectations & $0.183 \pm 0.047$ & $0.045$ [0.013, 0.088] & 0.758 & 3.5 \\
+Isolation Forest   & $0.110 \pm 0.039$ & $0.035$ [0.016, 0.066] & 0.936 & 0.08 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Average precision is lower under the chronological split for all four
+detectors, but the interval excludes the stratified mean only for Great
+Expectations and Isolation Forest; for the Z-score and the IQR rule the
+difference is within the uncertainty of $52$ test frauds. The best detector
+also changes: Great Expectations leads the stratified control, while the
+Z-score has the highest chronological point estimate, with overlapping
+intervals. Isolation Forest keeps a high ROC-AUC ($0.936$) but flags only
+$0.08\%$ of the future rows and none of the $52$ frauds: the threshold set
+from training scores does not carry over to the later period. This is a single
+two-day dataset with few positives, so it indicates a direction and an order
+of magnitude, not a general rule.
+
+To check the window monitor with a known change, a mean shift of $\delta$
+training standard deviations was added to five features from the middle of the
+test period. The alert threshold was fixed from the validation period before
+the test (the largest validation window score, $0.91$). Shifts of $1$ and $2$
+standard deviations were detected in the second window after the change
+($573$ seconds), and a shift of $0.5$ was not detected; no window before the
+change raised an alert ($22$ windows). Credit Card has no labelled change in
+distribution, so we make no claim about its natural drift.
+
 \subsection{Verification outcomes and computation cost}
 \label{sec:verification-results}
 At commit 561ac380 (local run, not independently attested) the routine suite runs 1,117 tests, plus three that need
