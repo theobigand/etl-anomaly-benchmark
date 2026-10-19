@@ -1,0 +1,14 @@
+# Environment of the LSTM pilot (issue 52): kept outside the project dependencies and the
+# scientific fingerprint. Python 3.11, CPU only. Install into a separate virtual environment:
+#   python -m venv .venv && .venv/bin/pip install -r research/requirements-lstm.txt
+# then run the miniature tests with: .venv/bin/python -m pytest research/tests
+torch==2.14.1
+numpy==2.4.6
+pandas==3.0.6
+scikit-learn==1.9.1
+scipy==1.17.1
+pyod==3.6.7
+great-expectations==1.24.0
+faker==40.43.0
+matplotlib==3.11.2
+pytest==9.1.1
