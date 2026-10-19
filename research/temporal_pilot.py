@@ -11,6 +11,7 @@ import argparse
 import hashlib
 import json
 import logging
+import os
 import platform
 import sys
 from pathlib import Path
@@ -236,10 +237,22 @@ def main(argv: list[str] | None = None) -> int:
         "protocol": "verification/temporal_pilot.md",
         "python": platform.python_version(),
         "platform": platform.platform(),
-        "processor": platform.processor(),
+        "machine": platform.machine(),
+        "cpu_count": os.cpu_count(),
     }
     with atomic_path(args.output) as partial:
         partial.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
+    from provenance import write_record
+
+    write_record(
+        args.output.with_name("run_temporal_pilot.json"),
+        experiment="temporal_pilot",
+        seeds=list(config.BENCHMARK_SEEDS),
+        dataset="credit_card",
+        data_path=None,
+        settings={**result["settings"], **result["provenance"]},
+        outputs=[args.output.name],
+    )
     print(f"wrote {args.output}")
     return 0
 
