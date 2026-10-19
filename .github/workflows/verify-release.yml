@@ -9,6 +9,10 @@ on:
         description: "Label of a runner that holds the research datasets (empty skips REAL)"
         required: false
         default: ""
+      fresh_mutants:
+        description: "Set to true to ignore the cached mutation verdicts and rerun every mutant (use for a release)"
+        required: false
+        default: "false"
       approved_sha:
         description: "Full commit SHA the operator reviewed; REAL refuses any other revision"
         required: false
@@ -173,6 +177,16 @@ jobs:
 
       - name: Install
         run: pip install -e ".[dev,deep]"
+
+      # Verdicts of mutants whose function and covering tests did not change are reused
+      # (verification/mutation_cache.py resets the others). A release can ask for a fresh run.
+      - name: Restore the mutation cache
+        if: inputs.fresh_mutants != 'true'
+        uses: actions/cache@v4
+        with:
+          path: mutants
+          key: mutants-${{ runner.os }}-${{ hashFiles('src/**/*.py', 'experiments/*.py', 'tests/**/*.py', 'pyproject.toml', 'environment.yml', 'verification/evidence/*.json') }}
+          restore-keys: mutants-${{ runner.os }}-
 
       - name: Run deep profile
         run: make verify-deep

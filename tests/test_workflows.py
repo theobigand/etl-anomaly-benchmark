@@ -287,3 +287,17 @@ def test_the_hosted_real_job_downloads_verifies_and_uploads_only_reports():
     uploads = [line.split("path:")[1].strip() for line in job.splitlines() if "path:" in line]
     assert uploads == ["evidence-real-hosted.tgz"]
     assert "self-hosted" not in job and "pip install" not in job
+
+
+def test_the_deep_job_reuses_the_mutation_cache_unless_a_fresh_run_is_asked():
+    text = _text("verify-release.yml")
+    job = text[text.index("  deep:") : text.index("  real-readiness:")]
+    assert "fresh_mutants:" in text[: text.index("jobs:")]
+    assert "actions/cache@v4" in job and "path: mutants" in job
+    assert "if: inputs.fresh_mutants != 'true'" in job
+    assert "restore-keys: mutants-${{ runner.os }}-" in job
+    assert job.index("actions/cache@v4") < job.index("make verify-deep")
+    makefile = (WORKFLOWS.parents[1] / "Makefile").read_text()
+    deep = makefile[makefile.index("verify-deep:") : makefile.index("verify-faults:")]
+    assert deep.index("mutation_cache prepare") < deep.index("mutmut run")
+    assert deep.index("mutmut run") < deep.index("mutation_cache record")
