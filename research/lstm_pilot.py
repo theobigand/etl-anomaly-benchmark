@@ -103,7 +103,11 @@ def compare(
     y = test[ANOMALY_COLUMN].to_numpy()
     return {
         "y": y,
-        "autoencoder": {"scores": a_scores, "metrics": compute_metrics(y, a_flags, a_scores), "settings": a_settings},
+        "autoencoder": {
+            "scores": a_scores,
+            "metrics": compute_metrics(y, a_flags, a_scores),
+            "settings": a_settings,
+        },
         "lstm": {
             "scores": b_scores,
             "metrics": compute_metrics(y, b_flags, b_scores),
