@@ -1,0 +1,59 @@
+{
+  "artifacts": {
+    "experiments/results/real_verification.json": "baebfe5692162074c8149e1e9d3eca1723b5f3a913a0e73dc141ef8617d252fa"
+  },
+  "captured_at": "2026-10-19T13:30:34.737077+00:00",
+  "environment": {
+    "packages": {
+      "mutmut": "3.8.0",
+      "mypy": null,
+      "numpy": "2.4.6",
+      "pandas": "3.0.6",
+      "pandas-stubs": null,
+      "pyod": "3.6.7",
+      "pytest": "9.1.1",
+      "pytest-cov": "7.1.0",
+      "scikit-learn": "1.9.1"
+    },
+    "platform": "macOS-27.0-arm64-arm-64bit",
+    "python": "3.11.17"
+  },
+  "execution": {
+    "ci": false,
+    "run_id": null,
+    "runner_environment": null,
+    "runner_name": null
+  },
+  "kind": "real",
+  "result": {
+    "datasets": [
+      {
+        "dataset": "credit_card",
+        "sha256": "76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89",
+        "status": "PASS"
+      },
+      {
+        "dataset": "water_quality",
+        "sha256": "904004bde729bfe3d2e195f46343bceead09e32a0eb95bb8184e7e20e029b2bf",
+        "status": "PASS"
+      },
+      {
+        "dataset": "cardio",
+        "sha256": "28bb4f67afca256f0cebe3cc6ca75a13be0bfc062e21efcaf40f1d3d80688eff",
+        "status": "PASS"
+      }
+    ],
+    "required": [
+      "credit_card",
+      "water_quality",
+      "cardio"
+    ]
+  },
+  "schema_version": 2,
+  "source": {
+    "revision": "8b5146fb3cfe4b684777b2e853bc42214a9b2930",
+    "scientific_fingerprint": "cecbed00f8228b25707199f820d62f28fa1c13f543a0bbb5d56f94716b6a17b9",
+    "worktree_dirty": false
+  },
+  "status": "PASS"
+}
