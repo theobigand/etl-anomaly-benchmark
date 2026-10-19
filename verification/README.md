@@ -150,6 +150,6 @@ sur durées ne doivent pas dépendre d'un nombre précis de secondes.
 
 Les résultats actuels et les travaux encore ouverts sont dans `report.md` et
 `issues.md`. FAST passe sur l'ensemble mesuré ; DEEP dépasse son seuil sur
-`src/etl_benchmark` et `experiments/` (97,73 % au run `local-561ac38`). Le statut
+`src/etl_benchmark` et `experiments/` (97,75 % au run `local-561ac38`). Le statut
 général est **CERTIFIED en local, non attesté**, et **CERTIFIED en CI, non attesté indépendamment** (run 39112662862, REAL
 hébergé à partir de téléchargements publics vérifiés) ; voir `certification.md`.

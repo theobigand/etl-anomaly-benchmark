@@ -10,13 +10,9 @@ mutant. `config.py`, `logging_setup.py`, `__main__.py` et les fichiers
 
 Résultat de `make verify-deep` du run local `local-561ac38` (commit
 `561ac380`, macOS arm64, 18 octobre 2026, non attesté ; preuves scellées dans
-`evidence/runs/local-561ac38/`) : **4 699 mutants éliminés sur 4 808
-(97,73 %)**, 108 survivants et un mutant « suspect », sans mutant ignoré, en
-erreur, interrompu ou sans test. Le mutant suspect,
-`experiments.run_benchmark.x_main__mutmut_104` (il ignore `--detectors`, donc
-les tests de ligne de commande rejouent tous les détecteurs et dépassent leur
-budget de temps sur une machine chargée), a été tué par toutes les campagnes
-précédentes et reste compté comme non éliminé. Le périmètre est
+`evidence/runs/local-561ac38/`) : **4 700 mutants éliminés sur 4 808
+(97,75 %)**, 108 survivants, sans mutant ignoré, expiré, en erreur, interrompu
+ou sans test (la barrière `check_mutation.py` refuse ces cas). Le périmètre est
 contrôlé par un relevé indépendant (voir « Périmètre contrôlé ») : 28 fichiers
 dans le périmètre, 27 ayant reçu des mutants. Les 68 mutants de plus que la
 campagne précédente (4 751) viennent des fonctions de provenance, d'empreinte de
@@ -33,8 +29,8 @@ retirer aucun mutant du dénominateur :
 | Périmètre | Éliminés | Total | Taux |
 | --- | --- | --- | --- |
 | Calcul scientifique : `split`, `metrics`, `synthetic`, `datasets`, `registry`, `transform`, `quality/` | 1 647 | 1 720 | 95,76 % |
-| Orchestration, entrées-sorties, scripts : `extract`, `load`, `pipeline`, `atomic`, `experiments/*.py` | 3 052 | 3 088 | 98,83 % |
-| Ensemble | 4 699 | 4 808 | 97,73 % |
+| Orchestration, entrées-sorties, scripts : `extract`, `load`, `pipeline`, `atomic`, `experiments/*.py` | 3 053 | 3 088 | 98,87 % |
+| Ensemble | 4 700 | 4 808 | 97,75 % |
 
 Le calcul scientifique reste au-dessus de 95 %, mais avec une marge plus
 faible que l'ensemble : l'agrégat ne doit pas être lu comme la garantie des
@@ -177,7 +173,7 @@ pas citée par le manuscrit, qui cite le run local `local-561ac38` (voir
 classé tantôt « tué », tantôt « expiré » quand la machine était chargée. Les
 campagnes locales qui comptent des expirations (cinq mutants dont celui-ci, sur
 une exécution concurrente d'autres tâches) ont été rejouées pour ces mutants
-seulement (`mutmut run <noms>`) ; le résultat retenu est celui du run `local-561ac38` (six expirations rejouées seules : cinq éliminés, un reste suspect ; aucun mutant n'a été retiré du dénominateur).
+seulement (`mutmut run <noms>`) ; le résultat retenu est celui du run `local-561ac38` (sept mutants expirés ou suspects sous charge, rejoués seuls dans l'arbre propre : tous éliminés ; aucun mutant n'a été retiré du dénominateur).
 
 ## Équivalences invoquées
 
