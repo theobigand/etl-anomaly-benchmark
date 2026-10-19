@@ -752,6 +752,36 @@ standard deviations were detected in the second window after the change
 change raised an alert ($22$ windows). Credit Card has no labelled change in
 distribution, so we make no claim about its natural drift.
 
+\subsection{LSTM autoencoder pilot}
+\label{sec:lstm}
+A last pilot asks whether the preceding rows of the transaction stream carry a
+fraud signal that a row-level autoencoder cannot see. Credit Card has no
+cardholder identifier, so the window is the global stream of the ten previous
+rows, not a customer's history. The protocol was fixed beforehand
+(\texttt{verification/lstm\_pilot.md}). The comparison uses the chronological
+partitions of Section~\ref{sec:chrono}, the same $50{,}000$ training rows and a
+CPU budget of at most $20$ epochs for both models; the architecture (window of
+$10$ rows, $32$ units) was not tuned, and the validation rows served only for
+early stopping on an unlabelled reconstruction loss.
+
+As a check before reading the real data, a synthetic stream whose anomalies
+break the continuity of an autoregressive signal was scored by both models: the
+LSTM reaches an average precision of $0.875$ against $0.006$ for the
+row-level autoencoder. On Credit Card, over five initialisation seeds, the LSTM
+reaches an average precision of $0.037 \pm 0.006$ on the $52$ test frauds
+against $0.024 \pm 0.010$ for the row-level autoencoder (ROC-AUC $0.926$
+against $0.841$). The paired block-bootstrap interval of the difference excludes
+zero for the main seed ($+0.021$, $[+0.005, +0.044]$) but not for the other
+four, where the difference is positive for three seeds and negative for one.
+This criterion was set in advance as an exploratory check, not a formal test.
+The LSTM is comparable to Isolation Forest ($0.035$) and Great Expectations
+($0.045$) on the same rows, not clearly better. None of the five trainings
+converged within the budget: the validation loss was still decreasing at the
+$20$th epoch. As for the other detectors, the threshold taken from training
+scores flags almost none of the frauds in the later period (recall at most
+$0.02$). The result is therefore an indication from a small, budget-limited
+experiment on one dataset, not a ranking.
+
 \subsection{Verification outcomes and computation cost}
 \label{sec:verification-results}
 At commit 4a50eb81 (local run, not independently attested) the routine suite runs 1,148 tests, plus three that need
