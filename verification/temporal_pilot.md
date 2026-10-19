@@ -85,9 +85,12 @@ Deux problèmes distincts, jamais additionnés :
 - Détecteurs : `zscore`, `iqr`, `great_expectations`, `isolation_forest`
   (ceux de `DATASETS["credit_card"]`), via `detect(test, detecteur,
   fit_df=train)`.
-- Graines : 42, 1, 2, 3, 4 (`config.BENCHMARK_SEEDS`). La graine pilote la
-  partition du bras témoin et l'aléa d'Isolation Forest ; le bras chronologique
-  est déterministe hors Isolation Forest.
+- Graines : 42, 1, 2, 3, 4 (`config.BENCHMARK_SEEDS`). La graine ne pilote que
+  la partition du bras témoin : Isolation Forest garde `random_state` égal à
+  `config.RANDOM_SEED` (42) quelle que soit la graine de partition, comme dans le
+  benchmark. Le bras chronologique est donc entièrement déterministe, et sa
+  seule incertitude est celle du bootstrap par blocs. (Correction d'une phrase
+  de la première version, avant toute exécution.)
 - Incertitude : bootstrap par blocs temporels sur le test chronologique (blocs
   de 30 minutes, 1 000 rééchantillonnages, graine 42, intervalle percentile à
   95 %) ; bras témoin : moyenne et écart type sur les cinq graines. Le test
