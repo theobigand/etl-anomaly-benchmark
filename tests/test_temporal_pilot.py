@@ -153,3 +153,33 @@ def test_the_monitor_threshold_comes_from_validation_never_from_test():
     a = tp.monitor_control(train, val, test, ["V1", "V2", "V3"], deltas=(0.0,), window_size=200)
     b = tp.monitor_control(train, val, noisy, ["V1", "V2", "V3"], deltas=(0.0,), window_size=200)
     assert a["threshold"] == b["threshold"]
+
+
+def test_the_archived_pilot_record_identifies_this_implementation():
+    import hashlib
+    import json
+    import subprocess
+
+    import provenance
+
+    archive = ROOT / "verification" / "evidence" / "temporal_pilot"
+    record = json.loads((archive / "run_temporal_pilot.json").read_text())
+    sha = lambda data: hashlib.sha256(data).hexdigest()  # noqa: E731
+    assert record["worktree_dirty"] is False
+    assert record["output_sha256"] == {
+        "temporal_pilot.json": sha((archive / "temporal_pilot.json").read_bytes())
+    }
+    manifest = json.loads((ROOT / "verification/evidence/manifest.json").read_text())["datasets"]
+    assert record["settings"]["dataset_sha256"] == manifest["credit_card"]["sha256"]
+    script = (ROOT / "research" / "temporal_pilot.py").read_bytes()
+    assert record["settings"]["script_sha256"] == sha(script)
+    committed = subprocess.run(
+        ["git", "show", f"{record['source_revision']}:research/temporal_pilot.py"],
+        cwd=ROOT,
+        capture_output=True,
+        check=True,
+    ).stdout
+    assert sha(committed) == record["settings"]["script_sha256"]
+    # research/ is outside the scientific fingerprint: it identifies the detector, split and
+    # monitor code the pilot used, and the script itself is identified by script_sha256.
+    assert record["scientific_fingerprint"] == provenance.scientific_fingerprint()

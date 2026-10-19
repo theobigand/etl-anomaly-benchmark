@@ -728,7 +728,13 @@ Isolation Forest   & $0.110 \pm 0.039$ & $0.035$ [0.016, 0.066] & 0.936 & 0.08 \
 Average precision is lower under the chronological split for all four
 detectors, but the interval excludes the stratified mean only for Great
 Expectations and Isolation Forest; for the Z-score and the IQR rule the
-difference is within the uncertainty of $52$ test frauds. The best detector
+difference is within the uncertainty of $52$ test frauds. This exclusion
+criterion was fixed in advance as an exploratory check. It is not a confidence
+interval or a test for the difference between the two protocols: the bootstrap
+reflects only the chronological arm, the stratified mean is itself uncertain
+(five seeds), and the share of frauds changes between partitions ($0.18\%$ in
+training, $0.12\%$ in the test period), so part of the gap may come from
+prevalence alone, which this pilot does not separate from the effect of time. The best detector
 also changes: Great Expectations leads the stratified control, while the
 Z-score has the highest chronological point estimate, with overlapping
 intervals. Isolation Forest keeps a high ROC-AUC ($0.936$) but flags only

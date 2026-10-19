@@ -40,6 +40,33 @@ Partitions chronologiques (0,70/0,15/0,15, dates égales groupées) : train
   changement (573 s) ; décalage de 0,5 non détecté, comme prévu ; témoin sans
   décalage sans alerte ; aucune fausse alerte avant le changement (22 fenêtres).
 
+## Portée statistique du critère de H1
+
+Le critère « l'intervalle chronologique exclut la moyenne stratifiée » a été
+fixé à l'avance comme critère exploratoire. Ce n'est ni un intervalle de
+confiance ni un test d'hypothèse sur la différence entre les deux protocoles :
+le bootstrap par blocs ne mesure que l'incertitude du bras chronologique (52
+fraudes, une seule période), la moyenne stratifiée est elle-même incertaine
+(écart type sur cinq graines, jusqu'à 0,047) et n'est pas traitée comme un
+paramètre connu. De plus, la part de fraudes change entre les partitions
+(0,184 % en train, 0,122 % en test, contre environ 0,17 % sur l'ensemble pour
+le bras stratifié) : une partie de l'écart peut venir de la seule prévalence,
+puisque le PR-AUC d'un détecteur sans pouvoir dépend de la prévalence. Le pilote
+ne sépare pas l'effet du temps de l'effet de la prévalence. Les hypothèses
+ci-dessus et leurs verdicts restent ceux du protocole.
+
+## Identité de l'implémentation du pilote
+
+`research/` est hors de l'empreinte scientifique (`src/` et `experiments/*.py`,
+recette 2) : l'empreinte `cecbed00` de l'enregistrement décrit le code des
+détecteurs, des partitions et du moniteur utilisé, pas le script du pilote.
+L'identité du script est portée par `script_sha256` dans les réglages de
+l'enregistrement, avec `source_revision` (commit où le script a cette empreinte,
+arbre propre), `dataset_sha256` (égal au manifeste) et `output_sha256`.
+`tests/test_temporal_pilot.py::test_the_archived_pilot_record_identifies_this_implementation`
+vérifie ces quatre liens et que le script actuel est celui de l'archive. La
+recette d'empreinte n'a pas été étendue.
+
 ## Constat non prévu
 
 Isolation Forest garde un ROC-AUC élevé (0,936) mais signale 0,08 % des lignes
