@@ -1,4 +1,4 @@
-"""The synthetic sequence stream behaves as pre-registered, and the comparison keeps its alignment."""
+"""The synthetic stream behaves as pre-registered and the comparison keeps its alignment."""
 
 import sys
 from pathlib import Path
