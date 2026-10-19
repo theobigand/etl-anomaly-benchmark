@@ -69,7 +69,9 @@ verify-fast: lint
 verify-deep:
 	@mkdir -p $(EVIDENCE)
 	@rm -f $(EVIDENCE)/deep.json mutants/mutmut-cicd-stats.json
+	python -m verification.mutation_cache prepare
 	mutmut run
+	python -m verification.mutation_cache record
 	mutmut export-cicd-stats
 	mutmut results --all true > mutants/results.txt
 	@set +e; python experiments/check_mutation.py mutants/mutmut-cicd-stats.json; gate=$$?; \
