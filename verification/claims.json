@@ -10,12 +10,12 @@
     "historical": false,
     "evidence_dir": "verification/evidence/runs/local-561ac38",
     "files": {
-      "deep.json": "ece8420276b0a427a39bb26eb483efa5575346a3db108fc5fd621f9bb56f5274",
+      "deep.json": "44b40ae884d511badedf557cd70b6144859fccc78e6374a4db243ae61c6439c2",
       "fast.json": "ca874ccf9d2f6a5b0820c1c7be28ce9ffdb03c247c295b97805fda729a55365d",
       "faults.json": "43c81e16c4f5f251562f68a6be065acfb2716c22780b388ff1ddcba19ffcc35b",
       "real.json": "cc63d370f62e7b87200855d8aab5bfa530b085bc1c7ec1b087b59d1c3a04df12",
       "reproduction.json": "e1a0cfb79219771f98800146aad1cd0e145b7e57fa777ab37efeac1a800ad644",
-      "results.txt": "aa0cbf618521f2ab1b42900c21de6cd74e75f389bcdbbcb8247c63f5575dd802",
+      "results.txt": "b6fa57dfb077a47e76a6b290ba3cd8ca59dd901b09a61c3ab9bcdf0625112832",
       "tools.json": "4f80589c105cbf4c666a1a60f13837b835a564c80b61b91968531aa519e9c31f",
       "types.json": "d2c237d4e9f7996dc566e747540141928ebd6856ccbcc5debee69b7812512579"
     }
@@ -32,12 +32,12 @@
     "branch": 692
   },
   "mutation": {
-    "killed": 4699,
+    "killed": 4700,
     "total": 4808,
     "survived": 108,
     "scientific_killed": 1647,
     "scientific_total": 1720,
-    "other_killed": 3052,
+    "other_killed": 3053,
     "other_total": 3088
   },
   "faults": 23,

@@ -2520,7 +2520,7 @@
     experiments.run_benchmark.x_main__mutmut_101: killed
     experiments.run_benchmark.x_main__mutmut_102: killed
     experiments.run_benchmark.x_main__mutmut_103: killed
-    experiments.run_benchmark.x_main__mutmut_104: suspicious
+    experiments.run_benchmark.x_main__mutmut_104: killed
     experiments.run_benchmark.x_main__mutmut_105: killed
     experiments.run_benchmark.x_main__mutmut_106: killed
     experiments.run_benchmark.x_main__mutmut_107: killed
