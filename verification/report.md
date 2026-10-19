@@ -8,7 +8,7 @@ exécution identifiée (révision, lieu, date) ; ils sont recopiés dans
 depuis. Les chiffres plus anciens sont marqués historiques.
 
 Le statut de certification est **CERTIFIED en local, non attesté** (commit
-`605a9cf4`, machine du chercheur) et **CERTIFIED en CI, non attesté
+`561ac380`, machine du chercheur) et **CERTIFIED en CI, non attesté
 indépendamment** : le run `verify-release` 39112662862 (tête de branche
 `440dcee`) rend CERTIFIED avec l'étiquette
 `ci-run:39112662862 (not independently attested)`, REAL compris, produit par le
@@ -53,17 +53,17 @@ archivés séparément et leurs chiffres sont rapprochés du manuscrit par un te
 
 ## Résultats des commandes
 
-Run local `local-605a9cf` : commit `605a9cf4`, macOS 27.0 arm64, Python 3.11.17
+Run local `local-561ac38` : commit `561ac380`, macOS 27.0 arm64, Python 3.11.17
 (environnement conda `etl-benchmark`, typage dans un venv avec mypy 2.4.0 et
 pandas-stubs 3.0.5.260914), 18 octobre 2026. Résultats non attestés
-indépendamment ; enveloppes de preuve scellées dans `evidence/runs/local-605a9cf/`.
+indépendamment ; enveloppes de preuve scellées dans `evidence/runs/local-561ac38/`.
 
 | Commande | Résultat | Détail |
 | --- | --- | --- |
-| `make verify-fast` | Réussite locale | 1 105 tests réussis, 3 tests réels et 23 essais de défauts exclus ; 1 628/1 628 lignes et 336/336 branches. |
-| `make verify-tools` | Réussite locale | 1 883/1 883 lignes et 690/690 branches du code de `verification/`. |
+| `make verify-fast` | Réussite locale | 1 117 tests réussis, 3 tests réels et 23 essais de défauts exclus ; 1 628/1 628 lignes et 336/336 branches. |
+| `make verify-tools` | Réussite locale | 1 893/1 893 lignes et 692/692 branches du code de `verification/`. |
 | `make verify-types` | Réussite locale | mypy 2.4.0, `verification/` sans erreur, 17 erreurs connues du code scientifique, aucune nouvelle. |
-| `make verify-deep` | Réussite locale | 4 700 mutants éliminés sur 4 808 (97,75 %) ; 108 survivants, dont 3 propres à macOS. |
+| `make verify-deep` | Réussite locale | 4 699 mutants éliminés sur 4 808 (97,73 %) ; 108 survivants, 1 mutant suspect (temps dépassé sous charge) ; 108 survivants, dont 3 propres à macOS. |
 | `make verify-faults` | Réussite locale | 23 défauts introduits dans une copie temporaire, tous détectés par un test prévu. |
 | `make verify-real` | Réussite locale | 3 tests et contrôle des trois CSV requis ; échoue si l'un manque ou si le registre est vide. |
 | `make verify-reproduce` | Réussite locale | cardio : archive, deux essais, environnement reconstruit depuis le verrou : numérique, écart 0,0 ; sensibilité à scikit-learn 1.8.0 mesurée. |
@@ -78,10 +78,10 @@ ligne ni branche n'est exclue.
 La campagne de mutation porte sur les modules de `src/etl_benchmark` qui
 calculent un résultat et sur les dix scripts de `experiments/` (mutmut 3.8.0),
 soit 28 fichiers dont 27 reçoivent des mutants (relevé indépendant dans
-`mutation_scope.json`) : 4 808 mutants produits, 4 700 éliminés, 108 survivants,
+`mutation_scope.json`) : 4 808 mutants produits, 4 699 éliminés, 108 survivants,
 aucun cas classé sans test, ignoré, expiré ou interrompu. Le taux mesuré est
-**97,75 %**, dont 95,76 % sur le calcul scientifique seul (1 647/1 720) et
-98,87 % sur l'orchestration et les scripts (3 053/3 088) ; voir
+**97,73 %**, dont 95,76 % sur le calcul scientifique seul (1 647/1 720) et
+98,83 % sur l'orchestration et les scripts (3 052/3 088) ; voir
 `mutation_notes.md`. La campagne avait commencé à 88,66 % sur `metrics.py` seul,
 à 74,5 % une fois élargie à `src/` sans nouveaux tests et à 24,3 % sur les
 scripts. `mutation_notes.md` classe les survivants par lecture des diffs
