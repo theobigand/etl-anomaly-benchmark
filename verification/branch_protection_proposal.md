@@ -108,7 +108,7 @@ proposal ».
 
 Limites : l'exécution REAL hébergée repose sur des sources publiques dont le
 sha256 est contrôlé avant usage ; elle n'est pas une attestation indépendante.
-Les téléchargements suivent la liste d'hôtes de `real_acquire.py` ; un
-redirigement vers un autre hôte n'est pas filtré, mais tout contenu différent est
-refusé par le contrôle du sha256 avant d'être écrit (aucun secret n'existe dans
-ces jobs).
+Les téléchargements suivent la liste d'hôtes de `real_acquire.py`, y compris à
+chaque redirection (https et hôte listé, dix sauts au plus ; issue 50) ; en plus,
+tout contenu différent est refusé par le contrôle du sha256 avant d'être écrit
+(aucun secret n'existe dans ces jobs).
