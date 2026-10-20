@@ -374,6 +374,29 @@ archived CSV values at the precision shown. This establishes traceability
 between the reported values and the recorded experiment; it does not
 establish that another machine will reproduce the same timings.
 
+A fourth part turns these checks into a release verdict. Each profile (routine
+suite, mutation campaign, fault injection, real-data check, coverage of the
+checking scripts themselves, static typing, and a controlled reproduction)
+writes a small evidence record tied to the source revision, to a clean working
+tree, to a fingerprint of the code that computes results (the pipeline and the
+experiment scripts, not the checking scripts) and to the software versions. A
+release script recomputes every status from the raw results instead of reading
+it from the record, requires that all profiles describe the same revision and
+compatible environments, and returns \emph{certified}, \emph{incomplete} or
+\emph{rejected}; figures quoted in this manuscript are accepted only if the run
+they come from is not older than a change to the code. The real-data check can
+also run on a hosted Linux machine: it downloads the three public files,
+compares each SHA-256 value with the archived manifest before using it, and
+refuses any other file. The controlled reproduction replays the cardiotocography
+benchmark against the archive, twice in the same environment and once in an
+environment rebuilt from a recorded, hash-pinned lock; on another operating
+system the metrics agree statistically (largest difference $6.5\times10^{-5}$,
+identical partitions) rather than bit for bit. Result files are written to a
+temporary name and renamed only when complete, so an interrupted run cannot leave
+a truncated table or figure. The verdict states where the evidence was produced
+and never that it was independently attested: the author wrote the code and
+launched every run.
+
 We treat a failed or missing check as a limitation of the evidence, not as
 a successful experiment. Complete line and branch coverage and a mutation
 score of at least $95\%$ over the pipeline and the scripts are the targets, and the
@@ -873,6 +896,22 @@ on its score) were each caught by a named test.
 The real-data checks pass
 locally on the three CSV files, and the six tables of this manuscript match
 the archived results.
+
+The same profiles were run on a hosted Linux machine for the final revision
+(commit c64c6ffa, a continuous-integration run, not independently attested).
+The release script returned \emph{certified}. The routine suite and the scripts
+keep complete line and branch coverage, the checking scripts are fully covered
+($1{,}975$ of $1{,}975$ lines), and the mutation campaign, run from scratch,
+kills $4{,}703$ of $4{,}808$ mutants ($97.82\%$) with no timeout. Earlier hosted
+runs reported fourteen timeouts, always the same mutants. They were not hangs in
+the mutated code: the mutation tool starts worker processes after the numerical
+libraries have created their thread pools, which blocks on Linux. Running the
+tool with single-threaded libraries removed them, and the same four mutants then
+gave the same outcomes as on macOS. The three real datasets were downloaded and
+matched the archived checksums, and the controlled reproduction passed at its
+three levels. These results show that the evidence is consistent and
+re-creatable on a second platform; they do not certify the scientific
+conclusions of the study, which rest on the limits stated with each experiment.
 
 Detector timing in Tables~\ref{tab:fraud} and~\ref{tab:synthetic} sums
 \texttt{fit}, \texttt{predict} and \texttt{score} inside the detection
