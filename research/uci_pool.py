@@ -78,6 +78,73 @@ def select(catalogue, licences):
     return chosen, rejected
 
 
+# Curation applied after the metadata and licence filters. Each entry carries the reason a
+# reader can check against the UCI page; nothing is dropped silently.
+DUPLICATE_OF = {
+    20: 2,  # Census Income is the same Adult extract
+    147: 50,  # Statlog Image Segmentation repeats Image Segmentation
+    74: 75,  # Musk version 1 is contained in version 2
+    211: 183,  # Unnormalized variant of Communities and Crime
+    143: 27,  # Statlog Australian Credit Approval is a version of Credit Approval
+}
+CURATION_EXCLUSIONS = {
+    107: "synthetic: generated from the waveform formula, no real process",
+    70: "synthetic: labels produced by three fixed rules",
+    12: "synthetic: psychological experiment grid, labels follow a rule",
+    19: "synthetic: labels derived by a hierarchical decision model",
+    76: "synthetic: labels derived by a hierarchical decision model",
+    713: "synthetic: simulated verification runs",
+    471: "synthetic: simulated grid stability",
+    22: "game: complete board positions, not records of a process",
+    23: "game: complete board positions, not records of a process",
+    26: "game: complete board positions, not records of a process",
+    101: "game: complete board positions, not records of a process",
+    367: "game: match results with one-hot hero indicators",
+}
+
+
+def curate(chosen):
+    kept, dropped = [], []
+    for meta in chosen:
+        uci_id = meta["uci_id"]
+        if uci_id in DUPLICATE_OF:
+            dropped.append((meta, f"duplicate of {DUPLICATE_OF[uci_id]}"))
+        elif uci_id in CURATION_EXCLUSIONS:
+            dropped.append((meta, CURATION_EXCLUSIONS[uci_id]))
+        else:
+            kept.append(meta)
+    return kept, dropped
+
+
+def panels(pool) -> dict[str, list[int]]:
+    """Sets that answer one specific question of the benchmark, by UCI id."""
+    result: dict[str, list[int]] = {
+        k: []
+        for k in (
+            "missing_values",
+            "mixed_types",
+            "temporal",
+            "stress_tiny",
+            "stress_large",
+            "stress_wide",
+        )
+    }
+    for meta in pool:
+        tags = strata(meta)
+        uci_id = meta["uci_id"]
+        for name, hit in (
+            ("missing_values", tags["missing"]),
+            ("mixed_types", tags["mixed_types"]),
+            ("temporal", tags["time"]),
+            ("stress_tiny", meta["num_instances"] <= 500),
+            ("stress_large", meta["num_instances"] >= 200_000),
+            ("stress_wide", meta["num_features"] >= 100),
+        ):
+            if hit:
+                result[name].append(uci_id)
+    return result
+
+
 def crawl(fetch: Callable[[str], str], sleep=time.sleep, delay: float = 0.3) -> dict[str, Any]:
     listing = json.loads(fetch(f"{API}/datasets/list"))["data"]
     datasets, failed = [], []
@@ -102,9 +169,24 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--survey", type=Path, help="crawl the catalogue metadata to this file")
     parser.add_argument("--select", type=Path, help="survey file to filter")
+    parser.add_argument("--curate", type=Path, help="selection file to curate and split in panels")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args(argv)
     from etl_benchmark.atomic import atomic_path
+
+    if args.curate:
+        chosen = json.loads(args.curate.read_text())["chosen"]
+        kept, dropped = curate(chosen)
+        out = {
+            "kept": kept,
+            "dropped": [{"uci_id": m["uci_id"], "name": m["name"], "reason": r} for m, r in dropped],
+            "panels": panels(kept),
+            "report": balance_report(kept),
+        }
+        with atomic_path(args.output) as partial:
+            partial.write_text(json.dumps(out, indent=1, sort_keys=True) + "\n")
+        print(f"kept {len(kept)}, dropped {len(dropped)}")
+        return 0
 
     if args.survey:
         result = crawl(dr._text)

@@ -118,3 +118,34 @@ def test_the_balanced_report_counts_datasets_per_stratum():
     report = up.balance_report(chosen)
     assert report["size"] == {"tiny": 1, "small": 2, "medium": 1}
     assert report["total"] == 4
+
+
+# --- curation: relevance for ETL data quality, no synthetic or duplicate datasets ---
+
+
+def test_curation_removes_synthetic_rule_generated_and_duplicate_versions_with_a_reason():
+    pool = [_meta(uci_id=i, name=f"D{i}") for i in (2, 20, 107, 26, 5)]
+    kept, dropped = up.curate(pool)
+    assert {m["uci_id"] for m in kept} == {2, 5}
+    reasons = {m["uci_id"]: r for m, r in dropped}
+    assert "duplicate of 2" in reasons[20]
+    assert "synthetic" in reasons[107] and "game" in reasons[26]
+
+
+def test_every_curation_rule_has_a_stated_reason_and_no_duplicate_points_to_itself():
+    assert all(isinstance(reason, str) and reason for reason in up.CURATION_EXCLUSIONS.values())
+    assert all(a != b for a, b in up.DUPLICATE_OF.items())
+    assert set(up.DUPLICATE_OF.values()).isdisjoint(up.DUPLICATE_OF)
+
+
+def test_panels_group_datasets_by_the_question_they_can_answer():
+    pool = [
+        _meta(uci_id=1, has_missing_values="yes", num_instances=3000),
+        _meta(uci_id=2, feature_types=["Real", "Categorical"], num_instances=500),
+        _meta(uci_id=3, characteristics=["Time-Series"], num_instances=300000),
+        _meta(uci_id=4, num_features=250, num_instances=3000),
+    ]
+    panels = up.panels(pool)
+    assert panels["missing_values"] == [1] and panels["mixed_types"] == [2]
+    assert panels["temporal"] == [3]
+    assert panels["stress_tiny"] == [2] and panels["stress_large"] == [3] and panels["stress_wide"] == [4]
