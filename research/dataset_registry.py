@@ -29,7 +29,7 @@ sys.path[:0] = [str(ROOT / "src")]
 
 ADBENCH_COMMIT = "3dac8221081e190f157d78e93bfa8867f90d0965"
 ADBENCH_BASE = f"https://raw.githubusercontent.com/Minqi824/ADBench/{ADBENCH_COMMIT}/adbench/datasets/Classical/"
-HOSTS = {"raw.githubusercontent.com"}
+HOSTS = {"raw.githubusercontent.com", "archive.ics.uci.edu"}
 MAX_BYTES = 100 * 1024 * 1024
 _TABLE = """ALOI|Image annthyroid|Healthcare backdoor|Network breastw|Healthcare campaign|Finance
 cardio|Healthcare Cardiotocography|Healthcare celeba|Image census|Sociology cover|Botany
