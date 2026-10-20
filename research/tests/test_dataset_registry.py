@@ -99,3 +99,55 @@ def test_the_inventory_row_carries_provenance_and_rights_fields_to_complete(tmp_
     assert row["source_url"].endswith("t.npz") and row["packaging_licence"] == "BSD-2-Clause"
     assert row["underlying_terms"] == "TO_CHECK" and row["decision"] == "PENDING"
     assert row["rows"] == 6 and row["anomalies"] == 1
+
+
+# --- rights: UCI pages carry their licence in the page text ---
+
+PAGE = (
+    "<html>...This dataset is licensed under a Creative Commons Attribution 4.0 "
+    "International (CC BY 4.0) license. This allows for the sharing...</html>"
+)
+
+
+def test_the_uci_licence_sentence_is_read_from_the_page():
+    found = dr.uci_licence(PAGE)
+    assert found["licence"] == "CC BY 4.0"
+    assert "Creative Commons Attribution 4.0 International" in found["text"]
+
+
+def test_a_page_without_a_licence_is_not_treated_as_open():
+    found = dr.uci_licence("<html>nothing about terms</html>")
+    assert found["licence"] is None
+
+
+def test_the_uci_name_is_checked_against_the_api_before_the_licence_is_trusted():
+    api = {"data": {"uci_id": 193, "name": "Cardiotocography", "dataset_doi": "10.24432/C51S4N"}}
+    assert dr.check_uci_identity(api, 193, "Cardiotocography")["doi"] == "10.24432/C51S4N"
+    with pytest.raises(dr.RegistryError, match="expected"):
+        dr.check_uci_identity(api, 193, "Wine")
+
+
+def test_rights_are_applied_to_the_inventory_without_inventing_terms():
+    rows = [
+        {"name": "cardio", "underlying_terms": "TO_CHECK", "decision": "PENDING"},
+        {"name": "celeba", "underlying_terms": "TO_CHECK", "decision": "PENDING"},
+    ]
+    seen = {
+        "cardio": {
+            "licence": "CC BY 4.0",
+            "text": "Creative Commons",
+            "doi": "10.1/x",
+            "url": "u",
+            "checked": "2026-10-20",
+        }
+    }
+    out = dr.apply_rights(rows, seen)
+    assert out[0]["decision"] == "INCLUDE" and out[0]["underlying_terms"].startswith(
+        "CC BY 4.0 (u, doi 10.1/x, read 2026-10-20"
+    )
+    assert out[1]["decision"] == "PENDING" and out[1]["underlying_terms"] == "TO_CHECK"
+
+
+def test_every_uci_mapping_names_an_adbench_dataset():
+    names = {e["name"] for e in dr.ADBENCH_TABULAR}
+    assert set(dr.UCI_SOURCES) <= names and len(dr.UCI_SOURCES) >= 30
