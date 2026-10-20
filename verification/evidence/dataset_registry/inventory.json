@@ -4,7 +4,7 @@
     "anomaly_rate": 0.030443735615940565,
     "bytes": 2904730,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "EXCLUDE",
     "domain": "Image",
     "exact_duplicate_rows": 0,
     "features": 27,
@@ -17,7 +17,7 @@
     "sha256": "792d0b5bd1147bfc9574a1974f157b39fbd4cbed8ecd04cf983fd554498ed477",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/1_ALOI.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "no open licence: no licence found on the collection page, only a copyright notice (UvA 2004) (https://aloi.science.uva.nl/, read 2026-10-20)"
   },
   {
     "anomalies": 534,
@@ -44,7 +44,7 @@
     "anomaly_rate": 0.02443118043827167,
     "bytes": 5022158,
     "constant_features": 3,
-    "decision": "PENDING",
+    "decision": "EXCLUDE",
     "domain": "Network",
     "exact_duplicate_rows": 8309,
     "features": 196,
@@ -57,7 +57,7 @@
     "sha256": "164481cd9688306b0742c25e996c876ba561ee975629b9fdb53f8ee51b1ed911",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/3_backdoor.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "no open licence: UNSW-NB15: free for academic research only, commercial use needs the authors (https://research.unsw.edu.au/projects/unsw-nb15-dataset, read 2026-10-20)"
   },
   {
     "anomalies": 239,
@@ -144,7 +144,7 @@
     "anomaly_rate": 0.022443348683853327,
     "bytes": 1700937,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "EXCLUDE",
     "domain": "Image",
     "exact_duplicate_rows": 88616,
     "features": 39,
@@ -157,7 +157,7 @@
     "sha256": "1cadfdea14cd8d240eca715a70c09c88af8621d086a7478c63f602d97adef0b5",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/8_celeba.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "no open licence: non-commercial research purposes only, copying and distribution not allowed (https://mmlab.ie.cuhk.edu.hk/projects/CelebA.html, read 2026-10-20)"
   },
   {
     "anomalies": 18568,
@@ -204,7 +204,7 @@
     "anomaly_rate": 0.05927411411760527,
     "bytes": 2938691,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "EXCLUDE",
     "domain": "Sociology",
     "exact_duplicate_rows": 583905,
     "features": 10,
@@ -217,7 +217,7 @@
     "sha256": "5824ec854465f2763b4bfe3da1ae9f25ed5433b5c6e265d42e37da4f82a58679",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/11_donors.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "no open licence: competition data, no open licence verified (https://www.kaggle.com/c/kdd-cup-2014-predicting-excitement-at-donors-choose, read 2026-10-20)"
   },
   {
     "anomalies": 673,
@@ -244,7 +244,7 @@
     "anomaly_rate": 0.001727485630620034,
     "bytes": 45902776,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Finance",
     "exact_duplicate_rows": 9146,
     "features": 29,
@@ -257,7 +257,7 @@
     "sha256": "353b9a156b3f20e0739fafacdff76ef5cad1eeb7323be0ae71d384bf0e2594a6",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/13_fraud.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "ODbL 1.0: Kaggle states: Database: Open Database, Contents: Database Contents; attribute Worldline and the ULB Machine Learning Group, no redistribution of the file here (https://www.kaggle.com/api/v1/datasets/view/mlg-ulb/creditcardfraud, read 2026-10-20)"
   },
   {
     "anomalies": 9,
@@ -444,7 +444,7 @@
     "anomaly_rate": 0.023249575248144506,
     "bytes": 166764,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "EXCLUDE",
     "domain": "Healthcare",
     "exact_duplicate_rows": 3335,
     "features": 6,
@@ -457,14 +457,14 @@
     "sha256": "a0308ac9712d78321073b1c2dc98dc37665c0f35c1cc33019416fe8f8d7de7ea",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/23_mammography.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "no open licence: OpenML licence field is the generic label Public, source Unknown, no open licence (https://www.openml.org/api/v1/json/data/310, read 2026-10-20)"
   },
   {
     "anomalies": 700,
     "anomaly_rate": 0.09206892016309351,
     "bytes": 455359,
     "constant_features": 22,
-    "decision": "PENDING",
+    "decision": "EXCLUDE",
     "domain": "Image",
     "exact_duplicate_rows": 0,
     "features": 100,
@@ -477,7 +477,7 @@
     "sha256": "be7706272325fdd3592c1be555ae1a82f916a2f8545f4f8cbaa548ab102cc44c",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/24_mnist.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "no open licence: the official page states no licence and secondary sources disagree (CC BY-SA 3.0, CC BY 4.0, CC0); the file is also an embedding of images (https://yann.lecun.com/exdb/mnist, read 2026-10-20)"
   },
   {
     "anomalies": 97,
@@ -564,7 +564,7 @@
     "anomaly_rate": 0.3489583333333333,
     "bytes": 11023,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "EXCLUDE",
     "domain": "Healthcare",
     "exact_duplicate_rows": 0,
     "features": 8,
@@ -577,7 +577,7 @@
     "sha256": "215454bb263a2f040945c9ea7bd7f06f1e89a61a3143bdb6f196e3887e801a7d",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/29_Pima.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "no open licence: NIDDK owner, no licence statement found, mirrors list the licence as unknown (https://www2.stat.duke.edu/courses/Fall00/sta290/datasets/pima.info, read 2026-10-20)"
   },
   {
     "anomalies": 2036,
@@ -704,7 +704,7 @@
     "anomaly_rate": 0.016549104720564298,
     "bytes": 6432210,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "EXCLUDE",
     "domain": "Linguistics",
     "exact_duplicate_rows": 0,
     "features": 400,
@@ -717,14 +717,14 @@
     "sha256": "aa647e9e3af9b021fc991bdf091e02ec8724fa8e9d3e8edf5394a8e6fe840190",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/36_speech.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "no open licence: ODDS page credits Brno University of Technology and states no licence (https://odds.cs.stonybrook.edu/?p=274, read 2026-10-20)"
   },
   {
     "anomalies": 31,
     "anomaly_rate": 0.09117647058823529,
     "bytes": 20569,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "EXCLUDE",
     "domain": "Document",
     "exact_duplicate_rows": 0,
     "features": 9,
@@ -737,7 +737,7 @@
     "sha256": "99fe739447284f613fa54bf2dccdb51c5120175ce6260adec6dad77576c42509",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/37_Stamps.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "no open licence: outlier-evaluation collection page gives no licence and no original source (https://www.dbs.ifi.lmu.de/research/outlier-evaluation/DAMI/, read 2026-10-20)"
   },
   {
     "anomalies": 93,
@@ -784,7 +784,7 @@
     "anomaly_rate": 0.034340659340659344,
     "bytes": 134268,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "EXCLUDE",
     "domain": "Linguistics",
     "exact_duplicate_rows": 4,
     "features": 12,
@@ -797,7 +797,7 @@
     "sha256": "4bfc4244d1c882773bbbc50d4a5db5e52276e53506e46b2d45e02d074cfcb1b6",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/40_vowels.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "no open licence: ODDS defers to the original research groups and states no licence (https://odds.cs.stonybrook.edu/, read 2026-10-20)"
   },
   {
     "anomalies": 100,
@@ -824,7 +824,7 @@
     "anomaly_rate": 0.04484304932735426,
     "bytes": 1444,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "EXCLUDE",
     "domain": "Healthcare",
     "exact_duplicate_rows": 0,
     "features": 9,
@@ -837,7 +837,7 @@
     "sha256": "650f9dcb129248f67a291be0974f533ef259fcbde50fce5c8ad2a1cb2652d03b",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/42_WBC.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "no open licence: derived file with no recorded link to the CC BY 4.0 UCI sets, which stay in the UCI pool as the raw originals (ids 15 and 17) (https://www.dbs.ifi.lmu.de/research/outlier-evaluation/DAMI/, read 2026-10-20)"
   },
   {
     "anomalies": 10,
