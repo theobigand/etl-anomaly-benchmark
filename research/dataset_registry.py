@@ -95,6 +95,89 @@ UCI_SOURCES = {
 }  # fmt: skip
 
 
+OPEN_LICENCES = {"CC BY 4.0", "CC0 1.0", "ODbL 1.0"}
+_READ = "2026-10-20"
+MANUAL_RIGHTS = {
+    "fraud": {
+        "decision": "INCLUDE",
+        "licence": "ODbL 1.0",
+        "source": "https://www.kaggle.com/api/v1/datasets/view/mlg-ulb/creditcardfraud",
+        "reason": "Kaggle states: Database: Open Database, Contents: Database Contents; attribute "
+        "Worldline and the ULB Machine Learning Group, no redistribution of the file here",
+    },
+    "celeba": {
+        "decision": "EXCLUDE",
+        "source": "https://mmlab.ie.cuhk.edu.hk/projects/CelebA.html",
+        "reason": "non-commercial research purposes only, copying and distribution not allowed",
+    },
+    "backdoor": {
+        "decision": "EXCLUDE",
+        "source": "https://research.unsw.edu.au/projects/unsw-nb15-dataset",
+        "reason": "UNSW-NB15: free for academic research only, commercial use needs the authors",
+    },
+    "mammography": {
+        "decision": "EXCLUDE",
+        "source": "https://www.openml.org/api/v1/json/data/310",
+        "reason": "OpenML licence field is the generic label Public, source Unknown, no open licence",
+    },
+    "ALOI": {
+        "decision": "EXCLUDE",
+        "source": "https://aloi.science.uva.nl/",
+        "reason": "no licence found on the collection page, only a copyright notice (UvA 2004)",
+    },
+    "donors": {
+        "decision": "EXCLUDE",
+        "source": "https://www.kaggle.com/c/kdd-cup-2014-predicting-excitement-at-donors-choose",
+        "reason": "competition data, no open licence verified",
+    },
+    "Pima": {
+        "decision": "EXCLUDE",
+        "source": "https://www2.stat.duke.edu/courses/Fall00/sta290/datasets/pima.info",
+        "reason": "NIDDK owner, no licence statement found, mirrors list the licence as unknown",
+    },
+    "Stamps": {
+        "decision": "EXCLUDE",
+        "source": "https://www.dbs.ifi.lmu.de/research/outlier-evaluation/DAMI/",
+        "reason": "outlier-evaluation collection page gives no licence and no original source",
+    },
+    "WBC": {
+        "decision": "EXCLUDE",
+        "source": "https://www.dbs.ifi.lmu.de/research/outlier-evaluation/DAMI/",
+        "reason": "derived file with no recorded link to the CC BY 4.0 UCI sets, which stay in the "
+        "UCI pool as the raw originals (ids 15 and 17)",
+    },
+    "speech": {
+        "decision": "EXCLUDE",
+        "source": "https://odds.cs.stonybrook.edu/?p=274",
+        "reason": "ODDS page credits Brno University of Technology and states no licence",
+    },
+    "vowels": {
+        "decision": "EXCLUDE",
+        "source": "https://odds.cs.stonybrook.edu/",
+        "reason": "ODDS defers to the original research groups and states no licence",
+    },
+    "mnist": {
+        "decision": "EXCLUDE",
+        "source": "https://yann.lecun.com/exdb/mnist",
+        "reason": "the official page states no licence and secondary sources disagree "
+        "(CC BY-SA 3.0, CC BY 4.0, CC0); the file is also an embedding of images",
+    },
+}
+
+
+def apply_manual_rights(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Record the decision read by hand from the source of each set without a UCI statement."""
+    out = []
+    for row in rows:
+        entry = MANUAL_RIGHTS.get(row["name"])
+        if entry and row["decision"] == "PENDING":
+            licence = entry.get("licence", "no open licence")
+            terms = f"{licence}: {entry['reason']} ({entry['source']}, read {_READ})"
+            row = {**row, "decision": entry["decision"], "underlying_terms": terms}
+        out.append(row)
+    return out
+
+
 class RegistryError(Exception):
     """A dataset could not be obtained or described as recorded."""
 
@@ -249,7 +332,7 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     rows = build_inventory(args.destination)
     if args.rights:
-        rows = apply_rights(rows, collect_uci_rights())
+        rows = apply_manual_rights(apply_rights(rows, collect_uci_rights()))
     from etl_benchmark.atomic import atomic_path
 
     with atomic_path(args.output) as partial:

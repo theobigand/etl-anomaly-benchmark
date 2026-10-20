@@ -153,3 +153,30 @@ def test_rights_are_applied_to_the_inventory_without_inventing_terms():
 def test_every_uci_mapping_names_an_adbench_dataset():
     names = {e["name"] for e in dr.ADBENCH_TABULAR}
     assert set(dr.UCI_SOURCES) <= names and len(dr.UCI_SOURCES) >= 30
+
+
+def test_manual_rights_cover_exactly_the_sets_without_a_uci_statement():
+    pending = {e["name"] for e in dr.ADBENCH_TABULAR} - set(dr.UCI_SOURCES)
+    assert set(dr.MANUAL_RIGHTS) == pending and len(pending) == 12
+
+
+def test_only_a_stated_open_licence_includes_a_set():
+    for name, entry in dr.MANUAL_RIGHTS.items():
+        assert entry["decision"] in {"INCLUDE", "EXCLUDE"}
+        assert entry["reason"] and entry["source"].startswith("https://")
+        if entry["decision"] == "INCLUDE":
+            assert entry["licence"] in dr.OPEN_LICENCES, name
+    assert dr.MANUAL_RIGHTS["celeba"]["decision"] == "EXCLUDE"
+    assert dr.MANUAL_RIGHTS["fraud"]["decision"] == "INCLUDE"
+
+
+def test_apply_manual_rights_leaves_no_set_pending_and_keeps_the_uci_decisions():
+    rows = [
+        {"name": "celeba", "decision": "PENDING", "underlying_terms": "TO_CHECK"},
+        {"name": "fraud", "decision": "PENDING", "underlying_terms": "TO_CHECK"},
+        {"name": "thyroid", "decision": "INCLUDE", "underlying_terms": "CC BY 4.0 (u)"},
+    ]
+    out = {r["name"]: r for r in dr.apply_manual_rights(rows)}
+    assert out["celeba"]["decision"] == "EXCLUDE" and "non-commercial" in out["celeba"]["underlying_terms"]
+    assert out["fraud"]["decision"] == "INCLUDE" and "ODbL" in out["fraud"]["underlying_terms"]
+    assert out["thyroid"]["underlying_terms"] == "CC BY 4.0 (u)"
