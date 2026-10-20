@@ -70,7 +70,7 @@ verify-deep:
 	@mkdir -p $(EVIDENCE)
 	@rm -f $(EVIDENCE)/deep.json mutants/mutmut-cicd-stats.json
 	python -m verification.mutation_cache prepare
-	mutmut run
+	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 mutmut run
 	python -m verification.mutation_cache record
 	mutmut export-cicd-stats
 	mutmut results --all true > mutants/results.txt
