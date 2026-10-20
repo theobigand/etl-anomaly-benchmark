@@ -179,7 +179,9 @@ def main(argv: list[str] | None = None) -> int:
         kept, dropped = curate(chosen)
         out = {
             "kept": kept,
-            "dropped": [{"uci_id": m["uci_id"], "name": m["name"], "reason": r} for m, r in dropped],
+            "dropped": [
+                {"uci_id": m["uci_id"], "name": m["name"], "reason": r} for m, r in dropped
+            ],
             "panels": panels(kept),
             "report": balance_report(kept),
         }

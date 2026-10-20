@@ -148,4 +148,8 @@ def test_panels_group_datasets_by_the_question_they_can_answer():
     panels = up.panels(pool)
     assert panels["missing_values"] == [1] and panels["mixed_types"] == [2]
     assert panels["temporal"] == [3]
-    assert panels["stress_tiny"] == [2] and panels["stress_large"] == [3] and panels["stress_wide"] == [4]
+    assert (
+        panels["stress_tiny"] == [2]
+        and panels["stress_large"] == [3]
+        and panels["stress_wide"] == [4]
+    )
