@@ -2,26 +2,26 @@
   "schema_version": 2,
   "note": "Verification figures quoted in paper/main.tex, with the run they describe. tests/test_manuscript_claims.py keeps the paper and this file in step; tests/test_claims_provenance.py checks the run (revision, sealed envelopes, staleness).",
   "published_run": {
-    "id": "local-4a50eb8",
-    "revision": "4a50eb813e30b06fb6e7dc9fa3f3204d5e3729a1",
+    "id": "local-3994e05",
+    "revision": "3994e05f8ad629259a83b192aeff2b846b78ef82",
     "source": "local-unattested",
     "platform": "macOS 27.0 arm64, Python 3.11.17 (conda etl-benchmark; typing in a venv with mypy 2.4.0)",
-    "captured": "2026-10-19",
+    "captured": "2026-10-20",
     "historical": false,
-    "evidence_dir": "verification/evidence/runs/local-4a50eb8",
+    "evidence_dir": "verification/evidence/runs/local-3994e05",
     "files": {
-      "deep.json": "38806ae245947115cc3a6c564540e8453eed66ecd06c73dc3edf8bd81ad40de2",
-      "fast.json": "78b7337a96129c9bd6297369f6def71ebb65b90b2505ec00ec89b6ac8e4a902e",
-      "faults.json": "97347dd21835a9448f9b448fa03aa748e0818cdc3bd591e6b3bcd2b989918ed4",
-      "real.json": "56295fbe5ecf379312b142348ee6a66da940e41418470e6908f63122956c401f",
-      "reproduction.json": "7697e0af248a88c9a1401409ec69cb42d1c4c8d4103b0f32c382843c9ec4f048",
+      "deep.json": "156bd52b97108abc29fbc8e09c0e4108455bc201a2d6f19e94782750c4153012",
+      "fast.json": "85455f6a7f735cc9f5c8416cc4ea3745a9d866ae28066f26f601f892a4c9ae0c",
+      "faults.json": "af45aa50f0f4bd53ae976c0dbcc305b7c5ac48bcef81bcb0bb2a1a403f95c313",
+      "real.json": "53b343ff43125702b920119722704a69430366bd99847ce3571d31783505aa63",
+      "reproduction.json": "767e2281886234372b614f763d6955db5a5bf1340500a2993eb90dc1175f8ca3",
       "results.txt": "b6fa57dfb077a47e76a6b290ba3cd8ca59dd901b09a61c3ab9bcdf0625112832",
-      "tools.json": "7bae9bc334be785eefac17f52c26ffc659a4937832c5e981992cf0764e9cd387",
-      "types.json": "748be8195884c47171427f423de949498ff87c7b220bdb4a6816e64abef6865a"
+      "tools.json": "416cd6159cf062453f4d9885dd5eac7e07947d9306721c68aa15a575d24dda14",
+      "types.json": "0ed815bd8b4a66ac020c7f649862f181035a7bdc6997863d05fe3319480df440"
     }
   },
   "fast": {
-    "tests": 1148,
+    "tests": 1149,
     "line_covered": 1628,
     "line_coverable": 1628,
     "branch_covered": 336,
