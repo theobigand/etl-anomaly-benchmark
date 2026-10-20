@@ -118,7 +118,8 @@ MANUAL_RIGHTS = {
     "mammography": {
         "decision": "EXCLUDE",
         "source": "https://www.openml.org/api/v1/json/data/310",
-        "reason": "OpenML licence field is the generic label Public, source Unknown, no open licence",
+        "reason": "OpenML licence field is the generic label Public and the source is Unknown, "
+        "so no open licence is stated",
     },
     "ALOI": {
         "decision": "EXCLUDE",

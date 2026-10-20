@@ -177,6 +177,9 @@ def test_apply_manual_rights_leaves_no_set_pending_and_keeps_the_uci_decisions()
         {"name": "thyroid", "decision": "INCLUDE", "underlying_terms": "CC BY 4.0 (u)"},
     ]
     out = {r["name"]: r for r in dr.apply_manual_rights(rows)}
-    assert out["celeba"]["decision"] == "EXCLUDE" and "non-commercial" in out["celeba"]["underlying_terms"]
+    assert (
+        out["celeba"]["decision"] == "EXCLUDE"
+        and "non-commercial" in out["celeba"]["underlying_terms"]
+    )
     assert out["fraud"]["decision"] == "INCLUDE" and "ODbL" in out["fraud"]["underlying_terms"]
     assert out["thyroid"]["underlying_terms"] == "CC BY 4.0 (u)"
