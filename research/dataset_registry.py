@@ -181,7 +181,8 @@ def inventory_row(entry: dict[str, str], path: Path, url: str) -> dict[str, Any]
 
 def uci_licence(page: str) -> dict[str, Any]:
     """The licence a UCI dataset page states about itself (None if it states none)."""
-    found = re.search(r"licensed under a (Creative Commons[^<]*?\((CC[^)]*)\)) license", page)
+    text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", page))
+    found = re.search(r"licensed under a (Creative Commons[^()]*?) \((CC[^)]*)\) license", text)
     if not found:
         return {"licence": None, "text": None}
     return {"licence": found.group(2), "text": found.group(1)}

@@ -104,8 +104,10 @@ def test_the_inventory_row_carries_provenance_and_rights_fields_to_complete(tmp_
 # --- rights: UCI pages carry their licence in the page text ---
 
 PAGE = (
-    "<html>...This dataset is licensed under a Creative Commons Attribution 4.0 "
-    "International (CC BY 4.0) license. This allows for the sharing...</html>"
+    '<p data-svelte-h="x">This dataset is licensed under a\n'
+    '<a href="https://creativecommons.org/licenses/by/4.0/legalcode" rel="nofollow">'
+    "Creative Commons Attribution 4.0 International</a>\n(CC BY 4.0) license.</p>"
+    "<p>This allows for the sharing and adaptation of the datasets.</p>"
 )
 
 
