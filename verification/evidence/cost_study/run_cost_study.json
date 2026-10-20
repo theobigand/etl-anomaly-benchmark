@@ -1,0 +1,70 @@
+{
+  "captured_at": "2026-10-20T08:51:37.742738+00:00",
+  "dataset": {
+    "identity": "synthetic_gaussian+credit_card"
+  },
+  "environment_lock": {
+    "file": "verification/environment/conda-darwin-arm64.explicit.txt",
+    "sha256": "88f9518425e499f8930b1710baf86442e7885a6dc85c70e0b823aa1ccad76355"
+  },
+  "experiment": "cost_study",
+  "fingerprint_recipe": 2,
+  "measurement_fingerprint": "9cd603c619d15e17d3cbd9d14986b6f62bdb5611a5ba78fbd4d10ae8f4d7285d",
+  "measurement_recipe": 1,
+  "output_sha256": {
+    "cost_study.json": "0dc5ca8ef55064a2f47cc97d9c7a2facc5d12fd9e75626f085a598dc6d903881"
+  },
+  "outputs": [
+    "cost_study.json"
+  ],
+  "packages": {
+    "great-expectations": "1.24.0",
+    "numpy": "2.4.6",
+    "pandas": "3.0.6",
+    "pyod": "3.6.7",
+    "scikit-learn": "1.9.1"
+  },
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "python": "3.11.17",
+  "schema_version": 1,
+  "scientific_fingerprint": "cecbed00f8228b25707199f820d62f28fa1c13f543a0bbb5d56f94716b6a17b9",
+  "seeds": [
+    42
+  ],
+  "settings": {
+    "cpu_count": 10,
+    "dataset_sha256": "76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89",
+    "features": 8,
+    "load_at_start": 2.1806640625,
+    "lstm_epochs": 5,
+    "lstm_fit_rows": 50000,
+    "machine": "arm64",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "protocol": "verification/cost_study.md",
+    "python": "3.11.17",
+    "script_sha256": "cbae455068b80c6e291c2baabaeac4af1f972c27b38493f3a7fedcc86e22092b",
+    "seed": 42,
+    "sizes": [
+      1000,
+      3000,
+      10000,
+      30000,
+      100000,
+      300000
+    ],
+    "timeout_s": 300,
+    "versions": {
+      "numpy": "2.4.6",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "torch": "2.14.1"
+    },
+    "wide": [
+      30000,
+      29
+    ]
+  },
+  "source_fingerprint": "d8c8a6a857073b22384213e66d0d2773e2d58c9d6ead796483e610ecd60f0ab4",
+  "source_revision": "d86681673f1257f8f10874a487e3325baf559aa8",
+  "worktree_dirty": false
+}
