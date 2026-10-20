@@ -8,7 +8,7 @@ exécution identifiée (révision, lieu, date) ; ils sont recopiés dans
 depuis. Les chiffres plus anciens sont marqués historiques.
 
 Le statut de certification est **CERTIFIED en local, non attesté** (commit
-`4a50eb81`, machine du chercheur) et **CERTIFIED en CI, non attesté
+`3994e05f`, machine du chercheur) et **CERTIFIED en CI, non attesté
 indépendamment** : le run `verify-release` 39112662862 (tête de branche
 `440dcee`) rend CERTIFIED avec l'étiquette
 `ci-run:39112662862 (not independently attested)`, REAL compris, produit par le
@@ -53,14 +53,14 @@ archivés séparément et leurs chiffres sont rapprochés du manuscrit par un te
 
 ## Résultats des commandes
 
-Run local `local-4a50eb8` : commit `4a50eb81`, macOS 27.0 arm64, Python 3.11.17
+Run local `local-3994e05` : commit `3994e05f`, macOS 27.0 arm64, Python 3.11.17
 (environnement conda `etl-benchmark`, typage dans un venv avec mypy 2.4.0 et
 pandas-stubs 3.0.5.260914), 18 octobre 2026. Résultats non attestés
-indépendamment ; enveloppes de preuve scellées dans `evidence/runs/local-4a50eb8/`.
+indépendamment ; enveloppes de preuve scellées dans `evidence/runs/local-3994e05/`.
 
 | Commande | Résultat | Détail |
 | --- | --- | --- |
-| `make verify-fast` | Réussite locale | 1 148 tests réussis, 3 tests réels et 23 essais de défauts exclus ; 1 628/1 628 lignes et 336/336 branches. |
+| `make verify-fast` | Réussite locale | 1 149 tests réussis, 3 tests réels et 23 essais de défauts exclus ; 1 628/1 628 lignes et 336/336 branches. |
 | `make verify-tools` | Réussite locale | 1 975/1 975 lignes et 724/724 branches du code de `verification/`. |
 | `make verify-types` | Réussite locale | mypy 2.4.0, `verification/` sans erreur, 17 erreurs connues du code scientifique, aucune nouvelle. |
 | `make verify-deep` | Réussite locale | 4 700 mutants éliminés sur 4 808 (97,75 %) ; 108 survivants ; 108 survivants, dont 3 propres à macOS. |
