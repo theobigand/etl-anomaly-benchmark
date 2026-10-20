@@ -301,3 +301,13 @@ def test_the_deep_job_reuses_the_mutation_cache_unless_a_fresh_run_is_asked():
     deep = makefile[makefile.index("verify-deep:") : makefile.index("verify-faults:")]
     assert deep.index("mutation_cache prepare") < deep.index("mutmut run")
     assert deep.index("mutmut run") < deep.index("mutation_cache record")
+
+
+def test_the_deep_target_runs_mutmut_with_single_threaded_math_libraries():
+    # On Linux, forked mutmut workers deadlock once OpenMP/BLAS thread pools exist in the
+    # parent: 14 mutants of the PyOD wrapper timed out in every hosted run (issue 54).
+    makefile = (WORKFLOWS.parents[1] / "Makefile").read_text()
+    deep = makefile[makefile.index("verify-deep:") : makefile.index("verify-faults:")]
+    line = next(row for row in deep.splitlines() if "mutmut run" in row)
+    for variable in ("OMP_NUM_THREADS=1", "OPENBLAS_NUM_THREADS=1", "MKL_NUM_THREADS=1"):
+        assert variable in line, variable
