@@ -12,9 +12,11 @@ import argparse
 import hashlib
 import io
 import json
+import re
 import sys
 import urllib.request
 from collections.abc import Callable
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
@@ -42,6 +44,55 @@ ADBENCH_TABULAR = [
     {"name": name, "file": f"{index}_{name}.npz", "domain": domain}
     for index, (name, domain) in enumerate((p.split("|") for p in _TABLE.split()), start=1)
 ]
+
+
+UCI_HOST = "archive.ics.uci.edu"
+# ADBench name -> (UCI id, exact UCI name). Only sets whose original is a UCI dataset appear here;
+# the others (ODDS, Kaggle, KDD Cup, image collections) are read by hand.
+_UCI_SETS = {
+    102: "Thyroid Disease",
+    15: "Breast Cancer Wisconsin (Original)",
+    222: "Bank Marketing",
+    193: "Cardiotocography",
+    31: "Covertype",
+    198: "Steel Plates Faults",
+    42: "Glass Identification",
+    46: "Hepatitis",
+    51: "Internet Advertisements",
+    52: "Ionosphere",
+    146: "Statlog (Landsat Satellite)",
+    59: "Letter Recognition",
+    63: "Lymphography",
+    159: "MAGIC Gamma Telescope",
+    75: "Musk (Version 2)",
+    80: "Optical Recognition of Handwritten Digits",
+    78: "Page Blocks Classification",
+    81: "Pen-Based Recognition of Handwritten Digits",
+    148: "Statlog (Shuttle)",
+    229: "Skin Segmentation",
+    94: "Spambase",
+    212: "Vertebral Column",
+    107: "Waveform Database Generator (Version 1)",
+    17: "Breast Cancer Wisconsin (Diagnostic)",
+    285: "Wilt",
+    109: "Wine",
+    16: "Breast Cancer Wisconsin (Prognostic)",
+    110: "Yeast",
+    117: "Census-Income (KDD)",
+    130: "KDD Cup 1999 Data",
+}
+UCI_SOURCES = {
+    name: (uci_id, _UCI_SETS[uci_id])
+    for name, uci_id in {
+        "annthyroid": 102, "thyroid": 102, "breastw": 15, "campaign": 222, "cardio": 193,
+        "Cardiotocography": 193, "cover": 31, "fault": 198, "glass": 42, "Hepatitis": 46,
+        "InternetAds": 51, "Ionosphere": 52, "landsat": 146, "satellite": 146, "satimage-2": 146,
+        "letter": 59, "Lymphography": 63, "magic.gamma": 159, "musk": 75, "optdigits": 80,
+        "PageBlocks": 78, "pendigits": 81, "shuttle": 148, "skin": 229, "SpamBase": 94,
+        "vertebral": 212, "Waveform": 107, "WDBC": 17, "Wilt": 285, "wine": 109, "WPBC": 16,
+        "yeast": 110, "census": 117, "http": 130, "smtp": 130,
+    }.items()
+}  # fmt: skip
 
 
 class RegistryError(Exception):
@@ -128,6 +179,55 @@ def inventory_row(entry: dict[str, str], path: Path, url: str) -> dict[str, Any]
     }
 
 
+def uci_licence(page: str) -> dict[str, Any]:
+    """The licence a UCI dataset page states about itself (None if it states none)."""
+    found = re.search(r"licensed under a (Creative Commons[^<]*?\((CC[^)]*)\)) license", page)
+    if not found:
+        return {"licence": None, "text": None}
+    return {"licence": found.group(2), "text": found.group(1)}
+
+
+def check_uci_identity(api: dict[str, Any], uci_id: int, expected: str) -> dict[str, Any]:
+    data = api["data"]
+    if data["uci_id"] != uci_id or data["name"] != expected:
+        raise RegistryError(f"UCI id {uci_id} is {data['name']!r}, expected {expected!r}")
+    return {"doi": data.get("dataset_doi")}
+
+
+def _text(url: str, limit: int = 5_000_000) -> str:
+    if urlparse(url).hostname != UCI_HOST or not url.startswith("https://"):
+        raise RegistryError(f"{url} is not allowed")
+    return open_url(url, limit).decode("utf-8", "replace")
+
+
+def collect_uci_rights(fetch_text: Callable[[str], str] = _text) -> dict[str, dict[str, Any]]:
+    """Licence statement of every UCI-derived dataset, with the date it was read."""
+    checked = datetime.now(UTC).date().isoformat()
+    by_id: dict[int, dict[str, Any]] = {}
+    for uci_id, expected in _UCI_SETS.items():
+        api = json.loads(fetch_text(f"https://{UCI_HOST}/api/dataset?id={uci_id}"))
+        identity = check_uci_identity(api, uci_id, expected)
+        url = api["data"]["repository_url"]
+        by_id[uci_id] = {**uci_licence(fetch_text(url)), **identity, "url": url, "checked": checked}
+    return {name: by_id[uci_id] for name, (uci_id, _expected) in UCI_SOURCES.items()}
+
+
+def apply_rights(
+    rows: list[dict[str, Any]], seen: dict[str, dict[str, Any]]
+) -> list[dict[str, Any]]:
+    """Record stated terms; a dataset is included only when a licence statement was found."""
+    out = []
+    for row in rows:
+        found = seen.get(row["name"])
+        if found and found["licence"]:
+            terms = (
+                f"{found['licence']} ({found['url']}, doi {found['doi']}, read {found['checked']})"
+            )
+            row = {**row, "underlying_terms": terms, "decision": "INCLUDE"}
+        out.append(row)
+    return out
+
+
 def build_inventory(destination: Path, opener=open_url) -> list[dict[str, Any]]:
     destination.mkdir(parents=True, exist_ok=True)
     rows = []
@@ -144,8 +244,11 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--destination", type=Path, default=ROOT / "data" / "adbench")
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--rights", action="store_true", help="read the UCI licence statements")
     args = parser.parse_args(argv)
     rows = build_inventory(args.destination)
+    if args.rights:
+        rows = apply_rights(rows, collect_uci_rights())
     from etl_benchmark.atomic import atomic_path
 
     with atomic_path(args.output) as partial:
