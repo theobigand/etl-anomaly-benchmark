@@ -782,6 +782,61 @@ scores flags almost none of the frauds in the later period (recall at most
 $0.02$). The result is therefore an indication from a small, budget-limited
 experiment on one dataset, not a ranking.
 
+\subsection{Cost of the detection stage and of the full pipeline}
+\label{sec:cost}
+The growth experiment reported later in this section uses only $100$ to $900$
+rows and cannot be extrapolated. We therefore measured the detectors again on
+a protocol fixed in advance (\texttt{verification/cost\_study.md}): synthetic
+Gaussian matrices of $1{,}000$ to $300{,}000$ rows and $8$ features, five
+repetitions up to $30{,}000$ rows and three above, a budget of $300$ seconds per
+measurement, and one fresh process per measurement so that the peak resident
+memory, native allocations included, belongs to that run alone. The detector
+is fitted and applied to the same rows, so this is a cost measurement, not a
+quality one. Times are those of the detection stage (fit, predict and score).
+
+\begin{table}[t]
+\caption{Median detection-stage time on synthetic data ($8$ features), peak
+resident memory added by detection at the largest size, and the empirical
+growth exponent over the sizes completed.}
+\label{tab:cost}
+\centering
+\footnotesize
+\begin{tabular}{lrrrrr}
+\toprule
+Detector & $10^4$ rows & $10^5$ rows & $3\cdot10^5$ rows & Exponent & Memory (MB) \\
+\midrule
+Z-score            & 0.002 s & 0.013 s & 0.039 s & 0.64 & 70 \\
+IQR                & 0.004 s & 0.029 s & 0.086 s & 0.70 & 116 \\
+Isolation Forest   & 0.16 s  & 1.09 s  & 3.2 s   & 0.72 & 140 \\
+Autoencoder (MLP)  & 1.5 s   & 8.4 s   & 12.7 s  & 0.77 & 115 \\
+LSTM autoencoder   & 1.1 s   & 5.1 s   & 7.3 s   & 0.73 & 499 \\
+LOF                & 0.73 s  & 18.0 s  & 133 s   & 1.51 & 405 \\
+One-Class SVM     & 5.6 s   & $>300$ s & not run & 1.99 & 788 (at $3\cdot10^4$) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The rule-based detectors and Isolation Forest grow roughly linearly (exponents
+below one at small sizes reflect fixed start-up costs), LOF grows with an
+exponent near $1.5$ and finished $3\cdot10^5$ rows in about $133$ seconds, and
+One-Class SVM, with an exponent near two, exceeded the budget at $10^5$ rows
+and was not tried beyond. The LSTM autoencoder was trained for at most five
+epochs on at most $50{,}000$ rows, a budget cap: only its scoring cost grows
+with the input after that. These exponents describe the sizes measured and are
+not extended beyond them. No measurement was made under contention as defined
+in the protocol, but the machine was not isolated.
+
+To separate the detection stage from the whole pipeline, we also timed read,
+cleaning, detection and write on the full Credit Card file ($284{,}807$ rows
+read, $283{,}726$ after removing duplicates). With the Z-score the pipeline
+takes about $4.8$ seconds, of which detection is $0.13$ seconds ($3\%$) and
+writing the two sorted files is $3.9$ seconds; with Isolation Forest it takes
+about $8.5$ seconds, of which detection is $3.7$ seconds ($43$ to $45\%$). Peak
+memory is about $0.75$ GB and $0.95$ GB respectively. Detection-stage latency
+is therefore not the latency of the whole pipeline, and the gap depends on the
+detector. These are single-machine figures on synthetic data and one real file,
+not a general ranking.
+
 \subsection{Verification outcomes and computation cost}
 \label{sec:verification-results}
 At commit 4a50eb81 (local run, not independently attested) the routine suite runs 1,148 tests, plus three that need
