@@ -24,7 +24,7 @@
     "anomaly_rate": 0.07416666666666667,
     "bytes": 66547,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Healthcare",
     "exact_duplicate_rows": 138,
     "features": 6,
@@ -37,7 +37,7 @@
     "sha256": "e738f7c58a8740d2c4aac4c71ff49ce5e1d1aa16f44178135fc9c09df05fad1b",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/2_annthyroid.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/102/thyroid+disease, doi 10.24432/C5D010, read 2026-10-20)"
   },
   {
     "anomalies": 2329,
@@ -64,7 +64,7 @@
     "anomaly_rate": 0.34992679355783307,
     "bytes": 3023,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Healthcare",
     "exact_duplicate_rows": 234,
     "features": 9,
@@ -77,14 +77,14 @@
     "sha256": "4f37ce07dbc25ddad8178fdc6d664ab46d2d0000ee28c2787c3c7ff3c03ef9f6",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/4_breastw.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/15/breast+cancer+wisconsin+original, doi 10.24432/C5HP4Z, read 2026-10-20)"
   },
   {
     "anomalies": 4640,
     "anomaly_rate": 0.11265417111780131,
     "bytes": 728999,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Finance",
     "exact_duplicate_rows": 12,
     "features": 62,
@@ -97,14 +97,14 @@
     "sha256": "74dd4d0072d6c6f1aabab63bc102f9633454f32bb936fa9bcfbd38f9f2386bcd",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/5_campaign.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/222/bank+marketing, doi 10.24432/C5K306, read 2026-10-20)"
   },
   {
     "anomalies": 176,
     "anomaly_rate": 0.0961223375204806,
     "bytes": 68471,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Healthcare",
     "exact_duplicate_rows": 9,
     "features": 21,
@@ -117,14 +117,14 @@
     "sha256": "bc5009bde6930b4d298b594f31b34485a9a17210cff0e8fb00a8c3068b885a2d",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/6_cardio.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/193/cardiotocography, doi 10.24432/C51S4N, read 2026-10-20)"
   },
   {
     "anomalies": 466,
     "anomaly_rate": 0.22043519394512773,
     "bytes": 37911,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Healthcare",
     "exact_duplicate_rows": 4,
     "features": 21,
@@ -137,7 +137,7 @@
     "sha256": "5ae84910430f05923e11b6f537243263977c9136949dabd891e3570aeec51e29",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/7_Cardiotocography.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/193/cardiotocography, doi 10.24432/C51S4N, read 2026-10-20)"
   },
   {
     "anomalies": 4547,
@@ -164,7 +164,7 @@
     "anomaly_rate": 0.062041198189017155,
     "bytes": 8761866,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Sociology",
     "exact_duplicate_rows": 76062,
     "features": 500,
@@ -177,14 +177,14 @@
     "sha256": "6739999359a3b8c285ea902943732c3d6a331d776e6333a7d991198bd2686b56",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/9_census.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/117/census+income+kdd, doi 10.24432/C5N30T, read 2026-10-20)"
   },
   {
     "anomalies": 2747,
     "anomaly_rate": 0.009603283365029646,
     "bytes": 2537258,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Botany",
     "exact_duplicate_rows": 0,
     "features": 10,
@@ -197,7 +197,7 @@
     "sha256": "945a097c3542ae81a551bf1c06dcad78a755d94f84fcaf1d60687e42d1a656df",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/10_cover.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/31/covertype, doi 10.24432/C50K5N, read 2026-10-20)"
   },
   {
     "anomalies": 36710,
@@ -224,7 +224,7 @@
     "anomaly_rate": 0.3467284904688305,
     "bytes": 192040,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Physical",
     "exact_duplicate_rows": 0,
     "features": 27,
@@ -237,7 +237,7 @@
     "sha256": "ec27301f9a4cf7c5d8b22c360cf37ddb043b7fb062465723dfd8b34e2771e5dd",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/12_fault.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/198/steel+plates+faults, doi 10.24432/C5J88N, read 2026-10-20)"
   },
   {
     "anomalies": 492,
@@ -264,7 +264,7 @@
     "anomaly_rate": 0.04205607476635514,
     "bytes": 10755,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Forensic",
     "exact_duplicate_rows": 1,
     "features": 7,
@@ -277,14 +277,14 @@
     "sha256": "aa7a8db1d475ba01a10488af454bc15220a3d5951b010b03b7020567d8152cdc",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/14_glass.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/42/glass+identification, doi 10.24432/C5WW2P, read 2026-10-20)"
   },
   {
     "anomalies": 13,
     "anomaly_rate": 0.1625,
     "bytes": 1644,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Healthcare",
     "exact_duplicate_rows": 0,
     "features": 19,
@@ -297,14 +297,14 @@
     "sha256": "4a87a2f7d8013e5bfde63294fae61ec7a612322de72f338a7f9491749025ad98",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/15_Hepatitis.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/46/hepatitis, doi 10.24432/C5Q59J, read 2026-10-20)"
   },
   {
     "anomalies": 2211,
     "anomaly_rate": 0.003896048972859816,
     "bytes": 2179269,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Web",
     "exact_duplicate_rows": 345598,
     "features": 3,
@@ -317,14 +317,14 @@
     "sha256": "9d98710091551587f4740cfc851a6b064fff6319a337c2dc77ee6da4bcc2e02c",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/16_http.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/130/kdd+cup+1999+data, doi 10.24432/C51C7N, read 2026-10-20)"
   },
   {
     "anomalies": 368,
     "anomaly_rate": 0.1871820956256358,
     "bytes": 78157,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Image",
     "exact_duplicate_rows": 0,
     "features": 1555,
@@ -337,14 +337,14 @@
     "sha256": "bdd8ad5cf5bf2cb96cba53dde30d522d0f6a279083a8e2bc7efbac5981b04385",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/17_InternetAds.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/51/internet+advertisements, doi 10.24432/C5V011, read 2026-10-20)"
   },
   {
     "anomalies": 126,
     "anomaly_rate": 0.358974358974359,
     "bytes": 42913,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Oryctognosy",
     "exact_duplicate_rows": 1,
     "features": 32,
@@ -357,14 +357,14 @@
     "sha256": "bca46cb0cfd1bf9ddef6cde5ad2215d54fb0189508d0d4c4eb98e788cad69001",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/18_Ionosphere.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/52/ionosphere, doi 10.24432/C5W01B, read 2026-10-20)"
   },
   {
     "anomalies": 1333,
     "anomaly_rate": 0.20714840714840715,
     "bytes": 223827,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Astronautics",
     "exact_duplicate_rows": 0,
     "features": 36,
@@ -377,14 +377,14 @@
     "sha256": "ba17e2158c07469597b89db49d3982c874c6b713ff6670721ddc88969da77987",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/19_landsat.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/146/statlog+landsat+satellite, doi 10.24432/C55887, read 2026-10-20)"
   },
   {
     "anomalies": 100,
     "anomaly_rate": 0.0625,
     "bytes": 23946,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Image",
     "exact_duplicate_rows": 2,
     "features": 32,
@@ -397,14 +397,14 @@
     "sha256": "f986d3da80cf1fa2aea83a5ebe73b7d4800e0d4c01fdd1ae074b58d20f10d039",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/20_letter.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/59/letter+recognition, doi 10.24432/C5ZP40, read 2026-10-20)"
   },
   {
     "anomalies": 6,
     "anomaly_rate": 0.04054054054054054,
     "bytes": 1895,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Healthcare",
     "exact_duplicate_rows": 0,
     "features": 18,
@@ -417,14 +417,14 @@
     "sha256": "dad977b04f4ea65b78ccd0e9f76b45175bad605165b37e63f3cc177845e67037",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/21_Lymphography.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/63/lymphography, doi 10.24432/C54598, read 2026-10-20)"
   },
   {
     "anomalies": 6688,
     "anomaly_rate": 0.3516298633017876,
     "bytes": 1296704,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Physical",
     "exact_duplicate_rows": 115,
     "features": 10,
@@ -437,7 +437,7 @@
     "sha256": "0be375984d7af9ea7a63b12206c240840d8b7daa3607021c5fb8756407dd86f1",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/22_magic.gamma.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/159/magic+gamma+telescope, doi 10.24432/C52C8B, read 2026-10-20)"
   },
   {
     "anomalies": 260,
@@ -484,7 +484,7 @@
     "anomaly_rate": 0.03167864141084259,
     "bytes": 736255,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Chemistry",
     "exact_duplicate_rows": 0,
     "features": 166,
@@ -497,14 +497,14 @@
     "sha256": "2ed3f4392197b76a1e59116ff880c7720a4b026cf4842073a53b56fdea265017",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/25_musk.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/75/musk+version+2, doi 10.24432/C51608, read 2026-10-20)"
   },
   {
     "anomalies": 150,
     "anomaly_rate": 0.028757668711656442,
     "bytes": 197633,
     "constant_features": 2,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Image",
     "exact_duplicate_rows": 18,
     "features": 64,
@@ -517,14 +517,14 @@
     "sha256": "60de17a375a278ba220a7849727d998aa02b5e2f9fd17732a004bba28de4656e",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/26_optdigits.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/80/optical+recognition+of+handwritten+digits, doi 10.24432/C50P49, read 2026-10-20)"
   },
   {
     "anomalies": 510,
     "anomaly_rate": 0.09456703133691823,
     "bytes": 102998,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Document",
     "exact_duplicate_rows": 0,
     "features": 10,
@@ -537,14 +537,14 @@
     "sha256": "10a9b4d5bb5d3b9083caab4c4062f665610eada703c3d927bf7c34b1f2d0d223",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/27_PageBlocks.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/78/page+blocks+classification, doi 10.24432/C5J590, read 2026-10-20)"
   },
   {
     "anomalies": 156,
     "anomaly_rate": 0.022707423580786028,
     "bytes": 653509,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Image",
     "exact_duplicate_rows": 0,
     "features": 16,
@@ -557,7 +557,7 @@
     "sha256": "c4936b89dcdad59d303020e492f763a0f54170080d787c77497609acbb9c2d79",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/28_pendigits.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/81/pen+based+recognition+of+handwritten+digits, doi 10.24432/C5MG6K, read 2026-10-20)"
   },
   {
     "anomalies": 268,
@@ -584,7 +584,7 @@
     "anomaly_rate": 0.3163947163947164,
     "bytes": 129874,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Astronautics",
     "exact_duplicate_rows": 0,
     "features": 36,
@@ -597,14 +597,14 @@
     "sha256": "1f048f5686f1b8c16a227fdfa3c81a62cd9a92715714a6b24c69b1c5ad96b46e",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/30_satellite.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/146/statlog+landsat+satellite, doi 10.24432/C55887, read 2026-10-20)"
   },
   {
     "anomalies": 71,
     "anomaly_rate": 0.0122350508357746,
     "bytes": 181405,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Astronautics",
     "exact_duplicate_rows": 2,
     "features": 36,
@@ -617,14 +617,14 @@
     "sha256": "1b056e357f801b8b20c3f380a30224a3c4088d7ed764ec5a24828dc9b1918d6f",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/31_satimage-2.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/146/statlog+landsat+satellite, doi 10.24432/C55887, read 2026-10-20)"
   },
   {
     "anomalies": 3511,
     "anomaly_rate": 0.0715114976475141,
     "bytes": 332929,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Astronautics",
     "exact_duplicate_rows": 0,
     "features": 9,
@@ -637,14 +637,14 @@
     "sha256": "26900b0f6be45d9ddb7a402c9b2f956ceda42d23a8ca4cf4406b8bc1352823d1",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/32_shuttle.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/148/statlog+shuttle, doi 10.24432/C5WS31, read 2026-10-20)"
   },
   {
     "anomalies": 50859,
     "anomaly_rate": 0.20753947040892526,
     "bytes": 618680,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Image",
     "exact_duplicate_rows": 193624,
     "features": 3,
@@ -657,14 +657,14 @@
     "sha256": "d02aa01ffc1b6bf2b8b1ac250c90e8a8eacd0cefc962940ed5cc4bf5deac9c95",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/33_skin.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/229/skin+segmentation, doi 10.24432/C5T30C, read 2026-10-20)"
   },
   {
     "anomalies": 30,
     "anomaly_rate": 0.0003152717642607928,
     "bytes": 496392,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Web",
     "exact_duplicate_rows": 23926,
     "features": 3,
@@ -677,14 +677,14 @@
     "sha256": "d2569fc9bc12115419e3f5b37d19921e10e6c26e5ad1e61064cfb0fbc402dfdd",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/34_smtp.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/130/kdd+cup+1999+data, doi 10.24432/C51C7N, read 2026-10-20)"
   },
   {
     "anomalies": 1679,
     "anomaly_rate": 0.39909674352270025,
     "bytes": 152038,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Document",
     "exact_duplicate_rows": 0,
     "features": 57,
@@ -697,7 +697,7 @@
     "sha256": "d0c46c7928e43f6496bcd06e09de0b70f6bc8143792dfa0a43f450263d254e9b",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/35_SpamBase.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/94/spambase, doi 10.24432/C53G6X, read 2026-10-20)"
   },
   {
     "anomalies": 61,
@@ -744,7 +744,7 @@
     "anomaly_rate": 0.024655355249204668,
     "bytes": 39882,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Healthcare",
     "exact_duplicate_rows": 116,
     "features": 6,
@@ -757,14 +757,14 @@
     "sha256": "8de161b3f235b7647bb0b39a836d983ff61d67bf234edac461da2d71e889cb87",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/38_thyroid.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/102/thyroid+disease, doi 10.24432/C5D010, read 2026-10-20)"
   },
   {
     "anomalies": 30,
     "anomaly_rate": 0.125,
     "bytes": 4868,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Biology",
     "exact_duplicate_rows": 0,
     "features": 6,
@@ -777,7 +777,7 @@
     "sha256": "0816286f92b96fe6867664a41a031ac7228dcfbf1a5feefe50ca3883b2e9073d",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/39_vertebral.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/212/vertebral+column, doi 10.24432/C5K89B, read 2026-10-20)"
   },
   {
     "anomalies": 50,
@@ -804,7 +804,7 @@
     "anomaly_rate": 0.02904443799012489,
     "bytes": 145028,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Physics",
     "exact_duplicate_rows": 0,
     "features": 21,
@@ -817,7 +817,7 @@
     "sha256": "6c9d867337ad1a2f8372c1d27f4c032f0401237e2041b7c45f00de8d319ff30f",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/41_Waveform.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/107/waveform+database+generator+version+1, doi 10.24432/C5CS3C, read 2026-10-20)"
   },
   {
     "anomalies": 10,
@@ -844,7 +844,7 @@
     "anomaly_rate": 0.027247956403269755,
     "bytes": 46770,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Healthcare",
     "exact_duplicate_rows": 0,
     "features": 30,
@@ -857,14 +857,14 @@
     "sha256": "78d4606a1ab516f5b60b00c196497f3bbd6bd5e4548fd04cf5f2475209b34b85",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/43_WDBC.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic, doi 10.24432/C5DW2B, read 2026-10-20)"
   },
   {
     "anomalies": 257,
     "anomaly_rate": 0.05333056650757419,
     "bytes": 134531,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Botany",
     "exact_duplicate_rows": 0,
     "features": 5,
@@ -877,14 +877,14 @@
     "sha256": "c70b72aa611ec87b20efb400943ef3ce4f8bf7aa58fcef825fbd28cc5cee3cc9",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/44_Wilt.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/285/wilt, doi 10.24432/C5KS4M, read 2026-10-20)"
   },
   {
     "anomalies": 10,
     "anomaly_rate": 0.07751937984496124,
     "bytes": 4072,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Chemistry",
     "exact_duplicate_rows": 0,
     "features": 13,
@@ -897,14 +897,14 @@
     "sha256": "d5ad8965d92cc57122fe1e6572bb301adbaf795b3e166d187ae00a704d8f6e20",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/45_wine.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/109/wine, doi 10.24432/C5PC7J, read 2026-10-20)"
   },
   {
     "anomalies": 47,
     "anomaly_rate": 0.23737373737373738,
     "bytes": 44367,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Healthcare",
     "exact_duplicate_rows": 0,
     "features": 33,
@@ -917,14 +917,14 @@
     "sha256": "68a6d67242643855713bcdad07d89ecc472bd00000dccc17ba87916eb2693d19",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/46_WPBC.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/16/breast+cancer+wisconsin+prognostic, doi 10.24432/C5GK50, read 2026-10-20)"
   },
   {
     "anomalies": 507,
     "anomaly_rate": 0.341644204851752,
     "bytes": 14707,
     "constant_features": 0,
-    "decision": "PENDING",
+    "decision": "INCLUDE",
     "domain": "Biology",
     "exact_duplicate_rows": 31,
     "features": 8,
@@ -937,6 +937,6 @@
     "sha256": "bbb15c873d78a4f6a589f46d0f75814595e2282d2ae7ce7779c750f276c3770d",
     "source_commit": "3dac8221081e190f157d78e93bfa8867f90d0965",
     "source_url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/47_yeast.npz",
-    "underlying_terms": "TO_CHECK"
+    "underlying_terms": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/110/yeast, doi 10.24432/C5KG68, read 2026-10-20)"
   }
 ]
