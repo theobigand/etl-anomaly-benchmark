@@ -108,3 +108,13 @@ def test_hypotheses_follow_the_preregistered_rules():
     h = td.hypotheses({"a": bad, "b": bad})
     assert not h["H1"]["supported"] and not h["H2"]["supported"] and not h["H3"]["supported"]
     assert not h["H4"]["supported"]
+
+
+def test_a_rank_correlation_of_exactly_the_threshold_counts_despite_float_error():
+    # with four methods one swapped pair gives rho = 0.8, computed as 0.7999999999999999
+    two_swaps = _result((2.0, 1.0, 0.5), 0.4, 0.3, 0.0, 0.2, [1, 0, 3, 2])
+    assert td.hypotheses({"a": two_swaps})["H1"]["supported"] is False
+    swapped = _result((2.0, 1.0, 0.5), 0.4, 0.3, 0.0, 0.2, [1, 0, 2, 3])
+    h = td.hypotheses({"a": swapped})
+    assert h["H1"]["spearman"]["a"] == pytest.approx(0.8)
+    assert h["H1"]["supported"] is True
