@@ -1,0 +1,729 @@
+{
+ "carrier": {
+  "columns": [
+   " ROA(C) before interest and depreciation before interest",
+   " ROA(A) before interest and % after tax",
+   " ROA(B) before interest and depreciation after tax",
+   " Operating Gross Margin",
+   " Realized Sales Gross Margin",
+   " Operating Profit Rate",
+   " Pre-tax net Interest Rate",
+   " After-tax net Interest Rate",
+   " Non-industry income and expenditure/revenue",
+   " Continuous interest rate (after tax)",
+   " Operating Expense Rate",
+   " Research and development expense rate",
+   " Cash flow rate",
+   " Interest-bearing debt interest rate",
+   " Tax rate (A)",
+   " Net Value Per Share (B)",
+   " Net Value Per Share (A)",
+   " Net Value Per Share (C)",
+   " Persistent EPS in the Last Four Seasons",
+   " Cash Flow Per Share",
+   " Revenue Per Share (Yuan \u00a5)",
+   " Operating Profit Per Share (Yuan \u00a5)",
+   " Per Share Net profit before tax (Yuan \u00a5)",
+   " Realized Sales Gross Profit Growth Rate",
+   " Operating Profit Growth Rate",
+   " After-tax Net Profit Growth Rate",
+   " Regular Net Profit Growth Rate",
+   " Continuous Net Profit Growth Rate",
+   " Total Asset Growth Rate",
+   " Net Value Growth Rate",
+   " Total Asset Return Growth Rate Ratio",
+   " Cash Reinvestment %",
+   " Current Ratio",
+   " Quick Ratio",
+   " Interest Expense Ratio",
+   " Total debt/Total net worth",
+   " Debt ratio %",
+   " Net worth/Assets",
+   " Long-term fund suitability ratio (A)",
+   " Borrowing dependency",
+   " Contingent liabilities/Net worth",
+   " Operating profit/Paid-in capital",
+   " Net profit before tax/Paid-in capital",
+   " Inventory and accounts receivable/Net value",
+   " Total Asset Turnover",
+   " Accounts Receivable Turnover",
+   " Average Collection Days",
+   " Inventory Turnover Rate (times)",
+   " Fixed Assets Turnover Frequency",
+   " Net Worth Turnover Rate (times)",
+   " Revenue per person",
+   " Operating profit per person",
+   " Allocation rate per person",
+   " Working Capital to Total Assets",
+   " Quick Assets/Total Assets",
+   " Current Assets/Total Assets",
+   " Cash/Total Assets",
+   " Quick Assets/Current Liability",
+   " Cash/Current Liability",
+   " Current Liability to Assets",
+   " Operating Funds to Liability",
+   " Inventory/Working Capital",
+   " Inventory/Current Liability",
+   " Current Liabilities/Liability",
+   " Working Capital/Equity",
+   " Current Liabilities/Equity",
+   " Long-term Liability to Current Assets",
+   " Retained Earnings to Total Assets",
+   " Total income/Total expense",
+   " Total expense/Assets",
+   " Current Asset Turnover Rate",
+   " Quick Asset Turnover Rate",
+   " Working capitcal Turnover Rate",
+   " Cash Turnover Rate",
+   " Cash Flow to Sales",
+   " Fixed Assets to Assets",
+   " Current Liability to Liability",
+   " Current Liability to Equity",
+   " Equity to Long-term Liability",
+   " Cash Flow to Total Assets",
+   " Cash Flow to Liability",
+   " CFO to Assets",
+   " Cash Flow to Equity",
+   " Current Liability to Current Assets",
+   " Net Income to Total Assets",
+   " Total assets to GNP price",
+   " No-credit Interval",
+   " Gross Profit to Sales",
+   " Net Income to Stockholder's Equity",
+   " Liability to Equity",
+   " Degree of Financial Leverage (DFL)",
+   " Interest Coverage Ratio (Interest expense to EBIT)",
+   " Equity to Liability"
+  ],
+  "duplicates_dropped": 0,
+  "normal_class_only": true,
+  "rows_in": 6599,
+  "rows_incomplete_dropped": 0,
+  "rows_out": 6599,
+  "source_rows": 6599
+ },
+ "fpr_mean": {
+  "drift": 0.3421286163,
+  "great_expectations": 0.0660476585,
+  "iqr": 0.9322879391,
+  "isolation_forest": 0.1568012292,
+  "lof": 0.1427844355,
+  "ocsvm": 0.1385091834,
+  "transform_dedup": 0.0354001147,
+  "zscore": 0.2062175727
+ },
+ "name": "Taiwanese Bankruptcy Prediction",
+ "precision_mean": {
+  "columns": [
+   "missing_value",
+   "duplicate",
+   "univariate_outlier",
+   "multivariate_outlier",
+   "temporal_drift",
+   "invalid_format"
+  ],
+  "data": [
+   [
+    0.0317383404,
+    0.039004707,
+    0.0974534139,
+    0.0410316233,
+    0.0331398102,
+    0.0958528048
+   ],
+   [
+    0.0332788173,
+    0.0334756516,
+    0.0363504104,
+    0.0335089515,
+    0.0356404678,
+    0.0365879084
+   ],
+   [
+    0.3498896539,
+    0.0260646066,
+    0.312348276,
+    0.0411264538,
+    0.0328310522,
+    0.3357488107
+   ],
+   [
+    0.0315023235,
+    0.0275152882,
+    0.0434946431,
+    0.0513011504,
+    0.047247092,
+    0.0348534135
+   ],
+   [
+    0.0319996673,
+    0.0280958345,
+    0.1298936916,
+    0.0829069026,
+    0.0374958331,
+    0.1295004261
+   ],
+   [
+    0.0321910683,
+    0.027862259,
+    0.1343560383,
+    0.0490841111,
+    0.0379253176,
+    0.1334675956
+   ],
+   [
+    0.0278658134,
+    0.0354319651,
+    0.0103149209,
+    0.0362031436,
+    0.0877004939,
+    0.0209567974
+   ],
+   [
+    0.0,
+    0.5,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  ],
+  "index": [
+   "zscore",
+   "iqr",
+   "great_expectations",
+   "isolation_forest",
+   "lof",
+   "ocsvm",
+   "drift",
+   "transform_dedup"
+  ]
+ },
+ "recall_mean": {
+  "columns": [
+   "missing_value",
+   "duplicate",
+   "univariate_outlier",
+   "multivariate_outlier",
+   "temporal_drift",
+   "invalid_format"
+  ],
+  "data": [
+   [
+    0.1873563218,
+    0.2349425287,
+    0.6285057471,
+    0.251954023,
+    0.2018390805,
+    0.6183908046
+   ],
+   [
+    0.9057471264,
+    0.9126436782,
+    1.0,
+    0.9255172414,
+    0.98,
+    1.0
+   ],
+   [
+    1.0,
+    0.0533333333,
+    0.8510344828,
+    0.0818390805,
+    0.0673563218,
+    0.9397701149
+   ],
+   [
+    0.1409195402,
+    0.1271264368,
+    0.2029885057,
+    0.2383908046,
+    0.2298850575,
+    0.1602298851
+   ],
+   [
+    0.1273563218,
+    0.1202298851,
+    0.6016091954,
+    0.3556321839,
+    0.1551724138,
+    0.5979310345
+   ],
+   [
+    0.1268965517,
+    0.1137931034,
+    0.6082758621,
+    0.2036781609,
+    0.1549425287,
+    0.6050574713
+   ],
+   [
+    0.2749425287,
+    0.355862069,
+    0.1011494253,
+    0.3740229885,
+    0.9328735632,
+    0.2073563218
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  ],
+  "index": [
+   "zscore",
+   "iqr",
+   "great_expectations",
+   "isolation_forest",
+   "lof",
+   "ocsvm",
+   "drift",
+   "transform_dedup"
+  ]
+ },
+ "recall_seeds": [
+  {
+   "columns": [
+    "missing_value",
+    "duplicate",
+    "univariate_outlier",
+    "multivariate_outlier",
+    "temporal_drift",
+    "invalid_format"
+   ],
+   "data": [
+    [
+     0.1333333333,
+     0.2666666667,
+     0.6551724138,
+     0.2,
+     0.3,
+     0.7586206897
+    ],
+    [
+     0.9,
+     0.9,
+     1.0,
+     0.9,
+     1.0,
+     1.0
+    ],
+    [
+     1.0,
+     0.1333333333,
+     0.8965517241,
+     0.1,
+     0.1666666667,
+     0.9655172414
+    ],
+    [
+     0.1,
+     0.1666666667,
+     0.1724137931,
+     0.2666666667,
+     0.4333333333,
+     0.0344827586
+    ],
+    [
+     0.1,
+     0.1,
+     0.6206896552,
+     0.2,
+     0.1666666667,
+     0.6896551724
+    ],
+    [
+     0.1,
+     0.1,
+     0.6206896552,
+     0.2333333333,
+     0.2333333333,
+     0.7586206897
+    ],
+    [
+     0.3,
+     0.4,
+     0.0689655172,
+     0.5333333333,
+     0.9,
+     0.1034482759
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "index": [
+    "zscore",
+    "iqr",
+    "great_expectations",
+    "isolation_forest",
+    "lof",
+    "ocsvm",
+    "drift",
+    "transform_dedup"
+   ]
+  },
+  {
+   "columns": [
+    "missing_value",
+    "duplicate",
+    "univariate_outlier",
+    "multivariate_outlier",
+    "temporal_drift",
+    "invalid_format"
+   ],
+   "data": [
+    [
+     0.1034482759,
+     0.2,
+     0.6,
+     0.2666666667,
+     0.1034482759,
+     0.6333333333
+    ],
+    [
+     0.8620689655,
+     1.0,
+     1.0,
+     0.9,
+     1.0,
+     1.0
+    ],
+    [
+     1.0,
+     0.0666666667,
+     0.9333333333,
+     0.0333333333,
+     0.0689655172,
+     1.0
+    ],
+    [
+     0.1379310345,
+     0.1333333333,
+     0.2666666667,
+     0.1666666667,
+     0.2068965517,
+     0.2333333333
+    ],
+    [
+     0.1034482759,
+     0.2333333333,
+     0.6333333333,
+     0.2333333333,
+     0.1034482759,
+     0.6
+    ],
+    [
+     0.0344827586,
+     0.1333333333,
+     0.5666666667,
+     0.2333333333,
+     0.0689655172,
+     0.6333333333
+    ],
+    [
+     0.2413793103,
+     0.3,
+     0.1,
+     0.2333333333,
+     1.0,
+     0.2
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "index": [
+    "zscore",
+    "iqr",
+    "great_expectations",
+    "isolation_forest",
+    "lof",
+    "ocsvm",
+    "drift",
+    "transform_dedup"
+   ]
+  },
+  {
+   "columns": [
+    "missing_value",
+    "duplicate",
+    "univariate_outlier",
+    "multivariate_outlier",
+    "temporal_drift",
+    "invalid_format"
+   ],
+   "data": [
+    [
+     0.2,
+     0.2333333333,
+     0.6333333333,
+     0.2413793103,
+     0.1724137931,
+     0.6
+    ],
+    [
+     0.9333333333,
+     0.8333333333,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    [
+     1.0,
+     0.0333333333,
+     0.8,
+     0.1724137931,
+     0.0344827586,
+     0.9333333333
+    ],
+    [
+     0.1666666667,
+     0.1666666667,
+     0.1333333333,
+     0.2068965517,
+     0.275862069,
+     0.2333333333
+    ],
+    [
+     0.1,
+     0.1333333333,
+     0.6333333333,
+     0.2068965517,
+     0.1724137931,
+     0.6333333333
+    ],
+    [
+     0.1666666667,
+     0.1666666667,
+     0.6333333333,
+     0.1724137931,
+     0.1724137931,
+     0.6
+    ],
+    [
+     0.1666666667,
+     0.3666666667,
+     0.0666666667,
+     0.4482758621,
+     0.9310344828,
+     0.2
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "index": [
+    "zscore",
+    "iqr",
+    "great_expectations",
+    "isolation_forest",
+    "lof",
+    "ocsvm",
+    "drift",
+    "transform_dedup"
+   ]
+  },
+  {
+   "columns": [
+    "missing_value",
+    "duplicate",
+    "univariate_outlier",
+    "multivariate_outlier",
+    "temporal_drift",
+    "invalid_format"
+   ],
+   "data": [
+    [
+     0.2666666667,
+     0.2333333333,
+     0.6206896552,
+     0.3103448276,
+     0.2666666667,
+     0.5666666667
+    ],
+    [
+     0.9333333333,
+     0.9333333333,
+     1.0,
+     0.8965517241,
+     1.0,
+     1.0
+    ],
+    [
+     1.0,
+     0.0333333333,
+     0.7586206897,
+     0.0344827586,
+     0.0,
+     0.9
+    ],
+    [
+     0.0666666667,
+     0.1,
+     0.275862069,
+     0.275862069,
+     0.1666666667,
+     0.1666666667
+    ],
+    [
+     0.1666666667,
+     0.1,
+     0.6206896552,
+     0.4827586207,
+     0.1,
+     0.6
+    ],
+    [
+     0.1,
+     0.1,
+     0.6206896552,
+     0.1724137931,
+     0.2333333333,
+     0.5666666667
+    ],
+    [
+     0.4333333333,
+     0.3333333333,
+     0.1034482759,
+     0.2413793103,
+     0.8666666667,
+     0.1666666667
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "index": [
+    "zscore",
+    "iqr",
+    "great_expectations",
+    "isolation_forest",
+    "lof",
+    "ocsvm",
+    "drift",
+    "transform_dedup"
+   ]
+  },
+  {
+   "columns": [
+    "missing_value",
+    "duplicate",
+    "univariate_outlier",
+    "multivariate_outlier",
+    "temporal_drift",
+    "invalid_format"
+   ],
+   "data": [
+    [
+     0.2333333333,
+     0.2413793103,
+     0.6333333333,
+     0.2413793103,
+     0.1666666667,
+     0.5333333333
+    ],
+    [
+     0.9,
+     0.8965517241,
+     1.0,
+     0.9310344828,
+     0.9,
+     1.0
+    ],
+    [
+     1.0,
+     0.0,
+     0.8666666667,
+     0.0689655172,
+     0.0666666667,
+     0.9
+    ],
+    [
+     0.2333333333,
+     0.0689655172,
+     0.1666666667,
+     0.275862069,
+     0.0666666667,
+     0.1333333333
+    ],
+    [
+     0.1666666667,
+     0.0344827586,
+     0.5,
+     0.6551724138,
+     0.2333333333,
+     0.4666666667
+    ],
+    [
+     0.2333333333,
+     0.0689655172,
+     0.6,
+     0.2068965517,
+     0.0666666667,
+     0.4666666667
+    ],
+    [
+     0.2333333333,
+     0.3793103448,
+     0.1666666667,
+     0.4137931034,
+     0.9666666667,
+     0.3666666667
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "index": [
+    "zscore",
+    "iqr",
+    "great_expectations",
+    "isolation_forest",
+    "lof",
+    "ocsvm",
+    "drift",
+    "transform_dedup"
+   ]
+  }
+ ],
+ "seeds": [
+  42,
+  1,
+  2,
+  3,
+  4
+ ],
+ "sha256": "67bf2e7c75490f7ad3f76bbce57d49cdc25967cdab607527b94f944863fa14d8",
+ "uci_id": 572
+}
