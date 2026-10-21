@@ -210,7 +210,7 @@ etl-anomaly-benchmark/
 │   ├── run_curves.py              # precision-recall curves + contamination sweep
 │   └── run_severity.py            # detection-vs-severity curves
 ├── .github/workflows/ci.yml       # ruff + pytest on push / PR
-├── slides/                   # thesis progress presentation (HTML)
+├── slides/                   # living thesis presentation (HTML + PDF), see CLAUDE.md
 ├── tests/                    # pytest
 ├── data/                     # raw datasets (gitignored)
 ├── experiments/results/      # generated output (gitignored)
