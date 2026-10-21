@@ -106,6 +106,7 @@ def test_the_summary_cli_reads_run_files_and_writes_results_and_a_table(tmp_path
                     "name": f"d{i}",
                     "carrier": {"columns": list("abcd")[: 4 + (i % 1)]},
                     "recall_mean": json.loads(m.to_json(orient="split")),
+                    "fpr_mean": {"iqr": 0.2 + 0.1 * i, "zscore": 0.0},
                 }
             )
         )
@@ -113,4 +114,31 @@ def test_the_summary_cli_reads_run_files_and_writes_results_and_a_table(tmp_path
     assert ts.main(["--runs", str(runs), "--output", str(out)]) == 0
     results = json.loads((out / "typed_results.json").read_text())
     assert set(results["hypotheses"]) == {"H1", "H2", "H3", "H4", "H5"} and results["datasets"] == 3
-    assert "great_expectations" in (out / "typed_results.md").read_text()
+    assert results["fpr"]["iqr"] == {"median": pytest.approx(0.3), "max": pytest.approx(0.4)}
+    text = (out / "typed_results.md").read_text()
+    assert "great_expectations" in text and "false positive rate" in text
+
+
+def test_the_figures_script_writes_the_pooled_and_the_small_multiples_png(tmp_path):
+    import json
+
+    import typed_figures as tf
+
+    runs = tmp_path / "runs"
+    runs.mkdir()
+    for uci_id in range(1, 9):
+        m = _pattern(0.01 * uci_id)
+        (runs / f"{uci_id}.json").write_text(
+            json.dumps(
+                {
+                    "uci_id": uci_id,
+                    "name": f"d{uci_id}",
+                    "carrier": {"columns": list("abcd")},
+                    "recall_mean": json.loads(m.to_json(orient="split")),
+                }
+            )
+        )
+    out = tmp_path / "fig"
+    assert tf.main(["--runs", str(runs), "--output", str(out), "--panels", "6"]) == 0
+    assert (out / "typed_pooled.png").stat().st_size > 1000
+    assert (out / "typed_panels.png").stat().st_size > 1000

@@ -105,7 +105,7 @@ def hypotheses(data: dict[str, pd.DataFrame], n_columns: dict[str, int]) -> dict
 def _load(runs):
     import json
 
-    data, columns = {}, {}
+    data, columns, fpr = {}, {}, {}
     for path in sorted(runs.glob("*.json")):
         run = json.loads(path.read_text())
         split = run["recall_mean"]
@@ -113,7 +113,9 @@ def _load(runs):
             split["data"], index=split["index"], columns=split["columns"]
         )
         columns[run["name"]] = len(run["carrier"]["columns"])
-    return data, columns
+        for method, value in run.get("fpr_mean", {}).items():
+            fpr.setdefault(method, []).append(value)
+    return data, columns, fpr
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -125,7 +127,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--runs", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args(argv)
-    data, columns = _load(args.runs)
+    data, columns, fpr = _load(args.runs)
     summary = pooled(data)
     results = {
         "datasets": len(data),
@@ -134,6 +136,9 @@ def main(argv: list[str] | None = None) -> int:
         "high": json.loads(summary["high"].to_json(orient="split")),
         "stability": stability(data),
         "hypotheses": hypotheses(data, columns),
+        "fpr": {
+            m: {"median": float(np.median(v)), "max": float(np.max(v))} for m, v in fpr.items()
+        },
     }
     args.output.mkdir(parents=True, exist_ok=True)
     (args.output / "typed_results.json").write_text(
@@ -148,6 +153,8 @@ def main(argv: list[str] | None = None) -> int:
             mid, lo, hi = (summary[n].loc[method, k] for n in ("median", "low", "high"))
             cells.append(f"{mid:.2f} [{lo:.2f}, {hi:.2f}]")
         lines.append(f"| {method} | " + " | ".join(cells) + " |")
+    lines += ["", "Clean-row false positive rate (median and maximum over datasets)", ""]
+    lines += [f"- {m}: {v['median']:.3f} (max {v['max']:.3f})" for m, v in results["fpr"].items()]
     (args.output / "typed_results.md").write_text("\n".join(lines) + "\n")
     print(f"{len(data)} datasets")
     return 0

@@ -1,0 +1,661 @@
+{
+ "carrier": {
+  "columns": [
+   "Application mode",
+   "Course",
+   "Previous qualification",
+   "Previous qualification (grade)",
+   "Nacionality",
+   "Mother's qualification",
+   "Father's qualification",
+   "Mother's occupation",
+   "Father's occupation",
+   "Admission grade",
+   "Age at enrollment",
+   "Curricular units 1st sem (credited)",
+   "Curricular units 1st sem (enrolled)",
+   "Curricular units 1st sem (evaluations)",
+   "Curricular units 1st sem (approved)",
+   "Curricular units 1st sem (grade)",
+   "Curricular units 1st sem (without evaluations)",
+   "Curricular units 2nd sem (credited)",
+   "Curricular units 2nd sem (enrolled)",
+   "Curricular units 2nd sem (evaluations)",
+   "Curricular units 2nd sem (approved)",
+   "Curricular units 2nd sem (grade)",
+   "Curricular units 2nd sem (without evaluations)",
+   "Unemployment rate",
+   "GDP"
+  ],
+  "duplicates_dropped": 0,
+  "normal_class_only": true,
+  "rows_in": 3630,
+  "rows_incomplete_dropped": 0,
+  "rows_out": 3630,
+  "source_rows": 3630
+ },
+ "fpr_mean": {
+  "drift": 0.0967192969,
+  "great_expectations": 0.0069030684,
+  "iqr": 0.4087165785,
+  "isolation_forest": 0.1614089149,
+  "lof": 0.1389876741,
+  "ocsvm": 0.1415561927,
+  "transform_dedup": 0.0353895137,
+  "zscore": 0.0565614061
+ },
+ "name": "Predict Students' Dropout and Academic Success",
+ "precision_mean": {
+  "columns": [
+   "missing_value",
+   "duplicate",
+   "univariate_outlier",
+   "multivariate_outlier",
+   "temporal_drift",
+   "invalid_format"
+  ],
+  "data": [
+   [
+    0.056987953,
+    0.0299833294,
+    0.1842749877,
+    0.1010137372,
+    0.0247201715,
+    0.3215186086
+   ],
+   [
+    0.0306329122,
+    0.0277174536,
+    0.0688336458,
+    0.0375626276,
+    0.0769861691,
+    0.0641882573
+   ],
+   [
+    0.8448029494,
+    0.0666666667,
+    0.8172455649,
+    0.0,
+    0.2133333333,
+    0.7839102564
+   ],
+   [
+    0.0359227138,
+    0.0127307692,
+    0.0602845528,
+    0.0479951512,
+    0.0461538334,
+    0.043510467
+   ],
+   [
+    0.0289165479,
+    0.0329419662,
+    0.15108858,
+    0.0699623696,
+    0.105699125,
+    0.1447420021
+   ],
+   [
+    0.0406637301,
+    0.0233927843,
+    0.1112553065,
+    0.1001727483,
+    0.0378427128,
+    0.1350157725
+   ],
+   [
+    0.0119310755,
+    0.013968254,
+    0.0119743407,
+    0.0064516129,
+    0.0320512821,
+    0.0087922705
+   ],
+   [
+    0.0,
+    0.5,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  ],
+  "index": [
+   "zscore",
+   "iqr",
+   "great_expectations",
+   "isolation_forest",
+   "lof",
+   "ocsvm",
+   "drift",
+   "transform_dedup"
+  ]
+ },
+ "recall_mean": {
+  "columns": [
+   "missing_value",
+   "duplicate",
+   "univariate_outlier",
+   "multivariate_outlier",
+   "temporal_drift",
+   "invalid_format"
+  ],
+  "data": [
+   [
+    0.0830882353,
+    0.0492647059,
+    0.2977941176,
+    0.2125,
+    0.05,
+    0.5963235294
+   ],
+   [
+    0.3595588235,
+    0.3323529412,
+    0.8448529412,
+    0.4625,
+    0.9875,
+    0.7919117647
+   ],
+   [
+    1.0,
+    0.0125,
+    0.8213235294,
+    0.0,
+    0.05,
+    0.6926470588
+   ],
+   [
+    0.1676470588,
+    0.0602941176,
+    0.2897058824,
+    0.2375,
+    0.225,
+    0.2066176471
+   ],
+   [
+    0.1183823529,
+    0.1360294118,
+    0.6720588235,
+    0.2875,
+    0.4625,
+    0.6573529412
+   ],
+   [
+    0.1691176471,
+    0.0970588235,
+    0.4919117647,
+    0.4625,
+    0.1625,
+    0.6205882353
+   ],
+   [
+    0.0948529412,
+    0.1242647059,
+    0.0602941176,
+    0.075,
+    0.2375,
+    0.0617647059
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  ],
+  "index": [
+   "zscore",
+   "iqr",
+   "great_expectations",
+   "isolation_forest",
+   "lof",
+   "ocsvm",
+   "drift",
+   "transform_dedup"
+  ]
+ },
+ "recall_seeds": [
+  {
+   "columns": [
+    "missing_value",
+    "duplicate",
+    "univariate_outlier",
+    "multivariate_outlier",
+    "temporal_drift",
+    "invalid_format"
+   ],
+   "data": [
+    [
+     0.1764705882,
+     0.125,
+     0.4705882353,
+     0.1875,
+     0.125,
+     0.5625
+    ],
+    [
+     0.3529411765,
+     0.3125,
+     0.7647058824,
+     0.4375,
+     1.0,
+     0.8125
+    ],
+    [
+     1.0,
+     0.0,
+     0.8235294118,
+     0.0,
+     0.125,
+     0.625
+    ],
+    [
+     0.2352941176,
+     0.0625,
+     0.2941176471,
+     0.3125,
+     0.25,
+     0.25
+    ],
+    [
+     0.1764705882,
+     0.125,
+     0.5882352941,
+     0.3125,
+     0.4375,
+     0.625
+    ],
+    [
+     0.2352941176,
+     0.0625,
+     0.5294117647,
+     0.25,
+     0.125,
+     0.5625
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "index": [
+    "zscore",
+    "iqr",
+    "great_expectations",
+    "isolation_forest",
+    "lof",
+    "ocsvm",
+    "drift",
+    "transform_dedup"
+   ]
+  },
+  {
+   "columns": [
+    "missing_value",
+    "duplicate",
+    "univariate_outlier",
+    "multivariate_outlier",
+    "temporal_drift",
+    "invalid_format"
+   ],
+   "data": [
+    [
+     0.0625,
+     0.0,
+     0.4117647059,
+     0.125,
+     0.0,
+     0.5625
+    ],
+    [
+     0.25,
+     0.1764705882,
+     0.8235294118,
+     0.625,
+     1.0,
+     0.75
+    ],
+    [
+     1.0,
+     0.0,
+     0.7647058824,
+     0.0,
+     0.0,
+     0.5625
+    ],
+    [
+     0.0625,
+     0.0588235294,
+     0.2941176471,
+     0.3125,
+     0.1875,
+     0.125
+    ],
+    [
+     0.0625,
+     0.1176470588,
+     0.8823529412,
+     0.5625,
+     0.5625,
+     0.5625
+    ],
+    [
+     0.125,
+     0.0588235294,
+     0.6470588235,
+     0.25,
+     0.0,
+     0.5625
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "index": [
+    "zscore",
+    "iqr",
+    "great_expectations",
+    "isolation_forest",
+    "lof",
+    "ocsvm",
+    "drift",
+    "transform_dedup"
+   ]
+  },
+  {
+   "columns": [
+    "missing_value",
+    "duplicate",
+    "univariate_outlier",
+    "multivariate_outlier",
+    "temporal_drift",
+    "invalid_format"
+   ],
+   "data": [
+    [
+     0.0588235294,
+     0.0,
+     0.2941176471,
+     0.6875,
+     0.0625,
+     0.5625
+    ],
+    [
+     0.3529411765,
+     0.5,
+     0.8235294118,
+     0.4375,
+     0.9375,
+     0.75
+    ],
+    [
+     1.0,
+     0.0,
+     0.7058823529,
+     0.0,
+     0.0625,
+     0.6875
+    ],
+    [
+     0.1176470588,
+     0.0,
+     0.2352941176,
+     0.1875,
+     0.25,
+     0.1875
+    ],
+    [
+     0.1764705882,
+     0.1875,
+     0.7647058824,
+     0.25,
+     0.0625,
+     0.6875
+    ],
+    [
+     0.0588235294,
+     0.0625,
+     0.4705882353,
+     0.6875,
+     0.3125,
+     0.625
+    ],
+    [
+     0.4117647059,
+     0.5625,
+     0.1764705882,
+     0.375,
+     0.9375,
+     0.25
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "index": [
+    "zscore",
+    "iqr",
+    "great_expectations",
+    "isolation_forest",
+    "lof",
+    "ocsvm",
+    "drift",
+    "transform_dedup"
+   ]
+  },
+  {
+   "columns": [
+    "missing_value",
+    "duplicate",
+    "univariate_outlier",
+    "multivariate_outlier",
+    "temporal_drift",
+    "invalid_format"
+   ],
+   "data": [
+    [
+     0.0,
+     0.0588235294,
+     0.0625,
+     0.0625,
+     0.0,
+     0.5882352941
+    ],
+    [
+     0.3125,
+     0.2352941176,
+     0.875,
+     0.375,
+     1.0,
+     0.8235294118
+    ],
+    [
+     1.0,
+     0.0,
+     0.8125,
+     0.0,
+     0.0625,
+     0.8235294118
+    ],
+    [
+     0.1875,
+     0.1176470588,
+     0.25,
+     0.1875,
+     0.0625,
+     0.1176470588
+    ],
+    [
+     0.0,
+     0.0,
+     0.5,
+     0.125,
+     0.5625,
+     0.6470588235
+    ],
+    [
+     0.25,
+     0.1764705882,
+     0.4375,
+     0.5,
+     0.125,
+     0.6470588235
+    ],
+    [
+     0.0625,
+     0.0588235294,
+     0.125,
+     0.0,
+     0.25,
+     0.0588235294
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "index": [
+    "zscore",
+    "iqr",
+    "great_expectations",
+    "isolation_forest",
+    "lof",
+    "ocsvm",
+    "drift",
+    "transform_dedup"
+   ]
+  },
+  {
+   "columns": [
+    "missing_value",
+    "duplicate",
+    "univariate_outlier",
+    "multivariate_outlier",
+    "temporal_drift",
+    "invalid_format"
+   ],
+   "data": [
+    [
+     0.1176470588,
+     0.0625,
+     0.25,
+     0.0,
+     0.0625,
+     0.7058823529
+    ],
+    [
+     0.5294117647,
+     0.4375,
+     0.9375,
+     0.4375,
+     1.0,
+     0.8235294118
+    ],
+    [
+     1.0,
+     0.0625,
+     1.0,
+     0.0,
+     0.0,
+     0.7647058824
+    ],
+    [
+     0.2352941176,
+     0.0625,
+     0.375,
+     0.1875,
+     0.375,
+     0.3529411765
+    ],
+    [
+     0.1764705882,
+     0.25,
+     0.625,
+     0.1875,
+     0.6875,
+     0.7647058824
+    ],
+    [
+     0.1764705882,
+     0.125,
+     0.375,
+     0.625,
+     0.25,
+     0.7058823529
+    ],
+    [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "index": [
+    "zscore",
+    "iqr",
+    "great_expectations",
+    "isolation_forest",
+    "lof",
+    "ocsvm",
+    "drift",
+    "transform_dedup"
+   ]
+  }
+ ],
+ "seeds": [
+  42,
+  1,
+  2,
+  3,
+  4
+ ],
+ "sha256": "a1b1a6531bbb93a5c7fdf0093b47172776652a4ffb12342fb79655c85b74801b",
+ "uci_id": 697
+}
