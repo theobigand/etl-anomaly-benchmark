@@ -1,0 +1,4617 @@
+{
+ "failed": [],
+ "rows": [
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [
+     "Sex"
+    ],
+    "features_out": 10,
+    "rows_in": 4177,
+    "rows_out": 4177
+   },
+   "label_refused": "fewer than 20 rows in the rarest class",
+   "licence": "CC BY 4.0",
+   "name": "Abalone",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "25f3dc964447fcb3d68cf1048c04ed69d1474771c4fb34318e10778800a4342f",
+   "uci_id": 1,
+   "url": "https://archive.ics.uci.edu/static/public/1/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "native-country"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 58,
+    "encoded": [
+     "workclass",
+     "education",
+     "marital-status",
+     "occupation",
+     "relationship",
+     "race",
+     "sex"
+    ],
+    "features_out": 66,
+    "rows_in": 48842,
+    "rows_out": 48784
+   },
+   "label": {
+    "anomalies": 3846,
+    "anomaly_class": ">50K.",
+    "classes": 4,
+    "conflicting_rows_removed": 14,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "native-country"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 51,
+    "encoded": [
+     "workclass",
+     "education",
+     "marital-status",
+     "occupation",
+     "relationship",
+     "race",
+     "sex"
+    ],
+    "features_out": 66,
+    "kind": "native_rare",
+    "natural_rate": 0.07874370418901765,
+    "rows": 48842,
+    "rows_in": 48842,
+    "rows_out": 48777
+   },
+   "licence": "CC BY 4.0",
+   "name": "Adult",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "26b38f8623766396e2ba0d1a235a283db8ed993cc32bf32fc8aab09708c3bdf2",
+   "skipped_detectors": [
+    "ocsvm"
+   ],
+   "uci_id": 2,
+   "url": "https://archive.ics.uci.edu/static/public/2/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [
+     "product-type"
+    ],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [
+     "famiily",
+     "temper-rolling",
+     "non-ageing",
+     "surface-finish",
+     "enamelability",
+     "bc",
+     "bf",
+     "bt",
+     "bw/me",
+     "bl",
+     "m",
+     "chrom",
+     "phos",
+     "cbond",
+     "marvi",
+     "exptl",
+     "ferro",
+     "corr",
+     "blue/bright/varn/clean",
+     "lustre",
+     "jurofm",
+     "s",
+     "p",
+     "oil",
+     "packing"
+    ],
+    "duplicates_removed": 165,
+    "encoded": [
+     "steel",
+     "condition",
+     "surface-quality",
+     "shape"
+    ],
+    "features_out": 23,
+    "rows_in": 898,
+    "rows_out": 733
+   },
+   "label_refused": "fewer than 20 rows in the rarest class",
+   "licence": "CC BY 4.0",
+   "name": "Annealing",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "868a9cfd6268d82cfd3fa0d05fbea7264d3ac771df152a7de8ab1d208eec2bad",
+   "uci_id": 3,
+   "url": "https://archive.ics.uci.edu/static/public/3/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 7,
+    "rows_in": 398,
+    "rows_out": 398
+   },
+   "label_refused": "not a classification task",
+   "licence": "CC BY 4.0",
+   "name": "Auto MPG",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "240f4657d747fe105f3c992251daba65f926ef54c4dec3cde34e398e8cf5da9c",
+   "uci_id": 9,
+   "url": "https://archive.ics.uci.edu/static/public/9/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 236,
+    "encoded": [],
+    "features_out": 9,
+    "rows_in": 699,
+    "rows_out": 463
+   },
+   "label": {
+    "anomalies": 51,
+    "anomaly_class": "4",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 234,
+    "encoded": [],
+    "features_out": 9,
+    "kind": "downsampled",
+    "natural_rate": 0.3447782546494993,
+    "rows": 509,
+    "rows_in": 509,
+    "rows_out": 275
+   },
+   "licence": "CC BY 4.0",
+   "name": "Breast Cancer Wisconsin (Original)",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "3fb81e10c657874f9db975b43a5c10fd0f95ec9ca33150962d486fd4740a8701",
+   "skipped_detectors": [],
+   "uci_id": 15,
+   "url": "https://archive.ics.uci.edu/static/public/15/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 30,
+    "rows_in": 569,
+    "rows_out": 569
+   },
+   "label": {
+    "anomalies": 40,
+    "anomaly_class": "M",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 30,
+    "kind": "downsampled",
+    "natural_rate": 0.37258347978910367,
+    "rows": 397,
+    "rows_in": 397,
+    "rows_out": 397
+   },
+   "licence": "CC BY 4.0",
+   "name": "Breast Cancer Wisconsin (Diagnostic)",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "3487b754ff02c93cdc8a18afafe223961d9cfbfdb932e57483e52581042767d7",
+   "skipped_detectors": [],
+   "uci_id": 17,
+   "url": "https://archive.ics.uci.edu/static/public/17/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [
+     "A1",
+     "A4",
+     "A5",
+     "A6",
+     "A7",
+     "A9",
+     "A10",
+     "A12",
+     "A13"
+    ],
+    "features_out": 46,
+    "rows_in": 690,
+    "rows_out": 690
+   },
+   "label": {
+    "anomalies": 43,
+    "anomaly_class": "+",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [
+     "A1",
+     "A4",
+     "A5",
+     "A6",
+     "A7",
+     "A9",
+     "A10",
+     "A12",
+     "A13"
+    ],
+    "features_out": 46,
+    "kind": "downsampled",
+    "natural_rate": 0.4449275362318841,
+    "rows": 426,
+    "rows_in": 426,
+    "rows_out": 426
+   },
+   "licence": "CC BY 4.0",
+   "name": "Credit Approval",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "fe592adc0045801c41c0cfe8fbb89537f909d149cc9b96f365ed043d17241488",
+   "skipped_detectors": [],
+   "uci_id": 27,
+   "url": "https://archive.ics.uci.edu/static/public/27/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 115,
+    "encoded": [],
+    "features_out": 9,
+    "rows_in": 1473,
+    "rows_out": 1358
+   },
+   "label": {
+    "anomalies": 127,
+    "anomaly_class": "2",
+    "classes": 3,
+    "conflicting_rows_removed": 55,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 48,
+    "encoded": [],
+    "features_out": 9,
+    "kind": "downsampled",
+    "natural_rate": 0.22606924643584522,
+    "rows": 1267,
+    "rows_in": 1267,
+    "rows_out": 1164
+   },
+   "licence": "CC BY 4.0",
+   "name": "Contraceptive Method Choice",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "3a150623738e0fe1d2ad3803f102e94f3120f9ff6e3d27cc335af895e124d963",
+   "skipped_detectors": [],
+   "uci_id": 30,
+   "url": "https://archive.ics.uci.edu/static/public/30/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 54,
+    "rows_in": 581012,
+    "rows_out": 581012
+   },
+   "label": {
+    "anomalies": 2747,
+    "anomaly_class": "4",
+    "classes": 7,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 54,
+    "kind": "native_rare",
+    "natural_rate": 0.004727957426008413,
+    "rows": 581012,
+    "rows_in": 581012,
+    "rows_out": 581012
+   },
+   "licence": "CC BY 4.0",
+   "name": "Covertype",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "a07902ee1c9d3231c6655f23e6f75a6797d0ba26a2359f533c2c0e65d05c9bd4",
+   "skipped_detectors": [
+    "lof",
+    "ocsvm"
+   ],
+   "uci_id": 31,
+   "url": "https://archive.ics.uci.edu/static/public/31/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "cylinder number",
+     "customer"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 1,
+    "encoded": [
+     "grain screened",
+     "ink color",
+     "proof on ctd ink",
+     "blade mfg",
+     "cylinder division",
+     "paper type",
+     "ink type",
+     "direct steam",
+     "solvent type",
+     "type on cylinder",
+     "press type",
+     "cylinder size",
+     "paper mill location"
+    ],
+    "features_out": 80,
+    "rows_in": 541,
+    "rows_out": 540
+   },
+   "label": {
+    "anomalies": 35,
+    "anomaly_class": "band",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "cylinder number",
+     "customer"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [
+     "grain screened",
+     "ink color",
+     "proof on ctd ink",
+     "blade mfg",
+     "cylinder division",
+     "paper type",
+     "ink type",
+     "direct steam",
+     "solvent type",
+     "type on cylinder",
+     "press type",
+     "cylinder size",
+     "paper mill location"
+    ],
+    "features_out": 68,
+    "kind": "downsampled",
+    "natural_rate": 0.42115027829313545,
+    "rows": 347,
+    "rows_in": 347,
+    "rows_out": 347
+   },
+   "licence": "CC BY 4.0",
+   "name": "Cylinder Bands",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "558c79a515fb4a901a848ae34614acf1570aa60bddd4eb9e398165bf9a2b6cfe",
+   "skipped_detectors": [],
+   "uci_id": 32,
+   "url": "https://archive.ics.uci.edu/static/public/32/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 34,
+    "rows_in": 366,
+    "rows_out": 366
+   },
+   "label": {
+    "anomalies": 20,
+    "anomaly_class": "6",
+    "classes": 6,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 34,
+    "kind": "native_rare",
+    "natural_rate": 0.0546448087431694,
+    "rows": 366,
+    "rows_in": 366,
+    "rows_out": 366
+   },
+   "licence": "CC BY 4.0",
+   "name": "Dermatology",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "8702228ddfe36a0e816c3982340d70a4a28956024dfdceafdfd808584e949f32",
+   "skipped_detectors": [],
+   "uci_id": 33,
+   "url": "https://archive.ics.uci.edu/static/public/33/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 7,
+    "rows_in": 336,
+    "rows_out": 336
+   },
+   "label_refused": "fewer than 20 rows in the rarest class",
+   "licence": "CC BY 4.0",
+   "name": "Ecoli",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "42e4526726ed030c640ecd91837acfd4fe23d8305954d250dedf944a4f9ecee8",
+   "uci_id": 39,
+   "url": "https://archive.ics.uci.edu/static/public/39/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 13,
+    "rows_in": 303,
+    "rows_out": 303
+   },
+   "label_refused": "fewer than 20 rows in the rarest class",
+   "licence": "CC BY 4.0",
+   "name": "Heart Disease",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "868cd646a53ffbc55611192bae7496911a163937c185710f6b8aa11549b88df1",
+   "uci_id": 45,
+   "url": "https://archive.ics.uci.edu/static/public/45/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [
+     "nasogastric_reflux_ph",
+     "abdominocentesis_appearance",
+     "abdominocentesis_total_protein"
+    ],
+    "duplicates_removed": 1,
+    "encoded": [],
+    "features_out": 24,
+    "rows_in": 368,
+    "rows_out": 367
+   },
+   "label": {
+    "anomalies": 26,
+    "anomaly_class": "2",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [
+     "nasogastric_reflux_ph",
+     "abdominocentesis_total_protein"
+    ],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 25,
+    "kind": "downsampled",
+    "natural_rate": 0.3695652173913043,
+    "rows": 258,
+    "rows_in": 258,
+    "rows_out": 258
+   },
+   "licence": "CC BY 4.0",
+   "name": "Horse Colic",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "7cad77c51181c532babb5c08db40dff35d3edb39797ea2f5291468a3e35d1efd",
+   "skipped_detectors": [],
+   "uci_id": 47,
+   "url": "https://archive.ics.uci.edu/static/public/47/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [
+     "region-pixel-count"
+    ],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 18,
+    "rows_in": 210,
+    "rows_out": 210
+   },
+   "label": {
+    "anomalies": 20,
+    "anomaly_class": "GRASS",
+    "classes": 7,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [
+     "region-pixel-count"
+    ],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 18,
+    "kind": "downsampled",
+    "natural_rate": 0.14285714285714285,
+    "rows": 200,
+    "rows_in": 200,
+    "rows_out": 200
+   },
+   "licence": "CC BY 4.0",
+   "name": "Image Segmentation",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "fddc213b8d668a7da006ff93d5f01ec099c2c2c2496770ef85cb185215c5f44e",
+   "skipped_detectors": [],
+   "uci_id": 50,
+   "url": "https://archive.ics.uci.edu/static/public/50/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [
+     "Attribute2"
+    ],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 1,
+    "encoded": [],
+    "features_out": 33,
+    "rows_in": 351,
+    "rows_out": 350
+   },
+   "label": {
+    "anomalies": 25,
+    "anomaly_class": "b",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [
+     "Attribute2"
+    ],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 33,
+    "kind": "downsampled",
+    "natural_rate": 0.358974358974359,
+    "rows": 250,
+    "rows_in": 250,
+    "rows_out": 250
+   },
+   "licence": "CC BY 4.0",
+   "name": "Ionosphere",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "04f2023ba4b9ff438d76d4d236762981795772d4f75f3bca1c8db0fcf26c83c1",
+   "skipped_detectors": [],
+   "uci_id": 52,
+   "url": "https://archive.ics.uci.edu/static/public/52/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 1332,
+    "encoded": [],
+    "features_out": 16,
+    "rows_in": 20000,
+    "rows_out": 18668
+   },
+   "label": {
+    "anomalies": 734,
+    "anomaly_class": "Z",
+    "classes": 26,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 1332,
+    "encoded": [],
+    "features_out": 16,
+    "kind": "native_rare",
+    "natural_rate": 0.0367,
+    "rows": 20000,
+    "rows_in": 20000,
+    "rows_out": 18668
+   },
+   "licence": "CC BY 4.0",
+   "name": "Letter Recognition",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "9ec44e47110540d997fc2e247464a75ed3da0ad9dfcd49ded7e68fcaab04a9f7",
+   "skipped_detectors": [],
+   "uci_id": 59,
+   "url": "https://archive.ics.uci.edu/static/public/59/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 4,
+    "encoded": [],
+    "features_out": 5,
+    "rows_in": 345,
+    "rows_out": 341
+   },
+   "label_refused": "not a classification task",
+   "licence": "CC BY 4.0",
+   "name": "Liver Disorders",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "ab7c9f801a6fc0568605bda3796a3962d0b940a19ced4060fb1e2ff98438b5cc",
+   "uci_id": 60,
+   "url": "https://archive.ics.uci.edu/static/public/60/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [
+     "veil-type"
+    ],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [
+     "cap-shape",
+     "cap-surface",
+     "cap-color",
+     "bruises",
+     "odor",
+     "gill-attachment",
+     "gill-spacing",
+     "gill-size",
+     "gill-color",
+     "stalk-shape",
+     "stalk-root",
+     "stalk-surface-above-ring",
+     "stalk-surface-below-ring",
+     "stalk-color-above-ring",
+     "stalk-color-below-ring",
+     "veil-color",
+     "ring-number",
+     "ring-type",
+     "spore-print-color",
+     "population",
+     "habitat"
+    ],
+    "features_out": 115,
+    "rows_in": 8124,
+    "rows_out": 8124
+   },
+   "label": {
+    "anomalies": 468,
+    "anomaly_class": "p",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [
+     "veil-type"
+    ],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [
+     "cap-shape",
+     "cap-surface",
+     "cap-color",
+     "bruises",
+     "odor",
+     "gill-attachment",
+     "gill-spacing",
+     "gill-size",
+     "gill-color",
+     "stalk-shape",
+     "stalk-root",
+     "stalk-surface-above-ring",
+     "stalk-surface-below-ring",
+     "stalk-color-above-ring",
+     "stalk-color-below-ring",
+     "veil-color",
+     "ring-number",
+     "ring-type",
+     "spore-print-color",
+     "population",
+     "habitat"
+    ],
+    "features_out": 111,
+    "kind": "downsampled",
+    "natural_rate": 0.48202855736090594,
+    "rows": 4676,
+    "rows_in": 4676,
+    "rows_out": 4676
+   },
+   "licence": "CC BY 4.0",
+   "name": "Mushroom",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "3557ad6f2ffaca855d66d9a8165c6bfabd355cc51d89eac56bab55f0e38b3116",
+   "skipped_detectors": [],
+   "uci_id": 73,
+   "url": "https://archive.ics.uci.edu/static/public/73/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 17,
+    "encoded": [],
+    "features_out": 166,
+    "rows_in": 6598,
+    "rows_out": 6581
+   },
+   "label": {
+    "anomalies": 620,
+    "anomaly_class": "1.0",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 17,
+    "encoded": [],
+    "features_out": 166,
+    "kind": "downsampled",
+    "natural_rate": 0.1541376174598363,
+    "rows": 6201,
+    "rows_in": 6201,
+    "rows_out": 6184
+   },
+   "licence": "CC BY 4.0",
+   "name": "Musk (Version 2)",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "029e743e24b4e58f35338021def28e12da9b0aeb866bbf86751b7b0d58f5232e",
+   "skipped_detectors": [],
+   "uci_id": 75,
+   "url": "https://archive.ics.uci.edu/static/public/75/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 80,
+    "encoded": [],
+    "features_out": 10,
+    "rows_in": 5473,
+    "rows_out": 5393
+   },
+   "label": {
+    "anomalies": 28,
+    "anomaly_class": "3",
+    "classes": 5,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 80,
+    "encoded": [],
+    "features_out": 10,
+    "kind": "native_rare",
+    "natural_rate": 0.0051160241183994155,
+    "rows": 5473,
+    "rows_in": 5473,
+    "rows_out": 5393
+   },
+   "licence": "CC BY 4.0",
+   "name": "Page Blocks Classification",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "431ac64c358a0bfb9ac0e333e1674abe45b24ebc586cb90d6905b20726b6c06f",
+   "skipped_detectors": [],
+   "uci_id": 78,
+   "url": "https://archive.ics.uci.edu/static/public/78/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [
+     "Attribute1",
+     "Attribute40"
+    ],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 62,
+    "rows_in": 5620,
+    "rows_out": 5620
+   },
+   "label": {
+    "anomalies": 554,
+    "anomaly_class": "8",
+    "classes": 10,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [
+     "Attribute1",
+     "Attribute40"
+    ],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 62,
+    "kind": "native_rare",
+    "natural_rate": 0.09857651245551602,
+    "rows": 5620,
+    "rows_in": 5620,
+    "rows_out": 5620
+   },
+   "licence": "CC BY 4.0",
+   "name": "Optical Recognition of Handwritten Digits",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "75fc37d1cb6590c84f567c6bd65c73051cdede2568f148a7b23ddd5ecbfdda2b",
+   "skipped_detectors": [],
+   "uci_id": 80,
+   "url": "https://archive.ics.uci.edu/static/public/80/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 16,
+    "rows_in": 10992,
+    "rows_out": 10992
+   },
+   "label": {
+    "anomalies": 1055,
+    "anomaly_class": "3",
+    "classes": 10,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 16,
+    "kind": "native_rare",
+    "natural_rate": 0.09597889374090247,
+    "rows": 10992,
+    "rows_in": 10992,
+    "rows_out": 10992
+   },
+   "licence": "CC BY 4.0",
+   "name": "Pen-Based Recognition of Handwritten Digits",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "3a3043879657816e18af4bc0822cb89aff03b30988511590e2c05454ce092656",
+   "skipped_detectors": [],
+   "uci_id": 81,
+   "url": "https://archive.ics.uci.edu/static/public/81/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 57,
+    "encoded": [],
+    "features_out": 17,
+    "rows_in": 339,
+    "rows_out": 282
+   },
+   "label_refused": "fewer than 20 rows in the rarest class",
+   "licence": "CC BY 4.0",
+   "name": "Primary Tumor",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "240061d84782e377acb56dbcb93963a051edf05f084d1141767a983183610ab1",
+   "uci_id": 83,
+   "url": "https://archive.ics.uci.edu/static/public/83/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 1011,
+    "encoded": [
+     "modified Zurich class",
+     "largest spot size",
+     "spot distribution"
+    ],
+    "features_out": 23,
+    "rows_in": 1389,
+    "rows_out": 378
+   },
+   "label_refused": "not a classification task",
+   "licence": "CC BY 4.0",
+   "name": "Solar Flare",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "a653db52e851ede9935cf95ab46d58ffcf5e9e221d861bf51c894ccd27f081ac",
+   "uci_id": 89,
+   "url": "https://archive.ics.uci.edu/static/public/89/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 4,
+    "encoded": [],
+    "features_out": 35,
+    "rows_in": 307,
+    "rows_out": 303
+   },
+   "label_refused": "fewer than 20 rows in the rarest class",
+   "licence": "CC BY 4.0",
+   "name": "Soybean (Large)",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "bf5e08597a5e18780fdaa1f24bc79587e16405bd1c0ee302f21aa70753dd7e37",
+   "uci_id": 90,
+   "url": "https://archive.ics.uci.edu/static/public/90/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 394,
+    "encoded": [],
+    "features_out": 57,
+    "rows_in": 4601,
+    "rows_out": 4207
+   },
+   "label": {
+    "anomalies": 310,
+    "anomaly_class": "1",
+    "classes": 2,
+    "conflicting_rows_removed": 2,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 261,
+    "encoded": [],
+    "features_out": 57,
+    "kind": "downsampled",
+    "natural_rate": 0.39404477287546186,
+    "rows": 3098,
+    "rows_in": 3098,
+    "rows_out": 2835
+   },
+   "licence": "CC BY 4.0",
+   "name": "Spambase",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "d86711ceadadd177f09ca816fffa79d82edf5007b585a836c112462e2c217c0d",
+   "skipped_detectors": [],
+   "uci_id": 94,
+   "url": "https://archive.ics.uci.edu/static/public/94/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 93,
+    "encoded": [
+     "handicapped-infants",
+     "water-project-cost-sharing",
+     "adoption-of-the-budget-resolution",
+     "physician-fee-freeze",
+     "el-salvador-aid",
+     "religious-groups-in-schools",
+     "anti-satellite-test-ban",
+     "aid-to-nicaraguan-contras",
+     "mx-missile",
+     "immigration",
+     "synfuels-corporation-cutback",
+     "education-spending",
+     "superfund-right-to-sue",
+     "crime",
+     "duty-free-exports",
+     "export-administration-act-south-africa"
+    ],
+    "features_out": 32,
+    "rows_in": 435,
+    "rows_out": 342
+   },
+   "label": {
+    "anomalies": 30,
+    "anomaly_class": "republican",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 44,
+    "encoded": [
+     "handicapped-infants",
+     "water-project-cost-sharing",
+     "adoption-of-the-budget-resolution",
+     "physician-fee-freeze",
+     "el-salvador-aid",
+     "religious-groups-in-schools",
+     "anti-satellite-test-ban",
+     "aid-to-nicaraguan-contras",
+     "mx-missile",
+     "immigration",
+     "synfuels-corporation-cutback",
+     "education-spending",
+     "superfund-right-to-sue",
+     "crime",
+     "duty-free-exports",
+     "export-administration-act-south-africa"
+    ],
+    "features_out": 32,
+    "kind": "downsampled",
+    "natural_rate": 0.38620689655172413,
+    "rows": 297,
+    "rows_in": 297,
+    "rows_out": 253
+   },
+   "licence": "CC BY 4.0",
+   "name": "Congressional Voting Records",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "d065a84731217cc149d64fd09a2b0c0232f14916a3d6fd3f60b8313d1bbab1d8",
+   "skipped_detectors": [],
+   "uci_id": 105,
+   "url": "https://archive.ics.uci.edu/static/public/105/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 31,
+    "encoded": [],
+    "features_out": 8,
+    "rows_in": 1484,
+    "rows_out": 1453
+   },
+   "label_refused": "fewer than 20 rows in the rarest class",
+   "licence": "CC BY 4.0",
+   "name": "Yeast",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "294c84c36ff131305fe1baaeb9c8c93f9a557d01d1ee676a77a31607ad3df516",
+   "uci_id": 110,
+   "url": "https://archive.ics.uci.edu/static/public/110/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "AMJIND",
+     "GRINST",
+     "HHDFMX",
+     "PEFNTVTY",
+     "PEMNTVTY",
+     "PENATVTY"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 3748,
+    "encoded": [
+     "ACLSWKR",
+     "AHGA",
+     "AHSCOL",
+     "AMARITL",
+     "AMJOCC",
+     "ARACE",
+     "AREORGN",
+     "ASEX",
+     "AUNMEM",
+     "AUNTYPE",
+     "AWKSTAT",
+     "FILESTAT",
+     "GRINREG",
+     "HHDREL",
+     "MIGMTR1",
+     "MIGMTR3",
+     "MIGMTR4",
+     "MIGSAME",
+     "MIGSUN",
+     "PARENT",
+     "PRCITSHP",
+     "VETQVA"
+    ],
+    "features_out": 163,
+    "rows_in": 199523,
+    "rows_out": 195775
+   },
+   "label": {
+    "anomalies": 12382,
+    "anomaly_class": " 50000+.",
+    "classes": 2,
+    "conflicting_rows_removed": 4,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "AMJIND",
+     "GRINST",
+     "HHDFMX",
+     "PEFNTVTY",
+     "PEMNTVTY",
+     "PENATVTY"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 3746,
+    "encoded": [
+     "ACLSWKR",
+     "AHGA",
+     "AHSCOL",
+     "AMARITL",
+     "AMJOCC",
+     "ARACE",
+     "AREORGN",
+     "ASEX",
+     "AUNMEM",
+     "AUNTYPE",
+     "AWKSTAT",
+     "FILESTAT",
+     "GRINREG",
+     "HHDREL",
+     "MIGMTR1",
+     "MIGMTR3",
+     "MIGMTR4",
+     "MIGSAME",
+     "MIGSUN",
+     "PARENT",
+     "PRCITSHP",
+     "VETQVA"
+    ],
+    "features_out": 163,
+    "kind": "native_rare",
+    "natural_rate": 0.06205800834991455,
+    "rows": 199523,
+    "rows_in": 199523,
+    "rows_out": 195773
+   },
+   "licence": "CC BY 4.0",
+   "name": "Census-Income (KDD)",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "1deb5132c85eb522f36c11e5a99704bc8fa30d0626f1847a9c6104594b063dfe",
+   "skipped_detectors": [
+    "lof",
+    "ocsvm"
+   ],
+   "uci_id": 117,
+   "url": "https://archive.ics.uci.edu/static/public/117/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [
+     "Attribute1",
+     "Attribute3",
+     "Attribute4",
+     "Attribute6",
+     "Attribute7",
+     "Attribute9",
+     "Attribute10",
+     "Attribute12",
+     "Attribute14",
+     "Attribute15",
+     "Attribute17",
+     "Attribute19",
+     "Attribute20"
+    ],
+    "features_out": 61,
+    "rows_in": 1000,
+    "rows_out": 1000
+   },
+   "label": {
+    "anomalies": 78,
+    "anomaly_class": "2",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [
+     "Attribute1",
+     "Attribute3",
+     "Attribute4",
+     "Attribute6",
+     "Attribute7",
+     "Attribute9",
+     "Attribute10",
+     "Attribute12",
+     "Attribute14",
+     "Attribute15",
+     "Attribute17",
+     "Attribute19",
+     "Attribute20"
+    ],
+    "features_out": 61,
+    "kind": "downsampled",
+    "natural_rate": 0.3,
+    "rows": 778,
+    "rows_in": 778,
+    "rows_out": 778
+   },
+   "licence": "CC BY 4.0",
+   "name": "Statlog (German Credit Data)",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "f985b42636c9e28ce4fb3913738d1ebfd0f7947fda8d4406fe2ded5d84295acb",
+   "skipped_detectors": [],
+   "uci_id": 144,
+   "url": "https://archive.ics.uci.edu/static/public/144/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 36,
+    "rows_in": 6435,
+    "rows_out": 6435
+   },
+   "label": {
+    "anomalies": 626,
+    "anomaly_class": "4",
+    "classes": 6,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 36,
+    "kind": "native_rare",
+    "natural_rate": 0.09728049728049729,
+    "rows": 6435,
+    "rows_in": 6435,
+    "rows_out": 6435
+   },
+   "licence": "CC BY 4.0",
+   "name": "Statlog (Landsat Satellite)",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "a121454cbcc631ace2b0581b10336c2d553aa7689632e653934374a759bef443",
+   "skipped_detectors": [],
+   "uci_id": 146,
+   "url": "https://archive.ics.uci.edu/static/public/146/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 16383,
+    "encoded": [],
+    "features_out": 7,
+    "rows_in": 58000,
+    "rows_out": 41617
+   },
+   "label_refused": "fewer than 20 rows in the rarest class",
+   "licence": "CC BY 4.0",
+   "name": "Statlog (Shuttle)",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "47aef84b30949e8e5980995aa7cac907892ec8f50d6b929ca91bfd28ebef704e",
+   "uci_id": 148,
+   "url": "https://archive.ics.uci.edu/static/public/148/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 18,
+    "rows_in": 846,
+    "rows_out": 846
+   },
+   "label_refused": "fewer than 20 rows in the rarest class",
+   "licence": "CC BY 4.0",
+   "name": "Statlog (Vehicle Silhouettes)",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "49e7a61b5b39575fa5570b029b5a33be6732d6824e11e94247f2d333b51a4d53",
+   "uci_id": 149,
+   "url": "https://archive.ics.uci.edu/static/public/149/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 115,
+    "encoded": [],
+    "features_out": 10,
+    "rows_in": 19020,
+    "rows_out": 18905
+   },
+   "label": {
+    "anomalies": 1370,
+    "anomaly_class": "h",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 7,
+    "encoded": [],
+    "features_out": 10,
+    "kind": "downsampled",
+    "natural_rate": 0.3516298633017876,
+    "rows": 13702,
+    "rows_in": 13702,
+    "rows_out": 13695
+   },
+   "licence": "CC BY 4.0",
+   "name": "MAGIC Gamma Telescope",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "a52d3a378e43df7b678c4c0b2f03a66a058bbfeb27c95ccd037a767e7d172984",
+   "skipped_detectors": [],
+   "uci_id": 159,
+   "url": "https://archive.ics.uci.edu/static/public/159/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 319,
+    "encoded": [],
+    "features_out": 5,
+    "rows_in": 961,
+    "rows_out": 642
+   },
+   "label": {
+    "anomalies": 57,
+    "anomaly_class": "1",
+    "classes": 2,
+    "conflicting_rows_removed": 32,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 143,
+    "encoded": [],
+    "features_out": 5,
+    "kind": "downsampled",
+    "natural_rate": 0.4630593132154006,
+    "rows": 573,
+    "rows_in": 573,
+    "rows_out": 398
+   },
+   "licence": "CC BY 4.0",
+   "name": "Mammographic Mass",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "51b86255a47927b721e09f119630be746beb9fd3e729f9c3c86630382a03352f",
+   "skipped_detectors": [],
+   "uci_id": 161,
+   "url": "https://archive.ics.uci.edu/static/public/161/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 13,
+    "encoded": [
+     "month",
+     "day"
+    ],
+    "features_out": 29,
+    "rows_in": 517,
+    "rows_out": 504
+   },
+   "label_refused": "not a classification task",
+   "licence": "CC BY 4.0",
+   "name": "Forest Fires",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "0d6586a1fa52f55bef48578aef14eb97273f1e9330e1a53423df497a77065253",
+   "uci_id": 162,
+   "url": "https://archive.ics.uci.edu/static/public/162/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 38,
+    "encoded": [],
+    "features_out": 8,
+    "rows_in": 1030,
+    "rows_out": 992
+   },
+   "label_refused": "not a classification task",
+   "licence": "CC BY 4.0",
+   "name": "Concrete Compressive Strength",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "8d4b15b6fc68cd932d745cbd663d5ceae66dd54422e99c1e4865f2936ab7e2af",
+   "uci_id": 165,
+   "url": "https://archive.ics.uci.edu/static/public/165/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 246,
+    "encoded": [],
+    "features_out": 4,
+    "rows_in": 748,
+    "rows_out": 502
+   },
+   "label": {
+    "anomalies": 63,
+    "anomaly_class": "1",
+    "classes": 2,
+    "conflicting_rows_removed": 98,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 122,
+    "encoded": [],
+    "features_out": 4,
+    "kind": "downsampled",
+    "natural_rate": 0.23796791443850268,
+    "rows": 633,
+    "rows_in": 633,
+    "rows_out": 413
+   },
+   "licence": "CC BY 4.0",
+   "name": "Blood Transfusion Service Center",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "386a3671dddb9427d43d12fcf7e1eaa34bd17e249679d0043c2a7c62f089790f",
+   "skipped_detectors": [],
+   "uci_id": 176,
+   "url": "https://archive.ics.uci.edu/static/public/176/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "county",
+     "community",
+     "communityname",
+     "LemasSwornFT",
+     "LemasSwFTPerPop",
+     "LemasSwFTFieldOps",
+     "LemasSwFTFieldPerPop",
+     "LemasTotalReq",
+     "LemasTotReqPerPop",
+     "PolicReqPerOffic",
+     "PolicPerPop",
+     "RacialMatchCommPol",
+     "PctPolicWhite",
+     "PctPolicBlack",
+     "PctPolicHisp",
+     "PctPolicAsian",
+     "PctPolicMinor",
+     "OfficAssgnDrugUnits",
+     "PolicAveOTWorked",
+     "PolicCars",
+     "PolicOperBudg",
+     "LemasPctPolicOnPatr",
+     "PolicBudgPerPop"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [
+     "NumKindsDrugsSeiz",
+     "LemasGangUnitDeploy"
+    ],
+    "features_out": 122,
+    "rows_in": 1994,
+    "rows_out": 1994
+   },
+   "label_refused": "not a classification task",
+   "licence": "CC BY 4.0",
+   "name": "Communities and Crime",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "7984874910c8f9ddcf5db06abe416850c55d880d225167112c612dd58ea54b40",
+   "uci_id": 183,
+   "url": "https://archive.ics.uci.edu/static/public/183/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 1179,
+    "encoded": [],
+    "features_out": 11,
+    "rows_in": 6497,
+    "rows_out": 5318
+   },
+   "label_refused": "fewer than 20 rows in the rarest class",
+   "licence": "CC BY 4.0",
+   "name": "Wine Quality",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "428bd8df7313b159988405ae5e3be6d363993d73f7ffc2adedfdc1d496508191",
+   "uci_id": 186,
+   "url": "https://archive.ics.uci.edu/static/public/186/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 19,
+    "rows_in": 5875,
+    "rows_out": 5875
+   },
+   "label_refused": "not a classification task",
+   "licence": "CC BY 4.0",
+   "name": "Parkinsons Telemonitoring",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "689fd221159cd78b07a50087992c9d9472a4eb26527cdc8e896a708a2013ebcf",
+   "uci_id": 189,
+   "url": "https://archive.ics.uci.edu/static/public/189/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 15,
+    "encoded": [],
+    "features_out": 21,
+    "rows_in": 2126,
+    "rows_out": 2111
+   },
+   "label_refused": "fewer than 2 classes",
+   "licence": "CC BY 4.0",
+   "name": "Cardiotocography",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "4648b5bf338d18f0c7e030a5d2cfb2018c831695cdb90129912cf00367c7d751",
+   "uci_id": 193,
+   "url": "https://archive.ics.uci.edu/static/public/193/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 27,
+    "rows_in": 1941,
+    "rows_out": 1941
+   },
+   "label_refused": "fewer than 2 classes",
+   "licence": "CC BY 4.0",
+   "name": "Steel Plates Faults",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "883ed09b2a46fcde7144dd173092c645aacb45499dea703d00228d3ddc3c60de",
+   "uci_id": 198,
+   "url": "https://archive.ics.uci.edu/static/public/198/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 6,
+    "rows_in": 310,
+    "rows_out": 310
+   },
+   "label": {
+    "anomalies": 28,
+    "anomaly_class": "Hernia",
+    "classes": 3,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 6,
+    "kind": "downsampled",
+    "natural_rate": 0.1935483870967742,
+    "rows": 278,
+    "rows_in": 278,
+    "rows_out": 278
+   },
+   "licence": "CC BY 4.0",
+   "name": "Vertebral Column",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "7b98e6802c824d4c20a97f86174ef47db9171875888775a3884245443f7432d5",
+   "skipped_detectors": [],
+   "uci_id": 212,
+   "url": "https://archive.ics.uci.edu/static/public/212/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [
+     "poutcome"
+    ],
+    "duplicates_removed": 0,
+    "encoded": [
+     "job",
+     "marital",
+     "education",
+     "default",
+     "housing",
+     "loan",
+     "contact",
+     "month"
+    ],
+    "features_out": 44,
+    "rows_in": 45211,
+    "rows_out": 45211
+   },
+   "label": {
+    "anomalies": 4436,
+    "anomaly_class": "yes",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [
+     "poutcome"
+    ],
+    "duplicates_removed": 0,
+    "encoded": [
+     "job",
+     "marital",
+     "education",
+     "default",
+     "housing",
+     "loan",
+     "contact",
+     "month"
+    ],
+    "features_out": 44,
+    "kind": "downsampled",
+    "natural_rate": 0.11698480458295547,
+    "rows": 44358,
+    "rows_in": 44358,
+    "rows_out": 44358
+   },
+   "licence": "CC BY 4.0",
+   "name": "Bank Marketing",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "94a5cb4b7d461dab12f7f6123723054911fbdd28d84a2c4ec92378af019be686",
+   "skipped_detectors": [
+    "ocsvm"
+   ],
+   "uci_id": 222,
+   "url": "https://archive.ics.uci.edu/static/public/222/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 13,
+    "encoded": [
+     "Gender"
+    ],
+    "features_out": 11,
+    "rows_in": 583,
+    "rows_out": 570
+   },
+   "label": {
+    "anomalies": 46,
+    "anomaly_class": "2",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 10,
+    "encoded": [
+     "Gender"
+    ],
+    "features_out": 11,
+    "kind": "downsampled",
+    "natural_rate": 0.2864493996569468,
+    "rows": 462,
+    "rows_in": 462,
+    "rows_out": 452
+   },
+   "licence": "CC BY 4.0",
+   "name": "ILPD (Indian Liver Patient Dataset)",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "dbb065e6bf2b226b6d9c04f066ddc0b45173861dfb3a4df83f3710d3927ef5de",
+   "skipped_detectors": [],
+   "uci_id": 225,
+   "url": "https://archive.ics.uci.edu/static/public/225/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 8,
+    "rows_in": 768,
+    "rows_out": 768
+   },
+   "label_refused": "fewer than 2 classes",
+   "licence": "CC BY 4.0",
+   "name": "Energy Efficiency",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "db44dbe453acd464b5cf65be2fb01a28aa9c5b2630300e65fbe28cde35f5d96f",
+   "uci_id": 242,
+   "url": "https://archive.ics.uci.edu/static/public/242/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "date"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 9,
+    "rows_in": 536,
+    "rows_out": 536
+   },
+   "label_refused": "fewer than 2 classes",
+   "licence": "CC BY 4.0",
+   "name": "ISTANBUL STOCK EXCHANGE",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "a01d8921bd9bfa7bed330f2058279e7d587bb795007b612dc29dfea9905c2853",
+   "uci_id": 247,
+   "url": "https://archive.ics.uci.edu/static/public/247/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 5,
+    "rows_in": 403,
+    "rows_out": 403
+   },
+   "label": {
+    "anomalies": 24,
+    "anomaly_class": "very_low",
+    "classes": 5,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 5,
+    "kind": "native_rare",
+    "natural_rate": 0.05955334987593052,
+    "rows": 403,
+    "rows_in": 403,
+    "rows_out": 403
+   },
+   "licence": "CC BY 4.0",
+   "name": "User Knowledge Modeling",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "e26c15a18c7c36074a0108e630f3181edd4e6065715a778aac5c517f23af7b41",
+   "skipped_detectors": [],
+   "uci_id": 257,
+   "url": "https://archive.ics.uci.edu/static/public/257/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 24,
+    "encoded": [],
+    "features_out": 4,
+    "rows_in": 1372,
+    "rows_out": 1348
+   },
+   "label": {
+    "anomalies": 85,
+    "anomaly_class": "1",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 24,
+    "encoded": [],
+    "features_out": 4,
+    "kind": "downsampled",
+    "natural_rate": 0.4446064139941691,
+    "rows": 847,
+    "rows_in": 847,
+    "rows_out": 823
+   },
+   "licence": "CC BY 4.0",
+   "name": "Banknote Authentication",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "0787e50299c198e919276660edf98dd5dcb94951ad81435b3ab61afb666936c9",
+   "skipped_detectors": [],
+   "uci_id": 267,
+   "url": "https://archive.ics.uci.edu/static/public/267/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [
+     "Feature128"
+    ],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 127,
+    "rows_in": 13910,
+    "rows_out": 13910
+   },
+   "label_refused": "fewer than 20 rows in the rarest class",
+   "licence": "CC BY 4.0",
+   "name": "Gas Sensor Array Drift at Different Concentrations",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "0dcc22a2a984483c4c6aed0e227331b9a9aab414532d9fd8ad1c3bad837a7c3d",
+   "uci_id": 270,
+   "url": "https://archive.ics.uci.edu/static/public/270/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "dteday"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 10,
+    "encoded": [],
+    "features_out": 12,
+    "rows_in": 17379,
+    "rows_out": 17369
+   },
+   "label_refused": "not a classification task",
+   "licence": "CC BY 4.0",
+   "name": "Bike Sharing",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "e03de4ee4ef4dc376ac6e04bf829673c6269e8eba5c60fa121640fa2f829504f",
+   "uci_id": 275,
+   "url": "https://archive.ics.uci.edu/static/public/275/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [
+     "DGN",
+     "PRE6",
+     "PRE7",
+     "PRE8",
+     "PRE9",
+     "PRE10",
+     "PRE11",
+     "PRE14",
+     "PRE17",
+     "PRE19",
+     "PRE25",
+     "PRE30",
+     "PRE32"
+    ],
+    "features_out": 37,
+    "rows_in": 470,
+    "rows_out": 470
+   },
+   "label": {
+    "anomalies": 44,
+    "anomaly_class": "T",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [
+     "DGN",
+     "PRE6",
+     "PRE7",
+     "PRE8",
+     "PRE9",
+     "PRE10",
+     "PRE11",
+     "PRE14",
+     "PRE17",
+     "PRE19",
+     "PRE25",
+     "PRE30",
+     "PRE32"
+    ],
+    "features_out": 37,
+    "kind": "downsampled",
+    "natural_rate": 0.14893617021276595,
+    "rows": 444,
+    "rows_in": 444,
+    "rows_out": 444
+   },
+   "licence": "CC BY 4.0",
+   "name": "Thoracic Surgery Data",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "d7856924d2410ab479ae43f38dc62fe0e84d4e428625ceeeb6b269b9233500c9",
+   "skipped_detectors": [],
+   "uci_id": 277,
+   "url": "https://archive.ics.uci.edu/static/public/277/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 5,
+    "rows_in": 1503,
+    "rows_out": 1503
+   },
+   "label_refused": "not a classification task",
+   "licence": "CC BY 4.0",
+   "name": "Airfoil Self-Noise",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "0beffa51c5b1493960d046c7d512a67d06a7884df6db599408087ee2fc2fc18a",
+   "uci_id": 291,
+   "url": "https://archive.ics.uci.edu/static/public/291/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 7,
+    "rows_in": 440,
+    "rows_out": 440
+   },
+   "label": {
+    "anomalies": 44,
+    "anomaly_class": "2",
+    "classes": 3,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 7,
+    "kind": "downsampled",
+    "natural_rate": 0.10681818181818181,
+    "rows": 437,
+    "rows_in": 437,
+    "rows_out": 437
+   },
+   "licence": "CC BY 4.0",
+   "name": "Wholesale customers",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "c3d018c643565b85cee733c4a2ac76dd76e080e857cb23f0ccfcc2e15a6c17ef",
+   "skipped_detectors": [],
+   "uci_id": 292,
+   "url": "https://archive.ics.uci.edu/static/public/292/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 41,
+    "encoded": [],
+    "features_out": 4,
+    "rows_in": 9568,
+    "rows_out": 9527
+   },
+   "label_refused": "not a classification task",
+   "licence": "CC BY 4.0",
+   "name": "Combined Cycle Power Plant",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "3c1fc11025f8424f8d95802d8b7086dffd3f73a552c6dcab3d973620986194b2",
+   "uci_id": 294,
+   "url": "https://archive.ics.uci.edu/static/public/294/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [
+     "examide",
+     "citoglipton"
+    ],
+    "dropped_high_cardinality": [
+     "medical_specialty",
+     "diag_1",
+     "diag_2",
+     "diag_3"
+    ],
+    "dropped_missing": [
+     "weight",
+     "max_glu_serum",
+     "A1Cresult"
+    ],
+    "duplicates_removed": 9,
+    "encoded": [
+     "race",
+     "gender",
+     "age",
+     "payer_code",
+     "metformin",
+     "repaglinide",
+     "nateglinide",
+     "chlorpropamide",
+     "glimepiride",
+     "acetohexamide",
+     "glipizide",
+     "glyburide",
+     "tolbutamide",
+     "pioglitazone",
+     "rosiglitazone",
+     "acarbose",
+     "miglitol",
+     "troglitazone",
+     "tolazamide",
+     "insulin",
+     "glyburide-metformin",
+     "glipizide-metformin",
+     "glimepiride-pioglitazone",
+     "metformin-rosiglitazone",
+     "metformin-pioglitazone",
+     "change",
+     "diabetesMed"
+    ],
+    "features_out": 119,
+    "rows_in": 101766,
+    "rows_out": 101757
+   },
+   "label": {
+    "anomalies": 10045,
+    "anomaly_class": "<30",
+    "classes": 3,
+    "conflicting_rows_removed": 4,
+    "dropped_constant": [
+     "examide",
+     "citoglipton"
+    ],
+    "dropped_high_cardinality": [
+     "medical_specialty",
+     "diag_1",
+     "diag_2",
+     "diag_3"
+    ],
+    "dropped_missing": [
+     "weight",
+     "max_glu_serum",
+     "A1Cresult"
+    ],
+    "duplicates_removed": 7,
+    "encoded": [
+     "race",
+     "gender",
+     "age",
+     "payer_code",
+     "metformin",
+     "repaglinide",
+     "nateglinide",
+     "chlorpropamide",
+     "glimepiride",
+     "acetohexamide",
+     "glipizide",
+     "glyburide",
+     "tolbutamide",
+     "pioglitazone",
+     "rosiglitazone",
+     "acarbose",
+     "miglitol",
+     "troglitazone",
+     "tolazamide",
+     "insulin",
+     "glyburide-metformin",
+     "glipizide-metformin",
+     "glimepiride-pioglitazone",
+     "metformin-rosiglitazone",
+     "metformin-pioglitazone",
+     "change",
+     "diabetesMed"
+    ],
+    "features_out": 119,
+    "kind": "downsampled",
+    "natural_rate": 0.11159915885462728,
+    "rows": 100454,
+    "rows_in": 100454,
+    "rows_out": 100443
+   },
+   "licence": "CC BY 4.0",
+   "name": "Diabetes 130-US Hospitals for Years 1999-2008",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "f792c388d9b470aac4fbf21c39b176534d55a116e7626881c30bbe7ab0341422",
+   "skipped_detectors": [
+    "lof",
+    "ocsvm"
+   ],
+   "uci_id": 296,
+   "url": "https://archive.ics.uci.edu/static/public/296/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "stock",
+     "date",
+     "open",
+     "high",
+     "low",
+     "close",
+     "next_weeks_open",
+     "next_weeks_close"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 7,
+    "rows_in": 750,
+    "rows_out": 750
+   },
+   "label_refused": "fewer than 20 rows in the rarest class",
+   "licence": "CC BY 4.0",
+   "name": "Dow Jones Index",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "24b8f83168153d9cd0bc6121d3979bd8c70fb7b58a94b920194135cbe003090b",
+   "uci_id": 312,
+   "url": "https://archive.ics.uci.edu/static/public/312/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [
+     "school",
+     "sex",
+     "address",
+     "famsize",
+     "Pstatus",
+     "Mjob",
+     "Fjob",
+     "reason",
+     "guardian",
+     "schoolsup",
+     "famsup",
+     "paid",
+     "activities",
+     "nursery",
+     "higher",
+     "internet",
+     "romantic"
+    ],
+    "features_out": 56,
+    "rows_in": 649,
+    "rows_out": 649
+   },
+   "label_refused": "fewer than 2 classes",
+   "licence": "CC BY 4.0",
+   "name": "Student Performance",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "5be7b02f13f5800fddd66e2c8d834cd00ece14c552fb404def2397b31b63236b",
+   "uci_id": 320,
+   "url": "https://archive.ics.uci.edu/static/public/320/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 5270,
+    "encoded": [],
+    "features_out": 30,
+    "rows_in": 11055,
+    "rows_out": 5785
+   },
+   "label": {
+    "anomalies": 684,
+    "anomaly_class": "-1",
+    "classes": 2,
+    "conflicting_rows_removed": 80,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 3332,
+    "encoded": [],
+    "features_out": 30,
+    "kind": "downsampled",
+    "natural_rate": 0.44305744007236547,
+    "rows": 6841,
+    "rows_in": 6841,
+    "rows_out": 3429
+   },
+   "licence": "CC BY 4.0",
+   "name": "Phishing Websites",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "35dd9aa6870643c292d68343d926869095292a7406d198305cae7435069b59c2",
+   "skipped_detectors": [],
+   "uci_id": 327,
+   "url": "https://archive.ics.uci.edu/static/public/327/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 5,
+    "encoded": [],
+    "features_out": 19,
+    "rows_in": 1151,
+    "rows_out": 1146
+   },
+   "label": {
+    "anomalies": 68,
+    "anomaly_class": "0",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 5,
+    "encoded": [],
+    "features_out": 19,
+    "kind": "downsampled",
+    "natural_rate": 0.46915725456125107,
+    "rows": 679,
+    "rows_in": 679,
+    "rows_out": 674
+   },
+   "licence": "CC BY 4.0",
+   "name": "Diabetic Retinopathy Debrecen",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "2636b73e6830e9d5f5967a286766b5d39f48a7bf40761e9621bcd5d79a2aa527",
+   "skipped_detectors": [],
+   "uci_id": 329,
+   "url": "https://archive.ics.uci.edu/static/public/329/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 58,
+    "rows_in": 39644,
+    "rows_out": 39644
+   },
+   "label_refused": "fewer than 20 rows in the rarest class",
+   "licence": "CC BY 4.0",
+   "name": "Online News Popularity",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "b66d9088632308cc27fa35af847650d174a5a50503987c4e511de94a99d1c218",
+   "uci_id": 332,
+   "url": "https://archive.ics.uci.edu/static/public/332/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [
+     "rbc",
+     "pc",
+     "pcc",
+     "ba",
+     "htn",
+     "dm",
+     "cad",
+     "appet",
+     "pe",
+     "ane"
+    ],
+    "features_out": 35,
+    "rows_in": 400,
+    "rows_out": 400
+   },
+   "label_refused": "fewer than 20 rows in the rarest class",
+   "licence": "CC BY 4.0",
+   "name": "Chronic Kidney Disease",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "0eeea8d17f5ad8792d854999d6ddf1602ec4e116616f6ccdfdaef0ba8109e694",
+   "uci_id": 336,
+   "url": "https://archive.ics.uci.edu/static/public/336/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [
+     "Genotype",
+     "Treatment",
+     "Behavior"
+    ],
+    "features_out": 83,
+    "rows_in": 1080,
+    "rows_out": 1080
+   },
+   "label": {
+    "anomalies": 105,
+    "anomaly_class": "t-CS-s",
+    "classes": 8,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [
+     "Genotype",
+     "Treatment",
+     "Behavior"
+    ],
+    "features_out": 83,
+    "kind": "native_rare",
+    "natural_rate": 0.09722222222222222,
+    "rows": 1080,
+    "rows_in": 1080,
+    "rows_out": 1080
+   },
+   "licence": "CC BY 4.0",
+   "name": "Mice Protein Expression",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "86dc3961c391df56c98d86757f779ae04e19229f12d9835ca084d01de22a10e5",
+   "skipped_detectors": [],
+   "uci_id": 342,
+   "url": "https://archive.ics.uci.edu/static/public/342/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 56,
+    "encoded": [],
+    "features_out": 23,
+    "rows_in": 30000,
+    "rows_out": 29944
+   },
+   "label": {
+    "anomalies": 2596,
+    "anomaly_class": "1",
+    "classes": 2,
+    "conflicting_rows_removed": 24,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 28,
+    "encoded": [],
+    "features_out": 23,
+    "kind": "downsampled",
+    "natural_rate": 0.2212,
+    "rows": 25960,
+    "rows_in": 25960,
+    "rows_out": 25908
+   },
+   "licence": "CC BY 4.0",
+   "name": "Default of Credit Card Clients",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "45bcf4df62ff2e237a74eb155cabfb4bbbc171219a0637daef44fdad07503dd0",
+   "skipped_detectors": [],
+   "uci_id": 350,
+   "url": "https://archive.ics.uci.edu/static/public/350/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "date"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 1442,
+    "encoded": [],
+    "features_out": 5,
+    "rows_in": 20562,
+    "rows_out": 19120
+   },
+   "label": {
+    "anomalies": 1757,
+    "anomaly_class": "1.0",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "date"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 1438,
+    "encoded": [],
+    "features_out": 5,
+    "kind": "downsampled",
+    "natural_rate": 0.23103112840466927,
+    "rows": 17567,
+    "rows_in": 17567,
+    "rows_out": 16129
+   },
+   "licence": "CC BY 4.0",
+   "name": "Occupancy Detection ",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "3648f2aa7026c24b1fcf69f463a696898a37949046aabf2db4e263e2769b9530",
+   "skipped_detectors": [],
+   "uci_id": 357,
+   "url": "https://archive.ics.uci.edu/static/public/357/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "Date",
+     "Time"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 31,
+    "encoded": [],
+    "features_out": 13,
+    "rows_in": 9357,
+    "rows_out": 9326
+   },
+   "label_refused": "not a classification task",
+   "licence": "CC BY 4.0",
+   "name": "Air Quality",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "4c42e4729e876dfdecf3bfb0ed658f2bdfb2b3007da496440d303260a97733e5",
+   "uci_id": 360,
+   "url": "https://archive.ics.uci.edu/static/public/360/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 401,
+    "encoded": [],
+    "features_out": 65,
+    "rows_in": 43405,
+    "rows_out": 43004
+   },
+   "label": {
+    "anomalies": 2091,
+    "anomaly_class": "1",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 401,
+    "encoded": [],
+    "features_out": 65,
+    "kind": "native_rare",
+    "natural_rate": 0.04817417348231771,
+    "rows": 43405,
+    "rows_in": 43405,
+    "rows_out": 43004
+   },
+   "licence": "CC BY 4.0",
+   "name": "Polish Companies Bankruptcy",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "afbfbed015d20f8421c32c62db37367c018eb6e92b00ea62a23354af8f84c44e",
+   "skipped_detectors": [
+    "ocsvm"
+   ],
+   "uci_id": 365,
+   "url": "https://archive.ics.uci.edu/static/public/365/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [
+     "Type"
+    ],
+    "features_out": 21,
+    "rows_in": 500,
+    "rows_out": 500
+   },
+   "label_refused": "not a classification task",
+   "licence": "CC BY 4.0",
+   "name": "Facebook Metrics",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "7f2c1dc78e46bb38e6c59fb852edb7a212484f590d259c3a1e0afb2f894a4f63",
+   "uci_id": 368,
+   "url": "https://archive.ics.uci.edu/static/public/368/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 8,
+    "rows_in": 17898,
+    "rows_out": 17898
+   },
+   "label": {
+    "anomalies": 1639,
+    "anomaly_class": "1",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 8,
+    "kind": "native_rare",
+    "natural_rate": 0.09157447759526204,
+    "rows": 17898,
+    "rows_in": 17898,
+    "rows_out": 17898
+   },
+   "licence": "CC BY 4.0",
+   "name": "HTRU2",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "f2ad10d1da05ebd2fa6b4e610e314284e646d56663cc64b889506e3a1c59c814",
+   "skipped_detectors": [],
+   "uci_id": 372,
+   "url": "https://archive.ics.uci.edu/static/public/372/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 12,
+    "rows_in": 1885,
+    "rows_out": 1885
+   },
+   "label_refused": "fewer than 2 classes",
+   "licence": "CC BY 4.0",
+   "name": "Drug Consumption (Quantified)",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "145a0af23d90744950c77d3283ba02a44494cfd839d503eb2ae000f6986cd9e5",
+   "uci_id": 373,
+   "url": "https://archive.ics.uci.edu/static/public/373/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "date"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 27,
+    "rows_in": 19735,
+    "rows_out": 19735
+   },
+   "label_refused": "not a classification task",
+   "licence": "CC BY 4.0",
+   "name": "Appliances Energy Prediction",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "df49e914acd72504f1109bd9fdb4a6970cb0effc8c7e977c92f95295af350e24",
+   "uci_id": 374,
+   "url": "https://archive.ics.uci.edu/static/public/374/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 677,
+    "encoded": [],
+    "features_out": 9,
+    "rows_in": 1353,
+    "rows_out": 676
+   },
+   "label": {
+    "anomalies": 103,
+    "anomaly_class": "0",
+    "classes": 3,
+    "conflicting_rows_removed": 38,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 649,
+    "encoded": [],
+    "features_out": 9,
+    "kind": "native_rare",
+    "natural_rate": 0.07612712490761271,
+    "rows": 1353,
+    "rows_in": 1353,
+    "rows_out": 666
+   },
+   "licence": "CC BY 4.0",
+   "name": "Website Phishing",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "1c9970fb1eb7f4efa3621c18646c2f5e96cab5d82688794356d5bea4b6626e2d",
+   "skipped_detectors": [],
+   "uci_id": 379,
+   "url": "https://archive.ics.uci.edu/static/public/379/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [
+     "cbwd"
+    ],
+    "features_out": 14,
+    "rows_in": 43824,
+    "rows_out": 43824
+   },
+   "label_refused": "not a classification task",
+   "licence": "CC BY 4.0",
+   "name": "Beijing PM2.5",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "670a47f8c76eb5de5936354a4c5de70ce5d5da76e2483c9df3884030aded8016",
+   "uci_id": 381,
+   "url": "https://archive.ics.uci.edu/static/public/381/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [
+     "STDs:cervical condylomatosis",
+     "STDs:AIDS"
+    ],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [
+     "STDs: Time since first diagnosis",
+     "STDs: Time since last diagnosis"
+    ],
+    "duplicates_removed": 23,
+    "encoded": [],
+    "features_out": 32,
+    "rows_in": 858,
+    "rows_out": 835
+   },
+   "label_refused": "fewer than 2 classes",
+   "licence": "CC BY 4.0",
+   "name": "Cervical Cancer (Risk Factors)",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "f71865358287ba3e87192ccc833fb8924efaec7b060f277771305559035ea7d4",
+   "uci_id": 383,
+   "url": "https://archive.ics.uci.edu/static/public/383/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 12,
+    "rows_in": 315,
+    "rows_out": 315
+   },
+   "label_refused": "not a classification task",
+   "licence": "CC BY 4.0",
+   "name": "Stock Portfolio Performance",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "24a9c22e57c5a12398b5a6c0c639f0a403ad4d7255dceace2ed6031b7c8a8a19",
+   "uci_id": 390,
+   "url": "https://archive.ics.uci.edu/static/public/390/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [
+     "age_desc"
+    ],
+    "dropped_high_cardinality": [
+     "country_of_res"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 10,
+    "encoded": [
+     "gender",
+     "ethnicity",
+     "jaundice",
+     "family_pdd",
+     "used_app_before",
+     "relation"
+    ],
+    "features_out": 36,
+    "rows_in": 704,
+    "rows_out": 694
+   },
+   "label": {
+    "anomalies": 57,
+    "anomaly_class": "YES",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [
+     "age_desc"
+    ],
+    "dropped_high_cardinality": [
+     "country_of_res"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 6,
+    "encoded": [
+     "gender",
+     "ethnicity",
+     "jaundice",
+     "family_pdd",
+     "used_app_before",
+     "relation"
+    ],
+    "features_out": 36,
+    "kind": "downsampled",
+    "natural_rate": 0.2684659090909091,
+    "rows": 572,
+    "rows_in": 572,
+    "rows_out": 566
+   },
+   "licence": "CC BY 4.0",
+   "name": "Autism Screening Adult",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "5ffba0d12ea9d867c8e5493109149a95c7f5602dc839a5ed73ebce9cb0cb8e8e",
+   "skipped_detectors": [],
+   "uci_id": 426,
+   "url": "https://archive.ics.uci.edu/static/public/426/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 66,
+    "encoded": [],
+    "features_out": 19,
+    "rows_in": 740,
+    "rows_out": 674
+   },
+   "label_refused": "fewer than 20 rows in the rarest class",
+   "licence": "CC BY 4.0",
+   "name": "Absenteeism at work",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "a9db81e36063ea227cb321b7dfc41644f05de496a006dbe5256a4c41da43f619",
+   "uci_id": 445,
+   "url": "https://archive.ics.uci.edu/static/public/445/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 6093,
+    "encoded": [],
+    "features_out": 81,
+    "rows_in": 21263,
+    "rows_out": 15170
+   },
+   "label_refused": "not a classification task",
+   "licence": "CC BY 4.0",
+   "name": "Superconductivty Data",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "0b50992b735f313b9c5f104d58562b676e58318b771ab48e08a9563a942091d4",
+   "uci_id": 464,
+   "url": "https://archive.ics.uci.edu/static/public/464/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [
+     "ms"
+    ],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [
+     "ge",
+     "cst",
+     "tnp",
+     "twp",
+     "iap",
+     "esp",
+     "arr",
+     "ls",
+     "as",
+     "fmi",
+     "fs",
+     "fq",
+     "mq",
+     "fo",
+     "mo",
+     "nf",
+     "sh",
+     "ss",
+     "me",
+     "tt",
+     "atd"
+    ],
+    "features_out": 77,
+    "rows_in": 131,
+    "rows_out": 131
+   },
+   "label_refused": "fewer than 2 classes",
+   "licence": "CC BY 4.0",
+   "name": "Student Academics Performance",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "58326591a4f1b8837feb5268dd8fa6c1beacf5251f976734d3a0727fb75dfa18",
+   "uci_id": 467,
+   "url": "https://archive.ics.uci.edu/static/public/467/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 125,
+    "encoded": [
+     "Month",
+     "VisitorType",
+     "Weekend"
+    ],
+    "features_out": 29,
+    "rows_in": 12330,
+    "rows_out": 12205
+   },
+   "label": {
+    "anomalies": 1158,
+    "anomaly_class": "True",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 125,
+    "encoded": [
+     "Month",
+     "VisitorType",
+     "Weekend"
+    ],
+    "features_out": 29,
+    "kind": "downsampled",
+    "natural_rate": 0.15474452554744525,
+    "rows": 11580,
+    "rows_in": 11580,
+    "rows_out": 11455
+   },
+   "licence": "CC BY 4.0",
+   "name": "Online Shoppers Purchasing Intention Dataset",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "b3055ee355f59134d851d32641183cb4a8b45def7124d2f50442a042f358e0d9",
+   "skipped_detectors": [],
+   "uci_id": 468,
+   "url": "https://archive.ics.uci.edu/static/public/468/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 20,
+    "encoded": [],
+    "features_out": 6,
+    "rows_in": 414,
+    "rows_out": 394
+   },
+   "label_refused": "not a classification task",
+   "licence": "CC BY 4.0",
+   "name": "Real Estate Valuation",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "0730a5687ec285a3c2f9921a808855bd1bde21fc53e6377561cbdce2dda9cbb1",
+   "uci_id": 477,
+   "url": "https://archive.ics.uci.edu/static/public/477/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 28,
+    "rows_in": 1385,
+    "rows_out": 1385
+   },
+   "label": {
+    "anomalies": 117,
+    "anomaly_class": "2",
+    "classes": 4,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 28,
+    "kind": "downsampled",
+    "natural_rate": 0.23971119133574006,
+    "rows": 1170,
+    "rows_in": 1170,
+    "rows_out": 1170
+   },
+   "licence": "CC BY 4.0",
+   "name": "Hepatitis C Virus (HCV) for Egyptian patients",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "6a9ca49f4ce8b7bb73acb413dcbad71a299c6c006c6df0511a216542ddd0e401",
+   "skipped_detectors": [],
+   "uci_id": 503,
+   "url": "https://archive.ics.uci.edu/static/public/503/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 269,
+    "encoded": [
+     "gender",
+     "polyuria",
+     "polydipsia",
+     "sudden_weight_loss",
+     "weakness",
+     "polyphagia",
+     "genital_thrush",
+     "visual_blurring",
+     "itching",
+     "irritability",
+     "delayed_healing",
+     "partial_paresis",
+     "muscle_stiffness",
+     "alopecia",
+     "obesity"
+    ],
+    "features_out": 31,
+    "rows_in": 520,
+    "rows_out": 251
+   },
+   "label": {
+    "anomalies": 36,
+    "anomaly_class": "Negative",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 153,
+    "encoded": [
+     "gender",
+     "polyuria",
+     "polydipsia",
+     "sudden_weight_loss",
+     "weakness",
+     "polyphagia",
+     "genital_thrush",
+     "visual_blurring",
+     "itching",
+     "irritability",
+     "delayed_healing",
+     "partial_paresis",
+     "muscle_stiffness",
+     "alopecia",
+     "obesity"
+    ],
+    "features_out": 31,
+    "kind": "downsampled",
+    "natural_rate": 0.38461538461538464,
+    "rows": 356,
+    "rows_in": 356,
+    "rows_out": 203
+   },
+   "licence": "CC BY 4.0",
+   "name": "Early Stage Diabetes Risk Prediction",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "f6bf14c5d2e939feccd78750da2542f131b78d80355ccf35f29554b1f03fcb97",
+   "skipped_detectors": [],
+   "uci_id": 529,
+   "url": "https://archive.ics.uci.edu/static/public/529/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 24,
+    "encoded": [
+     "Gender",
+     "family_history_with_overweight",
+     "FAVC",
+     "CAEC",
+     "SMOKE",
+     "SCC",
+     "CALC",
+     "MTRANS"
+    ],
+    "features_out": 31,
+    "rows_in": 2111,
+    "rows_out": 2087
+   },
+   "label": {
+    "anomalies": 204,
+    "anomaly_class": "Insufficient_Weight",
+    "classes": 7,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 20,
+    "encoded": [
+     "Gender",
+     "family_history_with_overweight",
+     "FAVC",
+     "CAEC",
+     "SMOKE",
+     "SCC",
+     "CALC",
+     "MTRANS"
+    ],
+    "features_out": 31,
+    "kind": "downsampled",
+    "natural_rate": 0.12884888678351492,
+    "rows": 2043,
+    "rows_in": 2043,
+    "rows_out": 2023
+   },
+   "licence": "CC BY 4.0",
+   "name": "Estimation of Obesity Levels Based On Eating Habits and Physical Condition ",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "28b6991062855d3d15642e38b1aa9d1b32fb7abbb5abf5b096f1868cd706154b",
+   "skipped_detectors": [],
+   "uci_id": 544,
+   "url": "https://archive.ics.uci.edu/static/public/544/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 7,
+    "rows_in": 3810,
+    "rows_out": 3810
+   },
+   "label": {
+    "anomalies": 242,
+    "anomaly_class": "Cammeo",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 7,
+    "kind": "downsampled",
+    "natural_rate": 0.42782152230971127,
+    "rows": 2422,
+    "rows_in": 2422,
+    "rows_out": 2422
+   },
+   "licence": "CC BY 4.0",
+   "name": "Rice (Cammeo and Osmancik)",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "a0d9b19693f0bde9a59a6a6e886df0456008fab1c3a406178a76e7c4440e95b3",
+   "skipped_detectors": [],
+   "uci_id": 545,
+   "url": "https://archive.ics.uci.edu/static/public/545/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 7,
+    "encoded": [],
+    "features_out": 12,
+    "rows_in": 36733,
+    "rows_out": 36726
+   },
+   "label_refused": "not a classification task",
+   "licence": "CC BY 4.0",
+   "name": "Gas Turbine CO and NOx Emission Data Set",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "33cbb8c68e24e3782547ccf0ed60d9ec0cc10732c3f84b08ed08fea08bfdaa6a",
+   "uci_id": 551,
+   "url": "https://archive.ics.uci.edu/static/public/551/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "title",
+     "body",
+     "amenities",
+     "cityname",
+     "state",
+     "source"
+    ],
+    "dropped_missing": [
+     "pets_allowed",
+     "address"
+    ],
+    "duplicates_removed": 156,
+    "encoded": [
+     "category",
+     "currency",
+     "fee",
+     "has_photo",
+     "price_type"
+    ],
+    "features_out": 38,
+    "rows_in": 99826,
+    "rows_out": 99670
+   },
+   "label_refused": "fewer than 2 classes",
+   "licence": "CC BY 4.0",
+   "name": "Apartment for Rent Classified",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "bd7c12b8a991e572c6c20aae171b835be256c4b7ba733a142b30b1696c22acfb",
+   "uci_id": 555,
+   "url": "https://archive.ics.uci.edu/static/public/555/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "Date"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [
+     "Seasons",
+     "Holiday"
+    ],
+    "features_out": 16,
+    "rows_in": 8760,
+    "rows_out": 8760
+   },
+   "label_refused": "not a classification task",
+   "licence": "CC BY 4.0",
+   "name": "Seoul Bike Sharing Demand",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "e392e3be042e7c0e58b48329a777206acb7f3400da95ee7cf405da5eb99d283e",
+   "uci_id": 560,
+   "url": "https://archive.ics.uci.edu/static/public/560/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 314,
+    "encoded": [],
+    "features_out": 13,
+    "rows_in": 3150,
+    "rows_out": 2836
+   },
+   "label": {
+    "anomalies": 295,
+    "anomaly_class": "1",
+    "classes": 2,
+    "conflicting_rows_removed": 49,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 251,
+    "encoded": [],
+    "features_out": 13,
+    "kind": "downsampled",
+    "natural_rate": 0.15714285714285714,
+    "rows": 2950,
+    "rows_in": 2950,
+    "rows_out": 2650
+   },
+   "licence": "CC BY 4.0",
+   "name": "Iranian Churn",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+   "skipped_detectors": [],
+   "uci_id": 563,
+   "url": "https://archive.ics.uci.edu/static/public/563/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [
+     "Sex"
+    ],
+    "features_out": 13,
+    "rows_in": 615,
+    "rows_out": 615
+   },
+   "label_refused": "fewer than 20 rows in the rarest class",
+   "licence": "CC BY 4.0",
+   "name": "HCV data",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "a6ebd135c7870d083520fcb99a76d8477ae42700b72db374e3efbfd103dfbdfd",
+   "uci_id": 571,
+   "url": "https://archive.ics.uci.edu/static/public/571/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [
+     " Net Income Flag"
+    ],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 94,
+    "rows_in": 6819,
+    "rows_out": 6819
+   },
+   "label": {
+    "anomalies": 220,
+    "anomaly_class": "1",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [
+     " Net Income Flag"
+    ],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 94,
+    "kind": "native_rare",
+    "natural_rate": 0.03226279513125092,
+    "rows": 6819,
+    "rows_in": 6819,
+    "rows_out": 6819
+   },
+   "licence": "CC BY 4.0",
+   "name": "Taiwanese Bankruptcy Prediction",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "67bf2e7c75490f7ad3f76bbce57d49cdc25967cdab607527b94f944863fa14d8",
+   "skipped_detectors": [],
+   "uci_id": 572,
+   "url": "https://archive.ics.uci.edu/static/public/572/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [
+     "IBS_NASL",
+     "S_AD_KBRIG",
+     "D_AD_KBRIG",
+     "KFK_BLOOD"
+    ],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 107,
+    "rows_in": 1700,
+    "rows_out": 1700
+   },
+   "label_refused": "fewer than 2 classes",
+   "licence": "CC BY 4.0",
+   "name": "Myocardial infarction complications",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "335805edbe66e47f0dc322c0d9c010da64384830ad68d80030b705f964ce95ac",
+   "uci_id": 579,
+   "url": "https://archive.ics.uci.edu/static/public/579/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 90,
+    "encoded": [
+     "Gender",
+     "Caste",
+     "coaching",
+     "time",
+     "Class_ten_education",
+     "twelve_education",
+     "medium",
+     "Class_X_Percentage",
+     "Class_XII_Percentage",
+     "Father_occupation",
+     "Mother_occupation"
+    ],
+    "features_out": 49,
+    "rows_in": 666,
+    "rows_out": 576
+   },
+   "label": {
+    "anomalies": 63,
+    "anomaly_class": "Excellent",
+    "classes": 4,
+    "conflicting_rows_removed": 24,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 68,
+    "encoded": [
+     "Gender",
+     "Caste",
+     "coaching",
+     "time",
+     "Class_ten_education",
+     "twelve_education",
+     "medium",
+     "Class_X_Percentage",
+     "Class_XII_Percentage",
+     "Father_occupation",
+     "Mother_occupation"
+    ],
+    "features_out": 49,
+    "kind": "downsampled",
+    "natural_rate": 0.15165165165165165,
+    "rows": 628,
+    "rows_in": 628,
+    "rows_out": 536
+   },
+   "licence": "CC BY 4.0",
+   "name": "Student Performance on an Entrance Examination",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "24822d2bc9ca1aa62bc7df47f6da5fc2688c65b7d85ec3886b9577cc1622d3e1",
+   "skipped_detectors": [],
+   "uci_id": 582,
+   "url": "https://archive.ics.uci.edu/static/public/582/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "date"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [
+     "quarter",
+     "department",
+     "day"
+    ],
+    "features_out": 23,
+    "rows_in": 1197,
+    "rows_out": 1197
+   },
+   "label_refused": "fewer than 20 rows in the rarest class",
+   "licence": "CC BY 4.0",
+   "name": "Productivity Prediction of Garment Employees",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "2cd10add9f5a0f0ff79aec7a71e1a2f19c69a571b471c3b5a09189c6881321e1",
+   "uci_id": 597,
+   "url": "https://archive.ics.uci.edu/static/public/597/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [
+     "Type"
+    ],
+    "features_out": 8,
+    "rows_in": 10000,
+    "rows_out": 10000
+   },
+   "label_refused": "fewer than 2 classes",
+   "licence": "CC BY 4.0",
+   "name": "AI4I 2020 Predictive Maintenance Dataset",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "ffc3c28f35b1a1636eacd2bf46aca0ff5e795b4a8eb934309c5819079e9b5a18",
+   "uci_id": 601,
+   "url": "https://archive.ics.uci.edu/static/public/601/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 68,
+    "encoded": [],
+    "features_out": 16,
+    "rows_in": 13611,
+    "rows_out": 13543
+   },
+   "label": {
+    "anomalies": 522,
+    "anomaly_class": "BOMBAY",
+    "classes": 7,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 68,
+    "encoded": [],
+    "features_out": 16,
+    "kind": "native_rare",
+    "natural_rate": 0.03835133348027331,
+    "rows": 13611,
+    "rows_in": 13611,
+    "rows_out": 13543
+   },
+   "licence": "CC BY 4.0",
+   "name": "Dry Bean",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "c91a086bb4357e69409d23287ec22be1be9512145cead1d8ca988c918be38fcb",
+   "skipped_detectors": [],
+   "uci_id": 602,
+   "url": "https://archive.ics.uci.edu/static/public/602/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [
+     "toCoupon_GEQ5min"
+    ],
+    "dropped_high_cardinality": [
+     "occupation"
+    ],
+    "dropped_missing": [
+     "car"
+    ],
+    "duplicates_removed": 141,
+    "encoded": [
+     "destination",
+     "passenger",
+     "weather",
+     "time",
+     "coupon",
+     "expiration",
+     "gender",
+     "age",
+     "maritalStatus",
+     "education",
+     "income",
+     "Bar",
+     "CoffeeHouse",
+     "CarryAway",
+     "RestaurantLessThan20",
+     "Restaurant20To50"
+    ],
+    "features_out": 83,
+    "rows_in": 12684,
+    "rows_out": 12543
+   },
+   "label": {
+    "anomalies": 801,
+    "anomaly_class": "0",
+    "classes": 2,
+    "conflicting_rows_removed": 9,
+    "dropped_constant": [
+     "toCoupon_GEQ5min"
+    ],
+    "dropped_high_cardinality": [
+     "occupation"
+    ],
+    "dropped_missing": [
+     "car"
+    ],
+    "duplicates_removed": 72,
+    "encoded": [
+     "destination",
+     "passenger",
+     "weather",
+     "time",
+     "coupon",
+     "expiration",
+     "gender",
+     "age",
+     "maritalStatus",
+     "education",
+     "income",
+     "Bar",
+     "CoffeeHouse",
+     "CarryAway",
+     "RestaurantLessThan20",
+     "Restaurant20To50"
+    ],
+    "features_out": 83,
+    "kind": "downsampled",
+    "natural_rate": 0.4315673289183223,
+    "rows": 8011,
+    "rows_in": 8011,
+    "rows_out": 7930
+   },
+   "licence": "CC BY 4.0",
+   "name": "In-Vehicle Coupon Recommendation",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "b3af5ae57a45001cff924392805ee83b4a269a3ffdc032059fc439f9cf29c801",
+   "skipped_detectors": [],
+   "uci_id": 603,
+   "url": "https://archive.ics.uci.edu/static/public/603/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 36,
+    "rows_in": 4424,
+    "rows_out": 4424
+   },
+   "label": {
+    "anomalies": 403,
+    "anomaly_class": "Enrolled",
+    "classes": 3,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 36,
+    "kind": "downsampled",
+    "natural_rate": 0.1794755877034358,
+    "rows": 4033,
+    "rows_in": 4033,
+    "rows_out": 4033
+   },
+   "licence": "CC BY 4.0",
+   "name": "Predict Students' Dropout and Academic Success",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "a1b1a6531bbb93a5c7fdf0093b47172776652a4ffb12342fb79655c85b74801b",
+   "skipped_detectors": [],
+   "uci_id": 697,
+   "url": "https://archive.ics.uci.edu/static/public/697/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 21937,
+    "encoded": [],
+    "features_out": 86,
+    "rows_in": 29332,
+    "rows_out": 7395
+   },
+   "label": {
+    "anomalies": 1633,
+    "anomaly_class": "0",
+    "classes": 2,
+    "conflicting_rows_removed": 1450,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 11502,
+    "encoded": [],
+    "features_out": 86,
+    "kind": "downsampled",
+    "natural_rate": 0.49884085640256376,
+    "rows": 16333,
+    "rows_in": 16333,
+    "rows_out": 3381
+   },
+   "licence": "CC BY 4.0",
+   "name": "NATICUSdroid (Android Permissions)",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "5764687009af15605f46941902d6a1c4c1a07618dfefb94a0275edb4869780ba",
+   "skipped_detectors": [],
+   "uci_id": 722,
+   "url": "https://archive.ics.uci.edu/static/public/722/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "Case_ID"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 1,
+    "encoded": [
+     "Race"
+    ],
+    "features_out": 26,
+    "rows_in": 839,
+    "rows_out": 838
+   },
+   "label": {
+    "anomalies": 54,
+    "anomaly_class": "1",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "Case_ID"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 1,
+    "encoded": [
+     "Race"
+    ],
+    "features_out": 26,
+    "kind": "downsampled",
+    "natural_rate": 0.4195470798569726,
+    "rows": 541,
+    "rows_in": 541,
+    "rows_out": 540
+   },
+   "licence": "CC BY 4.0",
+   "name": "Glioma Grading Clinical and Mutation Features",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "5d1ebd8485790b691744e756774bd00f810b545d0c754bfa42996c5e56d0ad25",
+   "skipped_detectors": [],
+   "uci_id": 759,
+   "url": "https://archive.ics.uci.edu/static/public/759/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "timestamp"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 45031,
+    "encoded": [],
+    "features_out": 9,
+    "rows_in": 416153,
+    "rows_out": 371122
+   },
+   "label_refused": "fewer than 2 classes",
+   "licence": "CC BY 4.0",
+   "name": "Single Elder Home Monitoring: Gas and Position",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "49a7429b1d1f9253e39fce101ae6cd47522ea6c5c6c15123366d6dda6877b363",
+   "uci_id": 799,
+   "url": "https://archive.ics.uci.edu/static/public/799/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [
+     "stem-root",
+     "stem-surface",
+     "veil-type",
+     "veil-color",
+     "spore-print-color"
+    ],
+    "duplicates_removed": 146,
+    "encoded": [
+     "cap-shape",
+     "cap-surface",
+     "cap-color",
+     "does-bruise-or-bleed",
+     "gill-attachment",
+     "gill-spacing",
+     "gill-color",
+     "stem-color",
+     "has-ring",
+     "ring-type",
+     "habitat",
+     "season"
+    ],
+    "features_out": 92,
+    "rows_in": 61069,
+    "rows_out": 60923
+   },
+   "label": {
+    "anomalies": 3765,
+    "anomaly_class": "e",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [
+     "stem-root",
+     "stem-surface",
+     "veil-type",
+     "veil-color",
+     "spore-print-color"
+    ],
+    "duplicates_removed": 146,
+    "encoded": [
+     "cap-shape",
+     "cap-surface",
+     "cap-color",
+     "does-bruise-or-bleed",
+     "gill-attachment",
+     "gill-spacing",
+     "gill-color",
+     "stem-color",
+     "has-ring",
+     "ring-type",
+     "habitat",
+     "season"
+    ],
+    "features_out": 92,
+    "kind": "downsampled",
+    "natural_rate": 0.44508670520231214,
+    "rows": 37653,
+    "rows_in": 37653,
+    "rows_out": 37507
+   },
+   "licence": "CC BY 4.0",
+   "name": "Secondary Mushroom",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "3f5fffdab705d152c58543ec7b5c1ee3eaec031db2696ca9ae840ef5326b44cd",
+   "skipped_detectors": [
+    "ocsvm"
+   ],
+   "uci_id": 848,
+   "url": "https://archive.ics.uci.edu/static/public/848/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "DateTime"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 5,
+    "rows_in": 52416,
+    "rows_out": 52416
+   },
+   "label_refused": "not a classification task",
+   "licence": "CC BY 4.0",
+   "name": "Power Consumption of Tetouan City",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "ca8b2f30cf07dd872cb7f2aa45dac110ee38dbe5fc5910a6ff4bcc530dae3a40",
+   "uci_id": 849,
+   "url": "https://archive.ics.uci.edu/static/public/849/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 7,
+    "rows_in": 900,
+    "rows_out": 900
+   },
+   "label": {
+    "anomalies": 50,
+    "anomaly_class": "Besni",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 7,
+    "kind": "downsampled",
+    "natural_rate": 0.5,
+    "rows": 500,
+    "rows_in": 500,
+    "rows_out": 500
+   },
+   "licence": "CC BY 4.0",
+   "name": "Raisin",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "175ecbc52d351e0e0d9aa00605de09425b3a4826c5db294fabcbc24bcba955ab",
+   "skipped_detectors": [],
+   "uci_id": 850,
+   "url": "https://archive.ics.uci.edu/static/public/850/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 87,
+    "encoded": [
+     "WeekStatus",
+     "Day_of_week"
+    ],
+    "features_out": 16,
+    "rows_in": 35040,
+    "rows_out": 34953
+   },
+   "label_refused": "not a classification task",
+   "licence": "CC BY 4.0",
+   "name": "Steel Industry Energy Consumption",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "9b1cee6f9cb9cd9df2b95814ca90a9a2ff15b7f5f1fba0fae3c643e82072eacc",
+   "uci_id": 851,
+   "url": "https://archive.ics.uci.edu/static/public/851/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 598,
+    "encoded": [],
+    "features_out": 6,
+    "rows_in": 1014,
+    "rows_out": 416
+   },
+   "label": {
+    "anomalies": 82,
+    "anomaly_class": "high risk",
+    "classes": 3,
+    "conflicting_rows_removed": 43,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 422,
+    "encoded": [],
+    "features_out": 6,
+    "kind": "downsampled",
+    "natural_rate": 0.2682445759368836,
+    "rows": 824,
+    "rows_in": 824,
+    "rows_out": 359
+   },
+   "licence": "CC BY 4.0",
+   "name": "Maternal Health Risk",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "a1f7025719f84715096e0d1f95ae2e56b57809b9b15449e1836c96a7d976ae9b",
+   "skipped_detectors": [],
+   "uci_id": 863,
+   "url": "https://archive.ics.uci.edu/static/public/863/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "Time"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 1264,
+    "encoded": [
+     "Date"
+    ],
+    "features_out": 23,
+    "rows_in": 10129,
+    "rows_out": 8865
+   },
+   "label": {
+    "anomalies": 459,
+    "anomaly_class": "1",
+    "classes": 4,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "Time"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 1264,
+    "encoded": [
+     "Date"
+    ],
+    "features_out": 23,
+    "kind": "native_rare",
+    "natural_rate": 0.04531543094086287,
+    "rows": 10129,
+    "rows_in": 10129,
+    "rows_out": 8865
+   },
+   "licence": "CC BY 4.0",
+   "name": "Room Occupancy Estimation",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "c090ee5c94b61762bfec9d22767864490b51030f98cca030f02822468db25d9c",
+   "skipped_detectors": [],
+   "uci_id": 864,
+   "url": "https://archive.ics.uci.edu/static/public/864/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "Cholesterol",
+     "Tryglicerides"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [
+     "Drug",
+     "Sex",
+     "Ascites",
+     "Hepatomegaly",
+     "Spiders",
+     "Edema"
+    ],
+    "features_out": 26,
+    "rows_in": 418,
+    "rows_out": 418
+   },
+   "label": {
+    "anomalies": 25,
+    "anomaly_class": "CL",
+    "classes": 3,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "Cholesterol",
+     "Tryglicerides"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [
+     "Drug",
+     "Sex",
+     "Ascites",
+     "Hepatomegaly",
+     "Spiders",
+     "Edema"
+    ],
+    "features_out": 26,
+    "kind": "native_rare",
+    "natural_rate": 0.05980861244019139,
+    "rows": 418,
+    "rows_in": 418,
+    "rows_out": 418
+   },
+   "licence": "CC BY 4.0",
+   "name": "Cirrhosis Patient Survival Prediction",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "539c167d30de2dc84d23376712b7f96b4ebb77d76f375574d02d2c51b76861cf",
+   "skipped_detectors": [],
+   "uci_id": 878,
+   "url": "https://archive.ics.uci.edu/static/public/878/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 7,
+    "rows_in": 2278,
+    "rows_out": 2278
+   },
+   "label": {
+    "anomalies": 213,
+    "anomaly_class": "Senior",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 7,
+    "kind": "downsampled",
+    "natural_rate": 0.15978928884986832,
+    "rows": 2127,
+    "rows_in": 2127,
+    "rows_out": 2127
+   },
+   "licence": "CC BY 4.0",
+   "name": "National Health and Nutrition Health Survey 2013-2014 (NHANES) Age Prediction Subset",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "a5e588ef5d015349b2656b2905cd2ac9603381643e188a5587a58cf5f972354d",
+   "skipped_detectors": [],
+   "uci_id": 887,
+   "url": "https://archive.ics.uci.edu/static/public/887/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "recipe_name",
+     "comment_id",
+     "user_id",
+     "user_name",
+     "text"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 10,
+    "rows_in": 18182,
+    "rows_out": 18182
+   },
+   "label_refused": "fewer than 2 classes",
+   "licence": "CC BY 4.0",
+   "name": "Recipe Reviews and User Feedback",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "8b180edb3bb23b19e23fbba5a27fc36782d5dedfab3c55b45709f1ad9754e555",
+   "uci_id": 911,
+   "url": "https://archive.ics.uci.edu/static/public/911/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "Cultivar"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 0,
+    "encoded": [],
+    "features_out": 10,
+    "rows_in": 320,
+    "rows_out": 320
+   },
+   "label_refused": "fewer than 2 classes",
+   "licence": "CC BY 4.0",
+   "name": "Forty Soybean Cultivars from Subsequent Harvests",
+   "roles": [
+    "carrier"
+   ],
+   "sha256": "0f8edd86ee189b2cfeb28a137273dd598bed6c49f61eee04579a85f9d17a32e5",
+   "uci_id": 913,
+   "url": "https://archive.ics.uci.edu/static/public/913/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 19,
+    "encoded": [
+     "Gender",
+     "Smoking",
+     "Hx Smoking",
+     "Hx Radiothreapy",
+     "Thyroid Function",
+     "Physical Examination",
+     "Adenopathy",
+     "Pathology",
+     "Focality",
+     "Risk",
+     "T",
+     "N",
+     "M",
+     "Stage",
+     "Response"
+    ],
+    "features_out": 55,
+    "rows_in": 383,
+    "rows_out": 364
+   },
+   "label": {
+    "anomalies": 31,
+    "anomaly_class": "Yes",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 19,
+    "encoded": [
+     "Gender",
+     "Smoking",
+     "Hx Smoking",
+     "Hx Radiothreapy",
+     "Thyroid Function",
+     "Physical Examination",
+     "Adenopathy",
+     "Pathology",
+     "Focality",
+     "Risk",
+     "T",
+     "N",
+     "M",
+     "Stage",
+     "Response"
+    ],
+    "features_out": 54,
+    "kind": "downsampled",
+    "natural_rate": 0.2819843342036554,
+    "rows": 306,
+    "rows_in": 306,
+    "rows_out": 287
+   },
+   "licence": "CC BY 4.0",
+   "name": "Differentiated Thyroid Cancer Recurrence",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "a2c65f7c8fa0e78a65aa4946961aafd45218c92760d10375fe2c778045c97b44",
+   "skipped_detectors": [],
+   "uci_id": 915,
+   "url": "https://archive.ics.uci.edu/static/public/915/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [
+     "Age"
+    ],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 80,
+    "encoded": [],
+    "features_out": 13,
+    "rows_in": 714,
+    "rows_out": 634
+   },
+   "label": {
+    "anomalies": 65,
+    "anomaly_class": "1",
+    "classes": 3,
+    "conflicting_rows_removed": 26,
+    "dropped_constant": [
+     "Age"
+    ],
+    "dropped_high_cardinality": [],
+    "dropped_missing": [],
+    "duplicates_removed": 48,
+    "encoded": [],
+    "features_out": 13,
+    "kind": "downsampled",
+    "natural_rate": 0.18347338935574228,
+    "rows": 648,
+    "rows_in": 648,
+    "rows_out": 574
+   },
+   "licence": "CC BY 4.0",
+   "name": "National Poll on Healthy Aging (NPHA)",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "cfb2663734619366c85634a8c8356521f6efc29291c2bff0fab2d6e460d3cc58",
+   "skipped_detectors": [],
+   "uci_id": 936,
+   "url": "https://archive.ics.uci.edu/static/public/936/data.csv"
+  },
+  {
+   "carrier": {
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "URL",
+     "Domain",
+     "TLD",
+     "Title"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 808,
+    "encoded": [],
+    "features_out": 50,
+    "rows_in": 235795,
+    "rows_out": 234987
+   },
+   "label": {
+    "anomalies": 14983,
+    "anomaly_class": "0",
+    "classes": 2,
+    "conflicting_rows_removed": 0,
+    "dropped_constant": [],
+    "dropped_high_cardinality": [
+     "URL",
+     "Domain",
+     "TLD",
+     "Title"
+    ],
+    "dropped_missing": [],
+    "duplicates_removed": 32,
+    "encoded": [],
+    "features_out": 50,
+    "kind": "downsampled",
+    "natural_rate": 0.42810492164804176,
+    "rows": 149833,
+    "rows_in": 149833,
+    "rows_out": 149801
+   },
+   "licence": "CC BY 4.0",
+   "name": "PhiUSIIL Phishing URL (Website)",
+   "roles": [
+    "carrier",
+    "labelled"
+   ],
+   "sha256": "a236549cd369cd80bd478ff8e1779cbf44c58d5c3f79f7a51a1adbed7d06d1c6",
+   "skipped_detectors": [
+    "lof",
+    "ocsvm"
+   ],
+   "uci_id": 967,
+   "url": "https://archive.ics.uci.edu/static/public/967/data.csv"
+  }
+ ]
+}

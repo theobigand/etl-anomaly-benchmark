@@ -311,3 +311,17 @@ def test_the_deep_target_runs_mutmut_with_single_threaded_math_libraries():
     line = next(row for row in deep.splitlines() if "mutmut run" in row)
     for variable in ("OMP_NUM_THREADS=1", "OPENBLAS_NUM_THREADS=1", "MKL_NUM_THREADS=1"):
         assert variable in line, variable
+
+
+def test_the_pool_check_redownloads_the_pinned_datasets_and_uploads_only_its_report():
+    text = _text("pool-check.yml")
+    triggers = text[: text.index("jobs:")]
+    assert "workflow_dispatch:" in triggers and "schedule:" in triggers
+    assert "pull_request" not in triggers and "workflow_run" not in triggers
+    manifest = "verification/evidence/dataset_registry/pool_manifest.json"
+    assert f"pool_check.py --verify {manifest}" in text
+    assert "runs-on: ubuntu-latest" in text and "self-hosted" not in text
+    assert "persist-credentials: false" in text and "secrets." not in text
+    assert "if: always()" in text
+    uploads = [line.split("path:")[1].strip() for line in text.splitlines() if "path:" in line]
+    assert uploads == ["pool_verification.json"]
