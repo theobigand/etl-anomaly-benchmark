@@ -7,7 +7,7 @@
     "source": "local-unattested",
     "platform": "macOS 27.0 arm64, Python 3.11.17 (conda etl-benchmark; typing in a venv with mypy 2.4.0)",
     "captured": "2026-10-20",
-    "historical": false,
+    "historical": true,
     "evidence_dir": "verification/evidence/runs/local-3994e05",
     "files": {
       "deep.json": "156bd52b97108abc29fbc8e09c0e4108455bc201a2d6f19e94782750c4153012",
@@ -18,7 +18,8 @@
       "results.txt": "b6fa57dfb077a47e76a6b290ba3cd8ca59dd901b09a61c3ab9bcdf0625112832",
       "tools.json": "416cd6159cf062453f4d9885dd5eac7e07947d9306721c68aa15a575d24dda14",
       "types.json": "0ed815bd8b4a66ac020c7f649862f181035a7bdc6997863d05fe3319480df440"
-    }
+    },
+    "note": "Run made before the dataset pool check workflow and its guard test (issue 66) were added. The figures are kept until the run on that revision is sealed."
   },
   "fast": {
     "tests": 1149,
