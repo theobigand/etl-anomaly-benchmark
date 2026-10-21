@@ -1,0 +1,254 @@
+[
+ {
+  "uci_id": 1,
+  "name": "Abalone",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 117,
+  "name": "Census-Income (KDD)",
+  "with_invalid_in_train": 0.32222222222222224,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 146,
+  "name": "Statlog (Landsat Satellite)",
+  "with_invalid_in_train": 0.2692307692307692,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 148,
+  "name": "Statlog (Shuttle)",
+  "with_invalid_in_train": 0.18888888888888888,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 159,
+  "name": "MAGIC Gamma Telescope",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 186,
+  "name": "Wine Quality",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 189,
+  "name": "Parkinsons Telemonitoring",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 2,
+  "name": "Adult",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 222,
+  "name": "Bank Marketing",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 270,
+  "name": "Gas Sensor Array Drift at Different Concentrations",
+  "with_invalid_in_train": 0.43548387096774194,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 275,
+  "name": "Bike Sharing",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 294,
+  "name": "Combined Cycle Power Plant",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 296,
+  "name": "Diabetes 130-US Hospitals for Years 1999-2008",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 31,
+  "name": "Covertype",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 332,
+  "name": "Online News Popularity",
+  "with_invalid_in_train": 0.15555555555555556,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 350,
+  "name": "Default of Credit Card Clients",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 357,
+  "name": "Occupancy Detection ",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 360,
+  "name": "Air Quality",
+  "with_invalid_in_train": 0.023809523809523808,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 365,
+  "name": "Polish Companies Bankruptcy",
+  "with_invalid_in_train": 0.6666666666666666,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 372,
+  "name": "HTRU2",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 374,
+  "name": "Appliances Energy Prediction",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 381,
+  "name": "Beijing PM2.5",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 464,
+  "name": "Superconductivty Data",
+  "with_invalid_in_train": 0.35294117647058826,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 468,
+  "name": "Online Shoppers Purchasing Intention Dataset",
+  "with_invalid_in_train": 0.09090909090909091,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 551,
+  "name": "Gas Turbine CO and NOx Emission Data Set",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 555,
+  "name": "Apartment for Rent Classified",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 560,
+  "name": "Seoul Bike Sharing Demand",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 572,
+  "name": "Taiwanese Bankruptcy Prediction",
+  "with_invalid_in_train": 0.6551724137931034,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 59,
+  "name": "Letter Recognition",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 601,
+  "name": "AI4I 2020 Predictive Maintenance Dataset",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 602,
+  "name": "Dry Bean",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 697,
+  "name": "Predict Students' Dropout and Academic Success",
+  "with_invalid_in_train": 0.47058823529411764,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 75,
+  "name": "Musk (Version 2)",
+  "with_invalid_in_train": 0.96,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 78,
+  "name": "Page Blocks Classification",
+  "with_invalid_in_train": 0.041666666666666664,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 799,
+  "name": "Single Elder Home Monitoring: Gas and Position",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 80,
+  "name": "Optical Recognition of Handwritten Digits",
+  "with_invalid_in_train": 0.43478260869565216,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 81,
+  "name": "Pen-Based Recognition of Handwritten Digits",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 849,
+  "name": "Power Consumption of Tetouan City",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 851,
+  "name": "Steel Industry Energy Consumption",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 864,
+  "name": "Room Occupancy Estimation",
+  "with_invalid_in_train": 0.15789473684210525,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 911,
+  "name": "Recipe Reviews and User Feedback",
+  "with_invalid_in_train": 0.0,
+  "without_invalid_in_train": 1.0
+ },
+ {
+  "uci_id": 967,
+  "name": "PhiUSIIL Phishing URL (Website)",
+  "with_invalid_in_train": 0.03333333333333333,
+  "without_invalid_in_train": 1.0
+ }
+]
