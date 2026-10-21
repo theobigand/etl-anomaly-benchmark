@@ -710,6 +710,55 @@ marks severity $1.0$.}
 \label{fig:severity}
 \end{figure}
 
+\subsection{Typed injection on real datasets}
+\label{sec:typed}
+The synthetic matrix of Section~\ref{sec:results-synthetic} comes from a single
+generator. To see whether its pattern depends on that generator, the six
+anomaly types were injected into $42$ real tables from the UCI repository
+(open licence, pinned by checksum; \texttt{verification/dataset\_pool.md}). For
+each table only the continuous columns are kept, and for labelled sets only the
+normal class, so that the original anomalies never enter the evaluation. The
+injection follows the synthetic one (three percent of rows per type, same
+split, seeds and detector settings), with numeric versions of the types: a
+value several standard deviations away, a pair of correlated columns pushed to
+opposite tails, a shift of three columns for the most recent rows, a sign
+flip, a sentinel or a thousandfold scale error. The protocol and five
+hypotheses were written before any run
+(\texttt{verification/typed\_injection.md}).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/typed_pooled.png}
+\caption{Median detection rate over $42$ real datasets with typed injection.
+Compare with Figure~\ref{fig:heatmap}.}
+\label{fig:typed}
+\end{figure}
+
+Two rows of the synthetic pattern hold on every table: Great Expectations finds
+all missing values and the deduplication rule all duplicates. The rest does not
+carry over. Three of the five hypotheses are not supported (Great Expectations
+and deduplication aside, the specialisation, the multivariate gap and the
+difficulty of drift). On multivariate outliers the median detection rate is
+$0.37$ for Isolation Forest and $0.17$ for the one-class SVM, against $0.89$ and
+$0.90$ on the synthetic data. The interquartile fences reach the best detection
+rate on several types, but they also flag a median of $22\%$ of the clean rows
+(up to $99\%$ on some wide tables), so the detection rate alone favours them.
+The $z$-score detects almost nothing on univariate outliers (median $0.00$
+against $0.93$ synthetically). A check made after seeing this, and therefore
+exploratory, shows why: the invalid rows of the training split inflate the
+standard deviation, and without them the $z$-score detects every univariate
+outlier on all $42$ tables. The result says more about non-robust statistics
+on a contaminated training set than about the $z$-score itself.
+
+The two hypotheses on stability hold. The mean rank correlation between the
+method-by-type matrices of two tables is $0.83$, and it is lowest for drift
+($0.70$) and multivariate outliers ($0.74$), though only slightly below the
+structural types ($0.75$ to $0.82$). Part of this stability is mechanical, since
+many cells are close to $0$ or $1$. The detection rate of Isolation Forest on
+univariate outliers falls with the number of continuous columns (rank
+correlation $-0.96$ over the $42$ tables). The anomalies are injected, not
+natural, at one severity, and the deep models are not part of this matrix.
+
 \subsection{Chronological pilot on Credit Card}
 \label{sec:chrono}
 The results above use a random stratified split. Of the three real datasets,

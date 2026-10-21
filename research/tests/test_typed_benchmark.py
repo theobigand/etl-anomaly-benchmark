@@ -86,3 +86,11 @@ def test_the_false_positive_rate_on_clean_rows_is_reported_for_every_method():
     # keep=False also flags the clean original of every injected copy: about 3 percent
     assert 0.0 < fpr.loc["transform_dedup"] < 0.06
     assert (fpr >= 0).all() and (fpr <= 1).all() and fpr.loc["iqr"] > fpr.loc["zscore"]
+
+
+def test_masking_diagnostic_shows_zscore_recovers_when_invalid_rows_leave_training():
+    import typed_masking as tm
+
+    df, cols = _injected()
+    out = tm.masking(df, cols, seed=0)
+    assert out["with_invalid_in_train"] < 0.2 and out["without_invalid_in_train"] > 0.9
