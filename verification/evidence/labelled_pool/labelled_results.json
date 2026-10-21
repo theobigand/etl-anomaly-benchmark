@@ -1,0 +1,206 @@
+{
+ "failed": {},
+ "hypotheses": {
+  "H1": {
+   "best": "ocsvm",
+   "second": "isolation_forest",
+   "supported": true
+  },
+  "H2": {
+   "supported": true
+  },
+  "H3": {
+   "by_prevalence": {
+    "5-20%": {
+     "median": 0.00924902180376036,
+     "n": 69
+    },
+    "<5%": {
+     "median": 0.03713675213675214,
+     "n": 19
+    },
+    ">20%": {
+     "median": 0.013233893373467032,
+     "n": 12
+    }
+   },
+   "supported": false
+  },
+  "H4": {
+   "median_flag_to_prevalence": {
+    "great_expectations": 0.17009441871262357,
+    "iqr": 2.3489522232208078,
+    "isolation_forest": 1.0246084169768288,
+    "lof": 1.0303387597371316,
+    "ocsvm": 1.0680749220839776,
+    "zscore": 1.6896359923531454
+   },
+   "supported": false
+  },
+  "H5": {
+   "spearman": 0.942857142857143,
+   "supported": true
+  }
+ },
+ "median_rank": {
+  "great_expectations": 5.0,
+  "iqr": 4.0,
+  "isolation_forest": 2.0,
+  "lof": 3.0,
+  "ocsvm": 3.0,
+  "zscore": 3.0
+ },
+ "pr_auc": {
+  "columns": [
+   "median",
+   "lo",
+   "hi"
+  ],
+  "data": [
+   [
+    0.1149155474,
+    0.1049023769,
+    0.1228976295
+   ],
+   [
+    0.1442071234,
+    0.1166495694,
+    0.190694127
+   ],
+   [
+    0.2146964206,
+    0.1579214236,
+    0.2927021449
+   ],
+   [
+    0.1646386884,
+    0.1525865801,
+    0.2374012299
+   ],
+   [
+    0.239924797,
+    0.1772804046,
+    0.3071467257
+   ],
+   [
+    0.2033472674,
+    0.164195992,
+    0.2787554056
+   ]
+  ],
+  "index": [
+   "great_expectations",
+   "iqr",
+   "isolation_forest",
+   "lof",
+   "ocsvm",
+   "zscore"
+  ]
+ },
+ "problems": 100,
+ "roc_auc": {
+  "columns": [
+   "median",
+   "lo",
+   "hi"
+  ],
+  "data": [
+   [
+    0.5084027285,
+    0.5013886147,
+    0.5123482621
+   ],
+   [
+    0.5556693127,
+    0.5083124262,
+    0.6197048611
+   ],
+   [
+    0.6773332607,
+    0.614765808,
+    0.7252191448
+   ],
+   [
+    0.5882910156,
+    0.5648991459,
+    0.6237562572
+   ],
+   [
+    0.6701869915,
+    0.6045370351,
+    0.7086419753
+   ],
+   [
+    0.6258954535,
+    0.5731412338,
+    0.6878368999
+   ]
+  ],
+  "index": [
+   "great_expectations",
+   "iqr",
+   "isolation_forest",
+   "lof",
+   "ocsvm",
+   "zscore"
+  ]
+ },
+ "skipped": {
+  "adbench:campaign": [
+   "ocsvm"
+  ],
+  "adbench:census": [
+   "lof",
+   "ocsvm"
+  ],
+  "adbench:cover": [
+   "lof",
+   "ocsvm"
+  ],
+  "adbench:fraud": [
+   "lof",
+   "ocsvm"
+  ],
+  "adbench:http": [
+   "lof",
+   "ocsvm"
+  ],
+  "adbench:shuttle": [
+   "ocsvm"
+  ],
+  "adbench:skin": [
+   "ocsvm"
+  ],
+  "adbench:smtp": [
+   "ocsvm"
+  ],
+  "uci:117": [
+   "lof",
+   "ocsvm"
+  ],
+  "uci:2": [
+   "ocsvm"
+  ],
+  "uci:222": [
+   "ocsvm"
+  ],
+  "uci:296": [
+   "lof",
+   "ocsvm"
+  ],
+  "uci:31": [
+   "lof",
+   "ocsvm"
+  ],
+  "uci:365": [
+   "ocsvm"
+  ],
+  "uci:848": [
+   "ocsvm"
+  ],
+  "uci:967": [
+   "lof",
+   "ocsvm"
+  ]
+ }
+}
