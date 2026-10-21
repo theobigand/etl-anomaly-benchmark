@@ -91,3 +91,26 @@ def test_hypotheses_are_evaluated_against_the_preregistered_thresholds():
     for m in failing.values():
         m.loc["great_expectations", "missing_value"] = 0.5
     assert ts.hypotheses(failing, n_columns={"a": 4, "b": 5, "c": 6})["H1"]["holds"] is False
+
+
+def test_the_summary_cli_reads_run_files_and_writes_results_and_a_table(tmp_path):
+    import json
+
+    runs = tmp_path / "runs"
+    runs.mkdir()
+    for i in range(3):
+        m = _pattern(0.05 * i)
+        (runs / f"{i}.json").write_text(
+            json.dumps(
+                {
+                    "name": f"d{i}",
+                    "carrier": {"columns": list("abcd")[: 4 + (i % 1)]},
+                    "recall_mean": json.loads(m.to_json(orient="split")),
+                }
+            )
+        )
+    out = tmp_path / "out"
+    assert ts.main(["--runs", str(runs), "--output", str(out)]) == 0
+    results = json.loads((out / "typed_results.json").read_text())
+    assert set(results["hypotheses"]) == {"H1", "H2", "H3", "H4", "H5"} and results["datasets"] == 3
+    assert "great_expectations" in (out / "typed_results.md").read_text()

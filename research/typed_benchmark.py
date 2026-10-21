@@ -63,7 +63,7 @@ def evaluate(df: pd.DataFrame, cols: list[str], seed: int, names: list[str] | No
     train, _val, test = split(df, seed)
     contamination = float(train["anomaly"].mean())
     features = [*cols, "t"]
-    recall_rows, precision_rows = [], []
+    recall_rows, precision_rows, fpr = [], [], {}
     for name in [*names, "transform_dedup"]:
         if name == "transform_dedup":
             flags = test.duplicated(subset=features, keep=False)
@@ -71,10 +71,13 @@ def evaluate(df: pd.DataFrame, cols: list[str], seed: int, names: list[str] | No
             flags = detect(
                 test[features], _build(name, contamination, cols), fit_df=train[features]
             ).flags
-        r, p = _per_type(pd.Series(np.asarray(flags), index=test.index), test["anomaly_type"])
+        flags = pd.Series(np.asarray(flags), index=test.index)
+        fpr[name] = float(flags[test["anomaly_type"] == "clean"].mean())
+        r, p = _per_type(flags, test["anomaly_type"])
         recall_rows.append({"method": name, **r})
         precision_rows.append({"method": name, **p})
     return {
         "recall": pd.DataFrame(recall_rows).set_index("method"),
         "precision": pd.DataFrame(precision_rows).set_index("method"),
+        "fpr": pd.Series(fpr, name="fpr"),
     }

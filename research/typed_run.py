@@ -39,14 +39,21 @@ def run_one(job: tuple[dict[str, Any], str, str]) -> dict[str, Any]:
     meta, path, digest = job
     carrier, report = load_carrier(meta, Path(path), seed=0)
     cols = list(carrier.columns)
-    recalls = []
+    recalls, precisions, fprs = [], [], []
     for seed in SEEDS:
         df = inj.inject(carrier, seed=seed)
-        recalls.append(tb.evaluate(df, cols, seed)["recall"])
+        result = tb.evaluate(df, cols, seed)
+        recalls.append(result["recall"])
+        precisions.append(result["precision"])
+        fprs.append(result["fpr"])
     import pandas as pd
 
     stack = pd.concat(recalls, keys=range(len(recalls)))
     mean = stack.groupby(level=1, sort=False).mean()
+    precision = (
+        pd.concat(precisions, keys=range(len(precisions))).groupby(level=1, sort=False).mean()
+    )
+    fpr = pd.concat(fprs, axis=1).mean(axis=1)
     return {
         "uci_id": meta["uci_id"],
         "name": meta["name"],
@@ -54,6 +61,8 @@ def run_one(job: tuple[dict[str, Any], str, str]) -> dict[str, Any]:
         "carrier": report,
         "seeds": list(SEEDS),
         "recall_mean": json.loads(mean.to_json(orient="split")),
+        "precision_mean": json.loads(precision.to_json(orient="split")),
+        "fpr_mean": json.loads(fpr.to_json()),
         "recall_seeds": [json.loads(r.to_json(orient="split")) for r in recalls],
     }
 
