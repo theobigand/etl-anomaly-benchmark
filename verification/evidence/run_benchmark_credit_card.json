@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-18T04:23:15.653189+00:00",
+  "captured_at": "2026-10-21T20:38:40.966096+00:00",
   "dataset": {
     "bytes": 150828752,
     "identity": "credit_card",
@@ -8,21 +8,21 @@
   },
   "environment_lock": {
     "file": "verification/environment/conda-darwin-arm64.explicit.txt",
-    "sha256": "88f9518425e499f8930b1710baf86442e7885a6dc85c70e0b823aa1ccad76355"
+    "sha256": "44d5470f1d0c6a675f26e8fec98bf0592967deb2e0a3b1834ac95d822b6e1c73"
   },
   "experiment": "real_benchmark",
   "fingerprint_recipe": 2,
   "measurement_fingerprint": "9cd603c619d15e17d3cbd9d14986b6f62bdb5611a5ba78fbd4d10ae8f4d7285d",
   "measurement_recipe": 1,
   "output_sha256": {
-    "benchmark_credit_card_20261018_042312.csv": "ad9ff2a151bd087e6bab4a965bf5cf76de8d3f4e03cda42f31579a197472234b",
-    "benchmark_credit_card_20261018_042312.md": "25e0b580becfa24e3bd34be7b6012bf05cf577efd1a7af53d2737f836e056df6",
-    "split_ids_credit_card_20261018_042312.json.gz": "589bb4cc4d74f6ed7b4201d7be010e942f61117a5b7a69a50246f5caea4475cf"
+    "benchmark_credit_card_20261021_203839.csv": "018e78bc3450ba263ade138b41329f356e767a723a683e45cd17560372127ac1",
+    "benchmark_credit_card_20261021_203839.md": "6da194670510de2f6769bd60cbfa90f3f6f418e3306edb212ed1f927880980f4",
+    "split_ids_credit_card_20261021_203839.json.gz": "589bb4cc4d74f6ed7b4201d7be010e942f61117a5b7a69a50246f5caea4475cf"
   },
   "outputs": [
-    "benchmark_credit_card_20261018_042312.csv",
-    "benchmark_credit_card_20261018_042312.md",
-    "split_ids_credit_card_20261018_042312.json.gz"
+    "benchmark_credit_card_20261021_203839.csv",
+    "benchmark_credit_card_20261021_203839.md",
+    "split_ids_credit_card_20261021_203839.json.gz"
   ],
   "packages": {
     "great-expectations": "1.24.0",
@@ -31,10 +31,10 @@
     "pyod": "3.6.7",
     "scikit-learn": "1.9.1"
   },
-  "platform": "macOS-27.0-arm64-arm-64bit",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "scientific_fingerprint": "cecbed00f8228b25707199f820d62f28fa1c13f543a0bbb5d56f94716b6a17b9",
+  "scientific_fingerprint": "536531c854369fa90900913ad7b6ec8e1c4abe110ba92a15b9e2f6e46a9974c0",
   "seeds": [
     42,
     1,
@@ -48,7 +48,11 @@
       "zscore",
       "iqr",
       "great_expectations",
-      "isolation_forest"
+      "isolation_forest",
+      "ecod",
+      "copod",
+      "hbos",
+      "pca"
     ],
     "features": [
       "Time",
@@ -85,8 +89,9 @@
     "fit_sample": null,
     "fixed_contamination": null,
     "not_run": {
-      "lof": "ineligible: 284k rows, 0.17% fraud. LOF/OC-SVM omitted: they do not scale to this size.",
-      "ocsvm": "ineligible: 284k rows, 0.17% fraud. LOF/OC-SVM omitted: they do not scale to this size."
+      "knn": "ineligible: 284k rows, 0.17% fraud. LOF, OC-SVM and KNN omitted: they do not scale to this size.",
+      "lof": "ineligible: 284k rows, 0.17% fraud. LOF, OC-SVM and KNN omitted: they do not scale to this size.",
+      "ocsvm": "ineligible: 284k rows, 0.17% fraud. LOF, OC-SVM and KNN omitted: they do not scale to this size."
     },
     "pr_auc_definition": "average_precision",
     "split_ratios": [
@@ -96,7 +101,7 @@
     ],
     "split_strategy": "stratified"
   },
-  "source_fingerprint": "d8c8a6a857073b22384213e66d0d2773e2d58c9d6ead796483e610ecd60f0ab4",
-  "source_revision": "367e3acc0e96b9e2bef3c748de3f1958d20acf85",
+  "source_fingerprint": "dbbbfb587274f1f92edab7bda7474473b1f1359f7b1c47375890dee9d7a726cf",
+  "source_revision": "4f7fd44135f69e5ce098d30676b9c15b43e6b302",
   "worktree_dirty": false
 }

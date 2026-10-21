@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-18T04:22:27.387524+00:00",
+  "captured_at": "2026-10-21T20:37:22.605397+00:00",
   "dataset": {
     "bytes": 770024,
     "identity": "cardio",
@@ -8,21 +8,21 @@
   },
   "environment_lock": {
     "file": "verification/environment/conda-darwin-arm64.explicit.txt",
-    "sha256": "88f9518425e499f8930b1710baf86442e7885a6dc85c70e0b823aa1ccad76355"
+    "sha256": "44d5470f1d0c6a675f26e8fec98bf0592967deb2e0a3b1834ac95d822b6e1c73"
   },
   "experiment": "real_benchmark",
   "fingerprint_recipe": 2,
   "measurement_fingerprint": "9cd603c619d15e17d3cbd9d14986b6f62bdb5611a5ba78fbd4d10ae8f4d7285d",
   "measurement_recipe": 1,
   "output_sha256": {
-    "benchmark_cardio_20261018_042227.csv": "26a79a6f6c1bc971a487076b22274bfdfbe90ec2df10952d962d3afb8d9c5f18",
-    "benchmark_cardio_20261018_042227.md": "8c5d244a62c0de3a74fef49d7c5356a4d27d3cc4ebb711ece35888a5c741ea84",
-    "split_ids_cardio_20261018_042227.json.gz": "3c8f3ca4703db0a4b719e58da9b12b22b4294d874f9ece643073d32692b35ffe"
+    "benchmark_cardio_20261021_203722.csv": "442eb45cd6e4be828e9c1377b47430aad8d7a1e1bf7c64d06119ef7802b9b4ed",
+    "benchmark_cardio_20261021_203722.md": "5fda858ce96af56001fc9ba664f621663309a2227be37b32126550ae0365393e",
+    "split_ids_cardio_20261021_203722.json.gz": "3c8f3ca4703db0a4b719e58da9b12b22b4294d874f9ece643073d32692b35ffe"
   },
   "outputs": [
-    "benchmark_cardio_20261018_042227.csv",
-    "benchmark_cardio_20261018_042227.md",
-    "split_ids_cardio_20261018_042227.json.gz"
+    "benchmark_cardio_20261021_203722.csv",
+    "benchmark_cardio_20261021_203722.md",
+    "split_ids_cardio_20261021_203722.json.gz"
   ],
   "packages": {
     "great-expectations": "1.24.0",
@@ -31,10 +31,10 @@
     "pyod": "3.6.7",
     "scikit-learn": "1.9.1"
   },
-  "platform": "macOS-27.0-arm64-arm-64bit",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "scientific_fingerprint": "cecbed00f8228b25707199f820d62f28fa1c13f543a0bbb5d56f94716b6a17b9",
+  "scientific_fingerprint": "536531c854369fa90900913ad7b6ec8e1c4abe110ba92a15b9e2f6e46a9974c0",
   "seeds": [
     42,
     1,
@@ -50,7 +50,12 @@
       "great_expectations",
       "isolation_forest",
       "lof",
-      "ocsvm"
+      "ocsvm",
+      "ecod",
+      "copod",
+      "hbos",
+      "knn",
+      "pca"
     ],
     "features": [
       "f00",
@@ -86,7 +91,7 @@
     ],
     "split_strategy": "stratified"
   },
-  "source_fingerprint": "d8c8a6a857073b22384213e66d0d2773e2d58c9d6ead796483e610ecd60f0ab4",
-  "source_revision": "367e3acc0e96b9e2bef3c748de3f1958d20acf85",
+  "source_fingerprint": "dbbbfb587274f1f92edab7bda7474473b1f1359f7b1c47375890dee9d7a726cf",
+  "source_revision": "4f7fd44135f69e5ce098d30676b9c15b43e6b302",
   "worktree_dirty": false
 }
