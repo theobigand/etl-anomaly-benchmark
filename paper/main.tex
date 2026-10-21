@@ -158,27 +158,94 @@ outlines future work.
 \section{Related Work}
 \label{sec:related}
 
-\emph{To be written. Planned subsections:}
-\begin{itemize}
-    \item Data quality in ETL pipelines (Khatri \& Brown
-    \cite{khatri2010data}; Data Quality
-    Survey~\cite{dataqualitysurvey2024}; pipeline tools
-    survey~\cite{pipelinetoolssurvey2024})
-    \item Rule-based and declarative approaches (Great Expectations,
-    Deequ, Soda~\cite{dataqualitysurvey2024})
-    \item Classical ML for anomaly detection (Isolation Forest, LOF,
-    One-Class SVM; Goldstein \& Uchida~\cite{goldstein2016comparative};
-    PyOD~\cite{zhao2019pyod})
-    \item Deep learning (Autoencoder, LSTM-Autoencoder)
-    \item Existing benchmarks: ADBench~\cite{han2022adbench}, which
-    covers 30 algorithms, 57 datasets, geometric anomaly types and
-    standalone run times, and what it leaves out (rule-based baselines,
-    ETL integration, data quality fault categories)
-    \item ML in ETL pipelines: Gopa~\cite{gopa2025aiaugmented},
-    Marupaka \& Rangineni~\cite{marupaka2024mlpredictive},
-    Sokkula \& Vuppala~\cite{sokkula2024implementing} as illustrative
-    limitations
-\end{itemize}
+\paragraph{Data quality in ETL pipelines.}
+Data quality is usually framed as governance: Khatri and
+Brown~\cite{khatri2010data} treat data as an asset to be governed, and recent
+surveys list the tools that check it, including Great
+Expectations~\cite{greatexpectations}, Deequ and Soda among $17$
+tools~\cite{dataqualitysurvey2024}, next to a broader survey of pipeline
+tools~\cite{pipelinetoolssurvey2024}. These tools are rule-based. Deequ
+expresses constraints as unit tests for data that run as aggregation queries on
+Spark, supports incremental validation, and also suggests constraints and
+detects anomalies in the time series of quality metrics~\cite{schelter2018automating}.
+They check what the author of the rules thought of in advance; they do not say
+how a learned detector would have done on the same data.
+
+\paragraph{Anomaly detection algorithms.}
+The detectors I compare are standard. Isolation
+Forest~\cite{liu2008isolation}, LOF~\cite{breunig2000lof} and the One-Class
+SVM~\cite{scholkopf2001support} are available in
+PyOD~\cite{zhao2019pyod}, and Chandola et al.~\cite{chandola2009anomaly} survey
+the field. Goldstein and Uchida~\cite{goldstein2016comparative} compare $19$
+unsupervised algorithms on $10$ datasets and find that the choice depends on
+the type of anomaly, local or global, which is the observation this paper takes
+to data quality faults. For reconstruction models, Malhotra et
+al.~\cite{malhotra2016lstm} train an LSTM encoder-decoder on normal behaviour
+and flag high reconstruction error, on public time series (power demand, space
+shuttle, ECG) and on engine sensors; my LSTM autoencoder follows that idea on windows of tabular rows.
+
+\paragraph{Benchmarks.}
+ADBench~\cite{han2022adbench} is the closest work: $30$ algorithms on $57$
+datasets, $98{,}436$ experiments, with different levels of supervision and four
+types of anomalies (local, global, dependency and clustered) generated from
+existing data, reported with AUCROC and AUCPR and with training and inference
+time. In its text I found no threshold-dependent metric and no chronological
+protocol, and none of its anomaly types is a data-quality fault such as a
+missing value or an invalid format. Agyemang~\cite{agyemang2024anomaly}
+compares five unsupervised detectors on one simulated dataset with accuracy,
+precision, recall and $F_1$, and leaves real data as future work (I read the
+abstract only). AnoShift~\cite{dragoi2022anoshift} builds a time-ordered
+protocol on ten years of Kyoto-2006+ network traffic, training on 2006--2010 and
+testing on 2011--2013 (NEAR) and 2014--2015 (FAR), and reports ROC-AUC and PR-AUC
+for classical and deep models, again without a decision threshold.
+FedAD-Bench~\cite{anwar2024fedadbench} compares deep models in a federated
+setting on four tabular datasets and chooses each threshold by maximising $F_1$
+on a validation set with the anomaly ratio of the test set. Sun et
+al.~\cite{sun2024online} propose online thresholds with confidence sequences
+that adapt to distribution shift, and test them on synthetic and real data. They
+study how to pick a threshold, not how classical detectors behave in a pipeline.
+
+\paragraph{Machine learning in ETL pipelines.}
+Papers on machine learning inside ETL
+mostly describe architectures. Gopa~\cite{gopa2025aiaugmented} reports aggregate
+figures taken from enterprise deployments without code, and
+Marupaka and Rangineni~\cite{marupaka2024mlpredictive} announce accuracy gains in
+an abstract that names no dataset or baseline. Sokkula and
+Vuppala~\cite{sokkula2024implementing} run an Isolation Forest on the
+resampled Credit Card data and obtain an AUC-ROC of $0.51$, which I come back
+to in Section~\ref{sec:experiments}.
+
+\begin{table*}[t]
+\caption{What each work reports, as far as I could read in the cited sources.
+``Not found'' means absent from the text I read, not proven absent.}
+\label{tab:positioning}
+\centering
+\footnotesize
+\begin{tabular}{p{2.4cm}p{3.4cm}p{3.0cm}p{2.6cm}p{3.0cm}}
+\toprule
+Work & Detectors and data & Time order & Metric at a threshold & Per-type results \\
+\midrule
+ADBench~\cite{han2022adbench} & $30$ algorithms, $57$ datasets & not found & not found (AUCROC, AUCPR) & four geometric types, generated \\
+Agyemang~\cite{agyemang2024anomaly} & $5$ detectors, one simulated set & none & accuracy, precision, recall, $F_1$ & not stated in the abstract \\
+AnoShift~\cite{dragoi2022anoshift} & classical and deep, Kyoto-2006+ & IID, NEAR, FAR splits & not found (ROC-AUC, PR-AUC) & none \\
+FedAD-Bench~\cite{anwar2024fedadbench} & deep models, federated, $4$ datasets & not found & $F_1$-optimal threshold on a validation set & none \\
+Sun et al.~\cite{sun2024online} & thresholding method, synthetic and real & shift in the stream & error-rate guarantees & none \\
+\midrule
+This paper & $6$ detectors (and $2$ deep), $3$ real sets, a pool of $152$, synthetic and typed injection & chronological pilot on one dataset & precision, recall, $F_1$ at the training-prevalence threshold & six data-quality fault types \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\paragraph{Gap and what is not claimed.}
+Among these sources I did not find a comparison of rule-based, classical and
+learned detectors that reports their decisions, not only a ranking, broken
+down by the kind of data-quality fault, on both a controlled generator and
+real tables, and in the setting of an ETL pipeline with its cost. That is the
+gap this paper addresses, with the limits stated in Section~\ref{sec:discussion}.
+I do not claim that no such study exists: the scan covers the works above, was
+not systematic, and I read the full text of only some of them. I do not claim
+that the detectors are new, that the injected faults match natural ones, or that
+the results hold beyond the datasets used.
 
 \section{Methodology}
 \label{sec:methodology}
