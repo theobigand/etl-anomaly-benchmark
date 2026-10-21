@@ -1,6 +1,6 @@
 # Vérification des références externes
 
-Contrôle du 17 octobre 2026 des douze entrées de `paper/references.bib` et de
+Contrôle du 17 octobre 2026 des douze premières entrées (complété le 21 octobre 2026 pour les onze suivantes, issue #68) de `paper/references.bib` et de
 chaque phrase de `paper/main.tex` qui s'y appuie. Source primaire = page de
 l'éditeur, de l'archive ou du dépôt, ou texte intégral de l'article. Les
 résultats expérimentaux de la thèse ne sont pas concernés.
@@ -19,12 +19,26 @@ résultats expérimentaux de la thèse ne sont pas concernés.
 | `mlgulbcredit` | Fiche Kaggle ULB | Existence et taille (voir `manuscript_check.md`) ; empreinte du fichier non recontrôlable sans compte. | Aucun. |
 | `kadiwal2021water` | Fiche Kaggle | 3 276 échantillons, 9 variables ; comparés au fichier local (empreinte dans le manifeste). | Aucun. |
 | `campos2000cardio` | UCI Cardiotocography, DOI 10.24432/C51S4N | Créateurs listés « D. Campos et J. Bernardes » ; 2 126 instances et 21 variables (le jeu ADBench utilisé en compte 1 831). | Aucun ; le manuscrit cite ADBench pour la version utilisée. |
+| `liu2008isolation` | Crossref (10.1109/icdm.2008.17) ; la page IEEE n'a pas répondu | Titre, auteurs (Liu, Ting, Zhou), ICDM 2008, pages 413-422. | Aucun. Contenu de l'article non relu : cité pour l'existence de la méthode. |
+| `breunig2000lof` | Crossref (10.1145/335191.335388) ; la page ACM a répondu 403 | Auteurs, SIGMOD Record 29(2), pages 93-104, 2000. Crossref donne le titre abrégé « LOF ». | Le titre complet « LOF: Identifying Density-Based Local Outliers » vient de l'usage courant et n'a pas été relu sur la page de l'éditeur. |
+| `scholkopf2001support` | Crossref (10.1162/089976601750264965) ; page MIT Press 403 | Titre, cinq auteurs, Neural Computation 13(7):1443-1471, 2001. | Aucun. |
+| `chandola2009anomaly` | Crossref (10.1145/1541880.1541882) ; page ACM 403 | Auteurs, ACM Computing Surveys 41(3):1-58, 2009. Crossref donne le titre « Anomaly detection » ; le sous-titre « A Survey » est retenu d'après l'usage courant. | Sous-titre non relu sur la page de l'éditeur. |
+| `malhotra2016lstm` | arXiv 1607.00148 (page de résumé) | Titre, six auteurs, atelier ICML 2016 sur la détection d'anomalies ; réseau LSTM encodeur-décodeur entraîné sur le comportement normal, erreur de reconstruction élevée = anomalie ; trois jeux publics (consommation électrique, navette spatiale, ECG) et deux jeux de moteurs. | Aucun. Seul le résumé a été lu. |
+| `schelter2018automating` | Première page du PDF de PVLDB, Crossref | PVLDB 11(12):1781-1794, DOI 10.14778/3229863.3229867 ; tests unitaires pour les données traduits en requêtes d'agrégation Spark, validation incrémentale, suggestion de contraintes, anomalies dans les séries de métriques de qualité. | Le nom Deequ n'apparaît pas dans le résumé lu ; le manuscrit le rattache à l'article via l'étude `dataqualitysurvey2024`. |
+| `agyemang2024anomaly` | Dépôt de l'Université du Ghana (notice), Crossref | Scientific African 26:e02386, 2024 ; cinq détecteurs non supervisés (OC-SVM, OC-SVM SGD, Isolation Forest, LOF, Robust Covariance) sur un jeu simulé ; exactitude, précision, rappel, F1 ; données réelles en perspective. | Résumé seul lu (la page de l'éditeur a répondu 403). Le manuscrit le signale. |
+| `dragoi2022anoshift` | arXiv 2206.15476 (page de résumé et texte intégral via ar5iv) | Cinq auteurs ; Kyoto-2006+ sur environ dix ans ; entraînement et IID 2006-2010, NEAR 2011-2013, FAR 2014-2015 ; ROC-AUC et PR-AUC, pas de seuil de décision ; modèles classiques et profonds. | La fiche du dossier #63 disait « ROC-AUC seulement » : corrigé, les deux métriques sont rapportées. Le volume NeurIPS D&B 2022 est confirmé par la page NeurIPS trouvée par recherche, non relue en détail. |
+| `anwar2024fedadbench` | arXiv 2408.04442 (page de résumé et version HTML) | Sept auteurs ; dépôt arXiv seulement (FLTA 2024 d'après la page du DFKI, non relue) ; modèles profonds en apprentissage fédéré ; seuil choisi en maximisant le F1 sur un jeu de validation ayant le même taux d'anomalies que le test ; quatre jeux (Arrhythmia, Thyroid, KDDCUP10, NSL-KDD). | La conférence n'est pas indiquée dans l'entrée BibTeX faute de source primaire lue. |
+| `sun2024online` | Page PMLR v235 | Trois auteurs, ICML 2024, PMLR 235:47105-47132 ; seuils en ligne avec séquences de confiance, garanties sur les taux d'erreur, jeux synthétiques et réels. | Résumé seul lu. |
+| `greatexpectations` | Site du projet (réponse HTTP 200) | Existence du projet. | Pas de publication ; version non citée dans l'entrée. |
+| ADBench (relecture) | Texte intégral du PDF (arXiv 2206.09426v2) | 30 algorithmes, 57 jeux, 98 436 expériences ; AUCROC et AUCPR ; temps d'entraînement et d'inférence ; quatre types d'anomalies générés (locales, globales, de dépendance, en grappes) ; aucune occurrence de « threshold », « chronolog » ni de F1 dans le texte. | Les mentions « non trouvé » du tableau de positionnement s'appuient sur cette recherche dans le texte. |
 
 ## Limites
 
 - Les textes intégraux de Marupaka et Rangineni et de Gartner n'ont pas été
   lus ; ce qui est écrit à leur sujet se limite à ce que les pages de
   l'éditeur montrent.
-- La section « Related Work » reste une liste de sujets à rédiger ; ses
-  citations ont été vérifiées comme les autres.
+- La section « Related Work » est rédigée (issue #68) ; le brouillon attend la
+  relecture de l'auteur. Plusieurs pages d'éditeurs (IEEE, ACM, MIT Press,
+  Elsevier) ont répondu 403 ; pour ces entrées les métadonnées viennent de
+  Crossref et le contenu des articles n'a pas été relu.
 - Les chiffres propres à la thèse sont hors de ce contrôle.
