@@ -211,7 +211,7 @@ def hypotheses(results: dict[str, dict[str, Any]]) -> dict[str, Any]:
         }
     h3 = {"p2_at_least_p0": int(wins), "pairs": int(total)}
     return {
-        "H1": {"supported": all(v >= 0.8 for v in h1.values()), "spearman": h1},
+        "H1": {"supported": all(round(v, 9) >= 0.8 for v in h1.values()), "spearman": h1},
         "H2": {"supported": all(v["ok"] for v in h2.values()), "by_dataset": h2},
         "H3": {"supported": wins >= total / 2, **h3},
         "H4": {"supported": all(v["ok"] for v in h4.values()), "by_dataset": h4},
