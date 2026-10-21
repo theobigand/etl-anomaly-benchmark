@@ -100,3 +100,58 @@ def hypotheses(data: dict[str, pd.DataFrame], n_columns: dict[str, int]) -> dict
     ).statistic
     out["H5"] = {"holds": bool(rho < 0), "rho": float(rho)}
     return out
+
+
+def _load(runs):
+    import json
+
+    data, columns = {}, {}
+    for path in sorted(runs.glob("*.json")):
+        run = json.loads(path.read_text())
+        split = run["recall_mean"]
+        data[run["name"]] = pd.DataFrame(
+            split["data"], index=split["index"], columns=split["columns"]
+        )
+        columns[run["name"]] = len(run["carrier"]["columns"])
+    return data, columns
+
+
+def main(argv: list[str] | None = None) -> int:
+    import argparse
+    import json
+    from pathlib import Path
+
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--runs", type=Path, required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args(argv)
+    data, columns = _load(args.runs)
+    summary = pooled(data)
+    results = {
+        "datasets": len(data),
+        "median": json.loads(summary["median"].to_json(orient="split")),
+        "low": json.loads(summary["low"].to_json(orient="split")),
+        "high": json.loads(summary["high"].to_json(orient="split")),
+        "stability": stability(data),
+        "hypotheses": hypotheses(data, columns),
+    }
+    args.output.mkdir(parents=True, exist_ok=True)
+    (args.output / "typed_results.json").write_text(
+        json.dumps(results, indent=1, sort_keys=True) + "\n"
+    )
+    lines = [f"Median recall over {len(data)} datasets (95% interval over datasets)", ""]
+    kinds = list(summary["median"].columns)
+    lines += ["| method | " + " | ".join(kinds) + " |", "|---|" + "---|" * len(kinds)]
+    for method in summary["median"].index:
+        cells = []
+        for k in kinds:
+            mid, lo, hi = (summary[n].loc[method, k] for n in ("median", "low", "high"))
+            cells.append(f"{mid:.2f} [{lo:.2f}, {hi:.2f}]")
+        lines.append(f"| {method} | " + " | ".join(cells) + " |")
+    (args.output / "typed_results.md").write_text("\n".join(lines) + "\n")
+    print(f"{len(data)} datasets")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -76,3 +76,13 @@ def test_a_labelled_set_contributes_only_its_normal_class_and_an_unlabelled_one_
     carrier2, report2 = tr.load_carrier(unlabelled, path, seed=0)
     assert report2["source_rows"] == n and report2["normal_class_only"] is False
     assert list(carrier.columns) == [f"x{i}" for i in range(5)]
+
+
+def test_the_false_positive_rate_on_clean_rows_is_reported_for_every_method():
+    df, cols = _injected()
+    result = tb.evaluate(df, cols, seed=0, names=["zscore", "iqr"])
+    fpr = result["fpr"]
+    assert list(fpr.index) == ["zscore", "iqr", "transform_dedup"]
+    # keep=False also flags the clean original of every injected copy: about 3 percent
+    assert 0.0 < fpr.loc["transform_dedup"] < 0.06
+    assert (fpr >= 0).all() and (fpr <= 1).all() and fpr.loc["iqr"] > fpr.loc["zscore"]
