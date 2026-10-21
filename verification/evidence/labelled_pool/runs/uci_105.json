@@ -1,0 +1,307 @@
+{
+ "features": 32,
+ "metrics": {
+  "great_expectations": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.10526315789473684,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.10526315789473684,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.10526315789473684,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.10526315789473684,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.10526315789473684,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   }
+  ],
+  "iqr": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.10526315789473684,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.10526315789473684,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.10526315789473684,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.10526315789473684,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.10526315789473684,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   }
+  ],
+  "isolation_forest": [
+   {
+    "f1": 0.18181818181818182,
+    "flagged_pct": 18.421052631578945,
+    "pr_auc": 0.35256916996047427,
+    "precision": 0.14285714285714285,
+    "recall": 0.25,
+    "roc_auc": 0.5882352941176471
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 18.421052631578945,
+    "pr_auc": 0.1468253968253968,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5955882352941176
+   },
+   {
+    "f1": 0.3076923076923077,
+    "flagged_pct": 23.684210526315788,
+    "pr_auc": 0.31437908496732025,
+    "precision": 0.2222222222222222,
+    "recall": 0.5,
+    "roc_auc": 0.7941176470588236
+   },
+   {
+    "f1": 0.5,
+    "flagged_pct": 10.526315789473683,
+    "pr_auc": 0.33596491228070174,
+    "precision": 0.5,
+    "recall": 0.5,
+    "roc_auc": 0.8088235294117647
+   },
+   {
+    "f1": 0.2222222222222222,
+    "flagged_pct": 13.157894736842104,
+    "pr_auc": 0.13193755169561622,
+    "precision": 0.2,
+    "recall": 0.25,
+    "roc_auc": 0.4411764705882353
+   }
+  ],
+  "lof": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 7.894736842105263,
+    "pr_auc": 0.08621226268285093,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.25735294117647056
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 10.526315789473683,
+    "pr_auc": 0.08054275473630312,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.2058823529411765
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 15.789473684210526,
+    "pr_auc": 0.10343915343915343,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.3014705882352941
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 10.526315789473683,
+    "pr_auc": 0.10054563492063492,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.2647058823529412
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 10.526315789473683,
+    "pr_auc": 0.07700568907465459,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.1544117647058824
+   }
+  ],
+  "ocsvm": [
+   {
+    "f1": 0.2857142857142857,
+    "flagged_pct": 26.31578947368421,
+    "pr_auc": 0.25795454545454544,
+    "precision": 0.2,
+    "recall": 0.5,
+    "roc_auc": 0.7352941176470588
+   },
+   {
+    "f1": 0.26666666666666666,
+    "flagged_pct": 28.947368421052634,
+    "pr_auc": 0.17385912698412698,
+    "precision": 0.18181818181818182,
+    "recall": 0.5,
+    "roc_auc": 0.6323529411764706
+   },
+   {
+    "f1": 0.46153846153846156,
+    "flagged_pct": 23.684210526315788,
+    "pr_auc": 0.45,
+    "precision": 0.3333333333333333,
+    "recall": 0.75,
+    "roc_auc": 0.9044117647058824
+   },
+   {
+    "f1": 0.6,
+    "flagged_pct": 15.789473684210526,
+    "pr_auc": 0.4583333333333333,
+    "precision": 0.5,
+    "recall": 0.75,
+    "roc_auc": 0.9191176470588236
+   },
+   {
+    "f1": 0.2222222222222222,
+    "flagged_pct": 13.157894736842104,
+    "pr_auc": 0.19558662280701755,
+    "precision": 0.2,
+    "recall": 0.25,
+    "roc_auc": 0.48529411764705876
+   }
+  ],
+  "zscore": [
+   {
+    "f1": 0.25,
+    "flagged_pct": 10.526315789473683,
+    "pr_auc": 0.3958333333333333,
+    "precision": 0.25,
+    "recall": 0.25,
+    "roc_auc": 0.9007352941176471
+   },
+   {
+    "f1": 0.2,
+    "flagged_pct": 15.789473684210526,
+    "pr_auc": 0.375,
+    "precision": 0.16666666666666666,
+    "recall": 0.25,
+    "roc_auc": 0.8713235294117647
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 2.631578947368421,
+    "pr_auc": 0.5714285714285714,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.9411764705882352
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 2.631578947368421,
+    "pr_auc": 0.6736111111111112,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.9485294117647058
+   },
+   {
+    "f1": 0.2857142857142857,
+    "flagged_pct": 7.894736842105263,
+    "pr_auc": 0.5119047619047619,
+    "precision": 0.3333333333333333,
+    "recall": 0.25,
+    "roc_auc": 0.9375
+   }
+  ]
+ },
+ "name": "Congressional Voting Records",
+ "prevalence": 0.11067193675889328,
+ "problem": "uci:105",
+ "report": {
+  "anomalies": 30,
+  "anomaly_class": "republican",
+  "classes": 2,
+  "conflicting_rows_removed": 0,
+  "dropped_constant": [],
+  "dropped_high_cardinality": [],
+  "dropped_missing": [],
+  "duplicates_removed": 44,
+  "encoded": [
+   "handicapped-infants",
+   "water-project-cost-sharing",
+   "adoption-of-the-budget-resolution",
+   "physician-fee-freeze",
+   "el-salvador-aid",
+   "religious-groups-in-schools",
+   "anti-satellite-test-ban",
+   "aid-to-nicaraguan-contras",
+   "mx-missile",
+   "immigration",
+   "synfuels-corporation-cutback",
+   "education-spending",
+   "superfund-right-to-sue",
+   "crime",
+   "duty-free-exports",
+   "export-administration-act-south-africa"
+  ],
+  "features_out": 32,
+  "kind": "downsampled",
+  "name": "Congressional Voting Records",
+  "natural_rate": 0.38620689655172413,
+  "rows": 297,
+  "rows_in": 297,
+  "rows_out": 253,
+  "source": "uci",
+  "uci_id": 105
+ },
+ "rows": 253,
+ "seeds": [
+  42,
+  1,
+  2,
+  3,
+  4
+ ],
+ "skipped": [],
+ "source": "uci"
+}

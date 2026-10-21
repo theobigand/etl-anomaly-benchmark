@@ -1,0 +1,306 @@
+{
+ "features": 54,
+ "metrics": {
+  "great_expectations": [
+   {
+    "f1": 0.3333333333333333,
+    "flagged_pct": 2.272727272727273,
+    "pr_auc": 0.2909090909090909,
+    "precision": 1.0,
+    "recall": 0.2,
+    "roc_auc": 0.6
+   },
+   {
+    "f1": 0.3333333333333333,
+    "flagged_pct": 2.272727272727273,
+    "pr_auc": 0.2909090909090909,
+    "precision": 1.0,
+    "recall": 0.2,
+    "roc_auc": 0.6
+   },
+   {
+    "f1": 0.3333333333333333,
+    "flagged_pct": 2.272727272727273,
+    "pr_auc": 0.2909090909090909,
+    "precision": 1.0,
+    "recall": 0.2,
+    "roc_auc": 0.6
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.11363636363636363,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.11363636363636363,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   }
+  ],
+  "iqr": [
+   {
+    "f1": 0.3333333333333333,
+    "flagged_pct": 2.272727272727273,
+    "pr_auc": 0.2909090909090909,
+    "precision": 1.0,
+    "recall": 0.2,
+    "roc_auc": 0.6
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.11363636363636363,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.11363636363636363,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.11363636363636363,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.125,
+    "flagged_pct": 25.0,
+    "pr_auc": 0.1090909090909091,
+    "precision": 0.09090909090909091,
+    "recall": 0.2,
+    "roc_auc": 0.47179487179487184
+   }
+  ],
+  "isolation_forest": [
+   {
+    "f1": 0.4,
+    "flagged_pct": 11.363636363636363,
+    "pr_auc": 0.5821018062397373,
+    "precision": 0.4,
+    "recall": 0.4,
+    "roc_auc": 0.841025641025641
+   },
+   {
+    "f1": 0.8888888888888888,
+    "flagged_pct": 9.090909090909092,
+    "pr_auc": 0.9666666666666666,
+    "precision": 1.0,
+    "recall": 0.8,
+    "roc_auc": 0.9948717948717949
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 9.090909090909092,
+    "pr_auc": 0.8076190476190477,
+    "precision": 0.75,
+    "recall": 0.6,
+    "roc_auc": 0.9128205128205129
+   },
+   {
+    "f1": 0.5,
+    "flagged_pct": 6.8181818181818175,
+    "pr_auc": 0.6264425770308124,
+    "precision": 0.6666666666666666,
+    "recall": 0.4,
+    "roc_auc": 0.9076923076923077
+   },
+   {
+    "f1": 0.4444444444444444,
+    "flagged_pct": 9.090909090909092,
+    "pr_auc": 0.5451282051282051,
+    "precision": 0.5,
+    "recall": 0.4,
+    "roc_auc": 0.7794871794871795
+   }
+  ],
+  "lof": [
+   {
+    "f1": 0.25,
+    "flagged_pct": 6.8181818181818175,
+    "pr_auc": 0.34,
+    "precision": 0.3333333333333333,
+    "recall": 0.2,
+    "roc_auc": 0.6717948717948719
+   },
+   {
+    "f1": 0.4444444444444444,
+    "flagged_pct": 9.090909090909092,
+    "pr_auc": 0.3354978354978355,
+    "precision": 0.5,
+    "recall": 0.4,
+    "roc_auc": 0.8153846153846154
+   },
+   {
+    "f1": 0.4,
+    "flagged_pct": 11.363636363636363,
+    "pr_auc": 0.6084415584415584,
+    "precision": 0.4,
+    "recall": 0.4,
+    "roc_auc": 0.8307692307692307
+   },
+   {
+    "f1": 0.36363636363636365,
+    "flagged_pct": 13.636363636363635,
+    "pr_auc": 0.5416666666666667,
+    "precision": 0.3333333333333333,
+    "recall": 0.4,
+    "roc_auc": 0.7846153846153845
+   },
+   {
+    "f1": 0.36363636363636365,
+    "flagged_pct": 13.636363636363635,
+    "pr_auc": 0.4650075414781297,
+    "precision": 0.3333333333333333,
+    "recall": 0.4,
+    "roc_auc": 0.7692307692307693
+   }
+  ],
+  "ocsvm": [
+   {
+    "f1": 0.5454545454545454,
+    "flagged_pct": 13.636363636363635,
+    "pr_auc": 0.5876190476190477,
+    "precision": 0.5,
+    "recall": 0.6,
+    "roc_auc": 0.8615384615384616
+   },
+   {
+    "f1": 0.7272727272727273,
+    "flagged_pct": 13.636363636363635,
+    "pr_auc": 0.885,
+    "precision": 0.6666666666666666,
+    "recall": 0.8,
+    "roc_auc": 0.9794871794871796
+   },
+   {
+    "f1": 0.7272727272727273,
+    "flagged_pct": 13.636363636363635,
+    "pr_auc": 0.8416666666666666,
+    "precision": 0.6666666666666666,
+    "recall": 0.8,
+    "roc_auc": 0.9025641025641025
+   },
+   {
+    "f1": 0.5454545454545454,
+    "flagged_pct": 13.636363636363635,
+    "pr_auc": 0.7625,
+    "precision": 0.5,
+    "recall": 0.6,
+    "roc_auc": 0.9230769230769231
+   },
+   {
+    "f1": 0.3333333333333333,
+    "flagged_pct": 15.909090909090908,
+    "pr_auc": 0.5326406926406926,
+    "precision": 0.2857142857142857,
+    "recall": 0.4,
+    "roc_auc": 0.7692307692307692
+   }
+  ],
+  "zscore": [
+   {
+    "f1": 0.3448275862068966,
+    "flagged_pct": 54.54545454545454,
+    "pr_auc": 0.45166666666666666,
+    "precision": 0.20833333333333334,
+    "recall": 1.0,
+    "roc_auc": 0.8076923076923077
+   },
+   {
+    "f1": 0.4,
+    "flagged_pct": 45.45454545454545,
+    "pr_auc": 0.576923076923077,
+    "precision": 0.25,
+    "recall": 1.0,
+    "roc_auc": 0.9076923076923077
+   },
+   {
+    "f1": 0.34782608695652173,
+    "flagged_pct": 40.909090909090914,
+    "pr_auc": 0.7216666666666667,
+    "precision": 0.2222222222222222,
+    "recall": 0.8,
+    "roc_auc": 0.9076923076923077
+   },
+   {
+    "f1": 0.3448275862068966,
+    "flagged_pct": 54.54545454545454,
+    "pr_auc": 0.5696778711484594,
+    "precision": 0.20833333333333334,
+    "recall": 1.0,
+    "roc_auc": 0.8333333333333334
+   },
+   {
+    "f1": 0.2727272727272727,
+    "flagged_pct": 38.63636363636363,
+    "pr_auc": 0.44434173669467786,
+    "precision": 0.17647058823529413,
+    "recall": 0.6,
+    "roc_auc": 0.7564102564102564
+   }
+  ]
+ },
+ "name": "Differentiated Thyroid Cancer Recurrence",
+ "prevalence": 0.10801393728222997,
+ "problem": "uci:915",
+ "report": {
+  "anomalies": 31,
+  "anomaly_class": "Yes",
+  "classes": 2,
+  "conflicting_rows_removed": 0,
+  "dropped_constant": [],
+  "dropped_high_cardinality": [],
+  "dropped_missing": [],
+  "duplicates_removed": 19,
+  "encoded": [
+   "Gender",
+   "Smoking",
+   "Hx Smoking",
+   "Hx Radiothreapy",
+   "Thyroid Function",
+   "Physical Examination",
+   "Adenopathy",
+   "Pathology",
+   "Focality",
+   "Risk",
+   "T",
+   "N",
+   "M",
+   "Stage",
+   "Response"
+  ],
+  "features_out": 54,
+  "kind": "downsampled",
+  "name": "Differentiated Thyroid Cancer Recurrence",
+  "natural_rate": 0.2819843342036554,
+  "rows": 306,
+  "rows_in": 306,
+  "rows_out": 287,
+  "source": "uci",
+  "uci_id": 915
+ },
+ "rows": 287,
+ "seeds": [
+  42,
+  1,
+  2,
+  3,
+  4
+ ],
+ "skipped": [],
+ "source": "uci"
+}

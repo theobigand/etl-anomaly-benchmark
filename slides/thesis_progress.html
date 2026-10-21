@@ -202,15 +202,15 @@
   </div>
   <div class="mid">
     <h1 style="max-width:19ch">Anomaly detection for data quality, <em>measured inside</em> the ETL pipeline</h1>
-    <p class="hero-lede">Progress review at the end of M1. Rule-based and classical
-    machine-learning detectors run through one pipeline and are compared per anomaly type,
-    on a held-out split, over five seeds.</p>
+    <p class="hero-lede">Living progress deck. Rule-based, classical and first deep detectors run through one
+    pipeline and are compared per anomaly type, on a synthetic generator and on 42 real
+    tables with injected anomalies, and on 100 labelled problems of the pool.</p>
   </div>
   <ul class="kv" style="max-width:none">
-    <li><span>Author</span><span>Theo Bigand &nbsp;·&nbsp; 2026-09-01</span></li>
+    <li><span>Author</span><span>Theo Bigand &nbsp;·&nbsp; updated 2026-10-21</span></li>
     <li><span>Repository</span><span>github.com/theobigand/etl-anomaly-benchmark</span></li>
-    <li><span>Code</span><span>~1.7k LOC &nbsp;·&nbsp; 82 tests &nbsp;·&nbsp; CI green</span></li>
-    <li><span>Datasets</span><span>Credit Card Fraud &nbsp;·&nbsp; Cardio &nbsp;·&nbsp; Water Quality &nbsp;·&nbsp; synthetic, 6 anomaly types</span></li>
+    <li><span>Code</span><span>1,150 tests &nbsp;·&nbsp; 100% line and branch coverage &nbsp;·&nbsp; 97.75% mutants killed</span></li>
+    <li><span>Datasets</span><span>pool of 152 open sets &nbsp;·&nbsp; Credit Card, Cardio, Water Quality &nbsp;·&nbsp; synthetic, 6 anomaly types</span></li>
   </ul>
   <svg class="motif motif--anim" viewBox="0 0 128 76" aria-hidden="true">
     <rect class="c s" x="2"   y="2"  width="20" height="20" style="--d:0s"/>
@@ -619,11 +619,178 @@
   <div class="foot"><span>experiments/run_severity.py &nbsp;·&nbsp; make severity</span><span>answers the "we picked the magnitudes" threat</span></div>
 </section>
 
+<section class="slide" data-sec="Pool">
+  <div class="dossier">
+    <div class="heading">
+      <div class="eyebrow"><span class="idx">16</span> &nbsp; M2 · real data at scale</div>
+      <h2>A pool of <em>152 open datasets</em>, pinned and checked</h2>
+      <p class="lede">Issue #66. The three datasets of M1 bracket the method but are too few to say anything general. The pool follows ADBench in scale and adds a licence rule: a dataset enters only when its terms are read and open. Raw data stays out of the repository; checksums, licences and reports are archived.</p>
+      <div class="stat">
+        <div><span class="v">152</span><span class="l">pinned datasets</span></div>
+        <div><span class="v">116</span><span class="l">clean carriers for injection</span></div>
+        <div><span class="v">100</span><span class="l">labelled anomaly problems</span></div>
+      </div>
+    </div>
+    <div class="panel"><ul class="kv">
+        <li><span>ADBench tabular sets kept (35 CC BY 4.0, 1 ODbL)</span><span class="badge done">36 of 47</span></li>
+        <li><span>UCI sets passing metadata and licence filters</span><span class="badge done">133</span></li>
+        <li><span>UCI sets kept after curation, reason recorded</span><span class="badge done">116</span></li>
+        <li><span>anomaly label rule fixed before any detector</span><span class="badge done">rarest class</span></li>
+        <li><span>one normalisation policy for all sets</span><span class="badge done">single</span></li>
+        <li><span>download check of every set, manual and monthly CI</span><span class="badge done">pinned</span></li>
+        <li><span>excluded for unclear terms (celeba, mammography, vowels...)</span><span class="badge open">11</span></li>
+      </ul></div>
+  </div>
+  <div class="foot"><span>verification/dataset_pool.md &nbsp;·&nbsp; research/build_pool.py</span><span>the pool is what makes the per-type result general</span></div>
+</section>
+
+<section class="slide" data-sec="Labelled pool">
+  <div class="dossier">
+    <div class="heading">
+      <div class="eyebrow"><span class="idx">17</span> &nbsp; M2 · the whole labelled pool</div>
+      <h2>On 100 labelled problems, <em>no detector is clearly ahead</em></h2>
+      <p class="lede">Six detectors, default settings, five seeds, on the 36 ADBench and 64 UCI problems of the pool. Protocol written before the run. Learning helps a little: Isolation Forest beats the Z-score on 67 problems, by 0.01 to 0.04 of PR-AUC. Three of five hypotheses hold; the two that fail are reported as they are.</p>
+      <div class="stat">
+        <div><span class="v">100</span><span class="l">problems run, none failed</span></div>
+        <div><span class="v">30</span><span class="l">problems where no detector reaches ROC-AUC 0.6</span></div>
+      </div>
+    </div>
+    <div class="panel">
+      <table class="num">
+        <thead><tr><th style="text-align:left">Detector</th><th>Problems</th><th>PR-AUC median [95%]</th><th>ROC-AUC</th><th>Rank</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">One-Class SVM</td><td>84</td><td class="up">0.240 [0.177, 0.307]</td><td>0.670</td><td>3</td></tr>
+          <tr><td style="text-align:left">Isolation Forest</td><td>100</td><td>0.215 [0.158, 0.293]</td><td class="up">0.677</td><td class="up">2</td></tr>
+          <tr><td style="text-align:left">Z-score</td><td>100</td><td>0.203 [0.164, 0.279]</td><td>0.626</td><td>3</td></tr>
+          <tr><td style="text-align:left">LOF</td><td>92</td><td>0.165 [0.153, 0.237]</td><td>0.588</td><td>3</td></tr>
+          <tr><td style="text-align:left">IQR</td><td>100</td><td>0.144 [0.117, 0.191]</td><td>0.556</td><td>4</td></tr>
+          <tr><td style="text-align:left">Great Expectations</td><td>100</td><td>0.115 [0.105, 0.123]</td><td>0.508</td><td>5</td></tr>
+        </tbody>
+        <caption>Median over problems. LOF and One-Class SVM are skipped on large sets, the skips are archived. The order of methods is the same for ADBench and UCI (rank correlation 0.94), the level is lower on UCI.</caption>
+      </table>
+    </div>
+  </div>
+  <div class="foot"><span>verification/labelled_pool.md &nbsp;·&nbsp; research/labelled_benchmark.py</span><span>labels from a rare class, not from data-quality defects</span></div>
+</section>
+
+<section class="slide" data-sec="Typed injection">
+  <div class="dossier">
+    <div class="heading">
+      <div class="eyebrow"><span class="idx">18</span> &nbsp; M2 · the six types on real tables</div>
+      <h2>The synthetic pattern <em>does not simply carry over</em></h2>
+      <p class="lede">Issue #65. The six anomaly types are injected into 42 real UCI tables (3% of rows per type, same split and settings as the synthetic run). Protocol and five hypotheses were written before any run. Two rows hold everywhere: Great Expectations finds all missing values, deduplication all duplicates. Three hypotheses are not supported.</p>
+      <div class="stat">
+        <div><span class="v">0.37</span><span class="l">Isolation Forest, multivariate outliers (0.89 synthetic)</span></div>
+        <div><span class="v">22%</span><span class="l">median clean rows flagged by IQR</span></div>
+      </div>
+    </div>
+    <div class="panel figpanel"><img src="../paper/figures/typed_pooled.png" alt="median detection rate per method and anomaly type over 42 real datasets"></div>
+  </div>
+  <div class="foot"><span>research/ typed benchmark &nbsp;·&nbsp; verification/typed_injection.md</span><span>median over 42 tables, injected not natural</span></div>
+</section>
+
+<section class="slide" data-sec="Typed injection">
+  <div class="dossier">
+    <div class="heading">
+      <div class="eyebrow"><span class="idx">19</span> &nbsp; M2 · reading the typed result</div>
+      <h2>Two failures that are <em>explained</em>, not hidden</h2>
+      <p class="lede">Z-score detects almost nothing on univariate outliers (median 0.00 against 0.93 synthetic). A check made after seeing it, so exploratory, shows why: invalid rows in the training split inflate the standard deviation. Without them the Z-score finds every univariate outlier on all 42 tables. The IQR fences reach the best detection rate on several types, but only by flagging a median 22% of clean rows.</p>
+      <div class="stat">
+        <div><span class="v">0.83</span><span class="l">mean rank correlation between two tables</span></div>
+        <div><span class="v">-0.96</span><span class="l">IF detection vs number of columns</span></div>
+      </div>
+    </div>
+    <div class="panel"><ul class="ledger two">
+        <li><span class="k">masking</span>Non-robust statistics on a contaminated training set, not a weakness of the Z-score as such.</li>
+        <li><span class="k">detection rate can be gamed</span>The false positive rate on clean rows has to be read next to it. It reaches 99% on some wide tables.</li>
+        <li><span class="k">stable ranking</span>Rank correlation of the method-by-type matrices is 0.83, lowest for drift (0.70). Partly mechanical: many cells sit near 0 or 1.</li>
+        <li><span class="k">dimension hurts</span>Isolation Forest on univariate outliers falls as the number of continuous columns grows.</li>
+      </ul></div>
+  </div>
+  <div class="foot"><span>injected anomalies, one severity</span><span>deep models are not yet in this matrix (#64)</span></div>
+</section>
+
+<section class="slide" data-sec="Temporal">
+  <div class="dossier">
+    <div class="heading">
+      <div class="eyebrow"><span class="idx">20</span> &nbsp; M2 · chronological split</div>
+      <h2>Time changes the answer: <em>a threshold from training does not travel</em></h2>
+      <p class="lede">Credit Card is the only dataset with a clock. Detectors are fitted on the first 70% of time and scored on the last 15% (52 frauds). Average precision drops for all four detectors, but the interval excludes the stratified mean only for Great Expectations and Isolation Forest. Prevalence also changes between partitions, so the pilot does not separate it from the effect of time.</p>
+      <div class="stat">
+        <div><span class="v">0.936</span><span class="l">Isolation Forest ROC-AUC, chronological</span></div>
+        <div><span class="v">0.08%</span><span class="l">future rows it flags: none of the 52 frauds</span></div>
+      </div>
+    </div>
+    <div class="panel"><table class="num">
+        <thead><tr><th style="text-align:left">Detector</th><th>PR strat.</th><th>PR chrono</th><th>ROC chrono</th><th>Flag%</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">Z-score</td><td>0.078</td><td>0.048</td><td>0.935</td><td>12.8</td></tr>
+          <tr><td style="text-align:left">IQR</td><td>0.018</td><td>0.013</td><td>0.917</td><td>47.1</td></tr>
+          <tr><td style="text-align:left">Great Expectations</td><td>0.183</td><td>0.045</td><td>0.758</td><td>3.5</td></tr>
+          <tr><td style="text-align:left">Isolation Forest</td><td>0.110</td><td>0.035</td><td>0.936</td><td>0.08</td></tr>
+        </tbody>
+        <caption>Average precision on the test split, 95% block-bootstrap interval for the chronological arm in the paper. The window monitor detects mean shifts of 1 and 2 standard deviations, not 0.5.</caption>
+      </table></div>
+  </div>
+  <div class="foot"><span>verification/temporal_pilot.md</span><span>one two-day dataset: a direction, not a rule</span></div>
+</section>
+
+<section class="slide" data-sec="Deep">
+  <div class="dossier">
+    <div class="heading">
+      <div class="eyebrow"><span class="idx">21</span> &nbsp; M2 · first deep model</div>
+      <h2>An LSTM autoencoder is <em>comparable, not clearly better</em></h2>
+      <p class="lede">Issue #52. The window is the ten previous rows of the global stream, since Credit Card has no cardholder. The protocol and a CPU budget of 20 epochs were fixed beforehand. On a synthetic stream with broken continuity the LSTM wins by a wide margin. On the real frauds it only matches Isolation Forest and Great Expectations, and none of five trainings converged within the budget.</p>
+      <div class="stat">
+        <div><span class="v">0.875</span><span class="l">LSTM AP on the synthetic stream (row AE 0.006)</span></div>
+        <div><span class="v">0.037</span><span class="l">LSTM AP on Credit Card (row AE 0.024)</span></div>
+      </div>
+    </div>
+    <div class="panel"><ul class="kv">
+        <li><span>paired bootstrap, main seed</span><span class="badge done">+0.021 [+0.005, +0.044]</span></li>
+        <li><span>other four seeds</span><span class="badge open">interval includes 0</span></li>
+        <li><span>versus Isolation Forest (0.035), GX (0.045)</span><span class="badge open">comparable</span></li>
+        <li><span>convergence within 20 epochs</span><span class="badge open">not reached</span></li>
+        <li><span>recall of frauds in the later period</span><span class="badge open">&le; 0.02</span></li>
+        <li><span>deep models in the per-type matrix</span><span class="badge m2">#64</span></li>
+      </ul></div>
+  </div>
+  <div class="foot"><span>verification/lstm_pilot.md &nbsp;·&nbsp; research/lstm_pilot.py</span><span>an indication from a budget-limited pilot, not a ranking</span></div>
+</section>
+
+<section class="slide" data-sec="Cost">
+  <div class="dossier">
+    <div class="heading">
+      <div class="eyebrow"><span class="idx">22</span> &nbsp; M2 · what detection costs</div>
+      <h2>Detection latency is <em>not</em> pipeline latency</h2>
+      <p class="lede">Issue #53. Synthetic matrices from 1,000 to 300,000 rows, a fresh process per measurement so that peak memory belongs to that run, 300 s budget. On the full Credit Card file the Z-score pipeline takes 4.8 s of which detection is 3%, while Isolation Forest takes 8.5 s with detection at 43 to 45%.</p>
+      <div class="stat">
+        <div><span class="v">133 s</span><span class="l">LOF at 300,000 rows (exponent 1.51)</span></div>
+        <div><span class="v">&gt;300 s</span><span class="l">One-Class SVM at 100,000 rows</span></div>
+      </div>
+    </div>
+    <div class="panel"><table class="num">
+        <thead><tr><th style="text-align:left">Detector</th><th>10k rows</th><th>100k rows</th><th>300k rows</th><th>Memory MB</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">Z-score</td><td>0.002 s</td><td>0.013 s</td><td>0.039 s</td><td>70</td></tr>
+          <tr><td style="text-align:left">IQR</td><td>0.004 s</td><td>0.029 s</td><td>0.086 s</td><td>116</td></tr>
+          <tr><td style="text-align:left">Isolation Forest</td><td>0.16 s</td><td>1.09 s</td><td>3.2 s</td><td>140</td></tr>
+          <tr><td style="text-align:left">Autoencoder (MLP)</td><td>1.5 s</td><td>8.4 s</td><td>12.7 s</td><td>115</td></tr>
+          <tr><td style="text-align:left">LSTM autoencoder</td><td>1.1 s</td><td>5.1 s</td><td>7.3 s</td><td>499</td></tr>
+          <tr><td style="text-align:left">LOF</td><td>0.73 s</td><td>18.0 s</td><td>133 s</td><td>405</td></tr>
+          <tr><td style="text-align:left">One-Class SVM</td><td>5.6 s</td><td>&gt;300 s</td><td>not run</td><td>788</td></tr>
+        </tbody>
+        <caption>Median detection-stage time, 8 features. LSTM trained for at most 5 epochs on 50,000 rows: a budget cap.</caption>
+      </table></div>
+  </div>
+  <div class="foot"><span>verification/cost_study.md</span><span>single machine, not isolated, not a general ranking</span></div>
+</section>
+
 <!-- 16 decision matrix -->
 <section class="slide" data-sec="Reading">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">16</span> &nbsp; The practical output</div>
+      <div class="eyebrow"><span class="idx">23</span> &nbsp; The practical output</div>
       <h2>Anomaly type <em>to method</em></h2>
       <p class="lede">Two of six types are not a per-row detector problem at all: duplicates
       belong to the transform stage, drift to a windowed monitor. That itself is a finding
@@ -650,7 +817,7 @@
 <section class="slide" data-sec="Reading">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">17</span> &nbsp; Across the three real datasets</div>
+      <div class="eyebrow"><span class="idx">24</span> &nbsp; Across the three real datasets</div>
       <h2>Unsupervised detection works in <em>one of three regimes</em></h2>
       <p class="lede">The question is less "rules or ML" than "does this dataset have rare,
       outlying anomalies at all". Latency and scaling then constrain which detector can
@@ -676,7 +843,7 @@
 <section class="slide" data-sec="Findings">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">18</span> &nbsp; What was harder than the plan assumed</div>
+      <div class="eyebrow"><span class="idx">25</span> &nbsp; What was harder than the plan assumed</div>
       <h2>Findings <em>from the build</em></h2>
       <p class="lede">Each of these became a paragraph in the paper. The recurring lesson:
       the setup around a detector, the operating point, the regime, the pipeline cost,
@@ -700,75 +867,72 @@
 <section class="slide" data-sec="State">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">19</span> &nbsp; Implemented and tested</div>
+      <div class="eyebrow"><span class="idx">26</span> &nbsp; Implemented, tested, verified</div>
       <h2>What the repository <em>holds today</em></h2>
-      <p class="lede">Every module has behavioural tests: detector outputs, split balance,
-      contamination flow, synthetic generator, benchmark aggregation. conda env, Makefile,
-      versioned paper PDF, CI on push.</p>
+      <p class="lede">The verification layer was built for the claim that the numbers are right: a test suite, a mutation campaign, deliberate defects and a release script that returns certified, incomplete or blocked. The last local run is not independently attested, and the hosted run certified an earlier revision.</p>
       <div class="stat">
-        <div><span class="v">82</span><span class="l">tests, ruff clean, CI green</span></div>
-        <div><span class="v">8</span><span class="l">commits since the last review</span></div>
+        <div><span class="v">1,150</span><span class="l">tests, plus 3 on full datasets</span></div>
+        <div><span class="v">97.75%</span><span class="l">mutants killed (4,700 of 4,808)</span></div>
       </div>
     </div>
-    <div class="panel">
-      <table class="num">
-        <thead><tr><th style="text-align:left">Module</th><th>Tests</th><th style="text-align:left">Covers</th></tr></thead>
+    <div class="panel"><table class="num">
+        <thead><tr><th style="text-align:left">Check</th><th>Result</th><th style="text-align:left">Scope</th></tr></thead>
         <tbody>
-          <tr><td style="text-align:left">quality/rules, gx</td><td>13</td><td style="text-align:left">flags, constant column, score, null + range</td></tr>
-          <tr><td style="text-align:left">quality/ml</td><td>16</td><td style="text-align:left">3 detectors: planted outliers, ranking, imputation</td></tr>
-          <tr><td style="text-align:left">quality/drift</td><td>5</td><td style="text-align:left">window shift, no-time no-op, index</td></tr>
-          <tr><td style="text-align:left">split, registry, datasets</td><td>16</td><td style="text-align:left">ratios, class balance, contamination flow</td></tr>
-          <tr><td style="text-align:left">synthetic</td><td>12</td><td style="text-align:left">reproducible, all types, severity monotone</td></tr>
-          <tr><td style="text-align:left">run_benchmark, run_synthetic_benchmark</td><td>8</td><td style="text-align:left">mean ± std over seeds, per-type precision, figure</td></tr>
-          <tr><td style="text-align:left">pipeline</td><td>4</td><td style="text-align:left">label excluded, fit-sample, timings</td></tr>
+          <tr><td style="text-align:left">line coverage</td><td>1,628 / 1,628</td><td style="text-align:left">pipeline modules and experiment scripts</td></tr>
+          <tr><td style="text-align:left">branch coverage</td><td>336 / 336</td><td style="text-align:left">same scope</td></tr>
+          <tr><td style="text-align:left">mutation, computing code</td><td>95.76%</td><td style="text-align:left">split, metrics, generator, detectors</td></tr>
+          <tr><td style="text-align:left">mutation, input / output</td><td>98.87%</td><td style="text-align:left">readers, writers, scripts</td></tr>
+          <tr><td style="text-align:left">fault injection</td><td>23 / 23</td><td style="text-align:left">four went through every earlier test</td></tr>
+          <tr><td style="text-align:left">real-data check</td><td>pass</td><td style="text-align:left">three CSV files, manuscript tables match</td></tr>
         </tbody>
-      </table>
-    </div>
+        <caption>Survivors (108) count as failures and were classified by reading the changes, not by proof.</caption>
+      </table></div>
   </div>
-  <div class="foot"><span>make test &nbsp;·&nbsp; make lint &nbsp;·&nbsp; .github/workflows/ci.yml</span><span>main, 82 tests green</span></div>
+  <div class="foot"><span>make verify-all &nbsp;·&nbsp; .github/workflows</span><span>main, local run sealed at e1fcbb0</span></div>
 </section>
 
 <!-- 20 limitations -->
 <section class="slide" data-sec="Next">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">20</span> &nbsp; Where it stands</div>
-      <h2>Rigour gaps closed, <em>substance left for M2</em></h2>
-      <p class="lede">Every rigour gap from the last review is closed: held-out split,
-      seeds, contamination, per-type precision, an imbalanced real dataset, CI. Deep
-      learning and the write-up are the work left for M2. Defense July 2027.</p>
+      <div class="eyebrow"><span class="idx">27</span> &nbsp; Where it stands</div>
+      <h2>Experiments run, <em>write-up and deep rows left</em></h2>
+      <p class="lede">Five of the seven M2 plan items are not closed. The target is an IMRaD paper; the demo paper was dropped. Defense July 2027.</p>
     </div>
-    <div class="panel">
-      <ul class="kv">
-        <li><span>held-out split, 5 seeds, mean ± std</span><span class="badge done">done</span></li>
-        <li><span>contamination from prevalence, full sweep</span><span class="badge done">done</span></li>
-        <li><span>per-type precision, stable under severity</span><span class="badge done">done</span></li>
-        <li><span>imbalanced real dataset (Cardio)</span><span class="badge done">done</span></li>
-        <li><span>CI: GitHub Actions, ruff + pytest</span><span class="badge done">done</span></li>
-        <li><span>deep learning: Autoencoder, LSTM-AE</span><span class="badge m2">M2</span></li>
-        <li><span>windowed drift monitor</span><span class="badge open">open</span></li>
-        <li><span>Related Work, bibliography, final Discussion</span><span class="badge m2">M2</span></li>
-      </ul>
-    </div>
+    <div class="panel"><ul class="kv">
+        <li><span>held-out split, 5 seeds, contamination, CI</span><span class="badge done">done</span></li>
+        <li><span>chronological pilot, LSTM pilot, cost study</span><span class="badge done">done</span></li>
+        <li><span>dataset pool of 152 sets (#66)</span><span class="badge done">done</span></li>
+        <li><span>typed injection on 42 real tables (#65)</span><span class="badge done">done</span></li>
+        <li><span>benchmark on the 100 labelled pool problems</span><span class="badge done">done</span></li>
+        <li><span>deep rows in the per-type matrix (#64)</span><span class="badge open">next</span></li>
+        <li><span>multi-schema Faker generator (#67)</span><span class="badge m2">M2</span></li>
+        <li><span>related work, verified bibliography (#68)</span><span class="badge m2">M2</span></li>
+        <li><span>IMRaD restructuring, condensed verification (#69)</span><span class="badge m2">M2</span></li>
+        <li><span>decision-level study under temporal shift (#63)</span><span class="badge m2">M2</span></li>
+      </ul></div>
   </div>
-  <div class="foot"><span>roadmap, phases C to F</span><span>fallback: demo paper if the M2 schedule slips</span></div>
+  <div class="foot"><span>issues #63 to #70</span><span>this deck is updated with every merged step</span></div>
 </section>
 
 <!-- 21 takeaway -->
 <section class="slide dark solo" data-sec="Takeaway">
   <div>
-    <div class="eyebrow"><span class="idx">21</span> &nbsp; Takeaway</div>
+    <div class="eyebrow"><span class="idx">28</span> &nbsp; Takeaway</div>
     <div class="brule"></div>
   </div>
   <div class="mid">
     <h1 style="max-width:22ch">Rules and machine learning are <em>complementary by anomaly type</em>.</h1>
     <p class="hero-lede" style="max-width:60ch">The per-type heatmap is what makes that
     choice actionable. Across three real datasets, unsupervised detection pays off only on
-    Cardio, where the anomalies are genuinely rare outliers. The pipeline, the four
-    datasets, the held-out protocol, the curves and the CI are in place and tested. Deep
-    learning and the write-up are the work for M2.</p>
+    Cardio, where the anomalies are genuinely rare outliers. On 100 labelled problems of the
+    pool no detector is clearly ahead. On 42 real tables with injected
+    types, the synthetic pattern holds only in part, which is why the real-data matrix is
+    the differentiator. The pipeline, the 152-dataset pool, the protocols and the
+    verification layer are in place. Deep rows in the matrix and the IMRaD write-up are
+    what remains.</p>
   </div>
-  <div class="metaline">github.com/theobigand/etl-anomaly-benchmark &nbsp;·&nbsp; 82 tests &nbsp;·&nbsp; 4 datasets &nbsp;·&nbsp; 7 detectors</div>
+  <div class="metaline">github.com/theobigand/etl-anomaly-benchmark &nbsp;·&nbsp; 1,150 tests &nbsp;·&nbsp; 152 datasets &nbsp;·&nbsp; 8 detectors</div>
   <svg class="motif" viewBox="0 0 128 76" aria-hidden="true">
     <rect class="c s" x="2" y="2" width="20" height="20"/><rect class="c" x="2" y="28" width="20" height="20"/><rect class="c" x="2" y="54" width="20" height="20"/>
     <rect class="c" x="28" y="2" width="20" height="20"/><rect class="c" x="28" y="28" width="20" height="20"/><rect class="c" x="28" y="54" width="20" height="20"/>

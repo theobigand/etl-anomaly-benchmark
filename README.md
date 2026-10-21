@@ -24,7 +24,11 @@ The question it tries to answer: does adding machine learning to an ETL pipeline
 - [x] CPU reconstruction autoencoder (opt-in: registered, not yet in the thesis tables)
 - [x] Chronological split and a windowed drift monitor, tested separately from the row-level metrics
 - [x] Causal sliding windows with leakage and alignment tests, ready for a sequence model
-- [ ] LSTM-Autoencoder (M2)
+- [x] Pool of 152 open datasets, pinned by checksum (`verification/dataset_pool.md`)
+- [x] Typed anomaly injection on 42 real tables (`verification/typed_injection.md`)
+- [x] Benchmark on the 100 labelled pool problems: `python research/labelled_benchmark.py --output <dir>` then `python research/labelled_summary.py --runs <dir> --output <dir>` (`verification/labelled_pool.md`, results in `verification/evidence/labelled_pool/`)
+- [x] Chronological pilot, LSTM autoencoder pilot, cost study
+- [ ] Deep models in the per-type matrix, related work, IMRaD restructuring (M2)
 - [ ] More imbalanced real datasets
 
 ## Install
@@ -210,7 +214,7 @@ etl-anomaly-benchmark/
 │   ├── run_curves.py              # precision-recall curves + contamination sweep
 │   └── run_severity.py            # detection-vs-severity curves
 ├── .github/workflows/ci.yml       # ruff + pytest on push / PR
-├── slides/                   # thesis progress presentation (HTML)
+├── slides/                   # living thesis presentation (HTML + PDF)
 ├── tests/                    # pytest
 ├── data/                     # raw datasets (gitignored)
 ├── experiments/results/      # generated output (gitignored)
