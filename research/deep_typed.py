@@ -38,7 +38,7 @@ ROW_LEVEL = ("zscore", "iqr", "great_expectations", "isolation_forest", "lof", "
 
 
 def _with_time(part: pd.DataFrame) -> pd.DataFrame:
-    """Order key for the windows: the signup date, an unreadable date goes first in its partition."""
+    """Window order key: the signup date; an unreadable date goes first in its partition."""
     dates = pd.to_datetime(part["signup_date"], errors="coerce", utc=True, format="mixed")
     out = part.copy()
     out["t"] = dates.fillna(dates.min())

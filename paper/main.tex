@@ -825,6 +825,46 @@ prevalence at $0.10$. The ADBench half is closer to the usual benchmark and the
 UCI half is a harder, rule-derived labelling; I did not tune any detector, so
 the numbers describe default settings.
 
+\subsection{Deep models in the per-type matrix}
+\label{sec:deep-rows}
+The matrix of Figure~\ref{fig:heatmap} has no learned reconstruction model. I
+added two rows on the same synthetic data and the same identity-grouped splits
+and seeds, with the protocol and four hypotheses written beforehand
+(\texttt{verification/deep\_typed.md}): the sklearn autoencoder of the registry,
+and the LSTM autoencoder of Section~\ref{sec:lstm} on windows of the ten
+preceding customers ordered by signup date. Unlike the Credit Card pilot, both
+models were trained until their validation loss stopped improving (patience of
+$5$, at most $300$ epochs), and all ten trainings stopped before the cap
+($60$ to $178$ epochs). The other rows were recomputed by the same code and
+equal the published matrix.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/heatmap_deep.png}
+\caption{Mean detection rate by anomaly type with the two deep rows added
+(synthetic, five seeds). Compare with Figure~\ref{fig:heatmap}.}
+\label{fig:heatmap-deep}
+\end{figure}
+
+The deep rows do not change the picture. The autoencoder detects multivariate
+outliers ($0.83 \pm 0.10$) about as well as Isolation Forest ($0.89$) and
+One-Class SVM ($0.90$), as expected for a model that reconstructs correlations,
+and the LSTM is a little lower ($0.68 \pm 0.12$). Both are close to the learned
+detectors on the structural types, and on missing values and duplicates they are
+no better than the best row-level detector. The hypothesis I expected to
+matter, that the sequence model would catch temporal drift better than every
+row-level detector, is not supported: its recall is $0.25 \pm 0.07$ against
+$0.50$ for LOF, $0.33$ for Isolation Forest and $0.29$ for the autoencoder.
+Three of the four hypotheses hold (structural types, convergence, multivariate
+outliers). The synthetic customers are independent rows, so the signup order
+carries a sequence only for the drifted rows, which are the most recent ones; a
+window of ten rows that are mostly clean and have shifted values in only some of
+the columns gives the LSTM little to learn from. This says that this
+construction of drift is not a sequence problem, not that sequence models
+cannot detect drift. The false-positive rate on clean rows is about $12\%$ for
+both models. With five seeds the standard deviations are indicative and none of
+these comparisons is a test.
+
 \subsection{Chronological pilot on Credit Card}
 \label{sec:chrono}
 The results above use a random stratified split. Of the three real datasets,
