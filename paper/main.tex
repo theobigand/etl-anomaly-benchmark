@@ -1015,6 +1015,62 @@ standard deviations were detected in the second window after the change
 change raised an alert ($22$ windows). Credit Card has no labelled change in
 distribution, so I make no claim about its natural drift.
 
+\subsection{Decisions under temporal shift}
+\label{sec:decisions}
+The pilot above leaves two questions open: whether a threshold chosen on the past
+can be repaired without labels, and how much of the gap is only a change in
+prevalence. I ran a second study on Credit Card and on Bank Marketing, a UCI
+table (CC BY 4.0) whose file is ordered by date from May 2008 to November 2010,
+with the protocol and four hypotheses written beforehand
+(\texttt{verification/temporal\_decision.md}). The Credit Card results were
+already known, so this study is an independent test only for Bank Marketing. The
+Kyoto-2006+ traffic used by AnoShift was left out, because I could not verify
+its data rights nor download it in time. The date of Bank Marketing is a month,
+with the file order inside each month. Four detectors (Z-score, IQR, Great
+Expectations, Isolation Forest) are fitted on the oldest $70\%$ of the rows and
+scored on the newest $15\%$. A threshold is a quantile of the scores that keeps
+the training prevalence, taken (P0) from the training scores, (P1) from the
+validation scores, or (P2) from the scores of the two previous blocks of the test
+period, without any label of that period. A stratified control, over five seeds,
+is also matched to the prevalence of the chronological test.
+
+On Bank Marketing the prevalence moves a lot: $5.8\%$ in training, $11.5\%$ in
+validation and $39.3\%$ in the test period (Credit Card: $0.18\%$, $0.13\%$ and
+$0.12\%$). The average precision under the chronological split is higher than
+under the stratified one for every detector ($0.55$ against $0.17$ for the
+Z-score, $0.42$ against $0.19$ for Isolation Forest), but the ROC-AUC of the
+chronological split is between $0.48$ and $0.63$, close to chance. Matching the
+control to the test prevalence brings its average precision to
+$0.40$--$0.52$, so the gap, a median of $0.26$, falls to $0.06$: on this
+dataset the apparent gain is a change in prevalence, not in detection. On Credit
+Card the same matching reduces the median gap from $0.053$ to $0.031$, which is
+less than half of it, so a smaller part of the gap is explained by prevalence
+there.
+
+The ranking of the detectors is not stable. The Spearman correlation between
+the two orderings by average precision is $0.80$ on Bank Marketing and $0.40$ on
+Credit Card, below the $0.8$ expected on both. The three thresholds do not
+behave as I expected. On Bank Marketing the share of rows flagged moves closer to
+the training prevalence from P0 to P1 to P2 (median error
+$|\ln(\text{share}/\pi)|$ of $1.51$, $1.02$ and $0.66$), but on Credit Card P1
+is no better than P0 ($0.78$ against $0.73$), so the ordering holds on one
+dataset only. The reason is clearer in the decisions. On Bank Marketing, P0
+flags $41\%$ of the test rows with the Z-score and $37\%$ with Isolation Forest,
+because the later rows score higher than the training rows, which gives an $F_1$
+of $0.51$ and $0.41$ by accident of a prevalence of $39\%$; the rolling
+threshold targets a share of $5.8\%$, flags $1.7\%$ and $6.3\%$ of the rows and
+drops the $F_1$ to $0.02$ and $0.11$. A label-free recalibration that keeps the
+training prevalence cannot follow a prevalence that changes. On Credit Card the
+opposite holds: no detector detects any of the $52$ frauds with P0 ($F_1 = 0$),
+while the rolling threshold gives a recall of $0.12$ for Great Expectations and
+$0.14$ for the Z-score, at a precision below $0.08$. The $F_1$ of P2 is at
+least that of P0 for $5$ of the $8$ pairs, which satisfies the hypothesis, but
+four of the five are Credit Card pairs where P0 is zero. Overall one hypothesis of
+four holds. This study does not establish a rule for thresholds under shift: it
+shows that a threshold fixed on the past can fail in both directions, that
+recalibrating without labels needs an estimate of the prevalence, and that part
+of what a chronological split changes is only the prevalence.
+
 \subsection{LSTM autoencoder pilot}
 \label{sec:lstm}
 A last pilot asks whether the preceding rows of the transaction stream carry a

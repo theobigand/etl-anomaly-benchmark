@@ -31,7 +31,8 @@ The question it tries to answer: does adding machine learning to an ETL pipeline
 - [x] Autoencoder and LSTM autoencoder rows in the per-type matrix, trained to convergence (`verification/deep_typed.md`, `.venv/bin/python research/deep_typed.py --output <dir>`)
 - [x] Two further synthetic schemas, transactions and sensors (`verification/multi_schema.md`, `python research/multi_schema.py --output <dir>`)
 - [x] Related work with verified references (`verification/references.md`) and the IMRaD manuscript with the verification in appendices
-- [ ] Temporal decision-level study (M2)
+- [x] Decision-level study under temporal shift on Credit Card and Bank Marketing (`verification/temporal_decision.md`, `python research/temporal_decision.py --output <dir>`)
+- [ ] Author review of the related work and the IMRaD draft, Kyoto-2006+ rights and download (M2)
 - [ ] More imbalanced real datasets
 
 ## Install
