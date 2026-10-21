@@ -9,7 +9,19 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import labelled_benchmark as lb  # noqa: E402
 
-METHODS = ["zscore", "iqr", "great_expectations", "isolation_forest", "lof", "ocsvm"]
+METHODS = [
+    "zscore",
+    "iqr",
+    "great_expectations",
+    "isolation_forest",
+    "lof",
+    "ocsvm",
+    "ecod",
+    "copod",
+    "hbos",
+    "knn",
+    "pca",
+]
 
 
 def _problem(n=600, anomalies=40, seed=0):
@@ -42,9 +54,11 @@ def test_quadratic_detectors_are_skipped_above_the_limits_and_the_skip_is_record
     x, y = _problem()
     monkeypatch.setattr(lb.nm, "LOF_MAX_TRAIN", 100)
     monkeypatch.setattr(lb.nm, "OCSVM_MAX_TRAIN", 100)
+    monkeypatch.setattr(lb.nm, "KNN_MAX_TRAIN", 100)
     result = lb.run_problem(x, y, seeds=(42,))
-    assert result["skipped"] == ["lof", "ocsvm"]
-    assert "lof" not in result["metrics"] and "ocsvm" not in result["metrics"]
+    assert result["skipped"] == ["lof", "ocsvm", "knn"]
+    for method in result["skipped"]:
+        assert method not in result["metrics"]
 
 
 def test_the_result_is_reproducible_for_a_seed():
@@ -66,3 +80,28 @@ def test_adbench_problem_is_read_from_its_npz(tmp_path):
     features, labels, report = lb.load_adbench("toy", tmp_path / "9_toy.npz")
     assert features.shape[0] == report["rows_out"] and set(labels) == {0, 1}
     assert report["source"] == "adbench"
+
+
+def test_a_failing_detector_is_recorded_with_its_seed_and_the_others_still_run(monkeypatch):
+    x, y = _problem()
+    real = lb.build
+
+    def build(name, contamination, seed):
+        if name == "hbos":
+            raise RuntimeError("boom")
+        return real(name, contamination, seed)
+
+    monkeypatch.setattr(lb, "build", build)
+    result = lb.run_problem(x, y, seeds=(42, 1), methods=["zscore", "hbos"])
+    assert [e["seed"] for e in result["errors"]["hbos"]] == [42, 1]
+    assert "boom" in result["errors"]["hbos"][0]["error"]
+    assert "hbos" not in result["metrics"] and len(result["metrics"]["zscore"]) == 2
+
+
+def test_the_neural_detectors_run_on_a_capped_seeded_sample_and_agree_between_runs(monkeypatch):
+    x, y = _problem()
+    monkeypatch.setattr(lb, "capped", lambda train, name, seed: train.iloc[:150])
+    first = lb.run_problem(x, y, seeds=(5,), methods=["deep_svdd"])
+    again = lb.run_problem(x, y, seeds=(5,), methods=["deep_svdd"])
+    assert first["errors"] == {} and first == again
+    assert first["metrics"]["deep_svdd"][0]["roc_auc"] > 0.5
