@@ -3,9 +3,9 @@
     "paper/figures/heatmap_synthetic.png": "d6bbba783775ef1c5371bf8c226f83f0d0cf68935c6f2ac3ca569558d70b3d1a",
     "paper/figures/pr_curves.png": "21e9b7a59ab7ea485b7a959ea6c4cfa3903d7d118d709e0c9cc036f81f34bf06",
     "paper/figures/severity_curves.png": "6bc50cb8eac4834e698758555d9cc6d2293365a50b33c6cb6270d804dec4b4a5",
-    "paper/main.pdf": "553a9dc18c92be72bfd5fe2ced524604c2b6d605f752b54fb82a133817d2e74e",
-    "paper/main.tex": "085232a8a0f480d14a0f16e12b8d58c96d3d99ab9025fe494f0dab8d9b03d574",
-    "paper/references.bib": "731ad11758ac5c0afa596d236862f4987c7dd4443b08afb04d98c9f93d7c4da4",
+    "paper/main.pdf": "a761a8ea84d9c34da27a7a32aa7937cd6c820d38ec19e124848e39f9a8b1f886",
+    "paper/main.tex": "8963c254e7b3d3fba84ec066e0cbb332d8c5358b53b12380523a6ebd9a253493",
+    "paper/references.bib": "c1066c1086ae364ceca45adf6ad33d6139ee0a09b92a8912f1b822809303cdfb",
     "verification/evidence/benchmark_cardio.csv": "26a79a6f6c1bc971a487076b22274bfdfbe90ec2df10952d962d3afb8d9c5f18",
     "verification/evidence/benchmark_cardio.md": "8c5d244a62c0de3a74fef49d7c5356a4d27d3cc4ebb711ece35888a5c741ea84",
     "verification/evidence/benchmark_credit_card.csv": "ad9ff2a151bd087e6bab4a965bf5cf76de8d3f4e03cda42f31579a197472234b",
@@ -97,6 +97,6 @@
   "platform": "macOS-27.0-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "source_revision": "a3d3169220a339ff2b1b54c5edbcf5d39f37de5f",
+  "source_revision": "846ca760ecc40926bc4badf6077e49bf713cddaa",
   "worktree_dirty": true
 }
