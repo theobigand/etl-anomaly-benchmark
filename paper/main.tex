@@ -159,8 +159,8 @@ benchmarks. Section~III describes my pipeline architecture, the
 detectors I compare, the datasets, the metrics and the verification of the
 code. Section~IV reports the main results, on the three real datasets, the
 synthetic generator and its variants, and the real-data pool. Section~V
-reports three secondary studies (a chronological split, an LSTM autoencoder and
-the cost of detection). Section~VI discusses when rules, classical ML and
+reports four secondary studies (a chronological split, decisions under
+temporal shift, an LSTM autoencoder and the cost of detection). Section~VI discusses when rules, classical ML and
 deep learning are each the right tool and what limits the evidence, and
 Section~VII concludes. Appendix~A and B describe the verification of the
 code and its outcomes.
@@ -222,8 +222,7 @@ figures taken from enterprise deployments without code, and
 Marupaka and Rangineni~\cite{marupaka2024mlpredictive} announce accuracy gains in
 an abstract that names no dataset or baseline. Sokkula and
 Vuppala~\cite{sokkula2024implementing} run an Isolation Forest on the
-resampled Credit Card data and obtain an AUC-ROC of $0.51$, which I come back
-to in Section~\ref{sec:experiments}.
+resampled Credit Card data and obtain an AUC-ROC of $0.51$.
 
 \begin{table*}[t]
 \caption{What each work reports, as far as I could read in the cited sources.
@@ -241,7 +240,7 @@ AnoShift~\cite{dragoi2022anoshift} & classical and deep, Kyoto-2006+ & IID, NEAR
 FedAD-Bench~\cite{anwar2024fedadbench} & deep models, federated, $4$ datasets & not found & $F_1$-optimal threshold on a validation set & none \\
 Sun et al.~\cite{sun2024online} & thresholding method, synthetic and real & shift in the stream & error-rate guarantees & none \\
 \midrule
-This paper & $6$ detectors (and $2$ deep), $3$ real sets, a pool of $152$, synthetic and typed injection & chronological pilot on one dataset & precision, recall, $F_1$ at the training-prevalence threshold & six data-quality fault types \\
+This paper & $6$ detectors (and $2$ deep), $3$ real sets, a pool of $152$, synthetic and typed injection & chronological pilot and decision study on two datasets & precision, recall, $F_1$ at the training-prevalence threshold & six data-quality fault types \\
 \bottomrule
 \end{tabular}
 \end{table*}
@@ -943,11 +942,12 @@ these comparisons is a test.
 
 \section{Secondary Studies}
 \label{sec:secondary}
-The three studies below are pilots. Each uses one dataset or a synthetic
-stream, was written down before its run, and answers a narrower question than the
-per-type comparison of the previous section: whether a chronological split changes
-the ranking, whether a sequence model adds anything, and what detection costs
-inside the pipeline. They are reported separately so that the main result does
+The four studies below are narrower than the per-type comparison of the
+previous section. Each uses one or two datasets or a synthetic stream, was
+written down before its run, and answers one question: whether a chronological
+split changes the ranking, whether a threshold chosen on the past survives a
+shift in prevalence, whether a sequence model adds anything, and what detection
+costs inside the pipeline. They are reported separately so that the main result does
 not rest on them.
 
 \subsection{Chronological pilot on Credit Card}
@@ -1260,12 +1260,17 @@ On $100$ labelled problems no detector is clearly ahead, and learning helps only
 by a small margin. Two further schemas keep the profile (rank correlation
 $0.93$) but change how visible multivariate outliers and drift are, and an LSTM
 autoencoder trained to convergence does not catch temporal drift better than
-the row-level detectors. The chronological pilot, on one dataset, points the same way: score
-rankings survive a split by time better than a threshold fixed on the past.
+the row-level detectors. The chronological pilot and the study of decisions under temporal shift, on
+Credit Card and Bank Marketing, point the same way: score rankings survive a
+split by time better than a threshold fixed on the past. On Bank Marketing, where
+the prevalence goes from $5.8\%$ to $39.3\%$, matching the control to it cuts
+the apparent gain of the chronological split from $0.26$ to $0.06$ of PR-AUC,
+and a label-free rolling threshold that keeps the training prevalence cannot
+follow it; only one of the four hypotheses of that study holds.
 
-The next steps are a study of decisions under temporal shift on datasets with
-genuine time, with the prevalence effect separated, and a check of the injected
-faults against faults observed in real pipelines. The open questions are listed
+The next steps are a check of the injected faults against faults observed in
+real pipelines, and a decision-level study on more datasets with genuine time,
+such as the Kyoto-2006+ traffic, whose data rights I have not verified. The open questions are listed
 in Section~\ref{sec:discussion}.
 
 
