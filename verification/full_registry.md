@@ -12,7 +12,7 @@ familles de detecteurs non supervises les plus utilisees, classiques et profonde
 
 ## Detecteurs ajoutes
 
-Tous viennent de PyOD 3.6.7 (meme interface `fit` / `predict` / `score`, meme preparation que les
+Tous viennent de PyOD 3.6.7, sauf PCA (voir plus bas) (meme interface `fit` / `predict` / `score`, meme preparation que les
 detecteurs existants : colonnes numeriques, imputation par la mediane, standardisation sur
 l'entrainement). Reglages par defaut de PyOD, aucun reglage apres avoir vu un resultat. Le seuil de
 decision est le quantile `1 - contamination` des scores, la contamination etant la prevalence
@@ -24,7 +24,11 @@ Classiques (ajoutes a `DETECTOR_NAMES`) :
 - **COPOD** : copule empirique, probabilite de queue conjointe des colonnes ;
 - **HBOS** : histogrammes par colonne, score en log-densite inverse ;
 - **KNN** : distance au k-ieme voisin (k = 5) ;
-- **PCA** : erreur de reconstruction apres projection lineaire sur les composantes principales.
+- **PCA** : erreur quadratique moyenne de reconstruction apres projection sur les composantes qui
+  expliquent 95 % de la variance (scikit-learn ; la classe `PCA` de PyOD note une distance ponderee
+  aux vecteurs propres, ce qui n'est pas une erreur de reconstruction). Une ligne qui reste dans le
+  sous-espace conserve n'est pas signalee : c'est une limite du modele, pas un defaut de
+  l'implementation.
 
 Profonds (dans `DEEP_NAMES`, avec l'autoencodeur MLP existant) :
 
