@@ -801,6 +801,7 @@ method on PR-AUC (1 is best).}
 \label{tab:labelled}
 \centering
 \footnotesize
+\setlength{\tabcolsep}{3pt}
 \begin{tabular}{lrrrr}
 \toprule
 Detector & Problems & PR-AUC & ROC-AUC & Rank \\
@@ -862,17 +863,18 @@ outliers, multivariate outliers, drift, invalid formats.}
 \label{tab:schemas}
 \centering
 \footnotesize
+\setlength{\tabcolsep}{2.5pt}
 \begin{tabular}{llcccccc}
 \toprule
 Schema & Method & Miss. & Dup. & Uni. & Multi. & Drift & Inv. \\
 \midrule
-Transactions & Great Expectations & 1.00 & 0.00 & 0.14 & 0.00 & 0.00 & 0.00 \\
+Transactions & Great Expect. & 1.00 & 0.00 & 0.14 & 0.00 & 0.00 & 0.00 \\
              & Dedup rule         & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
              & IQR                & 0.09 & 0.14 & 0.98 & 0.57 & 0.37 & 0.63 \\
              & Isolation Forest   & 0.09 & 0.18 & 0.97 & 0.49 & 0.38 & 0.56 \\
              & One-Class SVM      & 0.10 & 0.26 & 0.89 & 0.18 & 0.36 & 0.39 \\
 \midrule
-Sensors      & Great Expectations & 1.00 & 0.00 & 0.23 & 0.00 & 0.00 & 0.00 \\
+Sensors      & Great Expect. & 1.00 & 0.00 & 0.23 & 0.00 & 0.00 & 0.00 \\
              & Dedup rule         & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
              & IQR                & 0.03 & 0.05 & 1.00 & 0.02 & 0.94 & 1.00 \\
              & Isolation Forest   & 0.08 & 0.12 & 1.00 & 0.32 & 0.96 & 0.97 \\
@@ -970,15 +972,17 @@ Intervals for the chronological arm come from a block bootstrap over
 30-minute blocks of the test period.
 
 \begin{table}[t]
-\caption{Average precision on the test split, stratified control versus
-chronological split (95\% block-bootstrap interval), and the share of future
+\caption{Average precision (PR) on the test split, stratified (strat.)
+control versus chronological (chron.) split with its 95\% block-bootstrap
+interval, ROC-AUC of the chronological split, and the share of future
 rows flagged at the training-prevalence threshold.}
 \label{tab:chrono}
 \centering
-\footnotesize
+\scriptsize
+\setlength{\tabcolsep}{3pt}
 \begin{tabular}{lrrrr}
 \toprule
-Detector & PR, stratified & PR, chronological & ROC, chron. & Flag.\% \\
+Detector & PR, strat. & PR, chron. & ROC, chron. & Flag.\% \\
 \midrule
 Z-score            & $0.078 \pm 0.015$ & $0.048$ [0.020, 0.087] & 0.935 & 12.8 \\
 IQR                & $0.018 \pm 0.003$ & $0.013$ [0.007, 0.023] & 0.917 & 47.1 \\
@@ -1114,15 +1118,17 @@ is fitted and applied to the same rows, so this is a cost measurement, not a
 quality one. Times are those of the detection stage (fit, predict and score).
 
 \begin{table}[t]
-\caption{Median detection-stage time on synthetic data ($8$ features), peak
-resident memory added by detection at the largest size, and the empirical
-growth exponent over the sizes completed.}
+\caption{Median detection-stage time on synthetic data ($8$ features) for
+$10^4$, $10^5$ and $3\cdot10^5$ rows, the empirical growth exponent over the
+sizes completed, and the peak resident memory added by detection at the largest
+size (a: at $3\cdot10^4$ rows, the largest size completed).}
 \label{tab:cost}
 \centering
 \footnotesize
+\setlength{\tabcolsep}{3pt}
 \begin{tabular}{lrrrrr}
 \toprule
-Detector & $10^4$ rows & $10^5$ rows & $3\cdot10^5$ rows & Exponent & Memory (MB) \\
+Detector & $10^4$ & $10^5$ & $3\cdot10^5$ & Exp. & Mem. (MB) \\
 \midrule
 Z-score            & 0.002 s & 0.013 s & 0.039 s & 0.64 & 70 \\
 IQR                & 0.004 s & 0.029 s & 0.086 s & 0.70 & 116 \\
@@ -1130,7 +1136,7 @@ Isolation Forest   & 0.16 s  & 1.09 s  & 3.2 s   & 0.72 & 140 \\
 Autoencoder (MLP)  & 1.5 s   & 8.4 s   & 12.7 s  & 0.77 & 115 \\
 LSTM autoencoder   & 1.1 s   & 5.1 s   & 7.3 s   & 0.73 & 499 \\
 LOF                & 0.73 s  & 18.0 s  & 133 s   & 1.51 & 405 \\
-One-Class SVM     & 5.6 s   & $>300$ s & not run & 1.99 & 788 (at $3\cdot10^4$) \\
+One-Class SVM     & 5.6 s   & $>300$ s & not run & 1.99 & 788$^{a}$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1187,6 +1193,24 @@ is a $61\%$ majority, every method is at chance. The question is less
 ``rules or ML'' than ``does this dataset have rare, outlying anomalies at
 all''.
 
+\paragraph{The profile transfers in part, and the decision does not.}
+The later studies test whether the synthetic profile is an artefact of one
+generator. Two further schemas keep the ordering of the methods (rank
+correlation $0.93$), so the competence of each family is not specific to the
+customer table; but the multivariate and drift cells depend on how the columns
+are scaled, so their values do not transfer. On the $42$ real tables the
+structural rules still own their types while the multivariate gap shrinks, and
+on the $100$ labelled problems the medians of PR-AUC of One-Class SVM ($0.240$),
+Isolation Forest ($0.215$) and the Z-score ($0.203$) overlap, so the advice
+``use a learned model'' is not supported there. The deep models add little: the
+LSTM autoencoder recalls $0.25$ of the drifted rows against $0.50$ for LOF.
+Last, a ranking that holds under a chronological split does not give a usable
+threshold: on Bank Marketing the prevalence goes from $5.8\%$ to $39.3\%$,
+matching the control to it removes most of the apparent gain ($0.26$ to $0.06$),
+and a label-free rolling threshold cannot follow it. A practitioner should
+therefore choose the family from the type of fault and monitor the prevalence
+before trusting any alert rate.
+
 \paragraph{Aggregate metrics on a mixed label are misleading.} On every
 dataset the aggregate table compresses different behaviour into similar
 $F_1$ and PR-AUC values. A method excellent on one anomaly type and blind
@@ -1202,7 +1226,7 @@ scaling study. I time only the detection stage (fit, predict and score)
 inside the pipeline; extraction, transformation and loading are outside the
 measurement, so these figures are not the latency of a whole ETL run.
 
-\paragraph{Threats to validity.} The synthetic dataset still encodes my
+\paragraph{Threats to validity of the results.} The synthetic dataset still encodes my
 own assumptions about what each anomaly type looks like; the severity
 sweep addresses the magnitude choice but not the shape of the
 injections. The real-data pool answers part of this, but its anomalies are either
@@ -1211,7 +1235,11 @@ problems), so none of them is a data-quality fault observed in a production
 pipeline. The ML detectors carry a wide seed spread on the
 small datasets (Cardio $F_1$ standard deviation up to $0.17$; Isolation
 Forest on fraud $F_1 = 0.20 \pm 0.07$), so those numbers should be read
-as ranges.
+as ranges. The labels of the $64$ UCI problems come from a rule (the rarest
+class), $19$ sources appear in both lists of the pool, and the datasets are
+therefore not independent.
+
+\paragraph{Limits of the verification.}
 Verification has its own limits: complete line and branch coverage does not
 establish that the scientific assertions detect every defect. The previous
 archive was made on a working tree with uncommitted changes (revision
