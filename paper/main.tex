@@ -41,17 +41,18 @@ pipeline in which anomaly detectors from different families share one
 the same pipeline path: statistical rules (Z-score, IQR, Great
 Expectations) and classical ML detectors (Isolation Forest, LOF,
 One-Class SVM), with deep learning detectors (Autoencoder,
-LSTM-Autoencoder) planned behind the same interface. We evaluate the
+LSTM-Autoencoder) planned behind the same interface. I evaluate the
 detectors, over five seeds on a stratified held-out split, on four
-datasets: Kaggle Credit Card Fraud, a rare-anomaly Cardio dataset, a
+datasets (and, for generality, on $100$ labelled problems and $42$ real
+tables with injected anomalies): Kaggle Credit Card Fraud, a rare-anomaly Cardio dataset, a
 common-class Water Quality dataset, and a controlled synthetic dataset
 generated with Faker in which six distinct anomaly types are injected at
 controlled rates. Beyond aggregate precision, recall, F1, ROC-AUC and
-PR-AUC, we report a per-anomaly-type recall and precision, precision-recall
+PR-AUC, I report a per-anomaly-type recall and precision, precision-recall
 curves, and a sweep of the injection severity. The aggregate metrics make the families look interchangeable;
 the per-type view shows each has a narrow, largely non-overlapping
 competence, so broad coverage needs several families rather than the
-single best one. Our goal is a reproducible, pipeline-integrated
+single best one. My goal is a reproducible, pipeline-integrated
 benchmark that answers the practical question: \emph{which family of
 detectors should I use, for which kind of data quality problem, at what
 operational cost?}
@@ -87,7 +88,7 @@ learning anomaly detectors embedded directly inside the ETL
 flow~\cite{gopa2025aiaugmented,marupaka2024mlpredictive,sokkula2024implementing}.
 The existing literature, however, suffers from three gaps.
 
-First, the pipelines we reviewed are mostly presented as
+First, the pipelines I reviewed are mostly presented as
 architectures. Gopa~\cite{gopa2025aiaugmented} reports aggregate gains
 taken from other implementations and releases no code, and the abstract
 of Marupaka and Rangineni~\cite{marupaka2024mlpredictive} announces
@@ -122,7 +123,7 @@ distributions but can be fooled by concept drift. A practitioner
 choosing a detector today lacks a fine-grained, actionable map from
 anomaly type to recommended method.
 
-\paragraph{Contributions.} This paper addresses these three gaps. We
+\paragraph{Contributions.} This paper addresses these three gaps. I
 present:
 \begin{enumerate}
     \item \textbf{A reproducible ETL pipeline} in which rule-based and
@@ -139,7 +140,7 @@ present:
     \item \textbf{A per-anomaly-type analysis.} Using a synthetic
     dataset in which six distinct anomaly categories (missing values,
     duplicates, univariate outliers, multivariate outliers, temporal
-    drift, invalid formats) are injected at a tunable severity, we produce
+    drift, invalid formats) are injected at a tunable severity, I produce
     a method-by-type recall and precision matrix and test its sensitivity
     under a severity sweep. The families turn out to have narrow, largely
     non-overlapping competence that the aggregate metrics hide.
@@ -147,8 +148,8 @@ present:
 
 The rest of the paper is organized as follows. Section~II reviews
 related work on data quality in ETL and on anomaly detection
-benchmarks. Section~III describes our pipeline architecture, the
-detectors we compare, and the datasets and metrics we use. Section~IV
+benchmarks. Section~III describes my pipeline architecture, the
+detectors I compare, and the datasets and metrics I use. Section~IV
 reports experimental results. Section~V discusses when rules, classical
 ML, and deep learning are each the right tool, and highlights practical
 trade-offs in latency and operational cost. Section~VI concludes and
@@ -251,10 +252,10 @@ threshold and leaves ROC-AUC and PR-AUC unaffected.
 \label{sec:synthetic}
 The real datasets carry a single binary label that mixes every kind of
 defect together, so they cannot say \emph{which} problem a detector is
-good at. We therefore generate a controlled dataset of $12{,}360$
+good at. I therefore generate a controlled dataset of $12{,}360$
 customer records with Faker and NumPy, in which income is correlated with
 balance and transaction size and account age is spread over three years.
-Into this clean population we inject six anomaly types, each at a rate of
+Into this clean population I inject six anomaly types, each at a rate of
 $3\%$ and each row tagged with its category: \emph{missing values} (one
 or two cells nulled), \emph{exact duplicates} (a clean row copied),
 \emph{univariate outliers} (one numeric field pushed far out of range),
@@ -263,19 +264,19 @@ combination implausible, e.g.\ an $18$-year-old with a top-percentile
 balance and income), \emph{temporal drift} (recent-signup rows whose
 income and balance distribution has shifted upward by half), and
 \emph{invalid formats} (malformed e-mail, out-of-domain country code,
-impossible age). Because the category of every injected row is known, we
+impossible age). Because the category of every injected row is known, I
 report, per method and per type, both the detection rate (recall) and the
 precision on a stream made of clean rows plus that one type. The injection
 magnitudes are exposed as a single \emph{severity} multiplier so the
 choice of magnitude can be swept rather than fixed
-(Section~\ref{sec:severity}). We also add a time-aware detector,
+(Section~\ref{sec:severity}). I also add a time-aware detector,
 \emph{drift}, that learns a per-feature baseline from the oldest rows and
 flags recent rows that both sit in a window whose mean has moved and lean
 in the direction of that move; it is run on the synthetic dataset only, as
 the other detectors ignore the row order.
 
 \subsection{Datasets}
-We evaluate on four datasets. \emph{Credit Card Fraud}~\cite{mlgulbcredit}
+I evaluate on four datasets. \emph{Credit Card Fraud}~\cite{mlgulbcredit}
 (Kaggle;
 $283{,}726$ transactions after de-duplication, $30$ numeric features,
 $0.17\%$ labelled fraud) is the standard strongly imbalanced benchmark,
@@ -309,7 +310,7 @@ fixed grid and no value is selected from the test metrics. Threshold or
 hyperparameter selection for a later confirmatory experiment would use
 training or validation data only. The whole
 procedure is repeated over five random
-seeds and we report the mean and standard deviation. This spread measures
+seeds and I report the mean and standard deviation. This spread measures
 the sensitivity to the split and to model randomness on a fixed dataset; it
 is not a confidence interval for performance on new data. LOF and the
 One-Class SVM are run on Water Quality, Cardio and the synthetic dataset
@@ -318,16 +319,16 @@ One-Class SVM's quadratic training were expected to be too costly at
 $284$k rows; this was not measured.
 
 Because the detectors emit both a threshold decision and a graded score,
-we report threshold metrics (precision, recall, $F_1$) alongside
+I report threshold metrics (precision, recall, $F_1$) alongside
 ROC-AUC and PR-AUC (computed as average precision, not trapezoidal
 area). On imbalanced data PR-AUC is the more informative
 metric: the false-positive rate underlying ROC-AUC is diluted by the large
 true-negative pool and stays optimistic, whereas precision reacts directly
-to false alarms. We keep both because PR-AUC's random baseline equals the
+to false alarms. I keep both because PR-AUC's random baseline equals the
 prevalence and is not comparable across datasets, while ROC-AUC's is
-always $0.5$ and is. We also report the fraction of rows flagged and the
+always $0.5$ and is. I also report the fraction of rows flagged and the
 in-pipeline latency. Because a single flag threshold hides the rest of the
-trade-off, we additionally draw the full precision-recall curve of every
+trade-off, I additionally draw the full precision-recall curve of every
 detector (Fig.~\ref{fig:prcurves}) and sweep Isolation Forest's
 contamination across each dataset (Table~\ref{tab:contamination}). The
 deep-learning detectors (Autoencoder, LSTM-Autoencoder) are the object of
@@ -349,7 +350,7 @@ wall-clock duration.
 A second, manually invoked level asks whether these checks can fail.
 Mutation testing generates small source-level changes (a reversed
 comparison, an altered constant, a modified message) and counts how many
-make the routine suite fail. We apply it to the modules that compute a
+make the routine suite fail. I apply it to the modules that compute a
 result and to the experiment scripts. In addition, twenty-three deliberate
 scientific defects are applied one at a time to a temporary copy of the
 code, and a named test must fail on each: a scaler refitted on the rows
@@ -397,7 +398,7 @@ a truncated table or figure. The verdict states where the evidence was produced
 and never that it was independently attested: the author wrote the code and
 launched every run.
 
-We treat a failed or missing check as a limitation of the evidence, not as
+I treat a failed or missing check as a limitation of the evidence, not as
 a successful experiment. Complete line and branch coverage and a mutation
 score of at least $95\%$ over the pipeline and the scripts are the targets, and the
 measured values, with what they leave out, are reported with the results
@@ -426,7 +427,7 @@ table, but its recall drops to $0.21$ and both are seed-sensitive
 Expectations took $1.3$\,s on this run, against $0.03$--$0.12$\,s for the
 statistical rules; these times vary between runs. LOF and the
 One-Class SVM were not run at $284$k rows, where their cost was expected to
-be prohibitive; we did not measure it.
+be prohibitive; I did not measure it.
 
 \begin{table}[t]
 \caption{Detectors on Credit Card Fraud, mean over five seeds on the
@@ -651,7 +652,7 @@ Synthetic         & prev.\ 0.175 & 0.53 & 0.51 & 16.8 \\
 
 \subsection{Fixed-contamination sensitivity analysis}
 The train-prevalence operating point uses labels from the training
-partition. To measure its influence, we reran the three real datasets
+partition. To measure its influence, I reran the three real datasets
 with the same five seeds and partitions, replacing that value by a
 constant contamination of $0.02$ for the ML detectors. Table~\ref{tab:fixed-calibration}
 shows Isolation Forest, the only learned detector run on all three
@@ -687,7 +688,7 @@ Water Quality & 0.512 & 0.023 & 49.675 & 1.789 \\
 
 \subsection{Detection rate versus injection severity}
 \label{sec:severity}
-The synthetic magnitudes are a design choice, so we sweep them. A single
+The synthetic magnitudes are a design choice, so I sweep them. A single
 \emph{severity} multiplier scales the univariate factor, the multivariate
 percentile extremity and the temporal-drift multiplier ($1.0$ is the
 dataset used above). Fig.~\ref{fig:severity} plots per-type recall against
@@ -759,12 +760,77 @@ univariate outliers falls with the number of continuous columns (rank
 correlation $-0.96$ over the $42$ tables). The anomalies are injected, not
 natural, at one severity, and the deep models are not part of this matrix.
 
+\subsection{Labelled problems of the dataset pool}
+\label{sec:labelled}
+The three real datasets of this section are few. The pool of $152$ open
+tables (\texttt{verification/dataset\_pool.md}) holds $100$ problems whose
+anomalies are already labelled: $36$ from ADBench and $64$ from the UCI
+repository, where the rarest class (at least $20$ rows) is the anomaly and the
+other classes are normal; a class above $10\%$ of the rows is resampled to
+$10\%$. I ran the six detectors of the main benchmark on all of them with the
+protocol of Section~\ref{sec:protocol}, written down before the run
+(\texttt{verification/labelled\_pool.md}): one normalisation for every table,
+a stratified $70/15/15$ split, five seeds, contamination equal to the training
+prevalence and default settings. LOF is skipped above $50{,}000$ training rows
+and One-Class SVM above $20{,}000$, so they cover $92$ and $84$ problems; the
+skips are listed in the archive. All $100$ runs completed.
+
+\begin{table}[t]
+\caption{Median over the labelled problems of the seed-averaged test metrics,
+with a $95\%$ bootstrap interval over the problems, and the median rank of the
+method on PR-AUC (1 is best).}
+\label{tab:labelled}
+\centering
+\footnotesize
+\begin{tabular}{lrrrr}
+\toprule
+Detector & Problems & PR-AUC & ROC-AUC & Rank \\
+\midrule
+Z-score            & 100 & 0.203 [0.164, 0.279] & 0.626 & 3 \\
+IQR                & 100 & 0.144 [0.117, 0.191] & 0.556 & 4 \\
+Great Expectations & 100 & 0.115 [0.105, 0.123] & 0.508 & 5 \\
+Isolation Forest   & 100 & 0.215 [0.158, 0.293] & 0.677 & 2 \\
+LOF                &  92 & 0.165 [0.153, 0.237] & 0.588 & 3 \\
+One-Class SVM      &  84 & 0.240 [0.177, 0.307] & 0.670 & 3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+No detector is clearly ahead. One-Class SVM has the highest median PR-AUC
+($0.240$) and Isolation Forest the best median rank, but their intervals
+overlap with each other and with the Z-score, so the hypothesis that no method
+is universal is supported. The best method differs from one problem to the
+next: Isolation Forest is first on $26$ problems, LOF on $24$, the IQR rule on
+$16$, the Z-score on $14$, One-Class SVM on $13$ and Great Expectations on $7$.
+Learning does help on median: Isolation Forest is above the Z-score on $67$
+problems and above the IQR rule on $62$, but the gain is small (about $0.01$ to
+$0.04$ of PR-AUC). The median ROC-AUC stays between $0.51$ and $0.68$, and on
+$30$ problems no detector reaches $0.6$. These anomalies are mostly not outlying
+in the sense these detectors assume, which is expected for labels taken from a
+rare class rather than from a data-quality defect. Great Expectations, built for
+declared constraints, is close to chance here.
+
+Two of the five hypotheses are not supported. The advantage of Isolation Forest
+over the Z-score was expected to vanish when anomalies are more than $20\%$ of
+the rows; it is smaller there ($+0.013$ of median PR-AUC on $12$ problems) but
+still positive, as it is below $5\%$ ($+0.037$, $19$ problems) and in between
+($+0.009$, $69$ problems). The IQR rule was expected to flag more than three
+times the anomaly prevalence; its median is $2.3$ times, the Z-score's $1.7$,
+and the learned detectors flag about the prevalence by construction. The order
+of the methods is the same for ADBench and for UCI (rank correlation $0.94$),
+although the level is much lower on UCI (best median PR-AUC $0.19$ against
+$0.40$). Nineteen sources appear in both lists with different derivations, so
+the problems are not independent, and $10\%$ resampling fixes the median
+prevalence at $0.10$. The ADBench half is closer to the usual benchmark and the
+UCI half is a harder, rule-derived labelling; I did not tune any detector, so
+the numbers describe default settings.
+
 \subsection{Chronological pilot on Credit Card}
 \label{sec:chrono}
 The results above use a random stratified split. Of the three real datasets,
 only Credit Card has a time variable (seconds since the first transaction,
 about two days); Cardio and Water Quality have none, so their row order says
-nothing about time. We therefore ran one small pilot on Credit Card, with the
+nothing about time. I therefore ran one small pilot on Credit Card, with the
 protocol written down before any score was computed on held-out data
 (\texttt{verification/temporal\_pilot.md}). It is a separate experiment and
 does not replace the benchmark.
@@ -822,7 +888,7 @@ the test (the largest validation window score, $0.91$). Shifts of $1$ and $2$
 standard deviations were detected in the second window after the change
 ($573$ seconds), and a shift of $0.5$ was not detected; no window before the
 change raised an alert ($22$ windows). Credit Card has no labelled change in
-distribution, so we make no claim about its natural drift.
+distribution, so I make no claim about its natural drift.
 
 \subsection{LSTM autoencoder pilot}
 \label{sec:lstm}
@@ -857,7 +923,7 @@ experiment on one dataset, not a ranking.
 \subsection{Cost of the detection stage and of the full pipeline}
 \label{sec:cost}
 The growth experiment reported later in this section uses only $100$ to $900$
-rows and cannot be extrapolated. We therefore measured the detectors again on
+rows and cannot be extrapolated. I therefore measured the detectors again on
 a protocol fixed in advance (\texttt{verification/cost\_study.md}): synthetic
 Gaussian matrices of $1{,}000$ to $300{,}000$ rows and $8$ features, five
 repetitions up to $30{,}000$ rows and three above, a budget of $300$ seconds per
@@ -898,7 +964,7 @@ with the input after that. These exponents describe the sizes measured and are
 not extended beyond them. No measurement was made under contention as defined
 in the protocol, but the machine was not isolated.
 
-To separate the detection stage from the whole pipeline, we also timed read,
+To separate the detection stage from the whole pipeline, I also timed read,
 cleaning, detection and write on the full Credit Card file ($284{,}807$ rows
 read, $283{,}726$ after removing duplicates). With the Z-score the pipeline
 takes about $4.8$ seconds, of which detection is $0.13$ seconds ($3\%$) and
@@ -922,19 +988,19 @@ scripts kills 4,700 of 4,808 mutants ($97.75\%$). Split by what the code does,
 the modules that compute a result (splitting, metrics, the synthetic generator,
 the detectors) kill 1,647 of 1,720 ($95.76\%$) and the input, output and script
 code kills 3,053 of 3,088 ($98.87\%$), so the aggregate is higher than the score
-of the scientific computation alone. The 108 survivors count as failures. We
+of the scientific computation alone. The 108 survivors count as failures. I
 classified them by reading the changes, not by proof: most pass an explicit
 default (\texttt{dtype}, \texttt{index}) or change an internal label. Two that
-we first took for unreachable, a cap on a simulated transaction rate, turned out
+I first took for unreachable, a cap on a simulated transaction rate, turned out
 to be reachable by a very rich customer and are now killed by a test.
 
 All twenty-three deliberate defects are caught. The first fourteen were not
-always caught by the tests we started with: four went through every existing test
+always caught by the tests I started with: four went through every existing test
 (a scaler refitted on the scored batch, ranking metrics fed with binary flags, a
 detector missing from the results, and a contamination threshold read from the
 synthetic test partition), and a fifth, an inverted Z-score, was caught only by a
 test added during the mutation work. None of these defects was in the code; the
-tests were missing. After adding them we reran every experiment: all detection
+tests were missing. After adding them I reran every experiment: all detection
 metrics are unchanged and only the timings differ. The nine defects added later
 (a chronological split that trains on the latest events, validation rows copied
 into training, an undefined precision reported as one, inverted machine-learning
@@ -1016,11 +1082,11 @@ are what make the difference measurable.
 scaling matter, but the timing in these runs is too variable to establish
 a reliable speed ranking. The One-Class SVM and LOF were omitted from the
 full fraud dataset because their computational costs need a separate
-scaling study. We time only the detection stage (fit, predict and score)
+scaling study. I time only the detection stage (fit, predict and score)
 inside the pipeline; extraction, transformation and loading are outside the
 measurement, so these figures are not the latency of a whole ETL run.
 
-\paragraph{Threats to validity.} The synthetic dataset still encodes our
+\paragraph{Threats to validity.} The synthetic dataset still encodes my
 own assumptions about what each anomaly type looks like; the severity
 sweep addresses the magnitude choice but not the shape of the
 injections. Cardio is a single genuinely-imbalanced dataset, so ``the
@@ -1039,12 +1105,12 @@ the two timing tables and the scaling figures above were updated. The new
 records name that commit and mark the working tree as clean, but they were
 produced on one machine and the timings do not transfer to another. Mutation
 testing reaches the target on the pipeline modules and the scripts, but it
-cannot tell us whether the injected defects and the tests cover every way an
+cannot show whether the injected defects and the tests cover every way an
 experiment can go wrong. The complete real-data checks were performed with the three files available
 locally. The Water
 Quality file matches its named mirror, and the Cardio CSV can be reproduced
 from the current ADBench archive. The Credit Card file has the size of the
-current Kaggle version (3, March 2018), but we could not compare its content
+current Kaggle version (3, March 2018), but I could not compare its content
 hash with a fresh download. These
 gaps leave some implementation errors capable of changing a published
 result without being caught by the current gates.
@@ -1052,13 +1118,14 @@ result without being caught by the current gates.
 \section{Conclusion}
 \label{sec:conclusion}
 
-We built an ETL pipeline in which rule-based and classical
+I built an ETL pipeline in which rule-based and classical
 machine-learning anomaly detectors share one interface and are scored on
 the same held-out path, over five seeds, with the operating point read
 from the data. A controlled dataset labels six anomaly types separately,
 and a severity sweep shows where the per-type ranking changes as the
 injections are scaled. On aggregate metrics the detector families stay
-close on all four datasets. The per-type view is where they diverge:
+close on all four datasets, and on $100$ labelled problems of a pool of
+$152$ open tables no detector is clearly ahead (Section~\ref{sec:labelled}). The per-type view is where they diverge:
 declarative rules own missing values, statistical rules own single-column
 outliers, tree- and boundary-based models are the only ones that catch
 implausible combinations, and duplicates and temporal drift need

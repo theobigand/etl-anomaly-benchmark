@@ -31,3 +31,8 @@ Rules:
   end without a rewrite.
 - A pull request that changes results, the paper or the roadmap and leaves
   the deck untouched must say why in its description.
+
+## Paper voice
+
+The paper has a single author. Write in the first person singular ("I report",
+"my pipeline") or impersonally, never "we" or "our".
