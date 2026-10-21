@@ -58,3 +58,21 @@ def test_unknown_detector_names_are_refused():
     df, cols = _injected()
     with pytest.raises(ValueError, match="unknown"):
         tb.evaluate(df, cols, seed=0, names=["nope"])
+
+
+def test_a_labelled_set_contributes_only_its_normal_class_and_an_unlabelled_one_all_rows(tmp_path):
+    import typed_run as tr
+
+    rng = np.random.default_rng(0)
+    n = 4000
+    table = pd.DataFrame({f"x{i}": rng.normal(size=n) for i in range(5)})
+    table["y"] = (np.arange(n) % 10 == 0).astype(int)
+    path = tmp_path / "1.csv"
+    table.to_csv(path, index=False)
+    meta = {"uci_id": 1, "tasks": ["Classification"], "target_col": ["y"], "variables": []}
+    carrier, report = tr.load_carrier(meta, path, seed=0)
+    assert report["source_rows"] == 3600 and report["normal_class_only"] is True
+    unlabelled = {"uci_id": 1, "tasks": ["Regression"], "target_col": ["y"], "variables": []}
+    carrier2, report2 = tr.load_carrier(unlabelled, path, seed=0)
+    assert report2["source_rows"] == n and report2["normal_class_only"] is False
+    assert list(carrier.columns) == [f"x{i}" for i in range(5)]
