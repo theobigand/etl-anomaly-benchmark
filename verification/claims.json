@@ -2,27 +2,26 @@
   "schema_version": 2,
   "note": "Verification figures quoted in paper/main.tex, with the run they describe. tests/test_manuscript_claims.py keeps the paper and this file in step; tests/test_claims_provenance.py checks the run (revision, sealed envelopes, staleness).",
   "published_run": {
-    "id": "local-3994e05",
-    "revision": "3994e05f8ad629259a83b192aeff2b846b78ef82",
+    "id": "local-e1fcbb0",
+    "revision": "e1fcbb0dda7ea28ce98304b6c4e97f9959223a66",
     "source": "local-unattested",
     "platform": "macOS 27.0 arm64, Python 3.11.17 (conda etl-benchmark; typing in a venv with mypy 2.4.0)",
-    "captured": "2026-10-20",
-    "historical": true,
-    "evidence_dir": "verification/evidence/runs/local-3994e05",
+    "captured": "2026-10-21",
+    "historical": false,
+    "evidence_dir": "verification/evidence/runs/local-e1fcbb0",
     "files": {
-      "deep.json": "156bd52b97108abc29fbc8e09c0e4108455bc201a2d6f19e94782750c4153012",
-      "fast.json": "85455f6a7f735cc9f5c8416cc4ea3745a9d866ae28066f26f601f892a4c9ae0c",
-      "faults.json": "af45aa50f0f4bd53ae976c0dbcc305b7c5ac48bcef81bcb0bb2a1a403f95c313",
-      "real.json": "53b343ff43125702b920119722704a69430366bd99847ce3571d31783505aa63",
-      "reproduction.json": "767e2281886234372b614f763d6955db5a5bf1340500a2993eb90dc1175f8ca3",
+      "deep.json": "0d66b3847a9b5bb92f5ba21e65f81892619f3d88130432c799dc80976c2dfbab",
+      "fast.json": "9e7c273738a92fd72db8792b0e34e21ba5d5eb41b23cb97f3681bb987375be5f",
+      "faults.json": "79f845dad51012ea0278c365c3dc5cbf474ad413ce08eb29cfae34d2b1f1dc07",
+      "real.json": "2d9a57404d8a3a683683805d54dc7320bfee0bb3f583fc6b6a39785808082cec",
+      "reproduction.json": "92f86614cf05bdfc314da4746817c82e5b0c49c304820ea49a7de3f372098098",
       "results.txt": "b6fa57dfb077a47e76a6b290ba3cd8ca59dd901b09a61c3ab9bcdf0625112832",
-      "tools.json": "416cd6159cf062453f4d9885dd5eac7e07947d9306721c68aa15a575d24dda14",
-      "types.json": "0ed815bd8b4a66ac020c7f649862f181035a7bdc6997863d05fe3319480df440"
-    },
-    "note": "Run made before the dataset pool check workflow and its guard test (issue 66) were added. The figures are kept until the run on that revision is sealed."
+      "tools.json": "12491702526bcddf79ca0ac01ac7371d94aa2f6465b63ec7ea5666b459bea3c8",
+      "types.json": "d481a99dd54b1403ee981be4db6558128808124e9e2104db431fb5dc1b126eca"
+    }
   },
   "fast": {
-    "tests": 1149,
+    "tests": 1150,
     "line_covered": 1628,
     "line_coverable": 1628,
     "branch_covered": 336,
