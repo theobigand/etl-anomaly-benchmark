@@ -1,0 +1,38 @@
+name: pool-check
+
+# Re-downloads every pooled dataset into memory and compares its sha256 with the pinned manifest.
+# Nothing is stored or redistributed; only the per-dataset report is uploaded.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 5 1 * *"
+
+permissions:
+  contents: read
+
+jobs:
+  pool:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install
+        run: pip install -e .
+
+      - name: Verify the pinned downloads
+        run: python research/pool_check.py --verify verification/evidence/dataset_registry/pool_manifest.json --output pool_verification.json
+
+      - name: Keep the report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pool-verification
+          path: pool_verification.json
