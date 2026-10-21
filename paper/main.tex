@@ -825,6 +825,62 @@ prevalence at $0.10$. The ADBench half is closer to the usual benchmark and the
 UCI half is a harder, rule-derived labelling; I did not tune any detector, so
 the numbers describe default settings.
 
+\subsection{Two further synthetic schemas}
+\label{sec:schemas}
+The synthetic matrix comes from one table of customers, so its pattern could
+come from that table. I wrote two more generators, a table of card transactions
+and a table of sensor readings, each with six numeric fields, a date, a string
+with a checkable format and a category with a finite domain, and injected the
+same six types at the same rate and the same protocol, with four hypotheses
+fixed beforehand (\texttt{verification/multi\_schema.md}). The customer table
+and its published results are untouched; its matrix below is the published one.
+
+\begin{table}[t]
+\caption{Mean recall over five seeds on the two further schemas for the
+methods that carry the pattern (customer table in
+Figure~\ref{fig:heatmap}). Columns: missing values, duplicates, univariate
+outliers, multivariate outliers, drift, invalid formats.}
+\label{tab:schemas}
+\centering
+\footnotesize
+\begin{tabular}{llcccccc}
+\toprule
+Schema & Method & Miss. & Dup. & Uni. & Multi. & Drift & Inv. \\
+\midrule
+Transactions & Great Expectations & 1.00 & 0.00 & 0.14 & 0.00 & 0.00 & 0.00 \\
+             & Dedup rule         & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
+             & IQR                & 0.09 & 0.14 & 0.98 & 0.57 & 0.37 & 0.63 \\
+             & Isolation Forest   & 0.09 & 0.18 & 0.97 & 0.49 & 0.38 & 0.56 \\
+             & One-Class SVM      & 0.10 & 0.26 & 0.89 & 0.18 & 0.36 & 0.39 \\
+\midrule
+Sensors      & Great Expectations & 1.00 & 0.00 & 0.23 & 0.00 & 0.00 & 0.00 \\
+             & Dedup rule         & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
+             & IQR                & 0.03 & 0.05 & 1.00 & 0.02 & 0.94 & 1.00 \\
+             & Isolation Forest   & 0.08 & 0.12 & 1.00 & 0.32 & 0.96 & 0.97 \\
+             & One-Class SVM      & 0.08 & 0.10 & 1.00 & 0.33 & 0.94 & 1.00 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The structural rows carry over exactly: Great Expectations finds every missing
+value and the deduplication rule every duplicate, on all three schemas. The
+overall profile is stable too: the rank correlation between the method-by-type
+matrices of two schemas is $0.93$ on average ($0.91$ to $0.96$). Two things do
+not carry over. For multivariate outliers, Isolation Forest and One-Class SVM
+reach $0.89$ and $0.90$ on the customers, but only $0.49$ and $0.18$ on the
+transactions and $0.32$ and $0.33$ on the sensors, and on the transactions the
+IQR rule reaches $0.57$. For drift, the best recall is $0.50$ on the customers
+and $0.38$ on the transactions but $0.96$ on the sensors, where a factor of
+$1.5$ on a signal of about $-70$~dBm moves values several standard deviations
+away. The per-row drift detector of the registry, which was designed for
+dilute shifts, flags nothing on any schema. Two of the four hypotheses
+(structural rows, rank stability) hold; the multivariate gap and the weakness of
+drift do not. The injected magnitudes are set in relative terms, so how visible
+drift and multivariate outliers are depends on how the column is scaled
+and correlated, not only on the type. The three schemas share an author and an
+injection logic, so this shows that the profile does not depend on the shape of
+one table, not that it holds on real data (Section~\ref{sec:typed}).
+
 \subsection{Deep models in the per-type matrix}
 \label{sec:deep-rows}
 The matrix of Figure~\ref{fig:heatmap} has no learned reconstruction model. I
