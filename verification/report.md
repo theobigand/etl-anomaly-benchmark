@@ -8,7 +8,7 @@ exécution identifiée (révision, lieu, date) ; ils sont recopiés dans
 depuis. Les chiffres plus anciens sont marqués historiques.
 
 Le statut de certification est **CERTIFIED en local, non attesté** (commit
-`3994e05f`, machine du chercheur) et **CERTIFIED en CI, non attesté
+`e1fcbb0d`, machine du chercheur) et **CERTIFIED en CI, non attesté
 indépendamment** : le run `verify-release` 39112662862 (tête de branche
 `440dcee`) rend CERTIFIED avec l'étiquette
 `ci-run:39112662862 (not independently attested)`, REAL compris, produit par le
@@ -53,10 +53,10 @@ archivés séparément et leurs chiffres sont rapprochés du manuscrit par un te
 
 ## Résultats des commandes
 
-Run local `local-3994e05` : commit `3994e05f`, macOS 27.0 arm64, Python 3.11.17
+Run local `local-e1fcbb0` : commit `e1fcbb0d`, macOS 27.0 arm64, Python 3.11.17
 (environnement conda `etl-benchmark`, typage dans un venv avec mypy 2.4.0 et
 pandas-stubs 3.0.5.260914), 18 octobre 2026. Résultats non attestés
-indépendamment ; enveloppes de preuve scellées dans `evidence/runs/local-3994e05/`.
+indépendamment ; enveloppes de preuve scellées dans `evidence/runs/local-e1fcbb0/`.
 
 | Commande | Résultat | Détail |
 | --- | --- | --- |
