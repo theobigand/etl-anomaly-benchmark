@@ -1,0 +1,914 @@
+[
+ {
+  "id": "adbench:annthyroid",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/102/thyroid+disease, doi 10.24432/C5D010, read 2026-10-20)",
+  "sha256": "e738f7c58a8740d2c4aac4c71ff49ce5e1d1aa16f44178135fc9c09df05fad1b",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/2_annthyroid.npz"
+ },
+ {
+  "id": "adbench:breastw",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/15/breast+cancer+wisconsin+original, doi 10.24432/C5HP4Z, read 2026-10-20)",
+  "sha256": "4f37ce07dbc25ddad8178fdc6d664ab46d2d0000ee28c2787c3c7ff3c03ef9f6",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/4_breastw.npz"
+ },
+ {
+  "id": "adbench:campaign",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/222/bank+marketing, doi 10.24432/C5K306, read 2026-10-20)",
+  "sha256": "74dd4d0072d6c6f1aabab63bc102f9633454f32bb936fa9bcfbd38f9f2386bcd",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/5_campaign.npz"
+ },
+ {
+  "id": "adbench:cardio",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/193/cardiotocography, doi 10.24432/C51S4N, read 2026-10-20)",
+  "sha256": "bc5009bde6930b4d298b594f31b34485a9a17210cff0e8fb00a8c3068b885a2d",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/6_cardio.npz"
+ },
+ {
+  "id": "adbench:Cardiotocography",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/193/cardiotocography, doi 10.24432/C51S4N, read 2026-10-20)",
+  "sha256": "5ae84910430f05923e11b6f537243263977c9136949dabd891e3570aeec51e29",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/7_Cardiotocography.npz"
+ },
+ {
+  "id": "adbench:census",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/117/census+income+kdd, doi 10.24432/C5N30T, read 2026-10-20)",
+  "sha256": "6739999359a3b8c285ea902943732c3d6a331d776e6333a7d991198bd2686b56",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/9_census.npz"
+ },
+ {
+  "id": "adbench:cover",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/31/covertype, doi 10.24432/C50K5N, read 2026-10-20)",
+  "sha256": "945a097c3542ae81a551bf1c06dcad78a755d94f84fcaf1d60687e42d1a656df",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/10_cover.npz"
+ },
+ {
+  "id": "adbench:fault",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/198/steel+plates+faults, doi 10.24432/C5J88N, read 2026-10-20)",
+  "sha256": "ec27301f9a4cf7c5d8b22c360cf37ddb043b7fb062465723dfd8b34e2771e5dd",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/12_fault.npz"
+ },
+ {
+  "id": "adbench:fraud",
+  "licence": "ODbL 1.0: Kaggle states: Database: Open Database, Contents: Database Contents; attribute Worldline and the ULB Machine Learning Group, no redistribution of the file here (https://www.kaggle.com/api/v1/datasets/view/mlg-ulb/creditcardfraud, read 2026-10-20)",
+  "sha256": "353b9a156b3f20e0739fafacdff76ef5cad1eeb7323be0ae71d384bf0e2594a6",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/13_fraud.npz"
+ },
+ {
+  "id": "adbench:glass",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/42/glass+identification, doi 10.24432/C5WW2P, read 2026-10-20)",
+  "sha256": "aa7a8db1d475ba01a10488af454bc15220a3d5951b010b03b7020567d8152cdc",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/14_glass.npz"
+ },
+ {
+  "id": "adbench:Hepatitis",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/46/hepatitis, doi 10.24432/C5Q59J, read 2026-10-20)",
+  "sha256": "4a87a2f7d8013e5bfde63294fae61ec7a612322de72f338a7f9491749025ad98",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/15_Hepatitis.npz"
+ },
+ {
+  "id": "adbench:http",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/130/kdd+cup+1999+data, doi 10.24432/C51C7N, read 2026-10-20)",
+  "sha256": "9d98710091551587f4740cfc851a6b064fff6319a337c2dc77ee6da4bcc2e02c",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/16_http.npz"
+ },
+ {
+  "id": "adbench:InternetAds",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/51/internet+advertisements, doi 10.24432/C5V011, read 2026-10-20)",
+  "sha256": "bdd8ad5cf5bf2cb96cba53dde30d522d0f6a279083a8e2bc7efbac5981b04385",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/17_InternetAds.npz"
+ },
+ {
+  "id": "adbench:Ionosphere",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/52/ionosphere, doi 10.24432/C5W01B, read 2026-10-20)",
+  "sha256": "bca46cb0cfd1bf9ddef6cde5ad2215d54fb0189508d0d4c4eb98e788cad69001",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/18_Ionosphere.npz"
+ },
+ {
+  "id": "adbench:landsat",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/146/statlog+landsat+satellite, doi 10.24432/C55887, read 2026-10-20)",
+  "sha256": "ba17e2158c07469597b89db49d3982c874c6b713ff6670721ddc88969da77987",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/19_landsat.npz"
+ },
+ {
+  "id": "adbench:letter",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/59/letter+recognition, doi 10.24432/C5ZP40, read 2026-10-20)",
+  "sha256": "f986d3da80cf1fa2aea83a5ebe73b7d4800e0d4c01fdd1ae074b58d20f10d039",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/20_letter.npz"
+ },
+ {
+  "id": "adbench:Lymphography",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/63/lymphography, doi 10.24432/C54598, read 2026-10-20)",
+  "sha256": "dad977b04f4ea65b78ccd0e9f76b45175bad605165b37e63f3cc177845e67037",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/21_Lymphography.npz"
+ },
+ {
+  "id": "adbench:magic.gamma",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/159/magic+gamma+telescope, doi 10.24432/C52C8B, read 2026-10-20)",
+  "sha256": "0be375984d7af9ea7a63b12206c240840d8b7daa3607021c5fb8756407dd86f1",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/22_magic.gamma.npz"
+ },
+ {
+  "id": "adbench:musk",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/75/musk+version+2, doi 10.24432/C51608, read 2026-10-20)",
+  "sha256": "2ed3f4392197b76a1e59116ff880c7720a4b026cf4842073a53b56fdea265017",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/25_musk.npz"
+ },
+ {
+  "id": "adbench:optdigits",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/80/optical+recognition+of+handwritten+digits, doi 10.24432/C50P49, read 2026-10-20)",
+  "sha256": "60de17a375a278ba220a7849727d998aa02b5e2f9fd17732a004bba28de4656e",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/26_optdigits.npz"
+ },
+ {
+  "id": "adbench:PageBlocks",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/78/page+blocks+classification, doi 10.24432/C5J590, read 2026-10-20)",
+  "sha256": "10a9b4d5bb5d3b9083caab4c4062f665610eada703c3d927bf7c34b1f2d0d223",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/27_PageBlocks.npz"
+ },
+ {
+  "id": "adbench:pendigits",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/81/pen+based+recognition+of+handwritten+digits, doi 10.24432/C5MG6K, read 2026-10-20)",
+  "sha256": "c4936b89dcdad59d303020e492f763a0f54170080d787c77497609acbb9c2d79",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/28_pendigits.npz"
+ },
+ {
+  "id": "adbench:satellite",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/146/statlog+landsat+satellite, doi 10.24432/C55887, read 2026-10-20)",
+  "sha256": "1f048f5686f1b8c16a227fdfa3c81a62cd9a92715714a6b24c69b1c5ad96b46e",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/30_satellite.npz"
+ },
+ {
+  "id": "adbench:satimage-2",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/146/statlog+landsat+satellite, doi 10.24432/C55887, read 2026-10-20)",
+  "sha256": "1b056e357f801b8b20c3f380a30224a3c4088d7ed764ec5a24828dc9b1918d6f",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/31_satimage-2.npz"
+ },
+ {
+  "id": "adbench:shuttle",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/148/statlog+shuttle, doi 10.24432/C5WS31, read 2026-10-20)",
+  "sha256": "26900b0f6be45d9ddb7a402c9b2f956ceda42d23a8ca4cf4406b8bc1352823d1",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/32_shuttle.npz"
+ },
+ {
+  "id": "adbench:skin",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/229/skin+segmentation, doi 10.24432/C5T30C, read 2026-10-20)",
+  "sha256": "d02aa01ffc1b6bf2b8b1ac250c90e8a8eacd0cefc962940ed5cc4bf5deac9c95",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/33_skin.npz"
+ },
+ {
+  "id": "adbench:smtp",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/130/kdd+cup+1999+data, doi 10.24432/C51C7N, read 2026-10-20)",
+  "sha256": "d2569fc9bc12115419e3f5b37d19921e10e6c26e5ad1e61064cfb0fbc402dfdd",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/34_smtp.npz"
+ },
+ {
+  "id": "adbench:SpamBase",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/94/spambase, doi 10.24432/C53G6X, read 2026-10-20)",
+  "sha256": "d0c46c7928e43f6496bcd06e09de0b70f6bc8143792dfa0a43f450263d254e9b",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/35_SpamBase.npz"
+ },
+ {
+  "id": "adbench:thyroid",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/102/thyroid+disease, doi 10.24432/C5D010, read 2026-10-20)",
+  "sha256": "8de161b3f235b7647bb0b39a836d983ff61d67bf234edac461da2d71e889cb87",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/38_thyroid.npz"
+ },
+ {
+  "id": "adbench:vertebral",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/212/vertebral+column, doi 10.24432/C5K89B, read 2026-10-20)",
+  "sha256": "0816286f92b96fe6867664a41a031ac7228dcfbf1a5feefe50ca3883b2e9073d",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/39_vertebral.npz"
+ },
+ {
+  "id": "adbench:Waveform",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/107/waveform+database+generator+version+1, doi 10.24432/C5CS3C, read 2026-10-20)",
+  "sha256": "6c9d867337ad1a2f8372c1d27f4c032f0401237e2041b7c45f00de8d319ff30f",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/41_Waveform.npz"
+ },
+ {
+  "id": "adbench:WDBC",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic, doi 10.24432/C5DW2B, read 2026-10-20)",
+  "sha256": "78d4606a1ab516f5b60b00c196497f3bbd6bd5e4548fd04cf5f2475209b34b85",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/43_WDBC.npz"
+ },
+ {
+  "id": "adbench:Wilt",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/285/wilt, doi 10.24432/C5KS4M, read 2026-10-20)",
+  "sha256": "c70b72aa611ec87b20efb400943ef3ce4f8bf7aa58fcef825fbd28cc5cee3cc9",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/44_Wilt.npz"
+ },
+ {
+  "id": "adbench:wine",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/109/wine, doi 10.24432/C5PC7J, read 2026-10-20)",
+  "sha256": "d5ad8965d92cc57122fe1e6572bb301adbaf795b3e166d187ae00a704d8f6e20",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/45_wine.npz"
+ },
+ {
+  "id": "adbench:WPBC",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/16/breast+cancer+wisconsin+prognostic, doi 10.24432/C5GK50, read 2026-10-20)",
+  "sha256": "68a6d67242643855713bcdad07d89ecc472bd00000dccc17ba87916eb2693d19",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/46_WPBC.npz"
+ },
+ {
+  "id": "adbench:yeast",
+  "licence": "CC BY 4.0 (https://archive.ics.uci.edu/dataset/110/yeast, doi 10.24432/C5KG68, read 2026-10-20)",
+  "sha256": "bbb15c873d78a4f6a589f46d0f75814595e2282d2ae7ce7779c750f276c3770d",
+  "url": "https://raw.githubusercontent.com/Minqi824/ADBench/3dac8221081e190f157d78e93bfa8867f90d0965/adbench/datasets/Classical/47_yeast.npz"
+ },
+ {
+  "id": "uci:1",
+  "licence": "CC BY 4.0",
+  "sha256": "25f3dc964447fcb3d68cf1048c04ed69d1474771c4fb34318e10778800a4342f",
+  "url": "https://archive.ics.uci.edu/static/public/1/data.csv"
+ },
+ {
+  "id": "uci:2",
+  "licence": "CC BY 4.0",
+  "sha256": "26b38f8623766396e2ba0d1a235a283db8ed993cc32bf32fc8aab09708c3bdf2",
+  "url": "https://archive.ics.uci.edu/static/public/2/data.csv"
+ },
+ {
+  "id": "uci:3",
+  "licence": "CC BY 4.0",
+  "sha256": "868a9cfd6268d82cfd3fa0d05fbea7264d3ac771df152a7de8ab1d208eec2bad",
+  "url": "https://archive.ics.uci.edu/static/public/3/data.csv"
+ },
+ {
+  "id": "uci:9",
+  "licence": "CC BY 4.0",
+  "sha256": "240f4657d747fe105f3c992251daba65f926ef54c4dec3cde34e398e8cf5da9c",
+  "url": "https://archive.ics.uci.edu/static/public/9/data.csv"
+ },
+ {
+  "id": "uci:15",
+  "licence": "CC BY 4.0",
+  "sha256": "3fb81e10c657874f9db975b43a5c10fd0f95ec9ca33150962d486fd4740a8701",
+  "url": "https://archive.ics.uci.edu/static/public/15/data.csv"
+ },
+ {
+  "id": "uci:17",
+  "licence": "CC BY 4.0",
+  "sha256": "3487b754ff02c93cdc8a18afafe223961d9cfbfdb932e57483e52581042767d7",
+  "url": "https://archive.ics.uci.edu/static/public/17/data.csv"
+ },
+ {
+  "id": "uci:27",
+  "licence": "CC BY 4.0",
+  "sha256": "fe592adc0045801c41c0cfe8fbb89537f909d149cc9b96f365ed043d17241488",
+  "url": "https://archive.ics.uci.edu/static/public/27/data.csv"
+ },
+ {
+  "id": "uci:30",
+  "licence": "CC BY 4.0",
+  "sha256": "3a150623738e0fe1d2ad3803f102e94f3120f9ff6e3d27cc335af895e124d963",
+  "url": "https://archive.ics.uci.edu/static/public/30/data.csv"
+ },
+ {
+  "id": "uci:31",
+  "licence": "CC BY 4.0",
+  "sha256": "a07902ee1c9d3231c6655f23e6f75a6797d0ba26a2359f533c2c0e65d05c9bd4",
+  "url": "https://archive.ics.uci.edu/static/public/31/data.csv"
+ },
+ {
+  "id": "uci:32",
+  "licence": "CC BY 4.0",
+  "sha256": "558c79a515fb4a901a848ae34614acf1570aa60bddd4eb9e398165bf9a2b6cfe",
+  "url": "https://archive.ics.uci.edu/static/public/32/data.csv"
+ },
+ {
+  "id": "uci:33",
+  "licence": "CC BY 4.0",
+  "sha256": "8702228ddfe36a0e816c3982340d70a4a28956024dfdceafdfd808584e949f32",
+  "url": "https://archive.ics.uci.edu/static/public/33/data.csv"
+ },
+ {
+  "id": "uci:39",
+  "licence": "CC BY 4.0",
+  "sha256": "42e4526726ed030c640ecd91837acfd4fe23d8305954d250dedf944a4f9ecee8",
+  "url": "https://archive.ics.uci.edu/static/public/39/data.csv"
+ },
+ {
+  "id": "uci:45",
+  "licence": "CC BY 4.0",
+  "sha256": "868cd646a53ffbc55611192bae7496911a163937c185710f6b8aa11549b88df1",
+  "url": "https://archive.ics.uci.edu/static/public/45/data.csv"
+ },
+ {
+  "id": "uci:47",
+  "licence": "CC BY 4.0",
+  "sha256": "7cad77c51181c532babb5c08db40dff35d3edb39797ea2f5291468a3e35d1efd",
+  "url": "https://archive.ics.uci.edu/static/public/47/data.csv"
+ },
+ {
+  "id": "uci:50",
+  "licence": "CC BY 4.0",
+  "sha256": "fddc213b8d668a7da006ff93d5f01ec099c2c2c2496770ef85cb185215c5f44e",
+  "url": "https://archive.ics.uci.edu/static/public/50/data.csv"
+ },
+ {
+  "id": "uci:52",
+  "licence": "CC BY 4.0",
+  "sha256": "04f2023ba4b9ff438d76d4d236762981795772d4f75f3bca1c8db0fcf26c83c1",
+  "url": "https://archive.ics.uci.edu/static/public/52/data.csv"
+ },
+ {
+  "id": "uci:59",
+  "licence": "CC BY 4.0",
+  "sha256": "9ec44e47110540d997fc2e247464a75ed3da0ad9dfcd49ded7e68fcaab04a9f7",
+  "url": "https://archive.ics.uci.edu/static/public/59/data.csv"
+ },
+ {
+  "id": "uci:60",
+  "licence": "CC BY 4.0",
+  "sha256": "ab7c9f801a6fc0568605bda3796a3962d0b940a19ced4060fb1e2ff98438b5cc",
+  "url": "https://archive.ics.uci.edu/static/public/60/data.csv"
+ },
+ {
+  "id": "uci:73",
+  "licence": "CC BY 4.0",
+  "sha256": "3557ad6f2ffaca855d66d9a8165c6bfabd355cc51d89eac56bab55f0e38b3116",
+  "url": "https://archive.ics.uci.edu/static/public/73/data.csv"
+ },
+ {
+  "id": "uci:75",
+  "licence": "CC BY 4.0",
+  "sha256": "029e743e24b4e58f35338021def28e12da9b0aeb866bbf86751b7b0d58f5232e",
+  "url": "https://archive.ics.uci.edu/static/public/75/data.csv"
+ },
+ {
+  "id": "uci:78",
+  "licence": "CC BY 4.0",
+  "sha256": "431ac64c358a0bfb9ac0e333e1674abe45b24ebc586cb90d6905b20726b6c06f",
+  "url": "https://archive.ics.uci.edu/static/public/78/data.csv"
+ },
+ {
+  "id": "uci:80",
+  "licence": "CC BY 4.0",
+  "sha256": "75fc37d1cb6590c84f567c6bd65c73051cdede2568f148a7b23ddd5ecbfdda2b",
+  "url": "https://archive.ics.uci.edu/static/public/80/data.csv"
+ },
+ {
+  "id": "uci:81",
+  "licence": "CC BY 4.0",
+  "sha256": "3a3043879657816e18af4bc0822cb89aff03b30988511590e2c05454ce092656",
+  "url": "https://archive.ics.uci.edu/static/public/81/data.csv"
+ },
+ {
+  "id": "uci:83",
+  "licence": "CC BY 4.0",
+  "sha256": "240061d84782e377acb56dbcb93963a051edf05f084d1141767a983183610ab1",
+  "url": "https://archive.ics.uci.edu/static/public/83/data.csv"
+ },
+ {
+  "id": "uci:89",
+  "licence": "CC BY 4.0",
+  "sha256": "a653db52e851ede9935cf95ab46d58ffcf5e9e221d861bf51c894ccd27f081ac",
+  "url": "https://archive.ics.uci.edu/static/public/89/data.csv"
+ },
+ {
+  "id": "uci:90",
+  "licence": "CC BY 4.0",
+  "sha256": "bf5e08597a5e18780fdaa1f24bc79587e16405bd1c0ee302f21aa70753dd7e37",
+  "url": "https://archive.ics.uci.edu/static/public/90/data.csv"
+ },
+ {
+  "id": "uci:94",
+  "licence": "CC BY 4.0",
+  "sha256": "d86711ceadadd177f09ca816fffa79d82edf5007b585a836c112462e2c217c0d",
+  "url": "https://archive.ics.uci.edu/static/public/94/data.csv"
+ },
+ {
+  "id": "uci:105",
+  "licence": "CC BY 4.0",
+  "sha256": "d065a84731217cc149d64fd09a2b0c0232f14916a3d6fd3f60b8313d1bbab1d8",
+  "url": "https://archive.ics.uci.edu/static/public/105/data.csv"
+ },
+ {
+  "id": "uci:110",
+  "licence": "CC BY 4.0",
+  "sha256": "294c84c36ff131305fe1baaeb9c8c93f9a557d01d1ee676a77a31607ad3df516",
+  "url": "https://archive.ics.uci.edu/static/public/110/data.csv"
+ },
+ {
+  "id": "uci:117",
+  "licence": "CC BY 4.0",
+  "sha256": "1deb5132c85eb522f36c11e5a99704bc8fa30d0626f1847a9c6104594b063dfe",
+  "url": "https://archive.ics.uci.edu/static/public/117/data.csv"
+ },
+ {
+  "id": "uci:144",
+  "licence": "CC BY 4.0",
+  "sha256": "f985b42636c9e28ce4fb3913738d1ebfd0f7947fda8d4406fe2ded5d84295acb",
+  "url": "https://archive.ics.uci.edu/static/public/144/data.csv"
+ },
+ {
+  "id": "uci:146",
+  "licence": "CC BY 4.0",
+  "sha256": "a121454cbcc631ace2b0581b10336c2d553aa7689632e653934374a759bef443",
+  "url": "https://archive.ics.uci.edu/static/public/146/data.csv"
+ },
+ {
+  "id": "uci:148",
+  "licence": "CC BY 4.0",
+  "sha256": "47aef84b30949e8e5980995aa7cac907892ec8f50d6b929ca91bfd28ebef704e",
+  "url": "https://archive.ics.uci.edu/static/public/148/data.csv"
+ },
+ {
+  "id": "uci:149",
+  "licence": "CC BY 4.0",
+  "sha256": "49e7a61b5b39575fa5570b029b5a33be6732d6824e11e94247f2d333b51a4d53",
+  "url": "https://archive.ics.uci.edu/static/public/149/data.csv"
+ },
+ {
+  "id": "uci:159",
+  "licence": "CC BY 4.0",
+  "sha256": "a52d3a378e43df7b678c4c0b2f03a66a058bbfeb27c95ccd037a767e7d172984",
+  "url": "https://archive.ics.uci.edu/static/public/159/data.csv"
+ },
+ {
+  "id": "uci:161",
+  "licence": "CC BY 4.0",
+  "sha256": "51b86255a47927b721e09f119630be746beb9fd3e729f9c3c86630382a03352f",
+  "url": "https://archive.ics.uci.edu/static/public/161/data.csv"
+ },
+ {
+  "id": "uci:162",
+  "licence": "CC BY 4.0",
+  "sha256": "0d6586a1fa52f55bef48578aef14eb97273f1e9330e1a53423df497a77065253",
+  "url": "https://archive.ics.uci.edu/static/public/162/data.csv"
+ },
+ {
+  "id": "uci:165",
+  "licence": "CC BY 4.0",
+  "sha256": "8d4b15b6fc68cd932d745cbd663d5ceae66dd54422e99c1e4865f2936ab7e2af",
+  "url": "https://archive.ics.uci.edu/static/public/165/data.csv"
+ },
+ {
+  "id": "uci:176",
+  "licence": "CC BY 4.0",
+  "sha256": "386a3671dddb9427d43d12fcf7e1eaa34bd17e249679d0043c2a7c62f089790f",
+  "url": "https://archive.ics.uci.edu/static/public/176/data.csv"
+ },
+ {
+  "id": "uci:183",
+  "licence": "CC BY 4.0",
+  "sha256": "7984874910c8f9ddcf5db06abe416850c55d880d225167112c612dd58ea54b40",
+  "url": "https://archive.ics.uci.edu/static/public/183/data.csv"
+ },
+ {
+  "id": "uci:186",
+  "licence": "CC BY 4.0",
+  "sha256": "428bd8df7313b159988405ae5e3be6d363993d73f7ffc2adedfdc1d496508191",
+  "url": "https://archive.ics.uci.edu/static/public/186/data.csv"
+ },
+ {
+  "id": "uci:189",
+  "licence": "CC BY 4.0",
+  "sha256": "689fd221159cd78b07a50087992c9d9472a4eb26527cdc8e896a708a2013ebcf",
+  "url": "https://archive.ics.uci.edu/static/public/189/data.csv"
+ },
+ {
+  "id": "uci:193",
+  "licence": "CC BY 4.0",
+  "sha256": "4648b5bf338d18f0c7e030a5d2cfb2018c831695cdb90129912cf00367c7d751",
+  "url": "https://archive.ics.uci.edu/static/public/193/data.csv"
+ },
+ {
+  "id": "uci:198",
+  "licence": "CC BY 4.0",
+  "sha256": "883ed09b2a46fcde7144dd173092c645aacb45499dea703d00228d3ddc3c60de",
+  "url": "https://archive.ics.uci.edu/static/public/198/data.csv"
+ },
+ {
+  "id": "uci:212",
+  "licence": "CC BY 4.0",
+  "sha256": "7b98e6802c824d4c20a97f86174ef47db9171875888775a3884245443f7432d5",
+  "url": "https://archive.ics.uci.edu/static/public/212/data.csv"
+ },
+ {
+  "id": "uci:222",
+  "licence": "CC BY 4.0",
+  "sha256": "94a5cb4b7d461dab12f7f6123723054911fbdd28d84a2c4ec92378af019be686",
+  "url": "https://archive.ics.uci.edu/static/public/222/data.csv"
+ },
+ {
+  "id": "uci:225",
+  "licence": "CC BY 4.0",
+  "sha256": "dbb065e6bf2b226b6d9c04f066ddc0b45173861dfb3a4df83f3710d3927ef5de",
+  "url": "https://archive.ics.uci.edu/static/public/225/data.csv"
+ },
+ {
+  "id": "uci:242",
+  "licence": "CC BY 4.0",
+  "sha256": "db44dbe453acd464b5cf65be2fb01a28aa9c5b2630300e65fbe28cde35f5d96f",
+  "url": "https://archive.ics.uci.edu/static/public/242/data.csv"
+ },
+ {
+  "id": "uci:247",
+  "licence": "CC BY 4.0",
+  "sha256": "a01d8921bd9bfa7bed330f2058279e7d587bb795007b612dc29dfea9905c2853",
+  "url": "https://archive.ics.uci.edu/static/public/247/data.csv"
+ },
+ {
+  "id": "uci:257",
+  "licence": "CC BY 4.0",
+  "sha256": "e26c15a18c7c36074a0108e630f3181edd4e6065715a778aac5c517f23af7b41",
+  "url": "https://archive.ics.uci.edu/static/public/257/data.csv"
+ },
+ {
+  "id": "uci:267",
+  "licence": "CC BY 4.0",
+  "sha256": "0787e50299c198e919276660edf98dd5dcb94951ad81435b3ab61afb666936c9",
+  "url": "https://archive.ics.uci.edu/static/public/267/data.csv"
+ },
+ {
+  "id": "uci:270",
+  "licence": "CC BY 4.0",
+  "sha256": "0dcc22a2a984483c4c6aed0e227331b9a9aab414532d9fd8ad1c3bad837a7c3d",
+  "url": "https://archive.ics.uci.edu/static/public/270/data.csv"
+ },
+ {
+  "id": "uci:275",
+  "licence": "CC BY 4.0",
+  "sha256": "e03de4ee4ef4dc376ac6e04bf829673c6269e8eba5c60fa121640fa2f829504f",
+  "url": "https://archive.ics.uci.edu/static/public/275/data.csv"
+ },
+ {
+  "id": "uci:277",
+  "licence": "CC BY 4.0",
+  "sha256": "d7856924d2410ab479ae43f38dc62fe0e84d4e428625ceeeb6b269b9233500c9",
+  "url": "https://archive.ics.uci.edu/static/public/277/data.csv"
+ },
+ {
+  "id": "uci:291",
+  "licence": "CC BY 4.0",
+  "sha256": "0beffa51c5b1493960d046c7d512a67d06a7884df6db599408087ee2fc2fc18a",
+  "url": "https://archive.ics.uci.edu/static/public/291/data.csv"
+ },
+ {
+  "id": "uci:292",
+  "licence": "CC BY 4.0",
+  "sha256": "c3d018c643565b85cee733c4a2ac76dd76e080e857cb23f0ccfcc2e15a6c17ef",
+  "url": "https://archive.ics.uci.edu/static/public/292/data.csv"
+ },
+ {
+  "id": "uci:294",
+  "licence": "CC BY 4.0",
+  "sha256": "3c1fc11025f8424f8d95802d8b7086dffd3f73a552c6dcab3d973620986194b2",
+  "url": "https://archive.ics.uci.edu/static/public/294/data.csv"
+ },
+ {
+  "id": "uci:296",
+  "licence": "CC BY 4.0",
+  "sha256": "f792c388d9b470aac4fbf21c39b176534d55a116e7626881c30bbe7ab0341422",
+  "url": "https://archive.ics.uci.edu/static/public/296/data.csv"
+ },
+ {
+  "id": "uci:312",
+  "licence": "CC BY 4.0",
+  "sha256": "24b8f83168153d9cd0bc6121d3979bd8c70fb7b58a94b920194135cbe003090b",
+  "url": "https://archive.ics.uci.edu/static/public/312/data.csv"
+ },
+ {
+  "id": "uci:320",
+  "licence": "CC BY 4.0",
+  "sha256": "5be7b02f13f5800fddd66e2c8d834cd00ece14c552fb404def2397b31b63236b",
+  "url": "https://archive.ics.uci.edu/static/public/320/data.csv"
+ },
+ {
+  "id": "uci:327",
+  "licence": "CC BY 4.0",
+  "sha256": "35dd9aa6870643c292d68343d926869095292a7406d198305cae7435069b59c2",
+  "url": "https://archive.ics.uci.edu/static/public/327/data.csv"
+ },
+ {
+  "id": "uci:329",
+  "licence": "CC BY 4.0",
+  "sha256": "2636b73e6830e9d5f5967a286766b5d39f48a7bf40761e9621bcd5d79a2aa527",
+  "url": "https://archive.ics.uci.edu/static/public/329/data.csv"
+ },
+ {
+  "id": "uci:332",
+  "licence": "CC BY 4.0",
+  "sha256": "b66d9088632308cc27fa35af847650d174a5a50503987c4e511de94a99d1c218",
+  "url": "https://archive.ics.uci.edu/static/public/332/data.csv"
+ },
+ {
+  "id": "uci:336",
+  "licence": "CC BY 4.0",
+  "sha256": "0eeea8d17f5ad8792d854999d6ddf1602ec4e116616f6ccdfdaef0ba8109e694",
+  "url": "https://archive.ics.uci.edu/static/public/336/data.csv"
+ },
+ {
+  "id": "uci:342",
+  "licence": "CC BY 4.0",
+  "sha256": "86dc3961c391df56c98d86757f779ae04e19229f12d9835ca084d01de22a10e5",
+  "url": "https://archive.ics.uci.edu/static/public/342/data.csv"
+ },
+ {
+  "id": "uci:350",
+  "licence": "CC BY 4.0",
+  "sha256": "45bcf4df62ff2e237a74eb155cabfb4bbbc171219a0637daef44fdad07503dd0",
+  "url": "https://archive.ics.uci.edu/static/public/350/data.csv"
+ },
+ {
+  "id": "uci:357",
+  "licence": "CC BY 4.0",
+  "sha256": "3648f2aa7026c24b1fcf69f463a696898a37949046aabf2db4e263e2769b9530",
+  "url": "https://archive.ics.uci.edu/static/public/357/data.csv"
+ },
+ {
+  "id": "uci:360",
+  "licence": "CC BY 4.0",
+  "sha256": "4c42e4729e876dfdecf3bfb0ed658f2bdfb2b3007da496440d303260a97733e5",
+  "url": "https://archive.ics.uci.edu/static/public/360/data.csv"
+ },
+ {
+  "id": "uci:365",
+  "licence": "CC BY 4.0",
+  "sha256": "afbfbed015d20f8421c32c62db37367c018eb6e92b00ea62a23354af8f84c44e",
+  "url": "https://archive.ics.uci.edu/static/public/365/data.csv"
+ },
+ {
+  "id": "uci:368",
+  "licence": "CC BY 4.0",
+  "sha256": "7f2c1dc78e46bb38e6c59fb852edb7a212484f590d259c3a1e0afb2f894a4f63",
+  "url": "https://archive.ics.uci.edu/static/public/368/data.csv"
+ },
+ {
+  "id": "uci:372",
+  "licence": "CC BY 4.0",
+  "sha256": "f2ad10d1da05ebd2fa6b4e610e314284e646d56663cc64b889506e3a1c59c814",
+  "url": "https://archive.ics.uci.edu/static/public/372/data.csv"
+ },
+ {
+  "id": "uci:373",
+  "licence": "CC BY 4.0",
+  "sha256": "145a0af23d90744950c77d3283ba02a44494cfd839d503eb2ae000f6986cd9e5",
+  "url": "https://archive.ics.uci.edu/static/public/373/data.csv"
+ },
+ {
+  "id": "uci:374",
+  "licence": "CC BY 4.0",
+  "sha256": "df49e914acd72504f1109bd9fdb4a6970cb0effc8c7e977c92f95295af350e24",
+  "url": "https://archive.ics.uci.edu/static/public/374/data.csv"
+ },
+ {
+  "id": "uci:379",
+  "licence": "CC BY 4.0",
+  "sha256": "1c9970fb1eb7f4efa3621c18646c2f5e96cab5d82688794356d5bea4b6626e2d",
+  "url": "https://archive.ics.uci.edu/static/public/379/data.csv"
+ },
+ {
+  "id": "uci:381",
+  "licence": "CC BY 4.0",
+  "sha256": "670a47f8c76eb5de5936354a4c5de70ce5d5da76e2483c9df3884030aded8016",
+  "url": "https://archive.ics.uci.edu/static/public/381/data.csv"
+ },
+ {
+  "id": "uci:383",
+  "licence": "CC BY 4.0",
+  "sha256": "f71865358287ba3e87192ccc833fb8924efaec7b060f277771305559035ea7d4",
+  "url": "https://archive.ics.uci.edu/static/public/383/data.csv"
+ },
+ {
+  "id": "uci:390",
+  "licence": "CC BY 4.0",
+  "sha256": "24a9c22e57c5a12398b5a6c0c639f0a403ad4d7255dceace2ed6031b7c8a8a19",
+  "url": "https://archive.ics.uci.edu/static/public/390/data.csv"
+ },
+ {
+  "id": "uci:426",
+  "licence": "CC BY 4.0",
+  "sha256": "5ffba0d12ea9d867c8e5493109149a95c7f5602dc839a5ed73ebce9cb0cb8e8e",
+  "url": "https://archive.ics.uci.edu/static/public/426/data.csv"
+ },
+ {
+  "id": "uci:445",
+  "licence": "CC BY 4.0",
+  "sha256": "a9db81e36063ea227cb321b7dfc41644f05de496a006dbe5256a4c41da43f619",
+  "url": "https://archive.ics.uci.edu/static/public/445/data.csv"
+ },
+ {
+  "id": "uci:464",
+  "licence": "CC BY 4.0",
+  "sha256": "0b50992b735f313b9c5f104d58562b676e58318b771ab48e08a9563a942091d4",
+  "url": "https://archive.ics.uci.edu/static/public/464/data.csv"
+ },
+ {
+  "id": "uci:467",
+  "licence": "CC BY 4.0",
+  "sha256": "58326591a4f1b8837feb5268dd8fa6c1beacf5251f976734d3a0727fb75dfa18",
+  "url": "https://archive.ics.uci.edu/static/public/467/data.csv"
+ },
+ {
+  "id": "uci:468",
+  "licence": "CC BY 4.0",
+  "sha256": "b3055ee355f59134d851d32641183cb4a8b45def7124d2f50442a042f358e0d9",
+  "url": "https://archive.ics.uci.edu/static/public/468/data.csv"
+ },
+ {
+  "id": "uci:477",
+  "licence": "CC BY 4.0",
+  "sha256": "0730a5687ec285a3c2f9921a808855bd1bde21fc53e6377561cbdce2dda9cbb1",
+  "url": "https://archive.ics.uci.edu/static/public/477/data.csv"
+ },
+ {
+  "id": "uci:503",
+  "licence": "CC BY 4.0",
+  "sha256": "6a9ca49f4ce8b7bb73acb413dcbad71a299c6c006c6df0511a216542ddd0e401",
+  "url": "https://archive.ics.uci.edu/static/public/503/data.csv"
+ },
+ {
+  "id": "uci:529",
+  "licence": "CC BY 4.0",
+  "sha256": "f6bf14c5d2e939feccd78750da2542f131b78d80355ccf35f29554b1f03fcb97",
+  "url": "https://archive.ics.uci.edu/static/public/529/data.csv"
+ },
+ {
+  "id": "uci:544",
+  "licence": "CC BY 4.0",
+  "sha256": "28b6991062855d3d15642e38b1aa9d1b32fb7abbb5abf5b096f1868cd706154b",
+  "url": "https://archive.ics.uci.edu/static/public/544/data.csv"
+ },
+ {
+  "id": "uci:545",
+  "licence": "CC BY 4.0",
+  "sha256": "a0d9b19693f0bde9a59a6a6e886df0456008fab1c3a406178a76e7c4440e95b3",
+  "url": "https://archive.ics.uci.edu/static/public/545/data.csv"
+ },
+ {
+  "id": "uci:551",
+  "licence": "CC BY 4.0",
+  "sha256": "33cbb8c68e24e3782547ccf0ed60d9ec0cc10732c3f84b08ed08fea08bfdaa6a",
+  "url": "https://archive.ics.uci.edu/static/public/551/data.csv"
+ },
+ {
+  "id": "uci:555",
+  "licence": "CC BY 4.0",
+  "sha256": "bd7c12b8a991e572c6c20aae171b835be256c4b7ba733a142b30b1696c22acfb",
+  "url": "https://archive.ics.uci.edu/static/public/555/data.csv"
+ },
+ {
+  "id": "uci:560",
+  "licence": "CC BY 4.0",
+  "sha256": "e392e3be042e7c0e58b48329a777206acb7f3400da95ee7cf405da5eb99d283e",
+  "url": "https://archive.ics.uci.edu/static/public/560/data.csv"
+ },
+ {
+  "id": "uci:563",
+  "licence": "CC BY 4.0",
+  "sha256": "90d5fb6bd1630cd4de4b4d28fcf8b4cb92a8f6ab7484605b0799d47386f7dbe1",
+  "url": "https://archive.ics.uci.edu/static/public/563/data.csv"
+ },
+ {
+  "id": "uci:571",
+  "licence": "CC BY 4.0",
+  "sha256": "a6ebd135c7870d083520fcb99a76d8477ae42700b72db374e3efbfd103dfbdfd",
+  "url": "https://archive.ics.uci.edu/static/public/571/data.csv"
+ },
+ {
+  "id": "uci:572",
+  "licence": "CC BY 4.0",
+  "sha256": "67bf2e7c75490f7ad3f76bbce57d49cdc25967cdab607527b94f944863fa14d8",
+  "url": "https://archive.ics.uci.edu/static/public/572/data.csv"
+ },
+ {
+  "id": "uci:579",
+  "licence": "CC BY 4.0",
+  "sha256": "335805edbe66e47f0dc322c0d9c010da64384830ad68d80030b705f964ce95ac",
+  "url": "https://archive.ics.uci.edu/static/public/579/data.csv"
+ },
+ {
+  "id": "uci:582",
+  "licence": "CC BY 4.0",
+  "sha256": "24822d2bc9ca1aa62bc7df47f6da5fc2688c65b7d85ec3886b9577cc1622d3e1",
+  "url": "https://archive.ics.uci.edu/static/public/582/data.csv"
+ },
+ {
+  "id": "uci:597",
+  "licence": "CC BY 4.0",
+  "sha256": "2cd10add9f5a0f0ff79aec7a71e1a2f19c69a571b471c3b5a09189c6881321e1",
+  "url": "https://archive.ics.uci.edu/static/public/597/data.csv"
+ },
+ {
+  "id": "uci:601",
+  "licence": "CC BY 4.0",
+  "sha256": "ffc3c28f35b1a1636eacd2bf46aca0ff5e795b4a8eb934309c5819079e9b5a18",
+  "url": "https://archive.ics.uci.edu/static/public/601/data.csv"
+ },
+ {
+  "id": "uci:602",
+  "licence": "CC BY 4.0",
+  "sha256": "c91a086bb4357e69409d23287ec22be1be9512145cead1d8ca988c918be38fcb",
+  "url": "https://archive.ics.uci.edu/static/public/602/data.csv"
+ },
+ {
+  "id": "uci:603",
+  "licence": "CC BY 4.0",
+  "sha256": "b3af5ae57a45001cff924392805ee83b4a269a3ffdc032059fc439f9cf29c801",
+  "url": "https://archive.ics.uci.edu/static/public/603/data.csv"
+ },
+ {
+  "id": "uci:697",
+  "licence": "CC BY 4.0",
+  "sha256": "a1b1a6531bbb93a5c7fdf0093b47172776652a4ffb12342fb79655c85b74801b",
+  "url": "https://archive.ics.uci.edu/static/public/697/data.csv"
+ },
+ {
+  "id": "uci:722",
+  "licence": "CC BY 4.0",
+  "sha256": "5764687009af15605f46941902d6a1c4c1a07618dfefb94a0275edb4869780ba",
+  "url": "https://archive.ics.uci.edu/static/public/722/data.csv"
+ },
+ {
+  "id": "uci:759",
+  "licence": "CC BY 4.0",
+  "sha256": "5d1ebd8485790b691744e756774bd00f810b545d0c754bfa42996c5e56d0ad25",
+  "url": "https://archive.ics.uci.edu/static/public/759/data.csv"
+ },
+ {
+  "id": "uci:799",
+  "licence": "CC BY 4.0",
+  "sha256": "49a7429b1d1f9253e39fce101ae6cd47522ea6c5c6c15123366d6dda6877b363",
+  "url": "https://archive.ics.uci.edu/static/public/799/data.csv"
+ },
+ {
+  "id": "uci:848",
+  "licence": "CC BY 4.0",
+  "sha256": "3f5fffdab705d152c58543ec7b5c1ee3eaec031db2696ca9ae840ef5326b44cd",
+  "url": "https://archive.ics.uci.edu/static/public/848/data.csv"
+ },
+ {
+  "id": "uci:849",
+  "licence": "CC BY 4.0",
+  "sha256": "ca8b2f30cf07dd872cb7f2aa45dac110ee38dbe5fc5910a6ff4bcc530dae3a40",
+  "url": "https://archive.ics.uci.edu/static/public/849/data.csv"
+ },
+ {
+  "id": "uci:850",
+  "licence": "CC BY 4.0",
+  "sha256": "175ecbc52d351e0e0d9aa00605de09425b3a4826c5db294fabcbc24bcba955ab",
+  "url": "https://archive.ics.uci.edu/static/public/850/data.csv"
+ },
+ {
+  "id": "uci:851",
+  "licence": "CC BY 4.0",
+  "sha256": "9b1cee6f9cb9cd9df2b95814ca90a9a2ff15b7f5f1fba0fae3c643e82072eacc",
+  "url": "https://archive.ics.uci.edu/static/public/851/data.csv"
+ },
+ {
+  "id": "uci:863",
+  "licence": "CC BY 4.0",
+  "sha256": "a1f7025719f84715096e0d1f95ae2e56b57809b9b15449e1836c96a7d976ae9b",
+  "url": "https://archive.ics.uci.edu/static/public/863/data.csv"
+ },
+ {
+  "id": "uci:864",
+  "licence": "CC BY 4.0",
+  "sha256": "c090ee5c94b61762bfec9d22767864490b51030f98cca030f02822468db25d9c",
+  "url": "https://archive.ics.uci.edu/static/public/864/data.csv"
+ },
+ {
+  "id": "uci:878",
+  "licence": "CC BY 4.0",
+  "sha256": "539c167d30de2dc84d23376712b7f96b4ebb77d76f375574d02d2c51b76861cf",
+  "url": "https://archive.ics.uci.edu/static/public/878/data.csv"
+ },
+ {
+  "id": "uci:887",
+  "licence": "CC BY 4.0",
+  "sha256": "a5e588ef5d015349b2656b2905cd2ac9603381643e188a5587a58cf5f972354d",
+  "url": "https://archive.ics.uci.edu/static/public/887/data.csv"
+ },
+ {
+  "id": "uci:911",
+  "licence": "CC BY 4.0",
+  "sha256": "8b180edb3bb23b19e23fbba5a27fc36782d5dedfab3c55b45709f1ad9754e555",
+  "url": "https://archive.ics.uci.edu/static/public/911/data.csv"
+ },
+ {
+  "id": "uci:913",
+  "licence": "CC BY 4.0",
+  "sha256": "0f8edd86ee189b2cfeb28a137273dd598bed6c49f61eee04579a85f9d17a32e5",
+  "url": "https://archive.ics.uci.edu/static/public/913/data.csv"
+ },
+ {
+  "id": "uci:915",
+  "licence": "CC BY 4.0",
+  "sha256": "a2c65f7c8fa0e78a65aa4946961aafd45218c92760d10375fe2c778045c97b44",
+  "url": "https://archive.ics.uci.edu/static/public/915/data.csv"
+ },
+ {
+  "id": "uci:936",
+  "licence": "CC BY 4.0",
+  "sha256": "cfb2663734619366c85634a8c8356521f6efc29291c2bff0fab2d6e460d3cc58",
+  "url": "https://archive.ics.uci.edu/static/public/936/data.csv"
+ },
+ {
+  "id": "uci:967",
+  "licence": "CC BY 4.0",
+  "sha256": "a236549cd369cd80bd478ff8e1779cbf44c58d5c3f79f7a51a1adbed7d06d1c6",
+  "url": "https://archive.ics.uci.edu/static/public/967/data.csv"
+ }
+]

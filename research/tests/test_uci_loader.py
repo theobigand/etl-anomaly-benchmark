@@ -93,3 +93,18 @@ def test_pool_row_records_roles_digest_and_the_normalisation_report(tmp_path):
     carrier_only = bp.pool_row(_meta(tasks=["Regression"]), path, "cd" * 32)
     assert carrier_only["roles"] == ["carrier"]
     assert "classification" in carrier_only["label_refused"]
+
+
+def test_repeated_header_rows_are_removed_and_numbers_read_back_as_numbers(tmp_path):
+    path = tmp_path / "t.csv"
+    path.write_text("a,b\n1,x\na,b\n2,y\n3,x\n")
+    frame = ul.read_table(path)
+    assert len(frame) == 3 and frame["a"].dtype.kind in "if" and list(frame["a"]) == [1, 2, 3]
+
+
+def test_index_value_tokens_are_reduced_to_the_value(tmp_path):
+    rows = "\n".join(f"{i % 3},1:{i}.5,2:-{i}.25" for i in range(40))
+    path = tmp_path / "t.csv"
+    path.write_text("c,f1,f2\n" + rows + "\n")
+    frame = ul.read_table(path)
+    assert frame["f1"].iloc[3] == 3.5 and frame["f2"].iloc[3] == -3.25

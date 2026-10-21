@@ -23,7 +23,20 @@ class NoLabels(Exception):
 
 
 def read_table(path: Path) -> pd.DataFrame:
-    return pd.read_csv(path)
+    """Read the CSV and repair two known quirks of the repository files, recorded not hidden:
+    header lines repeated when several files were concatenated, and libsvm-style index:value
+    tokens."""
+    frame = pd.read_csv(path, low_memory=False)
+    repeated = (frame.astype(str) == pd.Series(frame.columns, index=frame.columns)).all(axis=1)
+    frame = frame[~repeated].reset_index(drop=True)
+    for name in frame.columns[frame.dtypes.map(lambda t: not pd.api.types.is_numeric_dtype(t))]:
+        text = frame[name].dropna().astype(str)
+        if len(text) and text.str.fullmatch(r"\d+:-?[\d.eE+-]+").mean() >= 0.99:
+            frame[name] = frame[name].astype("string").str.split(":").str[1]
+        number = pd.to_numeric(frame[name], errors="coerce")
+        if len(text) and number.notna().sum() >= 0.99 * len(text):
+            frame[name] = number
+    return frame
 
 
 def split_columns(frame: pd.DataFrame, meta: dict[str, Any]) -> tuple[pd.DataFrame, pd.Series]:
