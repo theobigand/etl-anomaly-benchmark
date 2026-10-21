@@ -1,0 +1,294 @@
+{
+ "features": 26,
+ "metrics": {
+  "great_expectations": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.09876543209876543,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.09876543209876543,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.09876543209876543,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 1.2345679012345678,
+    "pr_auc": 0.09876543209876543,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4931506849315068
+   },
+   {
+    "f1": 0.2222222222222222,
+    "flagged_pct": 1.2345679012345678,
+    "pr_auc": 0.21141975308641975,
+    "precision": 1.0,
+    "recall": 0.125,
+    "roc_auc": 0.5625
+   }
+  ],
+  "iqr": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.09876543209876543,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.09876543209876543,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.09876543209876543,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.09876543209876543,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.09876543209876543,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   }
+  ],
+  "isolation_forest": [
+   {
+    "f1": 0.4,
+    "flagged_pct": 8.641975308641975,
+    "pr_auc": 0.32070333880678703,
+    "precision": 0.42857142857142855,
+    "recall": 0.375,
+    "roc_auc": 0.8013698630136986
+   },
+   {
+    "f1": 0.23529411764705882,
+    "flagged_pct": 11.11111111111111,
+    "pr_auc": 0.2597694734708465,
+    "precision": 0.2222222222222222,
+    "recall": 0.25,
+    "roc_auc": 0.7739726027397261
+   },
+   {
+    "f1": 0.18181818181818182,
+    "flagged_pct": 3.7037037037037033,
+    "pr_auc": 0.2060924260054899,
+    "precision": 0.3333333333333333,
+    "recall": 0.125,
+    "roc_auc": 0.6763698630136986
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 6.172839506172839,
+    "pr_auc": 0.11793576995569414,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5462328767123288
+   },
+   {
+    "f1": 0.14285714285714285,
+    "flagged_pct": 7.4074074074074066,
+    "pr_auc": 0.2234132115711063,
+    "precision": 0.16666666666666666,
+    "recall": 0.125,
+    "roc_auc": 0.7636986301369864
+   }
+  ],
+  "lof": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 9.876543209876543,
+    "pr_auc": 0.12378650761003702,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.601027397260274
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 8.641975308641975,
+    "pr_auc": 0.10367132095519355,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5068493150684932
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 7.4074074074074066,
+    "pr_auc": 0.10812914191451928,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5222602739726028
+   },
+   {
+    "f1": 0.21052631578947367,
+    "flagged_pct": 13.580246913580247,
+    "pr_auc": 0.19548602939710016,
+    "precision": 0.18181818181818182,
+    "recall": 0.25,
+    "roc_auc": 0.6352739726027398
+   },
+   {
+    "f1": 0.2222222222222222,
+    "flagged_pct": 12.345679012345679,
+    "pr_auc": 0.2638557245095919,
+    "precision": 0.2,
+    "recall": 0.25,
+    "roc_auc": 0.6592465753424658
+   }
+  ],
+  "ocsvm": [
+   {
+    "f1": 0.26666666666666666,
+    "flagged_pct": 8.641975308641975,
+    "pr_auc": 0.3548373354407837,
+    "precision": 0.2857142857142857,
+    "recall": 0.25,
+    "roc_auc": 0.7962328767123288
+   },
+   {
+    "f1": 0.25,
+    "flagged_pct": 9.876543209876543,
+    "pr_auc": 0.3187088274044796,
+    "precision": 0.25,
+    "recall": 0.25,
+    "roc_auc": 0.7465753424657534
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 4.938271604938271,
+    "pr_auc": 0.1475846190018154,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.6404109589041096
+   },
+   {
+    "f1": 0.25,
+    "flagged_pct": 9.876543209876543,
+    "pr_auc": 0.19208095386666818,
+    "precision": 0.25,
+    "recall": 0.25,
+    "roc_auc": 0.523972602739726
+   },
+   {
+    "f1": 0.26666666666666666,
+    "flagged_pct": 8.641975308641975,
+    "pr_auc": 0.21747537871131886,
+    "precision": 0.2857142857142857,
+    "recall": 0.25,
+    "roc_auc": 0.7226027397260274
+   }
+  ],
+  "zscore": [
+   {
+    "f1": 0.30434782608695654,
+    "flagged_pct": 46.913580246913575,
+    "pr_auc": 0.21872849662884963,
+    "precision": 0.18421052631578946,
+    "recall": 0.875,
+    "roc_auc": 0.7542808219178082
+   },
+   {
+    "f1": 0.2909090909090909,
+    "flagged_pct": 58.0246913580247,
+    "pr_auc": 0.24438124929783173,
+    "precision": 0.1702127659574468,
+    "recall": 1.0,
+    "roc_auc": 0.7089041095890412
+   },
+   {
+    "f1": 0.2545454545454545,
+    "flagged_pct": 58.0246913580247,
+    "pr_auc": 0.14523246557929975,
+    "precision": 0.14893617021276595,
+    "recall": 0.875,
+    "roc_auc": 0.6232876712328768
+   },
+   {
+    "f1": 0.14814814814814814,
+    "flagged_pct": 56.79012345679012,
+    "pr_auc": 0.19129048344731886,
+    "precision": 0.08695652173913043,
+    "recall": 0.5,
+    "roc_auc": 0.5607876712328768
+   },
+   {
+    "f1": 0.27450980392156865,
+    "flagged_pct": 53.086419753086425,
+    "pr_auc": 0.23293477759320783,
+    "precision": 0.16279069767441862,
+    "recall": 0.875,
+    "roc_auc": 0.7054794520547946
+   }
+  ]
+ },
+ "name": "Glioma Grading Clinical and Mutation Features",
+ "prevalence": 0.1,
+ "problem": "uci:759",
+ "report": {
+  "anomalies": 54,
+  "anomaly_class": "1",
+  "classes": 2,
+  "conflicting_rows_removed": 0,
+  "dropped_constant": [],
+  "dropped_high_cardinality": [
+   "Case_ID"
+  ],
+  "dropped_missing": [],
+  "duplicates_removed": 1,
+  "encoded": [
+   "Race"
+  ],
+  "features_out": 26,
+  "kind": "downsampled",
+  "name": "Glioma Grading Clinical and Mutation Features",
+  "natural_rate": 0.4195470798569726,
+  "rows": 541,
+  "rows_in": 541,
+  "rows_out": 540,
+  "source": "uci",
+  "uci_id": 759
+ },
+ "rows": 540,
+ "seeds": [
+  42,
+  1,
+  2,
+  3,
+  4
+ ],
+ "skipped": [],
+ "source": "uci"
+}
