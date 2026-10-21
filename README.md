@@ -30,7 +30,8 @@ The question it tries to answer: does adding machine learning to an ETL pipeline
 - [x] Chronological pilot, LSTM autoencoder pilot, cost study
 - [x] Autoencoder and LSTM autoencoder rows in the per-type matrix, trained to convergence (`verification/deep_typed.md`, `.venv/bin/python research/deep_typed.py --output <dir>`)
 - [x] Two further synthetic schemas, transactions and sensors (`verification/multi_schema.md`, `python research/multi_schema.py --output <dir>`)
-- [ ] Related work, temporal decision-level study, IMRaD restructuring (M2)
+- [x] Related work with verified references (`verification/references.md`) and the IMRaD manuscript with the verification in appendices
+- [ ] Temporal decision-level study (M2)
 - [ ] More imbalanced real datasets
 
 ## Install
