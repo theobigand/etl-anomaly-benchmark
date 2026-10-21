@@ -73,12 +73,17 @@ def pip_lock(name: str, explicit: str) -> str:
 
 
 def project_requirements(pyproject: Path = ROOT / "pyproject.toml") -> list[str]:
-    """Runtime requirements and every extra, as declared (unpinned)."""
+    """Runtime requirements and every extra, as declared (unpinned).
+
+    PyTorch is left out: PyPI serves the CUDA build for Linux, with a long list of
+    GPU libraries, while the archived runs and their reproduction use no neural
+    detector. The Linux environment rebuilt from this lock runs them without it.
+    """
     project = tomllib.loads(pyproject.read_text())["project"]
     found = list(project["dependencies"])
     for extra in project.get("optional-dependencies", {}).values():
         found += extra
-    return list(dict.fromkeys(found))
+    return [req for req in dict.fromkeys(found) if not req.startswith("torch")]
 
 
 def resolve_linux(requirements: list[str], held: dict[str, str], workdir: Path) -> dict:

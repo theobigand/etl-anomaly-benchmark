@@ -41,6 +41,24 @@ Profonds (dans `DEEP_NAMES`, avec l'autoencodeur MLP existant) :
 L'autoencodeur LSTM reste hors registre : il lit des fenetres de lignes ordonnees et ne partage pas
 le contrat par ligne. Il est conserve tel qu'a l'issue #64.
 
+## Ecarts a PyOD, fixes avant tout run
+
+Le contrat du projet veut qu'un detecteur ajuste associe un score a une ligne, sans regarder les
+autres lignes evaluees. Quatre modeles PyOD ne le respectent pas ; seule l'etape de score est
+modifiee (les tests de contrat du registre le verifient pour les 19 noms) :
+
+- **ECOD et COPOD** recalculent les fonctions de repartition sur les lignes d'entrainement plus les
+  lignes evaluees. Ils sont recodes ici avec les seules lignes d'entrainement (la ligne est classee
+  comme si elle y etait ajoutee, ce que PyOD calcule pour un lot d'une ligne ; un test compare les
+  deux), et le signe de l'asymetrie est fixe a l'ajustement ;
+- **VAE** tire un code latent au hasard au moment du score ; le score utilise la moyenne du code ;
+- **DIF** standardise les representations des lignes evaluees avec leur propre moyenne et variance ;
+  la standardisation est celle des lignes d'entrainement ;
+- **AE1SVM** echoue sur une seule ligne ; la ligne est dupliquee pour le score.
+
+Les modeles PyTorch tournent en float32 sur CPU (PyTorch 2.14.1, conda-forge), graine fixee a la
+graine de la repetition. Le registre ne les importe qu'a l'ajustement.
+
 ## Protocole
 
 Meme protocole que les etudes existantes, sans modification :
