@@ -1,0 +1,306 @@
+{
+ "features": 31,
+ "metrics": {
+  "great_expectations": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 6.451612903225806,
+    "pr_auc": 0.16129032258064516,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.46153846153846156
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.16129032258064516,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 3.225806451612903,
+    "pr_auc": 0.16129032258064516,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4807692307692308
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.16129032258064516,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.16129032258064516,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   }
+  ],
+  "iqr": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.16129032258064516,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.16129032258064516,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.16129032258064516,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.16129032258064516,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.16129032258064516,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   }
+  ],
+  "isolation_forest": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 29.03225806451613,
+    "pr_auc": 0.12441174416980867,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.2384615384615385
+   },
+   {
+    "f1": 0.15384615384615385,
+    "flagged_pct": 25.806451612903224,
+    "pr_auc": 0.13371484528325464,
+    "precision": 0.125,
+    "recall": 0.2,
+    "roc_auc": 0.26153846153846155
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 38.70967741935484,
+    "pr_auc": 0.12930934656741108,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.2692307692307692
+   },
+   {
+    "f1": 0.3076923076923077,
+    "flagged_pct": 25.806451612903224,
+    "pr_auc": 0.21428571428571427,
+    "precision": 0.25,
+    "recall": 0.4,
+    "roc_auc": 0.5307692307692308
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 25.806451612903224,
+    "pr_auc": 0.14114695340501793,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.32307692307692315
+   }
+  ],
+  "lof": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 19.35483870967742,
+    "pr_auc": 0.12016367030160133,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.2076923076923077
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 9.67741935483871,
+    "pr_auc": 0.13171319102353585,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.24615384615384617
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 16.129032258064516,
+    "pr_auc": 0.12532530777621942,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.2076923076923077
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 9.67741935483871,
+    "pr_auc": 0.21264798003928442,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5923076923076923
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 9.67741935483871,
+    "pr_auc": 0.12653309031592264,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.24615384615384614
+   }
+  ],
+  "ocsvm": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 38.70967741935484,
+    "pr_auc": 0.14400059979007346,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.36153846153846153
+   },
+   {
+    "f1": 0.18181818181818182,
+    "flagged_pct": 19.35483870967742,
+    "pr_auc": 0.24719814780666705,
+    "precision": 0.16666666666666666,
+    "recall": 0.2,
+    "roc_auc": 0.5846153846153846
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 32.25806451612903,
+    "pr_auc": 0.12165471149137211,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.21538461538461537
+   },
+   {
+    "f1": 0.18181818181818182,
+    "flagged_pct": 19.35483870967742,
+    "pr_auc": 0.22539682539682537,
+    "precision": 0.16666666666666666,
+    "recall": 0.2,
+    "roc_auc": 0.6153846153846154
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 29.03225806451613,
+    "pr_auc": 0.131947762382545,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.2846153846153846
+   }
+  ],
+  "zscore": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.16644927536231885,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.3730769230769231
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.2588888888888889,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.6346153846153847
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.1748792270531401,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.35384615384615387
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.21666666666666667,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.6038461538461538
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.21729691876750698,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5576923076923077
+   }
+  ]
+ },
+ "name": "Early Stage Diabetes Risk Prediction",
+ "prevalence": 0.1477832512315271,
+ "problem": "uci:529",
+ "report": {
+  "anomalies": 36,
+  "anomaly_class": "Negative",
+  "classes": 2,
+  "conflicting_rows_removed": 0,
+  "dropped_constant": [],
+  "dropped_high_cardinality": [],
+  "dropped_missing": [],
+  "duplicates_removed": 153,
+  "encoded": [
+   "gender",
+   "polyuria",
+   "polydipsia",
+   "sudden_weight_loss",
+   "weakness",
+   "polyphagia",
+   "genital_thrush",
+   "visual_blurring",
+   "itching",
+   "irritability",
+   "delayed_healing",
+   "partial_paresis",
+   "muscle_stiffness",
+   "alopecia",
+   "obesity"
+  ],
+  "features_out": 31,
+  "kind": "downsampled",
+  "name": "Early Stage Diabetes Risk Prediction",
+  "natural_rate": 0.38461538461538464,
+  "rows": 356,
+  "rows_in": 356,
+  "rows_out": 203,
+  "source": "uci",
+  "uci_id": 529
+ },
+ "rows": 203,
+ "seeds": [
+  42,
+  1,
+  2,
+  3,
+  4
+ ],
+ "skipped": [],
+ "source": "uci"
+}

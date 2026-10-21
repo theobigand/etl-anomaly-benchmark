@@ -1,0 +1,302 @@
+{
+ "features": 49,
+ "metrics": {
+  "great_expectations": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.09876543209876543,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 1.2345679012345678,
+    "pr_auc": 0.09876543209876543,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4931506849315068
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.09876543209876543,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.09876543209876543,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.09876543209876543,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   }
+  ],
+  "iqr": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.09876543209876543,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.09876543209876543,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.09876543209876543,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.09876543209876543,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.09876543209876543,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   }
+  ],
+  "isolation_forest": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 17.28395061728395,
+    "pr_auc": 0.09052487911661694,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.41267123287671237
+   },
+   {
+    "f1": 0.1,
+    "flagged_pct": 14.814814814814813,
+    "pr_auc": 0.11333817554186348,
+    "precision": 0.08333333333333333,
+    "recall": 0.125,
+    "roc_auc": 0.4897260273972603
+   },
+   {
+    "f1": 0.15384615384615385,
+    "flagged_pct": 6.172839506172839,
+    "pr_auc": 0.1997802843381028,
+    "precision": 0.2,
+    "recall": 0.125,
+    "roc_auc": 0.5839041095890412
+   },
+   {
+    "f1": 0.1111111111111111,
+    "flagged_pct": 12.345679012345679,
+    "pr_auc": 0.1606157017596071,
+    "precision": 0.1,
+    "recall": 0.125,
+    "roc_auc": 0.5102739726027397
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 8.641975308641975,
+    "pr_auc": 0.08090940950929831,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.3321917808219178
+   }
+  ],
+  "lof": [
+   {
+    "f1": 0.1111111111111111,
+    "flagged_pct": 12.345679012345679,
+    "pr_auc": 0.10268180115869191,
+    "precision": 0.1,
+    "recall": 0.125,
+    "roc_auc": 0.4383561643835617
+   },
+   {
+    "f1": 0.125,
+    "flagged_pct": 9.876543209876543,
+    "pr_auc": 0.17074592285990925,
+    "precision": 0.125,
+    "recall": 0.125,
+    "roc_auc": 0.6232876712328766
+   },
+   {
+    "f1": 0.3076923076923077,
+    "flagged_pct": 6.172839506172839,
+    "pr_auc": 0.2785509407788687,
+    "precision": 0.4,
+    "recall": 0.25,
+    "roc_auc": 0.6558219178082192
+   },
+   {
+    "f1": 0.26666666666666666,
+    "flagged_pct": 8.641975308641975,
+    "pr_auc": 0.22817970813253832,
+    "precision": 0.2857142857142857,
+    "recall": 0.25,
+    "roc_auc": 0.7003424657534247
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 8.641975308641975,
+    "pr_auc": 0.09592460295972877,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4075342465753425
+   }
+  ],
+  "ocsvm": [
+   {
+    "f1": 0.09523809523809523,
+    "flagged_pct": 16.049382716049383,
+    "pr_auc": 0.10581941125902328,
+    "precision": 0.07692307692307693,
+    "recall": 0.125,
+    "roc_auc": 0.4828767123287671
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 9.876543209876543,
+    "pr_auc": 0.14828894145070615,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5787671232876712
+   },
+   {
+    "f1": 0.2,
+    "flagged_pct": 2.4691358024691357,
+    "pr_auc": 0.2474052926265435,
+    "precision": 0.5,
+    "recall": 0.125,
+    "roc_auc": 0.636986301369863
+   },
+   {
+    "f1": 0.25,
+    "flagged_pct": 9.876543209876543,
+    "pr_auc": 0.25427259938129504,
+    "precision": 0.25,
+    "recall": 0.25,
+    "roc_auc": 0.738013698630137
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 12.345679012345679,
+    "pr_auc": 0.09684655261626181,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4126712328767123
+   }
+  ],
+  "zscore": [
+   {
+    "f1": 0.21818181818181817,
+    "flagged_pct": 58.0246913580247,
+    "pr_auc": 0.11649281569494335,
+    "precision": 0.1276595744680851,
+    "recall": 0.75,
+    "roc_auc": 0.5633561643835616
+   },
+   {
+    "f1": 0.22727272727272727,
+    "flagged_pct": 44.44444444444444,
+    "pr_auc": 0.16429752047753166,
+    "precision": 0.1388888888888889,
+    "recall": 0.625,
+    "roc_auc": 0.6095890410958904
+   },
+   {
+    "f1": 0.18181818181818182,
+    "flagged_pct": 44.44444444444444,
+    "pr_auc": 0.22661943319838057,
+    "precision": 0.1111111111111111,
+    "recall": 0.5,
+    "roc_auc": 0.6215753424657535
+   },
+   {
+    "f1": 0.21818181818181817,
+    "flagged_pct": 58.0246913580247,
+    "pr_auc": 0.24630484136724481,
+    "precision": 0.1276595744680851,
+    "recall": 0.75,
+    "roc_auc": 0.7422945205479451
+   },
+   {
+    "f1": 0.18867924528301888,
+    "flagged_pct": 55.55555555555556,
+    "pr_auc": 0.10734840132781517,
+    "precision": 0.1111111111111111,
+    "recall": 0.625,
+    "roc_auc": 0.4623287671232877
+   }
+  ]
+ },
+ "name": "Student Performance on an Entrance Examination",
+ "prevalence": 0.09701492537313433,
+ "problem": "uci:582",
+ "report": {
+  "anomalies": 63,
+  "anomaly_class": "Excellent",
+  "classes": 4,
+  "conflicting_rows_removed": 24,
+  "dropped_constant": [],
+  "dropped_high_cardinality": [],
+  "dropped_missing": [],
+  "duplicates_removed": 68,
+  "encoded": [
+   "Gender",
+   "Caste",
+   "coaching",
+   "time",
+   "Class_ten_education",
+   "twelve_education",
+   "medium",
+   "Class_X_Percentage",
+   "Class_XII_Percentage",
+   "Father_occupation",
+   "Mother_occupation"
+  ],
+  "features_out": 49,
+  "kind": "downsampled",
+  "name": "Student Performance on an Entrance Examination",
+  "natural_rate": 0.15165165165165165,
+  "rows": 628,
+  "rows_in": 628,
+  "rows_out": 536,
+  "source": "uci",
+  "uci_id": 582
+ },
+ "rows": 536,
+ "seeds": [
+  42,
+  1,
+  2,
+  3,
+  4
+ ],
+ "skipped": [],
+ "source": "uci"
+}
