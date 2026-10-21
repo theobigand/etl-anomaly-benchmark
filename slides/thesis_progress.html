@@ -758,10 +758,37 @@
   <div class="foot"><span>verification/lstm_pilot.md &nbsp;·&nbsp; research/lstm_pilot.py</span><span>an indication from a budget-limited pilot, not a ranking</span></div>
 </section>
 
+<section class="slide" data-sec="Schemas">
+  <div class="dossier">
+    <div class="heading">
+      <div class="eyebrow"><span class="idx">22</span> &nbsp; M2 &middot; two more schemas</div>
+      <h2>The profile is stable, <em>two cells are not</em></h2>
+      <p class="lede">Issue #67. Transactions and sensor readings get the same six injected types and the same protocol as the customer table. Great Expectations and the deduplication rule carry over exactly, and the rank correlation between schemas is 0.93. The multivariate column and drift depend on how the columns are scaled and correlated. Two of four hypotheses hold.</p>
+      <div class="stat">
+        <div><span class="v">0.93</span><span class="l">mean rank correlation between schemas</span></div>
+        <div><span class="v">0.96</span><span class="l">best drift recall on sensors (0.38 on transactions)</span></div>
+      </div>
+    </div>
+    <div class="panel">
+      <table class="num">
+        <thead><tr><th style="text-align:left">Multivariate outliers</th><th>customers</th><th>transactions</th><th>sensors</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">Isolation Forest</td><td>0.89</td><td>0.49</td><td>0.32</td></tr>
+          <tr><td style="text-align:left">One-Class SVM</td><td>0.90</td><td>0.18</td><td>0.33</td></tr>
+          <tr><td style="text-align:left">IQR</td><td>0.04</td><td>0.57</td><td>0.02</td></tr>
+          <tr><td style="text-align:left">Z-score</td><td>0.00</td><td>0.00</td><td>0.00</td></tr>
+        </tbody>
+        <caption>Mean recall over five seeds. Same generator logic for all three schemas: the agreement shows the profile does not depend on one table, not that it holds on real data.</caption>
+      </table>
+    </div>
+  </div>
+  <div class="foot"><span>verification/multi_schema.md &nbsp;&middot;&nbsp; research/multi_schema.py</span><span>the drift detector flags nothing on any schema</span></div>
+</section>
+
 <section class="slide" data-sec="Deep rows">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">22</span> &nbsp; M2 &middot; deep rows in the per-type matrix</div>
+      <div class="eyebrow"><span class="idx">23</span> &nbsp; M2 &middot; deep rows in the per-type matrix</div>
       <h2>A sequence model does <em>not</em> fix temporal drift</h2>
       <p class="lede">Issue #64. An autoencoder and an LSTM autoencoder, both trained to convergence (60 to 178 epochs, never the cap), added to the synthetic matrix on the same splits. Three of four hypotheses hold. The one that fails is the one I expected to matter: the LSTM catches 25% of drifted rows, LOF 50%.</p>
       <div class="stat">
@@ -777,7 +804,7 @@
 <section class="slide" data-sec="Cost">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">23</span> &nbsp; M2 · what detection costs</div>
+      <div class="eyebrow"><span class="idx">24</span> &nbsp; M2 · what detection costs</div>
       <h2>Detection latency is <em>not</em> pipeline latency</h2>
       <p class="lede">Issue #53. Synthetic matrices from 1,000 to 300,000 rows, a fresh process per measurement so that peak memory belongs to that run, 300 s budget. On the full Credit Card file the Z-score pipeline takes 4.8 s of which detection is 3%, while Isolation Forest takes 8.5 s with detection at 43 to 45%.</p>
       <div class="stat">
@@ -806,7 +833,7 @@
 <section class="slide" data-sec="Reading">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">24</span> &nbsp; The practical output</div>
+      <div class="eyebrow"><span class="idx">25</span> &nbsp; The practical output</div>
       <h2>Anomaly type <em>to method</em></h2>
       <p class="lede">Two of six types are not a per-row detector problem at all: duplicates
       belong to the transform stage, drift to a windowed monitor. That itself is a finding
@@ -833,7 +860,7 @@
 <section class="slide" data-sec="Reading">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">25</span> &nbsp; Across the three real datasets</div>
+      <div class="eyebrow"><span class="idx">26</span> &nbsp; Across the three real datasets</div>
       <h2>Unsupervised detection works in <em>one of three regimes</em></h2>
       <p class="lede">The question is less "rules or ML" than "does this dataset have rare,
       outlying anomalies at all". Latency and scaling then constrain which detector can
@@ -859,7 +886,7 @@
 <section class="slide" data-sec="Findings">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">26</span> &nbsp; What was harder than the plan assumed</div>
+      <div class="eyebrow"><span class="idx">27</span> &nbsp; What was harder than the plan assumed</div>
       <h2>Findings <em>from the build</em></h2>
       <p class="lede">Each of these became a paragraph in the paper. The recurring lesson:
       the setup around a detector, the operating point, the regime, the pipeline cost,
@@ -883,7 +910,7 @@
 <section class="slide" data-sec="State">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">27</span> &nbsp; Implemented, tested, verified</div>
+      <div class="eyebrow"><span class="idx">28</span> &nbsp; Implemented, tested, verified</div>
       <h2>What the repository <em>holds today</em></h2>
       <p class="lede">The verification layer was built for the claim that the numbers are right: a test suite, a mutation campaign, deliberate defects and a release script that returns certified, incomplete or blocked. The last local run is not independently attested, and the hosted run certified an earlier revision.</p>
       <div class="stat">
@@ -911,7 +938,7 @@
 <section class="slide" data-sec="Next">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">28</span> &nbsp; Where it stands</div>
+      <div class="eyebrow"><span class="idx">29</span> &nbsp; Where it stands</div>
       <h2>Experiments run, <em>write-up and deep rows left</em></h2>
       <p class="lede">Five of the seven M2 plan items are not closed. The target is an IMRaD paper; the demo paper was dropped. Defense July 2027.</p>
     </div>
@@ -922,8 +949,8 @@
         <li><span>typed injection on 42 real tables (#65)</span><span class="badge done">done</span></li>
         <li><span>benchmark on the 100 labelled pool problems</span><span class="badge done">done</span></li>
         <li><span>deep rows in the per-type matrix (#64)</span><span class="badge done">done</span></li>
-        <li><span>multi-schema Faker generator (#67)</span><span class="badge open">next</span></li>
-        <li><span>related work, verified bibliography (#68)</span><span class="badge m2">M2</span></li>
+        <li><span>multi-schema Faker generator (#67)</span><span class="badge done">done</span></li>
+        <li><span>related work, verified bibliography (#68)</span><span class="badge open">next</span></li>
         <li><span>IMRaD restructuring, condensed verification (#69)</span><span class="badge m2">M2</span></li>
         <li><span>decision-level study under temporal shift (#63)</span><span class="badge m2">M2</span></li>
       </ul></div>
@@ -934,7 +961,7 @@
 <!-- 21 takeaway -->
 <section class="slide dark solo" data-sec="Takeaway">
   <div>
-    <div class="eyebrow"><span class="idx">29</span> &nbsp; Takeaway</div>
+    <div class="eyebrow"><span class="idx">30</span> &nbsp; Takeaway</div>
     <div class="brule"></div>
   </div>
   <div class="mid">

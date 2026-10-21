@@ -29,7 +29,8 @@ The question it tries to answer: does adding machine learning to an ETL pipeline
 - [x] Benchmark on the 100 labelled pool problems: `python research/labelled_benchmark.py --output <dir>` then `python research/labelled_summary.py --runs <dir> --output <dir>` (`verification/labelled_pool.md`, results in `verification/evidence/labelled_pool/`)
 - [x] Chronological pilot, LSTM autoencoder pilot, cost study
 - [x] Autoencoder and LSTM autoencoder rows in the per-type matrix, trained to convergence (`verification/deep_typed.md`, `.venv/bin/python research/deep_typed.py --output <dir>`)
-- [ ] Multi-schema generator, related work, temporal decision-level study, IMRaD restructuring (M2)
+- [x] Two further synthetic schemas, transactions and sensors (`verification/multi_schema.md`, `python research/multi_schema.py --output <dir>`)
+- [ ] Related work, temporal decision-level study, IMRaD restructuring (M2)
 - [ ] More imbalanced real datasets
 
 ## Install
