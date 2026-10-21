@@ -14,15 +14,17 @@ os.environ.setdefault("TQDM_DISABLE", "1")
 import injection as inj  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
+from deep_support import build, capped  # noqa: E402
 from sklearn.metrics import precision_score, recall_score  # noqa: E402
 
 from etl_benchmark import config  # noqa: E402
 from etl_benchmark.pipeline import detect  # noqa: E402
 from etl_benchmark.quality import TemporalDriftDetector  # noqa: E402
-from etl_benchmark.registry import ALL_NAMES, get_detector  # noqa: E402
+from etl_benchmark.registry import ALL_NAMES, DEEP_NAMES  # noqa: E402
 from etl_benchmark.split import stratified_split  # noqa: E402
 
 DETECTORS = [n for n in ALL_NAMES if n != "drift"] + ["drift"]
+KNOWN = [*ALL_NAMES, *DEEP_NAMES]
 
 
 def split(df: pd.DataFrame, seed: int) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
@@ -35,10 +37,10 @@ def split(df: pd.DataFrame, seed: int) -> tuple[pd.DataFrame, pd.DataFrame, pd.D
     return tuple(df[df["group_id"].isin(p["group_id"])].reset_index(drop=True) for p in parts)
 
 
-def _build(name: str, contamination: float, cols: list[str]):
+def _build(name: str, contamination: float, cols: list[str], seed: int):
     if name == "drift":
         return TemporalDriftDetector(time_column="t", columns=cols)
-    return get_detector(name, contamination)
+    return build(name, contamination, seed)
 
 
 def _per_type(flags: pd.Series, types: pd.Series) -> tuple[dict, dict]:
@@ -57,7 +59,7 @@ def _per_type(flags: pd.Series, types: pd.Series) -> tuple[dict, dict]:
 
 def evaluate(df: pd.DataFrame, cols: list[str], seed: int, names: list[str] | None = None):
     names = names or DETECTORS
-    unknown = [n for n in names if n not in ALL_NAMES]
+    unknown = [n for n in names if n not in KNOWN]
     if unknown:
         raise ValueError(f"unknown detector names: {unknown}")
     train, _val, test = split(df, seed)
@@ -69,7 +71,9 @@ def evaluate(df: pd.DataFrame, cols: list[str], seed: int, names: list[str] | No
             flags = test.duplicated(subset=features, keep=False)
         else:
             flags = detect(
-                test[features], _build(name, contamination, cols), fit_df=train[features]
+                test[features],
+                _build(name, contamination, cols, seed),
+                fit_df=capped(train[features], name, seed),
             ).flags
         flags = pd.Series(np.asarray(flags), index=test.index)
         fpr[name] = float(flags[test["anomaly_type"] == "clean"].mean())

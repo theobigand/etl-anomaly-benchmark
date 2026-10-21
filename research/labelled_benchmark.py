@@ -11,6 +11,7 @@ import json  # noqa: E402
 import sys  # noqa: E402
 import warnings  # noqa: E402
 from concurrent.futures import ProcessPoolExecutor  # noqa: E402
+from functools import partial as bind  # noqa: E402
 from pathlib import Path  # noqa: E402
 from typing import Any  # noqa: E402
 
@@ -22,13 +23,15 @@ sys.path.insert(0, str(HERE))
 import dataset_registry as dr  # noqa: E402
 import normalise as nm  # noqa: E402
 import uci_loader as ul  # noqa: E402
+from deep_support import build, capped  # noqa: E402
 
 from etl_benchmark import config  # noqa: E402
 from etl_benchmark.metrics import compute_metrics  # noqa: E402
 from etl_benchmark.pipeline import detect  # noqa: E402
-from etl_benchmark.registry import DETECTOR_NAMES, clip_contamination, get_detector  # noqa: E402
+from etl_benchmark.registry import DEEP_NAMES, DETECTOR_NAMES, clip_contamination  # noqa: E402
 
 METHODS = list(DETECTOR_NAMES)
+KNOWN = [*METHODS, *DEEP_NAMES]
 
 
 def load_adbench(name: str, path: Path) -> tuple[np.ndarray, np.ndarray, dict[str, Any]]:
@@ -52,10 +55,11 @@ def run_problem(
     methods: list[str] | None = None,
 ) -> dict[str, Any]:
     methods = methods or METHODS
-    unknown = [m for m in methods if m not in METHODS]
+    unknown = [m for m in methods if m not in KNOWN]
     if unknown:
         raise ValueError(f"unknown detector names: {unknown}")
     metrics: dict[str, list[dict[str, float]]] = {}
+    errors: dict[str, list[dict[str, Any]]] = {}
     skipped: list[str] = []
     for seed in seeds:
         part = nm.split(x, y, seed)
@@ -68,20 +72,26 @@ def run_problem(
         for method in methods:
             if method in skip:
                 continue
-            result = detect(test, get_detector(method, contamination), fit_df=train)
+            try:
+                result = detect(
+                    test, build(method, contamination, seed), fit_df=capped(train, method, seed)
+                )
+            except Exception as error:  # a failing model is recorded, not hidden
+                errors.setdefault(method, []).append({"seed": seed, "error": repr(error)})
+                continue
             row = compute_metrics(part["y_test"], result.flags.to_numpy(), result.scores.to_numpy())
             metrics.setdefault(method, []).append(row)
-    return {"seeds": list(seeds), "metrics": metrics, "skipped": skipped}
+    return {"seeds": list(seeds), "metrics": metrics, "skipped": skipped, "errors": errors}
 
 
-def run_job(job: dict[str, Any]) -> dict[str, Any]:
+def run_job(job: dict[str, Any], methods: list[str] | None = None) -> dict[str, Any]:
     warnings.filterwarnings("ignore")
     try:
         if job["source"] == "adbench":
             x, y, report = load_adbench(job["name"], Path(job["path"]))
         else:
             x, y, report = load_uci(job["meta"], Path(job["path"]))
-        result = run_problem(x, y)
+        result = run_problem(x, y, methods=methods)
     except Exception as error:  # recorded, never dropped silently
         return {"problem": job["problem"], "source": job["source"], "failed": repr(error)}
     return {
@@ -133,6 +143,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--only", nargs="*", help="problem ids, for a quick check")
+    parser.add_argument(
+        "--methods",
+        choices=("classical", "deep"),
+        default="classical",
+        help="the detectors of the registry sweep, or the neural ones (fit rows capped)",
+    )
     args = parser.parse_args(argv)
     from etl_benchmark.atomic import atomic_path
 
@@ -143,8 +159,9 @@ def main(argv: list[str] | None = None) -> int:
     ]
     args.output.mkdir(parents=True, exist_ok=True)
     failed = 0
+    methods = list(DEEP_NAMES) if args.methods == "deep" else list(METHODS)
     with ProcessPoolExecutor(max_workers=args.workers) as pool:
-        for result in pool.map(run_job, todo):
+        for result in pool.map(bind(run_job, methods=methods), todo):
             failed += "failed" in result
             stem = result["problem"].replace(":", "_")
             with atomic_path(args.output / f"{stem}.json") as partial:

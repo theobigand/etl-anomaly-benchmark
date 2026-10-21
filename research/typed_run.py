@@ -7,6 +7,7 @@ import json
 import sys
 import warnings
 from concurrent.futures import ProcessPoolExecutor
+from functools import partial as bind
 from pathlib import Path
 from typing import Any
 
@@ -14,6 +15,8 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import injection as inj  # noqa: E402
 import uci_loader as ul  # noqa: E402
+
+from etl_benchmark.registry import DEEP_NAMES  # noqa: E402
 
 SEEDS = (42, 1, 2, 3, 4)
 
@@ -32,7 +35,7 @@ def load_carrier(meta: dict[str, Any], path: Path, seed: int):
     return carrier, report
 
 
-def run_one(job: tuple[dict[str, Any], str, str]) -> dict[str, Any]:
+def run_one(job: tuple[dict[str, Any], str, str], names: list[str] | None = None) -> dict[str, Any]:
     warnings.filterwarnings("ignore")
     import typed_benchmark as tb
 
@@ -42,7 +45,7 @@ def run_one(job: tuple[dict[str, Any], str, str]) -> dict[str, Any]:
     recalls, precisions, fprs = [], [], []
     for seed in SEEDS:
         df = inj.inject(carrier, seed=seed)
-        result = tb.evaluate(df, cols, seed)
+        result = tb.evaluate(df, cols, seed, names)
         recalls.append(result["recall"])
         precisions.append(result["precision"])
         fprs.append(result["fpr"])
@@ -92,6 +95,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--only", type=int, nargs="*", help="UCI ids, for a quick check")
+    parser.add_argument(
+        "--methods",
+        choices=("classical", "deep"),
+        default="classical",
+        help="the registry sweep with drift, or the neural detectors",
+    )
     args = parser.parse_args(argv)
     from etl_benchmark.atomic import atomic_path
 
@@ -101,8 +110,9 @@ def main(argv: list[str] | None = None) -> int:
         if not args.only or j[0]["uci_id"] in args.only
     ]
     args.output.mkdir(parents=True, exist_ok=True)
+    names = list(DEEP_NAMES) if args.methods == "deep" else None
     with ProcessPoolExecutor(max_workers=args.workers) as pool:
-        for result in pool.map(run_one, todo):
+        for result in pool.map(bind(run_one, names=names), todo):
             with atomic_path(args.output / f"{result['uci_id']}.json") as partial:
                 partial.write_text(json.dumps(result, indent=1, sort_keys=True) + "\n")
             print(result["name"], flush=True)
