@@ -1,0 +1,43 @@
+{
+  "artifacts": {
+    "experiments/results/types_report.json": "f330a7ad6689b71f9fc350a51e47fece27ea82a1c77eabb16d55791be9011207"
+  },
+  "captured_at": "2026-10-21T07:29:37.942237+00:00",
+  "environment": {
+    "packages": {
+      "mutmut": null,
+      "mypy": "2.4.0",
+      "numpy": "2.4.6",
+      "pandas": "3.0.6",
+      "pandas-stubs": "3.0.5.260914",
+      "pyod": "3.6.7",
+      "pytest": "9.1.1",
+      "pytest-cov": "7.1.0",
+      "scikit-learn": "1.9.1"
+    },
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "python": "3.11.17"
+  },
+  "execution": {
+    "ci": false,
+    "run_id": null,
+    "runner_environment": null,
+    "runner_name": null
+  },
+  "kind": "types",
+  "result": {
+    "baseline_entries": 17,
+    "errors": 17,
+    "mypy": "2.4.0",
+    "pandas-stubs": "3.0.5.260914",
+    "problems": [],
+    "state": "PASS"
+  },
+  "schema_version": 2,
+  "source": {
+    "revision": "e1fcbb0dda7ea28ce98304b6c4e97f9959223a66",
+    "scientific_fingerprint": "cecbed00f8228b25707199f820d62f28fa1c13f543a0bbb5d56f94716b6a17b9",
+    "worktree_dirty": false
+  },
+  "status": "PASS"
+}

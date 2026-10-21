@@ -318,7 +318,8 @@ def test_the_pool_check_redownloads_the_pinned_datasets_and_uploads_only_its_rep
     triggers = text[: text.index("jobs:")]
     assert "workflow_dispatch:" in triggers and "schedule:" in triggers
     assert "pull_request" not in triggers and "workflow_run" not in triggers
-    assert "pool_check.py --verify verification/evidence/dataset_registry/pool_manifest.json" in text
+    manifest = "verification/evidence/dataset_registry/pool_manifest.json"
+    assert f"pool_check.py --verify {manifest}" in text
     assert "runs-on: ubuntu-latest" in text and "self-hosted" not in text
     assert "persist-credentials: false" in text and "secrets." not in text
     assert "if: always()" in text
