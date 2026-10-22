@@ -130,19 +130,9 @@ class DIFDetector(TorchDetector):
 
 class AE1SVMDetector(TorchDetector):
     name = "ae1svm"
-    estimator_path = ("pyod.models.ae1svm", "AE1SVM")
+    estimator_path = ("etl_benchmark.quality._torch_models", "PaddedAE1SVM")
     fixed_kwargs: ClassVar[dict[str, object]] = {"preprocessing": False}
     seed_argument = None
-    #: PyOD's default batch size for scoring.
-    batch_size = 32
-
-    def score(self, df: pd.DataFrame) -> pd.Series:
-        # PyOD's AE1SVM fails when the last batch of a scoring pass holds a single row, so a
-        # row is added in that case and dropped again; a row's score does not depend on the others.
-        size = int(self._estimator_kwargs.get("batch_size", self.batch_size))
-        if len(df) % size == 1:
-            return super().score(pd.concat([df, df.iloc[[-1]]])).iloc[:-1]
-        return super().score(df)
 
 
 class LUNARDetector(TorchDetector):

@@ -54,7 +54,10 @@ modifiee (les tests de contrat du registre le verifient pour les 19 noms) :
 - **VAE** tire un code latent au hasard au moment du score ; le score utilise la moyenne du code ;
 - **DIF** standardise les representations des lignes evaluees avec leur propre moyenne et variance ;
   la standardisation est celle des lignes d'entrainement ;
-- **AE1SVM** echoue sur une seule ligne ; la ligne est dupliquee pour le score.
+- **AE1SVM** echoue quand le dernier lot d'un passage (ajustement ou score) ne contient qu'une ligne
+  (la normalisation par lot ne s'entraine pas sur une ligne ; le code de score ne sait pas affecter
+  un seul score) ; la derniere ligne est alors repetee une fois, et retiree du resultat au score.
+  A l'ajustement, ce sont donc 1 ligne de plus sur 32 jeux de taille 32 k + 1.
 
 Les modeles PyTorch tournent en float32 sur CPU (PyTorch 2.14.1, conda-forge), graine fixee a la
 graine de la repetition. Le registre ne les importe qu'a l'ajustement.

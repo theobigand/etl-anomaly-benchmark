@@ -6,7 +6,9 @@ the contract that a fitted detector maps a row to a score:
 
     - ``VAE`` draws a random latent code when it scores;
     - ``DIF`` standardizes the learned representation of the scored rows with
-      their own mean and variance.
+      their own mean and variance;
+    - ``AE1SVM`` fails when the last batch of a pass holds a single row: batch normalization
+      cannot train on one row, and the scoring code cannot assign one score.
 
 The subclasses below change only that step.
 """
@@ -15,6 +17,7 @@ from __future__ import annotations
 
 import numpy as np
 import torch
+from pyod.models.ae1svm import AE1SVM
 from pyod.models.dif import DIF
 from pyod.models.vae import VAE
 from pyod.utils.stat_models import pairwise_distances_no_broadcast
@@ -45,3 +48,21 @@ class FitScalerDIF(DIF):
         if id(net) not in scalers:
             scalers[id(net)] = StandardScaler().fit(reduced)
         return np.tanh(scalers[id(net)].transform(reduced))
+
+
+class PaddedAE1SVM(AE1SVM):
+    """AE1SVM that adds a row to a pass whose last batch would hold a single one."""
+
+    def fit(self, X, y=None):
+        X = np.asarray(X)
+        if len(X) % self.batch_size == 1:
+            # the last fit row is repeated once, so no training batch holds a single row
+            X = np.vstack([X, X[-1:]])
+        return super().fit(X, y)
+
+    def decision_function(self, X):
+        X = np.asarray(X)
+        if len(X) % self.batch_size == 1:
+            # a row's score does not depend on the others, so the added row is dropped again
+            return super().decision_function(np.vstack([X, X[-1:]]))[:-1]
+        return super().decision_function(X)
