@@ -417,7 +417,7 @@
   <div class="dossier">
     <div class="heading">
       <div class="eyebrow"><span class="idx">08</span> &nbsp; Four datasets, one protocol</div>
-      <h2>Three real settings <em>bracket the method</em></h2>
+      <h2>Three example datasets <em>bracket the method</em></h2>
       <p class="lede">Stratified 70 / 15 / 15 split, fit on train, every number reported on
       the held-out test set. Five seeds, mean ± std. The ML contamination is read from the
       train-set prevalence, not fixed at 10%.</p>
@@ -737,10 +737,42 @@
   <div class="foot"><span>verification/full_registry.md &nbsp;·&nbsp; research/labelled_benchmark.py</span><span>labels from a rare class, not from data-quality defects</span></div>
 </section>
 
+<section class="slide" data-sec="Regimes">
+  <div class="dossier">
+    <div class="heading">
+      <div class="eyebrow"><span class="idx">20</span> &nbsp; M2 &middot; two more examples from the pool</div>
+      <h2>Two regimes the three examples <em>do not show</em></h2>
+      <p class="lede">Among the 100 problems, the largest margin of the rules over the learned models is on Annthyroid (IQR 0.61, best learned 0.31). The largest margin of a neural model is on Mushroom (LUNAR 0.96, best classical 0.63; label derived by a rule). Chosen after the results, as illustrations, not as a test.</p>
+      <div class="stat">
+        <div><span class="v">0.61</span><span class="l">IQR rule on Annthyroid (best learned model 0.31)</span></div>
+        <div><span class="v">0.96</span><span class="l">LUNAR on Mushroom, where the IQR rule is at chance (0.10)</span></div>
+      </div>
+    </div>
+    <div class="panel">
+      <table class="num dense">
+        <thead><tr><th style="text-align:left">PR-AUC</th><th>Credit Card</th><th>Cardio</th><th>Annthyroid</th><th>Mushroom</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">Z-score</td><td>0.10</td><td>0.61</td><td>0.18</td><td>0.44</td></tr>
+          <tr><td style="text-align:left">IQR</td><td>0.02</td><td>0.30</td><td class="up">0.61</td><td>0.10</td></tr>
+          <tr><td style="text-align:left">Isolation Forest</td><td>0.13</td><td class="up">0.70</td><td>0.29</td><td>0.63</td></tr>
+          <tr><td style="text-align:left">ECOD</td><td>0.21</td><td>0.69</td><td>0.28</td><td>0.41</td></tr>
+          <tr><td style="text-align:left">HBOS</td><td>0.26</td><td>0.58</td><td>0.24</td><td>0.50</td></tr>
+          <tr><td style="text-align:left">Autoencoder</td><td>0.11</td><td>0.35</td><td>0.14</td><td>0.68</td></tr>
+          <tr><td style="text-align:left">DIF</td><td>0.27</td><td>0.67</td><td>0.23</td><td>0.45</td></tr>
+          <tr><td style="text-align:left">LUNAR</td><td>0.15</td><td>0.33</td><td>0.20</td><td class="up">0.96</td></tr>
+        </tbody>
+        <caption>Mean over 5 seeds, as run in the pool (same normalisation for all). Best of each column in green; all 17 detectors are in the paper.</caption>
+      </table>
+    </div>
+  </div>
+  <div class="foot"><span>verification/full_registry_results.md &nbsp;&middot;&nbsp; paper, labelled pool</span><span>no universal detector, even at the scale of one dataset</span></div>
+</section>
+
+
 <section class="slide" data-sec="Typed injection">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">20</span> &nbsp; M2 · the six types on real tables</div>
+      <div class="eyebrow"><span class="idx">21</span> &nbsp; M2 · the six types on real tables</div>
       <h2>The synthetic pattern <em>does not simply carry over</em></h2>
       <p class="lede">Issue #65. The six anomaly types are injected into 42 real UCI tables (3% of rows per type, same split and settings as the synthetic run). Protocol and five hypotheses were written before any run. Two rows hold everywhere: Great Expectations finds all missing values, deduplication all duplicates. Three hypotheses are not supported. The eleven detectors added later run on the same tables: LUNAR is best on multivariate outliers (0.63) and drift (0.78), but flags a median 24% of clean rows.</p>
       <div class="stat">
@@ -756,7 +788,7 @@
 <section class="slide" data-sec="Typed injection">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">21</span> &nbsp; M2 · reading the typed result</div>
+      <div class="eyebrow"><span class="idx">22</span> &nbsp; M2 · reading the typed result</div>
       <h2>Two failures that are <em>explained</em>, not hidden</h2>
       <p class="lede">Z-score detects almost nothing on univariate outliers (median 0.00 against 0.93 synthetic). A check made after seeing it, so exploratory, shows why: invalid rows in the training split inflate the standard deviation. Without them the Z-score finds every univariate outlier on all 42 tables. The IQR fences reach the best detection rate on several types, but only by flagging a median 22% of clean rows.</p>
       <div class="stat">
@@ -777,7 +809,7 @@
 <section class="slide" data-sec="Temporal">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">22</span> &nbsp; M2 · chronological split</div>
+      <div class="eyebrow"><span class="idx">23</span> &nbsp; M2 · chronological split</div>
       <h2>Time changes the answer: <em>a threshold from training does not travel</em></h2>
       <p class="lede">Credit Card is the only dataset with a clock. Detectors are fitted on the first 70% of time and scored on the last 15% (52 frauds). Average precision drops for all four detectors, but the interval excludes the stratified mean only for Great Expectations and Isolation Forest. Prevalence also changes between partitions, so the pilot does not separate it from the effect of time.</p>
       <div class="stat">
@@ -802,7 +834,7 @@
 <section class="slide" data-sec="Decisions">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">23</span> &nbsp; M2 &middot; decisions under shift</div>
+      <div class="eyebrow"><span class="idx">24</span> &nbsp; M2 &middot; decisions under shift</div>
       <h2>Part of the gap is <em>only the prevalence</em></h2>
       <p class="lede">Issue #63. Credit Card and Bank Marketing (UCI, ordered by date 2008 to 2010), four detectors, three label-free thresholds. On Bank Marketing the prevalence goes from 5.8% in training to 39.3% in test: matching the stratified control to it removes most of the gap. A rolling threshold that keeps the training prevalence cannot follow it. One hypothesis of four holds.</p>
       <div class="stat">
@@ -828,7 +860,7 @@
 <section class="slide" data-sec="Deep">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">24</span> &nbsp; M2 · first deep model</div>
+      <div class="eyebrow"><span class="idx">25</span> &nbsp; M2 · first deep model</div>
       <h2>An LSTM autoencoder is <em>comparable, not clearly better</em></h2>
       <p class="lede">Issue #52. The window is the ten previous rows of the global stream, since Credit Card has no cardholder. The protocol and a CPU budget of 20 epochs were fixed beforehand. On a synthetic stream with broken continuity the LSTM wins by a wide margin. On the real frauds it only matches Isolation Forest and Great Expectations, and none of five trainings converged within the budget.</p>
       <div class="stat">
@@ -851,7 +883,7 @@
 <section class="slide" data-sec="Schemas">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">25</span> &nbsp; M2 &middot; two more schemas</div>
+      <div class="eyebrow"><span class="idx">26</span> &nbsp; M2 &middot; two more schemas</div>
       <h2>The profile is stable, <em>two cells are not</em></h2>
       <p class="lede">Issue #67. Transactions and sensor readings get the same six injected types and the same protocol as the customer table. Great Expectations and the deduplication rule carry over exactly, and the rank correlation between schemas is 0.93. The multivariate column and drift depend on how the columns are scaled and correlated. Two of four hypotheses hold.</p>
       <div class="stat">
@@ -878,7 +910,7 @@
 <section class="slide" data-sec="Deep rows">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">26</span> &nbsp; M2 &middot; every detector in the per-type matrix</div>
+      <div class="eyebrow"><span class="idx">27</span> &nbsp; M2 &middot; every detector in the per-type matrix</div>
       <h2>More detectors, <em>same competence map</em>, one exception</h2>
       <p class="lede">Eleven rows added to the synthetic matrix, with three hypotheses written beforehand; none holds. ECOD and COPOD find 0.5 of the multivariate outliers although they read one column at a time, PCA reaches 0.48 against 0.83 for the autoencoder, and LUNAR catches 0.65 of the drifted rows (LOF 0.50) while flagging 41% of clean rows. The LSTM still does not fix drift.</p>
       <div class="stat">
@@ -894,7 +926,7 @@
 <section class="slide" data-sec="Cost">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">27</span> &nbsp; M2 · what detection costs</div>
+      <div class="eyebrow"><span class="idx">28</span> &nbsp; M2 · what detection costs</div>
       <h2>Detection latency is <em>not</em> pipeline latency</h2>
       <p class="lede">Issue #53. Synthetic matrices from 1,000 to 300,000 rows, a fresh process per measurement so that peak memory belongs to that run, 300 s budget. On the full Credit Card file the Z-score pipeline takes 4.8 s of which detection is 3%, while Isolation Forest takes 8.5 s with detection at 43 to 45%.</p>
       <div class="stat">
@@ -923,7 +955,7 @@
 <section class="slide" data-sec="Reading">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">28</span> &nbsp; The practical output</div>
+      <div class="eyebrow"><span class="idx">29</span> &nbsp; The practical output</div>
       <h2>Anomaly type <em>to method</em></h2>
       <p class="lede">Two of six types are not a per-row detector problem at all: duplicates
       belong to the transform stage, drift to a windowed monitor. That itself is a finding
@@ -950,7 +982,7 @@
 <section class="slide" data-sec="Reading">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">29</span> &nbsp; Across the three real datasets</div>
+      <div class="eyebrow"><span class="idx">30</span> &nbsp; Across the three example datasets</div>
       <h2>Unsupervised detection works in <em>one of three regimes</em></h2>
       <p class="lede">The question is less "rules or ML" than "does this dataset have rare,
       outlying anomalies at all". Latency and scaling then constrain which detector can
@@ -976,7 +1008,7 @@
 <section class="slide" data-sec="Findings">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">30</span> &nbsp; What was harder than the plan assumed</div>
+      <div class="eyebrow"><span class="idx">31</span> &nbsp; What was harder than the plan assumed</div>
       <h2>Findings <em>from the build</em></h2>
       <p class="lede">Each of these became a paragraph in the paper. The recurring lesson:
       the setup around a detector, the operating point, the regime, the pipeline cost,
@@ -1000,7 +1032,7 @@
 <section class="slide" data-sec="State">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">31</span> &nbsp; Implemented, tested, verified</div>
+      <div class="eyebrow"><span class="idx">32</span> &nbsp; Implemented, tested, verified</div>
       <h2>What the repository <em>holds today</em></h2>
       <p class="lede">The verification layer was built for the claim that the numbers are right: a test suite, a mutation campaign, deliberate defects and a release script that returns certified, incomplete or blocked. The last local run is not independently attested, and the hosted run certified an earlier revision.</p>
       <div class="stat">
@@ -1028,7 +1060,7 @@
 <section class="slide" data-sec="Next">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">32</span> &nbsp; Where it stands</div>
+      <div class="eyebrow"><span class="idx">33</span> &nbsp; Where it stands</div>
       <h2>Experiments run, <em>write-up awaits review</em></h2>
       <p class="lede">The experiment issues of the M2 plan are closed. #68 and #69 stay open until I review the drafts. The target is an IMRaD paper; the demo paper was dropped. Defense July 2027.</p>
     </div>
@@ -1051,13 +1083,13 @@
 <!-- 21 takeaway -->
 <section class="slide dark solo" data-sec="Takeaway">
   <div>
-    <div class="eyebrow"><span class="idx">33</span> &nbsp; Takeaway</div>
+    <div class="eyebrow"><span class="idx">34</span> &nbsp; Takeaway</div>
     <div class="brule"></div>
   </div>
   <div class="mid">
     <h1 style="max-width:22ch">Rules and machine learning are <em>complementary by anomaly type</em>.</h1>
     <p class="hero-lede" style="max-width:60ch">The per-type heatmap is what makes that
-    choice actionable. Across three real datasets, unsupervised detection pays off only on
+    choice actionable. Across the three example datasets, unsupervised detection pays off only on
     Cardio, where the anomalies are genuinely rare outliers. On 100 labelled problems of the
     pool no detector is clearly ahead. On 42 real tables with injected
     types, the synthetic pattern holds only in part, which is why the real-data matrix is

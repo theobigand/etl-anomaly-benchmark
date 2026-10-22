@@ -201,7 +201,7 @@ def matrix_table(frame: pd.DataFrame, caption: str, label: str) -> str:
         r"\setlength{\tabcolsep}{3pt}",
         r"\begin{tabular}{l" + "c" * len(frame.columns) + "}",
         r"\toprule",
-        "Method & " + " & ".join(LABELS[c] for c in frame.columns) + r" \\\\",
+        "Method & " + " & ".join(LABELS[c] for c in frame.columns) + r" \\",
         r"\midrule",
     ]
     names = {**NAMES, **EXTRA_NAMES}
@@ -212,10 +212,47 @@ def matrix_table(frame: pd.DataFrame, caption: str, label: str) -> str:
             if method in NAMES and round(frame.loc[method, column], 2) == round(best[column], 2):
                 text = f"\\textbf{{{text}}}"
             cells.append(text)
-        lines.append(f"{names[method]:<18} & " + " & ".join(cells) + r" \\\\")
+        lines.append(f"{names[method]:<18} & " + " & ".join(cells) + r" \\")
         if method in ("great_expectations", "pca", "lunar"):
             lines.append(r"\midrule")
     lines += [r"\bottomrule", r"\end{tabular}", r"\end{table}"]
+    return "\n".join(lines)
+
+
+EXAMPLES = (
+    ("adbench:fraud", "Fraud"),
+    ("adbench:cardio", "Cardio"),
+    ("adbench:annthyroid", "Annthyroid"),
+    ("uci:73", "Mushroom"),
+)
+
+
+def example_rows(evidence: Path = EVIDENCE) -> str:
+    """PR-AUC of every detector on four problems of the pool, the best of each column in bold."""
+    import sys
+
+    sys.path.insert(0, str(ROOT / "research"))
+    import labelled_summary as ls
+
+    runs = ls.load(evidence / "labelled_pool" / "runs") + ls.load(
+        evidence / "full_registry" / "pool_deep" / "runs"
+    )
+    wide = ls.table(runs).pivot(index="problem", columns="method", values="pr_auc")
+    best = {problem: wide.loc[problem].max() for problem, _ in EXAMPLES}
+    lines = []
+    for name in NAMES:
+        cells = []
+        for problem, _ in EXAMPLES:
+            value = wide.loc[problem, name]
+            if pd.isna(value):
+                cells.append("--")
+            elif round(value, 2) == round(best[problem], 2):
+                cells.append(f"\\textbf{{{value:.2f}}}")
+            else:
+                cells.append(f"{value:.2f}")
+        lines.append(f"{NAMES[name]:<18} & " + " & ".join(cells) + r" \\")
+        if name in (list(NAMES)[2], list(NAMES)[10]):
+            lines.append(r"\midrule")
     return "\n".join(lines)
 
 

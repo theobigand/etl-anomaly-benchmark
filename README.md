@@ -18,7 +18,7 @@ The question it tries to answer: does adding machine learning to an ETL pipeline
 - [x] Synthetic dataset (6 anomaly types), per-type recall + precision, heatmap
 - [x] Evaluation protocol: stratified 70/15/15 split, 5 seeds, mean ± std
 - [x] ML contamination read from the train-set prevalence
-- [x] Four datasets: Credit Card Fraud, Cardio (rare anomalies), Water Quality, synthetic
+- [x] Real and synthetic data: a pool of 152 open datasets, with Credit Card Fraud, Cardio (rare anomalies) and Water Quality worked out as examples, plus Faker-generated synthetic datasets
 - [x] Time-aware `drift` detector; injection severity is a tunable multiplier
 - [x] Precision-recall curves, contamination sweep, detection-vs-severity curves
 - [x] CI (GitHub Actions: ruff + pytest)
@@ -106,7 +106,7 @@ the main curves use that same baseline; the contamination sweep deliberately
 varies the threshold on a fixed grid to show sensitivity, without choosing a
 winner from the test scores. `PR-AUC` is average precision.
 
-The fixed 0.02 comparator has now been run on the three real datasets with
+The fixed 0.02 comparator has now been run on the three example datasets with
 the same seeds and splits. Its tables are archived in
 `verification/evidence/fixed_benchmark_*.csv`. The value was fixed before
 these runs, but after the baseline results were known; this is an exploratory

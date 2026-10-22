@@ -43,12 +43,13 @@ Expectations), eight classical ML detectors (Isolation Forest, LOF,
 One-Class SVM, ECOD, COPOD, HBOS, KNN, PCA) and six neural ones
 (autoencoder, VAE, Deep SVDD, DIF, AE1SVM, LUNAR), with an LSTM autoencoder
 studied apart. I evaluate the
-detectors, over five seeds on a stratified held-out split, on four
-datasets (and, for generality, on $100$ labelled problems and $42$ real
-tables with injected anomalies): Kaggle Credit Card Fraud, a rare-anomaly Cardio dataset, a
-common-class Water Quality dataset, and a controlled synthetic dataset
-generated with Faker in which six distinct anomaly types are injected at
-controlled rates. Beyond aggregate precision, recall, F1, ROC-AUC and
+detectors, over five seeds on a stratified held-out split, on real open
+datasets and on controlled synthetic ones. The real data is a pool of $152$ open
+datasets, used as $100$ labelled problems and as $42$ tables into which I inject
+anomalies; three of them are worked out as examples because they show three regimes:
+Kaggle Credit Card Fraud, a rare-anomaly Cardio dataset and a
+common-class Water Quality dataset. The synthetic data are generated with Faker, with
+six distinct anomaly types injected at controlled rates. Beyond aggregate precision, recall, F1, ROC-AUC and
 PR-AUC, I report a per-anomaly-type recall and precision, precision-recall
 curves, and a sweep of the injection severity. The aggregate metrics make the families look interchangeable;
 the per-type view shows each has a narrow, largely non-overlapping
@@ -137,7 +138,7 @@ present:
     \item \textbf{A head-to-head benchmark} of statistical rules
     (Z-score, IQR, Great Expectations), classical ML detectors
     (Isolation Forest, LOF, One-Class SVM, ECOD, COPOD, HBOS, KNN, PCA) and neural
-    detectors (autoencoder, VAE, Deep SVDD, DIF, AE1SVM, LUNAR) on four datasets, with a
+    detectors (autoencoder, VAE, Deep SVDD, DIF, AE1SVM, LUNAR) on real and synthetic datasets, with a
     stratified held-out split, five seeds, and the ML operating point
     read from the data, reporting precision, recall, F1, ROC-AUC, PR-AUC,
     precision-recall curves, and detection-stage latency (fit, predict and
@@ -161,8 +162,8 @@ The rest of the paper is organized as follows. Section~II reviews
 related work on data quality in ETL and on anomaly detection
 benchmarks. Section~III describes my pipeline architecture, the
 detectors I compare, the datasets, the metrics and the verification of the
-code. Section~IV reports the main results, on the three real datasets, the
-synthetic generator and its variants, and the real-data pool. Section~V
+code. Section~IV reports the main results, on three example datasets taken from the
+real-data pool, the synthetic generators and their variants, and the whole pool. Section~V
 reports four secondary studies (a chronological split, decisions under
 temporal shift, an LSTM autoencoder and the cost of detection). Section~VI discusses when rules, classical ML and
 deep learning are each the right tool and what limits the evidence, and
@@ -428,21 +429,31 @@ in the direction of that move; it is run on the synthetic dataset only, as
 the other detectors ignore the row order.
 
 \subsection{Datasets}
-I evaluate on four datasets. \emph{Credit Card Fraud}~\cite{mlgulbcredit}
-(Kaggle;
+The real data is one pool of $152$ open datasets from ADBench and the UCI repository
+(open licence, pinned by checksum; \texttt{verification/dataset\_pool.md}). I use it in two
+ways: $100$ of its problems already carry labelled anomalies and are run as they are
+(Section~\ref{sec:labelled}), and $42$ of its tables are large enough ($3{,}000$ rows, four
+continuous columns) to receive injected anomalies (Section~\ref{sec:typed}). Three datasets
+are worked out in detail as examples, because they illustrate three regimes of the method.
+\emph{Credit Card Fraud}~\cite{mlgulbcredit}
+(Kaggle, also one of the ADBench problems;
 $283{,}726$ transactions after de-duplication, $30$ numeric features,
 $0.17\%$ labelled fraud) is the standard strongly imbalanced benchmark,
-but its positive class mixes every kind of defect. The \emph{synthetic}
-dataset above ($12{,}360$ rows, $17.5\%$ anomalous) carries the per-type
-labels. \emph{Cardio} (a cardiotocography anomaly dataset as packaged for
-outlier-detection benchmarking; $1{,}831$ rows, $21$ standardized
+but its positive class mixes every kind of defect.
+\emph{Cardio} (a cardiotocography anomaly dataset as packaged for
+outlier-detection benchmarking, another ADBench problem; $1{,}831$ rows, $21$ standardized
 features, $9.6\%$ anomalies) is a \emph{genuinely imbalanced} real
 dataset~\cite{han2022adbench,campos2000cardio}: the anomalies are rare and distributionally
 distinct, the regime the unsupervised detectors are built for.
-\emph{Water Quality}~\cite{kadiwal2021water} ($3{,}276$ samples,
+\emph{Water Quality}~\cite{kadiwal2021water} (a Kaggle dataset of the same kind, outside the pool;
+$3{,}276$ samples,
 $9$ numeric features) is the opposite case: the target class
 (``not potable'') is common ($61\%$) rather than rare, and the data has genuine missing values,
 so it probes the detectors outside their regime.
+Beside the real data, a \emph{synthetic} dataset generated with Faker
+($12{,}360$ rows, $17.5\%$ anomalous, described above) carries the per-type
+labels, and two further generators repeat it on other schemas
+(Section~\ref{sec:schemas}), to test particular cases in controlled numbers.
 
 \subsection{Evaluation protocol}
 \label{sec:protocol}
@@ -508,7 +519,7 @@ Benchmark tables report means over five seeds on the held-out test
 split (Section~\ref{sec:protocol}). Seed variability is reported in the
 archived result tables; timing also depends on the execution environment.
 
-\subsection{Real fraud data}
+\subsection{Example 1: Credit Card Fraud}
 Table~\ref{tab:fraud} reports the detectors on Credit Card Fraud: the
 eight that scale to $284$k rows, then the six neural ones, which are fitted on
 at most $20{,}000$ rows. The
@@ -566,7 +577,7 @@ LUNAR              & 0.138 & 0.535 & 0.216 & \textbf{0.941} & 0.136 & 0.7 & -- \
 \end{tabular}
 \end{table}
 
-\subsection{Genuinely imbalanced real data: Cardio}
+\subsection{Example 2: Cardio, rare and distinct anomalies}
 \label{sec:cardio}
 Table~\ref{tab:cardio} runs all detectors on Cardio, where the
 anomalies are both rare ($9.6\%$) and distributionally distinct. Here the
@@ -713,7 +724,7 @@ stage, shown for reference.}
 \label{fig:heatmap}
 \end{figure}
 
-\subsection{Third real dataset: Water Quality}
+\subsection{Example 3: Water Quality, a common target class}
 Table~\ref{tab:water} runs all detectors, the neural ones included, on Water Quality, where
 ``not potable'' is the target and covers $61\%$ of the rows. Every
 detector's ROC-AUC sits between $0.45$ and $0.51$ and every PR-AUC lies
@@ -813,7 +824,7 @@ Synthetic         & prev.\ 0.175 & 0.53 & 0.51 & 16.8 \\
 
 \subsection{Fixed-contamination sensitivity analysis}
 The train-prevalence operating point uses labels from the training
-partition. To measure its influence, I reran the three real datasets
+partition. To measure its influence, I reran the three example datasets
 with the same five seeds and partitions, replacing that value by a
 constant contamination of $0.02$ for the ML detectors. Table~\ref{tab:fixed-calibration}
 shows Isolation Forest, the only learned detector run on all three
@@ -937,8 +948,8 @@ no detector covers every type, and the one that comes closest buys its recall wi
 
 \subsection{Labelled problems of the dataset pool}
 \label{sec:labelled}
-The three real datasets of this section are few. The pool of $152$ open
-tables (\texttt{verification/dataset\_pool.md}) holds $100$ problems whose
+The three examples above are only a few datasets. The pool of $152$ open
+tables (\texttt{verification/dataset\_pool.md}), of which Credit Card Fraud and Cardio are members, holds $100$ problems whose
 anomalies are already labelled: $36$ from ADBench and $64$ from the UCI
 repository, where the rarest class (at least $20$ rows) is the anomaly and the
 other classes are normal; a class above $10\%$ of the rows is resampled to
@@ -1028,6 +1039,56 @@ the problems are not independent, and $10\%$ resampling fixes the median
 prevalence at $0.10$. The ADBench half is closer to the usual benchmark and the
 UCI half is a harder, rule-derived labelling; I did not tune any detector, so
 the numbers describe default settings.
+
+\paragraph{Two more examples from the pool.} The three examples of this section were
+picked for the regimes they show, and the pool holds two regimes they do not. Among the
+$100$ problems, the largest margin of the rule-based detectors over the learned ones is on
+Annthyroid ($7.6\%$ anomalies): the IQR rule reaches a PR-AUC of $0.61$ and the best learned
+model $0.31$. The largest margin of a neural model over the other families is on Mushroom
+($10\%$ anomalies, a class derived by a rule): LUNAR reaches $0.96$ and the best classical
+model $0.63$. I chose them after seeing the results, as illustrations, so this is an
+exploratory choice and not a test. Table~\ref{tab:examples} lists the seventeen detectors on
+these two problems and on Credit Card Fraud and Cardio as they appear in the pool, normalised
+like the others, so their numbers differ slightly from the tables above. It shows the
+absence of a universal detector at the scale of a single dataset: the IQR rule is the best on
+Annthyroid and at chance on Mushroom ($0.10$), where LUNAR leads; Deep SVDD is first on
+Credit Card Fraud and Isolation Forest on Cardio.
+
+\begin{table}[t]
+\caption{PR-AUC of the seventeen detectors on four problems of the pool (mean over five
+seeds). Credit Card Fraud ($0.2\%$ anomalies) and Cardio ($9.6\%$) are the examples of
+Section~\ref{sec:experiments}; Annthyroid and Mushroom are the two additional ones. A dash
+means the detector was skipped on that size.}
+\label{tab:examples}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrr}
+\toprule
+Detector & Fraud & Cardio & Annthyroid & Mushroom \\
+\midrule
+Z-score            & 0.10 & 0.61 & 0.18 & 0.44 \\
+IQR                & 0.02 & 0.30 & \textbf{0.61} & 0.10 \\
+Great Expectations & 0.22 & 0.19 & 0.10 & 0.12 \\
+\midrule
+Isolation Forest   & 0.13 & \textbf{0.70} & 0.29 & 0.63 \\
+LOF                & -- & 0.24 & 0.21 & 0.26 \\
+One-Class SVM      & -- & 0.63 & 0.19 & 0.40 \\
+ECOD               & 0.21 & 0.69 & 0.28 & 0.41 \\
+COPOD              & 0.26 & 0.69 & 0.18 & 0.44 \\
+HBOS               & 0.26 & 0.58 & 0.24 & 0.50 \\
+KNN                & -- & 0.47 & 0.23 & 0.59 \\
+PCA                & 0.03 & 0.37 & 0.12 & 0.37 \\
+\midrule
+Autoencoder        & 0.11 & 0.35 & 0.14 & 0.68 \\
+VAE                & 0.10 & 0.45 & 0.18 & 0.49 \\
+Deep SVDD          & \textbf{0.34} & 0.29 & 0.23 & 0.40 \\
+DIF                & 0.27 & 0.67 & 0.23 & 0.45 \\
+AE1SVM             & 0.18 & 0.64 & 0.31 & 0.40 \\
+LUNAR              & 0.15 & 0.33 & 0.20 & \textbf{0.96} \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{Two further synthetic schemas}
 \label{sec:schemas}
@@ -1154,7 +1215,7 @@ not rest on them.
 
 \subsection{Chronological pilot on Credit Card}
 \label{sec:chrono}
-The results above use a random stratified split. Of the three real datasets,
+The results above use a random stratified split. Of the three example datasets,
 only Credit Card has a time variable (seconds since the first transaction,
 about two days); Cardio and Water Quality have none, so their row order says
 nothing about time. I therefore ran one small pilot on Credit Card, with the
@@ -1401,7 +1462,7 @@ The same estimator looks weak or strong depending on one number that a
 benchmark must choose deliberately.
 
 \paragraph{Unsupervised detection works in one of the three regimes.}
-The three real settings bracket the method: on Cardio, where anomalies
+The three example datasets bracket the method: on Cardio, where anomalies
 are rare and distributionally distinct, Isolation Forest reaches
 $F_1 = 0.62$ and PR-AUC $0.70$; on Credit Card Fraud, where the positive
 class is a $0.17\%$ mixed-defect label, the best $F_1$ of the seventeen
@@ -1503,13 +1564,13 @@ the same held-out path, over five seeds, with the operating point read
 from the data. A controlled dataset labels six anomaly types separately,
 and a severity sweep shows where the per-type ranking changes as the
 injections are scaled. On aggregate metrics the detector families stay
-close on all four datasets, and on $100$ labelled problems of a pool of
+close on the example and synthetic datasets, and on $100$ labelled problems of a pool of
 $152$ open tables no detector is clearly ahead (Section~\ref{sec:labelled}). The per-type view is where they diverge:
 declarative rules own missing values, statistical rules own single-column
 outliers, tree-, boundary- and reconstruction-based models (Isolation Forest, the
 One-Class SVM, DIF, the VAE) catch implausible combinations, and duplicates and temporal drift need
 dedicated stages, LUNAR being the one learned model that helps on drift, at the price
-of many false alarms. Across the three real datasets, unsupervised detection
+of many false alarms. Across the three example datasets, unsupervised detection
 pays off only on Cardio, where the anomalies are genuinely rare and
 outlying. The choice of contamination, the precision-recall trade-off it
 selects, and the pipeline cost further constrain which detector fits a
@@ -1690,31 +1751,31 @@ The tables below give the mean recall of every detector of the registry on each 
 \setlength{\tabcolsep}{3pt}
 \begin{tabular}{lcccccc}
 \toprule
-Method & Miss. & Dup. & Uni. & Multi. & Drift & Inv. \\\\
+Method & Miss. & Dup. & Uni. & Multi. & Drift & Inv. \\
 \midrule
-Z-score            & 0.00 & 0.00 & 0.93 & 0.00 & 0.00 & 0.24 \\\\
-IQR                & 0.05 & 0.04 & 0.99 & 0.04 & 0.25 & \textbf{1.00} \\\\
-Great Expectations & \textbf{1.00} & 0.00 & 0.21 & 0.00 & 0.00 & 0.00 \\\\
+Z-score            & 0.00 & 0.00 & 0.93 & 0.00 & 0.00 & 0.24 \\
+IQR                & 0.05 & 0.04 & 0.99 & 0.04 & 0.25 & \textbf{1.00} \\
+Great Expectations & \textbf{1.00} & 0.00 & 0.21 & 0.00 & 0.00 & 0.00 \\
 \midrule
-Isolation Forest   & 0.09 & 0.11 & 0.99 & 0.89 & 0.33 & 0.60 \\\\
-LOF                & 0.28 & 0.16 & 0.70 & 0.21 & 0.50 & 0.67 \\\\
-One-Class SVM      & 0.07 & 0.10 & \textbf{1.00} & 0.90 & 0.29 & 0.54 \\\\
-ECOD               & 0.10 & 0.13 & 0.68 & 0.52 & 0.26 & 0.36 \\\\
-COPOD              & 0.09 & 0.13 & 0.89 & 0.51 & 0.34 & 0.30 \\\\
-HBOS               & 0.00 & 0.00 & 0.90 & 0.00 & 0.00 & 0.32 \\\\
-KNN                & 0.09 & 0.10 & \textbf{1.00} & 0.39 & 0.41 & 0.81 \\\\
-PCA                & 0.10 & 0.12 & \textbf{1.00} & 0.48 & 0.23 & 0.58 \\\\
+Isolation Forest   & 0.09 & 0.11 & 0.99 & 0.89 & 0.33 & 0.60 \\
+LOF                & 0.28 & 0.16 & 0.70 & 0.21 & 0.50 & 0.67 \\
+One-Class SVM      & 0.07 & 0.10 & \textbf{1.00} & 0.90 & 0.29 & 0.54 \\
+ECOD               & 0.10 & 0.13 & 0.68 & 0.52 & 0.26 & 0.36 \\
+COPOD              & 0.09 & 0.13 & 0.89 & 0.51 & 0.34 & 0.30 \\
+HBOS               & 0.00 & 0.00 & 0.90 & 0.00 & 0.00 & 0.32 \\
+KNN                & 0.09 & 0.10 & \textbf{1.00} & 0.39 & 0.41 & 0.81 \\
+PCA                & 0.10 & 0.12 & \textbf{1.00} & 0.48 & 0.23 & 0.58 \\
 \midrule
-Autoencoder        & 0.12 & 0.10 & 0.81 & 0.83 & 0.29 & 0.53 \\\\
-VAE                & 0.07 & 0.11 & 0.99 & 0.92 & 0.30 & 0.66 \\\\
-Deep SVDD          & 0.19 & 0.18 & 0.33 & 0.13 & 0.16 & 0.32 \\\\
-DIF                & 0.09 & 0.07 & \textbf{1.00} & \textbf{1.00} & 0.33 & \textbf{1.00} \\\\
-AE1SVM             & 0.09 & 0.10 & 0.99 & 0.78 & 0.27 & 0.61 \\\\
-LUNAR              & 0.44 & 0.39 & \textbf{1.00} & 0.63 & \textbf{0.65} & 0.90 \\\\
+Autoencoder        & 0.12 & 0.10 & 0.81 & 0.83 & 0.29 & 0.53 \\
+VAE                & 0.07 & 0.11 & 0.99 & 0.92 & 0.30 & 0.66 \\
+Deep SVDD          & 0.19 & 0.18 & 0.33 & 0.13 & 0.16 & 0.32 \\
+DIF                & 0.09 & 0.07 & \textbf{1.00} & \textbf{1.00} & 0.33 & \textbf{1.00} \\
+AE1SVM             & 0.09 & 0.10 & 0.99 & 0.78 & 0.27 & 0.61 \\
+LUNAR              & 0.44 & 0.39 & \textbf{1.00} & 0.63 & \textbf{0.65} & 0.90 \\
 \midrule
-LSTM autoencoder   & 0.08 & 0.09 & 0.97 & 0.68 & 0.25 & 0.53 \\\\
-Drift detector     & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\\\
-Dedup rule         & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\\\
+LSTM autoencoder   & 0.08 & 0.09 & 0.97 & 0.68 & 0.25 & 0.53 \\
+Drift detector     & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
+Dedup rule         & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1727,29 +1788,29 @@ Dedup rule         & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\\\
 \setlength{\tabcolsep}{3pt}
 \begin{tabular}{lcccccc}
 \toprule
-Method & Miss. & Dup. & Uni. & Multi. & Drift & Inv. \\\\
+Method & Miss. & Dup. & Uni. & Multi. & Drift & Inv. \\
 \midrule
-Z-score            & 0.00 & 0.00 & 0.63 & 0.00 & 0.00 & 0.26 \\\\
-IQR                & 0.09 & 0.14 & 0.98 & 0.57 & 0.37 & 0.63 \\\\
-Great Expectations & \textbf{1.00} & 0.00 & 0.14 & 0.00 & 0.00 & 0.00 \\\\
+Z-score            & 0.00 & 0.00 & 0.63 & 0.00 & 0.00 & 0.26 \\
+IQR                & 0.09 & 0.14 & 0.98 & 0.57 & 0.37 & 0.63 \\
+Great Expectations & \textbf{1.00} & 0.00 & 0.14 & 0.00 & 0.00 & 0.00 \\
 \midrule
-Isolation Forest   & 0.09 & 0.18 & 0.97 & 0.49 & 0.38 & 0.56 \\\\
-LOF                & 0.11 & 0.15 & 0.72 & 0.64 & 0.30 & 0.45 \\\\
-One-Class SVM      & 0.10 & 0.26 & 0.89 & 0.18 & 0.36 & 0.39 \\\\
-ECOD               & 0.10 & 0.20 & 0.67 & 0.45 & 0.29 & 0.67 \\\\
-COPOD              & 0.09 & 0.20 & 0.86 & 0.43 & 0.33 & 0.45 \\\\
-HBOS               & 0.00 & 0.00 & 0.69 & 0.00 & 0.00 & 0.26 \\\\
-KNN                & 0.11 & 0.17 & 0.97 & 0.33 & 0.39 & 0.57 \\\\
-PCA                & 0.08 & 0.19 & 0.86 & 0.16 & 0.27 & 0.37 \\\\
+Isolation Forest   & 0.09 & 0.18 & 0.97 & 0.49 & 0.38 & 0.56 \\
+LOF                & 0.11 & 0.15 & 0.72 & 0.64 & 0.30 & 0.45 \\
+One-Class SVM      & 0.10 & 0.26 & 0.89 & 0.18 & 0.36 & 0.39 \\
+ECOD               & 0.10 & 0.20 & 0.67 & 0.45 & 0.29 & 0.67 \\
+COPOD              & 0.09 & 0.20 & 0.86 & 0.43 & 0.33 & 0.45 \\
+HBOS               & 0.00 & 0.00 & 0.69 & 0.00 & 0.00 & 0.26 \\
+KNN                & 0.11 & 0.17 & 0.97 & 0.33 & 0.39 & 0.57 \\
+PCA                & 0.08 & 0.19 & 0.86 & 0.16 & 0.27 & 0.37 \\
 \midrule
-Autoencoder        & 0.09 & 0.19 & 0.84 & 0.17 & 0.30 & 0.46 \\\\
-VAE                & 0.07 & 0.24 & 0.86 & 0.21 & 0.34 & 0.39 \\\\
-Deep SVDD          & 0.12 & 0.14 & 0.74 & 0.70 & 0.27 & 0.54 \\\\
-DIF                & 0.09 & 0.20 & 0.97 & 0.37 & 0.36 & 0.60 \\\\
-AE1SVM             & 0.09 & 0.24 & 0.88 & 0.16 & 0.34 & 0.40 \\\\
-LUNAR              & 0.22 & 0.29 & \textbf{0.99} & \textbf{0.73} & \textbf{0.55} & \textbf{0.75} \\\\
+Autoencoder        & 0.09 & 0.19 & 0.84 & 0.17 & 0.30 & 0.46 \\
+VAE                & 0.07 & 0.24 & 0.86 & 0.21 & 0.34 & 0.39 \\
+Deep SVDD          & 0.12 & 0.14 & 0.74 & 0.70 & 0.27 & 0.54 \\
+DIF                & 0.09 & 0.20 & 0.97 & 0.37 & 0.36 & 0.60 \\
+AE1SVM             & 0.09 & 0.24 & 0.88 & 0.16 & 0.34 & 0.40 \\
+LUNAR              & 0.22 & 0.29 & \textbf{0.99} & \textbf{0.73} & \textbf{0.55} & \textbf{0.75} \\
 \midrule
-Dedup rule         & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\\\
+Dedup rule         & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1762,29 +1823,29 @@ Dedup rule         & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\\\
 \setlength{\tabcolsep}{3pt}
 \begin{tabular}{lcccccc}
 \toprule
-Method & Miss. & Dup. & Uni. & Multi. & Drift & Inv. \\\\
+Method & Miss. & Dup. & Uni. & Multi. & Drift & Inv. \\
 \midrule
-Z-score            & 0.00 & 0.00 & \textbf{1.00} & 0.00 & 0.00 & 0.26 \\\\
-IQR                & 0.03 & 0.05 & \textbf{1.00} & 0.02 & 0.94 & \textbf{1.00} \\\\
-Great Expectations & \textbf{1.00} & 0.00 & 0.23 & 0.00 & 0.00 & 0.00 \\\\
+Z-score            & 0.00 & 0.00 & \textbf{1.00} & 0.00 & 0.00 & 0.26 \\
+IQR                & 0.03 & 0.05 & \textbf{1.00} & 0.02 & 0.94 & \textbf{1.00} \\
+Great Expectations & \textbf{1.00} & 0.00 & 0.23 & 0.00 & 0.00 & 0.00 \\
 \midrule
-Isolation Forest   & 0.08 & 0.12 & \textbf{1.00} & 0.32 & 0.96 & 0.97 \\\\
-LOF                & 0.19 & 0.18 & 0.33 & 0.34 & 0.40 & 0.27 \\\\
-One-Class SVM      & 0.08 & 0.10 & \textbf{1.00} & 0.33 & 0.94 & \textbf{1.00} \\\\
-ECOD               & 0.10 & 0.13 & 0.81 & 0.40 & 0.80 & 0.58 \\\\
-COPOD              & 0.07 & 0.13 & 0.97 & 0.45 & 0.96 & 0.46 \\\\
-HBOS               & 0.00 & 0.00 & \textbf{1.00} & 0.00 & 0.00 & 0.26 \\\\
-KNN                & 0.11 & 0.10 & \textbf{1.00} & 0.26 & \textbf{1.00} & \textbf{1.00} \\\\
-PCA                & 0.09 & 0.12 & \textbf{1.00} & 0.26 & 0.63 & 0.95 \\\\
+Isolation Forest   & 0.08 & 0.12 & \textbf{1.00} & 0.32 & 0.96 & 0.97 \\
+LOF                & 0.19 & 0.18 & 0.33 & 0.34 & 0.40 & 0.27 \\
+One-Class SVM      & 0.08 & 0.10 & \textbf{1.00} & 0.33 & 0.94 & \textbf{1.00} \\
+ECOD               & 0.10 & 0.13 & 0.81 & 0.40 & 0.80 & 0.58 \\
+COPOD              & 0.07 & 0.13 & 0.97 & 0.45 & 0.96 & 0.46 \\
+HBOS               & 0.00 & 0.00 & \textbf{1.00} & 0.00 & 0.00 & 0.26 \\
+KNN                & 0.11 & 0.10 & \textbf{1.00} & 0.26 & \textbf{1.00} & \textbf{1.00} \\
+PCA                & 0.09 & 0.12 & \textbf{1.00} & 0.26 & 0.63 & 0.95 \\
 \midrule
-Autoencoder        & 0.07 & 0.11 & 0.93 & 0.62 & 0.71 & 0.94 \\\\
-VAE                & 0.07 & 0.09 & \textbf{1.00} & 0.25 & 0.94 & \textbf{1.00} \\\\
-Deep SVDD          & 0.14 & 0.14 & 0.82 & 0.19 & 0.25 & 0.59 \\\\
-DIF                & 0.05 & 0.06 & \textbf{1.00} & \textbf{0.99} & 0.80 & \textbf{1.00} \\\\
-AE1SVM             & 0.08 & 0.10 & \textbf{1.00} & 0.49 & 0.80 & \textbf{1.00} \\\\
-LUNAR              & 0.32 & 0.30 & \textbf{1.00} & 0.41 & \textbf{1.00} & \textbf{1.00} \\\\
+Autoencoder        & 0.07 & 0.11 & 0.93 & 0.62 & 0.71 & 0.94 \\
+VAE                & 0.07 & 0.09 & \textbf{1.00} & 0.25 & 0.94 & \textbf{1.00} \\
+Deep SVDD          & 0.14 & 0.14 & 0.82 & 0.19 & 0.25 & 0.59 \\
+DIF                & 0.05 & 0.06 & \textbf{1.00} & \textbf{0.99} & 0.80 & \textbf{1.00} \\
+AE1SVM             & 0.08 & 0.10 & \textbf{1.00} & 0.49 & 0.80 & \textbf{1.00} \\
+LUNAR              & 0.32 & 0.30 & \textbf{1.00} & 0.41 & \textbf{1.00} & \textbf{1.00} \\
 \midrule
-Dedup rule         & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\\\
+Dedup rule         & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1797,30 +1858,30 @@ Dedup rule         & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\\\
 \setlength{\tabcolsep}{3pt}
 \begin{tabular}{lcccccc}
 \toprule
-Method & Miss. & Dup. & Uni. & Multi. & Drift & Inv. \\\\
+Method & Miss. & Dup. & Uni. & Multi. & Drift & Inv. \\
 \midrule
-Z-score            & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.43 \\\\
-IQR                & 0.19 & 0.21 & \textbf{1.00} & 0.39 & 0.64 & \textbf{0.93} \\\\
-Great Expectations & \textbf{1.00} & 0.00 & 0.23 & 0.00 & 0.00 & 0.42 \\\\
+Z-score            & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.43 \\
+IQR                & 0.19 & 0.21 & \textbf{1.00} & 0.39 & 0.64 & \textbf{0.93} \\
+Great Expectations & \textbf{1.00} & 0.00 & 0.23 & 0.00 & 0.00 & 0.42 \\
 \midrule
-Isolation Forest   & 0.11 & 0.13 & 0.61 & 0.37 & 0.45 & 0.59 \\\\
-LOF                & 0.28 & 0.13 & 0.68 & 0.33 & 0.34 & 0.70 \\\\
-One-Class SVM      & 0.10 & 0.13 & 0.75 & 0.17 & 0.31 & 0.73 \\\\
-ECOD               & 0.10 & 0.14 & 0.44 & 0.25 & 0.36 & 0.44 \\\\
-COPOD              & 0.10 & 0.15 & 0.45 & 0.23 & 0.48 & 0.41 \\\\
-HBOS               & 0.00 & 0.01 & 0.04 & 0.02 & 0.01 & 0.32 \\\\
-KNN                & 0.19 & 0.10 & 0.91 & 0.30 & 0.46 & 0.80 \\\\
-PCA                & 0.12 & 0.14 & 0.54 & 0.19 & 0.23 & 0.71 \\\\
+Isolation Forest   & 0.11 & 0.13 & 0.61 & 0.37 & 0.45 & 0.59 \\
+LOF                & 0.28 & 0.13 & 0.68 & 0.33 & 0.34 & 0.70 \\
+One-Class SVM      & 0.10 & 0.13 & 0.75 & 0.17 & 0.31 & 0.73 \\
+ECOD               & 0.10 & 0.14 & 0.44 & 0.25 & 0.36 & 0.44 \\
+COPOD              & 0.10 & 0.15 & 0.45 & 0.23 & 0.48 & 0.41 \\
+HBOS               & 0.00 & 0.01 & 0.04 & 0.02 & 0.01 & 0.32 \\
+KNN                & 0.19 & 0.10 & 0.91 & 0.30 & 0.46 & 0.80 \\
+PCA                & 0.12 & 0.14 & 0.54 & 0.19 & 0.23 & 0.71 \\
 \midrule
-Autoencoder        & 0.11 & 0.12 & 0.76 & 0.29 & 0.36 & 0.76 \\\\
-VAE                & 0.10 & 0.13 & 0.72 & 0.18 & 0.27 & 0.72 \\\\
-Deep SVDD          & 0.14 & 0.13 & 0.72 & 0.23 & 0.37 & 0.70 \\\\
-DIF                & 0.11 & 0.12 & 0.81 & 0.28 & 0.39 & 0.78 \\\\
-AE1SVM             & 0.11 & 0.14 & 0.63 & 0.17 & 0.18 & 0.76 \\\\
-LUNAR              & 0.38 & 0.25 & 0.98 & \textbf{0.63} & \textbf{0.78} & 0.90 \\\\
+Autoencoder        & 0.11 & 0.12 & 0.76 & 0.29 & 0.36 & 0.76 \\
+VAE                & 0.10 & 0.13 & 0.72 & 0.18 & 0.27 & 0.72 \\
+Deep SVDD          & 0.14 & 0.13 & 0.72 & 0.23 & 0.37 & 0.70 \\
+DIF                & 0.11 & 0.12 & 0.81 & 0.28 & 0.39 & 0.78 \\
+AE1SVM             & 0.11 & 0.14 & 0.63 & 0.17 & 0.18 & 0.76 \\
+LUNAR              & 0.38 & 0.25 & 0.98 & \textbf{0.63} & \textbf{0.78} & 0.90 \\
 \midrule
-Drift detector     & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\\\
-Dedup rule         & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\\\
+Drift detector     & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
+Dedup rule         & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
 \bottomrule
 \end{tabular}
 \end{table}
