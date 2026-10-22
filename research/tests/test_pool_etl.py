@@ -57,3 +57,18 @@ def test_a_failing_dataset_is_recorded_with_its_reason(tmp_path):
     Path(job["path"]).unlink()
     out = pe.run_etl(job, "zscore")
     assert out["status"] == "FAIL" and "FileNotFoundError" in out["reason"]
+
+
+def test_an_adbench_carrier_has_string_column_names_so_the_rule_detectors_can_read_it(tmp_path):
+    import pool_typed as pt
+
+    rng = np.random.default_rng(0)
+    x = rng.normal(size=(3200, 5))
+    y = np.zeros(3200, dtype=int)
+    y[:40] = 1
+    path = tmp_path / "toy.npz"
+    np.savez(path, X=x, y=y)
+    job = {"id": "adbench:toy", "name": "toy", "source": "adbench", "path": str(path)}
+    carrier, report = pt.load_carrier(job)
+    assert all(isinstance(c, str) for c in carrier.columns) and report["normal_class_only"]
+    assert len(carrier) == 3160 and len(report["columns"]) == 5

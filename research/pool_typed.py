@@ -71,7 +71,7 @@ def load_carrier(job: dict[str, Any], seed: int = 0) -> tuple[pd.DataFrame, dict
     if job["source"] == "uci":
         return tr.load_carrier(job["meta"], Path(job["path"]), seed)
     data = np.load(job["path"])
-    features = pd.DataFrame(data["X"])[np.asarray(data["y"]).astype(int) == 0]
+    features = pd.DataFrame(data["X"]).add_prefix("f")[np.asarray(data["y"]).astype(int) == 0]
     carrier, report = inj.prepare(features.reset_index(drop=True), seed=seed)
     report.update(source_rows=int(len(features)), normal_class_only=True)
     return carrier, report
