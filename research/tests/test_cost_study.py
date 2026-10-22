@@ -161,3 +161,20 @@ def test_the_etl_stages_are_timed_separately(tmp_path):
     assert all(v >= 0 for v in out["stages_s"].values())
     assert out["rows_in"] == 300 and out["rss_peak_bytes"] > 0
     assert (tmp_path / "out" / "pipeline_clean.csv").is_file()
+
+
+@pytest.mark.parametrize("method", ["ecod", "copod", "hbos", "knn", "pca", "vae", "dif", "lunar"])
+def test_the_new_registry_detectors_can_be_timed(method):
+    out = cs.run_detection(method, cs.make_data(300, 4))
+    assert out["status"] == "OK" and out["detect_s"] > 0
+
+
+def test_the_sweep_runs_the_methods_it_is_given(monkeypatch, tmp_path):
+    seen = []
+
+    def measure(method, n, d, rep):
+        seen.append(method)
+        return {"status": "OK", "method": method, "n": n, "d": d, "detect_s": 0.1}
+
+    records = cs.sweep(["pca", "hbos"], [100], 4, measure, reps=lambda n: 1)
+    assert [r["method"] for r in records] == ["pca", "hbos"] and seen == ["pca", "hbos"]

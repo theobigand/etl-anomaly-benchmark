@@ -307,22 +307,94 @@ what the learned models of the next stage are meant to handle better.
 
 \subsection{Classical machine-learning detectors}
 The second family replaces the per-column band with a learned model of
-the joint feature space, so that a row can be flagged for an implausible
-\emph{combination} of otherwise-normal values. Three unsupervised
+the data, so that a row can be flagged for an implausible
+\emph{combination} of otherwise-normal values. Eight unsupervised
 detectors are taken from PyOD~\cite{zhao2019pyod} rather than
-reimplemented: \emph{Isolation Forest}, which scores a row by how few
-random axis-aligned splits are needed to isolate it; \emph{Local Outlier
-Factor} (LOF), which compares a point's local density to that of its
-neighbours; and a \emph{One-Class SVM}, which fits a boundary enclosing
-the bulk of the training data. All three receive the same preparation:
-non-numeric columns are dropped, missing cells are median-imputed, and
-every feature is standardized, since LOF and the One-Class SVM are
-distance-based. The PyOD \texttt{decision\_function} provides the
+reimplemented, with two deviations explained below. All receive the
+same preparation: non-numeric columns are dropped, missing cells are
+median-imputed, and every feature is standardized, since several of them
+are distance-based. The PyOD \texttt{decision\_function} provides the
 continuous score; the boolean flag uses a \emph{contamination} equal to
 the anomaly prevalence of the training split (clamped to PyOD's valid
 range), so each model marks about as many rows as the data actually
 contains rather than a fixed share. Contamination sets only the flag
-threshold and leaves ROC-AUC and PR-AUC unaffected.
+threshold and leaves ROC-AUC and PR-AUC unaffected. All hyperparameters
+are the defaults of PyOD; I tuned none of them.
+
+Three of the eight are the usual references. \emph{Isolation
+Forest}~\cite{liu2008isolation} scores a row by how few random
+axis-aligned splits are needed to isolate it; \emph{Local Outlier
+Factor} (LOF)~\cite{breunig2000lof} compares a point's local density to
+that of its neighbours; and a \emph{One-Class
+SVM}~\cite{scholkopf2001support} fits a boundary enclosing the bulk of
+the training data.
+
+Five more complete the family, and they differ mainly in whether they
+look at the columns one by one or together. Three of them model each
+column on its own and add up the evidence, so they can flag an unusual
+value in a column but not an unusual pair of values.
+\emph{ECOD}~\cite{li2023ecod} estimates, for each column, the share of
+fitted rows below a value and the share above it (the empirical tail
+probabilities); a row scores the sum over columns of the negative
+logarithm of the smaller tail, the tail being chosen by the sign of the
+skewness of the column. \emph{COPOD}~\cite{li2020copod} uses the same
+tail probabilities but combines the two tails of a column by their mean,
+which is an empirical copula without dependence between columns.
+\emph{HBOS}~\cite{goldstein2012hbos} builds a histogram of each column and
+scores a row by the sum of the logarithms of the inverse heights of the
+bins its values fall in. The two others use the joint distribution.
+\emph{KNN}~\cite{ramaswamy2000efficient} scores a row by its distance to
+its fifth nearest neighbour among the fitted rows, the simplest
+distance-based detector and the one LOF refines. \emph{PCA}
+projects the rows onto the principal components that explain $95\%$ of
+the variance and scores the squared reconstruction error: a row that
+follows the correlations of the fitted data is rebuilt almost exactly,
+one that breaks them is not, while a shift that stays inside the kept
+components is invisible to it. The idea of detecting outliers with
+principal components is that of Shyu et al.~\cite{shyu2006principal}.
+
+Two choices differ from what PyOD does by default, because a detector in my
+pipeline must map a row to a score using the fitted rows only. PyOD
+recomputes the empirical distribution of ECOD and COPOD on the fitted
+rows plus the rows being scored, so a row's score depends on the other
+rows evaluated with it. I recompute the two methods on the fitted rows
+alone, ranking a row as if it were added to them, which is what PyOD
+computes for a batch of one row (a test compares the two). PyOD's own PCA
+scores a weighted distance to the eigenvectors, not a reconstruction
+error, so the projection comes from scikit-learn. LOF and KNN compare every
+row with the fitted rows, and the One-Class SVM is quadratic too; they are
+skipped, and the skip recorded, above $50{,}000$ fitted rows for LOF and KNN and
+$20{,}000$ for the One-Class SVM (limits set from the cost study).
+
+\subsection{Deep detectors}
+The third family learns a representation with a neural network. They are
+opt-in in the registry, they need PyTorch, and they run on the CPU. Six
+models are compared, all behind the same interface and all with the default
+settings of PyOD~2~\cite{chen2025pyod2}.
+The \emph{autoencoder} is a multilayer perceptron (scikit-learn) trained to
+rebuild the standardized features through a bottleneck; a row that breaks the
+structure learned on the fitted data is rebuilt badly, and the squared
+reconstruction error is its score. The \emph{variational autoencoder}
+(VAE)~\cite{kingma2014auto} encodes a row into a Gaussian code and decodes
+it, and is trained on a bound of the likelihood of the data; its score is the
+reconstruction error. PyOD draws the code at random when it scores, so a
+row's score changes from one call to the next and with the rows around it;
+I score with the mean of the code instead. \emph{Deep SVDD}~\cite{ruff2018deep}
+trains a network to map the fitted rows close to a fixed centre and scores a
+row by its distance to that centre. The \emph{Deep Isolation
+Forest} (DIF)~\cite{xu2023deep} maps the rows through an ensemble of randomly
+initialized networks and builds an isolation forest in each representation;
+PyOD standardizes the representation of the scored rows with their own mean
+and variance, which makes a score depend on the other scored rows, so I
+standardize it with the fitted rows. \emph{AE1SVM}~\cite{nguyen2019scalable}
+trains an autoencoder and a one-class SVM approximated with random Fourier
+features on its code, and scores the combination. \emph{LUNAR}~\cite{goodge2022lunar}
+learns the score from the distances of a row to its nearest neighbours, which
+generalizes LOF and KNN with a network. The neural models are fitted on at
+most $20{,}000$ randomly drawn fitted rows to bound the duration, and each is
+seeded with the seed of the repetition. The LSTM autoencoder of
+Section~\ref{sec:lstm} reads windows of ordered rows, does not share the
+row-level contract, and stays outside this registry.
 
 \subsection{Synthetic per-anomaly-type dataset}
 \label{sec:synthetic}
