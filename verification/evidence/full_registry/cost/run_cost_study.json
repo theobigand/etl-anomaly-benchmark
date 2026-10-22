@@ -1,0 +1,82 @@
+{
+  "captured_at": "2026-10-22T20:11:19.521456+00:00",
+  "dataset": {
+    "identity": "synthetic_gaussian+credit_card"
+  },
+  "environment_lock": {
+    "file": "verification/environment/conda-darwin-arm64.explicit.txt",
+    "sha256": "44d5470f1d0c6a675f26e8fec98bf0592967deb2e0a3b1834ac95d822b6e1c73"
+  },
+  "experiment": "cost_study",
+  "fingerprint_recipe": 2,
+  "measurement_fingerprint": "9cd603c619d15e17d3cbd9d14986b6f62bdb5611a5ba78fbd4d10ae8f4d7285d",
+  "measurement_recipe": 1,
+  "output_sha256": {
+    "cost_study.json": "b0192566805b897f68ba223f5d204244238ceb8a24db01c03c822b00b1b43f99"
+  },
+  "outputs": [
+    "cost_study.json"
+  ],
+  "packages": {
+    "great-expectations": "1.24.0",
+    "numpy": "2.4.6",
+    "pandas": "3.0.6",
+    "pyod": "3.6.7",
+    "scikit-learn": "1.9.1"
+  },
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "python": "3.11.17",
+  "schema_version": 1,
+  "scientific_fingerprint": "40526dddf1e986ae926d6ab322ab8bbca5d5ebd32b9b6a676ba508cff07060d1",
+  "seeds": [
+    42
+  ],
+  "settings": {
+    "cpu_count": 10,
+    "dataset_sha256": "76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89",
+    "features": 8,
+    "load_at_start": 3.01220703125,
+    "lstm_epochs": 5,
+    "lstm_fit_rows": 50000,
+    "machine": "arm64",
+    "methods": [
+      "ecod",
+      "copod",
+      "hbos",
+      "knn",
+      "pca",
+      "vae",
+      "deep_svdd",
+      "dif",
+      "ae1svm",
+      "lunar"
+    ],
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "protocol": "verification/cost_study.md",
+    "python": "3.11.17",
+    "script_sha256": "c754219c7d3e61d00b1cff8c228bc9c5b6c75b591558ecea2359049611378b58",
+    "seed": 42,
+    "sizes": [
+      1000,
+      3000,
+      10000,
+      30000,
+      100000,
+      300000
+    ],
+    "timeout_s": 300,
+    "versions": {
+      "numpy": "2.4.6",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "torch": "2.14.1"
+    },
+    "wide": [
+      30000,
+      29
+    ]
+  },
+  "source_fingerprint": "250fb49199a28aa0d84a498d642881eeff7e5f8c185cf0168310d4d45e47a833",
+  "source_revision": "d0450d5cacf856141a8859ddfd15c8fab388b977",
+  "worktree_dirty": true
+}
