@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-21T20:40:17.527840+00:00",
+  "captured_at": "2026-10-22T17:49:38.104782+00:00",
   "dataset": {
     "identity": "credit_card,water_quality,cardio,synthetic"
   },
@@ -13,10 +13,10 @@
   "measurement_recipe": 1,
   "output_sha256": {
     "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/paper/figures/pr_curves.png": "4d1c2e741fdbebce6be6d8fdf0a9b856cfb53bfca03de27a94fc59075559a503",
-    "contamination_sweep_20261021_204017.csv": "03e598f79a9e4d1f9a99cd4386a5081e972fe40bd60ead320e361850598a8343"
+    "contamination_sweep_20261022_174938.csv": "03e598f79a9e4d1f9a99cd4386a5081e972fe40bd60ead320e361850598a8343"
   },
   "outputs": [
-    "contamination_sweep_20261021_204017.csv",
+    "contamination_sweep_20261022_174938.csv",
     "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/paper/figures/pr_curves.png"
   ],
   "packages": {
@@ -29,7 +29,7 @@
   "platform": "macOS-27.0.1-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "scientific_fingerprint": "536531c854369fa90900913ad7b6ec8e1c4abe110ba92a15b9e2f6e46a9974c0",
+  "scientific_fingerprint": "40526dddf1e986ae926d6ab322ab8bbca5d5ebd32b9b6a676ba508cff07060d1",
   "seeds": [
     42
   ],
@@ -59,7 +59,7 @@
     "synthetic_rows": null,
     "synthetic_split_strategy": "customer_identity_grouped_stratified"
   },
-  "source_fingerprint": "dbbbfb587274f1f92edab7bda7474473b1f1359f7b1c47375890dee9d7a726cf",
-  "source_revision": "4f7fd44135f69e5ce098d30676b9c15b43e6b302",
-  "worktree_dirty": true
+  "source_fingerprint": "250fb49199a28aa0d84a498d642881eeff7e5f8c185cf0168310d4d45e47a833",
+  "source_revision": "d8df57456a10dbc988773760889e9f72ad546a35",
+  "worktree_dirty": false
 }

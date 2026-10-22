@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-21T20:37:34.642400+00:00",
+  "captured_at": "2026-10-22T17:46:59.388564+00:00",
   "dataset": {
     "bytes": 525187,
     "identity": "water_quality",
@@ -15,14 +15,14 @@
   "measurement_fingerprint": "9cd603c619d15e17d3cbd9d14986b6f62bdb5611a5ba78fbd4d10ae8f4d7285d",
   "measurement_recipe": 1,
   "output_sha256": {
-    "benchmark_water_quality_20261021_203734.csv": "3b6a45a8f30f0308356558c2f865c5cf10fe6b8104eb5a0821d8e7b7c7843e31",
-    "benchmark_water_quality_20261021_203734.md": "82cb9686c848fde4bd5854cf56af993f5501a44a2c1c5adb43ac313f2916f88b",
-    "split_ids_water_quality_20261021_203734.json.gz": "bde870d2862f314501e1d38bb5aa614fb11c73eb775ab5acef42c44403bb8720"
+    "benchmark_water_quality_20261022_174659.csv": "bab445604f4e35b19b3a6376b9719f4604105d48621d68f2ed132e936b9f9f23",
+    "benchmark_water_quality_20261022_174659.md": "a3ba9496a702c874b120ff42482c94ae654939d39f7549055cc3821748ed11be",
+    "split_ids_water_quality_20261022_174659.json.gz": "bde870d2862f314501e1d38bb5aa614fb11c73eb775ab5acef42c44403bb8720"
   },
   "outputs": [
-    "benchmark_water_quality_20261021_203734.csv",
-    "benchmark_water_quality_20261021_203734.md",
-    "split_ids_water_quality_20261021_203734.json.gz"
+    "benchmark_water_quality_20261022_174659.csv",
+    "benchmark_water_quality_20261022_174659.md",
+    "split_ids_water_quality_20261022_174659.json.gz"
   ],
   "packages": {
     "great-expectations": "1.24.0",
@@ -34,7 +34,7 @@
   "platform": "macOS-27.0.1-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "scientific_fingerprint": "536531c854369fa90900913ad7b6ec8e1c4abe110ba92a15b9e2f6e46a9974c0",
+  "scientific_fingerprint": "40526dddf1e986ae926d6ab322ab8bbca5d5ebd32b9b6a676ba508cff07060d1",
   "seeds": [
     42,
     1,
@@ -79,7 +79,7 @@
     ],
     "split_strategy": "stratified"
   },
-  "source_fingerprint": "dbbbfb587274f1f92edab7bda7474473b1f1359f7b1c47375890dee9d7a726cf",
-  "source_revision": "4f7fd44135f69e5ce098d30676b9c15b43e6b302",
+  "source_fingerprint": "250fb49199a28aa0d84a498d642881eeff7e5f8c185cf0168310d4d45e47a833",
+  "source_revision": "d8df57456a10dbc988773760889e9f72ad546a35",
   "worktree_dirty": false
 }
