@@ -49,6 +49,19 @@ resultat.
    moins 20 anomalies ; les jeux ADBench, fournis sans colonne de temps, sont ecartes. Protocole du
    pilote (ajustement sur les 70 % les plus anciens, test sur les 15 % les plus recents, controle
    stratifie, seuils P0, P1 et P2 de `temporal_decision.md`), 17 detecteurs.
+
+   Precision ecrite avant les resultats, apres le balayage des colonnes (`evidence/pool_extension/
+   time_scan.json`, `research/time_scan.py`) : une colonne de temps est une colonne lisible comme date ou
+   horodatage, ou un mois dont l'ordre est verifie ; les colonnes dont seul le nom evoque le temps
+   (heures par semaine, duree de sejour, annees de tabagisme...) ne sont pas des variables de temps
+   des lignes et sont refusees. Les jeux etiquetes retenus sont Credit Card (variable `Time` du fichier
+   Kaggle, etude deja faite, rejouee avec les 17 detecteurs), Bank Marketing (ordre du fichier, mois du
+   2008-05 au 2010-11, deja verifie), Occupancy Detection (`date`), Room Occupancy Estimation (`Date` et
+   `Time`) et Online Shoppers (`Month`, ordre par mois, egalites par ordre du fichier). Onze jeux ont une
+   date mais pas d'etiquette (Forest Fires, Istanbul Stock Exchange, Bike Sharing, Dow Jones Index, Air
+   Quality, Appliances Energy, Seoul Bike Sharing, Garment Productivity, Single Elder Home Monitoring,
+   Power Consumption of Tetouan, Steel Industry Energy) : l'etude de la qualite de detection y est
+   indefinie, ils sont consignes comme ecartes pour cette raison.
 6. **Controle des fichiers** : chaque fichier local du pool est compare a l'empreinte du manifeste
    epingle (taille, empreinte, nombre de lignes et de colonnes, prevalence des etiquettes) par un test
    marque `real`, puis par la verification locale.
