@@ -106,7 +106,8 @@ def synthetic_seed(
     df = make_synthetic(seed=seed, **({"n_rows": rows} if rows else {}))
     train, _val, test = rsb._split_synthetic(df, seed)
     contamination = float(train["anomaly"].mean())
-    recall, precision, fpr, settings, errors = {}, {}, {}, {}, {}
+    recall, precision, fpr, settings, errors, metrics = {}, {}, {}, {}, {}, {}
+    y_test = test["anomaly"].astype(int)
     for name in names:
         detector = build(name, contamination, seed)
         started = time.perf_counter()
@@ -120,6 +121,7 @@ def synthetic_seed(
             errors[name] = repr(error)
             continue
         flags = pd.Series(result.flags.to_numpy(), index=test.index)
+        metrics[name] = compute_metrics(y_test, result.flags, result.scores)
         r, p = rsb._per_type(flags, test["anomaly_type"])
         recall[name], precision[name] = r, p
         fpr[name] = float(flags[test["anomaly_type"] == "clean"].mean())
@@ -129,6 +131,7 @@ def synthetic_seed(
         "recall": json.loads(pd.DataFrame(recall).T[ANOMALY_TYPES].to_json(orient="split")),
         "precision": json.loads(pd.DataFrame(precision).T[ANOMALY_TYPES].to_json(orient="split")),
         "fpr": fpr,
+        "metrics": metrics,
         "settings": settings,
         "errors": errors,
     }

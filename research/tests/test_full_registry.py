@@ -63,6 +63,8 @@ def test_a_synthetic_seed_gives_recall_and_precision_for_each_type():
     recall = fr._frame(run["recall"])
     assert list(recall.index) == list(FAST) and list(recall.columns) == ANOMALY_TYPES
     assert run["errors"] == {} and set(run["fpr"]) == set(FAST)
+    assert set(run["metrics"]) == set(FAST)
+    assert {"precision", "recall", "f1", "roc_auc", "pr_auc"} <= set(run["metrics"]["lunar"])
     assert run["settings"]["lunar"]["random_state"] == 2 and run["settings"]["lunar"]["seconds"] > 0
 
 

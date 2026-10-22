@@ -13,7 +13,8 @@ The question it tries to answer: does adding machine learning to an ETL pipeline
 - [x] ETL pipeline as composable stages (extract, transform, detect, load)
 - [x] Common `Detector` interface (fit / predict / score, PyOD-compatible)
 - [x] Rule-based detectors: Z-score, IQR, Great Expectations
-- [x] Classical ML detectors: Isolation Forest, LOF, One-Class SVM (via PyOD)
+- [x] Classical ML detectors (via PyOD): Isolation Forest, LOF, One-Class SVM, ECOD, COPOD, HBOS, KNN, PCA
+- [x] Neural detectors (opt-in, PyTorch, CPU): autoencoder, VAE, Deep SVDD, DIF, AE1SVM, LUNAR; the LSTM autoencoder stays in `research/`
 - [x] Synthetic dataset (6 anomaly types), per-type recall + precision, heatmap
 - [x] Evaluation protocol: stratified 70/15/15 split, 5 seeds, mean ± std
 - [x] ML contamination read from the train-set prevalence
@@ -31,6 +32,7 @@ The question it tries to answer: does adding machine learning to an ETL pipeline
 - [x] Autoencoder and LSTM autoencoder rows in the per-type matrix, trained to convergence (`verification/deep_typed.md`, `.venv/bin/python research/deep_typed.py --output <dir>`)
 - [x] Two further synthetic schemas, transactions and sensors (`verification/multi_schema.md`, `python research/multi_schema.py --output <dir>`)
 - [x] Related work with verified references (`verification/references.md`) and the IMRaD manuscript with the verification in appendices
+- [x] Complete detector registry: 8 classical and 6 neural detectors added, every study rerun, 6 pre-registered hypotheses (`verification/full_registry.md`, results in `verification/full_registry_results.md`; neural runs: `python research/full_registry.py real|synthetic --output <dir>`, `research/labelled_benchmark.py --methods deep`, `research/typed_run.py --methods deep`, `research/multi_schema.py --methods deep`; tables and figures: `python research/full_registry_summary.py`)
 - [x] Decision-level study under temporal shift on Credit Card and Bank Marketing (`verification/temporal_decision.md`, `python research/temporal_decision.py --output <dir>`)
 - [ ] Author review of the related work and the IMRaD draft, Kyoto-2006+ rights and download (M2)
 - [ ] More imbalanced real datasets
@@ -42,7 +44,7 @@ conda env create -f environment.yml
 conda activate etl-benchmark
 ```
 
-`environment.yml` installs the package in editable mode (`pip install -e .`), so code changes are picked up without reinstalling.
+`environment.yml` installs the package in editable mode (`pip install -e .`), so code changes are picked up without reinstalling. It also installs PyTorch (conda-forge `pytorch`), which only the six neural detectors need; it is imported when one of them is fitted. Install PyTorch from conda in this environment: a pip wheel brings its own OpenMP runtime, which clashes with the conda one. In CI, `pip install -e ".[dev]"` gets the CPU build from the PyTorch index.
 
 ## Data
 
@@ -87,7 +89,8 @@ python -m etl_benchmark --detector isolation_forest
 ```
 
 Registered detectors: `zscore`, `iqr`, `great_expectations`, `isolation_forest`, `lof`,
-`ocsvm`, plus `drift` (time-aware, opt-in, synthetic dataset only).
+`ocsvm`, `ecod`, `copod`, `hbos`, `knn`, `pca` (the default sweep), `drift` (time-aware, opt-in,
+synthetic dataset only) and the opt-in neural ones `autoencoder`, `vae`, `deep_svdd`, `dif`, `ae1svm`, `lunar`.
 
 Every benchmark uses a 70/15/15 split (fit on train, metrics on the held-out
 test set), repeats over the seeds in `config.BENCHMARK_SEEDS`, and reports mean ± std.
@@ -129,24 +132,49 @@ Mean over 5 seeds on the 15% held-out test split.
 
 | Detector | Prec | Rec | F1 | ROC-AUC | PR-AUC | Flag % | detect |
 |---|---|---|---|---|---|---|---|
-| Z-score | 0.011 | 0.870 | 0.021 | 0.926 | 0.078 | 13.4 | 0.07 s |
-| IQR | 0.003 | 0.966 | 0.007 | 0.911 | 0.018 | 48.6 | 0.20 s |
-| Great Expectations | 0.037 | 0.676 | 0.070 | 0.830 | 0.182 | 3.1 | 2.19 s |
-| Isolation Forest | 0.202 | 0.206 | 0.203 | 0.934 | 0.120 | 0.2 | 2.75 s |
+| Z-score | 0.011 | 0.870 | 0.021 | 0.926 | 0.078 | 13.4 | 0.03 s |
+| IQR | 0.003 | 0.966 | 0.007 | 0.911 | 0.018 | 48.6 | 0.12 s |
+| Great Expectations | 0.037 | 0.676 | 0.070 | 0.830 | 0.182 | 3.1 | 1.26 s |
+| Isolation Forest | 0.202 | 0.206 | 0.203 | 0.934 | 0.120 | 0.2 | 1.70 s |
+| ECOD | 0.260 | 0.268 | 0.262 | 0.930 | 0.175 | 0.2 | 3.04 s |
+| COPOD | 0.310 | 0.299 | 0.303 | 0.927 | 0.213 | 0.2 | 3.04 s |
+| HBOS | 0.337 | 0.318 | 0.326 | 0.931 | 0.216 | 0.2 | 0.97 s |
+| PCA | 0.139 | 0.132 | 0.135 | 0.831 | 0.105 | 0.2 | 0.70 s |
+| Autoencoder | 0.083 | 0.141 | 0.103 | 0.892 | 0.066 | 0.3 | n/m |
+| VAE | 0.162 | 0.237 | 0.191 | 0.929 | 0.142 | 0.2 | n/m |
+| Deep SVDD | 0.261 | 0.546 | 0.346 | 0.918 | 0.289 | 0.4 | n/m |
+| DIF | 0.287 | 0.355 | 0.317 | 0.922 | 0.242 | 0.2 | n/m |
+| AE1SVM | 0.184 | 0.223 | 0.201 | 0.937 | 0.144 | 0.2 | n/m |
+| LUNAR | 0.138 | 0.535 | 0.216 | 0.941 | 0.136 | 0.7 | n/m |
 
 With contamination set to the prevalence, Isolation Forest flags only 0.17% of rows and
 reaches a precision of 0.20 (the first usable operating point), at a recall of 0.21 and
-with real seed variance (F1 = 0.20 ± 0.07). LOF and One-Class SVM do not scale to 284k
-rows in the pipeline.
+with real seed variance (F1 = 0.20 ± 0.07). HBOS, COPOD and ECOD do better on this dataset
+(F1 0.33, 0.30, 0.26) and Deep SVDD has the best F1 (0.35 ± 0.08). LOF, KNN and One-Class SVM
+do not scale to 284k rows in the pipeline. `n/m`: the neural models were run in parallel, so their
+times are not published; the cost study measures them alone.
 
 ### Cardio (1,831 raw rows; 1,822 after deduplication, 9.6% anomalies)
 
 | Detector | Prec | Rec | F1 | ROC-AUC | PR-AUC | Flag % |
 |---|---|---|---|---|---|---|
 | Z-score | 0.49 | 0.81 | 0.61 | 0.93 | 0.61 | 16.6 |
+| IQR | 0.21 | 0.90 | 0.33 | 0.78 | 0.30 | 43.4 |
 | Great Expectations | 0.50 | 0.21 | 0.29 | 0.59 | 0.19 | 4.6 |
 | Isolation Forest | 0.64 | 0.61 | 0.62 | 0.94 | 0.70 | 9.9 |
+| LOF | 0.25 | 0.27 | 0.26 | 0.62 | 0.24 | 10.7 |
 | One-Class SVM | 0.56 | 0.61 | 0.58 | 0.94 | 0.63 | 10.7 |
+| ECOD | 0.57 | 0.59 | 0.57 | 0.95 | 0.69 | 10.2 |
+| COPOD | 0.61 | 0.61 | 0.60 | 0.93 | 0.69 | 9.9 |
+| HBOS | 0.52 | 0.52 | 0.51 | 0.86 | 0.57 | 10.2 |
+| KNN | 0.40 | 0.47 | 0.43 | 0.78 | 0.47 | 11.7 |
+| PCA | 0.33 | 0.39 | 0.36 | 0.73 | 0.37 | 11.4 |
+| Autoencoder | 0.32 | 0.38 | 0.35 | 0.74 | 0.35 | 11.7 |
+| VAE | 0.41 | 0.46 | 0.43 | 0.87 | 0.45 | 11.2 |
+| Deep SVDD | 0.26 | 0.41 | 0.32 | 0.69 | 0.29 | 15.8 |
+| DIF | 0.53 | 0.69 | 0.59 | 0.94 | 0.67 | 13.1 |
+| AE1SVM | 0.58 | 0.64 | 0.61 | 0.94 | 0.64 | 10.9 |
+| LUNAR | 0.41 | 0.39 | 0.29 | 0.65 | 0.33 | 18.8 |
 
 When the anomalies are genuinely rare and distributionally distinct, the unsupervised
 detectors work: Isolation Forest reaches F1 ≈ 0.62 and PR-AUC ≈ 0.70. This is the
@@ -163,6 +191,18 @@ majority target).
 | Isolation Forest | 0.09 | 0.11 | 0.99 | 0.89 | 0.33 | 0.60 |
 | LOF | 0.28 | 0.16 | 0.70 | 0.21 | 0.50 | 0.67 |
 | One-Class SVM | 0.07 | 0.10 | 1.00 | 0.90 | 0.29 | 0.54 |
+| ECOD | 0.10 | 0.13 | 0.68 | 0.52 | 0.26 | 0.36 |
+| COPOD | 0.09 | 0.13 | 0.89 | 0.51 | 0.34 | 0.30 |
+| HBOS | 0.00 | 0.00 | 0.90 | 0.00 | 0.00 | 0.32 |
+| KNN | 0.09 | 0.10 | 1.00 | 0.39 | 0.41 | 0.81 |
+| PCA | 0.10 | 0.12 | 1.00 | 0.48 | 0.23 | 0.58 |
+| Autoencoder | 0.12 | 0.10 | 0.81 | 0.83 | 0.29 | 0.53 |
+| VAE | 0.07 | 0.11 | 0.99 | 0.92 | 0.30 | 0.66 |
+| Deep SVDD | 0.19 | 0.18 | 0.33 | 0.13 | 0.16 | 0.32 |
+| DIF | 0.09 | 0.07 | 1.00 | 1.00 | 0.33 | 1.00 |
+| AE1SVM | 0.09 | 0.10 | 0.99 | 0.78 | 0.27 | 0.61 |
+| LUNAR | 0.44 | 0.39 | 1.00 | 0.63 | 0.65 | 0.90 |
+| LSTM autoencoder | 0.08 | 0.09 | 0.97 | 0.68 | 0.25 | 0.53 |
 | drift | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
 | transform dedup | 0.00 | 1.00 | 0.00 | 0.00 | 0.00 | 0.00 |
 
@@ -205,7 +245,9 @@ etl-anomaly-benchmark/
 │           ├── base.py       # Detector ABC (fit/predict/score)
 │           ├── rules.py      # ZScoreDetector, IQRDetector
 │           ├── gx.py         # GreatExpectationsDetector
-│           ├── ml.py         # IsolationForest / LOF / OneClassSVM (PyOD)
+│           ├── ml.py         # Isolation Forest, LOF, OC-SVM, ECOD, COPOD, HBOS, KNN, PCA (PyOD)
+│           ├── deep.py       # VAE, Deep SVDD, DIF, AE1SVM, LUNAR (PyTorch, imported on fit)
+│           ├── _torch_models.py # PyOD neural models with scores that depend on the fit rows only
 │           ├── autoencoder.py # AutoencoderDetector (CPU reconstruction error, opt-in)
 │           ├── drift.py      # TemporalDriftDetector (time-aware)
 │           ├── window_drift.py # WindowDriftMonitor (chronological windows)
@@ -250,7 +292,7 @@ class MyDetector(Detector):
         ...
 ```
 
-Then add one line to `src/etl_benchmark/registry.py`, and both the demo and the benchmark pick it up. The PyOD wrappers (`quality/ml.py`) follow this interface through a small `PyODDetector` base; `AutoencoderDetector` reuses that base, and the LSTM-AE will do the same through `quality/windows.py`. A detector listed in the registry is checked by `tests/test_registry_contract.py`, so a new one cannot be added without passing the common fit / predict / score and leakage checks. Learned models stay opt-in (`DEEP_NAMES`) until `verification/deep_models.md` is satisfied.
+Then add one line to `src/etl_benchmark/registry.py`, and both the demo and the benchmark pick it up. The PyOD wrappers (`quality/ml.py`) follow this interface through a small `PyODDetector` base; `AutoencoderDetector` reuses that base, and the LSTM-AE will do the same through `quality/windows.py`. A detector listed in the registry is checked by `tests/test_registry_contract.py`, so a new one cannot be added without passing the common fit / predict / score and leakage checks. Learned models stay opt-in (`DEEP_NAMES`) until `verification/deep_models.md` is satisfied. A PyOD neural model goes through `TorchDetector` in `quality/deep.py`, which fixes the seed and the arguments the protocol needs; if PyOD's scoring depends on the other scored rows (as it did for ECOD, COPOD, DIF and the VAE), a subclass in `quality/_torch_models.py` or a model in `quality/ml.py` fixes it, and the batch-independence contract test must pass.
 
 ## License
 

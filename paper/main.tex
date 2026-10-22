@@ -38,10 +38,11 @@ when evaluated within a realistic pipeline and broken down by the type
 of anomaly being injected. This paper presents an open-source ETL
 pipeline in which anomaly detectors from different families share one
 \texttt{fit}/\texttt{predict}/\texttt{score} interface and are scored on
-the same pipeline path: statistical rules (Z-score, IQR, Great
-Expectations) and classical ML detectors (Isolation Forest, LOF,
-One-Class SVM), with deep learning detectors (Autoencoder,
-LSTM-Autoencoder) added behind the same interface. I evaluate the
+the same pipeline path: three rule-based detectors (Z-score, IQR, Great
+Expectations), eight classical ML detectors (Isolation Forest, LOF,
+One-Class SVM, ECOD, COPOD, HBOS, KNN, PCA) and six neural ones
+(autoencoder, VAE, Deep SVDD, DIF, AE1SVM, LUNAR), with an LSTM autoencoder
+studied apart. I evaluate the
 detectors, over five seeds on a stratified held-out split, on four
 datasets (and, for generality, on $100$ labelled problems and $42$ real
 tables with injected anomalies): Kaggle Credit Card Fraud, a rare-anomaly Cardio dataset, a
@@ -52,7 +53,9 @@ PR-AUC, I report a per-anomaly-type recall and precision, precision-recall
 curves, and a sweep of the injection severity. The aggregate metrics make the families look interchangeable;
 the per-type view shows each has a narrow, largely non-overlapping
 competence, so broad coverage needs several families rather than the
-single best one. My goal is a reproducible, pipeline-integrated
+single best one. A larger registry does not change this: on the $100$ labelled
+problems no detector is clearly ahead, the column-wise ECOD, COPOD and HBOS match
+Isolation Forest, and the neural models do not beat the best classical one. My goal is a reproducible, pipeline-integrated
 benchmark that answers the practical question: \emph{which family of
 detectors should I use, for which kind of data quality problem, at what
 operational cost?}
@@ -129,11 +132,12 @@ present:
     \item \textbf{A reproducible ETL pipeline} in which rule-based and
     classical ML anomaly detectors share one interface and are scored on
     the same extract--transform--detect path, released as open-source
-    code, with an autoencoder and an LSTM autoencoder added behind the same
-    interface.
+    code. The registry holds three rule-based detectors, eight classical
+    models and six neural ones, all behind the same interface.
     \item \textbf{A head-to-head benchmark} of statistical rules
-    (Z-score, IQR, Great Expectations) and classical ML detectors
-    (Isolation Forest, LOF, One-Class SVM) on four datasets, with a
+    (Z-score, IQR, Great Expectations), classical ML detectors
+    (Isolation Forest, LOF, One-Class SVM, ECOD, COPOD, HBOS, KNN, PCA) and neural
+    detectors (autoencoder, VAE, Deep SVDD, DIF, AE1SVM, LUNAR) on four datasets, with a
     stratified held-out split, five seeds, and the ML operating point
     read from the data, reporting precision, recall, F1, ROC-AUC, PR-AUC,
     precision-recall curves, and detection-stage latency (fit, predict and
@@ -143,7 +147,7 @@ present:
     duplicates, univariate outliers, multivariate outliers, temporal
     drift, invalid formats) are injected at a tunable severity, I produce
     a method-by-type recall and precision matrix, test its sensitivity
-    under a severity sweep, add the two deep models, and repeat it on two
+    under a severity sweep, add the neural models and the further classical detectors, and repeat it on two
     further schemas. The families turn out to have narrow, largely
     non-overlapping competence that the aggregate metrics hide.
     \item \textbf{The same analysis on real data.} The six types are
@@ -505,18 +509,29 @@ split (Section~\ref{sec:protocol}). Seed variability is reported in the
 archived result tables; timing also depends on the execution environment.
 
 \subsection{Real fraud data}
-Table~\ref{tab:fraud} reports the detectors on Credit Card Fraud. The
+Table~\ref{tab:fraud} reports the detectors on Credit Card Fraud: the
+eight that scale to $284$k rows, then the six neural ones, which are fitted on
+at most $20{,}000$ rows. The
 statistical rules recover most frauds (recall $0.87$--$0.97$) at a
 precision below $0.04$: a fixed per-column rule cannot separate a
 $0.17\%$ positive class from the tails of legitimate traffic. Great
-Expectations is the most selective of the rules ($3\%$ of rows) and leads PR-AUC at
-$0.182 \pm 0.046$. Isolation Forest behaves differently now that its
+Expectations is the most selective of the rules ($3\%$ of rows) and has the best
+PR-AUC of the three ($0.182 \pm 0.046$). Isolation Forest behaves differently now that its
 contamination matches the prevalence: it flags only $0.17\%$ of rows and
-reaches a precision of $0.20$, the first usable operating point in the
-table, but its recall drops to $0.21$ and both are seed-sensitive
-($F_1 = 0.20 \pm 0.07$). It keeps the best ROC-AUC ($0.934$). Great
+reaches a precision of $0.20$, the first usable operating point among the
+rules and Isolation Forest, but its recall drops to $0.21$ and both are seed-sensitive
+($F_1 = 0.20 \pm 0.07$). The column-wise detectors added to the registry do better than
+Isolation Forest on this dataset: with the same $0.2\%$ of rows flagged, HBOS reaches the best
+precision of the table ($0.34 \pm 0.05$), COPOD and ECOD an $F_1$ of $0.30$ and
+$0.26$ against $0.20$, and the PR-AUC of HBOS and COPOD ($0.22$ and $0.21$) is above that of
+Great Expectations. PCA is below Isolation Forest ($F_1 = 0.14 \pm 0.14$). Among the neural
+models, Deep SVDD has the best $F_1$ ($0.35 \pm 0.08$) and PR-AUC ($0.29 \pm 0.10$) of the
+table, at a recall of $0.55$, and LUNAR the best ROC-AUC ($0.941$) with a precision of only
+$0.14$ and $0.7\%$ of rows flagged; the autoencoder is the weakest ($F_1 = 0.10$). Seed spreads
+are large for every learned model, so the order among the better ones is not firm. Great
 Expectations took $1.3$\,s on this run, against $0.03$--$0.12$\,s for the
-statistical rules; these times vary between runs. LOF and the
+statistical rules; these times vary between runs, and the neural models were timed under load,
+so their column is left empty (Section~\ref{sec:cost} measures them alone). LOF, KNN and the
 One-Class SVM were not run at $284$k rows, where their cost was expected to
 be prohibitive; I did not measure it.
 
@@ -531,23 +546,39 @@ $15\%$ test split. Higher is better except flagged rows and time.}
 \toprule
 Detector & Prec. & Rec. & $F_1$ & ROC & PR & Flag.\% & Time (s) \\
 \midrule
-Z-score            & 0.011 & 0.870 & 0.021 & 0.926 & 0.078 & 13.4 & \textbf{0.04} \\
-IQR                & 0.003 & \textbf{0.966} & 0.007 & 0.911 & 0.018 & 48.6 & 0.16 \\
-Great Expectations & 0.037 & 0.676 & 0.070 & 0.830 & \textbf{0.182} & 3.1 & 1.91 \\
-Isolation Forest   & \textbf{0.202} & 0.206 & \textbf{0.203} & \textbf{0.934} & 0.120 & \textbf{0.2} & 2.42 \\
+Z-score            & 0.011 & 0.870 & 0.021 & 0.926 & 0.078 & 13.4 & \textbf{0.03} \\
+IQR                & 0.003 & \textbf{0.966} & 0.007 & 0.911 & 0.018 & 48.6 & 0.12 \\
+Great Expectations & 0.037 & 0.676 & 0.070 & 0.830 & 0.182 & 3.1 & 1.26 \\
+\midrule
+Isolation Forest   & 0.202 & 0.206 & 0.203 & 0.934 & 0.120 & 0.2 & 1.70 \\
+ECOD               & 0.260 & 0.268 & 0.262 & 0.930 & 0.175 & 0.2 & 3.04 \\
+COPOD              & 0.310 & 0.299 & 0.303 & 0.927 & 0.213 & 0.2 & 3.04 \\
+HBOS               & \textbf{0.337} & 0.318 & 0.326 & 0.931 & 0.216 & 0.2 & 0.97 \\
+PCA                & 0.139 & 0.132 & 0.135 & 0.831 & 0.105 & 0.2 & 0.70 \\
+\midrule
+Autoencoder        & 0.083 & 0.141 & 0.103 & 0.892 & 0.066 & 0.3 & -- \\
+VAE                & 0.162 & 0.237 & 0.191 & 0.929 & 0.142 & 0.2 & -- \\
+Deep SVDD          & 0.261 & 0.546 & \textbf{0.346} & 0.918 & \textbf{0.289} & 0.4 & -- \\
+DIF                & 0.287 & 0.355 & 0.317 & 0.922 & 0.242 & 0.2 & -- \\
+AE1SVM             & 0.184 & 0.223 & 0.201 & 0.937 & 0.144 & 0.2 & -- \\
+LUNAR              & 0.138 & 0.535 & 0.216 & \textbf{0.941} & 0.136 & 0.7 & -- \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \subsection{Genuinely imbalanced real data: Cardio}
 \label{sec:cardio}
-Table~\ref{tab:cardio} runs all six detectors on Cardio, where the
+Table~\ref{tab:cardio} runs all detectors on Cardio, where the
 anomalies are both rare ($9.6\%$) and distributionally distinct. Here the
 unsupervised detectors work: Isolation Forest reaches $F_1 = 0.62$,
 PR-AUC $0.70$ and ROC-AUC $0.94$, and the One-Class SVM is close behind.
 Z-score also does well on this dataset ($F_1 = 0.61$) because the $21$
 features are already standardized and the anomalies stand out on several
-of them at once. This is the counterpoint to Credit Card Fraud and Water
+of them at once. ECOD and COPOD reach the level of Isolation Forest (PR-AUC $0.69$ for both
+against $0.70$, $F_1$ $0.57$ and $0.60$), while HBOS ($F_1 = 0.51$), KNN ($0.43$) and PCA
+($0.36$) fall below it. Among the neural models, DIF ($F_1 = 0.59$, PR-AUC $0.67$) and AE1SVM
+($0.61$, $0.64$) come close to Isolation Forest, whereas the autoencoder, Deep SVDD and LUNAR
+are far below ($F_1$ between $0.29$ and $0.35$). This is the counterpoint to Credit Card Fraud and Water
 Quality: the value of a learned detector shows when the anomalies are
 genuinely rare outliers, not when the positive class is a $0.17\%$
 mixed-defect label or a $61\%$ majority. Isolation Forest and the
@@ -565,12 +596,25 @@ split. $1{,}831$ raw rows ($1{,}822$ after deduplication), $9.6\%$ anomalies.}
 \toprule
 Detector & Prec. & Rec. & $F_1$ & ROC & PR & Flag.\% \\
 \midrule
-Z-score            & 0.49 & \textbf{0.81} & 0.61 & 0.93 & 0.61 & 16.6 \\
-IQR                & 0.21 & 0.90 & 0.33 & 0.78 & 0.30 & 43.4 \\
+Z-score            & 0.49 & 0.81 & 0.61 & 0.93 & 0.61 & 16.6 \\
+IQR                & 0.21 & \textbf{0.90} & 0.33 & 0.78 & 0.30 & 43.4 \\
 Great Expectations & 0.50 & 0.21 & 0.29 & 0.59 & 0.19 & 4.6 \\
-Isolation Forest   & \textbf{0.64} & 0.61 & \textbf{0.62} & \textbf{0.94} & \textbf{0.70} & 9.9 \\
+\midrule
+Isolation Forest   & \textbf{0.64} & 0.61 & \textbf{0.62} & 0.94 & \textbf{0.70} & 9.9 \\
 LOF                & 0.25 & 0.27 & 0.26 & 0.62 & 0.24 & 10.7 \\
 One-Class SVM      & 0.56 & 0.61 & 0.58 & 0.94 & 0.63 & 10.7 \\
+ECOD               & 0.57 & 0.59 & 0.57 & \textbf{0.95} & 0.69 & 10.2 \\
+COPOD              & 0.61 & 0.61 & 0.60 & 0.93 & 0.69 & 9.9 \\
+HBOS               & 0.52 & 0.52 & 0.51 & 0.86 & 0.57 & 10.2 \\
+KNN                & 0.40 & 0.47 & 0.43 & 0.78 & 0.47 & 11.7 \\
+PCA                & 0.33 & 0.39 & 0.36 & 0.73 & 0.37 & 11.4 \\
+\midrule
+Autoencoder        & 0.32 & 0.38 & 0.35 & 0.74 & 0.35 & 11.7 \\
+VAE                & 0.41 & 0.46 & 0.43 & 0.87 & 0.45 & 11.2 \\
+Deep SVDD          & 0.26 & 0.41 & 0.32 & 0.69 & 0.29 & 15.8 \\
+DIF                & 0.53 & 0.69 & 0.59 & 0.94 & 0.67 & 13.1 \\
+AE1SVM             & 0.58 & 0.64 & 0.61 & 0.94 & 0.64 & 10.9 \\
+LUNAR              & 0.41 & 0.39 & 0.29 & 0.65 & 0.33 & 18.8 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -608,32 +652,43 @@ One-Class SVM      & 0.478 & 0.485 & 0.481 & 0.722 & 0.520 & 4.20 \\
 
 \subsection{Synthetic dataset: by anomaly type}
 \label{sec:results-synthetic}
-Fig.~\ref{fig:heatmap} gives the mean recall of each method on each
-injected type. The structure the aggregate table hides is now clear:
-every method has a narrow competence.
+Fig.~\ref{fig:heatmap} gives the mean recall of each method of the registry on each
+injected type, with the LSTM autoencoder of Section~\ref{sec:lstm} for reference. The structure
+the aggregate table hides is now clear: most methods have a narrow competence, and the
+neural models and the new classical ones change the picture only on some columns.
 \begin{itemize}
     \item \emph{Univariate outliers} are caught by every distributional
-    method (recall $0.70$--$1.00$) and only by those. Z-score's precision
+    method (recall $0.68$--$1.00$) except Deep SVDD ($0.33$), and only by those. Z-score's precision
     on them is $1.00$: it never fires on a clean row.
-    \item \emph{Missing values} are caught only by the Great Expectations
+    \item \emph{Missing values} are caught best by the Great Expectations
     not-null expectations (recall $1.00$, precision $0.94$), because the
     statistical rules propagate \texttt{NaN} to a non-flag and the learned
-    models see imputed values.
-    \item \emph{Exact duplicates} are invisible to every detector. The
+    models see imputed values. LUNAR ($0.44$) and LOF ($0.28$) are the next best,
+    and every other model stays below $0.20$.
+    \item \emph{Exact duplicates} are nearly invisible to every detector
+    (recall at most $0.18$, except LUNAR with $0.39$). The
     deduplication rule of the transform stage is the only thing that
     catches them, at precision $0.50$ because it also flags each row's
     clean original. In this grouped split the rule is evaluated within
     the held-out partition; it is a stream-level reference, not a model.
-    \item \emph{Multivariate outliers} separate the families: Isolation
-    Forest ($0.89$) and the One-Class SVM ($0.90$) are the only methods
-    with real recall, since they are the only ones that model the joint
-    distribution. Their precision on this type is only about $0.22$: they
-    cast a wide net that also catches clean rows.
+    \item \emph{Multivariate outliers} separate the families, and here the new detectors
+    matter. Isolation Forest ($0.89$) and the One-Class SVM ($0.90$) were the only
+    methods with real recall among the first six, since they are the only ones that
+    model the joint distribution. Among the neural models, DIF ($1.00$), the VAE
+    ($0.92$), the autoencoder ($0.83$) and AE1SVM ($0.78$) do as well, and LUNAR ($0.63$)
+    follows; Deep SVDD ($0.13$) does not. KNN ($0.39$) and PCA ($0.48$) are below the
+    forest. ECOD and COPOD, which look at each column alone, still reach $0.52$ and
+    $0.51$, which I had not expected; probably the injected combination also puts one of the
+    values in a tail of its own column. HBOS, built on histograms of single columns,
+    stays at $0$. The precision of Isolation Forest and the One-Class SVM on this
+    type is only about $0.22$: they cast a wide net that also catches clean rows.
     \item \emph{Invalid formats} are caught mainly through the impossible
     numeric value they carry (IQR recall $1.00$, precision $0.37$; Z-score
-    precision $1.00$); the malformed string fields are missed by all.
-    \item \emph{Temporal drift} is the weakest column for every method
-    (best recall $0.50$, LOF). The dedicated \emph{drift} detector scores
+    precision $1.00$; DIF $1.00$, LUNAR $0.90$, KNN $0.81$); the malformed string fields
+    are missed by all.
+    \item \emph{Temporal drift} is the weakest column for most methods. LUNAR is the best
+    ($0.65$), ahead of LOF ($0.50$), the best of the first six; every other method stays
+    below $0.42$. The dedicated \emph{drift} detector scores
     $0$ here too: at the reference magnitude the shifted values stay
     inside the global range, and once diluted by the many clean recent
     rows the window mean has moved by less than a tenth of a standard
@@ -643,12 +698,14 @@ every method has a narrow competence.
 \end{itemize}
 The practical reading is a short decision list: null-rate problems to
 declarative rules, single-column outliers to any statistical rule,
-implausible combinations to a tree- or boundary-based model, and
-duplicates and drift to dedicated stages the detectors do not replace.
+implausible combinations to a tree-, boundary- or reconstruction-based model
+(Isolation Forest, the One-Class SVM, DIF, the VAE), and
+duplicates and drift to dedicated stages the detectors do not replace, with LUNAR as the
+one learned model that helps on drift at the price of more false alarms (Section~\ref{sec:typed}).
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figures/heatmap_synthetic.png}
+\includegraphics[width=\columnwidth]{figures/heatmap_full.png}
 \caption{Mean detection rate (recall) over five seeds of each method on
 each injected anomaly type, synthetic test split. Darker is higher.
 \texttt{transform\_dedup} is the deduplication rule of the transform
@@ -657,10 +714,10 @@ stage, shown for reference.}
 \end{figure}
 
 \subsection{Third real dataset: Water Quality}
-Table~\ref{tab:water} runs all six detectors on Water Quality, where
+Table~\ref{tab:water} runs all detectors, the neural ones included, on Water Quality, where
 ``not potable'' is the target and covers $61\%$ of the rows. Every
 detector's ROC-AUC sits between $0.45$ and $0.51$ and every PR-AUC lies
-within $0.04$ of the $0.61$ base rate: the unsupervised detectors are
+within $0.05$ of the $0.61$ base rate: the unsupervised detectors are
 essentially at chance. This is the expected outcome and a useful negative
 result. When the target class is common and not distributionally distinct
 from the rest, ``anomaly'' detection has nothing to key on. The dataset
@@ -681,10 +738,23 @@ Detector & Prec. & Rec. & $F_1$ & ROC & PR & Flag.\% \\
 \midrule
 Z-score            & 0.41 & 0.02 & 0.05 & 0.46 & 0.58 & 3.5 \\
 IQR                & 0.57 & 0.09 & 0.16 & 0.49 & 0.60 & 10.0 \\
-Great Expectations & 0.62 & 0.41 & 0.49 & 0.51 & 0.61 & 40.1 \\
+Great Expectations & \textbf{0.62} & 0.41 & 0.49 & \textbf{0.51} & \textbf{0.61} & 40.1 \\
+\midrule
 Isolation Forest   & 0.57 & 0.46 & 0.51 & 0.45 & 0.57 & 49.7 \\
 LOF                & 0.58 & 0.46 & 0.52 & 0.46 & 0.58 & 48.7 \\
 One-Class SVM      & 0.57 & 0.45 & 0.50 & 0.46 & 0.57 & 48.4 \\
+ECOD               & 0.58 & 0.47 & 0.52 & 0.45 & 0.57 & 49.6 \\
+COPOD              & 0.58 & 0.48 & 0.52 & 0.46 & 0.57 & 50.3 \\
+HBOS               & 0.58 & 0.47 & 0.52 & 0.46 & 0.58 & 49.8 \\
+KNN                & 0.57 & 0.46 & 0.51 & 0.45 & 0.57 & 48.4 \\
+PCA                & 0.59 & 0.48 & 0.53 & 0.47 & 0.59 & 49.8 \\
+\midrule
+Autoencoder        & 0.60 & 0.49 & 0.54 & 0.47 & 0.58 & 50.0 \\
+VAE                & 0.58 & 0.48 & 0.53 & 0.46 & 0.58 & 50.7 \\
+Deep SVDD          & 0.61 & 0.52 & \textbf{0.56} & 0.49 & 0.60 & 52.4 \\
+DIF                & 0.58 & 0.48 & 0.53 & 0.46 & 0.58 & 51.1 \\
+AE1SVM             & 0.56 & 0.45 & 0.50 & 0.45 & 0.57 & 49.3 \\
+LUNAR              & 0.58 & \textbf{0.53} & 0.55 & 0.45 & 0.57 & 55.4 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -843,13 +913,27 @@ outlier on all $42$ tables. The result says more about non-robust statistics
 on a contaminated training set than about the $z$-score itself.
 
 The two hypotheses on stability hold. The mean rank correlation between the
-method-by-type matrices of two tables is $0.83$, and it is lowest for drift
-($0.70$) and multivariate outliers ($0.74$), though only slightly below the
-structural types ($0.75$ to $0.82$). Part of this stability is mechanical, since
+method-by-type matrices of two tables is $0.80$ with the seventeen detectors of the
+registry (it was $0.83$ with the first eight rows), and it is lowest for drift
+($0.63$), multivariate outliers ($0.65$) and duplicates ($0.66$), highest for univariate
+outliers ($0.76$). Part of this stability is mechanical, since
 many cells are close to $0$ or $1$. The detection rate of Isolation Forest on
 univariate outliers falls with the number of continuous columns (rank
 correlation $-0.96$ over the $42$ tables). The anomalies are injected, not
-natural, at one severity, and the deep models are not part of this matrix.
+natural, and at one severity.
+
+The classical and neural detectors added to the registry were run on the same $42$
+tables (Figure~\ref{fig:typed}), without a hypothesis of their own on this study. On
+multivariate outliers LUNAR has the highest median detection rate ($0.63$, Isolation Forest
+$0.37$, KNN $0.30$, the autoencoder $0.29$, DIF $0.28$, ECOD $0.25$), and also on drift
+($0.78$ against $0.64$ for the IQR rule and $0.45$ for Isolation Forest) and on missing
+values among the learned models ($0.38$, Great Expectations $1.00$). It pays for it: it flags a
+median of $24\%$ of the clean rows ($97\%$ on the worst table), where the other learned
+models, calibrated to the same training prevalence, flag $12\%$ to $15\%$ and HBOS $1\%$.
+Only the IQR rule and LUNAR flag more than a fifth of the clean rows on median. The
+column-wise ECOD and COPOD detect univariate outliers less often than KNN ($0.44$ and
+$0.45$ against $0.91$) and HBOS almost never ($0.04$). So the synthetic reading holds in outline:
+no detector covers every type, and the one that comes closest buys its recall with false alarms.
 
 \subsection{Labelled problems of the dataset pool}
 \label{sec:labelled}
@@ -858,18 +942,23 @@ tables (\texttt{verification/dataset\_pool.md}) holds $100$ problems whose
 anomalies are already labelled: $36$ from ADBench and $64$ from the UCI
 repository, where the rarest class (at least $20$ rows) is the anomaly and the
 other classes are normal; a class above $10\%$ of the rows is resampled to
-$10\%$. I ran the six detectors of the main benchmark on all of them with the
+$10\%$. I first ran the six detectors of the main benchmark on all of them with the
 protocol of Section~\ref{sec:protocol}, written down before the run
 (\texttt{verification/labelled\_pool.md}): one normalisation for every table,
 a stratified $70/15/15$ split, five seeds, contamination equal to the training
-prevalence and default settings. LOF is skipped above $50{,}000$ training rows
-and One-Class SVM above $20{,}000$, so they cover $92$ and $84$ problems; the
-skips are listed in the archive. All $100$ runs completed.
+prevalence and default settings. I then added the five other classical detectors and the
+six neural ones of the registry on the same problems, with their own protocol and
+hypotheses (\texttt{verification/full\_registry.md}); the neural models are fitted on at
+most $20{,}000$ rows. LOF and KNN are skipped above $50{,}000$ training rows
+and One-Class SVM above $20{,}000$, so they cover $92$, $92$ and $84$ problems; the
+skips are listed in the archive. All runs completed: none of the six neural models failed on
+any of the $100$ problems.
 
 \begin{table}[t]
 \caption{Median over the labelled problems of the seed-averaged test metrics,
 with a $95\%$ bootstrap interval over the problems, and the median rank of the
-method on PR-AUC (1 is best).}
+method on PR-AUC among the seventeen (1 is best). The first block is the rules,
+the second the classical models, the third the neural ones.}
 \label{tab:labelled}
 \centering
 \footnotesize
@@ -878,22 +967,38 @@ method on PR-AUC (1 is best).}
 \toprule
 Detector & Problems & PR-AUC & ROC-AUC & Rank \\
 \midrule
-Z-score            & 100 & 0.203 [0.164, 0.279] & 0.626 & 3 \\
-IQR                & 100 & 0.144 [0.117, 0.191] & 0.556 & 4 \\
-Great Expectations & 100 & 0.115 [0.105, 0.123] & 0.508 & 5 \\
-Isolation Forest   & 100 & 0.215 [0.158, 0.293] & 0.677 & 2 \\
-LOF                &  92 & 0.165 [0.153, 0.237] & 0.588 & 3 \\
-One-Class SVM      &  84 & 0.240 [0.177, 0.307] & 0.670 & 3 \\
+Z-score            & 100 & 0.203 [0.164, 0.279] & 0.626 & 9.0 \\
+IQR                & 100 & 0.144 [0.117, 0.191] & 0.556 & 12.0 \\
+Great Expectations & 100 & 0.115 [0.105, 0.123] & 0.508 & 16.0 \\
+\midrule
+Isolation Forest   & 100 & 0.215 [0.158, 0.293] & 0.677 & 7.0 \\
+LOF                & 92 & 0.165 [0.153, 0.237] & 0.588 & 10.0 \\
+One-Class SVM      & 84 & 0.240 [0.177, 0.307] & 0.670 & 8.0 \\
+ECOD               & 100 & 0.240 [0.191, 0.305] & 0.656 & 7.0 \\
+COPOD              & 100 & 0.216 [0.162, 0.314] & 0.691 & 7.0 \\
+HBOS               & 100 & 0.237 [0.176, 0.311] & 0.663 & 8.0 \\
+KNN                & 92 & 0.203 [0.172, 0.284] & 0.658 & 8.0 \\
+PCA                & 100 & 0.178 [0.152, 0.219] & 0.581 & 10.0 \\
+\midrule
+Autoencoder        & 100 & 0.205 [0.150, 0.240] & 0.631 & 8.0 \\
+VAE                & 100 & 0.216 [0.163, 0.279] & 0.676 & 7.0 \\
+Deep SVDD          & 100 & 0.181 [0.147, 0.226] & 0.619 & 10.0 \\
+DIF                & 100 & 0.226 [0.173, 0.272] & 0.639 & 8.0 \\
+AE1SVM             & 100 & 0.210 [0.172, 0.253] & 0.635 & 8.0 \\
+LUNAR              & 100 & 0.183 [0.153, 0.225] & 0.615 & 10.0 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-No detector is clearly ahead. One-Class SVM has the highest median PR-AUC
-($0.240$) and Isolation Forest the best median rank, but their intervals
-overlap with each other and with the Z-score, so the hypothesis that no method
-is universal is supported. The best method differs from one problem to the
-next: Isolation Forest is first on $26$ problems, LOF on $24$, the IQR rule on
-$16$, the Z-score on $14$, One-Class SVM on $13$ and Great Expectations on $7$.
+No detector is clearly ahead. ECOD and the One-Class SVM share the highest median
+PR-AUC ($0.240$), followed by HBOS ($0.237$) and, among the neural models, DIF
+($0.226$); the intervals overlap broadly with each other and with the Z-score, so
+the hypothesis that no method is universal is supported on the first six
+detectors, and it also holds for the seventeen. The best method differs from one
+problem to the next: among the first six, Isolation Forest is first on $26$ problems, LOF on $24$, the IQR rule on
+$16$, the Z-score on $14$, One-Class SVM on $13$ and Great Expectations on $7$; among
+all seventeen, DIF is first on $13$ problems, HBOS on $10$, the IQR rule on $9$, and every
+method is first on at least two.
 Learning does help on median: Isolation Forest is above the Z-score on $67$
 problems and above the IQR rule on $62$, but the gain is small (about $0.01$ to
 $0.04$ of PR-AUC). The median ROC-AUC stays between $0.51$ and $0.68$, and on
@@ -902,7 +1007,14 @@ in the sense these detectors assume, which is expected for labels taken from a
 rare class rather than from a data-quality defect. Great Expectations, built for
 declared constraints, is close to chance here.
 
-Two of the five hypotheses are not supported. The advantage of Isolation Forest
+Three hypotheses of the registry study concern this table. The first holds: ECOD, HBOS and COPOD
+have a higher median PR-AUC than Isolation Forest ($0.240$, $0.237$ and $0.216$ against
+$0.215$), although the gap is small and KNN ($0.203$) and PCA ($0.178$) are below it. The
+second holds too: the best neural model (DIF, $0.226$) is below the best classical one
+($0.240$), so a neural model does not beat the classical ones by the margin of $0.02$ that I
+had set. The third holds, for the reason given above: no neural model failed.
+
+Two of the five hypotheses on the first six detectors are not supported. The advantage of Isolation Forest
 over the Z-score was expected to vanish when anomalies are more than $20\%$ of
 the rows; it is smaller there ($+0.013$ of median PR-AUC on $12$ problems) but
 still positive, as it is below $5\%$ ($+0.037$, $19$ problems) and in between
@@ -929,8 +1041,9 @@ and its published results are untouched; its matrix below is the published one.
 
 \begin{table}[t]
 \caption{Mean recall over five seeds on the two further schemas for the
-methods that carry the pattern (customer table in
-Figure~\ref{fig:heatmap}). Columns: missing values, duplicates, univariate
+first six methods that carry the pattern (customer table in
+Figure~\ref{fig:heatmap}; the full matrices with the other detectors are in
+Appendix~\ref{app:matrices}). Columns: missing values, duplicates, univariate
 outliers, multivariate outliers, drift, invalid formats.}
 \label{tab:schemas}
 \centering
@@ -958,7 +1071,9 @@ Sensors      & Great Expect. & 1.00 & 0.00 & 0.23 & 0.00 & 0.00 & 0.00 \\
 The structural rows carry over exactly: Great Expectations finds every missing
 value and the deduplication rule every duplicate, on all three schemas. The
 overall profile is stable too: the rank correlation between the method-by-type
-matrices of two schemas is $0.93$ on average ($0.91$ to $0.96$). Two things do
+matrices of two schemas is $0.93$ on average ($0.91$ to $0.96$) for the detectors
+of the first six rows, and $0.89$ ($0.86$ to $0.92$) when the new classical and
+the neural detectors are added. Two things do
 not carry over. For multivariate outliers, Isolation Forest and One-Class SVM
 reach $0.89$ and $0.90$ on the customers, but only $0.49$ and $0.18$ on the
 transactions and $0.32$ and $0.33$ on the sensors, and on the transactions the
@@ -968,16 +1083,20 @@ $1.5$ on a signal of about $-70$~dBm moves values several standard deviations
 away. The per-row drift detector of the registry, which was designed for
 dilute shifts, flags nothing on any schema. Two of the four hypotheses
 (structural rows, rank stability) hold; the multivariate gap and the weakness of
-drift do not. The injected magnitudes are set in relative terms, so how visible
+drift do not. The new detectors do not remove this dependence. On multivariate outliers the best model
+is not the same on each schema: DIF reaches $1.00$ on the customers and $0.99$ on the sensors
+but only $0.37$ on the transactions, where LUNAR ($0.73$) and Deep SVDD ($0.70$) do best. On
+drift, LUNAR and KNN reach $1.00$ on the sensors, and LUNAR $0.65$ and $0.55$ on the customers
+and the transactions. The injected magnitudes are set in relative terms, so how visible
 drift and multivariate outliers are depends on how the column is scaled
 and correlated, not only on the type. The three schemas share an author and an
 injection logic, so this shows that the profile does not depend on the shape of
 one table, not that it holds on real data (Section~\ref{sec:typed}).
 
-\subsection{Deep models in the per-type matrix}
+\subsection{Neural models and further classical detectors in the per-type matrix}
 \label{sec:deep-rows}
-The matrix of Figure~\ref{fig:heatmap} has no learned reconstruction model. I
-added two rows on the same synthetic data and the same identity-grouped splits
+The first six rows of Figure~\ref{fig:heatmap} have no learned reconstruction model. I
+added two on the same synthetic data and the same identity-grouped splits
 and seeds, with the protocol and four hypotheses written beforehand
 (\texttt{verification/deep\_typed.md}): the sklearn autoencoder of the registry,
 and the LSTM autoencoder of Section~\ref{sec:lstm} on windows of the ten
@@ -987,15 +1106,7 @@ $5$, at most $300$ epochs), and all ten trainings stopped before the cap
 ($60$ to $178$ epochs). The other rows were recomputed by the same code and
 equal the published matrix.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{figures/heatmap_deep.png}
-\caption{Mean detection rate by anomaly type with the two deep rows added
-(synthetic, five seeds). Compare with Figure~\ref{fig:heatmap}.}
-\label{fig:heatmap-deep}
-\end{figure}
-
-The deep rows do not change the picture. The autoencoder detects multivariate
+Those two rows do not change the picture. The autoencoder detects multivariate
 outliers ($0.83 \pm 0.10$) about as well as Isolation Forest ($0.89$) and
 One-Class SVM ($0.90$), as expected for a model that reconstructs correlations,
 and the LSTM is a little lower ($0.68 \pm 0.12$). Both are close to the learned
@@ -1010,9 +1121,26 @@ carries a sequence only for the drifted rows, which are the most recent ones; a
 window of ten rows that are mostly clean and have shifted values in only some of
 the columns gives the LSTM little to learn from. This says that this
 construction of drift is not a sequence problem, not that sequence models
-cannot detect drift. The false-positive rate on clean rows is about $12\%$ for
-both models. With five seeds the standard deviations are indicative and none of
+cannot detect drift. With five seeds the standard deviations are indicative and none of
 these comparisons is a test.
+
+The complete-registry study then added five classical detectors and five neural ones
+(Section~\ref{sec:methodology}) to the same matrix, with three hypotheses on it written
+beforehand (\texttt{verification/full\_registry.md}). None is supported. The
+detectors that read one column at a time were expected to miss multivariate outliers (recall
+at most $0.20$ for ECOD, COPOD and HBOS, and Isolation Forest at least $0.50$ above them): only HBOS does
+($0.00$), while ECOD and COPOD reach $0.52$ and $0.51$. PCA was expected to match the
+autoencoder within ten points, since both rebuild the rows, and it does not ($0.48$ against
+$0.83$): a reconstruction through $95\%$ of the variance rebuilds a row that breaks the
+correlations only when the broken direction is a minor one. No new detector was expected to
+beat the best earlier row-level detector on drift by more than ten points; LUNAR does
+($0.65$ against $0.50$ for LOF). Its other rows are also the highest of the matrix
+on missing values ($0.44$) and duplicates ($0.39$), but it flags $41\%$ of the clean rows, against
+$9\%$ to $16\%$ for the other neural models, so its recall comes with a much higher cost in false
+alarms; the same holds on the real tables of Section~\ref{sec:typed}. DIF reaches $1.00$ on both univariate and
+multivariate outliers and on invalid formats, with $9\%$ of clean rows flagged; the VAE ($0.92$)
+and AE1SVM ($0.78$) follow the autoencoder on multivariate outliers; Deep SVDD is the weakest
+neural model on univariate and multivariate outliers, drift and invalid formats.
 
 \section{Secondary Studies}
 \label{sec:secondary}
@@ -1034,8 +1162,9 @@ protocol written down before any score was computed on held-out data
 (\texttt{verification/temporal\_pilot.md}). It is a separate experiment and
 does not replace the benchmark.
 
-The rows are the same cleaned rows, and the detectors are the same four with
-default settings, but the clock variable is removed from the features. The
+The rows are the same cleaned rows, and the detectors are the four of the
+pilot with default settings, plus ECOD, COPOD, HBOS and PCA, which the registry gained
+afterwards and which scale to this size (the rerun reproduces the first four rows exactly); the clock variable is removed from the features. The
 chronological split uses the usual $70/15/15$ ratios by time: the detectors
 are fitted on the first $198{,}609$ rows ($366$ frauds) and scored on the last
 $42{,}557$ rows ($52$ frauds, $0.12\%$). The control uses the stratified split
@@ -1056,10 +1185,15 @@ rows flagged at the training-prevalence threshold.}
 \toprule
 Detector & PR, strat. & PR, chron. & ROC, chron. & Flag.\% \\
 \midrule
-Z-score            & $0.078 \pm 0.015$ & $0.048$ [0.020, 0.087] & 0.935 & 12.8 \\
-IQR                & $0.018 \pm 0.003$ & $0.013$ [0.007, 0.023] & 0.917 & 47.1 \\
-Great Expectations & $0.183 \pm 0.047$ & $0.045$ [0.013, 0.088] & 0.758 & 3.5 \\
+Z-score            & $0.078 \pm 0.015$ & $0.048$ [0.020, 0.087] & 0.935 & 12.79 \\
+IQR                & $0.018 \pm 0.003$ & $0.013$ [0.006, 0.023] & 0.917 & 47.10 \\
+Great Expectations & $0.183 \pm 0.046$ & $0.045$ [0.013, 0.088] & 0.758 & 3.45 \\
+\midrule
 Isolation Forest   & $0.110 \pm 0.039$ & $0.035$ [0.016, 0.066] & 0.936 & 0.08 \\
+ECOD               & $0.175 \pm 0.035$ & $0.075$ [0.027, 0.146] & 0.936 & 0.08 \\
+COPOD              & $0.212 \pm 0.046$ & $0.127$ [0.045, 0.216] & 0.936 & 0.07 \\
+HBOS               & $0.207 \pm 0.038$ & $0.151$ [0.058, 0.268] & 0.928 & 0.09 \\
+PCA                & $0.108 \pm 0.117$ & $0.002$ [0.001, 0.003] & 0.608 & 0.43 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1081,6 +1215,17 @@ $0.08\%$ of the future rows and none of the $52$ frauds: the threshold set
 from training scores does not carry over to the later period. This is a single
 two-day dataset with few positives, so it indicates a direction and an order
 of magnitude, not a general rule.
+
+The four detectors added later behave differently from one another. ECOD and COPOD
+lose part of their stratified average precision ($0.175$ to $0.075$ and $0.212$ to $0.127$)
+and, like Isolation Forest, flag under $0.1\%$ of the future rows; they find one
+fraud and three of the $52$ (recall $0.02$ and $0.06$). HBOS keeps the highest
+chronological average precision of the table ($0.151$, interval
+$[0.058, 0.268]$ overlapping the others'), with a precision of $0.26$ and a recall of $0.19$ on
+$0.09\%$ of the rows: the first detector of this study whose training-prevalence threshold
+still catches frauds in the later period. PCA collapses ($0.002$, ROC-AUC $0.61$), with
+no fraud found. The intervals are wide, so this shows that the column-wise
+detectors are not all alike under a time split, not that HBOS is better.
 
 To check the window monitor with a known change, a mean shift of $\delta$
 training standard deviations was added to five features from the middle of the
@@ -1242,7 +1387,7 @@ The per-type heatmap shows limited overlap between what the declarative
 rules catch (missing values), what the statistical rules catch
 (single-column outliers), and what the learned models add (implausible
 combinations, recall $0.89$ for Isolation Forest against $\le 0.04$ for
-the rules). Broad coverage needs more than one family, not the single
+the rules, and $1.00$ for DIF and $0.92$ for the VAE among the neural models). Broad coverage needs more than one family, not the single
 best one on aggregate. This is a different conclusion from benchmarks
 that publish a single ranking.
 
@@ -1259,8 +1404,9 @@ benchmark must choose deliberately.
 The three real settings bracket the method: on Cardio, where anomalies
 are rare and distributionally distinct, Isolation Forest reaches
 $F_1 = 0.62$ and PR-AUC $0.70$; on Credit Card Fraud, where the positive
-class is a $0.17\%$ mixed-defect label, no method clears a usable
-precision at reasonable recall; on Water Quality, where the ``anomaly''
+class is a $0.17\%$ mixed-defect label, the best $F_1$ of the seventeen
+detectors is $0.35$ (Deep SVDD, precision $0.26$) and HBOS reaches the best precision
+($0.34$) at a recall of $0.32$; on Water Quality, where the ``anomaly''
 is a $61\%$ majority, every method is at chance. The question is less
 ``rules or ML'' than ``does this dataset have rare, outlying anomalies at
 all''.
@@ -1274,14 +1420,30 @@ are scaled, so their values do not transfer. On the $42$ real tables the
 structural rules still own their types while the multivariate gap shrinks, and
 on the $100$ labelled problems the medians of PR-AUC of One-Class SVM ($0.240$),
 Isolation Forest ($0.215$) and the Z-score ($0.203$) overlap, so the advice
-``use a learned model'' is not supported there. The deep models add little: the
-LSTM autoencoder recalls $0.25$ of the drifted rows against $0.50$ for LOF.
+``use a learned model'' is not supported there. The neural models add little on
+aggregate: the best of them (DIF, $0.226$) stays below the best classical median
+($0.240$), and the LSTM autoencoder recalls $0.25$ of the drifted rows against
+$0.50$ for LOF; LUNAR is the exception on drift ($0.65$ on the customers), at the price of
+flagging $41\%$ of the clean rows.
 Last, a ranking that holds under a chronological split does not give a usable
 threshold: on Bank Marketing the prevalence goes from $5.8\%$ to $39.3\%$,
 matching the control to it removes most of the apparent gain ($0.26$ to $0.06$),
 and a label-free rolling threshold cannot follow it. A practitioner should
 therefore choose the family from the type of fault and monitor the prevalence
 before trusting any alert rate.
+
+\paragraph{A larger registry does not produce a winner.} The registry now holds three
+rules, eight classical models and six neural ones. On the $100$ labelled problems every one
+of the seventeen is first on at least two, and no method is first on more than $13$. The
+column-wise detectors ECOD, COPOD and HBOS cost little, match Isolation Forest on the pool
+($0.240$, $0.216$ and $0.237$ against $0.215$) and beat it on Credit Card, but they cannot
+see an implausible combination of ordinary values; on the synthetic data they only do
+because the injected combinations also push one value to a tail. The neural models help on
+specific types (DIF and the VAE on multivariate outliers, LUNAR on drift) and
+not on aggregate scores, and they cost more to fit and to tune. For a practitioner this
+suggests a cheap column-wise model and Isolation Forest as the baseline, a reconstruction model
+added when the faults are combinations, and a model such as LUNAR only when missing
+drift costs more than false alarms. These are default settings, and a tuned neural model could do better.
 
 \paragraph{Aggregate metrics on a mixed label are misleading.} On every
 dataset the aggregate table compresses different behaviour into similar
@@ -1335,8 +1497,8 @@ result without being caught by the current gates.
 \section{Conclusion}
 \label{sec:conclusion}
 
-I built an ETL pipeline in which rule-based and classical
-machine-learning anomaly detectors share one interface and are scored on
+I built an ETL pipeline in which three rule-based detectors, eight classical
+machine-learning detectors and six neural ones share one interface and are scored on
 the same held-out path, over five seeds, with the operating point read
 from the data. A controlled dataset labels six anomaly types separately,
 and a severity sweep shows where the per-type ranking changes as the
@@ -1344,9 +1506,10 @@ injections are scaled. On aggregate metrics the detector families stay
 close on all four datasets, and on $100$ labelled problems of a pool of
 $152$ open tables no detector is clearly ahead (Section~\ref{sec:labelled}). The per-type view is where they diverge:
 declarative rules own missing values, statistical rules own single-column
-outliers, tree- and boundary-based models are the only ones that catch
-implausible combinations, and duplicates and temporal drift need
-dedicated stages. Across the three real datasets, unsupervised detection
+outliers, tree-, boundary- and reconstruction-based models (Isolation Forest, the
+One-Class SVM, DIF, the VAE) catch implausible combinations, and duplicates and temporal drift need
+dedicated stages, LUNAR being the one learned model that helps on drift, at the price
+of many false alarms. Across the three real datasets, unsupervised detection
 pays off only on Cardio, where the anomalies are genuinely rare and
 outlying. The choice of contamination, the precision-recall trade-off it
 selects, and the pipeline cost further constrain which detector fits a
@@ -1356,8 +1519,8 @@ On real tables the pattern is less clean than on the generator. With the six
 types injected into $42$ tables, Great Expectations and the deduplication rule
 still own their types, but the multivariate gap shrinks and the $z$-score
 collapses for a reason that has to do with its training data, not its design.
-On $100$ labelled problems no detector is clearly ahead, and learning helps only
-by a small margin. Two further schemas keep the profile (rank correlation
+On $100$ labelled problems no detector is clearly ahead among the seventeen, learning helps only
+by a small margin, and the neural models do not beat the best classical one. Two further schemas keep the profile (rank correlation
 $0.93$) but change how visible multivariate outliers and drift are, and an LSTM
 autoencoder trained to convergence does not catch temporal drift better than
 the row-level detectors. The chronological pilot and the study of decisions under temporal shift, on
@@ -1513,6 +1676,155 @@ recorded macOS/ARM environment. This small in-memory experiment measures
 neither native-library peak memory nor the scaling of the 284,000-row
 fraud dataset. It supports reporting the workload and omissions explicitly,
 but not a general speed ranking.
+
+% BEGIN generated matrices
+\section{Full per-type matrices}
+\label{app:matrices}
+The tables below give the mean recall of every detector of the registry on each injected type, over five seeds for the synthetic tables and as the median over the $42$ real tables for the last one. The best value of each column among the detectors of the registry is in bold.
+
+\begin{table}[t]
+\caption{Synthetic customer table, mean recall over five seeds.}
+\label{tab:m-customer}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lcccccc}
+\toprule
+Method & Miss. & Dup. & Uni. & Multi. & Drift & Inv. \\\\
+\midrule
+Z-score            & 0.00 & 0.00 & 0.93 & 0.00 & 0.00 & 0.24 \\\\
+IQR                & 0.05 & 0.04 & 0.99 & 0.04 & 0.25 & \textbf{1.00} \\\\
+Great Expectations & \textbf{1.00} & 0.00 & 0.21 & 0.00 & 0.00 & 0.00 \\\\
+\midrule
+Isolation Forest   & 0.09 & 0.11 & 0.99 & 0.89 & 0.33 & 0.60 \\\\
+LOF                & 0.28 & 0.16 & 0.70 & 0.21 & 0.50 & 0.67 \\\\
+One-Class SVM      & 0.07 & 0.10 & \textbf{1.00} & 0.90 & 0.29 & 0.54 \\\\
+ECOD               & 0.10 & 0.13 & 0.68 & 0.52 & 0.26 & 0.36 \\\\
+COPOD              & 0.09 & 0.13 & 0.89 & 0.51 & 0.34 & 0.30 \\\\
+HBOS               & 0.00 & 0.00 & 0.90 & 0.00 & 0.00 & 0.32 \\\\
+KNN                & 0.09 & 0.10 & \textbf{1.00} & 0.39 & 0.41 & 0.81 \\\\
+PCA                & 0.10 & 0.12 & \textbf{1.00} & 0.48 & 0.23 & 0.58 \\\\
+\midrule
+Autoencoder        & 0.12 & 0.10 & 0.81 & 0.83 & 0.29 & 0.53 \\\\
+VAE                & 0.07 & 0.11 & 0.99 & 0.92 & 0.30 & 0.66 \\\\
+Deep SVDD          & 0.19 & 0.18 & 0.33 & 0.13 & 0.16 & 0.32 \\\\
+DIF                & 0.09 & 0.07 & \textbf{1.00} & \textbf{1.00} & 0.33 & \textbf{1.00} \\\\
+AE1SVM             & 0.09 & 0.10 & 0.99 & 0.78 & 0.27 & 0.61 \\\\
+LUNAR              & 0.44 & 0.39 & \textbf{1.00} & 0.63 & \textbf{0.65} & 0.90 \\\\
+\midrule
+LSTM autoencoder   & 0.08 & 0.09 & 0.97 & 0.68 & 0.25 & 0.53 \\\\
+Drift detector     & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\\\
+Dedup rule         & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\caption{Synthetic card transactions, mean recall over five seeds.}
+\label{tab:m-transactions}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lcccccc}
+\toprule
+Method & Miss. & Dup. & Uni. & Multi. & Drift & Inv. \\\\
+\midrule
+Z-score            & 0.00 & 0.00 & 0.63 & 0.00 & 0.00 & 0.26 \\\\
+IQR                & 0.09 & 0.14 & 0.98 & 0.57 & 0.37 & 0.63 \\\\
+Great Expectations & \textbf{1.00} & 0.00 & 0.14 & 0.00 & 0.00 & 0.00 \\\\
+\midrule
+Isolation Forest   & 0.09 & 0.18 & 0.97 & 0.49 & 0.38 & 0.56 \\\\
+LOF                & 0.11 & 0.15 & 0.72 & 0.64 & 0.30 & 0.45 \\\\
+One-Class SVM      & 0.10 & 0.26 & 0.89 & 0.18 & 0.36 & 0.39 \\\\
+ECOD               & 0.10 & 0.20 & 0.67 & 0.45 & 0.29 & 0.67 \\\\
+COPOD              & 0.09 & 0.20 & 0.86 & 0.43 & 0.33 & 0.45 \\\\
+HBOS               & 0.00 & 0.00 & 0.69 & 0.00 & 0.00 & 0.26 \\\\
+KNN                & 0.11 & 0.17 & 0.97 & 0.33 & 0.39 & 0.57 \\\\
+PCA                & 0.08 & 0.19 & 0.86 & 0.16 & 0.27 & 0.37 \\\\
+\midrule
+Autoencoder        & 0.09 & 0.19 & 0.84 & 0.17 & 0.30 & 0.46 \\\\
+VAE                & 0.07 & 0.24 & 0.86 & 0.21 & 0.34 & 0.39 \\\\
+Deep SVDD          & 0.12 & 0.14 & 0.74 & 0.70 & 0.27 & 0.54 \\\\
+DIF                & 0.09 & 0.20 & 0.97 & 0.37 & 0.36 & 0.60 \\\\
+AE1SVM             & 0.09 & 0.24 & 0.88 & 0.16 & 0.34 & 0.40 \\\\
+LUNAR              & 0.22 & 0.29 & \textbf{0.99} & \textbf{0.73} & \textbf{0.55} & \textbf{0.75} \\\\
+\midrule
+Dedup rule         & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\caption{Synthetic sensor readings, mean recall over five seeds.}
+\label{tab:m-sensors}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lcccccc}
+\toprule
+Method & Miss. & Dup. & Uni. & Multi. & Drift & Inv. \\\\
+\midrule
+Z-score            & 0.00 & 0.00 & \textbf{1.00} & 0.00 & 0.00 & 0.26 \\\\
+IQR                & 0.03 & 0.05 & \textbf{1.00} & 0.02 & 0.94 & \textbf{1.00} \\\\
+Great Expectations & \textbf{1.00} & 0.00 & 0.23 & 0.00 & 0.00 & 0.00 \\\\
+\midrule
+Isolation Forest   & 0.08 & 0.12 & \textbf{1.00} & 0.32 & 0.96 & 0.97 \\\\
+LOF                & 0.19 & 0.18 & 0.33 & 0.34 & 0.40 & 0.27 \\\\
+One-Class SVM      & 0.08 & 0.10 & \textbf{1.00} & 0.33 & 0.94 & \textbf{1.00} \\\\
+ECOD               & 0.10 & 0.13 & 0.81 & 0.40 & 0.80 & 0.58 \\\\
+COPOD              & 0.07 & 0.13 & 0.97 & 0.45 & 0.96 & 0.46 \\\\
+HBOS               & 0.00 & 0.00 & \textbf{1.00} & 0.00 & 0.00 & 0.26 \\\\
+KNN                & 0.11 & 0.10 & \textbf{1.00} & 0.26 & \textbf{1.00} & \textbf{1.00} \\\\
+PCA                & 0.09 & 0.12 & \textbf{1.00} & 0.26 & 0.63 & 0.95 \\\\
+\midrule
+Autoencoder        & 0.07 & 0.11 & 0.93 & 0.62 & 0.71 & 0.94 \\\\
+VAE                & 0.07 & 0.09 & \textbf{1.00} & 0.25 & 0.94 & \textbf{1.00} \\\\
+Deep SVDD          & 0.14 & 0.14 & 0.82 & 0.19 & 0.25 & 0.59 \\\\
+DIF                & 0.05 & 0.06 & \textbf{1.00} & \textbf{0.99} & 0.80 & \textbf{1.00} \\\\
+AE1SVM             & 0.08 & 0.10 & \textbf{1.00} & 0.49 & 0.80 & \textbf{1.00} \\\\
+LUNAR              & 0.32 & 0.30 & \textbf{1.00} & 0.41 & \textbf{1.00} & \textbf{1.00} \\\\
+\midrule
+Dedup rule         & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\caption{Typed injection into $42$ real tables, median recall over the tables.}
+\label{tab:m-typed}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lcccccc}
+\toprule
+Method & Miss. & Dup. & Uni. & Multi. & Drift & Inv. \\\\
+\midrule
+Z-score            & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.43 \\\\
+IQR                & 0.19 & 0.21 & \textbf{1.00} & 0.39 & 0.64 & \textbf{0.93} \\\\
+Great Expectations & \textbf{1.00} & 0.00 & 0.23 & 0.00 & 0.00 & 0.42 \\\\
+\midrule
+Isolation Forest   & 0.11 & 0.13 & 0.61 & 0.37 & 0.45 & 0.59 \\\\
+LOF                & 0.28 & 0.13 & 0.68 & 0.33 & 0.34 & 0.70 \\\\
+One-Class SVM      & 0.10 & 0.13 & 0.75 & 0.17 & 0.31 & 0.73 \\\\
+ECOD               & 0.10 & 0.14 & 0.44 & 0.25 & 0.36 & 0.44 \\\\
+COPOD              & 0.10 & 0.15 & 0.45 & 0.23 & 0.48 & 0.41 \\\\
+HBOS               & 0.00 & 0.01 & 0.04 & 0.02 & 0.01 & 0.32 \\\\
+KNN                & 0.19 & 0.10 & 0.91 & 0.30 & 0.46 & 0.80 \\\\
+PCA                & 0.12 & 0.14 & 0.54 & 0.19 & 0.23 & 0.71 \\\\
+\midrule
+Autoencoder        & 0.11 & 0.12 & 0.76 & 0.29 & 0.36 & 0.76 \\\\
+VAE                & 0.10 & 0.13 & 0.72 & 0.18 & 0.27 & 0.72 \\\\
+Deep SVDD          & 0.14 & 0.13 & 0.72 & 0.23 & 0.37 & 0.70 \\\\
+DIF                & 0.11 & 0.12 & 0.81 & 0.28 & 0.39 & 0.78 \\\\
+AE1SVM             & 0.11 & 0.14 & 0.63 & 0.17 & 0.18 & 0.76 \\\\
+LUNAR              & 0.38 & 0.25 & 0.98 & \textbf{0.63} & \textbf{0.78} & 0.90 \\\\
+\midrule
+Drift detector     & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\\\
+Dedup rule         & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\\\
+\bottomrule
+\end{tabular}
+\end{table}
+% END generated matrices
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}
