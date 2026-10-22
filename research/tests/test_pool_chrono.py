@@ -81,10 +81,32 @@ def test_the_loader_aligns_times_with_the_rows_kept_by_the_labelling_rule(tmp_pa
     path = tmp_path / "357.csv"
     frame.to_csv(path, index=False)
     meta = {"tasks": ["Classification"], "target_col": ["Occupancy"], "variables": []}
-    x, y, times = pc.load_pool_dataset(meta, path, 357)
+    x, y, times, dropped = pc.load_pool_dataset(meta, path, 357)
+    assert dropped == 0
     assert len(x) == len(y) == len(times) and set(x.columns) == {"v", "w"}
     # 60 of 400 rows is 15%: the pool rule downsamples the anomaly class to 10% of the kept rows
     assert y.sum() == round(340 * 0.10 / 0.90)
     anomalies = times[y == 1]
     assert (anomalies < pd.Timestamp("2015-02-04 01:00", tz="UTC")).all()  # the first 60 minutes
     assert (times[y == 0] >= pd.Timestamp("2015-02-04 01:00", tz="UTC")).all()
+
+
+def test_a_stray_header_line_in_the_time_column_is_dropped_and_counted(tmp_path):
+    n = 300
+    rng = np.random.default_rng(2)
+    dates = list(pd.date_range("2015-02-04", periods=n, freq="min").astype(str))
+    dates[100] = "Temperature"  # a header line left by a concatenation of files
+    frame = pd.DataFrame(
+        {
+            "date": dates,
+            "v": rng.normal(size=n),
+            "w": rng.normal(size=n),
+            "Occupancy": np.r_[np.ones(20), np.zeros(n - 20)],
+        }
+    )
+    path = tmp_path / "357.csv"
+    frame.to_csv(path, index=False)
+    meta = {"tasks": ["Classification"], "target_col": ["Occupancy"], "variables": []}
+    x, y, times, dropped = pc.load_pool_dataset(meta, path, 357)
+    assert dropped == 1 and len(x) == len(y) == len(times)
+    assert times.notna().all() and pd.Timestamp("2015-02-04 01:40", tz="UTC") not in set(times)

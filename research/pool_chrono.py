@@ -40,7 +40,11 @@ PERIODS = {357: "2015-02", 864: "2017-12", 468: "2017-01"}
 
 
 def read_times(frame: pd.DataFrame, uci_id: int) -> pd.Series:
-    """UTC timestamps of the rows of a raw table; a month alone keeps the file order inside it."""
+    """UTC timestamps of the rows of a raw table, ``NaT`` where the value is not a time.
+
+    A month alone keeps the file order inside it. Some files hold stray header lines from a
+    concatenation; their time is unreadable and the row is dropped by the caller, and counted.
+    """
     columns = TIME_COLUMNS[uci_id]
     if uci_id == 468:
         month = frame["Month"].astype(str).str[:3].str.lower().map(MONTHS.index)
@@ -50,7 +54,7 @@ def read_times(frame: pd.DataFrame, uci_id: int) -> pd.Series:
     text = frame[columns[0]].astype(str)
     if len(columns) == 2:
         text = text + " " + frame[columns[1]].astype(str)
-    return pd.Series(pd.to_datetime(text, utc=True))
+    return pd.Series(pd.to_datetime(text, utc=True, errors="coerce"))
 
 
 def to_features(features: pd.DataFrame) -> pd.DataFrame:
@@ -69,16 +73,19 @@ def to_features(features: pd.DataFrame) -> pd.DataFrame:
 
 def load_pool_dataset(
     meta: dict[str, Any], path: Path, uci_id: int
-) -> tuple[pd.DataFrame, np.ndarray, pd.Series]:
-    """Features, labels by the rule of the pool and row times, aligned."""
+) -> tuple[pd.DataFrame, np.ndarray, pd.Series, int]:
+    """Features, labels by the rule of the pool, row times (aligned) and the rows dropped."""
     frame = ul.read_table(path)
     times = read_times(frame, uci_id)
+    unreadable = int(times.isna().sum())
+    frame, times = frame[times.notna().to_numpy()].reset_index(drop=True), times.dropna()
+    times = times.reset_index(drop=True)
     marked = frame.assign(__row__=np.arange(len(frame), dtype=float))
     features, labels, _info = ul.derive_labels(marked, meta)
     rows = features.pop("__row__").to_numpy().astype(int)
     columns = set(TIME_COLUMNS[uci_id])
     features = features[[c for c in features.columns if c not in columns]]
-    return to_features(features), labels, times.iloc[rows].reset_index(drop=True)
+    return to_features(features), labels, times.iloc[rows].reset_index(drop=True), unreadable
 
 
 def eligible(y: np.ndarray, times: pd.Series) -> tuple[bool, str]:
@@ -128,8 +135,11 @@ def main(argv: list[str] | None = None) -> int:
     for name, loader in jobs.items():
         if args.only and name not in args.only:
             continue
-        x, y, times = loader()
+        loaded = loader()
+        x, y, times = loaded[:3]
         result = run_dataset(x, y, times)
+        if len(loaded) == 4:
+            result["rows_without_a_readable_time"] = loaded[3]
         with atomic_path(args.output / f"{name}.json") as partial:
             partial.write_text(json.dumps(result, indent=1, sort_keys=True) + "\n")
         print(name, result.get("excluded", "ok"), flush=True)
