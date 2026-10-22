@@ -144,6 +144,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--only", nargs="*", help="problem ids, for a quick check")
     parser.add_argument(
+        "--resume", action="store_true", help="skip the problems whose result is already written"
+    )
+    parser.add_argument(
         "--methods",
         choices=("classical", "deep"),
         default="classical",
@@ -158,6 +161,10 @@ def main(argv: list[str] | None = None) -> int:
         if not args.only or j["problem"] in args.only
     ]
     args.output.mkdir(parents=True, exist_ok=True)
+    if args.resume:
+        todo = [
+            j for j in todo if not (args.output / f"{j['problem'].replace(':', '_')}.json").exists()
+        ]
     failed = 0
     methods = list(DEEP_NAMES) if args.methods == "deep" else list(METHODS)
     with ProcessPoolExecutor(max_workers=args.workers) as pool:

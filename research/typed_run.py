@@ -96,6 +96,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--only", type=int, nargs="*", help="UCI ids, for a quick check")
     parser.add_argument(
+        "--resume", action="store_true", help="skip the datasets whose result is already written"
+    )
+    parser.add_argument(
         "--methods",
         choices=("classical", "deep"),
         default="classical",
@@ -110,6 +113,8 @@ def main(argv: list[str] | None = None) -> int:
         if not args.only or j[0]["uci_id"] in args.only
     ]
     args.output.mkdir(parents=True, exist_ok=True)
+    if args.resume:
+        todo = [j for j in todo if not (args.output / f"{j[0]['uci_id']}.json").exists()]
     names = list(DEEP_NAMES) if args.methods == "deep" else None
     with ProcessPoolExecutor(max_workers=args.workers) as pool:
         for result in pool.map(bind(run_one, names=names), todo):

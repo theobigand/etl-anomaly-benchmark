@@ -292,8 +292,9 @@ def main(argv: list[str] | None = None) -> int:
         "records": narrow, "wide_records": wide, "etl_records": etl,
         "summary": summarize(narrow), "wide_summary": summarize(wide),
         "settings": {"seed": SEED, "sizes": args.sizes, "features": FEATURES,
-                     "wide": [WIDE_ROWS, WIDE_FEATURES], "timeout_s": TIMEOUT_S, "methods": args.methods,
-                     "lstm_epochs": LSTM_EPOCHS, "lstm_fit_rows": LSTM_FIT_ROWS,
+                     "wide": [WIDE_ROWS, WIDE_FEATURES], "timeout_s": TIMEOUT_S,
+                     "methods": args.methods, "lstm_epochs": LSTM_EPOCHS,
+                     "lstm_fit_rows": LSTM_FIT_ROWS,
                      "load_at_start": started},
         "provenance": {
             "script_sha256": sha(__file__), "dataset_sha256": sha(csv),
