@@ -77,6 +77,21 @@ def merged_typed(classical: Path, deep: Path) -> dict[str, pd.DataFrame]:
     return out
 
 
+def typed_fpr(classical: Path, deep: Path) -> pd.DataFrame:
+    """Median and maximum over carriers of the share of clean rows each method flags."""
+    columns: dict[str, list[float]] = {}
+    for path in sorted(classical.glob("*.json")):
+        for directory in (classical, deep):
+            file = directory / path.name
+            if file.is_file():
+                for method, value in json.loads(file.read_text())["fpr_mean"].items():
+                    columns.setdefault(method, []).append(value)
+    table = pd.DataFrame(
+        {m: {"median": float(np.median(v)), "max": float(np.max(v))} for m, v in columns.items()}
+    ).T
+    return ordered(table)
+
+
 def table_md(
     frame: pd.DataFrame, low: pd.DataFrame | None = None, high=None, digits: int = 2
 ) -> str:
@@ -164,6 +179,8 @@ def build(evidence: Path, figures: Path) -> dict[str, object]:
         f"Median detection rate over {len(typed)} real datasets (typed injection)",
         figures / "typed_pooled.png",
     )
+    fpr = typed_fpr(evidence / "typed_injection" / "runs", out / "typed_deep" / "runs")
+    sections += ["### Typed injection, clean rows flagged", "", table_md(fpr, digits=3)]
     synthetic = synthetic_matrix(evidence, out)
     sections += ["### Synthetic customer table, mean recall", "", table_md(synthetic)]
     figure(

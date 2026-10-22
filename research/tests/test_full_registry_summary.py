@@ -81,3 +81,15 @@ def test_a_figure_is_written(tmp_path):
     fs.figure(_matrix(["zscore", "ecod"], 0.4), "title", tmp_path / "f.png")
     assert (tmp_path / "f.png").stat().st_size > 0
     assert not np.isnan(0.4)
+
+
+def test_the_clean_row_flag_rate_is_pooled_over_carriers(tmp_path):
+    classical, deep = tmp_path / "c", tmp_path / "d"
+    classical.mkdir()
+    deep.mkdir()
+    for k, (a, b) in enumerate(((0.1, 0.5), (0.3, 0.9)), start=1):
+        (classical / f"{k}.json").write_text(json.dumps({"fpr_mean": {"zscore": a}}))
+        (deep / f"{k}.json").write_text(json.dumps({"fpr_mean": {"vae": b}}))
+    table = fs.typed_fpr(classical, deep)
+    assert list(table.index) == ["zscore", "vae"]
+    assert table.loc["zscore", "median"] == pytest.approx(0.2) and table.loc["vae", "max"] == 0.9

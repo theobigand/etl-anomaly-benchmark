@@ -1,0 +1,241 @@
+{
+ "errors": {},
+ "fpr": {
+  "ae1svm": 0.11176470588235295,
+  "autoencoder": 0.13137254901960785,
+  "deep_svdd": 0.15555555555555556,
+  "dif": 0.08823529411764706,
+  "lunar": 0.12156862745098039,
+  "vae": 0.11633986928104575
+ },
+ "precision": {
+  "columns": [
+   "missing_value",
+   "duplicate",
+   "univariate_outlier",
+   "multivariate_outlier",
+   "temporal_drift",
+   "invalid_format"
+  ],
+  "data": [
+   [
+    0.0428571429,
+    0.0289855072,
+    0.1589958159,
+    0.1762295082,
+    0.0651162791,
+    0.0737327189
+   ],
+   [
+    0.021978022,
+    0.0326086957,
+    0.2294372294,
+    0.2192982456,
+    0.0582010582,
+    0.1563981043
+   ],
+   [
+    0.0517928287,
+    0.048,
+    0.048,
+    0.0285714286,
+    0.0441767068,
+    0.0703125
+   ],
+   [
+    0.0425531915,
+    0.0287769784,
+    0.2857142857,
+    0.2857142857,
+    0.1290322581,
+    0.2857142857
+   ],
+   [
+    0.0393258427,
+    0.0338983051,
+    0.2366071429,
+    0.2083333333,
+    0.0604395604,
+    0.1492537313
+   ],
+   [
+    0.0510204082,
+    0.0362694301,
+    0.225,
+    0.1226415094,
+    0.1184834123,
+    0.1982758621
+   ]
+  ],
+  "index": [
+   "autoencoder",
+   "vae",
+   "deep_svdd",
+   "dif",
+   "ae1svm",
+   "lunar"
+  ]
+ },
+ "recall": {
+  "columns": [
+   "missing_value",
+   "duplicate",
+   "univariate_outlier",
+   "multivariate_outlier",
+   "temporal_drift",
+   "invalid_format"
+  ],
+  "data": [
+   [
+    0.1666666667,
+    0.1111111111,
+    0.7037037037,
+    0.7962962963,
+    0.2592592593,
+    0.2962962963
+   ],
+   [
+    0.0740740741,
+    0.1111111111,
+    0.9814814815,
+    0.9259259259,
+    0.2037037037,
+    0.6111111111
+   ],
+   [
+    0.2407407407,
+    0.2222222222,
+    0.2222222222,
+    0.1296296296,
+    0.2037037037,
+    0.3333333333
+   ],
+   [
+    0.1111111111,
+    0.0740740741,
+    1.0,
+    1.0,
+    0.3703703704,
+    1.0
+   ],
+   [
+    0.1296296296,
+    0.1111111111,
+    0.9814814815,
+    0.8333333333,
+    0.2037037037,
+    0.5555555556
+   ],
+   [
+    0.1851851852,
+    0.1296296296,
+    1.0,
+    0.4814814815,
+    0.462962963,
+    0.8518518519
+   ]
+  ],
+  "index": [
+   "autoencoder",
+   "vae",
+   "deep_svdd",
+   "dif",
+   "ae1svm",
+   "lunar"
+  ]
+ },
+ "seed": 2,
+ "settings": {
+  "ae1svm": {
+   "arguments": {
+    "preprocessing": false
+   },
+   "contamination": 0.17475728155339806,
+   "device": "cpu",
+   "random_state": 2,
+   "seconds": 42.263570666000305,
+   "versions": {
+    "numpy": "2.4.6",
+    "pyod": "3.6.7",
+    "torch": "2.14.1"
+   }
+  },
+  "autoencoder": {
+   "contamination": 0.17475728155339806,
+   "converged": true,
+   "device": "cpu",
+   "hidden_layer_sizes": [
+    6,
+    3,
+    6
+   ],
+   "max_iter": 300,
+   "n_iter": 178,
+   "random_state": 2,
+   "seconds": 3.6347955410001305,
+   "versions": {
+    "numpy": "2.4.6",
+    "scikit-learn": "1.9.1"
+   }
+  },
+  "deep_svdd": {
+   "arguments": {
+    "preprocessing": false,
+    "verbose": 0
+   },
+   "contamination": 0.17475728155339806,
+   "device": "cpu",
+   "random_state": 2,
+   "seconds": 14.311045374999594,
+   "versions": {
+    "numpy": "2.4.6",
+    "pyod": "3.6.7",
+    "torch": "2.14.1"
+   }
+  },
+  "dif": {
+   "arguments": {
+    "device": "cpu"
+   },
+   "contamination": 0.17475728155339806,
+   "device": "cpu",
+   "random_state": 2,
+   "seconds": 27.53083795800012,
+   "versions": {
+    "numpy": "2.4.6",
+    "pyod": "3.6.7",
+    "torch": "2.14.1"
+   }
+  },
+  "lunar": {
+   "arguments": {
+    "verbose": 0
+   },
+   "contamination": 0.17475728155339806,
+   "device": "cpu",
+   "random_state": 2,
+   "seconds": 114.64747654100029,
+   "versions": {
+    "numpy": "2.4.6",
+    "pyod": "3.6.7",
+    "torch": "2.14.1"
+   }
+  },
+  "vae": {
+   "arguments": {
+    "device": "cpu",
+    "preprocessing": false,
+    "verbose": 0
+   },
+   "contamination": 0.17475728155339806,
+   "device": "cpu",
+   "random_state": 2,
+   "seconds": 16.39199008400101,
+   "versions": {
+    "numpy": "2.4.6",
+    "pyod": "3.6.7",
+    "torch": "2.14.1"
+   }
+  }
+ }
+}

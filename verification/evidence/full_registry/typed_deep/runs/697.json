@@ -1,0 +1,597 @@
+{
+ "carrier": {
+  "columns": [
+   "Application mode",
+   "Course",
+   "Previous qualification",
+   "Previous qualification (grade)",
+   "Nacionality",
+   "Mother's qualification",
+   "Father's qualification",
+   "Mother's occupation",
+   "Father's occupation",
+   "Admission grade",
+   "Age at enrollment",
+   "Curricular units 1st sem (credited)",
+   "Curricular units 1st sem (enrolled)",
+   "Curricular units 1st sem (evaluations)",
+   "Curricular units 1st sem (approved)",
+   "Curricular units 1st sem (grade)",
+   "Curricular units 1st sem (without evaluations)",
+   "Curricular units 2nd sem (credited)",
+   "Curricular units 2nd sem (enrolled)",
+   "Curricular units 2nd sem (evaluations)",
+   "Curricular units 2nd sem (approved)",
+   "Curricular units 2nd sem (grade)",
+   "Curricular units 2nd sem (without evaluations)",
+   "Unemployment rate",
+   "GDP"
+  ],
+  "duplicates_dropped": 0,
+  "normal_class_only": true,
+  "rows_in": 3630,
+  "rows_incomplete_dropped": 0,
+  "rows_out": 3630,
+  "source_rows": 3630
+ },
+ "fpr_mean": {
+  "ae1svm": 0.1393972965,
+  "autoencoder": 0.1389718478,
+  "deep_svdd": 0.1484611231,
+  "dif": 0.1437216057,
+  "lunar": 0.1178474343,
+  "transform_dedup": 0.0353895137,
+  "vae": 0.1368110896
+ },
+ "name": "Predict Students' Dropout and Academic Success",
+ "precision_mean": {
+  "columns": [
+   "missing_value",
+   "duplicate",
+   "univariate_outlier",
+   "multivariate_outlier",
+   "temporal_drift",
+   "invalid_format"
+  ],
+  "data": [
+   [
+    0.0386171328,
+    0.0205733239,
+    0.1660687401,
+    0.1151652269,
+    0.0488330952,
+    0.1437740526
+   ],
+   [
+    0.0395911746,
+    0.0219339595,
+    0.1038635321,
+    0.1116379994,
+    0.0338466054,
+    0.1366783616
+   ],
+   [
+    0.0387038429,
+    0.0255699118,
+    0.1463474055,
+    0.0720181513,
+    0.0418606997,
+    0.1408447489
+   ],
+   [
+    0.0295000488,
+    0.0202380952,
+    0.1075547585,
+    0.1054788815,
+    0.0459826304,
+    0.1358505866
+   ],
+   [
+    0.0358691608,
+    0.0210614043,
+    0.1048183951,
+    0.0957385949,
+    0.0414044065,
+    0.1363767644
+   ],
+   [
+    0.0406328196,
+    0.0177233326,
+    0.1539352692,
+    0.0905264118,
+    0.03995671,
+    0.1699271524
+   ],
+   [
+    0.0,
+    0.5,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  ],
+  "index": [
+   "autoencoder",
+   "vae",
+   "deep_svdd",
+   "dif",
+   "ae1svm",
+   "lunar",
+   "transform_dedup"
+  ]
+ },
+ "recall_mean": {
+  "columns": [
+   "missing_value",
+   "duplicate",
+   "univariate_outlier",
+   "multivariate_outlier",
+   "temporal_drift",
+   "invalid_format"
+  ],
+  "data": [
+   [
+    0.1558823529,
+    0.0860294118,
+    0.7691176471,
+    0.525,
+    0.2125,
+    0.6566176471
+   ],
+   [
+    0.1566176471,
+    0.0860294118,
+    0.4441176471,
+    0.5,
+    0.1375,
+    0.6080882353
+   ],
+   [
+    0.1676470588,
+    0.1110294118,
+    0.7102941176,
+    0.3375,
+    0.1875,
+    0.6919117647
+   ],
+   [
+    0.1198529412,
+    0.0852941176,
+    0.4808823529,
+    0.4875,
+    0.2,
+    0.6330882353
+   ],
+   [
+    0.1433823529,
+    0.0860294118,
+    0.4558823529,
+    0.425,
+    0.175,
+    0.6205882353
+   ],
+   [
+    0.1433823529,
+    0.0742647059,
+    0.5544117647,
+    0.3375,
+    0.1625,
+    0.6073529412
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  ],
+  "index": [
+   "autoencoder",
+   "vae",
+   "deep_svdd",
+   "dif",
+   "ae1svm",
+   "lunar",
+   "transform_dedup"
+  ]
+ },
+ "recall_seeds": [
+  {
+   "columns": [
+    "missing_value",
+    "duplicate",
+    "univariate_outlier",
+    "multivariate_outlier",
+    "temporal_drift",
+    "invalid_format"
+   ],
+   "data": [
+    [
+     0.1764705882,
+     0.125,
+     0.8235294118,
+     0.5,
+     0.4375,
+     0.625
+    ],
+    [
+     0.2352941176,
+     0.125,
+     0.4705882353,
+     0.4375,
+     0.125,
+     0.5625
+    ],
+    [
+     0.2941176471,
+     0.125,
+     0.7058823529,
+     0.1875,
+     0.25,
+     0.4375
+    ],
+    [
+     0.1764705882,
+     0.0,
+     0.5294117647,
+     0.5625,
+     0.3125,
+     0.625
+    ],
+    [
+     0.1764705882,
+     0.125,
+     0.5294117647,
+     0.4375,
+     0.1875,
+     0.625
+    ],
+    [
+     0.1176470588,
+     0.0,
+     0.5882352941,
+     0.3125,
+     0.125,
+     0.5
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "index": [
+    "autoencoder",
+    "vae",
+    "deep_svdd",
+    "dif",
+    "ae1svm",
+    "lunar",
+    "transform_dedup"
+   ]
+  },
+  {
+   "columns": [
+    "missing_value",
+    "duplicate",
+    "univariate_outlier",
+    "multivariate_outlier",
+    "temporal_drift",
+    "invalid_format"
+   ],
+   "data": [
+    [
+     0.0625,
+     0.0,
+     0.8823529412,
+     0.375,
+     0.0625,
+     0.5625
+    ],
+    [
+     0.125,
+     0.0588235294,
+     0.6470588235,
+     0.25,
+     0.0,
+     0.5625
+    ],
+    [
+     0.0,
+     0.0,
+     0.7647058824,
+     0.5,
+     0.125,
+     0.625
+    ],
+    [
+     0.125,
+     0.0588235294,
+     0.6470588235,
+     0.25,
+     0.0,
+     0.5625
+    ],
+    [
+     0.125,
+     0.0588235294,
+     0.6470588235,
+     0.25,
+     0.0,
+     0.5625
+    ],
+    [
+     0.0625,
+     0.0,
+     0.7058823529,
+     0.375,
+     0.1875,
+     0.5625
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "index": [
+    "autoencoder",
+    "vae",
+    "deep_svdd",
+    "dif",
+    "ae1svm",
+    "lunar",
+    "transform_dedup"
+   ]
+  },
+  {
+   "columns": [
+    "missing_value",
+    "duplicate",
+    "univariate_outlier",
+    "multivariate_outlier",
+    "temporal_drift",
+    "invalid_format"
+   ],
+   "data": [
+    [
+     0.1176470588,
+     0.125,
+     0.7647058824,
+     0.6875,
+     0.125,
+     0.625
+    ],
+    [
+     0.0588235294,
+     0.0625,
+     0.3529411765,
+     0.6875,
+     0.1875,
+     0.5625
+    ],
+    [
+     0.0588235294,
+     0.0625,
+     0.7058823529,
+     0.1875,
+     0.0625,
+     0.75
+    ],
+    [
+     0.0588235294,
+     0.0,
+     0.3529411765,
+     0.5,
+     0.1875,
+     0.625
+    ],
+    [
+     0.0588235294,
+     0.0,
+     0.3529411765,
+     0.5625,
+     0.1875,
+     0.5625
+    ],
+    [
+     0.0588235294,
+     0.0625,
+     0.3529411765,
+     0.1875,
+     0.125,
+     0.5625
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "index": [
+    "autoencoder",
+    "vae",
+    "deep_svdd",
+    "dif",
+    "ae1svm",
+    "lunar",
+    "transform_dedup"
+   ]
+  },
+  {
+   "columns": [
+    "missing_value",
+    "duplicate",
+    "univariate_outlier",
+    "multivariate_outlier",
+    "temporal_drift",
+    "invalid_format"
+   ],
+   "data": [
+    [
+     0.1875,
+     0.1176470588,
+     0.6875,
+     0.5,
+     0.1875,
+     0.7058823529
+    ],
+    [
+     0.1875,
+     0.0588235294,
+     0.375,
+     0.5,
+     0.125,
+     0.6470588235
+    ],
+    [
+     0.25,
+     0.1176470588,
+     0.75,
+     0.1875,
+     0.1875,
+     0.8823529412
+    ],
+    [
+     0.0625,
+     0.1176470588,
+     0.4375,
+     0.5,
+     0.125,
+     0.6470588235
+    ],
+    [
+     0.0625,
+     0.0588235294,
+     0.375,
+     0.3125,
+     0.1875,
+     0.6470588235
+    ],
+    [
+     0.125,
+     0.0588235294,
+     0.375,
+     0.1875,
+     0.0,
+     0.6470588235
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "index": [
+    "autoencoder",
+    "vae",
+    "deep_svdd",
+    "dif",
+    "ae1svm",
+    "lunar",
+    "transform_dedup"
+   ]
+  },
+  {
+   "columns": [
+    "missing_value",
+    "duplicate",
+    "univariate_outlier",
+    "multivariate_outlier",
+    "temporal_drift",
+    "invalid_format"
+   ],
+   "data": [
+    [
+     0.2352941176,
+     0.0625,
+     0.6875,
+     0.5625,
+     0.25,
+     0.7647058824
+    ],
+    [
+     0.1764705882,
+     0.125,
+     0.375,
+     0.625,
+     0.25,
+     0.7058823529
+    ],
+    [
+     0.2352941176,
+     0.25,
+     0.625,
+     0.625,
+     0.3125,
+     0.7647058824
+    ],
+    [
+     0.1764705882,
+     0.25,
+     0.4375,
+     0.625,
+     0.375,
+     0.7058823529
+    ],
+    [
+     0.2941176471,
+     0.1875,
+     0.375,
+     0.5625,
+     0.3125,
+     0.7058823529
+    ],
+    [
+     0.3529411765,
+     0.25,
+     0.75,
+     0.625,
+     0.375,
+     0.7647058824
+    ],
+    [
+     0.0,
+     1.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "index": [
+    "autoencoder",
+    "vae",
+    "deep_svdd",
+    "dif",
+    "ae1svm",
+    "lunar",
+    "transform_dedup"
+   ]
+  }
+ ],
+ "seeds": [
+  42,
+  1,
+  2,
+  3,
+  4
+ ],
+ "sha256": "a1b1a6531bbb93a5c7fdf0093b47172776652a4ffb12342fb79655c85b74801b",
+ "uci_id": 697
+}

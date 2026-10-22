@@ -1,0 +1,241 @@
+{
+ "errors": {},
+ "fpr": {
+  "ae1svm": 0.11699346405228758,
+  "autoencoder": 0.12679738562091503,
+  "deep_svdd": 0.1627450980392157,
+  "dif": 0.09542483660130718,
+  "lunar": 0.8,
+  "vae": 0.10392156862745099
+ },
+ "precision": {
+  "columns": [
+   "missing_value",
+   "duplicate",
+   "univariate_outlier",
+   "multivariate_outlier",
+   "temporal_drift",
+   "invalid_format"
+  ],
+  "data": [
+   [
+    0.0102040816,
+    0.03,
+    0.1848739496,
+    0.1744680851,
+    0.0717703349,
+    0.1141552511
+   ],
+   [
+    0.0185185185,
+    0.0421686747,
+    0.2535211268,
+    0.2535211268,
+    0.1117318436,
+    0.1497326203
+   ],
+   [
+    0.0532319392,
+    0.0423076923,
+    0.0603773585,
+    0.0423076923,
+    0.0459770115,
+    0.0674157303
+   ],
+   [
+    0.0135135135,
+    0.0331125828,
+    0.27,
+    0.27,
+    0.1097560976,
+    0.27
+   ],
+   [
+    0.0055555556,
+    0.0324324324,
+    0.2284482759,
+    0.2008928571,
+    0.0820512821,
+    0.1596244131
+   ],
+   [
+    0.0347003155,
+    0.0347003155,
+    0.0422535211,
+    0.0377358491,
+    0.0407523511,
+    0.0422535211
+   ]
+  ],
+  "index": [
+   "autoencoder",
+   "vae",
+   "deep_svdd",
+   "dif",
+   "ae1svm",
+   "lunar"
+  ]
+ },
+ "recall": {
+  "columns": [
+   "missing_value",
+   "duplicate",
+   "univariate_outlier",
+   "multivariate_outlier",
+   "temporal_drift",
+   "invalid_format"
+  ],
+  "data": [
+   [
+    0.037037037,
+    0.1111111111,
+    0.8148148148,
+    0.7592592593,
+    0.2777777778,
+    0.462962963
+   ],
+   [
+    0.0555555556,
+    0.1296296296,
+    1.0,
+    1.0,
+    0.3703703704,
+    0.5185185185
+   ],
+   [
+    0.2592592593,
+    0.2037037037,
+    0.2962962963,
+    0.2037037037,
+    0.2222222222,
+    0.3333333333
+   ],
+   [
+    0.037037037,
+    0.0925925926,
+    1.0,
+    1.0,
+    0.3333333333,
+    1.0
+   ],
+   [
+    0.0185185185,
+    0.1111111111,
+    0.9814814815,
+    0.8333333333,
+    0.2962962963,
+    0.6296296296
+   ],
+   [
+    0.8148148148,
+    0.8148148148,
+    1.0,
+    0.8888888889,
+    0.962962963,
+    1.0
+   ]
+  ],
+  "index": [
+   "autoencoder",
+   "vae",
+   "deep_svdd",
+   "dif",
+   "ae1svm",
+   "lunar"
+  ]
+ },
+ "seed": 3,
+ "settings": {
+  "ae1svm": {
+   "arguments": {
+    "preprocessing": false
+   },
+   "contamination": 0.17475728155339806,
+   "device": "cpu",
+   "random_state": 3,
+   "seconds": 37.73644445799982,
+   "versions": {
+    "numpy": "2.4.6",
+    "pyod": "3.6.7",
+    "torch": "2.14.1"
+   }
+  },
+  "autoencoder": {
+   "contamination": 0.17475728155339806,
+   "converged": true,
+   "device": "cpu",
+   "hidden_layer_sizes": [
+    6,
+    3,
+    6
+   ],
+   "max_iter": 300,
+   "n_iter": 143,
+   "random_state": 3,
+   "seconds": 2.2978544580000744,
+   "versions": {
+    "numpy": "2.4.6",
+    "scikit-learn": "1.9.1"
+   }
+  },
+  "deep_svdd": {
+   "arguments": {
+    "preprocessing": false,
+    "verbose": 0
+   },
+   "contamination": 0.17475728155339806,
+   "device": "cpu",
+   "random_state": 3,
+   "seconds": 21.738288292001016,
+   "versions": {
+    "numpy": "2.4.6",
+    "pyod": "3.6.7",
+    "torch": "2.14.1"
+   }
+  },
+  "dif": {
+   "arguments": {
+    "device": "cpu"
+   },
+   "contamination": 0.17475728155339806,
+   "device": "cpu",
+   "random_state": 3,
+   "seconds": 27.566244790999917,
+   "versions": {
+    "numpy": "2.4.6",
+    "pyod": "3.6.7",
+    "torch": "2.14.1"
+   }
+  },
+  "lunar": {
+   "arguments": {
+    "verbose": 0
+   },
+   "contamination": 0.17475728155339806,
+   "device": "cpu",
+   "random_state": 3,
+   "seconds": 116.75760470800014,
+   "versions": {
+    "numpy": "2.4.6",
+    "pyod": "3.6.7",
+    "torch": "2.14.1"
+   }
+  },
+  "vae": {
+   "arguments": {
+    "device": "cpu",
+    "preprocessing": false,
+    "verbose": 0
+   },
+   "contamination": 0.17475728155339806,
+   "device": "cpu",
+   "random_state": 3,
+   "seconds": 18.364895124999748,
+   "versions": {
+    "numpy": "2.4.6",
+    "pyod": "3.6.7",
+    "torch": "2.14.1"
+   }
+  }
+ }
+}

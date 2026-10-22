@@ -1,0 +1,301 @@
+{
+ "errors": {},
+ "features": 26,
+ "metrics": {
+  "ae1svm": [
+   {
+    "f1": 0.18181818181818182,
+    "flagged_pct": 11.11111111111111,
+    "pr_auc": 0.24133986928104575,
+    "precision": 0.14285714285714285,
+    "recall": 0.25,
+    "roc_auc": 0.7288135593220337
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 4.761904761904762,
+    "pr_auc": 0.07373752545977806,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4576271186440678
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 7.936507936507936,
+    "pr_auc": 0.0697659166582585,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.3940677966101695
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 7.936507936507936,
+    "pr_auc": 0.08655326211935759,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5550847457627119
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 7.936507936507936,
+    "pr_auc": 0.05750090683126398,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.3389830508474576
+   }
+  ],
+  "autoencoder": [
+   {
+    "f1": 0.23529411764705882,
+    "flagged_pct": 20.634920634920633,
+    "pr_auc": 0.20370370370370366,
+    "precision": 0.15384615384615385,
+    "recall": 0.5,
+    "roc_auc": 0.7881355932203389
+   },
+   {
+    "f1": 0.14285714285714285,
+    "flagged_pct": 15.873015873015872,
+    "pr_auc": 0.09538525555149596,
+    "precision": 0.1,
+    "recall": 0.25,
+    "roc_auc": 0.5042372881355932
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 17.46031746031746,
+    "pr_auc": 0.05662056489262371,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.326271186440678
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 26.984126984126984,
+    "pr_auc": 0.07931642001409443,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5296610169491526
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 14.285714285714285,
+    "pr_auc": 0.06089066399782539,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.3771186440677966
+   }
+  ],
+  "deep_svdd": [
+   {
+    "f1": 0.15384615384615385,
+    "flagged_pct": 14.285714285714285,
+    "pr_auc": 0.1403665239680778,
+    "precision": 0.1111111111111111,
+    "recall": 0.25,
+    "roc_auc": 0.6652542372881356
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 17.46031746031746,
+    "pr_auc": 0.08037347016023888,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 19.047619047619047,
+    "pr_auc": 0.07706766917293234,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4745762711864407
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 23.809523809523807,
+    "pr_auc": 0.07410058258336594,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 19.047619047619047,
+    "pr_auc": 0.06101059615765498,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.385593220338983
+   }
+  ],
+  "dif": [
+   {
+    "f1": 0.14285714285714285,
+    "flagged_pct": 15.873015873015872,
+    "pr_auc": 0.13125,
+    "precision": 0.1,
+    "recall": 0.25,
+    "roc_auc": 0.6483050847457628
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 19.047619047619047,
+    "pr_auc": 0.06732699667482275,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.41949152542372886
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 25.396825396825395,
+    "pr_auc": 0.05463105632597158,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.2923728813559322
+   },
+   {
+    "f1": 0.10526315789473684,
+    "flagged_pct": 23.809523809523807,
+    "pr_auc": 0.099674317617866,
+    "precision": 0.06666666666666667,
+    "recall": 0.25,
+    "roc_auc": 0.6186440677966102
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 19.047619047619047,
+    "pr_auc": 0.061597141315257245,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.385593220338983
+   }
+  ],
+  "lunar": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 3.1746031746031744,
+    "pr_auc": 0.11573426573426573,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.6186440677966102
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 1.5873015873015872,
+    "pr_auc": 0.09648617511520738,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5508474576271186
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 7.936507936507936,
+    "pr_auc": 0.05476188792396255,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.3050847457627119
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 7.936507936507936,
+    "pr_auc": 0.09300898026704478,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.6059322033898304
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 7.936507936507936,
+    "pr_auc": 0.059718966088850994,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.3686440677966102
+   }
+  ],
+  "vae": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 7.936507936507936,
+    "pr_auc": 0.1656926406926407,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.7584745762711864
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 3.1746031746031744,
+    "pr_auc": 0.06669884169884169,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4152542372881356
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 12.698412698412698,
+    "pr_auc": 0.06097374847374848,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.3305084745762712
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 9.523809523809524,
+    "pr_auc": 0.08350421508316244,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5550847457627119
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 7.936507936507936,
+    "pr_auc": 0.055385348583877995,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.31355932203389836
+   }
+  ]
+ },
+ "name": "Cirrhosis Patient Survival Prediction",
+ "prevalence": 0.05980861244019139,
+ "problem": "uci:878",
+ "report": {
+  "anomalies": 25,
+  "anomaly_class": "CL",
+  "classes": 3,
+  "conflicting_rows_removed": 0,
+  "dropped_constant": [],
+  "dropped_high_cardinality": [
+   "Cholesterol",
+   "Tryglicerides"
+  ],
+  "dropped_missing": [],
+  "duplicates_removed": 0,
+  "encoded": [
+   "Drug",
+   "Sex",
+   "Ascites",
+   "Hepatomegaly",
+   "Spiders",
+   "Edema"
+  ],
+  "features_out": 26,
+  "kind": "native_rare",
+  "name": "Cirrhosis Patient Survival Prediction",
+  "natural_rate": 0.05980861244019139,
+  "rows": 418,
+  "rows_in": 418,
+  "rows_out": 418,
+  "source": "uci",
+  "uci_id": 878
+ },
+ "rows": 418,
+ "seeds": [
+  42,
+  1,
+  2,
+  3,
+  4
+ ],
+ "skipped": [],
+ "source": "uci"
+}

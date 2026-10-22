@@ -1,0 +1,241 @@
+{
+ "errors": {},
+ "fpr": {
+  "ae1svm": 0.12679738562091503,
+  "autoencoder": 0.1084967320261438,
+  "deep_svdd": 0.17058823529411765,
+  "dif": 0.0869281045751634,
+  "lunar": 0.13398692810457516,
+  "vae": 0.1
+ },
+ "precision": {
+  "columns": [
+   "missing_value",
+   "duplicate",
+   "univariate_outlier",
+   "multivariate_outlier",
+   "temporal_drift",
+   "invalid_format"
+  ],
+  "data": [
+   [
+    0.0459770115,
+    0.0177514793,
+    0.220657277,
+    0.2350230415,
+    0.0726256983,
+    0.17
+   ],
+   [
+    0.0129032258,
+    0.0316455696,
+    0.2608695652,
+    0.2388059701,
+    0.0838323353,
+    0.1861702128
+   ],
+   [
+    0.0224719101,
+    0.0333333333,
+    0.0678571429,
+    0.0076045627,
+    0.026119403,
+    0.0678571429
+   ],
+   [
+    0.0220588235,
+    0.0148148148,
+    0.2887700535,
+    0.2887700535,
+    0.0827586207,
+    0.2887700535
+   ],
+   [
+    0.0202020202,
+    0.0251256281,
+    0.2177419355,
+    0.1565217391,
+    0.0490196078,
+    0.1415929204
+   ],
+   [
+    0.0238095238,
+    0.0144230769,
+    0.2084942085,
+    0.100877193,
+    0.1048034934,
+    0.1767068273
+   ]
+  ],
+  "index": [
+   "autoencoder",
+   "vae",
+   "deep_svdd",
+   "dif",
+   "ae1svm",
+   "lunar"
+  ]
+ },
+ "recall": {
+  "columns": [
+   "missing_value",
+   "duplicate",
+   "univariate_outlier",
+   "multivariate_outlier",
+   "temporal_drift",
+   "invalid_format"
+  ],
+  "data": [
+   [
+    0.1481481481,
+    0.0555555556,
+    0.8703703704,
+    0.9444444444,
+    0.2407407407,
+    0.6296296296
+   ],
+   [
+    0.037037037,
+    0.0925925926,
+    1.0,
+    0.8888888889,
+    0.2592592593,
+    0.6481481481
+   ],
+   [
+    0.1111111111,
+    0.1666666667,
+    0.3518518519,
+    0.037037037,
+    0.1296296296,
+    0.3518518519
+   ],
+   [
+    0.0555555556,
+    0.037037037,
+    1.0,
+    1.0,
+    0.2222222222,
+    1.0
+   ],
+   [
+    0.0740740741,
+    0.0925925926,
+    1.0,
+    0.6666666667,
+    0.1851851852,
+    0.5925925926
+   ],
+   [
+    0.0925925926,
+    0.0555555556,
+    1.0,
+    0.4259259259,
+    0.4444444444,
+    0.8148148148
+   ]
+  ],
+  "index": [
+   "autoencoder",
+   "vae",
+   "deep_svdd",
+   "dif",
+   "ae1svm",
+   "lunar"
+  ]
+ },
+ "seed": 1,
+ "settings": {
+  "ae1svm": {
+   "arguments": {
+    "preprocessing": false
+   },
+   "contamination": 0.17475728155339806,
+   "device": "cpu",
+   "random_state": 1,
+   "seconds": 102.34465958300098,
+   "versions": {
+    "numpy": "2.4.6",
+    "pyod": "3.6.7",
+    "torch": "2.14.1"
+   }
+  },
+  "autoencoder": {
+   "contamination": 0.17475728155339806,
+   "converged": true,
+   "device": "cpu",
+   "hidden_layer_sizes": [
+    6,
+    3,
+    6
+   ],
+   "max_iter": 300,
+   "n_iter": 121,
+   "random_state": 1,
+   "seconds": 3.1102772079993883,
+   "versions": {
+    "numpy": "2.4.6",
+    "scikit-learn": "1.9.1"
+   }
+  },
+  "deep_svdd": {
+   "arguments": {
+    "preprocessing": false,
+    "verbose": 0
+   },
+   "contamination": 0.17475728155339806,
+   "device": "cpu",
+   "random_state": 1,
+   "seconds": 31.851261540999985,
+   "versions": {
+    "numpy": "2.4.6",
+    "pyod": "3.6.7",
+    "torch": "2.14.1"
+   }
+  },
+  "dif": {
+   "arguments": {
+    "device": "cpu"
+   },
+   "contamination": 0.17475728155339806,
+   "device": "cpu",
+   "random_state": 1,
+   "seconds": 53.07861299999968,
+   "versions": {
+    "numpy": "2.4.6",
+    "pyod": "3.6.7",
+    "torch": "2.14.1"
+   }
+  },
+  "lunar": {
+   "arguments": {
+    "verbose": 0
+   },
+   "contamination": 0.17475728155339806,
+   "device": "cpu",
+   "random_state": 1,
+   "seconds": 207.13132145800046,
+   "versions": {
+    "numpy": "2.4.6",
+    "pyod": "3.6.7",
+    "torch": "2.14.1"
+   }
+  },
+  "vae": {
+   "arguments": {
+    "device": "cpu",
+    "preprocessing": false,
+    "verbose": 0
+   },
+   "contamination": 0.17475728155339806,
+   "device": "cpu",
+   "random_state": 1,
+   "seconds": 37.84368833299959,
+   "versions": {
+    "numpy": "2.4.6",
+    "pyod": "3.6.7",
+    "torch": "2.14.1"
+   }
+  }
+ }
+}

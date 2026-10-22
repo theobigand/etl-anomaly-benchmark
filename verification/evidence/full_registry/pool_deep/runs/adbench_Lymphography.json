@@ -1,0 +1,284 @@
+{
+ "errors": {},
+ "features": 18,
+ "metrics": {
+  "ae1svm": [
+   {
+    "f1": 1.0,
+    "flagged_pct": 4.3478260869565215,
+    "pr_auc": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.5,
+    "flagged_pct": 13.043478260869565,
+    "pr_auc": 0.5,
+    "precision": 0.3333333333333333,
+    "recall": 1.0,
+    "roc_auc": 0.9545454545454546
+   },
+   {
+    "f1": 0.5,
+    "flagged_pct": 13.043478260869565,
+    "pr_auc": 1.0,
+    "precision": 0.3333333333333333,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 1.0,
+    "flagged_pct": 4.3478260869565215,
+    "pr_auc": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 1.0,
+    "flagged_pct": 4.3478260869565215,
+    "pr_auc": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   }
+  ],
+  "autoencoder": [
+   {
+    "f1": 0.5,
+    "flagged_pct": 13.043478260869565,
+    "pr_auc": 1.0,
+    "precision": 0.3333333333333333,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.4,
+    "flagged_pct": 17.391304347826086,
+    "pr_auc": 0.5,
+    "precision": 0.25,
+    "recall": 1.0,
+    "roc_auc": 0.9545454545454546
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 8.695652173913043,
+    "pr_auc": 1.0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.4,
+    "flagged_pct": 17.391304347826086,
+    "pr_auc": 0.5,
+    "precision": 0.25,
+    "recall": 1.0,
+    "roc_auc": 0.9545454545454546
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 8.695652173913043,
+    "pr_auc": 1.0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   }
+  ],
+  "deep_svdd": [
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 8.695652173913043,
+    "pr_auc": 1.0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.3333333333333333,
+    "flagged_pct": 21.73913043478261,
+    "pr_auc": 0.5,
+    "precision": 0.2,
+    "recall": 1.0,
+    "roc_auc": 0.9545454545454546
+   },
+   {
+    "f1": 0.4,
+    "flagged_pct": 17.391304347826086,
+    "pr_auc": 1.0,
+    "precision": 0.25,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.4,
+    "flagged_pct": 17.391304347826086,
+    "pr_auc": 1.0,
+    "precision": 0.25,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 8.695652173913043,
+    "pr_auc": 1.0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   }
+  ],
+  "dif": [
+   {
+    "f1": 0.15384615384615385,
+    "flagged_pct": 52.17391304347826,
+    "pr_auc": 0.5,
+    "precision": 0.08333333333333333,
+    "recall": 1.0,
+    "roc_auc": 0.9545454545454546
+   },
+   {
+    "f1": 0.11764705882352941,
+    "flagged_pct": 69.56521739130434,
+    "pr_auc": 0.25,
+    "precision": 0.0625,
+    "recall": 1.0,
+    "roc_auc": 0.8636363636363636
+   },
+   {
+    "f1": 0.11764705882352941,
+    "flagged_pct": 69.56521739130434,
+    "pr_auc": 1.0,
+    "precision": 0.0625,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.1111111111111111,
+    "flagged_pct": 73.91304347826086,
+    "pr_auc": 0.14285714285714285,
+    "precision": 0.058823529411764705,
+    "recall": 1.0,
+    "roc_auc": 0.7272727272727273
+   },
+   {
+    "f1": 0.13333333333333333,
+    "flagged_pct": 60.86956521739131,
+    "pr_auc": 0.5,
+    "precision": 0.07142857142857142,
+    "recall": 1.0,
+    "roc_auc": 0.9545454545454546
+   }
+  ],
+  "lunar": [
+   {
+    "f1": 1.0,
+    "flagged_pct": 4.3478260869565215,
+    "pr_auc": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.5,
+    "flagged_pct": 13.043478260869565,
+    "pr_auc": 1.0,
+    "precision": 0.3333333333333333,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 1.0,
+    "flagged_pct": 4.3478260869565215,
+    "pr_auc": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.5,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.9545454545454546
+   },
+   {
+    "f1": 1.0,
+    "flagged_pct": 4.3478260869565215,
+    "pr_auc": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   }
+  ],
+  "vae": [
+   {
+    "f1": 1.0,
+    "flagged_pct": 4.3478260869565215,
+    "pr_auc": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 8.695652173913043,
+    "pr_auc": 1.0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 1.0,
+    "flagged_pct": 4.3478260869565215,
+    "pr_auc": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 1.0,
+    "flagged_pct": 4.3478260869565215,
+    "pr_auc": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 1.0,
+    "flagged_pct": 4.3478260869565215,
+    "pr_auc": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   }
+  ]
+ },
+ "name": "Lymphography",
+ "prevalence": 0.04054054054054054,
+ "problem": "adbench:Lymphography",
+ "report": {
+  "conflicting_rows_removed": 0,
+  "dropped_constant": [],
+  "dropped_high_cardinality": [],
+  "dropped_missing": [],
+  "duplicates_removed": 0,
+  "encoded": [],
+  "features_out": 18,
+  "name": "Lymphography",
+  "rows_in": 148,
+  "rows_out": 148,
+  "source": "adbench"
+ },
+ "rows": 148,
+ "seeds": [
+  42,
+  1,
+  2,
+  3,
+  4
+ ],
+ "skipped": [],
+ "source": "adbench"
+}
