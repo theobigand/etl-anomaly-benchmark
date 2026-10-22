@@ -88,12 +88,6 @@ class TorchDetector(PyODDetector):
         with contextlib.redirect_stdout(io.StringIO()):
             return super().fit(df)
 
-    def score(self, df: pd.DataFrame) -> pd.Series:
-        if len(df) == 1:
-            # PyOD's AE1SVM fails on a single row; a row's score does not depend on the others.
-            return super().score(pd.concat([df, df])).iloc[:1]
-        return super().score(df)
-
     def settings(self) -> dict[str, object]:
         """Hyper-parameters, seed and versions to store with a run."""
         return {
@@ -139,6 +133,16 @@ class AE1SVMDetector(TorchDetector):
     estimator_path = ("pyod.models.ae1svm", "AE1SVM")
     fixed_kwargs: ClassVar[dict[str, object]] = {"preprocessing": False}
     seed_argument = None
+    #: PyOD's default batch size for scoring.
+    batch_size = 32
+
+    def score(self, df: pd.DataFrame) -> pd.Series:
+        # PyOD's AE1SVM fails when the last batch of a scoring pass holds a single row, so a
+        # row is added in that case and dropped again; a row's score does not depend on the others.
+        size = int(self._estimator_kwargs.get("batch_size", self.batch_size))
+        if len(df) % size == 1:
+            return super().score(pd.concat([df, df.iloc[[-1]]])).iloc[:-1]
+        return super().score(df)
 
 
 class LUNARDetector(TorchDetector):
