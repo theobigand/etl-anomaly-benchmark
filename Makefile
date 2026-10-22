@@ -2,7 +2,7 @@ CONDA_ENV := etl-benchmark
 # any Chromium-family binary that supports --print-to-pdf (chrome, chromium, chrome-headless-shell)
 CHROME ?= chromium
 
-.PHONY: help env update test lint verify-fast verify-deep verify-faults verify-real verify-scale lock verify-types verify-tools verify-reproduce verify-release verify-all pipeline benchmark benchmark-water benchmark-cardio synthetic heatmap severity curves slides run clean
+.PHONY: help env update test lint verify-fast verify-deep verify-faults verify-real verify-pool verify-scale lock verify-types verify-tools verify-reproduce verify-release verify-all pipeline benchmark benchmark-water benchmark-cardio synthetic heatmap severity curves slides run clean
 
 help:
 	@echo "Available targets:"
@@ -14,6 +14,7 @@ help:
 	@echo "  make verify-deep  Mutation campaign on src/etl_benchmark and experiments, enforce 95%"
 	@echo "  make verify-faults Apply deliberate scientific defects to a temporary copy and require a failure"
 	@echo "  make verify-real  Inspect available full datasets and record provenance"
+	@echo "  make verify-pool  Compare every local pool file with the pinned manifest (152 datasets)"
 	@echo "  make verify-scale Measure bounded detector growth outside FAST"
 	@echo "  make lock       Record the exact conda and pip packages of the active environment"
 	@echo "  make verify-types mypy: verification/ clean, scientific code may not add errors"
@@ -99,6 +100,9 @@ verify-real:
 
 lock:
 	python verification/lock_environment.py
+
+verify-pool:
+	python -m verification.pool_contract --output verification/evidence/pool_extension/pool_contract.json
 
 verify-types:
 	@mkdir -p $(EVIDENCE) experiments/results
