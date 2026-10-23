@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-22T17:48:04.951059+00:00",
+  "captured_at": "2026-10-23T10:18:57.244055+00:00",
   "dataset": {
     "bytes": 150828752,
     "identity": "credit_card",
@@ -15,14 +15,14 @@
   "measurement_fingerprint": "9cd603c619d15e17d3cbd9d14986b6f62bdb5611a5ba78fbd4d10ae8f4d7285d",
   "measurement_recipe": 1,
   "output_sha256": {
-    "benchmark_credit_card_20261022_174803.csv": "74fc9315a617f36d1633d634ec606a437a2d9249727c72eece52051d20b114ac",
-    "benchmark_credit_card_20261022_174803.md": "9395b01d9414178ceb5ecc968a6dfb0460c46f850eda763272381809fd443085",
-    "split_ids_credit_card_20261022_174803.json.gz": "589bb4cc4d74f6ed7b4201d7be010e942f61117a5b7a69a50246f5caea4475cf"
+    "benchmark_credit_card_20261023_101855.csv": "b6672707ee4874da33b31dba1114fd61fb91d66752f5c87de8bdaf2196877673",
+    "benchmark_credit_card_20261023_101855.md": "c469ac774eb11f1111356e0f26dbe5a437c402c830da33ed9ee118df5d069209",
+    "split_ids_credit_card_20261023_101855.json.gz": "589bb4cc4d74f6ed7b4201d7be010e942f61117a5b7a69a50246f5caea4475cf"
   },
   "outputs": [
-    "benchmark_credit_card_20261022_174803.csv",
-    "benchmark_credit_card_20261022_174803.md",
-    "split_ids_credit_card_20261022_174803.json.gz"
+    "benchmark_credit_card_20261023_101855.csv",
+    "benchmark_credit_card_20261023_101855.md",
+    "split_ids_credit_card_20261023_101855.json.gz"
   ],
   "packages": {
     "great-expectations": "1.24.0",
@@ -34,7 +34,7 @@
   "platform": "macOS-27.0.1-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "scientific_fingerprint": "40526dddf1e986ae926d6ab322ab8bbca5d5ebd32b9b6a676ba508cff07060d1",
+  "scientific_fingerprint": "be28a126f038edec58574f4a3a8baff294ec1994ca9b93cb7c9b6a10efbab076",
   "seeds": [
     42,
     1,
@@ -101,7 +101,7 @@
     ],
     "split_strategy": "stratified"
   },
-  "source_fingerprint": "250fb49199a28aa0d84a498d642881eeff7e5f8c185cf0168310d4d45e47a833",
-  "source_revision": "d8df57456a10dbc988773760889e9f72ad546a35",
+  "source_fingerprint": "36e3025c6f2dd11dde84224c6994ddd67d1ea1f5d076abfbbd9fa9eace6ed757",
+  "source_revision": "5b0e0c1cd19c0600deef24926f7b757ce5674115",
   "worktree_dirty": false
 }

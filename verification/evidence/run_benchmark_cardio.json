@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-22T17:46:47.471596+00:00",
+  "captured_at": "2026-10-23T10:20:21.702051+00:00",
   "dataset": {
     "bytes": 770024,
     "identity": "cardio",
@@ -15,14 +15,14 @@
   "measurement_fingerprint": "9cd603c619d15e17d3cbd9d14986b6f62bdb5611a5ba78fbd4d10ae8f4d7285d",
   "measurement_recipe": 1,
   "output_sha256": {
-    "benchmark_cardio_20261022_174647.csv": "007c2701bf1d6d67efd28a50db66f37cf500d60fb31a18adbc413e6fb00a102c",
-    "benchmark_cardio_20261022_174647.md": "14fd6d8bcd60c24e9dcb18fbe0c258cefd0ec4cef96cbe99beeb0aa7a9745e2e",
-    "split_ids_cardio_20261022_174647.json.gz": "3c8f3ca4703db0a4b719e58da9b12b22b4294d874f9ece643073d32692b35ffe"
+    "benchmark_cardio_20261023_102021.csv": "da0e3bcab5b8db3c5642293c8905c6305e8eeb928a71990410cce110e1d0839d",
+    "benchmark_cardio_20261023_102021.md": "bcb21a8cdf4360fb59e96d671aafabb4874b47ce1d1029076379647f639069b6",
+    "split_ids_cardio_20261023_102021.json.gz": "3c8f3ca4703db0a4b719e58da9b12b22b4294d874f9ece643073d32692b35ffe"
   },
   "outputs": [
-    "benchmark_cardio_20261022_174647.csv",
-    "benchmark_cardio_20261022_174647.md",
-    "split_ids_cardio_20261022_174647.json.gz"
+    "benchmark_cardio_20261023_102021.csv",
+    "benchmark_cardio_20261023_102021.md",
+    "split_ids_cardio_20261023_102021.json.gz"
   ],
   "packages": {
     "great-expectations": "1.24.0",
@@ -34,7 +34,7 @@
   "platform": "macOS-27.0.1-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "scientific_fingerprint": "40526dddf1e986ae926d6ab322ab8bbca5d5ebd32b9b6a676ba508cff07060d1",
+  "scientific_fingerprint": "be28a126f038edec58574f4a3a8baff294ec1994ca9b93cb7c9b6a10efbab076",
   "seeds": [
     42,
     1,
@@ -91,7 +91,7 @@
     ],
     "split_strategy": "stratified"
   },
-  "source_fingerprint": "250fb49199a28aa0d84a498d642881eeff7e5f8c185cf0168310d4d45e47a833",
-  "source_revision": "d8df57456a10dbc988773760889e9f72ad546a35",
+  "source_fingerprint": "36e3025c6f2dd11dde84224c6994ddd67d1ea1f5d076abfbbd9fa9eace6ed757",
+  "source_revision": "5b0e0c1cd19c0600deef24926f7b757ce5674115",
   "worktree_dirty": false
 }

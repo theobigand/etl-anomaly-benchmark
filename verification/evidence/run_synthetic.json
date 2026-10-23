@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-22T17:50:04.946954+00:00",
+  "captured_at": "2026-10-23T10:16:10.770719+00:00",
   "dataset": {
     "identity": "synthetic"
   },
@@ -13,16 +13,16 @@
   "measurement_recipe": 1,
   "output_sha256": {
     "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/paper/figures/heatmap_synthetic.png": "fe24a3044c94b9d194cb66d07fa421c1a746ece11229db8fc908c4185189a687",
-    "synthetic_20261022_175004.md": "a23c8d01c06dc52c67b7cab02396304cf2d87a2c43f93838425e7815710e9a3b",
-    "synthetic_metrics_20261022_175004.csv": "a7666a03ef71e34f72601657b1a742d066b9c4f3aa7cea314c55d86fa5c772ab",
-    "synthetic_precision_20261022_175004.csv": "8defec9d81af1a5791f7a44ce5f79d841af3612a93a57bc8b2532207b56e5a99",
-    "synthetic_recall_20261022_175004.csv": "b4eb3e38abb0945fbb4682954aaf6dc3bd1f2054cc8fa9f396a5c20ccbc0ed0d"
+    "synthetic_20261023_101610.md": "f985a8d26c0f708b9a03d95c7e865b782072c86654f3d0148343522534512842",
+    "synthetic_metrics_20261023_101610.csv": "e2e98e5f765caf350c152569c74fe75ec43eb243197cb39d6f2fe0c5e80ddc5b",
+    "synthetic_precision_20261023_101610.csv": "8defec9d81af1a5791f7a44ce5f79d841af3612a93a57bc8b2532207b56e5a99",
+    "synthetic_recall_20261023_101610.csv": "b4eb3e38abb0945fbb4682954aaf6dc3bd1f2054cc8fa9f396a5c20ccbc0ed0d"
   },
   "outputs": [
-    "synthetic_metrics_20261022_175004.csv",
-    "synthetic_recall_20261022_175004.csv",
-    "synthetic_precision_20261022_175004.csv",
-    "synthetic_20261022_175004.md",
+    "synthetic_metrics_20261023_101610.csv",
+    "synthetic_recall_20261023_101610.csv",
+    "synthetic_precision_20261023_101610.csv",
+    "synthetic_20261023_101610.md",
     "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/paper/figures/heatmap_synthetic.png"
   ],
   "packages": {
@@ -35,7 +35,7 @@
   "platform": "macOS-27.0.1-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "scientific_fingerprint": "40526dddf1e986ae926d6ab322ab8bbca5d5ebd32b9b6a676ba508cff07060d1",
+  "scientific_fingerprint": "be28a126f038edec58574f4a3a8baff294ec1994ca9b93cb7c9b6a10efbab076",
   "seeds": [
     42,
     1,
@@ -81,7 +81,7 @@
     ],
     "split_strategy": "customer_identity_grouped_stratified"
   },
-  "source_fingerprint": "250fb49199a28aa0d84a498d642881eeff7e5f8c185cf0168310d4d45e47a833",
-  "source_revision": "d8df57456a10dbc988773760889e9f72ad546a35",
+  "source_fingerprint": "36e3025c6f2dd11dde84224c6994ddd67d1ea1f5d076abfbbd9fa9eace6ed757",
+  "source_revision": "5b0e0c1cd19c0600deef24926f7b757ce5674115",
   "worktree_dirty": false
 }
