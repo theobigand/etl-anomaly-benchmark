@@ -3,11 +3,11 @@
   "note": "Verification figures quoted in paper/main.tex, with the run they describe. tests/test_manuscript_claims.py keeps the paper and this file in step; tests/test_claims_provenance.py checks the run (revision, sealed envelopes, staleness).",
   "published_run": {
     "id": "local-22f1602",
-    "revision": "22f1602b4073440ed8582ba69b5c9880abda478f",
+    "revision": "d56eb7c85f97627c3dae4f2669027baea6d97bd1",
     "source": "local-unattested",
     "platform": "macOS 27.0 arm64, Python 3.11.17 (conda etl-benchmark; typing in a venv with mypy 2.4.0)",
     "captured": "2026-10-23",
-    "historical": false,
+    "historical": true,
     "evidence_dir": "verification/evidence/runs/local-22f1602",
     "files": {
       "deep.json": "396209cce6af91b8c4404b4a98851c6a5a3fe3b9554d8eeeacd4476b33ea106b",
@@ -18,7 +18,8 @@
       "results.txt": "d72ac0dffdbfede9d970e4b5f6fdda2ec4d3c4049985ccfff7f3f8e31f880aa3",
       "tools.json": "cdc8327ed5f49a35e58abcefafb27feca6b36182a87ed48d84c376d82e99f58c",
       "types.json": "fb4bd58dc96cf893c23a6be64f371984719165a8103a94f408959db58c7de083"
-    }
+    },
+    "note": "Run made before the history was rewritten (commit hashes changed, tree identical); the run is sealed again on the new history."
   },
   "fast": {
     "tests": 1290,
