@@ -631,14 +631,18 @@ LUNAR              & 0.41 & 0.39 & 0.29 & 0.65 & 0.33 & 18.8 \\
 \end{table}
 
 \subsection{Synthetic dataset: aggregate metrics}
-Table~\ref{tab:synthetic} reports the six core detectors on the synthetic
+Table~\ref{tab:synthetic} reports the seventeen detectors on the synthetic
 dataset. Aggregate metrics still compress the families together: $F_1$
-ranges from $0.33$ to $0.50$ and PR-AUC from $0.33$ to $0.54$. Isolation
-Forest has the best $F_1$ ($0.50$) and Z-score keeps a perfect
-precision by firing only on the most extreme rows. The One-Class SVM
-approaches Isolation Forest on quality while taking longer in this run. Read
-alone, these numbers suggest the detector choice barely matters; the
-per-type breakdown shows the opposite.
+ranges from $0.22$ (Deep SVDD) to $0.59$ (DIF) and PR-AUC from $0.22$ to
+$0.65$. Among the earlier detectors Isolation Forest has the best $F_1$
+($0.50$); Z-score and HBOS both reach a perfect precision by firing only on
+the most extreme rows, at a recall of $0.20$. DIF has the best $F_1$, ROC-AUC
+and PR-AUC, the VAE matches Isolation Forest, and LUNAR has the best recall
+($0.67$) with a low precision, which fits the share of clean rows it flags
+in the per-type matrix. Read alone, these numbers suggest the detector choice
+barely matters among the middle of the table; the per-type breakdown shows
+the opposite. The neural times are left empty because those runs shared the
+machine, and Section~\ref{sec:cost} gives their cost.
 
 \begin{table}[t]
 \caption{All detectors on the synthetic dataset, mean over five seeds on
@@ -651,12 +655,25 @@ the $15\%$ test split. Time is the in-pipeline fit+predict+score latency.}
 \toprule
 Detector & Prec. & Rec. & $F_1$ & ROC & PR & Time (s) \\
 \midrule
-Z-score            & \textbf{1.000} & 0.196 & 0.328 & \textbf{0.742} & \textbf{0.544} & \textbf{0.004} \\
-IQR                & 0.584 & 0.396 & 0.472 & 0.675 & 0.452 & 0.007 \\
-Great Expectations & 0.951 & 0.202 & 0.333 & 0.600 & 0.333 & 0.46 \\
-Isolation Forest   & 0.495 & \textbf{0.499} & \textbf{0.497} & 0.735 & 0.485 & 0.34 \\
-LOF                & 0.388 & 0.420 & 0.404 & 0.659 & 0.437 & 0.22 \\
-One-Class SVM      & 0.478 & 0.485 & 0.481 & 0.722 & 0.520 & 4.20 \\
+Z-score            & \textbf{1.000} & 0.196 & 0.328 & 0.742 & 0.544 & \textbf{0.002} \\
+IQR                & 0.584 & 0.396 & 0.472 & 0.675 & 0.452 & 0.003 \\
+Great Expectations & 0.951 & 0.202 & 0.333 & 0.600 & 0.333 & 0.243 \\
+\midrule
+Isolation Forest   & 0.495 & 0.499 & 0.497 & 0.735 & 0.485 & 0.143 \\
+LOF                & 0.388 & 0.420 & 0.404 & 0.659 & 0.437 & 0.136 \\
+One-Class SVM      & 0.478 & 0.485 & 0.481 & 0.722 & 0.520 & 2.656 \\
+ECOD               & 0.341 & 0.341 & 0.341 & 0.675 & 0.283 & 0.017 \\
+COPOD              & 0.367 & 0.375 & 0.371 & 0.682 & 0.302 & 0.016 \\
+HBOS               & \textbf{1.000} & 0.204 & 0.339 & 0.602 & 0.343 & 0.176 \\
+KNN                & 0.466 & 0.469 & 0.467 & 0.745 & 0.520 & 0.080 \\
+PCA                & 0.405 & 0.417 & 0.411 & 0.689 & 0.485 & 0.007 \\
+\midrule
+Autoencoder        & 0.438 & 0.445 & 0.441 & 0.694 & 0.455 & -- \\
+VAE                & 0.502 & 0.507 & 0.504 & 0.742 & 0.548 & -- \\
+Deep SVDD          & 0.221 & 0.219 & 0.219 & 0.573 & 0.221 & -- \\
+DIF                & 0.589 & 0.582 & \textbf{0.585} & \textbf{0.772} & \textbf{0.648} & -- \\
+AE1SVM             & 0.452 & 0.467 & 0.459 & 0.719 & 0.502 & -- \\
+LUNAR              & 0.345 & \textbf{0.668} & 0.410 & 0.728 & 0.495 & -- \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1522,7 +1539,7 @@ quality one. Times are those of the detection stage (fit, predict and score).
 \caption{Median detection-stage time on synthetic data ($8$ features) for
 $10^4$, $10^5$ and $3\cdot10^5$ rows, the empirical growth exponent over the
 sizes completed, and the peak resident memory added by detection at the largest
-size (a: at $3\cdot10^4$ rows, the largest size completed).}
+size (a: at $3\cdot10^4$ rows, b: at $10^5$ rows, the largest size completed).}
 \label{tab:cost}
 \centering
 \footnotesize
@@ -1538,6 +1555,17 @@ Autoencoder (MLP)  & 1.5 s   & 8.4 s   & 12.7 s  & 0.77 & 115 \\
 LSTM autoencoder   & 1.1 s   & 5.1 s   & 7.3 s   & 0.73 & 499 \\
 LOF                & 0.73 s  & 18.0 s  & 133 s   & 1.51 & 405 \\
 One-Class SVM     & 5.6 s   & $>300$ s & not run & 1.99 & 788$^{a}$ \\
+\midrule
+ECOD               & 0.045 s & 0.68 s & 2.35 s & 1.10 & 186 \\
+COPOD              & 0.044 s & 0.68 s & 2.36 s & 1.09 & 186 \\
+HBOS               & 0.013 s & 0.12 s & 0.39 s & 0.87 & 94 \\
+PCA                & 0.010 s & 0.089 s & 0.29 s & 0.85 & 97 \\
+KNN                & 0.45 s & 11 s & 68 s & 1.46 & 148 \\
+VAE                & 6.83 s & 69 s & 209 s & 1.00 & 105 \\
+Deep SVDD          & 5.65 s & 57 s & 192 s & 1.01 & 383 \\
+DIF                & 23 s & 262 s & $>300$ s & 1.01 & 2748$^{b}$ \\
+AE1SVM             & 22 s & 213 s & $>300$ s & 0.99 & 62$^{b}$ \\
+LUNAR              & 29 s & $>300$ s & not run & 0.99 & 369$^{a}$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1551,6 +1579,18 @@ epochs on at most $50{,}000$ rows, a budget cap: only its scoring cost grows
 with the input after that. These exponents describe the sizes measured and are
 not extended beyond them. No measurement was made under contention as defined
 in the protocol, but the machine was not isolated.
+
+The ten detectors added later (\texttt{verification/full\_registry.md}) were
+timed on the quiet machine with the same protocol; seven of the $252$ runs
+were flagged as contended and are kept in the archive. Here the neural models
+are fitted on all the rows, without the $20{,}000$-row cap of the quality
+studies, so their time grows with the input. ECOD, COPOD, HBOS and PCA take a
+few seconds at $3\cdot10^5$ rows, KNN about a minute (exponent $1.46$, like LOF),
+and the VAE and Deep SVDD three to four minutes. DIF, AE1SVM and LUNAR exceeded
+the budget of $300$ seconds at $3\cdot10^5$, $3\cdot10^5$ and $10^5$ rows. The
+cost of a neural model is therefore two orders of magnitude above the
+column-wise models, and the cap used for quality is what made the pool runs
+feasible.
 
 To separate the detection stage from the whole pipeline, I also timed read,
 cleaning, detection and write on the full Credit Card file ($284{,}807$ rows
