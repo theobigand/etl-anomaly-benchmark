@@ -28,6 +28,7 @@ The question it tries to answer: does adding machine learning to an ETL pipeline
 - [x] Pool of 152 open datasets, pinned by checksum (`verification/dataset_pool.md`)
 - [x] Typed anomaly injection on 42 real tables (`verification/typed_injection.md`)
 - [x] Benchmark on the 100 labelled pool problems: `python research/labelled_benchmark.py --output <dir>` then `python research/labelled_summary.py --runs <dir> --output <dir>` (`verification/labelled_pool.md`, results in `verification/evidence/labelled_pool/`)
+- [x] Every study extended to the whole pool (`verification/pool_extension.md`, results in `verification/pool_extension_results.md`, archives in `verification/evidence/pool_extension/`): one-pass run on the 100 labelled problems (`python research/pool_full.py`), typed injection and severity on the 58 eligible tables (`python research/pool_typed.py eligibility|reference|severity`), end-to-end pipeline on the 152 datasets (`python research/pool_etl.py`), chronological split on the 5 labelled datasets with a time variable (`python research/pool_chrono.py`, `python research/time_scan.py`), file check (`make verify-pool`)
 - [x] Chronological pilot, LSTM autoencoder pilot, cost study
 - [x] Autoencoder and LSTM autoencoder rows in the per-type matrix, trained to convergence (`verification/deep_typed.md`, `.venv/bin/python research/deep_typed.py --output <dir>`)
 - [x] Two further synthetic schemas, transactions and sensors (`verification/multi_schema.md`, `python research/multi_schema.py --output <dir>`)
