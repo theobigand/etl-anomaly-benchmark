@@ -1,0 +1,1205 @@
+[
+ {
+  "uci_id": 1,
+  "name": "Abalone",
+  "labelled": false,
+  "rows": 4177,
+  "candidates": []
+ },
+ {
+  "uci_id": 2,
+  "name": "Adult",
+  "labelled": true,
+  "rows": 48842,
+  "candidates": [
+   {
+    "column": "hours-per-week",
+    "kind": "numeric",
+    "distinct": 96
+   }
+  ]
+ },
+ {
+  "uci_id": 3,
+  "name": "Annealing",
+  "labelled": false,
+  "rows": 898,
+  "candidates": []
+ },
+ {
+  "uci_id": 9,
+  "name": "Auto MPG",
+  "labelled": false,
+  "rows": 398,
+  "candidates": [
+   {
+    "column": "model_year",
+    "kind": "numeric",
+    "distinct": 13
+   }
+  ]
+ },
+ {
+  "uci_id": 15,
+  "name": "Breast Cancer Wisconsin (Original)",
+  "labelled": true,
+  "rows": 699,
+  "candidates": []
+ },
+ {
+  "uci_id": 17,
+  "name": "Breast Cancer Wisconsin (Diagnostic)",
+  "labelled": true,
+  "rows": 569,
+  "candidates": []
+ },
+ {
+  "uci_id": 27,
+  "name": "Credit Approval",
+  "labelled": true,
+  "rows": 690,
+  "candidates": []
+ },
+ {
+  "uci_id": 30,
+  "name": "Contraceptive Method Choice",
+  "labelled": true,
+  "rows": 1473,
+  "candidates": []
+ },
+ {
+  "uci_id": 31,
+  "name": "Covertype",
+  "labelled": true,
+  "rows": 581012,
+  "candidates": []
+ },
+ {
+  "uci_id": 32,
+  "name": "Cylinder Bands",
+  "labelled": true,
+  "rows": 541,
+  "candidates": [
+   {
+    "column": "timestamp",
+    "kind": "numeric",
+    "distinct": 296
+   }
+  ]
+ },
+ {
+  "uci_id": 33,
+  "name": "Dermatology",
+  "labelled": true,
+  "rows": 366,
+  "candidates": []
+ },
+ {
+  "uci_id": 39,
+  "name": "Ecoli",
+  "labelled": false,
+  "rows": 336,
+  "candidates": []
+ },
+ {
+  "uci_id": 45,
+  "name": "Heart Disease",
+  "labelled": false,
+  "rows": 303,
+  "candidates": []
+ },
+ {
+  "uci_id": 47,
+  "name": "Horse Colic",
+  "labelled": true,
+  "rows": 368,
+  "candidates": []
+ },
+ {
+  "uci_id": 50,
+  "name": "Image Segmentation",
+  "labelled": true,
+  "rows": 210,
+  "candidates": []
+ },
+ {
+  "uci_id": 52,
+  "name": "Ionosphere",
+  "labelled": true,
+  "rows": 351,
+  "candidates": []
+ },
+ {
+  "uci_id": 59,
+  "name": "Letter Recognition",
+  "labelled": true,
+  "rows": 20000,
+  "candidates": []
+ },
+ {
+  "uci_id": 60,
+  "name": "Liver Disorders",
+  "labelled": false,
+  "rows": 345,
+  "candidates": []
+ },
+ {
+  "uci_id": 73,
+  "name": "Mushroom",
+  "labelled": true,
+  "rows": 8124,
+  "candidates": []
+ },
+ {
+  "uci_id": 75,
+  "name": "Musk (Version 2)",
+  "labelled": true,
+  "rows": 6598,
+  "candidates": []
+ },
+ {
+  "uci_id": 78,
+  "name": "Page Blocks Classification",
+  "labelled": true,
+  "rows": 5473,
+  "candidates": []
+ },
+ {
+  "uci_id": 80,
+  "name": "Optical Recognition of Handwritten Digits",
+  "labelled": true,
+  "rows": 5620,
+  "candidates": []
+ },
+ {
+  "uci_id": 81,
+  "name": "Pen-Based Recognition of Handwritten Digits",
+  "labelled": true,
+  "rows": 10992,
+  "candidates": []
+ },
+ {
+  "uci_id": 83,
+  "name": "Primary Tumor",
+  "labelled": false,
+  "rows": 339,
+  "candidates": []
+ },
+ {
+  "uci_id": 89,
+  "name": "Solar Flare",
+  "labelled": false,
+  "rows": 1389,
+  "candidates": []
+ },
+ {
+  "uci_id": 90,
+  "name": "Soybean (Large)",
+  "labelled": false,
+  "rows": 307,
+  "candidates": []
+ },
+ {
+  "uci_id": 94,
+  "name": "Spambase",
+  "labelled": true,
+  "rows": 4601,
+  "candidates": []
+ },
+ {
+  "uci_id": 105,
+  "name": "Congressional Voting Records",
+  "labelled": true,
+  "rows": 435,
+  "candidates": []
+ },
+ {
+  "uci_id": 110,
+  "name": "Yeast",
+  "labelled": false,
+  "rows": 1484,
+  "candidates": []
+ },
+ {
+  "uci_id": 117,
+  "name": "Census-Income (KDD)",
+  "labelled": true,
+  "rows": 199523,
+  "candidates": []
+ },
+ {
+  "uci_id": 144,
+  "name": "Statlog (German Credit Data)",
+  "labelled": true,
+  "rows": 1000,
+  "candidates": []
+ },
+ {
+  "uci_id": 146,
+  "name": "Statlog (Landsat Satellite)",
+  "labelled": true,
+  "rows": 6435,
+  "candidates": []
+ },
+ {
+  "uci_id": 148,
+  "name": "Statlog (Shuttle)",
+  "labelled": false,
+  "rows": 58000,
+  "candidates": []
+ },
+ {
+  "uci_id": 149,
+  "name": "Statlog (Vehicle Silhouettes)",
+  "labelled": false,
+  "rows": 846,
+  "candidates": []
+ },
+ {
+  "uci_id": 159,
+  "name": "MAGIC Gamma Telescope",
+  "labelled": true,
+  "rows": 19020,
+  "candidates": []
+ },
+ {
+  "uci_id": 161,
+  "name": "Mammographic Mass",
+  "labelled": true,
+  "rows": 961,
+  "candidates": []
+ },
+ {
+  "uci_id": 162,
+  "name": "Forest Fires",
+  "labelled": false,
+  "rows": 517,
+  "candidates": [
+   {
+    "column": "month",
+    "kind": "datetime",
+    "distinct": 12
+   }
+  ]
+ },
+ {
+  "uci_id": 165,
+  "name": "Concrete Compressive Strength",
+  "labelled": false,
+  "rows": 1030,
+  "candidates": []
+ },
+ {
+  "uci_id": 176,
+  "name": "Blood Transfusion Service Center",
+  "labelled": true,
+  "rows": 748,
+  "candidates": [
+   {
+    "column": "Time",
+    "kind": "numeric",
+    "distinct": 78
+   }
+  ]
+ },
+ {
+  "uci_id": 183,
+  "name": "Communities and Crime",
+  "labelled": false,
+  "rows": 1994,
+  "candidates": []
+ },
+ {
+  "uci_id": 186,
+  "name": "Wine Quality",
+  "labelled": false,
+  "rows": 6497,
+  "candidates": []
+ },
+ {
+  "uci_id": 189,
+  "name": "Parkinsons Telemonitoring",
+  "labelled": false,
+  "rows": 5875,
+  "candidates": [
+   {
+    "column": "test_time",
+    "kind": "numeric",
+    "distinct": 2442
+   }
+  ]
+ },
+ {
+  "uci_id": 193,
+  "name": "Cardiotocography",
+  "labelled": false,
+  "rows": 2126,
+  "candidates": []
+ },
+ {
+  "uci_id": 198,
+  "name": "Steel Plates Faults",
+  "labelled": false,
+  "rows": 1941,
+  "candidates": []
+ },
+ {
+  "uci_id": 212,
+  "name": "Vertebral Column",
+  "labelled": true,
+  "rows": 310,
+  "candidates": []
+ },
+ {
+  "uci_id": 222,
+  "name": "Bank Marketing",
+  "labelled": true,
+  "rows": 45211,
+  "candidates": [
+   {
+    "column": "day_of_week",
+    "kind": "numeric",
+    "distinct": 31
+   },
+   {
+    "column": "month",
+    "kind": "datetime",
+    "distinct": 12
+   },
+   {
+    "column": "pdays",
+    "kind": "numeric",
+    "distinct": 559
+   }
+  ]
+ },
+ {
+  "uci_id": 225,
+  "name": "ILPD (Indian Liver Patient Dataset)",
+  "labelled": true,
+  "rows": 583,
+  "candidates": []
+ },
+ {
+  "uci_id": 242,
+  "name": "Energy Efficiency",
+  "labelled": false,
+  "rows": 768,
+  "candidates": []
+ },
+ {
+  "uci_id": 247,
+  "name": "ISTANBUL STOCK EXCHANGE",
+  "labelled": false,
+  "rows": 536,
+  "candidates": [
+   {
+    "column": "date",
+    "kind": "datetime",
+    "distinct": 536
+   }
+  ]
+ },
+ {
+  "uci_id": 257,
+  "name": "User Knowledge Modeling",
+  "labelled": true,
+  "rows": 403,
+  "candidates": []
+ },
+ {
+  "uci_id": 267,
+  "name": "Banknote Authentication",
+  "labelled": true,
+  "rows": 1372,
+  "candidates": []
+ },
+ {
+  "uci_id": 270,
+  "name": "Gas Sensor Array Drift at Different Concentrations",
+  "labelled": false,
+  "rows": 13910,
+  "candidates": []
+ },
+ {
+  "uci_id": 275,
+  "name": "Bike Sharing",
+  "labelled": false,
+  "rows": 17379,
+  "candidates": [
+   {
+    "column": "dteday",
+    "kind": "datetime",
+    "distinct": 731
+   }
+  ]
+ },
+ {
+  "uci_id": 277,
+  "name": "Thoracic Surgery Data",
+  "labelled": true,
+  "rows": 470,
+  "candidates": []
+ },
+ {
+  "uci_id": 291,
+  "name": "Airfoil Self-Noise",
+  "labelled": false,
+  "rows": 1503,
+  "candidates": []
+ },
+ {
+  "uci_id": 292,
+  "name": "Wholesale customers",
+  "labelled": true,
+  "rows": 440,
+  "candidates": []
+ },
+ {
+  "uci_id": 294,
+  "name": "Combined Cycle Power Plant",
+  "labelled": false,
+  "rows": 9568,
+  "candidates": []
+ },
+ {
+  "uci_id": 296,
+  "name": "Diabetes 130-US Hospitals for Years 1999-2008",
+  "labelled": true,
+  "rows": 101766,
+  "candidates": [
+   {
+    "column": "time_in_hospital",
+    "kind": "numeric",
+    "distinct": 14
+   }
+  ]
+ },
+ {
+  "uci_id": 312,
+  "name": "Dow Jones Index",
+  "labelled": false,
+  "rows": 750,
+  "candidates": [
+   {
+    "column": "date",
+    "kind": "datetime",
+    "distinct": 25
+   },
+   {
+    "column": "previous_weeks_volume",
+    "kind": "numeric",
+    "distinct": 720
+   },
+   {
+    "column": "percent_change_next_weeks_price",
+    "kind": "numeric",
+    "distinct": 745
+   },
+   {
+    "column": "days_to_next_dividend",
+    "kind": "numeric",
+    "distinct": 105
+   }
+  ]
+ },
+ {
+  "uci_id": 320,
+  "name": "Student Performance",
+  "labelled": false,
+  "rows": 649,
+  "candidates": []
+ },
+ {
+  "uci_id": 327,
+  "name": "Phishing Websites",
+  "labelled": true,
+  "rows": 11055,
+  "candidates": []
+ },
+ {
+  "uci_id": 329,
+  "name": "Diabetic Retinopathy Debrecen",
+  "labelled": true,
+  "rows": 1151,
+  "candidates": [
+   {
+    "column": "exudate1",
+    "kind": "numeric",
+    "distinct": 1141
+   },
+   {
+    "column": "exudate2",
+    "kind": "numeric",
+    "distinct": 1141
+   },
+   {
+    "column": "exudate3",
+    "kind": "numeric",
+    "distinct": 1130
+   },
+   {
+    "column": "exudate3.1",
+    "kind": "numeric",
+    "distinct": 1032
+   },
+   {
+    "column": "exudate5",
+    "kind": "numeric",
+    "distinct": 795
+   },
+   {
+    "column": "exudate6",
+    "kind": "numeric",
+    "distinct": 579
+   },
+   {
+    "column": "exudate7",
+    "kind": "numeric",
+    "distinct": 415
+   },
+   {
+    "column": "exudate8",
+    "kind": "numeric",
+    "distinct": 351
+   }
+  ]
+ },
+ {
+  "uci_id": 332,
+  "name": "Online News Popularity",
+  "labelled": false,
+  "rows": 39644,
+  "candidates": [
+   {
+    "column": " timedelta",
+    "kind": "numeric",
+    "distinct": 724
+   },
+   {
+    "column": " global_sentiment_polarity",
+    "kind": "numeric",
+    "distinct": 34695
+   },
+   {
+    "column": " title_sentiment_polarity",
+    "kind": "numeric",
+    "distinct": 813
+   },
+   {
+    "column": " abs_title_sentiment_polarity",
+    "kind": "numeric",
+    "distinct": 653
+   }
+  ]
+ },
+ {
+  "uci_id": 336,
+  "name": "Chronic Kidney Disease",
+  "labelled": false,
+  "rows": 400,
+  "candidates": []
+ },
+ {
+  "uci_id": 342,
+  "name": "Mice Protein Expression",
+  "labelled": true,
+  "rows": 1080,
+  "candidates": []
+ },
+ {
+  "uci_id": 350,
+  "name": "Default of Credit Card Clients",
+  "labelled": true,
+  "rows": 30000,
+  "candidates": []
+ },
+ {
+  "uci_id": 357,
+  "name": "Occupancy Detection ",
+  "labelled": true,
+  "rows": 20562,
+  "candidates": [
+   {
+    "column": "date",
+    "kind": "datetime",
+    "distinct": 20560
+   }
+  ]
+ },
+ {
+  "uci_id": 360,
+  "name": "Air Quality",
+  "labelled": false,
+  "rows": 9357,
+  "candidates": [
+   {
+    "column": "Date",
+    "kind": "datetime",
+    "distinct": 391
+   },
+   {
+    "column": "Time",
+    "kind": "datetime",
+    "distinct": 24
+   }
+  ]
+ },
+ {
+  "uci_id": 365,
+  "name": "Polish Companies Bankruptcy",
+  "labelled": true,
+  "rows": 43405,
+  "candidates": []
+ },
+ {
+  "uci_id": 368,
+  "name": "Facebook Metrics",
+  "labelled": false,
+  "rows": 500,
+  "candidates": [
+   {
+    "column": "Post Month",
+    "kind": "numeric",
+    "distinct": 12
+   },
+   {
+    "column": "Post Hour",
+    "kind": "numeric",
+    "distinct": 22
+   },
+   {
+    "column": "Lifetime Post Total Reach",
+    "kind": "numeric",
+    "distinct": 485
+   },
+   {
+    "column": "Lifetime Post Total Impressions",
+    "kind": "numeric",
+    "distinct": 494
+   },
+   {
+    "column": "Lifetime Engaged Users",
+    "kind": "numeric",
+    "distinct": 414
+   },
+   {
+    "column": "Lifetime Post Consumers",
+    "kind": "numeric",
+    "distinct": 422
+   },
+   {
+    "column": "Lifetime Post Consumptions",
+    "kind": "numeric",
+    "distinct": 440
+   },
+   {
+    "column": "Lifetime Post Impressions by people who have liked your Page",
+    "kind": "numeric",
+    "distinct": 491
+   },
+   {
+    "column": "Lifetime Post reach by people who like your Page",
+    "kind": "numeric",
+    "distinct": 469
+   },
+   {
+    "column": "Lifetime People who have liked your Page and engaged with your post",
+    "kind": "numeric",
+    "distinct": 382
+   }
+  ]
+ },
+ {
+  "uci_id": 372,
+  "name": "HTRU2",
+  "labelled": true,
+  "rows": 17898,
+  "candidates": []
+ },
+ {
+  "uci_id": 373,
+  "name": "Drug Consumption (Quantified)",
+  "labelled": false,
+  "rows": 1885,
+  "candidates": []
+ },
+ {
+  "uci_id": 374,
+  "name": "Appliances Energy Prediction",
+  "labelled": false,
+  "rows": 19735,
+  "candidates": [
+   {
+    "column": "date",
+    "kind": "declared",
+    "distinct": 19735
+   }
+  ]
+ },
+ {
+  "uci_id": 379,
+  "name": "Website Phishing",
+  "labelled": true,
+  "rows": 1353,
+  "candidates": []
+ },
+ {
+  "uci_id": 381,
+  "name": "Beijing PM2.5",
+  "labelled": false,
+  "rows": 43824,
+  "candidates": [
+   {
+    "column": "month",
+    "kind": "numeric",
+    "distinct": 12
+   },
+   {
+    "column": "day",
+    "kind": "numeric",
+    "distinct": 31
+   },
+   {
+    "column": "hour",
+    "kind": "numeric",
+    "distinct": 24
+   }
+  ]
+ },
+ {
+  "uci_id": 383,
+  "name": "Cervical Cancer (Risk Factors)",
+  "labelled": false,
+  "rows": 858,
+  "candidates": [
+   {
+    "column": "Smokes (years)",
+    "kind": "numeric",
+    "distinct": 30
+   },
+   {
+    "column": "Smokes (packs/year)",
+    "kind": "numeric",
+    "distinct": 62
+   },
+   {
+    "column": "Hormonal Contraceptives (years)",
+    "kind": "numeric",
+    "distinct": 40
+   },
+   {
+    "column": "IUD (years)",
+    "kind": "numeric",
+    "distinct": 26
+   },
+   {
+    "column": "STDs: Time since first diagnosis",
+    "kind": "numeric",
+    "distinct": 18
+   },
+   {
+    "column": "STDs: Time since last diagnosis",
+    "kind": "numeric",
+    "distinct": 18
+   }
+  ]
+ },
+ {
+  "uci_id": 390,
+  "name": "Stock Portfolio Performance",
+  "labelled": false,
+  "rows": 315,
+  "candidates": []
+ },
+ {
+  "uci_id": 426,
+  "name": "Autism Screening Adult",
+  "labelled": true,
+  "rows": 704,
+  "candidates": []
+ },
+ {
+  "uci_id": 445,
+  "name": "Absenteeism at work",
+  "labelled": false,
+  "rows": 740,
+  "candidates": [
+   {
+    "column": "Month of absence",
+    "kind": "numeric",
+    "distinct": 13
+   },
+   {
+    "column": "Service time",
+    "kind": "numeric",
+    "distinct": 18
+   },
+   {
+    "column": "Work load Average/day ",
+    "kind": "numeric",
+    "distinct": 38
+   },
+   {
+    "column": "Absenteeism time in hours",
+    "kind": "numeric",
+    "distinct": 19
+   }
+  ]
+ },
+ {
+  "uci_id": 464,
+  "name": "Superconductivty Data",
+  "labelled": false,
+  "rows": 21263,
+  "candidates": []
+ },
+ {
+  "uci_id": 467,
+  "name": "Student Academics Performance",
+  "labelled": false,
+  "rows": 131,
+  "candidates": []
+ },
+ {
+  "uci_id": 468,
+  "name": "Online Shoppers Purchasing Intention Dataset",
+  "labelled": true,
+  "rows": 12330,
+  "candidates": [
+   {
+    "column": "Month",
+    "kind": "datetime",
+    "distinct": 10
+   }
+  ]
+ },
+ {
+  "uci_id": 477,
+  "name": "Real Estate Valuation",
+  "labelled": false,
+  "rows": 414,
+  "candidates": [
+   {
+    "column": "X1 transaction date",
+    "kind": "numeric",
+    "distinct": 12
+   }
+  ]
+ },
+ {
+  "uci_id": 503,
+  "name": "Hepatitis C Virus (HCV) for Egyptian patients",
+  "labelled": true,
+  "rows": 1385,
+  "candidates": []
+ },
+ {
+  "uci_id": 529,
+  "name": "Early Stage Diabetes Risk Prediction",
+  "labelled": true,
+  "rows": 520,
+  "candidates": []
+ },
+ {
+  "uci_id": 544,
+  "name": "Estimation of Obesity Levels Based On Eating Habits and Physical Condition ",
+  "labelled": true,
+  "rows": 2111,
+  "candidates": []
+ },
+ {
+  "uci_id": 545,
+  "name": "Rice (Cammeo and Osmancik)",
+  "labelled": true,
+  "rows": 3810,
+  "candidates": []
+ },
+ {
+  "uci_id": 551,
+  "name": "Gas Turbine CO and NOx Emission Data Set",
+  "labelled": false,
+  "rows": 36733,
+  "candidates": []
+ },
+ {
+  "uci_id": 555,
+  "name": "Apartment for Rent Classified",
+  "labelled": false,
+  "rows": 99826,
+  "candidates": [
+   {
+    "column": "time",
+    "kind": "numeric",
+    "distinct": 75541
+   }
+  ]
+ },
+ {
+  "uci_id": 560,
+  "name": "Seoul Bike Sharing Demand",
+  "labelled": false,
+  "rows": 8760,
+  "candidates": [
+   {
+    "column": "Date",
+    "kind": "datetime",
+    "distinct": 365
+   },
+   {
+    "column": "Hour",
+    "kind": "numeric",
+    "distinct": 24
+   }
+  ]
+ },
+ {
+  "uci_id": 563,
+  "name": "Iranian Churn",
+  "labelled": true,
+  "rows": 3150,
+  "candidates": []
+ },
+ {
+  "uci_id": 571,
+  "name": "HCV data",
+  "labelled": false,
+  "rows": 615,
+  "candidates": []
+ },
+ {
+  "uci_id": 572,
+  "name": "Taiwanese Bankruptcy Prediction",
+  "labelled": true,
+  "rows": 6819,
+  "candidates": [
+   {
+    "column": " Average Collection Days",
+    "kind": "numeric",
+    "distinct": 5451
+   },
+   {
+    "column": " Inventory Turnover Rate (times)",
+    "kind": "numeric",
+    "distinct": 2397
+   },
+   {
+    "column": " Net Worth Turnover Rate (times)",
+    "kind": "numeric",
+    "distinct": 741
+   }
+  ]
+ },
+ {
+  "uci_id": 579,
+  "name": "Myocardial infarction complications",
+  "labelled": false,
+  "rows": 1700,
+  "candidates": []
+ },
+ {
+  "uci_id": 582,
+  "name": "Student Performance on an Entrance Examination",
+  "labelled": true,
+  "rows": 666,
+  "candidates": []
+ },
+ {
+  "uci_id": 597,
+  "name": "Productivity Prediction of Garment Employees",
+  "labelled": false,
+  "rows": 1197,
+  "candidates": [
+   {
+    "column": "date",
+    "kind": "datetime",
+    "distinct": 59
+   },
+   {
+    "column": "over_time",
+    "kind": "numeric",
+    "distinct": 143
+   },
+   {
+    "column": "idle_time",
+    "kind": "numeric",
+    "distinct": 12
+   }
+  ]
+ },
+ {
+  "uci_id": 601,
+  "name": "AI4I 2020 Predictive Maintenance Dataset",
+  "labelled": false,
+  "rows": 10000,
+  "candidates": []
+ },
+ {
+  "uci_id": 602,
+  "name": "Dry Bean",
+  "labelled": true,
+  "rows": 13611,
+  "candidates": []
+ },
+ {
+  "uci_id": 603,
+  "name": "In-Vehicle Coupon Recommendation",
+  "labelled": true,
+  "rows": 12684,
+  "candidates": []
+ },
+ {
+  "uci_id": 697,
+  "name": "Predict Students' Dropout and Academic Success",
+  "labelled": true,
+  "rows": 4424,
+  "candidates": []
+ },
+ {
+  "uci_id": 722,
+  "name": "NATICUSdroid (Android Permissions)",
+  "labelled": true,
+  "rows": 29332,
+  "candidates": []
+ },
+ {
+  "uci_id": 759,
+  "name": "Glioma Grading Clinical and Mutation Features",
+  "labelled": true,
+  "rows": 839,
+  "candidates": []
+ },
+ {
+  "uci_id": 799,
+  "name": "Single Elder Home Monitoring: Gas and Position",
+  "labelled": false,
+  "rows": 416153,
+  "candidates": [
+   {
+    "column": "timestamp",
+    "kind": "datetime",
+    "distinct": 416153
+   }
+  ]
+ },
+ {
+  "uci_id": 848,
+  "name": "Secondary Mushroom",
+  "labelled": true,
+  "rows": 61069,
+  "candidates": []
+ },
+ {
+  "uci_id": 849,
+  "name": "Power Consumption of Tetouan City",
+  "labelled": false,
+  "rows": 52416,
+  "candidates": [
+   {
+    "column": "DateTime",
+    "kind": "datetime",
+    "distinct": 52416
+   }
+  ]
+ },
+ {
+  "uci_id": 850,
+  "name": "Raisin",
+  "labelled": true,
+  "rows": 900,
+  "candidates": []
+ },
+ {
+  "uci_id": 851,
+  "name": "Steel Industry Energy Consumption",
+  "labelled": false,
+  "rows": 35040,
+  "candidates": [
+   {
+    "column": "date",
+    "kind": "datetime",
+    "distinct": 35040
+   }
+  ]
+ },
+ {
+  "uci_id": 863,
+  "name": "Maternal Health Risk",
+  "labelled": true,
+  "rows": 1014,
+  "candidates": []
+ },
+ {
+  "uci_id": 864,
+  "name": "Room Occupancy Estimation",
+  "labelled": true,
+  "rows": 10129,
+  "candidates": [
+   {
+    "column": "Time",
+    "kind": "datetime",
+    "distinct": 10129
+   },
+   {
+    "column": "Date",
+    "kind": "declared",
+    "distinct": 7
+   }
+  ]
+ },
+ {
+  "uci_id": 878,
+  "name": "Cirrhosis Patient Survival Prediction",
+  "labelled": true,
+  "rows": 418,
+  "candidates": [
+   {
+    "column": "N_Days",
+    "kind": "numeric",
+    "distinct": 399
+   }
+  ]
+ },
+ {
+  "uci_id": 887,
+  "name": "National Health and Nutrition Health Survey 2013-2014 (NHANES) Age Prediction Subset",
+  "labelled": true,
+  "rows": 2278,
+  "candidates": []
+ },
+ {
+  "uci_id": 911,
+  "name": "Recipe Reviews and User Feedback",
+  "labelled": false,
+  "rows": 18182,
+  "candidates": []
+ },
+ {
+  "uci_id": 913,
+  "name": "Forty Soybean Cultivars from Subsequent Harvests",
+  "labelled": false,
+  "rows": 320,
+  "candidates": []
+ },
+ {
+  "uci_id": 915,
+  "name": "Differentiated Thyroid Cancer Recurrence",
+  "labelled": true,
+  "rows": 383,
+  "candidates": []
+ },
+ {
+  "uci_id": 936,
+  "name": "National Poll on Healthy Aging (NPHA)",
+  "labelled": true,
+  "rows": 714,
+  "candidates": []
+ },
+ {
+  "uci_id": 967,
+  "name": "PhiUSIIL Phishing URL (Website)",
+  "labelled": true,
+  "rows": 235795,
+  "candidates": []
+ }
+]

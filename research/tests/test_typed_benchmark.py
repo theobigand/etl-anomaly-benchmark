@@ -94,3 +94,27 @@ def test_masking_diagnostic_shows_zscore_recovers_when_invalid_rows_leave_traini
     df, cols = _injected()
     out = tm.masking(df, cols, seed=0)
     assert out["with_invalid_in_train"] < 0.2 and out["without_invalid_in_train"] > 0.9
+
+
+def test_the_new_classical_detectors_are_in_the_default_sweep_and_see_gross_outliers():
+    assert {"ecod", "copod", "hbos", "knn", "pca"} <= set(tb.DETECTORS)
+    df, cols = _injected()
+    recall = tb.evaluate(df, cols, seed=0, names=["ecod", "knn", "pca"])["recall"]
+    assert recall.loc[["ecod", "knn"], "univariate_outlier"].min() > 0.8
+    assert recall.loc["pca", "univariate_outlier"] > 0.5
+
+
+def test_a_neural_detector_can_be_evaluated_and_is_seeded_by_the_repetition(monkeypatch):
+    df, cols = _injected()
+    seen = []
+    real = tb.build
+
+    def spy(name, contamination, seed):
+        detector = real(name, contamination, seed)
+        seen.append((name, getattr(detector, "random_state", None)))
+        return detector
+
+    monkeypatch.setattr(tb, "build", spy)
+    result = tb.evaluate(df, cols, seed=11, names=["vae"])
+    assert seen == [("vae", 11)]
+    assert list(result["recall"].index) == ["vae", "transform_dedup"]

@@ -1,6 +1,6 @@
 # Vérification des références externes
 
-Contrôle du 17 octobre 2026 des douze premières entrées (complété le 21 octobre 2026 pour les onze suivantes, issue #68) de `paper/references.bib` et de
+Contrôle du 17 octobre 2026 des douze premières entrées (complété le 21 octobre 2026 pour les onze suivantes, issue #68, puis pour les onze détecteurs du registre complet) de `paper/references.bib` et de
 chaque phrase de `paper/main.tex` qui s'y appuie. Source primaire = page de
 l'éditeur, de l'archive ou du dépôt, ou texte intégral de l'article. Les
 résultats expérimentaux de la thèse ne sont pas concernés.
@@ -30,6 +30,17 @@ résultats expérimentaux de la thèse ne sont pas concernés.
 | `anwar2024fedadbench` | arXiv 2408.04442 (page de résumé et version HTML) | Sept auteurs ; dépôt arXiv seulement (FLTA 2024 d'après la page du DFKI, non relue) ; modèles profonds en apprentissage fédéré ; seuil choisi en maximisant le F1 sur un jeu de validation ayant le même taux d'anomalies que le test ; quatre jeux (Arrhythmia, Thyroid, KDDCUP10, NSL-KDD). | La conférence n'est pas indiquée dans l'entrée BibTeX faute de source primaire lue. |
 | `sun2024online` | Page PMLR v235 | Trois auteurs, ICML 2024, PMLR 235:47105-47132 ; seuils en ligne avec séquences de confiance, garanties sur les taux d'erreur, jeux synthétiques et réels. | Résumé seul lu. |
 | `greatexpectations` | Site du projet (réponse HTTP 200) | Existence du projet. | Pas de publication ; version non citée dans l'entrée. |
+| `li2023ecod` | Crossref (10.1109/tkde.2022.3159580) | Titre, six auteurs, IEEE TKDE 35(12):12181-12193, 2023. | Article non relu : cité pour l'existence de la méthode ; la description des queues empiriques vient du code de PyOD 3.6.7 lu. |
+| `li2020copod` | Crossref (10.1109/icdm50108.2020.00135) | Titre, cinq auteurs, ICDM 2020, pages 1118-1123. | Idem ; combinaison des deux queues lue dans le code de PyOD. |
+| `goldstein2012hbos` | Page de la publication au DFKI (via recherche) | Auteurs, KI-2012 Poster and Demo Track, pages 59-63 ; hypothèse d'indépendance des variables, linéaire en temps. | Absent de Crossref ; le PDF du DFKI a répondu 403 ; le résumé n'est connu que par la recherche. |
+| `ramaswamy2000efficient` | Crossref (10.1145/342009.335437) | Titre, trois auteurs, SIGMOD 2000, pages 427-438. | Page ACM non consultée ; la distance au k-ième voisin vient de l'usage courant et du code de PyOD. |
+| `shyu2006principal` | Crossref (10.1007/11539827_18) | Titre, quatre auteurs, chapitre de *Foundations and Novel Approaches in Data Mining*, pages 311-329. | Crossref ne donne pas l'année : 2006 est celle du livre, non relue sur la page de l'éditeur. Le score de PyOD (distance pondérée aux vecteurs propres) est celui de ce classifieur ; la thèse utilise l'erreur de reconstruction (scikit-learn), et ne lui attribue pas cette citation comme définition. |
+| `kingma2014auto` | arXiv 1312.6114 (API arXiv) | Titre, deux auteurs, déposé le 20 déc. 2013 ; ICLR 2014. | Conférence d'après l'usage courant, non relue. |
+| `ruff2018deep` | Page PMLR v80 | Titre, auteurs, ICML 2018, PMLR 80:4393-4402. | Aucun. |
+| `xu2023deep` | Crossref (10.1109/tkde.2023.3270293) | Titre, quatre auteurs, IEEE TKDE 35(12):12591-12604, 2023. | Article non relu. |
+| `nguyen2019scalable` | Crossref (10.1007/978-3-030-10925-7_10) | Titre, deux auteurs, LNCS, pages 157-172, 2019 (ECML PKDD 2018). | Le nom AE1SVM vient de PyOD ; l'article n'a pas été relu. |
+| `goodge2022lunar` | Crossref (10.1609/aaai.v36i6.20629) | Titre, quatre auteurs, AAAI 36(6):6737-6745, 2022. | Article non relu. |
+| `chen2025pyod2` | Crossref (10.1145/3701716.3715196) | Titre, treize auteurs, WWW 2025 Companion, pages 2807-2810. | Non relu ; cité pour les modèles profonds de PyOD 2. |
 | ADBench (relecture) | Texte intégral du PDF (arXiv 2206.09426v2) | 30 algorithmes, 57 jeux, 98 436 expériences ; AUCROC et AUCPR ; temps d'entraînement et d'inférence ; quatre types d'anomalies générés (locales, globales, de dépendance, en grappes) ; aucune occurrence de « threshold », « chronolog » ni de F1 dans le texte. | Les mentions « non trouvé » du tableau de positionnement s'appuient sur cette recherche dans le texte. |
 
 ## Limites

@@ -1,18 +1,18 @@
 {
-  "captured_at": "2026-10-19T11:05:19.242797+00:00",
+  "captured_at": "2026-10-23T10:22:27.613243+00:00",
   "dataset": {
     "identity": "credit_card"
   },
   "environment_lock": {
     "file": "verification/environment/conda-darwin-arm64.explicit.txt",
-    "sha256": "88f9518425e499f8930b1710baf86442e7885a6dc85c70e0b823aa1ccad76355"
+    "sha256": "44d5470f1d0c6a675f26e8fec98bf0592967deb2e0a3b1834ac95d822b6e1c73"
   },
   "experiment": "temporal_pilot",
   "fingerprint_recipe": 2,
   "measurement_fingerprint": "9cd603c619d15e17d3cbd9d14986b6f62bdb5611a5ba78fbd4d10ae8f4d7285d",
   "measurement_recipe": 1,
   "output_sha256": {
-    "temporal_pilot.json": "7171f1891235dbf9b79244501881f786778a16958b736f945558d1d3ce884bc2"
+    "temporal_pilot.json": "6b76906742d402708edab0dcf002f4e4f48328da430085c2b5ef0a8fce4b410a"
   },
   "outputs": [
     "temporal_pilot.json"
@@ -24,10 +24,10 @@
     "pyod": "3.6.7",
     "scikit-learn": "1.9.1"
   },
-  "platform": "macOS-27.0-arm64-arm-64bit",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "scientific_fingerprint": "cecbed00f8228b25707199f820d62f28fa1c13f543a0bbb5d56f94716b6a17b9",
+  "scientific_fingerprint": "be28a126f038edec58574f4a3a8baff294ec1994ca9b93cb7c9b6a10efbab076",
   "seeds": [
     42,
     1,
@@ -47,7 +47,7 @@
       2.0
     ],
     "machine": "arm64",
-    "platform": "macOS-27.0-arm64-arm-64bit",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
     "protocol": "verification/temporal_pilot.md",
     "python": "3.11.17",
     "ratios": [
@@ -66,7 +66,7 @@
     ],
     "window_size": 1000
   },
-  "source_fingerprint": "d8c8a6a857073b22384213e66d0d2773e2d58c9d6ead796483e610ecd60f0ab4",
-  "source_revision": "ce296386b7f1ea01fd06ac5188b1af19b12c9100",
+  "source_fingerprint": "36e3025c6f2dd11dde84224c6994ddd67d1ea1f5d076abfbbd9fa9eace6ed757",
+  "source_revision": "8d245d23cf1e3d1d4db93f9629093391c16e5a28",
   "worktree_dirty": false
 }

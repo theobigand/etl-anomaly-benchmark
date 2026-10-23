@@ -4,6 +4,7 @@ from etl_benchmark import config, registry
 from etl_benchmark.quality import Detector
 from etl_benchmark.registry import (
     ALL_NAMES,
+    DEEP_NAMES,
     DETECTOR_NAMES,
     ML_NAMES,
     RULE_NAMES,
@@ -107,3 +108,28 @@ def test_a_fixed_contamination_is_validated_without_any_labels():
             ValueError, match=f"^fixed contamination must be between {lo} and {hi}$"
         ):
             registry.fixed_contamination(bad)
+
+
+def test_the_registry_lists_the_classical_and_deep_families():
+    assert ML_NAMES == [
+        "isolation_forest",
+        "lof",
+        "ocsvm",
+        "ecod",
+        "copod",
+        "hbos",
+        "knn",
+        "pca",
+    ]
+    assert DEEP_NAMES == ["autoencoder", "vae", "deep_svdd", "dif", "ae1svm", "lunar"]
+    assert not set(DEEP_NAMES) & set(ALL_NAMES)
+
+
+def test_every_registered_name_builds_a_detector_with_that_name():
+    for name in [*ALL_NAMES, *DEEP_NAMES]:
+        assert get_detector(name).name == name
+
+
+def test_the_error_for_an_unknown_name_lists_the_deep_detectors_too():
+    with pytest.raises(ValueError, match="vae"):
+        get_detector("nope")

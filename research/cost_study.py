@@ -258,6 +258,7 @@ def main(argv: list[str] | None = None) -> int:
         "--output", type=Path, default=ROOT / "experiments" / "results" / "cost_study.json"
     )
     parser.add_argument("--sizes", type=int, nargs="+", default=list(SIZES))
+    parser.add_argument("--methods", nargs="+", default=list(METHODS))
     parser.add_argument("--csv", type=Path, default=None)
     args = parser.parse_args(argv)
     if args.worker:
@@ -270,8 +271,8 @@ def main(argv: list[str] | None = None) -> int:
     started = wait_for_quiet()
     workdir = Path(tempfile.mkdtemp(prefix="cost_study_"))
     measure = lambda m, n, d, r: measure_in_subprocess(m, n, d, r, workdir=workdir)  # noqa: E731
-    narrow = sweep(METHODS, args.sizes, FEATURES, measure)
-    wide = sweep(METHODS, [WIDE_ROWS], WIDE_FEATURES, measure)
+    narrow = sweep(args.methods, args.sizes, FEATURES, measure)
+    wide = sweep(args.methods, [WIDE_ROWS], WIDE_FEATURES, measure)
     csv = args.csv or config.CREDIT_CARD_CSV
     etl = []
     for method in ("zscore", "isolation_forest"):
@@ -292,7 +293,8 @@ def main(argv: list[str] | None = None) -> int:
         "summary": summarize(narrow), "wide_summary": summarize(wide),
         "settings": {"seed": SEED, "sizes": args.sizes, "features": FEATURES,
                      "wide": [WIDE_ROWS, WIDE_FEATURES], "timeout_s": TIMEOUT_S,
-                     "lstm_epochs": LSTM_EPOCHS, "lstm_fit_rows": LSTM_FIT_ROWS,
+                     "methods": args.methods, "lstm_epochs": LSTM_EPOCHS,
+                     "lstm_fit_rows": LSTM_FIT_ROWS,
                      "load_at_start": started},
         "provenance": {
             "script_sha256": sha(__file__), "dataset_sha256": sha(csv),

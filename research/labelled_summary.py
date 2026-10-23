@@ -13,6 +13,12 @@ import numpy as np
 import pandas as pd
 from scipy.stats import spearmanr
 
+# The six detectors of verification/labelled_pool.md: its hypotheses are stated on them.
+CORE = ("zscore", "iqr", "great_expectations", "isolation_forest", "lof", "ocsvm")
+# The five classical detectors of verification/full_registry.md.
+NEW_CLASSICAL = ("ecod", "copod", "hbos", "knn", "pca")
+DEEP_FAILURE_SHARE = 0.05
+DEEP_MARGIN = 0.02
 BINS = (("<5%", 0.0, 0.05), ("5-20%", 0.05, 0.20), (">20%", 0.20, 1.01))
 
 
@@ -125,6 +131,41 @@ def hypotheses(data: pd.DataFrame, resamples: int = 2000) -> dict[str, Any]:
     return out
 
 
+def registry_hypotheses(
+    classical: pd.DataFrame, deep: pd.DataFrame, deep_runs: list[dict[str, Any]]
+) -> dict[str, Any]:
+    """H1, H2 and H6 of verification/full_registry.md on the labelled pool."""
+    medians = pooled(classical, resamples=1)["median"]
+    new = medians.reindex(list(NEW_CLASSICAL))
+    out: dict[str, Any] = {
+        "H1": {
+            "supported": bool((new > medians["isolation_forest"]).any()),
+            "isolation_forest": float(medians["isolation_forest"]),
+            "new_classical": {m: float(v) for m, v in new.items()},
+        }
+    }
+    best = medians.idxmax()
+    deep_medians = pooled(deep, resamples=1)["median"]
+    out["H2"] = {
+        "supported": bool((deep_medians <= medians.max() + DEEP_MARGIN).all()),
+        "best_classical": {"method": best, "median": float(medians.max())},
+        "deep": {m: float(v) for m, v in deep_medians.items()},
+    }
+    ran = [r for r in deep_runs if "failed" not in r]
+    failures = {}
+    for method in deep_medians.index:
+        skipped = sum(method in r.get("skipped", []) for r in ran)
+        failed = sum(bool(r.get("errors", {}).get(method)) for r in ran)
+        failures[method] = {"failed": failed, "problems": len(ran) - skipped}
+    out["H6"] = {
+        "supported": bool(
+            all(v["failed"] <= DEEP_FAILURE_SHARE * v["problems"] for v in failures.values())
+        ),
+        "failures": failures,
+    }
+    return out
+
+
 def load(runs: Path) -> list[dict[str, Any]]:
     return [json.loads(p.read_text()) for p in sorted(runs.glob("*.json"))]
 
@@ -134,6 +175,9 @@ def main(argv: list[str] | None = None) -> int:
 
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--runs", type=Path, required=True)
+    parser.add_argument(
+        "--deep-runs", type=Path, help="runs of the neural detectors, same problems"
+    )
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args(argv)
     runs = load(args.runs)
@@ -147,8 +191,16 @@ def main(argv: list[str] | None = None) -> int:
         "pr_auc": json.loads(pooled(data).to_json(orient="split")),
         "roc_auc": json.loads(pooled(data, "roc_auc").to_json(orient="split")),
         "median_rank": {m: float(v) for m, v in ranks(data).median(axis=1).items()},
-        "hypotheses": hypotheses(data),
+        "hypotheses": hypotheses(data[data["method"].isin(CORE)]),
     }
+    if args.deep_runs:
+        deep_runs = load(args.deep_runs)
+        deep = table(deep_runs)
+        results["deep"] = {
+            "pr_auc": json.loads(pooled(deep).to_json(orient="split")),
+            "roc_auc": json.loads(pooled(deep, "roc_auc").to_json(orient="split")),
+            "hypotheses": registry_hypotheses(data, deep, deep_runs),
+        }
     args.output.mkdir(parents=True, exist_ok=True)
     (args.output / "labelled_results.json").write_text(
         json.dumps(results, indent=1, sort_keys=True) + "\n"
@@ -165,6 +217,29 @@ def main(argv: list[str] | None = None) -> int:
             f"| {method} | {a['median']:.3f} [{a['lo']:.3f}, {a['hi']:.3f}] "
             f"| {b['median']:.3f} [{b['lo']:.3f}, {b['hi']:.3f}] "
             f"| {results['median_rank'][method]:.1f} |"
+        )
+    if args.deep_runs:
+        both = pd.concat([data, deep])
+        dp, dr = pooled(deep), pooled(deep, "roc_auc")
+        lines += ["", "Neural detectors (fit rows capped, same problems)", ""]
+        lines += ["| method | PR-AUC | ROC-AUC |", "|---|---|---|"]
+        for method in dp.index:
+            a, b = dp.loc[method], dr.loc[method]
+            lines.append(
+                f"| {method} | {a['median']:.3f} [{a['lo']:.3f}, {a['hi']:.3f}] "
+                f"| {b['median']:.3f} [{b['lo']:.3f}, {b['hi']:.3f}] |"
+            )
+        results["median_rank_all"] = {m: float(v) for m, v in ranks(both).median(axis=1).items()}
+        lines += [
+            "",
+            "Median rank over all methods: "
+            + ", ".join(
+                f"{m} {v:.1f}"
+                for m, v in sorted(results["median_rank_all"].items(), key=lambda x: x[1])
+            ),
+        ]
+        (args.output / "labelled_results.json").write_text(
+            json.dumps(results, indent=1, sort_keys=True) + "\n"
         )
     (args.output / "labelled_results.md").write_text("\n".join(lines) + "\n")
     print(f"{results['problems']} problems, {len(failed)} failed")

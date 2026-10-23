@@ -17,14 +17,24 @@ from math import isfinite
 
 from etl_benchmark import config
 from etl_benchmark.quality import (
+    AE1SVMDetector,
     AutoencoderDetector,
+    COPODDetector,
+    DeepSVDDDetector,
     Detector,
+    DIFDetector,
+    ECODDetector,
     GreatExpectationsDetector,
+    HBOSDetector,
     IQRDetector,
     IsolationForestDetector,
+    KNNDetector,
     LOFDetector,
+    LUNARDetector,
     OneClassSVMDetector,
+    PCADetector,
     TemporalDriftDetector,
+    VAEDetector,
     ZScoreDetector,
 )
 
@@ -36,20 +46,31 @@ _FACTORIES: dict[str, Callable[[float], Detector]] = {
     "isolation_forest": lambda c: IsolationForestDetector(contamination=c),
     "lof": lambda c: LOFDetector(contamination=c),
     "ocsvm": lambda c: OneClassSVMDetector(contamination=c),
+    "ecod": lambda c: ECODDetector(contamination=c),
+    "copod": lambda c: COPODDetector(contamination=c),
+    "hbos": lambda c: HBOSDetector(contamination=c),
+    "knn": lambda c: KNNDetector(contamination=c),
+    "pca": lambda c: PCADetector(contamination=c),
     "drift": lambda c: TemporalDriftDetector(),
     "autoencoder": lambda c: AutoencoderDetector(contamination=c),
+    "vae": lambda c: VAEDetector(contamination=c),
+    "deep_svdd": lambda c: DeepSVDDDetector(contamination=c),
+    "dif": lambda c: DIFDetector(contamination=c),
+    "ae1svm": lambda c: AE1SVMDetector(contamination=c),
+    "lunar": lambda c: LUNARDetector(contamination=c),
 }
 
 RULE_NAMES: list[str] = ["zscore", "iqr", "great_expectations"]
-ML_NAMES: list[str] = ["isolation_forest", "lof", "ocsvm"]
+ML_NAMES: list[str] = ["isolation_forest", "lof", "ocsvm", "ecod", "copod", "hbos", "knn", "pca"]
 # The core comparison set. ``drift`` needs a timestamp column, so it is opt-in
 # (the synthetic benchmark adds it) rather than part of the default sweep.
 DETECTOR_NAMES: list[str] = [*RULE_NAMES, *ML_NAMES]
 DRIFT_NAME: str = "drift"
 ALL_NAMES: list[str] = [*DETECTOR_NAMES, DRIFT_NAME]
-# Learned reconstruction models are opt-in too: their results enter the thesis
-# tables only after the protocol-parity checks in verification/deep_models.md.
-DEEP_NAMES: list[str] = ["autoencoder"]
+# Neural models are opt-in too (they need PyTorch, except the MLP autoencoder):
+# their results enter the thesis tables only after the protocol-parity checks in
+# verification/deep_models.md and the protocol of verification/full_registry.md.
+DEEP_NAMES: list[str] = ["autoencoder", "vae", "deep_svdd", "dif", "ae1svm", "lunar"]
 
 
 def clip_contamination(prevalence: float | None) -> float:

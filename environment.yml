@@ -12,6 +12,7 @@ dependencies:
   - pytest-cov>=7.1,<8
   - hypothesis>=6.169,<7
   - ruff>=0.4
+  - pytorch>=2.1
   - pip
   - pip:
       - great_expectations>=1.0,<2.0

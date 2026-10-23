@@ -15,6 +15,11 @@ METHODS = {
     "Isolation Forest": "isolation_forest",
     "LOF": "lof",
     "One-Class SVM": "ocsvm",
+    "ECOD": "ecod",
+    "COPOD": "copod",
+    "HBOS": "hbos",
+    "KNN": "knn",
+    "PCA": "pca",
 }
 
 

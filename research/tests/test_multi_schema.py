@@ -130,3 +130,41 @@ def test_hypotheses_follow_the_preregistered_rules():
     broken = base.copy()
     broken.loc["great_expectations", "missing_value"] = 0.2
     assert not ms.hypotheses({"a": base, "b": broken})["H1"]["supported"]
+
+
+def test_the_neural_mode_returns_only_the_neural_rows(spec, monkeypatch):
+    seen = {}
+    real = ms.capped
+
+    def spy(train, name, seed):
+        seen[name] = seed
+        return real(train, name, seed)
+
+    monkeypatch.setattr(ms, "capped", spy)
+    monkeypatch.setattr(ms, "DEEP_NAMES", ["deep_svdd", "lunar"])
+    df = ms.make(spec, n_rows=1500, seed=1)
+    out = ms.evaluate(df, spec, seed=1, deep=True)
+    assert list(out["recall"].index) == ["deep_svdd", "lunar"]
+    assert seen == {"deep_svdd": 1, "lunar": 1}
+
+
+def test_later_detectors_do_not_change_the_preregistered_hypotheses():
+    methods = [
+        "zscore",
+        "iqr",
+        "great_expectations",
+        "isolation_forest",
+        "ocsvm",
+        "transform_dedup",
+    ]
+    base = pd.DataFrame(0.1, index=methods, columns=TYPES)
+    base.loc["great_expectations", "missing_value"] = 1.0
+    base.loc["transform_dedup", "duplicate"] = 1.0
+    base.loc[["isolation_forest", "ocsvm"], "multivariate_outlier"] = 0.8
+    base.loc["zscore", "multivariate_outlier"] = 0.0
+    base.loc["iqr", "multivariate_outlier"] = 0.05
+    extended = base.copy()
+    extended.loc["knn"] = [0.0, 0.0, 0.9, 0.9, 0.9, 0.9]  # a stronger row on drift, not a core row
+    before = ms.hypotheses({"a": base, "b": base + 0.01})
+    after = ms.hypotheses({"a": extended, "b": extended + 0.01})
+    assert before == after

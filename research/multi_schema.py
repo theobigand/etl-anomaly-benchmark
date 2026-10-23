@@ -29,14 +29,27 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 sys.path[:0] = [str(ROOT / "src")]
 
+from deep_support import build, capped  # noqa: E402
+
 from etl_benchmark import config  # noqa: E402
 from etl_benchmark.pipeline import detect  # noqa: E402
 from etl_benchmark.quality import TemporalDriftDetector  # noqa: E402
-from etl_benchmark.registry import DETECTOR_NAMES, get_detector  # noqa: E402
+from etl_benchmark.registry import DEEP_NAMES, DETECTOR_NAMES  # noqa: E402
 from etl_benchmark.split import stratified_split  # noqa: E402
 from etl_benchmark.synthetic import ANOMALY_TYPES  # noqa: E402
 
 SEEDS = (42, 1, 2, 3, 4)
+# The rows of verification/multi_schema.md: its hypotheses are stated on them, not on later ones.
+CORE_ROWS = (
+    "zscore",
+    "iqr",
+    "great_expectations",
+    "isolation_forest",
+    "lof",
+    "ocsvm",
+    "drift",
+    "transform_dedup",
+)
 REFERENCE = pd.Timestamp("2026-06-30")
 
 
@@ -264,21 +277,28 @@ def _per_type(flags: pd.Series, types: pd.Series) -> tuple[dict, dict]:
     return recall, precision
 
 
-def evaluate(df: pd.DataFrame, spec: Schema, seed: int) -> dict[str, pd.DataFrame]:
+def evaluate(
+    df: pd.DataFrame, spec: Schema, seed: int, deep: bool = False
+) -> dict[str, pd.DataFrame]:
+    """Per-type recall of the registry sweep, or of the neural detectors with ``deep``."""
     warnings.filterwarnings("ignore")
     train, _val, test = _split(df, spec, seed)
     contamination = float(train["anomaly"].mean())
     cols = features(spec)
     recall, precision, fpr = [], [], {}
-    detectors = {
-        **{n: get_detector(n, contamination) for n in DETECTOR_NAMES},
-        "drift": TemporalDriftDetector(time_column=spec.date_col, columns=spec.numeric),
-    }
-    for name in [*detectors, "transform_dedup"]:
+    if deep:
+        detectors = {n: build(n, contamination, seed) for n in DEEP_NAMES}
+    else:
+        detectors = {
+            **{n: build(n, contamination, seed) for n in DETECTOR_NAMES},
+            "drift": TemporalDriftDetector(time_column=spec.date_col, columns=spec.numeric),
+        }
+    for name in detectors if deep else [*detectors, "transform_dedup"]:
         if name == "transform_dedup":
             flags = test.duplicated(subset=cols, keep=False)
         else:
-            flags = detect(test[cols], detectors[name], fit_df=train[cols]).flags
+            fit = capped(train[cols], name, seed)
+            flags = detect(test[cols], detectors[name], fit_df=fit).flags
         flags = pd.Series(np.asarray(flags), index=test.index)
         fpr[name] = float(flags[test["anomaly_type"] == "clean"].mean())
         r, p = _per_type(flags, test["anomaly_type"])
@@ -306,10 +326,13 @@ def hypotheses(matrices: dict[str, pd.DataFrame]) -> dict[str, Any]:
         )
         for name, m in matrices.items()
     }
-    h3 = {name: float(m["temporal_drift"].max()) for name, m in matrices.items()}
+    h3 = {
+        name: float(m.loc[[i for i in m.index if i in CORE_ROWS], "temporal_drift"].max())
+        for name, m in matrices.items()
+    }
     rhos = {}
     for (a, ma), (b, mb) in combinations(matrices.items(), 2):
-        common = [i for i in ma.index if i in mb.index and i != "drift"]
+        common = [i for i in ma.index if i in mb.index and i in CORE_ROWS and i != "drift"]
         rhos[f"{a}|{b}"] = float(
             spearmanr(
                 ma.loc[common].to_numpy().ravel(), mb.loc[common].to_numpy().ravel()
@@ -336,14 +359,21 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--rows", type=int, default=12_000)
+    parser.add_argument(
+        "--methods",
+        choices=("classical", "deep"),
+        default="classical",
+        help="the registry sweep with its hypotheses, or the neural detectors alone",
+    )
     args = parser.parse_args(argv)
+    deep = args.methods == "deep"
     from etl_benchmark.atomic import atomic_path
 
     args.output.mkdir(parents=True, exist_ok=True)
     means: dict[str, pd.DataFrame] = {}
     stds: dict[str, pd.DataFrame] = {}
     for name, spec in SCHEMAS.items():
-        runs = [evaluate(make(spec, args.rows, seed), spec, seed) for seed in SEEDS]
+        runs = [evaluate(make(spec, args.rows, seed), spec, seed, deep) for seed in SEEDS]
         for seed, run in zip(SEEDS, runs, strict=True):
             with atomic_path(args.output / f"{name}_seed_{seed}.json") as partial:
                 partial.write_text(
@@ -356,11 +386,11 @@ def main(argv: list[str] | None = None) -> int:
         means[name] = stack.groupby(level=1, sort=False).mean()
         stds[name] = stack.groupby(level=1, sort=False).std()
         print(name, flush=True)
-    matrices = {"customer": published_customer(), **means}
+    matrices = means if deep else {"customer": published_customer(), **means}
     results = {
         "mean": {k: json.loads(v.to_json(orient="split")) for k, v in matrices.items()},
         "std": {k: json.loads(v.to_json(orient="split")) for k, v in stds.items()},
-        "hypotheses": hypotheses(matrices),
+        **({} if deep else {"hypotheses": hypotheses(matrices)}),
     }
     with atomic_path(args.output / "multi_schema_results.json") as partial:
         partial.write_text(json.dumps(results, indent=1, sort_keys=True) + "\n")

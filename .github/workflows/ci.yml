@@ -24,7 +24,7 @@ jobs:
           cache: pip
 
       - name: Install
-        run: pip install -e ".[dev]"
+        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev]"
 
       - name: FAST verification
         run: make verify-fast
@@ -68,7 +68,7 @@ jobs:
           cache: pip
 
       - name: Install
-        run: pip install -e ".[dev]"
+        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev]"
 
       - name: Scientific fault injection
         run: make verify-faults

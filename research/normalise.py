@@ -19,6 +19,7 @@ MAX_MISSING_SHARE = 0.5
 CATEGORY_CAP = 20
 MIN_CLASS_COUNT = 3  # needed so that train, validation and test each hold one anomaly
 OCSVM_MAX_TRAIN, LOF_MAX_TRAIN = 20_000, 50_000  # from the cost study exponents, set before use
+KNN_MAX_TRAIN = 50_000  # the same limit as LOF: both compare every row with the training rows
 
 
 class NormaliseError(Exception):
@@ -92,6 +93,10 @@ def skipped_detectors(n_train: int) -> list[str]:
     """Quadratic detectors skipped on large training sets; the skip is recorded, never silent."""
     return [
         name
-        for name, limit in (("lof", LOF_MAX_TRAIN), ("ocsvm", OCSVM_MAX_TRAIN))
+        for name, limit in (
+            ("lof", LOF_MAX_TRAIN),
+            ("ocsvm", OCSVM_MAX_TRAIN),
+            ("knn", KNN_MAX_TRAIN),
+        )
         if n_train > limit
     ]

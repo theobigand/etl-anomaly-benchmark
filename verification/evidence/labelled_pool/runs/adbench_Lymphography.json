@@ -1,6 +1,91 @@
 {
+ "errors": {},
  "features": 18,
  "metrics": {
+  "copod": [
+   {
+    "f1": 1.0,
+    "flagged_pct": 4.3478260869565215,
+    "pr_auc": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 8.695652173913043,
+    "pr_auc": 1.0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 8.695652173913043,
+    "pr_auc": 1.0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 1.0,
+    "flagged_pct": 4.3478260869565215,
+    "pr_auc": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 8.695652173913043,
+    "pr_auc": 1.0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   }
+  ],
+  "ecod": [
+   {
+    "f1": 1.0,
+    "flagged_pct": 4.3478260869565215,
+    "pr_auc": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 8.695652173913043,
+    "pr_auc": 1.0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 8.695652173913043,
+    "pr_auc": 1.0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 1.0,
+    "flagged_pct": 4.3478260869565215,
+    "pr_auc": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 8.695652173913043,
+    "pr_auc": 1.0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   }
+  ],
   "great_expectations": [
    {
     "f1": 0.0,
@@ -39,6 +124,48 @@
     "flagged_pct": 4.3478260869565215,
     "pr_auc": 1.0,
     "precision": 1.0,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   }
+  ],
+  "hbos": [
+   {
+    "f1": 1.0,
+    "flagged_pct": 4.3478260869565215,
+    "pr_auc": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 8.695652173913043,
+    "pr_auc": 1.0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 8.695652173913043,
+    "pr_auc": 1.0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 1.0,
+    "flagged_pct": 4.3478260869565215,
+    "pr_auc": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 8.695652173913043,
+    "pr_auc": 1.0,
+    "precision": 0.5,
     "recall": 1.0,
     "roc_auc": 1.0
    }
@@ -107,6 +234,48 @@
     "flagged_pct": 8.695652173913043,
     "pr_auc": 1.0,
     "precision": 0.5,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 1.0,
+    "flagged_pct": 4.3478260869565215,
+    "pr_auc": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 1.0,
+    "flagged_pct": 4.3478260869565215,
+    "pr_auc": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   }
+  ],
+  "knn": [
+   {
+    "f1": 1.0,
+    "flagged_pct": 4.3478260869565215,
+    "pr_auc": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 8.695652173913043,
+    "pr_auc": 1.0,
+    "precision": 0.5,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 1.0,
+    "flagged_pct": 4.3478260869565215,
+    "pr_auc": 1.0,
+    "precision": 1.0,
     "recall": 1.0,
     "roc_auc": 1.0
    },
@@ -207,6 +376,48 @@
     "flagged_pct": 4.3478260869565215,
     "pr_auc": 1.0,
     "precision": 1.0,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   }
+  ],
+  "pca": [
+   {
+    "f1": 0.4,
+    "flagged_pct": 17.391304347826086,
+    "pr_auc": 0.5,
+    "precision": 0.25,
+    "recall": 1.0,
+    "roc_auc": 0.9545454545454546
+   },
+   {
+    "f1": 0.3333333333333333,
+    "flagged_pct": 21.73913043478261,
+    "pr_auc": 0.5,
+    "precision": 0.2,
+    "recall": 1.0,
+    "roc_auc": 0.9545454545454546
+   },
+   {
+    "f1": 0.4,
+    "flagged_pct": 17.391304347826086,
+    "pr_auc": 1.0,
+    "precision": 0.25,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.3333333333333333,
+    "flagged_pct": 21.73913043478261,
+    "pr_auc": 1.0,
+    "precision": 0.2,
+    "recall": 1.0,
+    "roc_auc": 1.0
+   },
+   {
+    "f1": 0.6666666666666666,
+    "flagged_pct": 8.695652173913043,
+    "pr_auc": 1.0,
+    "precision": 0.5,
     "recall": 1.0,
     "roc_auc": 1.0
    }

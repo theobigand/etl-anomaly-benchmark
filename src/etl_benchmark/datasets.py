@@ -52,8 +52,8 @@ DATASETS: dict[str, DatasetSpec] = {
         csv=config.CREDIT_CARD_CSV,
         label_column="Class",
         positive_value=1,
-        detector_names=[*RULE_NAMES, "isolation_forest"],
-        note="284k rows, 0.17% fraud. LOF/OC-SVM omitted: they do not scale to this size.",
+        detector_names=[*RULE_NAMES, "isolation_forest", "ecod", "copod", "hbos", "pca"],
+        note="284k rows, 0.17% fraud. LOF, OC-SVM and KNN omitted: they do not scale to this size.",
     ),
     "water_quality": DatasetSpec(
         name="water_quality",

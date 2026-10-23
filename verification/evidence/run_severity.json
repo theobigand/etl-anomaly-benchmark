@@ -1,22 +1,22 @@
 {
-  "captured_at": "2026-10-18T04:21:43.596501+00:00",
+  "captured_at": "2026-10-23T10:17:20.952915+00:00",
   "dataset": {
     "identity": "synthetic"
   },
   "environment_lock": {
     "file": "verification/environment/conda-darwin-arm64.explicit.txt",
-    "sha256": "88f9518425e499f8930b1710baf86442e7885a6dc85c70e0b823aa1ccad76355"
+    "sha256": "44d5470f1d0c6a675f26e8fec98bf0592967deb2e0a3b1834ac95d822b6e1c73"
   },
   "experiment": "synthetic_severity",
   "fingerprint_recipe": 2,
   "measurement_fingerprint": "9cd603c619d15e17d3cbd9d14986b6f62bdb5611a5ba78fbd4d10ae8f4d7285d",
   "measurement_recipe": 1,
   "output_sha256": {
-    "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/paper/figures/severity_curves.png": "6bc50cb8eac4834e698758555d9cc6d2293365a50b33c6cb6270d804dec4b4a5",
-    "severity_20261018_042143.csv": "718db28cb414540422a7e21149d302906bcfb3c94918a6105aeba90e51b1e0a8"
+    "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/paper/figures/severity_curves.png": "335a5475a0b5d39e40f0336a3c48c733ca9d9a0f80fa496239a1b59ed1efdb6d",
+    "severity_20261023_101720.csv": "5dbc2771df474dd877890159262c1325283f5d284ff78abf99a9054444964f29"
   },
   "outputs": [
-    "severity_20261018_042143.csv",
+    "severity_20261023_101720.csv",
     "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/paper/figures/severity_curves.png"
   ],
   "packages": {
@@ -26,10 +26,10 @@
     "pyod": "3.6.7",
     "scikit-learn": "1.9.1"
   },
-  "platform": "macOS-27.0-arm64-arm-64bit",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "scientific_fingerprint": "cecbed00f8228b25707199f820d62f28fa1c13f543a0bbb5d56f94716b6a17b9",
+  "scientific_fingerprint": "be28a126f038edec58574f4a3a8baff294ec1994ca9b93cb7c9b6a10efbab076",
   "seeds": [
     42,
     1,
@@ -52,7 +52,7 @@
     ],
     "split_strategy": "customer_identity_grouped_stratified"
   },
-  "source_fingerprint": "d8c8a6a857073b22384213e66d0d2773e2d58c9d6ead796483e610ecd60f0ab4",
-  "source_revision": "367e3acc0e96b9e2bef3c748de3f1958d20acf85",
+  "source_fingerprint": "36e3025c6f2dd11dde84224c6994ddd67d1ea1f5d076abfbbd9fa9eace6ed757",
+  "source_revision": "8d245d23cf1e3d1d4db93f9629093391c16e5a28",
   "worktree_dirty": false
 }

@@ -64,6 +64,10 @@ def test_the_module_prints_usage():
     assert done.returncode == 0 and "usage:" in done.stdout
 
 
+# the conda package that provides a PyPI distribution of another name
+CONDA_NAME = {"torch": "pytorch"}
+
+
 def _locked():
     # the macOS lock; the Linux lock is checked on its own below
     text = "".join(
@@ -88,6 +92,7 @@ def test_the_lock_pins_every_direct_dependency_and_python():
     for requirement in direct:
         name = re.split(r"[<>=!~ ]", requirement)[0]
         key = re.sub(r"[-_.]+", "-", name.lower())
+        key = CONDA_NAME.get(key, key)
         assert key in locked or f"{key}-base" in locked, name
 
 
@@ -119,6 +124,7 @@ def test_requirements_cover_the_project_and_every_extra():
     names = {re.split(r"[<>=!~ ]", item, maxsplit=1)[0].lower() for item in requirements}
     assert {"pandas", "numpy", "scikit-learn", "pyod", "pytest", "mutmut"} <= names
     assert len(requirements) == len(set(requirements))
+    assert not any(req.startswith("torch") for req in requirements)  # the CUDA build is not locked
 
 
 def test_the_lock_text_pins_every_wheel_by_version_and_hash_in_name_order():
