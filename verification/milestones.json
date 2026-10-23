@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "baseline": {
-    "head": "7977deed9f7a8f3688d74109d7e13d7c0188d895",
+    "head": "2bbeef1a5d23c04842d3fcb68c88cad89f28d39d",
     "branch_at_start": "main",
     "worktree_clean": true,
     "python_env": "/Users/theo/miniconda3/envs/etl-benchmark (python is not on the default PATH)",

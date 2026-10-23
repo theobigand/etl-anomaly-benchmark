@@ -432,7 +432,7 @@
     300,
     900
   ],
-  "source_revision": "93b6fe896715f308575620db6a6bb3de5b4c7f77",
+  "source_revision": "10754d177fe52c5dd05a573ac1bc876b693b48a3",
   "timing_measure": "fit_s + predict_s + score_s inside pipeline.detect; data generation excluded",
   "worktree_dirty": true
 }
