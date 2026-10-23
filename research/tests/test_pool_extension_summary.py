@@ -120,6 +120,22 @@ def test_p3_needs_every_learned_detector_to_gain_recall_with_severity(tmp_path):
     assert not out["supported"] and out["higher_at_4"] == 0
 
 
+def test_p3_pools_the_detectors_of_several_run_folders(tmp_path):
+    classical, neural = tmp_path / "c", tmp_path / "n"
+    classical.mkdir()
+    neural.mkdir()
+    _severity_file(classical, "t1", 0.1, 0.8, methods=("isolation_forest",))
+    _severity_file(neural, "t1", 0.9, 0.1, methods=("lunar",))
+    out = ps.severity([classical, neural])
+    assert out["detectors"] == 2 and out["higher_at_4"] == 1 and not out["supported"]
+
+
+def test_severity_rows_follow_the_order_of_the_names_and_the_four_multipliers():
+    median = {m: {"0.5": 0.1, "1.0": 0.2, "2.0": 0.3, "4.0": 0.4} for m in ("iqr", "lunar")}
+    rows = ps.severity_rows(median, {"lunar": "LUNAR", "iqr": "IQR rule"}).splitlines()
+    assert rows[0].startswith("LUNAR") and "0.40" in rows[0] and rows[1].startswith("IQR rule")
+
+
 def test_p4_compares_the_detection_share_of_two_detectors_on_large_datasets():
     def record(method, share, rows=60_000, status="OK"):
         return {

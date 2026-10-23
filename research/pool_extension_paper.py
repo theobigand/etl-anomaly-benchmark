@@ -35,6 +35,11 @@ def block(evidence: Path) -> str:
     etl = ps.pipeline(json.loads((ext / "etl" / "pool_etl.json").read_text()))
     elig = json.loads((ext / "typed" / "eligibility.json").read_text())
     names = {k: v for k, v in pt.NAMES.items()}
+    typed = ext / "typed"
+    n_eligible = sum(r["eligible"] for r in elig)
+    sev = ps.severity([typed / "severity_classical", typed / "severity_deep"])
+    med = sev["median_multivariate_recall"]
+    flat = [pt.NAMES[m] for m in pt.NAMES if med[m]["4.0"] <= med[m]["0.5"]]
     tex = [
         r"\subsection{Every study on the whole pool}",
         r"\label{sec:pool-all}",
@@ -106,6 +111,34 @@ def block(evidence: Path) -> str:
         r"fewer than four continuous columns (categorical or binary tables) or too few rows. "
         r"Figure~\ref{fig:typed} and the stability figures of Section~\ref{sec:typed} include "
         r"the ADBench tables.",
+        "",
+        rf"\paragraph{{Severity.}} Table~\ref{{tab:pool-severity}} gives the median recall on "
+        rf"multivariate outliers over the {n_eligible} eligible tables when the injected "
+        r"amplitude is multiplied by $0.5$, $1$, $2$ and $4$. The hypothesis that every "
+        rf"detector gains recall between the smallest and the largest severity does not hold: "
+        rf"{sev['higher_at_4']} of {sev['detectors']} do, and {', '.join(flat)} do not. The "
+        r"Z-score, the Great Expectations bounds and HBOS stay at zero because they read one "
+        r"column at a time, and multivariate outliers stay inside the range of each column, as in "
+        r"the per-type matrices; "
+        r"LOF is already at its level at the smallest severity and does not move. LUNAR is "
+        r"the highest at every severity, which agrees with its behaviour on the "
+        r"per-type matrices.",
+        "",
+        r"\begin{table}[t]",
+        r"\caption{Median recall on multivariate outliers over the eligible tables, by "
+        r"severity multiplier of the injected amplitude.}",
+        r"\label{tab:pool-severity}",
+        r"\centering",
+        r"\footnotesize",
+        r"\setlength{\tabcolsep}{4pt}",
+        r"\begin{tabular}{lrrrr}",
+        r"\toprule",
+        r"Detector & $\times 0.5$ & $\times 1$ & $\times 2$ & $\times 4$ \\",
+        r"\midrule",
+        ps.severity_rows(med, names),
+        r"\bottomrule",
+        r"\end{tabular}",
+        r"\end{table}",
         "",
         rf"\paragraph{{The pipeline end to end.}} The four stages (read, remove duplicates, "
         rf"detect, write) ran on all $152$ datasets with Z-score and Isolation Forest, one "

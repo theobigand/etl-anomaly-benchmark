@@ -108,10 +108,11 @@ def timings(runs: list[dict[str, Any]]) -> dict[str, dict[str, float]]:
     }
 
 
-def severity(runs_dir: Path) -> dict[str, Any]:
+def severity(runs_dirs: Path | list[Path]) -> dict[str, Any]:
     """P3: median over tables of the multivariate recall at severity 4 against 0.5."""
     cells: dict[str, dict[str, list[float]]] = {}
-    for path in sorted(runs_dir.glob("*.json")):
+    folders = [runs_dirs] if isinstance(runs_dirs, Path) else runs_dirs
+    for path in sorted(p for folder in folders for p in folder.glob("*.json")):
         run = json.loads(path.read_text())
         for sev, payload in run["recall_by_severity"].items():
             frame = pd.DataFrame(payload["data"], payload["index"], payload["columns"])
@@ -128,6 +129,16 @@ def severity(runs_dir: Path) -> dict[str, Any]:
         "higher_at_4": len(higher),
         "median_multivariate_recall": median,
     }
+
+
+def severity_rows(median: dict[str, dict[str, float]], names: dict[str, str]) -> str:
+    """LaTeX rows: median multivariate recall at the four severity multipliers."""
+    return "\n".join(
+        f"{label:<18} & "
+        + " & ".join(f"{median[m][s]:.2f}" for s in ("0.5", "1.0", "2.0", "4.0"))
+        + " \\\\"
+        for m, label in names.items()
+    )
 
 
 def pipeline(records: list[dict[str, Any]], large: int = 50_000) -> dict[str, Any]:

@@ -1266,6 +1266,39 @@ Contamination & Prec. & Rec. & $F_1$ & Flag.\% \\
 
 \paragraph{Typed injection and eligibility.} The eligibility rule of Section~\ref{sec:typed} was applied to all $152$ datasets, ADBench ones included (the normal class only for a labelled set): 58 are eligible, 42 from the UCI repository and 16 from ADBench. The others are listed with their reason in the archive; the usual one is fewer than four continuous columns (categorical or binary tables) or too few rows. Figure~\ref{fig:typed} and the stability figures of Section~\ref{sec:typed} include the ADBench tables.
 
+\paragraph{Severity.} Table~\ref{tab:pool-severity} gives the median recall on multivariate outliers over the 58 eligible tables when the injected amplitude is multiplied by $0.5$, $1$, $2$ and $4$. The hypothesis that every detector gains recall between the smallest and the largest severity does not hold: 13 of 17 do, and Z-score, Great Expectations, LOF, HBOS do not. The Z-score, the Great Expectations bounds and HBOS stay at zero because they read one column at a time, and multivariate outliers stay inside the range of each column, as in the per-type matrices; LOF is already at its level at the smallest severity and does not move. LUNAR is the highest at every severity, which agrees with its behaviour on the per-type matrices.
+
+\begin{table}[t]
+\caption{Median recall on multivariate outliers over the eligible tables, by severity multiplier of the injected amplitude.}
+\label{tab:pool-severity}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrr}
+\toprule
+Detector & $\times 0.5$ & $\times 1$ & $\times 2$ & $\times 4$ \\
+\midrule
+Z-score            & 0.00 & 0.00 & 0.00 & 0.00 \\
+IQR                & 0.22 & 0.38 & 0.53 & 0.62 \\
+Great Expectations & 0.00 & 0.00 & 0.00 & 0.00 \\
+Isolation Forest   & 0.24 & 0.33 & 0.36 & 0.40 \\
+LOF                & 0.33 & 0.30 & 0.32 & 0.32 \\
+One-Class SVM      & 0.16 & 0.17 & 0.18 & 0.20 \\
+ECOD               & 0.21 & 0.24 & 0.27 & 0.30 \\
+COPOD              & 0.20 & 0.22 & 0.25 & 0.28 \\
+HBOS               & 0.00 & 0.00 & 0.00 & 0.00 \\
+KNN                & 0.31 & 0.32 & 0.34 & 0.35 \\
+PCA                & 0.18 & 0.18 & 0.21 & 0.19 \\
+Autoencoder        & 0.25 & 0.27 & 0.30 & 0.29 \\
+VAE                & 0.18 & 0.19 & 0.21 & 0.19 \\
+Deep SVDD          & 0.22 & 0.23 & 0.23 & 0.23 \\
+DIF                & 0.25 & 0.35 & 0.36 & 0.44 \\
+AE1SVM             & 0.16 & 0.18 & 0.17 & 0.18 \\
+LUNAR              & 0.60 & 0.66 & 0.66 & 0.68 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \paragraph{The pipeline end to end.} The four stages (read, remove duplicates, detect, write) ran on all $152$ datasets with Z-score and Isolation Forest, one fresh process per measurement; 14 of the $304$ runs failed and are recorded with their reason (a table with no numeric column, or a column that the pipeline reads as text because of stray header lines in the file). On the 14 datasets above $50{,}000$ rows the detection takes 62\% of the pipeline time with Isolation Forest and 4\% with the Z-score, the writing of the two files being the rest, as on Credit Card Fraud; the hypothesis holds. These times were measured while other jobs ran on the machine, so they are orders of magnitude, and the shares are ratios inside one process.
 
 \paragraph{Chronological split.}
