@@ -1719,7 +1719,7 @@
     etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_13: killed
     etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_14: killed
     etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_15: killed
-    etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_16: survived
+    etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_16: killed
     etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_17: killed
     etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_18: killed
     etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_19: killed
@@ -1783,9 +1783,9 @@
     etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_77: killed
     etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_78: killed
     etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_79: killed
-    etl_benchmark.quality.ml.xǁTailProbabilityModelǁpredict__mutmut_1: survived
+    etl_benchmark.quality.ml.xǁTailProbabilityModelǁpredict__mutmut_1: killed
     etl_benchmark.quality.ml.xǁTailProbabilityModelǁpredict__mutmut_2: killed
-    etl_benchmark.quality.ml.xǁTailProbabilityModelǁpredict__mutmut_3: survived
+    etl_benchmark.quality.ml.xǁTailProbabilityModelǁpredict__mutmut_3: killed
     etl_benchmark.quality.ml.xǁECODDetectorǁ_build_estimator__mutmut_1: killed
     etl_benchmark.quality.ml.xǁECODDetectorǁ_build_estimator__mutmut_2: survived
     etl_benchmark.quality.ml.xǁECODDetectorǁ_build_estimator__mutmut_3: killed
@@ -1831,9 +1831,9 @@
     etl_benchmark.quality.ml.xǁPCAReconstructionǁdecision_function__mutmut_9: killed
     etl_benchmark.quality.ml.xǁPCAReconstructionǁdecision_function__mutmut_10: killed
     etl_benchmark.quality.ml.xǁPCAReconstructionǁdecision_function__mutmut_11: killed
-    etl_benchmark.quality.ml.xǁPCAReconstructionǁpredict__mutmut_1: survived
+    etl_benchmark.quality.ml.xǁPCAReconstructionǁpredict__mutmut_1: killed
     etl_benchmark.quality.ml.xǁPCAReconstructionǁpredict__mutmut_2: killed
-    etl_benchmark.quality.ml.xǁPCAReconstructionǁpredict__mutmut_3: survived
+    etl_benchmark.quality.ml.xǁPCAReconstructionǁpredict__mutmut_3: killed
     etl_benchmark.quality.ml.xǁPCADetectorǁ_build_estimator__mutmut_1: killed
     etl_benchmark.quality.autoencoder.xǁReconstructionModelǁ__init____mutmut_1: killed
     etl_benchmark.quality.autoencoder.xǁReconstructionModelǁ__init____mutmut_2: killed

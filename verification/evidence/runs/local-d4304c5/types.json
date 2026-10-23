@@ -1,15 +1,15 @@
 {
   "artifacts": {
-    "experiments/results/reproducibility.json": "27c7cbbaafb5d3e7f4b57a4c879da42ea1b94fdf6f2a1df71d55b6b455da2c68"
+    "experiments/results/types_report.json": "f330a7ad6689b71f9fc350a51e47fece27ea82a1c77eabb16d55791be9011207"
   },
-  "captured_at": "2026-10-23T11:12:19.012729+00:00",
+  "captured_at": "2026-10-23T12:26:32.643645+00:00",
   "environment": {
     "packages": {
-      "mutmut": "3.8.0",
-      "mypy": null,
+      "mutmut": null,
+      "mypy": "2.4.0",
       "numpy": "2.4.6",
-      "pandas": "3.0.6",
-      "pandas-stubs": null,
+      "pandas": "3.1.0",
+      "pandas-stubs": "3.0.5.260914",
       "pyod": "3.6.7",
       "pytest": "9.1.1",
       "pytest-cov": "7.1.0",
@@ -24,20 +24,18 @@
     "runner_environment": null,
     "runner_name": null
   },
-  "kind": "reproduction",
+  "kind": "types",
   "result": {
-    "claimed_outcome": "PASS",
-    "dataset": "cardio",
-    "levels": {
-      "archive": "PASS",
-      "locked_environment": "PASS",
-      "same_environment": "PASS",
-      "version_sensitivity": "MEASURED"
-    }
+    "baseline_entries": 17,
+    "errors": 17,
+    "mypy": "2.4.0",
+    "pandas-stubs": "3.0.5.260914",
+    "problems": [],
+    "state": "PASS"
   },
   "schema_version": 2,
   "source": {
-    "revision": "22f1602b4073440ed8582ba69b5c9880abda478f",
+    "revision": "d4304c5bc51e9eb269e51952ca5aba8cc75f3e70",
     "scientific_fingerprint": "be28a126f038edec58574f4a3a8baff294ec1994ca9b93cb7c9b6a10efbab076",
     "worktree_dirty": false
   },

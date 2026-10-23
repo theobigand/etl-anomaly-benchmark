@@ -1,9 +1,9 @@
 {
   "artifacts": {
-    "coverage.json": "da46d9b6f696104936aec6d551c3ea439cbb5c8addbb474739c2f0afa6f74c25",
-    "experiments/results/pytest.xml": "1dfa30c33da435b3307aea8d22623b72aed61eb059e2f0869a30286623f8c930"
+    "coverage.json": "39a9ee671a040b1ef0fd556419267b81e0b93afb3d699356d569b67adec9e412",
+    "experiments/results/pytest.xml": "d46d052fc7bc15385e5546c6929f6665c7a9655f7c88112fc474ba8698fbe8a1"
   },
-  "captured_at": "2026-10-23T10:27:03.458253+00:00",
+  "captured_at": "2026-10-23T12:01:31.204776+00:00",
   "environment": {
     "packages": {
       "mutmut": "3.8.0",
@@ -393,12 +393,12 @@
       "errors": 0,
       "failures": 0,
       "skipped": 0,
-      "total": 1290
+      "total": 1292
     }
   },
   "schema_version": 2,
   "source": {
-    "revision": "22f1602b4073440ed8582ba69b5c9880abda478f",
+    "revision": "d4304c5bc51e9eb269e51952ca5aba8cc75f3e70",
     "scientific_fingerprint": "be28a126f038edec58574f4a3a8baff294ec1994ca9b93cb7c9b6a10efbab076",
     "worktree_dirty": false
   },

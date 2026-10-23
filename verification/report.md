@@ -8,7 +8,7 @@ exécution identifiée (révision, lieu, date) ; ils sont recopiés dans
 depuis. Les chiffres plus anciens sont marqués historiques.
 
 Le statut de certification est **CERTIFIED en local, non attesté** (commit
-`22f1602b`, machine du chercheur) et **CERTIFIED en CI, non attesté
+`d4304c5b`, machine du chercheur) et **CERTIFIED en CI, non attesté
 indépendamment** : le run `verify-release` 39112662862 (tête de branche
 `440dcee`) rend CERTIFIED avec l'étiquette
 `ci-run:39112662862 (not independently attested)`, REAL compris, produit par le
@@ -53,17 +53,17 @@ archivés séparément et leurs chiffres sont rapprochés du manuscrit par un te
 
 ## Résultats des commandes
 
-Run local `local-22f1602` : commit `22f1602b`, macOS 27.0 arm64, Python 3.11.17
+Run local `local-d4304c5` : commit `d4304c5b`, macOS 27.0 arm64, Python 3.11.17
 (environnement conda `etl-benchmark`, typage dans un venv avec mypy 2.4.0 et
 pandas-stubs 3.0.5.260914), 23 octobre 2026. Résultats non attestés
-indépendamment ; enveloppes de preuve scellées dans `evidence/runs/local-22f1602/`.
+indépendamment ; enveloppes de preuve scellées dans `evidence/runs/local-d4304c5/`.
 
 | Commande | Résultat | Détail |
 | --- | --- | --- |
-| `make verify-fast` | Réussite locale | 1 290 tests réussis, 3 tests réels et 23 essais de défauts exclus ; 1 790/1 790 lignes et 350/350 branches. |
+| `make verify-fast` | Réussite locale | 1 292 tests réussis, 3 tests réels et 23 essais de défauts exclus ; 1 790/1 790 lignes et 350/350 branches. |
 | `make verify-tools` | Réussite locale | 2 026/2 026 lignes et 738/738 branches du code de `verification/`. |
 | `make verify-types` | Réussite locale | mypy 2.4.0, `verification/` sans erreur, 17 erreurs connues du code scientifique, aucune nouvelle. |
-| `make verify-deep` | Réussite locale | 4 975 mutants éliminés sur 5 102 (97,51 %) ; 127 survivants ; un mutant suspect sous charge, tué quand il est rejoué seul. |
+| `make verify-deep` | Réussite locale | 4 980 mutants éliminés sur 5 102 (97,61 %) ; 122 survivants. |
 | `make verify-faults` | Réussite locale | 23 défauts introduits dans une copie temporaire, tous détectés par un test prévu. |
 | `make verify-real` | Réussite locale | 3 tests et contrôle des trois CSV requis ; échoue si l'un manque ou si le registre est vide. |
 | `make verify-reproduce` | Réussite locale | cardio : archive, deux essais, environnement reconstruit depuis le verrou : numérique, écart 0,0 ; sensibilité à scikit-learn 1.8.0 mesurée. |

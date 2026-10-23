@@ -1,9 +1,9 @@
 {
   "artifacts": {
-    "mutants/mutmut-cicd-stats.json": "41704078d848dd835f436ee58742d7f8629c5f938b419f092002878eb736c3b5",
-    "mutants/results.txt": "d72ac0dffdbfede9d970e4b5f6fdda2ec4d3c4049985ccfff7f3f8e31f880aa3"
+    "mutants/mutmut-cicd-stats.json": "c228f0980fd1a571740ef8eafee0ffc372260c720a0866d63aa49aa306874d19",
+    "mutants/results.txt": "8a7594a47435fbb1a9be4ccb64daf7ec81a4315a9749fa061683396679c714f7"
   },
-  "captured_at": "2026-10-23T11:14:43.990518+00:00",
+  "captured_at": "2026-10-23T12:26:30.574254+00:00",
   "environment": {
     "packages": {
       "mutmut": "3.8.0",
@@ -106,14 +106,14 @@
       "src/etl_benchmark/synthetic.py",
       "src/etl_benchmark/transform.py"
     ],
-    "score": 97.51078008624069,
+    "score": 97.60878087024696,
     "stats": {
       "check_was_interrupted_by_user": 0,
-      "killed": 4975,
+      "killed": 4980,
       "no_tests": 0,
       "segfault": 0,
       "skipped": 0,
-      "survived": 127,
+      "survived": 122,
       "suspicious": 0,
       "timeout": 0,
       "total": 5102
@@ -122,7 +122,7 @@
   },
   "schema_version": 2,
   "source": {
-    "revision": "22f1602b4073440ed8582ba69b5c9880abda478f",
+    "revision": "d4304c5bc51e9eb269e51952ca5aba8cc75f3e70",
     "scientific_fingerprint": "be28a126f038edec58574f4a3a8baff294ec1994ca9b93cb7c9b6a10efbab076",
     "worktree_dirty": false
   },
