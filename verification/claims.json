@@ -7,7 +7,7 @@
     "source": "local-unattested",
     "platform": "macOS 27.0 arm64, Python 3.11.17 (conda etl-benchmark; typing in a venv with mypy 2.4.0)",
     "captured": "2026-10-21",
-    "historical": false,
+    "historical": true,
     "evidence_dir": "verification/evidence/runs/local-e1fcbb0",
     "files": {
       "deep.json": "0d66b3847a9b5bb92f5ba21e65f81892619f3d88130432c799dc80976c2dfbab",
@@ -18,7 +18,8 @@
       "results.txt": "b6fa57dfb077a47e76a6b290ba3cd8ca59dd901b09a61c3ab9bcdf0625112832",
       "tools.json": "12491702526bcddf79ca0ac01ac7371d94aa2f6465b63ec7ea5666b459bea3c8",
       "types.json": "d481a99dd54b1403ee981be4db6558128808124e9e2104db431fb5dc1b126eca"
-    }
+    },
+    "note": "Run made before the complete detector registry and the extension of every study to the pool. The figures are kept until the run on that revision is sealed."
   },
   "fast": {
     "tests": 1150,
