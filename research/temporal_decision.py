@@ -26,8 +26,10 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 sys.path[:0] = [str(HERE), str(ROOT / "src")]
 
+from deep_support import build, capped  # noqa: E402
+
 from etl_benchmark import config  # noqa: E402
-from etl_benchmark.registry import clip_contamination, get_detector  # noqa: E402
+from etl_benchmark.registry import clip_contamination  # noqa: E402
 
 METHODS = ["zscore", "iqr", "great_expectations", "isolation_forest"]
 POLICIES = ("P0", "P1", "P2")
@@ -85,9 +87,9 @@ def match_prevalence(y, target: float, rng: np.random.Generator) -> np.ndarray:
     return np.sort(np.concatenate([pos, neg]))
 
 
-def _scores(method: str, pi: float, train: pd.DataFrame, parts: list[pd.DataFrame]):
-    det = get_detector(method, clip_contamination(pi))
-    det.fit(train)
+def _scores(method: str, pi: float, train: pd.DataFrame, parts: list[pd.DataFrame], seed: int = 42):
+    det = build(method, clip_contamination(pi), seed)
+    det.fit(capped(train, method, seed))
     return [det.score(p).to_numpy(dtype=float) for p in parts]
 
 

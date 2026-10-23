@@ -19,6 +19,10 @@ EXEMPT = {
 }
 
 
+# The networks run in float32, so a row scored alone and in a batch differs by rounding.
+FLOAT32 = {"vae", "deep_svdd", "dif", "ae1svm", "lunar"}
+
+
 def _train(n=200, seed=0):
     rng = np.random.default_rng(seed)
     base = rng.normal(size=n)
@@ -76,7 +80,8 @@ def test_a_rows_score_does_not_depend_on_the_rest_of_the_batch(name):
     batch = _train(12, seed=9) + 2.0
     together = detector.score(batch)
     alone = pd.concat([detector.score(batch.iloc[[i]]) for i in range(len(batch))])
-    np.testing.assert_allclose(together.to_numpy(), alone.to_numpy(), atol=1e-9)
+    tolerance = {"rtol": 1e-4, "atol": 1e-5} if name in FLOAT32 else {"atol": 1e-9}
+    np.testing.assert_allclose(together.to_numpy(), alone.to_numpy(), **tolerance)
 
 
 @pytest.mark.parametrize("name", _covered("orientation"))

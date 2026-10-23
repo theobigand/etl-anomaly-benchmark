@@ -1,22 +1,22 @@
 {
-  "captured_at": "2026-10-18T04:22:20.932438+00:00",
+  "captured_at": "2026-10-23T10:17:55.980804+00:00",
   "dataset": {
     "identity": "credit_card,water_quality,cardio,synthetic"
   },
   "environment_lock": {
     "file": "verification/environment/conda-darwin-arm64.explicit.txt",
-    "sha256": "88f9518425e499f8930b1710baf86442e7885a6dc85c70e0b823aa1ccad76355"
+    "sha256": "44d5470f1d0c6a675f26e8fec98bf0592967deb2e0a3b1834ac95d822b6e1c73"
   },
   "experiment": "precision_recall_and_contamination",
   "fingerprint_recipe": 2,
   "measurement_fingerprint": "9cd603c619d15e17d3cbd9d14986b6f62bdb5611a5ba78fbd4d10ae8f4d7285d",
   "measurement_recipe": 1,
   "output_sha256": {
-    "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/paper/figures/pr_curves.png": "21e9b7a59ab7ea485b7a959ea6c4cfa3903d7d118d709e0c9cc036f81f34bf06",
-    "contamination_sweep_20261018_042220.csv": "03e598f79a9e4d1f9a99cd4386a5081e972fe40bd60ead320e361850598a8343"
+    "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/paper/figures/pr_curves.png": "4d1c2e741fdbebce6be6d8fdf0a9b856cfb53bfca03de27a94fc59075559a503",
+    "contamination_sweep_20261023_101755.csv": "03e598f79a9e4d1f9a99cd4386a5081e972fe40bd60ead320e361850598a8343"
   },
   "outputs": [
-    "contamination_sweep_20261018_042220.csv",
+    "contamination_sweep_20261023_101755.csv",
     "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/paper/figures/pr_curves.png"
   ],
   "packages": {
@@ -26,10 +26,10 @@
     "pyod": "3.6.7",
     "scikit-learn": "1.9.1"
   },
-  "platform": "macOS-27.0-arm64-arm-64bit",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "scientific_fingerprint": "cecbed00f8228b25707199f820d62f28fa1c13f543a0bbb5d56f94716b6a17b9",
+  "scientific_fingerprint": "be28a126f038edec58574f4a3a8baff294ec1994ca9b93cb7c9b6a10efbab076",
   "seeds": [
     42
   ],
@@ -59,7 +59,7 @@
     "synthetic_rows": null,
     "synthetic_split_strategy": "customer_identity_grouped_stratified"
   },
-  "source_fingerprint": "d8c8a6a857073b22384213e66d0d2773e2d58c9d6ead796483e610ecd60f0ab4",
-  "source_revision": "367e3acc0e96b9e2bef3c748de3f1958d20acf85",
+  "source_fingerprint": "36e3025c6f2dd11dde84224c6994ddd67d1ea1f5d076abfbbd9fa9eace6ed757",
+  "source_revision": "8d245d23cf1e3d1d4db93f9629093391c16e5a28",
   "worktree_dirty": false
 }

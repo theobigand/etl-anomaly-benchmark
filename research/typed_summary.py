@@ -104,9 +104,11 @@ def hypotheses(data: dict[str, pd.DataFrame], n_columns: dict[str, int]) -> dict
 
 def _load(runs):
     import json
+    from pathlib import Path
 
+    folders = [runs] if isinstance(runs, Path) else list(runs)
     data, columns, fpr = {}, {}, {}
-    for path in sorted(runs.glob("*.json")):
+    for path in sorted(p for folder in folders for p in folder.glob("*.json")):
         run = json.loads(path.read_text())
         split = run["recall_mean"]
         data[run["name"]] = pd.DataFrame(
@@ -124,7 +126,7 @@ def main(argv: list[str] | None = None) -> int:
     from pathlib import Path
 
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--runs", type=Path, required=True)
+    parser.add_argument("--runs", type=Path, nargs="+", required=True)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args(argv)
     data, columns, fpr = _load(args.runs)

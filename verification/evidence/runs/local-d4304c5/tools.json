@@ -1,0 +1,47 @@
+{
+  "artifacts": {
+    "experiments/results/verifier_coverage.json": "6e9a9b016148fd938e0d3691cfefd9900c64cc83d7a36c246880dd60d396ea4e"
+  },
+  "captured_at": "2026-10-23T12:05:16.537849+00:00",
+  "environment": {
+    "packages": {
+      "mutmut": "3.8.0",
+      "mypy": null,
+      "numpy": "2.4.6",
+      "pandas": "3.0.6",
+      "pandas-stubs": null,
+      "pyod": "3.6.7",
+      "pytest": "9.1.1",
+      "pytest-cov": "7.1.0",
+      "scikit-learn": "1.9.1"
+    },
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "python": "3.11.17"
+  },
+  "execution": {
+    "ci": false,
+    "run_id": null,
+    "runner_environment": null,
+    "runner_name": null
+  },
+  "kind": "tools",
+  "result": {
+    "coverage": {
+      "branch": {
+        "coverable": 738,
+        "covered": 738
+      },
+      "line": {
+        "coverable": 2026,
+        "covered": 2026
+      }
+    }
+  },
+  "schema_version": 2,
+  "source": {
+    "revision": "d4304c5bc51e9eb269e51952ca5aba8cc75f3e70",
+    "scientific_fingerprint": "be28a126f038edec58574f4a3a8baff294ec1994ca9b93cb7c9b6a10efbab076",
+    "worktree_dirty": false
+  },
+  "status": "PASS"
+}

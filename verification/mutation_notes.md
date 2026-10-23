@@ -8,10 +8,10 @@ des archives (filiation, tableaux du manuscrit) ne sont pas lancés pour chaque
 mutant. `config.py`, `logging_setup.py`, `__main__.py` et les fichiers
 `__init__.py` ne sont pas mutés.
 
-Résultat de `make verify-deep` du run local `local-e1fcbb0` (commit
-`e1fcbb0d`, macOS arm64, 18 octobre 2026, non attesté ; preuves scellées dans
-`evidence/runs/local-e1fcbb0/`) : **4 700 mutants éliminés sur 4 808
-(97,75 %)**, 108 survivants, sans mutant ignoré, expiré, en erreur, interrompu
+Résultat de `make verify-deep` du run local `local-d4304c5` (commit
+`d4304c5b`, macOS arm64, 23 octobre 2026, non attesté ; preuves scellées dans
+`evidence/runs/local-d4304c5/`) : **4 980 mutants éliminés sur 5 102
+(97,61 %)**, 122 survivants, sans mutant ignoré, expiré, en erreur, interrompu
 ou sans test (la barrière `check_mutation.py` refuse ces cas). Le périmètre est
 contrôlé par un relevé indépendant (voir « Périmètre contrôlé ») : 28 fichiers
 dans le périmètre, 27 ayant reçu des mutants. Les 68 mutants de plus que la
@@ -28,9 +28,9 @@ retirer aucun mutant du dénominateur :
 
 | Périmètre | Éliminés | Total | Taux |
 | --- | --- | --- | --- |
-| Calcul scientifique : `split`, `metrics`, `synthetic`, `datasets`, `registry`, `transform`, `quality/` | 1 647 | 1 720 | 95,76 % |
+| Calcul scientifique : `split`, `metrics`, `synthetic`, `datasets`, `registry`, `transform`, `quality/` | 1 927 | 2 014 | 95,68 % |
 | Orchestration, entrées-sorties, scripts : `extract`, `load`, `pipeline`, `atomic`, `experiments/*.py` | 3 053 | 3 088 | 98,87 % |
-| Ensemble | 4 700 | 4 808 | 97,75 % |
+| Ensemble | 4 980 | 5 102 | 97,61 % |
 
 Le calcul scientifique reste au-dessus de 95 %, mais avec une marge plus
 faible que l'ensemble : l'agrégat ne doit pas être lu comme la garantie des
@@ -174,6 +174,39 @@ classé tantôt « tué », tantôt « expiré » quand la machine était charg�
 campagnes locales qui comptent des expirations (cinq mutants dont celui-ci, sur
 une exécution concurrente d'autres tâches) ont été rejouées pour ces mutants
 seulement (`mutmut run <noms>`) ; le résultat retenu est celui du run `local-e1fcbb0` (sept mutants expirés ou suspects sous charge, rejoués seuls dans l'arbre propre : tous éliminés ; aucun mutant n'a été retiré du dénominateur).
+
+## Survivants des modules du registre complet
+
+Les dix détecteurs ajoutés (`quality/ml.py`, `quality/deep.py`,
+`quality/_torch_models.py`) apportent des mutants dont 24 survivent. Classement par lecture, sans preuve formelle :
+
+- 10 mutants des valeurs provisoires posées dans `__init__` de
+  `TailProbabilityModel` et de `PCAReconstruction` (`np.empty((0, 0))`,
+  `float("nan")`, `None`, `float("NAN")`, `svd_solver` omis). Ces valeurs ne
+  servent qu'à donner un type aux attributs avant `fit`, qui les remplace ;
+  aucun test ne lit un estimateur non ajusté. Équivalents au sens du
+  comportement observable après `fit`.
+- 8 mutants de `FitScalerDIF._deep_representation` : arguments du
+  `DataLoader` (`shuffle`, `drop_last`, `batch_size` omis), appareil `None` et
+  clé du dictionnaire des normalisations. Le chargeur ne mélange rien et le
+  résultat est le même quel que soit le lot ; l'appareil `None` revient à
+  l'appareil par défaut sur CPU ; la clé n'est lue qu'au même endroit.
+  Équivalents sur CPU, non prouvés ailleurs.
+- 3 mutants de `TailProbabilityModel` : `side` omis dans le `searchsorted` de
+  la queue droite (la valeur par défaut est justement `"left"`), `* -1` devenu
+  `/ -1` (identique en virgule flottante) et `axis` omis dans `skew` (valeur
+  par défaut). Équivalents.
+- 3 mutants de `ECODDetector._build_estimator` (méthode `None`, `"ECOD"`,
+  `"XXecodXX"`) : toute méthode différente de `"copod"` prend la branche ECOD
+  de `decision_function`, donc le résultat de ECOD est inchangé.
+
+Cinq autres mutants de ces modules étaient de vraies lacunes de tests (égalité
+entre une ligne évaluée et une ligne d'ajustement dans la queue gauche,
+score égal au seuil avec `>=`, type du résultat de `predict`, pour
+`TailProbabilityModel` et `PCAReconstruction`). Deux tests les tuent
+(`test_a_row_tied_with_fit_rows_counts_them_in_both_tails` et
+`test_a_score_equal_to_the_threshold_is_not_flagged`), ajoutés avant le run
+scellé.
 
 ## Équivalences invoquées
 

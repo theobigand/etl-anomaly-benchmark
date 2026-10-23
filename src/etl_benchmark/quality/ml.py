@@ -11,9 +11,19 @@ rather than reimplemented:
     - :class:`LOFDetector` — local outlier factor (density relative to
       neighbours);
     - :class:`OneClassSVMDetector` — an SVM boundary around the bulk of
-      the data.
+      the data;
+    - :class:`ECODDetector` and :class:`COPODDetector` — empirical tail
+      probabilities of each column, combined across columns (computed on the
+      fit rows only, see :class:`TailProbabilityModel`);
+    - :class:`HBOSDetector` — histogram of each column, scored by inverse
+      density;
+    - :class:`KNNDetector` — distance to the k-th nearest neighbour;
+    - :class:`PCADetector` — reconstruction error after a linear projection
+      that keeps 95% of the variance.
 
-All three share the same preparation: non-numeric columns are dropped,
+ECOD, COPOD and HBOS model each column separately, so they see no
+dependency between columns; KNN and PCA look at the joint distribution. All
+of them share the same preparation: non-numeric columns are dropped,
 missing values are median-imputed, and every feature is standardized
 (LOF and One-Class SVM are distance-based and scale-sensitive). The
 PyOD ``decision_function`` is used as the continuous anomaly score and
@@ -29,6 +39,8 @@ from typing import ClassVar, Self
 
 import numpy as np
 import pandas as pd
+from scipy.stats import skew
+from sklearn.decomposition import PCA
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
 
@@ -123,3 +135,116 @@ class LOFDetector(PyODDetector):
 class OneClassSVMDetector(PyODDetector):
     name = "ocsvm"
     estimator_path = ("pyod.models.ocsvm", "OCSVM")
+
+
+class TailProbabilityModel:
+    """PyOD-style estimator for ECOD and COPOD that reads only the fit rows.
+
+    Both methods turn each column into left and right empirical tail
+    probabilities and sum their negative logarithms across columns. PyOD
+    recomputes these distributions on the fit rows plus the rows being scored,
+    so a row's score would depend on the other rows of its batch. Here the
+    distributions are those of the fit rows alone: a row is ranked among the
+    fit rows as if it were added to them, which is what PyOD computes for a
+    batch of one row. The skew that picks the heavier tail is also fixed at fit.
+    The flag threshold is the ``1 - contamination`` quantile of the training
+    scores.
+    """
+
+    #: Combination of the two tails: ``"ecod"`` keeps the larger, ``"copod"`` their mean.
+    method = "ecod"
+
+    def __init__(self, contamination: float, method: str) -> None:
+        self.contamination = contamination
+        self.method = method
+        self.sorted_ = np.empty((0, 0))
+        self.skew_sign_ = np.empty(0)
+        self.threshold_ = float("nan")
+
+    def fit(self, x: np.ndarray) -> Self:
+        self.sorted_ = np.sort(x, axis=0)
+        # a constant column has no skew; it then counts both tails
+        self.skew_sign_ = np.sign(np.nan_to_num(skew(x, axis=0)))
+        self.threshold_ = float(np.quantile(self.decision_function(x), 1.0 - self.contamination))
+        return self
+
+    def decision_function(self, x: np.ndarray) -> np.ndarray:
+        n = self.sorted_.shape[0]
+        left = np.empty(x.shape)
+        right = np.empty(x.shape)
+        for j in range(x.shape[1]):
+            column = self.sorted_[:, j]
+            left[:, j] = np.searchsorted(column, x[:, j], side="right")
+            right[:, j] = n - np.searchsorted(column, x[:, j], side="left")
+        u_left = -np.log((left + 1) / (n + 1))
+        u_right = -np.log((right + 1) / (n + 1))
+        u_skew = u_left * -1 * np.sign(self.skew_sign_ - 1) + u_right * np.sign(self.skew_sign_ + 1)
+        if self.method == "copod":
+            combined = np.maximum(u_skew, (u_left + u_right) / 2)
+        else:
+            combined = np.maximum(u_skew, np.maximum(u_left, u_right))
+        return combined.sum(axis=1)
+
+    def predict(self, x: np.ndarray) -> np.ndarray:
+        return (self.decision_function(x) > self.threshold_).astype(int)
+
+
+class ECODDetector(PyODDetector):
+    name = "ecod"
+
+    def _build_estimator(self) -> TailProbabilityModel:
+        return TailProbabilityModel(self.contamination, "ecod")
+
+
+class COPODDetector(PyODDetector):
+    name = "copod"
+
+    def _build_estimator(self) -> TailProbabilityModel:
+        return TailProbabilityModel(self.contamination, "copod")
+
+
+class HBOSDetector(PyODDetector):
+    name = "hbos"
+    estimator_path = ("pyod.models.hbos", "HBOS")
+
+
+class KNNDetector(PyODDetector):
+    name = "knn"
+    estimator_path = ("pyod.models.knn", "KNN")
+
+
+class PCAReconstruction:
+    """PyOD-style estimator: mean squared error of a PCA reconstruction.
+
+    PyOD's own ``PCA`` scores a weighted distance to the eigenvectors, which
+    is not a reconstruction error, so the projection comes from scikit-learn.
+    The flag threshold is the ``1 - contamination`` quantile of the training
+    scores.
+    """
+
+    #: Share of the variance the kept components must explain.
+    variance = 0.95
+
+    def __init__(self, contamination: float) -> None:
+        self.contamination = contamination
+        self.pca_ = PCA(n_components=self.variance, svd_solver="full")
+        self.threshold_ = float("nan")
+
+    def fit(self, x: np.ndarray) -> Self:
+        self.pca_.fit(x)
+        self.threshold_ = float(np.quantile(self.decision_function(x), 1.0 - self.contamination))
+        return self
+
+    def decision_function(self, x: np.ndarray) -> np.ndarray:
+        reconstruction = self.pca_.inverse_transform(self.pca_.transform(x))
+        return np.mean((x - reconstruction) ** 2, axis=1)
+
+    def predict(self, x: np.ndarray) -> np.ndarray:
+        return (self.decision_function(x) > self.threshold_).astype(int)
+
+
+class PCADetector(PyODDetector):
+    name = "pca"
+
+    def _build_estimator(self) -> PCAReconstruction:
+        return PCAReconstruction(self.contamination)

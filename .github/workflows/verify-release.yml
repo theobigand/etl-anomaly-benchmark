@@ -41,7 +41,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install
-        run: pip install -e ".[dev]"
+        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev]"
 
       - name: Run fast profile
         run: make verify-fast
@@ -72,7 +72,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install
-        run: pip install -e ".[dev]"
+        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev]"
 
       - name: Verifier coverage
         run: make verify-tools
@@ -108,7 +108,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install
-        run: pip install -e ".[dev]"
+        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev]"
 
       # Cardio is a public ADBench file; nothing is uploaded, and the replay
       # refuses to run when the download differs from the archived run.
@@ -144,7 +144,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install
-        run: pip install -e ".[dev]"
+        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev]"
 
       - name: Run faults profile
         run: make verify-faults
@@ -176,7 +176,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install
-        run: pip install -e ".[dev,deep]"
+        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev,deep]"
 
       # Verdicts of mutants whose function and covering tests did not change are reused
       # (verification/mutation_cache.py resets the others). A release can ask for a fresh run.
@@ -356,7 +356,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install
-        run: pip install -e ".[dev]"
+        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev]"
 
       - name: Refuse a release when a profile job failed
         run: test "${{ contains(needs.*.result, 'failure') }}" = false
