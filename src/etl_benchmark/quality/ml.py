@@ -157,9 +157,9 @@ class TailProbabilityModel:
     def __init__(self, contamination: float, method: str) -> None:
         self.contamination = contamination
         self.method = method
-        self.sorted_: np.ndarray | None = None
-        self.skew_sign_: np.ndarray | None = None
-        self.threshold_: float | None = None
+        self.sorted_ = np.empty((0, 0))
+        self.skew_sign_ = np.empty(0)
+        self.threshold_ = float("nan")
 
     def fit(self, x: np.ndarray) -> Self:
         self.sorted_ = np.sort(x, axis=0)
@@ -227,11 +227,11 @@ class PCAReconstruction:
 
     def __init__(self, contamination: float) -> None:
         self.contamination = contamination
-        self.pca_: PCA | None = None
-        self.threshold_: float | None = None
+        self.pca_ = PCA(n_components=self.variance, svd_solver="full")
+        self.threshold_ = float("nan")
 
     def fit(self, x: np.ndarray) -> Self:
-        self.pca_ = PCA(n_components=self.variance, svd_solver="full").fit(x)
+        self.pca_.fit(x)
         self.threshold_ = float(np.quantile(self.decision_function(x), 1.0 - self.contamination))
         return self
 

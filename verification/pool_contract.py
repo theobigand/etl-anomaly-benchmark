@@ -64,12 +64,13 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output", type=Path)
     args = parser.parse_args(argv)
     report = check_pool(json.loads(args.manifest.read_text()), args.adbench, args.pool)
-    result = {"summary": summarize(report), "report": report}
+    summary = summarize(report)
+    result = {"summary": summary, "report": report}
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(result, indent=1, sort_keys=True) + "\n")
-    print(json.dumps(result["summary"]))
-    return 0 if result["summary"]["all_ok"] else 1
+    print(json.dumps(summary))
+    return 0 if summary["all_ok"] else 1
 
 
 if __name__ == "__main__":
