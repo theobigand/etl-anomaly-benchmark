@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-22T17:54:10.336573+00:00",
+  "captured_at": "2026-10-23T10:22:27.613243+00:00",
   "dataset": {
     "identity": "credit_card"
   },
@@ -27,7 +27,7 @@
   "platform": "macOS-27.0.1-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "scientific_fingerprint": "40526dddf1e986ae926d6ab322ab8bbca5d5ebd32b9b6a676ba508cff07060d1",
+  "scientific_fingerprint": "be28a126f038edec58574f4a3a8baff294ec1994ca9b93cb7c9b6a10efbab076",
   "seeds": [
     42,
     1,
@@ -66,7 +66,7 @@
     ],
     "window_size": 1000
   },
-  "source_fingerprint": "250fb49199a28aa0d84a498d642881eeff7e5f8c185cf0168310d4d45e47a833",
-  "source_revision": "4a3c3c141829c8616697ca048ddc54e05dfcd6e8",
+  "source_fingerprint": "36e3025c6f2dd11dde84224c6994ddd67d1ea1f5d076abfbbd9fa9eace6ed757",
+  "source_revision": "5b0e0c1cd19c0600deef24926f7b757ce5674115",
   "worktree_dirty": false
 }
