@@ -198,3 +198,20 @@ def test_ecod_keeps_the_larger_tail_and_copod_their_mean():
     extreme = pd.DataFrame({"a": [1000.0]})  # beyond the maximum: right tail 1/101, left tail 1
     assert ecod.score(extreme).iloc[0] == pytest.approx(np.log(101))
     assert copod.score(extreme).iloc[0] == pytest.approx(np.log(101) / 2)
+
+
+def test_a_row_tied_with_fit_rows_counts_them_in_both_tails():
+    from etl_benchmark.quality.ml import TailProbabilityModel
+
+    model = TailProbabilityModel(0.25, "ecod").fit(np.array([[1.0], [2.0], [2.0], [3.0]]))
+    tail = -np.log(4 / 5)  # three of the four fit rows are on each side of the tied value
+    assert model.decision_function(np.array([[2.0]]))[0] == pytest.approx(2 * tail)
+
+
+def test_a_score_equal_to_the_threshold_is_not_flagged():
+    from etl_benchmark.quality.ml import PCAReconstruction, TailProbabilityModel
+
+    x = np.array([[1.0, 0.0], [2.0, 0.1], [3.0, 0.0], [4.0, 0.3], [5.0, 0.0]])
+    for model in (TailProbabilityModel(0.0, "ecod"), PCAReconstruction(0.0)):
+        flags = model.fit(x).predict(x)  # contamination 0: the threshold is the largest fit score
+        assert flags.dtype.kind == "i" and flags.sum() == 0
