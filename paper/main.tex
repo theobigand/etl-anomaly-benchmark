@@ -1838,18 +1838,18 @@ metrics from the stratified benchmark.
 
 \section{Verification outcomes}
 \label{app:outcomes}
-At commit d56eb7c8 (local run, not independently attested) the routine suite runs 1,290 tests, plus three that need
+At commit d4304c5b (local run, not independently attested) the routine suite runs 1,292 tests, plus three that need
 the full datasets and twenty-three fault-injection runs, all run separately.
 Coverage of the pipeline modules and the experiment scripts is complete: 1,790 of
 1,790 executable lines and 350 of 350 branches. The tools that check the
 checks (the evidence and release scripts under \texttt{verification/}) are
 measured apart, at 2,026 of 2,026 lines and 738 of 738 branches, and are not part of
 that figure. The mutation campaign on the pipeline modules and the experiment
-scripts kills 4,975 of 5,102 mutants ($97.51\%$). Split by what the code does,
+scripts kills 4,980 of 5,102 mutants ($97.61\%$). Split by what the code does,
 the modules that compute a result (splitting, metrics, the synthetic generator,
-the detectors) kill 1,922 of 2,014 ($95.43\%$) and the input, output and script
+the detectors) kill 1,927 of 2,014 ($95.68\%$) and the input, output and script
 code kills 3,053 of 3,088 ($98.87\%$), so the aggregate is higher than the score
-of the scientific computation alone. The 127 survivors count as failures (one further mutant, flagged as suspect while the machine was busy, was killed when run alone and is counted as killed). I
+of the scientific computation alone. The 122 survivors count as failures. I
 classified them by reading the changes, not by proof: most pass an explicit
 default (\texttt{dtype}, \texttt{index}) or change an internal label. Two that
 I first took for unreachable, a cap on a simulated transaction rate, turned out

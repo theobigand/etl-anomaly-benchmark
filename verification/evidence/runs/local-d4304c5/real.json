@@ -1,8 +1,8 @@
 {
   "artifacts": {
-    "experiments/results/real_verification.json": "7554c40b9848d697f9120ff4a0eb3afa6c6f33567757a8c92c7c643cf276cb70"
+    "experiments/results/real_verification.json": "0705c144cd4a320565348e7bec98ece667b5b3189054a9163e1424f72cb1241d"
   },
-  "captured_at": "2026-10-23T10:33:32.895292+00:00",
+  "captured_at": "2026-10-23T12:08:07.890641+00:00",
   "environment": {
     "packages": {
       "mutmut": "3.8.0",
@@ -51,7 +51,7 @@
   },
   "schema_version": 2,
   "source": {
-    "revision": "22f1602b4073440ed8582ba69b5c9880abda478f",
+    "revision": "d4304c5bc51e9eb269e51952ca5aba8cc75f3e70",
     "scientific_fingerprint": "be28a126f038edec58574f4a3a8baff294ec1994ca9b93cb7c9b6a10efbab076",
     "worktree_dirty": false
   },
