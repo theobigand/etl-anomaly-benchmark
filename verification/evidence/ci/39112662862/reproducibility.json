@@ -2,7 +2,7 @@
   "archived_run": {
     "dataset_sha256": "28bb4f67afca256f0cebe3cc6ca75a13be0bfc062e21efcaf40f1d3d80688eff",
     "file": "verification/evidence/run_benchmark_cardio.json",
-    "source_revision": "367e3acc0e96b9e2bef3c748de3f1958d20acf85",
+    "source_revision": "7de75e62adbae835e26aa882be7bf0d71abdb891",
     "split_ids_sha256": "3c8f3ca4703db0a4b719e58da9b12b22b4294d874f9ece643073d32692b35ffe"
   },
   "captured_at": "2026-10-18T08:47:34.968576+00:00",
