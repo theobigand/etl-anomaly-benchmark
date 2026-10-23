@@ -28,38 +28,27 @@ theobigand@gmail.com}
 \maketitle
 
 \begin{abstract}
-Modern data pipelines increasingly depend on automated data quality
-controls, yet Extract--Transform--Load (ETL) practitioners still rely
-mostly on hand-crafted declarative rules. Recent work has started to
-introduce machine learning (ML) anomaly detectors inside ETL workflows,
-but systematic, apples-to-apples comparisons between rule-based,
-classical ML, and deep learning approaches remain scarce---especially
-when evaluated within a realistic pipeline and broken down by the type
-of anomaly being injected. This paper presents an open-source ETL
-pipeline in which anomaly detectors from different families share one
-\texttt{fit}/\texttt{predict}/\texttt{score} interface and are scored on
-the same pipeline path: three rule-based detectors (Z-score, IQR, Great
-Expectations), eight classical ML detectors (Isolation Forest, LOF,
-One-Class SVM, ECOD, COPOD, HBOS, KNN, PCA) and six neural ones
-(autoencoder, VAE, Deep SVDD, DIF, AE1SVM, LUNAR), with an LSTM autoencoder
-studied apart. I evaluate the
-detectors, over five seeds on a stratified held-out split, on real open
-datasets and on controlled synthetic ones. The real data is a pool of $152$ open
-datasets, used as $100$ labelled problems and as $42$ tables into which I inject
-anomalies; three of them are worked out as examples because they show three regimes:
-Kaggle Credit Card Fraud, a rare-anomaly Cardio dataset and a
-common-class Water Quality dataset. The synthetic data are generated with Faker, with
-six distinct anomaly types injected at controlled rates. Beyond aggregate precision, recall, F1, ROC-AUC and
-PR-AUC, I report a per-anomaly-type recall and precision, precision-recall
-curves, and a sweep of the injection severity. The aggregate metrics make the families look interchangeable;
-the per-type view shows each has a narrow, largely non-overlapping
-competence, so broad coverage needs several families rather than the
-single best one. A larger registry does not change this: on the $100$ labelled
-problems no detector is clearly ahead, the column-wise ECOD, COPOD and HBOS match
-Isolation Forest, and the neural models do not beat the best classical one. My goal is a reproducible, pipeline-integrated
-benchmark that answers the practical question: \emph{which family of
-detectors should I use, for which kind of data quality problem, at what
-operational cost?}
+Modern data pipelines depend on automated data quality controls, yet Extract--Transform--Load
+(ETL) practitioners still rely mostly on hand-written declarative rules. Recent work puts
+machine learning (ML) anomaly detectors inside ETL workflows, but fair comparisons between
+rule-based, classical ML and neural detectors, inside a realistic pipeline and broken down by
+the type of anomaly, remain scarce. I ask which family of detectors to use for which kind of
+data quality problem, how much the answer depends on the operating point and on time, and what
+it costs. To answer, I built an open-source ETL pipeline in which seventeen detectors share one
+\texttt{fit}/\texttt{predict}/\texttt{score} interface: three rules (Z-score, IQR, Great
+Expectations), eight classical ML detectors (Isolation Forest, LOF, One-Class SVM, ECOD, COPOD, HBOS,
+KNN, PCA) and six neural ones (autoencoder, VAE, Deep SVDD, DIF, AE1SVM, LUNAR). I evaluate them over
+five seeds on a stratified held-out split, on a pool of $152$ open datasets (used as $100$ labelled
+problems and as $42$ UCI tables, $58$ with ADBench, into which six anomaly types are injected) and on
+Faker-generated data with controlled anomaly types, and I report each study against hypotheses written
+before its runs. On aggregate scores the families look interchangeable: on the $100$ labelled problems no
+detector is clearly ahead, the column-wise ECOD, COPOD and HBOS match Isolation Forest, and the neural
+models do not beat the best classical one. The per-type view shows a narrow, largely non-overlapping
+competence for each family, which holds in structure on real tables but not in its values. The
+operating point moves precision and recall by an order of magnitude with the same scores, a threshold
+fixed on the past fails when the prevalence moves, and the neural models cost one to two orders of magnitude
+more than the column-wise ones. Broad coverage therefore needs several families, chosen from the type of
+fault, with the operating point and the prevalence monitored.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -127,6 +116,25 @@ distributions but can be fooled by concept drift. A practitioner
 choosing a detector today lacks a fine-grained, actionable map from
 anomaly type to recommended method.
 
+\paragraph{Research questions.}\label{sec:rq} Each gap becomes a question that the
+rest of the paper answers, one study at a time.
+\begin{enumerate}
+    \item[\textbf{RQ1}] Inside one ETL pipeline and behind one interface, how do rule-based,
+    classical machine-learning and neural detectors compare on real and on
+    synthetic data, and does a larger registry change the answer? (first gap)
+    \item[\textbf{RQ2}] Which anomaly types does each family detect, and does that
+    per-type profile survive a change of generator, of injection magnitude and a move
+    to real tables? (third gap)
+    \item[\textbf{RQ3}] How much do the conclusions depend on the operating point
+    (contamination, a label-free threshold) and on time (a chronological split, a
+    change of prevalence)?
+    \item[\textbf{RQ4}] What does a detector cost inside the pipeline, in time and
+    in memory? (second gap)
+\end{enumerate}
+Each study has a protocol and hypotheses written in the repository before its
+runs (Section~\ref{sec:studies}). A hypothesis that fails is reported as failed.
+The Discussion answers the four questions in turn.
+
 \paragraph{Contributions.} This paper addresses these three gaps. I
 present:
 \begin{enumerate}
@@ -152,7 +160,7 @@ present:
     further schemas. The families turn out to have narrow, largely
     non-overlapping competence that the aggregate metrics hide.
     \item \textbf{The same analysis on real data.} The six types are
-    injected into $42$ real tables of a pool of $152$ open datasets, and the
+    injected into $42$ real UCI tables of a pool of $152$ open datasets, and the
     detectors are also run on its $100$ labelled problems. The synthetic
     pattern holds only in part, and no detector is clearly ahead on the
     labelled problems.
@@ -161,14 +169,14 @@ present:
 The rest of the paper is organized as follows. Section~II reviews
 related work on data quality in ETL and on anomaly detection
 benchmarks. Section~III describes my pipeline architecture, the
-detectors I compare, the datasets, the metrics and the verification of the
-code. Section~IV reports the main results, on three example datasets taken from the
-real-data pool, the synthetic generators and their variants, and the whole pool. Section~V
-reports four secondary studies (a chronological split, decisions under
-temporal shift, an LSTM autoencoder and the cost of detection). Section~VI discusses when rules, classical ML and
+detectors I compare, the datasets, the metrics, the studies with their
+hypotheses and the verification of the code. Section~IV reports the results: three
+example datasets taken from the real-data pool, the synthetic generators and their
+variants, the whole pool, and four narrower studies on time, sequence models and cost.
+Section~V answers the research questions, says when rules, classical ML and
 deep learning are each the right tool and what limits the evidence, and
-Section~VII concludes. Appendix~A and B describe the verification of the
-code and its outcomes.
+Section~VI concludes. Appendix~A and B describe the verification of the
+code and its outcomes, and Appendix~C gives the full per-type matrices.
 
 \section{Related Work}
 \label{sec:related}
@@ -271,7 +279,7 @@ the transform stage removes exact duplicate rows, and the quality stage
 applies a detector that assigns each row a boolean anomaly flag and a
 continuous anomaly score. All detectors share a common
 \texttt{fit}/\texttt{predict}/\texttt{score} interface modelled on
-PyOD~\cite{zhao2019pyod}, so that classical and deep models can later be
+PyOD~\cite{zhao2019pyod}, so that classical and neural models can be
 dropped in without changing the harness.
 
 \subsection{Rule-based detectors}
@@ -308,7 +316,7 @@ The continuous scores of the statistical detectors are the worst
 standardized deviation (Z-score) and the largest fence exceedance in IQR
 units (IQR). The axis of difference between the three is thus robustness
 and the assumption made about the shape of the data, which is precisely
-what the learned models of the next stage are meant to handle better.
+what the learned models below are meant to handle better.
 
 \subsection{Classical machine-learning detectors}
 The second family replaces the per-column band with a learned model of
@@ -432,8 +440,10 @@ the other detectors ignore the row order.
 The real data is one pool of $152$ open datasets from ADBench and the UCI repository
 (open licence, pinned by checksum; \texttt{verification/dataset\_pool.md}). I use it in two
 ways: $100$ of its problems already carry labelled anomalies and are run as they are
-(Section~\ref{sec:labelled}), and $42$ of its tables are large enough ($3{,}000$ rows, four
-continuous columns) to receive injected anomalies (Section~\ref{sec:typed}). Three datasets
+(Section~\ref{sec:labelled}), and $58$ of its tables are large enough ($3{,}000$ rows, four
+continuous columns) to receive injected anomalies: the $42$ UCI ones form the typed-injection
+study (Section~\ref{sec:typed}) and the $16$ ADBench ones join them in the whole-pool study
+(Section~\ref{sec:pool-all}). Three datasets
 are worked out in detail as examples, because they illustrate three regimes of the method.
 \emph{Credit Card Fraud}~\cite{mlgulbcredit}
 (Kaggle, also one of the ADBench problems;
@@ -493,9 +503,94 @@ always $0.5$ and is. I also report the fraction of rows flagged and the
 in-pipeline latency. Because a single flag threshold hides the rest of the
 trade-off, I additionally draw the full precision-recall curve of every
 detector (Fig.~\ref{fig:prcurves}) and sweep Isolation Forest's
-contamination across each dataset (Table~\ref{tab:contamination}). The
-deep-learning detectors (Autoencoder, LSTM-Autoencoder) are the object of
-the next stage.
+contamination across each dataset (Table~\ref{tab:contamination}).
+
+\subsection{Studies, research questions and hypotheses}
+\label{sec:studies}
+Every study below answers one of the research questions of Section~\ref{sec:rq}, and its
+protocol and hypotheses were committed to the repository before its runs (the file is named
+for each one). A hypothesis that fails is reported as failed, and a choice made after seeing a
+result is labelled as exploratory.
+
+\paragraph{Typed injection on real tables (RQ2).} The six anomaly types were injected into
+$42$ real tables from the UCI repository (open licence, pinned by checksum;
+\texttt{verification/dataset\_pool.md}); $58$ pool tables are large enough ($3{,}000$ rows,
+four continuous columns, ten distinct values), the $16$ other ones come from ADBench and enter
+in the whole-pool study below. For each table only the continuous columns are kept, and for
+labelled sets only the normal class, so that the original anomalies never enter the evaluation.
+The injection follows the synthetic one (three percent of rows per type, same split, seeds and
+detector settings), with numeric versions of the types: a value several standard deviations
+away, a pair of correlated columns pushed to opposite tails, a shift of three columns for the
+most recent rows, a sign flip, a sentinel or a thousandfold scale error. Five hypotheses
+(\texttt{verification/typed\_injection.md}) concern the structural rows, the multivariate gap,
+the specialisation of the types and the stability of the matrices between tables.
+
+\paragraph{Further schemas and neural rows (RQ1, RQ2).} Two more generators, a table of card
+transactions and a table of sensor readings, each with six numeric fields, a date, a string with
+a checkable format and a category with a finite domain, receive the same six types at the same
+rate and the same protocol, with four hypotheses
+(\texttt{verification/multi\_schema.md}). The sklearn autoencoder and an LSTM autoencoder were
+added to the synthetic matrix on the same identity-grouped splits and seeds, trained until their
+validation loss stopped improving (patience of $5$, at most $300$ epochs), on windows of the ten
+preceding customers ordered by signup date for the LSTM, with four hypotheses
+(\texttt{verification/deep\_typed.md}). The ten detectors added to the registry were then run on the
+same matrices and on the other studies, with six hypotheses
+(\texttt{verification/full\_registry.md}).
+
+\paragraph{Labelled problems of the pool (RQ1).} Among the $152$ pool tables, $100$ problems
+already carry labelled anomalies: $36$ from ADBench and $64$ from the UCI repository, where the
+rarest class (at least $20$ rows) is the anomaly and the other classes are normal; a class above
+$10\%$ of the rows is resampled to $10\%$. Every table gets one normalisation, a stratified
+$70/15/15$ split, five seeds, a contamination equal to the training prevalence and default
+settings (\texttt{verification/labelled\_pool.md}). Neural models are fitted on at most $20{,}000$
+rows, and LOF, KNN and the One-Class SVM are skipped above $50{,}000$, $50{,}000$ and $20{,}000$
+training rows; every skip is recorded.
+
+\paragraph{The whole pool (RQ1 to RQ4).} The studies that were first run on three examples and on
+the synthetic data were extended to every pool dataset for which they are defined, with six
+hypotheses (\texttt{verification/pool\_extension.md}) and the list of the datasets left out and why.
+(i)~One fit per problem, seed and detector gives the metrics at the training-prevalence threshold, the
+metrics at a label-free contamination of $0.02$ (derived from the stored training scores; a test checks
+that this equals a refit), the precision-recall curve of seed $42$ and the contamination sweep of
+Isolation Forest over a fixed grid. (ii)~The severity sweep multiplies the injected amplitude by $0.5$,
+$1$, $2$ and $4$ on every eligible table, with three seeds. (iii)~The pipeline runs end to end
+(read, remove duplicates, detect, write) on the $152$ datasets with the Z-score and Isolation Forest,
+in a fresh process per measure. (iv)~The chronological split needs a real time variable: a column
+readable as a date or timestamp, or a month whose order is checked, not a column whose name only
+suggests time; at least $3{,}000$ rows remain and the test partition holds at least $20$ anomalies.
+(v)~Every local file is compared with the pinned manifest.
+
+\paragraph{Chronological pilot (RQ3).} The protocol was written before any score was computed on
+held-out data (\texttt{verification/temporal\_pilot.md}). The rows are the cleaned Credit Card rows
+(Cardio and Water Quality have no time variable), the clock variable is removed from the features,
+and the chronological split uses the usual $70/15/15$ ratios by time. The control uses the stratified
+split of the main benchmark with the same rows and features, over five seeds. Intervals for the
+chronological arm come from a block bootstrap over $30$-minute blocks of the test period.
+
+\paragraph{Decisions under temporal shift (RQ3).} A second study runs on Credit Card and on Bank
+Marketing, a UCI table (CC BY 4.0) whose file is ordered by date from May 2008 to November 2010,
+with four hypotheses (\texttt{verification/temporal\_decision.md}). The Kyoto-2006+ traffic used by
+AnoShift was left out, because I could not verify its data rights nor download it in time. The
+date of Bank Marketing is a month, with the file order inside each month. Four detectors (Z-score,
+IQR, Great Expectations, Isolation Forest) are fitted on the oldest $70\%$ of the rows and scored on
+the newest $15\%$. A threshold is a quantile of the scores that keeps the training prevalence, taken
+(P0) from the training scores, (P1) from the validation scores, or (P2) from the scores of the two
+previous blocks of the test period, without any label of that period. A stratified control, over five
+seeds, is also matched to the prevalence of the chronological test.
+
+\paragraph{LSTM pilot (RQ1).} Credit Card has no cardholder identifier, so the window is the global
+stream of the ten previous rows, not a customer's history. The protocol was fixed beforehand
+(\texttt{verification/lstm\_pilot.md}). The comparison uses the chronological partitions of the
+pilot above, the same $50{,}000$ training rows and a CPU budget of at most $20$ epochs for both models;
+the architecture (window of $10$ rows, $32$ units) was not tuned, and the validation rows served only
+for early stopping on an unlabelled reconstruction loss.
+
+\paragraph{Cost (RQ4).} The protocol was fixed in advance (\texttt{verification/cost\_study.md}):
+synthetic Gaussian matrices of $1{,}000$ to $300{,}000$ rows and $8$ features, five repetitions up
+to $30{,}000$ rows and three above, a budget of $300$ seconds per measurement, and one fresh
+process per measurement so that the peak resident memory, native allocations included, belongs to
+that run alone. The detector is fitted and applied to the same rows, so this is a cost measurement,
+not a quality one.
 
 \subsection{Verification and reproducibility}
 \label{sec:verification}
@@ -517,7 +612,11 @@ measures are not pooled with the row-level metrics of the stratified benchmark.
 \label{sec:experiments}
 Benchmark tables report means over five seeds on the held-out test
 split (Section~\ref{sec:protocol}). Seed variability is reported in the
-archived result tables; timing also depends on the execution environment.
+archived result tables; timing also depends on the execution environment. The first
+subsections answer RQ1 and RQ2 on the three examples, the synthetic data and the pool; the
+last four (chronological pilot, decisions under shift, LSTM pilot, cost) are narrower studies
+on one or two datasets or on a synthetic stream, placed last so that the main result does not
+rest on them.
 
 \subsection{Example 1: Credit Card Fraud}
 Table~\ref{tab:fraud} reports the detectors on Credit Card Fraud: the
@@ -903,18 +1002,8 @@ marks severity $1.0$.}
 \subsection{Typed injection on real datasets}
 \label{sec:typed}
 The synthetic matrix of Section~\ref{sec:results-synthetic} comes from a single
-generator. To see whether its pattern depends on that generator, the six
-anomaly types were injected into $42$ real tables from the UCI repository
-(open licence, pinned by checksum; \texttt{verification/dataset\_pool.md}). For
-each table only the continuous columns are kept, and for labelled sets only the
-normal class, so that the original anomalies never enter the evaluation. The
-injection follows the synthetic one (three percent of rows per type, same
-split, seeds and detector settings), with numeric versions of the types: a
-value several standard deviations away, a pair of correlated columns pushed to
-opposite tails, a shift of three columns for the most recent rows, a sign
-flip, a sentinel or a thousandfold scale error. The protocol and five
-hypotheses were written before any run
-(\texttt{verification/typed\_injection.md}).
+generator. Section~\ref{sec:studies} describes how the six anomaly types were injected
+into $42$ real UCI tables; this subsection reports what the detectors find there.
 
 \begin{figure}[t]
 \centering
@@ -968,16 +1057,8 @@ no detector covers every type, and the one that comes closest buys its recall wi
 The three examples above are only a few datasets. The pool of $152$ open
 tables (\texttt{verification/dataset\_pool.md}), of which Credit Card Fraud and Cardio are members, holds $100$ problems whose
 anomalies are already labelled: $36$ from ADBench and $64$ from the UCI
-repository, where the rarest class (at least $20$ rows) is the anomaly and the
-other classes are normal; a class above $10\%$ of the rows is resampled to
-$10\%$. I first ran the six detectors of the main benchmark on all of them with the
-protocol of Section~\ref{sec:protocol}, written down before the run
-(\texttt{verification/labelled\_pool.md}): one normalisation for every table,
-a stratified $70/15/15$ split, five seeds, contamination equal to the training
-prevalence and default settings. I then added the five other classical detectors and the
-six neural ones of the registry on the same problems, with their own protocol and
-hypotheses (\texttt{verification/full\_registry.md}); the neural models are fitted on at
-most $20{,}000$ rows. LOF and KNN are skipped above $50{,}000$ training rows
+repository. The protocol of Section~\ref{sec:studies} gives every problem the same normalisation,
+split, seeds and operating point; the neural models are fitted on at most $20{,}000$ rows. LOF and KNN are skipped above $50{,}000$ training rows
 and One-Class SVM above $20{,}000$, so they cover $92$, $92$ and $84$ problems; the
 skips are listed in the archive. All runs completed: none of the six neural models failed on
 any of the $100$ problems.
@@ -1110,12 +1191,9 @@ LUNAR              & 0.15 & 0.33 & 0.20 & \textbf{0.96} \\
 \subsection{Two further synthetic schemas}
 \label{sec:schemas}
 The synthetic matrix comes from one table of customers, so its pattern could
-come from that table. I wrote two more generators, a table of card transactions
-and a table of sensor readings, each with six numeric fields, a date, a string
-with a checkable format and a category with a finite domain, and injected the
-same six types at the same rate and the same protocol, with four hypotheses
-fixed beforehand (\texttt{verification/multi\_schema.md}). The customer table
-and its published results are untouched; its matrix below is the published one.
+come from that table. Section~\ref{sec:studies} describes the two further generators and
+their four hypotheses. The customer table and its published results are untouched; its
+matrix below is the published one.
 
 \begin{table}[t]
 \caption{Mean recall over five seeds on the two further schemas for the
@@ -1174,15 +1252,10 @@ one table, not that it holds on real data (Section~\ref{sec:typed}).
 \subsection{Neural models and further classical detectors in the per-type matrix}
 \label{sec:deep-rows}
 The first six rows of Figure~\ref{fig:heatmap} have no learned reconstruction model. I
-added two on the same synthetic data and the same identity-grouped splits
-and seeds, with the protocol and four hypotheses written beforehand
-(\texttt{verification/deep\_typed.md}): the sklearn autoencoder of the registry,
-and the LSTM autoencoder of Section~\ref{sec:lstm} on windows of the ten
-preceding customers ordered by signup date. Unlike the Credit Card pilot, both
-models were trained until their validation loss stopped improving (patience of
-$5$, at most $300$ epochs), and all ten trainings stopped before the cap
-($60$ to $178$ epochs). The other rows were recomputed by the same code and
-equal the published matrix.
+added two on the same synthetic data, splits and seeds (protocol in
+Section~\ref{sec:studies}): the sklearn autoencoder of the registry, and the LSTM
+autoencoder of Section~\ref{sec:lstm}. All ten trainings stopped before the cap ($60$ to $178$
+epochs), and the other rows, recomputed by the same code, equal the published matrix.
 
 Those two rows do not change the picture. The autoencoder detects multivariate
 outliers ($0.83 \pm 0.10$) about as well as Isolation Forest ($0.89$) and
@@ -1223,7 +1296,7 @@ neural model on univariate and multivariate outliers, drift and invalid formats.
 % BEGIN generated pool extension
 \subsection{Every study on the whole pool}
 \label{sec:pool-all}
-The curves, the contamination sweep, the label-free threshold, the severity sweep, the pipeline run and the chronological split were first done on the three example datasets and the synthetic data. I applied each of them to every dataset of the pool for which it is defined, with the protocol and six hypotheses written beforehand (\texttt{verification/pool\_extension.md}), and list what could not be run and why.
+The protocol and the six hypotheses of this extension are in Section~\ref{sec:studies}. This subsection reports the outcomes; the datasets for which a study is not defined are listed with their reason in the archive.
 
 \paragraph{Label-free threshold and curves.} Table~\ref{tab:pool-fixed} gives, for the seventeen detectors on the $100$ labelled problems, the median $F_1$ and the median share of flagged rows at the training-prevalence threshold and at a constant contamination of $0.02$, both read from a single fit (a test checks that this equals a refit). The hypothesis that the label-free threshold lowers the median $F_1$ of at least twelve of the seventeen detectors holds: it does for the 14 learned detectors, and the three rules are unchanged because they do not read the contamination. The ranking by the average precision of the curves (seed $42$) correlates with the published PR-AUC ranking at $0.90$, below the $0.99$ I had fixed, so the hypothesis is not supported: several detectors have medians within a hundredth of each other and swap places between one seed and five.
 
@@ -1281,7 +1354,7 @@ Contamination & Prec. & Rec. & $F_1$ & Flag.\% \\
 \end{tabular}
 \end{table}
 
-\paragraph{Typed injection and eligibility.} The eligibility rule of Section~\ref{sec:typed} was applied to all $152$ datasets, ADBench ones included (the normal class only for a labelled set): 58 are eligible, 42 from the UCI repository and 16 from ADBench. The others are listed with their reason in the archive; the usual one is fewer than four continuous columns (categorical or binary tables) or too few rows. Figure~\ref{fig:typed} and the stability figures of Section~\ref{sec:typed} include the ADBench tables.
+\paragraph{Typed injection and eligibility.} The eligibility rule of Section~\ref{sec:typed} applied to all $152$ datasets, ADBench ones included, leaves 58 eligible tables, 42 from the UCI repository and 16 from ADBench. The others are listed with their reason in the archive; the usual one is fewer than four continuous columns (categorical or binary tables) or too few rows. Pooling the 58 tables changes nothing of the picture of Section~\ref{sec:typed} (Figure~\ref{fig:typed} shows the $42$ UCI tables): the mean rank correlation between the matrices of two tables is $0.80$ ($0.80$ on the UCI tables), the rank correlation between the number of continuous columns and the univariate recall of Isolation Forest is $-0.96$, and the same three of the five hypotheses are not supported.
 
 \paragraph{Severity.} Table~\ref{tab:pool-severity} gives the median recall on multivariate outliers over the 58 eligible tables when the injected amplitude is multiplied by $0.5$, $1$, $2$ and $4$. The hypothesis that every detector gains recall between the smallest and the largest severity does not hold: 13 of 17 do, and Z-score, Great Expectations, LOF, HBOS do not. The Z-score, the Great Expectations bounds and HBOS stay at zero because they read one column at a time, and multivariate outliers stay inside the range of each column, as in the per-type matrices; LOF is already at its level at the smallest severity and does not move. LUNAR is the highest at every severity, which agrees with its behaviour on the per-type matrices.
 
@@ -1316,10 +1389,10 @@ LUNAR              & 0.60 & 0.66 & 0.66 & 0.68 \\
 \end{tabular}
 \end{table}
 
-\paragraph{The pipeline end to end.} The four stages (read, remove duplicates, detect, write) ran on all $152$ datasets with Z-score and Isolation Forest, one fresh process per measurement; 14 of the $304$ runs failed and are recorded with their reason (a table with no numeric column, or a column that the pipeline reads as text because of stray header lines in the file). On the 14 datasets above $50{,}000$ rows the detection takes 62\% of the pipeline time with Isolation Forest and 4\% with the Z-score, the writing of the two files being the rest, as on Credit Card Fraud; the hypothesis holds. These times were measured while other jobs ran on the machine, so they are orders of magnitude, and the shares are ratios inside one process.
+\paragraph{The pipeline end to end.} The pipeline ran on all $152$ datasets with Z-score and Isolation Forest; 14 of the $304$ runs failed and are recorded with their reason (a table with no numeric column, or a column that the pipeline reads as text because of stray header lines in the file). On the 14 datasets above $50{,}000$ rows the detection takes 62\% of the pipeline time with Isolation Forest and 4\% with the Z-score, the writing of the two files being the rest, as on Credit Card Fraud; the hypothesis holds. These times were measured while other jobs ran on the machine, so they are orders of magnitude, and the shares are ratios inside one process.
 
 \paragraph{Chronological split.}
-A time variable is needed, and only some pool datasets have one: eleven unlabelled UCI tables have a date, the ADBench files have none, and five labelled datasets qualify (Credit Card, Bank Marketing, Occupancy Detection, Online Shoppers and Room Occupancy, the rule being fixed beforehand). Table~\ref{tab:pool-chrono} gives the result of the chronological pilot with all the detectors that scale. The hypothesis that the chronological PR-AUC is below the stratified one for two thirds of the pairs does not hold: 31 of 64 pairs are lower. Bank Marketing is the reason: its prevalence rises from $5.8\%$ to $39.3\%$ and no detector loses PR-AUC there, as Section~\ref{sec:decisions} found with four detectors. Room Occupancy is excluded because its anomalies are all in the oldest rows.
+Only some pool datasets have a time variable: eleven unlabelled UCI tables have a date, the ADBench files have none, and five labelled datasets qualify (Credit Card, Bank Marketing, Occupancy Detection, Online Shoppers and Room Occupancy). Table~\ref{tab:pool-chrono} gives the result of the chronological pilot with all the detectors that scale. The hypothesis that the chronological PR-AUC is below the stratified one for two thirds of the pairs does not hold: 31 of 64 pairs are lower. Bank Marketing is the reason: its prevalence rises from $5.8\%$ to $39.3\%$ and no detector loses PR-AUC there, as Section~\ref{sec:decisions} found with four detectors. Room Occupancy is excluded because its anomalies are all in the oldest rows.
 
 \begin{table}[t]
 \caption{Chronological split on the pool datasets with a time variable: anomalies in the test partition, prevalence in training and test (\%), and the number of detectors whose PR-AUC is lower than under the stratified split.}
@@ -1343,35 +1416,15 @@ Room Occupancy & \multicolumn{4}{l}{excluded: 0 test anomalies} \\
 \paragraph{Files.} All $152$ local files match the pinned manifest (\texttt{make verify-pool}), so the sixth hypothesis holds.
 % END generated pool extension
 
-\section{Secondary Studies}
-\label{sec:secondary}
-The four studies below are narrower than the per-type comparison of the
-previous section. Each uses one or two datasets or a synthetic stream, was
-written down before its run, and answers one question: whether a chronological
-split changes the ranking, whether a threshold chosen on the past survives a
-shift in prevalence, whether a sequence model adds anything, and what detection
-costs inside the pipeline. They are reported separately so that the main result does
-not rest on them.
-
 \subsection{Chronological pilot on Credit Card}
 \label{sec:chrono}
-The results above use a random stratified split. Of the three example datasets,
-only Credit Card has a time variable (seconds since the first transaction,
-about two days); Cardio and Water Quality have none, so their row order says
-nothing about time. I therefore ran one small pilot on Credit Card, with the
-protocol written down before any score was computed on held-out data
-(\texttt{verification/temporal\_pilot.md}). It is a separate experiment and
-does not replace the benchmark.
-
-The rows are the same cleaned rows, and the detectors are the four of the
-pilot with default settings, plus ECOD, COPOD, HBOS and PCA, which the registry gained
-afterwards and which scale to this size (the rerun reproduces the first four rows exactly); the clock variable is removed from the features. The
-chronological split uses the usual $70/15/15$ ratios by time: the detectors
-are fitted on the first $198{,}609$ rows ($366$ frauds) and scored on the last
-$42{,}557$ rows ($52$ frauds, $0.12\%$). The control uses the stratified split
-of the main benchmark with the same rows and features, over five seeds.
-Intervals for the chronological arm come from a block bootstrap over
-30-minute blocks of the test period.
+The results above use a random stratified split, and Credit Card is the only example
+with a time variable. The protocol of Section~\ref{sec:studies} fits the detectors on the
+oldest $70\%$ of the rows and scores the newest $15\%$, with a stratified control.
+The detectors are fitted on the first $198{,}609$ rows ($366$ frauds) and scored on the last
+$42{,}557$ rows ($52$ frauds, $0.12\%$). The detectors are the four of the pilot plus ECOD,
+COPOD, HBOS and PCA, which scale to this size; the rerun reproduces the first four rows
+exactly. The pilot is a separate experiment and does not replace the benchmark.
 
 \begin{table}[t]
 \caption{Average precision (PR) on the test split, stratified (strat.)
@@ -1441,20 +1494,9 @@ distribution, so I make no claim about its natural drift.
 \label{sec:decisions}
 The pilot above leaves two questions open: whether a threshold chosen on the past
 can be repaired without labels, and how much of the gap is only a change in
-prevalence. I ran a second study on Credit Card and on Bank Marketing, a UCI
-table (CC BY 4.0) whose file is ordered by date from May 2008 to November 2010,
-with the protocol and four hypotheses written beforehand
-(\texttt{verification/temporal\_decision.md}). The Credit Card results were
-already known, so this study is an independent test only for Bank Marketing. The
-Kyoto-2006+ traffic used by AnoShift was left out, because I could not verify
-its data rights nor download it in time. The date of Bank Marketing is a month,
-with the file order inside each month. Four detectors (Z-score, IQR, Great
-Expectations, Isolation Forest) are fitted on the oldest $70\%$ of the rows and
-scored on the newest $15\%$. A threshold is a quantile of the scores that keeps
-the training prevalence, taken (P0) from the training scores, (P1) from the
-validation scores, or (P2) from the scores of the two previous blocks of the test
-period, without any label of that period. A stratified control, over five seeds,
-is also matched to the prevalence of the chronological test.
+prevalence. The study of Section~\ref{sec:studies} runs on Credit Card and on Bank
+Marketing. The Credit Card results were already known, so it is an independent test only
+for Bank Marketing.
 
 On Bank Marketing the prevalence moves a lot: $5.8\%$ in training, $11.5\%$ in
 validation and $39.3\%$ in the test period (Credit Card: $0.18\%$, $0.13\%$ and
@@ -1496,14 +1538,8 @@ of what a chronological split changes is only the prevalence.
 \subsection{LSTM autoencoder pilot}
 \label{sec:lstm}
 A last pilot asks whether the preceding rows of the transaction stream carry a
-fraud signal that a row-level autoencoder cannot see. Credit Card has no
-cardholder identifier, so the window is the global stream of the ten previous
-rows, not a customer's history. The protocol was fixed beforehand
-(\texttt{verification/lstm\_pilot.md}). The comparison uses the chronological
-partitions of Section~\ref{sec:chrono}, the same $50{,}000$ training rows and a
-CPU budget of at most $20$ epochs for both models; the architecture (window of
-$10$ rows, $32$ units) was not tuned, and the validation rows served only for
-early stopping on an unlabelled reconstruction loss.
+fraud signal that a row-level autoencoder cannot see (protocol in
+Section~\ref{sec:studies}; the architecture was not tuned).
 
 As a check before reading the real data, a synthetic stream whose anomalies
 break the continuity of an autoregressive signal was scored by both models: the
@@ -1525,15 +1561,9 @@ experiment on one dataset, not a ranking.
 
 \subsection{Cost of the detection stage and of the full pipeline}
 \label{sec:cost}
-The growth experiment reported later in this section uses only $100$ to $900$
-rows and cannot be extrapolated. I therefore measured the detectors again on
-a protocol fixed in advance (\texttt{verification/cost\_study.md}): synthetic
-Gaussian matrices of $1{,}000$ to $300{,}000$ rows and $8$ features, five
-repetitions up to $30{,}000$ rows and three above, a budget of $300$ seconds per
-measurement, and one fresh process per measurement so that the peak resident
-memory, native allocations included, belongs to that run alone. The detector
-is fitted and applied to the same rows, so this is a cost measurement, not a
-quality one. Times are those of the detection stage (fit, predict and score).
+A growth experiment on $100$ to $900$ rows cannot be extrapolated, so I measured the
+detectors again on synthetic matrices of up to $300{,}000$ rows (protocol in
+Section~\ref{sec:studies}). Times are those of the detection stage (fit, predict and score).
 
 \begin{table}[t]
 \caption{Median detection-stage time on synthetic data ($8$ features) for
@@ -1605,6 +1635,23 @@ not a general ranking.
 
 \section{Discussion}
 \label{sec:discussion}
+
+\paragraph{Answers to the research questions.}
+\emph{RQ1.} In one pipeline the families are close on aggregate scores. On the $100$ labelled
+problems no detector is clearly ahead among the seventeen, the column-wise ECOD, COPOD and HBOS
+match Isolation Forest, and the neural models do not beat the best classical one by the margin I
+had set ($0.02$ of median PR-AUC). \emph{RQ2.} Per type, the competence of each family is narrow:
+declarative rules own missing values, statistical rules own single-column outliers, models that
+read several columns own implausible combinations. The profile holds in structure across three
+generators and on $42$ real tables, but the values of the multivariate and drift cells depend on
+how the columns are scaled and do not transfer. \emph{RQ3.} The operating point moves precision
+and recall by an order of magnitude with the same scores, a label-free contamination lowers the
+median $F_1$ of fourteen of the seventeen detectors, and a threshold fixed on the past fails in both
+directions when the prevalence moves; only $31$ of $64$ pairs of a pool dataset and a detector lose
+PR-AUC under a chronological split, so that effect is not general. \emph{RQ4.} Detection is cheap
+for the rules and the column-wise models, one to two orders of magnitude more for the neural ones,
+and it is not the cost of the pipeline: writing the output dominates for the rules, while detection
+takes $62\%$ of the time with Isolation Forest on the datasets above $50{,}000$ rows.
 
 \paragraph{Rules and learned models are complementary, not competing.}
 The per-type heatmap shows limited overlap between what the declarative
@@ -1698,25 +1745,12 @@ class), $19$ sources appear in both lists of the pool, and the datasets are
 therefore not independent.
 
 \paragraph{Limits of the verification.}
-Verification has its own limits: complete line and branch coverage does not
-establish that the scientific assertions detect every defect. The previous
-archive was made on a working tree with uncommitted changes (revision
-\texttt{841c3aa}). The archived runs were therefore replayed from a clean
-commit (\texttt{93b6fe8}): every detection metric, curve and partition is
-identical to the previous archive and only the timings changed, which is why
-the two timing tables and the scaling figures above were updated. The new
-records name that commit and mark the working tree as clean, but they were
-produced on one machine and the timings do not transfer to another. Mutation
-testing reaches the target on the pipeline modules and the scripts, but it
-cannot show whether the injected defects and the tests cover every way an
-experiment can go wrong. The complete real-data checks were performed with the three files available
-locally. The Water
-Quality file matches its named mirror, and the Cardio CSV can be reproduced
-from the current ADBench archive. The Credit Card file has the size of the
-current Kaggle version (3, March 2018), but I could not compare its content
-hash with a fresh download. These
-gaps leave some implementation errors capable of changing a published
-result without being caught by the current gates.
+Complete line and branch coverage does not establish that the scientific assertions detect
+every defect, and mutation testing cannot show whether the injected defects and the tests cover
+every way an experiment can go wrong. The checks were run on one machine by the person who wrote the
+code, and the timings do not transfer to another. The details, the history of the replays and the
+gaps of the real-data check are in Appendix~\ref{app:outcomes}; they leave some implementation
+errors capable of changing a published result without being caught by the current gates.
 
 \section{Conclusion}
 \label{sec:conclusion}
@@ -1888,6 +1922,19 @@ matched the archived checksums, and the controlled reproduction passed at its
 three levels. These results show that the evidence is consistent and
 re-creatable on a second platform; they do not certify the scientific
 conclusions of the study, which rest on the limits stated with each experiment.
+
+\paragraph{Replay history and gaps.}
+The previous archive was made on a working tree with uncommitted changes (revision
+\texttt{841c3aa}). The archived runs were therefore replayed from a clean commit
+(\texttt{93b6fe8}): every detection metric, curve and partition is identical to the previous
+archive and only the timings changed, which is why the two timing tables and the scaling figures
+were updated. The new records name that commit and mark the working tree as clean, but they were
+produced on one machine. The complete real-data checks were performed with the three files
+available locally. The Water Quality file matches its named mirror, and the Cardio CSV can be
+reproduced from the current ADBench archive. The Credit Card file has the size of the current
+Kaggle version (3, March 2018), but I could not compare its content hash with a fresh download.
+These gaps leave some implementation errors capable of changing a published result without being
+caught by the current gates.
 
 Detector timing in Tables~\ref{tab:fraud} and~\ref{tab:synthetic} sums
 \texttt{fit}, \texttt{predict} and \texttt{score} inside the detection
