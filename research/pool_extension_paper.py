@@ -37,17 +37,17 @@ def block(evidence: Path) -> str:
     names = {k: v for k, v in pt.NAMES.items()}
     typed = ext / "typed"
     n_eligible = sum(r["eligible"] for r in elig)
+    pooled = json.loads((typed / "all_classical" / "typed_results.json").read_text())
+    uci = json.loads((evidence / "typed_injection" / "typed_results.json").read_text())
     sev = ps.severity([typed / "severity_classical", typed / "severity_deep"])
     med = sev["median_multivariate_recall"]
     flat = [pt.NAMES[m] for m in pt.NAMES if med[m]["4.0"] <= med[m]["0.5"]]
     tex = [
         r"\subsection{Every study on the whole pool}",
         r"\label{sec:pool-all}",
-        "The curves, the contamination sweep, the label-free threshold, the severity sweep, "
-        "the pipeline run and the chronological split were first done on the three example "
-        "datasets and the synthetic data. I applied each of them to every dataset of the pool "
-        "for which it is defined, with the protocol and six hypotheses written beforehand "
-        r"(\texttt{verification/pool\_extension.md}), and list what could not be run and why.",
+        r"The protocol and the six hypotheses of this extension are in Section~\ref{sec:studies}. "
+        "This subsection reports the outcomes; the datasets for which a study is not defined are "
+        "listed with their reason in the archive.",
         "",
         rf"\paragraph{{Label-free threshold and curves.}} Table~\ref{{tab:pool-fixed}} gives, for "
         rf"the seventeen detectors on the $100$ labelled problems, the median $F_1$ and the "
@@ -103,14 +103,21 @@ def block(evidence: Path) -> str:
         r"\end{table}",
         "",
         rf"\paragraph{{Typed injection and eligibility.}} The eligibility rule of "
-        rf"Section~\ref{{sec:typed}} was applied to all $152$ datasets, ADBench ones included "
-        rf"(the normal class only for a labelled set): {sum(r['eligible'] for r in elig)} are "
-        rf"eligible, {sum(r['eligible'] and r['source'] == 'uci' for r in elig)} from the UCI "
+        rf"Section~\ref{{sec:typed}} applied to all $152$ datasets, ADBench ones included, leaves "
+        rf"{n_eligible} eligible tables, "
+        rf"{sum(r['eligible'] and r['source'] == 'uci' for r in elig)} from the UCI "
         rf"repository and {sum(r['eligible'] and r['source'] == 'adbench' for r in elig)} from "
         r"ADBench. The others are listed with their reason in the archive; the usual one is "
         r"fewer than four continuous columns (categorical or binary tables) or too few rows. "
-        r"Figure~\ref{fig:typed} and the stability figures of Section~\ref{sec:typed} include "
-        r"the ADBench tables.",
+        rf"Pooling the {n_eligible} tables changes nothing of the picture of "
+        rf"Section~\ref{{sec:typed}} (Figure~\ref{{fig:typed}} shows the $42$ UCI tables): "
+        rf"the mean rank correlation between the matrices of two tables is "
+        rf"${pooled['stability']['overall']:.2f}$ "
+        rf"(${uci['stability']['overall']:.2f}$ on the UCI tables), the rank correlation "
+        rf"between the number of continuous columns and the univariate recall of Isolation "
+        rf"Forest is ${pooled['hypotheses']['H5']['rho']:.2f}$, and the same three of the "
+        r"five hypotheses "
+        r"are not supported.",
         "",
         rf"\paragraph{{Severity.}} Table~\ref{{tab:pool-severity}} gives the median recall on "
         rf"multivariate outliers over the {n_eligible} eligible tables when the injected "
@@ -140,9 +147,8 @@ def block(evidence: Path) -> str:
         r"\end{tabular}",
         r"\end{table}",
         "",
-        rf"\paragraph{{The pipeline end to end.}} The four stages (read, remove duplicates, "
-        rf"detect, write) ran on all $152$ datasets with Z-score and Isolation Forest, one "
-        rf"fresh process per measurement; {len(etl['failed'])} of the $304$ runs failed "
+        rf"\paragraph{{The pipeline end to end.}} The pipeline ran on all $152$ datasets with "
+        rf"Z-score and Isolation Forest; {len(etl['failed'])} of the $304$ runs failed "
         r"and are recorded with their reason (a table with no numeric column, or a column "
         r"that the pipeline reads as text because of stray header lines in the file). On the "
         rf"{etl['datasets_above']} datasets above $50{{,}}000$ rows the detection takes "
@@ -153,10 +159,10 @@ def block(evidence: Path) -> str:
         r"they are orders of magnitude, and the shares are ratios inside one process.",
         "",
         r"\paragraph{Chronological split.}",
-        "A time variable is needed, and only some pool datasets have one: eleven unlabelled "
+        "Only some pool datasets have a time variable: eleven unlabelled "
         "UCI tables have a date, the ADBench files have none, and five labelled datasets "
         "qualify (Credit Card, Bank Marketing, Occupancy Detection, Online Shoppers and Room "
-        r"Occupancy, the rule being fixed beforehand). Table~\ref{tab:pool-chrono} gives the "
+        r"Occupancy). Table~\ref{tab:pool-chrono} gives the "
         "result of the chronological pilot with all the detectors that scale. The hypothesis "
         "that the chronological PR-AUC is below the stratified one for two thirds of the pairs "
         rf"does not hold: {chrono_summary['lower']} of {chrono_summary['pairs']} pairs are "
