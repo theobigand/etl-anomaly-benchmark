@@ -163,3 +163,36 @@ def test_p6_is_the_status_of_the_file_check():
     assert ps.contract(report)["supported"]
     report["summary"]["all_ok"] = False
     assert not ps.contract(report)["supported"]
+
+
+def test_the_latex_rows_of_the_pool_tables_carry_the_computed_numbers():
+    table = {
+        "by_detector": {
+            "zscore": {
+                "f1": {"prevalence": 0.164, "fixed": 0.164},
+                "flagged_pct": {"prevalence": 11.4, "fixed": 11.4},
+            },
+            "pca": {
+                "f1": {"prevalence": 0.169, "fixed": 0.068},
+                "flagged_pct": {"prevalence": 11.4, "fixed": 2.4},
+            },
+        }
+    }
+    rows = ps.fixed_rows(table, {"zscore": "Z-score", "pca": "PCA"})
+    assert "Z-score" in rows and "0.164 & 0.164 & 11.4 & 11.4" in rows
+    assert "0.169 & 0.068 & 11.4 & 2.4" in rows and rows.count("midrule") == 1
+    grid = {"0.01": {"precision": 0.125, "recall": 0.018, "f1": 0.032, "flagged_pct": 1.089}}
+    assert ps.sweep_rows(grid) == "0.010 & 0.125 & 0.018 & 0.032 & 1.1 \\\\"
+    results = {
+        "a": {
+            "partitions": {
+                "test": {"positives": 52, "prevalence": 0.0012},
+                "train": {"prevalence": 0.0018},
+            },
+            "chronological": {"m": {"pr_auc": 0.1}},
+            "stratified": {"m": {"pr_auc": 0.3}},
+        },
+        "b": {"excluded": "0 anomalies"},
+    }
+    out = ps.chrono_rows(results, {"a": "Alpha", "b": "Beta"})
+    assert "Alpha & 52 & 0.2 & 0.1 & 1 of 1" in out and "excluded: 0 anomalies" in out

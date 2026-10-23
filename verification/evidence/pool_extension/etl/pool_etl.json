@@ -1,0 +1,5596 @@
+[
+ {
+  "columns": 9,
+  "detect_stage_share": 0.1353133640969259,
+  "flagged_share": 0.022264783337323436,
+  "id": "uci:1",
+  "method": "zscore",
+  "name": "Abalone",
+  "rows_after_transform": 4177,
+  "rows_in": 4177,
+  "rss_delta_bytes": 2736128,
+  "rss_peak_bytes": 182812672,
+  "stages_s": {
+   "detect": 0.004323792003560811,
+   "extract": 0.004528833000222221,
+   "load": 0.020953999992343597,
+   "transform": 0.0021472919906955212
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 9,
+  "detect_stage_share": 0.9612030851290246,
+  "flagged_share": 0.05003591094086665,
+  "id": "uci:1",
+  "method": "isolation_forest",
+  "name": "Abalone",
+  "rows_after_transform": 4177,
+  "rows_in": 4177,
+  "rss_delta_bytes": 59342848,
+  "rss_peak_bytes": 237928448,
+  "stages_s": {
+   "detect": 0.8631261669943342,
+   "extract": 0.005757207996794023,
+   "load": 0.027279250003630295,
+   "transform": 0.0018017910042544827
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 15,
+  "detect_stage_share": 0.05030078651536125,
+  "flagged_share": 0.08442423124987196,
+  "id": "uci:2",
+  "method": "zscore",
+  "name": "Adult",
+  "rows_after_transform": 48813,
+  "rows_in": 48842,
+  "rss_delta_bytes": 32374784,
+  "rss_peak_bytes": 264126464,
+  "stages_s": {
+   "detect": 0.018975124999997206,
+   "extract": 0.08802770799957216,
+   "load": 0.21874016700894572,
+   "transform": 0.05149016699579079
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 15,
+  "detect_stage_share": 0.8259663822168599,
+  "flagged_share": 0.05000717022104767,
+  "id": "uci:2",
+  "method": "isolation_forest",
+  "name": "Adult",
+  "rows_after_transform": 48813,
+  "rows_in": 48842,
+  "rss_delta_bytes": 90914816,
+  "rss_peak_bytes": 323633152,
+  "stages_s": {
+   "detect": 1.7870853329950478,
+   "extract": 0.09350004100997467,
+   "load": 0.2323376249987632,
+   "transform": 0.050706624999293126
+  },
+  "status": "OK"
+ },
+ {
+  "id": "uci:3",
+  "method": "zscore",
+  "reason": "ValueError('all-missing training feature')",
+  "status": "FAIL"
+ },
+ {
+  "id": "uci:3",
+  "method": "isolation_forest",
+  "reason": "ValueError('all-missing training feature')",
+  "status": "FAIL"
+ },
+ {
+  "columns": 9,
+  "detect_stage_share": 0.28290546015448637,
+  "flagged_share": 0.017587939698492462,
+  "id": "uci:9",
+  "method": "zscore",
+  "name": "Auto MPG",
+  "rows_after_transform": 398,
+  "rows_in": 398,
+  "rss_delta_bytes": 638976,
+  "rss_peak_bytes": 177061888,
+  "stages_s": {
+   "detect": 0.005553999988478608,
+   "extract": 0.001212250004755333,
+   "load": 0.011897332995431498,
+   "transform": 0.0009684169926913455
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 9,
+  "detect_stage_share": 0.9873762702216289,
+  "flagged_share": 0.05025125628140704,
+  "id": "uci:9",
+  "method": "isolation_forest",
+  "name": "Auto MPG",
+  "rows_after_transform": 398,
+  "rows_in": 398,
+  "rss_delta_bytes": 56131584,
+  "rss_peak_bytes": 231882752,
+  "stages_s": {
+   "detect": 0.8190312090009684,
+   "extract": 0.0011399170034565032,
+   "load": 0.008118458004901186,
+   "transform": 0.001213041992741637
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 11,
+  "detect_stage_share": 0.3769846106082531,
+  "flagged_share": 0.0723589001447178,
+  "id": "uci:15",
+  "method": "zscore",
+  "name": "Breast Cancer Wisconsin (Original)",
+  "rows_after_transform": 691,
+  "rows_in": 699,
+  "rss_delta_bytes": 573440,
+  "rss_peak_bytes": 176914432,
+  "stages_s": {
+   "detect": 0.005802500003483146,
+   "extract": 0.0012890829966636375,
+   "load": 0.007000666999374516,
+   "transform": 0.0012996250006835908
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 11,
+  "detect_stage_share": 0.9859422941400379,
+  "flagged_share": 0.05065123010130246,
+  "id": "uci:15",
+  "method": "isolation_forest",
+  "name": "Breast Cancer Wisconsin (Original)",
+  "rows_after_transform": 691,
+  "rows_in": 699,
+  "rss_delta_bytes": 51920896,
+  "rss_peak_bytes": 228851712,
+  "stages_s": {
+   "detect": 0.8597807090118295,
+   "extract": 0.0012022079899907112,
+   "load": 0.008700458987732418,
+   "transform": 0.0023562090063933283
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 32,
+  "detect_stage_share": 0.31532182694217775,
+  "flagged_share": 0.13005272407732865,
+  "id": "uci:17",
+  "method": "zscore",
+  "name": "Breast Cancer Wisconsin (Diagnostic)",
+  "rows_after_transform": 569,
+  "rows_in": 569,
+  "rss_delta_bytes": 1392640,
+  "rss_peak_bytes": 179126272,
+  "stages_s": {
+   "detect": 0.011208166994038038,
+   "extract": 0.003570124987163581,
+   "load": 0.0177847080049105,
+   "transform": 0.002982167003210634
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 32,
+  "detect_stage_share": 0.9682567860739895,
+  "flagged_share": 0.050966608084358524,
+  "id": "uci:17",
+  "method": "isolation_forest",
+  "name": "Breast Cancer Wisconsin (Diagnostic)",
+  "rows_after_transform": 569,
+  "rows_in": 569,
+  "rss_delta_bytes": 57196544,
+  "rss_peak_bytes": 234586112,
+  "stages_s": {
+   "detect": 0.8536029999959283,
+   "extract": 0.0030577090074075386,
+   "load": 0.02211162500316277,
+   "transform": 0.0028150839934824035
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 16,
+  "detect_stage_share": 0.19791753346952715,
+  "flagged_share": 0.07536231884057971,
+  "id": "uci:27",
+  "method": "zscore",
+  "name": "Credit Approval",
+  "rows_after_transform": 690,
+  "rows_in": 690,
+  "rss_delta_bytes": 1064960,
+  "rss_peak_bytes": 176504832,
+  "stages_s": {
+   "detect": 0.003972708000219427,
+   "extract": 0.0025800839939620346,
+   "load": 0.011608791988692246,
+   "transform": 0.0019109580025542527
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 16,
+  "detect_stage_share": 0.9842340768338549,
+  "flagged_share": 0.050724637681159424,
+  "id": "uci:27",
+  "method": "isolation_forest",
+  "name": "Credit Approval",
+  "rows_after_transform": 690,
+  "rows_in": 690,
+  "rss_delta_bytes": 55803904,
+  "rss_peak_bytes": 232062976,
+  "stages_s": {
+   "detect": 0.8723029589891667,
+   "extract": 0.003086291006184183,
+   "load": 0.00906191700778436,
+   "transform": 0.001824749997467734
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 10,
+  "detect_stage_share": 0.30672408132159407,
+  "flagged_share": 0.0863157894736842,
+  "id": "uci:30",
+  "method": "zscore",
+  "name": "Contraceptive Method Choice",
+  "rows_after_transform": 1425,
+  "rows_in": 1473,
+  "rss_delta_bytes": 950272,
+  "rss_peak_bytes": 177209344,
+  "stages_s": {
+   "detect": 0.005675749998772517,
+   "extract": 0.00145254100789316,
+   "load": 0.009361624994198792,
+   "transform": 0.0020145000016782433
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 10,
+  "detect_stage_share": 0.9899189405166716,
+  "flagged_share": 0.05052631578947368,
+  "id": "uci:30",
+  "method": "isolation_forest",
+  "name": "Contraceptive Method Choice",
+  "rows_after_transform": 1425,
+  "rows_in": 1473,
+  "rss_delta_bytes": 56442880,
+  "rss_peak_bytes": 232947712,
+  "stages_s": {
+   "detect": 0.9267076249961974,
+   "extract": 0.0018147079972550273,
+   "load": 0.006046082999091595,
+   "transform": 0.0015765420102979988
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 55,
+  "detect_stage_share": 0.13247017057010935,
+  "flagged_share": 0.812895430731207,
+  "id": "uci:31",
+  "method": "zscore",
+  "name": "Covertype",
+  "rows_after_transform": 581012,
+  "rows_in": 581012,
+  "rss_delta_bytes": 0,
+  "rss_peak_bytes": 2333048832,
+  "stages_s": {
+   "detect": 1.638966166996397,
+   "extract": 2.8326541669957805,
+   "load": 7.374352166996687,
+   "transform": 0.5263688339910004
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 55,
+  "detect_stage_share": 0.5912759646408146,
+  "flagged_share": 0.05000068845393899,
+  "id": "uci:31",
+  "method": "isolation_forest",
+  "name": "Covertype",
+  "rows_after_transform": 581012,
+  "rows_in": 581012,
+  "rss_delta_bytes": 0,
+  "rss_peak_bytes": 2321743872,
+  "stages_s": {
+   "detect": 14.738096332992427,
+   "extract": 2.9951271250029095,
+   "load": 6.657471792001161,
+   "transform": 0.535222958002123
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 40,
+  "detect_stage_share": 0.1794326304794615,
+  "flagged_share": 0.17005545286506468,
+  "id": "uci:32",
+  "method": "zscore",
+  "name": "Cylinder Bands",
+  "rows_after_transform": 541,
+  "rows_in": 541,
+  "rss_delta_bytes": 2244608,
+  "rss_peak_bytes": 176930816,
+  "stages_s": {
+   "detect": 0.006756916991434991,
+   "extract": 0.006506958990939893,
+   "load": 0.021059040998807177,
+   "transform": 0.0033342079987050965
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 40,
+  "detect_stage_share": 0.9720787194114916,
+  "flagged_share": 0.04990757855822551,
+  "id": "uci:32",
+  "method": "isolation_forest",
+  "name": "Cylinder Bands",
+  "rows_after_transform": 541,
+  "rows_in": 541,
+  "rss_delta_bytes": 56508416,
+  "rss_peak_bytes": 233619456,
+  "stages_s": {
+   "detect": 0.881271458012634,
+   "extract": 0.004909707990009338,
+   "load": 0.016567625003517605,
+   "transform": 0.0038356660079443827
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 35,
+  "detect_stage_share": 0.42182983630993387,
+  "flagged_share": 0.2896174863387978,
+  "id": "uci:33",
+  "method": "zscore",
+  "name": "Dermatology",
+  "rows_after_transform": 366,
+  "rows_in": 366,
+  "rss_delta_bytes": 1769472,
+  "rss_peak_bytes": 178503680,
+  "stages_s": {
+   "detect": 0.009749207994900644,
+   "extract": 0.0024370419996557757,
+   "load": 0.008853332998114638,
+   "transform": 0.0020721249893540516
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 35,
+  "detect_stage_share": 0.9784698055159072,
+  "flagged_share": 0.05191256830601093,
+  "id": "uci:33",
+  "method": "isolation_forest",
+  "name": "Dermatology",
+  "rows_after_transform": 366,
+  "rows_in": 366,
+  "rss_delta_bytes": 56049664,
+  "rss_peak_bytes": 233062400,
+  "stages_s": {
+   "detect": 0.8703837500070222,
+   "extract": 0.0070067500055301934,
+   "load": 0.009729041994432919,
+   "transform": 0.002416083007119596
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 9,
+  "detect_stage_share": 0.34988228404773863,
+  "flagged_share": 0.041666666666666664,
+  "id": "uci:39",
+  "method": "zscore",
+  "name": "Ecoli",
+  "rows_after_transform": 336,
+  "rows_in": 336,
+  "rss_delta_bytes": 229376,
+  "rss_peak_bytes": 176275456,
+  "stages_s": {
+   "detect": 0.004991624999092892,
+   "extract": 0.0011400000075809658,
+   "load": 0.007157959000323899,
+   "transform": 0.0009770000033313408
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 9,
+  "detect_stage_share": 0.9883695413430166,
+  "flagged_share": 0.050595238095238096,
+  "id": "uci:39",
+  "method": "isolation_forest",
+  "name": "Ecoli",
+  "rows_after_transform": 336,
+  "rows_in": 336,
+  "rss_delta_bytes": 55836672,
+  "rss_peak_bytes": 232226816,
+  "stages_s": {
+   "detect": 0.8742788329982432,
+   "extract": 0.002118250005878508,
+   "load": 0.006749583000782877,
+   "transform": 0.0014200840087141842
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 14,
+  "detect_stage_share": 0.36712236050708213,
+  "flagged_share": 0.0297029702970297,
+  "id": "uci:45",
+  "method": "zscore",
+  "name": "Heart Disease",
+  "rows_after_transform": 303,
+  "rows_in": 303,
+  "rss_delta_bytes": 524288,
+  "rss_peak_bytes": 176144384,
+  "stages_s": {
+   "detect": 0.006651874995441176,
+   "extract": 0.0011065419967053458,
+   "load": 0.009256874996935949,
+   "transform": 0.0011036670039175078
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 14,
+  "detect_stage_share": 0.9902157523490015,
+  "flagged_share": 0.052805280528052806,
+  "id": "uci:45",
+  "method": "isolation_forest",
+  "name": "Heart Disease",
+  "rows_after_transform": 303,
+  "rows_in": 303,
+  "rss_delta_bytes": 55902208,
+  "rss_peak_bytes": 232128512,
+  "stages_s": {
+   "detect": 0.8657084170117741,
+   "extract": 0.001363832998322323,
+   "load": 0.005870374996447936,
+   "transform": 0.0013197920052334666
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 28,
+  "detect_stage_share": 0.37154287166788386,
+  "flagged_share": 0.16032608695652173,
+  "id": "uci:47",
+  "method": "zscore",
+  "name": "Horse Colic",
+  "rows_after_transform": 368,
+  "rows_in": 368,
+  "rss_delta_bytes": 1015808,
+  "rss_peak_bytes": 178061312,
+  "stages_s": {
+   "detect": 0.00887704199703876,
+   "extract": 0.0022338340058922768,
+   "load": 0.010551167011726648,
+   "transform": 0.0022303330042632297
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 28,
+  "detect_stage_share": 0.9857280588089898,
+  "flagged_share": 0.051630434782608696,
+  "id": "uci:47",
+  "method": "isolation_forest",
+  "name": "Horse Colic",
+  "rows_after_transform": 368,
+  "rows_in": 368,
+  "rss_delta_bytes": 56131584,
+  "rss_peak_bytes": 233390080,
+  "stages_s": {
+   "detect": 0.9199653749965364,
+   "extract": 0.0023267079959623516,
+   "load": 0.008851625010720454,
+   "transform": 0.002141457996913232
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 20,
+  "detect_stage_share": 0.4220843262337731,
+  "flagged_share": 0.1380952380952381,
+  "id": "uci:50",
+  "method": "zscore",
+  "name": "Image Segmentation",
+  "rows_after_transform": 210,
+  "rows_in": 210,
+  "rss_delta_bytes": 999424,
+  "rss_peak_bytes": 177356800,
+  "stages_s": {
+   "detect": 0.007667249999940395,
+   "extract": 0.0018965420022141188,
+   "load": 0.006567167001776397,
+   "transform": 0.00203424999199342
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 20,
+  "detect_stage_share": 0.9842086652561697,
+  "flagged_share": 0.05238095238095238,
+  "id": "uci:50",
+  "method": "isolation_forest",
+  "name": "Image Segmentation",
+  "rows_after_transform": 210,
+  "rows_in": 210,
+  "rss_delta_bytes": 56098816,
+  "rss_peak_bytes": 231604224,
+  "stages_s": {
+   "detect": 0.8461515829985728,
+   "extract": 0.0017335409938823432,
+   "load": 0.00993558400659822,
+   "transform": 0.0019071249989792705
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 35,
+  "detect_stage_share": 0.32868925702134366,
+  "flagged_share": 0.08857142857142856,
+  "id": "uci:52",
+  "method": "zscore",
+  "name": "Ionosphere",
+  "rows_after_transform": 350,
+  "rows_in": 351,
+  "rss_delta_bytes": 1589248,
+  "rss_peak_bytes": 177504256,
+  "stages_s": {
+   "detect": 0.010499458003323525,
+   "extract": 0.0026990839978680015,
+   "load": 0.015406624996103346,
+   "transform": 0.003338250011438504
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 35,
+  "detect_stage_share": 0.972268362174237,
+  "flagged_share": 0.05142857142857143,
+  "id": "uci:52",
+  "method": "isolation_forest",
+  "name": "Ionosphere",
+  "rows_after_transform": 350,
+  "rows_in": 351,
+  "rss_delta_bytes": 54853632,
+  "rss_peak_bytes": 232521728,
+  "stages_s": {
+   "detect": 0.8831281250022585,
+   "extract": 0.002477333997376263,
+   "load": 0.01968995800416451,
+   "transform": 0.0030218330066418275
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 17,
+  "detect_stage_share": 0.17794805892495633,
+  "flagged_share": 0.07558388686522391,
+  "id": "uci:59",
+  "method": "zscore",
+  "name": "Letter Recognition",
+  "rows_after_transform": 18668,
+  "rows_in": 20000,
+  "rss_delta_bytes": 31866880,
+  "rss_peak_bytes": 239140864,
+  "stages_s": {
+   "detect": 0.023463000004994683,
+   "extract": 0.024534707990824245,
+   "load": 0.07448541600024328,
+   "transform": 0.009369958002935164
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 17,
+  "detect_stage_share": 0.9320273580239989,
+  "flagged_share": 0.05003214056138847,
+  "id": "uci:59",
+  "method": "isolation_forest",
+  "name": "Letter Recognition",
+  "rows_after_transform": 18668,
+  "rows_in": 20000,
+  "rss_delta_bytes": 81330176,
+  "rss_peak_bytes": 288833536,
+  "stages_s": {
+   "detect": 1.5179295409907354,
+   "extract": 0.0255270420020679,
+   "load": 0.0707879999972647,
+   "transform": 0.014387374991201796
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 7,
+  "detect_stage_share": 0.38523940265633594,
+  "flagged_share": 0.05278592375366569,
+  "id": "uci:60",
+  "method": "zscore",
+  "name": "Liver Disorders",
+  "rows_after_transform": 341,
+  "rows_in": 345,
+  "rss_delta_bytes": 131072,
+  "rss_peak_bytes": 176242688,
+  "stages_s": {
+   "detect": 0.0040821250004228204,
+   "extract": 0.0008547080069547519,
+   "load": 0.004637792007997632,
+   "transform": 0.0010217079980066046
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 7,
+  "detect_stage_share": 0.9829718431436695,
+  "flagged_share": 0.04985337243401759,
+  "id": "uci:60",
+  "method": "isolation_forest",
+  "name": "Liver Disorders",
+  "rows_after_transform": 341,
+  "rows_in": 345,
+  "rss_delta_bytes": 55066624,
+  "rss_peak_bytes": 231866368,
+  "stages_s": {
+   "detect": 0.9202817079931265,
+   "extract": 0.0013834169949404895,
+   "load": 0.013391125001362525,
+   "transform": 0.0011676249996526167
+  },
+  "status": "OK"
+ },
+ {
+  "id": "uci:73",
+  "method": "zscore",
+  "reason": "ValueError('at least one numeric feature is required')",
+  "status": "FAIL"
+ },
+ {
+  "id": "uci:73",
+  "method": "isolation_forest",
+  "reason": "ValueError(\"isolation_forest detector needs at least one numeric column; got ['cap-shape', 'cap-surface', 'cap-color', 'bruises', 'odor', 'gill-attachment', 'gill-spacing', 'gill-size', 'gill-color', 'stalk-shape', 'stalk-root', 'stalk-surface-above-ring', 'stalk-surface-below-ring', 'stalk-color-above-ring', 'stalk-color-below-ring', 'veil-type', 'veil-color', 'ring-number', 'ring-type', 'spore-print-color', 'population', 'habitat']\")",
+  "status": "FAIL"
+ },
+ {
+  "columns": 169,
+  "detect_stage_share": 0.2074506229857385,
+  "flagged_share": 0.4762049105789633,
+  "id": "uci:75",
+  "method": "zscore",
+  "name": "Musk (Version 2)",
+  "rows_after_transform": 6598,
+  "rows_in": 6598,
+  "rss_delta_bytes": 22298624,
+  "rss_peak_bytes": 316211200,
+  "stages_s": {
+   "detect": 0.15518862499448005,
+   "extract": 0.15971745899878442,
+   "load": 0.40076520798902493,
+   "transform": 0.03240370900311973
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 169,
+  "detect_stage_share": 0.701578942277042,
+  "flagged_share": 0.05001515610791149,
+  "id": "uci:75",
+  "method": "isolation_forest",
+  "name": "Musk (Version 2)",
+  "rows_after_transform": 6598,
+  "rows_in": 6598,
+  "rss_delta_bytes": 69664768,
+  "rss_peak_bytes": 364609536,
+  "stages_s": {
+   "detect": 1.3281055420084158,
+   "extract": 0.14707245900353882,
+   "load": 0.3905623330065282,
+   "transform": 0.027283332994556986
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 11,
+  "detect_stage_share": 0.13489004031944551,
+  "flagged_share": 0.08842027376988532,
+  "id": "uci:78",
+  "method": "zscore",
+  "name": "Page Blocks Classification",
+  "rows_after_transform": 5406,
+  "rows_in": 5473,
+  "rss_delta_bytes": 4833280,
+  "rss_peak_bytes": 185368576,
+  "stages_s": {
+   "detect": 0.006326000002445653,
+   "extract": 0.006833124993136153,
+   "load": 0.0307709160115337,
+   "transform": 0.0029674170073121786
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 11,
+  "detect_stage_share": 0.9614824870858795,
+  "flagged_share": 0.050129485756566776,
+  "id": "uci:78",
+  "method": "isolation_forest",
+  "name": "Page Blocks Classification",
+  "rows_after_transform": 5406,
+  "rows_in": 5473,
+  "rss_delta_bytes": 60112896,
+  "rss_peak_bytes": 240746496,
+  "stages_s": {
+   "detect": 1.1543444160051877,
+   "extract": 0.005455582999275066,
+   "load": 0.037490916991373524,
+   "transform": 0.003297167000710033
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 65,
+  "detect_stage_share": 0.23625684370494857,
+  "flagged_share": 0.23558718861209965,
+  "id": "uci:80",
+  "method": "zscore",
+  "name": "Optical Recognition of Handwritten Digits",
+  "rows_after_transform": 5620,
+  "rows_in": 5620,
+  "rss_delta_bytes": 44859392,
+  "rss_peak_bytes": 255066112,
+  "stages_s": {
+   "detect": 0.043437749991426244,
+   "extract": 0.036179500006255694,
+   "load": 0.09082991600735113,
+   "transform": 0.013411000007181428
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 65,
+  "detect_stage_share": 0.8991997339558976,
+  "flagged_share": 0.05,
+  "id": "uci:80",
+  "method": "isolation_forest",
+  "name": "Optical Recognition of Handwritten Digits",
+  "rows_after_transform": 5620,
+  "rows_in": 5620,
+  "rss_delta_bytes": 87588864,
+  "rss_peak_bytes": 299253760,
+  "stages_s": {
+   "detect": 1.1826114160066936,
+   "extract": 0.03344295799615793,
+   "load": 0.09097141699749045,
+   "transform": 0.008156333002261817
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 17,
+  "detect_stage_share": 0.1813560875325477,
+  "flagged_share": 0.021834061135371178,
+  "id": "uci:81",
+  "method": "zscore",
+  "name": "Pen-Based Recognition of Handwritten Digits",
+  "rows_after_transform": 10992,
+  "rows_in": 10992,
+  "rss_delta_bytes": 13156352,
+  "rss_peak_bytes": 204898304,
+  "stages_s": {
+   "detect": 0.01393541699508205,
+   "extract": 0.01474595899344422,
+   "load": 0.04427529199165292,
+   "transform": 0.003883415993186645
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 17,
+  "detect_stage_share": 0.9444860189331394,
+  "flagged_share": 0.050036390101892286,
+  "id": "uci:81",
+  "method": "isolation_forest",
+  "name": "Pen-Based Recognition of Handwritten Digits",
+  "rows_after_transform": 10992,
+  "rows_in": 10992,
+  "rss_delta_bytes": 63897600,
+  "rss_peak_bytes": 256278528,
+  "stages_s": {
+   "detect": 1.3209677090053447,
+   "extract": 0.018929708006908186,
+   "load": 0.049542499997187406,
+   "transform": 0.009170207995339297
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 18,
+  "detect_stage_share": 0.44742081009165957,
+  "flagged_share": 0.20064724919093851,
+  "id": "uci:83",
+  "method": "zscore",
+  "name": "Primary Tumor",
+  "rows_after_transform": 309,
+  "rows_in": 339,
+  "rss_delta_bytes": 557056,
+  "rss_peak_bytes": 177340416,
+  "stages_s": {
+   "detect": 0.00726425000175368,
+   "extract": 0.0012207079998916015,
+   "load": 0.005536209006095305,
+   "transform": 0.002214666994404979
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 18,
+  "detect_stage_share": 0.9864718545032356,
+  "flagged_share": 0.05177993527508091,
+  "id": "uci:83",
+  "method": "isolation_forest",
+  "name": "Primary Tumor",
+  "rows_after_transform": 309,
+  "rows_in": 339,
+  "rss_delta_bytes": 56197120,
+  "rss_peak_bytes": 231833600,
+  "stages_s": {
+   "detect": 0.8805359580001095,
+   "extract": 0.0015837919927434996,
+   "load": 0.008450292007182725,
+   "transform": 0.002041291998466477
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 13,
+  "detect_stage_share": 0.2762861059324878,
+  "flagged_share": 0.11954459203036052,
+  "id": "uci:89",
+  "method": "zscore",
+  "name": "Solar Flare",
+  "rows_after_transform": 527,
+  "rows_in": 1389,
+  "rss_delta_bytes": 1179648,
+  "rss_peak_bytes": 177471488,
+  "stages_s": {
+   "detect": 0.004515125008765608,
+   "extract": 0.002085707994410768,
+   "load": 0.006162999998196028,
+   "transform": 0.0035783749917754903
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 13,
+  "detect_stage_share": 0.9837697561701887,
+  "flagged_share": 0.04933586337760911,
+  "id": "uci:89",
+  "method": "isolation_forest",
+  "name": "Solar Flare",
+  "rows_after_transform": 527,
+  "rows_in": 1389,
+  "rss_delta_bytes": 54804480,
+  "rss_peak_bytes": 231620608,
+  "stages_s": {
+   "detect": 0.8912715829937952,
+   "extract": 0.0022346659970935434,
+   "load": 0.009399707996635698,
+   "transform": 0.003069833997869864
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 36,
+  "detect_stage_share": 0.3774708253751609,
+  "flagged_share": 0.24752475247524752,
+  "id": "uci:90",
+  "method": "zscore",
+  "name": "Soybean (Large)",
+  "rows_after_transform": 303,
+  "rows_in": 307,
+  "rss_delta_bytes": 1196032,
+  "rss_peak_bytes": 177143808,
+  "stages_s": {
+   "detect": 0.010927167008048855,
+   "extract": 0.002359332997002639,
+   "load": 0.010558875001152046,
+   "transform": 0.005103000003146008
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 36,
+  "detect_stage_share": 0.9792839200554198,
+  "flagged_share": 0.052805280528052806,
+  "id": "uci:90",
+  "method": "isolation_forest",
+  "name": "Soybean (Large)",
+  "rows_after_transform": 303,
+  "rows_in": 307,
+  "rss_delta_bytes": 56180736,
+  "rss_peak_bytes": 233013248,
+  "stages_s": {
+   "detect": 0.9052054170024348,
+   "extract": 0.0019179999944753945,
+   "load": 0.014644875001977198,
+   "transform": 0.0025861250032903627
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 58,
+  "detect_stage_share": 0.12213087058814859,
+  "flagged_share": 0.5114014251781472,
+  "id": "uci:94",
+  "method": "zscore",
+  "name": "Spambase",
+  "rows_after_transform": 4210,
+  "rows_in": 4601,
+  "rss_delta_bytes": 18579456,
+  "rss_peak_bytes": 219365376,
+  "stages_s": {
+   "detect": 0.02598862499871757,
+   "extract": 0.017255291997571476,
+   "load": 0.1570056670025224,
+   "transform": 0.012543666991405189
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 58,
+  "detect_stage_share": 0.8453419233443344,
+  "flagged_share": 0.0501187648456057,
+  "id": "uci:94",
+  "method": "isolation_forest",
+  "name": "Spambase",
+  "rows_after_transform": 4210,
+  "rows_in": 4601,
+  "rss_delta_bytes": 76464128,
+  "rss_peak_bytes": 277364736,
+  "stages_s": {
+   "detect": 1.0858876659913221,
+   "extract": 0.028495499995187856,
+   "load": 0.1534192920080386,
+   "transform": 0.01675191699177958
+  },
+  "status": "OK"
+ },
+ {
+  "id": "uci:105",
+  "method": "zscore",
+  "reason": "ValueError('at least one numeric feature is required')",
+  "status": "FAIL"
+ },
+ {
+  "id": "uci:105",
+  "method": "isolation_forest",
+  "reason": "ValueError(\"isolation_forest detector needs at least one numeric column; got ['handicapped-infants', 'water-project-cost-sharing', 'adoption-of-the-budget-resolution', 'physician-fee-freeze', 'el-salvador-aid', 'religious-groups-in-schools', 'anti-satellite-test-ban', 'aid-to-nicaraguan-contras', 'mx-missile', 'immigration', 'synfuels-corporation-cutback', 'education-spending', 'superfund-right-to-sue', 'crime', 'duty-free-exports', 'export-administration-act-south-africa']\")",
+  "status": "FAIL"
+ },
+ {
+  "columns": 10,
+  "detect_stage_share": 0.3808431602844429,
+  "flagged_share": 0.08549931600547196,
+  "id": "uci:110",
+  "method": "zscore",
+  "name": "Yeast",
+  "rows_after_transform": 1462,
+  "rows_in": 1484,
+  "rss_delta_bytes": 1753088,
+  "rss_peak_bytes": 178765824,
+  "stages_s": {
+   "detect": 0.00961608299985528,
+   "extract": 0.002574333004304208,
+   "load": 0.01071912499901373,
+   "transform": 0.002339915998163633
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 10,
+  "detect_stage_share": 0.9781923751008013,
+  "flagged_share": 0.0506155950752394,
+  "id": "uci:110",
+  "method": "isolation_forest",
+  "name": "Yeast",
+  "rows_after_transform": 1462,
+  "rows_in": 1484,
+  "rss_delta_bytes": 55803904,
+  "rss_peak_bytes": 233537536,
+  "stages_s": {
+   "detect": 0.902265124997939,
+   "extract": 0.0027139169978909194,
+   "load": 0.015396167000290006,
+   "transform": 0.002004833993851207
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 42,
+  "detect_stage_share": 0.02088701717036176,
+  "flagged_share": 0.1418943014050353,
+  "id": "uci:117",
+  "method": "zscore",
+  "name": "Census-Income (KDD)",
+  "rows_after_transform": 196294,
+  "rows_in": 199523,
+  "rss_delta_bytes": 10190848,
+  "rss_peak_bytes": 578224128,
+  "stages_s": {
+   "detect": 0.14820500000496395,
+   "extract": 2.049847749993205,
+   "load": 4.085089832995436,
+   "transform": 0.812413416992058
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 42,
+  "detect_stage_share": 0.4929739239081608,
+  "flagged_share": 0.05000152831976525,
+  "id": "uci:117",
+  "method": "isolation_forest",
+  "name": "Census-Income (KDD)",
+  "rows_after_transform": 196294,
+  "rows_in": 199523,
+  "rss_delta_bytes": 104300544,
+  "rss_peak_bytes": 676364288,
+  "stages_s": {
+   "detect": 6.840833666996332,
+   "extract": 1.9906896669999696,
+   "load": 4.254268415999832,
+   "transform": 0.7908725830056937
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 21,
+  "detect_stage_share": 0.386476401493995,
+  "flagged_share": 0.048,
+  "id": "uci:144",
+  "method": "zscore",
+  "name": "Statlog (German Credit Data)",
+  "rows_after_transform": 1000,
+  "rows_in": 1000,
+  "rss_delta_bytes": 1835008,
+  "rss_peak_bytes": 175702016,
+  "stages_s": {
+   "detect": 0.009827000001678243,
+   "extract": 0.0037777499965159222,
+   "load": 0.008562874994822778,
+   "transform": 0.0032595420052530244
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 21,
+  "detect_stage_share": 0.9860736523117626,
+  "flagged_share": 0.05,
+  "id": "uci:144",
+  "method": "isolation_forest",
+  "name": "Statlog (German Credit Data)",
+  "rows_after_transform": 1000,
+  "rows_in": 1000,
+  "rss_delta_bytes": 56098816,
+  "rss_peak_bytes": 232177664,
+  "stages_s": {
+   "detect": 1.071370667006704,
+   "extract": 0.003560540993930772,
+   "load": 0.009025916995597072,
+   "transform": 0.002544541988754645
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 37,
+  "detect_stage_share": 0.1837739101167541,
+  "flagged_share": 0.028904428904428906,
+  "id": "uci:146",
+  "method": "zscore",
+  "name": "Statlog (Landsat Satellite)",
+  "rows_after_transform": 6435,
+  "rows_in": 6435,
+  "rss_delta_bytes": 22970368,
+  "rss_peak_bytes": 222134272,
+  "stages_s": {
+   "detect": 0.024467375013045967,
+   "extract": 0.031174458999885246,
+   "load": 0.07076183299068362,
+   "transform": 0.0067347909935051575
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 37,
+  "detect_stage_share": 0.9230269545117646,
+  "flagged_share": 0.05003885003885004,
+  "id": "uci:146",
+  "method": "isolation_forest",
+  "name": "Statlog (Landsat Satellite)",
+  "rows_after_transform": 6435,
+  "rows_in": 6435,
+  "rss_delta_bytes": 70123520,
+  "rss_peak_bytes": 270385152,
+  "stages_s": {
+   "detect": 1.1924003339954652,
+   "extract": 0.022998665997874923,
+   "load": 0.06789233400195371,
+   "transform": 0.00854562500899192
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 8,
+  "detect_stage_share": 0.1335100101036815,
+  "flagged_share": 0.029318541996830427,
+  "id": "uci:148",
+  "method": "zscore",
+  "name": "Statlog (Shuttle)",
+  "rows_after_transform": 41646,
+  "rows_in": 58000,
+  "rss_delta_bytes": 7700480,
+  "rss_peak_bytes": 238206976,
+  "stages_s": {
+   "detect": 0.020872915993095376,
+   "extract": 0.038058749996707775,
+   "load": 0.08800979200168513,
+   "transform": 0.009398249996593222
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 8,
+  "detect_stage_share": 0.9325637004500031,
+  "flagged_share": 0.05001680833693512,
+  "id": "uci:148",
+  "method": "isolation_forest",
+  "name": "Statlog (Shuttle)",
+  "rows_after_transform": 41646,
+  "rows_in": 58000,
+  "rss_delta_bytes": 59244544,
+  "rss_peak_bytes": 290111488,
+  "stages_s": {
+   "detect": 2.0944560830103,
+   "extract": 0.04336754200630821,
+   "load": 0.09681112499674782,
+   "transform": 0.011277332989266142
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 19,
+  "detect_stage_share": 0.3266125520056174,
+  "flagged_share": 0.022458628841607566,
+  "id": "uci:149",
+  "method": "zscore",
+  "name": "Statlog (Vehicle Silhouettes)",
+  "rows_after_transform": 846,
+  "rows_in": 846,
+  "rss_delta_bytes": 1310720,
+  "rss_peak_bytes": 177471488,
+  "stages_s": {
+   "detect": 0.0070364999992307276,
+   "extract": 0.002679458004422486,
+   "load": 0.009796375001315027,
+   "transform": 0.002031542011536658
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 19,
+  "detect_stage_share": 0.9840278458796424,
+  "flagged_share": 0.0508274231678487,
+  "id": "uci:149",
+  "method": "isolation_forest",
+  "name": "Statlog (Vehicle Silhouettes)",
+  "rows_after_transform": 846,
+  "rows_in": 846,
+  "rss_delta_bytes": 55459840,
+  "rss_peak_bytes": 233881600,
+  "stages_s": {
+   "detect": 0.9198808340006508,
+   "extract": 0.0031498330063186586,
+   "load": 0.009647250000853091,
+   "transform": 0.002133875008439645
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 11,
+  "detect_stage_share": 0.055481930347542875,
+  "flagged_share": 0.06247024596667548,
+  "id": "uci:159",
+  "method": "zscore",
+  "name": "MAGIC Gamma Telescope",
+  "rows_after_transform": 18905,
+  "rows_in": 19020,
+  "rss_delta_bytes": 20725760,
+  "rss_peak_bytes": 217874432,
+  "stages_s": {
+   "detect": 0.012822999997297302,
+   "extract": 0.02895199999329634,
+   "load": 0.1735062090010615,
+   "transform": 0.015839083993341774
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 11,
+  "detect_stage_share": 0.8749925842307114,
+  "flagged_share": 0.05003967204443269,
+  "id": "uci:159",
+  "method": "isolation_forest",
+  "name": "MAGIC Gamma Telescope",
+  "rows_after_transform": 18905,
+  "rows_in": 19020,
+  "rss_delta_bytes": 75202560,
+  "rss_peak_bytes": 273989632,
+  "stages_s": {
+   "detect": 1.5498232499958249,
+   "extract": 0.02949166599137243,
+   "load": 0.1770833750051679,
+   "transform": 0.014843291995930485
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 6,
+  "detect_stage_share": 0.330640989631167,
+  "flagged_share": 0.02467343976777939,
+  "id": "uci:161",
+  "method": "zscore",
+  "name": "Mammographic Mass",
+  "rows_after_transform": 689,
+  "rows_in": 961,
+  "rss_delta_bytes": 458752,
+  "rss_peak_bytes": 176357376,
+  "stages_s": {
+   "detect": 0.004997665993869305,
+   "extract": 0.001073249994078651,
+   "load": 0.008046292001381516,
+   "transform": 0.0009978749876609072
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 6,
+  "detect_stage_share": 0.9925530304614936,
+  "flagged_share": 0.05079825834542816,
+  "id": "uci:161",
+  "method": "isolation_forest",
+  "name": "Mammographic Mass",
+  "rows_after_transform": 689,
+  "rows_in": 961,
+  "rss_delta_bytes": 55951360,
+  "rss_peak_bytes": 231473152,
+  "stages_s": {
+   "detect": 0.9841492080013268,
+   "extract": 0.0010687499889172614,
+   "load": 0.005305416998453438,
+   "transform": 0.0010097499907715246
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 13,
+  "detect_stage_share": 0.2974395329316425,
+  "flagged_share": 0.042884990253411304,
+  "id": "uci:162",
+  "method": "zscore",
+  "name": "Forest Fires",
+  "rows_after_transform": 513,
+  "rows_in": 517,
+  "rss_delta_bytes": 786432,
+  "rss_peak_bytes": 176783360,
+  "stages_s": {
+   "detect": 0.004461208998691291,
+   "extract": 0.0013324169995030388,
+   "load": 0.007586499996250495,
+   "transform": 0.0016185830027097836
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 13,
+  "detect_stage_share": 0.9871637421906723,
+  "flagged_share": 0.050682261208576995,
+  "id": "uci:162",
+  "method": "isolation_forest",
+  "name": "Forest Fires",
+  "rows_after_transform": 513,
+  "rows_in": 517,
+  "rss_delta_bytes": 55689216,
+  "rss_peak_bytes": 232407040,
+  "stages_s": {
+   "detect": 0.9820939170022029,
+   "extract": 0.0014468340086750686,
+   "load": 0.009606000006897375,
+   "transform": 0.0017174999957205728
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 9,
+  "detect_stage_share": 0.21968143256633643,
+  "flagged_share": 0.04875621890547264,
+  "id": "uci:165",
+  "method": "zscore",
+  "name": "Concrete Compressive Strength",
+  "rows_after_transform": 1005,
+  "rows_in": 1030,
+  "rss_delta_bytes": 770048,
+  "rss_peak_bytes": 176947200,
+  "stages_s": {
+   "detect": 0.005561208003200591,
+   "extract": 0.004996709001716226,
+   "load": 0.01286716699542012,
+   "transform": 0.0018897909903898835
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 9,
+  "detect_stage_share": 0.9836140414216444,
+  "flagged_share": 0.050746268656716415,
+  "id": "uci:165",
+  "method": "isolation_forest",
+  "name": "Concrete Compressive Strength",
+  "rows_after_transform": 1005,
+  "rows_in": 1030,
+  "rss_delta_bytes": 56573952,
+  "rss_peak_bytes": 233766912,
+  "stages_s": {
+   "detect": 1.0415084170090267,
+   "extract": 0.00217237499600742,
+   "load": 0.013199791996157728,
+   "transform": 0.001978250002139248
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 5,
+  "detect_stage_share": 0.38669037598724343,
+  "flagged_share": 0.028142589118198873,
+  "id": "uci:176",
+  "method": "zscore",
+  "name": "Blood Transfusion Service Center",
+  "rows_after_transform": 533,
+  "rows_in": 748,
+  "rss_delta_bytes": 278528,
+  "rss_peak_bytes": 175685632,
+  "stages_s": {
+   "detect": 0.004009124997537583,
+   "extract": 0.000974750000750646,
+   "load": 0.0045129159989301115,
+   "transform": 0.0008709999965503812
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 5,
+  "detect_stage_share": 0.9900619149471597,
+  "flagged_share": 0.05065666041275797,
+  "id": "uci:176",
+  "method": "isolation_forest",
+  "name": "Blood Transfusion Service Center",
+  "rows_after_transform": 533,
+  "rows_in": 748,
+  "rss_delta_bytes": 55033856,
+  "rss_peak_bytes": 231211008,
+  "stages_s": {
+   "detect": 0.8950420829933137,
+   "extract": 0.0008631659875391051,
+   "load": 0.0072583750006742775,
+   "transform": 0.000862750006490387
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 128,
+  "detect_stage_share": 0.14011058831383152,
+  "flagged_share": 0.43480441323971913,
+  "id": "uci:183",
+  "method": "zscore",
+  "name": "Communities and Crime",
+  "rows_after_transform": 1994,
+  "rows_in": 1994,
+  "rss_delta_bytes": 23494656,
+  "rss_peak_bytes": 224608256,
+  "stages_s": {
+   "detect": 0.03536216699285433,
+   "extract": 0.025000500012538396,
+   "load": 0.1745856659981655,
+   "transform": 0.01743920899752993
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 128,
+  "detect_stage_share": 0.8146384002479071,
+  "flagged_share": 0.05015045135406219,
+  "id": "uci:183",
+  "method": "isolation_forest",
+  "name": "Communities and Crime",
+  "rows_after_transform": 1994,
+  "rows_in": 1994,
+  "rss_delta_bytes": 73367552,
+  "rss_peak_bytes": 274923520,
+  "stages_s": {
+   "detect": 1.0177085409959545,
+   "extract": 0.02711045800242573,
+   "load": 0.18942650000099093,
+   "transform": 0.015030916998512112
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 13,
+  "detect_stage_share": 0.10523460032037422,
+  "flagged_share": 0.08101503759398496,
+  "id": "uci:186",
+  "method": "zscore",
+  "name": "Wine Quality",
+  "rows_after_transform": 5320,
+  "rows_in": 6497,
+  "rss_delta_bytes": 7520256,
+  "rss_peak_bytes": 189693952,
+  "stages_s": {
+   "detect": 0.00861474999692291,
+   "extract": 0.010660916988854297,
+   "load": 0.058961249989806674,
+   "transform": 0.0036254169972380623
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 13,
+  "detect_stage_share": 0.9407999626797744,
+  "flagged_share": 0.05,
+  "id": "uci:186",
+  "method": "isolation_forest",
+  "name": "Wine Quality",
+  "rows_after_transform": 5320,
+  "rows_in": 6497,
+  "rss_delta_bytes": 61652992,
+  "rss_peak_bytes": 244285440,
+  "stages_s": {
+   "detect": 1.026387749996502,
+   "extract": 0.007215332996565849,
+   "load": 0.05257429199991748,
+   "transform": 0.004796042005182244
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 22,
+  "detect_stage_share": 0.08078882542368938,
+  "flagged_share": 0.06297872340425532,
+  "id": "uci:189",
+  "method": "zscore",
+  "name": "Parkinsons Telemonitoring",
+  "rows_after_transform": 5875,
+  "rows_in": 5875,
+  "rss_delta_bytes": 10780672,
+  "rss_peak_bytes": 197705728,
+  "stages_s": {
+   "detect": 0.011062332996516488,
+   "extract": 0.020947083001374267,
+   "load": 0.09807695800554939,
+   "transform": 0.006842625007266179
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 22,
+  "detect_stage_share": 0.8849410307295464,
+  "flagged_share": 0.05004255319148936,
+  "id": "uci:189",
+  "method": "isolation_forest",
+  "name": "Parkinsons Telemonitoring",
+  "rows_after_transform": 5875,
+  "rows_in": 5875,
+  "rss_delta_bytes": 65683456,
+  "rss_peak_bytes": 253526016,
+  "stages_s": {
+   "detect": 1.033664000002318,
+   "extract": 0.022514374999445863,
+   "load": 0.10489333400619216,
+   "transform": 0.006988041990553029
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 23,
+  "detect_stage_share": 0.22132141112865344,
+  "flagged_share": 0.16879432624113475,
+  "id": "uci:193",
+  "method": "zscore",
+  "name": "Cardiotocography",
+  "rows_after_transform": 2115,
+  "rows_in": 2126,
+  "rss_delta_bytes": 3735552,
+  "rss_peak_bytes": 184401920,
+  "stages_s": {
+   "detect": 0.008786792008322664,
+   "extract": 0.004179625000688247,
+   "load": 0.02381712500937283,
+   "transform": 0.002917958001489751
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 23,
+  "detect_stage_share": 0.9607154636422347,
+  "flagged_share": 0.050118203309692674,
+  "id": "uci:193",
+  "method": "isolation_forest",
+  "name": "Cardiotocography",
+  "rows_after_transform": 2115,
+  "rows_in": 2126,
+  "rss_delta_bytes": 58556416,
+  "rss_peak_bytes": 239714304,
+  "stages_s": {
+   "detect": 0.9479183340008603,
+   "extract": 0.010054667000076734,
+   "load": 0.02524708298733458,
+   "transform": 0.0034595000033732504
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 34,
+  "detect_stage_share": 0.18062849969874833,
+  "flagged_share": 0.10870685213807316,
+  "id": "uci:198",
+  "method": "zscore",
+  "name": "Steel Plates Faults",
+  "rows_after_transform": 1941,
+  "rows_in": 1941,
+  "rss_delta_bytes": 5881856,
+  "rss_peak_bytes": 187432960,
+  "stages_s": {
+   "detect": 0.011904832994332537,
+   "extract": 0.010433417002786882,
+   "load": 0.04025550000369549,
+   "transform": 0.003314083005534485
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 34,
+  "detect_stage_share": 0.9496814515821752,
+  "flagged_share": 0.04997424008243174,
+  "id": "uci:198",
+  "method": "isolation_forest",
+  "name": "Steel Plates Faults",
+  "rows_after_transform": 1941,
+  "rows_in": 1941,
+  "rss_delta_bytes": 57786368,
+  "rss_peak_bytes": 240893952,
+  "stages_s": {
+   "detect": 0.8731819999957224,
+   "extract": 0.007896959010395221,
+   "load": 0.03462845800095238,
+   "transform": 0.003739834006410092
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 7,
+  "detect_stage_share": 0.452514230775717,
+  "flagged_share": 0.035483870967741936,
+  "id": "uci:212",
+  "method": "zscore",
+  "name": "Vertebral Column",
+  "rows_after_transform": 310,
+  "rows_in": 310,
+  "rss_delta_bytes": 475136,
+  "rss_peak_bytes": 176979968,
+  "stages_s": {
+   "detect": 0.007854665993363596,
+   "extract": 0.0011180830042576417,
+   "load": 0.0075606250029522926,
+   "transform": 0.0008244579948950559
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 7,
+  "detect_stage_share": 0.9860710625654312,
+  "flagged_share": 0.05161290322580645,
+  "id": "uci:212",
+  "method": "isolation_forest",
+  "name": "Vertebral Column",
+  "rows_after_transform": 310,
+  "rows_in": 310,
+  "rss_delta_bytes": 55607296,
+  "rss_peak_bytes": 232046592,
+  "stages_s": {
+   "detect": 0.8251895839930512,
+   "extract": 0.0016220000106841326,
+   "load": 0.008855833002598956,
+   "transform": 0.0011785419919760898
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 17,
+  "detect_stage_share": 0.048377001933481725,
+  "flagged_share": 0.1106367919311672,
+  "id": "uci:222",
+  "method": "zscore",
+  "name": "Bank Marketing",
+  "rows_after_transform": 45211,
+  "rows_in": 45211,
+  "rss_delta_bytes": 34766848,
+  "rss_peak_bytes": 264077312,
+  "stages_s": {
+   "detect": 0.020107792006456293,
+   "extract": 0.11495841600117274,
+   "load": 0.22872254200046882,
+   "transform": 0.051859000013791956
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 17,
+  "detect_stage_share": 0.8481191206459786,
+  "flagged_share": 0.05000995332994183,
+  "id": "uci:222",
+  "method": "isolation_forest",
+  "name": "Bank Marketing",
+  "rows_after_transform": 45211,
+  "rows_in": 45211,
+  "rss_delta_bytes": 92585984,
+  "rss_peak_bytes": 323289088,
+  "stages_s": {
+   "detect": 1.7404273329884745,
+   "extract": 0.08121158399444539,
+   "load": 0.1860891249962151,
+   "transform": 0.0443744170042919
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 11,
+  "detect_stage_share": 0.2891731109314653,
+  "flagged_share": 0.07894736842105263,
+  "id": "uci:225",
+  "method": "zscore",
+  "name": "ILPD (Indian Liver Patient Dataset)",
+  "rows_after_transform": 570,
+  "rows_in": 583,
+  "rss_delta_bytes": 589824,
+  "rss_peak_bytes": 177192960,
+  "stages_s": {
+   "detect": 0.005672167011653073,
+   "extract": 0.0012106670037610456,
+   "load": 0.010939583997242153,
+   "transform": 0.001792708004359156
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 11,
+  "detect_stage_share": 0.9799236566993145,
+  "flagged_share": 0.05087719298245614,
+  "id": "uci:225",
+  "method": "isolation_forest",
+  "name": "ILPD (Indian Liver Patient Dataset)",
+  "rows_after_transform": 570,
+  "rows_in": 583,
+  "rss_delta_bytes": 56016896,
+  "rss_peak_bytes": 230522880,
+  "stages_s": {
+   "detect": 0.8498082500009332,
+   "extract": 0.0014387910050572827,
+   "load": 0.014367625000886619,
+   "transform": 0.0016041670023696497
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 10,
+  "detect_stage_share": 0.3067462097822234,
+  "flagged_share": 0.0,
+  "id": "uci:242",
+  "method": "zscore",
+  "name": "Energy Efficiency",
+  "rows_after_transform": 768,
+  "rows_in": 768,
+  "rss_delta_bytes": 753664,
+  "rss_peak_bytes": 176259072,
+  "stages_s": {
+   "detect": 0.004982875005225651,
+   "extract": 0.0011892089969478548,
+   "load": 0.008228040998801589,
+   "transform": 0.001844167010858655
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 10,
+  "detect_stage_share": 0.9865917214955,
+  "flagged_share": 0.05078125,
+  "id": "uci:242",
+  "method": "isolation_forest",
+  "name": "Energy Efficiency",
+  "rows_after_transform": 768,
+  "rows_in": 768,
+  "rss_delta_bytes": 57458688,
+  "rss_peak_bytes": 234094592,
+  "stages_s": {
+   "detect": 0.8592978749948088,
+   "extract": 0.0013445420045172796,
+   "load": 0.009231083007762209,
+   "transform": 0.0011026659922208637
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 10,
+  "detect_stage_share": 0.2597618687955787,
+  "flagged_share": 0.054104477611940295,
+  "id": "uci:247",
+  "method": "zscore",
+  "name": "ISTANBUL STOCK EXCHANGE",
+  "rows_after_transform": 536,
+  "rows_in": 536,
+  "rss_delta_bytes": 1376256,
+  "rss_peak_bytes": 178765824,
+  "stages_s": {
+   "detect": 0.004660874998080544,
+   "extract": 0.002235332998679951,
+   "load": 0.009713708990602754,
+   "transform": 0.0013329590001376346
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 10,
+  "detect_stage_share": 0.9861223665991867,
+  "flagged_share": 0.05037313432835821,
+  "id": "uci:247",
+  "method": "isolation_forest",
+  "name": "ISTANBUL STOCK EXCHANGE",
+  "rows_after_transform": 536,
+  "rows_in": 536,
+  "rss_delta_bytes": 56147968,
+  "rss_peak_bytes": 232292352,
+  "stages_s": {
+   "detect": 0.856706666003447,
+   "extract": 0.0016914169973460957,
+   "load": 0.009138124994933605,
+   "transform": 0.0012268330028746277
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 6,
+  "detect_stage_share": 0.3060043199501042,
+  "flagged_share": 0.0024813895781637717,
+  "id": "uci:257",
+  "method": "zscore",
+  "name": "User Knowledge Modeling",
+  "rows_after_transform": 403,
+  "rows_in": 403,
+  "rss_delta_bytes": 114688,
+  "rss_peak_bytes": 176259072,
+  "stages_s": {
+   "detect": 0.0037250419991323724,
+   "extract": 0.0008882920083124191,
+   "load": 0.006774334004148841,
+   "transform": 0.0007855000003473833
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 6,
+  "detect_stage_share": 0.9905500866325537,
+  "flagged_share": 0.052109181141439205,
+  "id": "uci:257",
+  "method": "isolation_forest",
+  "name": "User Knowledge Modeling",
+  "rows_after_transform": 403,
+  "rows_in": 403,
+  "rss_delta_bytes": 56016896,
+  "rss_peak_bytes": 231833600,
+  "stages_s": {
+   "detect": 0.867092833010247,
+   "extract": 0.0009176659950753674,
+   "load": 0.006589291006093845,
+   "transform": 0.0007651659980183467
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 5,
+  "detect_stage_share": 0.29053999919494533,
+  "flagged_share": 0.025222551928783383,
+  "id": "uci:267",
+  "method": "zscore",
+  "name": "Banknote Authentication",
+  "rows_after_transform": 1348,
+  "rows_in": 1372,
+  "rss_delta_bytes": 1245184,
+  "rss_peak_bytes": 177520640,
+  "stages_s": {
+   "detect": 0.005329749998054467,
+   "extract": 0.0015862080035731196,
+   "load": 0.010020165995229036,
+   "transform": 0.0014081659901421517
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 5,
+  "detect_stage_share": 0.9849345235773889,
+  "flagged_share": 0.050445103857566766,
+  "id": "uci:267",
+  "method": "isolation_forest",
+  "name": "Banknote Authentication",
+  "rows_after_transform": 1348,
+  "rows_in": 1372,
+  "rss_delta_bytes": 56672256,
+  "rss_peak_bytes": 233504768,
+  "stages_s": {
+   "detect": 0.8681075000058627,
+   "extract": 0.001629332997254096,
+   "load": 0.010281625000061467,
+   "transform": 0.0013675420050276443
+  },
+  "status": "OK"
+ },
+ {
+  "id": "uci:270",
+  "method": "zscore",
+  "reason": "ValueError('all-missing training feature')",
+  "status": "FAIL"
+ },
+ {
+  "id": "uci:270",
+  "method": "isolation_forest",
+  "reason": "ValueError('all-missing training feature')",
+  "status": "FAIL"
+ },
+ {
+  "columns": 17,
+  "detect_stage_share": 0.10373044349417021,
+  "flagged_share": 0.03625064733298809,
+  "id": "uci:275",
+  "method": "zscore",
+  "name": "Bike Sharing",
+  "rows_after_transform": 17379,
+  "rows_in": 17379,
+  "rss_delta_bytes": 25182208,
+  "rss_peak_bytes": 229801984,
+  "stages_s": {
+   "detect": 0.016271542001049966,
+   "extract": 0.024347083002794534,
+   "load": 0.10896016600599978,
+   "transform": 0.007284917010110803
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 17,
+  "detect_stage_share": 0.9012911793365196,
+  "flagged_share": 0.050002877035502616,
+  "id": "uci:275",
+  "method": "isolation_forest",
+  "name": "Bike Sharing",
+  "rows_after_transform": 17379,
+  "rows_in": 17379,
+  "rss_delta_bytes": 65486848,
+  "rss_peak_bytes": 269484032,
+  "stages_s": {
+   "detect": 1.2705346669972641,
+   "extract": 0.026616959003149532,
+   "load": 0.10572570799558889,
+   "transform": 0.006805459008319303
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 17,
+  "detect_stage_share": 0.24133996359524412,
+  "flagged_share": 0.036170212765957444,
+  "id": "uci:277",
+  "method": "zscore",
+  "name": "Thoracic Surgery Data",
+  "rows_after_transform": 470,
+  "rows_in": 470,
+  "rss_delta_bytes": 688128,
+  "rss_peak_bytes": 175538176,
+  "stages_s": {
+   "detect": 0.0035256249975645915,
+   "extract": 0.002387332991929725,
+   "load": 0.00647304201265797,
+   "transform": 0.0022225420107133687
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 17,
+  "detect_stage_share": 0.9874225860440071,
+  "flagged_share": 0.05106382978723404,
+  "id": "uci:277",
+  "method": "isolation_forest",
+  "name": "Thoracic Surgery Data",
+  "rows_after_transform": 470,
+  "rows_in": 470,
+  "rss_delta_bytes": 45645824,
+  "rss_peak_bytes": 221708288,
+  "stages_s": {
+   "detect": 0.9343059160019038,
+   "extract": 0.0018669999990379438,
+   "load": 0.008344833986484446,
+   "transform": 0.0016889999969862401
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 6,
+  "detect_stage_share": 0.3568868865852984,
+  "flagged_share": 0.05056553559547571,
+  "id": "uci:291",
+  "method": "zscore",
+  "name": "Airfoil Self-Noise",
+  "rows_after_transform": 1503,
+  "rows_in": 1503,
+  "rss_delta_bytes": 688128,
+  "rss_peak_bytes": 178176000,
+  "stages_s": {
+   "detect": 0.007153500002459623,
+   "extract": 0.0014930829929653555,
+   "load": 0.010463708007591777,
+   "transform": 0.0009338750096503645
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 6,
+  "detect_stage_share": 0.9855052983047615,
+  "flagged_share": 0.05056553559547571,
+  "id": "uci:291",
+  "method": "isolation_forest",
+  "name": "Airfoil Self-Noise",
+  "rows_after_transform": 1503,
+  "rows_in": 1503,
+  "rss_delta_bytes": 57933824,
+  "rss_peak_bytes": 233209856,
+  "stages_s": {
+   "detect": 0.986080792004941,
+   "extract": 0.001742124994052574,
+   "load": 0.011735332998796366,
+   "transform": 0.0010257079993607476
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 8,
+  "detect_stage_share": 0.37821422053639814,
+  "flagged_share": 0.05909090909090909,
+  "id": "uci:292",
+  "method": "zscore",
+  "name": "Wholesale customers",
+  "rows_after_transform": 440,
+  "rows_in": 440,
+  "rss_delta_bytes": 163840,
+  "rss_peak_bytes": 176603136,
+  "stages_s": {
+   "detect": 0.0048177090066019446,
+   "extract": 0.0010784170008264482,
+   "load": 0.005994999999529682,
+   "transform": 0.0008469169988529757
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 8,
+  "detect_stage_share": 0.9887308615233394,
+  "flagged_share": 0.05,
+  "id": "uci:292",
+  "method": "isolation_forest",
+  "name": "Wholesale customers",
+  "rows_after_transform": 440,
+  "rows_in": 440,
+  "rss_delta_bytes": 55738368,
+  "rss_peak_bytes": 232210432,
+  "stages_s": {
+   "detect": 0.8556787080015056,
+   "extract": 0.0012687499984167516,
+   "load": 0.007144125003833324,
+   "transform": 0.0013397909933701158
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 5,
+  "detect_stage_share": 0.08968993173529667,
+  "flagged_share": 0.006087960533221371,
+  "id": "uci:294",
+  "method": "zscore",
+  "name": "Combined Cycle Power Plant",
+  "rows_after_transform": 9527,
+  "rows_in": 9568,
+  "rss_delta_bytes": 6373376,
+  "rss_peak_bytes": 187138048,
+  "stages_s": {
+   "detect": 0.005346457997802645,
+   "extract": 0.00435579199984204,
+   "load": 0.04712991700216662,
+   "transform": 0.0027782919933088124
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 5,
+  "detect_stage_share": 0.961173479367188,
+  "flagged_share": 0.05006822714390679,
+  "id": "uci:294",
+  "method": "isolation_forest",
+  "name": "Combined Cycle Power Plant",
+  "rows_after_transform": 9527,
+  "rows_in": 9568,
+  "rss_delta_bytes": 58916864,
+  "rss_peak_bytes": 239665152,
+  "stages_s": {
+   "detect": 1.1725496250001015,
+   "extract": 0.004504249998717569,
+   "load": 0.04003874999762047,
+   "transform": 0.002822041991748847
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 50,
+  "detect_stage_share": 0.023230638484674392,
+  "flagged_share": 0.1078945816874005,
+  "id": "uci:296",
+  "method": "zscore",
+  "name": "Diabetes 130-US Hospitals for Years 1999-2008",
+  "rows_after_transform": 101766,
+  "rows_in": 101766,
+  "rss_delta_bytes": 20299776,
+  "rss_peak_bytes": 423362560,
+  "stages_s": {
+   "detect": 0.05687841700273566,
+   "extract": 0.6798260420036968,
+   "load": 1.3902159169956576,
+   "transform": 0.32150208299572114
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 50,
+  "detect_stage_share": 0.6058846917145373,
+  "flagged_share": 0.050006878525244186,
+  "id": "uci:296",
+  "method": "isolation_forest",
+  "name": "Diabetes 130-US Hospitals for Years 1999-2008",
+  "rows_after_transform": 101766,
+  "rows_in": 101766,
+  "rss_delta_bytes": 95338496,
+  "rss_peak_bytes": 525893632,
+  "stages_s": {
+   "detect": 3.653491709002992,
+   "extract": 0.6685095830034697,
+   "load": 1.374824416008778,
+   "transform": 0.3331858749879757
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 16,
+  "detect_stage_share": 0.16765621695813934,
+  "flagged_share": 0.07866666666666666,
+  "id": "uci:312",
+  "method": "zscore",
+  "name": "Dow Jones Index",
+  "rows_after_transform": 750,
+  "rows_in": 750,
+  "rss_delta_bytes": 1310720,
+  "rss_peak_bytes": 175161344,
+  "stages_s": {
+   "detect": 0.005344083998352289,
+   "extract": 0.004239667003275827,
+   "load": 0.019553250007447787,
+   "transform": 0.0027382499974919483
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 16,
+  "detect_stage_share": 0.9812426755168774,
+  "flagged_share": 0.050666666666666665,
+  "id": "uci:312",
+  "method": "isolation_forest",
+  "name": "Dow Jones Index",
+  "rows_after_transform": 750,
+  "rows_in": 750,
+  "rss_delta_bytes": 56295424,
+  "rss_peak_bytes": 232538112,
+  "stages_s": {
+   "detect": 0.8756002090085531,
+   "extract": 0.0034434999979566783,
+   "load": 0.010984624997945502,
+   "transform": 0.0023097499943105504
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 33,
+  "detect_stage_share": 0.2675504723053272,
+  "flagged_share": 0.11248073959938366,
+  "id": "uci:320",
+  "method": "zscore",
+  "name": "Student Performance",
+  "rows_after_transform": 649,
+  "rows_in": 649,
+  "rss_delta_bytes": 1392640,
+  "rss_peak_bytes": 179568640,
+  "stages_s": {
+   "detect": 0.006158042000606656,
+   "extract": 0.003309332998469472,
+   "load": 0.0107398749969434,
+   "transform": 0.0028091249987483025
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 33,
+  "detect_stage_share": 0.9810324346103558,
+  "flagged_share": 0.05084745762711865,
+  "id": "uci:320",
+  "method": "isolation_forest",
+  "name": "Student Performance",
+  "rows_after_transform": 649,
+  "rows_in": 649,
+  "rss_delta_bytes": 55508992,
+  "rss_peak_bytes": 232865792,
+  "stages_s": {
+   "detect": 0.8948393339960603,
+   "extract": 0.003651207996881567,
+   "load": 0.01045124999654945,
+   "transform": 0.0031986250105546787
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 31,
+  "detect_stage_share": 0.22156660352651608,
+  "flagged_share": 0.049068216789194735,
+  "id": "uci:327",
+  "method": "zscore",
+  "name": "Phishing Websites",
+  "rows_after_transform": 5849,
+  "rows_in": 11055,
+  "rss_delta_bytes": 25952256,
+  "rss_peak_bytes": 234995712,
+  "stages_s": {
+   "detect": 0.023747250001179054,
+   "extract": 0.03002550000383053,
+   "load": 0.04709904101036955,
+   "transform": 0.00630704200011678
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 31,
+  "detect_stage_share": 0.9255382749836614,
+  "flagged_share": 0.050094033168062914,
+  "id": "uci:327",
+  "method": "isolation_forest",
+  "name": "Phishing Websites",
+  "rows_after_transform": 5849,
+  "rows_in": 11055,
+  "rss_delta_bytes": 58540032,
+  "rss_peak_bytes": 267878400,
+  "stages_s": {
+   "detect": 1.1190812090062536,
+   "extract": 0.0344524160027504,
+   "load": 0.04866949999995995,
+   "transform": 0.00691079199896194
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 20,
+  "detect_stage_share": 0.2539373398704256,
+  "flagged_share": 0.15881326352530542,
+  "id": "uci:329",
+  "method": "zscore",
+  "name": "Diabetic Retinopathy Debrecen",
+  "rows_after_transform": 1146,
+  "rows_in": 1151,
+  "rss_delta_bytes": 2998272,
+  "rss_peak_bytes": 180502528,
+  "stages_s": {
+   "detect": 0.008338624989846721,
+   "extract": 0.0034290000039618462,
+   "load": 0.01813458300603088,
+   "transform": 0.002935124997748062
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 20,
+  "detect_stage_share": 0.9668807341741735,
+  "flagged_share": 0.0506108202443281,
+  "id": "uci:329",
+  "method": "isolation_forest",
+  "name": "Diabetic Retinopathy Debrecen",
+  "rows_after_transform": 1146,
+  "rows_in": 1151,
+  "rss_delta_bytes": 54738944,
+  "rss_peak_bytes": 233635840,
+  "stages_s": {
+   "detect": 0.8822860829968704,
+   "extract": 0.005919624993111938,
+   "load": 0.021481333998963237,
+   "transform": 0.002820624999003485
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 61,
+  "detect_stage_share": 0.04404345423354616,
+  "flagged_share": 0.46632529512662696,
+  "id": "uci:332",
+  "method": "zscore",
+  "name": "Online News Popularity",
+  "rows_after_transform": 39644,
+  "rows_in": 39644,
+  "rss_delta_bytes": 19709952,
+  "rss_peak_bytes": 452886528,
+  "stages_s": {
+   "detect": 0.1279034170001978,
+   "extract": 0.41573074999905657,
+   "load": 2.270696167004644,
+   "transform": 0.08969750000687782
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 61,
+  "detect_stage_share": 0.4758084343762668,
+  "flagged_share": 0.050020179598425994,
+  "id": "uci:332",
+  "method": "isolation_forest",
+  "name": "Online News Popularity",
+  "rows_after_transform": 39644,
+  "rows_in": 39644,
+  "rss_delta_bytes": 55328768,
+  "rss_peak_bytes": 507052032,
+  "stages_s": {
+   "detect": 2.411693791989819,
+   "extract": 0.3994166670017876,
+   "load": 2.170506958005717,
+   "transform": 0.08700604099431075
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 25,
+  "detect_stage_share": 0.2426162796769624,
+  "flagged_share": 0.105,
+  "id": "uci:336",
+  "method": "zscore",
+  "name": "Chronic Kidney Disease",
+  "rows_after_transform": 400,
+  "rows_in": 400,
+  "rss_delta_bytes": 1245184,
+  "rss_peak_bytes": 177618944,
+  "stages_s": {
+   "detect": 0.00652237499889452,
+   "extract": 0.002633459007483907,
+   "load": 0.012095666999812238,
+   "transform": 0.005632000000332482
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 25,
+  "detect_stage_share": 0.9811032347914294,
+  "flagged_share": 0.05,
+  "id": "uci:336",
+  "method": "isolation_forest",
+  "name": "Chronic Kidney Disease",
+  "rows_after_transform": 400,
+  "rows_in": 400,
+  "rss_delta_bytes": 55885824,
+  "rss_peak_bytes": 232488960,
+  "stages_s": {
+   "detect": 0.8713714580080705,
+   "extract": 0.0031211250025080517,
+   "load": 0.011063542013289407,
+   "transform": 0.0025985839893110096
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 82,
+  "detect_stage_share": 0.15363633127242823,
+  "flagged_share": 0.23055555555555557,
+  "id": "uci:342",
+  "method": "zscore",
+  "name": "Mice Protein Expression",
+  "rows_after_transform": 1080,
+  "rows_in": 1080,
+  "rss_delta_bytes": 11599872,
+  "rss_peak_bytes": 197033984,
+  "stages_s": {
+   "detect": 0.024674583997693844,
+   "extract": 0.01252270900295116,
+   "load": 0.11336929199751467,
+   "transform": 0.0100372500019148
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 82,
+  "detect_stage_share": 0.883067791050319,
+  "flagged_share": 0.05,
+  "id": "uci:342",
+  "method": "isolation_forest",
+  "name": "Mice Protein Expression",
+  "rows_after_transform": 1080,
+  "rows_in": 1080,
+  "rss_delta_bytes": 65306624,
+  "rss_peak_bytes": 253394944,
+  "stages_s": {
+   "detect": 0.9736347080033738,
+   "extract": 0.01426424999954179,
+   "load": 0.10255200001120102,
+   "transform": 0.012108458002330735
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 25,
+  "detect_stage_share": 0.12227441658068842,
+  "flagged_share": 0.11903333333333334,
+  "id": "uci:350",
+  "method": "zscore",
+  "name": "Default of Credit Card Clients",
+  "rows_after_transform": 30000,
+  "rows_in": 30000,
+  "rss_delta_bytes": 46268416,
+  "rss_peak_bytes": 297877504,
+  "stages_s": {
+   "detect": 0.04965237498981878,
+   "extract": 0.08848033400136046,
+   "load": 0.24995262500306126,
+   "transform": 0.017987958999583498
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 25,
+  "detect_stage_share": 0.8439189172076093,
+  "flagged_share": 0.05,
+  "id": "uci:350",
+  "method": "isolation_forest",
+  "name": "Default of Credit Card Clients",
+  "rows_after_transform": 30000,
+  "rows_in": 30000,
+  "rss_delta_bytes": 88375296,
+  "rss_peak_bytes": 338870272,
+  "stages_s": {
+   "detect": 1.8185415000043577,
+   "extract": 0.07569612500083167,
+   "load": 0.24028216699662153,
+   "transform": 0.020357250003144145
+  },
+  "status": "OK"
+ },
+ {
+  "id": "uci:357",
+  "method": "zscore",
+  "reason": "ValueError('at least one numeric feature is required')",
+  "status": "FAIL"
+ },
+ {
+  "id": "uci:357",
+  "method": "isolation_forest",
+  "reason": "ValueError(\"isolation_forest detector needs at least one numeric column; got ['date', 'Temperature', 'Humidity', 'Light', 'CO2', 'HumidityRatio']\")",
+  "status": "FAIL"
+ },
+ {
+  "columns": 15,
+  "detect_stage_share": 0.11452470022047045,
+  "flagged_share": 0.08336005129849311,
+  "id": "uci:360",
+  "method": "zscore",
+  "name": "Air Quality",
+  "rows_after_transform": 9357,
+  "rows_in": 9357,
+  "rss_delta_bytes": 12648448,
+  "rss_peak_bytes": 200343552,
+  "stages_s": {
+   "detect": 0.011491208002553321,
+   "extract": 0.013509791999240406,
+   "load": 0.07047533300647046,
+   "transform": 0.004861916997469962
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 15,
+  "detect_stage_share": 0.9231887598986244,
+  "flagged_share": 0.05001603077909587,
+  "id": "uci:360",
+  "method": "isolation_forest",
+  "name": "Air Quality",
+  "rows_after_transform": 9357,
+  "rows_in": 9357,
+  "rss_delta_bytes": 70090752,
+  "rss_peak_bytes": 257622016,
+  "stages_s": {
+   "detect": 1.07142633399053,
+   "extract": 0.014574916000128724,
+   "load": 0.06961358401167672,
+   "transform": 0.004956417003995739
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 66,
+  "detect_stage_share": 0.052001507339152514,
+  "flagged_share": 0.02599758162031439,
+  "id": "uci:365",
+  "method": "zscore",
+  "name": "Polish Companies Bankruptcy",
+  "rows_after_transform": 43004,
+  "rows_in": 43405,
+  "rss_delta_bytes": 7733248,
+  "rss_peak_bytes": 480870400,
+  "stages_s": {
+   "detect": 0.1712807080039056,
+   "extract": 0.42762474999472033,
+   "load": 2.4639239590032957,
+   "transform": 0.2309348749986384
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 66,
+  "detect_stage_share": 0.41878630275671397,
+  "flagged_share": 0.050018602920658545,
+  "id": "uci:365",
+  "method": "isolation_forest",
+  "name": "Polish Companies Bankruptcy",
+  "rows_after_transform": 43004,
+  "rows_in": 43405,
+  "rss_delta_bytes": 75988992,
+  "rss_peak_bytes": 542965760,
+  "stages_s": {
+   "detect": 2.405794833000982,
+   "extract": 0.41261125000892207,
+   "load": 2.710249667012249,
+   "transform": 0.21602791600162163
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 19,
+  "detect_stage_share": 0.2895557528583037,
+  "flagged_share": 0.094,
+  "id": "uci:368",
+  "method": "zscore",
+  "name": "Facebook Metrics",
+  "rows_after_transform": 500,
+  "rows_in": 500,
+  "rss_delta_bytes": 1376256,
+  "rss_peak_bytes": 176406528,
+  "stages_s": {
+   "detect": 0.006879459004267119,
+   "extract": 0.0021783330012112856,
+   "load": 0.00958770900615491,
+   "transform": 0.005113167004310526
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 19,
+  "detect_stage_share": 0.9826342229466744,
+  "flagged_share": 0.05,
+  "id": "uci:368",
+  "method": "isolation_forest",
+  "name": "Facebook Metrics",
+  "rows_after_transform": 500,
+  "rows_in": 500,
+  "rss_delta_bytes": 55459840,
+  "rss_peak_bytes": 231718912,
+  "stages_s": {
+   "detect": 0.9206749590084655,
+   "extract": 0.002417458003037609,
+   "load": 0.011933417001273483,
+   "transform": 0.0019199160014977679
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 9,
+  "detect_stage_share": 0.06324893252819462,
+  "flagged_share": 0.09643535590568779,
+  "id": "uci:372",
+  "method": "zscore",
+  "name": "HTRU2",
+  "rows_after_transform": 17898,
+  "rows_in": 17898,
+  "rss_delta_bytes": 17776640,
+  "rss_peak_bytes": 211107840,
+  "stages_s": {
+   "detect": 0.013374000001931563,
+   "extract": 0.01902829199389089,
+   "load": 0.16950050000741612,
+   "transform": 0.009547416993882507
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 9,
+  "detect_stage_share": 0.8669845404689521,
+  "flagged_share": 0.050005587216448766,
+  "id": "uci:372",
+  "method": "isolation_forest",
+  "name": "HTRU2",
+  "rows_after_transform": 17898,
+  "rows_in": 17898,
+  "rss_delta_bytes": 71974912,
+  "rss_peak_bytes": 263864320,
+  "stages_s": {
+   "detect": 1.3962219579989323,
+   "extract": 0.02769779101072345,
+   "load": 0.1758911659999285,
+   "transform": 0.010623750000377186
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 32,
+  "detect_stage_share": 0.1426354371724027,
+  "flagged_share": 0.0350132625994695,
+  "id": "uci:373",
+  "method": "zscore",
+  "name": "Drug Consumption (Quantified)",
+  "rows_after_transform": 1885,
+  "rows_in": 1885,
+  "rss_delta_bytes": 4440064,
+  "rss_peak_bytes": 185319424,
+  "stages_s": {
+   "detect": 0.007911334003438242,
+   "extract": 0.008053500001551583,
+   "load": 0.03530187500291504,
+   "transform": 0.004198708003968932
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 32,
+  "detect_stage_share": 0.9516188285546245,
+  "flagged_share": 0.050397877984084884,
+  "id": "uci:373",
+  "method": "isolation_forest",
+  "name": "Drug Consumption (Quantified)",
+  "rows_after_transform": 1885,
+  "rows_in": 1885,
+  "rss_delta_bytes": 57573376,
+  "rss_peak_bytes": 237895680,
+  "stages_s": {
+   "detect": 0.9338771250040736,
+   "extract": 0.00918241700856015,
+   "load": 0.033987500006332994,
+   "transform": 0.004309249998186715
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 29,
+  "detect_stage_share": 0.060329328222148294,
+  "flagged_share": 0.09916392196605016,
+  "id": "uci:374",
+  "method": "zscore",
+  "name": "Appliances Energy Prediction",
+  "rows_after_transform": 19735,
+  "rows_in": 19735,
+  "rss_delta_bytes": 34390016,
+  "rss_peak_bytes": 277266432,
+  "stages_s": {
+   "detect": 0.03929716699349228,
+   "extract": 0.09248166700126603,
+   "load": 0.49185566599771846,
+   "transform": 0.027742999998736195
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 29,
+  "detect_stage_share": 0.6963831172735864,
+  "flagged_share": 0.05001266784899924,
+  "id": "uci:374",
+  "method": "isolation_forest",
+  "name": "Appliances Energy Prediction",
+  "rows_after_transform": 19735,
+  "rows_in": 19735,
+  "rss_delta_bytes": 100040704,
+  "rss_peak_bytes": 343244800,
+  "stages_s": {
+   "detect": 1.3796098749880912,
+   "extract": 0.0938652920012828,
+   "load": 0.4872754999960307,
+   "transform": 0.02035691699711606
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 10,
+  "detect_stage_share": 0.28671469330978366,
+  "flagged_share": 0.0,
+  "id": "uci:379",
+  "method": "zscore",
+  "name": "Website Phishing",
+  "rows_after_transform": 724,
+  "rows_in": 1353,
+  "rss_delta_bytes": 770048,
+  "rss_peak_bytes": 177274880,
+  "stages_s": {
+   "detect": 0.005175917001906782,
+   "extract": 0.00212508300319314,
+   "load": 0.008740999997826293,
+   "transform": 0.0020105000003241003
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 10,
+  "detect_stage_share": 0.9895780646081954,
+  "flagged_share": 0.05110497237569061,
+  "id": "uci:379",
+  "method": "isolation_forest",
+  "name": "Website Phishing",
+  "rows_after_transform": 724,
+  "rows_in": 1353,
+  "rss_delta_bytes": 57147392,
+  "rss_peak_bytes": 233390080,
+  "stages_s": {
+   "detect": 0.9082543749973411,
+   "extract": 0.0019425000064074993,
+   "load": 0.006011709003360011,
+   "transform": 0.001611250001587905
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 13,
+  "detect_stage_share": 0.08577018270124276,
+  "flagged_share": 0.04627601314348302,
+  "id": "uci:381",
+  "method": "zscore",
+  "name": "Beijing PM2.5",
+  "rows_after_transform": 43824,
+  "rows_in": 43824,
+  "rss_delta_bytes": 17825792,
+  "rss_peak_bytes": 245858304,
+  "stages_s": {
+   "detect": 0.0294830000057118,
+   "extract": 0.06179791699105408,
+   "load": 0.23082691700255964,
+   "transform": 0.021636332996422425
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 13,
+  "detect_stage_share": 0.8474191416724748,
+  "flagged_share": 0.050018254837531945,
+  "id": "uci:381",
+  "method": "isolation_forest",
+  "name": "Beijing PM2.5",
+  "rows_after_transform": 43824,
+  "rows_in": 43824,
+  "rss_delta_bytes": 75513856,
+  "rss_peak_bytes": 304431104,
+  "stages_s": {
+   "detect": 1.6317727499990724,
+   "extract": 0.04694474999269005,
+   "load": 0.2327742500056047,
+   "transform": 0.0140875409997534
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 36,
+  "detect_stage_share": 0.3895847468689447,
+  "flagged_share": 0.3029940119760479,
+  "id": "uci:383",
+  "method": "zscore",
+  "name": "Cervical Cancer (Risk Factors)",
+  "rows_after_transform": 835,
+  "rows_in": 858,
+  "rss_delta_bytes": 2965504,
+  "rss_peak_bytes": 181993472,
+  "stages_s": {
+   "detect": 0.015278457998647355,
+   "extract": 0.005194458004552871,
+   "load": 0.015506333002122119,
+   "transform": 0.0032380409975303337
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 36,
+  "detect_stage_share": 0.9683678724952126,
+  "flagged_share": 0.05029940119760479,
+  "id": "uci:383",
+  "method": "isolation_forest",
+  "name": "Cervical Cancer (Risk Factors)",
+  "rows_after_transform": 835,
+  "rows_in": 858,
+  "rss_delta_bytes": 56180736,
+  "rss_peak_bytes": 235749376,
+  "stages_s": {
+   "detect": 0.9138095839880407,
+   "extract": 0.0027121669991174713,
+   "load": 0.02339091699104756,
+   "transform": 0.003746874994249083
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 20,
+  "detect_stage_share": 0.25872390811032003,
+  "flagged_share": 0.09523809523809523,
+  "id": "uci:390",
+  "method": "zscore",
+  "name": "Stock Portfolio Performance",
+  "rows_after_transform": 315,
+  "rows_in": 315,
+  "rss_delta_bytes": 589824,
+  "rss_peak_bytes": 176553984,
+  "stages_s": {
+   "detect": 0.0063200000004144385,
+   "extract": 0.0024942919990280643,
+   "load": 0.01332925001042895,
+   "transform": 0.0022840419987915084
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 20,
+  "detect_stage_share": 0.9812627331989076,
+  "flagged_share": 0.050793650793650794,
+  "id": "uci:390",
+  "method": "isolation_forest",
+  "name": "Stock Portfolio Performance",
+  "rows_after_transform": 315,
+  "rows_in": 315,
+  "rss_delta_bytes": 56410112,
+  "rss_peak_bytes": 232751104,
+  "stages_s": {
+   "detect": 0.8845417919947067,
+   "extract": 0.0019345000036992133,
+   "load": 0.010775916001875885,
+   "transform": 0.004179959010798484
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 21,
+  "detect_stage_share": 0.3124323708359888,
+  "flagged_share": 0.001430615164520744,
+  "id": "uci:426",
+  "method": "zscore",
+  "name": "Autism Screening Adult",
+  "rows_after_transform": 699,
+  "rows_in": 704,
+  "rss_delta_bytes": 1540096,
+  "rss_peak_bytes": 177733632,
+  "stages_s": {
+   "detect": 0.008447000000160187,
+   "extract": 0.0032866249966900796,
+   "load": 0.011896958996658213,
+   "transform": 0.0034056670119753107
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 21,
+  "detect_stage_share": 0.9834746316745634,
+  "flagged_share": 0.05007153075822604,
+  "id": "uci:426",
+  "method": "isolation_forest",
+  "name": "Autism Screening Adult",
+  "rows_after_transform": 699,
+  "rows_in": 704,
+  "rss_delta_bytes": 57573376,
+  "rss_peak_bytes": 233799680,
+  "stages_s": {
+   "detect": 0.9408710839925334,
+   "extract": 0.0028151660080766305,
+   "load": 0.01002133300062269,
+   "transform": 0.002972999995108694
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 21,
+  "detect_stage_share": 0.4499041079641842,
+  "flagged_share": 0.21954674220963172,
+  "id": "uci:445",
+  "method": "zscore",
+  "name": "Absenteeism at work",
+  "rows_after_transform": 706,
+  "rows_in": 740,
+  "rss_delta_bytes": 1441792,
+  "rss_peak_bytes": 177324032,
+  "stages_s": {
+   "detect": 0.011886915992363356,
+   "extract": 0.0027927500050282106,
+   "load": 0.008912125005736016,
+   "transform": 0.00282920800964348
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 21,
+  "detect_stage_share": 0.9838051452360297,
+  "flagged_share": 0.05099150141643059,
+  "id": "uci:445",
+  "method": "isolation_forest",
+  "name": "Absenteeism at work",
+  "rows_after_transform": 706,
+  "rows_in": 740,
+  "rss_delta_bytes": 55934976,
+  "rss_peak_bytes": 232833024,
+  "stages_s": {
+   "detect": 0.9151359170064097,
+   "extract": 0.0019044590007979423,
+   "load": 0.009858334000455216,
+   "transform": 0.0033016670058714226
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 82,
+  "detect_stage_share": 0.03993612103299479,
+  "flagged_share": 0.22710760956739162,
+  "id": "uci:464",
+  "method": "zscore",
+  "name": "Superconductivty Data",
+  "rows_after_transform": 21197,
+  "rows_in": 21263,
+  "rss_delta_bytes": 0,
+  "rss_peak_bytes": 387006464,
+  "stages_s": {
+   "detect": 0.10643570800311863,
+   "extract": 0.32690145800006576,
+   "load": 2.1373258749954402,
+   "transform": 0.0944858330040006
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 82,
+  "detect_stage_share": 0.4044640389367422,
+  "flagged_share": 0.05000707647308581,
+  "id": "uci:464",
+  "method": "isolation_forest",
+  "name": "Superconductivty Data",
+  "rows_after_transform": 21197,
+  "rows_in": 21263,
+  "rss_delta_bytes": 83034112,
+  "rss_peak_bytes": 477757440,
+  "stages_s": {
+   "detect": 1.7570482919982169,
+   "extract": 0.3388591249968158,
+   "load": 2.149405999996816,
+   "transform": 0.09882629099593032
+  },
+  "status": "OK"
+ },
+ {
+  "id": "uci:467",
+  "method": "zscore",
+  "reason": "ValueError('at least one numeric feature is required')",
+  "status": "FAIL"
+ },
+ {
+  "id": "uci:467",
+  "method": "isolation_forest",
+  "reason": "ValueError(\"isolation_forest detector needs at least one numeric column; got ['ge', 'cst', 'tnp', 'twp', 'iap', 'esp', 'arr', 'ms', 'ls', 'as', 'fmi', 'fs', 'fq', 'mq', 'fo', 'mo', 'nf', 'sh', 'ss', 'me', 'tt', 'atd']\")",
+  "status": "FAIL"
+ },
+ {
+  "columns": 18,
+  "detect_stage_share": 0.09778853097715565,
+  "flagged_share": 0.21622285948381811,
+  "id": "uci:468",
+  "method": "zscore",
+  "name": "Online Shoppers Purchasing Intention Dataset",
+  "rows_after_transform": 12205,
+  "rows_in": 12330,
+  "rss_delta_bytes": 16990208,
+  "rss_peak_bytes": 211009536,
+  "stages_s": {
+   "detect": 0.014903791001415811,
+   "extract": 0.021040999999968335,
+   "load": 0.10469854099210352,
+   "transform": 0.011765041999751702
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 18,
+  "detect_stage_share": 0.887976575262272,
+  "flagged_share": 0.050061450225317494,
+  "id": "uci:468",
+  "method": "isolation_forest",
+  "name": "Online Shoppers Purchasing Intention Dataset",
+  "rows_after_transform": 12205,
+  "rows_in": 12330,
+  "rss_delta_bytes": 67682304,
+  "rss_peak_bytes": 263241728,
+  "stages_s": {
+   "detect": 1.307461999997031,
+   "extract": 0.027892166006495245,
+   "load": 0.12722670900984667,
+   "transform": 0.009825083005125634
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 8,
+  "detect_stage_share": 0.398900435015163,
+  "flagged_share": 0.014492753623188406,
+  "id": "uci:477",
+  "method": "zscore",
+  "name": "Real Estate Valuation",
+  "rows_after_transform": 414,
+  "rows_in": 414,
+  "rss_delta_bytes": 458752,
+  "rss_peak_bytes": 175882240,
+  "stages_s": {
+   "detect": 0.005432707999716513,
+   "extract": 0.0010771670058602467,
+   "load": 0.00617433300067205,
+   "transform": 0.0009350000036647543
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 8,
+  "detect_stage_share": 0.9894882233688439,
+  "flagged_share": 0.050724637681159424,
+  "id": "uci:477",
+  "method": "isolation_forest",
+  "name": "Real Estate Valuation",
+  "rows_after_transform": 414,
+  "rows_in": 414,
+  "rss_delta_bytes": 55803904,
+  "rss_peak_bytes": 230080512,
+  "stages_s": {
+   "detect": 0.8845880409935489,
+   "extract": 0.0010705000022426248,
+   "load": 0.007391999999526888,
+   "transform": 0.0009348750027129427
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 29,
+  "detect_stage_share": 0.2488301223654205,
+  "flagged_share": 0.002888086642599278,
+  "id": "uci:503",
+  "method": "zscore",
+  "name": "Hepatitis C Virus (HCV) for Egyptian patients",
+  "rows_after_transform": 1385,
+  "rows_in": 1385,
+  "rss_delta_bytes": 3948544,
+  "rss_peak_bytes": 183451648,
+  "stages_s": {
+   "detect": 0.010712458009948023,
+   "extract": 0.005486416004714556,
+   "load": 0.02432537499407772,
+   "transform": 0.0025270420010201633
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 29,
+  "detect_stage_share": 0.9732619687506714,
+  "flagged_share": 0.05054151624548736,
+  "id": "uci:503",
+  "method": "isolation_forest",
+  "name": "Hepatitis C Virus (HCV) for Egyptian patients",
+  "rows_after_transform": 1385,
+  "rows_in": 1385,
+  "rss_delta_bytes": 56049664,
+  "rss_peak_bytes": 235290624,
+  "stages_s": {
+   "detect": 0.9637771249981597,
+   "extract": 0.0047300409933086485,
+   "load": 0.018194666990893893,
+   "transform": 0.003552750000380911
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 17,
+  "detect_stage_share": 0.31514289360094927,
+  "flagged_share": 0.00398406374501992,
+  "id": "uci:529",
+  "method": "zscore",
+  "name": "Early Stage Diabetes Risk Prediction",
+  "rows_after_transform": 251,
+  "rows_in": 520,
+  "rss_delta_bytes": 1327104,
+  "rss_peak_bytes": 176291840,
+  "stages_s": {
+   "detect": 0.0055229579884326085,
+   "extract": 0.0025424999912502244,
+   "load": 0.007232999996631406,
+   "transform": 0.00222679199941922
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 17,
+  "detect_stage_share": 0.9873006838797607,
+  "flagged_share": 0.04780876494023904,
+  "id": "uci:529",
+  "method": "isolation_forest",
+  "name": "Early Stage Diabetes Risk Prediction",
+  "rows_after_transform": 251,
+  "rows_in": 520,
+  "rss_delta_bytes": 55721984,
+  "rss_peak_bytes": 231440384,
+  "stages_s": {
+   "detect": 0.8544789580046199,
+   "extract": 0.0021994999988237396,
+   "load": 0.006358250000630505,
+   "transform": 0.0024331250024260953
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 17,
+  "detect_stage_share": 0.12418592977418179,
+  "flagged_share": 0.011499760421657882,
+  "id": "uci:544",
+  "method": "zscore",
+  "name": "Estimation of Obesity Levels Based On Eating Habits and Physical Condition ",
+  "rows_after_transform": 2087,
+  "rows_in": 2111,
+  "rss_delta_bytes": 3391488,
+  "rss_peak_bytes": 181764096,
+  "stages_s": {
+   "detect": 0.004615458004991524,
+   "extract": 0.005235874996287748,
+   "load": 0.02322775000357069,
+   "transform": 0.00408662500558421
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 17,
+  "detect_stage_share": 0.9647735919578566,
+  "flagged_share": 0.05031145184475323,
+  "id": "uci:544",
+  "method": "isolation_forest",
+  "name": "Estimation of Obesity Levels Based On Eating Habits and Physical Condition ",
+  "rows_after_transform": 2087,
+  "rows_in": 2111,
+  "rss_delta_bytes": 58490880,
+  "rss_peak_bytes": 235683840,
+  "stages_s": {
+   "detect": 0.9251060420065187,
+   "extract": 0.0063659169973107055,
+   "load": 0.022055125009501353,
+   "transform": 0.005357000001822598
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 8,
+  "detect_stage_share": 0.11836170680028607,
+  "flagged_share": 0.008923884514435695,
+  "id": "uci:545",
+  "method": "zscore",
+  "name": "Rice (Cammeo and Osmancik)",
+  "rows_after_transform": 3810,
+  "rows_in": 3810,
+  "rss_delta_bytes": 3915776,
+  "rss_peak_bytes": 182272000,
+  "stages_s": {
+   "detect": 0.005688000004738569,
+   "extract": 0.008074124998529442,
+   "load": 0.03200733299308922,
+   "transform": 0.002286624992848374
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 8,
+  "detect_stage_share": 0.965029756050371,
+  "flagged_share": 0.050131233595800524,
+  "id": "uci:545",
+  "method": "isolation_forest",
+  "name": "Rice (Cammeo and Osmancik)",
+  "rows_after_transform": 3810,
+  "rows_in": 3810,
+  "rss_delta_bytes": 58458112,
+  "rss_peak_bytes": 237289472,
+  "stages_s": {
+   "detect": 0.9798155000025872,
+   "extract": 0.003930042003048584,
+   "load": 0.029442958009894937,
+   "transform": 0.0021330419986043125
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 12,
+  "detect_stage_share": 0.08533402540867675,
+  "flagged_share": 0.04558078745303055,
+  "id": "uci:551",
+  "method": "zscore",
+  "name": "Gas Turbine CO and NOx Emission Data Set",
+  "rows_after_transform": 36726,
+  "rows_in": 36733,
+  "rss_delta_bytes": 34193408,
+  "rss_peak_bytes": 259588096,
+  "stages_s": {
+   "detect": 0.036477750007179566,
+   "extract": 0.039380791000439785,
+   "load": 0.3277623339963611,
+   "transform": 0.02384929099935107
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 12,
+  "detect_stage_share": 0.7915561143646732,
+  "flagged_share": 0.05001906006643794,
+  "id": "uci:551",
+  "method": "isolation_forest",
+  "name": "Gas Turbine CO and NOx Emission Data Set",
+  "rows_after_transform": 36726,
+  "rows_in": 36733,
+  "rss_delta_bytes": 93585408,
+  "rss_peak_bytes": 317227008,
+  "stages_s": {
+   "detect": 1.7103939579974394,
+   "extract": 0.05164495900680777,
+   "load": 0.3783309170103166,
+   "transform": 0.02042954199714586
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 22,
+  "detect_stage_share": 0.007747976445218671,
+  "flagged_share": 0.011018427543061097,
+  "id": "uci:555",
+  "method": "zscore",
+  "name": "Apartment for Rent Classified",
+  "rows_after_transform": 99742,
+  "rows_in": 99826,
+  "rss_delta_bytes": 0,
+  "rss_peak_bytes": 495763456,
+  "stages_s": {
+   "detect": 0.042056000005686656,
+   "extract": 1.62284541700501,
+   "load": 3.1568001249979716,
+   "transform": 0.6062963750009658
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 22,
+  "detect_stage_share": 0.3968308006095602,
+  "flagged_share": 0.049988971546590204,
+  "id": "uci:555",
+  "method": "isolation_forest",
+  "name": "Apartment for Rent Classified",
+  "rows_after_transform": 99742,
+  "rows_in": 99826,
+  "rss_delta_bytes": 72499200,
+  "rss_peak_bytes": 570228736,
+  "stages_s": {
+   "detect": 3.3234282920020632,
+   "extract": 1.5699092080030823,
+   "load": 2.862365624998347,
+   "transform": 0.6192221249948489
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 14,
+  "detect_stage_share": 0.1257330757809933,
+  "flagged_share": 0.05422374429223744,
+  "id": "uci:560",
+  "method": "zscore",
+  "name": "Seoul Bike Sharing Demand",
+  "rows_after_transform": 8760,
+  "rows_in": 8760,
+  "rss_delta_bytes": 9191424,
+  "rss_peak_bytes": 192823296,
+  "stages_s": {
+   "detect": 0.011793333003879525,
+   "extract": 0.01883083400025498,
+   "load": 0.056822541999281384,
+   "transform": 0.006349874995066784
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 14,
+  "detect_stage_share": 0.9199529627179481,
+  "flagged_share": 0.05,
+  "id": "uci:560",
+  "method": "isolation_forest",
+  "name": "Seoul Bike Sharing Demand",
+  "rows_after_transform": 8760,
+  "rows_in": 8760,
+  "rss_delta_bytes": 66928640,
+  "rss_peak_bytes": 251641856,
+  "stages_s": {
+   "detect": 1.0369697910064133,
+   "extract": 0.01191970900981687,
+   "load": 0.07236916599504184,
+   "transform": 0.0059400419995654374
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 14,
+  "detect_stage_share": 0.22924748236533224,
+  "flagged_share": 0.21789473684210525,
+  "id": "uci:563",
+  "method": "zscore",
+  "name": "Iranian Churn",
+  "rows_after_transform": 2850,
+  "rows_in": 3150,
+  "rss_delta_bytes": 4046848,
+  "rss_peak_bytes": 183173120,
+  "stages_s": {
+   "detect": 0.0071054590080166236,
+   "extract": 0.004553792008664459,
+   "load": 0.016313957996317185,
+   "transform": 0.0030215000006137416
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 14,
+  "detect_stage_share": 0.9755096606977226,
+  "flagged_share": 0.05017543859649123,
+  "id": "uci:563",
+  "method": "isolation_forest",
+  "name": "Iranian Churn",
+  "rows_after_transform": 2850,
+  "rows_in": 3150,
+  "rss_delta_bytes": 58982400,
+  "rss_peak_bytes": 239255552,
+  "stages_s": {
+   "detect": 0.9217240410071099,
+   "extract": 0.0047919999924488366,
+   "load": 0.014994749988545664,
+   "transform": 0.0033532920060679317
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 14,
+  "detect_stage_share": 0.3471527304594181,
+  "flagged_share": 0.0991869918699187,
+  "id": "uci:571",
+  "method": "zscore",
+  "name": "HCV data",
+  "rows_after_transform": 615,
+  "rows_in": 615,
+  "rss_delta_bytes": 1277952,
+  "rss_peak_bytes": 178176000,
+  "stages_s": {
+   "detect": 0.006050249998224899,
+   "extract": 0.0019512500002747402,
+   "load": 0.007699833004153334,
+   "transform": 0.0017268750088987872
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 14,
+  "detect_stage_share": 0.983421167842759,
+  "flagged_share": 0.05040650406504065,
+  "id": "uci:571",
+  "method": "isolation_forest",
+  "name": "HCV data",
+  "rows_after_transform": 615,
+  "rows_in": 615,
+  "rss_delta_bytes": 55410688,
+  "rss_peak_bytes": 231538688,
+  "stages_s": {
+   "detect": 0.8765922080056043,
+   "extract": 0.001899208000395447,
+   "load": 0.010939416999462992,
+   "transform": 0.001939249996212311
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 96,
+  "detect_stage_share": 0.04776279343405254,
+  "flagged_share": 0.2800997213667693,
+  "id": "uci:572",
+  "method": "zscore",
+  "name": "Taiwanese Bankruptcy Prediction",
+  "rows_after_transform": 6819,
+  "rows_in": 6819,
+  "rss_delta_bytes": 50364416,
+  "rss_peak_bytes": 322633728,
+  "stages_s": {
+   "detect": 0.05228733300464228,
+   "extract": 0.12838258300325833,
+   "load": 0.8797667089966126,
+   "transform": 0.03429275000235066
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 96,
+  "detect_stage_share": 0.5260229608121517,
+  "flagged_share": 0.05000733245343892,
+  "id": "uci:572",
+  "method": "isolation_forest",
+  "name": "Taiwanese Bankruptcy Prediction",
+  "rows_after_transform": 6819,
+  "rows_in": 6819,
+  "rss_delta_bytes": 77004800,
+  "rss_peak_bytes": 354926592,
+  "stages_s": {
+   "detect": 1.1749036249966593,
+   "extract": 0.11813312499725726,
+   "load": 0.9076530000020284,
+   "transform": 0.032869832997675985
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 124,
+  "detect_stage_share": 0.22177332749281634,
+  "flagged_share": 0.6770588235294117,
+  "id": "uci:579",
+  "method": "zscore",
+  "name": "Myocardial infarction complications",
+  "rows_after_transform": 1700,
+  "rows_in": 1700,
+  "rss_delta_bytes": 18694144,
+  "rss_peak_bytes": 215318528,
+  "stages_s": {
+   "detect": 0.0409803750080755,
+   "extract": 0.018021208001300693,
+   "load": 0.11507225000241306,
+   "transform": 0.010711124996305443
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 124,
+  "detect_stage_share": 0.8547431121326815,
+  "flagged_share": 0.05,
+  "id": "uci:579",
+  "method": "isolation_forest",
+  "name": "Myocardial infarction complications",
+  "rows_after_transform": 1700,
+  "rows_in": 1700,
+  "rss_delta_bytes": 72597504,
+  "rss_peak_bytes": 269516800,
+  "stages_s": {
+   "detect": 0.9230233749985928,
+   "extract": 0.01854191599704791,
+   "load": 0.12705741700483486,
+   "transform": 0.011261249994277023
+  },
+  "status": "OK"
+ },
+ {
+  "id": "uci:582",
+  "method": "zscore",
+  "reason": "ValueError('at least one numeric feature is required')",
+  "status": "FAIL"
+ },
+ {
+  "id": "uci:582",
+  "method": "isolation_forest",
+  "reason": "ValueError(\"isolation_forest detector needs at least one numeric column; got ['Gender', 'Caste', 'coaching', 'time', 'Class_ten_education', 'twelve_education', 'medium', 'Class_X_Percentage', 'Class_XII_Percentage', 'Father_occupation', 'Mother_occupation']\")",
+  "status": "FAIL"
+ },
+ {
+  "columns": 15,
+  "detect_stage_share": 0.22099819038189586,
+  "flagged_share": 0.0885547201336675,
+  "id": "uci:597",
+  "method": "zscore",
+  "name": "Productivity Prediction of Garment Employees",
+  "rows_after_transform": 1197,
+  "rows_in": 1197,
+  "rss_delta_bytes": 1212416,
+  "rss_peak_bytes": 179142656,
+  "stages_s": {
+   "detect": 0.006728915992425755,
+   "extract": 0.002536542000598274,
+   "load": 0.01786958299635444,
+   "transform": 0.00331279200327117
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 15,
+  "detect_stage_share": 0.9788243564063216,
+  "flagged_share": 0.05012531328320802,
+  "id": "uci:597",
+  "method": "isolation_forest",
+  "name": "Productivity Prediction of Garment Employees",
+  "rows_after_transform": 1197,
+  "rows_in": 1197,
+  "rss_delta_bytes": 55754752,
+  "rss_peak_bytes": 232882176,
+  "stages_s": {
+   "detect": 0.8909130420070142,
+   "extract": 0.0028900839970447123,
+   "load": 0.01407412500702776,
+   "transform": 0.0023095829965313897
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 14,
+  "detect_stage_share": 0.0915897317204534,
+  "flagged_share": 0.0178,
+  "id": "uci:601",
+  "method": "zscore",
+  "name": "AI4I 2020 Predictive Maintenance Dataset",
+  "rows_after_transform": 10000,
+  "rows_in": 10000,
+  "rss_delta_bytes": 10616832,
+  "rss_peak_bytes": 201457664,
+  "stages_s": {
+   "detect": 0.007360207993770018,
+   "extract": 0.01415337499929592,
+   "load": 0.05264079100743402,
+   "transform": 0.006206250007380731
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 14,
+  "detect_stage_share": 0.9374787895581369,
+  "flagged_share": 0.05,
+  "id": "uci:601",
+  "method": "isolation_forest",
+  "name": "AI4I 2020 Predictive Maintenance Dataset",
+  "rows_after_transform": 10000,
+  "rows_in": 10000,
+  "rss_delta_bytes": 59506688,
+  "rss_peak_bytes": 248299520,
+  "stages_s": {
+   "detect": 1.1466524169954937,
+   "extract": 0.012513666995801032,
+   "load": 0.05860154199763201,
+   "transform": 0.005355957997380756
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 17,
+  "detect_stage_share": 0.05894718076431415,
+  "flagged_share": 0.08336409953481504,
+  "id": "uci:602",
+  "method": "zscore",
+  "name": "Dry Bean",
+  "rows_after_transform": 13543,
+  "rows_in": 13611,
+  "rss_delta_bytes": 24576000,
+  "rss_peak_bytes": 227393536,
+  "stages_s": {
+   "detect": 0.01610449999861885,
+   "extract": 0.027569917001528665,
+   "load": 0.2154527090024203,
+   "transform": 0.014075082988711074
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 17,
+  "detect_stage_share": 0.8145420143471881,
+  "flagged_share": 0.05006276305102267,
+  "id": "uci:602",
+  "method": "isolation_forest",
+  "name": "Dry Bean",
+  "rows_after_transform": 13543,
+  "rows_in": 13611,
+  "rss_delta_bytes": 80478208,
+  "rss_peak_bytes": 281985024,
+  "stages_s": {
+   "detect": 1.164395208004862,
+   "extract": 0.03224225000303704,
+   "load": 0.21357541700126603,
+   "transform": 0.019296208003652282
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 26,
+  "detect_stage_share": 0.04529532751098975,
+  "flagged_share": 0.0,
+  "id": "uci:603",
+  "method": "zscore",
+  "name": "In-Vehicle Coupon Recommendation",
+  "rows_after_transform": 12610,
+  "rows_in": 12684,
+  "rss_delta_bytes": 15958016,
+  "rss_peak_bytes": 216743936,
+  "stages_s": {
+   "detect": 0.008458708005491644,
+   "extract": 0.04093375000229571,
+   "load": 0.11380137500236742,
+   "transform": 0.023551874997792765
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 26,
+  "detect_stage_share": 0.8346304213450955,
+  "flagged_share": 0.03957176843774782,
+  "id": "uci:603",
+  "method": "isolation_forest",
+  "name": "In-Vehicle Coupon Recommendation",
+  "rows_after_transform": 12610,
+  "rows_in": 12684,
+  "rss_delta_bytes": 71303168,
+  "rss_peak_bytes": 271400960,
+  "stages_s": {
+   "detect": 1.0292983330000425,
+   "extract": 0.05671716600772925,
+   "load": 0.12165900001127739,
+   "transform": 0.025563957999111153
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 37,
+  "detect_stage_share": 0.17344240043795775,
+  "flagged_share": 0.30357142857142855,
+  "id": "uci:697",
+  "method": "zscore",
+  "name": "Predict Students' Dropout and Academic Success",
+  "rows_after_transform": 4424,
+  "rows_in": 4424,
+  "rss_delta_bytes": 19873792,
+  "rss_peak_bytes": 213254144,
+  "stages_s": {
+   "detect": 0.01883891600300558,
+   "extract": 0.01933591699344106,
+   "load": 0.06595399999059737,
+   "transform": 0.004488874998060055
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 37,
+  "detect_stage_share": 0.9300783751195809,
+  "flagged_share": 0.05018083182640145,
+  "id": "uci:697",
+  "method": "isolation_forest",
+  "name": "Predict Students' Dropout and Academic Success",
+  "rows_after_transform": 4424,
+  "rows_in": 4424,
+  "rss_delta_bytes": 63881216,
+  "rss_peak_bytes": 255885312,
+  "stages_s": {
+   "detect": 0.9848410420090659,
+   "extract": 0.014021209004567936,
+   "load": 0.0556570409971755,
+   "transform": 0.004360334001830779
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 87,
+  "detect_stage_share": 0.09981798926739018,
+  "flagged_share": 0.7567747964223736,
+  "id": "uci:722",
+  "method": "zscore",
+  "name": "NATICUSdroid (Android Permissions)",
+  "rows_after_transform": 7491,
+  "rows_in": 29332,
+  "rss_delta_bytes": 0,
+  "rss_peak_bytes": 440385536,
+  "stages_s": {
+   "detect": 0.04402887499600183,
+   "extract": 0.2108182499941904,
+   "load": 0.14279808399442118,
+   "transform": 0.04344637499889359
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 87,
+  "detect_stage_share": 0.7496801058339287,
+  "flagged_share": 0.0500600720865038,
+  "id": "uci:722",
+  "method": "isolation_forest",
+  "name": "NATICUSdroid (Android Permissions)",
+  "rows_after_transform": 7491,
+  "rows_in": 29332,
+  "rss_delta_bytes": 0,
+  "rss_peak_bytes": 426754048,
+  "stages_s": {
+   "detect": 1.247927249991335,
+   "extract": 0.22081824998895172,
+   "load": 0.15031608399294782,
+   "transform": 0.045551415998488665
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 25,
+  "detect_stage_share": 0.3335846924410181,
+  "flagged_share": 0.432657926102503,
+  "id": "uci:759",
+  "method": "zscore",
+  "name": "Glioma Grading Clinical and Mutation Features",
+  "rows_after_transform": 839,
+  "rows_in": 839,
+  "rss_delta_bytes": 1409024,
+  "rss_peak_bytes": 179830784,
+  "stages_s": {
+   "detect": 0.008682041996507905,
+   "extract": 0.002488541998900473,
+   "load": 0.01264229099615477,
+   "transform": 0.002213625004515052
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 25,
+  "detect_stage_share": 0.9701525892113461,
+  "flagged_share": 0.050059594755661505,
+  "id": "uci:759",
+  "method": "isolation_forest",
+  "name": "Glioma Grading Clinical and Mutation Features",
+  "rows_after_transform": 839,
+  "rows_in": 839,
+  "rss_delta_bytes": 55869440,
+  "rss_peak_bytes": 233766912,
+  "stages_s": {
+   "detect": 0.9053051249939017,
+   "extract": 0.0033285420067841187,
+   "load": 0.021868541996809654,
+   "transform": 0.0026552500057732686
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 10,
+  "detect_stage_share": 0.05333223444493041,
+  "flagged_share": 0.025505042616537667,
+  "id": "uci:799",
+  "method": "zscore",
+  "name": "Single Elder Home Monitoring: Gas and Position",
+  "rows_after_transform": 416153,
+  "rows_in": 416153,
+  "rss_delta_bytes": 0,
+  "rss_peak_bytes": 663879680,
+  "stages_s": {
+   "detect": 0.2114580829947954,
+   "extract": 0.5798179170087678,
+   "load": 2.968227791003301,
+   "transform": 0.20541695899737533
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 10,
+  "detect_stage_share": 0.6335908215122036,
+  "flagged_share": 0.0500008410368302,
+  "id": "uci:799",
+  "method": "isolation_forest",
+  "name": "Single Elder Home Monitoring: Gas and Position",
+  "rows_after_transform": 416153,
+  "rows_in": 416153,
+  "rss_delta_bytes": 15286272,
+  "rss_peak_bytes": 683819008,
+  "stages_s": {
+   "detect": 6.5806577499897685,
+   "extract": 0.5962371670029825,
+   "load": 3.0136637090035947,
+   "transform": 0.1957309580029687
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 21,
+  "detect_stage_share": 0.023569284939434432,
+  "flagged_share": 0.03712883475862975,
+  "id": "uci:848",
+  "method": "zscore",
+  "name": "Secondary Mushroom",
+  "rows_after_transform": 60923,
+  "rows_in": 61069,
+  "rss_delta_bytes": 28229632,
+  "rss_peak_bytes": 267567104,
+  "stages_s": {
+   "detect": 0.01569029201345984,
+   "extract": 0.15768308399128728,
+   "load": 0.38484191699535586,
+   "transform": 0.10749399999622256
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 21,
+  "detect_stage_share": 0.763566371761039,
+  "flagged_share": 0.049899052902844576,
+  "id": "uci:848",
+  "method": "isolation_forest",
+  "name": "Secondary Mushroom",
+  "rows_after_transform": 60923,
+  "rows_in": 61069,
+  "rss_delta_bytes": 90832896,
+  "rss_peak_bytes": 333643776,
+  "stages_s": {
+   "detect": 1.9765026250097435,
+   "extract": 0.15589112498855684,
+   "load": 0.36196824999933597,
+   "transform": 0.09415249999437947
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 9,
+  "detect_stage_share": 0.04935651098718208,
+  "flagged_share": 0.03069673382173382,
+  "id": "uci:849",
+  "method": "zscore",
+  "name": "Power Consumption of Tetouan City",
+  "rows_after_transform": 52416,
+  "rows_in": 52416,
+  "rss_delta_bytes": 5423104,
+  "rss_peak_bytes": 240271360,
+  "stages_s": {
+   "detect": 0.025681915998575278,
+   "extract": 0.0691350830020383,
+   "load": 0.39985779199923854,
+   "transform": 0.025660125000285916
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 9,
+  "detect_stage_share": 0.7721283433810155,
+  "flagged_share": 0.05000381562881563,
+  "id": "uci:849",
+  "method": "isolation_forest",
+  "name": "Power Consumption of Tetouan City",
+  "rows_after_transform": 52416,
+  "rows_in": 52416,
+  "rss_delta_bytes": 79429632,
+  "rss_peak_bytes": 311246848,
+  "stages_s": {
+   "detect": 1.693841208005324,
+   "extract": 0.07303891699120868,
+   "load": 0.4000659169978462,
+   "transform": 0.026784083995153196
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 8,
+  "detect_stage_share": 0.39211170586274174,
+  "flagged_share": 0.044444444444444446,
+  "id": "uci:850",
+  "method": "zscore",
+  "name": "Raisin",
+  "rows_after_transform": 900,
+  "rows_in": 900,
+  "rss_delta_bytes": 950272,
+  "rss_peak_bytes": 177258496,
+  "stages_s": {
+   "detect": 0.010404291999293491,
+   "extract": 0.0018711659940890968,
+   "load": 0.012872374994913116,
+   "transform": 0.001386167001328431
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 8,
+  "detect_stage_share": 0.9830462449621499,
+  "flagged_share": 0.05,
+  "id": "uci:850",
+  "method": "isolation_forest",
+  "name": "Raisin",
+  "rows_after_transform": 900,
+  "rows_in": 900,
+  "rss_delta_bytes": 56246272,
+  "rss_peak_bytes": 232128512,
+  "stages_s": {
+   "detect": 0.9006459579977673,
+   "extract": 0.002107209002133459,
+   "load": 0.011926709004910663,
+   "transform": 0.001498749988968484
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 11,
+  "detect_stage_share": 0.06228449806290811,
+  "flagged_share": 0.03290525114155251,
+  "id": "uci:851",
+  "method": "zscore",
+  "name": "Steel Industry Energy Consumption",
+  "rows_after_transform": 35040,
+  "rows_in": 35040,
+  "rss_delta_bytes": 14303232,
+  "rss_peak_bytes": 226279424,
+  "stages_s": {
+   "detect": 0.020280540993553586,
+   "extract": 0.06879550000303425,
+   "load": 0.21439308300614357,
+   "transform": 0.022142250003525987
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 11,
+  "detect_stage_share": 0.8413604417264229,
+  "flagged_share": 0.05,
+  "id": "uci:851",
+  "method": "isolation_forest",
+  "name": "Steel Industry Energy Consumption",
+  "rows_after_transform": 35040,
+  "rows_in": 35040,
+  "rss_delta_bytes": 76087296,
+  "rss_peak_bytes": 291504128,
+  "stages_s": {
+   "detect": 1.6364980830112472,
+   "extract": 0.051794749990222044,
+   "load": 0.2367143750016112,
+   "transform": 0.02005462501256261
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 7,
+  "detect_stage_share": 0.45015557615330715,
+  "flagged_share": 0.05530973451327434,
+  "id": "uci:863",
+  "method": "zscore",
+  "name": "Maternal Health Risk",
+  "rows_after_transform": 452,
+  "rows_in": 1014,
+  "rss_delta_bytes": 1064960,
+  "rss_peak_bytes": 176521216,
+  "stages_s": {
+   "detect": 0.008620666994829662,
+   "extract": 0.0022632500040344894,
+   "load": 0.006596291990717873,
+   "transform": 0.0016702080029062927
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 7,
+  "detect_stage_share": 0.9891725837922234,
+  "flagged_share": 0.05088495575221239,
+  "id": "uci:863",
+  "method": "isolation_forest",
+  "name": "Maternal Health Risk",
+  "rows_after_transform": 452,
+  "rows_in": 1014,
+  "rss_delta_bytes": 56147968,
+  "rss_peak_bytes": 232243200,
+  "stages_s": {
+   "detect": 0.9460782920068596,
+   "extract": 0.0019641669932752848,
+   "load": 0.006732834008289501,
+   "transform": 0.0016587080026511103
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 19,
+  "detect_stage_share": 0.10474496493402384,
+  "flagged_share": 0.15924573008194293,
+  "id": "uci:864",
+  "method": "zscore",
+  "name": "Room Occupancy Estimation",
+  "rows_after_transform": 10129,
+  "rows_in": 10129,
+  "rss_delta_bytes": 16957440,
+  "rss_peak_bytes": 209829888,
+  "stages_s": {
+   "detect": 0.015240375010762364,
+   "extract": 0.01616329199168831,
+   "load": 0.10614987500593998,
+   "transform": 0.007946291996631771
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 19,
+  "detect_stage_share": 0.8816009530857616,
+  "flagged_share": 0.05005429953598578,
+  "id": "uci:864",
+  "method": "isolation_forest",
+  "name": "Room Occupancy Estimation",
+  "rows_after_transform": 10129,
+  "rows_in": 10129,
+  "rss_delta_bytes": 63930368,
+  "rss_peak_bytes": 258834432,
+  "stages_s": {
+   "detect": 1.1137390829971991,
+   "extract": 0.023751582994009368,
+   "load": 0.11025804201199207,
+   "transform": 0.01556558300217148
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 20,
+  "detect_stage_share": 0.22270561476853537,
+  "flagged_share": 0.07655502392344497,
+  "id": "uci:878",
+  "method": "zscore",
+  "name": "Cirrhosis Patient Survival Prediction",
+  "rows_after_transform": 418,
+  "rows_in": 418,
+  "rss_delta_bytes": 933888,
+  "rss_peak_bytes": 177651712,
+  "stages_s": {
+   "detect": 0.0041165830043610185,
+   "extract": 0.0034503749920986593,
+   "load": 0.008601916008046828,
+   "transform": 0.00231554098718334
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 20,
+  "detect_stage_share": 0.9853452803971433,
+  "flagged_share": 0.050239234449760764,
+  "id": "uci:878",
+  "method": "isolation_forest",
+  "name": "Cirrhosis Patient Survival Prediction",
+  "rows_after_transform": 418,
+  "rows_in": 418,
+  "rss_delta_bytes": 55672832,
+  "rss_peak_bytes": 231522304,
+  "stages_s": {
+   "detect": 0.9031860420072917,
+   "extract": 0.002798000001348555,
+   "load": 0.008063458997639827,
+   "transform": 0.002571332996012643
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 10,
+  "detect_stage_share": 0.15711921753006902,
+  "flagged_share": 0.0781387181738367,
+  "id": "uci:887",
+  "method": "zscore",
+  "name": "National Health and Nutrition Health Survey 2013-2014 (NHANES) Age Prediction Subset",
+  "rows_after_transform": 2278,
+  "rows_in": 2278,
+  "rss_delta_bytes": 1490944,
+  "rss_peak_bytes": 178864128,
+  "stages_s": {
+   "detect": 0.0064761659887153655,
+   "extract": 0.00825420800538268,
+   "load": 0.02490537500125356,
+   "transform": 0.0015824169968254864
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 10,
+  "detect_stage_share": 0.9717258530032626,
+  "flagged_share": 0.05004389815627744,
+  "id": "uci:887",
+  "method": "isolation_forest",
+  "name": "National Health and Nutrition Health Survey 2013-2014 (NHANES) Age Prediction Subset",
+  "rows_after_transform": 2278,
+  "rows_in": 2278,
+  "rss_delta_bytes": 56721408,
+  "rss_peak_bytes": 234471424,
+  "stages_s": {
+   "detect": 0.9606314170086989,
+   "extract": 0.0027288750134175643,
+   "load": 0.02332837499852758,
+   "transform": 0.001894084009109065
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 15,
+  "detect_stage_share": 0.03779979210132511,
+  "flagged_share": 0.11302386976130238,
+  "id": "uci:911",
+  "method": "zscore",
+  "name": "Recipe Reviews and User Feedback",
+  "rows_after_transform": 18182,
+  "rows_in": 18182,
+  "rss_delta_bytes": 31064064,
+  "rss_peak_bytes": 256180224,
+  "stages_s": {
+   "detect": 0.014931792000425048,
+   "extract": 0.14545079199888278,
+   "load": 0.21199108300788794,
+   "transform": 0.02264945799834095
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 15,
+  "detect_stage_share": 0.7637622095617776,
+  "flagged_share": 0.05004949950500495,
+  "id": "uci:911",
+  "method": "isolation_forest",
+  "name": "Recipe Reviews and User Feedback",
+  "rows_after_transform": 18182,
+  "rows_in": 18182,
+  "rss_delta_bytes": 76267520,
+  "rss_peak_bytes": 303382528,
+  "stages_s": {
+   "detect": 1.2386534170072991,
+   "extract": 0.15006170900596771,
+   "load": 0.20699245799914934,
+   "transform": 0.026071291009429842
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 11,
+  "detect_stage_share": 0.6148162327894395,
+  "flagged_share": 0.0375,
+  "id": "uci:913",
+  "method": "zscore",
+  "name": "Forty Soybean Cultivars from Subsequent Harvests",
+  "rows_after_transform": 320,
+  "rows_in": 320,
+  "rss_delta_bytes": 704512,
+  "rss_peak_bytes": 175636480,
+  "stages_s": {
+   "detect": 0.025294999999459833,
+   "extract": 0.0017072079936042428,
+   "load": 0.012589334000949748,
+   "transform": 0.0015508329961448908
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 11,
+  "detect_stage_share": 0.986771392845859,
+  "flagged_share": 0.05,
+  "id": "uci:913",
+  "method": "isolation_forest",
+  "name": "Forty Soybean Cultivars from Subsequent Harvests",
+  "rows_after_transform": 320,
+  "rows_in": 320,
+  "rss_delta_bytes": 55427072,
+  "rss_peak_bytes": 231718912,
+  "stages_s": {
+   "detect": 0.9220440000062808,
+   "extract": 0.001252250003744848,
+   "load": 0.008272000006400049,
+   "transform": 0.002836625004420057
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 17,
+  "detect_stage_share": 0.22802260302833693,
+  "flagged_share": 0.0,
+  "id": "uci:915",
+  "method": "zscore",
+  "name": "Differentiated Thyroid Cancer Recurrence",
+  "rows_after_transform": 364,
+  "rows_in": 383,
+  "rss_delta_bytes": 229376,
+  "rss_peak_bytes": 175177728,
+  "stages_s": {
+   "detect": 0.0028917919989908114,
+   "extract": 0.002872416007448919,
+   "load": 0.004774707995238714,
+   "transform": 0.0021431249915622175
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 17,
+  "detect_stage_share": 0.9844319335405789,
+  "flagged_share": 0.0521978021978022,
+  "id": "uci:915",
+  "method": "isolation_forest",
+  "name": "Differentiated Thyroid Cancer Recurrence",
+  "rows_after_transform": 364,
+  "rows_in": 383,
+  "rss_delta_bytes": 55541760,
+  "rss_peak_bytes": 231735296,
+  "stages_s": {
+   "detect": 0.8968696249939967,
+   "extract": 0.0018702079978538677,
+   "load": 0.00712129200110212,
+   "transform": 0.005191832999116741
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 15,
+  "detect_stage_share": 0.39341683498958213,
+  "flagged_share": 0.22023809523809523,
+  "id": "uci:936",
+  "method": "zscore",
+  "name": "National Poll on Healthy Aging (NPHA)",
+  "rows_after_transform": 672,
+  "rows_in": 714,
+  "rss_delta_bytes": 819200,
+  "rss_peak_bytes": 176226304,
+  "stages_s": {
+   "detect": 0.010211166998487897,
+   "extract": 0.0012849170016124845,
+   "load": 0.009598000004189089,
+   "transform": 0.004860999993979931
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 15,
+  "detect_stage_share": 0.9882106215098023,
+  "flagged_share": 0.050595238095238096,
+  "id": "uci:936",
+  "method": "isolation_forest",
+  "name": "National Poll on Healthy Aging (NPHA)",
+  "rows_after_transform": 672,
+  "rows_in": 714,
+  "rss_delta_bytes": 55394304,
+  "rss_peak_bytes": 231653376,
+  "stages_s": {
+   "detect": 0.8837365420040442,
+   "extract": 0.0015935419942252338,
+   "load": 0.00699995800096076,
+   "transform": 0.001949500001501292
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 56,
+  "detect_stage_share": 0.06663931816604518,
+  "flagged_share": 0.2524777879089887,
+  "id": "uci:967",
+  "method": "zscore",
+  "name": "PhiUSIIL Phishing URL (Website)",
+  "rows_after_transform": 235795,
+  "rows_in": 235795,
+  "rss_delta_bytes": 0,
+  "rss_peak_bytes": 1332871168,
+  "stages_s": {
+   "detect": 0.5670331669971347,
+   "extract": 2.2783363749913406,
+   "load": 5.180156833986985,
+   "transform": 0.4834617499873275
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 56,
+  "detect_stage_share": 0.5646960930006478,
+  "flagged_share": 0.0500010602430077,
+  "id": "uci:967",
+  "method": "isolation_forest",
+  "name": "PhiUSIIL Phishing URL (Website)",
+  "rows_after_transform": 235795,
+  "rows_in": 235795,
+  "rss_delta_bytes": 0,
+  "rss_peak_bytes": 1152647168,
+  "stages_s": {
+   "detect": 10.307449667001492,
+   "extract": 2.2637935420061694,
+   "load": 5.184109416004503,
+   "transform": 0.49773925000044983
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 22,
+  "detect_stage_share": 0.23020163429975665,
+  "flagged_share": 0.16145833333333334,
+  "id": "adbench:Cardiotocography",
+  "method": "zscore",
+  "name": "Cardiotocography",
+  "rows_after_transform": 2112,
+  "rows_in": 2114,
+  "rss_delta_bytes": 6438912,
+  "rss_peak_bytes": 187662336,
+  "stages_s": {
+   "detect": 0.013020165992202237,
+   "extract": 0.005550917005166411,
+   "load": 0.03424362500663847,
+   "transform": 0.003745124995475635
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 22,
+  "detect_stage_share": 0.9496491422065658,
+  "flagged_share": 0.050189393939393936,
+  "id": "adbench:Cardiotocography",
+  "method": "isolation_forest",
+  "name": "Cardiotocography",
+  "rows_after_transform": 2112,
+  "rows_in": 2114,
+  "rss_delta_bytes": 59801600,
+  "rss_peak_bytes": 244744192,
+  "stages_s": {
+   "detect": 0.9642240410030354,
+   "extract": 0.004126791987800971,
+   "load": 0.043712124999728985,
+   "transform": 0.0032847090042196214
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 20,
+  "detect_stage_share": 0.46729097595350794,
+  "flagged_share": 0.075,
+  "id": "adbench:Hepatitis",
+  "method": "zscore",
+  "name": "Hepatitis",
+  "rows_after_transform": 80,
+  "rows_in": 80,
+  "rss_delta_bytes": 360448,
+  "rss_peak_bytes": 176373760,
+  "stages_s": {
+   "detect": 0.009210499993059784,
+   "extract": 0.0017234999977517873,
+   "load": 0.007049457999528386,
+   "transform": 0.0017269590025534853
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 20,
+  "detect_stage_share": 0.9920710882992055,
+  "flagged_share": 0.05,
+  "id": "adbench:Hepatitis",
+  "method": "isolation_forest",
+  "name": "Hepatitis",
+  "rows_after_transform": 80,
+  "rows_in": 80,
+  "rss_delta_bytes": 55328768,
+  "rss_peak_bytes": 230490112,
+  "stages_s": {
+   "detect": 0.909064416991896,
+   "extract": 0.001283833000343293,
+   "load": 0.004490999999688938,
+   "transform": 0.0014906659926055
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 1556,
+  "detect_stage_share": 0.15801074429148143,
+  "flagged_share": 0.9959308240081384,
+  "id": "adbench:InternetAds",
+  "method": "zscore",
+  "name": "InternetAds",
+  "rows_after_transform": 1966,
+  "rows_in": 1966,
+  "rss_delta_bytes": 130908160,
+  "rss_peak_bytes": 389693440,
+  "stages_s": {
+   "detect": 0.6583837499929359,
+   "extract": 0.2724774999951478,
+   "load": 3.103724291009712,
+   "transform": 0.1321168750000652
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 1556,
+  "detect_stage_share": 0.28446182115694596,
+  "flagged_share": 0.05035605289928789,
+  "id": "adbench:InternetAds",
+  "method": "isolation_forest",
+  "name": "InternetAds",
+  "rows_after_transform": 1966,
+  "rows_in": 1966,
+  "rss_delta_bytes": 237338624,
+  "rss_peak_bytes": 498597888,
+  "stages_s": {
+   "detect": 1.356692249988555,
+   "extract": 0.24840612499974668,
+   "load": 2.9880702910013497,
+   "transform": 0.1761611669935519
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 33,
+  "detect_stage_share": 0.340989462073819,
+  "flagged_share": 0.08857142857142856,
+  "id": "adbench:Ionosphere",
+  "method": "zscore",
+  "name": "Ionosphere",
+  "rows_after_transform": 350,
+  "rows_in": 351,
+  "rss_delta_bytes": 2179072,
+  "rss_peak_bytes": 179683328,
+  "stages_s": {
+   "detect": 0.016037459005019628,
+   "extract": 0.003223082996555604,
+   "load": 0.019162208001944236,
+   "transform": 0.008609374999650754
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 33,
+  "detect_stage_share": 0.9785788072436764,
+  "flagged_share": 0.05142857142857143,
+  "id": "adbench:Ionosphere",
+  "method": "isolation_forest",
+  "name": "Ionosphere",
+  "rows_after_transform": 350,
+  "rows_in": 351,
+  "rss_delta_bytes": 57131008,
+  "rss_peak_bytes": 233832448,
+  "stages_s": {
+   "detect": 0.9991785830061417,
+   "extract": 0.0029696660058107227,
+   "load": 0.014881374998367392,
+   "transform": 0.004021083004772663
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 19,
+  "detect_stage_share": 0.5600707770717139,
+  "flagged_share": 0.14864864864864866,
+  "id": "adbench:Lymphography",
+  "method": "zscore",
+  "name": "Lymphography",
+  "rows_after_transform": 148,
+  "rows_in": 148,
+  "rss_delta_bytes": 655360,
+  "rss_peak_bytes": 176308224,
+  "stages_s": {
+   "detect": 0.016574291003053077,
+   "extract": 0.0014041249960428104,
+   "load": 0.010165750005398877,
+   "transform": 0.0014490419998764992
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 19,
+  "detect_stage_share": 0.9872677803041544,
+  "flagged_share": 0.05405405405405406,
+  "id": "adbench:Lymphography",
+  "method": "isolation_forest",
+  "name": "Lymphography",
+  "rows_after_transform": 148,
+  "rows_in": 148,
+  "rss_delta_bytes": 55230464,
+  "rss_peak_bytes": 231800832,
+  "stages_s": {
+   "detect": 0.8960238750005374,
+   "extract": 0.001356417007627897,
+   "load": 0.008712040988029912,
+   "transform": 0.0014870419981889427
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 11,
+  "detect_stage_share": 0.14243049972231753,
+  "flagged_share": 0.08715000927127758,
+  "id": "adbench:PageBlocks",
+  "method": "zscore",
+  "name": "PageBlocks",
+  "rows_after_transform": 5393,
+  "rows_in": 5393,
+  "rss_delta_bytes": 3735552,
+  "rss_peak_bytes": 191168512,
+  "stages_s": {
+   "detect": 0.008642208005767316,
+   "extract": 0.005311333006829955,
+   "load": 0.04375770900514908,
+   "transform": 0.002965417006635107
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 11,
+  "detect_stage_share": 0.9517438609281889,
+  "flagged_share": 0.05006489894307436,
+  "id": "adbench:PageBlocks",
+  "method": "isolation_forest",
+  "name": "PageBlocks",
+  "rows_after_transform": 5393,
+  "rows_in": 5393,
+  "rss_delta_bytes": 58966016,
+  "rss_peak_bytes": 245383168,
+  "stages_s": {
+   "detect": 1.0869553750089835,
+   "extract": 0.005435292012407444,
+   "load": 0.04614575000596233,
+   "transform": 0.0035307079961057752
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 58,
+  "detect_stage_share": 0.13433285902227177,
+  "flagged_share": 0.5143807939149038,
+  "id": "adbench:SpamBase",
+  "method": "zscore",
+  "name": "SpamBase",
+  "rows_after_transform": 4207,
+  "rows_in": 4207,
+  "rss_delta_bytes": 30867456,
+  "rss_peak_bytes": 232390656,
+  "stages_s": {
+   "detect": 0.030097708004177548,
+   "extract": 0.020145041999057867,
+   "load": 0.15690379099396523,
+   "transform": 0.01690666700596921
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 58,
+  "detect_stage_share": 0.8498418664048256,
+  "flagged_share": 0.05015450439743285,
+  "id": "adbench:SpamBase",
+  "method": "isolation_forest",
+  "name": "SpamBase",
+  "rows_after_transform": 4207,
+  "rows_in": 4207,
+  "rss_delta_bytes": 85508096,
+  "rss_peak_bytes": 288456704,
+  "stages_s": {
+   "detect": 1.0566922089928994,
+   "extract": 0.02364349999697879,
+   "load": 0.15082374999474268,
+   "transform": 0.012239167001098394
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 31,
+  "detect_stage_share": 0.3631691977808105,
+  "flagged_share": 0.12534059945504086,
+  "id": "adbench:WDBC",
+  "method": "zscore",
+  "name": "WDBC",
+  "rows_after_transform": 367,
+  "rows_in": 367,
+  "rss_delta_bytes": 1949696,
+  "rss_peak_bytes": 177635328,
+  "stages_s": {
+   "detect": 0.01259708400175441,
+   "extract": 0.0027624590002233163,
+   "load": 0.01647487501031719,
+   "transform": 0.0028521250060293823
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 31,
+  "detect_stage_share": 0.9762361031347124,
+  "flagged_share": 0.051771117166212535,
+  "id": "adbench:WDBC",
+  "method": "isolation_forest",
+  "name": "WDBC",
+  "rows_after_transform": 367,
+  "rows_in": 367,
+  "rss_delta_bytes": 56213504,
+  "rss_peak_bytes": 232964096,
+  "stages_s": {
+   "detect": 0.9220036250044359,
+   "extract": 0.0030016670061741024,
+   "load": 0.016012667008908466,
+   "transform": 0.0034294159995624796
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 34,
+  "detect_stage_share": 0.41453003155201085,
+  "flagged_share": 0.21212121212121213,
+  "id": "adbench:WPBC",
+  "method": "zscore",
+  "name": "WPBC",
+  "rows_after_transform": 198,
+  "rows_in": 198,
+  "rss_delta_bytes": 1835008,
+  "rss_peak_bytes": 177242112,
+  "stages_s": {
+   "detect": 0.012824332996387966,
+   "extract": 0.003274333997978829,
+   "load": 0.011669125000480562,
+   "transform": 0.0031692500051576644
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 34,
+  "detect_stage_share": 0.9798354045113525,
+  "flagged_share": 0.050505050505050504,
+  "id": "adbench:WPBC",
+  "method": "isolation_forest",
+  "name": "WPBC",
+  "rows_after_transform": 198,
+  "rows_in": 198,
+  "rss_delta_bytes": 56295424,
+  "rss_peak_bytes": 232030208,
+  "stages_s": {
+   "detect": 0.902124249987537,
+   "extract": 0.003214124997612089,
+   "load": 0.012460541009204462,
+   "transform": 0.0028906670049764216
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 22,
+  "detect_stage_share": 0.20462113803619125,
+  "flagged_share": 0.027882660470519894,
+  "id": "adbench:Waveform",
+  "method": "zscore",
+  "name": "Waveform",
+  "rows_after_transform": 3443,
+  "rows_in": 3443,
+  "rss_delta_bytes": 7536640,
+  "rss_peak_bytes": 197722112,
+  "stages_s": {
+   "detect": 0.018856374997994862,
+   "extract": 0.007367375001194887,
+   "load": 0.06108562499866821,
+   "transform": 0.004843249989789911
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 22,
+  "detect_stage_share": 0.9399459759273332,
+  "flagged_share": 0.05024687772291606,
+  "id": "adbench:Waveform",
+  "method": "isolation_forest",
+  "name": "Waveform",
+  "rows_after_transform": 3443,
+  "rows_in": 3443,
+  "rss_delta_bytes": 63995904,
+  "rss_peak_bytes": 254099456,
+  "stages_s": {
+   "detect": 1.0516522500111023,
+   "extract": 0.009519166997051798,
+   "load": 0.054178499995032325,
+   "transform": 0.003493374999379739
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 6,
+  "detect_stage_share": 0.21960358675273137,
+  "flagged_share": 0.036522100020751194,
+  "id": "adbench:Wilt",
+  "method": "zscore",
+  "name": "Wilt",
+  "rows_after_transform": 4819,
+  "rows_in": 4819,
+  "rss_delta_bytes": 2899968,
+  "rss_peak_bytes": 181927936,
+  "stages_s": {
+   "detect": 0.01057125000806991,
+   "extract": 0.005535083997529,
+   "load": 0.029624707996845245,
+   "transform": 0.0024068329948931932
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 6,
+  "detect_stage_share": 0.9635333673924028,
+  "flagged_share": 0.0500103755965968,
+  "id": "adbench:Wilt",
+  "method": "isolation_forest",
+  "name": "Wilt",
+  "rows_after_transform": 4819,
+  "rows_in": 4819,
+  "rss_delta_bytes": 56688640,
+  "rss_peak_bytes": 236994560,
+  "stages_s": {
+   "detect": 1.0070089159999043,
+   "extract": 0.0039592920074937865,
+   "load": 0.031776957999682054,
+   "transform": 0.002375791998929344
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 7,
+  "detect_stage_share": 0.14073421065897274,
+  "flagged_share": 0.04956103086944209,
+  "id": "adbench:annthyroid",
+  "method": "zscore",
+  "name": "annthyroid",
+  "rows_after_transform": 7062,
+  "rows_in": 7200,
+  "rss_delta_bytes": 6766592,
+  "rss_peak_bytes": 189874176,
+  "stages_s": {
+   "detect": 0.007101541996235028,
+   "extract": 0.004876082995906472,
+   "load": 0.03550849999010097,
+   "transform": 0.002974540999275632
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 7,
+  "detect_stage_share": 0.9591141801702737,
+  "flagged_share": 0.05012744265080714,
+  "id": "adbench:annthyroid",
+  "method": "isolation_forest",
+  "name": "annthyroid",
+  "rows_after_transform": 7062,
+  "rows_in": 7200,
+  "rss_delta_bytes": 59064320,
+  "rss_peak_bytes": 243515392,
+  "stages_s": {
+   "detect": 1.1693092079949565,
+   "extract": 0.00468104200263042,
+   "load": 0.04014387499773875,
+   "transform": 0.0050212500063935295
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 10,
+  "detect_stage_share": 0.22016716438940306,
+  "flagged_share": 0.031180400890868598,
+  "id": "adbench:breastw",
+  "method": "zscore",
+  "name": "breastw",
+  "rows_after_transform": 449,
+  "rows_in": 683,
+  "rss_delta_bytes": 0,
+  "rss_peak_bytes": 174784512,
+  "stages_s": {
+   "detect": 0.004915333003737032,
+   "extract": 0.0012929590011481196,
+   "load": 0.014504209000733681,
+   "transform": 0.001612958003534004
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 10,
+  "detect_stage_share": 0.992444799687523,
+  "flagged_share": 0.051224944320712694,
+  "id": "adbench:breastw",
+  "method": "isolation_forest",
+  "name": "breastw",
+  "rows_after_transform": 449,
+  "rows_in": 683,
+  "rss_delta_bytes": 55951360,
+  "rss_peak_bytes": 231964672,
+  "stages_s": {
+   "detect": 0.880949333004537,
+   "extract": 0.001330125000094995,
+   "load": 0.0037194580072537065,
+   "transform": 0.001656833992456086
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 63,
+  "detect_stage_share": 0.06666227093677188,
+  "flagged_share": 0.5766465902467457,
+  "id": "adbench:campaign",
+  "method": "zscore",
+  "name": "campaign",
+  "rows_after_transform": 41176,
+  "rows_in": 41188,
+  "rss_delta_bytes": 139427840,
+  "rss_peak_bytes": 372375552,
+  "stages_s": {
+   "detect": 0.13673875000677072,
+   "extract": 0.2372853330016369,
+   "load": 1.6037246250052704,
+   "transform": 0.07346779099316336
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 63,
+  "detect_stage_share": 0.5736995991206614,
+  "flagged_share": 0.05000485719836798,
+  "id": "adbench:campaign",
+  "method": "isolation_forest",
+  "name": "campaign",
+  "rows_after_transform": 41176,
+  "rows_in": 41188,
+  "rss_delta_bytes": 205307904,
+  "rss_peak_bytes": 438730752,
+  "stages_s": {
+   "detect": 2.5937648749968503,
+   "extract": 0.2318023749976419,
+   "load": 1.6326248749974184,
+   "transform": 0.06292812500032596
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 22,
+  "detect_stage_share": 0.0951751316436621,
+  "flagged_share": 0.16300768386388584,
+  "id": "adbench:cardio",
+  "method": "zscore",
+  "name": "cardio",
+  "rows_after_transform": 1822,
+  "rows_in": 1831,
+  "rss_delta_bytes": 5177344,
+  "rss_peak_bytes": 187383808,
+  "stages_s": {
+   "detect": 0.008796292007900774,
+   "extract": 0.010707042005378753,
+   "load": 0.06975575000979006,
+   "transform": 0.0031630839948775247
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 22,
+  "detect_stage_share": 0.9258090236086282,
+  "flagged_share": 0.050493962678375415,
+  "id": "adbench:cardio",
+  "method": "isolation_forest",
+  "name": "cardio",
+  "rows_after_transform": 1822,
+  "rows_in": 1831,
+  "rss_delta_bytes": 59195392,
+  "rss_peak_bytes": 240943104,
+  "stages_s": {
+   "detect": 0.9274965419899672,
+   "extract": 0.008022457986953668,
+   "load": 0.06034658399585169,
+   "transform": 0.005957166009466164
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 501,
+  "detect_stage_share": 0.08216559662692986,
+  "flagged_share": 0.9780966361732218,
+  "id": "adbench:census",
+  "method": "zscore",
+  "name": "census",
+  "rows_after_transform": 223436,
+  "rows_in": 299285,
+  "rss_delta_bytes": 2038185984,
+  "rss_peak_bytes": 3359113216,
+  "stages_s": {
+   "detect": 8.377728082996327,
+   "extract": 10.20246749999933,
+   "load": 79.81473937499686,
+   "transform": 3.566572374998941
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 501,
+  "detect_stage_share": 0.2227913434613558,
+  "flagged_share": 0.05000089511090424,
+  "id": "adbench:census",
+  "method": "isolation_forest",
+  "name": "census",
+  "rows_after_transform": 223436,
+  "rows_in": 299285,
+  "rss_delta_bytes": 1226326016,
+  "rss_peak_bytes": 3810918400,
+  "stages_s": {
+   "detect": 26.58653683299781,
+   "extract": 10.230447499998263,
+   "load": 79.03055279099499,
+   "transform": 3.486259333003545
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 11,
+  "detect_stage_share": 0.11922126547539787,
+  "flagged_share": 0.06432836447029869,
+  "id": "adbench:cover",
+  "method": "zscore",
+  "name": "cover",
+  "rows_after_transform": 286048,
+  "rows_in": 286048,
+  "rss_delta_bytes": 225984512,
+  "rss_peak_bytes": 425558016,
+  "stages_s": {
+   "detect": 0.1691042079910403,
+   "extract": 0.23256029198819306,
+   "load": 0.9422875830059638,
+   "transform": 0.07445433399698231
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 11,
+  "detect_stage_share": 0.8430242642505482,
+  "flagged_share": 0.050002097550061526,
+  "id": "adbench:cover",
+  "method": "isolation_forest",
+  "name": "cover",
+  "rows_after_transform": 286048,
+  "rows_in": 286048,
+  "rss_delta_bytes": 329039872,
+  "rss_peak_bytes": 529596416,
+  "stages_s": {
+   "detect": 6.71762595900509,
+   "extract": 0.21893716701015364,
+   "load": 0.9483521250076592,
+   "transform": 0.0835694579873234
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 28,
+  "detect_stage_share": 0.170371136720343,
+  "flagged_share": 0.10870685213807316,
+  "id": "adbench:fault",
+  "method": "zscore",
+  "name": "fault",
+  "rows_after_transform": 1941,
+  "rows_in": 1941,
+  "rss_delta_bytes": 6815744,
+  "rss_peak_bytes": 193970176,
+  "stages_s": {
+   "detect": 0.020567750005284324,
+   "extract": 0.015757207991555333,
+   "load": 0.07965783300460316,
+   "transform": 0.004740415999549441
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 28,
+  "detect_stage_share": 0.903095804341358,
+  "flagged_share": 0.04997424008243174,
+  "id": "adbench:fault",
+  "method": "isolation_forest",
+  "name": "fault",
+  "rows_after_transform": 1941,
+  "rows_in": 1941,
+  "rss_delta_bytes": 63995904,
+  "rss_peak_bytes": 250494976,
+  "stages_s": {
+   "detect": 0.9744752919941675,
+   "extract": 0.010781208009575494,
+   "load": 0.08934074999706354,
+   "transform": 0.004441416007466614
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 30,
+  "detect_stage_share": 0.03629915739400086,
+  "flagged_share": 0.13462187251733107,
+  "id": "adbench:fraud",
+  "method": "zscore",
+  "name": "fraud",
+  "rows_after_transform": 275661,
+  "rows_in": 284807,
+  "rss_delta_bytes": 443940864,
+  "rss_peak_bytes": 792084480,
+  "stages_s": {
+   "detect": 0.41525045900198165,
+   "extract": 1.5288902910106117,
+   "load": 8.776459583008545,
+   "transform": 0.7190717920020688
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 30,
+  "detect_stage_share": 0.4937559020618864,
+  "flagged_share": 0.049999818617795046,
+  "id": "adbench:fraud",
+  "method": "isolation_forest",
+  "name": "fraud",
+  "rows_after_transform": 275661,
+  "rows_in": 284807,
+  "rss_delta_bytes": 641679360,
+  "rss_peak_bytes": 989528064,
+  "stages_s": {
+   "detect": 9.554522416001419,
+   "extract": 1.4135743340011686,
+   "load": 7.6816837080114055,
+   "transform": 0.7009197080042213
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 8,
+  "detect_stage_share": 0.40854483811938963,
+  "flagged_share": 0.06572769953051644,
+  "id": "adbench:glass",
+  "method": "zscore",
+  "name": "glass",
+  "rows_after_transform": 213,
+  "rows_in": 214,
+  "rss_delta_bytes": 344064,
+  "rss_peak_bytes": 172654592,
+  "stages_s": {
+   "detect": 0.005465291003929451,
+   "extract": 0.0014059579989407212,
+   "load": 0.004752458000439219,
+   "transform": 0.001753749995259568
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 8,
+  "detect_stage_share": 0.9910446990214943,
+  "flagged_share": 0.051643192488262914,
+  "id": "adbench:glass",
+  "method": "isolation_forest",
+  "name": "glass",
+  "rows_after_transform": 213,
+  "rows_in": 214,
+  "rss_delta_bytes": 55230464,
+  "rss_peak_bytes": 232079360,
+  "stages_s": {
+   "detect": 0.9257601250137668,
+   "extract": 0.0012570420076372102,
+   "load": 0.0055343330022878945,
+   "transform": 0.0015739999944344163
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 4,
+  "detect_stage_share": 0.037475146500058655,
+  "flagged_share": 0.016601923371578446,
+  "id": "adbench:http",
+  "method": "zscore",
+  "name": "http",
+  "rows_after_transform": 221902,
+  "rows_in": 567498,
+  "rss_delta_bytes": 143835136,
+  "rss_peak_bytes": 383025152,
+  "stages_s": {
+   "detect": 0.05693512500147335,
+   "extract": 0.2797021250007674,
+   "load": 1.111483540997142,
+   "transform": 0.07115612500638235
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 4,
+  "detect_stage_share": 0.8241903957006785,
+  "flagged_share": 0.05000405584447189,
+  "id": "adbench:http",
+  "method": "isolation_forest",
+  "name": "http",
+  "rows_after_transform": 221902,
+  "rows_in": 567498,
+  "rss_delta_bytes": 211222528,
+  "rss_peak_bytes": 448348160,
+  "stages_s": {
+   "detect": 6.180252500009374,
+   "extract": 0.28871108300518245,
+   "load": 0.956854916003067,
+   "transform": 0.07275529199978337
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 37,
+  "detect_stage_share": 0.06567941119933672,
+  "flagged_share": 0.028904428904428906,
+  "id": "adbench:landsat",
+  "method": "zscore",
+  "name": "landsat",
+  "rows_after_transform": 6435,
+  "rows_in": 6435,
+  "rss_delta_bytes": 28377088,
+  "rss_peak_bytes": 228491264,
+  "stages_s": {
+   "detect": 0.02735695800220128,
+   "extract": 0.0572208329977002,
+   "load": 0.32522537499608006,
+   "transform": 0.0067194169969297945
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 37,
+  "detect_stage_share": 0.7331470482167152,
+  "flagged_share": 0.05003885003885004,
+  "id": "adbench:landsat",
+  "method": "isolation_forest",
+  "name": "landsat",
+  "rows_after_transform": 6435,
+  "rows_in": 6435,
+  "rss_delta_bytes": 89849856,
+  "rss_peak_bytes": 292634624,
+  "stages_s": {
+   "detect": 1.108387041997048,
+   "extract": 0.054600791001576,
+   "load": 0.3394421660050284,
+   "transform": 0.009390916995471343
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 33,
+  "detect_stage_share": 0.4031709271094896,
+  "flagged_share": 0.11576971214017522,
+  "id": "adbench:letter",
+  "method": "zscore",
+  "name": "letter",
+  "rows_after_transform": 1598,
+  "rows_in": 1600,
+  "rss_delta_bytes": 5210112,
+  "rss_peak_bytes": 181026816,
+  "stages_s": {
+   "detect": 0.014926999996532686,
+   "extract": 0.004208457990898751,
+   "load": 0.01447583299886901,
+   "transform": 0.0034127079998143017
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 33,
+  "detect_stage_share": 0.9724953496494546,
+  "flagged_share": 0.05006257822277847,
+  "id": "adbench:letter",
+  "method": "isolation_forest",
+  "name": "letter",
+  "rows_after_transform": 1598,
+  "rows_in": 1600,
+  "rss_delta_bytes": 60276736,
+  "rss_peak_bytes": 234848256,
+  "stages_s": {
+   "detect": 0.9698927079880377,
+   "extract": 0.007799500002874993,
+   "load": 0.015341124992119148,
+   "transform": 0.004290416007279418
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 11,
+  "detect_stage_share": 0.03647567107009619,
+  "flagged_share": 0.06247024596667548,
+  "id": "adbench:magic.gamma",
+  "method": "zscore",
+  "name": "magic.gamma",
+  "rows_after_transform": 18905,
+  "rows_in": 19020,
+  "rss_delta_bytes": 24133632,
+  "rss_peak_bytes": 221822976,
+  "stages_s": {
+   "detect": 0.014451708004344255,
+   "extract": 0.04166995799459983,
+   "load": 0.3244965420017252,
+   "transform": 0.015583083993988112
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 11,
+  "detect_stage_share": 0.813578482925131,
+  "flagged_share": 0.05003967204443269,
+  "id": "adbench:magic.gamma",
+  "method": "isolation_forest",
+  "name": "magic.gamma",
+  "rows_after_transform": 18905,
+  "rows_in": 19020,
+  "rss_delta_bytes": 87212032,
+  "rss_peak_bytes": 286785536,
+  "stages_s": {
+   "detect": 1.5087305829947582,
+   "extract": 0.04335000000719447,
+   "load": 0.28536116699979175,
+   "transform": 0.016995916012092493
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 167,
+  "detect_stage_share": 0.09249960768824612,
+  "flagged_share": 0.4039843239712606,
+  "id": "adbench:musk",
+  "method": "zscore",
+  "name": "musk",
+  "rows_after_transform": 3062,
+  "rows_in": 3062,
+  "rss_delta_bytes": 57819136,
+  "rss_peak_bytes": 265846784,
+  "stages_s": {
+   "detect": 0.06391162500949576,
+   "extract": 0.06894787499913946,
+   "load": 0.5337362090067472,
+   "transform": 0.024343707991647534
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 167,
+  "detect_stage_share": 0.6978666675228519,
+  "flagged_share": 0.050293925538863485,
+  "id": "adbench:musk",
+  "method": "isolation_forest",
+  "name": "musk",
+  "rows_after_transform": 3062,
+  "rows_in": 3062,
+  "rss_delta_bytes": 131039232,
+  "rss_peak_bytes": 340131840,
+  "stages_s": {
+   "detect": 1.0965506250067847,
+   "extract": 0.06449799999245442,
+   "load": 0.3835717080073664,
+   "transform": 0.026669250000850298
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 65,
+  "detect_stage_share": 0.13191706980212967,
+  "flagged_share": 0.24759522893420546,
+  "id": "adbench:optdigits",
+  "method": "zscore",
+  "name": "optdigits",
+  "rows_after_transform": 5198,
+  "rows_in": 5216,
+  "rss_delta_bytes": 48496640,
+  "rss_peak_bytes": 253181952,
+  "stages_s": {
+   "detect": 0.043050042004324496,
+   "extract": 0.03643691699835472,
+   "load": 0.23454241699073464,
+   "transform": 0.012312332997680642
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 65,
+  "detect_stage_share": 0.7971300456871534,
+  "flagged_share": 0.05001923816852635,
+  "id": "adbench:optdigits",
+  "method": "isolation_forest",
+  "name": "optdigits",
+  "rows_after_transform": 5198,
+  "rows_in": 5216,
+  "rss_delta_bytes": 96747520,
+  "rss_peak_bytes": 301842432,
+  "stages_s": {
+   "detect": 1.2377239159977762,
+   "extract": 0.028101624993723817,
+   "load": 0.2713158750120783,
+   "transform": 0.015583792002871633
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 17,
+  "detect_stage_share": 0.07949840252412825,
+  "flagged_share": 0.019068413391557498,
+  "id": "adbench:pendigits",
+  "method": "zscore",
+  "name": "pendigits",
+  "rows_after_transform": 6870,
+  "rows_in": 6870,
+  "rss_delta_bytes": 12632064,
+  "rss_peak_bytes": 210878464,
+  "stages_s": {
+   "detect": 0.013413792010396719,
+   "extract": 0.016037499997764826,
+   "load": 0.13122933299746364,
+   "transform": 0.00804970899480395
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 17,
+  "detect_stage_share": 0.876472171563732,
+  "flagged_share": 0.05007278020378457,
+  "id": "adbench:pendigits",
+  "method": "isolation_forest",
+  "name": "pendigits",
+  "rows_after_transform": 6870,
+  "rows_in": 6870,
+  "rss_delta_bytes": 74416128,
+  "rss_peak_bytes": 269893632,
+  "stages_s": {
+   "detect": 1.134833999996772,
+   "extract": 0.014098874991759658,
+   "load": 0.1360285830014618,
+   "transform": 0.009813249998842366
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 37,
+  "detect_stage_share": 0.21473358144923052,
+  "flagged_share": 0.028904428904428906,
+  "id": "adbench:satellite",
+  "method": "zscore",
+  "name": "satellite",
+  "rows_after_transform": 6435,
+  "rows_in": 6435,
+  "rss_delta_bytes": 31391744,
+  "rss_peak_bytes": 208732160,
+  "stages_s": {
+   "detect": 0.02508891699835658,
+   "extract": 0.024277500007883646,
+   "load": 0.06257383299816865,
+   "transform": 0.004897166989394464
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 37,
+  "detect_stage_share": 0.9186899814222683,
+  "flagged_share": 0.05003885003885004,
+  "id": "adbench:satellite",
+  "method": "isolation_forest",
+  "name": "satellite",
+  "rows_after_transform": 6435,
+  "rows_in": 6435,
+  "rss_delta_bytes": 81985536,
+  "rss_peak_bytes": 259276800,
+  "stages_s": {
+   "detect": 1.1172355000016978,
+   "extract": 0.027155167001183145,
+   "load": 0.060888708001584746,
+   "transform": 0.010838709000381641
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 37,
+  "detect_stage_share": 0.11737428044922102,
+  "flagged_share": 0.021720393035683502,
+  "id": "adbench:satimage-2",
+  "method": "zscore",
+  "name": "satimage-2",
+  "rows_after_transform": 5801,
+  "rows_in": 5803,
+  "rss_delta_bytes": 25624576,
+  "rss_peak_bytes": 224706560,
+  "stages_s": {
+   "detect": 0.024825125001370907,
+   "extract": 0.02118312500533648,
+   "load": 0.1572222920076456,
+   "transform": 0.008273416999145411
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 37,
+  "detect_stage_share": 0.847061390412352,
+  "flagged_share": 0.04999138079641441,
+  "id": "adbench:satimage-2",
+  "method": "isolation_forest",
+  "name": "satimage-2",
+  "rows_after_transform": 5801,
+  "rows_in": 5803,
+  "rss_delta_bytes": 79888384,
+  "rss_peak_bytes": 280772608,
+  "stages_s": {
+   "detect": 1.0400693749979837,
+   "extract": 0.02337808300217148,
+   "load": 0.15499870799249038,
+   "transform": 0.009409791993675753
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 10,
+  "detect_stage_share": 0.14941941385906812,
+  "flagged_share": 0.06941360979285903,
+  "id": "adbench:shuttle",
+  "method": "zscore",
+  "name": "shuttle",
+  "rows_after_transform": 49097,
+  "rows_in": 49097,
+  "rss_delta_bytes": 54050816,
+  "rss_peak_bytes": 234799104,
+  "stages_s": {
+   "detect": 0.029304290990694426,
+   "extract": 0.037573666995740496,
+   "load": 0.12208395800553262,
+   "transform": 0.0071591250016354024
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 10,
+  "detect_stage_share": 0.9227084598934092,
+  "flagged_share": 0.050003055176487364,
+  "id": "adbench:shuttle",
+  "method": "isolation_forest",
+  "name": "shuttle",
+  "rows_after_transform": 49097,
+  "rows_in": 49097,
+  "rss_delta_bytes": 112443392,
+  "rss_peak_bytes": 291373056,
+  "stages_s": {
+   "detect": 2.0686829170008423,
+   "extract": 0.037060374990687706,
+   "load": 0.12577629100997,
+   "transform": 0.010448500004713424
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 4,
+  "detect_stage_share": 0.03167117733357384,
+  "flagged_share": 0.0,
+  "id": "adbench:skin",
+  "method": "zscore",
+  "name": "skin",
+  "rows_after_transform": 51444,
+  "rows_in": 245057,
+  "rss_delta_bytes": 58474496,
+  "rss_peak_bytes": 277446656,
+  "stages_s": {
+   "detect": 0.012302041999646463,
+   "extract": 0.12396637500205543,
+   "load": 0.228304999996908,
+   "transform": 0.023856791012804024
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 4,
+  "detect_stage_share": 0.8263005510677194,
+  "flagged_share": 0.05001555089028847,
+  "id": "adbench:skin",
+  "method": "isolation_forest",
+  "name": "skin",
+  "rows_after_transform": 51444,
+  "rows_in": 245057,
+  "rss_delta_bytes": 97452032,
+  "rss_peak_bytes": 317276160,
+  "stages_s": {
+   "detect": 1.8908866249985294,
+   "extract": 0.12674437499663327,
+   "load": 0.244556833000388,
+   "transform": 0.026188499992713332
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 4,
+  "detect_stage_share": 0.04726125484215904,
+  "flagged_share": 0.04002527025129861,
+  "id": "adbench:smtp",
+  "method": "zscore",
+  "name": "smtp",
+  "rows_after_transform": 71230,
+  "rows_in": 95156,
+  "rss_delta_bytes": 38895616,
+  "rss_peak_bytes": 244498432,
+  "stages_s": {
+   "detect": 0.019245999996201135,
+   "extract": 0.04888766699878033,
+   "load": 0.32335704199795146,
+   "transform": 0.015735042004962452
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 4,
+  "detect_stage_share": 0.8677528924844982,
+  "flagged_share": 0.050007019514249615,
+  "id": "adbench:smtp",
+  "method": "isolation_forest",
+  "name": "smtp",
+  "rows_after_transform": 71230,
+  "rows_in": 95156,
+  "rss_delta_bytes": 109314048,
+  "rss_peak_bytes": 316489728,
+  "stages_s": {
+   "detect": 2.5302636659907876,
+   "extract": 0.05328058400482405,
+   "load": 0.32191779199638404,
+   "transform": 0.010418375008157454
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 7,
+  "detect_stage_share": 0.1253822864121488,
+  "flagged_share": 0.05278993435448578,
+  "id": "adbench:thyroid",
+  "method": "zscore",
+  "name": "thyroid",
+  "rows_after_transform": 3656,
+  "rows_in": 3772,
+  "rss_delta_bytes": 3260416,
+  "rss_peak_bytes": 183549952,
+  "stages_s": {
+   "detect": 0.006346209003822878,
+   "extract": 0.003715458995429799,
+   "load": 0.03537595899251755,
+   "transform": 0.0051772500009974465
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 7,
+  "detect_stage_share": 0.9575320484280516,
+  "flagged_share": 0.050054704595185996,
+  "id": "adbench:thyroid",
+  "method": "isolation_forest",
+  "name": "thyroid",
+  "rows_after_transform": 3656,
+  "rows_in": 3772,
+  "rss_delta_bytes": 58114048,
+  "rss_peak_bytes": 237371392,
+  "stages_s": {
+   "detect": 0.9582696659927024,
+   "extract": 0.003849125001579523,
+   "load": 0.03682554099941626,
+   "transform": 0.0018259999924339354
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 7,
+  "detect_stage_share": 0.40314814697332585,
+  "flagged_share": 0.029166666666666667,
+  "id": "adbench:vertebral",
+  "method": "zscore",
+  "name": "vertebral",
+  "rows_after_transform": 240,
+  "rows_in": 240,
+  "rss_delta_bytes": 49152,
+  "rss_peak_bytes": 175325184,
+  "stages_s": {
+   "detect": 0.004711542002041824,
+   "extract": 0.0009595829906174913,
+   "load": 0.00506854199920781,
+   "transform": 0.0009472080128034577
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 7,
+  "detect_stage_share": 0.9913219569931936,
+  "flagged_share": 0.05,
+  "id": "adbench:vertebral",
+  "method": "isolation_forest",
+  "name": "vertebral",
+  "rows_after_transform": 240,
+  "rows_in": 240,
+  "rss_delta_bytes": 55459840,
+  "rss_peak_bytes": 231997440,
+  "stages_s": {
+   "detect": 0.9015915419877274,
+   "extract": 0.0010287500044796616,
+   "load": 0.00588666700059548,
+   "transform": 0.0009771249897312373
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 14,
+  "detect_stage_share": 0.3850657068748203,
+  "flagged_share": 0.08527131782945736,
+  "id": "adbench:wine",
+  "method": "zscore",
+  "name": "wine",
+  "rows_after_transform": 129,
+  "rows_in": 129,
+  "rss_delta_bytes": 212992,
+  "rss_peak_bytes": 176406528,
+  "stages_s": {
+   "detect": 0.0056239169934997335,
+   "extract": 0.0010992080060532317,
+   "load": 0.006400250000297092,
+   "transform": 0.0014817089977441356
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 14,
+  "detect_stage_share": 0.9912061152406647,
+  "flagged_share": 0.05426356589147287,
+  "id": "adbench:wine",
+  "method": "isolation_forest",
+  "name": "wine",
+  "rows_after_transform": 129,
+  "rows_in": 129,
+  "rss_delta_bytes": 55459840,
+  "rss_peak_bytes": 230260736,
+  "stages_s": {
+   "detect": 0.9160615000000689,
+   "extract": 0.0010906669922405854,
+   "load": 0.005617583010462113,
+   "transform": 0.0014189590001478791
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 9,
+  "detect_stage_share": 0.2660525927022942,
+  "flagged_share": 0.08602890571231935,
+  "id": "adbench:yeast",
+  "method": "zscore",
+  "name": "yeast",
+  "rows_after_transform": 1453,
+  "rows_in": 1484,
+  "rss_delta_bytes": 2326528,
+  "rss_peak_bytes": 178667520,
+  "stages_s": {
+   "detect": 0.010602750000543892,
+   "extract": 0.006776957990950905,
+   "load": 0.01709512498928234,
+   "transform": 0.0053772499959450215
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 9,
+  "detect_stage_share": 0.9612888199020184,
+  "flagged_share": 0.05024088093599449,
+  "id": "adbench:yeast",
+  "method": "isolation_forest",
+  "name": "yeast",
+  "rows_after_transform": 1453,
+  "rows_in": 1484,
+  "rss_delta_bytes": 57376768,
+  "rss_peak_bytes": 235323392,
+  "stages_s": {
+   "detect": 0.935843625004054,
+   "extract": 0.003534292001859285,
+   "load": 0.03236466599628329,
+   "transform": 0.0017875420016935095
+  },
+  "status": "OK"
+ }
+]

@@ -1203,6 +1203,96 @@ multivariate outliers and on invalid formats, with $9\%$ of clean rows flagged; 
 and AE1SVM ($0.78$) follow the autoencoder on multivariate outliers; Deep SVDD is the weakest
 neural model on univariate and multivariate outliers, drift and invalid formats.
 
+% BEGIN generated pool extension
+\subsection{Every study on the whole pool}
+\label{sec:pool-all}
+The curves, the contamination sweep, the label-free threshold, the severity sweep, the pipeline run and the chronological split were first done on the three example datasets and the synthetic data. I applied each of them to every dataset of the pool for which it is defined, with the protocol and six hypotheses written beforehand (\texttt{verification/pool\_extension.md}), and list what could not be run and why.
+
+\paragraph{Label-free threshold and curves.} Table~\ref{tab:pool-fixed} gives, for the seventeen detectors on the $100$ labelled problems, the median $F_1$ and the median share of flagged rows at the training-prevalence threshold and at a constant contamination of $0.02$, both read from a single fit (a test checks that this equals a refit). The hypothesis that the label-free threshold lowers the median $F_1$ of at least twelve of the seventeen detectors holds: it does for the 14 learned detectors, and the three rules are unchanged because they do not read the contamination. The ranking by the average precision of the curves (seed $42$) correlates with the published PR-AUC ranking at $0.90$, below the $0.99$ I had fixed, so the hypothesis is not supported: several detectors have medians within a hundredth of each other and swap places between one seed and five.
+
+\begin{table}[t]
+\caption{Median over the $100$ labelled problems of the $F_1$ and of the share of flagged rows (\%), at the training-prevalence threshold (prev.) and at a constant contamination of $0.02$ (fixed).}
+\label{tab:pool-fixed}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrr}
+\toprule
+Detector & $F_1$ prev. & $F_1$ fixed & Flag.\% prev. & Flag.\% fixed \\
+\midrule
+Z-score            & 0.164 & 0.164 & 11.4 & 11.4 \\
+IQR                & 0.160 & 0.160 & 22.8 & 22.8 \\
+Great Expectations & 0.052 & 0.052 & 1.6 & 1.6 \\
+\midrule
+Isolation Forest   & 0.189 & 0.068 & 10.0 & 2.1 \\
+LOF                & 0.163 & 0.052 & 10.1 & 2.0 \\
+One-Class SVM      & 0.214 & 0.072 & 10.6 & 2.4 \\
+ECOD               & 0.214 & 0.068 & 10.0 & 2.1 \\
+COPOD              & 0.199 & 0.073 & 10.0 & 2.2 \\
+HBOS               & 0.213 & 0.067 & 10.0 & 2.1 \\
+KNN                & 0.202 & 0.074 & 10.0 & 2.1 \\
+PCA                & 0.169 & 0.068 & 11.4 & 2.4 \\
+\midrule
+Autoencoder        & 0.190 & 0.100 & 12.4 & 3.0 \\
+VAE                & 0.184 & 0.069 & 10.0 & 2.2 \\
+Deep SVDD          & 0.193 & 0.101 & 14.0 & 4.3 \\
+DIF                & 0.217 & 0.120 & 13.6 & 2.9 \\
+AE1SVM             & 0.184 & 0.054 & 10.3 & 2.2 \\
+LUNAR              & 0.131 & 0.064 & 9.1 & 2.3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:pool-sweep} sweeps the contamination of Isolation Forest on the same problems. Recall rises with the contamination as on the three examples, and the median $F_1$ keeps rising up to the largest value of the grid, $0.2$, twice the median prevalence of the pool ($0.10$). Precision stays between $0.14$ and $0.16$ from $0.05$ on whatever the threshold, which points to weak scores on these labels more than to a badly placed threshold.
+
+\begin{table}[t]
+\caption{Isolation Forest on the $100$ labelled problems: median precision, recall, $F_1$ and share of flagged rows (\%) over the contamination grid.}
+\label{tab:pool-sweep}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrr}
+\toprule
+Contamination & Prec. & Rec. & $F_1$ & Flag.\% \\
+\midrule
+0.001 & 0.062 & 0.001 & 0.003 & 0.1 \\
+0.010 & 0.125 & 0.018 & 0.032 & 1.1 \\
+0.050 & 0.155 & 0.117 & 0.114 & 5.2 \\
+0.100 & 0.141 & 0.213 & 0.166 & 10.2 \\
+0.200 & 0.148 & 0.377 & 0.203 & 20.3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Typed injection and eligibility.} The eligibility rule of Section~\ref{sec:typed} was applied to all $152$ datasets, ADBench ones included (the normal class only for a labelled set): 58 are eligible, 42 from the UCI repository and 16 from ADBench. The others are listed with their reason in the archive; the usual one is fewer than four continuous columns (categorical or binary tables) or too few rows. Figure~\ref{fig:typed} and the stability figures of Section~\ref{sec:typed} include the ADBench tables.
+
+\paragraph{The pipeline end to end.} The four stages (read, remove duplicates, detect, write) ran on all $152$ datasets with Z-score and Isolation Forest, one fresh process per measurement; 14 of the $304$ runs failed and are recorded with their reason (a table with no numeric column, or a column that the pipeline reads as text because of stray header lines in the file). On the 14 datasets above $50{,}000$ rows the detection takes 62\% of the pipeline time with Isolation Forest and 4\% with the Z-score, the writing of the two files being the rest, as on Credit Card Fraud; the hypothesis holds. These times were measured while other jobs ran on the machine, so they are orders of magnitude, and the shares are ratios inside one process.
+
+\paragraph{Chronological split.}
+A time variable is needed, and only some pool datasets have one: eleven unlabelled UCI tables have a date, the ADBench files have none, and five labelled datasets qualify (Credit Card, Bank Marketing, Occupancy Detection, Online Shoppers and Room Occupancy, the rule being fixed beforehand). Table~\ref{tab:pool-chrono} gives the result of the chronological pilot with all the detectors that scale. The hypothesis that the chronological PR-AUC is below the stratified one for two thirds of the pairs does not hold: 31 of 64 pairs are lower. Bank Marketing is the reason: its prevalence rises from $5.8\%$ to $39.3\%$ and no detector loses PR-AUC there, as Section~\ref{sec:decisions} found with four detectors. Room Occupancy is excluded because its anomalies are all in the oldest rows.
+
+\begin{table}[t]
+\caption{Chronological split on the pool datasets with a time variable: anomalies in the test partition, prevalence in training and test (\%), and the number of detectors whose PR-AUC is lower than under the stratified split.}
+\label{tab:pool-chrono}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrr}
+\toprule
+Dataset & Test anom. & Train \% & Test \% & Lower \\
+\midrule
+Credit Card & 52 & 0.2 & 0.1 & 12 of 14 \\
+Bank Marketing & 2668 & 5.8 & 39.3 & 0 of 16 \\
+Occupancy Detection & 405 & 11.0 & 15.4 & 11 of 17 \\
+Online Shoppers & 144 & 8.9 & 8.3 & 8 of 17 \\
+Room Occupancy & \multicolumn{4}{l}{excluded: 0 test anomalies} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Files.} All $152$ local files match the pinned manifest (\texttt{make verify-pool}), so the sixth hypothesis holds.
+% END generated pool extension
+
 \section{Secondary Studies}
 \label{sec:secondary}
 The four studies below are narrower than the per-type comparison of the

@@ -178,3 +178,53 @@ def chronology(results: dict[str, dict[str, Any]]) -> dict[str, Any]:
 def contract(report: dict[str, Any]) -> dict[str, Any]:
     """P6: no pool file differs from the manifest."""
     return {"supported": bool(report["summary"]["all_ok"]), **report["summary"]}
+
+
+def fixed_rows(table: dict[str, Any], names: dict[str, str]) -> str:
+    """LaTeX rows: median F1 and flagged share at the prevalence and at the fixed threshold."""
+    lines = []
+    for method, label in names.items():
+        e = table["by_detector"][method]
+        lines.append(
+            f"{label:<18} & {e['f1']['prevalence']:.3f} & {e['f1']['fixed']:.3f} "
+            f"& {e['flagged_pct']['prevalence']:.1f} & {e['flagged_pct']['fixed']:.1f} \\\\"
+        )
+        if method in ("great_expectations", "pca"):
+            lines.append(r"\midrule")
+    return "\n".join(lines)
+
+
+def sweep_rows(sweep: dict[str, Any]) -> str:
+    """LaTeX rows of the Isolation Forest contamination grid."""
+    return "\n".join(
+        f"{float(c):.3f} & {v['precision']:.3f} & {v['recall']:.3f} & {v['f1']:.3f} "
+        f"& {v['flagged_pct']:.1f} \\\\"
+        for c, v in sweep.items()
+    )
+
+
+def _short(reason: str) -> str:
+    return reason.replace(" anomalies in the test partition (at least 20)", " test anomalies")
+
+
+def chrono_rows(results: dict[str, dict[str, Any]], labels: dict[str, str]) -> str:
+    """LaTeX rows of the chronological study: partitions, prevalence shift, lower pairs."""
+    lines = []
+    for name, label in labels.items():
+        result = results[name]
+        if "excluded" in result:
+            lines.append(
+                f"{label} & \\multicolumn{{4}}{{l}}{{excluded: {_short(result['excluded'])}}} \\\\"
+            )
+            continue
+        part = result["partitions"]
+        lower = sum(
+            result["chronological"][m]["pr_auc"] < result["stratified"][m]["pr_auc"]
+            for m in result["chronological"]
+        )
+        lines.append(
+            f"{label} & {part['test']['positives']} "
+            f"& {100 * part['train']['prevalence']:.1f} & {100 * part['test']['prevalence']:.1f} "
+            f"& {lower} of {len(result['chronological'])} \\\\"
+        )
+    return "\n".join(lines)
