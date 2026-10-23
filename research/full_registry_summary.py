@@ -92,6 +92,25 @@ def typed_fpr(classical: Path, deep: Path) -> pd.DataFrame:
     return ordered(table)
 
 
+def _merge_fpr(evidence: Path, out: Path, extra: Path) -> pd.DataFrame:
+    """Clean-row flag rate over the UCI carriers and the ADBench ones together."""
+    columns: dict[str, list[float]] = {}
+    for classical, deep in (
+        (evidence / "typed_injection" / "runs", out / "typed_deep" / "runs"),
+        (extra / "reference_classical", extra / "reference_deep"),
+    ):
+        for path in sorted(classical.glob("*.json")):
+            for folder in (classical, deep):
+                file = folder / path.name
+                if file.is_file():
+                    for method, value in json.loads(file.read_text())["fpr_mean"].items():
+                        columns.setdefault(method, []).append(value)
+    table = pd.DataFrame(
+        {m: {"median": float(np.median(v)), "max": float(np.max(v))} for m, v in columns.items()}
+    ).T
+    return ordered(table)
+
+
 def table_md(
     frame: pd.DataFrame, low: pd.DataFrame | None = None, high=None, digits: int = 2
 ) -> str:
@@ -167,7 +186,10 @@ def real_table(classical_csv: Path, deep_json: Path) -> pd.DataFrame:
 def build(evidence: Path, figures: Path) -> dict[str, object]:
     out = evidence / "full_registry"
     sections = []
+    extra = evidence / "pool_extension" / "typed"
     typed = merged_typed(evidence / "typed_injection" / "runs", out / "typed_deep" / "runs")
+    if (extra / "reference_classical").is_dir():  # the ADBench carriers of the pool extension
+        typed |= merged_typed(extra / "reference_classical", extra / "reference_deep")
     pooled = ts.pooled(typed)
     sections += [
         f"### Typed injection, median recall over {len(typed)} real datasets",
@@ -180,6 +202,9 @@ def build(evidence: Path, figures: Path) -> dict[str, object]:
         figures / "typed_pooled.png",
     )
     fpr = typed_fpr(evidence / "typed_injection" / "runs", out / "typed_deep" / "runs")
+    if (extra / "reference_classical").is_dir():
+        both = typed_fpr(extra / "reference_classical", extra / "reference_deep")
+        fpr = both if len(fpr) == 0 else _merge_fpr(evidence, out, extra)
     sections += ["### Typed injection, clean rows flagged", "", table_md(fpr, digits=3)]
     synthetic = synthetic_matrix(evidence, out)
     sections += ["### Synthetic customer table, mean recall", "", table_md(synthetic)]

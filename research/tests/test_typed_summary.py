@@ -142,3 +142,19 @@ def test_the_figures_script_writes_the_pooled_and_the_small_multiples_png(tmp_pa
     assert tf.main(["--runs", str(runs), "--output", str(out), "--panels", "6"]) == 0
     assert (out / "typed_pooled.png").stat().st_size > 1000
     assert (out / "typed_panels.png").stat().st_size > 1000
+
+
+def test_the_runs_of_several_folders_are_pooled_into_one_summary(tmp_path):
+    import json
+
+    def run(folder, name, value):
+        folder.mkdir(exist_ok=True)
+        frame = {"index": ["zscore"], "columns": ["univariate_outlier"], "data": [[value]]}
+        payload = {"name": name, "recall_mean": frame, "carrier": {"columns": ["a", "b"]}}
+        (folder / f"{name}.json").write_text(json.dumps(payload))
+
+    run(tmp_path / "a", "first", 0.2)
+    run(tmp_path / "b", "second", 0.6)
+    data, columns, _ = ts._load([tmp_path / "a", tmp_path / "b"])
+    assert sorted(data) == ["first", "second"] and columns == {"first": 2, "second": 2}
+    assert len(ts._load(tmp_path / "a")[0]) == 1
