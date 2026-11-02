@@ -265,7 +265,6 @@ etl-anomaly-benchmark/
 ├── tests/                    # pytest
 ├── data/                     # raw datasets (gitignored)
 ├── experiments/results/      # generated output (gitignored)
-├── notebooks/                # exploratory analysis (later)
 └── paper/                    # LaTeX IEEE paper + figures/
 ```
 
