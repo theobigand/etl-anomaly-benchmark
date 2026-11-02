@@ -1,0 +1,86 @@
+name: Organize thesis remediation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/thesis-roadmap-sync.yml"
+      - "docs/thesis-remediation/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: thesis-roadmap-organization
+  cancel-in-progress: false
+
+jobs:
+  synchronize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout roadmap
+        uses: actions/checkout@v4
+
+      - name: Validate tasks and synchronize GitHub milestones and labels
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const root = 'docs/thesis-remediation';
+            const config = JSON.parse(fs.readFileSync(path.join(root, 'tracking.json'), 'utf8'));
+            const files = fs.readdirSync(root).filter(f => /^\d{2}-.*\.md$/.test(f));
+            const ids = files.flatMap(f => [...fs.readFileSync(path.join(root, f), 'utf8')
+              .matchAll(/^- \[[ xX]\] T(\d{3}) /gm)].map(m => Number(m[1])));
+            const unique = new Set(ids);
+            if (ids.length !== 415 || unique.size !== 415 ||
+                Array.from({length: 415}, (_, i) => i + 1).some(id => !unique.has(id))) {
+              throw new Error('The roadmap must contain exactly T001–T415, each once');
+            }
+            if (config.issues.length !== 16 || config.milestones.length !== 8) {
+              throw new Error('Unexpected roadmap issue or milestone inventory');
+            }
+            const { owner, repo } = context.repo;
+            const existingLabels = await github.paginate(github.rest.issues.listLabelsForRepo, {
+              owner, repo, per_page: 100
+            });
+            const labelNames = new Set(existingLabels.map(l => l.name));
+            for (const label of config.labels) {
+              if (!labelNames.has(label.name)) {
+                await github.rest.issues.createLabel({
+                  owner, repo, name: label.name, color: label.color,
+                  description: label.description
+                });
+                labelNames.add(label.name);
+              }
+            }
+            const existingMilestones = await github.paginate(github.rest.issues.listMilestones, {
+              owner, repo, state: 'all', per_page: 100
+            });
+            const milestones = new Map(existingMilestones.map(m => [m.title, m.number]));
+            for (const milestone of config.milestones) {
+              if (!milestones.has(milestone.title)) {
+                const response = await github.rest.issues.createMilestone({
+                  owner, repo, title: milestone.title,
+                  description: milestone.description, state: 'open'
+                });
+                milestones.set(milestone.title, response.data.number);
+              }
+            }
+            for (const item of config.issues) {
+              const milestone = milestones.get(item.milestone);
+              if (!milestone) throw new Error('Unknown milestone: ' + item.milestone);
+              await github.rest.issues.get({ owner, repo, issue_number: item.number });
+              await github.rest.issues.addLabels({
+                owner, repo, issue_number: item.number, labels: item.labels
+              });
+              await github.rest.issues.update({
+                owner, repo, issue_number: item.number, milestone
+              });
+            }
+            core.info('Verified 415 tasks and synchronized ' +
+              config.issues.length + ' issues, ' +
+              config.milestones.length + ' milestones, and ' +
+              config.labels.length + ' labels.');
