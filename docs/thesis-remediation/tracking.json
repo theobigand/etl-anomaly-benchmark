@@ -1,0 +1,324 @@
+{
+  "schema_version": 1,
+  "scope": "thesis-remediation",
+  "task_range": "T001–T415",
+  "milestones": [
+    {
+      "title": "Thesis 01 — Manuscript and methods corrections",
+      "description": "Resolve scientific framing, detector definitions, dataset accounting, figures, and tables before new analysis."
+    },
+    {
+      "title": "Thesis 02 — Statistical validity and deployment thresholds",
+      "description": "Correct AP terminology, paired inference, source clustering, operational metrics, and label-free thresholding."
+    },
+    {
+      "title": "Thesis 03 — Fair baselines and ETL fault fidelity",
+      "description": "Evaluate domain-informed rules, categorical ML representations, robust statistics, and realistic typed injections."
+    },
+    {
+      "title": "Thesis 04 — Hybrid pipelines and detector ablations",
+      "description": "Validate rules-plus-model combinations, inductive adaptations, and equal-budget tuning."
+    },
+    {
+      "title": "Thesis 05 — Temporal validity and operational cost",
+      "description": "Validate chronological behavior, drift monitoring, training/inference costs, and scaling."
+    },
+    {
+      "title": "Thesis 06 — IMRaD synthesis and academic quality",
+      "description": "Rewrite Results, Discussion, and Conclusion and verify bibliography and scholarly presentation."
+    },
+    {
+      "title": "Thesis 07 — Reproducibility and certified release",
+      "description": "Preserve evidence lineage, close verification gaps, and produce a reproducible certified final release."
+    },
+    {
+      "title": "Thesis 08 — Optional research extensions",
+      "description": "Track non-blocking follow-up research beyond the minimum defensible thesis."
+    }
+  ],
+  "labels": [
+    {
+      "name": "scope:thesis",
+      "color": "5319E7",
+      "description": "Thesis remediation and scientific quality roadmap"
+    },
+    {
+      "name": "priority:p0",
+      "color": "B60205",
+      "description": "Required correction affecting scientific validity or publication accuracy"
+    },
+    {
+      "name": "priority:p1",
+      "color": "D93F0B",
+      "description": "Important methodological or experimental improvement"
+    },
+    {
+      "name": "priority:p2",
+      "color": "0E8A16",
+      "description": "Optional research extension"
+    },
+    {
+      "name": "status:needs-audit",
+      "color": "C5DEF5",
+      "description": "Requires inspection of current code and evidence before implementation"
+    },
+    {
+      "name": "kind:correction",
+      "color": "1D76DB",
+      "description": "Manuscript or implementation correction"
+    },
+    {
+      "name": "kind:experiment",
+      "color": "FBCA04",
+      "description": "New experiment or ablation"
+    },
+    {
+      "name": "kind:validation",
+      "color": "0E8A16",
+      "description": "Statistical, scientific, or release validation"
+    },
+    {
+      "name": "kind:extension",
+      "color": "EDEDED",
+      "description": "Future research extension"
+    },
+    {
+      "name": "area:manuscript",
+      "color": "BFD4F2",
+      "description": "IMRaD and text"
+    },
+    {
+      "name": "area:methods",
+      "color": "0E8A16",
+      "description": "Methodology and detector contracts"
+    },
+    {
+      "name": "area:datasets",
+      "color": "C2E0C6",
+      "description": "Dataset inventory, lineage, and selection"
+    },
+    {
+      "name": "area:metrics",
+      "color": "006B75",
+      "description": "Metric definitions and reporting"
+    },
+    {
+      "name": "area:figures",
+      "color": "D4C5F9",
+      "description": "Figures, tables, and publication artifacts"
+    },
+    {
+      "name": "area:statistics",
+      "color": "BFDADC",
+      "description": "Paired and clustered statistical inference"
+    },
+    {
+      "name": "area:thresholds",
+      "color": "FEF2C0",
+      "description": "Threshold calibration and deployment"
+    },
+    {
+      "name": "area:experiments",
+      "color": "F9D0C4",
+      "description": "Experimental protocols and ablations"
+    },
+    {
+      "name": "area:temporal",
+      "color": "C5DEF5",
+      "description": "Chronological and temporal studies"
+    },
+    {
+      "name": "area:reproducibility",
+      "color": "D4C5F9",
+      "description": "Provenance, verification, and release"
+    },
+    {
+      "name": "area:publication",
+      "color": "F9D0C4",
+      "description": "Bibliography, governance, and formatting"
+    },
+    {
+      "name": "area:extension",
+      "color": "EDEDED",
+      "description": "Non-blocking future research"
+    }
+  ],
+  "issues": [
+    {
+      "number": 88,
+      "milestone": "Thesis 01 — Manuscript and methods corrections",
+      "labels": [
+        "scope:thesis",
+        "status:needs-audit",
+        "priority:p0",
+        "area:manuscript",
+        "kind:correction"
+      ]
+    },
+    {
+      "number": 89,
+      "milestone": "Thesis 01 — Manuscript and methods corrections",
+      "labels": [
+        "scope:thesis",
+        "status:needs-audit",
+        "priority:p0",
+        "area:methods",
+        "kind:validation"
+      ]
+    },
+    {
+      "number": 90,
+      "milestone": "Thesis 01 — Manuscript and methods corrections",
+      "labels": [
+        "scope:thesis",
+        "status:needs-audit",
+        "priority:p0",
+        "area:datasets",
+        "kind:validation"
+      ]
+    },
+    {
+      "number": 91,
+      "milestone": "Thesis 02 — Statistical validity and deployment thresholds",
+      "labels": [
+        "scope:thesis",
+        "status:needs-audit",
+        "priority:p0",
+        "area:metrics",
+        "kind:correction"
+      ]
+    },
+    {
+      "number": 92,
+      "milestone": "Thesis 01 — Manuscript and methods corrections",
+      "labels": [
+        "scope:thesis",
+        "status:needs-audit",
+        "priority:p0",
+        "area:figures",
+        "kind:correction"
+      ]
+    },
+    {
+      "number": 93,
+      "milestone": "Thesis 02 — Statistical validity and deployment thresholds",
+      "labels": [
+        "scope:thesis",
+        "status:needs-audit",
+        "priority:p0",
+        "area:statistics",
+        "kind:validation"
+      ]
+    },
+    {
+      "number": 94,
+      "milestone": "Thesis 02 — Statistical validity and deployment thresholds",
+      "labels": [
+        "scope:thesis",
+        "status:needs-audit",
+        "priority:p0",
+        "area:thresholds",
+        "kind:experiment"
+      ]
+    },
+    {
+      "number": 95,
+      "milestone": "Thesis 03 — Fair baselines and ETL fault fidelity",
+      "labels": [
+        "scope:thesis",
+        "status:needs-audit",
+        "priority:p1",
+        "area:experiments",
+        "kind:experiment"
+      ]
+    },
+    {
+      "number": 96,
+      "milestone": "Thesis 03 — Fair baselines and ETL fault fidelity",
+      "labels": [
+        "scope:thesis",
+        "status:needs-audit",
+        "priority:p1",
+        "area:experiments",
+        "kind:experiment"
+      ]
+    },
+    {
+      "number": 97,
+      "milestone": "Thesis 04 — Hybrid pipelines and detector ablations",
+      "labels": [
+        "scope:thesis",
+        "status:needs-audit",
+        "priority:p1",
+        "area:experiments",
+        "kind:experiment"
+      ]
+    },
+    {
+      "number": 98,
+      "milestone": "Thesis 05 — Temporal validity and operational cost",
+      "labels": [
+        "scope:thesis",
+        "status:needs-audit",
+        "priority:p1",
+        "area:temporal",
+        "kind:experiment"
+      ]
+    },
+    {
+      "number": 99,
+      "milestone": "Thesis 06 — IMRaD synthesis and academic quality",
+      "labels": [
+        "scope:thesis",
+        "status:needs-audit",
+        "priority:p0",
+        "area:manuscript",
+        "kind:correction"
+      ]
+    },
+    {
+      "number": 100,
+      "milestone": "Thesis 07 — Reproducibility and certified release",
+      "labels": [
+        "scope:thesis",
+        "status:needs-audit",
+        "priority:p0",
+        "area:reproducibility",
+        "kind:validation"
+      ]
+    },
+    {
+      "number": 101,
+      "milestone": "Thesis 06 — IMRaD synthesis and academic quality",
+      "labels": [
+        "scope:thesis",
+        "status:needs-audit",
+        "priority:p0",
+        "area:publication",
+        "kind:correction"
+      ]
+    },
+    {
+      "number": 102,
+      "milestone": "Thesis 08 — Optional research extensions",
+      "labels": [
+        "scope:thesis",
+        "status:needs-audit",
+        "priority:p2",
+        "area:extension",
+        "kind:extension"
+      ]
+    },
+    {
+      "number": 103,
+      "milestone": "Thesis 07 — Reproducibility and certified release",
+      "labels": [
+        "scope:thesis",
+        "status:needs-audit",
+        "priority:p1",
+        "area:reproducibility",
+        "kind:validation"
+      ]
+    }
+  ]
+}
