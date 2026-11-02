@@ -41,10 +41,17 @@ jobs:
             }
             const historicalOpen = config.historical_open_issues ?? [];
             const historicalClosed = config.historical_closed_issues ?? [];
-            if (config.issues.length !== 16 || config.milestones.length !== 8) {
-              throw new Error('Unexpected core roadmap issue or milestone inventory');
+            const optionalResearch = config.optional_research_issues ?? [];
+            if (config.issues.length !== 16 || config.milestones.length !== 8 ||
+                optionalResearch.length !== 5) {
+              throw new Error('Unexpected core roadmap, milestone, or optional research inventory');
             }
-            const active = [...config.issues, ...historicalOpen];
+            if (optionalResearch.some(item => !item.labels.includes('status:if-time') ||
+                !item.labels.includes('priority:p2') ||
+                item.milestone !== 'Thesis 08 — Optional research extensions')) {
+              throw new Error('Optional research must remain non-blocking and if-time');
+            }
+            const active = [...config.issues, ...historicalOpen, ...optionalResearch];
             const allNumbers = [...active, ...historicalClosed].map(item => item.number);
             if (new Set(allNumbers).size !== allNumbers.length) {
               throw new Error('An issue appears more than once in the roadmap configuration');
