@@ -4,9 +4,9 @@ This directory is the canonical, version-controlled backlog for strengthening th
 
 - **415 individually numbered actions:** T001–T397 preserve the complete consolidated remediation checklist; T398–T415 add repository-specific verification and coordination requirements.
 - **12 checklist volumes:** each task appears once and has a stable identifier.
-- **24 active GitHub issues:** 16 core roadmap issues with complete checklists plus eight historical follow-ups with their original acceptance criteria; one historical planning issue is archived.
+- **29 active GitHub issues:** 16 core roadmap issues with complete checklists, eight historical follow-ups, and five optional agentic-rule research issues; one historical planning issue is archived.
 - **8 planned GitHub milestones:** ordered phases without fabricated due dates.
-- **26 GitHub labels:** priority, scope, status, work kind, subject area, and historical provenance.
+- **28 GitHub labels:** priority, scope, status (including `status:if-time`), work kind, subject area, and historical provenance.
 - **All tasks start unchecked:** documentation of a concern is not proof that it remains unresolved or that it has been fixed.
 
 ## Canonical checklists
@@ -50,6 +50,18 @@ This directory is the canonical, version-controlled backlog for strengthening th
 ## Historical issue dispositions
 
 The original nine remaining issues were triaged individually. [#70](https://github.com/theobigand/etl-anomaly-benchmark/issues/70) was closed as a completed planning decision. [#77–#84](HISTORICAL_ISSUES.md) remain open, classified by priority and milestone, and linked to their new thematic parent issues. See the [full historical issue triage and grouping matrix](HISTORICAL_ISSUES.md). Their specific acceptance criteria remain in force; optional extensions are not release blockers.
+
+## Optional agentic rule-generation research (if time only)
+
+The following five issues are **not part of T001–T415**, not a committed fourth family of detectors, and must **not delay or block the three-category thesis**. They are in **Thesis 08 — Optional research extensions** and tagged `priority:p2`, `status:if-time`, `kind:extension`, and `area:agentic`. Start only after an explicit scope decision; preserve the original manuscript and sealed research evidence until that decision.
+
+1. [#104 — Feasibility, literature, and scientific positioning](https://github.com/theobigand/etl-anomaly-benchmark/issues/104).
+2. [#105 — Fair semantic-rule baselines and fit/predict/score contract](https://github.com/theobigand/etl-anomaly-benchmark/issues/105).
+3. [#106 — Bounded local agentic rule-generation prototype](https://github.com/theobigand/etl-anomaly-benchmark/issues/106).
+4. [#107 — Controlled evaluation, fairness, uncertainty, and operational cost](https://github.com/theobigand/etl-anomaly-benchmark/issues/107).
+5. [#108 — Reproducibility audit and decision on conditional IMRaD inclusion](https://github.com/theobigand/etl-anomaly-benchmark/issues/108).
+
+This is a **system-level** comparison of train-time semantic constraint generation, rather than a claim that language-model orchestration is inherently comparable to a classical anomaly detector. At inference time, validated frozen declarative rules are evaluated without model calls. A valid outcome is to retain the idea solely as Future Work.
 
 ## Milestone plan
 
