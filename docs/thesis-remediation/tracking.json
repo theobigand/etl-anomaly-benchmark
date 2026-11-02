@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "scope": "thesis-remediation",
   "task_range": "T001–T415",
   "milestones": [
@@ -141,6 +141,31 @@
       "name": "area:extension",
       "color": "EDEDED",
       "description": "Non-blocking future research"
+    },
+    {
+      "name": "origin:historical",
+      "color": "A2A2A2",
+      "description": "Carry-over issue from the original thesis work plan"
+    },
+    {
+      "name": "status:historical",
+      "color": "EDEDED",
+      "description": "Closed historical decision preserved for traceability"
+    },
+    {
+      "name": "kind:decision",
+      "color": "D4C5F9",
+      "description": "Recorded scope or governance decision"
+    },
+    {
+      "name": "area:planning",
+      "color": "BFD4F2",
+      "description": "Thesis schedule, phase gates, and scope control"
+    },
+    {
+      "name": "area:performance",
+      "color": "006B75",
+      "description": "Measured latency, throughput, memory, and operational cost"
     }
   ],
   "issues": [
@@ -319,6 +344,160 @@
         "area:reproducibility",
         "kind:validation"
       ]
+    }
+  ],
+  "historical_open_issues": [
+    {
+      "number": 77,
+      "milestone": "Thesis 08 — Optional research extensions",
+      "labels": [
+        "scope:thesis",
+        "origin:historical",
+        "status:needs-audit",
+        "priority:p2",
+        "area:datasets",
+        "kind:extension"
+      ],
+      "grouped_with": [
+        96,
+        95,
+        102
+      ],
+      "disposition": "Typed injection for 94 ineligible pool tables; requires a separate preregistered mixed/categorical protocol."
+    },
+    {
+      "number": 78,
+      "milestone": "Thesis 08 — Optional research extensions",
+      "labels": [
+        "scope:thesis",
+        "origin:historical",
+        "status:needs-audit",
+        "priority:p2",
+        "area:temporal",
+        "kind:extension"
+      ],
+      "grouped_with": [
+        98,
+        102
+      ],
+      "disposition": "Expand chronological evaluation to ten licensed datasets with real time variables; optional external-validity extension."
+    },
+    {
+      "number": 79,
+      "milestone": "Thesis 03 — Fair baselines and ETL fault fidelity",
+      "labels": [
+        "scope:thesis",
+        "origin:historical",
+        "status:needs-audit",
+        "priority:p1",
+        "area:methods",
+        "kind:validation"
+      ],
+      "grouped_with": [
+        95,
+        103
+      ],
+      "disposition": "Resolve 14 failed pipeline measurements without hiding failures or silently changing comparability."
+    },
+    {
+      "number": 80,
+      "milestone": "Thesis 04 — Hybrid pipelines and detector ablations",
+      "labels": [
+        "scope:thesis",
+        "origin:historical",
+        "status:needs-audit",
+        "priority:p1",
+        "area:experiments",
+        "kind:experiment"
+      ],
+      "grouped_with": [
+        97
+      ],
+      "disposition": "Fit-cap and equal-budget hyperparameter ablations; keep original defaults as baseline."
+    },
+    {
+      "number": 81,
+      "milestone": "Thesis 05 — Temporal validity and operational cost",
+      "labels": [
+        "scope:thesis",
+        "origin:historical",
+        "status:needs-audit",
+        "priority:p1",
+        "area:performance",
+        "kind:experiment"
+      ],
+      "grouped_with": [
+        98
+      ],
+      "disposition": "Isolated measurements on real datasets; replace only timing claims supported by controlled evidence."
+    },
+    {
+      "number": 82,
+      "milestone": "Thesis 07 — Reproducibility and certified release",
+      "labels": [
+        "scope:thesis",
+        "origin:historical",
+        "status:needs-audit",
+        "priority:p0",
+        "area:reproducibility",
+        "kind:validation"
+      ],
+      "grouped_with": [
+        100,
+        103
+      ],
+      "disposition": "Replay old-fingerprint archives; preserve original records and verify scientific lineage."
+    },
+    {
+      "number": 83,
+      "milestone": "Thesis 02 — Statistical validity and deployment thresholds",
+      "labels": [
+        "scope:thesis",
+        "origin:historical",
+        "status:needs-audit",
+        "priority:p0",
+        "area:statistics",
+        "kind:validation"
+      ],
+      "grouped_with": [
+        93,
+        90
+      ],
+      "disposition": "Label-rule sensitivity, duplicate sources, seed robustness, and paired multiple-comparison inference."
+    },
+    {
+      "number": 84,
+      "milestone": "Thesis 07 — Reproducibility and certified release",
+      "labels": [
+        "scope:thesis",
+        "origin:historical",
+        "status:needs-audit",
+        "priority:p1",
+        "area:reproducibility",
+        "kind:validation"
+      ],
+      "grouped_with": [
+        100,
+        103
+      ],
+      "disposition": "Independent release attestation, Linux neural lock, and unresolved mutation survivors."
+    }
+  ],
+  "historical_closed_issues": [
+    {
+      "number": 70,
+      "labels": [
+        "scope:thesis",
+        "origin:historical",
+        "status:historical",
+        "kind:decision",
+        "area:planning"
+      ],
+      "grouped_with": [
+        99,
+        103
+      ],
+      "disposition": "Original IMRaD scope and M2 gate decision completed; archived after PR #76 progress evidence. No outstanding work is lost."
     }
   ]
 }
