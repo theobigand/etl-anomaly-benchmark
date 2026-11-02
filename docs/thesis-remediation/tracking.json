@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "scope": "thesis-remediation",
   "task_range": "T001–T415",
   "milestones": [
@@ -166,6 +166,16 @@
       "name": "area:performance",
       "color": "006B75",
       "description": "Measured latency, throughput, memory, and operational cost"
+    },
+    {
+      "name": "status:if-time",
+      "color": "D4C5F9",
+      "description": "Optional and non-blocking work, to start only if time and explicit scope approval allow"
+    },
+    {
+      "name": "area:agentic",
+      "color": "C5DEF5",
+      "description": "Optional agentic semantic data-quality rule generation research"
     }
   ],
   "issues": [
@@ -498,6 +508,68 @@
         103
       ],
       "disposition": "Original IMRaD scope and M2 gate decision completed; archived after PR #76 progress evidence. No outstanding work is lost."
+    }
+  ],
+  "optional_research_issues": [
+    {
+      "number": 104,
+      "milestone": "Thesis 08 — Optional research extensions",
+      "labels": [
+        "scope:thesis",
+        "priority:p2",
+        "status:if-time",
+        "kind:extension",
+        "area:agentic"
+      ],
+      "disposition": "Optional sequential research gate; not part of the mandatory 415 remediation tasks and never a release blocker"
+    },
+    {
+      "number": 105,
+      "milestone": "Thesis 08 — Optional research extensions",
+      "labels": [
+        "scope:thesis",
+        "priority:p2",
+        "status:if-time",
+        "kind:extension",
+        "area:agentic"
+      ],
+      "disposition": "Optional sequential research gate; not part of the mandatory 415 remediation tasks and never a release blocker"
+    },
+    {
+      "number": 106,
+      "milestone": "Thesis 08 — Optional research extensions",
+      "labels": [
+        "scope:thesis",
+        "priority:p2",
+        "status:if-time",
+        "kind:extension",
+        "area:agentic"
+      ],
+      "disposition": "Optional sequential research gate; not part of the mandatory 415 remediation tasks and never a release blocker"
+    },
+    {
+      "number": 107,
+      "milestone": "Thesis 08 — Optional research extensions",
+      "labels": [
+        "scope:thesis",
+        "priority:p2",
+        "status:if-time",
+        "kind:extension",
+        "area:agentic"
+      ],
+      "disposition": "Optional sequential research gate; not part of the mandatory 415 remediation tasks and never a release blocker"
+    },
+    {
+      "number": 108,
+      "milestone": "Thesis 08 — Optional research extensions",
+      "labels": [
+        "scope:thesis",
+        "priority:p2",
+        "status:if-time",
+        "kind:extension",
+        "area:agentic"
+      ],
+      "disposition": "Optional sequential research gate; not part of the mandatory 415 remediation tasks and never a release blocker"
     }
   ]
 }
