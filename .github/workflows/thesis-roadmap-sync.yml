@@ -39,8 +39,15 @@ jobs:
                 Array.from({length: 415}, (_, i) => i + 1).some(id => !unique.has(id))) {
               throw new Error('The roadmap must contain exactly T001–T415, each once');
             }
+            const historicalOpen = config.historical_open_issues ?? [];
+            const historicalClosed = config.historical_closed_issues ?? [];
             if (config.issues.length !== 16 || config.milestones.length !== 8) {
-              throw new Error('Unexpected roadmap issue or milestone inventory');
+              throw new Error('Unexpected core roadmap issue or milestone inventory');
+            }
+            const active = [...config.issues, ...historicalOpen];
+            const allNumbers = [...active, ...historicalClosed].map(item => item.number);
+            if (new Set(allNumbers).size !== allNumbers.length) {
+              throw new Error('An issue appears more than once in the roadmap configuration');
             }
             const { owner, repo } = context.repo;
             const existingLabels = await github.paginate(github.rest.issues.listLabelsForRepo, {
@@ -69,18 +76,37 @@ jobs:
                 milestones.set(milestone.title, response.data.number);
               }
             }
-            for (const item of config.issues) {
+            for (const item of active) {
               const milestone = milestones.get(item.milestone);
               if (!milestone) throw new Error('Unknown milestone: ' + item.milestone);
-              await github.rest.issues.get({ owner, repo, issue_number: item.number });
+              const current = await github.rest.issues.get({
+                owner, repo, issue_number: item.number
+              });
+              if (current.data.state !== 'open') {
+                throw new Error('Tracked active issue is not open: #' + item.number);
+              }
               await github.rest.issues.addLabels({
                 owner, repo, issue_number: item.number, labels: item.labels
               });
-              await github.rest.issues.update({
-                owner, repo, issue_number: item.number, milestone
+              if (current.data.milestone?.number !== milestone) {
+                await github.rest.issues.update({
+                  owner, repo, issue_number: item.number, milestone
+                });
+              }
+            }
+            for (const item of historicalClosed) {
+              const current = await github.rest.issues.get({
+                owner, repo, issue_number: item.number
+              });
+              if (current.data.state !== 'closed') {
+                throw new Error('Archived issue must remain closed: #' + item.number);
+              }
+              await github.rest.issues.addLabels({
+                owner, repo, issue_number: item.number, labels: item.labels
               });
             }
             core.info('Verified 415 tasks and synchronized ' +
-              config.issues.length + ' issues, ' +
+              active.length + ' open issues, ' +
+              historicalClosed.length + ' archived issues, ' +
               config.milestones.length + ' milestones, and ' +
               config.labels.length + ' labels.');
