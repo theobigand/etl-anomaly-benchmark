@@ -4,9 +4,9 @@ This directory is the canonical, version-controlled backlog for strengthening th
 
 - **415 individually numbered actions:** T001–T397 preserve the complete consolidated remediation checklist; T398–T415 add repository-specific verification and coordination requirements.
 - **12 checklist volumes:** each task appears once and has a stable identifier.
-- **16 GitHub tracking issues:** each contains the relevant checkboxes, acceptance criteria, and a link to its canonical checklist.
+- **24 active GitHub issues:** 16 core roadmap issues with complete checklists plus eight historical follow-ups with their original acceptance criteria; one historical planning issue is archived.
 - **8 planned GitHub milestones:** ordered phases without fabricated due dates.
-- **21 GitHub labels:** priority, scope, status, work kind, and subject area.
+- **26 GitHub labels:** priority, scope, status, work kind, subject area, and historical provenance.
 - **All tasks start unchecked:** documentation of a concern is not proof that it remains unresolved or that it has been fixed.
 
 ## Canonical checklists
@@ -47,6 +47,10 @@ This directory is the canonical, version-controlled backlog for strengthening th
 | [#102 — Optional extensions](https://github.com/theobigand/etl-anomaly-benchmark/issues/102) | T381–T397 | P2 | Thesis 08 |
 | [#103 — Repository-specific gates](https://github.com/theobigand/etl-anomaly-benchmark/issues/103) | T398–T415 | P1 | Thesis 07 |
 
+## Historical issue dispositions
+
+The original nine remaining issues were triaged individually. [#70](https://github.com/theobigand/etl-anomaly-benchmark/issues/70) was closed as a completed planning decision. [#77–#84](HISTORICAL_ISSUES.md) remain open, classified by priority and milestone, and linked to their new thematic parent issues. See the [full historical issue triage and grouping matrix](HISTORICAL_ISSUES.md). Their specific acceptance criteria remain in force; optional extensions are not release blockers.
+
 ## Milestone plan
 
 1. **Thesis 01 — Manuscript and methods corrections:** eliminate factual errors, audit implementations and data accounting, repair figures and tables.
@@ -83,7 +87,7 @@ For every task:
 
 ## Existing work and dependencies
 
-Review existing open issues [#77](https://github.com/theobigand/etl-anomaly-benchmark/issues/77), [#78](https://github.com/theobigand/etl-anomaly-benchmark/issues/78), [#79](https://github.com/theobigand/etl-anomaly-benchmark/issues/79), [#80](https://github.com/theobigand/etl-anomaly-benchmark/issues/80), [#81](https://github.com/theobigand/etl-anomaly-benchmark/issues/81), [#82](https://github.com/theobigand/etl-anomaly-benchmark/issues/82), [#83](https://github.com/theobigand/etl-anomaly-benchmark/issues/83), [#84](https://github.com/theobigand/etl-anomaly-benchmark/issues/84), and [#70](https://github.com/theobigand/etl-anomaly-benchmark/issues/70) before duplicating work. The existing verification archive, release policy, claims checks, and scientific fingerprint remain authoritative.
+Consult the [historical issue triage](HISTORICAL_ISSUES.md) before duplicating work. The original scope decision [#70](https://github.com/theobigand/etl-anomaly-benchmark/issues/70) is archived; the eight unresolved historical deliverables (#77–#84) remain active and cross-linked to roadmap issues. The existing verification archive, release policy, claims checks, and scientific fingerprint remain authoritative.
 
 The proposed milestone/label/issue mapping is stored in [tracking.json](tracking.json). The synchronization workflow is idempotent and must not modify research artifacts.
 
