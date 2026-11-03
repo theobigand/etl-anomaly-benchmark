@@ -345,8 +345,8 @@ continuous score; the boolean flag uses a \emph{contamination} equal to
 the anomaly prevalence of the training split (clamped to PyOD's valid
 range), so each model marks about as many rows as the data actually
 contains rather than a fixed share. Contamination sets only the flag
-threshold and leaves ROC-AUC and PR-AUC unaffected. All hyperparameters
-are the defaults of PyOD; I tuned none of them.
+threshold and leaves ROC-AUC and PR-AUC unaffected. Base estimator defaults are retained unless the recorded protocol or an
+adaptation below overrides them; no hyperparameter search was performed.
 
 Three of the eight are the usual references. \emph{Isolation
 Forest}~\cite{liu2008isolation} scores a row by how few random
@@ -356,17 +356,28 @@ that of its neighbours; and a \emph{One-Class
 SVM}~\cite{scholkopf2001support} fits a boundary enclosing the bulk of
 the training data.
 
-Five more complete the family, and they differ mainly in whether they
-look at the columns one by one or together. Three of them model each
-column on its own and add up the evidence, so they can flag an unusual
-value in a column but not an unusual pair of values.
-\emph{ECOD}~\cite{li2023ecod} estimates, for each column, the share of
-fitted rows below a value and the share above it (the empirical tail
-probabilities); a row scores the sum over columns of the negative
-logarithm of the smaller tail, the tail being chosen by the sign of the
-skewness of the column. \emph{COPOD}~\cite{li2020copod} uses the same
-tail probabilities but combines the two tails of a column by their mean,
-which is an empirical copula without dependence between columns.
+Five more complete the family. ECOD, COPOD and HBOS aggregate marginal
+evidence without explicitly fitting cross-feature dependence; several moderate
+marginal deviations can nevertheless accumulate into a high row score.
+\emph{COPOD}~\cite{li2020copod} is motivated by copulas, which separate
+marginal distributions from dependence. This motivation must be distinguished
+from the additive marginal-tail calculation in the evaluated implementation;
+it does not fit a general joint empirical copula.
+
+The inspected reference is PyOD~3.6.7. Write $u_{Lj}=-\log p_{Lj}$ and
+$u_{Rj}=-\log p_{Rj}$ for column $j$'s left and right empirical tail
+surprisals. Its skew-selected term $u_{Sj}$ is $u_{Lj}$ for negative
+skewness, $u_{Rj}$ for positive skewness, and $u_{Lj}+u_{Rj}$ for zero
+skewness. The column contributions, summed over $j$, are
+\[
+\begin{aligned}
+c_j^{\mathrm{ECOD}}&=\max(u_{Lj},u_{Rj},u_{Sj}),\\
+c_j^{\mathrm{COPOD}}&=\max\bigl(u_{Sj},(u_{Lj}+u_{Rj})/2\bigr).
+\end{aligned}
+\]
+Thus \emph{ECOD}~\cite{li2023ecod} does not merely select one tail, and
+COPOD does not merely average two tail probabilities: it averages their
+negative logarithms and compares that average with the skew-selected term.
 \emph{HBOS}~\cite{goldstein2012hbos} builds a histogram of each column and
 scores a row by the sum of the logarithms of the inverse heights of the
 bins its values fall in. The two others use the joint distribution.
@@ -380,13 +391,26 @@ one that breaks them is not, while a shift that stays inside the kept
 components is invisible to it. The idea of detecting outliers with
 principal components is that of Shyu et al.~\cite{shyu2006principal}.
 
-Two choices differ from what PyOD does by default, because a detector in my
-pipeline must map a row to a score using the fitted rows only. PyOD
-recomputes the empirical distribution of ECOD and COPOD on the fitted
-rows plus the rows being scored, so a row's score depends on the other
-rows evaluated with it. I recompute the two methods on the fitted rows
-alone, ranking a row as if it were added to them, which is what PyOD
-computes for a batch of one row (a test compares the two). PyOD's own PCA
+The ETL row-level contract requires a fitted model to score a row without
+using other evaluation rows. PyOD~3.6.7 recomputes both tail distributions
+and skewness on training rows concatenated with the evaluated batch.
+The repository's inductive ECOD/COPOD variants instead freeze sorted training
+columns and training skew signs. For $n$ training values, they use
+$p_{Lj}(x)=(1+\#\{i:X_{ij}\leq x_j\})/(n+1)$ and the analogous
+$p_{Rj}(x)$ with $X_{ij}\geq x_j$, counting ties in both tails.
+These ranks match inserting the query alone into the reference set, but
+the frozen skew sign need not match PyOD's recomputed sign. General
+singleton-score equivalence is therefore not claimed; training-score
+thresholds can also differ from upstream. The existing registry tests
+compare each of the $17$ row-level detectors scored alone and in a batch,
+with float32 tolerances for neural models. They provide bounded contract
+evidence, not proof for every dataset or configuration.
+
+These are algorithm-changing protocol adaptations, not corrections that
+establish equivalence to unmodified PyOD. Their impact requires the
+separate ablation in the remediation roadmap; historical outcomes are
+retained under the settings actually evaluated.
+PyOD's own PCA
 scores a weighted distance to the eigenvectors, not a reconstruction
 error, so the projection comes from scikit-learn. LOF and KNN compare every
 row with the fitted rows, and the One-Class SVM is quadratic too; they are
@@ -396,8 +420,10 @@ $20{,}000$ for the One-Class SVM (limits set from the cost study).
 \subsection{Deep detectors}
 The third family learns a representation with a neural network. They are
 opt-in in the registry, they need PyTorch, and they run on the CPU. Six
-models are compared, all behind the same interface and all with the default
-settings of PyOD~2~\cite{chen2025pyod2}.
+models are compared behind the same interface: one scikit-learn MLP
+autoencoder and five PyOD~3.6.7 models~\cite{chen2025pyod2}, with the
+protocol adaptations described below. Defaults are retained only where
+the recorded configuration does not override them.
 The \emph{autoencoder} is a multilayer perceptron (scikit-learn) trained to
 rebuild the standardized features through a bottleneck; a row that breaks the
 structure learned on the fitted data is rebuilt badly, and the squared
@@ -406,16 +432,22 @@ reconstruction error is its score. The \emph{variational autoencoder}
 it, and is trained on a bound of the likelihood of the data; its score is the
 reconstruction error. PyOD draws the code at random when it scores, so a
 row's score changes from one call to the next and with the rows around it;
-I score with the mean of the code instead. \emph{Deep SVDD}~\cite{ruff2018deep}
+I decode the latent mean instead and use the Euclidean reconstruction
+distance. This changes the scoring rule; it is not the expected
+reconstruction error over latent draws. \emph{Deep SVDD}~\cite{ruff2018deep}
 trains a network to map the fitted rows close to a fixed centre and scores a
 row by its distance to that centre. The \emph{Deep Isolation
 Forest} (DIF)~\cite{xu2023deep} maps the rows through an ensemble of randomly
 initialized networks and builds an isolation forest in each representation;
 PyOD standardizes the representation of the scored rows with their own mean
 and variance, which makes a score depend on the other scored rows, so I
-standardize it with the fitted rows. \emph{AE1SVM}~\cite{nguyen2019scalable}
+fit one representation scaler per network on the training rows and reuse
+it, followed by the same hyperbolic tangent transform. \emph{AE1SVM}~\cite{nguyen2019scalable}
 trains an autoencoder and a one-class SVM approximated with random Fourier
-features on its code, and scores the combination. \emph{LUNAR}~\cite{goodge2022lunar}
+features on its code, and scores the combination. The adapter duplicates
+the last row when a training or scoring pass would end in a singleton
+batch; the extra score is then removed. Training padding changes that
+row's weight and is not an inference-only repair. \emph{LUNAR}~\cite{goodge2022lunar}
 learns the score from the distances of a row to its nearest neighbours, which
 generalizes LOF and KNN with a network. The neural models are fitted on at
 most $20{,}000$ randomly drawn fitted rows to bound the duration, and each is
