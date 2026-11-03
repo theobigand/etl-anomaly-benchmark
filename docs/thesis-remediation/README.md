@@ -4,9 +4,9 @@ This directory is the canonical, version-controlled backlog for strengthening th
 
 - **415 individually numbered actions:** T001–T397 preserve the complete consolidated remediation checklist; T398–T415 add repository-specific verification and coordination requirements.
 - **12 checklist volumes:** each task appears once and has a stable identifier.
-- **29 active GitHub issues:** 16 core roadmap issues with complete checklists, eight historical follow-ups, and five optional agentic-rule research issues; one historical planning issue is archived.
+- **33 active GitHub issues:** 16 core roadmap issues with complete checklists, eight historical follow-ups, five optional rule-generation research issues, and four governance/DoR/DoD follow-ups; one historical planning issue is archived.
 - **8 planned GitHub milestones:** ordered phases without fabricated due dates.
-- **28 GitHub labels:** priority, scope, status (including `status:if-time`), work kind, subject area, and historical provenance.
+- **29 GitHub labels:** priority, scope, status (including `status:if-time`), work kind, subject area (including `area:governance`), and historical provenance.
 - **All tasks start unchecked:** documentation of a concern is not proof that it remains unresolved or that it has been fixed.
 
 ## Canonical checklists
@@ -50,6 +50,19 @@ This directory is the canonical, version-controlled backlog for strengthening th
 ## Historical issue dispositions
 
 The original nine remaining issues were triaged individually. [#70](https://github.com/theobigand/etl-anomaly-benchmark/issues/70) was closed as a completed planning decision. [#77–#84](HISTORICAL_ISSUES.md) remain open, classified by priority and milestone, and linked to their new thematic parent issues. See the [full historical issue triage and grouping matrix](HISTORICAL_ISSUES.md). Their specific acceptance criteria remain in force; optional extensions are not release blockers.
+
+## Research governance, DoR/DoD and verification reporting
+
+Four **P1 follow-ups** extend the governance and scientific-reporting work, without renumbering T001–T415 or modifying scientific results. Their canonical scope, crosswalk, controls and proposed manuscript placement are documented in [GOVERNANCE_DOR_DOD.md](GOVERNANCE_DOR_DOD.md).
+
+| Issue | Deliverable | Milestone |
+| --- | --- | --- |
+| [#109 — Definition of Ready / Definition of Done](https://github.com/theobigand/etl-anomaly-benchmark/issues/109) | Formalize separate criteria for code changes and preregistered experiments, with exceptions and evidence | Thesis 07 |
+| [#110 — Scientific tests and verification layers](https://github.com/theobigand/etl-anomaly-benchmark/issues/110) | Verify actual test coverage, scientific faults, mutation gates, data checks, CI, limitations, historical figures | Thesis 07 |
+| [#111 — Provenance and release governance](https://github.com/theobigand/etl-anomaly-benchmark/issues/111) | Explain source fingerprints, release decisions, evidence integrity, environment and trust boundaries | Thesis 07 |
+| [#112 — Methods and Appendix A/B integration](https://github.com/theobigand/etl-anomaly-benchmark/issues/112) | Present the governance framework as a bounded secondary methodological contribution, without a new research question | Thesis 06 |
+
+All four are tagged `area:governance` and `priority:p1`, are linked to existing parent issues #99, #100, #101 and #103, and require a current-state audit before execution. Preserve the historical verification milestones and the existing certification policy. A release verdict, high coverage, or mutation score is **not** proof of scientific validity or independent attestation.
 
 ## Optional agentic rule-generation research (if time only)
 
