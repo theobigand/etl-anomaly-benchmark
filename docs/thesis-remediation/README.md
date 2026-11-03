@@ -7,7 +7,11 @@ This directory is the canonical, version-controlled backlog for strengthening th
 - **33 active GitHub issues:** 16 core roadmap issues with complete checklists, eight historical follow-ups, five optional rule-generation research issues, and four governance/DoR/DoD follow-ups; one historical planning issue is archived.
 - **8 planned GitHub milestones:** ordered phases without fabricated due dates.
 - **29 GitHub labels:** priority, scope, status (including `status:if-time`), work kind, subject area (including `area:governance`), and historical provenance.
-- **All tasks start unchecked:** documentation of a concern is not proof that it remains unresolved or that it has been fixed.
+- **Evidence-based completion:** tasks began unchecked; individual checks now link to audited implementation and validation. A recorded concern alone proves neither that work is missing nor that it is complete.
+
+Current reconciliation: [2026-11-03 audit and execution dependencies](AUDIT_2026-11-03.md).
+Partial completion evidence: [metric definitions](METRIC_DEFINITIONS_2026-11-03.md) and
+[rule definitions](RULE_DEFINITIONS_2026-11-03.md).
 
 ## Canonical checklists
 

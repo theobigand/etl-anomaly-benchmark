@@ -6,14 +6,14 @@ Preserve the registered protocols and sealed baselines. Check pinned library ver
 
 ## 04. Detector definitions and inductive scoring (P0; Thesis 01)
 
-- [ ] T037 Correct the Z-score normality notation to 3 sigma in LaTeX.
-- [ ] T038 Correct the IQR normality notation to approximately 2.7 sigma in LaTeX.
-- [ ] T039 Define Z-score mathematically and document the decision threshold.
-- [ ] T040 Define the IQR rule, boundaries, and alert-rate implications.
-- [ ] T041 Describe the existing Great Expectations baseline as a generic automated statistical rule suite.
-- [ ] T042 Document not-null checks and train-derived 0.1%/99.9% numerical bounds.
-- [ ] T043 Do not present this suite as representative of domain-informed declarative rules.
-- [ ] T044 Explain that train-fitted percentile bounds constitute a univariate statistical detector.
+- [x] T037 Correct the Z-score normality notation to 3 sigma in LaTeX.
+- [x] T038 Correct the IQR normality notation to approximately 2.7 sigma in LaTeX.
+- [x] T039 Define Z-score mathematically and document the decision threshold.
+- [x] T040 Define the IQR rule, boundaries, and alert-rate implications.
+- [x] T041 Describe the existing Great Expectations baseline as a generic automated statistical rule suite.
+- [x] T042 Document not-null checks and train-derived 0.1%/99.9% numerical bounds.
+- [x] T043 Do not present this suite as representative of domain-informed declarative rules.
+- [x] T044 Explain that train-fitted percentile bounds constitute a univariate statistical detector.
 - [ ] T045 Correct the theoretical description of COPOD.
 - [ ] T046 Distinguish COPOD's theoretical formulation from scoring in the pinned PyOD version.
 - [ ] T047 Inspect the pinned PyOD source before describing how ECOD/COPOD combine dimensions.
@@ -25,6 +25,9 @@ Preserve the registered protocols and sealed baselines. Check pinned library ver
 - [ ] T053 Test whether a row's score is invariant to other rows in the test batch where claimed.
 - [ ] T054 Distinguish bug fixes from algorithm-changing adaptations.
 - [ ] T055 Check neural convergence, stopping rules, epochs, and numerical failures.
+
+Evidence for T037–T044: [rule-definition audit and validation](RULE_DEFINITIONS_2026-11-03.md).
+T037/T038 were already implemented; the audit confirms them without a duplicate notation patch.
 
 ## 05. ETL preprocessing and leakage controls (P0; Thesis 01)
 

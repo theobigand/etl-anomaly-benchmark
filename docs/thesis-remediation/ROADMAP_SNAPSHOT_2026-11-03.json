@@ -1,0 +1,494 @@
+{
+  "observed_at": "2026-11-03",
+  "baseline": "901ccedff4b34eaa4507aaf60819ede799770ff1",
+  "scope": "issues >=77; includes closed historical publication issue; pull requests excluded",
+  "issues": [
+    {
+      "number": 77,
+      "title": "[Coverage] Typed injection on the 94 pool tables that are not eligible",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/77",
+      "labels": [
+        "scope:thesis",
+        "priority:p2",
+        "status:needs-audit",
+        "kind:extension",
+        "area:datasets",
+        "origin:historical"
+      ],
+      "milestone": "Thesis 08 \u2014 Optional research extensions"
+    },
+    {
+      "number": 78,
+      "title": "[Coverage] Chronological study on more than five datasets with a real time variable",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/78",
+      "labels": [
+        "scope:thesis",
+        "priority:p2",
+        "status:needs-audit",
+        "kind:extension",
+        "area:temporal",
+        "origin:historical"
+      ],
+      "milestone": "Thesis 08 \u2014 Optional research extensions"
+    },
+    {
+      "number": 79,
+      "title": "[Coverage] Handle the 14 failed end-to-end pipeline measures (7 datasets)",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/79",
+      "labels": [
+        "scope:thesis",
+        "priority:p1",
+        "status:needs-audit",
+        "kind:validation",
+        "area:methods",
+        "origin:historical"
+      ],
+      "milestone": "Thesis 03 \u2014 Fair baselines and ETL fault fidelity"
+    },
+    {
+      "number": 80,
+      "title": "[Coverage] Fit-size cap and default hyperparameters: ablation and tuning study",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/80",
+      "labels": [
+        "scope:thesis",
+        "priority:p1",
+        "status:needs-audit",
+        "kind:experiment",
+        "area:experiments",
+        "origin:historical"
+      ],
+      "milestone": "Thesis 04 \u2014 Hybrid pipelines and detector ablations"
+    },
+    {
+      "number": 81,
+      "title": "[Coverage] Isolated timings on real pool datasets",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/81",
+      "labels": [
+        "scope:thesis",
+        "priority:p1",
+        "status:needs-audit",
+        "kind:experiment",
+        "origin:historical",
+        "area:performance"
+      ],
+      "milestone": "Thesis 05 \u2014 Temporal validity and operational cost"
+    },
+    {
+      "number": 82,
+      "title": "[Coverage] Replay the large pool archives on the current scientific fingerprint",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/82",
+      "labels": [
+        "scope:thesis",
+        "priority:p0",
+        "status:needs-audit",
+        "kind:validation",
+        "area:reproducibility",
+        "origin:historical"
+      ],
+      "milestone": "Thesis 07 \u2014 Reproducibility and certified release"
+    },
+    {
+      "number": 83,
+      "title": "[Coverage] Label-rule sensitivity, twin sources, more seeds and formal tests",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/83",
+      "labels": [
+        "scope:thesis",
+        "priority:p0",
+        "status:needs-audit",
+        "kind:validation",
+        "area:statistics",
+        "origin:historical"
+      ],
+      "milestone": "Thesis 02 \u2014 Statistical validity and deployment thresholds"
+    },
+    {
+      "number": 84,
+      "title": "[Coverage] Independent attestation, Linux lock with PyTorch, remaining mutation survivors",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/84",
+      "labels": [
+        "scope:thesis",
+        "priority:p1",
+        "status:needs-audit",
+        "kind:validation",
+        "area:reproducibility",
+        "origin:historical"
+      ],
+      "milestone": "Thesis 07 \u2014 Reproducibility and certified release"
+    },
+    {
+      "number": 85,
+      "title": "[Paper] IMRaD review: research questions, methods in results, length, table count",
+      "state": "CLOSED",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/85",
+      "labels": [],
+      "milestone": null
+    },
+    {
+      "number": 88,
+      "title": "[Thesis R01] Abstract, introduction, and related-work corrections",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/88",
+      "labels": [
+        "scope:thesis",
+        "priority:p0",
+        "status:needs-audit",
+        "kind:correction",
+        "area:manuscript"
+      ],
+      "milestone": "Thesis 01 \u2014 Manuscript and methods corrections"
+    },
+    {
+      "number": 89,
+      "title": "[Thesis R02] Detector definitions, inductive scoring, and leakage controls",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/89",
+      "labels": [
+        "scope:thesis",
+        "priority:p0",
+        "status:needs-audit",
+        "kind:validation",
+        "area:methods"
+      ],
+      "milestone": "Thesis 01 \u2014 Manuscript and methods corrections"
+    },
+    {
+      "number": 90,
+      "title": "[Thesis R03] Dataset inventory, source overlap, and selection provenance",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/90",
+      "labels": [
+        "scope:thesis",
+        "priority:p0",
+        "status:needs-audit",
+        "kind:validation",
+        "area:datasets"
+      ],
+      "milestone": "Thesis 01 \u2014 Manuscript and methods corrections"
+    },
+    {
+      "number": 91,
+      "title": "[Thesis R04] Average Precision terminology and metric definitions",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/91",
+      "labels": [
+        "scope:thesis",
+        "priority:p0",
+        "status:needs-audit",
+        "kind:correction",
+        "area:metrics"
+      ],
+      "milestone": "Thesis 02 \u2014 Statistical validity and deployment thresholds"
+    },
+    {
+      "number": 92,
+      "title": "[Thesis R05] Figures, tables, and publication data lineage",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/92",
+      "labels": [
+        "scope:thesis",
+        "priority:p0",
+        "status:needs-audit",
+        "kind:correction",
+        "area:figures"
+      ],
+      "milestone": "Thesis 01 \u2014 Manuscript and methods corrections"
+    },
+    {
+      "number": 93,
+      "title": "[Thesis R06] Paired inference, source-clustered uncertainty, and operational metrics",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/93",
+      "labels": [
+        "scope:thesis",
+        "priority:p0",
+        "status:needs-audit",
+        "kind:validation",
+        "area:statistics"
+      ],
+      "milestone": "Thesis 02 \u2014 Statistical validity and deployment thresholds"
+    },
+    {
+      "number": 94,
+      "title": "[Thesis R07] Oracle versus label-free deployment thresholds",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/94",
+      "labels": [
+        "scope:thesis",
+        "priority:p0",
+        "status:needs-audit",
+        "kind:experiment",
+        "area:thresholds"
+      ],
+      "milestone": "Thesis 02 \u2014 Statistical validity and deployment thresholds"
+    },
+    {
+      "number": 95,
+      "title": "[Thesis R08] Fair rules-versus-models comparison and richer feature representations",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/95",
+      "labels": [
+        "scope:thesis",
+        "priority:p1",
+        "status:needs-audit",
+        "kind:experiment",
+        "area:experiments"
+      ],
+      "milestone": "Thesis 03 \u2014 Fair baselines and ETL fault fidelity"
+    },
+    {
+      "number": 96,
+      "title": "[Thesis R09] Robust statistics and realistic ETL fault injection",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/96",
+      "labels": [
+        "scope:thesis",
+        "priority:p1",
+        "status:needs-audit",
+        "kind:experiment",
+        "area:experiments"
+      ],
+      "milestone": "Thesis 03 \u2014 Fair baselines and ETL fault fidelity"
+    },
+    {
+      "number": 97,
+      "title": "[Thesis R10] Hybrid ETL pipelines and inductive detector ablations",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/97",
+      "labels": [
+        "scope:thesis",
+        "priority:p1",
+        "status:needs-audit",
+        "kind:experiment",
+        "area:experiments"
+      ],
+      "milestone": "Thesis 04 \u2014 Hybrid pipelines and detector ablations"
+    },
+    {
+      "number": 98,
+      "title": "[Thesis R11] Temporal validation and operational cost measurements",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/98",
+      "labels": [
+        "scope:thesis",
+        "priority:p1",
+        "status:needs-audit",
+        "kind:experiment",
+        "area:temporal"
+      ],
+      "milestone": "Thesis 05 \u2014 Temporal validity and operational cost"
+    },
+    {
+      "number": 99,
+      "title": "[Thesis R12] IMRaD results, discussion, and conclusion rewrite",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/99",
+      "labels": [
+        "scope:thesis",
+        "priority:p0",
+        "status:needs-audit",
+        "kind:correction",
+        "area:manuscript"
+      ],
+      "milestone": "Thesis 06 \u2014 IMRaD synthesis and academic quality"
+    },
+    {
+      "number": 100,
+      "title": "[Thesis R13] Reproducibility, provenance, and certified release",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/100",
+      "labels": [
+        "scope:thesis",
+        "priority:p0",
+        "status:needs-audit",
+        "kind:validation",
+        "area:reproducibility"
+      ],
+      "milestone": "Thesis 07 \u2014 Reproducibility and certified release"
+    },
+    {
+      "number": 101,
+      "title": "[Thesis R14] Bibliography, data governance, and academic formatting",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/101",
+      "labels": [
+        "scope:thesis",
+        "priority:p0",
+        "status:needs-audit",
+        "kind:correction",
+        "area:publication"
+      ],
+      "milestone": "Thesis 06 \u2014 IMRaD synthesis and academic quality"
+    },
+    {
+      "number": 102,
+      "title": "[Thesis R15] Optional research extensions and deployment scenarios",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/102",
+      "labels": [
+        "scope:thesis",
+        "priority:p2",
+        "status:needs-audit",
+        "kind:extension",
+        "area:extension"
+      ],
+      "milestone": "Thesis 08 \u2014 Optional research extensions"
+    },
+    {
+      "number": 103,
+      "title": "[Thesis R16] Repository-specific quality gates and existing issue coordination",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/103",
+      "labels": [
+        "scope:thesis",
+        "priority:p1",
+        "status:needs-audit",
+        "kind:validation",
+        "area:reproducibility"
+      ],
+      "milestone": "Thesis 07 \u2014 Reproducibility and certified release"
+    },
+    {
+      "number": 104,
+      "title": "[Optional \u00b7 Agentic A1] Assess feasibility, related work, and scientific positioning",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/104",
+      "labels": [
+        "scope:thesis",
+        "priority:p2",
+        "kind:extension",
+        "area:extension",
+        "status:if-time",
+        "area:agentic"
+      ],
+      "milestone": "Thesis 08 \u2014 Optional research extensions"
+    },
+    {
+      "number": 105,
+      "title": "[Optional \u00b7 Agentic A2] Define fair semantic-rule baselines and fit/predict/score behavior",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/105",
+      "labels": [
+        "scope:thesis",
+        "priority:p2",
+        "kind:extension",
+        "area:extension",
+        "status:if-time",
+        "area:agentic"
+      ],
+      "milestone": "Thesis 08 \u2014 Optional research extensions"
+    },
+    {
+      "number": 106,
+      "title": "[Optional \u00b7 Agentic A3] Prototype bounded agentic declarative-rule generation at fit time",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/106",
+      "labels": [
+        "scope:thesis",
+        "priority:p2",
+        "kind:extension",
+        "area:extension",
+        "status:if-time",
+        "area:agentic"
+      ],
+      "milestone": "Thesis 08 \u2014 Optional research extensions"
+    },
+    {
+      "number": 107,
+      "title": "[Optional \u00b7 Agentic A4] Evaluate agent-generated constraints against fair ETL anomaly baselines",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/107",
+      "labels": [
+        "scope:thesis",
+        "priority:p2",
+        "kind:extension",
+        "area:extension",
+        "status:if-time",
+        "area:agentic"
+      ],
+      "milestone": "Thesis 08 \u2014 Optional research extensions"
+    },
+    {
+      "number": 108,
+      "title": "[Optional \u00b7 Agentic A5] Reproducibility audit and conditional IMRaD integration decision",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/108",
+      "labels": [
+        "scope:thesis",
+        "priority:p2",
+        "kind:extension",
+        "area:extension",
+        "status:if-time",
+        "area:agentic"
+      ],
+      "milestone": "Thesis 08 \u2014 Optional research extensions"
+    },
+    {
+      "number": 109,
+      "title": "[Thesis G01] Formalize Definition of Ready and Definition of Done for research and code changes",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/109",
+      "labels": [
+        "scope:thesis",
+        "priority:p1",
+        "status:needs-audit",
+        "kind:validation",
+        "area:reproducibility",
+        "area:governance"
+      ],
+      "milestone": "Thesis 07 \u2014 Reproducibility and certified release"
+    },
+    {
+      "number": 110,
+      "title": "[Thesis G02] Audit and document the layered testing and scientific verification gates",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/110",
+      "labels": [
+        "scope:thesis",
+        "priority:p1",
+        "status:needs-audit",
+        "kind:validation",
+        "area:reproducibility",
+        "area:governance"
+      ],
+      "milestone": "Thesis 07 \u2014 Reproducibility and certified release"
+    },
+    {
+      "number": 111,
+      "title": "[Thesis G03] Specify evidence provenance, certification semantics, and release governance",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/111",
+      "labels": [
+        "scope:thesis",
+        "priority:p1",
+        "status:needs-audit",
+        "kind:validation",
+        "area:reproducibility",
+        "area:governance"
+      ],
+      "milestone": "Thesis 07 \u2014 Reproducibility and certified release"
+    },
+    {
+      "number": 112,
+      "title": "[Thesis G04] Integrate research governance, DoR/DoD, and test evidence into Methods and appendices",
+      "state": "OPEN",
+      "url": "https://github.com/theobigand/etl-anomaly-benchmark/issues/112",
+      "labels": [
+        "scope:thesis",
+        "priority:p1",
+        "status:needs-audit",
+        "kind:correction",
+        "area:publication",
+        "area:governance"
+      ],
+      "milestone": "Thesis 06 \u2014 IMRaD synthesis and academic quality"
+    }
+  ]
+}
