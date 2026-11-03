@@ -342,7 +342,7 @@
       <p class="lede">The demo and every benchmark call the same <code>detect()</code>
       stage, so latency is the real in-pipeline fit + predict + score time. A continuous
       <code>score()</code> on top of the boolean <code>predict()</code> makes ROC-AUC and
-      PR-AUC computable; <code>detect(fit_df=...)</code> fits on the train slice and scores
+      AP computable; <code>detect(fit_df=...)</code> fits on the train slice and scores
       the test set.</p>
       <svg viewBox="0 0 300 40" style="margin-top:24px;max-width:320px">
         <defs><marker id="ar" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7z" fill="#d36f52"/></marker></defs>
@@ -379,6 +379,26 @@
   <div class="foot"><span>src/etl_benchmark/pipeline.py &nbsp;·&nbsp; quality/base.py</span><span>interface modelled on PyOD BaseDetector</span></div>
 </section>
 
+<section class="slide" data-sec="Metric definitions">
+  <div class="dossier">
+    <div class="heading">
+      <div class="eyebrow"><span class="idx">6a</span> &nbsp; Metric interpretation</div>
+      <h2>Average Precision measures <em>the ranking</em></h2>
+      <p class="lede">AP uses continuous anomaly scores. Precision, recall, F1 and the flagged share use a selected decision threshold.</p>
+      <div class="stat"><div><span class="v" style="font-size:42px;white-space:nowrap">AP = ∑ ΔR · P</span><span class="l">precision weighted by each recall increment</span></div></div>
+    </div>
+    <div class="panel">
+      <ul class="ledger">
+        <li><span class="k">Non-interpolated</span>Distinct cutoffs run from high to low scores; tied scores enter together. AP differs from trapezoidal precision–recall area.</li>
+        <li><span class="k">Prevalence matters</span>Prevalence is a no-skill reference precision. Constant scores give AP equal to prevalence; a random strict ranking has an upward finite-sample correction.</li>
+        <li><span class="k">Separate decisions from scores</span>Changing only the flag threshold leaves AP and ROC-AUC unchanged. ROC-AUC is complementary; neither ranking metric establishes a useful operating point.</li>
+        <li><span class="k">Historical naming</span>Stored <code>pr_auc</code> fields and remaining PR-AUC labels in archived figures and the paper denote this same AP quantity.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>paper/main.tex · Evaluation protocol · equation (3)</span><span>scikit-learn average_precision_score</span></div>
+</section>
+
 <!-- 5 detectors -->
 <section class="slide" data-sec="Detectors">
   <div class="dossier">
@@ -393,7 +413,7 @@
         <tbody>
           <tr><td>Z-score</td><td>rule</td><td style="text-align:left">flag <code>|z| &gt; 3</code> on any column</td><td style="text-align:left">mean and std inflated by outliers</td></tr>
           <tr><td>IQR</td><td>rule</td><td style="text-align:left">Tukey fences, <code>k = 1.5</code></td><td style="text-align:left">fires often in high dimension</td></tr>
-          <tr><td>Great Expectations</td><td>rule</td><td style="text-align:left">not-null + range at 0.1 / 99.9 pct</td><td style="text-align:left">checks only what the suite declares</td></tr>
+          <tr><td>Great Expectations</td><td>rule</td><td style="text-align:left">null checks + fitted 0.1% / 99.9% bounds</td><td style="text-align:left">generic statistical suite, no domain rules</td></tr>
           <tr><td>Isolation Forest</td><td>joint</td><td style="text-align:left">isolation depth under random splits</td><td style="text-align:left">axis-aligned splits, weak on nulls</td></tr>
           <tr><td>LOF</td><td>joint</td><td style="text-align:left">local density vs 20 neighbours</td><td style="text-align:left">cost grows with the scored set</td></tr>
           <tr><td>One-Class SVM</td><td>joint</td><td style="text-align:left">RBF boundary around the bulk</td><td style="text-align:left">quadratic training</td></tr>
@@ -408,6 +428,25 @@
     </div>
   </div>
   <div class="foot"><span>src/etl_benchmark/quality/ml.py &nbsp;&middot;&nbsp; rules.py &nbsp;&middot;&nbsp; gx.py</span><span>ECOD and COPOD rescored on the fit rows only</span></div>
+</section>
+
+<section class="slide" data-sec="Rule definitions">
+  <div class="dossier">
+    <div class="heading">
+      <div class="eyebrow"><span class="idx">7a</span> &nbsp; Fitted rules</div>
+      <h2>Column bounds do not fix <em>row alert rates</em></h2>
+      <p class="lede">All statistics come from training data. The evaluated Great Expectations suite is a generic statistical baseline, not a domain-informed rule set.</p>
+    </div>
+    <div class="panel">
+      <ul class="ledger">
+        <li><span class="k">Z-score</span>Maximum |x − training mean| / sample standard deviation. Flag above 3; constant columns contribute zero.</li>
+        <li><span class="k">IQR</span>Training fences Q1 − 1.5 IQR and Q3 + 1.5 IQR. Flag strictly outside; zero-IQR columns contribute zero.</li>
+        <li><span class="k">Gaussian reference only</span>Per-column tails: 0.27% beyond 3σ, 0.70% beyond the IQR fences (about 2.7σ). Fitted bounds and multiple columns change row-level rates.</li>
+        <li><span class="k">Great Expectations</span>Not-null on all columns; inclusive numeric training quantiles 0.1% / 99.9%. Omit undefined or equal bounds. Score: fraction of active checks violated.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>paper/main.tex · Methods, rule-based detectors</span><span>no domain-specific category, format or cross-field rules</span></div>
 </section>
 
 <section class="slide" data-sec="Neural detectors">
@@ -518,10 +557,10 @@
       <p class="lede">The statistical rules recover most frauds at precision below 0.04.
       Isolation Forest changes once its contamination matches the prevalence: it flags
       0.17% of rows and reaches the first usable precision, at recall 0.21 and with real
-      seed variance (F1 = 0.20 ± 0.07). Great Expectations leads PR-AUC.</p>
+      seed variance (F1 = 0.20 ± 0.07). Great Expectations leads AP.</p>
       <div class="stat">
         <div><span class="v">0.20</span><span class="l">Isolation Forest precision (was 0.01 at contamination 0.10)</span></div>
-        <div><span class="v">0.182</span><span class="l">Great Expectations PR-AUC, the best on this dataset</span></div>
+        <div><span class="v">0.182</span><span class="l">Great Expectations AP, the best on this dataset</span></div>
       </div>
     </div>
     <div class="panel">
@@ -537,7 +576,7 @@
       </table>
     </div>
   </div>
-  <div class="foot"><span>experiments/run_benchmark.py &nbsp;·&nbsp; make benchmark</span><span>metric that matters here: PR-AUC</span></div>
+  <div class="foot"><span>experiments/run_benchmark.py &nbsp;·&nbsp; make benchmark</span><span>metric that matters here: AP</span></div>
 </section>
 
 <!-- 10 results: cardio -->
@@ -546,12 +585,12 @@
     <div class="heading">
       <div class="eyebrow"><span class="idx">13</span> &nbsp; Genuinely imbalanced real data</div>
       <h2>When anomalies are <em>rare and outlying</em>, the learned detectors work</h2>
-      <p class="lede">Isolation Forest reaches F1 0.62 and PR-AUC 0.70, with ECOD, COPOD and DIF close behind (PR-AUC 0.69, 0.69, 0.67). Z-score also does
+      <p class="lede">Isolation Forest reaches F1 0.62 and AP 0.70, with ECOD, COPOD and DIF close behind (AP 0.69, 0.69, 0.67). Z-score also does
       well: the 21 features are standardized and anomalies stand out on several at once.
       This is the counterpoint to a 0.17% mixed label and a 61% majority.</p>
       <div class="stat">
         <div><span class="v">0.62</span><span class="l">Isolation Forest F1 on Cardio</span></div>
-        <div><span class="v">0.70</span><span class="l">Isolation Forest PR-AUC on Cardio</span></div>
+        <div><span class="v">0.70</span><span class="l">Isolation Forest AP on Cardio</span></div>
       </div>
     </div>
     <div class="panel">
@@ -578,7 +617,7 @@
     <div class="heading">
       <div class="eyebrow"><span class="idx">14</span> &nbsp; Synthetic dataset, aggregate</div>
       <h2>Aggregate metrics make the families <em>look interchangeable</em></h2>
-      <p class="lede">Z-score and HBOS reach a perfect precision by firing only on extreme rows (recall 0.20). DIF has the best F1 and PR-AUC, the VAE matches Isolation Forest, LUNAR has the best recall with a low precision.</p>
+      <p class="lede">Z-score and HBOS reach a perfect precision by firing only on extreme rows (recall 0.20). DIF has the best F1 and AP, the VAE matches Isolation Forest, LUNAR has the best recall with a low precision.</p>
       <div class="stat">
         <div><span class="v">0.22&ndash;0.59</span><span class="l">F1 range across the seventeen detectors</span></div>
       </div>
@@ -620,7 +659,7 @@
       <div class="stat"><div><span class="v">0.91 <em>vs</em> &le;0.02</span><span class="l">Isolation Forest recall on multivariate outliers, against every rule</span></div></div>
     </div>
     <div class="panel figpanel">
-      <img src="../paper/figures/heatmap_synthetic.png" alt="mean detection rate by anomaly type">
+      <img style="max-height:calc(100dvh - 190px)" src="../paper/figures/heatmap_synthetic.png" alt="mean detection rate by anomaly type">
     </div>
   </div>
   <div class="foot"><span>paper/figures/heatmap_synthetic.png</span><span>transform_dedup and drift shown for reference</span></div>
@@ -734,7 +773,7 @@
     </div>
     <div class="panel">
       <table class="num dense">
-        <thead><tr><th style="text-align:left">Detector</th><th>Problems</th><th>PR-AUC median [95%]</th><th>ROC-AUC</th><th>Rank</th></tr></thead>
+        <thead><tr><th style="text-align:left">Detector</th><th>Problems</th><th>AP median [95%]</th><th>ROC-AUC</th><th>Rank</th></tr></thead>
         <tbody>
           <tr><td style="text-align:left">ECOD</td><td>100</td><td class="up">0.240 [0.191, 0.305]</td><td>0.656</td><td>7.0</td></tr>
           <tr><td style="text-align:left">One-Class SVM</td><td>84</td><td>0.240 [0.177, 0.307]</td><td>0.670</td><td>8.0</td></tr>
@@ -754,7 +793,7 @@
           <tr><td style="text-align:left">IQR</td><td>100</td><td>0.144 [0.117, 0.191]</td><td>0.556</td><td>12.0</td></tr>
           <tr><td style="text-align:left">Great Expectations</td><td>100</td><td>0.115 [0.105, 0.123]</td><td>0.508</td><td>16.0</td></tr>
         </tbody>
-        <caption>Median over problems, sorted by PR-AUC. LOF and KNN are skipped above 50,000 training rows and One-Class SVM above 20,000. Neural models fitted on at most 20,000 rows.</caption>
+        <caption>Median over problems, sorted by AP. LOF and KNN are skipped above 50,000 training rows and One-Class SVM above 20,000. Neural models fitted on at most 20,000 rows.</caption>
       </table>
     </div>
   </div>
@@ -774,7 +813,7 @@
     </div>
     <div class="panel">
       <table class="num dense">
-        <thead><tr><th style="text-align:left">PR-AUC</th><th>Credit Card</th><th>Cardio</th><th>Annthyroid</th><th>Mushroom</th></tr></thead>
+        <thead><tr><th style="text-align:left">AP</th><th>Credit Card</th><th>Cardio</th><th>Annthyroid</th><th>Mushroom</th></tr></thead>
         <tbody>
           <tr><td style="text-align:left">Z-score</td><td>0.10</td><td>0.61</td><td>0.18</td><td>0.44</td></tr>
           <tr><td style="text-align:left">IQR</td><td>0.02</td><td>0.30</td><td class="up">0.61</td><td>0.10</td></tr>
@@ -862,7 +901,7 @@
       <h2>Part of the gap is <em>only the prevalence</em></h2>
       <p class="lede">Issue #63. Credit Card and Bank Marketing (UCI, ordered by date 2008 to 2010), four detectors, three label-free thresholds. On Bank Marketing the prevalence goes from 5.8% in training to 39.3% in test: matching the stratified control to it removes most of the gap. A rolling threshold that keeps the training prevalence cannot follow it. One hypothesis of four holds.</p>
       <div class="stat">
-        <div><span class="v">0.26 &rarr; 0.06</span><span class="l">median PR-AUC gap on Bank Marketing after prevalence matching</span></div>
+        <div><span class="v">0.26 &rarr; 0.06</span><span class="l">median AP gap on Bank Marketing after prevalence matching</span></div>
       </div>
     </div>
     <div class="panel">
@@ -897,10 +936,10 @@
         <thead><tr><th style="text-align:left">Hypothesis</th><th>Result</th><th style="text-align:left">Value</th></tr></thead>
         <tbody>
           <tr><td style="text-align:left">P1 label-free threshold lowers F1</td><td class="up">holds</td><td style="text-align:left">14 of 17 detectors</td></tr>
-          <tr><td style="text-align:left">P2 curve ranking = PR-AUC ranking</td><td>fails</td><td style="text-align:left">Spearman 0.90 (< 0.99)</td></tr>
+          <tr><td style="text-align:left">P2 curve ranking = AP ranking</td><td>fails</td><td style="text-align:left">Spearman 0.90 (< 0.99)</td></tr>
           <tr><td style="text-align:left">P3 recall rises with severity</td><td>fails</td><td style="text-align:left">13 of 17; column-wise rules stay at 0</td></tr>
           <tr><td style="text-align:left">P4 detection share of the pipeline</td><td class="up">holds</td><td style="text-align:left">62% (IF), 4% (Z-score), 14 datasets</td></tr>
-          <tr><td style="text-align:left">P5 chronological PR-AUC lower</td><td>fails</td><td style="text-align:left">31 of 64 pairs; Bank Marketing 0/16</td></tr>
+          <tr><td style="text-align:left">P5 chronological AP lower</td><td>fails</td><td style="text-align:left">31 of 64 pairs; Bank Marketing 0/16</td></tr>
           <tr><td style="text-align:left">P6 files match the manifest</td><td class="up">holds</td><td style="text-align:left">152 of 152</td></tr>
         </tbody>
         <caption>Chronology needs a real time variable: 5 labelled datasets qualify (ADBench has none).</caption>
@@ -1047,7 +1086,7 @@
     <div class="panel">
       <div class="grid3">
         <div data-k="edge"><span class="big">Fraud</span><h3>too extreme</h3><p>0.17% positives, and the label mixes every defect. Best F1 of seventeen detectors is 0.35 (Deep SVDD), best precision 0.34 (HBOS).</p></div>
-        <div data-k="fit"><span class="big">Cardio</span><h3>the fit</h3><p>9.6%, rare and distinct. Isolation Forest F1 0.62, PR-AUC 0.70. The regime the detectors are built for.</p></div>
+        <div data-k="fit"><span class="big">Cardio</span><h3>the fit</h3><p>9.6%, rare and distinct. Isolation Forest F1 0.62, AP 0.70. The regime the detectors are built for.</p></div>
         <div data-k="off"><span class="big">Water</span><h3>wrong regime</h3><p>61% majority target. Every ROC-AUC 0.45 to 0.51: the detectors are at chance.</p></div>
       </div>
       <p class="sm">The synthetic dataset sits in the middle at 17.5% and is where the
@@ -1117,22 +1156,22 @@
     <div class="heading">
       <div class="eyebrow"><span class="idx">35</span> &nbsp; Where it stands</div>
       <h2>Experiments run, <em>paper in IMRaD form</em></h2>
-      <p class="lede">The M2 plan issues (#63 to #69) are closed and #70 keeps the calendar. The paper has explicit research questions, methods apart from results, results by question and answers in the Discussion; per-dataset tables are in an appendix. Eight coverage gaps are open as issues (#77 to #84). Defence July 2027.</p>
+      <p class="lede">Historical implementation issues #63 to #70 are closed. The current roadmap preserves T001–T415. Fourteen definition tasks in #89 and #91 are verified; both issues remain open. Source-aware inference, archive replay and publication corrections remain required. Optional P2 research is outside the active scope.</p>
     </div>
     <div class="panel"><ul class="kv">
         <li><span>held-out split, 5 seeds, chronological and LSTM pilots, cost study</span><span class="badge done">done</span></li>
         <li><span>dataset pool of 152 sets (#66), typed injection on 42 tables (#65)</span><span class="badge done">done</span></li>
         <li><span>benchmark on the 100 labelled pool problems</span><span class="badge done">done</span></li>
         <li><span>deep rows (#64), multi-schema generator (#67)</span><span class="badge done">done</span></li>
-        <li><span>related work, verified bibliography, IMRaD article: 7 tables and 4 figures in the body, details in an appendix (#68, #69, #85)</span><span class="badge done">done</span></li>
+        <li><span>historical IMRaD restructuring (#68, #69, #85); final bibliography audit remains #101</span><span class="badge done">done</span></li>
         <li><span>decision-level study under temporal shift (#63)</span><span class="badge done">done</span></li>
         <li><span>paper layout (tables) and discussion revised, merged to main</span><span class="badge done">done</span></li>
         <li><span>complete registry: 17 detectors, every study rerun</span><span class="badge done">done</span></li>
         <li><span>every study extended to the 152-dataset pool, six hypotheses</span><span class="badge done">done</span></li>
-        <li><span>coverage gaps: ineligible tables, more time datasets, tuning, isolated timings (#77 to #84)</span><span class="badge open">next</span></li>
+        <li><span>P0 remediation: detector/source audits, source-aware statistics, archive replay, publication</span><span class="badge open">next</span></li>
       </ul></div>
   </div>
-  <div class="foot"><span>issues #63 to #70 and #77 to #85, PRs #73 to #76</span><span>this deck is updated with every merged step</span></div>
+  <div class="foot"><span>docs/thesis-remediation/ · issues #89, #91, #100, #103</span><span>this deck is updated with every merged step</span></div>
 </section>
 
 <!-- 21 takeaway -->
