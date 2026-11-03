@@ -1,0 +1,18 @@
+{
+  "implementation_revision": "edc359236bb2953ea55bc77733a5c17627677819",
+  "files": {
+    "research/pool_preprocessing.py": "edf8ac28b2824c76840c8e4cad47fe3fee1f1ac84a5b38ad341e968dee9e8dc0",
+    "research/pool_train_only.py": "177258ce0eb5910e8b10845a328a1a0ab5fe870cbeb5e9e94ba165587f3fdae3",
+    "research/deep_support.py": "21e4ef7e52a2eb0d03a9367b25cf08ece677201f53f427aa779be8c6c94e8aff",
+    "research/normalise.py": "150988fd2b92ca0c1e22686e36c4b329e8abefd3f96c13494f123238e7c50bea",
+    "tests/test_pool_preprocessing.py": "28ebe4901fd9ae9695024714d0e1690590fc8beb14a0ef60c2ac1d02200ada37",
+    "tests/test_pool_preprocessing_faults.py": "399fc9c40fdb51ed093599fc5f8161513630112ef882514a31b158b951afed39",
+    "tests/test_fault_matrix.py": "bf1203bad7cc1736e791bf61a6580d82246c36cc16d12320a1a67c45880928ba",
+    "tests/test_workflows.py": "a9eae8d8c52ec8d0088fce12edf0bacfa142fd964c1cee968b862e95c8ffb117",
+    "research/tests/test_normalise.py": "8163254b363163eab835383529c05c2f8e333f98c3e03a3df2c13649e33c6aec",
+    "pyproject.toml": "403ab8361d2d48d6332615decdd7d4e647b59c884a36f9b3318de6003f4de089",
+    "Makefile": "7453e6fc38b27c8b69dd0f0a1de2d16572776b9bdcd0130ce207ba7cc9010be1",
+    ".github/workflows/ci.yml": "34c4ea7f94b461db30ea29f3821345bfc1e6da89ec2f37a333e08be7df9bb415"
+  },
+  "scope": "Implementation bytes used by the new gate and stable core campaign; documentation changes excluded. Core campaign record retains its actual pre-commit revision and dirty flag."
+}

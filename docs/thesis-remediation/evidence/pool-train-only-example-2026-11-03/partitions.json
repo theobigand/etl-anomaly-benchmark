@@ -1,0 +1,1 @@
+{"schema_version": 1, "row_count": 12, "seed": 42, "input_sha256": "48d801ecaf35b24cc4a1e54cc868da5474a4f31962e8454c260565367d968259", "partitions": {"train": [0, 1, 2, 3, 4, 5, 6, 7], "validation": [8, 9], "test": [10, 11]}}
