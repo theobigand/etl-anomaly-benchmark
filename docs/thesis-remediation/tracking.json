@@ -1,5 +1,5 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
   "scope": "thesis-remediation",
   "task_range": "T001–T415",
   "milestones": [
@@ -176,6 +176,11 @@
       "name": "area:agentic",
       "color": "C5DEF5",
       "description": "Optional agentic semantic data-quality rule generation research"
+    },
+    {
+      "name": "area:governance",
+      "color": "BFDADC",
+      "description": "Experimental readiness, completion criteria, verification controls and evidence governance"
     }
   ],
   "issues": [
@@ -570,6 +575,86 @@
         "area:agentic"
       ],
       "disposition": "Optional sequential research gate; not part of the mandatory 415 remediation tasks and never a release blocker"
+    }
+  ],
+  "governance_followups": [
+    {
+      "number": 109,
+      "milestone": "Thesis 07 — Reproducibility and certified release",
+      "labels": [
+        "scope:thesis",
+        "priority:p1",
+        "status:needs-audit",
+        "kind:validation",
+        "area:reproducibility",
+        "area:governance"
+      ],
+      "disposition": "Evidence-backed governance follow-up: audit existing controls before documenting or changing any behavior",
+      "canonical_document": "docs/thesis-remediation/GOVERNANCE_DOR_DOD.md",
+      "related_issues": [
+        100,
+        103
+      ]
+    },
+    {
+      "number": 110,
+      "milestone": "Thesis 07 — Reproducibility and certified release",
+      "labels": [
+        "scope:thesis",
+        "priority:p1",
+        "status:needs-audit",
+        "kind:validation",
+        "area:reproducibility",
+        "area:governance"
+      ],
+      "disposition": "Evidence-backed governance follow-up: audit existing controls before documenting or changing any behavior",
+      "canonical_document": "docs/thesis-remediation/GOVERNANCE_DOR_DOD.md",
+      "related_issues": [
+        83,
+        84,
+        100,
+        103
+      ]
+    },
+    {
+      "number": 111,
+      "milestone": "Thesis 07 — Reproducibility and certified release",
+      "labels": [
+        "scope:thesis",
+        "priority:p1",
+        "status:needs-audit",
+        "kind:validation",
+        "area:reproducibility",
+        "area:governance"
+      ],
+      "disposition": "Evidence-backed governance follow-up: audit existing controls before documenting or changing any behavior",
+      "canonical_document": "docs/thesis-remediation/GOVERNANCE_DOR_DOD.md",
+      "related_issues": [
+        82,
+        84,
+        100,
+        103
+      ]
+    },
+    {
+      "number": 112,
+      "milestone": "Thesis 06 — IMRaD synthesis and academic quality",
+      "labels": [
+        "scope:thesis",
+        "priority:p1",
+        "status:needs-audit",
+        "kind:correction",
+        "area:publication",
+        "area:governance"
+      ],
+      "disposition": "Publication follow-up: accurate Methods and Appendix A/B integration as a secondary methodological contribution",
+      "canonical_document": "docs/thesis-remediation/GOVERNANCE_DOR_DOD.md",
+      "related_issues": [
+        99,
+        100,
+        101,
+        103
+      ]
     }
   ]
 }
