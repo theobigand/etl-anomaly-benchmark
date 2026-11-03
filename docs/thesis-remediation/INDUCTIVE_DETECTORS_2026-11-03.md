@@ -138,4 +138,20 @@ No issue-level closure or release certification is claimed.
 - Every pre-existing slide table retains its numeric cells; presentation voice check
   passed. Scientific source, historical protocols and run records remain unchanged.
 
-FAST is in progress at this publication checkpoint; final gate evidence follows separately.
+### Final local verification
+
+`make verify-fast`: PASS, exit 0; 1292 passed, 27 deselected, 300 expected small-fixture
+Isolation Forest warnings; 1790/1790 executable statements and 350/350 branches covered.
+Full output is preserved in [FAST evidence](evidence/inductive-fast-2026-11-03.txt).
+`make lint` and `git diff --check` pass. No verification assertion or acceptance criterion
+was changed. Both recorded characterization examples execute successfully.
+
+The canonical inventory retains exactly T001–T415 once each. This unit adds seven
+verified #89 tasks and shared T255 in #97, bringing the checked total to 22.
+T255 reuses the source audit; the performance/ranking/cost ablations remain outstanding.
+
+DEEP, FAULTS, REAL, typing, verifier coverage and locked-environment reproduction were
+not rerun locally for documentation-only changes. No scientific code, test, protection,
+verifier or dependency changed. Integration CI runs its configured checks independently.
+No clean-revision release certification or independent attestation is claimed.
+
