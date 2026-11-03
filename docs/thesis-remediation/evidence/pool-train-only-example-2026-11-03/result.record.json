@@ -1,0 +1,57 @@
+{
+  "captured_at": "2026-11-03T17:48:23.322381+00:00",
+  "dataset": {
+    "bytes": 265,
+    "identity": "raw.csv",
+    "path": "docs/thesis-remediation/evidence/pool-train-only-example-2026-11-03/raw.csv",
+    "sha256": "48d801ecaf35b24cc4a1e54cc868da5474a4f31962e8454c260565367d968259"
+  },
+  "environment_lock": {
+    "file": "verification/environment/conda-darwin-arm64.explicit.txt",
+    "sha256": "44d5470f1d0c6a675f26e8fec98bf0592967deb2e0a3b1834ac95d822b6e1c73"
+  },
+  "experiment": "pool-train-only-v1",
+  "fingerprint_recipe": 2,
+  "measurement_fingerprint": "9cd603c619d15e17d3cbd9d14986b6f62bdb5611a5ba78fbd4d10ae8f4d7285d",
+  "measurement_recipe": 1,
+  "output_sha256": {
+    "result.json": "92bf4824110cc494520caa03d439197827d1f38057fc408c3a40ff59639d8309"
+  },
+  "outputs": [
+    "result.json"
+  ],
+  "packages": {
+    "great-expectations": "1.24.0",
+    "numpy": "2.4.6",
+    "pandas": "3.0.6",
+    "pyod": "3.6.7",
+    "scikit-learn": "1.9.1"
+  },
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "python": "3.11.17",
+  "schema_version": 1,
+  "scientific_fingerprint": "be28a126f038edec58574f4a3a8baff294ec1994ca9b93cb7c9b6a10efbab076",
+  "seeds": [
+    42
+  ],
+  "settings": {
+    "detectors": [
+      "zscore",
+      "isolation_forest"
+    ],
+    "exploratory": true,
+    "label_column": "anomaly",
+    "partition_sha256": "b716984ccf9d3ac9a6b515f55d14c91e22ea9e99fee2236ac319ab046a43521d",
+    "protocol": "pool-train-only-v1",
+    "research_sha256": {
+      "research/deep_support.py": "21e4ef7e52a2eb0d03a9367b25cf08ece677201f53f427aa779be8c6c94e8aff",
+      "research/normalise.py": "150988fd2b92ca0c1e22686e36c4b329e8abefd3f96c13494f123238e7c50bea",
+      "research/pool_preprocessing.py": "edf8ac28b2824c76840c8e4cad47fe3fee1f1ac84a5b38ad341e968dee9e8dc0",
+      "research/pool_train_only.py": "177258ce0eb5910e8b10845a328a1a0ab5fe870cbeb5e9e94ba165587f3fdae3"
+    },
+    "torch": "2.14.1"
+  },
+  "source_fingerprint": "36e3025c6f2dd11dde84224c6994ddd67d1ea1f5d076abfbbd9fa9eace6ed757",
+  "source_revision": "edc359236bb2953ea55bc77733a5c17627677819",
+  "worktree_dirty": true
+}

@@ -14,6 +14,8 @@ Partial completion evidence: [metric definitions](METRIC_DEFINITIONS_2026-11-03.
 [rule definitions](RULE_DEFINITIONS_2026-11-03.md), and
 [inductive detector audit](INDUCTIVE_DETECTORS_2026-11-03.md).
 Current preprocessing unit: [frozen-partition exploratory protocol](POOL_PREPROCESSING_PROTOCOL_2026-11-03.md).
+Its [implementation and gate evidence](POOL_PREPROCESSING_VALIDATION_2026-11-03.md)
+support T064/T351 (24 checked tasks in total).
 Historical pool partition recovery and train-only replay remain outstanding.
 
 ## Canonical checklists

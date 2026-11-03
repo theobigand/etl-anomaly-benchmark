@@ -70,5 +70,50 @@ remain explicitly attributed to their original run, not the current branch.
 T062/T063 remain open: suitable source-bound historical pool assignments must be
 recovered and applicable studies replayed before claiming a validated train-only
 ranking. This unit supplies tests for T064/T351, not proof that all historical
-research paths are now leakage-free. Final FAST and integration evidence will be
-recorded separately; this checkpoint does not claim issue-level completion.
+research paths are now leakage-free. This unit does not claim issue-level completion.
+
+## Final local evidence
+
+- REGRESSION: `make verify-fast`: 1,347 passed, 30 deselected; Ruff lint/format
+  checks pass. Core scope: 1,790/1,790 lines and 350/350 branches. The new research
+  modules retain their separate 165-line/64-branch denominator; the routine test
+  count includes their acceptance cases, not their fault suite.
+- A persisted [12-row CLI example](evidence/pool-train-only-example-2026-11-03/README.md)
+  runs Z-score and Isolation Forest at seed 42. Source, partition, output and all
+  four research-source hashes verify. It is not a real-pool performance study.
+- [Verification bundle](evidence/pool-preprocessing-verification-2026-11-03.tgz):
+  raw FAST/preprocessing reports, core mutation statistics and per-mutant outcomes,
+  core fault matrix, original gate/RED logs and SHA-256 member inventory. Every
+  inventory entry was checked against the archived bytes. No sealed older evidence
+  or record was restamped. The earlier interrupted campaign is not accepted.
+- [Implementation hashes](evidence/preprocessing-implementation-2026-11-03.json)
+  bind the actual source/test/configuration bytes. Core DEEP/FAULTS records retain
+  their actual base revision and dirty flag because they ran before the
+  implementation commit. The completed DEEP copied tests and recorded test hashes
+  match the current test files; its copied new research modules match implementation
+  `edc3592`. No test or source edit occurred during the accepted campaign.
+- [Final deck geometry/navigation](evidence/preprocessing-slides-geometry-2026-11-03.json):
+  40 slides, 1280×720 content viewport, no out-of-bounds content or footer overlap;
+  next/previous navigation passes. All rendered slide contact sheets were inspected,
+  with the new preparation and final tracking slides inspected at presentation size.
+  Paper abstract, Methods correction and pool-results page were inspected rendered.
+  Voice check passes. All 21 manuscript tables remain byte-identical to the base;
+  the only changed slide table is the RQ1 interpretation, with result tables intact.
+- `git diff --check`: PASS. Scientific fingerprint
+  `be28a126f038edec58574f4a3a8baff294ec1994ca9b93cb7c9b6a10efbab076` and measurement
+  fingerprint `9cd603c619d15e17d3cbd9d14986b6f62bdb5611a5ba78fbd4d10ae8f4d7285d`
+  are unchanged. They do not cover the new research code; the additional hashes do.
+
+REAL, archive reproduction and release certification were not rerun: this unit
+does not change old scientific implementations or result values, and does not
+reuse old results as corrected train-only measurements. Local pinned typing and
+verifier coverage were not rerun for unchanged verifier/core code; existing CI
+requires those checks in addition to FAST, the new preparation gate and FAULTS.
+Integration remains pending those checks on the final branch revision. No CI
+success, new certification or independent attestation is inferred from local gates.
+
+T064 and T351 are now checked in their issue/canonical volume; all 415 identifiers
+remain unique and checked total is 24. All parent issues and milestones remain
+open. Next independently executable P0 work is the complete 17-detector inventory
+(T048–T050), using the source audit already completed; historical pool partition
+recovery/replay is a separate unresolved scientific dependency.

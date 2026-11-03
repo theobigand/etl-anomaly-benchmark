@@ -21,7 +21,7 @@ Keep the existing verification/milestones.json historical evidence unchanged. Ne
 - [ ] T348 Publish random seeds and partitions.
 - [ ] T349 Publish raw scores or sufficient intermediates for statistical reproduction.
 - [ ] T350 Bind each result to code, configuration, and environment.
-- [ ] T351 Add leakage regression tests.
+- [x] T351 Add leakage regression tests.
 - [ ] T352 Add injection-generator validation tests.
 - [ ] T353 Add inductive-scoring tests.
 - [ ] T354 Add metric-consistency tests.
@@ -37,6 +37,11 @@ Keep the existing verification/milestones.json historical evidence unchanged. Ne
 - [ ] T364 Validate hashes of changed artifacts.
 - [ ] T365 Produce a new release consistent with the final PDF.
 - [ ] T366 Provide a reduced-cost reproduction path for readers.
+
+Evidence for T351: [pool-preparation validation](POOL_PREPROCESSING_VALIDATION_2026-11-03.md),
+implementation `edc3592`, evaluation-feature/label perturbations and three injected
+leakage defects. Existing core split/label contracts are retained. This check does
+not certify historical pool results or complete the remaining release tasks.
 
 ## 21. Bibliography, ethics, and academic presentation (P0; Thesis 06)
 
