@@ -1,0 +1,132 @@
+{
+  "calibration": {
+    "policy": "train_prevalence",
+    "value": 0.5
+  },
+  "errors": [],
+  "exploratory": true,
+  "partitions": {
+    "test": [
+      10,
+      11
+    ],
+    "train": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "validation": [
+      8,
+      9
+    ]
+  },
+  "preprocessing": {
+    "categorical_columns": [
+      "category"
+    ],
+    "categories": [
+      [
+        "a",
+        "b"
+      ]
+    ],
+    "category_cap": 20,
+    "dropped": {
+      "cardinality": [],
+      "constant": [
+        "constant"
+      ],
+      "missing": [
+        "missing"
+      ]
+    },
+    "input_columns": [
+      "x",
+      "category",
+      "holes",
+      "constant",
+      "missing"
+    ],
+    "max_missing_share": 0.5,
+    "mean": [
+      3.5,
+      4.125,
+      0.5,
+      0.5
+    ],
+    "medians": [
+      3.5,
+      4.5
+    ],
+    "numeric_columns": [
+      "x",
+      "holes"
+    ],
+    "output_columns": [
+      "f0",
+      "f1",
+      "f2",
+      "f3"
+    ],
+    "scale": [
+      2.29128784747792,
+      2.072890493972125,
+      0.5,
+      0.5
+    ],
+    "unknown_categories": "zero one-hot block before scaling"
+  },
+  "prevalence": {
+    "test": 0.5,
+    "train": 0.5,
+    "validation": 0.5
+  },
+  "protocol": "pool-train-only-v1",
+  "runs": {
+    "isolation_forest": {
+      "fit_rows": 8,
+      "flags": [
+        true,
+        true
+      ],
+      "metrics": {
+        "f1": 0.6666666666666666,
+        "flagged_pct": 100.0,
+        "pr_auc": 0.5,
+        "precision": 0.5,
+        "recall": 1.0,
+        "roc_auc": 0.5
+      },
+      "scores": [
+        0.08119185350560859,
+        0.08119185350560859
+      ]
+    },
+    "zscore": {
+      "fit_rows": 8,
+      "flags": [
+        false,
+        true
+      ],
+      "metrics": {
+        "f1": 1.0,
+        "flagged_pct": 50.0,
+        "pr_auc": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "roc_auc": 1.0
+      },
+      "scores": [
+        2.6536138880151094,
+        3.1024184114977142
+      ]
+    }
+  },
+  "seed": 42,
+  "skipped": []
+}

@@ -6,6 +6,7 @@ se lancent à la racine du dépôt.
 | Commande | Ce qu'elle fait |
 | --- | --- |
 | `make verify-fast` | Ruff, tests hors données réelles, couverture des lignes et branches. |
+| `make verify-preprocessing` | Préparation exploratoire du pool : tests construits, couverture lignes/branches des deux nouveaux modules `research/` (100 % exigé), puis trois défauts de fuite introduits dans des copies temporaires. |
 | `make verify-deep` | Mutations de `src/etl_benchmark` et `experiments/` avec mutmut (environ vingt-cinq minutes) ; seuil de 95 %. |
 | `make verify-faults` | Vingt-trois défauts scientifiques appliqués à une copie temporaire ; chacun doit faire échouer un test prévu (environ deux minutes). |
 | `make verify-real` | Tests sur les trois CSV locaux et contrôle de leurs tailles, labels et sommes de contrôle. |
@@ -70,6 +71,23 @@ Ce contrôle porte sur les processus Python lancés depuis pytest.
   entrées. `scaling.md` décrit l'essai local de croissance.
 
 ## Prêt et terminé
+
+Le protocole exploratoire [pool-train-only-v1](../docs/thesis-remediation/POOL_PREPROCESSING_PROTOCOL_2026-11-03.md)
+consomme des partitions explicites liées au CSV source. Ses rapports
+`experiments/results/preprocessing_coverage.json` et `preprocessing_pytest.xml`
+sont conservés en CI. Son périmètre de couverture est distinct du socle FAST ;
+ses trois défauts construits ne modifient pas la matrice historique des 23 défauts.
+Les nouveaux modules de recherche ne font pas partie du dénominateur DEEP
+(`src/etl_benchmark` et `experiments/`). Ces contrôles ne corrigent pas les
+archives du pool : leur préparation historique sélectionne le schéma et certaines
+lignes avant le découpage. La récupération des partitions et le rejeu restent
+nécessaires pour T062/T063. Les résultats historiques restent inchangés.
+
+DEEP réutilise les verdicts valides dans `mutants/`. Le garde de cache invalide
+les verdicts concernés par des changements de tests ; les mutants nouveaux,
+non vérifiés ou invalidés sont exécutés. Une modification de dépendance ou de
+configuration peut imposer une invalidation plus large. Une campagne interrompue
+ne constitue pas une preuve complète.
 
 Avant de commencer un changement qui touche un résultat :
 

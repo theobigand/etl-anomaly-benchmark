@@ -1,5 +1,16 @@
 # Avancement des tickets
 
+## Remédiation du prétraitement du pool — 3 novembre 2026
+
+Le suivi courant est dans #89, #100 et `docs/thesis-remediation/`. Le nouveau
+chemin explicite `pool-train-only-v1` protège l'ajustement sur des partitions
+fournies ; les anciens scripts et leurs résultats restent inchangés. Les tests
+construits caractérisent les fuites historiques de schéma et de filtrage par label.
+T062/T063 restent ouverts : il manque les partitions historiques liées aux sources
+et le rejeu applicable. La couverture et les défauts injectés ne quantifient pas
+l'effet sur les classements publiés. Les sections suivantes conservent les états
+historiques datés.
+
 Au 15 octobre 2026, tous les tickets de la feuille de route sont fermés (#2 à
 #31). Les entrées ci-dessous gardent l'historique de chaque ticket et les
 limites qui subsistent après sa fermeture. Le statut général de la
