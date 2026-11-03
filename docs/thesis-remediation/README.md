@@ -13,6 +13,8 @@ Current reconciliation: [2026-11-03 audit and execution dependencies](AUDIT_2026
 Partial completion evidence: [metric definitions](METRIC_DEFINITIONS_2026-11-03.md) and
 [rule definitions](RULE_DEFINITIONS_2026-11-03.md), and
 [inductive detector audit](INDUCTIVE_DETECTORS_2026-11-03.md).
+Current preprocessing unit: [frozen-partition exploratory protocol](POOL_PREPROCESSING_PROTOCOL_2026-11-03.md).
+Historical pool partition recovery and train-only replay remain outstanding.
 
 ## Canonical checklists
 

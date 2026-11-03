@@ -41,8 +41,9 @@ KNN, PCA) and six neural ones (autoencoder, VAE, Deep SVDD, DIF, AE1SVM, LUNAR).
 five seeds on a stratified held-out split, on a pool of $152$ open datasets (used as $100$ labelled
 problems and as $42$ UCI tables, $58$ with ADBench, into which six anomaly types are injected) and on
 Faker-generated data with controlled anomaly types, and I report each study against hypotheses written
-before its runs. On aggregate scores the families look interchangeable: on the $100$ labelled problems no
-detector is clearly ahead, the column-wise ECOD, COPOD and HBOS match Isolation Forest, and the neural
+before its runs. The aggregate findings on the $100$ labelled problems remain descriptive:
+their historical schema and row filtering precede the split and require train-only
+revalidation. Under that preparation, the column-wise ECOD, COPOD and HBOS match Isolation Forest, and the neural
 models do not beat the best classical one. The per-type view shows a narrow, largely non-overlapping
 competence for each family, which holds in structure on real tables but not in its values. The
 operating point moves precision and recall by an order of magnitude with the same scores, a threshold
@@ -573,6 +574,27 @@ rest of the trade-off, I additionally draw the full precision--recall curve
 of every detector (Fig.~\ref{fig:prcurves}) and sweep Isolation Forest's
 contamination across each dataset (Table~\ref{tab:contamination}).
 
+\paragraph{Historical pool preparation and exploratory correction.}
+The labelled-pool loader filters columns by missingness, constancy and category
+count, constructs the one-hot vocabulary and removes duplicates with conflicting
+labels before splitting. Median imputation and numerical scaling are fitted on
+the training partition, but the preceding schema and population decisions can
+read evaluation values or labels. A constructed six-row table changes from five
+to three encoded columns when only two evaluation categories change; changing
+an evaluation duplicate's label can also remove a reference row. These checks
+establish an information-access problem, not its effect on dataset-level AP.
+
+An exploratory \texttt{pool-train-only-v1} path instead requires explicit,
+source-bound train/validation/test positions. It fits column selection, vocabulary,
+medians and scaling on training rows, retains the supplied rows and order,
+rejects raw-feature duplicates across partitions and encodes unseen categories
+without extending the training vocabulary. Labels are excluded from preparation;
+only training labels calibrate the historical prevalence-based operating point.
+Constructed regression and defect-injection checks exercise this path. It has
+not replaced the historical pool studies: source-bound partition recovery and
+replay are still required. The archived protocols, assignments and reported
+numbers are retained, and no corrected pool ranking is claimed here.
+
 \subsection{Studies, research questions and hypotheses}
 \label{sec:studies}
 Every study below answers one of the research questions of Section~\ref{sec:rq}, and its
@@ -753,6 +775,9 @@ LUNAR              & 0.15 & 0.33 & 0.20 & \textbf{0.96} \\
 
 \subsection{Labelled problems of the pool (RQ1)}
 \label{sec:labelled}
+The following tables retain the historical pool results. Because schema and
+population filtering precede the split, they are descriptive outcomes of that
+preparation, not a validated strictly train-only comparison.
 The three examples above are only a few datasets. The pool of $152$ open
 tables (\texttt{verification/dataset\_pool.md}), of which Credit Card Fraud and Cardio are members, holds $100$ problems whose
 anomalies are already labelled: $36$ from ADBench and $64$ from the UCI
@@ -1355,7 +1380,10 @@ small datasets (Cardio $F_1$ standard deviation up to $0.17$; Isolation
 Forest on fraud $F_1 = 0.20 \pm 0.07$), so those numbers should be read
 as ranges. The labels of the $64$ UCI problems come from a rule (the rarest
 class), $19$ sources appear in both lists of the pool, and the datasets are
-therefore not independent.
+therefore not independent. The labelled-pool preparation also reads full-table
+values and labels before the split; the exploratory training-only path has only
+constructed validation so far. Its performance impact needs a separate replay,
+not a retrospective reinterpretation of the archived outcomes.
 
 \paragraph{Limits of the verification.}
 Complete line and branch coverage does not establish that the scientific assertions detect
@@ -1375,7 +1403,8 @@ from the data. A controlled dataset labels six anomaly types separately,
 and a severity sweep shows where the per-type ranking changes as the
 injections are scaled. On aggregate metrics the detector families stay
 close on the example and synthetic datasets, and on $100$ labelled problems of a pool of
-$152$ open tables no detector is clearly ahead (Section~\ref{sec:labelled}). The per-type view is where they diverge:
+$152$ open tables the historical rankings require train-only revalidation
+(Section~\ref{sec:labelled}). The per-type view is where they diverge:
 declarative rules own missing values, statistical rules own single-column
 outliers, tree-, boundary- and reconstruction-based models (Isolation Forest, the
 One-Class SVM, DIF, the VAE) catch implausible combinations, and duplicates and temporal drift need
@@ -1390,8 +1419,9 @@ On real tables the pattern is less clean than on the generator. With the six
 types injected into $42$ tables, Great Expectations and the deduplication rule
 still own their types, but the multivariate gap shrinks and the $z$-score
 collapses for a reason that has to do with its training data, not its design.
-On $100$ labelled problems no detector is clearly ahead among the seventeen, learning helps only
-by a small margin, and the neural models do not beat the best classical one. Two further schemas keep the profile (rank correlation
+On the $100$ labelled problems, the descriptive results are conditional on
+historical pre-split preparation; they do not establish a validated train-only
+ranking or equivalence among the seventeen detectors. Two further schemas keep the profile (rank correlation
 $0.93$) but change how visible multivariate outliers and drift are, and an LSTM
 autoencoder trained to convergence does not catch temporal drift better than
 the row-level detectors. The chronological pilot and the study of decisions under temporal shift, on
@@ -1442,10 +1472,11 @@ and post-deduplication row counts, the number of anomalies and the
 positive-class value with an archived manifest. An absent file is reported as
 not run, and the command as a whole passes only if all three files pass. The
 scripts record the dataset fingerprint, software versions, random seeds,
-split policy and output names alongside their results. For each real-data
-seed, an archive stores the positions of the train, validation and test rows
+split policy and output names alongside their results. For each seed on the three main real-data datasets, an archive stores the positions of the train, validation and test rows
 after deduplication; a capped fit also records the selected training
-positions. Archived tables and figures are checked against their manifest,
+positions. The historical pool runs retain seeds but do not export equivalent
+source-bound row-position manifests; recovery remains outstanding.
+Archived tables and figures are checked against their manifest,
 and the six numerical tables in this manuscript are compared with the
 archived CSV values at the precision shown. This establishes traceability
 between the reported values and the recorded experiment; it does not
@@ -1485,6 +1516,13 @@ metrics from the stratified benchmark.
 
 \section{Verification outcomes}
 \label{app:outcomes}
+The exploratory pool-preparation modules have a separate constructed acceptance
+suite and an explicit line/branch coverage gate. Three deliberately introduced
+schema/scaling/label-access defects are detected. This is bounded
+validation of the new path, not replay evidence for the historical pool. The
+routine and mutation figures below describe the named archived run and do not
+extend that mutation denominator to these new research modules.
+
 At commit d4304c5b (local run, not independently attested) the routine suite runs 1,292 tests, plus three that need
 the full datasets and twenty-three fault-injection runs, all run separately.
 Coverage of the pipeline modules and the experiment scripts is complete: 1,790 of
