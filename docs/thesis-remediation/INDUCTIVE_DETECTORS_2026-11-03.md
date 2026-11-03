@@ -155,3 +155,5 @@ not rerun locally for documentation-only changes. No scientific code, test, prot
 verifier or dependency changed. Integration CI runs its configured checks independently.
 No clean-revision release certification or independent attestation is claimed.
 
+The final whitespace check initially flagged an extra blank line at the end of this
+record; it was removed and the same check rerun successfully.
