@@ -30,7 +30,7 @@ Do not claim that hybrid pipelines are superior before comparative measurements.
 - [ ] T252 Measure score and ranking differences.
 - [ ] T253 Measure detection-performance differences.
 - [ ] T254 Measure time and memory differences.
-- [ ] T255 Document whether adaptations fix problematic behavior or change the reference algorithm.
+- [x] T255 Document whether adaptations fix problematic behavior or change the reference algorithm.
 - [ ] T256 Add an ablation table to the appendix.
 - [ ] T257 Retain out-of-the-box experiments as the main baseline.
 - [ ] T258 Run a representative equal-budget tuning study.
@@ -40,3 +40,6 @@ Do not claim that hybrid pipelines are superior before comparative measurements.
 - [ ] T262 Measure tuning gains and their computational cost.
 - [ ] T263 Reassess neural-model conclusions after tuning.
 - [ ] T264 Mark non-preregistered follow-up experiments as exploratory.
+
+Evidence for T255: [pinned-source adaptation classification](INDUCTIVE_DETECTORS_2026-11-03.md).
+This documentation does not complete the performance, ranking or cost ablations.

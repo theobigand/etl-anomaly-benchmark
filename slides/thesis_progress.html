@@ -405,7 +405,7 @@
     <div class="heading">
       <div class="eyebrow"><span class="idx">7</span> &nbsp; Three families, eleven row-level detectors</div>
       <h2>Rules and classical models, <em>one contract</em></h2>
-      <p class="lede">Classical ML detectors are wrapped from PyOD. The flag threshold is read from the train-set prevalence. Three of the eight look at each column alone (ECOD, COPOD, HBOS), so they see an extreme value but not an odd pair. The time-aware <code>drift</code> detector is opt-in, synthetic only.</p>
+      <p class="lede">Classical detectors use PyOD or the recorded protocol adaptations. The flag threshold uses training prevalence. ECOD, COPOD and HBOS aggregate marginal evidence without explicitly fitting dependence between columns. The time-aware <code>drift</code> detector is opt-in, synthetic only.</p>
     </div>
     <div class="panel">
       <table class="dense">
@@ -417,8 +417,8 @@
           <tr><td>Isolation Forest</td><td>joint</td><td style="text-align:left">isolation depth under random splits</td><td style="text-align:left">axis-aligned splits, weak on nulls</td></tr>
           <tr><td>LOF</td><td>joint</td><td style="text-align:left">local density vs 20 neighbours</td><td style="text-align:left">cost grows with the scored set</td></tr>
           <tr><td>One-Class SVM</td><td>joint</td><td style="text-align:left">RBF boundary around the bulk</td><td style="text-align:left">quadratic training</td></tr>
-          <tr><td>ECOD</td><td>column-wise</td><td style="text-align:left">empirical tail probabilities, summed</td><td style="text-align:left">blind to a combination of normal values</td></tr>
-          <tr><td>COPOD</td><td>column-wise</td><td style="text-align:left">same tails, empirical copula</td><td style="text-align:left">same</td></tr>
+          <tr><td>ECOD</td><td>column-wise</td><td style="text-align:left">empirical tail probabilities, summed</td><td style="text-align:left">no explicit cross-feature dependence</td></tr>
+          <tr><td>COPOD</td><td>column-wise</td><td style="text-align:left">max of skew term and mean log tails</td><td style="text-align:left">same</td></tr>
           <tr><td>HBOS</td><td>column-wise</td><td style="text-align:left">histogram per column, inverse bin height</td><td style="text-align:left">independent columns, coarse bins</td></tr>
           <tr><td>KNN</td><td>joint</td><td style="text-align:left">distance to the 5th neighbour</td><td style="text-align:left">quadratic, skipped above 50k rows</td></tr>
           <tr><td>PCA</td><td>joint</td><td style="text-align:left">reconstruction error, 95% of variance</td><td style="text-align:left">misses a shift inside the kept space</td></tr>
@@ -427,7 +427,7 @@
       </table>
     </div>
   </div>
-  <div class="foot"><span>src/etl_benchmark/quality/ml.py &nbsp;&middot;&nbsp; rules.py &nbsp;&middot;&nbsp; gx.py</span><span>ECOD and COPOD rescored on the fit rows only</span></div>
+  <div class="foot"><span>src/etl_benchmark/quality/ml.py &nbsp;&middot;&nbsp; rules.py &nbsp;&middot;&nbsp; gx.py</span><span>ECOD/COPOD use training ranks and frozen skew signs</span></div>
 </section>
 
 <section class="slide" data-sec="Rule definitions">
@@ -454,7 +454,7 @@
     <div class="heading">
       <div class="eyebrow"><span class="idx">8</span> &nbsp; Six neural models, opt-in</div>
       <h2>Neural detectors behind <em>the same contract</em></h2>
-      <p class="lede">PyOD defaults, CPU, seeded, fitted on at most 20,000 rows. Four PyOD behaviours broke the rule that a row's score must not depend on the other scored rows or crash on one row; each is fixed in the wrapper and covered by a test.</p>
+      <p class="lede">PyOD 3.6.7 with recorded adaptations, CPU, seeded, fitted on at most 20,000 rows. Frozen representation scaling and latent-mean scoring change the evaluated algorithms; they do not establish equivalence to upstream defaults.</p>
     </div>
     <div class="panel">
       <table class="dense">
@@ -463,15 +463,34 @@
           <tr><td>Autoencoder</td><td style="text-align:left">rebuild standardized rows through a bottleneck</td><td style="text-align:left">MLP from scikit-learn</td></tr>
           <tr><td>VAE</td><td style="text-align:left">Gaussian code, rebuild, reconstruction error</td><td style="text-align:left">scored with the code mean, PyOD draws one</td></tr>
           <tr><td>Deep SVDD</td><td style="text-align:left">map normal rows near a centre, distance</td><td style="text-align:left">weakest on most types</td></tr>
-          <tr><td>DIF</td><td style="text-align:left">isolation forests on random neural features</td><td style="text-align:left">PyOD standardizes the scored rows, fixed</td></tr>
-          <tr><td>AE1SVM</td><td style="text-align:left">autoencoder + random-Fourier one-class SVM</td><td style="text-align:left">last batch of one row crashed, fixed</td></tr>
+          <tr><td>DIF</td><td style="text-align:left">isolation forests on random neural features</td><td style="text-align:left">training representation scaler reused</td></tr>
+          <tr><td>AE1SVM</td><td style="text-align:left">autoencoder + random-Fourier one-class SVM</td><td style="text-align:left">singleton padding changes training weight</td></tr>
           <tr><td>LUNAR</td><td style="text-align:left">network learns the score from neighbour distances</td><td style="text-align:left">best on drift, many false alarms</td></tr>
         </tbody>
         <caption>The LSTM autoencoder reads windows of ordered rows and stays outside the registry.</caption>
       </table>
     </div>
   </div>
-  <div class="foot"><span>src/etl_benchmark/quality/deep.py &nbsp;&middot;&nbsp; verification/full_registry.md</span><span>19 names pass the same registry contract tests</span></div>
+  <div class="foot"><span>src/etl_benchmark/quality/deep.py &nbsp;&middot;&nbsp; verification/full_registry.md</span><span>17 row-level detectors tested for batch independence</span></div>
+</section>
+
+<section class="slide" data-sec="Inductive scoring">
+  <div class="dossier">
+    <div class="heading">
+      <div class="eyebrow"><span class="idx">8a</span> &nbsp; Evaluated variants</div>
+      <h2>Stable row scores require <em>explicit adaptations</em></h2>
+      <p class="lede">A fitted ETL detector must score a row without consulting other evaluation rows. Contract tests check the 17 row-level detectors; the time-window monitor has a different contract.</p>
+    </div>
+    <div class="panel">
+      <ul class="ledger">
+        <li><span class="k">ECOD and COPOD</span>PyOD 3.6.7 recomputes tails and skew with the evaluated batch. Here ranks and skew signs are frozen from training. Even singleton scores can differ when the skew sign changes.</li>
+        <li><span class="k">Copula motivation versus implemented score</span>COPOD adds marginal contributions: max(skew-selected log tail, mean of left/right log tails). This is not a fitted general joint copula. ECOD takes the max of both log tails and the skew term.</li>
+        <li><span class="k">Neural scoring</span>VAE decodes the latent mean; DIF reuses a training representation scaler. These are algorithm changes. AE1SVM training padding also reweights its last row.</li>
+        <li><span class="k">Evidence boundary</span>Bounded tests support batch independence, not universal equivalence. Separate ablations remain open; historical results retain their actual adapted configurations.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>paper/main.tex · Classical and deep detectors</span><span>PyOD 3.6.7 · paired adaptation ablations remain open</span></div>
 </section>
 
 <!-- 6 datasets -->
@@ -765,7 +784,7 @@
     <div class="heading">
       <div class="eyebrow"><span class="idx">20</span> &nbsp; M2 · the whole labelled pool</div>
       <h2>On 100 labelled problems, <em>still no clear winner among seventeen</em></h2>
-      <p class="lede">Eleven classical and six neural detectors, default settings, five seeds, on the 36 ADBench and 64 UCI problems. ECOD and One-Class SVM tie on the median, HBOS follows, DIF is the best neural model. Protocol and hypotheses written before the runs; the three about the new detectors hold: a column-wise model beats Isolation Forest, no neural model beats the best classical one by 0.02, none failed.</p>
+      <p class="lede">Three rules, eight classical and six neural detectors, recorded settings, five seeds, on the 36 ADBench and 64 UCI problems. ECOD and One-Class SVM tie on the median, HBOS follows, DIF is the best neural model. Protocol and hypotheses written before the runs; the three about the new detectors hold: a column-wise model beats Isolation Forest, no neural model beats the best classical one by 0.02, none failed.</p>
       <div class="stat">
         <div><span class="v">17</span><span class="l">detectors, none of the neural ones failed</span></div>
         <div><span class="v">13</span><span class="l">problems won by DIF, the most; each of the 17 wins at least 2</span></div>
@@ -1113,7 +1132,7 @@
         <li><span class="k">the operating point is a lever</span>Contamination = prevalence instead of a fixed 10% moves Isolation Forest fraud precision from 0.01 to 0.20 and multivariate recall from 0.41 to 0.91.</li>
         <li><span class="k">one regime out of three</span>Cardio: F1 0.62. Fraud (mixed label): nothing usable. Water Quality (61% majority): at chance.</li>
         <li><span class="k">GX 1.x is a full API rewrite</span>Per-row failures need the COMPLETE result format plus an explicit index column. Figured out by probing the installed library.</li>
-        <li><span class="k">PyOD scores can depend on the batch</span>ECOD, COPOD and DIF use the scored rows for their statistics, the VAE draws a random code, AE1SVM crashes on a last batch of one row. Fixed in the wrappers, tested for 19 names.</li>
+        <li><span class="k">PyOD scores can depend on the batch</span>ECOD, COPOD and DIF use the scored rows for their statistics, the VAE draws a random code, AE1SVM crashes on a last batch of one row. Recorded adaptations, with 17 row-level batch-independence checks; not upstream-equivalence claims.</li>
         <li><span class="k">ML is weak on missing values</span>Imputing removes the signal a not-null rule catches for free: GX recall 1.00 against 0.08 to 0.26 for the learned models.</li>
         <li><span class="k">drift is not a per-row problem</span>Once diluted by clean recent rows the window mean has moved by about a tenth of a standard deviation.</li>
       </ul>
@@ -1156,7 +1175,7 @@
     <div class="heading">
       <div class="eyebrow"><span class="idx">35</span> &nbsp; Where it stands</div>
       <h2>Experiments run, <em>paper in IMRaD form</em></h2>
-      <p class="lede">Historical implementation issues #63 to #70 are closed. The current roadmap preserves T001–T415. Fourteen definition tasks in #89 and #91 are verified; both issues remain open. Source-aware inference, archive replay and publication corrections remain required. Optional P2 research is outside the active scope.</p>
+      <p class="lede">Historical implementation issues #63 to #70 are closed. The current roadmap preserves T001–T415. Twenty-two definition and classification tasks in #89, #91 and #97 are verified; both issues remain open. Source-aware inference, archive replay and publication corrections remain required. Optional P2 research is outside the active scope.</p>
     </div>
     <div class="panel"><ul class="kv">
         <li><span>held-out split, 5 seeds, chronological and LSTM pilots, cost study</span><span class="badge done">done</span></li>
