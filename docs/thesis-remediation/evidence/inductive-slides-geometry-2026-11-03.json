@@ -1,0 +1,204 @@
+{
+  "width": 1280,
+  "height": 720,
+  "navigation": true,
+  "slides": [
+    {
+      "section": "Cover",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Problem",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Positioning",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Questions",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Contribution",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "System",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Metric definitions",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Detectors",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Rule definitions",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Neural detectors",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Inductive scoring",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Datasets",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Construction",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Pivot",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Results",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Results",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Results",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Results",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Results",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Results",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Results",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Pool",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Labelled pool",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Regimes",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Typed injection",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Typed injection",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Temporal",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Decisions",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Whole pool",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Deep",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Schemas",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Deep rows",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Cost",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Reading",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Reading",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Findings",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "State",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Next",
+      "outside": [],
+      "footerOverlap": false
+    },
+    {
+      "section": "Takeaway",
+      "outside": [],
+      "footerOverlap": false
+    }
+  ],
+  "html_sha256": "3430d604a553f275dfc6f66a7f3f9fd7be0d08e53b9593e3c7366bb82e22d0e2",
+  "pdf_sha256": "befe3c09d40b0becff741d0a6904971d5dc41a78802ebbf6b1959faa55661418"
+}
