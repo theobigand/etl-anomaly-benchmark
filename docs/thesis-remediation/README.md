@@ -11,7 +11,8 @@ This directory is the canonical, version-controlled backlog for strengthening th
 
 Current reconciliation: [2026-11-03 audit and execution dependencies](AUDIT_2026-11-03.md).
 Partial completion evidence: [metric definitions](METRIC_DEFINITIONS_2026-11-03.md) and
-[rule definitions](RULE_DEFINITIONS_2026-11-03.md).
+[rule definitions](RULE_DEFINITIONS_2026-11-03.md), and
+[inductive detector audit](INDUCTIVE_DETECTORS_2026-11-03.md).
 
 ## Canonical checklists
 

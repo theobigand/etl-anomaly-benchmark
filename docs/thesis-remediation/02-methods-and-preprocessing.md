@@ -14,20 +14,23 @@ Preserve the registered protocols and sealed baselines. Check pinned library ver
 - [x] T042 Document not-null checks and train-derived 0.1%/99.9% numerical bounds.
 - [x] T043 Do not present this suite as representative of domain-informed declarative rules.
 - [x] T044 Explain that train-fitted percentile bounds constitute a univariate statistical detector.
-- [ ] T045 Correct the theoretical description of COPOD.
-- [ ] T046 Distinguish COPOD's theoretical formulation from scoring in the pinned PyOD version.
-- [ ] T047 Inspect the pinned PyOD source before describing how ECOD/COPOD combine dimensions.
+- [x] T045 Correct the theoretical description of COPOD.
+- [x] T046 Distinguish COPOD's theoretical formulation from scoring in the pinned PyOD version.
+- [x] T047 Inspect the pinned PyOD source before describing how ECOD/COPOD combine dimensions.
 - [ ] T048 Add a complete table of all 17 detectors.
 - [ ] T049 Record family, implementation origin, library version, accepted data types, preprocessing, and training caps.
 - [ ] T050 Record score definition, direction, threshold, and implementation adaptations.
-- [ ] T051 Document the modifications to ECOD, COPOD, DIF, and VAE.
-- [ ] T052 Explain the requirement for inductive per-row scoring in ETL inference.
-- [ ] T053 Test whether a row's score is invariant to other rows in the test batch where claimed.
-- [ ] T054 Distinguish bug fixes from algorithm-changing adaptations.
+- [x] T051 Document the modifications to ECOD, COPOD, DIF, and VAE.
+- [x] T052 Explain the requirement for inductive per-row scoring in ETL inference.
+- [x] T053 Test whether a row's score is invariant to other rows in the test batch where claimed.
+- [x] T054 Distinguish bug fixes from algorithm-changing adaptations.
 - [ ] T055 Check neural convergence, stopping rules, epochs, and numerical failures.
 
 Evidence for T037–T044: [rule-definition audit and validation](RULE_DEFINITIONS_2026-11-03.md).
 T037/T038 were already implemented; the audit confirms them without a duplicate notation patch.
+
+Evidence for T045–T047 and T051–T054: [pinned-source inductive detector audit](INDUCTIVE_DETECTORS_2026-11-03.md).
+These are verified descriptions of existing adaptations; no equivalence to unmodified PyOD is claimed.
 
 ## 05. ETL preprocessing and leakage controls (P0; Thesis 01)
 

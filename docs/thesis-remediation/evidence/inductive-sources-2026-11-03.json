@@ -1,0 +1,28 @@
+{
+  "baseline": "f7a388a698b4beb1fc09a32d140fa5cbcced0ba0",
+  "versions": {
+    "pyod": "3.6.7",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "scikit-learn": "1.9.1",
+    "torch": "2.14.1"
+  },
+  "installed_sources": {
+    "ECOD": {
+      "module": "pyod.models.ecod",
+      "file_sha256": "fc84ebe8607b93625da201d38c9e566006297209a307e110e9b93cc8070f86cf"
+    },
+    "COPOD": {
+      "module": "pyod.models.copod",
+      "file_sha256": "d46319c451ce91d5d41ee9a33ad02d4dffec0ba90a1624b4642268f020c84be8"
+    },
+    "DIF": {
+      "module": "pyod.models.dif",
+      "file_sha256": "793f30dcc6762b81697df9decd311ea5d56d6e229e7b1317655cf04ec17afa57"
+    },
+    "VAE": {
+      "module": "pyod.models.vae",
+      "file_sha256": "37052dc8a5d55696f45e8404edbdaf62ca9a115ace8baeaf5f0e29e928374e24"
+    }
+  }
+}
