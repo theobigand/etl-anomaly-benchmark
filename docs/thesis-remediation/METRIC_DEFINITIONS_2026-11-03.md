@@ -58,18 +58,18 @@ for n in range(2, 8):
             y = np.zeros(n, dtype=int)
             y[list(positives)] = 1
             measured = average_precision_score(y, -np.arange(n))
-            manual = sum(Fraction(int(y[:k+1].sum()), k+1) for k in positives) / m
+            manual = sum(Fraction(int(y[: k + 1].sum()), k + 1) for k in positives) / m
             assert isclose(measured, float(manual), abs_tol=1e-14)
-            assert isclose(average_precision_score(y, np.zeros(n)), m/n, abs_tol=1e-14)
+            assert isclose(average_precision_score(y, np.zeros(n)), m / n, abs_tol=1e-14)
             values.append(measured)
             count += 1
         assert isclose(float(np.mean(values)), float(expected), abs_tol=1e-14)
-y, scores = [0, 1, 0, 1], [.1, .9, .8, .2]
+y, scores = [0, 1, 0, 1], [0.1, 0.9, 0.8, 0.2]
 a = compute_metrics(y, [False, True, True, False], scores)
 b = compute_metrics(y, [False, False, False, False], scores)
 p, r, _ = precision_recall_curve(y, scores)
-assert isclose(a["pr_auc"], 5/6)
-assert isclose(auc(r, p), 19/24)
+assert isclose(a["pr_auc"], 5 / 6)
+assert isclose(auc(r, p), 19 / 24)
 assert a["pr_auc"] == b["pr_auc"] and a["roc_auc"] == b["roc_auc"]
 assert a["f1"] != b["f1"]
 assert count == 240
@@ -88,3 +88,5 @@ Do not rename stored fields or restamp sealed runs to perform a display correcti
 T097 remains open: evaluation prevalence needs consistent presentation alongside AP,
 including per-split accounting. #92 owns coordinated figure/table lineage; #93/#83 own
 source-aware inference. No issue-level acceptance criterion is declared satisfied yet.
+
+Validation outcomes and gate applicability: [shared validation record](VALIDATION_2026-11-03.md).

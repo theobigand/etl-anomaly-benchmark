@@ -68,3 +68,5 @@ T045–T070 remain open: pinned-source algorithm descriptions, full implementati
 feature-access inventory, adaptation audits, neural convergence and preprocessing/leakage
 reconciliation. Existing detector tests are reusable evidence, not automatic completion
 of those tasks. No #89 issue-level closure or release certification is claimed.
+
+Validation outcomes and gate applicability: [shared validation record](VALIDATION_2026-11-03.md).
