@@ -1,5 +1,12 @@
 # Research governance, DoR/DoD, and verification reporting
 
+Prospective policy update: [#116](https://github.com/theobigand/etl-anomaly-benchmark/issues/116)
+tracks the mandatory P0 migration to L1/L2/L3/L4 mutation thresholds of
+80/90/95/98%. Its [separate contract and current limitations](RISK_MUTATION_MIGRATION.md)
+extend the four follow-ups below without changing T001–T415. Existing global
+95% evidence retains its historical interpretation. No migration completion or
+current certification is implied by this planning cross-reference.
+
 **Status:** Planned follow-up work, not implemented or independently verified by this document.
 **Scope:** Four issue-tracked tasks (#109–#112) concerning the existing ETL anomaly-benchmark thesis. These tasks are **in addition to** the unchanged T001–T415 checklist. They are not a new research question, detector family, or substitute for the required scientific corrections.
 

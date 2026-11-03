@@ -1514,6 +1514,17 @@ chronological split and the window-based drift monitor have a separate
 protocol: their alert and delay measures are not pooled with the row-level
 metrics from the stratified benchmark.
 
+\paragraph{Prospective risk-tiered policy.}
+A prospective verification revision assigns minimum mutation scores of $80\%$
+(L1, limited consequences), $90\%$ (L2, operational support), $95\%$ (L3,
+scientific processing), and $98\%$ (L4, leakage, metric/evidence integrity and
+certification). Each required module must meet its own threshold; aggregates
+cannot compensate for a failing module or risk level. Classification uses the
+highest applicable consequence. The arithmetic checks and explicit inventory are
+under implementation and review; complete mutation, evidence and release
+integration are not yet established. The historical results below retain their
+original global $95\%$ criterion and are not claims of compliance with this revision.
+
 \section{Verification outcomes}
 \label{app:outcomes}
 The exploratory pool-preparation modules have a separate constructed acceptance
