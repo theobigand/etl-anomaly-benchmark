@@ -285,40 +285,52 @@ PyOD~\cite{zhao2019pyod}, so that classical and neural models can be
 dropped in without changing the harness.
 
 \subsection{Rule-based detectors}
-This stage compares three rule-based baselines. All three define a band of
-``normal'' values per column and flag a row when it leaves the band on at
-least one column; they differ in how the band is estimated and in how
-robust that estimate is to the very outliers being sought.
+This stage compares three generic rule-based baselines. Their numerical
+bounds are fitted on training data; a row is flagged if it violates any
+active column rule. These baselines do not represent the full range of
+domain-informed declarative constraints.
 
-\emph{Z-score} standardizes each numeric column on the fitted data and
-flags a row when any column exceeds $|z| > 3$. The threshold follows the
-empirical rule: under an approximately normal distribution about $99.7\%$
-of values lie within $3\sigma$, so beyond it is rare by construction. Its
-weakness is that the mean and standard deviation are themselves inflated
-by extreme values, so a large outlier can mask others.
+For \emph{Z-score}, let $\hat\mu_j$ and $\hat\sigma_j$ be the training mean
+and sample standard deviation of numeric column $j$. The row score is
+\begin{equation}
+s_Z(x)=\max_j \frac{|x_j-\hat\mu_j|}{\hat\sigma_j},
+\qquad \text{flag if }s_Z(x)>3.
+\end{equation}
+Constant training columns have zero contribution and do not trigger flags.
+For a normal variable with known population parameters, about $99.73\%$
+of values lie within $3\sigma$. This is a per-column reference, not a
+calibrated row-level false-alarm guarantee for fitted, multivariate data.
+Extreme training values can inflate the fitted mean and standard deviation
+and mask other outliers.
 
-\emph{IQR} learns Tukey's fences $[Q_1 - 1.5\,\mathrm{IQR},\,
-Q_3 + 1.5\,\mathrm{IQR}]$ per column, where the interquartile range spans
-the central $50\%$ of the data, and flags a row falling outside any fence.
-Quartiles are robust: unlike the mean and standard deviation they barely
-move when extreme values are added, so the fences are not distorted by the
-outliers they are meant to catch. The $1.5$ multiplier corresponds to
-about $2.7\sigma$ under normality, isolating a comparable tail.
+\emph{IQR} fits $Q_{1j}$ and $Q_{3j}$ on each numeric training column and
+sets $I_j=Q_{3j}-Q_{1j}$. Its fences are
+\begin{equation}
+L_j=Q_{1j}-1.5I_j,\qquad U_j=Q_{3j}+1.5I_j.
+\end{equation}
+The row is flagged if any active column lies strictly outside its fences;
+the score is $\max_j\max(0,L_j-x_j,x_j-U_j)/I_j$.
+Columns with zero training IQR contribute zero and do not trigger flags in
+this implementation. Quartiles are less sensitive to extreme values than
+the mean and standard deviation, but training contamination can still move
+them. Under a normal distribution the population fences lie at approximately
+$\mu\pm2.7\sigma$, giving a two-sided per-column tail of about $0.70\%$,
+versus about $0.27\%$ for the $3\sigma$ rule. With $d$ independent normal
+columns and known population bounds, a per-column tail probability $p$
+gives row alert probability $1-(1-p)^d$; dependence and fitted bounds change
+that reference. Neither rule fixes a universal row alert rate.
 
-\emph{Great Expectations} encodes a declarative expectation
-suite~\cite{dataqualitysurvey2024} and makes no distributional
-assumption: a not-null expectation on every column and a range expectation
-per numeric column, with bounds set to the $0.1$th and $99.9$th
-percentiles of the fitted data. Using inner percentiles rather than the
-observed min/max is what turns the range check into a usable rule instead
-of a no-op on the fitting data. A row is flagged when it violates at least
-one expectation; its score is the fraction of the suite it violates.
-
-The continuous scores of the statistical detectors are the worst
-standardized deviation (Z-score) and the largest fence exceedance in IQR
-units (IQR). The axis of difference between the three is thus robustness
-and the assumption made about the shape of the data, which is precisely
-what the learned models below are meant to handle better.
+\emph{Great Expectations} implements a generic automated statistical
+suite~\cite{dataqualitysurvey2024}: a not-null check on every column and
+an inclusive range check on each numeric column, using its training
+$0.1\%$ and $99.9\%$ quantiles. A range check is omitted if either bound
+is undefined or the bounds coincide. A row is flagged when it violates at
+least one check; its score is the fraction of active checks violated.
+The fitted percentile bounds are univariate statistical detectors expressed
+as declarative expectations. They require no Gaussian model, but they do
+learn marginal limits from the training distribution. The suite contains
+no domain-specific validity, cross-field consistency, category or format
+constraints; its results must not be generalized to such richer rule suites.
 
 \subsection{Classical machine-learning detectors}
 The second family replaces the per-column band with a learned model of
@@ -494,17 +506,39 @@ One-Class SVM's quadratic training were expected to be too costly at
 $284$k rows; this was not measured.
 
 Because the detectors emit both a threshold decision and a graded score,
-I report threshold metrics (precision, recall, $F_1$) alongside
-ROC-AUC and PR-AUC (computed as average precision, not trapezoidal
-area). On imbalanced data PR-AUC is the more informative
-metric: the false-positive rate underlying ROC-AUC is diluted by the large
-true-negative pool and stays optimistic, whereas precision reacts directly
-to false alarms. I keep both because PR-AUC's random baseline equals the
-prevalence and is not comparable across datasets, while ROC-AUC's is
-always $0.5$ and is. I also report the fraction of rows flagged and the
-in-pipeline latency. Because a single flag threshold hides the rest of the
-trade-off, I additionally draw the full precision-recall curve of every
-detector (Fig.~\ref{fig:prcurves}) and sweep Isolation Forest's
+I distinguish ranking metrics from threshold-dependent metrics. Average
+Precision (AP) and ROC-AUC use continuous scores, with larger scores indicating
+more anomalous rows; precision, recall, $F_1$ and the fraction of rows flagged
+use the selected decision threshold. Changing that threshold alone leaves the
+ranking metrics unchanged.
+
+The primary ranking metric is non-interpolated AP, computed with
+\texttt{average\_precision\_score} in scikit-learn. At the successive distinct
+score cutoffs, ordered from the highest score to the lowest, let $P_j$ and
+$R_j$ denote precision and recall, with $R_0=0$. Then
+\begin{equation}
+\label{eq:average-precision}
+\mathrm{AP}=\sum_{j=1}^{J}(R_j-R_{j-1})P_j.
+\end{equation}
+Tied scores enter together at one cutoff. This recall-weighted sum does not
+linearly interpolate precision and differs from trapezoidal area under a
+precision--recall curve. Historical result files retain the field
+\texttt{pr\_auc} for this same AP quantity; remaining PR-AUC labels in the
+results refer to AP, not to a second metric.
+
+For rare anomalies, AP makes false alarms visible through precision.
+ROC-AUC remains complementary: its false-positive rate can be small despite
+many false alarms when the normal class is large. For $m$ anomalies among
+$n$ evaluated rows, prevalence $\pi=m/n$ is a no-skill reference precision,
+not an exact finite-sample expectation of AP for a uniformly random strict
+ranking. Such rankings have an upward finite-sample correction; constant
+scores, with all ties evaluated together, give AP exactly $\pi$. AP therefore
+requires the evaluation prevalence for interpretation, and raw AP values
+across different prevalences are not directly comparable. Neither AP nor
+ROC-AUC alone establishes the usefulness of a deployed operating point.
+I also report detection latency. Because a single flag threshold hides the
+rest of the trade-off, I additionally draw the full precision--recall curve
+of every detector (Fig.~\ref{fig:prcurves}) and sweep Isolation Forest's
 contamination across each dataset (Table~\ref{tab:contamination}).
 
 \subsection{Studies, research questions and hypotheses}

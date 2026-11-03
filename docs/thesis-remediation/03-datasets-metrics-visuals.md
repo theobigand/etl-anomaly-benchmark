@@ -28,16 +28,19 @@ Keep dataset populations separate and document overlaps. Generate figures and ta
 
 ## 07. Metric definitions and baselines (P0; Thesis 02)
 
-- [ ] T090 Verify whether the primary metric uses average_precision_score.
+- [x] T090 Verify whether the primary metric uses average_precision_score.
 - [ ] T091 Rename PR-AUC to Average Precision (AP) throughout if confirmed.
 - [ ] T092 Correct AP headers in Tables II, III, VII, XII, XIII, XIV, XV, XX, and XXI.
 - [ ] T093 Correct related figure labels and captions.
-- [ ] T094 Define AP mathematically.
-- [ ] T095 Distinguish AP from trapezoidal precision-recall area.
-- [ ] T096 Retain ROC-AUC as complementary, not sufficient for rare anomalies.
+- [x] T094 Define AP mathematically.
+- [x] T095 Distinguish AP from trapezoidal precision-recall area.
+- [x] T096 Retain ROC-AUC as complementary, not sufficient for rare anomalies.
 - [ ] T097 Show anomaly prevalence alongside AP.
-- [ ] T098 Provide a prevalence-aware random-ranking baseline with qualifications.
-- [ ] T099 Separate ranking metrics from threshold-dependent metrics.
+- [x] T098 Provide a prevalence-aware random-ranking baseline with qualifications.
+- [x] T099 Separate ranking metrics from threshold-dependent metrics.
+
+Evidence for T090, T094–T096, T098 and T099: [metric definitions and validation](METRIC_DEFINITIONS_2026-11-03.md).
+T091–T093 and T097 remain open; the issue is only partially complete.
 
 ## 08. Figures and methodological diagrams (P0; Thesis 01)
 
