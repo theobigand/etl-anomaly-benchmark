@@ -29,6 +29,9 @@ jobs:
       - name: FAST verification
         run: make verify-fast
 
+      - name: Frozen-partition pool preparation
+        run: make verify-preprocessing
+
       - name: Static typing (mypy is pinned here, not in pyproject)
         run: |
           pip install mypy==2.4.0 pandas-stubs==3.0.5.260914
@@ -52,6 +55,8 @@ jobs:
             experiments/results/types_report.json
             experiments/results/verifier_coverage.json
             verification/profile.json
+            experiments/results/preprocessing_coverage.json
+            experiments/results/preprocessing_pytest.xml
           if-no-files-found: warn
           retention-days: 30
 

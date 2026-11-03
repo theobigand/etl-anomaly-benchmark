@@ -211,7 +211,7 @@
   <ul class="kv" style="max-width:none">
     <li><span>Author</span><span>Theo Bigand &nbsp;·&nbsp; updated 2026-10-21</span></li>
     <li><span>Repository</span><span>github.com/theobigand/etl-anomaly-benchmark</span></li>
-    <li><span>Code</span><span>1,150 tests &nbsp;·&nbsp; 100% line and branch coverage &nbsp;·&nbsp; 97.75% mutants killed</span></li>
+    <li><span>Verification</span><span>Core mutation: 97.45% killed locally &nbsp;·&nbsp; exploratory preparation verified separately</span></li>
     <li><span>Datasets</span><span>pool of 152 open sets &nbsp;·&nbsp; Credit Card, Cardio, Water Quality &nbsp;·&nbsp; synthetic, 6 anomaly types</span></li>
   </ul>
   <svg class="motif motif--anim" viewBox="0 0 128 76" aria-hidden="true">
@@ -293,7 +293,7 @@
       <table class="num dense">
         <thead><tr><th style="text-align:left">Question</th><th style="text-align:left">Studies</th><th style="text-align:left">Answer</th></tr></thead>
         <tbody>
-          <tr><td style="text-align:left">RQ1 rules, classical, neural in one pipeline</td><td style="text-align:left">examples, 100 labelled problems</td><td style="text-align:left">no clear winner among 17</td></tr>
+          <tr><td style="text-align:left">RQ1 rules, classical, neural in one pipeline</td><td style="text-align:left">examples, 100 labelled problems</td><td style="text-align:left">historical ranking; train-only replay pending</td></tr>
           <tr><td style="text-align:left">RQ2 which anomaly type each family finds</td><td style="text-align:left">synthetic matrix, schemas, 42 UCI tables</td><td style="text-align:left">narrow competence, values do not transfer</td></tr>
           <tr><td style="text-align:left">RQ3 operating point and time</td><td style="text-align:left">contamination, label-free threshold, chronological split</td><td style="text-align:left">threshold fixed on the past fails when prevalence moves</td></tr>
           <tr><td style="text-align:left">RQ4 cost in the pipeline</td><td style="text-align:left">cost study, ETL run on 152 sets</td><td style="text-align:left">neural 10 to 100 times column-wise</td></tr>
@@ -493,6 +493,23 @@
   <div class="foot"><span>paper/main.tex · Classical and deep detectors</span><span>PyOD 3.6.7 · paired adaptation ablations remain open</span></div>
 </section>
 
+<section class="slide" data-sec="Pool preparation">
+  <div class="dossier">
+    <div class="heading">
+      <div class="eyebrow"><span class="idx">8b</span> &nbsp; Exploratory correction</div>
+      <h2>Historical pool preparation <em>needs revalidation</em></h2>
+      <p class="lede">Column filtering, category vocabulary and conflicting-label removal occur before the historical split. Training-only medians and scaling do not isolate those earlier decisions.</p>
+    </div>
+    <div class="panel"><ul class="ledger">
+      <li><span class="k">Constructed negative controls</span>Changing only evaluation categories changes encoded width from 5 to 3. An evaluation duplicate's label can also remove a reference row. AP bias is not yet quantified.</li>
+      <li><span class="k">Versioned path</span>pool-train-only-v1 consumes source-bound frozen positions. Fitted schema, imputation and scaling use training rows only. Cross-partition duplicates are rejected; evaluation rows are retained.</li>
+      <li><span class="k">Bounded checks</span>Separate constructed checks enforce full line/branch coverage for the two new modules and detect three leakage defects. Targets are excluded from preparation; only training prevalence calibrates flags.</li>
+      <li><span class="k">Still outstanding</span>Recover source-bound historical assignments and replay applicable pool studies. Old protocols and results are preserved; no corrected pool-performance claim is available.</li>
+    </ul></div>
+  </div>
+  <div class="foot"><span>research/pool_preprocessing.py · pool_train_only.py</span><span>exploratory path, no replacement of archived results</span></div>
+</section>
+
 <!-- 6 datasets -->
 <section class="slide" data-sec="Datasets">
   <div class="dossier">
@@ -555,7 +572,7 @@
     <div class="brule"></div>
   </div>
   <div class="mid">
-    <blockquote>Aggregate metrics say the detector families are interchangeable. <em>Per anomaly type, they are not.</em></blockquote>
+    <blockquote>Aggregate scores do not establish equivalence. <em>Per-type results show different competencies.</em></blockquote>
   </div>
   <div class="metaline">F1 spans 0.31 to 0.51 on the synthetic set &nbsp;·&nbsp; the per-type competences barely overlap</div>
   <svg class="motif" viewBox="0 0 128 76" aria-hidden="true">
@@ -635,7 +652,7 @@
   <div class="dossier">
     <div class="heading">
       <div class="eyebrow"><span class="idx">14</span> &nbsp; Synthetic dataset, aggregate</div>
-      <h2>Aggregate metrics make the families <em>look interchangeable</em></h2>
+      <h2>Aggregate scores hide <em>different trade-offs</em></h2>
       <p class="lede">Z-score and HBOS reach a perfect precision by firing only on extreme rows (recall 0.20). DIF has the best F1 and AP, the VAE matches Isolation Forest, LUNAR has the best recall with a low precision.</p>
       <div class="stat">
         <div><span class="v">0.22&ndash;0.59</span><span class="l">F1 range across the seventeen detectors</span></div>
@@ -783,8 +800,8 @@
   <div class="dossier">
     <div class="heading">
       <div class="eyebrow"><span class="idx">20</span> &nbsp; M2 · the whole labelled pool</div>
-      <h2>On 100 labelled problems, <em>still no clear winner among seventeen</em></h2>
-      <p class="lede">Three rules, eight classical and six neural detectors, recorded settings, five seeds, on the 36 ADBench and 64 UCI problems. ECOD and One-Class SVM tie on the median, HBOS follows, DIF is the best neural model. Protocol and hypotheses written before the runs; the three about the new detectors hold: a column-wise model beats Isolation Forest, no neural model beats the best classical one by 0.02, none failed.</p>
+      <h2>Historical pool rankings <em>need train-only revalidation</em></h2>
+      <p class="lede">Historical run: three rules, eight classical and six neural detectors, five seeds, on 36 ADBench and 64 UCI problems. The numerical table is retained as recorded. Schema and row filtering precede the split, so these descriptive rankings still need train-only replay; source dependence and label-rule sensitivity also remain open.</p>
       <div class="stat">
         <div><span class="v">17</span><span class="l">detectors, none of the neural ones failed</span></div>
         <div><span class="v">13</span><span class="l">problems won by DIF, the most; each of the 17 wins at least 2</span></div>
@@ -1146,8 +1163,8 @@
   <div class="dossier">
     <div class="heading">
       <div class="eyebrow"><span class="idx">34</span> &nbsp; Implemented, tested, verified</div>
-      <h2>What the repository <em>holds today</em></h2>
-      <p class="lede">The verification layer was built for the claim that the numbers are right: a test suite, a mutation campaign, deliberate defects and a release script that returns certified, incomplete or blocked. The last local run is not independently attested, and the hosted run certified an earlier revision.</p>
+      <h2>Historical verification has <em>a defined scope</em></h2>
+      <p class="lede">These measurements belong to local run d4304c5. They cover the core pipeline and experiment scripts, with separate verifier checks. They do not certify the new research modules or establish scientific validity. The run is not independently attested.</p>
       <div class="stat">
         <div><span class="v">1,292</span><span class="l">tests, plus 3 on full datasets</span></div>
         <div><span class="v">97.61%</span><span class="l">mutants killed (4,980 of 5,102)</span></div>
@@ -1175,7 +1192,7 @@
     <div class="heading">
       <div class="eyebrow"><span class="idx">35</span> &nbsp; Where it stands</div>
       <h2>Experiments run, <em>paper in IMRaD form</em></h2>
-      <p class="lede">Historical implementation issues #63 to #70 are closed. The current roadmap preserves T001–T415. Twenty-two definition and classification tasks in #89, #91 and #97 are verified; both issues remain open. Source-aware inference, archive replay and publication corrections remain required. Optional P2 research is outside the active scope.</p>
+      <p class="lede">Historical implementation issues #63 to #70 are closed. The current roadmap preserves T001–T415. Twenty-four definition, classification and leakage-test tasks in #89, #91, #97 and #100 are verified; all four issues remain open. Source-aware inference, partition recovery, replay and publication corrections remain required. Optional P2 research is outside the active scope.</p>
     </div>
     <div class="panel"><ul class="kv">
         <li><span>held-out split, 5 seeds, chronological and LSTM pilots, cost study</span><span class="badge done">done</span></li>
@@ -1204,13 +1221,13 @@
     <p class="hero-lede" style="max-width:60ch">The per-type heatmap is what makes that
     choice actionable. Across the three example datasets, unsupervised detection pays off only on
     Cardio, where the anomalies are genuinely rare outliers. On 100 labelled problems of the
-    pool no detector is clearly ahead. On 42 real tables with injected
+    pool, rankings require train-only revalidation. On 42 real tables with injected
     types, the synthetic pattern holds only in part, which is why the real-data matrix is
     the differentiator. The pipeline, the 152-dataset pool, the protocols and the
     verification layer are in place. The IMRaD write-up and the remaining studies are
     what remains.</p>
   </div>
-  <div class="metaline">github.com/theobigand/etl-anomaly-benchmark &nbsp;·&nbsp; 1,292 tests &nbsp;·&nbsp; 152 datasets &nbsp;·&nbsp; 17 detectors</div>
+  <div class="metaline">github.com/theobigand/etl-anomaly-benchmark &nbsp;·&nbsp; bounded verification &nbsp;·&nbsp; 152 datasets &nbsp;·&nbsp; 17 detectors</div>
   <svg class="motif" viewBox="0 0 128 76" aria-hidden="true">
     <rect class="c s" x="2" y="2" width="20" height="20"/><rect class="c" x="2" y="28" width="20" height="20"/><rect class="c" x="2" y="54" width="20" height="20"/>
     <rect class="c" x="28" y="2" width="20" height="20"/><rect class="c" x="28" y="28" width="20" height="20"/><rect class="c" x="28" y="54" width="20" height="20"/>

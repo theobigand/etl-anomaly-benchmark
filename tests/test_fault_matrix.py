@@ -22,7 +22,7 @@ import pytest
 pytestmark = pytest.mark.fault
 
 ROOT = Path(__file__).resolve().parents[1]
-COPIED = ("src", "experiments", "tests", "pyproject.toml", "environment.yml")
+COPIED = ("src", "experiments", "research", "tests", "pyproject.toml", "environment.yml")
 
 
 @dataclass(frozen=True)
