@@ -42,16 +42,25 @@ jobs:
             const historicalOpen = config.historical_open_issues ?? [];
             const historicalClosed = config.historical_closed_issues ?? [];
             const optionalResearch = config.optional_research_issues ?? [];
+            const governanceFollowups = config.governance_followups ?? [];
             if (config.issues.length !== 16 || config.milestones.length !== 8 ||
-                optionalResearch.length !== 5) {
-              throw new Error('Unexpected core roadmap, milestone, or optional research inventory');
+                optionalResearch.length !== 5 || governanceFollowups.length !== 4) {
+              throw new Error('Unexpected core roadmap, milestone, optional research or governance inventory');
             }
             if (optionalResearch.some(item => !item.labels.includes('status:if-time') ||
                 !item.labels.includes('priority:p2') ||
                 item.milestone !== 'Thesis 08 — Optional research extensions')) {
               throw new Error('Optional research must remain non-blocking and if-time');
             }
-            const active = [...config.issues, ...historicalOpen, ...optionalResearch];
+            if (governanceFollowups.some(item => !item.labels.includes('area:governance') ||
+                !item.labels.includes('priority:p1') ||
+                item.labels.includes('status:if-time') ||
+                !['Thesis 06 — IMRaD synthesis and academic quality',
+                  'Thesis 07 — Reproducibility and certified release'].includes(item.milestone))) {
+              throw new Error('Governance issues must retain their approved category, priority and milestones');
+            }
+            const active = [...config.issues, ...historicalOpen, ...optionalResearch,
+              ...governanceFollowups];
             const allNumbers = [...active, ...historicalClosed].map(item => item.number);
             if (new Set(allNumbers).size !== allNumbers.length) {
               throw new Error('An issue appears more than once in the roadmap configuration');
