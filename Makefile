@@ -2,7 +2,7 @@ CONDA_ENV := etl-benchmark
 # any Chromium-family binary that supports --print-to-pdf (chrome, chromium, chrome-headless-shell)
 CHROME ?= chromium
 
-.PHONY: help env update test lint verify-fast verify-deep verify-faults verify-real verify-pool verify-scale lock verify-types verify-tools verify-reproduce verify-release verify-all pipeline benchmark benchmark-water benchmark-cardio synthetic heatmap severity curves slides run clean
+.PHONY: help env update test lint verify-fast verify-preprocessing verify-deep verify-faults verify-real verify-pool verify-scale lock verify-types verify-tools verify-reproduce verify-release verify-all pipeline benchmark benchmark-water benchmark-cardio synthetic heatmap severity curves slides run clean
 
 help:
 	@echo "Available targets:"
@@ -11,6 +11,7 @@ help:
 	@echo "  make test       Run pytest"
 	@echo "  make lint       Run ruff check + format"
 	@echo "  make verify-fast  Lint, test, measure exact line/branch coverage, write evidence"
+	@echo "  make verify-preprocessing  Test frozen pool preparation, separate 100% coverage and three isolation defects"
 	@echo "  make verify-deep  Mutation campaign on src/etl_benchmark and experiments, enforce 95%"
 	@echo "  make verify-faults Apply deliberate scientific defects to a temporary copy and require a failure"
 	@echo "  make verify-real  Inspect available full datasets and record provenance"
@@ -66,6 +67,16 @@ verify-fast: lint
 		evidence_status=$$?; \
 		test $$tests_status -eq 0 -a $$profile_status -eq 0 -a $$report_status -eq 0 \
 		-a $$evidence_status -eq 0
+
+# Experimental research scope is measured separately from the historical FAST denominator.
+verify-preprocessing:
+	@mkdir -p experiments/results
+	pytest tests/test_pool_preprocessing.py --cov=research.pool_preprocessing \
+		--cov=research.pool_train_only --cov-branch --cov-fail-under=100 \
+		--cov-report=term-missing:skip-covered \
+		--cov-report=json:experiments/results/preprocessing_coverage.json \
+		--junitxml=experiments/results/preprocessing_pytest.xml
+	pytest -m fault tests/test_pool_preprocessing_faults.py
 
 verify-deep:
 	@mkdir -p $(EVIDENCE)

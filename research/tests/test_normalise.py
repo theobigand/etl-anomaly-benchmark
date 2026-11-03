@@ -78,4 +78,6 @@ def test_too_few_anomalies_are_refused_instead_of_split():
 def test_slow_detectors_are_skipped_beyond_the_declared_training_size():
     assert nm.skipped_detectors(10_000) == []
     assert nm.skipped_detectors(30_000) == ["ocsvm"]
-    assert nm.skipped_detectors(80_000) == ["lof", "ocsvm"]
+    assert nm.skipped_detectors(50_000) == ["ocsvm"]
+    assert nm.skipped_detectors(50_001) == ["lof", "ocsvm", "knn"]
+    assert nm.skipped_detectors(80_000) == ["lof", "ocsvm", "knn"]
