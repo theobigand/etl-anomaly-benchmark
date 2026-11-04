@@ -508,6 +508,54 @@ def record_execution(
     return proof
 
 
+def validate_execution(
+    root: Path,
+    sources: list[str],
+    *,
+    runtime: dict | None = None,
+    mutated_sources: list[str] | None = None,
+) -> dict:
+    """Check a recorded binding against current inputs and native artifacts.
+
+    A transferred binding can use its recorded runtime for consistency checks;
+    this does not independently attest execution. Callers must still reconcile
+    the catalog, inspect the native exit and enforce the mutation policy.
+    """
+    cache = root / MUTANTS
+    if (cache / PENDING_EXECUTION).exists():
+        raise ValueError("pending native execution cannot validate a settled binding")
+    proof = _execution_proof(root)
+    if proof is None:
+        raise ValueError("execution proof is missing")
+    context = capture_context(
+        root,
+        sources,
+        runtime=proof["context"]["runtime"] if runtime is None else runtime,
+        mutated_sources=mutated_sources,
+    )
+    if context != proof["context"]:
+        raise ValueError("execution inputs differ from the recorded binding")
+    documents = _execution_documents(root, context["mutation_scope"])
+    metadata = {
+        path.relative_to(cache).as_posix(): _metadata_digest(data)
+        for path, data in documents.items()
+    }
+    if metadata != proof["metadata_sha256"]:
+        raise ValueError("native verdict metadata differs from the recorded binding")
+    if _native_artifacts(root, context["mutation_scope"]) != proof["native_artifacts_sha256"]:
+        raise ValueError("native generation artifacts differ from the recorded binding")
+    if _statistics(root) != proof["statistics"]:
+        raise ValueError("native dependency/test maps differ from the recorded binding")
+    settled = sum(
+        code is not None
+        for data in documents.values()
+        for code in data["exit_code_by_key"].values()
+    )
+    if settled != proof["settled"]:
+        raise ValueError("settled verdict count differs from native metadata")
+    return proof
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("step", choices=["prepare", "record"])

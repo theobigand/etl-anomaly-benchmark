@@ -1536,6 +1536,8 @@ A constructed native smoke check executes two mutants and subsequently reuses
 both unchanged verdicts. Per-attempt logs are preserved, while live workers,
 changed inputs or stale generation artifacts prevent a new execution binding.
 This small check does not measure mutation adequacy of the benchmark modules.
+Recorded arithmetic can be recomputed without the historical source files;
+current scope and execution bindings must still be verified before reuse.
 
 \section{Verification outcomes}
 \label{app:outcomes}

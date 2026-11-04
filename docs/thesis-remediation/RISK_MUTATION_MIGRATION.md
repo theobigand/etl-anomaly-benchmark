@@ -262,3 +262,39 @@ Publication review: no new benchmark result, native-smoke result or methodologic
 claim changed. The manuscript and slides already describe the constructed
 two-mutant reuse check and incomplete release integration. Their content and
 artifact hashes therefore remain unchanged for this test-only follow-up.
+
+## Recorded reports and current execution inputs (2026-11-04)
+
+`evaluate_snapshot` checks recorded policy declarations, source-hash maps and
+per-module arithmetic without requiring the old source tree. `evaluate` still
+checks the actual production inventory and technical exclusions against source
+bodies. A consistent snapshot cannot establish that those exclusions or the
+current execution are valid. These checks share the same integer comparisons;
+there is no alternative threshold or global-score fallback.
+
+`validate_execution` checks a saved binding against current source/test/configuration
+inputs, meaningful native verdict metadata, generated source/index hashes and
+dependency/test maps. Missing or pending attempts and mismatched settled counts
+are rejected. A consistent partial attempt retains its nonzero native exit; this
+function does not independently attest execution or certify mutation compliance.
+
+The missing snapshot and binding interfaces first failed 17 and 13 checks,
+respectively. The combined suite now passes 291 cases, covering 685/685 lines and
+310/310 branches across the four helpers. Pinned typing passes with the unchanged
+17-entry baseline. CLI/evidence/release integration remains required.
+
+The arithmetic module's changed source and test selection require a new focused
+result: **470/535 killed (87.8505%), L4 FAIL**, with all 65 survivors retained and
+no exclusions. The previous 469-mutant cache was preserved before regeneration;
+its 469 verdicts were invalidated in that focused cache and the new catalog was
+evaluated separately. This does not reset the global campaign or restamp the
+older 403/469 report. The manuscript and slides distinguish recorded consistency
+from current-source validity; no benchmark result changed.
+
+The complete TOOLS gate passes on this checkpoint: 2,629/2,629 lines and
+1,016/1,016 branches. The [record](evidence/risk-snapshot-binding-2026-11-04.json)
+and [verified source/check archive](evidence/risk-snapshot-binding-2026-11-04.tgz)
+retain the failed mutation result and earlier focused cache. The paper has 23
+pages and the deck 41 slides; changed pages were inspected rendered and slide
+bounds/navigation checks pass. The classification and exact per-module arithmetic
+criteria are checked in #116; its eight remaining criteria stay open.

@@ -1,0 +1,120 @@
+{
+  "archive": {
+    "path": "risk-snapshot-binding-2026-11-04.tgz",
+    "sha256": "58a22677ef4dbc6d564fc2d8fb6969c737e30778835fed7aa840e595ed8bf8e9",
+    "verified_members": 38
+  },
+  "base_revision": "11775789e8fad07236f0e704e6628d1556a8891d",
+  "date": "2026-11-04",
+  "issue": 116,
+  "kind": "snapshot-and-binding-development-checkpoint",
+  "limitations": [
+    "snapshot arithmetic does not validate actual scope, technical exclusions or execution",
+    "bindings are consistency evidence, not independent attestation",
+    "current cache-binding module mutation adequacy remains unmeasured",
+    "focused arithmetic mutation remains below L4",
+    "DEEP/evidence/release/CI integration and independent review remain pending"
+  ],
+  "mutation": {
+    "caught by type check": 0,
+    "check was interrupted by user": 0,
+    "eligible": 535,
+    "error": 0,
+    "exclusions": [],
+    "execution_provenance_verified": false,
+    "killed": 470,
+    "level": "L4",
+    "no tests": 0,
+    "not checked": 0,
+    "reason": "Risk classification, denominators and independent thresholds govern scientific verification.",
+    "score": 87.85046728971963,
+    "segfault": 0,
+    "skipped": 0,
+    "status": "FAIL",
+    "survived": 65,
+    "suspicious": 0,
+    "target": "verification/mutation_policy.py",
+    "threshold": 98,
+    "timeout": 0
+  },
+  "promotion_eligible": false,
+  "publication": {
+    "experimental_results_changed": false,
+    "geometry": {
+      "artifacts": {
+        "slides/thesis_progress.html": "dd843e0590eeef811323055e6852a84735e72d4f8939e454c0c9b0a4f31cfe5a",
+        "slides/thesis_progress.pdf": "9b5834c7e9d69de69a4870d8bcaa5c1b7fc1cbcb03369f4143f3999bb3612dcf"
+      },
+      "errors": [],
+      "navigation": {
+        "after": "8 / 41",
+        "back": "7 / 41",
+        "before": "7 / 41",
+        "pass": true
+      },
+      "slides": 41,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    "paper_pages": 23,
+    "slides": 41
+  },
+  "risk": "L4",
+  "sources": {
+    "tests/test_mutation_snapshot.py": "ffb207ada544873db40d1d656645a23c3f883d54390481507d145c94b59e2555",
+    "tests/verifier/test_mutation_binding.py": "268987d2f2e200b7027f836ae5e32706deea501a5ae971909962ddf9a4c6c53e",
+    "verification/mutation_cache.py": "681a7ef2459f6dba432ecfc1e9677d7e8e6353dd30d5f5b04f1b2138ed2fa59e",
+    "verification/mutation_catalog.py": "20f13773ad014bb1fe9a41ff72a79787315e74175fd9a60910965594d30af570",
+    "verification/mutation_policy.py": "a7b10af006ac756745f2fce645c63c21f1cd5b632bcbd53177157f09b8a875d8",
+    "verification/mutation_run.py": "bc3da1ed9f7a184b9220c27bb2a19e21deb614712bfce96d1eef7c3c1366aaf0"
+  },
+  "status": "INCOMPLETE",
+  "targeted": {
+    "coverage": {
+      "covered_branches": 310,
+      "covered_lines": 685,
+      "excluded_lines": 0,
+      "missing_branches": 0,
+      "missing_lines": 0,
+      "num_branches": 310,
+      "num_partial_branches": 0,
+      "num_statements": 685,
+      "percent_branches_covered": 100.0,
+      "percent_branches_covered_display": "100",
+      "percent_covered": 100.0,
+      "percent_covered_display": "100",
+      "percent_statements_covered": 100.0,
+      "percent_statements_covered_display": "100"
+    },
+    "tests_passed": 291
+  },
+  "tools": {
+    "coverage": {
+      "covered_branches": 1016,
+      "covered_lines": 2629,
+      "excluded_lines": 0,
+      "missing_branches": 0,
+      "missing_lines": 0,
+      "num_branches": 1016,
+      "num_partial_branches": 0,
+      "num_statements": 2629,
+      "percent_branches_covered": 100.0,
+      "percent_branches_covered_display": "100",
+      "percent_covered": 100.0,
+      "percent_covered_display": "100",
+      "percent_statements_covered": 100.0,
+      "percent_statements_covered_display": "100"
+    },
+    "status": "PASS"
+  },
+  "types": {
+    "baseline_entries": 17,
+    "errors": 17,
+    "mypy": "2.4.0",
+    "pandas-stubs": "3.0.5.260914",
+    "problems": [],
+    "status": "PASS"
+  }
+}

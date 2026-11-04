@@ -9,6 +9,7 @@ from __future__ import annotations
 import ast
 import hashlib
 import json
+import re
 from collections import Counter
 from pathlib import Path, PurePosixPath
 
@@ -37,7 +38,7 @@ INCOMPLETE = {
 }
 
 
-def _relative(name: str, root: Path) -> Path:
+def _canonical_name(name: str) -> PurePosixPath:
     if (
         not isinstance(name, str)
         or not name
@@ -47,14 +48,18 @@ def _relative(name: str, root: Path) -> Path:
         or str(PurePosixPath(name)) != name
     ):
         raise ValueError("policy paths must be canonical relative paths")
-    path = root / name
+    return PurePosixPath(name)
+
+
+def _relative(name: str, root: Path) -> Path:
+    path = root / _canonical_name(name)
     if not path.resolve().is_relative_to(root.resolve()) or path.is_symlink():
         raise ValueError(f"policy path escapes or aliases the source tree: {name}")
     return path
 
 
-def validate_policy(policy: dict, root: Path) -> None:
-    """Require explicit justified classifications for the actual production tree."""
+def _validate_declarations(policy: dict) -> None:
+    """Check recorded declarations; actual files and function bodies need a root."""
     if (
         not isinstance(policy, dict)
         or type(policy.get("version")) is not int
@@ -69,6 +74,30 @@ def validate_policy(policy: dict, root: Path) -> None:
         raise ValueError("policy roots must be a nonempty path list")
     if len(set(roots)) != len(roots) or not isinstance(units, dict) or not units:
         raise ValueError("policy roots must be unique and units must be nonempty")
+    for base in roots:
+        _canonical_name(base)
+    for name, unit in units.items():
+        path = _canonical_name(name)
+        if not any(path.is_relative_to(base) for base in roots):
+            raise ValueError(f"classification lies outside the policy roots: {name}")
+        if (
+            not isinstance(unit, dict)
+            or not isinstance(unit.get("level"), str)
+            or unit["level"] not in THRESHOLDS
+        ):
+            raise ValueError(f"invalid risk level for {name}")
+        if not isinstance(unit.get("reason"), str) or not unit["reason"].strip():
+            raise ValueError(f"classification for {name} requires a reason")
+        if "no_mutants" in unit and (
+            not isinstance(unit["no_mutants"], str) or not unit["no_mutants"].strip()
+        ):
+            raise ValueError(f"technical exclusion for {name} requires a reason")
+
+
+def validate_policy(policy: dict, root: Path) -> None:
+    """Require justified classifications for the actual production tree and bodies."""
+    _validate_declarations(policy)
+    roots, units = policy["roots"], policy["units"]
     discovered = set()
     for base in roots:
         directory = _relative(base, root)
@@ -85,17 +114,7 @@ def validate_policy(policy: dict, root: Path) -> None:
         )
     for name, unit in units.items():
         path = _relative(name, root)
-        if (
-            not isinstance(unit, dict)
-            or not isinstance(unit.get("level"), str)
-            or unit["level"] not in THRESHOLDS
-        ):
-            raise ValueError(f"invalid risk level for {name}")
-        if not isinstance(unit.get("reason"), str) or not unit["reason"].strip():
-            raise ValueError(f"classification for {name} requires a reason")
         if "no_mutants" in unit:
-            if not isinstance(unit["no_mutants"], str) or not unit["no_mutants"].strip():
-                raise ValueError(f"technical exclusion for {name} requires a reason")
             tree = ast.parse(path.read_text())
             if any(
                 isinstance(node, ast.FunctionDef | ast.AsyncFunctionDef) for node in ast.walk(tree)
@@ -167,6 +186,29 @@ def evaluate(policy: dict, root: Path, catalog: dict, records: list[dict]) -> di
     execution. Missing observations remain incomplete, never removed from counts.
     """
     validate_policy(policy, root)
+    sources = {
+        path: hashlib.sha256((root / path).read_bytes()).hexdigest() for path in policy["units"]
+    }
+    return evaluate_snapshot(policy, sources, catalog, records)
+
+
+def evaluate_snapshot(policy: dict, sources: dict, catalog: dict, records: list[dict]) -> dict:
+    """Recompute recorded arithmetic, without proving live scope or execution.
+
+    Snapshot declarations cannot establish technical exclusions or absence of
+    unclassified files. Current certification must additionally call ``evaluate``
+    against its actual root and validate native execution/artifact bindings.
+    """
+    _validate_declarations(policy)
+    if (
+        not isinstance(sources, dict)
+        or set(sources) != set(policy["units"])
+        or any(
+            not isinstance(value, str) or not re.fullmatch(r"[0-9a-f]{64}", value)
+            for value in sources.values()
+        )
+    ):
+        raise ValueError("recorded sources must map every classified unit to its SHA-256")
     if not isinstance(catalog, dict) or not isinstance(records, list):
         raise ValueError("catalog must be a mapping and records a list")
     units = policy["units"]
@@ -221,7 +263,7 @@ def evaluate(policy: dict, root: Path, catalog: dict, records: list[dict]) -> di
     return {
         "policy_version": VERSION,
         "policy_sha256": policy_digest(policy),
-        "sources": {path: hashlib.sha256((root / path).read_bytes()).hexdigest() for path in units},
+        "sources": dict(sources),
         "modules": modules,
         "levels": levels,
         "total": total,
