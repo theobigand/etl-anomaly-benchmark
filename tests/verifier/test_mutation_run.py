@@ -6,6 +6,7 @@ import json
 import os
 import signal
 import sys
+from contextlib import suppress
 from pathlib import Path
 
 import pytest
@@ -52,12 +53,17 @@ def _engine(monkeypatch, root, *, exit_code=0, change_test=False, worker=False):
         "estimated_durations_by_key": {},
     }
     script = (
-        "from pathlib import Path; import json,sys,subprocess; "
+        "from pathlib import Path; import json,sys,subprocess,os; "
         f"p=Path('mutants/{SOURCE}.meta'); p.parent.mkdir(parents=True,exist_ok=True); "
         f"p.write_text({json.dumps(metadata)!r}); "
         f"p.with_suffix('').write_text(Path({SOURCE!r}).read_text()); "
         "Path(str(p.with_suffix(''))+'.spans').write_text('{}'); "
         "print('constructed native process',flush=True); "
+        "print('observed='+json.dumps({'pid':os.getpid(),'children':sys.argv[1],"
+        "'environment':{key:os.environ.get(key) for key in "
+        "['OMP_NUM_THREADS','OPENBLAS_NUM_THREADS','MKL_NUM_THREADS',"
+        "'PYTHONHASHSEED','PYTHONPATH']}}),flush=True); "
+        "print('constructed native stderr',file=sys.stderr,flush=True); "
     )
     if change_test:
         script += "Path('tests/test_a.py').write_text('changed during execution'); "
@@ -67,7 +73,9 @@ def _engine(monkeypatch, root, *, exit_code=0, change_test=False, worker=False):
             "Path('constructed-worker-pid').write_text(str(worker.pid)); "
         )
     script += f"sys.exit({exit_code})"
-    monkeypatch.setattr(api, "_command", lambda max_children: [sys.executable, "-c", script])
+    monkeypatch.setattr(
+        api, "_command", lambda max_children: [sys.executable, "-c", script, str(max_children)]
+    )
     return api
 
 
@@ -121,10 +129,8 @@ def test_a_terminal_parent_with_live_workers_cannot_bind_results(tmp_path, monke
     finally:
         marker = tmp_path / "constructed-worker-pid"
         if marker.exists():
-            try:
+            with suppress(ProcessLookupError):
                 os.kill(int(marker.read_text()), signal.SIGTERM)
-            except ProcessLookupError:
-                pass
 
 
 def test_observed_runtime_changes_during_execution_reject_binding(tmp_path, monkeypatch):
@@ -215,11 +221,15 @@ def test_runtime_collects_installed_versions_and_hashes_effective_environment(mo
     api = _api()
     packages = [
         SimpleNamespace(metadata={"Name": "mutmut"}, version="3.8.0"),
-        SimpleNamespace(metadata={"Name": "pytest_cov"}, version="7.1.0"),
+        SimpleNamespace(metadata={"Name": "PyTest_Cov"}, version="7.1.0"),
         SimpleNamespace(metadata={"Name": "mutmut"}, version="3.8.0"),
     ]
     monkeypatch.setattr(api, "distributions", lambda: packages)
     result = api.collect_runtime({"OMP_NUM_THREADS": "1", "UNRELATED_SECRET": "never record this"})
+    import platform
+
+    assert result["python"] == platform.python_version()
+    assert result["platform"] == platform.platform()
     assert result["packages"] == {"mutmut": "3.8.0", "pytest-cov": "7.1.0"}
     assert result["environment_sha256"]["OMP_NUM_THREADS"] == hashlib.sha256(b"1").hexdigest()
     assert result["environment_sha256"]["PYTHONPATH"] is None
@@ -252,6 +262,8 @@ def test_cli_keeps_the_observed_native_status(tmp_path, monkeypatch, capsys, exi
     assert api.main(["--root", str(tmp_path), "--max-children", "3"]) == expected
     report = json.loads(capsys.readouterr().out)
     assert report["native_exit_code"] == exit_code
+    observed = _observation(tmp_path / report["native_log"])
+    assert observed["children"] == "3"
 
 
 def test_command_entrypoint_documents_the_actual_execution_options(monkeypatch, capsys):
@@ -334,9 +346,87 @@ def test_an_interrupted_wait_retains_ownership_information_without_claiming_term
             api.run(tmp_path)
         pending = json.loads((cache / "execution-pending.json").read_text())
         assert pending["native_pid"] == process.pid
+        assert (tmp_path / pending["native_log"]).is_file()
         os.killpg(process.pid, 0)
         assert not (cache / "execution-context.json").exists()
     finally:
         if process is not None:
             process.terminate()
             process.wait()
+
+
+def _observation(log):
+    return json.loads(
+        next(
+            line.removeprefix("observed=")
+            for line in log.read_text().splitlines()
+            if line.startswith("observed=")
+        )
+    )
+
+
+def test_effective_child_environment_and_stderr_match_the_binding(tmp_path, monkeypatch):
+    import hashlib
+
+    _repository(tmp_path)
+    api = _engine(monkeypatch, tmp_path)
+    for key in ["OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS", "PYTHONHASHSEED"]:
+        monkeypatch.setenv(key, "7")
+    monkeypatch.setenv("PYTHONPATH", str(tmp_path / "unbound-parent-path"))
+    result = api.run(tmp_path, max_children=4)
+    log = tmp_path / result["native_log"]
+    observed = _observation(log)
+    assert observed["children"] == "4"
+    assert observed["environment"] == {
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "PYTHONHASHSEED": "0",
+        "PYTHONPATH": "",
+    }
+    assert "constructed native stderr" in log.read_text()
+    record = json.loads((tmp_path / result["attempt_record"]).read_text())
+    assert record["native_pid"] == observed["pid"]
+    assert record["admission"] == result["admission"]
+    assert record["native_log"] == result["native_log"]
+    assert record["native_log_sha256"] == hashlib.sha256(log.read_bytes()).hexdigest()
+
+
+def test_unmutated_technical_units_remain_bound_without_entering_the_executed_scope(
+    tmp_path, monkeypatch
+):
+    cache = _repository(tmp_path)
+    api = _engine(monkeypatch, tmp_path)
+    name = "src/pkg/constants.py"
+    (tmp_path / name).write_text("LIMIT = 1\n")
+    path = tmp_path / "verification/mutation_risk_policy.json"
+    policy = json.loads(path.read_text())
+    policy["units"][name] = {
+        "level": "L4",
+        "reason": "Constructed constants scope",
+        "no_mutants": "Constants only; no function bodies",
+    }
+    path.write_text(json.dumps(policy))
+    api.run(tmp_path)
+    context = json.loads((cache / "execution-context.json").read_text())["context"]
+    assert context["mutation_scope"] == [SOURCE]
+    assert set(context["sources"]) == {SOURCE, name}
+
+
+def test_missing_native_source_roots_fail_before_any_attempt(tmp_path, monkeypatch):
+    cache = _repository(tmp_path)
+    api = _engine(monkeypatch, tmp_path)
+    path = tmp_path / "pyproject.toml"
+    path.write_text(path.read_text().replace('source_paths=["src/pkg"]\n', ""))
+    with pytest.raises(ValueError, match="source roots"):
+        api.run(tmp_path)
+    assert not cache.exists()
+
+
+def test_cli_defaults_use_the_current_repository_and_two_children(tmp_path, monkeypatch, capsys):
+    _repository(tmp_path)
+    api = _engine(monkeypatch, tmp_path)
+    monkeypatch.chdir(tmp_path)
+    assert api.main([]) == 0
+    result = json.loads(capsys.readouterr().out)
+    assert _observation(tmp_path / result["native_log"])["children"] == "2"

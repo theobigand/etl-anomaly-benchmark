@@ -233,3 +233,32 @@ remain promotion-ineligible. Initial triage identifies missing assertions on
 actual child environment, captured stderr, runtime keys, pending/audit pointers,
 configured technical scope and CLI defaults/parallelism. Diagnostic-only and
 platform-dependent survivors are not silently excluded or called killed.
+
+## Controller contract follow-up (2026-11-04)
+
+The final lint check at f636bf3 found SIM105 in test-worker cleanup, after FAST and
+TOOLS had run. The command sequence nevertheless committed; this was not a
+passing style gate. The follow-up uses explicit exception suppression only for
+cleanup of an already-terminated constructed worker, then checks lint and format
+before committing. The original archive is retained unchanged.
+
+Strengthened contracts observe the actual child environment and stderr, default
+and explicit worker limits, pending-log pointers and immutable audit-log hashes,
+source/runtime identity fields, and separately configured technical no-mutant
+units. The same production code now has 259 passing targeted cases with 645/645
+lines and 288/288 branches; lint and format pass. No production code changed.
+The modified test file legitimately reopened all 318 focused verdicts in the
+same persistent cache. The global cache was untouched.
+
+The new result is **295/318 killed (92.7673%), L4 FAIL**, 23 survivors, zero
+exclusions. Thirty-six additional mutants are detected. Remaining diagnostic,
+platform-dependent and potentially equivalent changes remain raw survivors; no
+equivalence disposition is inferred. The [follow-up record](evidence/risk-controller-contracts-2026-11-04.json)
+and [verified archive](evidence/risk-controller-contracts-2026-11-04.tgz) preserve
+this negative result and the cache invalidation counts. Full-gate figures remain
+those of the preceding checkpoint, not a new certification.
+
+Publication review: no new benchmark result, native-smoke result or methodological
+claim changed. The manuscript and slides already describe the constructed
+two-mutant reuse check and incomplete release integration. Their content and
+artifact hashes therefore remain unchanged for this test-only follow-up.
