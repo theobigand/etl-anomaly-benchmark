@@ -1524,6 +1524,14 @@ highest applicable consequence. The arithmetic checks and explicit inventory are
 under implementation and review; complete mutation, evidence and release
 integration are not yet established. The historical results below retain their
 original global $95\%$ criterion and are not claims of compliance with this revision.
+The native-catalog adapter distinguishes assertion kills from internal runner
+errors and checks generated identities against source-function hashes. A separate
+execution-binding prototype tracks source globals, tests, configuration and
+runtime metadata. Unchanged bound verdicts can be reused; input changes following
+an interrupted attempt require conservative invalidation when dependency maps
+may be partial. Neither catalog parsing nor these constructed acceptance checks
+establishes current release compliance. Changes to compliance thresholds alone
+require a new policy evaluation rather than repeating unchanged execution.
 
 \section{Verification outcomes}
 \label{app:outcomes}

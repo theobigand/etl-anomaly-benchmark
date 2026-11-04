@@ -121,10 +121,17 @@ def _identity(key: str, path: str) -> None:
     function, marker, index = key.rpartition("__mutmut_")
     if not marker or not function or not index.isdecimal() or int(index) <= 0:
         raise ValueError("invalid mutant identity")
-    if any(not part.isidentifier() for part in function.split(".")):
-        raise ValueError("invalid mutant function identity")
-    if function.rsplit(".", 1)[0] != _module(path):
-        raise ValueError("mutant identity does not belong to its source module")
+    local = function.removeprefix(_module(path) + ".")
+    if local.startswith("x_") and local.isidentifier():
+        return
+    owner = local.split("ǁ")
+    if (
+        len(owner) != 3
+        or owner[0] != "x"
+        or any(not part.isidentifier() for part in owner[1].split("."))
+        or not owner[2].isidentifier()
+    ):
+        raise ValueError("invalid native mutant function identity")
 
 
 def _summary(records: list[dict], eligible: int, threshold: int) -> dict:

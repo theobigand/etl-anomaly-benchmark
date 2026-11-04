@@ -132,14 +132,6 @@
       "level": "L4",
       "reason": "Scientific fingerprints, partition IDs and artifact hashes bind results to their inputs."
     },
-    "experiments/results/mutation-feedback/risk-policy/mutants/verification/mutation_policy.py": {
-      "level": "L4",
-      "reason": "Risk classification, denominators and independent thresholds govern scientific verification."
-    },
-    "experiments/results/mutation-feedback/risk-policy/verification/mutation_policy.py": {
-      "level": "L4",
-      "reason": "Risk classification, denominators and independent thresholds govern scientific verification."
-    },
     "experiments/run_benchmark.py": {
       "level": "L4",
       "reason": "Splits, thresholds, metrics, seed aggregation and omissions determine scientific comparisons."
@@ -379,6 +371,10 @@
     "verification/scaling.py": {
       "level": "L3",
       "reason": "Timing/scaling measurements affect reported experimental cost, not acceptance decisions."
+    },
+    "verification/mutation_catalog.py": {
+      "level": "L4",
+      "reason": "Independent native generation indexes, verdict identities and raw-count reconciliation prevent denominator forgery and false kills."
     }
   }
 }

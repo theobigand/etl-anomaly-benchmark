@@ -100,12 +100,49 @@ manifest changes are limited to TeX/PDF artifact hashes and its source revision.
 No scientific result table or sealed run record changed. Broader gates, final
 mutation compliance and independent review remain pending the full migration.
 
-`verification/mutation_risk_policy.json` is an initial explicit inventory of 91
-source modules across the four governed roots: three L2, six L3 and 82 L4. No
+`verification/mutation_risk_policy.json` now inventories 90 canonical
+source modules across the four governed roots: three L2, six L3 and 81 L4. The
+initial 91-entry draft included two generated sandbox copies; these were removed
+after relocation, and the new native-catalog adapter was added. No
 whole module was found with only L1 consequences; L1 arithmetic is supported and
 tested. Constants/package markers have explicit technical declarations. These
 classifications await independent review and execution reconciliation; their
 presence does not establish mutation compliance or replace the old release path.
+
+## Native catalog and execution-binding checkpoint (2026-11-04)
+
+The native 3.8.0 adapter reconciles generated span indexes, metadata, listing and
+statistics without treating parsing as proof of execution. Current function
+hashes must match generated functions, including nested-class identities. Native
+exit 3 (internal runner error), unknown codes, interrupted cases and type-check-only
+outcomes cannot become assertion kills. Read-only reconciliation against the old
+5,102-entry cache finds 57 missing current module catalogs and 11 modules below
+their prospective thresholds. This is a readiness projection, not a new campaign
+or reinterpretation of historical results.
+
+The execution-binding prototype records source/function/global hashes, test
+hashes, execution configuration and supplied runtime metadata before and after
+an attempt. It rejects stale generated functions, unbound metadata edits, external
+cache aliases, malformed proofs and changed inputs during execution. A pending
+attempt requires authoritative process checks before recovery; its presence or
+age is not evidence that its process has stopped. Previously unbound results
+cannot acquire current provenance merely by recording them retrospectively.
+
+Changed functions reopen their transitive callers when the recorded dependency
+map is usable. Missing dependency information or changed uninstrumented support
+requires broader invalidation. After a nonzero native attempt, a source or test
+change also triggers broader invalidation because its saved maps may be partial.
+Unchanged bound settled results remain reusable, including after partial attempts.
+Compliance policy files are evaluated separately: changing classifications or
+thresholds alone does not force unchanged execution to repeat.
+
+225 targeted cases pass, covering 531/531 executable lines and 264/264 branches
+across the arithmetic, native-catalog and cache helpers. Four partial-proof and
+scope/version regressions and two policy/proof-shape regressions failed before
+their corrections. These are constructed software checks, not measured mutation
+compliance. The old focused 403/469 failure belongs to its archived source/test
+snapshot and is not restamped for these changes. Runtime collection, the managed
+native execution command and evidence/release integration remain outstanding.
 
 Remaining: explicit justified production inventory; native catalog parsing and
 execution provenance; CLI/evidence/release integration; focused survivor analysis;
@@ -113,3 +150,17 @@ incremental full-scope reconciliation; negative certification tests; publication
 and profile synchronization; applicable gates and independent review after a
 tested frozen patch. Any missing or failing scope remains incomplete. Parent
 issues and milestones remain open.
+
+The current FAST gate passes: 1,557 tests, 1,790/1,790 measured core/experiment
+lines and 350/350 branches. This coverage scope does not include all research or
+verifier modules. The targeted helper measurements above are separate. The paper
+build has 23 pages; all 41 slides pass bounds/footer and keyboard-navigation
+checks at 1280×720, and the changed publication pages were inspected rendered.
+The manuscript manifest updates only its TeX/PDF hashes and source revision.
+
+The complete TOOLS gate also passes: 2,475/2,475 verifier lines and 970/970
+branches. No verifier exclusion was added. The [checkpoint record](evidence/risk-native-cache-checkpoint-2026-11-04.json)
+and [SHA-verified source/check archive](evidence/risk-native-cache-verification-2026-11-04.tgz)
+preserve these bounded checks with `promotion_eligible: false`. The local typing
+checker and stubs are unavailable; the pinned typing gate is not reported as
+passed. Current native mutation compliance and independent review remain pending.

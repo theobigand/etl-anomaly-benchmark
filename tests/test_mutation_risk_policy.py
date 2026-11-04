@@ -413,3 +413,30 @@ def test_noncanonical_roots_are_diagnosed_before_discovery(tmp_path, path):
     policy["roots"] = [path]
     with pytest.raises(ValueError, match="canonical relative"):
         _api().validate_policy(policy, tmp_path)
+
+
+def test_native_class_qualified_identities_preserve_nested_owners(tmp_path):
+    policy = _policy(tmp_path, ("L4",))
+    (tmp_path / "app/unit0.py").write_text(
+        "class Outer:\n    class Inner:\n        def score(self):\n            return 1\n"
+    )
+    key = "app.unit0.xǁOuter.Innerǁscore__mutmut_1"
+    records = [{"id": key, "path": "app/unit0.py", "outcome": "killed"}]
+    assert _api().evaluate(policy, tmp_path, {"app/unit0.py": [key]}, records)["status"] == "PASS"
+
+
+def test_function_names_containing_the_mutation_marker_are_not_truncated(tmp_path):
+    policy = _policy(tmp_path, ("L4",))
+    key = "app.unit0.x_f__mutmut_label__mutmut_1"
+    records = [{"id": key, "path": "app/unit0.py", "outcome": "killed"}]
+    assert _api().evaluate(policy, tmp_path, {"app/unit0.py": [key]}, records)["status"] == "PASS"
+
+
+@pytest.mark.parametrize(
+    "function", ["unmangled", "xǁOuter..Innerǁscore", "xǁOuterǁ", "xǁOuterǁbad-name"]
+)
+def test_non_native_or_malformed_function_owners_are_refused(tmp_path, function):
+    policy = _policy(tmp_path, ("L4",))
+    key = f"app.unit0.{function}__mutmut_1"
+    with pytest.raises(ValueError):
+        _api().evaluate(policy, tmp_path, {"app/unit0.py": [key]}, [])
