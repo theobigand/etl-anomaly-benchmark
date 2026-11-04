@@ -100,10 +100,11 @@ manifest changes are limited to TeX/PDF artifact hashes and its source revision.
 No scientific result table or sealed run record changed. Broader gates, final
 mutation compliance and independent review remain pending the full migration.
 
-`verification/mutation_risk_policy.json` now inventories 90 canonical
-source modules across the four governed roots: three L2, six L3 and 81 L4. The
+`verification/mutation_risk_policy.json` now inventories 91 canonical
+source modules across the four governed roots: three L2, six L3 and 82 L4. The
 initial 91-entry draft included two generated sandbox copies; these were removed
-after relocation, and the new native-catalog adapter was added. No
+after relocation, the native-catalog adapter brought the count to 90, and the
+managed execution controller then brought it to 91. No
 whole module was found with only L1 consequences; L1 arithmetic is supported and
 tested. Constants/package markers have explicit technical declarations. These
 classifications await independent review and execution reconciliation; their
@@ -164,3 +165,71 @@ and [SHA-verified source/check archive](evidence/risk-native-cache-verification-
 preserve these bounded checks with `promotion_eligible: false`. The local typing
 checker and stubs are unavailable; the pinned typing gate is not reported as
 passed. Current native mutation compliance and independent review remain pending.
+
+## Managed native execution checkpoint (2026-11-04)
+
+`verification/mutation_run.py` is L4 (98%): it exclusively owns the cache through
+an operating-system file lock, checks the configured scope against the classified
+inventory and launches a native process group. A parent exit does not establish
+that its workers stopped. Live or uninspectable groups, interrupted waits, pending
+attempts, changed inputs and changed inventories prevent a new execution binding.
+Each started attempt keeps a separate log and completed attempts preserve their
+proof snapshots. A nonzero native return remains explicit, including settled
+partial results; none of these records is a compliance verdict.
+
+The first actual smoke attempt stopped before execution because the historical
+Conda environment contains conflicting distribution metadata for ten packages.
+No numerical package was changed to remove this failure. A clean local verification
+environment instead pins mutmut 3.8.0 and pytest 9.1.1 for a constructed two-mutant
+example. Both mutants were killed, and an unchanged subsequent run reused both
+verdicts with zero mutation executions. This validates the controller path only,
+not mutation adequacy of the thesis modules or reproducibility of their results.
+
+A constructed project-local `mutmut` package exposed an entrypoint-shadowing
+defect. The corrected native command uses Python 3.11 safe-path startup (`-P`)
+and an empty child `PYTHONPATH`, while preserving the fixed hash seed and thread
+settings. The installed runner then executes despite the shadow package.
+See the official [Python 3.11 safe-path semantics](https://docs.python.org/3.11/using/cmdline.html#cmdoption-P)
+and [process-group behavior](https://docs.python.org/3.11/library/subprocess.html#popen-constructor).
+
+Execution-binding format 2 additionally binds native generated source and span
+indexes. Changed native artifacts reopen the active verdicts; settled results
+without their generation artifacts cannot receive a binding. Prototype format-1
+proofs are rejected, not upgraded by hashing present-day artifacts retrospectively.
+For the constructed example only, the old proof was copied intact after verifying
+that no pending attempt or native process group remained; removing its active
+pointer caused an explicit bootstrap reset of two results. Native generation and
+execution then revalidated them under format 2. The following unchanged run kept
+two and reset zero. The global thesis cache was not reset or executed.
+
+255 combined targeted cases pass with 641/641 measured lines and 288/288 branches
+across the four mutation helpers. The 12 initial controller failures, two attempt/
+inventory regressions, three generation-binding failures and entrypoint negative
+control preceded their corrections. Typing initially reported six new verifier
+errors; annotations and a local variable rename resolve them without changing
+the 17-entry scientific baseline. The pinned checker/stubs (mypy 2.4.0 and
+pandas-stubs 3.0.5.260914) pass in an isolated overlay of the existing environment;
+the historical numerical installation is unchanged.
+
+Remaining integration: DEEP orchestration, risk-scoped CLI/evidence/release and
+bundle/workflow enforcement, present-snapshot mutation adequacy, final publication
+and profile reconciliation, and independent review. The environment metadata
+conflict remains a blocker for a trustworthy new global campaign in that specific
+environment; a clean pinned full scientific environment is required before reuse
+as current certification evidence. No canonical task or parent acceptance is
+closed by the constructed smoke test.
+
+Final intermediate checks: 255 targeted cases, now 645/645 lines after typing-only
+annotations expanded local declarations, and 288/288 branches. FAST passes 1,587
+tests with unchanged 1,790-line/350-branch core measurements. A subsequent test-
+worker cleanup change has 24 passing controller cases and a full TOOLS rerun:
+2,589/2,589 lines and 994/994 branches. No scientific source or result changed.
+
+Focused controller mutation: **259/318 killed (81.4465%), L4 FAIL**, 59 survivors,
+zero exclusions. Native catalogs/outcomes and survivor diffs are retained in the
+[checkpoint record](evidence/risk-controller-checkpoint-2026-11-04.json) and
+[SHA-verified archive](evidence/risk-controller-verification-2026-11-04.tgz). Both
+remain promotion-ineligible. Initial triage identifies missing assertions on
+actual child environment, captured stderr, runtime keys, pending/audit pointers,
+configured technical scope and CLI defaults/parallelism. Diagnostic-only and
+platform-dependent survivors are not silently excluded or called killed.

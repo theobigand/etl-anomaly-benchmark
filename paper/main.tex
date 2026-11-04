@@ -1532,6 +1532,10 @@ an interrupted attempt require conservative invalidation when dependency maps
 may be partial. Neither catalog parsing nor these constructed acceptance checks
 establishes current release compliance. Changes to compliance thresholds alone
 require a new policy evaluation rather than repeating unchanged execution.
+A constructed native smoke check executes two mutants and subsequently reuses
+both unchanged verdicts. Per-attempt logs are preserved, while live workers,
+changed inputs or stale generation artifacts prevent a new execution binding.
+This small check does not measure mutation adequacy of the benchmark modules.
 
 \section{Verification outcomes}
 \label{app:outcomes}

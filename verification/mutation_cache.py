@@ -38,7 +38,7 @@ HASHES = "test-hashes.json"
 KILLED = {1}  # assertion failure; pytest internal errors are not stable successful kills
 TYPED = {37}  # caught by the type checker, independent of the tests
 FINAL = KILLED | TYPED
-EXECUTION_VERSION = 1
+EXECUTION_VERSION = 2
 EXECUTION_RECORD = "execution-context.json"
 PENDING_EXECUTION = "execution-pending.json"
 
@@ -256,6 +256,17 @@ def _metadata_digest(data: dict) -> str:
     return _digest({name: data[name] for name in ("exit_code_by_key", "hash_by_function_name")})
 
 
+def _native_artifacts(root: Path, scope: list[str]) -> dict[str, str | None]:
+    artifacts = {}
+    for source in scope:
+        for name in (source, source + ".spans"):
+            path = _relative(f"{MUTANTS}/{name}", root)
+            artifacts[name] = (
+                hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else None
+            )
+    return artifacts
+
+
 def _statistics(root: Path) -> dict:
     path = root / MUTANTS / "mutmut-stats.json"
     data = mutation_catalog._read(root / MUTANTS, "mutmut-stats.json", {}) if path.exists() else {}
@@ -302,6 +313,12 @@ def _execution_proof(root: Path) -> dict | None:
         ):
             raise ValueError("invalid execution proof shape")
         mappings = [context["tests"], context["dependencies"], proof["metadata_sha256"]]
+        native = proof["native_artifacts_sha256"]
+        if not isinstance(native, dict) or any(
+            not isinstance(key, str) or (value is not None and not isinstance(value, str))
+            for key, value in native.items()
+        ):
+            raise ValueError("invalid execution proof native artifacts")
         for name, source in context["sources"].items():
             _relative(name, root)
             if set(source) != {"sha256", "globals_sha256", "functions"}:
@@ -345,7 +362,8 @@ def prepare_execution(
     verdicts = {
         key: code for data in documents.values() for key, code in data["exit_code_by_key"].items()
     }
-    reset, reasons = set(), []
+    reset: set[str] = set()
+    reasons: list[str] = []
     if previous is None:
         reset.update(verdicts)
         reasons.append("no previous execution proof; bootstrap reconciliation")
@@ -358,11 +376,17 @@ def prepare_execution(
             != {name: value["globals_sha256"] for name, value in old["sources"].items()}
         )
         partial = previous["native_exit_code"] != 0
+        if previous["native_artifacts_sha256"] != _native_artifacts(
+            root, context["mutation_scope"]
+        ):
+            reset.update(verdicts)
+            reasons.append("native generation artifacts changed outside the recorded attempt")
         if global_change:
             reset.update(verdicts)
             reasons.append("runtime, dependency, source-global or inventory inputs changed")
         else:
-            changed, support = set(), False
+            changed: set[str] = set()
+            support = False
             for name, value in context["sources"].items():
                 before, after = old["sources"][name]["functions"], value["functions"]
                 functions = {
@@ -402,13 +426,13 @@ def prepare_execution(
                 reasons.append(f"unbound metadata change: {name}")
     cleared = 0
     for path, data in documents.items():
-        changed = False
+        modified = False
         for key in data["exit_code_by_key"]:
             if key in reset and data["exit_code_by_key"][key] is not None:
                 data["exit_code_by_key"][key] = None
                 cleared += 1
-                changed = True
-        if changed:
+                modified = True
+        if modified:
             _write_json(path, data)
     cache.mkdir(parents=True, exist_ok=True)
     _write_json(cache / PENDING_EXECUTION, {"version": EXECUTION_VERSION, "context": context})
@@ -447,6 +471,7 @@ def record_execution(
     if type(native_exit_code) is not int:
         raise ValueError("native exit code must be an integer")
     documents = _execution_documents(root, context["mutation_scope"])
+    artifacts = _native_artifacts(root, context["mutation_scope"])
     settled = 0
     for path, data in documents.items():
         source = path.relative_to(cache).as_posix().removesuffix(".meta")
@@ -454,6 +479,8 @@ def record_execution(
         for key, code in data["exit_code_by_key"].items():
             if code is None:
                 continue
+            if artifacts[source] is None or artifacts[source + ".spans"] is None:
+                raise ValueError("settled verdicts lack native generation artifacts")
             local = function_of(key).removeprefix(_module(source) + ".")
             if (
                 local not in functions
@@ -469,6 +496,7 @@ def record_execution(
             path.relative_to(cache).as_posix(): _metadata_digest(data)
             for path, data in documents.items()
         },
+        "native_artifacts_sha256": artifacts,
         "native_exit_code": native_exit_code,
         "settled": settled,
         "captured_at": datetime.now(UTC).isoformat(),

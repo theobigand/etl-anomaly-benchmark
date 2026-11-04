@@ -375,6 +375,10 @@
     "verification/mutation_catalog.py": {
       "level": "L4",
       "reason": "Independent native generation indexes, verdict identities and raw-count reconciliation prevent denominator forgery and false kills."
+    },
+    "verification/mutation_run.py": {
+      "level": "L4",
+      "reason": "Exclusive native execution and source/runtime bindings govern admissibility of mutation evidence."
     }
   }
 }

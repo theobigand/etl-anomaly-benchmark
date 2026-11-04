@@ -51,6 +51,10 @@ def _repository(tmp_path):
             }
         )
     )
+    for name in SOURCES:
+        generated = cache / name
+        generated.write_text((tmp_path / name).read_text())
+        (cache / (name + ".spans")).write_text("{}\n")
     return cache
 
 
@@ -434,3 +438,43 @@ def test_malformed_proof_fields_fail_closed_even_with_a_matching_checksum(tmp_pa
     with pytest.raises(ValueError, match="execution proof"):
         _prepare(tmp_path)
     assert not (cache / mc.PENDING_EXECUTION).exists()
+
+
+@pytest.mark.parametrize("artifact", [SOURCES[0], SOURCES[0] + ".spans"])
+def test_changed_native_generation_artifacts_cannot_keep_bound_verdicts(tmp_path, artifact):
+    cache = _baseline(tmp_path)
+    (cache / artifact).write_text("changed native generation artifact\n")
+    result = _prepare(tmp_path)
+    assert result["kept"] == 0 and result["reset"] == 2
+
+
+def test_settled_verdicts_require_their_native_generation_artifacts(tmp_path):
+    cache = _repository(tmp_path)
+    _prepare(tmp_path)
+    _fill(cache)
+    (cache / SOURCES[0]).unlink()
+    with pytest.raises(ValueError, match="generation artifacts"):
+        _record(tmp_path)
+
+
+@pytest.mark.parametrize("value", [[], {"src/pkg/a.py": 3}])
+def test_malformed_native_artifact_binding_cannot_admit_cache(tmp_path, value):
+    cache = _baseline(tmp_path)
+    path = cache / mc.EXECUTION_RECORD
+    proof = json.loads(path.read_text())
+    proof["native_artifacts_sha256"] = value
+    proof["sha256"] = mc._digest({key: item for key, item in proof.items() if key != "sha256"})
+    path.write_text(json.dumps(proof))
+    with pytest.raises(ValueError, match="execution proof native artifacts"):
+        _prepare(tmp_path)
+
+
+def test_previous_prototype_proofs_cannot_be_restamped_under_the_new_binding_format(tmp_path):
+    cache = _baseline(tmp_path)
+    path = cache / mc.EXECUTION_RECORD
+    proof = json.loads(path.read_text())
+    proof["version"] = 1
+    proof["sha256"] = mc._digest({key: item for key, item in proof.items() if key != "sha256"})
+    path.write_text(json.dumps(proof))
+    with pytest.raises(ValueError, match="execution proof"):
+        _prepare(tmp_path)

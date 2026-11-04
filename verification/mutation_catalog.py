@@ -155,7 +155,9 @@ def read_native(policy: dict, root: Path, cache: Path, stats: dict, listing: str
         or any(type(value) is not int or value < 0 for value in stats.values())
     ):
         raise ValueError("invalid native mutation statistics")
-    catalog, records, native, artifacts, missing = {}, [], {}, {}, []
+    catalog: dict[str, list[str]] = {}
+    artifacts: dict[str, str] = {}
+    records, native, missing = [], {}, []
     for path, unit in sorted(policy["units"].items()):
         catalog[path] = []
         meta_path = cache / f"{path}.meta"
