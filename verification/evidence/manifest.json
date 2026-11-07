@@ -97,6 +97,6 @@
   "platform": "macOS-27.0-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "source_revision": "08391b1634e44ff793f61f366113e3e4859a93f1",
+  "source_revision": "0933320379ca26dfe314083be1ce0b3cfb6839cb",
   "worktree_dirty": true
 }
