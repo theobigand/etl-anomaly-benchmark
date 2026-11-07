@@ -664,7 +664,7 @@ in the PyTorch detector (`fit` 55, `settings` 26, `__init__` 24, `_reconstructio
 killed only on Linux, none is without tests and none has a different error or
 timeout outcome.
 
-**Environments.** Same revision tree, mutmut 3.8.0, pytest 9.1.1, Python 3.11,
+**Environments.** The runs used different commits (3d6ae7c locally, 034ea98 hosted); `research/lstm_detector.py`, `research/pool_check.py`, the four mapped test files, `research/tests/conftest.py` and `pyproject.toml` are byte-identical between them (checked with `git diff`). Both used mutmut 3.8.0, pytest 9.1.1, Python 3.11,
 numpy 2.4.6, pandas 3.1.1, scikit-learn 1.9.1 and torch 2.15.0 (CPU build on Linux).
 The shared catalog and the same mapped tests (14 for `LSTMAutoencoder.fit`, from
 `test_lstm_detector`, `test_deep_typed`, `test_cost_study`, `test_lstm_pilot`) apply
