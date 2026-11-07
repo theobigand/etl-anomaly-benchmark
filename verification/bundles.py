@@ -12,12 +12,15 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import tarfile
 from pathlib import Path
 from typing import IO, cast
 
 ROOT = Path(__file__).resolve().parents[1]
 MAX_MEMBER = 5 * 1024 * 1024
+MAX_MEMBERS = 512
+MAX_TOTAL = 64 * 1024 * 1024
 _EVIDENCE = "experiments/results/evidence/"
 _RESULTS = "experiments/results/"
 KINDS = {
@@ -62,10 +65,48 @@ def _allowed(kind: str | None) -> set[str]:
     return set(KINDS[kind])
 
 
+def deep_artifacts(root: Path) -> list[str]:
+    """Return the current DEEP envelope's verified raw artifacts.
+
+    The envelope alone is insufficient: its listed campaign must still validate
+    against the current policy, source inventory and execution binding before
+    the native files are eligible for transfer.
+    """
+    from verification import mutation_campaign
+
+    evidence = root / _EVIDENCE / "deep.json"
+    try:
+        document = json.loads(evidence.read_text())
+        result = document["result"]
+        if document.get("kind") != "deep" or result.get("format_version") != 2:
+            raise ValueError("DEEP evidence is not a current campaign")
+        paths = mutation_campaign.validate_current(result, root)
+        names = set(KINDS["deep"])
+        names.update(path.resolve().relative_to(root.resolve()).as_posix() for path in paths)
+        return sorted(names)
+    except (OSError, KeyError, TypeError, ValueError) as exc:
+        raise BundleError(
+            f"deep evidence cannot identify its current raw artifacts: {exc}"
+        ) from exc
+
+
+def _deep_member_allowed(name: str, root: Path) -> bool:
+    """Allow only raw files belonging to a classified module or canonical attempt."""
+    try:
+        units = json.loads((root / "verification/mutation_risk_policy.json").read_text())["units"]
+    except (OSError, KeyError, TypeError, ValueError):
+        return False
+    native = {f"mutants/{source}{suffix}" for source in units for suffix in ("", ".meta", ".spans")}
+    return name in native or bool(
+        re.fullmatch(r"mutants/attempts/[0-9a-f]{32}/(?:execution\.json|native\.log)", name)
+    )
+
+
 def pack(kind: str, root: Path, output: Path, allow_missing: bool = False) -> Path:
     """Archive the evidence files of ``kind`` found under ``root``."""
     names = []
-    for name in KINDS.get(kind, ()) or _allowed(kind):
+    selected = deep_artifacts(root) if kind == "deep" and not allow_missing else _allowed(kind)
+    for name in selected:
         path = root / name
         if not path.is_file():
             if allow_missing:
@@ -92,8 +133,17 @@ def unpack(bundle: Path, root: Path, kind: str | None = None) -> list[str]:
     try:
         with tarfile.open(bundle) as archive:
             members = archive.getmembers()
+            if len(members) > MAX_MEMBERS:
+                raise BundleError(f"bundle has more than {MAX_MEMBERS} members")
+            if sum(member.size for member in members) > MAX_TOTAL:
+                raise BundleError(f"bundle is larger than {MAX_TOTAL} bytes")
+            seen: set[str] = set()
             for member in members:
-                if member.name not in allowed:
+                dynamic_deep = kind in (None, "deep") and _deep_member_allowed(member.name, root)
+                if member.name in seen:
+                    raise BundleError(f"{member.name!r} occurs more than once")
+                seen.add(member.name)
+                if member.name not in allowed and not dynamic_deep:
                     raise BundleError(f"{member.name!r} is not an allowed evidence file")
                 if not member.isreg():
                     raise BundleError(f"{member.name} is not a regular file")

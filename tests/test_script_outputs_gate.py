@@ -41,19 +41,20 @@ def test_a_single_killed_mutant_is_a_complete_campaign():
     assert check_mutation.classify(_outcomes(total=1, killed=1)) == ("PASS", 100.0)
 
 
-def test_mutation_gate_prints_status_and_score(tmp_path, monkeypatch, capsys):
+def test_aggregate_counts_require_execution_provenance(tmp_path, monkeypatch, capsys):
     stats = tmp_path / "mutation.json"
     stats.write_text(json.dumps(_outcomes(total=40, killed=38, survived=2)))
     monkeypatch.setattr(sys, "argv", ["check_mutation", str(stats)])
-    assert check_mutation.main() == 0
-    assert capsys.readouterr().out == "mutation gate: PASS (95.00% killed)\n"
+    assert check_mutation.main() == 1
+    out = capsys.readouterr().out
+    assert "INVALID" in out and "mutation gate: PASS" not in out
 
 
 def test_mutation_gate_help_shows_its_purpose(monkeypatch, capsys):
     monkeypatch.setattr(sys, "argv", ["check_mutation", "--help"])
     with pytest.raises(SystemExit):
         check_mutation.main()
-    assert "Fail-closed interpretation of a mutation campaign." in capsys.readouterr().out
+    assert "current per-module mutation thresholds" in capsys.readouterr().out
 
 
 def _csv(tmp_path, frame=None):

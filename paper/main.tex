@@ -149,7 +149,7 @@ present:
     (Isolation Forest, LOF, One-Class SVM, ECOD, COPOD, HBOS, KNN, PCA) and neural
     detectors (autoencoder, VAE, Deep SVDD, DIF, AE1SVM, LUNAR) on real and synthetic datasets, with a
     stratified held-out split, five seeds, and the ML operating point
-    read from the data, reporting precision, recall, F1, ROC-AUC, PR-AUC,
+    read from the data, reporting precision, recall, F1, ROC-AUC, AP,
     precision-recall curves, and detection-stage latency (fit, predict and
     score; extraction, transformation and loading are not timed).
     \item \textbf{A per-anomaly-type analysis.} Using a synthetic
@@ -222,7 +222,7 @@ compares five unsupervised detectors on one simulated dataset with accuracy,
 precision, recall and $F_1$, and leaves real data as future work (I read the
 abstract only). AnoShift~\cite{dragoi2022anoshift} builds a time-ordered
 protocol on ten years of Kyoto-2006+ network traffic, training on 2006--2010 and
-testing on 2011--2013 (NEAR) and 2014--2015 (FAR), and reports ROC-AUC and PR-AUC
+testing on 2011--2013 (NEAR) and 2014--2015 (FAR), and reports ROC-AUC and AP
 for classical and deep models, again without a decision threshold.
 FedAD-Bench~\cite{anwar2024fedadbench} compares deep models in a federated
 setting on four tabular datasets and chooses each threshold by maximising $F_1$
@@ -252,7 +252,7 @@ Work & Detectors and data & Time order & Metric at a threshold & Per-type result
 \midrule
 ADBench~\cite{han2022adbench} & $30$ algorithms, $57$ datasets & not found & not found (AUCROC, AUCPR) & four geometric types, generated \\
 Agyemang~\cite{agyemang2024anomaly} & $5$ detectors, one simulated set & none & accuracy, precision, recall, $F_1$ & not stated in the abstract \\
-AnoShift~\cite{dragoi2022anoshift} & classical and deep, Kyoto-2006+ & IID, NEAR, FAR splits & not found (ROC-AUC, PR-AUC) & none \\
+AnoShift~\cite{dragoi2022anoshift} & classical and deep, Kyoto-2006+ & IID, NEAR, FAR splits & not found (ROC-AUC, AP) & none \\
 FedAD-Bench~\cite{anwar2024fedadbench} & deep models, federated, $4$ datasets & not found & $F_1$-optimal threshold on a validation set & none \\
 Sun et al.~\cite{sun2024online} & thresholding method, synthetic and real & shift in the stream & error-rate guarantees & none \\
 \midrule
@@ -284,6 +284,11 @@ continuous anomaly score. All detectors share a common
 \texttt{fit}/\texttt{predict}/\texttt{score} interface modelled on
 PyOD~\cite{zhao2019pyod}, so that classical and neural models can be
 dropped in without changing the harness.
+The ordinary transform removes exact duplicate rows before detection. This
+is an operational cleaning decision, not a detector result: in the typed
+injection study, duplicates are instead retained after injection and a
+separate \texttt{transform\_dedup} reference is reported. That study has its
+own group-preserving split and does not reuse the ordinary ETL path.
 
 \subsection{Rule-based detectors}
 This stage compares three generic rule-based baselines. Their numerical
@@ -346,8 +351,12 @@ continuous score; the boolean flag uses a \emph{contamination} equal to
 the anomaly prevalence of the training split (clamped to PyOD's valid
 range), so each model marks about as many rows as the data actually
 contains rather than a fixed share. Contamination sets only the flag
-threshold and leaves ROC-AUC and PR-AUC unaffected. Base estimator defaults are retained unless the recorded protocol or an
+threshold and leaves ROC-AUC and AP unaffected. Base estimator defaults are retained unless the recorded protocol or an
 adaptation below overrides them; no hyperparameter search was performed.
+This gives the learned models numeric information only. Great Expectations
+also checks nulls in every column, whereas neither path evaluates text,
+categorical-domain or cross-field rules; this unequal information access is a
+limitation of the comparison rather than a family ranking.
 
 Three of the eight are the usual references. \emph{Isolation
 Forest}~\cite{liu2008isolation} scores a row by how few random
@@ -425,6 +434,12 @@ models are compared behind the same interface: one scikit-learn MLP
 autoencoder and five PyOD~3.6.7 models~\cite{chen2025pyod2}, with the
 protocol adaptations described below. Defaults are retained only where
 the recorded configuration does not override them.
+The complete implementation inventory for all seventeen comparable
+detectors---family, pinned implementation origin, accepted input,
+training-only preparation, training cap, score direction, decision rule
+and adaptation---is maintained with the source in
+\texttt{verification/detector\_inventory.md}. It records the protocol;
+it is not an empirical comparison or a convergence result.
 The \emph{autoencoder} is a multilayer perceptron (scikit-learn) trained to
 rebuild the standardized features through a bottleneck; a row that breaks the
 structure learned on the fitted data is rebuilt badly, and the squared
@@ -556,7 +571,7 @@ $R_j$ denote precision and recall, with $R_0=0$. Then
 Tied scores enter together at one cutoff. This recall-weighted sum does not
 linearly interpolate precision and differs from trapezoidal area under a
 precision--recall curve. Historical result files retain the field
-\texttt{pr\_auc} for this same AP quantity; remaining PR-AUC labels in the
+\texttt{pr\_auc} for this same AP quantity; displayed AP labels in the
 results refer to AP, not to a second metric.
 
 For rare anomalies, AP makes false alarms visible through precision.
@@ -715,18 +730,18 @@ frauds (recall $0.87$--$0.97$) at a precision below $0.04$. With a contamination
 prevalence, the learned detectors flag about $0.2\%$ of the rows: HBOS has the best precision
 ($0.34 \pm 0.05$), Deep SVDD the best $F_1$ ($0.35 \pm 0.08$) and Isolation Forest reaches
 $F_1 = 0.20 \pm 0.07$. On Cardio, where the anomalies are rare ($9.6\%$) and distinct, the learned
-detectors work: Isolation Forest reaches $F_1 = 0.62$, PR-AUC $0.70$ and ROC-AUC $0.94$, ECOD and
-COPOD reach a PR-AUC of $0.69$, DIF and AE1SVM come close, and the Z-score does well too
+detectors work: Isolation Forest reaches $F_1 = 0.62$, AP $0.70$ and ROC-AUC $0.94$, ECOD and
+COPOD reach an AP of $0.69$, DIF and AE1SVM come close, and the Z-score does well too
 ($F_1 = 0.61$) because the $21$ features are already standardised. On Water Quality, where the
 target class (``not potable'') covers $61\%$ of the rows, every ROC-AUC lies between $0.45$ and
-$0.51$ and every PR-AUC within $0.05$ of the base rate: the detectors are at chance, the expected
+$0.51$ and every AP within $0.05$ of the base rate: the detectors are at chance, the expected
 negative result. A learned detector pays off when the anomalies are rare outliers, not when the
 positive class is a mixed-defect label or a majority.
 
 \paragraph{Two more regimes from the pool.} The three examples were
 picked for the regimes they show, and the pool holds two regimes they do not. Among the
 $100$ problems, the largest margin of the rule-based detectors over the learned ones is on
-Annthyroid ($7.6\%$ anomalies): the IQR rule reaches a PR-AUC of $0.61$ and the best learned
+Annthyroid ($7.6\%$ anomalies): the IQR rule reaches an AP of $0.61$ and the best learned
 model $0.31$. The largest margin of a neural model over the other families is on Mushroom
 ($10\%$ anomalies, a class derived by a rule): LUNAR reaches $0.96$ and the best classical
 model $0.63$. I chose them after seeing the results, as illustrations, so this is an
@@ -738,7 +753,7 @@ Annthyroid and at chance on Mushroom ($0.10$), where LUNAR leads; Deep SVDD is f
 Credit Card Fraud and Isolation Forest on Cardio.
 
 \begin{table}[t]
-\caption{PR-AUC of the seventeen detectors on four problems of the pool (mean over five
+\caption{AP of the seventeen detectors on four problems of the pool (mean over five
 seeds). Credit Card Fraud ($0.2\%$ anomalies) and Cardio ($9.6\%$) are the examples of
 Section~\ref{sec:experiments}; Annthyroid and Mushroom are the two additional ones. A dash
 means the detector was skipped on that size.}
@@ -784,13 +799,16 @@ anomalies are already labelled: $36$ from ADBench and $64$ from the UCI
 repository. The protocol of Section~\ref{sec:studies} gives every problem the same normalisation,
 split, seeds and operating point; the neural models are fitted on at most $20{,}000$ rows. LOF and KNN are skipped above $50{,}000$ training rows
 and One-Class SVM above $20{,}000$, so they cover $92$, $92$ and $84$ problems; the
-skips are listed in the archive. All runs completed: none of the six neural models failed on
-any of the $100$ problems.
+skips are listed in the archive. The archived runs record no exception for the
+six neural models on these $100$ problems. They do not retain loss histories,
+completed epochs or convergence diagnostics for the PyOD models, so successful
+execution is not evidence that those models converged; the limitation is
+recorded in the remediation audit.
 
 \begin{table}[t]
 \caption{Median over the labelled problems of the seed-averaged test metrics,
 with a $95\%$ bootstrap interval over the problems, and the median rank of the
-method on PR-AUC among the seventeen (1 is best). The first block is the rules,
+method on AP among the seventeen (1 is best). The first block is the rules,
 the second the classical models, the third the neural ones.}
 \label{tab:labelled}
 \centering
@@ -798,7 +816,7 @@ the second the classical models, the third the neural ones.}
 \setlength{\tabcolsep}{3pt}
 \begin{tabular}{lrrrr}
 \toprule
-Detector & Problems & PR-AUC & ROC-AUC & Rank \\
+Detector & Problems & AP & ROC-AUC & Rank \\
 \midrule
 Z-score            & 100 & 0.203 [0.164, 0.279] & 0.626 & 9.0 \\
 IQR                & 100 & 0.144 [0.117, 0.191] & 0.556 & 12.0 \\
@@ -824,7 +842,7 @@ LUNAR              & 100 & 0.183 [0.153, 0.225] & 0.615 & 10.0 \\
 \end{table}
 
 No detector is clearly ahead. ECOD and the One-Class SVM share the highest median
-PR-AUC ($0.240$), followed by HBOS ($0.237$) and, among the neural models, DIF
+AP ($0.240$), followed by HBOS ($0.237$) and, among the neural models, DIF
 ($0.226$); the intervals overlap broadly with each other and with the Z-score, so
 the hypothesis that no method is universal is supported on the first six
 detectors, and it also holds for the seventeen. The best method differs from one
@@ -834,14 +852,14 @@ all seventeen, DIF is first on $13$ problems, HBOS on $10$, the IQR rule on $9$,
 method is first on at least two.
 Learning does help on median: Isolation Forest is above the Z-score on $67$
 problems and above the IQR rule on $62$, but the gain is small (about $0.01$ to
-$0.04$ of PR-AUC). The median ROC-AUC stays between $0.51$ and $0.68$, and on
+$0.04$ of AP). The median ROC-AUC stays between $0.51$ and $0.68$, and on
 $30$ problems no detector reaches $0.6$. These anomalies are mostly not outlying
 in the sense these detectors assume, which is expected for labels taken from a
 rare class rather than from a data-quality defect. Great Expectations, built for
 declared constraints, is close to chance here.
 
 Three hypotheses of the registry study concern this table. The first holds: ECOD, HBOS and COPOD
-have a higher median PR-AUC than Isolation Forest ($0.240$, $0.237$ and $0.216$ against
+have a higher median AP than Isolation Forest ($0.240$, $0.237$ and $0.216$ against
 $0.215$), although the gap is small and KNN ($0.203$) and PCA ($0.178$) are below it. The
 second holds too: the best neural model (DIF, $0.226$) is below the best classical one
 ($0.240$), so a neural model does not beat the classical ones by the margin of $0.02$ that I
@@ -849,15 +867,15 @@ had set. The third holds, for the reason given above: no neural model failed.
 
 Two of the five hypotheses on the first six detectors are not supported. The advantage of Isolation Forest
 over the Z-score was expected to vanish when anomalies are more than $20\%$ of
-the rows; it is smaller there ($+0.013$ of median PR-AUC on $12$ problems) but
+the rows; it is smaller there ($+0.013$ of median AP on $12$ problems) but
 still positive, as it is below $5\%$ ($+0.037$, $19$ problems) and in between
 ($+0.009$, $69$ problems). The IQR rule was expected to flag more than three
 times the anomaly prevalence; its median is $2.3$ times, the Z-score's $1.7$,
 and the learned detectors flag about the prevalence by construction. The order
 of the methods is the same for ADBench and for UCI (rank correlation $0.94$),
-although the level is much lower on UCI (best median PR-AUC $0.19$ against
-$0.40$). Nineteen sources appear in both lists with different derivations, so
-the problems are not independent, and $10\%$ resampling fixes the median
+although the level is much lower on UCI (best median AP $0.19$ against
+$0.40$). Fifteen sources underlie both an ADBench and a UCI problem (17 and 15 of
+the problems, with different derivations), so the problems are not independent, and $10\%$ resampling fixes the median
 prevalence at $0.10$. The ADBench half is closer to the usual benchmark and the
 UCI half is a harder, rule-derived labelling; I did not tune any detector, so
 the numbers describe default settings.
@@ -865,7 +883,7 @@ the numbers describe default settings.
 \subsection{Synthetic data: aggregate and per type (RQ2)}
 \label{sec:results-synthetic}
 Aggregate metrics on the synthetic data compress the families together. Over the seventeen
-detectors $F_1$ ranges from $0.22$ (Deep SVDD) to $0.59$ (DIF) and PR-AUC from $0.22$ to $0.65$
+detectors $F_1$ ranges from $0.22$ (Deep SVDD) to $0.59$ (DIF) and AP from $0.22$ to $0.65$
 (Table~\ref{tab:synthetic} of Appendix~\ref{app:details}); among the earlier detectors Isolation
 Forest has the best $F_1$ ($0.50$), and Z-score and HBOS reach a perfect precision at a recall of
 $0.20$. Read alone, these numbers suggest that the choice of detector barely matters. The
@@ -1249,10 +1267,10 @@ The curves, the contamination sweep, the label-free threshold, the severity swee
 Hypothesis & Outcome & Value \\
 \midrule
 P1 label-free threshold lowers the median $F_1$ (at least 12 of 17) & holds & 14 of 17 \\
-P2 ranking by curves equals the PR-AUC ranking ($\rho \geq 0.99$) & not supported & $\rho = 0.90$ \\
+P2 ranking by curves equals the AP ranking ($\rho \geq 0.99$) & not supported & $\rho = 0.90$ \\
 P3 recall rises with severity for every detector & not supported & 13 of 17 \\
 P4 detection above $30\%$ (Isolation Forest) and below $10\%$ (Z-score) of the pipeline on large datasets & holds & $62\%$ and $4\%$ \\
-P5 chronological PR-AUC lower for two thirds of the pairs & not supported & 31 of 64 \\
+P5 chronological AP lower for two thirds of the pairs & not supported & 31 of 64 \\
 P6 no pool file differs from the manifest & holds & 152 of 152 \\
 \bottomrule
 \end{tabular}
@@ -1260,13 +1278,13 @@ P6 no pool file differs from the manifest & holds & 152 of 152 \\
 
 \paragraph{Eligibility.} The eligibility rule of Section~\ref{sec:typed} applied to all $152$ datasets, ADBench ones included, leaves 58 eligible tables, 42 from the UCI repository and 16 from ADBench; the others have fewer than four continuous columns (categorical or binary tables) or too few rows. Pooling the 58 tables changes nothing of the picture of Section~\ref{sec:typed}: the mean rank correlation between the matrices of two tables is $0.80$ ($0.80$ on the UCI tables), the rank correlation between the number of continuous columns and the univariate recall of Isolation Forest is $-0.96$, and the same three of the five hypotheses are not supported.
 
-\paragraph{Label-free threshold and curves (P1, P2).} A constant contamination of $0.02$, read from the stored training scores, lowers the median $F_1$ of 14 learned detectors; the three rules do not read the contamination and are unchanged. The ranking by the average precision of the curves (seed $42$) correlates with the published PR-AUC ranking at $0.90$: several detectors have medians within a hundredth of each other and swap places between one seed and five. On Isolation Forest the median $F_1$ keeps rising up to the largest contamination of the grid, $0.2$, twice the median prevalence of the pool ($0.10$), while the precision stays between $0.14$ and $0.16$ from $0.05$ on: the scores are weak on these labels, more than the threshold is badly placed (Tables~\ref{tab:pool-fixed} and~\ref{tab:pool-sweep}).
+\paragraph{Label-free threshold and curves (P1, P2).} A constant contamination of $0.02$, read from the stored training scores, lowers the median $F_1$ of 14 learned detectors; the three rules do not read the contamination and are unchanged. The ranking by the average precision of the curves (seed $42$) correlates with the published AP ranking at $0.90$: several detectors have medians within a hundredth of each other and swap places between one seed and five. On Isolation Forest the median $F_1$ keeps rising up to the largest contamination of the grid, $0.2$, twice the median prevalence of the pool ($0.10$), while the precision stays between $0.14$ and $0.16$ from $0.05$ on: the scores are weak on these labels, more than the threshold is badly placed (Tables~\ref{tab:pool-fixed} and~\ref{tab:pool-sweep}).
 
 \paragraph{Severity (P3).} Over the 58 eligible tables, 13 of 17 detectors gain recall on multivariate outliers between the smallest and the largest amplitude, and Z-score, Great Expectations, LOF, HBOS do not. The Z-score, the Great Expectations bounds and HBOS stay at zero because they read one column at a time, and multivariate outliers stay inside the range of each column, as in the per-type matrices; LOF is already at its level at the smallest severity. LUNAR is the highest at every severity (Table~\ref{tab:pool-severity}).
 
 \paragraph{The pipeline end to end (P4).} The pipeline ran on all $152$ datasets with Z-score and Isolation Forest; 14 of the $304$ runs failed and are recorded with their reason (a table with no numeric column, or a column that the pipeline reads as text because of stray header lines in the file). On the 14 datasets above $50{,}000$ rows the detection takes 62\% of the pipeline time with Isolation Forest and 4\% with the Z-score, the writing of the two files being the rest, as on Credit Card Fraud. These times were measured while other jobs ran on the machine, so they are orders of magnitude, and the shares are ratios inside one process.
 
-\paragraph{Chronological split (P5).} Only some pool datasets have a time variable: eleven unlabelled UCI tables have a date, the ADBench files have none, and five labelled datasets qualify (Credit Card, Bank Marketing, Occupancy Detection, Online Shoppers and Room Occupancy). The PR-AUC under the chronological split is lower than under the stratified one for 31 of 64 pairs of a dataset and a detector, not for two thirds. Bank Marketing is the reason: its prevalence rises from $5.8\%$ to $39.3\%$ and no detector loses PR-AUC there, as Section~\ref{sec:time} found with four detectors. Room Occupancy is excluded because its anomalies are all in the oldest rows (Table~\ref{tab:pool-chrono}).
+\paragraph{Chronological split (P5).} Only some pool datasets have a time variable: eleven unlabelled UCI tables have a date, the ADBench files have none, and five labelled datasets qualify (Credit Card, Bank Marketing, Occupancy Detection, Online Shoppers and Room Occupancy). The AP under the chronological split is lower than under the stratified one for 31 of 64 pairs of a dataset and a detector, not for two thirds. Bank Marketing is the reason: its prevalence rises from $5.8\%$ to $39.3\%$ and no detector loses AP there, as Section~\ref{sec:time} found with four detectors. Room Occupancy is excluded because its anomalies are all in the oldest rows (Table~\ref{tab:pool-chrono}).
 
 \paragraph{Files (P6).} All $152$ local files match the pinned manifest (\texttt{make verify-pool}).
 % END generated pool extension
@@ -1278,7 +1296,7 @@ P6 no pool file differs from the manifest & holds & 152 of 152 \\
 \emph{RQ1.} In one pipeline the families are close on aggregate scores. On the $100$ labelled
 problems no detector is clearly ahead among the seventeen, the column-wise ECOD, COPOD and HBOS
 match Isolation Forest, and the neural models do not beat the best classical one by the margin I
-had set ($0.02$ of median PR-AUC). \emph{RQ2.} Per type, the competence of each family is narrow:
+had set ($0.02$ of median AP). \emph{RQ2.} Per type, the competence of each family is narrow:
 declarative rules own missing values, statistical rules own single-column outliers, models that
 read several columns own implausible combinations. The profile holds in structure across three
 generators and on $42$ real tables, but the values of the multivariate and drift cells depend on
@@ -1286,7 +1304,7 @@ how the columns are scaled and do not transfer. \emph{RQ3.} The operating point 
 and recall by an order of magnitude with the same scores, a label-free contamination lowers the
 median $F_1$ of fourteen of the seventeen detectors, and a threshold fixed on the past fails in both
 directions when the prevalence moves; only $31$ of $64$ pairs of a pool dataset and a detector lose
-PR-AUC under a chronological split, so that effect is not general. \emph{RQ4.} Detection is cheap
+AP under a chronological split, so that effect is not general. \emph{RQ4.} Detection is cheap
 for the rules and the column-wise models, one to two orders of magnitude more for the neural ones,
 and it is not the cost of the pipeline: writing the output dominates for the rules, while detection
 takes $62\%$ of the time with Isolation Forest on the datasets above $50{,}000$ rows.
@@ -1312,7 +1330,7 @@ benchmark must choose deliberately.
 \paragraph{Unsupervised detection works in one of the three regimes.}
 The three example datasets bracket the method: on Cardio, where anomalies
 are rare and distributionally distinct, Isolation Forest reaches
-$F_1 = 0.62$ and PR-AUC $0.70$; on Credit Card Fraud, where the positive
+$F_1 = 0.62$ and AP $0.70$; on Credit Card Fraud, where the positive
 class is a $0.17\%$ mixed-defect label, the best $F_1$ of the seventeen
 detectors is $0.35$ (Deep SVDD, precision $0.26$) and HBOS reaches the best precision
 ($0.34$) at a recall of $0.32$; on Water Quality, where the ``anomaly''
@@ -1327,7 +1345,7 @@ correlation $0.93$), so the competence of each family is not specific to the
 customer table; but the multivariate and drift cells depend on how the columns
 are scaled, so their values do not transfer. On the $42$ real tables the
 structural rules still own their types while the multivariate gap shrinks, and
-on the $100$ labelled problems the medians of PR-AUC of One-Class SVM ($0.240$),
+on the $100$ labelled problems the medians of AP of One-Class SVM ($0.240$),
 Isolation Forest ($0.215$) and the Z-score ($0.203$) overlap, so the advice
 ``use a learned model'' is not supported there. The neural models add little on
 aggregate: the best of them (DIF, $0.226$) stays below the best classical median
@@ -1356,7 +1374,7 @@ drift costs more than false alarms. These are default settings, and a tuned neur
 
 \paragraph{Aggregate metrics on a mixed label are misleading.} On every
 dataset the aggregate table compresses different behaviour into similar
-$F_1$ and PR-AUC values. A method excellent on one anomaly type and blind
+$F_1$ and AP values. A method excellent on one anomaly type and blind
 to the rest scores like a mediocre all-rounder. The controlled per-type
 dataset, and the severity sweep that tests the sensitivity of that ranking,
 are what make the difference measurable.
@@ -1428,7 +1446,7 @@ the row-level detectors. The chronological pilot and the study of decisions unde
 Credit Card and Bank Marketing, point the same way: score rankings survive a
 split by time better than a threshold fixed on the past. On Bank Marketing, where
 the prevalence goes from $5.8\%$ to $39.3\%$, matching the control to it cuts
-the apparent gain of the chronological split from $0.26$ to $0.06$ of PR-AUC,
+the apparent gain of the chronological split from $0.26$ to $0.06$ of AP,
 and a label-free rolling threshold that keeps the training prevalence cannot
 follow it; only one of the four hypotheses of that study holds.
 
@@ -1513,6 +1531,32 @@ Appendix~\ref{app:outcomes}. The
 chronological split and the window-based drift monitor have a separate
 protocol: their alert and delay measures are not pooled with the row-level
 metrics from the stratified benchmark.
+
+\paragraph{Prospective risk-tiered policy.}
+A prospective verification revision assigns minimum mutation scores of $80\%$
+(L1, limited consequences), $90\%$ (L2, operational support), $95\%$ (L3,
+scientific processing), and $98\%$ (L4, leakage, metric/evidence integrity and
+certification). Each required module must meet its own threshold; aggregates
+cannot compensate for a failing module or risk level. Classification uses the
+highest applicable consequence. The explicit four-root inventory and the
+per-module campaign gate are implemented prospectively; complete release
+integration and independent review are not yet established. The historical results below retain their
+original global $95\%$ criterion and are not claims of compliance with this revision.
+A first complete native campaign over the governed scope ($29{,}811$ mutants, one clean environment) killed $19{,}248$; the L4 aggregate was $65.5\%$ against the required $98\%$, and the gate failed. A further $7{,}501$ mutants had no covering test. This is a measured diagnostic of the current test suite, not a certification.
+The native-catalog adapter distinguishes assertion kills from internal runner
+errors and checks generated identities against source-function hashes. A separate
+execution-binding prototype tracks source globals, tests, configuration and
+runtime metadata. Unchanged bound verdicts can be reused; input changes following
+an interrupted attempt require conservative invalidation when dependency maps
+may be partial. Neither catalog parsing nor these constructed acceptance checks
+establishes current release compliance. Changes to compliance thresholds alone
+require a new policy evaluation rather than repeating unchanged execution.
+A constructed native smoke check executes two mutants and subsequently reuses
+both unchanged verdicts. Per-attempt logs are preserved, while live workers,
+changed inputs or stale generation artifacts prevent a new execution binding.
+This small check does not measure mutation adequacy of the benchmark modules.
+Recorded arithmetic can be recomputed without the historical source files;
+current scope and execution bindings must still be verified before reuse.
 
 \section{Verification outcomes}
 \label{app:outcomes}
@@ -1761,16 +1805,16 @@ statistical rules recover most frauds (recall $0.87$--$0.97$) at a
 precision below $0.04$: a fixed per-column rule cannot separate a
 $0.17\%$ positive class from the tails of legitimate traffic. Great
 Expectations is the most selective of the rules ($3\%$ of rows) and has the best
-PR-AUC of the three ($0.182 \pm 0.046$). Isolation Forest behaves differently now that its
+AP of the three ($0.182 \pm 0.046$). Isolation Forest behaves differently now that its
 contamination matches the prevalence: it flags only $0.17\%$ of rows and
 reaches a precision of $0.20$, the first usable operating point among the
 rules and Isolation Forest, but its recall drops to $0.21$ and both are seed-sensitive
 ($F_1 = 0.20 \pm 0.07$). The column-wise detectors added to the registry do better than
 Isolation Forest on this dataset: with the same $0.2\%$ of rows flagged, HBOS reaches the best
 precision of the table ($0.34 \pm 0.05$), COPOD and ECOD an $F_1$ of $0.30$ and
-$0.26$ against $0.20$, and the PR-AUC of HBOS and COPOD ($0.22$ and $0.21$) is above that of
+$0.26$ against $0.20$, and the AP of HBOS and COPOD ($0.22$ and $0.21$) is above that of
 Great Expectations. PCA is below Isolation Forest ($F_1 = 0.14 \pm 0.14$). Among the neural
-models, Deep SVDD has the best $F_1$ ($0.35 \pm 0.08$) and PR-AUC ($0.29 \pm 0.10$) of the
+models, Deep SVDD has the best $F_1$ ($0.35 \pm 0.08$) and AP ($0.29 \pm 0.10$) of the
 table, at a recall of $0.55$, and LUNAR the best ROC-AUC ($0.941$) with a precision of only
 $0.14$ and $0.7\%$ of rows flagged; the autoencoder is the weakest ($F_1 = 0.10$). Seed spreads
 are large for every learned model, so the order among the better ones is not firm. Great
@@ -1816,12 +1860,12 @@ LUNAR              & 0.138 & 0.535 & 0.216 & \textbf{0.941} & 0.136 & 0.7 & -- \
 Table~\ref{tab:cardio} runs all detectors on Cardio, where the
 anomalies are both rare ($9.6\%$) and distributionally distinct. Here the
 unsupervised detectors work: Isolation Forest reaches $F_1 = 0.62$,
-PR-AUC $0.70$ and ROC-AUC $0.94$, and the One-Class SVM is close behind.
+AP $0.70$ and ROC-AUC $0.94$, and the One-Class SVM is close behind.
 Z-score also does well on this dataset ($F_1 = 0.61$) because the $21$
 features are already standardized and the anomalies stand out on several
-of them at once. ECOD and COPOD reach the level of Isolation Forest (PR-AUC $0.69$ for both
+of them at once. ECOD and COPOD reach the level of Isolation Forest (AP $0.69$ for both
 against $0.70$, $F_1$ $0.57$ and $0.60$), while HBOS ($F_1 = 0.51$), KNN ($0.43$) and PCA
-($0.36$) fall below it. Among the neural models, DIF ($F_1 = 0.59$, PR-AUC $0.67$) and AE1SVM
+($0.36$) fall below it. Among the neural models, DIF ($F_1 = 0.59$, AP $0.67$) and AE1SVM
 ($0.61$, $0.64$) come close to Isolation Forest, whereas the autoencoder, Deep SVDD and LUNAR
 are far below ($F_1$ between $0.29$ and $0.35$). This is the counterpoint to Credit Card Fraud and Water
 Quality: the value of a learned detector shows when the anomalies are
@@ -1867,7 +1911,7 @@ LUNAR              & 0.41 & 0.39 & 0.29 & 0.65 & 0.33 & 18.8 \\
 \subsection{Example 3: Water Quality, a common target class}
 Table~\ref{tab:water} runs all detectors, the neural ones included, on Water Quality, where
 ``not potable'' is the target and covers $61\%$ of the rows. Every
-detector's ROC-AUC sits between $0.45$ and $0.51$ and every PR-AUC lies
+detector's ROC-AUC sits between $0.45$ and $0.51$ and every AP lies
 within $0.05$ of the $0.61$ base rate: the unsupervised detectors are
 essentially at chance. This is the expected outcome and a useful negative
 result. When the target class is common and not distributionally distinct
@@ -1913,11 +1957,11 @@ LUNAR              & 0.58 & \textbf{0.53} & 0.55 & 0.45 & 0.57 & 55.4 \\
 \subsection{Synthetic dataset: aggregate metrics}
 Table~\ref{tab:synthetic} reports the seventeen detectors on the synthetic
 dataset. Aggregate metrics still compress the families together: $F_1$
-ranges from $0.22$ (Deep SVDD) to $0.59$ (DIF) and PR-AUC from $0.22$ to
+ranges from $0.22$ (Deep SVDD) to $0.59$ (DIF) and AP from $0.22$ to
 $0.65$. Among the earlier detectors Isolation Forest has the best $F_1$
 ($0.50$); Z-score and HBOS both reach a perfect precision by firing only on
 the most extreme rows, at a recall of $0.20$. DIF has the best $F_1$, ROC-AUC
-and PR-AUC, the VAE matches Isolation Forest, and LUNAR has the best recall
+and AP, the VAE matches Isolation Forest, and LUNAR has the best recall
 ($0.67$) with a low precision, which fits the share of clean rows it flags
 in the per-type matrix. Read alone, these numbers suggest the detector choice
 barely matters among the middle of the table; the per-type breakdown shows
@@ -2150,7 +2194,7 @@ LUNAR              & 0.60 & 0.66 & 0.66 & 0.68 \\
 \end{table}
 
 \begin{table}[t]
-\caption{Chronological split on the pool datasets with a time variable: anomalies in the test partition, prevalence in training and test (\%), and the number of detectors whose PR-AUC is lower than under the stratified split.}
+\caption{Chronological split on the pool datasets with a time variable: anomalies in the test partition, prevalence in training and test (\%), and the number of detectors whose AP is lower than under the stratified split.}
 \label{tab:pool-chrono}
 \centering
 \footnotesize

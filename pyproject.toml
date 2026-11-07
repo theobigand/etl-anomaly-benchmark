@@ -38,7 +38,7 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
-testpaths = ["tests"]
+testpaths = ["tests", "research/tests"]
 addopts = "-ra -q"
 filterwarnings = ["ignore:.pin_memory. argument is set as true:UserWarning"]
 markers = [
@@ -61,51 +61,36 @@ select = ["E", "F", "I", "UP", "B", "SIM"]
 patch = ["subprocess"]
 
 [tool.mutmut]
-source_paths = ["src/etl_benchmark", "experiments"]
+source_paths = ["src/etl_benchmark", "experiments", "research", "verification"]
 only_mutate = [
-    "src/etl_benchmark/atomic.py",
-    "src/etl_benchmark/datasets.py",
-    "src/etl_benchmark/extract.py",
-    "src/etl_benchmark/load.py",
-    "src/etl_benchmark/metrics.py",
-    "src/etl_benchmark/pipeline.py",
-    "src/etl_benchmark/registry.py",
-    "src/etl_benchmark/split.py",
-    "src/etl_benchmark/synthetic.py",
-    "src/etl_benchmark/transform.py",
+    "src/etl_benchmark/*.py",
     "src/etl_benchmark/quality/*.py",
     "experiments/*.py",
+    "research/*.py",
+    "verification/*.py",
 ]
 pytest_add_cli_args_test_selection = [
     "tests",
+    "research/tests",
     "-m",
-    "not real",
+    "not real and not fault",
     "--ignore=tests/test_artifact_lineage.py",
-    "--ignore=tests/test_publication_tables.py",
-    "--ignore=tests/test_profile_refresh.py",
-    "--ignore=tests/test_scaling_study.py",
-    "--ignore=tests/test_test_support.py",
-    "--ignore=tests/test_fault_matrix.py",
-    "--ignore=tests/test_pool_preprocessing_faults.py",
-    "--ignore=tests/test_verification_policy.py",
-    "--ignore=tests/test_evidence_schema.py",
-    "--ignore=tests/test_release_gate.py",
-    "--ignore=tests/test_verifier_tools.py",
-    "--ignore=tests/test_reproduce.py",
-    "--ignore=tests/test_manuscript_claims.py",
-    "--ignore=tests/test_check_types.py",
-    "--ignore=tests/test_environment_lock.py",
-    "--ignore=tests/test_workflows.py",
-    "--ignore=tests/test_branch_protection.py",
-    "--ignore=tests/test_real_preflight.py",
-    "--ignore=tests/test_real_acquire.py",
-    "--ignore=tests/test_temporal_pilot.py",
     "--ignore=tests/test_claims_provenance.py",
-    "--ignore=tests/test_evidence_bundles.py",
-    "--ignore=tests/test_mutation_scope.py",
-    "--ignore=tests/verifier",
+    "--ignore=tests/test_temporal_pilot.py",
+    "--deselect=tests/test_verifier_tools.py::test_archive_lineage_separates_legacy_records_from_broken_ones",
 ]
-also_copy = ["verification", "research", "environment.yml"]
+do_not_mutate = ["research/tests/*"]
+also_copy = [
+    "verification",
+    "research",
+    "environment.yml",
+    "docs",
+    "paper",
+    "slides",
+    ".github",
+    "Makefile",
+    "README.md",
+]
 # Only the non-Python files that tests read invalidate the cache; documents, evidence copies,
 # the paper and workflows do not (verification/mutation_cache.py guards changed tests).
 on_dependency_change = "rerun"

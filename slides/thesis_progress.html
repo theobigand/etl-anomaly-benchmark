@@ -343,7 +343,8 @@
       stage, so latency is the real in-pipeline fit + predict + score time. A continuous
       <code>score()</code> on top of the boolean <code>predict()</code> makes ROC-AUC and
       AP computable; <code>detect(fit_df=...)</code> fits on the train slice and scores
-      the test set.</p>
+      the test set. Exact deduplication belongs to the ordinary transform; typed injected
+      duplicates instead remain in their separate evaluation with <code>transform_dedup</code>.</p>
       <svg viewBox="0 0 300 40" style="margin-top:24px;max-width:320px">
         <defs><marker id="ar" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7z" fill="#d36f52"/></marker></defs>
         <g font-family="Menlo,monospace" font-size="10" fill="#625d55">
@@ -392,7 +393,7 @@
         <li><span class="k">Non-interpolated</span>Distinct cutoffs run from high to low scores; tied scores enter together. AP differs from trapezoidal precision–recall area.</li>
         <li><span class="k">Prevalence matters</span>Prevalence is a no-skill reference precision. Constant scores give AP equal to prevalence; a random strict ranking has an upward finite-sample correction.</li>
         <li><span class="k">Separate decisions from scores</span>Changing only the flag threshold leaves AP and ROC-AUC unchanged. ROC-AUC is complementary; neither ranking metric establishes a useful operating point.</li>
-        <li><span class="k">Historical naming</span>Stored <code>pr_auc</code> fields and remaining PR-AUC labels in archived figures and the paper denote this same AP quantity.</li>
+        <li><span class="k">Historical naming</span>Stored <code>pr_auc</code> fields and remaining AP labels in archived figures and the paper denote this same AP quantity.</li>
       </ul>
     </div>
   </div>
@@ -405,7 +406,7 @@
     <div class="heading">
       <div class="eyebrow"><span class="idx">7</span> &nbsp; Three families, eleven row-level detectors</div>
       <h2>Rules and classical models, <em>one contract</em></h2>
-      <p class="lede">Classical detectors use PyOD or the recorded protocol adaptations. The flag threshold uses training prevalence. ECOD, COPOD and HBOS aggregate marginal evidence without explicitly fitting dependence between columns. The time-aware <code>drift</code> detector is opt-in, synthetic only.</p>
+      <p class="lede">Classical detectors use PyOD or the recorded protocol adaptations. The flag threshold uses training prevalence. They receive numeric columns only; Great Expectations separately checks nulls on all columns, so this is an explicit information asymmetry. ECOD, COPOD and HBOS aggregate marginal evidence without explicitly fitting dependence between columns. The time-aware <code>drift</code> detector is opt-in, synthetic only.</p>
     </div>
     <div class="panel">
       <table class="dense">
@@ -471,7 +472,7 @@
       </table>
     </div>
   </div>
-  <div class="foot"><span>src/etl_benchmark/quality/deep.py &nbsp;&middot;&nbsp; verification/full_registry.md</span><span>17 row-level detectors tested for batch independence</span></div>
+  <div class="foot"><span>verification/detector_inventory.md &nbsp;&middot;&nbsp; verification/full_registry.md</span><span>17 row-level detectors tested for batch independence</span></div>
 </section>
 
 <section class="slide" data-sec="Inductive scoring">
@@ -801,9 +802,9 @@
     <div class="heading">
       <div class="eyebrow"><span class="idx">20</span> &nbsp; M2 · the whole labelled pool</div>
       <h2>Historical pool rankings <em>need train-only revalidation</em></h2>
-      <p class="lede">Historical run: three rules, eight classical and six neural detectors, five seeds, on 36 ADBench and 64 UCI problems. The numerical table is retained as recorded. Schema and row filtering precede the split, so these descriptive rankings still need train-only replay; source dependence and label-rule sensitivity also remain open.</p>
+      <p class="lede">Historical run: three rules, eight classical and six neural detectors, five seeds, on 36 ADBench and 64 UCI problems. The numerical table is retained as recorded. Schema and row filtering precede the split, so these descriptive rankings still need train-only replay; source dependence, label-rule sensitivity and unrecorded PyOD convergence diagnostics remain open.</p>
       <div class="stat">
-        <div><span class="v">17</span><span class="l">detectors, none of the neural ones failed</span></div>
+        <div><span class="v">17</span><span class="l">detectors; no neural exception recorded</span></div>
         <div><span class="v">13</span><span class="l">problems won by DIF, the most; each of the 17 wins at least 2</span></div>
       </div>
     </div>
@@ -1184,6 +1185,23 @@
       </table></div>
   </div>
   <div class="foot"><span>make verify-all &nbsp;·&nbsp; .github/workflows</span><span>main, local run sealed at d4304c5</span></div>
+</section>
+
+<section class="slide" data-sec="Prospective verification">
+  <div class="dossier">
+    <div class="heading">
+      <div class="eyebrow">Prospective policy · issue #116</div>
+      <h2>Mutation thresholds follow <em>scientific risk</em></h2>
+      <p class="lede">Each required module must pass its own threshold. A strong aggregate cannot hide a failing critical scope. Historical reports keep their original criterion.</p>
+    </div>
+    <div class="panel"><ul class="ledger">
+      <li><span class="k">L1 · 80%</span>Limited consequences, no effect on numerical results, integrity or certification.</li>
+      <li><span class="k">L2 · 90%</span>Operational support with meaningful but noncritical consequences.</li>
+      <li><span class="k">L3 · 95%</span>Scientific processing, detector computation and reported cost measurements.</li>
+      <li><span class="k">L4 · 98%</span>Leakage prevention, metrics, source identity, evidence and certification.</li>
+    </ul><p class="sm">The prospective inventory covers 92 source modules across four roots. Recorded counts and current source validity are checked separately. A two-mutant smoke confirms cache reuse. Live workers, changed inputs and stale artifacts block binding. First full campaign: 19,248 of 29,811 mutants killed, L4 at 65.5% against 98%, gate FAIL. Release integration and independent review remain required; no policy-v2 certification is claimed.</p></div>
+  </div>
+  <div class="foot"><span>verification/mutation_policy.py · issue #116</span><span>prospective requirements, historical figures preserved</span></div>
 </section>
 
 <!-- 20 limitations -->
