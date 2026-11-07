@@ -80,16 +80,17 @@ verify-preprocessing:
 
 verify-deep:
 	@mkdir -p $(EVIDENCE)
-	@rm -f $(EVIDENCE)/deep.json mutants/mutmut-cicd-stats.json
-	python -m verification.mutation_cache prepare
-	OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 mutmut run
-	python -m verification.mutation_cache record
-	mutmut export-cicd-stats
-	mutmut results --all true > mutants/results.txt
-	@set +e; python experiments/check_mutation.py mutants/mutmut-cicd-stats.json; gate=$$?; \
+	@rm -f $(EVIDENCE)/deep.json mutants/controller-result.json
+	@set +e; python -m verification.mutation_run > mutants/controller-result.json; controller_status=$$?; \
+		export_status=1; listing_status=1; \
+		if test -s mutants/controller-result.json; then \
+			PYTHONPATH= python -P -m mutmut export-cicd-stats; export_status=$$?; \
+			PYTHONPATH= python -P -m mutmut results --all true > mutants/results.txt; listing_status=$$?; \
+		fi; \
+		python experiments/check_mutation.py mutants/mutmut-cicd-stats.json --results mutants/results.txt --run mutants/controller-result.json; gate=$$?; \
 		python -m verification.evidence_schema deep --stats mutants/mutmut-cicd-stats.json \
-		--results mutants/results.txt --output $(EVIDENCE)/deep.json; evidence_status=$$?; \
-		test $$gate -eq 0 -a $$evidence_status -eq 0
+		--results mutants/results.txt --run mutants/controller-result.json --output $(EVIDENCE)/deep.json; evidence_status=$$?; \
+		test $$controller_status -eq 0 -a $$export_status -eq 0 -a $$listing_status -eq 0 -a $$gate -eq 0 -a $$evidence_status -eq 0
 
 verify-faults:
 	@mkdir -p $(EVIDENCE)

@@ -106,8 +106,13 @@ def test_the_deep_job_exports_its_surviving_mutants_for_inspection():
     assert "verification.bundles pack deep" in deep.split("Bundle deep evidence")[1]
     makefile = (WORKFLOWS.parents[1] / "Makefile").read_text()
     target = makefile[makefile.index("verify-deep:") : makefile.index("verify-faults:")]
-    assert "mutmut results --all true > mutants/results.txt" in target
-    assert "--results mutants/results.txt" in target
+    assert "python -m verification.mutation_run > mutants/controller-result.json" in target
+    assert "python -P -m mutmut results --all true > mutants/results.txt" in target
+    assert "--results mutants/results.txt --run mutants/controller-result.json" in target
+    assert "rm -f $(EVIDENCE)/deep.json mutants/controller-result.json" in target
+    assert "mutants/mutmut-cicd-stats.json" not in next(
+        row for row in target.splitlines() if row.startswith("\t@rm -f")
+    )
 
 
 def test_the_release_workflow_produces_every_evidence_kind_the_policy_requires():
@@ -299,8 +304,9 @@ def test_the_deep_job_reuses_the_mutation_cache_unless_a_fresh_run_is_asked():
     assert job.index("actions/cache@v4") < job.index("make verify-deep")
     makefile = (WORKFLOWS.parents[1] / "Makefile").read_text()
     deep = makefile[makefile.index("verify-deep:") : makefile.index("verify-faults:")]
-    assert deep.index("mutation_cache prepare") < deep.index("mutmut run")
-    assert deep.index("mutmut run") < deep.index("mutation_cache record")
+    assert "mutation_run > mutants/controller-result.json" in deep
+    assert "mutation_cache prepare" not in deep
+    assert "mutation_cache record" not in deep
 
 
 def test_the_deep_target_runs_mutmut_with_single_threaded_math_libraries():
@@ -308,9 +314,8 @@ def test_the_deep_target_runs_mutmut_with_single_threaded_math_libraries():
     # parent: 14 mutants of the PyOD wrapper timed out in every hosted run (issue 54).
     makefile = (WORKFLOWS.parents[1] / "Makefile").read_text()
     deep = makefile[makefile.index("verify-deep:") : makefile.index("verify-faults:")]
-    line = next(row for row in deep.splitlines() if "mutmut run" in row)
-    for variable in ("OMP_NUM_THREADS=1", "OPENBLAS_NUM_THREADS=1", "MKL_NUM_THREADS=1"):
-        assert variable in line, variable
+    assert "verification.mutation_run" in deep
+    assert "python -P -m mutmut" in deep
 
 
 def test_the_pool_check_redownloads_the_pinned_datasets_and_uploads_only_its_report():
