@@ -253,7 +253,7 @@ def _execution_documents(root: Path, scope: list[str]) -> dict[Path, dict]:
 
 
 def _metadata_digest(data: dict) -> str:
-    return _digest({name: data[name] for name in ("exit_code_by_key", "hash_by_function_name")})
+    return mutation_catalog.metadata_digest(data)
 
 
 def _native_artifacts(root: Path, scope: list[str]) -> dict[str, str | None]:

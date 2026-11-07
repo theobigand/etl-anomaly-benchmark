@@ -68,7 +68,7 @@ def _deep(tmp_path, results="    x.x_f__mutmut_1: killed\n", execution=EXECUTION
     listing = tmp_path / "results.txt"
     if results is not None:
         listing.write_text(results)
-    return evidence.build_deep(
+    return evidence.build_legacy_deep(
         stats,
         listing if results is not None else None,
         root=tmp_path,
@@ -236,7 +236,7 @@ def test_deep_doctored_counts_cannot_keep_a_pass(tmp_path):
 def test_deep_unreadable_stats_are_incomplete_not_a_crash(tmp_path):
     stats = tmp_path / "stats.json"
     stats.write_text("not json")
-    doc = evidence.build_deep(
+    doc = evidence.build_legacy_deep(
         stats,
         root=tmp_path,
         scope=["x"],
@@ -245,7 +245,7 @@ def test_deep_unreadable_stats_are_incomplete_not_a_crash(tmp_path):
         execution=EXECUTION,
     )
     assert doc["status"] == "INCOMPLETE"
-    missing = evidence.build_deep(
+    missing = evidence.build_legacy_deep(
         tmp_path / "gone.json",
         root=tmp_path,
         scope=["x"],
@@ -417,7 +417,7 @@ def test_command_line_builders_write_validated_envelopes(tmp_path):
     # the scope comes from pyproject.toml but resolves to no file under the temporary root
     assert done.returncode == 1
     deep = json.loads((tmp_path / "d.json").read_text())
-    assert deep["result"]["scope"] and deep["result"]["scope_files"] == []
+    assert deep["result"]["format_version"] == 2 and deep["result"]["reason"]
     assert deep["status"] == "INCOMPLETE"
 
     _real(tmp_path)
@@ -476,7 +476,7 @@ def test_deep_with_a_scope_that_matches_no_file_is_incomplete(tmp_path):
 def test_deep_with_an_unreadable_mutant_listing_is_incomplete_with_a_reason(tmp_path):
     stats = tmp_path / "stats.json"
     stats.write_text(json.dumps(_stats()))
-    doc = evidence.build_deep(
+    doc = evidence.build_legacy_deep(
         stats,
         tmp_path / "gone.txt",
         root=tmp_path,

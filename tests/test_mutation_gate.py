@@ -42,13 +42,13 @@ def test_mutation_gate_rejects_missing_incomplete_and_low_score():
     ) == ("FAIL", 90.0)
 
 
-def test_mutation_command_exit_matches_recorded_outcomes(tmp_path, monkeypatch):
+def test_mutation_command_rejects_historical_counts_without_bound_execution(tmp_path, monkeypatch):
     stats = tmp_path / "mutation.json"
     monkeypatch.setattr(sys, "argv", ["check_mutation", str(stats)])
     result = {key: 0 for key in check_mutation.OUTCOMES}
     result.update(total=20, killed=19, survived=1)
     stats.write_text(json.dumps(result))
-    assert check_mutation.main() == 0
+    assert check_mutation.main() == 1
     result.update(killed=18, survived=2)
     stats.write_text(json.dumps(result))
     assert check_mutation.main() == 1
@@ -74,7 +74,7 @@ def test_mutation_gate_rejects_zero_or_inconsistent_campaign(tmp_path):
         check=False,
     )
     assert command.returncode == 1
-    assert "FAIL" in command.stdout
+    assert "INVALID" in command.stdout
 
 
 def _stats(**changes):
@@ -165,14 +165,14 @@ def test_classify_reports_each_contract_with_its_exact_message():
     assert str(error.value) == "unreliable campaign: skipped=1"
 
 
-def test_main_prints_the_reason_and_exits_with_one_in_process(tmp_path, monkeypatch, capsys):
+def test_main_requires_bound_execution_in_process(tmp_path, monkeypatch, capsys):
     stats = tmp_path / "mutation.json"
     monkeypatch.setattr(sys, "argv", ["check_mutation", str(stats)])
     assert check_mutation.main() == 1
     assert capsys.readouterr().out.startswith("mutation gate: INVALID (")
     stats.write_text(json.dumps(_stats(killed=99, segfault=1)))
     assert check_mutation.main() == 1
-    assert capsys.readouterr().out == "mutation gate: INVALID (unreliable campaign: segfault=1)\n"
+    assert capsys.readouterr().out.startswith("mutation gate: INVALID (")
     stats.write_text(json.dumps(_stats(killed=98, survived=2)))
-    assert check_mutation.main() == 0
-    assert capsys.readouterr().out == "mutation gate: PASS (98.00% killed)\n"
+    assert check_mutation.main() == 1
+    assert capsys.readouterr().out.startswith("mutation gate: INVALID (")

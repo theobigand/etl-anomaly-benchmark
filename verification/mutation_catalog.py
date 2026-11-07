@@ -142,6 +142,14 @@ def _function_hashes(source: str) -> dict[str, str]:
     return hashes
 
 
+def metadata_digest(data: dict) -> str:
+    """Bind verdicts and original function hashes, excluding timing telemetry."""
+    payload = {name: data[name] for name in ("exit_code_by_key", "hash_by_function_name")}
+    return hashlib.sha256(
+        json.dumps(payload, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
+    ).hexdigest()
+
+
 def read_native(policy: dict, root: Path, cache: Path, stats: dict, listing: str) -> dict:
     """Require agreement of generation index, verdict metadata, counts and listing.
 
@@ -157,6 +165,7 @@ def read_native(policy: dict, root: Path, cache: Path, stats: dict, listing: str
         raise ValueError("invalid native mutation statistics")
     catalog: dict[str, list[str]] = {}
     artifacts: dict[str, str] = {}
+    metadata: dict[str, str] = {}
     records, native, missing = [], {}, []
     for path, unit in sorted(policy["units"].items()):
         catalog[path] = []
@@ -168,6 +177,7 @@ def read_native(policy: dict, root: Path, cache: Path, stats: dict, listing: str
         meta = _read(cache, f"{path}.meta", artifacts)
         if set(meta) != META_FIELDS or any(not isinstance(value, dict) for value in meta.values()):
             raise ValueError("invalid native metadata structure")
+        metadata[f"{path}.meta"] = metadata_digest(meta)
         verdicts = meta["exit_code_by_key"]
         generated = _index(_read(cache, f"{path}.spans", artifacts), path)
         if set(verdicts) != generated:
@@ -206,5 +216,6 @@ def read_native(policy: dict, root: Path, cache: Path, stats: dict, listing: str
         "missing": missing,
         "native_stats": dict(stats),
         "artifacts": artifacts,
+        "metadata_sha256": metadata,
         "execution_provenance_verified": False,
     }
