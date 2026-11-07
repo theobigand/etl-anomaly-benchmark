@@ -23,10 +23,12 @@ Keep dataset populations separate and document overlaps. Generate figures and ta
 - [x] T085 Document minority-class-to-anomaly label mapping in UCI.
 - [x] T086 Do not equate semantic minority classes with ETL defects.
 - [x] T087 Explain Water Quality's violation of the rare-anomaly assumption where applicable.
-- [ ] T088 Record prevalence in train, validation, and test.
-- [ ] T089 Publish seeds and reproducible partition IDs.
+- [x] T088 Record prevalence in train, validation, and test.
+- [x] T089 Publish seeds and reproducible partition IDs.
 
-Evidence for T071–T087: [dataset inventory audit](DATASET_INVENTORY_AUDIT_2026-11-07.md), recomputed from the pinned registry manifests, eligibility records and archived problems by `tests/test_dataset_source_overlap.py` (T077 criteria, T083 overlap). T088 was reopened on 2026-11-07: the historical per-problem archives record one overall prevalence, and per-partition prevalence is stored only for the chronological study and the prospective frozen-partition path. T088 and T089 depend on recovering the historical partitions.
+Evidence for T088 and T089: [partition recovery](PARTITION_RECOVERY_2026-11-08.md) (recomputed memberships, replay-validated against all archived Z-score metrics).
+
+Evidence for T071–T087: [dataset inventory audit](DATASET_INVENTORY_AUDIT_2026-11-07.md), recomputed from the pinned registry manifests, eligibility records and archived problems by `tests/test_dataset_source_overlap.py` (T077 criteria, T083 overlap). T088 was reopened on 2026-11-07 because the per-problem archives held one overall prevalence; it is supported again by the recovered partitions.
 
 ## 07. Metric definitions and baselines (P0; Thesis 02)
 

@@ -82,7 +82,13 @@ def split(x: np.ndarray, y, seed: int) -> dict[str, np.ndarray]:
     filled = fill(x[train])
     mean, scale = filled.mean(axis=0), filled.std(axis=0)
     scale = np.where(scale == 0, 1.0, scale)
-    out: dict[str, np.ndarray] = {"mean": mean, "scale": scale, "idx_train": train}
+    out: dict[str, np.ndarray] = {
+        "mean": mean,
+        "scale": scale,
+        "idx_train": train,
+        "idx_val": val,
+        "idx_test": test,
+    }
     for name, rows in (("train", train), ("val", val), ("test", test)):
         out[f"x_{name}"] = (fill(x[rows]) - mean) / scale
         out[f"y_{name}"] = y[rows]

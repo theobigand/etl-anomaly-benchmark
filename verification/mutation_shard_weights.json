@@ -35,6 +35,7 @@
   "research/pool_preprocessing.py": 248,
   "research/pool_train_only.py": 332,
   "research/pool_typed.py": 525,
+  "research/recover_partitions.py": 150,
   "research/temporal_decision.py": 836,
   "research/temporal_pilot.py": 586,
   "research/time_scan.py": 135,

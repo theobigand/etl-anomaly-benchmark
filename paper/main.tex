@@ -543,7 +543,13 @@ comparison protocol; the numerical results in this manuscript retain the
 train-prevalence baseline. In the sensitivity sweep, contamination follows a
 fixed grid and no value is selected from the test metrics. Threshold or
 hyperparameter selection for a later confirmatory experiment would use
-training or validation data only. The whole
+training or validation data only. The row identifiers of the
+historical pool splits were not archived when the runs were made. I recomputed them from the
+deterministic split and the recorded seeds, and for all $100$ labelled problems a replay of the
+Z-score detector on the recomputed partitions reproduces the archived per-seed metrics
+to $10^{-9}$; the partition digests and sizes are published with the evidence. This confirms the
+training and test rows used by that deterministic detector, not the validation rows, which no
+reported number uses. The whole
 procedure is repeated over five random
 seeds and I report the mean and standard deviation. This spread measures
 the sensitivity to the split and to model randomness on a fixed dataset; it

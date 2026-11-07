@@ -228,6 +228,10 @@
       "level": "L4",
       "reason": "Pinned pool hashes and download verification enforce dataset integrity."
     },
+    "research/recover_partitions.py": {
+      "level": "L4",
+      "reason": "Recovered train/validation/test memberships and their replay check establish which rows each historical result was trained and evaluated on."
+    },
     "research/pool_chrono.py": {
       "level": "L4",
       "reason": "Real-time variables, time ordering and held-out partitions govern causal validity."
