@@ -22,6 +22,12 @@ avec la politique appliquée.
 | `independent_attestation` | différée | Aucun tiers n'atteste les preuves. |
 | `linux_environment_lock` | différée | Le verrou d'environnement ne couvre que osx-arm64 (issue 45). |
 
+La preuve `deep` doit provenir d'un environnement Linux (`deep_platform` dans la politique) : le
+runtime lié à la campagne est vérifié, et une campagne exécutée sous une autre plateforme n'est
+qu'un diagnostic. Les résultats de plateformes différentes ne sont jamais combinés (les fragments d'une
+campagne partagent un contexte identique). Le verrou d'environnement reste différé pour Linux ;
+la preuve `reproduction` n'en dépend pas pour la campagne de mutation.
+
 Chaque preuve est une enveloppe validée par `verification/evidence_schema.py` :
 statut recalculé à partir du résultat (jamais lu tel quel), hachages des
 artefacts, révision du dépôt, empreinte scientifique et environnement. Une
