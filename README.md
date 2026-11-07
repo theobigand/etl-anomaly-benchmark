@@ -92,6 +92,9 @@ python -m etl_benchmark --detector isolation_forest
 Registered detectors: `zscore`, `iqr`, `great_expectations`, `isolation_forest`, `lof`,
 `ocsvm`, `ecod`, `copod`, `hbos`, `knn`, `pca` (the default sweep), `drift` (time-aware, opt-in,
 synthetic dataset only) and the opt-in neural ones `autoencoder`, `vae`, `deep_svdd`, `dif`, `ae1svm`, `lunar`.
+The [comparable detector inventory](verification/detector_inventory.md) records the family,
+implementation and version, input and preprocessing contract, training cap, score direction,
+threshold and any protocol adaptation for the 17 row-level entries.
 
 Every benchmark uses a 70/15/15 split (fit on train, metrics on the held-out
 test set), repeats over the seeds in `config.BENCHMARK_SEEDS`, and reports mean ± std.

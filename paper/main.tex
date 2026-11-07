@@ -425,6 +425,12 @@ models are compared behind the same interface: one scikit-learn MLP
 autoencoder and five PyOD~3.6.7 models~\cite{chen2025pyod2}, with the
 protocol adaptations described below. Defaults are retained only where
 the recorded configuration does not override them.
+The complete implementation inventory for all seventeen comparable
+detectors---family, pinned implementation origin, accepted input,
+training-only preparation, training cap, score direction, decision rule
+and adaptation---is maintained with the source in
+\texttt{verification/detector\_inventory.md}. It records the protocol;
+it is not an empirical comparison or a convergence result.
 The \emph{autoencoder} is a multilayer perceptron (scikit-learn) trained to
 rebuild the standardized features through a bottleneck; a row that breaks the
 structure learned on the fitted data is rebuilt badly, and the squared

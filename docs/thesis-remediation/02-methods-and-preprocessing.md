@@ -17,9 +17,9 @@ Preserve the registered protocols and sealed baselines. Check pinned library ver
 - [x] T045 Correct the theoretical description of COPOD.
 - [x] T046 Distinguish COPOD's theoretical formulation from scoring in the pinned PyOD version.
 - [x] T047 Inspect the pinned PyOD source before describing how ECOD/COPOD combine dimensions.
-- [ ] T048 Add a complete table of all 17 detectors.
-- [ ] T049 Record family, implementation origin, library version, accepted data types, preprocessing, and training caps.
-- [ ] T050 Record score definition, direction, threshold, and implementation adaptations.
+- [x] T048 Add a complete table of all 17 detectors.
+- [x] T049 Record family, implementation origin, library version, accepted data types, preprocessing, and training caps.
+- [x] T050 Record score definition, direction, threshold, and implementation adaptations.
 - [x] T051 Document the modifications to ECOD, COPOD, DIF, and VAE.
 - [x] T052 Explain the requirement for inductive per-row scoring in ETL inference.
 - [x] T053 Test whether a row's score is invariant to other rows in the test batch where claimed.
@@ -31,6 +31,8 @@ T037/T038 were already implemented; the audit confirms them without a duplicate 
 
 Evidence for T045–T047 and T051–T054: [pinned-source inductive detector audit](INDUCTIVE_DETECTORS_2026-11-03.md).
 These are verified descriptions of existing adaptations; no equivalence to unmodified PyOD is claimed.
+
+Evidence for T048–T050: [comparable detector inventory](../../verification/detector_inventory.md), checked against the runtime registry by `tests/test_detector_inventory.py`.
 
 ## 05. ETL preprocessing and leakage controls (P0; Thesis 01)
 
