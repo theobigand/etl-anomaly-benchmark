@@ -175,20 +175,18 @@ def test_a_recorded_deep_scope_is_compared_with_the_current_tree(tmp_path):
     ]
 
 
-def test_mutation_selection_excludes_tests_that_read_files_outside_the_sandbox():
-    """The native stats run executes in a sandbox that holds no remediation documents."""
+def test_mutation_sandbox_holds_every_directory_the_selected_tests_read():
+    """The native stats run executes in a sandbox; tests may not read files it lacks."""
     import tomllib
     from pathlib import Path
 
     root = Path(__file__).resolve().parents[1]
-    args = tomllib.loads((root / "pyproject.toml").read_text())["tool"]["mutmut"][
-        "pytest_add_cli_args_test_selection"
-    ]
-    ignored = {a.removeprefix("--ignore=") for a in args if a.startswith("--ignore=")}
-    for path in sorted((root / "tests").glob("test_*.py")):
-        if "docs/thesis-remediation" in path.read_text():
-            assert f"tests/{path.name}" in ignored, path.name
-    assert "tests/verifier" not in ignored
+    config = tomllib.loads((root / "pyproject.toml").read_text())["tool"]["mutmut"]
+    selection, copied = config["pytest_add_cli_args_test_selection"], config["also_copy"]
+    assert {"tests", "research/tests"} <= set(selection)
+    assert {"docs", "paper", "slides", ".github", "Makefile"} <= set(copied)
+    assert "--ignore=tests/verifier" not in selection
+    assert config["do_not_mutate"] == ["research/tests/*"]
 
 
 def test_patterns_follow_mutmut_fnmatch_where_a_star_crosses_directories(tmp_path):
