@@ -414,3 +414,16 @@ def test_the_aggregate_uses_the_shard_dependency_set_and_preserves_release_evide
     assert '-e ".[dev,deep]" "mutmut==3.8.0" "pytest==9.1.1"' in job
     assert "verification.evidence_schema deep-shards" in job and "deep-evidence.json" in job
     assert "evidence-shard-*.json" in job.split("upload-artifact@v4")[-1]
+
+
+def test_the_diagnostic_label_runs_one_small_shard_and_never_the_aggregate():
+    text = _text("mutation-shards.yml")
+    assert "run:mutation-shard-diagnostic" in text and "matrix=[31]" in text
+    plan = text[text.index("  plan:") : text.index("  shard:")]
+    assert "run:mutation-shards'" in plan and "run:mutation-shard-diagnostic" in plan
+    assert "github.event.pull_request.head.repo.full_name == github.repository" in plan
+    aggregate = text[text.index("  aggregate:") :]
+    assert "needs.plan.outputs.diagnostic != 'true'" in aggregate
+    assert (
+        "controller-result.json" in text.split("Preserve the shard evidence")[1].split("- name")[0]
+    )

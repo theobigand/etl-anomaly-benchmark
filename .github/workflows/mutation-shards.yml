@@ -32,14 +32,18 @@ env:
   SHARDS: ${{ inputs.shards || '6' }}
   FRESH: ${{ inputs.fresh_mutants || 'false' }}
   TESTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+  # A diagnostic run executes one small shard of a 45-way plan to exercise the execution
+  # proof and the cache on hosted runners. It is never a campaign and never certifies.
+  DIAGNOSTIC: ${{ contains(github.event.pull_request.labels.*.name, 'run:mutation-shard-diagnostic') }}
 
 jobs:
   plan:
     name: shard-plan
-    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.labels.*.name, 'run:mutation-shards'))
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && (contains(github.event.pull_request.labels.*.name, 'run:mutation-shards') || contains(github.event.pull_request.labels.*.name, 'run:mutation-shard-diagnostic')))
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.matrix.outputs.matrix }}
+      diagnostic: ${{ steps.matrix.outputs.diagnostic }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -52,9 +56,16 @@ jobs:
           python -m verification.mutation_shards plan
           --policy verification/mutation_risk_policy.json
           --weights verification/mutation_shard_weights.json
-          --count "${{ env.SHARDS }}" --output shard-plan.json
+          --count "${{ env.DIAGNOSTIC == 'true' && '45' || env.SHARDS }}" --output shard-plan.json
       - id: matrix
-        run: echo "matrix=$(python -c "import json;print(json.dumps(list(range(int('${{ env.SHARDS }}')))))")" >> "$GITHUB_OUTPUT"
+        run: |
+          if [ "$DIAGNOSTIC" = "true" ]; then
+            echo "matrix=[31]" >> "$GITHUB_OUTPUT"
+            echo "diagnostic=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "matrix=$(python -c "import json;print(json.dumps(list(range(int('${{ env.SHARDS }}')))))")" >> "$GITHUB_OUTPUT"
+            echo "diagnostic=false" >> "$GITHUB_OUTPUT"
+          fi
       - uses: actions/upload-artifact@v4
         with:
           name: shard-plan
@@ -130,7 +141,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: shard-evidence-${{ matrix.index }}
-          path: evidence-shard-${{ matrix.index }}.json
+          path: |
+            evidence-shard-${{ matrix.index }}.json
+            controller-result.json
+            mutants/attempts/*/execution.json
           if-no-files-found: warn
           retention-days: 90
 
@@ -144,7 +158,7 @@ jobs:
   aggregate:
     name: shard-aggregate
     needs: [plan, shard]
-    if: always() && needs.plan.result == 'success'
+    if: always() && needs.plan.result == 'success' && needs.plan.outputs.diagnostic != 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
