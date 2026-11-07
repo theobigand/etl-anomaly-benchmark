@@ -524,3 +524,38 @@ The deep-profile typing and coverage gates also cover the new modules: the pinne
 typing check (mypy 2.4.0, pandas-stubs 3.0.5.260914) found five errors in the
 first version of the shard planner, which were fixed, and the REAL profile passes
 locally on the three research datasets.
+
+## First hosted sharded campaign (2026-11-08, run 42393637254, commit 20342c2)
+
+The manual workflow ran on PR #117 (label `run:mutation-shards`, same-repository,
+read-only token) on `ubuntu-latest`, Python 3.11.18, mutmut 3.8.0, pytest 9.1.1:
+plan, six shards, aggregation and the release-contract evidence wrapper all
+completed. Every shard finished successfully and uploaded its manifest; the
+aggregate reconciled the complete catalog and returned **FAIL** (a quality
+result, not an execution failure). The record is
+[hosted-sharded-campaign-2026-11-08.json](evidence/hosted-sharded-campaign-2026-11-08.json)
+with the [full aggregate](evidence/hosted-sharded-campaign-full-2026-11-08.json.gz);
+it is marked `promotion_eligible: false` (shards are not yet execution-bound).
+
+| Level | Required | Killed / eligible | Score |
+| --- | --- | --- | --- |
+| L4 | 98% | 19,117 / 29,387 | 65.1% |
+| L3 | 95% | 856 / 1,740 | 49.2% |
+| L2 | 90% | 10 / 10 | 100% (PASS) |
+
+Totals: 31,137 mutants, 19,983 killed, 3,891 survived, 7,252 without a covering
+test, 11 timeouts, **0 segmentation faults**. The 46 faults of the local macOS run
+therefore came from that platform's runner, not from the code. Modules: 20 pass, 43
+fail, 27 incomplete, 3 declared technical.
+
+Shard wall times were 19.5, 26.7, 35.6, 42.6, 48.9 and 49.3 minutes, so the
+mutant-count weights balance counts (about 5,000 each) but not time; the longest
+shard is 2.5 times the shortest. The largest cost is the repeated native test
+collection and the slow research and verification suites rather than the number of
+mutants. Rebalancing should use measured per-module durations, which the next run's
+manifests can record. This run used no restored cache (first run for this key); the
+caches saved by each shard are keyed by run id and will be the restore source for the
+next run.
+
+Not yet exercised on hosted runners: cache restoration, a second incremental run,
+and failure recovery of a single shard.
