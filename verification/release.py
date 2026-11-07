@@ -223,7 +223,7 @@ def assess(  # noqa: PLR0913
     }
     if "types" in valid:
         rejected += check_typing(valid["types"], policy["typing_pins"])
-    if "deep" in valid:
+    if "deep" in valid and "format_version" not in valid["deep"]["result"]:
         rejected += [
             f"deep scope: {problem}"
             for problem in mutation_scope.check_evidence(

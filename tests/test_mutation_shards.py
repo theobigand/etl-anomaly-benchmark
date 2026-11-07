@@ -18,7 +18,7 @@ from verification import mutation_shards as shards
 def _tool_versions(monkeypatch):
     """The unit tests must not depend on the mutation engine being installed."""
     versions = {"mutmut": "3.8.0", "pytest": "9.1.1"}
-    monkeypatch.setattr(shards, "version", lambda name: versions[name])
+    monkeypatch.setattr(shards, "version", lambda name: versions.get(name))
 
 
 CONTEXT = {
@@ -290,7 +290,7 @@ def test_the_context_binds_revision_tests_configuration_and_tools(tmp_path):
     _git_repository(tmp_path)
     context = shards.current_context(tmp_path)
     assert set(context) == set(shards.CONTEXT_KEYS) and len(context["revision"]) == 40
-    assert set(context["runtime"]) == {"python", "mutmut", "pytest"}
+    assert set(context["runtime"]) == {"python", "platform", "packages"}
     (tmp_path / "tests/test_a.py").write_text("def test_a():\n    assert True\n")
     assert shards.current_context(tmp_path)["tests_sha256"] != context["tests_sha256"]
     (tmp_path / "pyproject.toml").write_text('[tool.mutmut]\nsource_paths=["lib"]\n')
@@ -329,7 +329,7 @@ def test_the_command_line_plans_builds_and_aggregates_a_campaign(tmp_path, capsy
     assert shards.main([*arguments, "--equivalence", str(equivalence)]) == 0
     context = tmp_path / "context.json"
     assert shards.main(["context", "--root", str(tmp_path), "--output", str(context)]) == 0
-    assert json.loads(context.read_text())["runtime"]["mutmut"]
+    assert json.loads(context.read_text())["runtime"]["packages"]["mutmut"]
     broken = json.loads(manifest.read_text())
     broken["records"][0]["outcome"] = "survived"
     manifest.write_text(json.dumps(broken))
@@ -558,13 +558,17 @@ def test_the_context_counts_both_test_trees_and_the_tool_versions(tmp_path):
     (tmp_path / "tests/test_a.py").write_text("def test_a():\n    assert 1\n")
     assert shards.current_context(tmp_path)["tests_sha256"] != base
     runtime = shards.current_context(tmp_path)["runtime"]
-    assert runtime["mutmut"] == "3.8.0" and runtime["pytest"] == "9.1.1"
+    assert runtime["packages"]["mutmut"] == "3.8.0" and runtime["packages"]["pytest"] == "9.1.1"
+    assert runtime["packages"]["numpy"] is None and set(runtime["packages"]) == set(shards.PACKAGES)
 
 
 def test_aggregation_messages_and_result_fields_are_exact(tmp_path):
     policy, document, manifests = _build(tmp_path)
     result = shards.aggregate(document, manifests, policy, tmp_path, CONTEXT)
-    assert set(result) == {"format", "plan_sha256", "context", "shards", "analysis", "status"}
+    assert set(result) == {
+        "format", "plan_sha256", "context", "shards", "catalog", "records", "native_exit_code",
+        "analysis", "status",
+    }  # fmt: skip
     assert result["format"] == 1 and result["plan_sha256"] == document["sha256"]
     assert result["context"] == CONTEXT
 

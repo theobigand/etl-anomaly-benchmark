@@ -14,14 +14,20 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import platform
 import subprocess
 import sys
 import tomllib
-from importlib.metadata import version
+from importlib.metadata import PackageNotFoundError
+from importlib.metadata import version as _installed_version
 from pathlib import Path
 
 from verification import mutation_catalog, mutation_policy
 
+PACKAGES = (
+    "pytest", "pytest-cov", "mutmut", "numpy", "pandas", "scikit-learn", "pyod", "mypy",
+    "pandas-stubs",
+)  # fmt: skip
 PLAN_FORMAT = 1
 SHARD_FORMAT = 1
 MANIFEST_KEYS = {
@@ -29,6 +35,13 @@ MANIFEST_KEYS = {
     "missing", "native_exit_code",
 }  # fmt: skip
 CONTEXT_KEYS = ("revision", "tests_sha256", "configuration_sha256", "runtime")
+
+
+def version(name: str) -> str | None:
+    try:
+        return _installed_version(name)
+    except PackageNotFoundError:
+        return None
 
 
 def _digest(value) -> str:
@@ -146,6 +159,7 @@ def aggregate(
 ) -> dict:
     """Combine shard manifests into one campaign verdict or reject them."""
     validate_plan(document, policy)
+    mutation_policy.validate_policy(policy, root)
     _check_context(expected_context)
     shards = document["shards"]
     seen: dict[int, dict] = {}
@@ -196,11 +210,15 @@ def aggregate(
     status = analysis["status"]
     if status == "PASS" and incomplete:
         status = "INCOMPLETE"
+    exit_codes = [seen[index]["native_exit_code"] for index in range(len(shards))]
     return {
         "format": SHARD_FORMAT,
         "plan_sha256": document["sha256"],
         "context": expected_context,
         "shards": len(shards),
+        "catalog": catalog,
+        "records": records,
+        "native_exit_code": next((code for code in exit_codes if code != 0), 0),
         "analysis": analysis,
         "status": status,
     }
@@ -232,8 +250,8 @@ def current_context(root: Path) -> dict:
         "configuration_sha256": _digest(configuration),
         "runtime": {
             "python": ".".join(map(str, sys.version_info[:3])),
-            "mutmut": version("mutmut"),
-            "pytest": version("pytest"),
+            "platform": platform.platform(),
+            "packages": {name: version(name) for name in PACKAGES},
         },
     }
 

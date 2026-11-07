@@ -405,3 +405,11 @@ def test_the_sharded_campaign_runs_before_merge_only_for_labelled_same_repositor
     assert text.count("ref: ${{ env.TESTED_SHA }}") >= 3
     assert text.count('test "$(git rev-parse HEAD)" = "$TESTED_SHA"') == 2
     assert "if: always() && needs.plan.result == 'success'" in text
+
+
+def test_the_aggregate_uses_the_shard_dependency_set_and_preserves_release_evidence():
+    text = _text("mutation-shards.yml")
+    job = text[text.index("  aggregate:") :]
+    assert '-e ".[dev,deep]" "mutmut==3.8.0" "pytest==9.1.1"' in job
+    assert "verification.evidence_schema deep-shards" in job and "deep-evidence.json" in job
+    assert "evidence-shard-*.json" in job.split("upload-artifact@v4")[-1]

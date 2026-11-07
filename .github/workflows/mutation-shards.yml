@@ -152,7 +152,8 @@ jobs:
           python-version: "3.11"
       - name: Confirm the tested commit
         run: test "$(git rev-parse HEAD)" = "$TESTED_SHA"
-      - run: pip install "mutmut==3.8.0" "pytest==9.1.1"
+      # The aggregate must see the same dependency set as the shards: the context binds it.
+      - run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev,deep]" "mutmut==3.8.0" "pytest==9.1.1"
       - uses: actions/download-artifact@v4
         with:
           name: shard-plan
@@ -169,10 +170,21 @@ jobs:
           python -m verification.mutation_shards aggregate \
             --plan shard-plan.json --manifests evidence-shard-*.json \
             $equivalence --output mutation-campaign.json
+      # Exits nonzero unless the campaign is PASS; the evidence is uploaded either way.
+      - name: Wrap the campaign in the release evidence contract
+        if: always()
+        run: |
+          python -m verification.evidence_schema deep-shards \
+            --plan shard-plan.json --manifests evidence-shard-*.json \
+            --output deep-evidence.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: mutation-campaign
-          path: mutation-campaign.json
+          path: |
+            mutation-campaign.json
+            deep-evidence.json
+            shard-plan.json
+            evidence-shard-*.json
           if-no-files-found: warn
           retention-days: 90

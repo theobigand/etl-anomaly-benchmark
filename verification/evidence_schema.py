@@ -274,6 +274,28 @@ def build_deep(
     return _envelope("deep", status, result, artifacts, root, source, environment, execution)
 
 
+def build_deep_shards(
+    plan: Path, manifests: list[Path], *, root: Path = ROOT, source=None, environment=None,
+    execution=None,
+):  # fmt: skip
+    """Wrap a sharded risk-scoped campaign in the same evidence contract as a monolithic one."""
+    artifacts = [plan, *manifests]
+    try:
+        result, artifacts = mutation_campaign.load_sharded(root, plan, manifests)
+        status = mutation_campaign.status(result)
+        if environment is None:
+            runtime = result["runtime"]
+            environment = {
+                "python": runtime["python"],
+                "platform": runtime["platform"],
+                "packages": {name: runtime["packages"].get(name) for name in PACKAGES},
+            }
+    except (OSError, KeyError, TypeError, ValueError, subprocess.CalledProcessError) as exc:
+        result = {"format_version": 2, "reason": str(exc)}
+        status = "INCOMPLETE"
+    return _envelope("deep", status, result, artifacts, root, source, environment, execution)
+
+
 def build_faults(
     matrix: Path, expected, *, root: Path = ROOT, source=None, environment=None, execution=None
 ):
@@ -542,6 +564,11 @@ def _write(doc: dict, output: Path) -> int:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
+    shard = sub.add_parser("deep-shards", help="wrap a sharded mutation campaign")
+    shard.add_argument("--plan", type=Path, required=True)
+    shard.add_argument("--manifests", type=Path, nargs="+", required=True)
+    shard.add_argument("--output", type=Path, required=True)
+    shard.add_argument("--root", type=Path, default=ROOT)
     check = sub.add_parser("validate", help="validate one evidence file")
     check.add_argument("path", type=Path)
     check.add_argument("--root", type=Path, default=None, help="verify artifact hashes here")
@@ -572,6 +599,8 @@ def main(argv: list[str] | None = None) -> int:
                 doc = build_fast(args.coverage, args.junit, root=args.root)
             elif args.command == "deep":
                 doc = build_deep(args.stats, args.results, run_report=args.run, root=args.root)
+            elif args.command == "deep-shards":
+                doc = build_deep_shards(args.plan, args.manifests, root=args.root)
             elif args.command == "faults":
                 doc = build_faults(args.matrix, fault_names(), root=args.root)
             elif args.command == "tools":

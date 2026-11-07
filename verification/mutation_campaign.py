@@ -11,11 +11,18 @@ import hashlib
 import re
 from pathlib import Path
 
-from verification import mutation_cache, mutation_catalog, mutation_policy, mutation_run
+from verification import (
+    mutation_cache,
+    mutation_catalog,
+    mutation_policy,
+    mutation_run,
+    mutation_shards,
+)
 from verification.mutation_policy import _relative
 
 FORMAT_VERSION = 2
 EQUIVALENCE = "verification/mutation_equivalence.json"
+SHARDED_BINDING = "unbound"
 HEX64 = re.compile(r"[0-9a-f]{64}")
 ATTEMPT = re.compile(r"mutants/attempts/([0-9a-f]{32})/execution\.json")
 
@@ -150,6 +157,56 @@ def load_campaign(
     return result, sorted(set(artifacts))
 
 
+def load_sharded(
+    root: Path, plan_path: Path, manifest_paths: list[Path]
+) -> tuple[dict, list[Path]]:
+    """Recompute a sharded campaign from its plan and shard manifests.
+
+    The result has the same fields as a monolithic campaign, so the same arithmetic
+    applies. Shards are not yet bound to a controller execution proof; the result
+    says so and cannot pass until that binding exists.
+    """
+    root = root.resolve()
+    plan_path = _input(root, plan_path)
+    manifests = [_input(root, path) for path in manifest_paths]
+    policy = _json(root, root / "verification/mutation_risk_policy.json")
+    equivalence_path = root / EQUIVALENCE
+    equivalence = _json(root, equivalence_path) if equivalence_path.is_file() else None
+    context = mutation_shards.current_context(root)
+    if context["runtime"]["packages"].get("mutmut") != "3.8.0":
+        raise ValueError("sharded campaign requires the inspected mutmut 3.8.0")
+    combined = mutation_shards.aggregate(
+        _json(root, plan_path),
+        [_json(root, path) for path in manifests],
+        policy,
+        root,
+        context,
+        equivalence,
+    )
+    result = {
+        "format_version": FORMAT_VERSION,
+        "mode": "sharded",
+        "execution_binding": SHARDED_BINDING,
+        "policy": policy,
+        "catalog": combined["catalog"],
+        "records": combined["records"],
+        "analysis": combined["analysis"],
+        "equivalence": equivalence,
+        "native_exit_code": combined["native_exit_code"],
+        "context": context,
+        "runtime": context["runtime"],
+        "plan_sha256": combined["plan_sha256"],
+        "paths": {
+            "plan": plan_path.relative_to(root).as_posix(),
+            "manifests": sorted(path.relative_to(root).as_posix() for path in manifests),
+        },
+    }
+    artifacts = [plan_path, *manifests]
+    if equivalence is not None:
+        artifacts.append(equivalence_path)
+    return result, sorted(set(artifacts))
+
+
 def status(result: dict) -> str:
     """Check recorded arithmetic; callers must also validate current artifacts."""
     if type(result.get("format_version")) is not int or result["format_version"] != FORMAT_VERSION:
@@ -173,6 +230,8 @@ def status(result: dict) -> str:
         raise ValueError("stored mutation arithmetic differs from the recomputed result")
     if analysis["status"] == "FAIL":
         return "FAIL"
+    if result.get("mode") == "sharded" and result.get("execution_binding") != "controller-proof":
+        return "INCOMPLETE"
     return (
         "PASS" if analysis["status"] == "PASS" and result["native_exit_code"] == 0 else "INCOMPLETE"
     )
@@ -181,6 +240,13 @@ def status(result: dict) -> str:
 def validate_current(result: dict, root: Path) -> list[Path]:
     """Reject a stored result inconsistent with its current source or raw files."""
     paths = result["paths"]
+    if result.get("mode") == "sharded":
+        if not isinstance(paths, dict) or set(paths) != {"plan", "manifests"}:
+            raise ValueError("sharded campaign artifact paths are incomplete")
+        fresh, artifacts = load_sharded(root, paths["plan"], paths["manifests"])
+        if fresh != result:
+            raise ValueError("stored campaign differs from current policy, source or evidence")
+        return artifacts
     if not isinstance(paths, dict) or set(paths) != {"stats", "results", "run"}:
         raise ValueError("campaign artifact paths are incomplete")
     fresh, artifacts = load_campaign(
