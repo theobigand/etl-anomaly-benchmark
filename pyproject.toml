@@ -24,7 +24,7 @@ dev = [
     "ruff>=0.4",
     "torch>=2.1,<3",
 ]
-deep = ["mutmut>=3.8,<4"]
+deep = ["mutmut==3.8.0"]
 
 [project.scripts]
 etl-benchmark = "etl_benchmark.__main__:main"
@@ -61,20 +61,13 @@ select = ["E", "F", "I", "UP", "B", "SIM"]
 patch = ["subprocess"]
 
 [tool.mutmut]
-source_paths = ["src/etl_benchmark", "experiments"]
+source_paths = ["src/etl_benchmark", "experiments", "research", "verification"]
 only_mutate = [
-    "src/etl_benchmark/atomic.py",
-    "src/etl_benchmark/datasets.py",
-    "src/etl_benchmark/extract.py",
-    "src/etl_benchmark/load.py",
-    "src/etl_benchmark/metrics.py",
-    "src/etl_benchmark/pipeline.py",
-    "src/etl_benchmark/registry.py",
-    "src/etl_benchmark/split.py",
-    "src/etl_benchmark/synthetic.py",
-    "src/etl_benchmark/transform.py",
+    "src/etl_benchmark/*.py",
     "src/etl_benchmark/quality/*.py",
     "experiments/*.py",
+    "research/*.py",
+    "verification/*.py",
 ]
 pytest_add_cli_args_test_selection = [
     "tests",

@@ -1,17 +1,16 @@
 {
-  "version": 1,
+  "version": 2,
   "roots": [
     "src/etl_benchmark",
-    "experiments"
+    "experiments",
+    "research",
+    "verification"
   ],
-  "exclusions": {
-    "src/etl_benchmark/__init__.py": "package marker holding only the version string",
-    "src/etl_benchmark/__main__.py": "command-line entry point that dispatches to pipeline.run; exercised by the end-to-end tests",
-    "src/etl_benchmark/config.py": "module of constants (seeds, thresholds, paths); a changed constant is caught by the protocol and lineage tests, and mutating assignments produces no meaningful behavioural mutants",
-    "src/etl_benchmark/logging_setup.py": "logging handler configuration, no experimental result depends on it"
-  },
+  "exclusions": {},
   "no_mutants": {
-    "src/etl_benchmark/quality/__init__.py": "re-exports the detector classes; the code has no operation mutmut can change"
+    "src/etl_benchmark/__init__.py": "package marker/re-exports contain no first-party function bodies",
+    "src/etl_benchmark/config.py": "constants-only module; mutmut creates function-body mutants",
+    "src/etl_benchmark/quality/__init__.py": "package marker/re-exports contain no first-party function bodies"
   },
   "scientific": [
     "src/etl_benchmark/split.py",

@@ -18,7 +18,7 @@ def _tree(tmp_path, files=("src/pkg/a.py", "src/pkg/b.py", "scripts/run.py"), ex
     (tmp_path / "src/pkg/__pycache__").mkdir(exist_ok=True)
     (tmp_path / "src/pkg/__pycache__/junk.py").write_text("")
     config = {
-        "version": 1,
+        "version": 2,
         "roots": ["src/pkg", "scripts"],
         "exclusions": exclusions or {},
     }
@@ -95,6 +95,23 @@ def test_the_load_rejects_an_unknown_version(tmp_path):
         mutation_scope.load(path)
 
 
+def test_the_load_rejects_the_superseded_two_root_scope_version(tmp_path):
+    path = tmp_path / "s.json"
+    path.write_text(json.dumps({"version": 1, "roots": [], "exclusions": {}}))
+    with pytest.raises(ValueError, match="version"):
+        mutation_scope.load(path)
+
+
+def test_inventory_excludes_test_modules_below_a_production_root(tmp_path):
+    config = mutation_scope.load(
+        _tree(
+            tmp_path,
+            files=("src/pkg/a.py", "src/pkg/tests/test_a.py", "scripts/run.py"),
+        )
+    )
+    assert mutation_scope.inventory(tmp_path, config) == ["scripts/run.py", "src/pkg/a.py"]
+
+
 def test_mutants_are_mapped_back_to_their_source_files(tmp_path):
     _tree(tmp_path, files=("src/pkg/a.py", "src/pkg/q/__init__.py", "scripts/run.py"))
     text = (
@@ -115,13 +132,12 @@ def test_the_repository_mutation_scope_equals_its_eligible_inventory():
 
 def test_every_recorded_exclusion_of_this_repository_has_a_reason():
     config = mutation_scope.load()
-    assert set(config["exclusions"]) == {
+    assert config["exclusions"] == {}
+    assert set(config["no_mutants"]) == {
         "src/etl_benchmark/__init__.py",
-        "src/etl_benchmark/__main__.py",
         "src/etl_benchmark/config.py",
-        "src/etl_benchmark/logging_setup.py",
+        "src/etl_benchmark/quality/__init__.py",
     }
-    assert set(config["no_mutants"]) == {"src/etl_benchmark/quality/__init__.py"}
     assert all(reason.strip() for reason in config["exclusions"].values())
     assert all(reason.strip() for reason in config["no_mutants"].values())
 

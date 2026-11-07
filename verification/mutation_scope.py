@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "verification" / "mutation_scope.json"
-VERSION = 1
+VERSION = 2
 
 
 def load(path: Path = CONFIG) -> dict:
@@ -33,7 +33,7 @@ def _python_files(root: Path, base: str) -> list[str]:
     return sorted(
         str(path.relative_to(root))
         for path in (root / base).rglob("*.py")
-        if "__pycache__" not in path.parts
+        if "__pycache__" not in path.parts and "tests" not in path.relative_to(root / base).parts
     )
 
 

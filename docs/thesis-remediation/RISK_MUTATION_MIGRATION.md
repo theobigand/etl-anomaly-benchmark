@@ -37,11 +37,12 @@ evidence by itself. Computing a current source or policy hash cannot make old
 execution admissible. Promotion still needs current execution/test/configuration,
 tool/dependency provenance and a catalog generated from the governed source.
 
-The existing global classifier, scope checker, evidence envelope, release policy,
-bundle allowlist and workflows must migrate together. Until that integration and
-its acceptance checks pass, the legacy CLI remains historical behavior and must
-not be called a policy-v2 certification path. Current certification is not implied
-by a new JSON policy or by passing arithmetic tests.
+The scope checker now inventories all four governed roots and compares the native
+patterns with the policy inventory. The current DEEP envelope and public mutation
+gate require a bound native campaign rather than a standalone aggregate count.
+Release policy, bundle allowlist and workflows still need the same migration.
+Current certification is not implied by a new JSON policy, a passing arithmetic
+test or an internally consistent stored campaign.
 
 ## Historical preservation and cache policy
 
@@ -100,11 +101,12 @@ manifest changes are limited to TeX/PDF artifact hashes and its source revision.
 No scientific result table or sealed run record changed. Broader gates, final
 mutation compliance and independent review remain pending the full migration.
 
-`verification/mutation_risk_policy.json` now inventories 91 canonical
-source modules across the four governed roots: three L2, six L3 and 82 L4. The
+`verification/mutation_risk_policy.json` now inventories 92 canonical
+source modules across the four governed roots: three L2, six L3 and 83 L4. The
 initial 91-entry draft included two generated sandbox copies; these were removed
-after relocation, the native-catalog adapter brought the count to 90, and the
-managed execution controller then brought it to 91. No
+after relocation, the native-catalog adapter brought the count to 90, the
+managed execution controller then brought it to 91, and the current DEEP
+campaign reader is the 92nd governed module. No
 whole module was found with only L1 consequences; L1 arithmetic is supported and
 tested. Constants/package markers have explicit technical declarations. These
 classifications await independent review and execution reconciliation; their
