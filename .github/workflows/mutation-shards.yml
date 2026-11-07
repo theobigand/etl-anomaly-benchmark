@@ -6,8 +6,8 @@ name: mutation-shards
 # certifies a release: the verdict is a report.
 on:
   # Pre-merge validation: only for a pull request from this repository that carries the
-  # label below. Removing the label stops further runs. The trigger is pull_request,
-  # never pull_request_target, so the branch code runs with a read-only token.
+  # label below. Removing the label stops further runs. The plain pull request event is used,
+  # never the privileged variant, so the branch code runs with a read-only token.
   pull_request:
     types: [labeled, synchronize, reopened]
   workflow_dispatch:
