@@ -22,5 +22,6 @@
   "typing_pins": {
     "mypy": "2.4.0",
     "pandas-stubs": "3.0.5.260914"
-  }
+  },
+  "deep_platform": "Linux"
 }

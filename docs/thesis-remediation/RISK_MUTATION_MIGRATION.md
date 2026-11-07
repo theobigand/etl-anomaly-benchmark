@@ -652,3 +652,49 @@ environments in one module: `research/lstm_detector.py` is killed 128 more times
 the macOS run than on the hosted Linux runs (all 128 mutants are in the PyTorch
 detector). This is unexplained and must be resolved before hosted scores are
 compared with local ones.
+
+## Cross-platform discrepancy for `research/lstm_detector.py` (2026-11-08)
+
+**Observation.** Shard 31 (`research/lstm_detector.py`, `research/pool_check.py`) gave
+495 killed locally (macOS arm64) and 367 killed on the hosted Linux runner. By stable
+mutant identity (557 shared identities, same catalog), the two runs agree on 429
+mutants and differ on exactly 128, all `killed` locally and `survived` on Linux, all
+in the PyTorch detector (`fit` 55, `settings` 26, `__init__` 24, `_reconstruction_error`
+9, `score`, `validation_loss_now`, `_windows`, `_Network.__init__`). No mutant is
+killed only on Linux, none is without tests and none has a different error or
+timeout outcome.
+
+**Environments.** Same revision tree, mutmut 3.8.0, pytest 9.1.1, Python 3.11,
+numpy 2.4.6, pandas 3.1.1, scikit-learn 1.9.1 and torch 2.15.0 (CPU build on Linux).
+The shared catalog and the same mapped tests (14 for `LSTMAutoencoder.fit`, from
+`test_lstm_detector`, `test_deep_typed`, `test_cost_study`, `test_lstm_pilot`) apply
+on both. Version differences therefore do not explain it.
+
+**Reproduction.** For a random sample of 16 of the 128 mutants (and three inspected
+in detail, for example `spread > 0` changed to `spread >= 0` in `fit`), the mapped
+tests were run directly with `MUTANT_UNDER_TEST` set, in the mutmut order, in a
+forked child after a collection warm-up, and with the controller's thread and hash
+settings: all 14 tests passed for every sampled mutant, as they do unmutated. A
+direct run therefore agrees with the hosted Linux verdict (survived). The local
+native run reports those mutants as killed because a test fails in the forked worker
+of the local macOS runner (`worker exit code 1`), a failure that does not occur
+when the same tests run directly. The exact worker failure was not captured; the
+evidence is the disagreement between the runner and direct execution, not a
+diagnosed traceback.
+
+**Conclusion.** The 128 local kills are not confirmed by test execution and are
+treated as runner artifacts of the forked macOS worker with PyTorch (the same kind of
+platform issue as the 46 macOS segmentation faults, which did not occur on Linux).
+They are not evidence that the tests detect those mutations; the hosted Linux
+verdict (survived) is the supported one, which means `research/lstm_detector.py`
+still needs behavioral tests (the `scale_` zero-variance guard is an example).
+
+**Policy consequence.** Release policy version 2 now carries `deep_platform: "Linux"`:
+a risk-tiered campaign (monolithic or sharded) is accepted by the release gate only
+if its recorded environment platform starts with `Linux`; macOS campaigns remain
+usable as diagnostics only. Evidence records already bind the platform, Python and
+the checked package versions, and the shard aggregator rejects shards from
+different contexts, so Linux and macOS results cannot be combined. The earlier
+local figures that include PyTorch-dependent modules (for example the 495/62 shard
+record) are retained as diagnostics and are superseded by the hosted values for
+those modules. No dependency lock was introduced: torch versions were identical.
