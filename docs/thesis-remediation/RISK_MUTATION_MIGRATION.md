@@ -494,3 +494,33 @@ record and diagnostic evidence only, not a campaign result.
   the runner on macOS arm64) is unresolved. They remain incomplete outcomes; a Linux
   shard run will show whether they are platform-specific. No segmentation fault is
   counted as a kill.
+
+## Release-gate integration of sharded campaigns (2026-11-08)
+
+A complete sharded campaign and a complete monolithic campaign now share one
+evidence contract: a `deep` envelope whose result has `format_version: 2`, the
+classified policy, the full mutant catalog, every outcome, the reviewed-equivalence
+file when present, the native exit status, the runtime and the artifact paths.
+`verification.evidence_schema deep-shards` builds it from a shard plan and the
+shard manifests. The same arithmetic (`mutation_campaign.status`) decides the
+verdict, and the same validation re-derives the result from the current plan,
+manifests, policy, source, tests, configuration and tool versions and rejects any
+difference, so stale, foreign, duplicated, tampered or forged evidence cannot be
+accepted. Policy version 2 still rejects historical global evidence.
+
+A sharded campaign is deliberately **not able to pass yet**. Shards are run with
+the plain native command, without the controller's execution-binding proof (source,
+function, global and test hashes before and after an attempt, and process-group
+checks) that the monolithic path requires. The result states
+`execution_binding: "unbound"` and its status is capped at INCOMPLETE; a failing
+campaign is still reported as FAIL. Giving sharded runs the same proof, or an
+equivalent verifiable record, is the remaining step before a sharded campaign can
+contribute to a certification. The legacy file-scope check was also skipped for
+format-2 evidence in the release assessment because those results reconcile their
+scope through the policy inventory; previously a passing monolithic campaign
+would have been rejected by it.
+
+The deep-profile typing and coverage gates also cover the new modules: the pinned
+typing check (mypy 2.4.0, pandas-stubs 3.0.5.260914) found five errors in the
+first version of the shard planner, which were fixed, and the REAL profile passes
+locally on the three research datasets.
