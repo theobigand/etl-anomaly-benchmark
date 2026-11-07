@@ -5,6 +5,11 @@ name: mutation-shards
 # that the plan is complete and applies the per-module risk thresholds. Nothing here
 # certifies a release: the verdict is a report.
 on:
+  # Pre-merge validation: only for a pull request from this repository that carries the
+  # label below. Removing the label stops further runs. The trigger is pull_request,
+  # never pull_request_target, so the branch code runs with a read-only token.
+  pull_request:
+    types: [labeled, synchronize, reopened]
   workflow_dispatch:
     inputs:
       shards:
@@ -19,14 +24,26 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: mutation-shards-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  SHARDS: ${{ inputs.shards || '6' }}
+  FRESH: ${{ inputs.fresh_mutants || 'false' }}
+  TESTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+
 jobs:
   plan:
     name: shard-plan
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.labels.*.name, 'run:mutation-shards'))
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TESTED_SHA }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -35,9 +52,9 @@ jobs:
           python -m verification.mutation_shards plan
           --policy verification/mutation_risk_policy.json
           --weights verification/mutation_shard_weights.json
-          --count "${{ inputs.shards }}" --output shard-plan.json
+          --count "${{ env.SHARDS }}" --output shard-plan.json
       - id: matrix
-        run: echo "matrix=$(python -c "import json;print(json.dumps(list(range(int('${{ inputs.shards }}')))))")" >> "$GITHUB_OUTPUT"
+        run: echo "matrix=$(python -c "import json;print(json.dumps(list(range(int('${{ env.SHARDS }}')))))")" >> "$GITHUB_OUTPUT"
       - uses: actions/upload-artifact@v4
         with:
           name: shard-plan
@@ -47,6 +64,7 @@ jobs:
   shard:
     name: shard-${{ matrix.index }}
     needs: plan
+    if: needs.plan.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 300
     strategy:
@@ -57,9 +75,12 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ env.TESTED_SHA }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Confirm the tested commit
+        run: test "$(git rev-parse HEAD)" = "$TESTED_SHA"
       - name: Install
         run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev,deep]" "mutmut==3.8.0" "pytest==9.1.1"
       - uses: actions/download-artifact@v4
@@ -71,7 +92,7 @@ jobs:
       # the native engine and the manifest builder revalidate them against the source,
       # the tests and the configuration.
       - name: Restore the shard cache
-        if: inputs.fresh_mutants != 'true'
+        if: env.FRESH != 'true'
         uses: actions/cache/restore@v4
         with:
           path: mutants
@@ -119,15 +140,18 @@ jobs:
   aggregate:
     name: shard-aggregate
     needs: [plan, shard]
-    if: always()
+    if: always() && needs.plan.result == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ env.TESTED_SHA }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Confirm the tested commit
+        run: test "$(git rev-parse HEAD)" = "$TESTED_SHA"
       - run: pip install "mutmut==3.8.0" "pytest==9.1.1"
       - uses: actions/download-artifact@v4
         with:

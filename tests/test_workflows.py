@@ -369,7 +369,7 @@ def test_deep_job_installs_the_exact_inspected_mutmut_outside_the_fingerprinted_
 def test_the_sharded_campaign_keeps_evidence_and_caches_even_when_scores_fail():
     text = _text("mutation-shards.yml")
     shard = text[text.index("  shard:") : text.index("  aggregate:")]
-    assert "workflow_dispatch" in text and "pull_request" not in text and "push:" not in text
+    assert "workflow_dispatch" in text and "push:" not in text
     assert '"mutmut==3.8.0" "pytest==9.1.1"' in shard
     assert "fail-fast: false" in shard
     restore = shard[shard.index("actions/cache/restore@v4") : shard.index("Run the native")]
@@ -391,3 +391,17 @@ def test_the_aggregation_waits_for_every_shard_and_fails_on_an_invalid_campaign(
     assert "mutation-campaign.json" in job.split("Verify the complete campaign")[1]
     verify = job[job.index("Verify the complete campaign") :].split("      - uses:", 1)[0]
     assert "continue-on-error" not in verify
+
+
+def test_the_sharded_campaign_runs_before_merge_only_for_labelled_same_repository_pull_requests():
+    text = _text("mutation-shards.yml")
+    assert "pull_request:" in text and "pull_request_target" not in text
+    assert "workflow_dispatch" in text and "contents: read" in text
+    assert "permissions:\n  contents: read\n" in text
+    gate = text[text.index("  plan:") : text.index("    runs-on")]
+    assert "github.event.pull_request.head.repo.full_name == github.repository" in gate
+    assert "run:mutation-shards" in gate
+    assert "cancel-in-progress: true" in text
+    assert text.count("ref: ${{ env.TESTED_SHA }}") >= 3
+    assert text.count('test "$(git rev-parse HEAD)" = "$TESTED_SHA"') == 2
+    assert "if: always() && needs.plan.result == 'success'" in text
