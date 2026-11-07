@@ -302,6 +302,15 @@ def test_the_deep_job_reuses_the_mutation_cache_unless_a_fresh_run_is_asked():
     assert "if: inputs.fresh_mutants != 'true'" in job
     assert "restore-keys: mutants-${{ runner.os }}-" in job
     assert job.index("actions/cache@v4") < job.index("make verify-deep")
+    key = next(line for line in job.splitlines() if line.strip().startswith("key: mutants-"))
+    for path in (
+        "research/**/*.py",
+        "verification/**/*.py",
+        "verification/mutation_risk_policy.json",
+        "verification/mutation_scope.json",
+        "verification/release_policy.json",
+    ):
+        assert path in key
     makefile = (WORKFLOWS.parents[1] / "Makefile").read_text()
     deep = makefile[makefile.index("verify-deep:") : makefile.index("verify-faults:")]
     assert "mutation_run > mutants/controller-result.json" in deep
