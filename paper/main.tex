@@ -353,6 +353,10 @@ range), so each model marks about as many rows as the data actually
 contains rather than a fixed share. Contamination sets only the flag
 threshold and leaves ROC-AUC and PR-AUC unaffected. Base estimator defaults are retained unless the recorded protocol or an
 adaptation below overrides them; no hyperparameter search was performed.
+This gives the learned models numeric information only. Great Expectations
+also checks nulls in every column, whereas neither path evaluates text,
+categorical-domain or cross-field rules; this unequal information access is a
+limitation of the comparison rather than a family ranking.
 
 Three of the eight are the usual references. \emph{Isolation
 Forest}~\cite{liu2008isolation} scores a row by how few random

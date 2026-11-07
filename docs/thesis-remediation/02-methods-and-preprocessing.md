@@ -47,12 +47,12 @@ Evidence for T055: [neural convergence audit](NEURAL_CONVERGENCE_AUDIT_2026-11-0
 - [ ] T062 Verify all preprocessing is fitted on training data only.
 - [ ] T063 Verify test statistics never influence preprocessing or fitting.
 - [x] T064 Test for label leakage in preprocessing decisions.
-- [ ] T065 Record columns removed, retained, or transformed.
-- [ ] T066 Explain the impact of excluding text and categorical features.
-- [ ] T067 Explain how median imputation affects missing-value detection.
-- [ ] T068 Document normalization and scaling.
-- [ ] T069 Verify consistent anomaly-score orientation.
-- [ ] T070 Identify comparisons where families receive unequal input information.
+- [x] T065 Record columns removed, retained, or transformed.
+- [x] T066 Explain the impact of excluding text and categorical features.
+- [x] T067 Explain how median imputation affects missing-value detection.
+- [x] T068 Document normalization and scaling.
+- [x] T069 Verify consistent anomaly-score orientation.
+- [x] T070 Identify comparisons where families receive unequal input information.
 
 Evidence for T064: [constructed regressions and injected defects](POOL_PREPROCESSING_VALIDATION_2026-11-03.md),
 implementation `edc3592`. The tests detect historical label-dependent filtering and
@@ -60,3 +60,5 @@ protect the explicit new path. T062/T063 remain open for historical partition
 recovery and replay; testing the defect does not resolve every existing pipeline.
 
 Evidence for T056–T061: [standard and typed ETL paths](ETL_PATHS_2026-11-07.md), aligned with `pipeline.py`, `typed_benchmark.py` and the baseline tests.
+
+Evidence for T065–T070: [preprocessing and information audit](PREPROCESSING_INFORMATION_AUDIT_2026-11-07.md), with the historical/prospective boundary retained.
