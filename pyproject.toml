@@ -83,6 +83,9 @@ pytest_add_cli_args_test_selection = [
     "--deselect=tests/test_verifier_tools.py::test_archive_lineage_separates_legacy_records_from_broken_ones",
 ]
 do_not_mutate = ["research/tests/*"]
+# Training-heavy mutants (epochs, batch sizes) legitimately run long on hosted runners; the
+# default factor of 15 reported 43 genuine detections of the LSTM detector as timeouts.
+timeout_multiplier = 60.0
 also_copy = [
     "verification",
     "research",

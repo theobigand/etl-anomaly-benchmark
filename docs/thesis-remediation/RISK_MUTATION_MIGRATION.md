@@ -724,3 +724,25 @@ sorted index selection that keeps the order, and `replace=None` in the sampler w
 behavior was not independently established); they are candidates for the equivalence
 review, not accepted equivalents, and the sampler case needs a semantic argument. This direct evaluation is a diagnostic
 and does not replace a hosted native campaign.
+
+### Focused native Linux run of the LSTM module (hosted diagnostic, 2026-11-08, commit 61042c1)
+
+Shard 31 on a hosted runner (diagnostic label, non-certifying, controller-bound, native
+exit 0) with the new LSTM tests: `research/lstm_detector.py` 377 mutants: **332 killed,
+43 timeouts, 2 survived** (88.1% killed; timeouts do not count as kills);
+`research/pool_check.py` 180: 118 killed, 62 survived (65.6%). The cache reset 192
+verdicts and kept 365 (the changed and added tests). The run took 58 minutes.
+
+Comparison with the direct mutant-by-mutant evaluation (367 of 377 detected, 10
+survivors) by stable identity: 332 detected directly and killed natively; 35 detected
+directly but timed out natively; 8 survived directly but timed out natively; 2
+survived in both. No mutant killed natively survived directly. All timeouts are in
+`fit` (27), `_reconstruction_error` (13), `_Network.__init__` (2) and `_windows` (1),
+that is training-heavy code. mutmut's CPU limit is `ceil((estimated test time + 1) *
+multiplier * 2)` seconds with the default multiplier 15, estimated on a small
+test-time measurement; the 35 mutants that a direct run detects within seconds hit
+that limit on the hosted runner, so these are budget effects, not undetected
+mutations. The timeout factor is now 60 (`pyproject.toml`; it reclassifies only
+timeout verdicts in mutmut's cache) and the diagnostic shard must be rerun to confirm
+the effect. The two native survivors and the eight timeout-only mutants are
+inspected next; none is accepted as equivalent.
