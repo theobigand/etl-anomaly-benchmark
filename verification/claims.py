@@ -50,7 +50,11 @@ def is_code(path: str) -> bool:
     """Whether a changed file can alter what a verification run measured."""
     if path.startswith(CODE_PREFIXES) or path in CODE_FILES:
         return True
-    configuration = ("verification/release_policy.json", "verification/mutation_scope.json")
+    configuration = (
+        "verification/release_policy.json",
+        "verification/mutation_scope.json",
+        "verification/mutation_risk_policy.json",
+    )
     return path.startswith("verification/") and path.count("/") == 1 and (
         path.endswith(".py") or path in configuration
     )  # fmt: skip

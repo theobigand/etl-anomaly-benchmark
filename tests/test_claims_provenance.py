@@ -317,6 +317,7 @@ def test_the_paper_of_this_repository_names_its_run():
         ("pyproject.toml", True),
         ("verification/release.py", True),
         ("verification/mutation_scope.json", True),
+        ("verification/mutation_risk_policy.json", True),
         ("verification/claims.json", False),
         ("verification/report.md", False),
         ("verification/evidence/runs/x/fast.json", False),
