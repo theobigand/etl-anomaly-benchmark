@@ -127,7 +127,13 @@ def test_mutants_are_mapped_back_to_their_source_files(tmp_path):
 def test_the_repository_mutation_scope_equals_its_eligible_inventory():
     config = mutation_scope.load()
     patterns = mutation_scope.configured_patterns(ROOT / "pyproject.toml")
-    assert mutation_scope.check(patterns, ROOT, config) == []
+    exclude = mutation_scope.configured_exclusions(ROOT / "pyproject.toml")
+    assert mutation_scope.check(patterns, ROOT, config, exclude) == []
+    # without the configured exclusion, fnmatch pulls the research test files into the scope
+    assert any(
+        "research/tests/" in p and "outside the eligible roots" in p
+        for p in mutation_scope.check(patterns, ROOT, config)
+    )
 
 
 def test_every_recorded_exclusion_of_this_repository_has_a_reason():
@@ -183,3 +189,32 @@ def test_mutation_selection_excludes_tests_that_read_files_outside_the_sandbox()
         if "docs/thesis-remediation" in path.read_text():
             assert f"tests/{path.name}" in ignored, path.name
     assert "tests/verifier" not in ignored
+
+
+def test_patterns_follow_mutmut_fnmatch_where_a_star_crosses_directories(tmp_path):
+    _tree(tmp_path)
+    nested = tmp_path / "src/pkg/tests"
+    nested.mkdir()
+    (nested / "test_a.py").write_text("def test():\n    pass\n")
+    assert mutation_scope.resolve(["src/pkg/*.py"], tmp_path) == [
+        "src/pkg/a.py",
+        "src/pkg/b.py",
+        "src/pkg/tests/test_a.py",
+    ]
+    assert mutation_scope.resolve(["src/pkg/*.py"], tmp_path, exclude=["src/pkg/tests/*"]) == [
+        "src/pkg/a.py",
+        "src/pkg/b.py",
+    ]
+
+
+def test_a_pattern_that_would_mutate_test_code_is_reported_by_the_check(tmp_path):
+    config = mutation_scope.load(_tree(tmp_path))
+    nested = tmp_path / "src/pkg/tests"
+    nested.mkdir()
+    (nested / "test_a.py").write_text("def test():\n    pass\n")
+    patterns = ["src/pkg/*.py", "scripts/*.py"]
+    assert any(
+        "src/pkg/tests/test_a.py" in p and "outside the eligible roots" in p
+        for p in mutation_scope.check(patterns, tmp_path, config)
+    )
+    assert mutation_scope.check(patterns, tmp_path, config, exclude=["src/pkg/tests/*"]) == []

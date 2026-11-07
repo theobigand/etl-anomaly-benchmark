@@ -101,6 +101,7 @@ pytest_add_cli_args_test_selection = [
     "--ignore=tests/test_neural_convergence_audit.py",
     "--ignore=tests/test_preprocessing_information_audit.py",
 ]
+do_not_mutate = ["research/tests/*"]
 also_copy = ["verification", "research", "environment.yml"]
 # Only the non-Python files that tests read invalidate the cache; documents, evidence copies,
 # the paper and workflows do not (verification/mutation_cache.py guards changed tests).

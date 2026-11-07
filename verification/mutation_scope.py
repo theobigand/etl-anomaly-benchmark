@@ -9,7 +9,9 @@ evidence, with the files that really received mutants.
 
 from __future__ import annotations
 
+import fnmatch
 import json
+import os
 import tomllib
 from pathlib import Path
 
@@ -29,6 +31,10 @@ def configured_patterns(pyproject: Path = ROOT / "pyproject.toml") -> list[str]:
     return list(tomllib.loads(pyproject.read_text())["tool"]["mutmut"]["only_mutate"])
 
 
+def configured_exclusions(pyproject: Path = ROOT / "pyproject.toml") -> list[str]:
+    return list(tomllib.loads(pyproject.read_text())["tool"]["mutmut"].get("do_not_mutate", []))
+
+
 def _python_files(root: Path, base: str) -> list[str]:
     return sorted(
         str(path.relative_to(root))
@@ -45,15 +51,40 @@ def inventory(root: Path, config: dict) -> list[str]:
     return sorted(found - set(config["exclusions"]))
 
 
-def resolve(patterns: list[str], root: Path) -> list[str]:
-    """Files matched by the mutmut patterns."""
-    files: set[str] = set()
+_SKIPPED_DIRECTORIES = {"__pycache__", "mutants", ".git", ".venv", "node_modules"}
+
+
+def _walk(root: Path, patterns: list[str]) -> list[str]:
+    """Python files below the literal prefix of every pattern, as POSIX paths."""
+    found: set[str] = set()
     for pattern in patterns:
-        files.update(str(path.relative_to(root)) for path in root.glob(pattern) if path.is_file())
-    return sorted(files)
+        literal = pattern.split("*", 1)[0].split("?", 1)[0].split("[", 1)[0]
+        base = root / literal.rpartition("/")[0]
+        for directory, names, files in os.walk(base):
+            names[:] = [name for name in names if name not in _SKIPPED_DIRECTORIES]
+            found.update(
+                (Path(directory) / name).relative_to(root).as_posix()
+                for name in files
+                if name.endswith(".py")
+            )
+    return sorted(found)
 
 
-def check(patterns: list[str], root: Path, config: dict) -> list[str]:
+def resolve(
+    patterns: list[str], root: Path, exclude: list[str] | tuple[str, ...] = ()
+) -> list[str]:
+    """Files selected like mutmut: ``fnmatch`` (a star crosses directories) minus excludes."""
+    return [
+        name
+        for name in _walk(root, list(patterns))
+        if any(fnmatch.fnmatchcase(name, pattern) for pattern in patterns)
+        and not any(fnmatch.fnmatchcase(name, pattern) for pattern in exclude)
+    ]
+
+
+def check(
+    patterns: list[str], root: Path, config: dict, exclude: list[str] | tuple[str, ...] = ()
+) -> list[str]:
     """Reasons the configured scope is not the eligible inventory (empty when equal)."""
     problems: list[str] = []
     for name, reason in sorted(config["exclusions"].items()):
@@ -62,7 +93,7 @@ def check(patterns: list[str], root: Path, config: dict) -> list[str]:
         if not (root / name).is_file():
             problems.append(f"exclusion {name} does not exist")
     wanted = set(inventory(root, config))
-    scope = set(resolve(patterns, root))
+    scope = set(resolve(patterns, root, exclude))
     for name in sorted(wanted - scope):
         problems.append(f"{name} is eligible but not mutated")
     for name in sorted(scope & set(config["exclusions"])):
@@ -70,7 +101,7 @@ def check(patterns: list[str], root: Path, config: dict) -> list[str]:
     for name in sorted(scope - wanted - set(config["exclusions"])):
         problems.append(f"{name} is mutated but is outside the eligible roots")
     for pattern in patterns:
-        if not any(root.glob(pattern)):
+        if not resolve([pattern], root):
             problems.append(f"pattern {pattern} matches no file")
     return problems
 

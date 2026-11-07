@@ -71,7 +71,9 @@ def _scope(root: Path) -> tuple[list[str], list[str]]:
     policy = json.loads((root / "verification/mutation_risk_policy.json").read_text())
     validate_policy(policy, root)
     configuration = tomllib.loads((root / "pyproject.toml").read_text())["tool"]["mutmut"]
-    configured = mutation_scope.resolve(configuration["only_mutate"], root)
+    configured = mutation_scope.resolve(
+        configuration["only_mutate"], root, configuration.get("do_not_mutate", [])
+    )
     sources = sorted(policy["units"])
     required = {name for name, unit in policy["units"].items() if "no_mutants" not in unit}
     if required - set(configured) or set(configured) - set(sources):

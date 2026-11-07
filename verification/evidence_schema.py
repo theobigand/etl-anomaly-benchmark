@@ -217,10 +217,13 @@ def build_legacy_deep(
     environment=None, execution=None,
 ):  # fmt: skip
     """Wrap the mutation counts; ``results`` lists the mutants (``mutmut results --all``)."""
+    exclude = (
+        [] if scope is not None else mutation_scope.configured_exclusions(ROOT / "pyproject.toml")
+    )
     scope = mutation_scope.configured_patterns(ROOT / "pyproject.toml") if scope is None else scope
     result = {
         "scope": scope,
-        "scope_files": mutation_scope.resolve(scope, root),
+        "scope_files": mutation_scope.resolve(scope, root, exclude),
         "mutated_files": None,
         "threshold": check_mutation.THRESHOLD,
     }
