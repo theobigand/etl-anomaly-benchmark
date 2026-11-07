@@ -284,6 +284,11 @@ continuous anomaly score. All detectors share a common
 \texttt{fit}/\texttt{predict}/\texttt{score} interface modelled on
 PyOD~\cite{zhao2019pyod}, so that classical and neural models can be
 dropped in without changing the harness.
+The ordinary transform removes exact duplicate rows before detection. This
+is an operational cleaning decision, not a detector result: in the typed
+injection study, duplicates are instead retained after injection and a
+separate \texttt{transform\_dedup} reference is reported. That study has its
+own group-preserving split and does not reuse the ordinary ETL path.
 
 \subsection{Rule-based detectors}
 This stage compares three generic rule-based baselines. Their numerical

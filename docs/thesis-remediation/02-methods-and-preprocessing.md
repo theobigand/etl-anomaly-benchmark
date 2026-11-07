@@ -38,12 +38,12 @@ Evidence for T055: [neural convergence audit](NEURAL_CONVERGENCE_AUDIT_2026-11-0
 
 ## 05. ETL preprocessing and leakage controls (P0; Thesis 01)
 
-- [ ] T056 Document extraction, validation, transformation, imputation, encoding, fitting, scoring, and alert order.
-- [ ] T057 Add a diagram of the standard ETL path.
-- [ ] T058 Show the typed-fault evaluation as a separate path.
-- [ ] T059 Explain that standard transformation may remove exact duplicates before detection.
-- [ ] T060 Explain that injected duplicates remain available to the typed detector benchmark.
-- [ ] T061 Report transform_dedup as a distinct baseline when appropriate.
+- [x] T056 Document extraction, validation, transformation, imputation, encoding, fitting, scoring, and alert order.
+- [x] T057 Add a diagram of the standard ETL path.
+- [x] T058 Show the typed-fault evaluation as a separate path.
+- [x] T059 Explain that standard transformation may remove exact duplicates before detection.
+- [x] T060 Explain that injected duplicates remain available to the typed detector benchmark.
+- [x] T061 Report transform_dedup as a distinct baseline when appropriate.
 - [ ] T062 Verify all preprocessing is fitted on training data only.
 - [ ] T063 Verify test statistics never influence preprocessing or fitting.
 - [x] T064 Test for label leakage in preprocessing decisions.
@@ -58,3 +58,5 @@ Evidence for T064: [constructed regressions and injected defects](POOL_PREPROCES
 implementation `edc3592`. The tests detect historical label-dependent filtering and
 protect the explicit new path. T062/T063 remain open for historical partition
 recovery and replay; testing the defect does not resolve every existing pipeline.
+
+Evidence for T056–T061: [standard and typed ETL paths](ETL_PATHS_2026-11-07.md), aligned with `pipeline.py`, `typed_benchmark.py` and the baseline tests.

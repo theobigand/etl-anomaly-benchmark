@@ -343,7 +343,8 @@
       stage, so latency is the real in-pipeline fit + predict + score time. A continuous
       <code>score()</code> on top of the boolean <code>predict()</code> makes ROC-AUC and
       AP computable; <code>detect(fit_df=...)</code> fits on the train slice and scores
-      the test set.</p>
+      the test set. Exact deduplication belongs to the ordinary transform; typed injected
+      duplicates instead remain in their separate evaluation with <code>transform_dedup</code>.</p>
       <svg viewBox="0 0 300 40" style="margin-top:24px;max-width:320px">
         <defs><marker id="ar" markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7z" fill="#d36f52"/></marker></defs>
         <g font-family="Menlo,monospace" font-size="10" fill="#625d55">
