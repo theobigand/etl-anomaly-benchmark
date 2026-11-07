@@ -10,9 +10,9 @@ def test_audit_records_input_asymmetry_and_train_only_boundary():
     ).read_text()
     for phrase in (
         "prepare_frozen",
-        "vocabulaire",
-        "imputation médiane",
-        "plus grande signifie",
-        "asymétrie",
+        "vocabulary",
+        "median imputation",
+        "larger value means",
+        "asymmetry",
     ):
         assert phrase in text

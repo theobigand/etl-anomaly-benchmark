@@ -9,10 +9,10 @@ def test_etl_paths_document_standard_and_typed_routes():
     ).read_text()
     for phrase in (
         "run_pipeline",
-        "drop_duplicates exact",
+        "exact drop_duplicates",
         "transform_dedup",
-        "L'étude typée ne passe pas par `run_pipeline`",
+        "The typed study does not go through `run_pipeline`",
         "group_id",
-        "T062 et T063",
+        "T062 and T063",
     ):
         assert phrase in text

@@ -11,8 +11,8 @@ def test_neural_convergence_audit_covers_all_comparable_neural_detectors():
 
     for name in ("`autoencoder`", "`vae`", "`deep_svdd`", "`dif`", "`ae1svm`", "`lunar`"):
         assert name in text
-    assert "ne conservent pas leurs réglages effectifs" in text
-    assert "ne présente plus ce constat comme une preuve de convergence" in text
+    assert "do not keep the effective settings" in text
+    assert "no longer presents this as evidence of convergence" in text
 
 
 def test_archived_neural_runs_distinguish_empty_errors_from_convergence_data():
