@@ -380,6 +380,10 @@
       "level": "L4",
       "reason": "Exclusive native execution and source/runtime bindings govern admissibility of mutation evidence."
     },
+    "verification/mutation_shards.py": {
+      "level": "L4",
+      "reason": "Shard planning and aggregation decide whether a mutation campaign is complete, current and compliant, so an error would accept invalid certification evidence."
+    },
     "verification/mutation_campaign.py": {
       "level": "L4",
       "reason": "Campaign assembly and current-root validation determine whether mutation evidence can support certification."

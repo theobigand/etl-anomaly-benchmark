@@ -150,24 +150,17 @@ def metadata_digest(data: dict) -> str:
     ).hexdigest()
 
 
-def read_native(policy: dict, root: Path, cache: Path, stats: dict, listing: str) -> dict:
-    """Require agreement of generation index, verdict metadata, counts and listing.
-
-    Native pytest-internal-error code 3 and unknown exit codes are error outcomes,
-    never successful kills. Preserve native counts separately for reconciliation.
-    """
-    validate_policy(policy, root)
-    if (
-        not isinstance(stats, dict)
-        or set(stats) != {"total", *NATIVE_OUTCOMES}
-        or any(type(value) is not int or value < 0 for value in stats.values())
-    ):
-        raise ValueError("invalid native mutation statistics")
+def read_modules(
+    policy: dict, root: Path, cache: Path, only: set[str] | None = None
+) -> tuple[dict, list, dict, list, dict, dict]:
+    """Read the generation index and verdict metadata of the selected modules."""
     catalog: dict[str, list[str]] = {}
     artifacts: dict[str, str] = {}
     metadata: dict[str, str] = {}
     records, native, missing = [], {}, []
     for path, unit in sorted(policy["units"].items()):
+        if only is not None and path not in only:
+            continue
         catalog[path] = []
         meta_path = cache / f"{path}.meta"
         if not meta_path.exists() and not meta_path.is_symlink():
@@ -204,6 +197,23 @@ def read_native(policy: dict, root: Path, cache: Path, stats: dict, listing: str
             native[key] = native_status
             outcome = "error" if code == 3 or code not in NATIVE_STATUS else native_status
             records.append({"id": key, "path": path, "outcome": outcome})
+    return catalog, records, native, missing, artifacts, metadata
+
+
+def read_native(policy: dict, root: Path, cache: Path, stats: dict, listing: str) -> dict:
+    """Require agreement of generation index, verdict metadata, counts and listing.
+
+    Native pytest-internal-error code 3 and unknown exit codes are error outcomes,
+    never successful kills. Preserve native counts separately for reconciliation.
+    """
+    validate_policy(policy, root)
+    if (
+        not isinstance(stats, dict)
+        or set(stats) != {"total", *NATIVE_OUTCOMES}
+        or any(type(value) is not int or value < 0 for value in stats.values())
+    ):
+        raise ValueError("invalid native mutation statistics")
+    catalog, records, native, missing, artifacts, metadata = read_modules(policy, root, cache)
     if _listing(listing) != native:
         raise ValueError("full native listing differs from verdict metadata")
     counts = Counter(value.replace(" ", "_") for value in native.values())
