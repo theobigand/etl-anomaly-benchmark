@@ -303,3 +303,41 @@ retain the failed mutation result and earlier focused cache. The paper has 23
 pages and the deck 41 slides; changed pages were inspected rendered and slide
 bounds/navigation checks pass. The classification and exact per-module arithmetic
 criteria are checked in #116; its eight remaining criteria stay open.
+
+## Classification review (2026-11-07)
+
+The inventory holds 92 modules: 83 L4, 6 L3, 3 L2 and no L1. Every entry has a
+written reason, and no unit was reclassified for this review. The weighting
+towards L4 is deliberate and conservative: nearly all production code here
+either defines labels and partitions, computes a reported metric, binds a result
+to its inputs, or generates a manuscript table from archived results. Three
+groups are arguable and are recorded rather than changed:
+
+- result-to-paper generators (`research/paper_tables.py`, `paper_appendix.py`,
+  `typed_figures.py`, `pool_extension_paper.py`): classed L4 because an
+  alignment error silently misstates a published number, although they compute
+  no new result;
+- data acquisition entry points (`experiments/fetch_cardio.py`,
+  `generate_synthetic.py`): classed L4 for source and label identity;
+- `src/etl_benchmark/logging_setup.py` and the CLI dispatcher keep their lower
+  tiers because they cannot alter a reported number.
+
+A reclassification downwards is permitted only through a reviewed change to
+`verification/mutation_risk_policy.json`; it changes the policy digest, so it
+cannot be used to rescue a failing module without the change being visible in
+the compliance record. Over-classification costs more mutants at the strictest
+threshold; it never weakens the gate.
+
+The mutation configuration also exposed three environment dependencies that are
+recorded here because they decide whether a campaign can start at all:
+
+- mutmut 3.8.0 reads `Item._nodeid`, which pytest 9.2.0 no longer provides; the
+  campaign environment must use pytest 9.1.1. The pins live in the workflow
+  install command, not in `[project]`, because the scientific fingerprint hashes
+  that table.
+- the native stats run executes the test selection in the `mutants/` sandbox,
+  which contains `src`, `experiments`, `research`, `verification` and
+  `environment.yml` only; tests that read other repository files must be excluded
+  from the selection or fail the whole stats run.
+- on a clean checkout `mutants/` does not exist before the deep target writes
+  its controller record into it.

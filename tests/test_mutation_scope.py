@@ -167,3 +167,19 @@ def test_a_recorded_deep_scope_is_compared_with_the_current_tree(tmp_path):
     assert mutation_scope.check_evidence({"scope": ["x"]}, full, config) == [
         "the files that were mutated are not recorded"
     ]
+
+
+def test_mutation_selection_excludes_tests_that_read_files_outside_the_sandbox():
+    """The native stats run executes in a sandbox that holds no remediation documents."""
+    import tomllib
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1]
+    args = tomllib.loads((root / "pyproject.toml").read_text())["tool"]["mutmut"][
+        "pytest_add_cli_args_test_selection"
+    ]
+    ignored = {a.removeprefix("--ignore=") for a in args if a.startswith("--ignore=")}
+    for path in sorted((root / "tests").glob("test_*.py")):
+        if "docs/thesis-remediation" in path.read_text():
+            assert f"tests/{path.name}" in ignored, path.name
+    assert "tests/verifier" not in ignored
