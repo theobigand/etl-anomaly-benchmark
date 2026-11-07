@@ -364,3 +364,30 @@ def test_deep_job_installs_the_exact_inspected_mutmut_outside_the_fingerprinted_
     assert '-e ".[dev,deep]" "mutmut==3.8.0" "pytest==9.1.1"' in job
     project = (WORKFLOWS.parents[1] / "pyproject.toml").read_text()
     assert "mutmut==3.8.0" not in project.split("[tool.", 1)[0]
+
+
+def test_the_sharded_campaign_keeps_evidence_and_caches_even_when_scores_fail():
+    text = _text("mutation-shards.yml")
+    shard = text[text.index("  shard:") : text.index("  aggregate:")]
+    assert "workflow_dispatch" in text and "pull_request" not in text and "push:" not in text
+    assert '"mutmut==3.8.0" "pytest==9.1.1"' in shard
+    assert "fail-fast: false" in shard
+    restore = shard[shard.index("actions/cache/restore@v4") : shard.index("Run the native")]
+    assert "github.run_id" in restore and "restore-keys" in restore
+    for step in ("Build the shard evidence", "Preserve the shard evidence", "Save the shard cache"):
+        block = shard[shard.index(step) :].split("      - ", 1)[0]
+        assert "if: always()" in block, step
+    save = shard[shard.index("actions/cache/save@v4") :]
+    assert "github.run_id" in save
+    assert "set +e" in shard and "steps.native.outputs.exit" in shard
+
+
+def test_the_aggregation_waits_for_every_shard_and_fails_on_an_invalid_campaign():
+    text = _text("mutation-shards.yml")
+    job = text[text.index("  aggregate:") :]
+    assert "needs: [plan, shard]" in job and "if: always()" in job
+    assert "pattern: shard-evidence-*" in job and "merge-multiple: true" in job
+    assert "verification.mutation_shards aggregate" in job and "evidence-shard-*.json" in job
+    assert "mutation-campaign.json" in job.split("Verify the complete campaign")[1]
+    verify = job[job.index("Verify the complete campaign") :].split("      - uses:", 1)[0]
+    assert "continue-on-error" not in verify

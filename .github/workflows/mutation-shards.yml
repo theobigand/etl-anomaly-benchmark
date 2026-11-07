@@ -1,0 +1,154 @@
+name: mutation-shards
+
+# Manual sharded mutation campaign. Each shard runs the native engine on its modules
+# and uploads an evidence manifest even when its scores fail; a separate job checks
+# that the plan is complete and applies the per-module risk thresholds. Nothing here
+# certifies a release: the verdict is a report.
+on:
+  workflow_dispatch:
+    inputs:
+      shards:
+        description: "Number of shards"
+        required: false
+        default: "6"
+      fresh_mutants:
+        description: "Ignore restored shard caches and rerun every mutant"
+        required: false
+        default: "false"
+
+permissions:
+  contents: read
+
+jobs:
+  plan:
+    name: shard-plan
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Plan the shards
+        run: >
+          python -m verification.mutation_shards plan
+          --policy verification/mutation_risk_policy.json
+          --weights verification/mutation_shard_weights.json
+          --count "${{ inputs.shards }}" --output shard-plan.json
+      - id: matrix
+        run: echo "matrix=$(python -c "import json;print(json.dumps(list(range(int('${{ inputs.shards }}')))))")" >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shard-plan
+          path: shard-plan.json
+          retention-days: 90
+
+  shard:
+    name: shard-${{ matrix.index }}
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        index: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev,deep]" "mutmut==3.8.0" "pytest==9.1.1"
+      - uses: actions/download-artifact@v4
+        with:
+          name: shard-plan
+
+      # Caches are immutable: every run saves under a new key and restores the newest
+      # key with the same prefix. The cache is only a source of candidate verdicts;
+      # the native engine and the manifest builder revalidate them against the source,
+      # the tests and the configuration.
+      - name: Restore the shard cache
+        if: inputs.fresh_mutants != 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: mutants
+          key: mutants-shard-${{ matrix.index }}-${{ runner.os }}-${{ hashFiles('verification/mutation_risk_policy.json', 'pyproject.toml') }}-${{ github.run_id }}
+          restore-keys: |
+            mutants-shard-${{ matrix.index }}-${{ runner.os }}-${{ hashFiles('verification/mutation_risk_policy.json', 'pyproject.toml') }}-
+
+      - name: Run the native engine on this shard
+        id: native
+        env:
+          OMP_NUM_THREADS: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          MKL_NUM_THREADS: "1"
+          PYTHONHASHSEED: "0"
+        run: |
+          set +e
+          names=$(python -m verification.mutation_shards names --plan shard-plan.json --index ${{ matrix.index }})
+          PYTHONPATH= python -P -m mutmut run $names
+          echo "exit=$?" >> "$GITHUB_OUTPUT"
+
+      - name: Build the shard evidence
+        if: always()
+        run: >
+          python -m verification.mutation_shards build
+          --plan shard-plan.json --index ${{ matrix.index }}
+          --native-exit-code "${{ steps.native.outputs.exit }}"
+          --output evidence-shard-${{ matrix.index }}.json
+
+      - name: Preserve the shard evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shard-evidence-${{ matrix.index }}
+          path: evidence-shard-${{ matrix.index }}.json
+          if-no-files-found: warn
+          retention-days: 90
+
+      - name: Save the shard cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: mutants
+          key: mutants-shard-${{ matrix.index }}-${{ runner.os }}-${{ hashFiles('verification/mutation_risk_policy.json', 'pyproject.toml') }}-${{ github.run_id }}
+
+  aggregate:
+    name: shard-aggregate
+    needs: [plan, shard]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install "mutmut==3.8.0" "pytest==9.1.1"
+      - uses: actions/download-artifact@v4
+        with:
+          name: shard-plan
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: shard-evidence-*
+          merge-multiple: true
+      - name: Verify the complete campaign
+        run: |
+          equivalence=""
+          if [ -f verification/mutation_equivalence.json ]; then
+            equivalence="--equivalence verification/mutation_equivalence.json"
+          fi
+          python -m verification.mutation_shards aggregate \
+            --plan shard-plan.json --manifests evidence-shard-*.json \
+            $equivalence --output mutation-campaign.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mutation-campaign
+          path: mutation-campaign.json
+          if-no-files-found: warn
+          retention-days: 90

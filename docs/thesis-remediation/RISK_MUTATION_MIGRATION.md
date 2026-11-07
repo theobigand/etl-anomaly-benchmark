@@ -431,3 +431,48 @@ owner must decide: the policy has no mechanism for reviewed equivalents, so a
 module with more than 2% equivalent mutants cannot pass unless its source is
 rewritten to avoid generating them. These figures come from a development run of
 two modules and are not bound to a campaign; they do not change the recorded FAIL.
+
+## Reviewed equivalence, zero-mutant modules and sharding (2026-11-08)
+
+**Zero-mutant modules.** `src/etl_benchmark/__main__.py` and `logging_setup.py` are
+inside the configured scope and mutmut 3.8.0 does generate mutants for them (39
+and 10 on the source alone). The campaign produced none because the engine mutates
+only lines the test run covers and no test called `main()` or `setup_logging()`.
+This was a missing-test defect, not an engine limitation. After adding
+`tests/test_cli_entrypoint.py`, focused native runs give 35 of 36 killed for
+`__main__` (L3) and 10 of 10 for `logging_setup` (L2). No technical
+`NOT_APPLICABLE` classification was needed or introduced.
+
+**Reviewed equivalence (policy mechanism, version 1).** `verification/mutation_policy.py`
+accepts an optional record file, `verification/mutation_equivalence.json`, bound
+into the campaign verdict and its artifacts. A record is accepted only for a
+surviving mutant, with the mutant identity, module, function, diff, original and
+mutated behavior, risk level, reason, supporting evidence, source and module-catalog
+SHA-256, author, a different approving reviewer, ISO review date and the policy
+version. Any mismatch rejects the whole evidence; nothing is classified
+automatically and no record exists yet. Raw counts and the raw score are always
+reported; the adjusted score removes only accepted equivalents from the eligible
+denominator and never counts them as killed. Historical reports are unaffected.
+Proposed equivalents are pending an independent reviewer; the survivors listed for
+`research/pool_preprocessing.py` and `research/pool_train_only.py` are candidates,
+not accepted exclusions.
+
+**Sharded execution.** `verification/mutation_shards.py` plans a deterministic
+partition of the mutating modules (balanced by the weights in
+`verification/mutation_shard_weights.json`), builds a per-shard evidence manifest
+from a native cache, and aggregates manifests fail-closed: every shard of the plan
+exactly once, one shared context (revision, tests, configuration, tool versions),
+current source hashes, no unknown or duplicate mutant, then the per-module and
+per-level thresholds. A shard with failing scores is valid diagnostic evidence; a
+missing, stale or foreign shard rejects the campaign; a nonzero native exit or
+missing module can never pass. `.github/workflows/mutation-shards.yml` runs the
+plan, one job per shard (each saves its evidence and a uniquely keyed cache even
+when scores fail) and the aggregation. It is manual and separate from the release
+workflow; wiring the aggregate verdict into the release gate is still pending, and
+the hosted workflow has not been dispatched yet.
+
+A real shard (1 of 6, 15 modules, 5,618 mutants, native exit 0) was executed
+locally end to end with the same commands and its manifest built by the CLI
+([plan](evidence/shard-plan-6-2026-11-07.json),
+[manifest](evidence/shard-e2e-1-of-6-2026-11-07.json.gz)). It is a feasibility
+record and diagnostic evidence only, not a campaign result.

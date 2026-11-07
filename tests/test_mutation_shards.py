@@ -339,3 +339,30 @@ def test_running_the_module_as_a_script_exits_with_the_command_status(tmp_path, 
     with pytest.raises(SystemExit) as caught:
         runpy.run_path(shards.__file__, run_name="__main__")
     assert caught.value.code == 0
+
+
+def test_native_name_patterns_select_the_modules_of_one_shard(tmp_path, capsys):
+    import json
+
+    policy, document, _ = _build(tmp_path)
+    assert shards.shard_patterns(document, 0) == [
+        name[:-3].replace("/", ".") + ".*" for name in document["shards"][0]["modules"]
+    ]
+    with pytest.raises(ValueError, match="outside the plan"):
+        shards.shard_patterns(document, 2)
+    path = tmp_path / "plan.json"
+    path.write_text(json.dumps(document))
+    assert shards.main(["names", "--plan", str(path), "--index", "1"]) == 0
+    assert capsys.readouterr().out.split() == shards.shard_patterns(document, 1)
+
+
+def test_the_committed_weights_cover_exactly_the_mutating_modules():
+    import json
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1]
+    policy = json.loads((root / "verification/mutation_risk_policy.json").read_text())
+    weights = json.loads((root / "verification/mutation_shard_weights.json").read_text())
+    document = shards.plan(policy, weights, 6)
+    shards.validate_plan(document, policy)
+    assert max(s["weight"] for s in document["shards"]) < 0.3 * sum(weights.values())

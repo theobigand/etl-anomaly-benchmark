@@ -204,6 +204,13 @@ def aggregate(
     }
 
 
+def shard_patterns(document: dict, index: int) -> list[str]:
+    """Native mutant-name patterns that select exactly the modules of one shard."""
+    if type(index) is not int or not 0 <= index < len(document["shards"]):
+        raise ValueError("shard index is outside the plan")
+    return [mutation_catalog._module(name) + ".*" for name in document["shards"][index]["modules"]]
+
+
 def current_context(root: Path) -> dict:
     """Revision, test files, mutation configuration and tool versions of this checkout."""
     revision = subprocess.run(
@@ -251,6 +258,9 @@ def main(argv: list[str] | None = None) -> int:
     build.add_argument("--cache", default="mutants")
     build.add_argument("--native-exit-code", type=int, required=True)
     build.add_argument("--output", required=True)
+    names = commands.add_parser("names")
+    names.add_argument("--plan", required=True)
+    names.add_argument("--index", type=int, required=True)
     join = commands.add_parser("aggregate")
     join.add_argument("--root", default=".")
     join.add_argument("--plan", required=True)
@@ -259,6 +269,9 @@ def main(argv: list[str] | None = None) -> int:
     join.add_argument("--output", required=True)
     args = parser.parse_args(argv)
     root = Path(getattr(args, "root", ".")).resolve()
+    if args.command == "names":
+        print(" ".join(shard_patterns(_load(args.plan), args.index)))
+        return 0
     if args.command == "plan":
         policy = _load(args.policy)
         result = plan(policy, _load(args.weights), args.count)
