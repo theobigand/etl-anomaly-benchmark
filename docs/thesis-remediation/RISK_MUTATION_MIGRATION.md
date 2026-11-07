@@ -602,3 +602,24 @@ affected mutants, and an edited verdict is not trusted. A pending attempt left b
 interrupted run blocks the next attempt until its process group is confirmed gone,
 as designed; recovery here followed that check. The hosted cache restore and
 cross-run reuse remain to be exercised with the next hosted campaign.
+
+### Focused measurements of research modules (local development runs, 2026-11-08)
+
+Native single-module runs after the sandbox selection fixes, before new tests for
+them (not bound to a campaign):
+
+| Module | Killed / total | Note |
+| --- | --- | --- |
+| `research/injection.py` | 323 / 336 (96.1%) | 13 survivors |
+| `research/normalise.py` | 175 / 193 (90.7%) | 18 survivors (historical, leakage-relevant) |
+| `research/uci_loader.py` | 157 / 186 (84.4%) | 29 survivors |
+| `research/pool_full.py` | 223 / 515 (43.3%) | 265 no tests: `main` (197) and `run_job` (68); 27 survivors |
+| `research/labelled_benchmark.py` | 112 / 475 (23.6%) | 361 no tests: `main` (204), `run_job` (70), `jobs` (62), `load_uci` (25); 2 survivors |
+| `verification/claims.py` | 599 / 714 (83.9%) | was 5 / 714 before the sandbox selection fix |
+| `verification/release.py` | 680 / 827 (82.2%) | was 557 before tests for the command wiring |
+
+The uncovered mutants of the two pool pipelines are the orchestration entry points
+(`main`, `run_job`, `jobs`); their tests need a tiny synthetic pool driven through
+the real functions and an assertion on the aggregated, per-seed and per-partition
+result, not on call order. That is the next test batch, followed by the survivors in
+`normalise`, `uci_loader` and `injection`.
