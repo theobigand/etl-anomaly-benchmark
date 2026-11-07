@@ -24,7 +24,7 @@ Preserve the registered protocols and sealed baselines. Check pinned library ver
 - [x] T052 Explain the requirement for inductive per-row scoring in ETL inference.
 - [x] T053 Test whether a row's score is invariant to other rows in the test batch where claimed.
 - [x] T054 Distinguish bug fixes from algorithm-changing adaptations.
-- [x] T055 Check neural convergence, stopping rules, epochs, and numerical failures.
+- [ ] T055 Check neural convergence, stopping rules, epochs, and numerical failures.
 
 Evidence for T037–T044: [rule-definition audit and validation](RULE_DEFINITIONS_2026-11-03.md).
 T037/T038 were already implemented; the audit confirms them without a duplicate notation patch.
@@ -34,7 +34,7 @@ These are verified descriptions of existing adaptations; no equivalence to unmod
 
 Evidence for T048–T050: [comparable detector inventory](../../verification/detector_inventory.md), checked against the runtime registry by `tests/test_detector_inventory.py`.
 
-Evidence for T055: [neural convergence audit](NEURAL_CONVERGENCE_AUDIT_2026-11-07.md). The audit distinguishes archived execution failures from convergence evidence and preserves the resulting limitation.
+Partial evidence for T055 (reopened 2026-11-07): [neural convergence audit](NEURAL_CONVERGENCE_AUDIT_2026-11-07.md). Convergence is verified only for the typed-benchmark autoencoder; for the five other neural detectors the archives hold no convergence diagnostics. The task closes only with a prospective campaign that retains them, or an explicit not-applicable justification.
 
 ## 05. ETL preprocessing and leakage controls (P0; Thesis 01)
 

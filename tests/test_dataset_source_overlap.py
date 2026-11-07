@@ -48,3 +48,13 @@ def test_source_overlap_separates_occurrences_from_unique_sources():
     shared = {source for source in origin.values() if source in labelled}
     adbench_side = [name for name, source in origin.items() if source in labelled]
     assert (len(adbench_side), len(shared), len(labelled & shared)) == (17, 15, 15)
+
+
+def test_eligibility_criteria_hold_for_every_carrier_and_every_exclusion_has_a_reason():
+    rows = json.loads((EVIDENCE / "pool_extension/typed/eligibility.json").read_text())
+    assert len(rows) == 152
+    for row in rows:
+        if row["eligible"]:
+            assert row["rows"] >= 3_000 and len(row["report"]["columns"]) >= 4
+        else:
+            assert row["reason"]
