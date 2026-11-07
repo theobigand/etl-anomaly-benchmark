@@ -476,3 +476,21 @@ locally end to end with the same commands and its manifest built by the CLI
 ([plan](evidence/shard-plan-6-2026-11-07.json),
 [manifest](evidence/shard-e2e-1-of-6-2026-11-07.json.gz)). It is a feasibility
 record and diagnostic evidence only, not a campaign result.
+
+### Timeouts and segmentation faults (investigation, 2026-11-08)
+
+- **Six timeouts.** The three inspected cases are mutations that change how many
+  rows a block bootstrap samples (`research/paired_bootstrap.py`, `research/temporal_decision.py`),
+  so the mutated code runs far longer than the original. They are mutation-induced
+  slow paths, not runner faults, and stay outside the killed count. A direct test
+  of the bootstrap result on a small input is the intended way to detect them.
+- **46 segmentation faults.** All occur in the forked native runner, in
+  `verification/real_acquire.py` (44, including every `GuardedRedirects.redirect_request`
+  mutant) and `research/full_registry.py` (2). Run directly, the same mutant under
+  the same tests fails an ordinary assertion and is killed, both in a plain process
+  and in a forked child, with and without `OBJC_DISABLE_INITIALIZE_FORK_SAFETY`. The
+  crash is therefore not an application defect in the exercised code, and it is not
+  reproduced by a simple fork. The cause (a platform or worker-pool interaction of
+  the runner on macOS arm64) is unresolved. They remain incomplete outcomes; a Linux
+  shard run will show whether they are platform-specific. No segmentation fault is
+  counted as a kill.
