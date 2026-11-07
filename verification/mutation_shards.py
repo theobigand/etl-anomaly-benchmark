@@ -21,6 +21,7 @@ import tomllib
 from importlib.metadata import PackageNotFoundError
 from importlib.metadata import version as _installed_version
 from pathlib import Path
+from typing import Any
 
 from verification import mutation_catalog, mutation_policy
 
@@ -66,7 +67,9 @@ def plan(policy: dict, weights: dict[str, int], count: int) -> dict:
     modules = required_modules(policy)
     if set(weights) != set(modules) or any(type(w) is not int or w < 0 for w in weights.values()):
         raise ValueError("weights must cover exactly the mutating modules")
-    shards = [{"index": index, "modules": [], "weight": 0} for index in range(count)]
+    shards: list[dict[str, Any]] = [
+        {"index": index, "modules": [], "weight": 0} for index in range(count)
+    ]
     for name in sorted(modules, key=lambda item: (-weights[item], item)):
         target = min(
             shards, key=lambda shard: (shard["weight"], len(shard["modules"]), shard["index"])
@@ -162,7 +165,7 @@ def aggregate(
     mutation_policy.validate_policy(policy, root)
     _check_context(expected_context)
     shards = document["shards"]
-    seen: dict[int, dict] = {}
+    seen: dict[int, dict[str, Any]] = {}
     for manifest in manifests:
         if (
             not isinstance(manifest, dict)
@@ -171,7 +174,7 @@ def aggregate(
             or type(manifest["index"]) is not int
         ):
             raise ValueError("invalid shard manifest")
-        index = manifest.get("index")
+        index = manifest["index"]
         if index in seen:
             raise ValueError(f"shard {index} appears more than once")
         seen[index] = manifest
