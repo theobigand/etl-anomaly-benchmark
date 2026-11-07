@@ -9,10 +9,10 @@ def test_dataset_audit_separates_populations_and_partition_limit():
         / "docs/thesis-remediation/DATASET_INVENTORY_AUDIT_2026-11-07.md"
     ).read_text()
     for phrase in (
-        "152 fichiers",
-        "100 problèmes",
-        "58 porteurs",
-        "19 occurrences",
-        "T089 reste donc ouvert",
+        "152 files",
+        "100 labelled problems",
+        "58 injection-eligible",
+        "unique UCI sources",
+        "T089 therefore remains open",
     ):
         assert phrase in text

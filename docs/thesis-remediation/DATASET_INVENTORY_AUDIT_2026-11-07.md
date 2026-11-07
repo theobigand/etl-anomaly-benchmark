@@ -1,62 +1,74 @@
-# Audit d'inventaire des jeux — 2026-11-07
+# Dataset inventory audit — 2026-11-07
 
-## Populations et provenance
+## Populations and provenance
 
-Le manifeste `pool_manifest.json` lie 152 fichiers à une URL et une empreinte.
-Ils regroupent 36 jeux ADBench inclus (commit `3dac8221`) et 116 tables UCI
-curatées. Les licences, dimensions, types, libellés et transformations par
-table sont archivés dans `inventory.json`, `uci_curated.json` et
-`uci_pool.json`; aucune donnée brute n'est distribuée dans le dépôt.
+The manifest `pool_manifest.json` links 152 files to a URL and a checksum. They
+consist of 36 included ADBench datasets (commit `3dac8221`) and 116 curated UCI
+tables. Licences, dimensions, types, labels and per-table transformations are
+archived in `inventory.json`, `uci_curated.json` and `uci_pool.json`; no raw
+data is distributed in the repository.
 
-Les 100 problèmes labellisés sont 36 ADBench et 64 UCI. Les 58 porteurs
-éligibles à l'injection sont une autre population: 42 UCI et 16 ADBench,
-avec au moins 3 000 lignes, quatre colonnes continues et dix valeurs distinctes
-après préparation. Les autres jeux sont exclus avec une raison dans
-`typed/eligibility.json`. Un problème labellisé UCI est également un porteur,
-mais une occurrence de problème, une table et une source ne sont pas des unités
-indépendantes interchangeables.
+The 100 labelled problems are 36 ADBench and 64 UCI. The 58 injection-eligible
+carriers are a different population: 42 UCI and 16 ADBench, with at least 3,000
+rows, four continuous columns and ten distinct values after preparation. The
+other datasets are excluded with a reason in `typed/eligibility.json`. A
+labelled UCI problem is also a carrier, but a problem occurrence, a table and a
+source are not interchangeable independent units.
 
 ```mermaid
 flowchart TD
-  A[152 fichiers manifestés] --> B[36 ADBench]
-  A --> C[116 UCI curatés]
-  B --> D[100 problèmes labellisés]
+  A[152 manifested files] --> B[36 ADBench]
+  A --> C[116 curated UCI]
+  B --> D[100 labelled problems]
   C --> D
-  B --> E[58 porteurs injectables]
+  B --> E[58 injectable carriers]
   C --> E
   D --> F[36 ADBench + 64 UCI]
   E --> G[16 ADBench + 42 UCI]
 ```
 
-## Sélection, labels et recouvrements
+## Selection, labels and overlaps
 
-La sélection UCI requiert une licence ouverte, un téléchargement direct, 300 à
-1 000 000 lignes, 4 à 300 variables et une tâche non textuelle/non séquentielle;
-les doublons, jeux synthétiques et jeux de plateau sont exclus avec leur motif.
-Pour les UCI labellisés, la classe la plus rare comptant au moins 20 lignes est
-définie avant les détecteurs comme anomalie; au-dessus de 10 %, elle est
-rééchantillonnée à 10 % et le taux naturel est conservé. Ce mapping de classe
-ne transforme pas une minorité sémantique en faute ETL naturelle.
+UCI selection requires an open licence, a direct download, 300 to 1,000,000
+rows, 4 to 300 variables and a non-textual, non-sequential task; duplicates,
+synthetic datasets and board games are excluded with their reason. For labelled
+UCI problems, the rarest class with at least 20 rows is defined as the anomaly
+before any detector is run; above 10 % it is resampled to 10 % and the natural
+rate is kept. This class mapping does not turn a semantic minority into a
+natural ETL fault.
 
-Le registre `UCI_SOURCES` relie les dérivations ADBench à leurs identifiants
-UCI. Le rapport historique compte 19 occurrences ADBench/UCI présentes deux
-fois; parmi les problèmes UCI labellisés, ces correspondances couvrent 15
-identifiants source uniques, car plusieurs dérivations peuvent partager une
-origine (par exemple trois variantes Landsat). Les statistiques par problème
-ne sont donc pas une estimation fondée sur 100 sources indépendantes.
+### Source overlap (recomputed)
 
-Water Quality reste hors pool: son label « non potable » est majoritaire
-(environ 61 %), contraire à l'hypothèse d'anomalie rare; il est présenté comme
-contre-exemple de régime, non comme une faute de qualité.
+The registry `UCI_SOURCES` links ADBench derivations to UCI identifiers. The
+counts below are recomputed from the registry and from the archived per-problem
+files by `tests/test_dataset_source_overlap.py`; they distinguish occurrences
+from unique source identifiers.
 
-## Temps et partitions
+| quantity | occurrences | unique UCI sources |
+| --- | --- | --- |
+| ADBench labelled problems with a UCI origin (of 36; `fraud` has none) | 35 | 30 |
+| of those, sources also present in the 116-table UCI pool | 22 | 19 |
+| of those, sources that are also one of the 64 labelled UCI problems | 17 ADBench problems and 15 UCI problems | 15 |
 
-Cinq problèmes labellisés ont une variable temporelle utilisable: Credit Card,
-Bank Marketing, Occupancy Detection, Online Shoppers et Room Occupancy. Room
-Occupancy est exclu du calcul chronologique car sa partition test contient zéro
-anomalie. Les 11 tables UCI datées sans libellé ne définissent pas cette étude;
-les fichiers ADBench ne portent pas de temps utilisable.
+The figure of 19 reported in earlier documents is therefore the number of
+unique UCI sources shared between the ADBench-derived problems and the full
+116-table UCI pool. Among the 100 labelled problems the shared sources number
+15, covering 32 problems (17 ADBench and 15 UCI). Several derivations can share
+one origin (for example three Landsat variants). Per-problem statistics are
+therefore not an estimate based on 100 independent sources.
 
-Les graines historiques sont archivées, mais les identifiants de lignes des
-partitions ne le sont pas. T089 reste donc ouvert: ce document ne prétend pas
-reconstruire ni certifier les splits historiques.
+Water Quality stays outside the pool: its "not potable" label is the majority
+(about 61 %), contrary to the rare-anomaly assumption; it is presented as a
+regime counter-example, not as a quality fault.
+
+## Time and partitions
+
+Five labelled problems have a usable time variable: Credit Card, Bank
+Marketing, Occupancy Detection, Online Shoppers and Room Occupancy. Room
+Occupancy is excluded from the chronological computation because its test
+partition contains zero anomalies. The 11 dated unlabelled UCI tables do not
+define this study; the ADBench files carry no usable time.
+
+The historical seeds are archived, but the row identifiers of the partitions are
+not. T089 therefore remains open: this document does not claim to reconstruct
+or certify the historical splits.
