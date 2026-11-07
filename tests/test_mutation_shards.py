@@ -567,7 +567,7 @@ def test_aggregation_messages_and_result_fields_are_exact(tmp_path):
     result = shards.aggregate(document, manifests, policy, tmp_path, CONTEXT)
     assert set(result) == {
         "format", "plan_sha256", "context", "shards", "catalog", "records", "native_exit_code",
-        "analysis", "status",
+        "execution_bound", "analysis", "status",
     }  # fmt: skip
     assert result["format"] == 1 and result["plan_sha256"] == document["sha256"]
     assert result["context"] == CONTEXT

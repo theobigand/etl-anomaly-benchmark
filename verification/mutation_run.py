@@ -96,7 +96,7 @@ def _require_terminal_group(pid: int) -> None:
     raise ValueError("native process group still has workers; retain pending execution")
 
 
-def run(root: Path, *, max_children: int = 2) -> dict:
+def run(root: Path, *, max_children: int = 2, names: tuple[str, ...] = ()) -> dict:
     """Run the configured scope exclusively; preserve partial results honestly."""
     if type(max_children) is not int or max_children <= 0:
         raise ValueError("max children must be a positive integer")
@@ -111,7 +111,7 @@ def run(root: Path, *, max_children: int = 2) -> dict:
         except BlockingIOError as error:
             raise ValueError("mutation cache already has an active controller") from error
         env = {**os.environ, **FIXED_ENV}
-        command = _command(max_children)
+        command = [*_command(max_children), *names]
         runtime = {**collect_runtime(env), "native_command": command}
         admission = mutation_cache.prepare_execution(
             root, sources, runtime=runtime, mutated_sources=configured
@@ -169,8 +169,9 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path.cwd())
     parser.add_argument("--max-children", type=int, default=2)
+    parser.add_argument("--names", nargs="*", default=[], help="native mutant-name patterns")
     args = parser.parse_args(argv)
-    report = run(args.root, max_children=args.max_children)
+    report = run(args.root, max_children=args.max_children, names=tuple(args.names))
     print(json.dumps(report, sort_keys=True))
     return 0 if report["native_exit_code"] == 0 else 1
 

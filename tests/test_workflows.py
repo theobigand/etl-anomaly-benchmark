@@ -379,7 +379,8 @@ def test_the_sharded_campaign_keeps_evidence_and_caches_even_when_scores_fail():
         assert "if: always()" in block, step
     save = shard[shard.index("actions/cache/save@v4") :]
     assert "github.run_id" in save
-    assert "set +e" in shard and "steps.native.outputs.exit" in shard
+    assert "set +e" in shard and "verification.mutation_run --names" in shard
+    assert "--attempt" in shard and "controller-result.json" in shard
 
 
 def test_the_aggregation_waits_for_every_shard_and_fails_on_an_invalid_campaign():

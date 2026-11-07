@@ -186,7 +186,7 @@ def load_sharded(
     result = {
         "format_version": FORMAT_VERSION,
         "mode": "sharded",
-        "execution_binding": SHARDED_BINDING,
+        "execution_binding": "controller-proof" if combined["execution_bound"] else SHARDED_BINDING,
         "policy": policy,
         "catalog": combined["catalog"],
         "records": combined["records"],

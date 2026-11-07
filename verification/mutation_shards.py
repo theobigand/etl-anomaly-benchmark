@@ -23,7 +23,7 @@ from importlib.metadata import version as _installed_version
 from pathlib import Path
 from typing import Any
 
-from verification import mutation_catalog, mutation_policy
+from verification import mutation_cache, mutation_catalog, mutation_policy
 
 PACKAGES = (
     "pytest", "pytest-cov", "mutmut", "numpy", "pandas", "scikit-learn", "pyod", "mypy",
@@ -114,18 +114,28 @@ def build_shard(
     index: int,
     context: dict,
     native_exit_code: int,
+    attempt: Path | None = None,
 ) -> dict:
-    """Read one shard's native cache into an evidence manifest bound to its context."""
+    """Read one shard's native cache into an evidence manifest bound to its context.
+
+    With the controller's attempt record the manifest also carries a verified summary
+    of the execution proof; without it the manifest is unbound and cannot pass.
+    """
     validate_plan(document, policy)
     if type(index) is not int or not 0 <= index < len(document["shards"]):
         raise ValueError("shard index is outside the plan")
     _check_context(context)
     modules = document["shards"][index]["modules"]
     mutation_policy.validate_policy(policy, root)
-    catalog, records, _, missing, _, _ = mutation_catalog.read_modules(
+    catalog, records, _, missing, _, metadata = mutation_catalog.read_modules(
         policy, root, cache, set(modules)
     )
-    return {
+    execution = None
+    if attempt is not None:
+        execution = _execution_summary(
+            attempt, root, shard_patterns(document, index), modules, metadata, native_exit_code
+        )
+    manifest = {
         "format": SHARD_FORMAT,
         "plan_sha256": document["sha256"],
         "index": index,
@@ -136,6 +146,78 @@ def build_shard(
         "records": records,
         "missing": missing,
         "native_exit_code": native_exit_code,
+    }
+    if execution is not None:
+        manifest["execution"] = execution
+    return manifest
+
+
+EXECUTION_KEYS = {
+    "attempt_sha256", "native_log_sha256", "proof_sha256", "native_command", "native_exit_code",
+    "context_sha256", "tests_sha256", "dependencies_sha256", "runtime", "sources",
+    "metadata_sha256", "settled",
+}  # fmt: skip
+
+
+def _execution_summary(
+    attempt: Path,
+    root: Path,
+    patterns: list[str],
+    modules: list[str],
+    metadata: dict[str, str],
+    native_exit_code: int,
+) -> dict:
+    """Verify the controller's attempt record and keep the parts a shard must prove."""
+    content = attempt.read_bytes()
+    document = json.loads(content)
+    if set(document) != {"native_pid", "admission", "proof", "native_log", "native_log_sha256"}:
+        raise ValueError("invalid attempt record")
+    proof = document["proof"]
+    if proof.get("version") != mutation_cache.EXECUTION_VERSION or proof.get("sha256") != (
+        mutation_cache._digest({key: value for key, value in proof.items() if key != "sha256"})
+    ):
+        raise ValueError("execution proof digest differs from its content")
+    context = proof["context"]
+    if document["admission"].get("context_sha256") != mutation_cache._digest(context):
+        raise ValueError("attempt admission does not match the execution proof")
+    log = (root / document["native_log"]).read_bytes()
+    if hashlib.sha256(log).hexdigest() != document["native_log_sha256"]:
+        raise ValueError("native log differs from the attempt record")
+    command = context["runtime"].get("native_command")
+    if (
+        not isinstance(command, list)
+        or len(command) < 7
+        or command[1:6] != ["-P", "-m", "mutmut", "run", "--max-children"]
+        or not str(command[6]).isdecimal()
+        or command[7:] != patterns
+        or proof["native_exit_code"] != native_exit_code
+    ):
+        raise ValueError("execution proof does not describe this shard's native run")
+    sources = {name: context["sources"][name]["sha256"] for name in modules}
+    if sources != {name: _source(root, name) for name in modules}:
+        raise ValueError("execution proof is stale for the shard sources")
+    proven = {f"{name}.meta": proof["metadata_sha256"].get(f"{name}.meta") for name in modules}
+    if any(proven[name] != metadata.get(name) for name in proven if name in metadata):
+        raise ValueError("execution proof does not bind the shard verdict metadata")
+    return {
+        "attempt_sha256": hashlib.sha256(content).hexdigest(),
+        "native_log_sha256": document["native_log_sha256"],
+        "proof_sha256": proof["sha256"],
+        "native_command": command,
+        "native_exit_code": proof["native_exit_code"],
+        "context_sha256": mutation_cache._digest(context),
+        "tests_sha256": mutation_cache._digest(context["tests"]),
+        "dependencies_sha256": mutation_cache._digest(context["dependencies"]),
+        "runtime": {
+            "python": context["runtime"].get("python"),
+            "platform": context["runtime"].get("platform"),
+            "packages": {
+                name: context["runtime"].get("packages", {}).get(name) for name in PACKAGES
+            },
+        },
+        "sources": sources,
+        "metadata_sha256": {name: proof["metadata_sha256"].get(name) for name in sorted(proven)},
+        "settled": proof["settled"],
     }
 
 
@@ -169,7 +251,7 @@ def aggregate(
     for manifest in manifests:
         if (
             not isinstance(manifest, dict)
-            or set(manifest) != MANIFEST_KEYS
+            or set(manifest) not in (MANIFEST_KEYS, MANIFEST_KEYS | {"execution"})
             or manifest["format"] != SHARD_FORMAT
             or type(manifest["index"]) is not int
         ):
@@ -185,6 +267,7 @@ def aggregate(
     records: list[dict] = []
     ids: set[str] = set()
     incomplete = False
+    bound = []
     for index, shard in enumerate(shards):
         manifest = seen[index]
         if manifest["plan_sha256"] != document["sha256"] or manifest["modules"] != shard["modules"]:
@@ -205,9 +288,11 @@ def aggregate(
                 raise ValueError(f"shard {index} has an unknown or duplicate mutant record")
             ids.add(key)
             records.append(record)
+        bound.append(_check_execution(index, manifest, expected_context, document))
         if manifest["missing"] or type(manifest["native_exit_code"]) is not int:
             incomplete = True
         incomplete = incomplete or manifest["native_exit_code"] != 0
+    _check_common_suite([seen[index].get("execution") for index in range(len(shards))])
     sources = {name: _source(root, name) for name in units}
     analysis = mutation_policy.evaluate_snapshot(policy, sources, catalog, records, equivalence)
     status = analysis["status"]
@@ -222,6 +307,7 @@ def aggregate(
         "catalog": catalog,
         "records": records,
         "native_exit_code": next((code for code in exit_codes if code != 0), 0),
+        "execution_bound": all(bound),
         "analysis": analysis,
         "status": status,
     }
@@ -232,6 +318,36 @@ def shard_patterns(document: dict, index: int) -> list[str]:
     if type(index) is not int or not 0 <= index < len(document["shards"]):
         raise ValueError("shard index is outside the plan")
     return [mutation_catalog._module(name) + ".*" for name in document["shards"][index]["modules"]]
+
+
+def _check_execution(index: int, manifest: dict, expected_context: dict, document: dict) -> bool:
+    """True when the shard carries a consistent execution proof; None means unbound."""
+    execution = manifest.get("execution")
+    if execution is None:
+        return False
+    if not isinstance(execution, dict) or set(execution) != EXECUTION_KEYS:
+        raise ValueError(f"shard {index} has an invalid execution proof")
+    runtime = expected_context["runtime"]
+    if (
+        execution["native_command"][7:] != shard_patterns(document, index)
+        or execution["native_exit_code"] != manifest["native_exit_code"]
+        or execution["sources"] != manifest["sources"]
+        or execution["runtime"]
+        != {
+            "python": runtime["python"],
+            "platform": runtime["platform"],
+            "packages": {name: runtime["packages"].get(name) for name in PACKAGES},
+        }
+    ):
+        raise ValueError(f"shard {index} execution proof contradicts its manifest or context")
+    return True
+
+
+def _check_common_suite(executions: list) -> None:
+    proven = [item for item in executions if item is not None]
+    for key in ("tests_sha256", "dependencies_sha256"):
+        if len({item[key] for item in proven}) > 1:
+            raise ValueError("shards ran different test suites or dependencies")
 
 
 def current_context(root: Path) -> dict:
@@ -280,6 +396,7 @@ def main(argv: list[str] | None = None) -> int:
     build.add_argument("--index", type=int, required=True)
     build.add_argument("--cache", default="mutants")
     build.add_argument("--native-exit-code", type=int, required=True)
+    build.add_argument("--attempt", help="controller attempt record binding the execution")
     build.add_argument("--output", required=True)
     names = commands.add_parser("names")
     names.add_argument("--plan", required=True)
@@ -306,6 +423,7 @@ def main(argv: list[str] | None = None) -> int:
             result = build_shard(
                 policy, root, root / args.cache, _load(args.plan), args.index,
                 current_context(root), args.native_exit_code,
+                Path(args.attempt) if args.attempt else None,
             )  # fmt: skip
         else:
             result = aggregate(

@@ -100,26 +100,30 @@ jobs:
           restore-keys: |
             mutants-shard-${{ matrix.index }}-${{ runner.os }}-${{ hashFiles('verification/mutation_risk_policy.json', 'pyproject.toml') }}-
 
+      # The controller owns the cache, runs the native engine on this shard's modules and
+      # records the execution proof that the shard evidence carries.
       - name: Run the native engine on this shard
         id: native
-        env:
-          OMP_NUM_THREADS: "1"
-          OPENBLAS_NUM_THREADS: "1"
-          MKL_NUM_THREADS: "1"
-          PYTHONHASHSEED: "0"
         run: |
           set +e
           names=$(python -m verification.mutation_shards names --plan shard-plan.json --index ${{ matrix.index }})
-          PYTHONPATH= python -P -m mutmut run $names
-          echo "exit=$?" >> "$GITHUB_OUTPUT"
+          python -m verification.mutation_run --names $names > controller-result.json
+          echo "controller=$?" >> "$GITHUB_OUTPUT"
 
       - name: Build the shard evidence
         if: always()
-        run: >
-          python -m verification.mutation_shards build
-          --plan shard-plan.json --index ${{ matrix.index }}
-          --native-exit-code "${{ steps.native.outputs.exit }}"
-          --output evidence-shard-${{ matrix.index }}.json
+        run: |
+          if [ -s controller-result.json ]; then
+            attempt=$(python -c "import json;print(json.load(open('controller-result.json'))['attempt_record'])")
+            code=$(python -c "import json;print(json.load(open('controller-result.json'))['native_exit_code'])")
+            python -m verification.mutation_shards build --plan shard-plan.json \
+              --index ${{ matrix.index }} --native-exit-code "$code" --attempt "$attempt" \
+              --output evidence-shard-${{ matrix.index }}.json
+          else
+            python -m verification.mutation_shards build --plan shard-plan.json \
+              --index ${{ matrix.index }} --native-exit-code 2 \
+              --output evidence-shard-${{ matrix.index }}.json
+          fi
 
       - name: Preserve the shard evidence
         if: always()
