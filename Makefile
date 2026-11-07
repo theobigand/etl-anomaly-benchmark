@@ -79,7 +79,7 @@ verify-preprocessing:
 	pytest -m fault tests/test_pool_preprocessing_faults.py
 
 verify-deep:
-	@mkdir -p $(EVIDENCE)
+	@mkdir -p $(EVIDENCE) mutants
 	@rm -f $(EVIDENCE)/deep.json mutants/controller-result.json
 	@set +e; python -m verification.mutation_run > mutants/controller-result.json; controller_status=$$?; \
 		export_status=1; listing_status=1; \

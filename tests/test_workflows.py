@@ -349,3 +349,10 @@ def test_frozen_pool_preparation_has_a_separate_coverage_and_defect_gate():
     assert "--cov=research.pool_train_only" in target
     assert "--cov-fail-under=100" in target
     assert "pytest -m fault tests/test_pool_preprocessing_faults.py" in target
+
+
+def test_deep_target_creates_the_directory_it_redirects_into():
+    makefile = (WORKFLOWS.parents[1] / "Makefile").read_text()
+    deep = makefile[makefile.index("verify-deep:") : makefile.index("verify-faults:")]
+    assert "mkdir -p $(EVIDENCE) mutants" in deep
+    assert deep.index("mkdir -p") < deep.index("> mutants/controller-result.json")
