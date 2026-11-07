@@ -427,3 +427,9 @@ def test_the_diagnostic_label_runs_one_small_shard_and_never_the_aggregate():
     assert (
         "controller-result.json" in text.split("Preserve the shard evidence")[1].split("- name")[0]
     )
+
+
+def test_the_plan_job_installs_the_project_before_planning():
+    text = _text("mutation-shards.yml")
+    plan = text[text.index("  plan:") : text.index("  shard:")]
+    assert plan.index("pip install -e .") < plan.index("verification.mutation_shards plan")
