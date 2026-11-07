@@ -790,8 +790,11 @@ anomalies are already labelled: $36$ from ADBench and $64$ from the UCI
 repository. The protocol of Section~\ref{sec:studies} gives every problem the same normalisation,
 split, seeds and operating point; the neural models are fitted on at most $20{,}000$ rows. LOF and KNN are skipped above $50{,}000$ training rows
 and One-Class SVM above $20{,}000$, so they cover $92$, $92$ and $84$ problems; the
-skips are listed in the archive. All runs completed: none of the six neural models failed on
-any of the $100$ problems.
+skips are listed in the archive. The archived runs record no exception for the
+six neural models on these $100$ problems. They do not retain loss histories,
+completed epochs or convergence diagnostics for the PyOD models, so successful
+execution is not evidence that those models converged; the limitation is
+recorded in the remediation audit.
 
 \begin{table}[t]
 \caption{Median over the labelled problems of the seed-averaged test metrics,
