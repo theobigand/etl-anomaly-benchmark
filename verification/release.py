@@ -21,7 +21,7 @@ from verification import claims, evidence_schema, lineage, mutation_scope
 
 ROOT = Path(__file__).resolve().parents[1]
 POLICY = ROOT / "verification" / "release_policy.json"
-POLICY_VERSION = 1
+POLICY_VERSION = 2
 EVIDENCE_DIR = ROOT / "experiments" / "results" / "evidence"
 ARCHIVE = ROOT / "verification" / "evidence"
 LOCK = ROOT / "verification" / "environment"
@@ -186,6 +186,14 @@ def assess(  # noqa: PLR0913
         if doc is None:
             profiles[kind] = "MISSING"
             incomplete.append(f"{kind} evidence is missing")
+            continue
+        if (
+            kind == "deep"
+            and policy["version"] >= 2
+            and doc.get("result", {}).get("format_version") != 2
+        ):
+            profiles[kind] = "INVALID"
+            rejected.append("deep: current release requires risk-tiered campaign evidence")
             continue
         problems = evidence_schema.validate(doc, root=root)
         if problems:

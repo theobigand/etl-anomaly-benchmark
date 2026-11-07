@@ -41,8 +41,9 @@ The scope checker now inventories all four governed roots and compares the nativ
 patterns with the policy inventory. The current DEEP envelope and public mutation
 gate require a bound native campaign rather than a standalone aggregate count.
 The DEEP Makefile target owns the native controller and retains existing native
-exports until a new run replaces them. Release policy, bundle allowlist and
-workflow artifact contracts still need the same migration.
+exports until a new run replaces them. The version-2 release policy rejects a
+legacy global envelope for a current certification. Workflow artifact contracts
+still need the same migration.
 Current certification is not implied by a new JSON policy, a passing arithmetic
 test or an internally consistent stored campaign.
 
