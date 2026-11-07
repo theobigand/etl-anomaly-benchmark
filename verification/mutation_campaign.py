@@ -15,6 +15,7 @@ from verification import mutation_cache, mutation_catalog, mutation_policy, muta
 from verification.mutation_policy import _relative
 
 FORMAT_VERSION = 2
+EQUIVALENCE = "verification/mutation_equivalence.json"
 HEX64 = re.compile(r"[0-9a-f]{64}")
 ATTEMPT = re.compile(r"mutants/attempts/([0-9a-f]{32})/execution\.json")
 
@@ -106,13 +107,18 @@ def load_campaign(
         raise ValueError("parsed native metadata differs from the execution binding")
     if mutation_cache.validate_execution(root, sources, mutated_sources=configured) != proof:
         raise ValueError("execution binding changed while the campaign was read")
-    analysis = mutation_policy.evaluate(policy, root, native["catalog"], native["records"])
+    equivalence_path = root / EQUIVALENCE
+    equivalence = _json(root, equivalence_path) if equivalence_path.is_file() else None
+    analysis = mutation_policy.evaluate(
+        policy, root, native["catalog"], native["records"], equivalence
+    )
     result = {
         "format_version": FORMAT_VERSION,
         "policy": policy,
         "catalog": native["catalog"],
         "records": native["records"],
         "analysis": analysis,
+        "equivalence": equivalence,
         "native_stats": native_stats,
         "native_exit_code": proof["native_exit_code"],
         "execution_proof_sha256": proof["sha256"],
@@ -136,6 +142,8 @@ def load_campaign(
         for name, digest in proof["native_artifacts_sha256"].items()
         if digest is not None
     )
+    if equivalence is not None:
+        artifacts.append(equivalence_path)
     graph = cache / "mutmut-stats.json"
     if graph.is_file():
         artifacts.append(graph)
@@ -155,7 +163,11 @@ def status(result: dict) -> str:
             raise ValueError("incomplete campaign must state its input failure")
         return "INCOMPLETE"
     analysis = mutation_policy.evaluate_snapshot(
-        result["policy"], result["analysis"]["sources"], result["catalog"], result["records"]
+        result["policy"],
+        result["analysis"]["sources"],
+        result["catalog"],
+        result["records"],
+        result.get("equivalence"),
     )
     if analysis != result["analysis"] or type(result["native_exit_code"]) is not int:
         raise ValueError("stored mutation arithmetic differs from the recomputed result")

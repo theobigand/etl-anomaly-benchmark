@@ -396,3 +396,41 @@ def test_reported_artifacts_suffice_to_validate_a_transferred_campaign(tmp_path)
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(path, target)
     assert _api().validate_current(result, transferred)
+
+
+def test_a_reviewed_equivalent_is_read_bound_and_adjusts_the_campaign_verdict(tmp_path):
+    inputs = _fixture(tmp_path, survived=True)
+    result, _ = _load(tmp_path, inputs)
+    assert _api().status(result) == "FAIL"
+    key = "pkg.a.x_compute__mutmut_2"
+    from verification import mutation_policy
+
+    record = {
+        "id": key,
+        "path": SOURCE,
+        "function": "compute",
+        "diff": "-    return value + 1\n+    return value + 2",
+        "original_behavior": "adds one",
+        "mutated_behavior": "constructed example only",
+        "risk": "L4",
+        "reason": "constructed equivalence for the arithmetic path",
+        "evidence": ["tests/test_mutation_campaign.py"],
+        "source_sha256": hashlib.sha256((tmp_path / SOURCE).read_bytes()).hexdigest(),
+        "catalog_sha256": mutation_policy.catalog_digest(result["catalog"][SOURCE]),
+        "author": "a",
+        "reviewer": "b",
+        "approved": True,
+        "review_date": "2026-11-08",
+        "policy_version": 2,
+    }
+    (tmp_path / "verification/mutation_equivalence.json").write_text(
+        json.dumps({"version": 1, "records": [record]})
+    )
+    adjusted, artifacts = _load(tmp_path, inputs)
+    unit = adjusted["analysis"]["modules"][SOURCE]
+    assert unit["raw_score"] == 50.0 and unit["score"] == 100.0
+    assert unit["equivalent_accepted"] == 1 and _api().status(adjusted) == "PASS"
+    assert tmp_path / "verification/mutation_equivalence.json" in artifacts
+    adjusted["equivalence"]["records"][0]["reviewer"] = "a"
+    with pytest.raises(ValueError):
+        _api().status(adjusted)
