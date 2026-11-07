@@ -6,30 +6,36 @@ Statistical inference must respect repeated seeds, paired datasets, and shared s
 
 ## 10. Paired inference and clustered uncertainty (P0; Thesis 02)
 
-- [ ] T126 Recompute comparisons using matched datasets and partitions.
-- [ ] T127 Compare paired AP differences, not just marginal confidence intervals.
+- [x] T126 Recompute comparisons using matched datasets and partitions.
+- [x] T127 Compare paired AP differences, not just marginal confidence intervals.
 - [ ] T128 Report effect sizes for primary comparisons.
-- [ ] T129 Compute uncertainty intervals for paired differences.
-- [ ] T130 Do not interpret a non-significant result as equivalence.
+- [x] T129 Compute uncertainty intervals for paired differences.
+- [x] T130 Do not interpret a non-significant result as equivalence.
 - [ ] T131 Define a region of practical equivalence if equivalence is claimed.
-- [ ] T132 Verify whether a plus/minus 0.02 AP margin is justified and prespecified.
+- [x] T132 Verify whether a plus/minus 0.02 AP margin is justified and prespecified.
 - [ ] T133 Optionally estimate posterior superiority and practical-equivalence probabilities.
 - [ ] T134 Do not attribute Bayesian probabilities to Wilcoxon signed-rank tests.
 - [ ] T135 Check baycomp assumptions against source dependence and repeated seeds.
-- [ ] T136 Compare ECOD vs Isolation Forest, DIF vs ECOD, and cross-family representatives.
+- [x] T136 Compare ECOD vs Isolation Forest, DIF vs ECOD, and cross-family representatives.
 - [ ] T137 Define primary comparisons before inspecting new outcomes.
-- [ ] T138 Apply appropriate multiple-comparison correction.
+- [x] T138 Apply appropriate multiple-comparison correction.
 - [ ] T139 Add source_id to result records.
-- [ ] T140 Group derived problems by original data source.
-- [ ] T141 Bootstrap source clusters instead of individual problem rows.
-- [ ] T142 Keep observations from each source together when resampling.
-- [ ] T143 Aggregate five seeds correctly within each problem.
-- [ ] T144 Do not treat repeated seeds as independent datasets.
-- [ ] T145 Recompute 95% cluster-aware uncertainty intervals.
-- [ ] T146 Compare cluster-aware and original intervals.
-- [ ] T147 Count actual unique sources rather than assuming 81 clusters.
-- [ ] T148 Run sensitivity analyses excluding overlapping ADBench/UCI sources.
+- [x] T140 Group derived problems by original data source.
+- [x] T141 Bootstrap source clusters instead of individual problem rows.
+- [x] T142 Keep observations from each source together when resampling.
+- [x] T143 Aggregate five seeds correctly within each problem.
+- [x] T144 Do not treat repeated seeds as independent datasets.
+- [x] T145 Recompute 95% cluster-aware uncertainty intervals.
+- [x] T146 Compare cluster-aware and original intervals.
+- [x] T147 Count actual unique sources rather than assuming 81 clusters.
+- [x] T148 Run sensitivity analyses excluding overlapping ADBench/UCI sources.
 - [ ] T149 Revise Table III and statistical conclusions from corrected analyses.
+
+Evidence for the checked tasks of this section: [source-clustered re-analysis](SOURCE_CLUSTERED_ANALYSIS_2026-11-08.md)
+(`research/source_clustered.py`, `verification/evidence/source_clustered/analysis.json`). Still open here: T128 (effect sizes
+beyond mean differences), T133-T135 (optional Bayesian summaries), T137 (primary comparisons cannot be prespecified retroactively; the
+re-analysis is declared post hoc), T139 (source_id is derived in the analysis, not stored in the archived records) and T149 (Table III and the
+conclusions are unchanged; the re-analysis is reported beside them).
 
 ## 11. Operational and fault-specific metrics (P1; Thesis 02)
 

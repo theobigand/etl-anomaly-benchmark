@@ -232,6 +232,10 @@
       "level": "L4",
       "reason": "Recovered train/validation/test memberships and their replay check establish which rows each historical result was trained and evaluated on."
     },
+    "research/source_clustered.py": {
+      "level": "L4",
+      "reason": "Source grouping, seed averaging and cluster resampling determine the reported uncertainty and which comparisons are claimed."
+    },
     "research/pool_chrono.py": {
       "level": "L4",
       "reason": "Real-time variables, time ordering and held-out partitions govern causal validity."

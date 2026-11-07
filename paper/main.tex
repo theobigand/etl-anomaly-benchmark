@@ -886,6 +886,35 @@ prevalence at $0.10$. The ADBench half is closer to the usual benchmark and the
 UCI half is a harder, rule-derived labelling; I did not tune any detector, so
 the numbers describe default settings.
 
+\paragraph{Source-clustered re-analysis.} The $100$ labelled problems come from 80 distinct
+sources: 17 ADBench problems derive from a UCI table that is also a labelled UCI problem, and
+others share an origin. This is a post-hoc re-analysis of the archived per-seed AP, so its comparisons were chosen from those
+reported above after the results were known and it is exploratory. I averaged the five seeds within each problem,
+then resampled whole sources with replacement (10,000 draws, seed 2026), and adjusted the $p$-values of the
+six comparisons with Holm's method (Table~\ref{tab:clustered}). Resampling sources instead of problems widens
+the intervals by at most $22\%$ and changes no sign. Only Great Expectations is clearly below Isolation Forest;
+for every other comparison the interval contains zero, so the data neither separate these detectors nor show them to be
+equivalent: no equivalence margin was specified in advance and none is claimed.
+
+\begin{table*}[t]
+\centering
+\caption{Paired mean AP differences over the labelled problems with $95\%$ percentile intervals from a problem-level and a source-level bootstrap, and the Holm-adjusted source-level $p$-value.}
+\label{tab:clustered}
+\small
+\begin{tabular}{lrccr}
+\hline
+Comparison & Problems & Problem bootstrap & Source bootstrap & Holm $p$ \\
+\hline
+ECOD $-$ Isolation Forest & 100 & -0.009 [-0.035, +0.016] & -0.009 [-0.036, +0.020] & 1.000 \\
+COPOD $-$ Isolation Forest & 100 & -0.004 [-0.027, +0.016] & -0.004 [-0.028, +0.018] & 1.000 \\
+One-Class SVM $-$ Isolation Forest & 84 & -0.015 [-0.032, +0.004] & -0.015 [-0.033, +0.004] & 0.655 \\
+DIF $-$ ECOD & 100 & -0.021 [-0.054, +0.011] & -0.021 [-0.062, +0.017] & 1.000 \\
+Z-score $-$ Isolation Forest & 100 & -0.018 [-0.046, +0.012] & -0.018 [-0.050, +0.020] & 1.000 \\
+Great Expectations $-$ Isolation Forest & 100 & -0.162 [-0.207, -0.120] & -0.162 [-0.208, -0.116] & 0.000 \\
+\hline
+\end{tabular}
+\end{table*}
+
 \subsection{Synthetic data: aggregate and per type (RQ2)}
 \label{sec:results-synthetic}
 Aggregate metrics on the synthetic data compress the families together. Over the seventeen

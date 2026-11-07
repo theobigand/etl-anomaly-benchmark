@@ -505,7 +505,7 @@
       <li><span class="k">Constructed negative controls</span>Changing only evaluation categories changes encoded width from 5 to 3. An evaluation duplicate's label can also remove a reference row. AP bias is not yet quantified.</li>
       <li><span class="k">Versioned path</span>pool-train-only-v1 consumes source-bound frozen positions. Fitted schema, imputation and scaling use training rows only. Cross-partition duplicates are rejected; evaluation rows are retained.</li>
       <li><span class="k">Bounded checks</span>Separate constructed checks enforce full line/branch coverage for the two new modules and detect three leakage defects. Targets are excluded from preparation; only training prevalence calibrates flags.</li>
-      <li><span class="k">Still outstanding</span>Recover source-bound historical assignments and replay applicable pool studies. Old protocols and results are preserved; no corrected pool-performance claim is available.</li>
+      <li><span class="k">Still outstanding</span>Historical memberships were recomputed (not originally archived) and replay-validated: the Z-score reproduces all 100 archived per-seed results. Replaying the studies on the train-only path remains outstanding; old protocols and results are preserved and no corrected pool-performance claim is available.</li>
     </ul></div>
   </div>
   <div class="foot"><span>research/pool_preprocessing.py · pool_train_only.py</span><span>exploratory path, no replacement of archived results</span></div>
@@ -802,7 +802,7 @@
     <div class="heading">
       <div class="eyebrow"><span class="idx">20</span> &nbsp; M2 · the whole labelled pool</div>
       <h2>Historical pool rankings <em>need train-only revalidation</em></h2>
-      <p class="lede">Historical run: three rules, eight classical and six neural detectors, five seeds, on 36 ADBench and 64 UCI problems. The numerical table is retained as recorded. Schema and row filtering precede the split, so these descriptive rankings still need train-only replay; source dependence, label-rule sensitivity and unrecorded PyOD convergence diagnostics remain open.</p>
+      <p class="lede">Historical run: three rules, eight classical and six neural detectors, five seeds, on 36 ADBench and 64 UCI problems. The numerical table is retained as recorded. Schema and row filtering precede the split, so these descriptive rankings still need train-only replay; the 100 problems come from 80 sources and a source-clustered re-analysis changes no sign (only Great Expectations is clearly below Isolation Forest); label-rule sensitivity and unrecorded PyOD convergence diagnostics remain open.</p>
       <div class="stat">
         <div><span class="v">17</span><span class="l">detectors; no neural exception recorded</span></div>
         <div><span class="v">13</span><span class="l">problems won by DIF, the most; each of the 17 wins at least 2</span></div>
