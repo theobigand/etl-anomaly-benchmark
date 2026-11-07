@@ -225,3 +225,118 @@ def test_the_same_seed_reproduces_the_fitted_model_exactly():
     assert one.threshold_ == two.threshold_
     assert one.settings()["train_loss"] == two.settings()["train_loss"]
     assert _fit(model=_model(seed=6))[0].threshold_ != one.threshold_
+
+
+def _constant_losses(monkeypatch, train_value=2.0, validation_value=1.0):
+    """Replace the loss by known constants so that the epoch arithmetic can be checked."""
+    real = ld.nn.functional.mse_loss
+
+    def loss(prediction, target):
+        value = train_value if prediction.requires_grad else validation_value
+        return real(prediction, target) * 0.0 + value
+
+    monkeypatch.setattr(ld.nn.functional, "mse_loss", loss)
+
+
+def test_the_epoch_loss_is_the_row_weighted_mean_of_the_batch_losses(monkeypatch):
+    _constant_losses(monkeypatch)
+    model = _fit(model=_model(batch_size=7, max_epochs=2, fit_rows=10_000))[0]
+    assert model.settings()["train_loss"] == pytest.approx([2.0, 2.0])
+    assert model.settings()["validation_loss"] == [1.0, 1.0]
+
+
+def test_a_validation_loss_equal_to_the_best_counts_as_no_improvement(monkeypatch):
+    monkeypatch.setattr(ld.LSTMAutoencoder, "validation_loss_now", lambda self: 1.0)
+    settings = _fit(model=_model(max_epochs=9, patience=2))[0].settings()
+    assert settings["epochs_run"] == 3 and settings["best_epoch"] == 1
+
+
+def test_the_windows_are_centred_and_divided_by_the_training_scale():
+    model, _, _ = _fit()
+    frame = _frame(20, 9, 400)
+    expected = (frame[COLUMNS].to_numpy() - model.center_) / model.scale_
+    windows, order = model._windows(frame)
+    assert np.allclose(windows[:, -1, :], expected[order])
+
+
+def test_a_cap_equal_to_the_number_of_windows_keeps_every_window_in_order(monkeypatch):
+    seen = {}
+    real = ld.LSTMAutoencoder._reconstruction_error
+
+    def spy(self, windows, last_only):
+        seen["fit"] = windows
+        return real(self, windows, last_only)
+
+    monkeypatch.setattr(ld.LSTMAutoencoder, "_reconstruction_error", spy)
+    train = _frame(150, 0)
+    model, _, _ = _fit(model=_model(fit_rows=150, validation_rows=60), train=train)
+    assert np.array_equal(seen["fit"], model._windows(train)[0])
+    assert np.array_equal(
+        model._validation.numpy(), model._windows(_frame(60, 1, start=150))[0].astype("float32")
+    )
+
+
+def test_capped_windows_are_distinct_rows_of_the_original_set(monkeypatch):
+    seen = {}
+    real = ld.LSTMAutoencoder._reconstruction_error
+
+    def spy(self, windows, last_only):
+        seen["fit"] = windows
+        return real(self, windows, last_only)
+
+    monkeypatch.setattr(ld.LSTMAutoencoder, "_reconstruction_error", spy)
+    train = _frame(150, 0)
+    model, _, _ = _fit(model=_model(fit_rows=120, validation_rows=50), train=train)
+    full = model._windows(train)[0]
+    chosen = seen["fit"]
+    assert chosen.shape[0] == 120 and np.unique(chosen.reshape(120, -1), axis=0).shape[0] == 120
+    assert all(any(np.array_equal(row, source) for source in full) for row in chosen[:5])
+    kept = model._validation.numpy().reshape(50, -1)
+    assert np.unique(kept, axis=0).shape[0] == 50
+
+
+def test_the_optimiser_uses_the_configured_learning_rate_and_a_seeded_shuffler(monkeypatch):
+    seen = {}
+    real_adam, real_randperm = ld.torch.optim.Adam, ld.torch.randperm
+
+    def adam(parameters, **kwargs):
+        seen["lr"] = kwargs.get("lr")
+        return real_adam(parameters, **kwargs)
+
+    def randperm(n, generator=None):
+        seen.setdefault("seed", generator.initial_seed() if generator is not None else None)
+        return real_randperm(n, generator=generator)
+
+    monkeypatch.setattr(ld.torch.optim, "Adam", adam)
+    monkeypatch.setattr(ld.torch, "randperm", randperm)
+    _fit(model=_model(learning_rate=0.05, seed=11))
+    assert seen["lr"] == 0.05 and seen["seed"] == 11
+
+
+def test_fitting_enables_deterministic_algorithms_and_the_configured_threads():
+    _fit(model=_model(threads=2))
+    assert torch.are_deterministic_algorithms_enabled() is True
+    assert torch.get_num_threads() == 2
+    torch.set_num_threads(1)
+
+
+def test_an_event_scoring_exactly_the_threshold_is_not_flagged():
+    model, _, _ = _fit()
+    frame = _frame(30, 8, 300)
+    scores = model.score(frame)
+    model.threshold_ = float(scores.iloc[3])
+    assert bool(model.flags(frame).iloc[3]) is False
+
+
+def test_each_unfitted_component_alone_is_enough_to_refuse_scoring():
+    model, _, _ = _fit()
+    saved = model.center_
+    model.center_ = None
+    with pytest.raises(RuntimeError, match="not fitted"):
+        model.score(_frame(10, 2, 300))
+    model.center_ = saved
+    model._validation = None
+    with pytest.raises(RuntimeError, match="not fitted"):
+        model.validation_loss_now()
+    fresh = _model()
+    assert fresh._history == {} and fresh._validation is None and fresh._net is None

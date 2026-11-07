@@ -698,3 +698,21 @@ different contexts, so Linux and macOS results cannot be combined. The earlier
 local figures that include PyTorch-dependent modules (for example the 495/62 shard
 record) are retained as diagnostics and are superseded by the hosted values for
 those modules. No dependency lock was introduced: torch versions were identical.
+
+### LSTM detector tests (2026-11-08)
+
+`research/tests/test_lstm_contracts.py` (35 tests) pins constructor and `fit`
+validation and boundaries, the population-spread training statistics and the
+zero-variance guard, median imputation, the training-quantile threshold, the strict
+flag comparison, window capping (boundary, distinctness, order), the seeded shuffler,
+the configured learning rate, deterministic algorithms and threads, the early-stopping
+arithmetic (row-weighted epoch loss, strict improvement, patience), the reported
+settings, and the exact refusal messages. Because the local forked runner is
+unreliable for PyTorch modules (see above), the 377 mutants of the module were
+evaluated by running `test_lstm_detector.py` and the new file directly with each
+mutant active: 343 were detected by the older suite alone, 367 of 377 (97.3%) with the
+new tests. The ten survivors are default or case-insensitive variants
+(`astype(None)` on float data, `dim=+1` on the last axis, `version("TORCH")`, an
+unused initial counter, annotation-only defaults); they are proposals for the
+equivalence review, not accepted equivalents. This direct evaluation is a diagnostic
+and does not replace a hosted native campaign.
