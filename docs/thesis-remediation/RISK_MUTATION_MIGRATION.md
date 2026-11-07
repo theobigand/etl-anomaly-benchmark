@@ -559,3 +559,46 @@ next run.
 
 Not yet exercised on hosted runners: cache restoration, a second incremental run,
 and failure recovery of a single shard.
+
+## Shard execution proofs and cache behavior (2026-11-08)
+
+**Execution binding.** Shards now run through the managed controller
+(`python -m verification.mutation_run --names <shard patterns>`), which holds the
+cache lock, binds source, function, global, test, dependency and runtime hashes
+before and after the attempt and refuses to bind if any input changes during it. A
+shard manifest built with `--attempt` carries a verified summary of that proof:
+proof and attempt digests, the native command (which must equal the shard's own
+patterns), exit status, per-module source and verdict-metadata digests, test and
+dependency digests and the runtime. Aggregation rejects a shard whose summary
+contradicts its manifest, the plan, the sources or the shared context, rejects shards
+that ran different test or dependency sets, and marks the campaign bound only when
+every shard carries a proof. A bound campaign can pass; an unbound one stays
+INCOMPLETE; a bound campaign below threshold fails. Eighteen regression tests cover
+missing, forged, stale, foreign, contradictory and mixed proofs.
+
+The aggregator verifies the proof's internal hash chain and its agreement with the
+plan, sources and context; it cannot re-inspect each shard's live cache, which is
+only available on the shard runner. That is the same trust boundary as stored
+monolithic evidence, but it means a shard runner with write access could fabricate a
+consistent proof; independent re-execution is the only defense.
+
+**Real shard check (local, controller-bound).** Shard 31 of a 45-way plan
+(`research/lstm_detector.py`, `research/pool_check.py`) ran through the controller:
+557 mutants (495 killed, 62 survived), native exit 0, manifest built and verified.
+This is feasibility evidence, not a campaign result.
+
+**Cache behavior on the same shard** (admission reports of the controller):
+
+| Change | Verdicts kept | Reset |
+| --- | --- | --- |
+| none (rerun) | 557 | 0 (1 min instead of about 10) |
+| one test file edited | 377 | 180 (mutants it covers) |
+| one source function edited | 517 | 40 (function and transitive callers) |
+| source reverted | 517 | 42 |
+| one verdict edited in a `.meta` file | 377 | 180 ("unbound metadata change") |
+
+Unchanged valid verdicts are reused, changed tests and functions invalidate only the
+affected mutants, and an edited verdict is not trusted. A pending attempt left by an
+interrupted run blocks the next attempt until its process group is confirmed gone,
+as designed; recovery here followed that check. The hosted cache restore and
+cross-run reuse remain to be exercised with the next hosted campaign.
