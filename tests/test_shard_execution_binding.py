@@ -111,6 +111,10 @@ def test_a_trustworthy_campaign_below_threshold_still_fails(tmp_path):
         (lambda r, p: r["admission"].__setitem__("context_sha256", "0" * 64), "admission"),
         (lambda r, p: r.__setitem__("native_log_sha256", "0" * 64), "native log"),
         (
+            lambda r, p: p["metadata_sha256"].__setitem__(f"{MODULE}.meta", "0" * 64),
+            "verdict metadata",
+        ),
+        (
             lambda r, p: p["context"]["sources"][MODULE].__setitem__("sha256", "0" * 64),
             "stale",
         ),
