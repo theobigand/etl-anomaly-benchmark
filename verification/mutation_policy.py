@@ -11,6 +11,7 @@ import hashlib
 import json
 import re
 from collections import Counter
+from datetime import date
 from pathlib import Path, PurePosixPath
 
 VERSION = 2
@@ -153,18 +154,23 @@ def _identity(key: str, path: str) -> None:
         raise ValueError("invalid native mutant function identity")
 
 
-def _summary(records: list[dict], eligible: int, threshold: int) -> dict:
+def _summary(records: list[dict], eligible: int, threshold: int, equivalent: int = 0) -> dict:
+    """Raw counts plus the score over the eligible mutants after accepted equivalents."""
     counts = Counter(record["outcome"] for record in records)
-    incomplete = len(records) != eligible or not eligible or any(counts[s] for s in INCOMPLETE)
+    adjusted = eligible - equivalent
+    incomplete = len(records) != eligible or not adjusted or any(counts[s] for s in INCOMPLETE)
     killed = counts["killed"]
     status = (
-        "INCOMPLETE" if incomplete else ("PASS" if killed * 100 >= threshold * eligible else "FAIL")
+        "INCOMPLETE" if incomplete else ("PASS" if killed * 100 >= threshold * adjusted else "FAIL")
     )
     return {
         "eligible": eligible,
         **{outcome: counts[outcome] for outcome in OUTCOMES},
         "threshold": threshold,
-        "score": 100.0 * killed / eligible if eligible else None,
+        "raw_score": 100.0 * killed / eligible if eligible else None,
+        "equivalent_accepted": equivalent,
+        "adjusted_eligible": adjusted,
+        "score": 100.0 * killed / adjusted if adjusted > 0 else None,
         "status": status,
         "exclusions": [],
     }
@@ -178,7 +184,81 @@ def _aggregate_status(statuses: list[str]) -> str:
     return "PASS"
 
 
-def evaluate(policy: dict, root: Path, catalog: dict, records: list[dict]) -> dict:
+EQUIVALENCE_VERSION = 1
+_EQUIVALENCE_TEXT = (
+    "id", "path", "function", "diff", "original_behavior", "mutated_behavior", "risk", "reason",
+    "source_sha256", "catalog_sha256", "author", "reviewer", "review_date",
+)  # fmt: skip
+
+
+def catalog_digest(keys: list[str]) -> str:
+    return hashlib.sha256(json.dumps(sorted(keys), separators=(",", ":")).encode()).hexdigest()
+
+
+def accepted_equivalents(
+    document: dict | None, units: dict, sources: dict, catalog: dict, records: list[dict]
+) -> dict[str, set[str]]:
+    """Validate reviewed equivalence records; return accepted mutant ids per module.
+
+    Only a surviving mutant of a classified module can be accepted. A record is bound
+    to the current source, the module catalog, the risk level and the policy version,
+    needs an approval by a reviewer other than its author and fails closed on any
+    mismatch; nothing is accepted automatically.
+    """
+    if document is None:
+        return {}
+    if (
+        not isinstance(document, dict)
+        or set(document) != {"version", "records"}
+        or document["version"] != EQUIVALENCE_VERSION
+        or not isinstance(document["records"], list)
+    ):
+        raise ValueError("equivalence document must be version 1 with a record list")
+    outcome = {record["id"]: record["outcome"] for record in records}
+    owner = {key: path for path, keys in catalog.items() for key in keys}
+    accepted: dict[str, set[str]] = {}
+    seen = set()
+    for item in document["records"]:
+        if not isinstance(item, dict) or set(item) != {
+            *_EQUIVALENCE_TEXT, "evidence", "approved", "policy_version"
+        }:  # fmt: skip
+            raise ValueError("invalid equivalence record shape")
+        if any(
+            not isinstance(item[name], str) or not item[name].strip() for name in _EQUIVALENCE_TEXT
+        ):
+            raise ValueError("equivalence record fields must be nonempty text")
+        evidence = item["evidence"]
+        if (
+            not isinstance(evidence, list)
+            or not evidence
+            or any(not isinstance(entry, str) or not entry.strip() for entry in evidence)
+        ):
+            raise ValueError("equivalence record needs supporting evidence")
+        key, path = item["id"], item["path"]
+        if key in seen or key not in owner or owner[key] != path:
+            raise ValueError("duplicate or unknown equivalence identity")
+        seen.add(key)
+        if item["approved"] is not True or item["reviewer"] == item["author"]:
+            raise ValueError("equivalence needs approval by a reviewer other than the author")
+        if outcome.get(key) != "survived":
+            raise ValueError("only a surviving mutant can be accepted as equivalent")
+        if item["policy_version"] != VERSION or item["risk"] != units[path]["level"]:
+            raise ValueError("equivalence record does not match the policy version or risk level")
+        if item["source_sha256"] != sources[path] or item["catalog_sha256"] != catalog_digest(
+            catalog[path]
+        ):
+            raise ValueError("equivalence record is stale for the current source or catalog")
+        try:
+            date.fromisoformat(item["review_date"])
+        except ValueError as error:
+            raise ValueError("equivalence review date must be ISO 8601") from error
+        accepted.setdefault(path, set()).add(key)
+    return accepted
+
+
+def evaluate(
+    policy: dict, root: Path, catalog: dict, records: list[dict], equivalence: dict | None = None
+) -> dict:
     """Reconcile outcomes with a complete catalog and enforce every module boundary.
 
     A caller must additionally bind the catalog and execution to current source,
@@ -189,10 +269,16 @@ def evaluate(policy: dict, root: Path, catalog: dict, records: list[dict]) -> di
     sources = {
         path: hashlib.sha256((root / path).read_bytes()).hexdigest() for path in policy["units"]
     }
-    return evaluate_snapshot(policy, sources, catalog, records)
+    return evaluate_snapshot(policy, sources, catalog, records, equivalence)
 
 
-def evaluate_snapshot(policy: dict, sources: dict, catalog: dict, records: list[dict]) -> dict:
+def evaluate_snapshot(
+    policy: dict,
+    sources: dict,
+    catalog: dict,
+    records: list[dict],
+    equivalence: dict | None = None,
+) -> dict:
     """Recompute recorded arithmetic, without proving live scope or execution.
 
     Snapshot declarations cannot establish technical exclusions or absence of
@@ -233,13 +319,19 @@ def evaluate_snapshot(policy: dict, sources: dict, catalog: dict, records: list[
         if path != expected[key] or record["outcome"] not in OUTCOMES:
             raise ValueError("mutant path or outcome differs from catalog")
         observed.add(key)
+    waived = accepted_equivalents(equivalence, units, sources, catalog, records)
     modules = {}
     for path, unit in sorted(units.items()):
         selected = [record for record in records if record["path"] == path]
         modules[path] = {
             "level": unit["level"],
             "reason": unit["reason"],
-            **_summary(selected, len(catalog.get(path, [])), THRESHOLDS[unit["level"]]),
+            **_summary(
+                selected,
+                len(catalog.get(path, [])),
+                THRESHOLDS[unit["level"]],
+                len(waived.get(path, ())),
+            ),
         }
         if "no_mutants" in unit:
             modules[path]["status"] = "NO_MUTANTS_TECHNICAL"
@@ -250,7 +342,9 @@ def evaluate_snapshot(policy: dict, sources: dict, catalog: dict, records: list[
         selected = [record for record in records if record["path"] in paths]
         eligible = sum(len(catalog.get(path, [])) for path in paths)
         scoped = [modules[path]["status"] for path in paths if "no_mutants" not in units[path]]
-        summary = _summary(selected, eligible, threshold)
+        summary = _summary(
+            selected, eligible, threshold, sum(len(waived.get(path, ())) for path in paths)
+        )
         summary["status"] = _aggregate_status(scoped) if scoped else "NOT_APPLICABLE"
         levels[level] = summary
     required = [
@@ -264,6 +358,8 @@ def evaluate_snapshot(policy: dict, sources: dict, catalog: dict, records: list[
         "policy_version": VERSION,
         "policy_sha256": policy_digest(policy),
         "sources": dict(sources),
+        "equivalence_version": EQUIVALENCE_VERSION,
+        "accepted_equivalents": {path: sorted(keys) for path, keys in sorted(waived.items())},
         "modules": modules,
         "levels": levels,
         "total": total,
