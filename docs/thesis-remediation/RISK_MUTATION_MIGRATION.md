@@ -682,12 +682,18 @@ when the same tests run directly. The exact worker failure was not captured; the
 evidence is the disagreement between the runner and direct execution, not a
 diagnosed traceback.
 
-**Conclusion.** The 128 local kills are not confirmed by test execution and are
-treated as runner artifacts of the forked macOS worker with PyTorch (the same kind of
-platform issue as the 46 macOS segmentation faults, which did not occur on Linux).
-They are not evidence that the tests detect those mutations; the hosted Linux
-verdict (survived) is the supported one, which means `research/lstm_detector.py`
-still needs behavioral tests (the `scale_` zero-variance guard is an example).
+**Status of the explanation.**
+
+- Observed: 128 mutants differ between the two runs, all in the PyTorch detector.
+- Observed: for 16 sampled mutants (three inspected in detail) the mapped tests passed when run directly with the mutant active.
+- Observed: the hosted Linux campaign reported those mutants as surviving.
+- Inferred: the local macOS forked worker produced test failures unrelated to the mutations.
+- Unverified: the exact worker failure, and any relationship to the 46 macOS-only segmentation faults (which did not occur on Linux).
+
+Because the local verdicts are not confirmed by direct execution, they are not used
+as evidence that the tests detect those mutations; the hosted Linux verdict is the
+one relied on, and `research/lstm_detector.py` needed behavioral tests (the
+`scale_` zero-variance guard is an example).
 
 **Policy consequence.** Release policy version 2 now carries `deep_platform: "Linux"`:
 a risk-tiered campaign (monolithic or sharded) is accepted by the release gate only
