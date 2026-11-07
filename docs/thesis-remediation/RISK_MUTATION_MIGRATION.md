@@ -409,3 +409,25 @@ regression test and is on this branch:
 
 Until these are resolved, the version-2 release policy correctly refuses a
 current certification.
+
+### Focused survivor work (development feedback, not evidence)
+
+Contract tests were added for the two leakage-critical research modules, using
+the native engine on each module alone with the existing cache:
+
+| Module | Before | After | Remaining survivors |
+| --- | --- | --- | --- |
+| `research/pool_preprocessing.py` | 203 / 248 (81.9%) | 238 / 248 (96.0%) | 10 |
+| `research/pool_train_only.py` | 234 / 332 (70.5%) | 325 / 332 (97.9%) | 7 |
+
+The new tests pin exact refusal messages, threshold boundaries, report fields, the
+arguments handed to the detector builder (including the training-prevalence
+contamination), output formatting and the CLI contract. Every remaining survivor
+was reviewed and is behaviorally equivalent: a default argument written
+explicitly (`errors="raise"`, `index=None` for `False`), a case-insensitive
+package-name lookup, or an empty-array dtype that broadcasts away. Both modules
+stay below 98% under the arithmetic as written, which shows a design question the
+owner must decide: the policy has no mechanism for reviewed equivalents, so a
+module with more than 2% equivalent mutants cannot pass unless its source is
+rewritten to avoid generating them. These figures come from a development run of
+two modules and are not bound to a campaign; they do not change the recorded FAIL.
