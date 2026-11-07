@@ -38,7 +38,7 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
-testpaths = ["tests"]
+testpaths = ["tests", "research/tests"]
 addopts = "-ra -q"
 filterwarnings = ["ignore:.pin_memory. argument is set as true:UserWarning"]
 markers = [
