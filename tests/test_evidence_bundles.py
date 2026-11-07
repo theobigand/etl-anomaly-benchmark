@@ -126,6 +126,51 @@ def test_every_evidence_kind_has_an_allowlist_covering_what_its_make_target_writ
     assert bundles.KINDS["real"] == REAL
 
 
+def test_deep_bundle_requires_the_current_campaign_raw_artifacts(tmp_path, monkeypatch):
+    root = tmp_path / "src"
+    required = [
+        "mutants/mutmut-cicd-stats.json",
+        "mutants/results.txt",
+        "mutants/controller-result.json",
+        "mutants/execution.json",
+        "mutants/attempts/" + "a" * 32 + "/execution.json",
+        "mutants/attempts/" + "a" * 32 + "/native.log",
+        "mutants/src/pkg/a.py",
+        "mutants/src/pkg/a.py.meta",
+        "mutants/src/pkg/a.py.spans",
+        "experiments/results/evidence/deep.json",
+    ]
+    for name in required:
+        _write(root, name, "log\n" if name.endswith(".log") or name.endswith(".txt") else "{}")
+    monkeypatch.setattr(bundles, "deep_artifacts", lambda _: required)
+    out = bundles.pack("deep", root, tmp_path / "deep.tgz")
+    with tarfile.open(out) as archive:
+        assert sorted(archive.getnames()) == sorted(required)
+
+
+def test_deep_unpack_accepts_only_policy_modules_and_canonical_attempts(tmp_path):
+    root = tmp_path / "dest"
+    _write(
+        root,
+        "verification/mutation_risk_policy.json",
+        json.dumps({"units": {"src/pkg/a.py": {}}}),
+    )
+    allowed = _bundle(
+        tmp_path / "allowed.tgz",
+        {
+            "mutants/src/pkg/a.py": "generated",
+            "mutants/src/pkg/a.py.meta": "{}",
+            "mutants/src/pkg/a.py.spans": "{}",
+            "mutants/attempts/" + "a" * 32 + "/execution.json": "{}",
+            "mutants/attempts/" + "a" * 32 + "/native.log": "log\n",
+        },
+    )
+    assert bundles.unpack(allowed, root, kind="deep")
+    forbidden = _bundle(tmp_path / "forbidden.tgz", {"mutants/src/pkg/other.py": "generated"})
+    with pytest.raises(bundles.BundleError, match="allowed"):
+        bundles.unpack(forbidden, root, kind="deep")
+
+
 def test_the_command_packs_and_unpacks(tmp_path):
     for name in REAL:
         _write(tmp_path / "src", name)
