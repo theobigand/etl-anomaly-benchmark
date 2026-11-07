@@ -39,3 +39,10 @@ class _FlatNames(importlib.abc.MetaPathFinder):
 
 if not any(isinstance(finder, _FlatNames) for finder in sys.meta_path):
     sys.meta_path.insert(0, _FlatNames())
+
+# These modules need PyTorch at import time; jobs that install without it skip them.
+collect_ignore = (
+    []
+    if importlib.util.find_spec("torch") is not None
+    else ["test_deep_typed.py", "test_lstm_detector.py", "test_lstm_pilot.py"]
+)
