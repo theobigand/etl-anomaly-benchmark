@@ -356,3 +356,11 @@ def test_deep_target_creates_the_directory_it_redirects_into():
     deep = makefile[makefile.index("verify-deep:") : makefile.index("verify-faults:")]
     assert "mkdir -p $(EVIDENCE) mutants" in deep
     assert deep.index("mkdir -p") < deep.index("> mutants/controller-result.json")
+
+
+def test_deep_job_installs_the_exact_inspected_mutmut_outside_the_fingerprinted_metadata():
+    job = (WORKFLOWS / "verify-release.yml").read_text()
+    job = job[job.index("  deep:") : job.index("Run deep profile")]
+    assert '-e ".[dev,deep]" "mutmut==3.8.0"' in job
+    project = (WORKFLOWS.parents[1] / "pyproject.toml").read_text()
+    assert "mutmut==3.8.0" not in project.split("[tool.", 1)[0]

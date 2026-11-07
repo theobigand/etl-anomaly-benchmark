@@ -176,7 +176,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install
-        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev,deep]"
+        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev,deep]" "mutmut==3.8.0"
 
       # Verdicts of mutants whose function and covering tests did not change are reused
       # (verification/mutation_cache.py resets the others). A release can ask for a fresh run.
