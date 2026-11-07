@@ -55,7 +55,9 @@ def plan(policy: dict, weights: dict[str, int], count: int) -> dict:
         raise ValueError("weights must cover exactly the mutating modules")
     shards = [{"index": index, "modules": [], "weight": 0} for index in range(count)]
     for name in sorted(modules, key=lambda item: (-weights[item], item)):
-        target = min(shards, key=lambda shard: (shard["weight"], shard["index"]))
+        target = min(
+            shards, key=lambda shard: (shard["weight"], len(shard["modules"]), shard["index"])
+        )
         target["modules"].append(name)
         target["weight"] += weights[name]
     for shard in shards:
