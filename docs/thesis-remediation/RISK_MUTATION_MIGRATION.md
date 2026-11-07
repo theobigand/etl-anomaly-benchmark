@@ -712,7 +712,9 @@ unreliable for PyTorch modules (see above), the 377 mutants of the module were
 evaluated by running `test_lstm_detector.py` and the new file directly with each
 mutant active: 343 were detected by the older suite alone, 367 of 377 (97.3%) with the
 new tests. The ten survivors are default or case-insensitive variants
-(`astype(None)` on float data, `dim=+1` on the last axis, `version("TORCH")`, an
-unused initial counter, annotation-only defaults); they are proposals for the
-equivalence review, not accepted equivalents. This direct evaluation is a diagnostic
+(`astype(None)` on float data, `dim=+1` on the last axis, `version("TORCH")`, a
+stale counter reset on the first epoch, the validation cap with `>=` followed by a
+sorted index selection that keeps the order, and `replace=None` in the sampler whose
+behavior was not independently established); they are candidates for the equivalence
+review, not accepted equivalents, and the sampler case needs a semantic argument. This direct evaluation is a diagnostic
 and does not replace a hosted native campaign.
