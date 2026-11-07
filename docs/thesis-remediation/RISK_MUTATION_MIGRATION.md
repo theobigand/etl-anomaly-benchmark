@@ -623,3 +623,15 @@ The uncovered mutants of the two pool pipelines are the orchestration entry poin
 the real functions and an assertion on the aggregated, per-seed and per-partition
 result, not on call order. That is the next test batch, followed by the survivors in
 `normalise`, `uci_loader` and `injection`.
+
+## Hosted diagnostic shard, first execution (2026-11-08, run 42401769698, commit 034ea98)
+
+A non-certifying diagnostic (label `run:mutation-shard-diagnostic`: one small shard,
+31 of a 45-way plan, no aggregation) ran on a hosted runner with the controller. The
+plan job, the checkout at the PR head SHA (verified in the job), the controller
+(bootstrap admission, native command with the shard's own patterns, exit 0), the
+manifest with its execution summary and the artifact transport all worked; the shard
+took about 16 minutes. 557 mutants: 367 killed, 190 survived. The same shard run
+locally on macOS gave 495 killed and 62 survived, so 128 mutants differ between
+environments; the cause (platform-dependent tests, or tests that need local data) is
+not yet identified and is recorded as an open question rather than averaged away.
