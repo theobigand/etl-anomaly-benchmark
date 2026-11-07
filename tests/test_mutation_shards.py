@@ -13,6 +13,14 @@ from tests.test_mutation_risk_policy import _campaign, _policy
 from verification import mutation_catalog, mutation_policy
 from verification import mutation_shards as shards
 
+
+@pytest.fixture(autouse=True)
+def _tool_versions(monkeypatch):
+    """The unit tests must not depend on the mutation engine being installed."""
+    versions = {"mutmut": "3.8.0", "pytest": "9.1.1"}
+    monkeypatch.setattr(shards, "version", lambda name: versions[name])
+
+
 CONTEXT = {
     "revision": "r" * 40,
     "tests_sha256": "t" * 64,
@@ -549,12 +557,8 @@ def test_the_context_counts_both_test_trees_and_the_tool_versions(tmp_path):
     assert shards.current_context(tmp_path)["tests_sha256"] != base
     (tmp_path / "tests/test_a.py").write_text("def test_a():\n    assert 1\n")
     assert shards.current_context(tmp_path)["tests_sha256"] != base
-    import hashlib as h
-    import importlib.metadata as md
-
     runtime = shards.current_context(tmp_path)["runtime"]
-    assert runtime["mutmut"] == md.version("mutmut") and runtime["pytest"] == md.version("pytest")
-    assert h.sha256().digest_size == 32
+    assert runtime["mutmut"] == "3.8.0" and runtime["pytest"] == "9.1.1"
 
 
 def test_aggregation_messages_and_result_fields_are_exact(tmp_path):
@@ -661,8 +665,9 @@ def test_the_command_line_reads_the_equivalence_file_and_names_use_spaces(tmp_pa
     from verification import mutation_policy
 
     record = {
-        "id": survivor, "path": SOURCE, "function": "compute", "diff": "d", "original_behavior": "o",
-        "mutated_behavior": "m", "risk": "L4", "reason": "r", "evidence": ["e"],
+        "id": survivor, "path": SOURCE, "function": "compute", "diff": "d",
+        "original_behavior": "o", "mutated_behavior": "m", "risk": "L4", "reason": "r",
+        "evidence": ["e"],
         "source_sha256": mutation_run["sources"][SOURCE],
         "catalog_sha256": mutation_policy.catalog_digest(mutation_run["catalog"][SOURCE]),
         "author": "a", "reviewer": "b", "approved": True, "review_date": "2026-11-08",
