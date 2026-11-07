@@ -6,25 +6,27 @@ Keep dataset populations separate and document overlaps. Generate figures and ta
 
 ## 06. Dataset inventory, overlap, and selection (P0; Thesis 01)
 
-- [ ] T071 Explain the provenance of the 152-dataset pool.
-- [ ] T072 Describe 100 labelled problems separately: 36 ADBench and 64 UCI.
-- [ ] T073 Describe 58 injection-eligible tables separately: 42 UCI and 16 ADBench.
-- [ ] T074 Show overlap between labelled and injection-eligible populations.
-- [ ] T075 Add a dataset inclusion/exclusion flow diagram.
-- [ ] T076 Define inclusion and exclusion criteria.
-- [ ] T077 Verify the stated minimum-row and continuous-column eligibility criteria.
-- [ ] T078 Inventory the five initially identified temporal datasets.
-- [ ] T079 Explain why four temporal datasets were retained, if confirmed.
-- [ ] T080 Document the Room Occupancy exclusion.
-- [ ] T081 Publish a manifest with source, version, dimensions, types, labels, and license.
-- [ ] T082 Assign a shared source identifier to derived problems.
-- [ ] T083 Verify the reported 19 overlapping ADBench/UCI sources.
-- [ ] T084 Do not treat 100 problems as 100 independent sources.
-- [ ] T085 Document minority-class-to-anomaly label mapping in UCI.
-- [ ] T086 Do not equate semantic minority classes with ETL defects.
-- [ ] T087 Explain Water Quality's violation of the rare-anomaly assumption where applicable.
-- [ ] T088 Record prevalence in train, validation, and test.
+- [x] T071 Explain the provenance of the 152-dataset pool.
+- [x] T072 Describe 100 labelled problems separately: 36 ADBench and 64 UCI.
+- [x] T073 Describe 58 injection-eligible tables separately: 42 UCI and 16 ADBench.
+- [x] T074 Show overlap between labelled and injection-eligible populations.
+- [x] T075 Add a dataset inclusion/exclusion flow diagram.
+- [x] T076 Define inclusion and exclusion criteria.
+- [x] T077 Verify the stated minimum-row and continuous-column eligibility criteria.
+- [x] T078 Inventory the five initially identified temporal datasets.
+- [x] T079 Explain why four temporal datasets were retained, if confirmed.
+- [x] T080 Document the Room Occupancy exclusion.
+- [x] T081 Publish a manifest with source, version, dimensions, types, labels, and license.
+- [x] T082 Assign a shared source identifier to derived problems.
+- [x] T083 Verify the reported 19 overlapping ADBench/UCI sources.
+- [x] T084 Do not treat 100 problems as 100 independent sources.
+- [x] T085 Document minority-class-to-anomaly label mapping in UCI.
+- [x] T086 Do not equate semantic minority classes with ETL defects.
+- [x] T087 Explain Water Quality's violation of the rare-anomaly assumption where applicable.
+- [x] T088 Record prevalence in train, validation, and test.
 - [ ] T089 Publish seeds and reproducible partition IDs.
+
+Evidence for T071–T088: [dataset inventory audit](DATASET_INVENTORY_AUDIT_2026-11-07.md), derived from the pinned registry manifests and temporal evidence. T089 remains open because historical row IDs were not archived.
 
 ## 07. Metric definitions and baselines (P0; Thesis 02)
 
