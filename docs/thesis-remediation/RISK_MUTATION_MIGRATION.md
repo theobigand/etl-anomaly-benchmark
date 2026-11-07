@@ -635,3 +635,20 @@ took about 16 minutes. 557 mutants: 367 killed, 190 survived. The same shard run
 locally on macOS gave 495 killed and 62 survived, so 128 mutants differ between
 environments; the cause (platform-dependent tests, or tests that need local data) is
 not yet identified and is recorded as an open question rather than averaged away.
+
+### Hosted cache reuse (run 42403174357, commit d6641df)
+
+The second diagnostic run of the same shard restored the cache saved by the first
+(run-keyed key, restore by prefix). The controller's admission report was
+`kept: 557, reset: 0, reasons: []`: every verdict was reused because source, tests,
+configuration and tools were unchanged, and the shard again finished with native exit
+0. Wall time stayed about 16 minutes because dependency installation and the native
+stats collection are repeated regardless of reuse; the saving applies to the mutant
+executions only. Hosted invalidation after a test or source change was shown locally
+(see above) and has not been repeated hosted. The diagnostic label has been removed.
+
+The mutation counts of the three recorded executions of this shard differ between
+environments in one module: `research/lstm_detector.py` is killed 128 more times on
+the macOS run than on the hosted Linux runs (all 128 mutants are in the PyTorch
+detector). This is unexplained and must be resolved before hosted scores are
+compared with local ones.
