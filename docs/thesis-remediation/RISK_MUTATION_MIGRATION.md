@@ -341,3 +341,71 @@ recorded here because they decide whether a campaign can start at all:
   from the selection or fail the whole stats run.
 - on a clean checkout `mutants/` does not exist before the deep target writes
   its controller record into it.
+
+## First complete native campaign (2026-11-07, revision c8e3917)
+
+The managed controller ran the native mutmut 3.8.0 campaign over all four governed
+roots in a clean environment (Python 3.11, mutmut 3.8.0, pytest 9.1.1, macOS
+arm64, exit 0) and the public gate evaluated it with the version-2 per-module
+policy. The verdict is **FAIL**. This is a measured diagnostic, not a certification,
+and the record is marked `promotion_eligible: false`
+([record](evidence/risk-native-campaign-2026-11-07.json), SHA-verified
+[archive](evidence/risk-native-campaign-2026-11-07.tgz)). The historical
+95% figures keep their original criterion and denominators.
+
+| Level | Required | Killed / eligible | Score | Modules (pass / fail / incomplete) |
+| --- | --- | --- | --- | --- |
+| L4 | 98% | 18,400 / 28,107 | 65.5% | 26 / 31 / 25 |
+| L3 | 95% | 848 / 1,704 | 49.8% | 1 / 1 / 4 |
+| L2 | 90% | 0 / 0 | n/a | 0 / 0 / 1 |
+
+Native totals: 29,811 mutants, 19,248 killed, 3,010 survived, 7,501 without a
+covering test, 6 timeouts, 46 segmentation faults (all in
+`verification/real_acquire.py` and `research/full_registry.py`). Timeouts,
+segmentation faults and no-test mutants stay in the denominator and never count as
+kills. Twenty-seven modules meet their own threshold (every core scientific module
+under `src/etl_benchmark`, plus several experiment entry points), 32 fall below
+it and 30 are incomplete. No aggregate compensates for a failing module.
+
+### Defects found by the first execution
+
+Constructed examples had not exposed these; each was fixed test-first or with a
+regression test and is on this branch:
+
+- `only_mutate` patterns are matched by mutmut with `fnmatch`, in which a star
+  crosses directories; `research/*.py` selected 24 test files (9,906 mutants of
+  test code). The scope checker used `Path.glob` and agreed with the wrong scope.
+  It now uses the native matching and the configuration excludes `research/tests/*`.
+- The campaign environment needs pytest 9.1.1: mutmut 3.8.0 reads `Item._nodeid`,
+  which pytest 9.2.0 removed. The pin is in the workflow install command.
+- `make verify-deep` wrote to `mutants/` before creating it on a clean checkout.
+- The mutation test selection ignored `tests/verifier`, the only tests of the
+  cache and controller, and ran the research scripts without attribution because
+  their tests import them by flat name. The selection now includes `tests` and
+  `research/tests`, the sandbox holds the documents and workflows the tests read,
+  and a finder serves the flat names from the package modules.
+- `research/tests` (245 tests) was not part of the default test path; it is now.
+
+### Remaining work before any level can pass
+
+1. 7,501 mutants have no covering test, concentrated in the research summary,
+   paper-table and pool modules, `verification/claims.py` and
+   `verification/release.py`. Each needs tests that exercise the code, not an
+   exclusion.
+2. 3,010 survivors need assertions that detect the change or a documented
+   reviewed equivalence; they are listed per module in the record.
+3. `src/etl_benchmark/__main__.py` and `logging_setup.py` receive no native
+   mutants although they contain functions, so they stay incomplete: the policy
+   accepts a technical declaration only for modules without functions. This needs
+   an owner and reviewer decision (for example a declaration validated against the
+   native generation index), not a silent exemption.
+4. The 46 segmentation faults come from native or subprocess code reached by the
+   mutated path; they need a bounded reproduction.
+5. The hosted `release-deep` job cannot finish a 29,811-mutant campaign within its
+   180-minute limit on a standard runner; the local campaign took about 1.5 hours
+   on ten cores with a cleared cache. The release path needs a persistent or
+   sharded cache before it can be exercised remotely.
+6. Independent review of the enforcement migration after these changes.
+
+Until these are resolved, the version-2 release policy correctly refuses a
+current certification.

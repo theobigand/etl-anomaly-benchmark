@@ -1,0 +1,1046 @@
+{
+  "archive": "risk-native-campaign-2026-11-07.tgz",
+  "archive_sha256": "ce573d79d66541a94455abd6c1f8a86be33c1b46003c19a3e91be9ee6162de0e",
+  "artifacts": {
+    "controller-result.json": "a40c23c80d1a639c723e3d05f8348af33c8666a6b8e267911576b10173801b18",
+    "execution.json": "9600b20c39cfec661d3cde399ca72e5640cb42dba199eb4840f173594cafbf7f",
+    "mutmut-cicd-stats.json": "7c94fb8c4f3cb2562fa4062a1d7b8eccb47f3a8299fa71ec42c73b38c514f6c5",
+    "results.txt": "0e45e3c07c8e38d4d03a8fddb065b3d8cf4d792606942dac8266c916bdb0a8dc"
+  },
+  "date": "2026-11-07",
+  "environment": {
+    "mutmut": "3.8.0",
+    "native_exit_code": 0,
+    "platform": "macOS-27.2-arm64-arm-64bit-Mach-O",
+    "pytest": "9.1.1",
+    "python": "3.11"
+  },
+  "levels": {
+    "L2": {
+      "eligible": 0,
+      "killed": 0,
+      "modules": {
+        "INCOMPLETE": 1
+      },
+      "score_percent": null,
+      "threshold": 90
+    },
+    "L3": {
+      "eligible": 1704,
+      "killed": 848,
+      "modules": {
+        "FAIL": 1,
+        "INCOMPLETE": 4,
+        "PASS": 1
+      },
+      "score_percent": 49.77,
+      "threshold": 95
+    },
+    "L4": {
+      "eligible": 28107,
+      "killed": 18400,
+      "modules": {
+        "FAIL": 31,
+        "INCOMPLETE": 25,
+        "PASS": 26
+      },
+      "score_percent": 65.46,
+      "threshold": 98
+    }
+  },
+  "modules": {
+    "experiments/check_mutation.py": {
+      "eligible": 150,
+      "killed": 125,
+      "level": "L4",
+      "outcomes": {
+        "killed": 125,
+        "survived": 25
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "experiments/fetch_cardio.py": {
+      "eligible": 61,
+      "killed": 60,
+      "level": "L4",
+      "outcomes": {
+        "killed": 60,
+        "survived": 1
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "experiments/generate_synthetic.py": {
+      "eligible": 91,
+      "killed": 90,
+      "level": "L4",
+      "outcomes": {
+        "killed": 90,
+        "survived": 1
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "experiments/provenance.py": {
+      "eligible": 381,
+      "killed": 378,
+      "level": "L4",
+      "outcomes": {
+        "killed": 378,
+        "survived": 3
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "experiments/run_benchmark.py": {
+      "eligible": 438,
+      "killed": 437,
+      "level": "L4",
+      "outcomes": {
+        "killed": 437,
+        "survived": 1
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "experiments/run_curves.py": {
+      "eligible": 451,
+      "killed": 443,
+      "level": "L4",
+      "outcomes": {
+        "killed": 443,
+        "survived": 8
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "experiments/run_severity.py": {
+      "eligible": 329,
+      "killed": 320,
+      "level": "L4",
+      "outcomes": {
+        "killed": 320,
+        "survived": 9
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "experiments/run_synthetic_benchmark.py": {
+      "eligible": 572,
+      "killed": 568,
+      "level": "L4",
+      "outcomes": {
+        "killed": 568,
+        "survived": 4
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "experiments/verification_report.py": {
+      "eligible": 290,
+      "killed": 290,
+      "level": "L4",
+      "outcomes": {
+        "killed": 290
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "experiments/verify_real.py": {
+      "eligible": 212,
+      "killed": 212,
+      "level": "L4",
+      "outcomes": {
+        "killed": 212
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "research/build_pool.py": {
+      "eligible": 172,
+      "killed": 57,
+      "level": "L4",
+      "outcomes": {
+        "killed": 57,
+        "no tests": 86,
+        "survived": 29
+      },
+      "status": "INCOMPLETE",
+      "threshold": 98
+    },
+    "research/cost_study.py": {
+      "eligible": 825,
+      "killed": 429,
+      "level": "L3",
+      "outcomes": {
+        "killed": 429,
+        "no tests": 305,
+        "survived": 91
+      },
+      "status": "INCOMPLETE",
+      "threshold": 95
+    },
+    "research/dataset_registry.py": {
+      "eligible": 417,
+      "killed": 242,
+      "level": "L4",
+      "outcomes": {
+        "killed": 242,
+        "no tests": 155,
+        "survived": 20
+      },
+      "status": "INCOMPLETE",
+      "threshold": 98
+    },
+    "research/deep_support.py": {
+      "eligible": 14,
+      "killed": 14,
+      "level": "L3",
+      "outcomes": {
+        "killed": 14
+      },
+      "status": "PASS",
+      "threshold": 95
+    },
+    "research/deep_typed.py": {
+      "eligible": 442,
+      "killed": 271,
+      "level": "L4",
+      "outcomes": {
+        "killed": 271,
+        "no tests": 142,
+        "survived": 29
+      },
+      "status": "INCOMPLETE",
+      "threshold": 98
+    },
+    "research/full_registry.py": {
+      "eligible": 571,
+      "killed": 280,
+      "level": "L4",
+      "outcomes": {
+        "killed": 280,
+        "no tests": 270,
+        "segfault": 2,
+        "survived": 19
+      },
+      "status": "INCOMPLETE",
+      "threshold": 98
+    },
+    "research/full_registry_summary.py": {
+      "eligible": 541,
+      "killed": 161,
+      "level": "L4",
+      "outcomes": {
+        "killed": 161,
+        "no tests": 352,
+        "survived": 28
+      },
+      "status": "INCOMPLETE",
+      "threshold": 98
+    },
+    "research/injection.py": {
+      "eligible": 336,
+      "killed": 323,
+      "level": "L4",
+      "outcomes": {
+        "killed": 323,
+        "survived": 13
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "research/labelled_benchmark.py": {
+      "eligible": 475,
+      "killed": 112,
+      "level": "L4",
+      "outcomes": {
+        "killed": 112,
+        "no tests": 361,
+        "survived": 2
+      },
+      "status": "INCOMPLETE",
+      "threshold": 98
+    },
+    "research/labelled_summary.py": {
+      "eligible": 676,
+      "killed": 280,
+      "level": "L4",
+      "outcomes": {
+        "killed": 280,
+        "no tests": 314,
+        "survived": 82
+      },
+      "status": "INCOMPLETE",
+      "threshold": 98
+    },
+    "research/lstm_detector.py": {
+      "eligible": 377,
+      "killed": 377,
+      "level": "L4",
+      "outcomes": {
+        "killed": 377
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "research/lstm_pilot.py": {
+      "eligible": 506,
+      "killed": 189,
+      "level": "L4",
+      "outcomes": {
+        "killed": 189,
+        "no tests": 317
+      },
+      "status": "INCOMPLETE",
+      "threshold": 98
+    },
+    "research/multi_schema.py": {
+      "eligible": 1093,
+      "killed": 870,
+      "level": "L4",
+      "outcomes": {
+        "killed": 870,
+        "no tests": 204,
+        "survived": 19
+      },
+      "status": "INCOMPLETE",
+      "threshold": 98
+    },
+    "research/normalise.py": {
+      "eligible": 193,
+      "killed": 175,
+      "level": "L4",
+      "outcomes": {
+        "killed": 175,
+        "survived": 18
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "research/paired_bootstrap.py": {
+      "eligible": 100,
+      "killed": 77,
+      "level": "L4",
+      "outcomes": {
+        "killed": 77,
+        "survived": 21,
+        "timeout": 2
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "research/paper_appendix.py": {
+      "eligible": 171,
+      "killed": 0,
+      "level": "L4",
+      "outcomes": {
+        "no tests": 171
+      },
+      "status": "INCOMPLETE",
+      "threshold": 98
+    },
+    "research/paper_tables.py": {
+      "eligible": 511,
+      "killed": 0,
+      "level": "L4",
+      "outcomes": {
+        "no tests": 511
+      },
+      "status": "INCOMPLETE",
+      "threshold": 98
+    },
+    "research/pool_check.py": {
+      "eligible": 180,
+      "killed": 118,
+      "level": "L4",
+      "outcomes": {
+        "killed": 118,
+        "survived": 62
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "research/pool_chrono.py": {
+      "eligible": 316,
+      "killed": 145,
+      "level": "L4",
+      "outcomes": {
+        "killed": 145,
+        "no tests": 138,
+        "survived": 33
+      },
+      "status": "INCOMPLETE",
+      "threshold": 98
+    },
+    "research/pool_etl.py": {
+      "eligible": 317,
+      "killed": 154,
+      "level": "L4",
+      "outcomes": {
+        "killed": 154,
+        "no tests": 121,
+        "survived": 42
+      },
+      "status": "INCOMPLETE",
+      "threshold": 98
+    },
+    "research/pool_extension_paper.py": {
+      "eligible": 652,
+      "killed": 0,
+      "level": "L4",
+      "outcomes": {
+        "no tests": 652
+      },
+      "status": "INCOMPLETE",
+      "threshold": 98
+    },
+    "research/pool_extension_summary.py": {
+      "eligible": 496,
+      "killed": 436,
+      "level": "L4",
+      "outcomes": {
+        "killed": 436,
+        "survived": 60
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "research/pool_full.py": {
+      "eligible": 515,
+      "killed": 223,
+      "level": "L4",
+      "outcomes": {
+        "killed": 223,
+        "no tests": 265,
+        "survived": 27
+      },
+      "status": "INCOMPLETE",
+      "threshold": 98
+    },
+    "research/pool_preprocessing.py": {
+      "eligible": 248,
+      "killed": 203,
+      "level": "L4",
+      "outcomes": {
+        "killed": 203,
+        "survived": 45
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "research/pool_train_only.py": {
+      "eligible": 332,
+      "killed": 234,
+      "level": "L4",
+      "outcomes": {
+        "killed": 234,
+        "survived": 98
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "research/pool_typed.py": {
+      "eligible": 525,
+      "killed": 26,
+      "level": "L4",
+      "outcomes": {
+        "killed": 26,
+        "no tests": 478,
+        "survived": 21
+      },
+      "status": "INCOMPLETE",
+      "threshold": 98
+    },
+    "research/temporal_decision.py": {
+      "eligible": 836,
+      "killed": 522,
+      "level": "L4",
+      "outcomes": {
+        "killed": 522,
+        "no tests": 186,
+        "survived": 127,
+        "timeout": 1
+      },
+      "status": "INCOMPLETE",
+      "threshold": 98
+    },
+    "research/temporal_pilot.py": {
+      "eligible": 586,
+      "killed": 20,
+      "level": "L4",
+      "outcomes": {
+        "killed": 20,
+        "no tests": 566
+      },
+      "status": "INCOMPLETE",
+      "threshold": 98
+    },
+    "research/time_scan.py": {
+      "eligible": 135,
+      "killed": 0,
+      "level": "L3",
+      "outcomes": {
+        "no tests": 135
+      },
+      "status": "INCOMPLETE",
+      "threshold": 95
+    },
+    "research/typed_benchmark.py": {
+      "eligible": 180,
+      "killed": 180,
+      "level": "L4",
+      "outcomes": {
+        "killed": 180
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "research/typed_figures.py": {
+      "eligible": 240,
+      "killed": 133,
+      "level": "L4",
+      "outcomes": {
+        "killed": 133,
+        "survived": 107
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "research/typed_masking.py": {
+      "eligible": 132,
+      "killed": 27,
+      "level": "L4",
+      "outcomes": {
+        "killed": 27,
+        "no tests": 104,
+        "survived": 1
+      },
+      "status": "INCOMPLETE",
+      "threshold": 98
+    },
+    "research/typed_run.py": {
+      "eligible": 351,
+      "killed": 27,
+      "level": "L4",
+      "outcomes": {
+        "killed": 27,
+        "no tests": 322,
+        "survived": 2
+      },
+      "status": "INCOMPLETE",
+      "threshold": 98
+    },
+    "research/typed_summary.py": {
+      "eligible": 507,
+      "killed": 386,
+      "level": "L4",
+      "outcomes": {
+        "killed": 386,
+        "survived": 121
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "research/uci_loader.py": {
+      "eligible": 186,
+      "killed": 157,
+      "level": "L4",
+      "outcomes": {
+        "killed": 157,
+        "survived": 29
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "research/uci_pool.py": {
+      "eligible": 423,
+      "killed": 222,
+      "level": "L3",
+      "outcomes": {
+        "killed": 222,
+        "no tests": 174,
+        "survived": 27
+      },
+      "status": "INCOMPLETE",
+      "threshold": 95
+    },
+    "src/etl_benchmark/__main__.py": {
+      "eligible": 0,
+      "killed": 0,
+      "level": "L3",
+      "outcomes": {},
+      "status": "INCOMPLETE",
+      "threshold": 95
+    },
+    "src/etl_benchmark/atomic.py": {
+      "eligible": 6,
+      "killed": 6,
+      "level": "L4",
+      "outcomes": {
+        "killed": 6
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "src/etl_benchmark/datasets.py": {
+      "eligible": 23,
+      "killed": 23,
+      "level": "L4",
+      "outcomes": {
+        "killed": 23
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "src/etl_benchmark/extract.py": {
+      "eligible": 5,
+      "killed": 5,
+      "level": "L4",
+      "outcomes": {
+        "killed": 5
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "src/etl_benchmark/load.py": {
+      "eligible": 14,
+      "killed": 13,
+      "level": "L4",
+      "outcomes": {
+        "killed": 13,
+        "survived": 1
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "src/etl_benchmark/logging_setup.py": {
+      "eligible": 0,
+      "killed": 0,
+      "level": "L2",
+      "outcomes": {},
+      "status": "INCOMPLETE",
+      "threshold": 90
+    },
+    "src/etl_benchmark/metrics.py": {
+      "eligible": 91,
+      "killed": 91,
+      "level": "L4",
+      "outcomes": {
+        "killed": 91
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "src/etl_benchmark/pipeline.py": {
+      "eligible": 163,
+      "killed": 163,
+      "level": "L4",
+      "outcomes": {
+        "killed": 163
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "src/etl_benchmark/quality/_torch_models.py": {
+      "eligible": 65,
+      "killed": 57,
+      "level": "L4",
+      "outcomes": {
+        "killed": 57,
+        "survived": 8
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "src/etl_benchmark/quality/autoencoder.py": {
+      "eligible": 117,
+      "killed": 117,
+      "level": "L4",
+      "outcomes": {
+        "killed": 117
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "src/etl_benchmark/quality/base.py": {
+      "eligible": 31,
+      "killed": 30,
+      "level": "L4",
+      "outcomes": {
+        "killed": 30,
+        "survived": 1
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "src/etl_benchmark/quality/deep.py": {
+      "eligible": 62,
+      "killed": 62,
+      "level": "L4",
+      "outcomes": {
+        "killed": 62
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "src/etl_benchmark/quality/drift.py": {
+      "eligible": 129,
+      "killed": 129,
+      "level": "L4",
+      "outcomes": {
+        "killed": 129
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "src/etl_benchmark/quality/gx.py": {
+      "eligible": 98,
+      "killed": 98,
+      "level": "L4",
+      "outcomes": {
+        "killed": 98
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "src/etl_benchmark/quality/ml.py": {
+      "eligible": 259,
+      "killed": 259,
+      "level": "L4",
+      "outcomes": {
+        "killed": 259
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "src/etl_benchmark/quality/rules.py": {
+      "eligible": 119,
+      "killed": 119,
+      "level": "L4",
+      "outcomes": {
+        "killed": 119
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "src/etl_benchmark/quality/window_drift.py": {
+      "eligible": 233,
+      "killed": 226,
+      "level": "L4",
+      "outcomes": {
+        "killed": 226,
+        "survived": 7
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "src/etl_benchmark/quality/windows.py": {
+      "eligible": 57,
+      "killed": 57,
+      "level": "L4",
+      "outcomes": {
+        "killed": 57
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "src/etl_benchmark/registry.py": {
+      "eligible": 68,
+      "killed": 68,
+      "level": "L4",
+      "outcomes": {
+        "killed": 68
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "src/etl_benchmark/split.py": {
+      "eligible": 124,
+      "killed": 123,
+      "level": "L4",
+      "outcomes": {
+        "killed": 123,
+        "survived": 1
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "src/etl_benchmark/synthetic.py": {
+      "eligible": 536,
+      "killed": 536,
+      "level": "L4",
+      "outcomes": {
+        "killed": 536
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "src/etl_benchmark/transform.py": {
+      "eligible": 2,
+      "killed": 2,
+      "level": "L4",
+      "outcomes": {
+        "killed": 2
+      },
+      "status": "PASS",
+      "threshold": 98
+    },
+    "verification/archive_evidence.py": {
+      "eligible": 249,
+      "killed": 207,
+      "level": "L4",
+      "outcomes": {
+        "killed": 207,
+        "survived": 42
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "verification/bundles.py": {
+      "eligible": 264,
+      "killed": 141,
+      "level": "L4",
+      "outcomes": {
+        "killed": 141,
+        "no tests": 109,
+        "survived": 14
+      },
+      "status": "INCOMPLETE",
+      "threshold": 98
+    },
+    "verification/check_types.py": {
+      "eligible": 209,
+      "killed": 161,
+      "level": "L4",
+      "outcomes": {
+        "killed": 161,
+        "survived": 48
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "verification/claims.py": {
+      "eligible": 714,
+      "killed": 5,
+      "level": "L4",
+      "outcomes": {
+        "killed": 5,
+        "no tests": 689,
+        "survived": 20
+      },
+      "status": "INCOMPLETE",
+      "threshold": 98
+    },
+    "verification/evidence_schema.py": {
+      "eligible": 1434,
+      "killed": 954,
+      "level": "L4",
+      "outcomes": {
+        "killed": 954,
+        "no tests": 250,
+        "survived": 230
+      },
+      "status": "INCOMPLETE",
+      "threshold": 98
+    },
+    "verification/lineage.py": {
+      "eligible": 191,
+      "killed": 166,
+      "level": "L4",
+      "outcomes": {
+        "killed": 166,
+        "survived": 25
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "verification/lock_environment.py": {
+      "eligible": 346,
+      "killed": 247,
+      "level": "L4",
+      "outcomes": {
+        "killed": 247,
+        "survived": 99
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "verification/mutation_cache.py": {
+      "eligible": 1110,
+      "killed": 946,
+      "level": "L4",
+      "outcomes": {
+        "killed": 946,
+        "survived": 163,
+        "timeout": 1
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "verification/mutation_campaign.py": {
+      "eligible": 483,
+      "killed": 440,
+      "level": "L4",
+      "outcomes": {
+        "killed": 440,
+        "survived": 43
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "verification/mutation_catalog.py": {
+      "eligible": 355,
+      "killed": 288,
+      "level": "L4",
+      "outcomes": {
+        "killed": 288,
+        "survived": 67
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "verification/mutation_policy.py": {
+      "eligible": 535,
+      "killed": 470,
+      "level": "L4",
+      "outcomes": {
+        "killed": 470,
+        "survived": 65
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "verification/mutation_run.py": {
+      "eligible": 326,
+      "killed": 298,
+      "level": "L4",
+      "outcomes": {
+        "killed": 298,
+        "survived": 28
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "verification/mutation_scope.py": {
+      "eligible": 246,
+      "killed": 225,
+      "level": "L4",
+      "outcomes": {
+        "killed": 225,
+        "survived": 21
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "verification/pool_contract.py": {
+      "eligible": 187,
+      "killed": 144,
+      "level": "L4",
+      "outcomes": {
+        "killed": 144,
+        "survived": 41,
+        "timeout": 2
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "verification/protection.py": {
+      "eligible": 294,
+      "killed": 235,
+      "level": "L4",
+      "outcomes": {
+        "killed": 235,
+        "survived": 59
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "verification/real_acquire.py": {
+      "eligible": 219,
+      "killed": 119,
+      "level": "L4",
+      "outcomes": {
+        "killed": 119,
+        "segfault": 44,
+        "survived": 56
+      },
+      "status": "INCOMPLETE",
+      "threshold": 98
+    },
+    "verification/real_preflight.py": {
+      "eligible": 790,
+      "killed": 543,
+      "level": "L4",
+      "outcomes": {
+        "killed": 543,
+        "survived": 247
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "verification/refresh_profile.py": {
+      "eligible": 147,
+      "killed": 105,
+      "level": "L4",
+      "outcomes": {
+        "killed": 105,
+        "survived": 42
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "verification/release.py": {
+      "eligible": 819,
+      "killed": 557,
+      "level": "L4",
+      "outcomes": {
+        "killed": 557,
+        "no tests": 124,
+        "survived": 138
+      },
+      "status": "INCOMPLETE",
+      "threshold": 98
+    },
+    "verification/reproduce.py": {
+      "eligible": 832,
+      "killed": 637,
+      "level": "L4",
+      "outcomes": {
+        "killed": 637,
+        "survived": 195
+      },
+      "status": "FAIL",
+      "threshold": 98
+    },
+    "verification/scaling.py": {
+      "eligible": 307,
+      "killed": 183,
+      "level": "L3",
+      "outcomes": {
+        "killed": 183,
+        "survived": 124
+      },
+      "status": "FAIL",
+      "threshold": 95
+    }
+  },
+  "native_statistics": {
+    "check_was_interrupted_by_user": 0,
+    "killed": 19248,
+    "no_tests": 7501,
+    "segfault": 46,
+    "skipped": 0,
+    "survived": 3010,
+    "suspicious": 0,
+    "timeout": 6,
+    "total": 29811
+  },
+  "promotion_eligible": false,
+  "revision": "c8e39171aa1e328c9b700883edafc9836db6d071",
+  "schema": "risk-native-campaign-record-1",
+  "statement": "Measured diagnostic of the first complete native campaign over the four governed roots. No level meets its threshold; this is not a certification and the historical 95% criterion is unchanged.",
+  "verdict": "FAIL",
+  "worktree_clean_except_untracked_local_file": true
+}
