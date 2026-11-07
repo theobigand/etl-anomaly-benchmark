@@ -108,7 +108,7 @@ or test labels to set the flag threshold. It is a separate comparator: the
 tables below retain the train-prevalence policy. The synthetic benchmark and
 the main curves use that same baseline; the contamination sweep deliberately
 varies the threshold on a fixed grid to show sensitivity, without choosing a
-winner from the test scores. `PR-AUC` is average precision.
+winner from the test scores. `AP` is average precision.
 
 The fixed 0.02 comparator has now been run on the three example datasets with
 the same seeds and splits. Its tables are archived in
@@ -116,7 +116,7 @@ the same seeds and splits. Its tables are archived in
 these runs, but after the baseline results were known; this is an exploratory
 sensitivity check, not an independent confirmatory test. For Isolation
 Forest, F1 changes from 0.203 to 0.102 on Credit Card Fraud, 0.618 to 0.406
-on Cardio, and 0.512 to 0.023 on Water Quality. The score ranking and PR-AUC
+on Cardio, and 0.512 to 0.023 on Water Quality. The score ranking and AP
 do not change with the threshold.
 
 The [verification protocol](verification/README.md) records current coverage,
@@ -134,7 +134,7 @@ Mean over 5 seeds on the 15% held-out test split.
 
 ### Credit Card Fraud (283,726 rows, 0.167% fraud)
 
-| Detector | Prec | Rec | F1 | ROC-AUC | PR-AUC | Flag % | detect |
+| Detector | Prec | Rec | F1 | ROC-AUC | AP | Flag % | detect |
 |---|---|---|---|---|---|---|---|
 | Z-score | 0.011 | 0.870 | 0.021 | 0.926 | 0.078 | 13.4 | 0.03 s |
 | IQR | 0.003 | 0.966 | 0.007 | 0.911 | 0.018 | 48.6 | 0.12 s |
@@ -160,7 +160,7 @@ times are not published; the cost study measures them alone.
 
 ### Cardio (1,831 raw rows; 1,822 after deduplication, 9.6% anomalies)
 
-| Detector | Prec | Rec | F1 | ROC-AUC | PR-AUC | Flag % |
+| Detector | Prec | Rec | F1 | ROC-AUC | AP | Flag % |
 |---|---|---|---|---|---|---|
 | Z-score | 0.49 | 0.81 | 0.61 | 0.93 | 0.61 | 16.6 |
 | IQR | 0.21 | 0.90 | 0.33 | 0.78 | 0.30 | 43.4 |
@@ -181,7 +181,7 @@ times are not published; the cost study measures them alone.
 | LUNAR | 0.41 | 0.39 | 0.29 | 0.65 | 0.33 | 18.8 |
 
 When the anomalies are genuinely rare and distributionally distinct, the unsupervised
-detectors work: Isolation Forest reaches F1 ≈ 0.62 and PR-AUC ≈ 0.70. This is the
+detectors work: Isolation Forest reaches F1 ≈ 0.62 and AP ≈ 0.70. This is the
 counterpoint to Credit Card Fraud (0.17% mixed-defect label) and Water Quality (61%
 majority target).
 
@@ -219,7 +219,7 @@ draws the precision-recall curves and the contamination sweep.
 
 ### Water Quality (3,276 rows, 61% "not potable")
 
-Every ROC-AUC is 0.45–0.51 and every PR-AUC sits at the 0.61 base rate: the target class
+Every ROC-AUC is 0.45–0.51 and every AP sits at the 0.61 base rate: the target class
 is common, not rare, so the unsupervised detectors are at chance. A useful negative
 result, and it exercises the pipeline on real missing data.
 
@@ -273,7 +273,7 @@ etl-anomaly-benchmark/
 
 ## Adding a detector
 
-Every detector subclasses `etl_benchmark.quality.base.Detector` and implements `fit` and `predict`. The `score` method returns a continuous anomaly score (higher means more anomalous); it has a binary default, and you override it when a graded score is available so ROC-AUC and PR-AUC mean something.
+Every detector subclasses `etl_benchmark.quality.base.Detector` and implements `fit` and `predict`. The `score` method returns a continuous anomaly score (higher means more anomalous); it has a binary default, and you override it when a graded score is available so ROC-AUC and AP mean something.
 
 ```python
 from etl_benchmark.quality.base import Detector
