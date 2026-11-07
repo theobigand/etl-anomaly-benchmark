@@ -65,6 +65,28 @@ def test_missing_current_execution_never_falls_back_to_global_95_percent_counts(
     assert evidence.validate(doc, root=tmp_path) == []
 
 
+def test_current_deep_envelope_requires_a_native_listing(tmp_path):
+    inputs = _fixture(tmp_path)
+    doc = evidence.build_deep(
+        inputs[0],
+        root=tmp_path,
+        source=SOURCE_ID,
+        environment=EXECUTION,
+        execution=EXECUTION,
+    )
+    assert doc["status"] == "INCOMPLETE"
+    assert doc["result"]["reason"] == "the native mutant listing is required"
+
+
+def test_current_deep_envelope_uses_the_bound_runtime_when_no_environment_is_supplied(tmp_path):
+    inputs = _fixture(tmp_path)
+    doc = evidence.build_deep(
+        *inputs[:2], run_report=inputs[2], root=tmp_path, source=SOURCE_ID, execution=EXECUTION
+    )
+    proof = json.loads((tmp_path / "mutants/execution-context.json").read_text())
+    assert doc["environment"]["python"] == proof["context"]["runtime"]["python"]
+
+
 def test_current_root_rejects_a_consistent_old_snapshot_after_source_changes(tmp_path):
     doc = _build(tmp_path, _fixture(tmp_path))
     (tmp_path / SOURCE).write_text("def compute(value):\n    return value+2\n")

@@ -9,6 +9,8 @@ from pathlib import Path
 
 import pytest
 
+from tests.test_mutation_campaign import _fixture
+from tests.test_mutation_evidence import _build
 from verification import bundles
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -148,6 +150,29 @@ def test_deep_bundle_requires_the_current_campaign_raw_artifacts(tmp_path, monke
         assert sorted(archive.getnames()) == sorted(required)
 
 
+def test_deep_artifacts_are_derived_from_a_current_bound_envelope(tmp_path):
+    doc = _build(tmp_path, _fixture(tmp_path))
+    evidence = tmp_path / "experiments/results/evidence/deep.json"
+    evidence.parent.mkdir(parents=True)
+    evidence.write_text(json.dumps(doc))
+    names = bundles.deep_artifacts(tmp_path)
+    assert "mutants/execution-context.json" in names
+    assert "mutants/src/pkg/a.py.meta" in names
+    assert "mutants/attempts/" + "a" * 32 + "/native.log" in names
+
+
+def test_deep_artifact_derivation_rejects_an_unbound_or_missing_envelope(tmp_path):
+    with pytest.raises(bundles.BundleError, match="cannot identify"):
+        bundles.deep_artifacts(tmp_path)
+    _write(
+        tmp_path,
+        "experiments/results/evidence/deep.json",
+        json.dumps({"kind": "deep", "result": {}}),
+    )
+    with pytest.raises(bundles.BundleError, match="current campaign"):
+        bundles.deep_artifacts(tmp_path)
+
+
 def test_deep_unpack_accepts_only_policy_modules_and_canonical_attempts(tmp_path):
     root = tmp_path / "dest"
     _write(
@@ -169,6 +194,25 @@ def test_deep_unpack_accepts_only_policy_modules_and_canonical_attempts(tmp_path
     forbidden = _bundle(tmp_path / "forbidden.tgz", {"mutants/src/pkg/other.py": "generated"})
     with pytest.raises(bundles.BundleError, match="allowed"):
         bundles.unpack(forbidden, root, kind="deep")
+
+
+def test_bundle_rejects_duplicate_members_and_resource_limits(tmp_path, monkeypatch):
+    duplicate = tmp_path / "duplicate.tgz"
+    with tarfile.open(duplicate, "w:gz") as archive:
+        for _ in range(2):
+            info = tarfile.TarInfo(REAL[1])
+            info.size = 2
+            archive.addfile(info, io.BytesIO(b"{}"))
+    with pytest.raises(bundles.BundleError, match="more than once"):
+        bundles.unpack(duplicate, tmp_path / "dest")
+    many = _bundle(tmp_path / "many.tgz", {REAL[1]: "{}"})
+    monkeypatch.setattr(bundles, "MAX_MEMBERS", 0)
+    with pytest.raises(bundles.BundleError, match="more than"):
+        bundles.unpack(many, tmp_path / "dest")
+    monkeypatch.setattr(bundles, "MAX_MEMBERS", 512)
+    monkeypatch.setattr(bundles, "MAX_TOTAL", 1)
+    with pytest.raises(bundles.BundleError, match="larger than"):
+        bundles.unpack(many, tmp_path / "dest")
 
 
 def test_the_command_packs_and_unpacks(tmp_path):

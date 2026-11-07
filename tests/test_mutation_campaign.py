@@ -129,6 +129,14 @@ def test_complete_campaign_retains_per_module_counts_and_required_raw_artifacts(
     assert tmp_path / ("mutants/" + SOURCE) in artifacts
 
 
+def test_optional_native_dependency_graph_is_not_required_for_campaign_reading(tmp_path):
+    inputs = _fixture(tmp_path)
+    graph = tmp_path / "mutants/mutmut-stats.json"
+    graph.unlink()
+    _, artifacts = _load(tmp_path, inputs)
+    assert graph not in artifacts
+
+
 def test_survivors_are_not_removed_to_obtain_a_passing_campaign(tmp_path):
     result, _ = _load(tmp_path, _fixture(tmp_path, survived=True))
     assert _api().status(result) == "FAIL"
@@ -145,6 +153,29 @@ def test_nonzero_native_exit_blocks_even_complete_killed_counts(tmp_path):
 def test_known_mutation_failure_remains_visible_after_a_nonzero_exit(tmp_path):
     result, _ = _load(tmp_path, _fixture(tmp_path, survived=True, exit_code=2))
     assert _api().status(result) == "FAIL"
+
+
+def test_campaign_read_rejects_a_changed_execution_binding_mid_read(tmp_path, monkeypatch):
+    inputs = _fixture(tmp_path)
+    original = _api().mutation_cache.validate_execution
+    calls = 0
+
+    def changed_after_initial_validation(*args, **kwargs):
+        nonlocal calls
+        calls += 1
+        proof = original(*args, **kwargs)
+        return proof if calls == 1 else {**proof, "sha256": "f" * 64}
+
+    monkeypatch.setattr(
+        _api().mutation_cache, "validate_execution", changed_after_initial_validation
+    )
+    with pytest.raises(ValueError, match="changed while"):
+        _load(tmp_path, inputs)
+
+
+def test_malformed_incomplete_campaign_reason_is_rejected():
+    with pytest.raises(ValueError, match="incomplete campaign"):
+        _api().status({"format_version": 2, "reason": ""})
 
 
 @pytest.mark.parametrize("field", ["status", "killed", "threshold"])
