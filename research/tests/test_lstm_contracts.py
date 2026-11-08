@@ -340,3 +340,37 @@ def test_each_unfitted_component_alone_is_enough_to_refuse_scoring():
         model.validation_loss_now()
     fresh = _model()
     assert fresh._history == {} and fresh._validation is None and fresh._net is None
+
+
+def test_a_column_with_a_spread_below_one_is_scaled_by_that_spread_not_left_unscaled():
+    train = _frame(150, 0)
+    train["a"] = train["a"] * 0.15  # population spread well below one
+    model, _, _ = _fit(train=train)
+    spread = train[COLUMNS].astype(float).std(ddof=0).to_numpy()
+    assert 0 < spread[0] < 0.5 and model.scale_[0] == pytest.approx(spread[0])
+    assert model.scale_[0] != 1.0
+
+
+def test_numeric_text_columns_are_converted_to_floats_when_fitting_and_scoring():
+    train, validation = _frame(150, 0), _frame(60, 1, start=150)
+    text_train = train.assign(**{c: train[c].map(repr) for c in COLUMNS})
+    text_validation = validation.assign(**{c: validation[c].map(repr) for c in COLUMNS})
+    numeric = _fit(train=train, validation=validation)[0]
+    text = _fit(train=text_train, validation=text_validation)[0]
+    assert np.allclose(text.center_, numeric.center_) and np.allclose(text.scale_, numeric.scale_)
+    frame = _frame(20, 4, 300)
+    as_text = frame.assign(**{c: frame[c].map(repr) for c in COLUMNS})
+    assert np.allclose(text.score(as_text).to_numpy(), text.score(frame).to_numpy())
+
+
+def test_a_non_improving_first_epoch_still_counts_towards_the_patience(monkeypatch):
+    calls = []
+
+    def nan_loss(self):
+        calls.append(1)
+        return float("nan")
+
+    monkeypatch.setattr(ld.LSTMAutoencoder, "validation_loss_now", nan_loss)
+    with pytest.raises(AssertionError):
+        _model(max_epochs=9, patience=2).fit(_frame(150, 0), _frame(60, 1, 150), 0.1)
+    assert len(calls) == 2

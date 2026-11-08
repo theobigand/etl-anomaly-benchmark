@@ -746,3 +746,20 @@ mutations. The timeout factor is now 60 (`pyproject.toml`; it reclassifies only
 timeout verdicts in mutmut's cache) and the diagnostic shard must be rerun to confirm
 the effect. The two native survivors and the eight timeout-only mutants are
 inspected next; none is accepted as equivalent.
+
+### Fork-server run of the LSTM shard (hosted, run 42433394723, commit d296f2f)
+
+Diagnostic, non-certifying, controller-bound, native exit 0, cache cold (kept 0, reset 0).
+`research/lstm_detector.py`: 377 mutants, **366 killed, 11 survived, 0 timeouts**.
+With `process_isolation = "forkserver"` all 46 timeouts of run 42415522768 resolved (37 killed, 9
+survived); PyTorch is documented as not fork-safe under mutmut's default isolation. Agreement with direct
+execution is exact for 376 of 377 identities (366 killed in both; 10 survive in both); the one difference,
+`fit__29` (`spread > 0` to `spread > 1`), was detected directly but survived natively because the older tests
+only exercised data whose spread is near one, so the outcome depended on platform arithmetic. A test for a
+column with spread below one now kills it, with the test of the non-improving first epoch that kills
+`fit__86` (`stale` initial value). That makes 368 of 377 (97.6%) the expected result of the new tests, still
+below 98% (370 needed). The nine remaining survivors are equivalence candidates with semantic arguments
+(`EQUIVALENCE_CANDIDATES_LSTM_2026-11-08.md`); they are not accepted and the module stays below L4 until an
+independent review accepts enough of them or further behavior is found. The expected 368 is a local direct
+computation, not a hosted result. Other shard modules in this run: `research/pool_check.py` 118 of 180,
+`etl_benchmark/atomic.py` 6 of 6, `transform.py` 2 of 2.
