@@ -86,6 +86,9 @@ do_not_mutate = ["research/tests/*"]
 # Training-heavy mutants (epochs, batch sizes) legitimately run long on hosted runners; the
 # default factor of 15 reported 43 genuine detections of the LSTM detector as timeouts.
 timeout_multiplier = 60.0
+# PyTorch is not fork-safe: with the default process isolation the native workers either failed
+# spuriously (macOS) or hung until the time limit (hosted Linux) on training-heavy mutants.
+process_isolation = "forkserver"
 also_copy = [
     "verification",
     "research",

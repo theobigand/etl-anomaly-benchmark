@@ -224,3 +224,11 @@ def test_the_native_timeout_factor_is_the_documented_value():
 
     config = tomllib.loads((Path(__file__).resolve().parents[1] / "pyproject.toml").read_text())
     assert config["tool"]["mutmut"]["timeout_multiplier"] == 60.0
+
+
+def test_the_native_workers_use_forkserver_isolation_because_pytorch_is_not_fork_safe():
+    import tomllib
+    from pathlib import Path
+
+    config = tomllib.loads((Path(__file__).resolve().parents[1] / "pyproject.toml").read_text())
+    assert config["tool"]["mutmut"]["process_isolation"] == "forkserver"
