@@ -34,6 +34,14 @@ Only the Great Expectations bounds are clearly below Isolation Forest. For every
 interval contains zero: the data neither separate the detectors nor show them equivalent. No equivalence
 margin was prespecified, and none is claimed (T130-T132).
 
+## Independent check
+
+A separate vectorized implementation (ratio estimator over resampled sources, different random
+generator, 40,000 draws) reproduces the stored source-level intervals to within 0.001 for Great
+Expectations, DIF - ECOD and One-Class SVM, and the point estimates exactly. The denominators match the
+archives: One-Class SVM did not run on 16 problems (LOF and KNN on 8), leaving 84 problems and 68 sources
+for its comparison.
+
 ## Limits
 
 The detectors were run with default settings on one split per seed. The percentile bootstrap over 80
