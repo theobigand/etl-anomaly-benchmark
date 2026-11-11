@@ -96,3 +96,5 @@ score, `fit_scores` returns none for each of them, and `run_method` gives it a `
 never a `budgets` record (`test_no_rule_is_ever_given_a_tunable_alert_budget`). A mandatory
 business rule (a non-null key, a domain range, a format) is a constraint to enforce, not a
 statistical operating point, and would likewise be reported outside any budget.
+
+See `NEURAL_REPRODUCIBILITY_2026-11-11.md` for the controlled reproducibility probe of these differences.
