@@ -154,3 +154,28 @@ def test_rules_are_a_separate_untuned_reference():
     ref = ab.rule_reference([{"problem": "a", **result}])
     assert set(ref) == {"zscore"} and ref["zscore"]["problems"] == 1
     assert 0.0 <= ref["zscore"]["median_test_alert_rate"] <= 1.0
+
+
+def test_a_checkpointed_seed_run_is_reused_and_a_corrupt_one_is_recomputed(tmp_path, monkeypatch):
+    x, y = _problem()
+    first = ab.run_problem(x, y, seeds=(42, 1), methods=["hbos"], cells=tmp_path, tag="p:1")
+    assert len(list(tmp_path.glob("*.json"))) == 2 and not list(tmp_path.glob(".*"))
+
+    def boom(*args, **kwargs):
+        raise AssertionError("a valid checkpoint must not be refitted")
+
+    monkeypatch.setattr(ab, "run_method", boom)
+    again = ab.run_problem(x, y, seeds=(42, 1), methods=["hbos"], cells=tmp_path, tag="p:1")
+    assert again == first
+    monkeypatch.undo()
+    (tmp_path / "p_1__hbos__1.json").write_text("{truncated")
+    healed = ab.run_problem(x, y, seeds=(42, 1), methods=["hbos"], cells=tmp_path, tag="p:1")
+    assert healed == first
+
+
+def test_a_checkpoint_for_another_seed_or_method_is_ignored(tmp_path):
+    x, y = _problem()
+    ab.run_problem(x, y, seeds=(42,), methods=["hbos"], cells=tmp_path, tag="p")
+    path = tmp_path / "p__hbos__42.json"
+    assert ab._load_cell(path, "hbos", 42) is not None
+    assert ab._load_cell(path, "ecod", 42) is None and ab._load_cell(path, "hbos", 1) is None

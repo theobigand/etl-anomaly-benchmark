@@ -111,11 +111,27 @@ def run_method(
     return row
 
 
+def _cell_path(cells: Path, tag: str, method: str, seed: int) -> Path:
+    return cells / f"{tag.replace(':', '_')}__{method}__{seed}.json"
+
+
+def _load_cell(path: Path, method: str, seed: int) -> dict[str, Any] | None:
+    """A checkpointed seed run, or ``None`` when absent, unreadable or for another run."""
+    try:
+        row = json.loads(path.read_text())
+    except (OSError, ValueError):
+        return None
+    ok = isinstance(row, dict) and row.get("seed") == seed and row.get("method") == method
+    return row if ok and ("budgets" in row or "rule" in row) else None
+
+
 def run_problem(
     x: np.ndarray,
     y: np.ndarray,
     seeds: tuple[int, ...] = config.BENCHMARK_SEEDS,
     methods: list[str] | None = None,
+    cells: Path | None = None,
+    tag: str = "",
 ) -> dict[str, Any]:
     methods = methods or list(DETECTOR_NAMES)
     unknown = [m for m in methods if m not in KNOWN]
@@ -135,7 +151,21 @@ def run_problem(
             if method in skip:
                 continue
             try:
-                row = run_method(method, train, test, part["y_test"], seed)
+                row = (
+                    _load_cell(_cell_path(cells, tag, method, seed), method, seed)
+                    if cells
+                    else None
+                )
+                if row is None:
+                    row = {
+                        "method": method,
+                        **run_method(method, train, test, part["y_test"], seed),
+                    }
+                    if cells:
+                        from etl_benchmark.atomic import atomic_path
+
+                        with atomic_path(_cell_path(cells, tag, method, seed)) as partial:
+                            partial.write_text(json.dumps(row, sort_keys=True) + "\n")
             except Exception as error:  # a failing model is recorded, not hidden
                 errors.setdefault(method, []).append({"seed": seed, "error": repr(error)})
                 continue
@@ -143,14 +173,16 @@ def run_problem(
     return {"seeds": list(seeds), "runs": runs, "skipped": sorted(skipped), "errors": errors}
 
 
-def run_job(job: dict[str, Any], methods: list[str] | None = None) -> dict[str, Any]:
+def run_job(
+    job: dict[str, Any], methods: list[str] | None = None, cells: Path | None = None
+) -> dict[str, Any]:
     warnings.filterwarnings("ignore")
     try:
         if job["source"] == "adbench":
             x, y, report = lb.load_adbench(job["name"], Path(job["path"]))
         else:
             x, y, report = lb.load_uci(job["meta"], Path(job["path"]))
-        result = run_problem(x, y, methods=methods)
+        result = run_problem(x, y, methods=methods, cells=cells, tag=job["problem"])
     except Exception as error:  # recorded, never dropped silently
         return {"problem": job["problem"], "source": job["source"], "failed": repr(error)}
     return {
@@ -230,6 +262,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--only", nargs="*", help="problem ids, for a quick check")
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--methods", choices=("classical", "deep"), default="classical")
+    parser.add_argument("--cells", type=Path, help="checkpoint folder: one file per seed run")
     args = parser.parse_args(argv)
     from etl_benchmark.atomic import atomic_path
 
@@ -246,7 +279,7 @@ def main(argv: list[str] | None = None) -> int:
     methods = list(DEEP_NAMES) if args.methods == "deep" else list(DETECTOR_NAMES)
     failed = 0
     with ProcessPoolExecutor(max_workers=args.workers) as pool:
-        for result in pool.map(bind(run_job, methods=methods), todo):
+        for result in pool.map(bind(run_job, methods=methods, cells=args.cells), todo):
             failed += "failed" in result
             stem = result["problem"].replace(":", "_")
             with atomic_path(args.output / f"{stem}.json") as partial:
