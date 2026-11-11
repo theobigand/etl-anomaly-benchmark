@@ -46,3 +46,19 @@ for the budget are excluded. The rules have no budget cell and are excluded.
 
 Expected values, not resampled draws; the label-shift assumption is strong; the few-positive problems;
 exploratory and limited to the archived pool; no claim about operational monitoring, which is T171.
+
+## Source-clustered contrasts (added 2026-11-11, `prevalence_shift.contrasts`)
+
+Unit of inference: the original source. The 100 problems form 80 sources (62 singletons); problems that
+share a source are resampled together (2,000 draws, seed 2026), fits of all detectors
+and seeds inside a problem are averaged first, and the contrast is taken inside each problem against its own
+observed held-out prevalence, so the comparison stays paired. Holm adjusts over the 12 prevalence-metric
+pairs of each budget; fewer than 10 sources would give no interval. Evidence:
+`verification/evidence/alert_budgets/prevalence_shift.json`, key `contrasts`.
+
+At the 2% budget, relative to the observed prevalence: the alert-to-budget ratio changes by -0.29 [-0.42, -0.18]
+at 0.5%, -0.22 [-0.34, -0.11] at 2%, +0.20 [+0.03, +0.40] at 10% (Holm p 0.056) and +0.71 [+0.40, +1.10] at
+20%; precision changes by -0.15 [-0.19, -0.12], -0.09 [-0.12, -0.06], +0.04 [+0.01, +0.08] (Holm p 0.056) and
++0.12 [+0.08, +0.16]. The 5% contrasts include zero. The observed prevalences lie around 5% to 10%, so the
+effect is small near them and grows away from them. The point is the direction and size of the effect under the
+label-shift assumption, not a forecast of an operating system.

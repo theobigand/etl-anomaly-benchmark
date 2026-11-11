@@ -28,7 +28,7 @@ import numpy as np
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-from source_clustered import bootstrap, source_id  # noqa: E402
+from source_clustered import bootstrap, holm, source_id  # noqa: E402
 
 PREVALENCES = (0.005, 0.01, 0.02, 0.05, 0.10, 0.20)
 METRICS = ("alert_rate", "precision", "recall", "f1", "fpr", "alert_over_budget")
@@ -100,6 +100,70 @@ def summarize(
     return {"prevalences": list(prevalences), "budgets": list(budgets), "table": table}
 
 
+MIN_SOURCES = 10  # fewer independent sources than this give no interval
+CONTRAST_METRICS = ("alert_over_budget", "precision")
+
+
+def contrasts(
+    runs: list[dict[str, Any]],
+    budget: float = 0.02,
+    prevalences: tuple[float, ...] = PREVALENCES,
+    draws: int = DRAWS,
+) -> dict[str, Any]:
+    """Change of the fixed threshold's behaviour from the observed prevalence to ``pi``.
+
+    Per problem, the metrics of the threshold at ``pi`` minus its metrics at the problem's own
+    held-out prevalence (the observed cell), averaged over the fits of all detectors and seeds
+    that share the data. The independent unit is the original source, resampled as a whole; a
+    contrast needs at least ``MIN_SOURCES`` sources. Holm adjusts over prevalence-metric pairs.
+    """
+    key = str(budget)
+    problems, per_problem = [], []
+    for run in runs:
+        cells = [
+            c
+            for seeds in run["runs"].values()
+            for s in seeds
+            if key in s.get("budgets", {}) and "infeasible" not in s["budgets"][key]
+            for c in [s["budgets"][key]]
+        ]
+        if not cells:
+            continue
+        rows = {}
+        for pi in prevalences:
+            observed = [
+                shifted(c, (c["tp"] + c["fn"]) / (c["tp"] + c["fn"] + c["fp"] + c["tn"]))
+                for c in cells
+            ]
+            moved = [shifted(c, pi) for c in cells]
+            rows[pi] = {
+                m: float(np.mean([a[m] - b[m] for a, b in zip(moved, observed, strict=True)]))
+                for m in CONTRAST_METRICS
+            }
+        problems.append(run["problem"])
+        per_problem.append(rows)
+    clusters = np.array([source_id(p) for p in problems])
+    sources, counts = np.unique(clusters, return_counts=True)
+    out: dict[str, Any] = {
+        "budget": budget, "problems": len(problems), "sources": int(len(sources)),
+        "singleton_sources": int((counts == 1).sum()), "draws": draws, "contrasts": [],
+    }  # fmt: skip
+    if len(sources) < MIN_SOURCES:
+        out["insufficient"] = f"fewer than {MIN_SOURCES} independent sources"
+        return out
+    for pi in prevalences:
+        for metric in CONTRAST_METRICS:
+            values = np.array([row[pi][metric] for row in per_problem])
+            out["contrasts"].append(
+                {"prevalence": pi, "metric": metric}
+                | bootstrap(values, clusters, by_cluster=True, draws=draws)
+            )
+    adjusted = holm([c["p_two_sided"] for c in out["contrasts"]])
+    for item, value in zip(out["contrasts"], adjusted, strict=True):
+        item["holm_p"] = value
+    return out
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("folders", nargs="+", type=Path)
@@ -108,7 +172,11 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     from matched_alert import load
 
-    summary = summarize(load(*args.folders), draws=args.draws)
+    runs = load(*args.folders)
+    summary = summarize(runs, draws=args.draws)
+    summary["contrasts"] = {
+        str(b): contrasts(runs, b, draws=args.draws) for b in (0.01, 0.02, 0.05)
+    }
     args.output.write_text(json.dumps(summary, indent=1, sort_keys=True) + "\n")
     return 0
 

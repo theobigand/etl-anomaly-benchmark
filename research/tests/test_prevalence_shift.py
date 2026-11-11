@@ -97,3 +97,37 @@ def test_the_summary_counts_problems_seed_runs_and_the_smallest_class_and_skips_
     assert set(entry["by_prevalence"]) == {"0.02", "0.2"}
     median = entry["by_prevalence"]["0.2"]["recall"]["median"]
     assert median == pytest.approx(np.median([0.4, 0.5]))
+
+
+def _cells_run(problem, tp, fn, fp, tn):
+    cell = {"tp": tp, "fn": fn, "fp": fp, "tn": tn, "nominal": 0.02}
+    runs = {"hbos": [{"seed": s, "budgets": {"0.02": cell}} for s in range(2)]}
+    return {"problem": problem, "runs": runs}
+
+
+def test_contrasts_compare_each_prevalence_with_the_problems_own_observed_one():
+    runs = [_cells_run(f"uci:{i}", 4 + i, 6, 3, 87 - i) for i in range(12)]
+    got = ps.contrasts(runs, prevalences=(0.1, 0.5), draws=200)
+    assert (got["problems"], got["sources"], got["singleton_sources"]) == (12, 12, 12)
+    entry = next(
+        c for c in got["contrasts"] if c["prevalence"] == 0.5 and c["metric"] == "precision"
+    )
+    expected = []
+    for i in range(12):  # independent calculation of the same difference
+        tp, fn, fp, tn = 4 + i, 6, 3, 87 - i
+        tpr, fpr = tp / (tp + fn), fp / (fp + tn)
+        observed = tp / (tp + fp)
+        moved = 0.5 * tpr / (0.5 * tpr + 0.5 * fpr)
+        expected.append(moved - observed)
+    assert entry["mean"] == pytest.approx(np.mean(expected))
+    assert all(c["holm_p"] >= c["p_two_sided"] for c in got["contrasts"])
+    assert len(got["contrasts"]) == 2 * len(ps.CONTRAST_METRICS)
+
+
+def test_the_observed_prevalence_is_a_zero_contrast_and_few_sources_give_no_interval():
+    runs = [_cells_run(f"uci:{i}", 5, 5, 2, 88) for i in range(ps.MIN_SOURCES)]
+    observed = 10 / 100
+    got = ps.contrasts(runs, prevalences=(observed,), draws=100)
+    assert all(c["mean"] == pytest.approx(0.0) for c in got["contrasts"])
+    few = ps.contrasts(runs[: ps.MIN_SOURCES - 1], draws=50)
+    assert "insufficient" in few and few["contrasts"] == []

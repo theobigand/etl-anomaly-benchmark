@@ -39,6 +39,7 @@ import labelled_benchmark as lb  # noqa: E402
 import normalise as nm  # noqa: E402
 from alert_budget import FIXED_BUILD, budget_threshold, build, fit_scores  # noqa: E402
 from deep_support import capped  # noqa: E402
+from source_clustered import bootstrap, holm, source_id  # noqa: E402
 
 from etl_benchmark import config  # noqa: E402
 
@@ -240,6 +241,70 @@ def monitor_table(runs: list[dict[str, Any]], budget: float = 0.02) -> dict[str,
     return table
 
 
+CONTRAST_METRICS = ("alert_over_budget", "precision", "recall", "roc_auc")
+MIN_SOURCES = 10  # fewer independent sources than this give no interval
+DRAWS = 10_000
+
+
+def contrasts(
+    runs: list[dict[str, Any]], budget: float = 0.02, draws: int = DRAWS
+) -> dict[str, Any]:
+    """Each scenario minus the unshifted baseline, with source-resampled uncertainty.
+
+    The independent unit is the original source: problems derived from one table are one cluster
+    (``source_clustered.source_id``). Within a problem the fits of all detectors and seeds are
+    averaged first, because they share the data; the difference is taken inside each problem, so the
+    comparison stays paired. Holm adjusts over all scenario-metric contrasts. Fewer than
+    ``MIN_SOURCES`` sources give no interval.
+    """
+    key = str(budget)
+    per_problem: dict[str, dict[str, dict[str, float]]] = {}
+    for run in runs:
+        cells = [s["scenarios"] for seeds in run["runs"].values() for s in seeds]
+        if not cells:
+            continue
+        per_problem[run["problem"]] = {
+            scenario: {
+                m: float(
+                    np.mean(
+                        [c[scenario][m] if m == "roc_auc" else c[scenario][key][m] for c in cells]
+                    )
+                )
+                for m in CONTRAST_METRICS
+            }
+            for scenario in cells[0]
+        }
+    problems = sorted(per_problem)
+    clusters = np.array([source_id(p) for p in problems])
+    sources, counts = np.unique(clusters, return_counts=True)
+    out: dict[str, Any] = {
+        "budget": budget, "problems": len(problems), "sources": int(len(sources)),
+        "singleton_sources": int((counts == 1).sum()), "draws": draws, "contrasts": [],
+    }  # fmt: skip
+    if len(sources) < MIN_SOURCES:
+        out["insufficient"] = f"fewer than {MIN_SOURCES} independent sources"
+        return out
+    for kind, param in SCENARIOS:
+        name = f"{kind}:{param:g}"
+        if name == "baseline:0":
+            continue
+        for metric in CONTRAST_METRICS:
+            diff = np.array(
+                [
+                    per_problem[p][name][metric] - per_problem[p]["baseline:0"][metric]
+                    for p in problems
+                ]
+            )
+            out["contrasts"].append(
+                {"scenario": name, "metric": metric}
+                | bootstrap(diff, clusters, by_cluster=True, draws=draws)
+            )
+    adjusted = holm([c["p_two_sided"] for c in out["contrasts"]])
+    for item, value in zip(out["contrasts"], adjusted, strict=True):
+        item["holm_p"] = value
+    return out
+
+
 TEST_SHARE = 0.15  # the held-out share of the rows in the archived 70/15/15 split
 ALERT_BINS = (5.0, 30.0)  # expected alerts in the window: few, some, enough
 
@@ -304,6 +369,7 @@ def main(argv: list[str] | None = None) -> int:
             "summary": summarize(runs),
             "monitors": monitor_table(runs),
             "volume_false_alarms": volume_false_alarms(runs),
+            "contrasts": contrasts(runs),
         }
         args.output.write_text(json.dumps(document, indent=1, sort_keys=True) + "\n")
         return 0

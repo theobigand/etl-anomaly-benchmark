@@ -150,3 +150,54 @@ def test_volume_false_alarms_are_stratified_by_the_expected_number_of_alerts():
     assert got["between"] == {"fits": 1, "false_alarm": 1.0}
     assert got["enough"] == {"fits": 2, "false_alarm": 0.0}
     assert ss.volume_false_alarms([])["enough"] == {"fits": 0, "false_alarm": None}
+
+
+def _scenario_run(problem, base_ratio, moved_ratio, base_auc=0.7, moved_auc=0.6):
+    def sc(ratio, auc):
+        cell = {"alert_over_budget": ratio, "precision": 0.5, "recall": 0.4, "ks_fit_vs_eval": 0.1}
+        return {"roc_auc": auc, "ap": 0.3, **{str(b): dict(cell) for b in ss.BUDGETS}}
+
+    full = {f"{k}:{p:g}": sc(base_ratio, base_auc) for k, p in ss.SCENARIOS}
+    full["location:1"] = sc(moved_ratio, moved_auc)
+    return {
+        "problem": problem,
+        "runs": {
+            "ecod": [{"seed": 1, "scenarios": full}, {"seed": 2, "scenarios": full}],
+            "hbos": [{"seed": 1, "scenarios": full}],
+        },
+    }
+
+
+def test_contrasts_are_paired_per_problem_and_resample_whole_sources():
+    # 12 sources of one problem each; the shifted alert ratio is baseline + 2 + (i % 3)
+    runs = [_scenario_run(f"uci:{i}", 1.0 + i / 10, 3.0 + i / 10 + i % 3) for i in range(12)]
+    got = ss.contrasts(runs, draws=300)
+    assert (got["problems"], got["sources"], got["singleton_sources"]) == (12, 12, 12)
+    entry = next(
+        c
+        for c in got["contrasts"]
+        if c["scenario"] == "location:1" and c["metric"] == "alert_over_budget"
+    )
+    expected = np.mean([2.0 + i % 3 for i in range(12)])  # independent of the bootstrap
+    assert entry["mean"] == pytest.approx(expected) and entry["units"] == 12
+    assert entry["mean_ci"][0] <= expected <= entry["mean_ci"][1]
+    auc = next(
+        c for c in got["contrasts"] if c["scenario"] == "location:1" and c["metric"] == "roc_auc"
+    )
+    assert auc["mean"] == pytest.approx(-0.1)
+    assert all(c["holm_p"] >= c["p_two_sided"] for c in got["contrasts"])
+    assert len(got["contrasts"]) == (len(ss.SCENARIOS) - 1) * len(ss.CONTRAST_METRICS)
+
+
+def test_problems_from_one_source_are_a_single_resampling_unit():
+    # glass derives from UCI source 42, as does uci:42: three problems, two clusters
+    runs = [_scenario_run(p, 1.0, 2.0) for p in ("adbench:glass", "uci:42", "uci:1")]
+    runs += [_scenario_run(f"uci:{100 + i}", 1.0, 2.0) for i in range(9)]
+    got = ss.contrasts(runs, draws=50)
+    assert got["problems"] == 12 and got["sources"] == 11 and got["singleton_sources"] == 10
+
+
+def test_too_few_independent_sources_give_no_interval():
+    runs = [_scenario_run(f"uci:{i}", 1.0, 2.0) for i in range(ss.MIN_SOURCES - 1)]
+    got = ss.contrasts(runs, draws=50)
+    assert "insufficient" in got and got["contrasts"] == [] and got["sources"] == ss.MIN_SOURCES - 1
