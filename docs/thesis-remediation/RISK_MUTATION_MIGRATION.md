@@ -803,3 +803,11 @@ The 180-minute timeout is not raised. The sharded campaign (`mutation-shards`) a
 the release evidence kind `deep-shards` through `evidence_schema`, with caches and a plan digest.
 Replacing the monolithic DEEP job of `verify-release` by that evidence is possible but needs one
 complete hosted validation of the wiring, which has not been run and is not claimed here.
+
+## Focused diagnostics, 2026-11-11
+
+Nine research modules were re-measured one at a time after behavioural tests were added; seven
+reach 98 % or more raw, `normalise` and `paired_bootstrap` stay below it, and one boundary
+finding (minimum anomaly count) awaits an owner decision. Figures, surviving mutants and the
+macOS fork-safety setting are in [MUTATION_FOCUSED_DIAGNOSTICS_2026-11-11.md](MUTATION_FOCUSED_DIAGNOSTICS_2026-11-11.md).
+No threshold, level or exclusion changed and no task of the checklist was closed by this work.
