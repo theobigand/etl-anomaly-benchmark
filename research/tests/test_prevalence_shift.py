@@ -232,8 +232,11 @@ def test_the_contrast_bootstrap_resamples_sources_with_the_requested_draws(monke
     assert all(c[1].count("uci:42") == 2 for c in spy.calls)
     assert [c["holm_p"] for c in got["contrasts"]] == [1.0] * 4  # four p = 0.5, Holm-adjusted
     assert [(c["prevalence"], c["metric"]) for c in got["contrasts"]] == [
-        (0.1, "alert_over_budget"), (0.1, "precision"), (0.3, "alert_over_budget"), (0.3, "precision"),
-    ]  # fmt: skip
+        (0.1, "alert_over_budget"),
+        (0.1, "precision"),
+        (0.3, "alert_over_budget"),
+        (0.3, "precision"),
+    ]
 
 
 def test_contrasts_use_only_feasible_budget_cells_and_never_stop_at_an_empty_problem():
