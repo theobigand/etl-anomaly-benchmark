@@ -23,6 +23,7 @@
   "research/labelled_summary.py": 676,
   "research/lstm_detector.py": 377,
   "research/lstm_pilot.py": 506,
+  "research/matched_alert.py": 322,
   "research/multi_schema.py": 1093,
   "research/normalise.py": 193,
   "research/paired_bootstrap.py": 100,

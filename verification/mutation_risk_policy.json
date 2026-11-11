@@ -216,6 +216,10 @@
       "level": "L4",
       "reason": "Chronological partitions, label alignment and reported bootstrap comparisons govern findings."
     },
+    "research/matched_alert.py": {
+      "level": "L4",
+      "reason": "Matched-alert pairing, tolerance, seed and source denominators and bootstrap inputs govern the rule versus learned detector conclusions."
+    },
     "research/multi_schema.py": {
       "level": "L4",
       "reason": "Ground-truth anomaly labels, duplicate groups and evaluation splits govern schema comparisons."

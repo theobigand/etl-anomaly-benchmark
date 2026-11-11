@@ -15,7 +15,7 @@ Partial completion evidence: [metric definitions](METRIC_DEFINITIONS_2026-11-03.
 [inductive detector audit](INDUCTIVE_DETECTORS_2026-11-03.md).
 Current preprocessing unit: [frozen-partition exploratory protocol](POOL_PREPROCESSING_PROTOCOL_2026-11-03.md).
 Its [implementation and gate evidence](POOL_PREPROCESSING_VALIDATION_2026-11-03.md)
-support T064/T351. 87 of the 415 tasks are checked as of 2026-11-11; T055 remains open for partial evidence, and T088/T089 are supported by recomputed, replay-validated partitions.
+support T064/T351. 88 of the 415 tasks are checked as of 2026-11-11; T055 remains open for partial evidence, and T088/T089 are supported by recomputed, replay-validated partitions.
 Historical pool partition recovery and train-only replay remain outstanding.
 Mandatory prospective governance migration:
 [risk-tiered mutation policy, #116](RISK_MUTATION_MIGRATION.md), in progress.
