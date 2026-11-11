@@ -209,9 +209,9 @@
     tables with injected anomalies, and on 100 labelled problems of the pool.</p>
   </div>
   <ul class="kv" style="max-width:none">
-    <li><span>Author</span><span>Theo Bigand &nbsp;·&nbsp; updated 2026-10-21</span></li>
+    <li><span>Author</span><span>Theo Bigand &nbsp;·&nbsp; updated 2026-11-11</span></li>
     <li><span>Repository</span><span>github.com/theobigand/etl-anomaly-benchmark</span></li>
-    <li><span>Verification</span><span>Core mutation: 97.45% killed locally &nbsp;·&nbsp; exploratory preparation verified separately</span></li>
+    <li><span>Verification</span><span>Core mutation: 97.61% killed in a historical local run, not release evidence &nbsp;·&nbsp; exploratory preparation verified separately</span></li>
     <li><span>Datasets</span><span>pool of 152 open sets &nbsp;·&nbsp; Credit Card, Cardio, Water Quality &nbsp;·&nbsp; synthetic, 6 anomaly types</span></li>
   </ul>
   <svg class="motif motif--anim" viewBox="0 0 128 76" aria-hidden="true">
@@ -957,6 +957,33 @@
   <div class="foot"><span>verification/temporal_decision.md &nbsp;&middot;&nbsp; research/temporal_decision.py</span><span>Credit Card results were known before the protocol</span></div>
 </section>
 
+<section class="slide" data-sec="Decisions">
+  <div class="dossier">
+    <div class="heading">
+      <div class="eyebrow"><span class="idx">25A</span> &nbsp; M2 &middot; exploratory deployment thresholds</div>
+      <h2>A nominal alert budget <em>is not a promise</em></h2>
+      <p class="lede">Issue #94, exploratory. Budgets of 0.5 to 10% set from training scores only, on 100 labelled problems. Held-out alert volume was 1.05 to 1.36 times the nominal 1% budget for classical detectors and 1.13 to 2.87 times for neural ones. One machine; not in the main tables.</p>
+      <div class="stat">
+        <div><span class="v">+4.1&times;</span><span class="l">alert volume, in budgets, for a 1 &sigma; score shift; ROC-AUC unchanged</span></div>
+      </div>
+    </div>
+    <div class="panel">
+      <table class="num">
+        <thead><tr><th style="text-align:left">Change at a 2% budget</th><th>&Delta; alert &divide; budget [95%]</th><th>&Delta; ROC-AUC</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">Evaluated scores shifted +1 &sigma;</td><td>+4.09 [3.50, 4.77]</td><td>0.000</td></tr>
+          <tr><td style="text-align:left">Evaluated scores scaled &times;2</td><td>+4.86 [4.57, 5.19]</td><td>0.000</td></tr>
+          <tr><td style="text-align:left">Noise of 1 &sigma; on the scores</td><td>+1.55 [1.32, 1.81]</td><td>&minus;0.038</td></tr>
+          <tr><td style="text-align:left">Every feature drifted &frac12; &sigma;</td><td>+20.90 [17.39, 24.55]</td><td>&minus;0.051</td></tr>
+          <tr><td style="text-align:left">Monotone change of fit and test scores</td><td>+0.001 [0.000, 0.003]</td><td>0.000</td></tr>
+        </tbody>
+        <caption>Five classical detectors, 98 problems from 78 sources, sources resampled whole, Holm-adjusted. Prevalence reweighted under a label-shift assumption: 0.83 to 1.83 times the budget at 0.5% prevalence, 1.15 to 2.73 times at 20%. The 30-expected-alert rule for monitoring was chosen after the false alarms were seen.</caption>
+      </table>
+    </div>
+  </div>
+  <div class="foot"><span>docs/thesis-remediation/SCORE_SHIFT_T170_T171_2026-11-11.md &nbsp;&middot;&nbsp; research/score_shift.py</span><span>exploratory, one machine, not promoted to the main tables</span></div>
+</section>
+
 <section class="slide" data-sec="Whole pool">
   <div class="dossier">
     <div class="heading">
@@ -1199,7 +1226,7 @@
       <li><span class="k">L2 · 90%</span>Operational support with meaningful but noncritical consequences.</li>
       <li><span class="k">L3 · 95%</span>Scientific processing, detector computation and reported cost measurements.</li>
       <li><span class="k">L4 · 98%</span>Leakage prevention, metrics, source identity, evidence and certification.</li>
-    </ul><p class="sm">The prospective inventory covers 92 source modules across four roots. Recorded counts and current source validity are checked separately. A two-mutant smoke confirms cache reuse. Live workers, changed inputs and stale artifacts block binding. First full campaign: 19,248 of 29,811 mutants killed, L4 at 65.5% against 98%, gate FAIL. Release integration and independent review remain required; no policy-v2 certification is claimed.</p></div>
+    </ul><p class="sm">The prospective inventory covers 100 source modules across four roots. Recorded counts and current source validity are checked separately. A two-mutant smoke confirms cache reuse. Live workers, changed inputs and stale artifacts block binding. First full campaign: 19,248 of 29,811 mutants killed, L4 at 65.5% against 98%, gate FAIL. Focused Linux diagnostic, LSTM module: 368 of 377 killed (97.61%); 98.66% after four owner-recorded equivalences (sole-author review). One module, no certification. Release integration and independent review remain required; no policy-v2 certification is claimed.</p></div>
   </div>
   <div class="foot"><span>verification/mutation_policy.py · issue #116</span><span>prospective requirements, historical figures preserved</span></div>
 </section>
@@ -1210,7 +1237,7 @@
     <div class="heading">
       <div class="eyebrow"><span class="idx">35</span> &nbsp; Where it stands</div>
       <h2>Experiments run, <em>paper in IMRaD form</em></h2>
-      <p class="lede">Historical implementation issues #63 to #70 are closed. The current roadmap preserves T001–T415. Twenty-four definition, classification and leakage-test tasks in #89, #91, #97 and #100 are verified; all four issues remain open. Source-aware inference, partition recovery, replay and publication corrections remain required. Optional P2 research is outside the active scope.</p>
+      <p class="lede">Historical implementation issues #63 to #70 are closed. The current roadmap preserves T001–T415. 91 of the 415 tasks are checked as of 2026-11-11, including the exploratory deployment-threshold tasks T163 to T171 of #94; T172, T062 and T063 remain open, as do the issues themselves. Source-aware inference, partition recovery, replay and publication corrections remain required. Optional P2 research is outside the active scope.</p>
     </div>
     <div class="panel"><ul class="kv">
         <li><span>held-out split, 5 seeds, chronological and LSTM pilots, cost study</span><span class="badge done">done</span></li>

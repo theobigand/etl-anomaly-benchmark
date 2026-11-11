@@ -1362,6 +1362,30 @@ $0.9$ (means over five seeds).
 The same estimator looks weak or strong depending on one number that a
 benchmark must choose deliberately.
 
+\paragraph{Exploratory study of label-free alert budgets.} Setting the contamination from the
+training prevalence reads training labels (the historical, label-informed protocol). A deployment
+threshold instead has to come from unlabelled training scores alone. I therefore fixed the threshold of
+each of the fourteen score-based detectors at the $1-b$ quantile of its training scores for alert budgets
+$b$ of $0.5$, $1$, $2$, $5$ and $10\%$, on the $100$ labelled problems and five seeds, without
+reading a held-out label or a held-out score; the three rules have no score to threshold and keep
+their own decision. The nominal budget is a property of the training scores: on held-out rows the median
+alert rate was $1.05$ to $1.36$ times the nominal $1\%$ budget for the classical detectors and $1.13$ to $2.87$
+times for the neural ones ($1.02$ to $1.20$ and $1.08$ to $2.15$ at $2\%$). At the $1\%$ and $2\%$ budgets the
+median recall was $2$ to $10\%$ and the median precision $11$ to $20\%$. Comparing each rule with each learned
+detector at the budget cell whose realized alert volume is closest to the rule's (within a factor of $1.5$),
+with sources resampled as a whole and a Holm correction, four of $84$ contrasts remain, all in favour of the
+$z$-score rule (over the autoencoder, Deep SVDD and PCA). With the threshold of the $2\%$ budget kept fixed,
+reweighting the held-out confusion counts to another prevalence (a label-shift assumption, with labels used
+only to build the population) gives an alert rate of $0.83$ to $1.83$ times the budget at a prevalence of
+$0.5\%$ and $1.15$ to $2.73$ times at $20\%$. Shifting or rescaling the evaluated scores of five classical
+detectors while keeping the ranking left the ROC-AUC unchanged and moved the alert volume by $+4.1$ times
+the budget for a shift of one standard deviation (source-resampled interval $3.5$ to $4.8$); a drift of half
+a standard deviation in every feature gave $+20.9$ ($17.4$ to $24.6$). This is exploratory: it comes from one
+machine, the neural scores of AE1SVM and LUNAR depend on the thread count, the shift study covers five
+classical detectors, the monitoring thresholds of the accompanying note are conventions, and its
+stratification by expected alerts was chosen after the false-alarm rate was seen. None of it enters the main
+tables, and the details are in the repository notes under \texttt{docs/thesis-remediation/}.
+
 \paragraph{Unsupervised detection works in one of the three regimes.}
 The three example datasets bracket the method: on Cardio, where anomalies
 are rare and distributionally distinct, Isolation Forest reaches
@@ -1437,6 +1461,11 @@ therefore not independent. The labelled-pool preparation also reads full-table
 values and labels before the split; the exploratory training-only path has only
 constructed validation so far. Its performance impact needs a separate replay,
 not a retrospective reinterpretation of the archived outcomes.
+The neural scores are not bit-reproducible across numerical settings: in a controlled probe of $24$ fits, the
+scores of AE1SVM changed materially with the PyTorch thread count (a rank correlation as low as $0.82$ against
+the four-thread run) and those of LUNAR less so, while the autoencoder was invariant and Deep SVDD varied at
+the $10^{-3}$ level without changing its ranking. The medians over the pool agreed between the archived and
+the repeated run, but a single neural result should be read as one realization under the recorded setting.
 
 \paragraph{Limits of the verification.}
 Complete line and branch coverage does not establish that the scientific assertions detect
@@ -1578,6 +1607,10 @@ per-module campaign gate are implemented prospectively; complete release
 integration and independent review are not yet established. The historical results below retain their
 original global $95\%$ criterion and are not claims of compliance with this revision.
 A first complete native campaign over the governed scope ($29{,}811$ mutants, one clean environment) killed $19{,}248$; the L4 aggregate was $65.5\%$ against the required $98\%$, and the gate failed. A further $7{,}501$ mutants had no covering test. This is a measured diagnostic of the current test suite, not a certification.
+A later focused Linux diagnostic of one shard (the LSTM autoencoder module, $377$ mutants) killed $368$
+($97.61\%$, below the L4 threshold); after four equivalences recorded by the repository owner as sole author
+and reviewer (not independent review) the adjusted score was $368/373 = 98.66\%$, with five inconclusive
+survivors still counted. It covers one module of one shard and certifies nothing.
 The native-catalog adapter distinguishes assertion kills from internal runner
 errors and checks generated identities against source-function hashes. A separate
 execution-binding prototype tracks source globals, tests, configuration and
