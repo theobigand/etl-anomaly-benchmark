@@ -9,6 +9,8 @@
   "experiments/run_synthetic_benchmark.py": 572,
   "experiments/verification_report.py": 290,
   "experiments/verify_real.py": 212,
+  "research/alert_budget.py": 780,
+  "research/alert_budget_summary.py": 123,
   "research/build_pool.py": 172,
   "research/cost_study.py": 825,
   "research/dataset_registry.py": 417,
