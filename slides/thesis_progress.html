@@ -996,7 +996,7 @@
       <h2>A nominal alert budget <em>is not a promise</em></h2>
       <p class="lede">Issue #94, exploratory. Budgets of 0.5 to 10% set from training scores only, on 100 labelled problems. Held-out alert volume was 1.05 to 1.36 times the nominal 1% budget for classical detectors and 1.13 to 2.87 times for neural ones. One machine; not in the main tables.</p>
       <div class="stat">
-        <div><span class="v">+4.1&times;</span><span class="l">alert volume, in budgets, for a 1 &sigma; score shift; ROC-AUC unchanged</span></div>
+        <div><span class="v">+4.1 budgets</span><span class="l">added alert volume at a 2% budget (about 5 times nominal) for a 1 &sigma; score shift; ROC-AUC unchanged</span></div>
       </div>
     </div>
     <div class="panel">
@@ -1249,25 +1249,25 @@
 <!-- 35 mutation: what a mutant is -->
 <section class="slide" data-sec="Mutation testing">
   <div class="wide">
-    <div class="eyebrow"><span class="idx">35</span> &nbsp; Mutation testing, issue #116</div>
+    <div class="eyebrow"><span class="idx">35</span> &nbsp; Mutation testing</div>
     <h2>A surviving mutant is <em>a behaviour no test protects</em></h2>
     <div class="mut3">
       <div class="mut-step">
-        <div class="k">1 &nbsp; Change one thing</div>
+        <div class="k">1 &nbsp; Inject one small bug</div>
         <pre class="code"><span class="rm">- flags = scores &gt; info["threshold"]</span>
 <span class="ad">+ flags = scores &gt;= info["threshold"]</span></pre>
-        <p class="sm">A real mutant of <code>research/alert_budget.py</code>. A score equal to the training threshold would now raise an alert.</p>
+        <p class="sm">A mutant is a copy of the code with one small, plausible bug. This one is real, in <code>research/alert_budget.py</code>: a score equal to the training threshold would now raise an alert.</p>
       </div>
       <div class="mut-step">
         <div class="k">2 &nbsp; Run the tests</div>
         <div class="verdict"><span class="vk">killed</span><span>a test fails: the change is noticed</span></div>
         <div class="verdict"><span class="vs">survived</span><span>every test passes: the behaviour is not checked</span></div>
-        <p class="sm">Here the test <code>a score equal to the training threshold is not an alert</code> kills it. It did not exist before this session.</p>
+        <p class="sm">A new test, "a score equal to the training threshold is not an alert", kills this mutant. No test covered it before this session.</p>
       </div>
       <div class="mut-step">
         <div class="k">3 &nbsp; Score the module</div>
-        <div class="frac"><span class="v">killed</span><span class="bar"></span><span class="v">all mutants</span></div>
-        <p class="sm">Survivors stay in the denominator. A mutant counts as equivalent only when the owner has recorded it as such, and never by assumption.</p>
+        <div class="frac"><span class="v">killed</span><span class="bar"></span><span class="v">eligible mutants</span></div>
+        <p class="sm">Example: pool_check killed 178 of 180 eligible mutants, 98.9%. Survivors stay in the denominator. A mutant counts as equivalent only when the owner has recorded it as such, and never by assumption.</p>
       </div>
     </div>
   </div>
@@ -1278,10 +1278,10 @@
 <section class="slide" data-sec="Mutation thresholds">
   <div class="wide">
     <div class="eyebrow"><span class="idx">36</span> &nbsp; Risk-tiered thresholds, measured change</div>
-    <h2>Four thresholds by scientific risk, <em>nine modules moved</em></h2>
+    <h2>Seven of nine modules reach <em>the 98% bar, two do not</em></h2>
     <div class="chartwrap">
       <svg class="chart" viewBox="0 0 1130 545" role="img" aria-label="Raw mutation score before and after new tests, nine research modules, with the four risk thresholds"><line x1="783" y1="86" x2="783" y2="500" stroke="var(--terra-text)" stroke-width="1.2" stroke-dasharray="5 5"/><text x="783" y="76" text-anchor="middle" class="ct" fill="var(--terra-text)">L1 80</text><line x1="897" y1="56" x2="897" y2="500" stroke="var(--terra-text)" stroke-width="1.2" stroke-dasharray="5 5"/><text x="897" y="46" text-anchor="middle" class="ct" fill="var(--terra-text)">L2 90</text><line x1="953" y1="86" x2="953" y2="500" stroke="var(--terra-text)" stroke-width="1.2" stroke-dasharray="5 5"/><text x="953" y="76" text-anchor="middle" class="ct" fill="var(--terra-text)">L3 95</text><line x1="987" y1="56" x2="987" y2="500" stroke="var(--terra-text)" stroke-width="2.5" stroke-dasharray="0"/><text x="987" y="46" text-anchor="middle" class="ct" fill="var(--terra-text)">L4 98</text><text x="314" y="132" text-anchor="end" class="ct">pool_check</text><line x1="620" y1="126" x2="998" y2="126" stroke="var(--sage-text)" stroke-width="3" opacity=".55"/><circle cx="620" cy="126" r="7" fill="var(--bg)" stroke="var(--ink-soft)" stroke-width="2.5"/><circle cx="998" cy="126" r="8" fill="var(--sage-text)"/><text x="1014" y="134" class="cv" fill="var(--sage-text)">98.9</text><text x="314" y="172" text-anchor="end" class="ct">alert_budget</text><line x1="497" y1="166" x2="990" y2="166" stroke="var(--sage-text)" stroke-width="3" opacity=".55"/><circle cx="497" cy="166" r="7" fill="var(--bg)" stroke="var(--ink-soft)" stroke-width="2.5"/><circle cx="990" cy="166" r="8" fill="var(--sage-text)"/><text x="1006" y="174" class="cv" fill="var(--sage-text)">98.2</text><text x="314" y="212" text-anchor="end" class="ct">alert_budget_summary</text><line x1="330" y1="206" x2="1010" y2="206" stroke="var(--sage-text)" stroke-width="3" opacity=".55"/><circle cx="330" cy="206" r="7" fill="var(--bg)" stroke="var(--ink-soft)" stroke-width="2.5"/><circle cx="1010" cy="206" r="8" fill="var(--sage-text)"/><text x="1026" y="214" class="cv" fill="var(--sage-text)">100.0</text><text x="342" y="192" class="cs">no test, 0%</text><text x="314" y="252" text-anchor="end" class="ct">matched_alert</text><line x1="746" y1="246" x2="992" y2="246" stroke="var(--sage-text)" stroke-width="3" opacity=".55"/><circle cx="746" cy="246" r="7" fill="var(--bg)" stroke="var(--ink-soft)" stroke-width="2.5"/><circle cx="992" cy="246" r="8" fill="var(--sage-text)"/><text x="1008" y="254" class="cv" fill="var(--sage-text)">98.4</text><text x="314" y="292" text-anchor="end" class="ct">prevalence_shift</text><line x1="690" y1="286" x2="992" y2="286" stroke="var(--sage-text)" stroke-width="3" opacity=".55"/><circle cx="690" cy="286" r="7" fill="var(--bg)" stroke="var(--ink-soft)" stroke-width="2.5"/><circle cx="992" cy="286" r="8" fill="var(--sage-text)"/><text x="1008" y="294" class="cv" fill="var(--sage-text)">98.4</text><text x="314" y="332" text-anchor="end" class="ct">score_shift</text><line x1="568" y1="326" x2="994" y2="326" stroke="var(--sage-text)" stroke-width="3" opacity=".55"/><circle cx="568" cy="326" r="7" fill="var(--bg)" stroke="var(--ink-soft)" stroke-width="2.5"/><circle cx="994" cy="326" r="8" fill="var(--sage-text)"/><text x="1010" y="334" class="cv" fill="var(--sage-text)">98.6</text><text x="314" y="372" text-anchor="end" class="ct">source_clustered</text><line x1="839" y1="366" x2="996" y2="366" stroke="var(--sage-text)" stroke-width="3" opacity=".55"/><circle cx="839" cy="366" r="7" fill="var(--bg)" stroke="var(--ink-soft)" stroke-width="2.5"/><circle cx="996" cy="366" r="8" fill="var(--sage-text)"/><text x="1012" y="374" class="cv" fill="var(--sage-text)">98.8</text><text x="314" y="412" text-anchor="end" class="ct">normalise</text><line x1="905" y1="406" x2="958" y2="406" stroke="var(--terra-text)" stroke-width="3" opacity=".55"/><circle cx="905" cy="406" r="7" fill="var(--bg)" stroke="var(--ink-soft)" stroke-width="2.5"/><circle cx="958" cy="406" r="8" fill="var(--terra-text)"/><text x="1026" y="414" class="cv" fill="var(--terra-text)">95.4</text><text x="314" y="452" text-anchor="end" class="ct">paired_bootstrap</text><line x1="749" y1="446" x2="942" y2="446" stroke="var(--terra-text)" stroke-width="3" opacity=".55"/><circle cx="749" cy="446" r="7" fill="var(--bg)" stroke="var(--ink-soft)" stroke-width="2.5"/><circle cx="942" cy="446" r="8" fill="var(--terra-text)"/><text x="1026" y="454" class="cv" fill="var(--terra-text)">94.0</text><text x="330" y="528" text-anchor="middle" class="cs">40%</text><text x="443" y="528" text-anchor="middle" class="cs">50%</text><text x="557" y="528" text-anchor="middle" class="cs">60%</text><text x="670" y="528" text-anchor="middle" class="cs">70%</text><text x="783" y="528" text-anchor="middle" class="cs">80%</text><text x="897" y="528" text-anchor="middle" class="cs">90%</text><text x="1010" y="528" text-anchor="middle" class="cs">100%</text></svg>
-      <p class="sm">Raw focused mutation score per module, local run, 2026-11-11. Open circle: before this session. Filled: after new behavioural tests. Green: at or above the L4 threshold of 98%, on that module alone. All nine modules are L4. Thresholds were not changed.</p>
+      <p class="sm">Raw focused mutation score per module, local run, 2026-11-11. Open circle: before this session. Filled: after new behavioural tests. Green: at or above the L4 threshold of 98%, on that module alone. All nine are L4, 9 of 82 L4 modules, chosen by the author and tested for these mutants. Axis starts at 40%. Before values: seven from the first run of this session, normalise and paired_bootstrap from the 2026-11-07 campaign. L1 to L3 are shown for reference. Thresholds were not changed.</p>
     </div>
   </div>
   <div class="foot"><span>docs/thesis-remediation/MUTATION_FOCUSED_DIAGNOSTICS_2026-11-11.md</span><span>a module result is not a certification</span></div>
@@ -1295,17 +1295,17 @@
     <div class="scope">
       <div class="scope-a">
         <div class="k">LSTM autoencoder, one module, one shard</div>
-        <div class="pair"><div><span class="v">97.61%</span><span class="l">raw, 368 of 377</span></div>
-        <div><span class="v ok">98.66%</span><span class="l">adjusted, 368 of 373</span></div></div>
+        <div class="pair"><div><span class="v ok">97.61%</span><span class="l">raw, 368 of 377, below the 98% L4 bar</span></div>
+        <div><span class="v">98.66%</span><span class="l">adjusted, 368 of 373, author-accepted</span></div></div>
         <p class="sm">Adjusted means four equivalences accepted by the repository owner, as sole author and reviewer, not an independent review. Five inconclusive mutants stay eligible. No timeout.</p>
       </div>
       <div class="scope-b">
-        <div class="k">First complete native campaign, 2026-11-07, L4 modules</div>
+        <div class="k">First complete native campaign, 2026-11-07, 82 L4 modules</div>
         <div class="stack" role="img" aria-label="L4 modules: 26 pass, 31 fail, 25 incomplete">
           <span style="flex:26" class="p">26 pass</span><span style="flex:31" class="f">31 fail</span><span style="flex:25" class="i">25 incomplete</span></div>
         <p class="sm">65.5% of L4 mutants killed against 98% required, 7,501 further mutants with no covering test. The release gate fails and stays closed.</p>
         <ul class="ledger tight">
-          <li><span class="k">open</span>32 modules below threshold and 30 incomplete in that campaign, not re-measured here</li>
+          <li><span class="k">open</span>31 L4 modules below threshold and 25 incomplete in that campaign, not re-measured here</li>
           <li><span class="k">open</span>survivors that look inert (dtype coercions, <code>zip(strict=)</code>) await an owner decision</li>
           <li><span class="k">found</span>minimum anomaly count 3 is below the 6 a stratified split needs; no archived result changes</li>
         </ul>
