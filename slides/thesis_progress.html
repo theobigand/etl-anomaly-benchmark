@@ -186,11 +186,60 @@
     html,body{overflow:visible;background:var(--bg)}
     #deck{height:auto}
     nav#dots,#count{display:none}
-    .slide{position:static;display:grid;opacity:1;height:720px;width:1280px;overflow:hidden;
+    .slide{position:relative;display:grid;opacity:1;height:720px;width:1280px;overflow:hidden;
       page-break-after:always;break-after:page;transition:none}
     .slide:last-child{page-break-after:auto}
     .motif--anim .c{opacity:1!important;animation:none!important;transform:none!important;filter:none!important}
   }
+
+  /* legibility floor and the data-led cover (edition 2026-11-11) */
+  .eyebrow{font-size:13px;letter-spacing:.06em}
+  .stat{margin-top:16px;gap:28px}
+  .stat .v{font-size:clamp(34px,4.1vw,50px)}
+  .stat .l{font-size:13px}
+  p.sm{font-size:14px}
+  ul.ledger li{font-size:16px}
+  ul.ledger li .k,dl.defs dt,figcaption .k,tr.grp td{font-size:13px}
+  caption{font-size:13.5px}
+  .foot{font-size:12px}
+  .metaline{font-size:14px}
+  .badge{font-size:11.5px}
+  .slide.cover .cover-fig{position:absolute;right:78px;top:118px;width:430px}
+  .cover-matrix{width:100%;height:auto;display:block}
+  .cover-cap{font-size:13.5px;line-height:1.45;color:var(--ink-soft);margin-top:12px}
+  .slide.cover .mid h1{max-width:12.5ch}
+  .slide.cover .hero-lede,.slide.cover ul.kv{max-width:560px}
+  .slide.cover ul.kv{font-size:14px}
+  .wide{display:flex;flex-direction:column;justify-content:center;gap:22px;min-height:0}
+  .wide h2{max-width:31ch;font-size:clamp(30px,3.6vw,44px)}
+  .mut3{display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:44px;margin-top:10px}
+  .mut-step .k{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--terra-text);
+    letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
+  .mut-step pre.code{font-size:14.5px;padding:18px 20px;line-height:1.7;white-space:pre-wrap}
+  pre.code .rm{color:#e59a86}pre.code .ad{color:#b9cf9e}
+  .verdict{display:flex;gap:14px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--line);font-size:16px}
+  .verdict .vk,.verdict .vs{font-family:var(--mono);font-size:13px;font-weight:700;min-width:84px;letter-spacing:.04em}
+  .verdict .vk{color:var(--sage-text)}.verdict .vs{color:var(--terra-text)}
+  .frac{display:flex;flex-direction:column;align-items:flex-start;gap:6px;font-family:var(--serif);font-size:30px;font-weight:600}
+  .frac .bar{display:block;height:3px;width:100%;background:var(--ink)}
+  .chartwrap{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:28px;align-items:center;min-height:0}
+  .chartwrap .chart{width:100%;height:auto;max-height:60vh}
+  .chart .ct{font-family:var(--mono);font-size:21px;fill:var(--ink)}
+  .chart .cv{font-family:var(--serif);font-size:27px;font-weight:600}
+  .chart .cs{font-family:var(--mono);font-size:17px;fill:var(--ink-soft)}
+  .scope{display:grid;grid-template-columns:1fr 1.25fr;gap:64px;margin-top:6px}
+  .scope .k{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--terra-text);
+    letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px}
+  .scope .pair{display:flex;gap:40px;margin-bottom:14px}
+  .scope .pair>div{display:flex;flex-direction:column;gap:4px}
+  .scope .pair .v{font-family:var(--serif);font-weight:600;font-size:clamp(40px,4.6vw,58px);line-height:.95;color:var(--ink-soft)}
+  .scope .pair .v.ok{color:var(--terra-text)}
+  .scope .pair .l{font-size:14px;color:var(--ink-soft)}
+  .stack{display:flex;height:46px;margin:2px 0 14px;font-family:var(--mono);font-size:14px;font-weight:600}
+  .stack span{display:flex;align-items:center;padding:0 12px;white-space:nowrap;overflow:hidden}
+  .stack .p{background:var(--sage);color:#26331d}.stack .f{background:var(--terra);color:#2d140c}
+  .stack .i{background:var(--surface-soft);color:var(--ink)}
+  ul.ledger.tight li{padding:10px 0;font-size:15px}
 </style>
 </head>
 <body>
@@ -208,29 +257,12 @@
     pipeline and are compared per anomaly type, on a synthetic generator and on 42 real UCI
     tables with injected anomalies, and on 100 labelled problems of the pool.</p>
   </div>
-  <ul class="kv" style="max-width:none">
-    <li><span>Author</span><span>Theo Bigand &nbsp;·&nbsp; updated 2026-11-11</span></li>
-    <li><span>Repository</span><span>github.com/theobigand/etl-anomaly-benchmark</span></li>
-    <li><span>Verification</span><span>Core mutation: 97.61% killed in a historical local run, not release evidence &nbsp;·&nbsp; exploratory preparation verified separately</span></li>
-    <li><span>Datasets</span><span>pool of 152 open sets &nbsp;·&nbsp; Credit Card, Cardio, Water Quality &nbsp;·&nbsp; synthetic, 6 anomaly types</span></li>
+  <ul class="kv">
+    <li><span>Author</span><span>Theo Bigand, 2026-11-11</span></li>
+    <li><span>Repository</span><span>theobigand/etl-anomaly-benchmark</span></li>
+    <li><span>Evidence</span><span>pool of 152 open sets, synthetic generator, 17 detectors</span></li>
   </ul>
-  <svg class="motif motif--anim" viewBox="0 0 128 76" aria-hidden="true">
-    <rect class="c s" x="2"   y="2"  width="20" height="20" style="--d:0s"/>
-    <rect class="c"   x="2"   y="28" width="20" height="20" style="--d:.05s"/>
-    <rect class="c"   x="2"   y="54" width="20" height="20" style="--d:.10s"/>
-    <rect class="c"   x="28"  y="2"  width="20" height="20" style="--d:.09s"/>
-    <rect class="c"   x="28"  y="28" width="20" height="20" style="--d:.14s"/>
-    <rect class="c"   x="28"  y="54" width="20" height="20" style="--d:.19s"/>
-    <rect class="c h" x="54"  y="2"  width="20" height="20" style="--d:.18s"/>
-    <rect class="c h" x="54"  y="28" width="20" height="20" style="--d:.23s"/>
-    <rect class="c"   x="54"  y="54" width="20" height="20" style="--d:.28s"/>
-    <rect class="c"   x="80"  y="2"  width="20" height="20" style="--d:.27s"/>
-    <rect class="c h" x="80"  y="28" width="20" height="20" style="--d:.32s"/>
-    <rect class="c"   x="80"  y="54" width="20" height="20" style="--d:.37s"/>
-    <rect class="c"   x="106" y="2"  width="20" height="20" style="--d:.36s"/>
-    <rect class="c"   x="106" y="28" width="20" height="20" style="--d:.41s"/>
-    <rect class="c"   x="106" y="54" width="20" height="20" style="--d:.46s"/>
-  </svg>
+  <div class="cover-fig"><svg class="cover-matrix" viewBox="0 0 404 438" role="img" aria-label="Mean recall of 17 detectors (rows) on six injected anomaly types (columns), synthetic customer table"><rect x="0" y="0" width="64" height="22" fill="#ddd6ca"><title>Z-score, missing: recall 0.00</title></rect><rect x="68" y="0" width="64" height="22" fill="#ddd6ca"><title>Z-score, duplicate: recall 0.00</title></rect><rect x="136" y="0" width="64" height="22" fill="#ac4f38"><title>Z-score, univariate: recall 0.93</title></rect><rect x="204" y="0" width="64" height="22" fill="#ddd6ca"><title>Z-score, multivariate: recall 0.00</title></rect><rect x="272" y="0" width="64" height="22" fill="#ddd6ca"><title>Z-score, drift: recall 0.00</title></rect><rect x="340" y="0" width="64" height="22" fill="#d0b3a4"><title>Z-score, invalid: recall 0.24</title></rect><rect x="0" y="26" width="64" height="22" fill="#dacfc2"><title>IQR, missing: recall 0.05</title></rect><rect x="68" y="26" width="64" height="22" fill="#dbd0c4"><title>IQR, duplicate: recall 0.04</title></rect><rect x="136" y="26" width="64" height="22" fill="#a9462f"><title>IQR, univariate: recall 0.99</title></rect><rect x="204" y="26" width="64" height="22" fill="#dbd0c4"><title>IQR, multivariate: recall 0.04</title></rect><rect x="272" y="26" width="64" height="22" fill="#d0b2a3"><title>IQR, drift: recall 0.25</title></rect><rect x="340" y="26" width="64" height="22" fill="#a8452d"><title>IQR, invalid: recall 1.00</title></rect><rect x="0" y="52" width="64" height="22" fill="#a8452d"><title>GE, missing: recall 1.00</title></rect><rect x="68" y="52" width="64" height="22" fill="#ddd6ca"><title>GE, duplicate: recall 0.00</title></rect><rect x="136" y="52" width="64" height="22" fill="#d2b8a9"><title>GE, univariate: recall 0.21</title></rect><rect x="204" y="52" width="64" height="22" fill="#ddd6ca"><title>GE, multivariate: recall 0.00</title></rect><rect x="272" y="52" width="64" height="22" fill="#ddd6ca"><title>GE, drift: recall 0.00</title></rect><rect x="340" y="52" width="64" height="22" fill="#ddd6ca"><title>GE, invalid: recall 0.00</title></rect><rect x="0" y="78" width="64" height="22" fill="#d8c9bc"><title>IF, missing: recall 0.09</title></rect><rect x="68" y="78" width="64" height="22" fill="#d7c6b9"><title>IF, duplicate: recall 0.11</title></rect><rect x="136" y="78" width="64" height="22" fill="#a9462f"><title>IF, univariate: recall 0.99</title></rect><rect x="204" y="78" width="64" height="22" fill="#ae553e"><title>IF, multivariate: recall 0.89</title></rect><rect x="272" y="78" width="64" height="22" fill="#cca696"><title>IF, drift: recall 0.33</title></rect><rect x="340" y="78" width="64" height="22" fill="#bd7f6c"><title>IF, invalid: recall 0.60</title></rect><rect x="0" y="104" width="64" height="22" fill="#cead9e"><title>LOF, missing: recall 0.28</title></rect><rect x="68" y="104" width="64" height="22" fill="#d5bfb1"><title>LOF, duplicate: recall 0.16</title></rect><rect x="136" y="104" width="64" height="22" fill="#b8705c"><title>LOF, univariate: recall 0.70</title></rect><rect x="204" y="104" width="64" height="22" fill="#d2b8a9"><title>LOF, multivariate: recall 0.21</title></rect><rect x="272" y="104" width="64" height="22" fill="#c28e7c"><title>LOF, drift: recall 0.50</title></rect><rect x="340" y="104" width="64" height="22" fill="#b97561"><title>LOF, invalid: recall 0.67</title></rect><rect x="0" y="130" width="64" height="22" fill="#d9ccbf"><title>OCSVM, missing: recall 0.07</title></rect><rect x="68" y="130" width="64" height="22" fill="#d8c8ba"><title>OCSVM, duplicate: recall 0.10</title></rect><rect x="136" y="130" width="64" height="22" fill="#a8452d"><title>OCSVM, univariate: recall 1.00</title></rect><rect x="204" y="130" width="64" height="22" fill="#ad543d"><title>OCSVM, multivariate: recall 0.90</title></rect><rect x="272" y="130" width="64" height="22" fill="#ceac9c"><title>OCSVM, drift: recall 0.29</title></rect><rect x="340" y="130" width="64" height="22" fill="#c08875"><title>OCSVM, invalid: recall 0.54</title></rect><rect x="0" y="156" width="64" height="22" fill="#d8c8ba"><title>ECOD, missing: recall 0.10</title></rect><rect x="68" y="156" width="64" height="22" fill="#d6c3b6"><title>ECOD, duplicate: recall 0.13</title></rect><rect x="136" y="156" width="64" height="22" fill="#b9735f"><title>ECOD, univariate: recall 0.68</title></rect><rect x="204" y="156" width="64" height="22" fill="#c18b78"><title>ECOD, multivariate: recall 0.52</title></rect><rect x="272" y="156" width="64" height="22" fill="#cfb0a1"><title>ECOD, drift: recall 0.26</title></rect><rect x="340" y="156" width="64" height="22" fill="#caa291"><title>ECOD, invalid: recall 0.36</title></rect><rect x="0" y="182" width="64" height="22" fill="#d8c9bc"><title>COPOD, missing: recall 0.09</title></rect><rect x="68" y="182" width="64" height="22" fill="#d6c3b6"><title>COPOD, duplicate: recall 0.13</title></rect><rect x="136" y="182" width="64" height="22" fill="#ae553e"><title>COPOD, univariate: recall 0.89</title></rect><rect x="204" y="182" width="64" height="22" fill="#c28c7a"><title>COPOD, multivariate: recall 0.51</title></rect><rect x="272" y="182" width="64" height="22" fill="#cba595"><title>COPOD, drift: recall 0.34</title></rect><rect x="340" y="182" width="64" height="22" fill="#cdaa9b"><title>COPOD, invalid: recall 0.30</title></rect><rect x="0" y="208" width="64" height="22" fill="#ddd6ca"><title>HBOS, missing: recall 0.00</title></rect><rect x="68" y="208" width="64" height="22" fill="#ddd6ca"><title>HBOS, duplicate: recall 0.00</title></rect><rect x="136" y="208" width="64" height="22" fill="#ad543d"><title>HBOS, univariate: recall 0.90</title></rect><rect x="204" y="208" width="64" height="22" fill="#ddd6ca"><title>HBOS, multivariate: recall 0.00</title></rect><rect x="272" y="208" width="64" height="22" fill="#ddd6ca"><title>HBOS, drift: recall 0.00</title></rect><rect x="340" y="208" width="64" height="22" fill="#cca898"><title>HBOS, invalid: recall 0.32</title></rect><rect x="0" y="234" width="64" height="22" fill="#d8c9bc"><title>KNN, missing: recall 0.09</title></rect><rect x="68" y="234" width="64" height="22" fill="#d8c8ba"><title>KNN, duplicate: recall 0.10</title></rect><rect x="136" y="234" width="64" height="22" fill="#a8452d"><title>KNN, univariate: recall 1.00</title></rect><rect x="204" y="234" width="64" height="22" fill="#c89d8d"><title>KNN, multivariate: recall 0.39</title></rect><rect x="272" y="234" width="64" height="22" fill="#c79b8a"><title>KNN, drift: recall 0.41</title></rect><rect x="340" y="234" width="64" height="22" fill="#b2614b"><title>KNN, invalid: recall 0.81</title></rect><rect x="0" y="260" width="64" height="22" fill="#d8c8ba"><title>PCA, missing: recall 0.10</title></rect><rect x="68" y="260" width="64" height="22" fill="#d7c5b7"><title>PCA, duplicate: recall 0.12</title></rect><rect x="136" y="260" width="64" height="22" fill="#a8452d"><title>PCA, univariate: recall 1.00</title></rect><rect x="204" y="260" width="64" height="22" fill="#c4907f"><title>PCA, multivariate: recall 0.48</title></rect><rect x="272" y="260" width="64" height="22" fill="#d1b5a6"><title>PCA, drift: recall 0.23</title></rect><rect x="340" y="260" width="64" height="22" fill="#be826f"><title>PCA, invalid: recall 0.58</title></rect><rect x="0" y="286" width="64" height="22" fill="#d7c5b7"><title>AE, missing: recall 0.12</title></rect><rect x="68" y="286" width="64" height="22" fill="#d8c8ba"><title>AE, duplicate: recall 0.10</title></rect><rect x="136" y="286" width="64" height="22" fill="#b2614b"><title>AE, univariate: recall 0.81</title></rect><rect x="204" y="286" width="64" height="22" fill="#b15e48"><title>AE, multivariate: recall 0.83</title></rect><rect x="272" y="286" width="64" height="22" fill="#ceac9c"><title>AE, drift: recall 0.29</title></rect><rect x="340" y="286" width="64" height="22" fill="#c18977"><title>AE, invalid: recall 0.53</title></rect><rect x="0" y="312" width="64" height="22" fill="#d9ccbf"><title>VAE, missing: recall 0.07</title></rect><rect x="68" y="312" width="64" height="22" fill="#d7c6b9"><title>VAE, duplicate: recall 0.11</title></rect><rect x="136" y="312" width="64" height="22" fill="#a9462f"><title>VAE, univariate: recall 0.99</title></rect><rect x="204" y="312" width="64" height="22" fill="#ac513a"><title>VAE, multivariate: recall 0.92</title></rect><rect x="272" y="312" width="64" height="22" fill="#cdaa9b"><title>VAE, drift: recall 0.30</title></rect><rect x="340" y="312" width="64" height="22" fill="#ba7662"><title>VAE, invalid: recall 0.66</title></rect><rect x="0" y="338" width="64" height="22" fill="#d3baac"><title>DSVDD, missing: recall 0.19</title></rect><rect x="68" y="338" width="64" height="22" fill="#d3bcae"><title>DSVDD, duplicate: recall 0.18</title></rect><rect x="136" y="338" width="64" height="22" fill="#cca696"><title>DSVDD, univariate: recall 0.33</title></rect><rect x="204" y="338" width="64" height="22" fill="#d6c3b6"><title>DSVDD, multivariate: recall 0.13</title></rect><rect x="272" y="338" width="64" height="22" fill="#d5bfb1"><title>DSVDD, drift: recall 0.16</title></rect><rect x="340" y="338" width="64" height="22" fill="#cca898"><title>DSVDD, invalid: recall 0.32</title></rect><rect x="0" y="364" width="64" height="22" fill="#d8c9bc"><title>DIF, missing: recall 0.09</title></rect><rect x="68" y="364" width="64" height="22" fill="#d9ccbf"><title>DIF, duplicate: recall 0.07</title></rect><rect x="136" y="364" width="64" height="22" fill="#a8452d"><title>DIF, univariate: recall 1.00</title></rect><rect x="204" y="364" width="64" height="22" fill="#a8452d"><title>DIF, multivariate: recall 1.00</title></rect><rect x="272" y="364" width="64" height="22" fill="#cca696"><title>DIF, drift: recall 0.33</title></rect><rect x="340" y="364" width="64" height="22" fill="#a8452d"><title>DIF, invalid: recall 1.00</title></rect><rect x="0" y="390" width="64" height="22" fill="#d8c9bc"><title>AE1SVM, missing: recall 0.09</title></rect><rect x="68" y="390" width="64" height="22" fill="#d8c8ba"><title>AE1SVM, duplicate: recall 0.10</title></rect><rect x="136" y="390" width="64" height="22" fill="#a9462f"><title>AE1SVM, univariate: recall 0.99</title></rect><rect x="204" y="390" width="64" height="22" fill="#b46550"><title>AE1SVM, multivariate: recall 0.78</title></rect><rect x="272" y="390" width="64" height="22" fill="#cfafa0"><title>AE1SVM, drift: recall 0.27</title></rect><rect x="340" y="390" width="64" height="22" fill="#bd7e6a"><title>AE1SVM, invalid: recall 0.61</title></rect><rect x="0" y="416" width="64" height="22" fill="#c69685"><title>LUNAR, missing: recall 0.44</title></rect><rect x="68" y="416" width="64" height="22" fill="#c89d8d"><title>LUNAR, duplicate: recall 0.39</title></rect><rect x="136" y="416" width="64" height="22" fill="#a8452d"><title>LUNAR, univariate: recall 1.00</title></rect><rect x="204" y="416" width="64" height="22" fill="#bc7b67"><title>LUNAR, multivariate: recall 0.63</title></rect><rect x="272" y="416" width="64" height="22" fill="#bb7864"><title>LUNAR, drift: recall 0.65</title></rect><rect x="340" y="416" width="64" height="22" fill="#ad543d"><title>LUNAR, invalid: recall 0.90</title></rect></svg><p class="cover-cap">Mean recall, 17 detectors by 6 anomaly types, synthetic customer table, 5 seeds. Rows: Z-score to LUNAR as in the paper. Each family has a narrow band of dark cells.</p></div>
 </section>
 
 <!-- 2 problem -->
@@ -515,7 +547,7 @@
 <section class="slide" data-sec="Datasets">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">9</span> &nbsp; Four datasets, one protocol</div>
+      <div class="eyebrow"><span class="idx">9</span> &nbsp; Three examples, one synthetic set</div>
       <h2>Three example datasets <em>bracket the method</em></h2>
       <p class="lede">Stratified 70 / 15 / 15 split, fit on train, every number reported on
       the held-out test set. Five seeds, mean ± std. The ML contamination is read from the
@@ -575,7 +607,7 @@
   <div class="mid">
     <blockquote>Aggregate scores do not establish equivalence. <em>Per-type results show different competencies.</em></blockquote>
   </div>
-  <div class="metaline">F1 spans 0.31 to 0.51 on the synthetic set &nbsp;·&nbsp; the per-type competences barely overlap</div>
+  <div class="metaline">F1 spans 0.22 to 0.59 over the seventeen detectors on the synthetic set &nbsp;·&nbsp; the per-type competences barely overlap</div>
   <svg class="motif" viewBox="0 0 128 76" aria-hidden="true">
     <rect class="c s" x="2" y="2" width="20" height="20"/><rect class="c" x="2" y="28" width="20" height="20"/><rect class="c" x="2" y="54" width="20" height="20"/>
     <rect class="c" x="28" y="2" width="20" height="20"/><rect class="c" x="28" y="28" width="20" height="20"/><rect class="c" x="28" y="54" width="20" height="20"/>
@@ -1214,28 +1246,80 @@
   <div class="foot"><span>make verify-all &nbsp;·&nbsp; .github/workflows</span><span>main, local run sealed at d4304c5</span></div>
 </section>
 
-<section class="slide" data-sec="Prospective verification">
-  <div class="dossier">
-    <div class="heading">
-      <div class="eyebrow">Prospective policy · issue #116</div>
-      <h2>Mutation thresholds follow <em>scientific risk</em></h2>
-      <p class="lede">Each required module must pass its own threshold. A strong aggregate cannot hide a failing critical scope. Historical reports keep their original criterion.</p>
+<!-- 35 mutation: what a mutant is -->
+<section class="slide" data-sec="Mutation testing">
+  <div class="wide">
+    <div class="eyebrow"><span class="idx">35</span> &nbsp; Mutation testing, issue #116</div>
+    <h2>A surviving mutant is <em>a behaviour no test protects</em></h2>
+    <div class="mut3">
+      <div class="mut-step">
+        <div class="k">1 &nbsp; Change one thing</div>
+        <pre class="code"><span class="rm">- flags = scores &gt; info["threshold"]</span>
+<span class="ad">+ flags = scores &gt;= info["threshold"]</span></pre>
+        <p class="sm">A real mutant of <code>research/alert_budget.py</code>. A score equal to the training threshold would now raise an alert.</p>
+      </div>
+      <div class="mut-step">
+        <div class="k">2 &nbsp; Run the tests</div>
+        <div class="verdict"><span class="vk">killed</span><span>a test fails: the change is noticed</span></div>
+        <div class="verdict"><span class="vs">survived</span><span>every test passes: the behaviour is not checked</span></div>
+        <p class="sm">Here the test <code>a score equal to the training threshold is not an alert</code> kills it. It did not exist before this session.</p>
+      </div>
+      <div class="mut-step">
+        <div class="k">3 &nbsp; Score the module</div>
+        <div class="frac"><span class="v">killed</span><span class="bar"></span><span class="v">all mutants</span></div>
+        <p class="sm">Survivors stay in the denominator. A mutant counts as equivalent only when the owner has recorded it as such, and never by assumption.</p>
+      </div>
     </div>
-    <div class="panel"><ul class="ledger">
-      <li><span class="k">L1 · 80%</span>Limited consequences, no effect on numerical results, integrity or certification.</li>
-      <li><span class="k">L2 · 90%</span>Operational support with meaningful but noncritical consequences.</li>
-      <li><span class="k">L3 · 95%</span>Scientific processing, detector computation and reported cost measurements.</li>
-      <li><span class="k">L4 · 98%</span>Leakage prevention, metrics, source identity, evidence and certification.</li>
-    </ul><p class="sm">The prospective inventory covers 100 source modules across four roots. Recorded counts and current source validity are checked separately. A two-mutant smoke confirms cache reuse. Live workers, changed inputs and stale artifacts block binding. First full campaign: 19,248 of 29,811 mutants killed, L4 at 65.5% against 98%, gate FAIL. Focused Linux diagnostic, LSTM module: 368 of 377 killed (97.61%); 98.66% after four owner-recorded equivalences (sole-author review). One module, no certification. Release integration and independent review remain required; no policy-v2 certification is claimed.</p></div>
   </div>
-  <div class="foot"><span>verification/mutation_policy.py · issue #116</span><span>prospective requirements, historical figures preserved</span></div>
+  <div class="foot"><span>research/tests/test_alert_budget.py</span><span>mutmut 3.8.0, raw focused counts</span></div>
+</section>
+
+<!-- 36 mutation: thresholds and measured change -->
+<section class="slide" data-sec="Mutation thresholds">
+  <div class="wide">
+    <div class="eyebrow"><span class="idx">36</span> &nbsp; Risk-tiered thresholds, measured change</div>
+    <h2>Four thresholds by scientific risk, <em>nine modules moved</em></h2>
+    <div class="chartwrap">
+      <svg class="chart" viewBox="0 0 1130 545" role="img" aria-label="Raw mutation score before and after new tests, nine research modules, with the four risk thresholds"><line x1="783" y1="86" x2="783" y2="500" stroke="var(--terra-text)" stroke-width="1.2" stroke-dasharray="5 5"/><text x="783" y="76" text-anchor="middle" class="ct" fill="var(--terra-text)">L1 80</text><line x1="897" y1="56" x2="897" y2="500" stroke="var(--terra-text)" stroke-width="1.2" stroke-dasharray="5 5"/><text x="897" y="46" text-anchor="middle" class="ct" fill="var(--terra-text)">L2 90</text><line x1="953" y1="86" x2="953" y2="500" stroke="var(--terra-text)" stroke-width="1.2" stroke-dasharray="5 5"/><text x="953" y="76" text-anchor="middle" class="ct" fill="var(--terra-text)">L3 95</text><line x1="987" y1="56" x2="987" y2="500" stroke="var(--terra-text)" stroke-width="2.5" stroke-dasharray="0"/><text x="987" y="46" text-anchor="middle" class="ct" fill="var(--terra-text)">L4 98</text><text x="314" y="132" text-anchor="end" class="ct">pool_check</text><line x1="620" y1="126" x2="998" y2="126" stroke="var(--sage-text)" stroke-width="3" opacity=".55"/><circle cx="620" cy="126" r="7" fill="var(--bg)" stroke="var(--ink-soft)" stroke-width="2.5"/><circle cx="998" cy="126" r="8" fill="var(--sage-text)"/><text x="1014" y="134" class="cv" fill="var(--sage-text)">98.9</text><text x="314" y="172" text-anchor="end" class="ct">alert_budget</text><line x1="497" y1="166" x2="990" y2="166" stroke="var(--sage-text)" stroke-width="3" opacity=".55"/><circle cx="497" cy="166" r="7" fill="var(--bg)" stroke="var(--ink-soft)" stroke-width="2.5"/><circle cx="990" cy="166" r="8" fill="var(--sage-text)"/><text x="1006" y="174" class="cv" fill="var(--sage-text)">98.2</text><text x="314" y="212" text-anchor="end" class="ct">alert_budget_summary</text><line x1="330" y1="206" x2="1010" y2="206" stroke="var(--sage-text)" stroke-width="3" opacity=".55"/><circle cx="330" cy="206" r="7" fill="var(--bg)" stroke="var(--ink-soft)" stroke-width="2.5"/><circle cx="1010" cy="206" r="8" fill="var(--sage-text)"/><text x="1026" y="214" class="cv" fill="var(--sage-text)">100.0</text><text x="342" y="192" class="cs">no test, 0%</text><text x="314" y="252" text-anchor="end" class="ct">matched_alert</text><line x1="746" y1="246" x2="992" y2="246" stroke="var(--sage-text)" stroke-width="3" opacity=".55"/><circle cx="746" cy="246" r="7" fill="var(--bg)" stroke="var(--ink-soft)" stroke-width="2.5"/><circle cx="992" cy="246" r="8" fill="var(--sage-text)"/><text x="1008" y="254" class="cv" fill="var(--sage-text)">98.4</text><text x="314" y="292" text-anchor="end" class="ct">prevalence_shift</text><line x1="690" y1="286" x2="992" y2="286" stroke="var(--sage-text)" stroke-width="3" opacity=".55"/><circle cx="690" cy="286" r="7" fill="var(--bg)" stroke="var(--ink-soft)" stroke-width="2.5"/><circle cx="992" cy="286" r="8" fill="var(--sage-text)"/><text x="1008" y="294" class="cv" fill="var(--sage-text)">98.4</text><text x="314" y="332" text-anchor="end" class="ct">score_shift</text><line x1="568" y1="326" x2="994" y2="326" stroke="var(--sage-text)" stroke-width="3" opacity=".55"/><circle cx="568" cy="326" r="7" fill="var(--bg)" stroke="var(--ink-soft)" stroke-width="2.5"/><circle cx="994" cy="326" r="8" fill="var(--sage-text)"/><text x="1010" y="334" class="cv" fill="var(--sage-text)">98.6</text><text x="314" y="372" text-anchor="end" class="ct">source_clustered</text><line x1="839" y1="366" x2="996" y2="366" stroke="var(--sage-text)" stroke-width="3" opacity=".55"/><circle cx="839" cy="366" r="7" fill="var(--bg)" stroke="var(--ink-soft)" stroke-width="2.5"/><circle cx="996" cy="366" r="8" fill="var(--sage-text)"/><text x="1012" y="374" class="cv" fill="var(--sage-text)">98.8</text><text x="314" y="412" text-anchor="end" class="ct">normalise</text><line x1="905" y1="406" x2="958" y2="406" stroke="var(--terra-text)" stroke-width="3" opacity=".55"/><circle cx="905" cy="406" r="7" fill="var(--bg)" stroke="var(--ink-soft)" stroke-width="2.5"/><circle cx="958" cy="406" r="8" fill="var(--terra-text)"/><text x="1026" y="414" class="cv" fill="var(--terra-text)">95.4</text><text x="314" y="452" text-anchor="end" class="ct">paired_bootstrap</text><line x1="749" y1="446" x2="942" y2="446" stroke="var(--terra-text)" stroke-width="3" opacity=".55"/><circle cx="749" cy="446" r="7" fill="var(--bg)" stroke="var(--ink-soft)" stroke-width="2.5"/><circle cx="942" cy="446" r="8" fill="var(--terra-text)"/><text x="1026" y="454" class="cv" fill="var(--terra-text)">94.0</text><text x="330" y="528" text-anchor="middle" class="cs">40%</text><text x="443" y="528" text-anchor="middle" class="cs">50%</text><text x="557" y="528" text-anchor="middle" class="cs">60%</text><text x="670" y="528" text-anchor="middle" class="cs">70%</text><text x="783" y="528" text-anchor="middle" class="cs">80%</text><text x="897" y="528" text-anchor="middle" class="cs">90%</text><text x="1010" y="528" text-anchor="middle" class="cs">100%</text></svg>
+      <p class="sm">Raw focused mutation score per module, local run, 2026-11-11. Open circle: before this session. Filled: after new behavioural tests. Green: at or above the L4 threshold of 98%, on that module alone. All nine modules are L4. Thresholds were not changed.</p>
+    </div>
+  </div>
+  <div class="foot"><span>docs/thesis-remediation/MUTATION_FOCUSED_DIAGNOSTICS_2026-11-11.md</span><span>a module result is not a certification</span></div>
+</section>
+
+<!-- 37 mutation: raw vs adjusted, what remains -->
+<section class="slide" data-sec="Mutation scope">
+  <div class="wide">
+    <div class="eyebrow"><span class="idx">37</span> &nbsp; What the evidence does and does not cover</div>
+    <h2>A focused pass does not certify <em>the repository</em></h2>
+    <div class="scope">
+      <div class="scope-a">
+        <div class="k">LSTM autoencoder, one module, one shard</div>
+        <div class="pair"><div><span class="v">97.61%</span><span class="l">raw, 368 of 377</span></div>
+        <div><span class="v ok">98.66%</span><span class="l">adjusted, 368 of 373</span></div></div>
+        <p class="sm">Adjusted means four equivalences accepted by the repository owner, as sole author and reviewer, not an independent review. Five inconclusive mutants stay eligible. No timeout.</p>
+      </div>
+      <div class="scope-b">
+        <div class="k">First complete native campaign, 2026-11-07, L4 modules</div>
+        <div class="stack" role="img" aria-label="L4 modules: 26 pass, 31 fail, 25 incomplete">
+          <span style="flex:26" class="p">26 pass</span><span style="flex:31" class="f">31 fail</span><span style="flex:25" class="i">25 incomplete</span></div>
+        <p class="sm">65.5% of L4 mutants killed against 98% required, 7,501 further mutants with no covering test. The release gate fails and stays closed.</p>
+        <ul class="ledger tight">
+          <li><span class="k">open</span>32 modules below threshold and 30 incomplete in that campaign, not re-measured here</li>
+          <li><span class="k">open</span>survivors that look inert (dtype coercions, <code>zip(strict=)</code>) await an owner decision</li>
+          <li><span class="k">found</span>minimum anomaly count 3 is below the 6 a stratified split needs; no archived result changes</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>verification/mutation_risk_policy.json</span><span>no full campaign was run in this phase</span></div>
 </section>
 
 <!-- 20 limitations -->
 <section class="slide" data-sec="Next">
   <div class="dossier">
     <div class="heading">
-      <div class="eyebrow"><span class="idx">35</span> &nbsp; Where it stands</div>
+      <div class="eyebrow"><span class="idx">38</span> &nbsp; Where it stands</div>
       <h2>Experiments run, <em>paper in IMRaD form</em></h2>
       <p class="lede">Historical implementation issues #63 to #70 are closed. The current roadmap preserves T001–T415. 91 of the 415 tasks are checked as of 2026-11-11, including the exploratory deployment-threshold tasks T163 to T171 of #94; T172, T062 and T063 remain open, as do the issues themselves. Source-aware inference, partition recovery, replay and publication corrections remain required. Optional P2 research is outside the active scope.</p>
     </div>
@@ -1258,7 +1342,7 @@
 <!-- 21 takeaway -->
 <section class="slide dark solo" data-sec="Takeaway">
   <div>
-    <div class="eyebrow"><span class="idx">36</span> &nbsp; Takeaway</div>
+    <div class="eyebrow"><span class="idx">39</span> &nbsp; Takeaway</div>
     <div class="brule"></div>
   </div>
   <div class="mid">
