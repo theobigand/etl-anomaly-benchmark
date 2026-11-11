@@ -39,7 +39,7 @@ The classical run (`verification/evidence/alert_budgets/classical`) and the neur
 
 `python research/alert_budget.py --output <dir>/runs` (classical) and
 `research/run_alert_budget_neural.sh <python> 2 4` (neural: 2 workers, 4 threads each, resumable,
-checkpoints in `neural/cells`, fingerprints in `neural/manifest.json`, run at a clean `ae994808`
+checkpoints in `neural/cells` (local only; `runs/` holds the same rows), fingerprints in `neural/manifest.json`, run at a clean `ae994808`
 with numpy 2.4.6, pandas 3.0.6, pyod 3.6.7, scikit-learn 1.9.1, torch 2.14.1), then
 `research/alert_budget_summary.py <dir>/runs --json ... --markdown ...`. Raw scores were not
 archived, so the detectors were refitted once per problem, detector and seed; no refit per budget.
