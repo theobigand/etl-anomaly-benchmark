@@ -32,11 +32,10 @@ def worker(problem: str, method: str, seed: int, threads: int, deterministic: bo
     warnings.filterwarnings("ignore")
     os.environ["TQDM_DISABLE"] = "1"
     sys.path[:0] = [str(ROOT / "research"), str(ROOT / "src")]
-    import pandas as pd
-    import torch
-
     import labelled_benchmark as lb
     import normalise as nm
+    import pandas as pd
+    import torch
     from deep_support import build, capped
     from pool_full import fit_scores
     from sklearn.metrics import average_precision_score, roc_auc_score
@@ -47,7 +46,9 @@ def worker(problem: str, method: str, seed: int, threads: int, deterministic: bo
     job = next(
         j
         for j in lb.jobs(
-            ROOT / "verification/evidence/dataset_registry", ROOT / "data/adbench", ROOT / "data/pool"
+            ROOT / "verification/evidence/dataset_registry",
+            ROOT / "data/adbench",
+            ROOT / "data/pool",
         )
         if j["problem"] == problem
     )
@@ -71,17 +72,29 @@ def worker(problem: str, method: str, seed: int, threads: int, deterministic: bo
     flags = s1 > thr
     yt = part["y_test"]
     np.savez(out, fit=kept, test=s1, test_again=s2, y=yt)
-    print(json.dumps({
-        "problem": problem, "method": method, "seed": seed, "threads": threads,
-        "deterministic": deterministic, "fit_rows": len(fit), "test_rows": len(yt),
-        "seconds": round(time.time() - t0, 2), "threshold": thr,
-        "alert_rate": float(flags.mean()), "recall": float((flags & (yt == 1)).sum() / (yt == 1).sum()),
-        "precision": float((flags & (yt == 1)).sum() / max(flags.sum(), 1)),
-        "roc_auc": float(roc_auc_score(yt, s1)), "ap": float(average_precision_score(yt, s1)),
-        "sha_fit": hashlib.sha256(kept.tobytes()).hexdigest()[:16],
-        "sha_test": hashlib.sha256(s1.tobytes()).hexdigest()[:16],
-        "inference_repeat_identical": bool(np.array_equal(s1, s2)),
-    }))
+    print(
+        json.dumps(
+            {
+                "problem": problem,
+                "method": method,
+                "seed": seed,
+                "threads": threads,
+                "deterministic": deterministic,
+                "fit_rows": len(fit),
+                "test_rows": len(yt),
+                "seconds": round(time.time() - t0, 2),
+                "threshold": thr,
+                "alert_rate": float(flags.mean()),
+                "recall": float((flags & (yt == 1)).sum() / (yt == 1).sum()),
+                "precision": float((flags & (yt == 1)).sum() / max(flags.sum(), 1)),
+                "roc_auc": float(roc_auc_score(yt, s1)),
+                "ap": float(average_precision_score(yt, s1)),
+                "sha_fit": hashlib.sha256(kept.tobytes()).hexdigest()[:16],
+                "sha_test": hashlib.sha256(s1.tobytes()).hexdigest()[:16],
+                "inference_repeat_identical": bool(np.array_equal(s1, s2)),
+            }
+        )
+    )
 
 
 def run_worker(problem, method, seed, threads, det, out: Path):
@@ -108,33 +121,55 @@ def compare(a: Path, b: Path) -> dict:
         "test_bitwise": bool(np.array_equal(x["test"], y["test"])),
         "fit_bitwise": bool(np.array_equal(x["fit"], y["fit"])),
         "flag_disagreements": int(
-            ((x["test"] > np.percentile(x["fit"], 98)) != (y["test"] > np.percentile(y["fit"], 98))).sum()
+            (
+                (x["test"] > np.percentile(x["fit"], 98))
+                != (y["test"] > np.percentile(y["fit"], 98))
+            ).sum()
         ),
     }
 
 
 def drive(out: Path):
     out.mkdir(parents=True, exist_ok=True)
-    import numpy, pandas, scipy, sklearn, torch
+    import numpy
+    import pandas
+    import scipy
+    import sklearn
+    import torch
 
+    cpu = subprocess.run(
+        ["sysctl", "-n", "machdep.cpu.brand_string"], capture_output=True, text=True
+    ).stdout.strip()
     env = {
-        "python": sys.version.split()[0], "platform": platform.platform(),
+        "python": sys.version.split()[0],
+        "platform": platform.platform(),
         "machine": platform.machine(),
-        "cpu": subprocess.run(["sysctl", "-n", "machdep.cpu.brand_string"], capture_output=True, text=True).stdout.strip(),
-        "cores": os.cpu_count(), "torch": torch.__version__, "numpy": numpy.__version__,
-        "pandas": pandas.__version__, "scipy": scipy.__version__, "sklearn": sklearn.__version__,
-        "torch_default_threads": torch.get_num_threads(), "deterministic_default": torch.are_deterministic_algorithms_enabled(),
-        "blas": str(numpy.show_config) and "see numpy.show_config()",
-    }  # fmt: skip
+        "cpu": cpu,
+        "cores": os.cpu_count(),
+        "torch": torch.__version__,
+        "numpy": numpy.__version__,
+        "pandas": pandas.__version__,
+        "scipy": scipy.__version__,
+        "sklearn": sklearn.__version__,
+        "torch_default_threads": torch.get_num_threads(),
+        "deterministic_default": torch.are_deterministic_algorithms_enabled(),
+    }
     results = []
     for problem in PROBLEMS:
         for method in METHODS:
             for seed in SEEDS:
                 tag = f"{problem.replace(':', '_')}__{method}__{seed}"
                 runs = {}
-                for label, threads, det in (("t4_a", 4, False), ("t4_b", 4, False), ("t4_c", 4, False),
-                                            ("t1", 1, False), ("t2", 2, False), ("t10", 10, False),
-                                            ("t4_det", 4, True)):  # fmt: skip
+                configurations = (
+                    ("t4_a", 4, False),
+                    ("t4_b", 4, False),
+                    ("t4_c", 4, False),
+                    ("t1", 1, False),
+                    ("t2", 2, False),
+                    ("t10", 10, False),
+                    ("t4_det", 4, True),
+                )
+                for label, threads, det in configurations:
                     path = out / f"{tag}__{label}.npz"
                     try:
                         runs[label] = (run_worker(problem, method, seed, threads, det, path), path)
@@ -147,8 +182,14 @@ def drive(out: Path):
                     if label != "t4_a" and "error" not in rec and "error" not in base[0]:
                         entry["vs_t4_a"][label] = compare(base[1], path)
                 results.append(entry)
-                print(tag, {k: ("ERR" if "error" in v[0] else v[0]["sha_test"]) for k, v in runs.items()}, flush=True)
-    (out / "results.json").write_text(json.dumps({"environment": env, "results": results}, indent=1))
+                print(
+                    tag,
+                    {k: ("ERR" if "error" in v[0] else v[0]["sha_test"]) for k, v in runs.items()},
+                    flush=True,
+                )
+    (out / "results.json").write_text(
+        json.dumps({"environment": env, "results": results}, indent=1)
+    )
     for p in out.glob("*.npz"):
         p.unlink()  # arrays are summarized by hashes and differences
 
