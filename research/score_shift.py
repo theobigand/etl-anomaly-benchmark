@@ -240,6 +240,37 @@ def monitor_table(runs: list[dict[str, Any]], budget: float = 0.02) -> dict[str,
     return table
 
 
+TEST_SHARE = 0.15  # the held-out share of the rows in the archived 70/15/15 split
+ALERT_BINS = (5.0, 30.0)  # expected alerts in the window: few, some, enough
+
+
+def volume_false_alarms(runs: list[dict[str, Any]], budget: float = 0.02) -> dict[str, Any]:
+    """Share of unshifted fits whose alert rate leaves ``VOLUME_BAND``, by expected alerts.
+
+    The expected number of alerts in the held-out window is ``rows * TEST_SHARE * budget``: a rate
+    measured on a handful of alerts moves by chance alone, so the band is only meaningful with
+    enough of them.
+    """
+    groups: dict[str, list[bool]] = {"fewer": [], "between": [], "enough": []}
+    for run in runs:
+        expected = run["rows"] * TEST_SHARE * budget
+        name = (
+            "fewer"
+            if expected < ALERT_BINS[0]
+            else "between"
+            if expected < ALERT_BINS[1]
+            else "enough"
+        )
+        for seed_runs in run["runs"].values():
+            for seed_run in seed_runs:
+                ratio = seed_run["scenarios"]["baseline:0"][str(budget)]["alert_over_budget"]
+                groups[name].append(not VOLUME_BAND[0] <= ratio <= VOLUME_BAND[1])
+    return {
+        name: {"fits": len(v), "false_alarm": float(np.mean(v)) if v else None}
+        for name, v in groups.items()
+    }
+
+
 def load(folder: Path) -> list[dict[str, Any]]:
     return [
         run
@@ -272,6 +303,7 @@ def main(argv: list[str] | None = None) -> int:
             "problems": len(runs),
             "summary": summarize(runs),
             "monitors": monitor_table(runs),
+            "volume_false_alarms": volume_false_alarms(runs),
         }
         args.output.write_text(json.dumps(document, indent=1, sort_keys=True) + "\n")
         return 0

@@ -136,3 +136,17 @@ def test_the_summary_gives_medians_over_problems_per_method_and_pooled():
     cell = table["ecod"]["location:1"]["0.02"]
     assert cell["problems"] == 3 and cell["median_alert_over_budget"] == pytest.approx(2.0)
     assert table["all"]["baseline:0"]["0.01"]["median_roc_auc"] == pytest.approx(0.9)
+
+
+def test_volume_false_alarms_are_stratified_by_the_expected_number_of_alerts():
+    def run(rows, ratio):
+        sc = {"baseline:0": {"0.02": {"alert_over_budget": ratio}}}
+        return {"problem": "p", "rows": rows, "runs": {"ecod": [{"seed": 1, "scenarios": sc}]}}
+
+    # expected alerts = rows * 0.15 * 0.02: 100 rows -> 0.3, 1,500 -> 4.5, 3,000 -> 9, 20,000 -> 60
+    runs = [run(100, 3.0), run(1_500, 1.0), run(3_000, 0.4), run(20_000, 1.0), run(20_000, 1.1)]
+    got = ss.volume_false_alarms(runs)
+    assert got["fewer"] == {"fits": 2, "false_alarm": 0.5}
+    assert got["between"] == {"fits": 1, "false_alarm": 1.0}
+    assert got["enough"] == {"fits": 2, "false_alarm": 0.0}
+    assert ss.volume_false_alarms([])["enough"] == {"fits": 0, "false_alarm": None}

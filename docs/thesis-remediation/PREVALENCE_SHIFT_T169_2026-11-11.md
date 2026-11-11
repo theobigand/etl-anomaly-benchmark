@@ -34,9 +34,9 @@ for the budget are excluded. The rules have no budget cell and are excluded.
 - Alert volume: the medians of the ratio of the alert rate to the budget range, over the 14 detectors, from
   0.83 to 1.83 at a prevalence of 0.5% and from 1.15 to 2.73 at 20% for the 2% budget (1% budget: 0.86-2.02
   and 1.24-3.65; 5% budget: 0.76-1.42 and 1.09-2.05). A threshold calibrated as a 2% alert budget therefore
-  alerts on 15% to 173% more rows than planned when anomalies are a fifth of the population, and is close to
-  or under the budget when they are rare. The budget holds only near the prevalence where the cell was
-  measured.
+  alerts on 15% to 173% more rows than planned when anomalies are a fifth of the population, and, when
+  anomalies are rare, alerts on 17% fewer rows (0.83) to 83% more (1.83) depending on the detector. The
+  budget holds only near the prevalence and conditional score distributions where the cell was measured.
 - Precision rises almost in proportion to prevalence: at the 2% budget the median precision at 20% is 14.7
   to 31.8 times that at 0.5% (Isolation Forest 0.017 to 0.304; PCA 0.011 to 0.277).
 - The detectors already above their budget at the observed prevalence (Deep SVDD 1.9, autoencoder 1.4) are
