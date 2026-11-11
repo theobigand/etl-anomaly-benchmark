@@ -38,7 +38,7 @@ from pool_full import KNOWN, fit_scores  # noqa: E402,F401
 
 from etl_benchmark import config  # noqa: E402
 from etl_benchmark.pipeline import detect  # noqa: E402
-from etl_benchmark.registry import DEEP_NAMES, DETECTOR_NAMES  # noqa: E402
+from etl_benchmark.registry import DEEP_NAMES, DETECTOR_NAMES, RULE_NAMES  # noqa: E402
 
 BUDGETS = (0.005, 0.01, 0.02, 0.05, 0.10)
 FIXED_BUILD = 0.02  # constant contamination used only to construct the detector; no label is read
@@ -102,9 +102,12 @@ def run_method(
     row["pr_auc"] = float(average_precision_score(y, scores))
     row["budgets"] = {}
     for budget in BUDGETS:
-        info = budget_threshold(kept, budget)
-        cell = _counts(y, scores > info["threshold"])
-        row["budgets"][str(budget)] = {**info, **cell}
+        try:
+            info = budget_threshold(kept, budget)
+        except ValueError as error:  # e.g. too few training rows to realize this budget
+            row["budgets"][str(budget)] = {"nominal": float(budget), "infeasible": str(error)}
+            continue
+        row["budgets"][str(budget)] = {**info, **_counts(y, scores > info["threshold"])}
     return row
 
 
@@ -178,7 +181,11 @@ def summarize(
             per: dict[str, list[float]] = {name: [] for name in (*SELECT, "ratio")}
             seed_runs = 0
             for run in runs:
-                seeds = [s for s in run["runs"].get(method, []) if "budgets" in s]
+                seeds = [
+                    s
+                    for s in run["runs"].get(method, [])
+                    if key in s.get("budgets", {}) and "infeasible" not in s["budgets"][key]
+                ]
                 if not seeds:
                     continue
                 seed_runs += len(seeds)
@@ -193,6 +200,22 @@ def summarize(
                 "median_realized_over_nominal": float(np.median(per["ratio"])),
             }  # fmt: skip
     return table
+
+
+def rule_reference(runs: list[dict[str, Any]]) -> dict[str, dict[str, float]]:
+    """Untuned rule decisions: seed-mean per problem, then the median over problems."""
+    out: dict[str, dict[str, float]] = {}
+    for method in sorted({m for r in runs for m in r["runs"] if m in RULE_NAMES}):
+        per: dict[str, list[float]] = {k: [] for k in ("test_alert_rate", "precision", "recall")}
+        for run in runs:
+            seeds = [s["rule"] for s in run["runs"].get(method, []) if "rule" in s]
+            if seeds:
+                for k in per:
+                    per[k].append(float(np.mean([s[k] for s in seeds])))
+        out[method] = {"problems": len(per["recall"])} | {
+            f"median_{k}": float(np.median(v)) for k, v in per.items()
+        }
+    return out
 
 
 def main(argv: list[str] | None = None) -> int:

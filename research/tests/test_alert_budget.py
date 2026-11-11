@@ -136,3 +136,21 @@ def test_summary_counts_failures_and_skips_as_unevaluated_not_zero():
     table = ab.summarize([base], budgets=(0.01,))
     assert table == {} or "hbos" not in table
     assert ab.accounting([base]) == {"problems": 1, "failed_runs": 1, "skipped_detectors": 1}
+
+
+def test_a_budget_the_training_set_cannot_realize_is_recorded_not_fatal():
+    x, y = _problem(n=250, anomalies=40)  # about 175 training rows: 0.5% needs 200
+    result = ab.run_problem(x, y, seeds=(42,), methods=["hbos"])
+    cells = result["runs"]["hbos"][0]["budgets"]
+    assert "infeasible" in cells["0.005"] and "tp" not in cells["0.005"]
+    assert "infeasible" not in cells["0.01"] and result["errors"] == {}
+    table = ab.summarize([{"problem": "a", **result}], budgets=(0.005, 0.01))
+    assert "0.005" not in table["hbos"] and table["hbos"]["0.01"]["problems"] == 1
+
+
+def test_rules_are_a_separate_untuned_reference():
+    x, y = _problem()
+    result = ab.run_problem(x, y, seeds=(42, 1), methods=["zscore", "hbos"])
+    ref = ab.rule_reference([{"problem": "a", **result}])
+    assert set(ref) == {"zscore"} and ref["zscore"]["problems"] == 1
+    assert 0.0 <= ref["zscore"]["median_test_alert_rate"] <= 1.0
