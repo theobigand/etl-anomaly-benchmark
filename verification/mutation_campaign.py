@@ -117,7 +117,12 @@ def load_campaign(
     equivalence_path = root / EQUIVALENCE
     equivalence = _json(root, equivalence_path) if equivalence_path.is_file() else None
     analysis = mutation_policy.evaluate(
-        policy, root, native["catalog"], native["records"], equivalence
+        policy,
+        root,
+        native["catalog"],
+        native["records"],
+        equivalence,
+        proof["context"]["runtime"]["packages"],
     )
     result = {
         "format_version": FORMAT_VERSION,
@@ -225,6 +230,7 @@ def status(result: dict) -> str:
         result["catalog"],
         result["records"],
         result.get("equivalence"),
+        result["runtime"]["packages"],
     )
     if analysis != result["analysis"] or type(result["native_exit_code"]) is not int:
         raise ValueError("stored mutation arithmetic differs from the recomputed result")

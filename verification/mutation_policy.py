@@ -70,6 +70,14 @@ def _validate_declarations(policy: dict) -> None:
     thresholds = policy.get("thresholds")
     if thresholds != THRESHOLDS or any(type(value) is not int for value in thresholds.values()):
         raise ValueError("thresholds must be L1=80 L2=90 L3=95 L4=98")
+    governance = policy.get("governance")
+    if governance is not None and (
+        not isinstance(governance, dict)
+        or set(governance) != {"review_mode", "owner"}
+        or governance["review_mode"] != REVIEW_MODE
+        or not _text(governance["owner"])
+    ):
+        raise ValueError("invalid governance declaration")
     roots, units = policy.get("roots"), policy.get("units")
     if not isinstance(roots, list) or not roots or any(not isinstance(p, str) for p in roots):
         raise ValueError("policy roots must be a nonempty path list")
@@ -184,62 +192,103 @@ def _aggregate_status(statuses: list[str]) -> str:
     return "PASS"
 
 
-EQUIVALENCE_VERSION = 1
+EQUIVALENCE_VERSION = 2
+REVIEW_MODE = "sole_author_owner_review"
+VERDICTS = ("accepted", "rejected", "inconclusive", "proposed")
 _EQUIVALENCE_TEXT = (
     "id", "path", "function", "diff", "original_behavior", "mutated_behavior", "risk", "reason",
-    "source_sha256", "catalog_sha256", "author", "reviewer", "review_date",
+    "source_sha256", "catalog_sha256", "author",
 )  # fmt: skip
+_EQUIVALENCE_KEYS = {
+    *_EQUIVALENCE_TEXT, "evidence", "verdict", "approver", "decision_date", "policy_version",
+    "environment", "assessments",
+}  # fmt: skip
 
 
 def catalog_digest(keys: list[str]) -> str:
     return hashlib.sha256(json.dumps(sorted(keys), separators=(",", ":")).encode()).hexdigest()
 
 
-def accepted_equivalents(
-    document: dict | None, units: dict, sources: dict, catalog: dict, records: list[dict]
-) -> dict[str, set[str]]:
-    """Validate reviewed equivalence records; return accepted mutant ids per module.
+def _text(value) -> bool:
+    return isinstance(value, str) and bool(value.strip())
 
-    Only a surviving mutant of a classified module can be accepted. A record is bound
-    to the current source, the module catalog, the risk level and the policy version,
-    needs an approval by a reviewer other than its author and fails closed on any
-    mismatch; nothing is accepted automatically.
+
+def accepted_equivalents(
+    document: dict | None,
+    units: dict,
+    sources: dict,
+    catalog: dict,
+    records: list[dict],
+    governance: dict | None = None,
+    environment: dict | None = None,
+) -> dict[str, set[str]]:
+    """Validate owner-reviewed equivalence records; return accepted mutant ids per module.
+
+    Review model ``sole_author_owner_review``: this is an individual thesis whose only
+    authorized approver is the repository owner declared in the policy, who may approve a
+    claim they or an assistant proposed. It is not independent peer review and the approver
+    identity is recorded text, not an authenticated signature. Only a record with the verdict
+    ``accepted`` and the owner's recorded decision excludes a mutant; ``proposed``,
+    ``rejected`` and ``inconclusive`` records are validated and ignored. Every record must
+    name a surviving mutant of the current catalog, match the current source and module
+    catalog digests, risk level and policy version, and an accepted record must also match
+    the dependency versions of the campaign environment. Any mismatch rejects the evidence.
     """
     if document is None:
         return {}
     if (
+        not isinstance(governance, dict)
+        or governance.get("review_mode") != REVIEW_MODE
+        or not _text(governance.get("owner"))
+    ):
+        raise ValueError("the policy does not declare the sole-author owner review mode")
+    if (
         not isinstance(document, dict)
-        or set(document) != {"version", "records"}
+        or set(document) != {"version", "review_mode", "owner", "records"}
         or document["version"] != EQUIVALENCE_VERSION
         or not isinstance(document["records"], list)
     ):
-        raise ValueError("equivalence document must be version 1 with a record list")
+        raise ValueError("equivalence document must be version 2 with a record list")
+    if document["review_mode"] != REVIEW_MODE or document["owner"] != governance["owner"]:
+        raise ValueError("equivalence document does not match the declared review mode and owner")
     outcome = {record["id"]: record["outcome"] for record in records}
     owner = {key: path for path, keys in catalog.items() for key in keys}
     accepted: dict[str, set[str]] = {}
     seen = set()
     for item in document["records"]:
-        if not isinstance(item, dict) or set(item) != {
-            *_EQUIVALENCE_TEXT, "evidence", "approved", "policy_version"
-        }:  # fmt: skip
+        if not isinstance(item, dict) or set(item) != _EQUIVALENCE_KEYS:
             raise ValueError("invalid equivalence record shape")
-        if any(
-            not isinstance(item[name], str) or not item[name].strip() for name in _EQUIVALENCE_TEXT
-        ):
+        if any(not _text(item[name]) for name in _EQUIVALENCE_TEXT):
             raise ValueError("equivalence record fields must be nonempty text")
         evidence = item["evidence"]
-        if (
-            not isinstance(evidence, list)
-            or not evidence
-            or any(not isinstance(entry, str) or not entry.strip() for entry in evidence)
-        ):
+        if not isinstance(evidence, list) or not evidence or any(not _text(e) for e in evidence):
             raise ValueError("equivalence record needs supporting evidence")
+        assessments = item["assessments"]
+        if not isinstance(assessments, list) or any(
+            not isinstance(a, dict)
+            or set(a) != {"assessor", "verdict", "note"}
+            or not _text(a["assessor"])
+            or a["verdict"] not in ("ACCEPT", "REJECT", "INCONCLUSIVE")
+            or not _text(a["note"])
+            for a in assessments
+        ):
+            raise ValueError("invalid equivalence assessments")
         key, path = item["id"], item["path"]
         if key in seen or key not in owner or owner[key] != path:
             raise ValueError("duplicate or unknown equivalence identity")
         seen.add(key)
-        if item["approved"] is not True or item["reviewer"] == item["author"]:
-            raise ValueError("equivalence needs approval by a reviewer other than the author")
+        if item["verdict"] not in VERDICTS:
+            raise ValueError("invalid equivalence verdict")
+        decided = item["verdict"] != "proposed"
+        if decided:
+            if item["approver"] != governance["owner"]:
+                raise ValueError("an equivalence decision must be recorded by the declared owner")
+            try:
+                date.fromisoformat(item["decision_date"])
+            except (TypeError, ValueError) as error:
+                raise ValueError("equivalence decision date must be ISO 8601") from error
+        elif item["approver"] != "" or item["decision_date"] != "":
+            raise ValueError("a proposed equivalence must not carry an approver or decision date")
         if outcome.get(key) != "survived":
             raise ValueError("only a surviving mutant can be accepted as equivalent")
         if item["policy_version"] != VERSION or item["risk"] != units[path]["level"]:
@@ -248,16 +297,29 @@ def accepted_equivalents(
             catalog[path]
         ):
             raise ValueError("equivalence record is stale for the current source or catalog")
-        try:
-            date.fromisoformat(item["review_date"])
-        except ValueError as error:
-            raise ValueError("equivalence review date must be ISO 8601") from error
-        accepted.setdefault(path, set()).add(key)
+        recorded = item["environment"]
+        if (
+            not isinstance(recorded, dict)
+            or not recorded
+            or any(not _text(name) or not _text(version) for name, version in recorded.items())
+        ):
+            raise ValueError("equivalence record must state the dependency versions it relies on")
+        if item["verdict"] == "accepted":
+            if not isinstance(environment, dict) or any(
+                environment.get(name) != version for name, version in recorded.items()
+            ):
+                raise ValueError("equivalence record is incompatible with the campaign environment")
+            accepted.setdefault(path, set()).add(key)
     return accepted
 
 
 def evaluate(
-    policy: dict, root: Path, catalog: dict, records: list[dict], equivalence: dict | None = None
+    policy: dict,
+    root: Path,
+    catalog: dict,
+    records: list[dict],
+    equivalence: dict | None = None,
+    environment: dict | None = None,
 ) -> dict:
     """Reconcile outcomes with a complete catalog and enforce every module boundary.
 
@@ -269,7 +331,7 @@ def evaluate(
     sources = {
         path: hashlib.sha256((root / path).read_bytes()).hexdigest() for path in policy["units"]
     }
-    return evaluate_snapshot(policy, sources, catalog, records, equivalence)
+    return evaluate_snapshot(policy, sources, catalog, records, equivalence, environment)
 
 
 def evaluate_snapshot(
@@ -278,6 +340,7 @@ def evaluate_snapshot(
     catalog: dict,
     records: list[dict],
     equivalence: dict | None = None,
+    environment: dict | None = None,
 ) -> dict:
     """Recompute recorded arithmetic, without proving live scope or execution.
 
@@ -319,7 +382,9 @@ def evaluate_snapshot(
         if path != expected[key] or record["outcome"] not in OUTCOMES:
             raise ValueError("mutant path or outcome differs from catalog")
         observed.add(key)
-    waived = accepted_equivalents(equivalence, units, sources, catalog, records)
+    waived = accepted_equivalents(
+        equivalence, units, sources, catalog, records, policy.get("governance"), environment
+    )
     modules = {}
     for path, unit in sorted(units.items()):
         selected = [record for record in records if record["path"] == path]
@@ -359,6 +424,7 @@ def evaluate_snapshot(
         "policy_sha256": policy_digest(policy),
         "sources": dict(sources),
         "equivalence_version": EQUIVALENCE_VERSION,
+        "review_mode": REVIEW_MODE,
         "accepted_equivalents": {path: sorted(keys) for path, keys in sorted(waived.items())},
         "modules": modules,
         "levels": levels,

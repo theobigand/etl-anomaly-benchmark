@@ -8,6 +8,7 @@ import sys
 
 import pytest
 
+from tests import owner_review
 from tests.test_mutation_campaign import _fixture
 from tests.test_mutation_risk_policy import _campaign, _policy
 from verification import mutation_catalog, mutation_policy
@@ -25,7 +26,11 @@ CONTEXT = {
     "revision": "r" * 40,
     "tests_sha256": "t" * 64,
     "configuration_sha256": "c" * 64,
-    "runtime": {"python": "3.11", "mutmut": "3.8.0", "pytest": "9.1.1"},
+    "runtime": {
+        "python": "3.11",
+        "platform": "Linux-test",
+        "packages": {"mutmut": "3.8.0", "pytest": "9.1.1"},
+    },
 }
 
 
@@ -207,14 +212,11 @@ def test_reviewed_equivalents_pass_through_the_aggregation(tmp_path):
     path = next(r["path"] for m in manifests for r in m["records"] if r["id"] == survivor)
     assert shards.aggregate(document, manifests, policy, tmp_path, CONTEXT)["status"] == "FAIL"
     source = hashlib.sha256((tmp_path / path).read_bytes()).hexdigest()
-    record = {
-        "id": survivor, "path": path, "function": "compute", "diff": "d", "original_behavior": "o",
-        "mutated_behavior": "m", "risk": "L4", "reason": "r", "evidence": ["e"],
-        "source_sha256": source, "catalog_sha256": mutation_policy.catalog_digest(catalog[path]),
-        "author": "a", "reviewer": "b", "approved": True, "review_date": "2026-11-08",
-        "policy_version": 2,
-    }  # fmt: skip
-    equivalence = {"version": 1, "records": [record]}
+    record = owner_review.record(
+        survivor, path, source, mutation_policy.catalog_digest(catalog[path]),
+        environment={"mutmut": "3.8.0", "pytest": "9.1.1"},
+    )  # fmt: skip
+    equivalence = owner_review.document(record)
     result = shards.aggregate(document, manifests, policy, tmp_path, CONTEXT, equivalence)
     assert result["status"] == "PASS" and result["analysis"]["accepted_equivalents"] == {
         path: [survivor]
@@ -325,7 +327,7 @@ def test_the_command_line_plans_builds_and_aggregates_a_campaign(tmp_path, capsy
     assert shards.main(arguments) == 0
     assert "mutation campaign: PASS (1 shards)" in capsys.readouterr().out
     equivalence = tmp_path / "eq.json"
-    equivalence.write_text(json.dumps({"version": 1, "records": []}))
+    equivalence.write_text(json.dumps(owner_review.document()))
     assert shards.main([*arguments, "--equivalence", str(equivalence)]) == 0
     context = tmp_path / "context.json"
     assert shards.main(["context", "--root", str(tmp_path), "--output", str(context)]) == 0
@@ -668,17 +670,12 @@ def test_the_command_line_reads_the_equivalence_file_and_names_use_spaces(tmp_pa
     survivor = mutation_run["records"][1]["id"]
     from verification import mutation_policy
 
-    record = {
-        "id": survivor, "path": SOURCE, "function": "compute", "diff": "d",
-        "original_behavior": "o", "mutated_behavior": "m", "risk": "L4", "reason": "r",
-        "evidence": ["e"],
-        "source_sha256": mutation_run["sources"][SOURCE],
-        "catalog_sha256": mutation_policy.catalog_digest(mutation_run["catalog"][SOURCE]),
-        "author": "a", "reviewer": "b", "approved": True, "review_date": "2026-11-08",
-        "policy_version": 2,
-    }  # fmt: skip
+    record = owner_review.record(
+        survivor, SOURCE, mutation_run["sources"][SOURCE],
+        mutation_policy.catalog_digest(mutation_run["catalog"][SOURCE]),
+    )  # fmt: skip
     equivalence = tmp_path / "eq.json"
-    equivalence.write_text(json.dumps({"version": 1, "records": [record]}))
+    equivalence.write_text(json.dumps(owner_review.document(record)))
     base = ["aggregate", "--root", str(tmp_path), "--plan", str(plan_path), "--manifests",
             str(manifest), "--output", str(tmp_path / "r.json")]  # fmt: skip
     assert shards.main(base) == 1

@@ -1,47 +1,49 @@
-# Independent review packet — LSTM equivalence candidates
+# Owner decision packet — LSTM equivalence candidates (updated 2026-11-11)
 
-Status: **awaiting an independent reviewer. No verdict below is filled in and none may be filled in by the author
-of the candidates.** The repository has a single collaborator (the project owner), so no reviewer other than the
-owner is available to this process; the owner can review, or name a reviewer, and record the verdicts here.
+Governance: this is a sole-author thesis. The repository owner (`theobigand`) is the only authorized approver and may
+approve claims that were proposed by an assistant or by themselves (`review_mode: sole_author_owner_review`, declared in
+`verification/mutation_risk_policy.json`). Owner approval is **not independent peer review** and the approver identity is
+recorded text, not an authenticated signature (git history and the commit author are the only attestations). AI-assisted
+assessments below are supporting evidence, not authorization.
 
-Source revision of the candidates: d296f2f (`research/lstm_detector.py`; the same file at later commits). Candidate
-list and the author's arguments: `EQUIVALENCE_CANDIDATES_LSTM_2026-11-08.md`. Differential evidence for the
-arguments (not an acceptance): `research/tests/test_equivalence_claims.py` (14 tests, run with
-`pytest research/tests/test_equivalence_claims.py`); it records the dependency versions on which the arguments rest
-(pandas 3.0.6, numpy 2.4.6, torch 2.15.0).
+**No candidate is approved.** The proposals are in `docs/thesis-remediation/equivalence/lstm_proposals_2026-11-11.json`
+(all `proposed`, approver and date empty, validated against the hosted evidence of run 42433394723). That file is never loaded by
+the gate. To accept a claim, copy its record into `verification/mutation_equivalence.json` (document `version: 2`,
+`review_mode: sole_author_owner_review`, `owner: theobigand`), set `verdict` to `accepted`, `approver` to `theobigand` and
+`decision_date` to the ISO date of the decision. The gate then requires the record to match the current source and
+module-catalog digests, the risk level, the policy version and the dependency versions of the campaign runtime
+(`environment`), and it keeps the raw outcome and raw score beside the adjusted score.
 
-## How to review one candidate
+Source `research/lstm_detector.py` sha256 `277375e66d...` (identical at d296f2f and later); catalog digest `aef20963dc...`
+(377 mutants). Differential evidence: `research/tests/test_equivalence_claims.py` (14 tests). Candidate descriptions:
+`EQUIVALENCE_CANDIDATES_LSTM_2026-11-08.md`.
 
-1. `python -m mutmut show 'research.lstm_detector.xǁLSTMAutoencoderǁ<function>__mutmut_<n>'` prints the diff.
-2. Decide whether original and mutated code give the same result for every supported input and every supported
-   environment (not only the tested ones); consider boundary sizes, dtypes, empty and single-row inputs, and other
-   package versions allowed by `pyproject.toml` (the ranges are open).
-3. Record ACCEPT, REJECT (give a counterexample or a missing contract) or INCONCLUSIVE. INCONCLUSIVE counts as not accepted.
-4. For an ACCEPT, create a record in `verification/mutation_equivalence.json` (version 1) with the fields required by
-   `verification/mutation_policy.accepted_equivalents`: id, path, function, diff, original and mutated behavior, risk,
-   reason, evidence, `source_sha256`, `catalog_sha256` (`mutation_policy.catalog_digest` of the module catalog), author,
-   the reviewer's own identity, approved true, ISO review date and policy version 2. A record whose reviewer equals its
-   author, or whose digests are stale, is rejected by the gate.
+## Technical assessment (assistant, confirmed against the exact mutant diffs; preliminary GPT-6 assessment agrees)
 
-## Verdict table (to be completed by the reviewer)
+| Mutant | Diff | Assessment | Scope of the argument | Relied-on environment |
+| --- | --- | --- | --- | --- |
+| `_reconstruction_error__31` | `dim=-1` to `dim=+1` | ACCEPT proposed | universal: in the `last_only` branch the tensor is `error[:, -1]`, always 2-D, because windows are 3-D by construction | torch 2.15.0+cpu |
+| `fit__50` | validation cap `>` to `>=` | ACCEPT proposed | universal: choosing all indices then `np.sort` is the identity, and the generator is not used afterwards | numpy 2.4.6 |
+| `settings__41` | `version("torch")` to `"TORCH"` | ACCEPT proposed | universal for Python >= 3.11: distribution names are normalised (PEP 503) | torch 2.15.0+cpu |
+| `settings__46` | `version("numpy")` to `"NUMPY"` | ACCEPT proposed | same | numpy 2.4.6 |
+| `_reconstruction_error__35` | `.astype(float)` to `.astype(None)` | INCONCLUSIVE | environment-specific: `astype(None)` is float64 here, a library default | numpy 2.4.6 |
+| `_windows__2` | same on a DataFrame | INCONCLUSIVE | environment-specific (pandas behavior) | pandas 3.1.1 |
+| `fit__16` | same on a DataFrame | INCONCLUSIVE | environment-specific (pandas behavior) | pandas 3.1.1 |
+| `fit__43` | `replace=False` to `replace=None` | INCONCLUSIVE | outside the documented boolean contract; falsy in the installed numpy | numpy 2.4.6 |
+| `fit__55` | same | INCONCLUSIVE | same | numpy 2.4.6 |
 
-| Mutant | Diff | Verdict | Reviewer | Date | Counterexample or note |
-| --- | --- | --- | --- | --- | --- |
-| `_reconstruction_error__mutmut_31` | `dim=-1` to `dim=+1` (2-D tensor) | | | | |
-| `_reconstruction_error__mutmut_35` | `.astype(float)` to `.astype(None)` | | | | |
-| `_windows__mutmut_2` | `.astype(float)` to `.astype(None)` | | | | |
-| `fit__mutmut_16` | `.astype(float)` to `.astype(None)` | | | | |
-| `fit__mutmut_43` | `replace=False` to `replace=None` | | | | |
-| `fit__mutmut_55` | `replace=False` to `replace=None` | | | | |
-| `fit__mutmut_50` | `>` to `>=` (validation cap) | | | | |
-| `settings__mutmut_41` | `version("torch")` to `version("TORCH")` | | | | |
-| `settings__mutmut_46` | `version("numpy")` to `version("NUMPY")` | | | | |
+The five INCONCLUSIVE candidates could be accepted only as environment-bound equivalences (valid while the recorded
+dependency versions hold); they are not universal. Rejecting them would require a behavior no test can distinguish today,
+so a REJECT would not yield a test. If you accept none, the module stays at 368/377 (97.6%) and below L4.
 
-## Points the reviewer should weigh
+## Arithmetic (a consequence, not a reason to accept)
 
-- The three `astype(None)` candidates rely on `astype(None)` meaning float64 in the installed pandas and numpy; the
-  dependency ranges are open, so a future release could change that. A reviewer may reasonably reject them for that
-  reason, in which case a test that pins `astype(float)` behavior (for example a string or datetime column) is needed.
-- `replace=None` relies on truthiness inside numpy; `fit__mutmut_43` and `_55` are the least version-stable.
-- The arithmetic: with 377 mutants L4 needs 370 kills; 368 are expected; two or more accepted exclusions would be needed
-  only if no further behavior is found. That is a consequence, not a reason to accept.
+L4 needs 370 of 377. Accepting the four universal candidates gives raw 368/377 and adjusted 368/373 (98.7%); the five
+environment-bound ones are not needed for that. The recommendation of the assessment is to decide each candidate on its own
+argument, and the five environment-bound ones only if you are content with an equivalence that expires when pandas or numpy
+change.
+
+## Decisions requested from the owner
+
+For each of the nine mutants: ACCEPT, REJECT, INCONCLUSIVE or leave proposed, with your date. Nothing else depends on
+this decision, and no decision is assumed.

@@ -763,3 +763,19 @@ below 98% (370 needed). The nine remaining survivors are equivalence candidates 
 independent review accepts enough of them or further behavior is found. The expected 368 is a local direct
 computation, not a hosted result. Other shard modules in this run: `research/pool_check.py` 118 of 180,
 `etl_benchmark/atomic.py` 6 of 6, `transform.py` 2 of 2.
+
+## Sole-author owner-review governance (2026-11-11, equivalence format version 2)
+
+The thesis has one author who is also the repository owner and the only authorized approver, so the earlier rule that
+a reviewer must differ from the author is replaced. The policy declares `governance: {review_mode:
+"sole_author_owner_review", owner: "theobigand"}`. Equivalence records (document version 2) carry a verdict
+(`proposed`, `accepted`, `rejected`, `inconclusive`), the approver, the decision date, the dependency versions the
+argument relies on, and the supporting assessments (assistant or AI-model findings, labelled non-authorizing). Only an
+`accepted` record signed with the declared owner, bound to the current source digest, module-catalog digest, risk level,
+policy version and the campaign runtime's dependency versions, and naming a surviving mutant, removes a mutant from the
+adjusted denominator; every other verdict is validated and ignored; any mismatch rejects the whole evidence, and the
+raw outcome and raw score are always reported. The model is not independent peer review, and the approver is recorded text
+rather than an authenticated signature, which the owner-decision packet states. Historical campaigns and records of format
+version 1 are not reinterpreted. Nine LSTM candidates are proposed, none decided
+(`EQUIVALENCE_REVIEW_PACKET_LSTM_2026-11-08.md`). The torch version joined the recorded runtime packages so that
+equivalences relying on it can be checked.

@@ -9,6 +9,7 @@ from pathlib import Path
 
 import pytest
 
+from tests import owner_review
 from tests.verifier.test_mutation_run import SOURCE, _repository
 from verification import mutation_cache, mutation_run
 
@@ -405,32 +406,20 @@ def test_a_reviewed_equivalent_is_read_bound_and_adjusts_the_campaign_verdict(tm
     key = "pkg.a.x_compute__mutmut_2"
     from verification import mutation_policy
 
-    record = {
-        "id": key,
-        "path": SOURCE,
-        "function": "compute",
-        "diff": "-    return value + 1\n+    return value + 2",
-        "original_behavior": "adds one",
-        "mutated_behavior": "constructed example only",
-        "risk": "L4",
-        "reason": "constructed equivalence for the arithmetic path",
-        "evidence": ["tests/test_mutation_campaign.py"],
-        "source_sha256": hashlib.sha256((tmp_path / SOURCE).read_bytes()).hexdigest(),
-        "catalog_sha256": mutation_policy.catalog_digest(result["catalog"][SOURCE]),
-        "author": "a",
-        "reviewer": "b",
-        "approved": True,
-        "review_date": "2026-11-08",
-        "policy_version": 2,
-    }
+    record = owner_review.record(
+        key,
+        SOURCE,
+        hashlib.sha256((tmp_path / SOURCE).read_bytes()).hexdigest(),
+        mutation_policy.catalog_digest(result["catalog"][SOURCE]),
+    )
     (tmp_path / "verification/mutation_equivalence.json").write_text(
-        json.dumps({"version": 1, "records": [record]})
+        json.dumps(owner_review.document(record))
     )
     adjusted, artifacts = _load(tmp_path, inputs)
     unit = adjusted["analysis"]["modules"][SOURCE]
     assert unit["raw_score"] == 50.0 and unit["score"] == 100.0
     assert unit["equivalent_accepted"] == 1 and _api().status(adjusted) == "PASS"
     assert tmp_path / "verification/mutation_equivalence.json" in artifacts
-    adjusted["equivalence"]["records"][0]["reviewer"] = "a"
+    adjusted["equivalence"]["records"][0]["approver"] = "someone-else"
     with pytest.raises(ValueError):
         _api().status(adjusted)

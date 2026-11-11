@@ -8,6 +8,7 @@ import json
 
 import pytest
 
+from tests import owner_review
 from tests.test_evidence_schema import EXECUTION, SOURCE
 from tests.test_mutation_shards import _git_repository
 from tests.test_release_gate import _assess, _docs
@@ -166,11 +167,11 @@ def test_historical_global_evidence_cannot_satisfy_the_current_policy(tmp_path):
 def test_the_reviewed_equivalence_file_is_bound_into_the_sharded_campaign(tmp_path):
     _, manifests = _campaign(tmp_path, outcomes=("killed", "survived"))
     (tmp_path / "verification/mutation_equivalence.json").write_text(
-        json.dumps({"version": 1, "records": []})
+        json.dumps(owner_review.document())
     )
     result, artifacts = mutation_campaign.load_sharded(tmp_path, tmp_path / "plan.json", manifests)
     assert tmp_path / "verification/mutation_equivalence.json" in artifacts
-    assert result["equivalence"] == {"version": 1, "records": []}
+    assert result["equivalence"] == owner_review.document()
     forged = copy.deepcopy(result)
     forged["equivalence"]["records"].append({"id": "x"})
     with pytest.raises(ValueError):

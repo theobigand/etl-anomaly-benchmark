@@ -27,7 +27,7 @@ from verification import mutation_cache, mutation_catalog, mutation_policy
 
 PACKAGES = (
     "pytest", "pytest-cov", "mutmut", "numpy", "pandas", "scikit-learn", "pyod", "mypy",
-    "pandas-stubs",
+    "pandas-stubs", "torch",
 )  # fmt: skip
 PLAN_FORMAT = 1
 SHARD_FORMAT = 1
@@ -294,7 +294,9 @@ def aggregate(
         incomplete = incomplete or manifest["native_exit_code"] != 0
     _check_common_suite([seen[index].get("execution") for index in range(len(shards))])
     sources = {name: _source(root, name) for name in units}
-    analysis = mutation_policy.evaluate_snapshot(policy, sources, catalog, records, equivalence)
+    analysis = mutation_policy.evaluate_snapshot(
+        policy, sources, catalog, records, equivalence, expected_context["runtime"]["packages"]
+    )
     status = analysis["status"]
     if status == "PASS" and incomplete:
         status = "INCOMPLETE"

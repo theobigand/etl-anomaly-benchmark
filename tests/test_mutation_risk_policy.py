@@ -20,6 +20,7 @@ def _policy(tmp_path, levels=("L1", "L2", "L3", "L4")):
         "version": 2,
         "thresholds": {"L1": 80, "L2": 90, "L3": 95, "L4": 98},
         "roots": ["app"],
+        "governance": {"review_mode": "sole_author_owner_review", "owner": "the-owner"},
         "units": units,
     }
 

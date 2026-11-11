@@ -6,6 +6,10 @@
     "L3": 95,
     "L4": 98
   },
+  "governance": {
+    "review_mode": "sole_author_owner_review",
+    "owner": "theobigand"
+  },
   "roots": [
     "src/etl_benchmark",
     "experiments",
