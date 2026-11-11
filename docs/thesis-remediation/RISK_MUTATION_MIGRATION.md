@@ -779,3 +779,27 @@ rather than an authenticated signature, which the owner-decision packet states. 
 version 1 are not reinterpreted. Nine LSTM candidates are proposed, none decided
 (`EQUIVALENCE_REVIEW_PACKET_LSTM_2026-11-08.md`). The torch version joined the recorded runtime packages so that
 equivalences relying on it can be checked.
+
+## Release verification trigger (2026-11-11)
+
+`verify-release` used to start on every update of a pull request that modifies the workflow file,
+which is every update of PR #117, so each push launched the complete monolithic DEEP campaign
+(180-minute job timeout, cancelled twice without a verdict). Ordinary changes are validated by
+`ci` (FAST, faults, verifier coverage, static and workflow tests). The full verification now starts
+only:
+
+- by `workflow_dispatch` (unchanged, with its `real_runner`, `fresh_mutants` and `approved_sha` inputs);
+- on a pull request from this repository while it carries the label `run:release-verification`,
+  for the exact head commit (every checkout is pinned to it); another label, a fork, or a removed
+  label starts nothing, and a removed label cancels the running campaign.
+
+One verification per pull request runs at a time (concurrency group per pull request; an unrelated
+label event gets its own group and cannot cancel it). Permissions stay read-only and the plain
+`pull_request` event is used. The gate is unchanged: a skipped profile leaves its evidence missing,
+so `verify-release` reports INCOMPLETE and never CERTIFIED; only a complete current set of evidence
+that passes can certify. Skipping a run by policy is not a release result.
+
+The 180-minute timeout is not raised. The sharded campaign (`mutation-shards`) already produces
+the release evidence kind `deep-shards` through `evidence_schema`, with caches and a plan digest.
+Replacing the monolithic DEEP job of `verify-release` by that evidence is possible but needs one
+complete hosted validation of the wiring, which has not been run and is not claimed here.

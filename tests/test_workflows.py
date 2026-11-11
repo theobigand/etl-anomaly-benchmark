@@ -38,15 +38,9 @@ def test_evidence_is_uploaded_even_when_a_profile_fails():
         assert "retention-days" in text
 
 
-def test_release_workflow_is_manual_and_runs_every_profile():
+def test_release_workflow_is_explicit_and_runs_every_profile():
     text = _text("verify-release.yml")
-    assert "workflow_dispatch:" in text
-    assert "push:" not in text
-    # the only automatic trigger is a change to this very file
-    triggers = text[text.index("on:") : text.index("permissions:")]
-    assert triggers.count("pull_request:") == 1
-    assert triggers.count('- ".github/workflows/verify-release.yml"') == 1
-    assert triggers.count("paths:") == 1
+    assert "workflow_dispatch:" in text and "push:" not in text
     for target in (
         "make verify-fast",
         "make verify-faults",
@@ -55,6 +49,80 @@ def test_release_workflow_is_manual_and_runs_every_profile():
     ):
         assert target in text
     assert "make verify-release" in text
+
+
+def _release():
+    import yaml
+
+    document = yaml.safe_load(_text("verify-release.yml"))
+    document["triggers"] = document.pop(True)  # PyYAML reads the key `on` as a boolean
+    return document
+
+
+LABEL = "run:release-verification"
+
+
+def test_an_ordinary_push_never_starts_the_full_release_verification():
+    triggers = _release()["triggers"]
+    assert set(triggers) == {"workflow_dispatch", "pull_request"}
+    pull_request = triggers["pull_request"]
+    assert "paths" not in pull_request  # editing the workflow file is not an activation
+    assert set(pull_request["types"]) == {"labeled", "unlabeled", "synchronize", "reopened"}
+
+
+def test_every_release_job_needs_the_dispatch_or_the_label_of_a_same_repository_pull_request():
+    jobs = _release()["jobs"]
+    gated = {
+        "fast",
+        "static",
+        "reproduce",
+        "faults",
+        "deep",
+        "real-readiness",
+        "real-hosted",
+        "release",
+    }
+    for name in gated:
+        condition = jobs[name]["if"]
+        assert "github.event_name == 'workflow_dispatch'" in condition, name
+        assert "github.event.pull_request.head.repo.full_name == github.repository" in condition
+        assert f"contains(github.event.pull_request.labels.*.name, '{LABEL}')" in condition
+        assert f"github.event.label.name == '{LABEL}'" in condition, name  # another label is inert
+    # the self-hosted REAL job only exists for an operator's explicit dispatch
+    assert "github.event_name == 'workflow_dispatch'" in jobs["real"]["if"]
+
+
+def test_every_release_checkout_is_pinned_to_the_exact_head_commit():
+    for name, job in _release()["jobs"].items():
+        if name == "real":  # private datasets: dispatch only, the operator names the revision
+            continue
+        for step in job["steps"]:
+            if str(step.get("uses", "")).startswith("actions/checkout@"):
+                ref = step["with"]["ref"]
+                assert ref == "${{ github.event.pull_request.head.sha || github.sha }}", name
+
+
+def test_one_release_campaign_per_pull_request_and_unrelated_labels_cannot_cancel_it():
+    concurrency = _release()["concurrency"]
+    assert concurrency["cancel-in-progress"] is True
+    group = concurrency["group"]
+    assert "github.event.pull_request.number" in group
+    assert f"github.event.label.name == '{LABEL}'" in group and "github.run_id" in group
+
+
+def test_the_gate_stays_fail_closed_whatever_triggered_the_run():
+    jobs = _release()["jobs"]
+    release = jobs["release"]
+    assert set(release["needs"]) == {
+        "fast", "static", "reproduce", "faults", "deep", "real", "real-hosted", "real-readiness"
+    }  # fmt: skip
+    assert release["if"].startswith("always() && (")  # skipped profiles still reach the gate
+    commands = [step.get("run", "") for step in release["steps"]]
+    assert any("contains(needs.*.result, 'failure')" in c for c in commands)
+    assert any(c.strip() == "make verify-release" for c in commands)
+    assert not any(
+        "continue-on-error" in str(step) for job in jobs.values() for step in job["steps"]
+    )
 
 
 def test_real_runs_only_on_a_runner_the_operator_names():
@@ -70,7 +138,7 @@ def test_release_job_waits_for_all_profiles_and_fails_when_any_failed():
         "needs: [fast, static, reproduce, faults, deep, real, real-hosted, real-readiness]"
         in release
     )
-    assert "if: always()" in release
+    assert "if: always() && (" in release
     assert "contains(needs.*.result, 'failure')" in release
     assert "make verify-release" in release
 
@@ -189,7 +257,7 @@ def test_the_documented_real_procedure_matches_the_workflow():
 
 def test_the_real_job_runs_only_a_reviewed_revision_from_the_default_branch():
     text = _text("verify-release.yml")
-    job = text[text.index("  real:") : text.index("  release:")]
+    job = text[text.index("  real:\n") : text.index("  real-hosted:")]
     # The private datasets are only exposed to code that is on the default branch
     # and whose commit the operator names in the dispatch.
     assert "approved_sha:" in text[: text.index("jobs:")]
