@@ -1,0 +1,33 @@
+{
+ "budgets": [
+  0.005,
+  0.01,
+  0.02,
+  0.05,
+  0.1
+ ],
+ "dirty": false,
+ "head": "ae9948085a975a4be52b89ef0c573c55e28fb7bc",
+ "python": "3.11.17",
+ "registry_sha256": "e8675e27433f8ef9bba7a6cd2d94286f3fa5152427524ae417374b57bec8040d",
+ "sources": {
+  "research/alert_budget.py": "0da6a79ece4e6cbd8066eb2474f653ba69eb2247caeeb0f77e3cf9b48be5a7e9",
+  "research/deep_support.py": "21e4ef7e52a2eb0d03a9367b25cf08ece677201f53f427aa779be8c6c94e8aff",
+  "research/labelled_benchmark.py": "d4f1f954079d382f364748648837cb33e7743e81b24e63e66caeeb1b89b51f78",
+  "research/normalise.py": "e29a092ecd81321d33ae324c288491026600559608b9e85973f8386a3272633b",
+  "research/pool_full.py": "bf7a089a7c2521d05dc7171b69206dc42fbf907e88f11ee4e5ce7e1e13157a4c",
+  "src/etl_benchmark/pipeline.py": "ed07a0edf43f5833c5766b8266a1d19fb5b386e5678c309aa1dd8633af309a7f",
+  "src/etl_benchmark/quality/_torch_models.py": "77a1b57ff69e580cad700bb4ee41f069e3ac0c8489bdd714651c753c4bbdd09d",
+  "src/etl_benchmark/quality/deep.py": "77364cfdf0850b107c316ffae0389e1bb552445d76188dab388dff76e8e22632",
+  "src/etl_benchmark/registry.py": "6b5ee955877a24fd43368f362c38bd6645872166e19b9173c39192a8f1d0957d"
+ },
+ "threads": 4,
+ "versions": {
+  "numpy": "2.4.6",
+  "pandas": "3.0.6",
+  "pyod": "3.6.7",
+  "scikit-learn": "1.9.1",
+  "torch": "2.14.1"
+ },
+ "workers": 2
+}
