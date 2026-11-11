@@ -179,3 +179,11 @@ def test_a_checkpoint_for_another_seed_or_method_is_ignored(tmp_path):
     path = tmp_path / "p__hbos__42.json"
     assert ab._load_cell(path, "hbos", 42) is not None
     assert ab._load_cell(path, "ecod", 42) is None and ab._load_cell(path, "hbos", 1) is None
+
+
+@pytest.mark.parametrize("rule", ["zscore", "iqr", "great_expectations"])
+def test_no_rule_is_ever_given_a_tunable_alert_budget(rule):
+    x, y = _problem()
+    row = ab.run_problem(x, y, seeds=(42,), methods=[rule])["runs"][rule][0]
+    assert "budgets" not in row and set(row["rule"]) >= {"test_alert_rate", "recall", "precision"}
+    assert ab.fit_scores(ab.build(rule, ab.FIXED_BUILD, 42), pd.DataFrame(x[:100])) is None

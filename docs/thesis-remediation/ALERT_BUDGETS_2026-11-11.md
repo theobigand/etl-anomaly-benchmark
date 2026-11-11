@@ -52,3 +52,14 @@ with it. The logic for feasible cells is identical.
 
 Medians over heterogeneous problems, no source-clustered inference (see the source-clustered
 analysis), no tuning of the build contamination for the score distribution, neural detectors absent.
+
+## T168: mandatory rules versus tunable thresholds
+
+The three benchmark rules (z-score, IQR, Great Expectations) are generic statistical rules whose
+bounds are fitted on training data (`RULE_DEFINITIONS_2026-11-03.md`; Methods, "Rule-based
+detectors": they do not represent domain-informed declarative constraints). The benchmark therefore
+contains no mandatory business rule. Evidence of the separation in the budget study: a rule has no
+score, `fit_scores` returns none for each of them, and `run_method` gives it a `rule` record and
+never a `budgets` record (`test_no_rule_is_ever_given_a_tunable_alert_budget`). A mandatory
+business rule (a non-null key, a domain range, a format) is a constraint to enforce, not a
+statistical operating point, and would likewise be reported outside any budget.
