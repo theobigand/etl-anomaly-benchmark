@@ -243,3 +243,55 @@ def test_the_policy_governance_block_is_validated():
     ):
         with pytest.raises(ValueError, match="governance"):
             api._validate_declarations({**base, "governance": bad})
+
+
+def _claim(policy, catalog, key, verdict):
+    change = {"verdict": verdict}
+    if verdict == "proposed":
+        change |= {"approver": "", "decision_date": ""}
+    return _record(policy, catalog, key, **change)
+
+
+@pytest.mark.parametrize("verdict", ["proposed", "rejected", "inconclusive"])
+def test_a_claim_that_is_not_accepted_may_be_killed_by_better_tests(tmp_path, verdict):
+    policy, catalog, records, survivor = _setup(tmp_path, killed=96, total=100)
+    improved = [dict(r, outcome="killed") if r["id"] == survivor else r for r in records]
+    document = _document(_claim(policy, catalog, survivor, verdict))
+    result = _evaluate(policy, tmp_path, catalog, improved, document)
+    module = result["modules"]["app/unit0.py"]
+    assert module["killed"] == 97 and module["survived"] == 3
+    assert module["equivalent_accepted"] == 0 and module["adjusted_eligible"] == 100
+    assert module["raw_score"] == module["score"] == pytest.approx(97.0)
+    assert result["accepted_equivalents"] == {}
+
+
+def test_a_non_accepted_claim_is_still_bound_to_identity_and_provenance(tmp_path):
+    policy, catalog, records, survivor = _setup(tmp_path)
+    improved = [dict(r, outcome="killed") if r["id"] == survivor else r for r in records]
+    stale = _claim(policy, catalog, survivor, "inconclusive") | {"source_sha256": "0" * 64}
+    with pytest.raises(ValueError, match="stale"):
+        _evaluate(policy, tmp_path, catalog, improved, _document(stale))
+    unknown = _claim(policy, catalog, survivor, "rejected") | {
+        "id": "app.unit0.x_compute__mutmut_999"
+    }
+    with pytest.raises(ValueError, match="unknown"):
+        _evaluate(policy, tmp_path, catalog, improved, _document(unknown))
+    twice = _claim(policy, catalog, survivor, "inconclusive")
+    with pytest.raises(ValueError, match="duplicate"):
+        _evaluate(policy, tmp_path, catalog, improved, _document(twice, copy.deepcopy(twice)))
+
+
+def test_killing_an_inconclusive_mutant_changes_raw_and_adjusted_scores_exactly(tmp_path):
+    policy, catalog, records, _ = _setup(tmp_path, killed=96, total=100)
+    survivors = [r["id"] for r in records if r["outcome"] == "survived"]
+    accepted, inconclusive = survivors[0], survivors[1]
+    document = _document(
+        _record(policy, catalog, accepted), _claim(policy, catalog, inconclusive, "inconclusive")
+    )
+    before = _evaluate(policy, tmp_path, catalog, records, document)["modules"]["app/unit0.py"]
+    assert (before["killed"], before["adjusted_eligible"]) == (96, 99)
+    improved = [dict(r, outcome="killed") if r["id"] == inconclusive else r for r in records]
+    after = _evaluate(policy, tmp_path, catalog, improved, document)["modules"]["app/unit0.py"]
+    assert (after["killed"], after["eligible"], after["adjusted_eligible"]) == (97, 100, 99)
+    assert after["raw_score"] == pytest.approx(97.0)
+    assert after["score"] == pytest.approx(100 * 97 / 99)

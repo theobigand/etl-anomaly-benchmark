@@ -229,10 +229,12 @@ def accepted_equivalents(
     claim they or an assistant proposed. It is not independent peer review and the approver
     identity is recorded text, not an authenticated signature. Only a record with the verdict
     ``accepted`` and the owner's recorded decision excludes a mutant; ``proposed``,
-    ``rejected`` and ``inconclusive`` records are validated and ignored. Every record must
-    name a surviving mutant of the current catalog, match the current source and module
-    catalog digests, risk level and policy version, and an accepted record must also match
-    the dependency versions of the campaign environment. Any mismatch rejects the evidence.
+    ``rejected`` and ``inconclusive`` records are validated and ignored; their mutant may
+    survive or later be killed by better tests and is counted by its actual outcome. Every
+    record must name a mutant of the current catalog and match the current source and module
+    catalog digests, risk level and policy version. An accepted record must additionally name
+    a surviving mutant and match the dependency versions of the campaign environment, so a
+    killed accepted mutant needs its review record reconciled. Any mismatch rejects the evidence.
     """
     if document is None:
         return {}
@@ -289,7 +291,7 @@ def accepted_equivalents(
                 raise ValueError("equivalence decision date must be ISO 8601") from error
         elif item["approver"] != "" or item["decision_date"] != "":
             raise ValueError("a proposed equivalence must not carry an approver or decision date")
-        if outcome.get(key) != "survived":
+        if item["verdict"] == "accepted" and outcome.get(key) != "survived":
             raise ValueError("only a surviving mutant can be accepted as equivalent")
         if item["policy_version"] != VERSION or item["risk"] != units[path]["level"]:
             raise ValueError("equivalence record does not match the policy version or risk level")
