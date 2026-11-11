@@ -453,7 +453,7 @@ version. Any mismatch rejects the whole evidence; nothing is classified
 automatically and no record exists yet. Raw counts and the raw score are always
 reported; the adjusted score removes only accepted equivalents from the eligible
 denominator and never counts them as killed. Historical reports are unaffected.
-Proposed equivalents are pending an independent reviewer; the survivors listed for
+Proposed equivalents await the owner's recorded decision (see the sole-author governance section); the survivors listed for
 `research/pool_preprocessing.py` and `research/pool_train_only.py` are candidates,
 not accepted exclusions.
 

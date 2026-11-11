@@ -2,7 +2,7 @@
 
 Each test compares the original expression with the mutated one over a wide set of inputs and
 fails if a counterexample appears, so a dependency change that breaks an argument is noticed.
-A passing test does not accept an equivalence: that needs an independent reviewer.
+A passing test does not accept an equivalence: that needs the owner's recorded decision.
 """
 
 from importlib.metadata import version

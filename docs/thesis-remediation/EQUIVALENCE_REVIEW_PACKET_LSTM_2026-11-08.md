@@ -1,49 +1,44 @@
-# Owner decision packet — LSTM equivalence candidates (updated 2026-11-11)
+# Owner decisions — LSTM equivalence candidates (decided 2026-11-11)
 
-Governance: this is a sole-author thesis. The repository owner (`theobigand`) is the only authorized approver and may
-approve claims that were proposed by an assistant or by themselves (`review_mode: sole_author_owner_review`, declared in
-`verification/mutation_risk_policy.json`). Owner approval is **not independent peer review** and the approver identity is
-recorded text, not an authenticated signature (git history and the commit author are the only attestations). AI-assisted
-assessments below are supporting evidence, not authorization.
+Governance: sole-author thesis; the repository owner `theobigand` is the only authorized approver
+(`review_mode: sole_author_owner_review`). These are owner approvals, **not independent peer review**, and the approver is
+recorded text, not an authenticated signature. The assistant and GPT-6 assessments were supporting evidence only.
 
-**No candidate is approved.** The proposals are in `docs/thesis-remediation/equivalence/lstm_proposals_2026-11-11.json`
-(all `proposed`, approver and date empty, validated against the hosted evidence of run 42433394723). That file is never loaded by
-the gate. To accept a claim, copy its record into `verification/mutation_equivalence.json` (document `version: 2`,
-`review_mode: sole_author_owner_review`, `owner: theobigand`), set `verdict` to `accepted`, `approver` to `theobigand` and
-`decision_date` to the ISO date of the decision. The gate then requires the record to match the current source and
-module-catalog digests, the risk level, the policy version and the dependency versions of the campaign runtime
-(`environment`), and it keeps the raw outcome and raw score beside the adjusted score.
+Decisions are recorded in `verification/mutation_equivalence.json` (version 2). The original proposals stay in
+`docs/thesis-remediation/equivalence/lstm_proposals_2026-11-11.json` for traceability; that file is not an approval source.
 
-Source `research/lstm_detector.py` sha256 `277375e66d...` (identical at d296f2f and later); catalog digest `aef20963dc...`
-(377 mutants). Differential evidence: `research/tests/test_equivalence_claims.py` (14 tests). Candidate descriptions:
-`EQUIVALENCE_CANDIDATES_LSTM_2026-11-08.md`.
+Checked before applying: source `research/lstm_detector.py` sha256 `277375e66d...` and module-catalog digest `aef20963dc...`
+(377 mutants) equal the values in the hosted evidence of run 42433394723 (revision d296f2f) and the current file; every
+candidate is a surviving mutant in that evidence; the policy version is 2 and the module is L4.
 
-## Technical assessment (assistant, confirmed against the exact mutant diffs; preliminary GPT-6 assessment agrees)
+| Mutant | Decision | Date | Justification |
+| --- | --- | --- | --- |
+| `_reconstruction_error__mutmut_31` | **ACCEPT** | 2026-11-11 | In the `last_only` branch the tensor is `error[:, -1]`, always 2-D (windows are 3-D by construction), so `dim=+1` and `dim=-1` are the same axis. |
+| `fit__mutmut_50` | **ACCEPT** | 2026-11-11 | With window count equal to the cap, choosing every index without replacement and sorting is the identity; the generator is not used again in `fit`. |
+| `settings__mutmut_41` | **ACCEPT** | 2026-11-11 | Distribution names are normalised (PEP 503), so `TORCH` equals `torch`. |
+| `settings__mutmut_46` | **ACCEPT** | 2026-11-11 | Same normalisation for `numpy`. |
+| `_reconstruction_error__mutmut_35` | INCONCLUSIVE | 2026-11-11 | Depends on NumPy `astype(None)` behavior; stays in the denominator. |
+| `_windows__mutmut_2` | INCONCLUSIVE | 2026-11-11 | Depends on pandas `astype(None)` behavior; stays in the denominator. |
+| `fit__mutmut_16` | INCONCLUSIVE | 2026-11-11 | Same. |
+| `fit__mutmut_43` | INCONCLUSIVE | 2026-11-11 | `replace=None` is outside the documented boolean contract; stays in the denominator. |
+| `fit__mutmut_55` | INCONCLUSIVE | 2026-11-11 | Same. |
 
-| Mutant | Diff | Assessment | Scope of the argument | Relied-on environment |
-| --- | --- | --- | --- | --- |
-| `_reconstruction_error__31` | `dim=-1` to `dim=+1` | ACCEPT proposed | universal: in the `last_only` branch the tensor is `error[:, -1]`, always 2-D, because windows are 3-D by construction | torch 2.15.0+cpu |
-| `fit__50` | validation cap `>` to `>=` | ACCEPT proposed | universal: choosing all indices then `np.sort` is the identity, and the generator is not used afterwards | numpy 2.4.6 |
-| `settings__41` | `version("torch")` to `"TORCH"` | ACCEPT proposed | universal for Python >= 3.11: distribution names are normalised (PEP 503) | torch 2.15.0+cpu |
-| `settings__46` | `version("numpy")` to `"NUMPY"` | ACCEPT proposed | same | numpy 2.4.6 |
-| `_reconstruction_error__35` | `.astype(float)` to `.astype(None)` | INCONCLUSIVE | environment-specific: `astype(None)` is float64 here, a library default | numpy 2.4.6 |
-| `_windows__2` | same on a DataFrame | INCONCLUSIVE | environment-specific (pandas behavior) | pandas 3.1.1 |
-| `fit__16` | same on a DataFrame | INCONCLUSIVE | environment-specific (pandas behavior) | pandas 3.1.1 |
-| `fit__43` | `replace=False` to `replace=None` | INCONCLUSIVE | outside the documented boolean contract; falsy in the installed numpy | numpy 2.4.6 |
-| `fit__55` | same | INCONCLUSIVE | same | numpy 2.4.6 |
+Only the four ACCEPT records exclude a mutant, and only while all validations pass: current source and catalog digests,
+risk level, policy version, a surviving mutant, and the dependency versions of the campaign runtime (`numpy 2.4.6`,
+`torch 2.15.0+cpu`). The five inconclusive mutants are never excluded, counted as killed, or accepted.
 
-The five INCONCLUSIVE candidates could be accepted only as environment-bound equivalences (valid while the recorded
-dependency versions hold); they are not universal. Rejecting them would require a behavior no test can distinguish today,
-so a REJECT would not yield a test. If you accept none, the module stays at 368/377 (97.6%) and below L4.
+## Dependency-version reconciliation
 
-## Arithmetic (a consequence, not a reason to accept)
+Earlier review documents cite pandas 3.0.6 (the local Conda environment, where the differential tests were first run) while the
+proposal records cite pandas 3.1.1 (the hosted Linux run and the mutation environment). Both are real: the 14 differential tests in
+`research/tests/test_equivalence_claims.py` pass on pandas 3.0.6 and on 3.1.1 (numpy 2.4.6 on both). The pandas-dependent
+candidates (`_windows__2`, `fit__16`) are INCONCLUSIVE, so no accepted record relies on pandas. The torch version recorded for
+the two accepted torch-related records (`2.15.0+cpu`) comes from the hosted install log; campaign runtimes record the torch
+version from the next run onward, and a mismatch then rejects the exclusion.
 
-L4 needs 370 of 377. Accepting the four universal candidates gives raw 368/377 and adjusted 368/373 (98.7%); the five
-environment-bound ones are not needed for that. The recommendation of the assessment is to decide each candidate on its own
-argument, and the five environment-bound ones only if you are content with an equivalence that expires when pandas or numpy
-change.
+## Resulting arithmetic
 
-## Decisions requested from the owner
-
-For each of the nine mutants: ACCEPT, REJECT, INCONCLUSIVE or leave proposed, with your date. Nothing else depends on
-this decision, and no decision is assumed.
+On the hosted evidence of run 42433394723 (366 killed of 377): raw 97.08%, and with the four accepted exclusions adjusted
+366/373 = 98.12%. That is a recalculation on an older run plus the owner's decisions, not current evidence: two later tests are
+expected to give 368 killed (adjusted 98.66%), which a new hosted native run must confirm. Passing L4 for this module would not
+establish compliance of other modules or certification.

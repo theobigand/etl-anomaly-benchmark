@@ -1,0 +1,385 @@
+{
+  "version": 2,
+  "review_mode": "sole_author_owner_review",
+  "owner": "theobigand",
+  "records": [
+    {
+      "id": "research.lstm_detector.xǁLSTMAutoencoderǁ_reconstruction_error__mutmut_31",
+      "path": "research/lstm_detector.py",
+      "function": "_reconstruction_error",
+      "diff": "-                (error[:, -1] if last_only else error).mean(dim=-1 if last_only else (1, 2))\n+                (error[:, -1] if last_only else error).mean(dim=+1 if last_only else (1, 2))",
+      "original_behavior": "original expression of the function at the recorded revision",
+      "mutated_behavior": "the mutated expression of the diff",
+      "risk": "L4",
+      "reason": "In the last_only branch the tensor is error[:, -1], always two-dimensional (batch, features) because the windows array is three-dimensional by construction, so dim=+1 and dim=-1 name the same axis for every supported input.",
+      "evidence": [
+        "research/tests/test_equivalence_claims.py",
+        "docs/thesis-remediation/EQUIVALENCE_CANDIDATES_LSTM_2026-11-08.md",
+        "hosted run 42433394723 (survived natively), direct execution (survived)"
+      ],
+      "source_sha256": "277375e66d1edc6ed94c5ffc4b1074c113e86c6095c7dc2b20d3058cb006da18",
+      "catalog_sha256": "aef20963dc44e0ca61b2c9e9744bdf76a552d33490a96ed8e51b592a9cacfbc2",
+      "author": "theobigand",
+      "verdict": "accepted",
+      "approver": "theobigand",
+      "decision_date": "2026-11-11",
+      "policy_version": 2,
+      "environment": {
+        "torch": "2.15.0+cpu"
+      },
+      "assessments": [
+        {
+          "assessor": "assistant (author of the candidate analysis)",
+          "verdict": "ACCEPT",
+          "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "GPT-6 (preliminary assessment relayed by the owner)",
+          "verdict": "ACCEPT",
+          "note": "agrees with the assistant after verification against the mutant diff; not an owner decision"
+        },
+        {
+          "assessor": "theobigand (owner)",
+          "verdict": "ACCEPT",
+          "note": "owner decision under sole_author_owner_review, 2026-11-11; not independent peer review"
+        }
+      ]
+    },
+    {
+      "id": "research.lstm_detector.xǁLSTMAutoencoderǁ_reconstruction_error__mutmut_35",
+      "path": "research/lstm_detector.py",
+      "function": "_reconstruction_error",
+      "diff": "-    return torch.cat(out).numpy().astype(float)\n+    return torch.cat(out).numpy().astype(None)",
+      "original_behavior": "original expression of the function at the recorded revision",
+      "mutated_behavior": "the mutated expression of the diff",
+      "risk": "L4",
+      "reason": "Owner decision: the argument depends on specific numpy or pandas behavior (or on behavior outside the documented parameter contract) and does not hold across the supported dependency range; the mutant stays in the eligible denominator. DataFrame/ndarray astype(None) yields float64 in the installed numpy and pandas, matching astype(float), but NumPy treats None as the default dtype and pandas behavior is dependency-sensitive; equivalence holds only for the recorded versions.",
+      "evidence": [
+        "research/tests/test_equivalence_claims.py",
+        "docs/thesis-remediation/EQUIVALENCE_CANDIDATES_LSTM_2026-11-08.md",
+        "hosted run 42433394723 (survived natively), direct execution (survived)"
+      ],
+      "source_sha256": "277375e66d1edc6ed94c5ffc4b1074c113e86c6095c7dc2b20d3058cb006da18",
+      "catalog_sha256": "aef20963dc44e0ca61b2c9e9744bdf76a552d33490a96ed8e51b592a9cacfbc2",
+      "author": "theobigand",
+      "verdict": "inconclusive",
+      "approver": "theobigand",
+      "decision_date": "2026-11-11",
+      "policy_version": 2,
+      "environment": {
+        "numpy": "2.4.6"
+      },
+      "assessments": [
+        {
+          "assessor": "assistant (author of the candidate analysis)",
+          "verdict": "INCONCLUSIVE",
+          "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "GPT-6 (preliminary assessment relayed by the owner)",
+          "verdict": "INCONCLUSIVE",
+          "note": "agrees with the assistant after verification against the mutant diff; not an owner decision"
+        },
+        {
+          "assessor": "theobigand (owner)",
+          "verdict": "INCONCLUSIVE",
+          "note": "owner decision under sole_author_owner_review, 2026-11-11; not independent peer review"
+        }
+      ]
+    },
+    {
+      "id": "research.lstm_detector.xǁLSTMAutoencoderǁ_windows__mutmut_2",
+      "path": "research/lstm_detector.py",
+      "function": "_windows",
+      "diff": "-    values = frame[self.columns].astype(float).to_numpy()\n+    values = frame[self.columns].astype(None).to_numpy()",
+      "original_behavior": "original expression of the function at the recorded revision",
+      "mutated_behavior": "the mutated expression of the diff",
+      "risk": "L4",
+      "reason": "Owner decision: the argument depends on specific numpy or pandas behavior (or on behavior outside the documented parameter contract) and does not hold across the supported dependency range; the mutant stays in the eligible denominator. pandas astype(None) yields float64 for every dtype tested (int, float32, bool, nullable, object, numeric text, NaN) and fails like astype(float) for datetimes; dependency-sensitive.",
+      "evidence": [
+        "research/tests/test_equivalence_claims.py",
+        "docs/thesis-remediation/EQUIVALENCE_CANDIDATES_LSTM_2026-11-08.md",
+        "hosted run 42433394723 (survived natively), direct execution (survived)"
+      ],
+      "source_sha256": "277375e66d1edc6ed94c5ffc4b1074c113e86c6095c7dc2b20d3058cb006da18",
+      "catalog_sha256": "aef20963dc44e0ca61b2c9e9744bdf76a552d33490a96ed8e51b592a9cacfbc2",
+      "author": "theobigand",
+      "verdict": "inconclusive",
+      "approver": "theobigand",
+      "decision_date": "2026-11-11",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1"
+      },
+      "assessments": [
+        {
+          "assessor": "assistant (author of the candidate analysis)",
+          "verdict": "INCONCLUSIVE",
+          "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "GPT-6 (preliminary assessment relayed by the owner)",
+          "verdict": "INCONCLUSIVE",
+          "note": "agrees with the assistant after verification against the mutant diff; not an owner decision"
+        },
+        {
+          "assessor": "theobigand (owner)",
+          "verdict": "INCONCLUSIVE",
+          "note": "owner decision under sole_author_owner_review, 2026-11-11; not independent peer review"
+        }
+      ]
+    },
+    {
+      "id": "research.lstm_detector.xǁLSTMAutoencoderǁfit__mutmut_16",
+      "path": "research/lstm_detector.py",
+      "function": "fit",
+      "diff": "-    values = train[self.columns].astype(float)\n+    values = train[self.columns].astype(None)",
+      "original_behavior": "original expression of the function at the recorded revision",
+      "mutated_behavior": "the mutated expression of the diff",
+      "risk": "L4",
+      "reason": "Owner decision: the argument depends on specific numpy or pandas behavior (or on behavior outside the documented parameter contract) and does not hold across the supported dependency range; the mutant stays in the eligible denominator. Same pandas behavior as _windows__mutmut_2.",
+      "evidence": [
+        "research/tests/test_equivalence_claims.py",
+        "docs/thesis-remediation/EQUIVALENCE_CANDIDATES_LSTM_2026-11-08.md",
+        "hosted run 42433394723 (survived natively), direct execution (survived)"
+      ],
+      "source_sha256": "277375e66d1edc6ed94c5ffc4b1074c113e86c6095c7dc2b20d3058cb006da18",
+      "catalog_sha256": "aef20963dc44e0ca61b2c9e9744bdf76a552d33490a96ed8e51b592a9cacfbc2",
+      "author": "theobigand",
+      "verdict": "inconclusive",
+      "approver": "theobigand",
+      "decision_date": "2026-11-11",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1"
+      },
+      "assessments": [
+        {
+          "assessor": "assistant (author of the candidate analysis)",
+          "verdict": "INCONCLUSIVE",
+          "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "GPT-6 (preliminary assessment relayed by the owner)",
+          "verdict": "INCONCLUSIVE",
+          "note": "agrees with the assistant after verification against the mutant diff; not an owner decision"
+        },
+        {
+          "assessor": "theobigand (owner)",
+          "verdict": "INCONCLUSIVE",
+          "note": "owner decision under sole_author_owner_review, 2026-11-11; not independent peer review"
+        }
+      ]
+    },
+    {
+      "id": "research.lstm_detector.xǁLSTMAutoencoderǁfit__mutmut_43",
+      "path": "research/lstm_detector.py",
+      "function": "fit",
+      "diff": "-        fit_windows = fit_windows[rng.choice(len(fit_windows), self.fit_rows, replace=False)]\n+        fit_windows = fit_windows[rng.choice(len(fit_windows), self.fit_rows, replace=None)]",
+      "original_behavior": "original expression of the function at the recorded revision",
+      "mutated_behavior": "the mutated expression of the diff",
+      "risk": "L4",
+      "reason": "Owner decision: the argument depends on specific numpy or pandas behavior (or on behavior outside the documented parameter contract) and does not hold across the supported dependency range; the mutant stays in the eligible denominator. Generator.choice documents replace as a boolean; None is falsy in the installed numpy and samples without replacement identically to False over 300 seeds and several sizes; behavior outside the documented contract.",
+      "evidence": [
+        "research/tests/test_equivalence_claims.py",
+        "docs/thesis-remediation/EQUIVALENCE_CANDIDATES_LSTM_2026-11-08.md",
+        "hosted run 42433394723 (survived natively), direct execution (survived)"
+      ],
+      "source_sha256": "277375e66d1edc6ed94c5ffc4b1074c113e86c6095c7dc2b20d3058cb006da18",
+      "catalog_sha256": "aef20963dc44e0ca61b2c9e9744bdf76a552d33490a96ed8e51b592a9cacfbc2",
+      "author": "theobigand",
+      "verdict": "inconclusive",
+      "approver": "theobigand",
+      "decision_date": "2026-11-11",
+      "policy_version": 2,
+      "environment": {
+        "numpy": "2.4.6"
+      },
+      "assessments": [
+        {
+          "assessor": "assistant (author of the candidate analysis)",
+          "verdict": "INCONCLUSIVE",
+          "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "GPT-6 (preliminary assessment relayed by the owner)",
+          "verdict": "INCONCLUSIVE",
+          "note": "agrees with the assistant after verification against the mutant diff; not an owner decision"
+        },
+        {
+          "assessor": "theobigand (owner)",
+          "verdict": "INCONCLUSIVE",
+          "note": "owner decision under sole_author_owner_review, 2026-11-11; not independent peer review"
+        }
+      ]
+    },
+    {
+      "id": "research.lstm_detector.xǁLSTMAutoencoderǁfit__mutmut_55",
+      "path": "research/lstm_detector.py",
+      "function": "fit",
+      "diff": "-        keep = np.sort(rng.choice(len(val_windows), self.validation_rows, replace=False))\n+        keep = np.sort(rng.choice(len(val_windows), self.validation_rows, replace=None))",
+      "original_behavior": "original expression of the function at the recorded revision",
+      "mutated_behavior": "the mutated expression of the diff",
+      "risk": "L4",
+      "reason": "Owner decision: the argument depends on specific numpy or pandas behavior (or on behavior outside the documented parameter contract) and does not hold across the supported dependency range; the mutant stays in the eligible denominator. Same replace=None concern as fit__mutmut_43.",
+      "evidence": [
+        "research/tests/test_equivalence_claims.py",
+        "docs/thesis-remediation/EQUIVALENCE_CANDIDATES_LSTM_2026-11-08.md",
+        "hosted run 42433394723 (survived natively), direct execution (survived)"
+      ],
+      "source_sha256": "277375e66d1edc6ed94c5ffc4b1074c113e86c6095c7dc2b20d3058cb006da18",
+      "catalog_sha256": "aef20963dc44e0ca61b2c9e9744bdf76a552d33490a96ed8e51b592a9cacfbc2",
+      "author": "theobigand",
+      "verdict": "inconclusive",
+      "approver": "theobigand",
+      "decision_date": "2026-11-11",
+      "policy_version": 2,
+      "environment": {
+        "numpy": "2.4.6"
+      },
+      "assessments": [
+        {
+          "assessor": "assistant (author of the candidate analysis)",
+          "verdict": "INCONCLUSIVE",
+          "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "GPT-6 (preliminary assessment relayed by the owner)",
+          "verdict": "INCONCLUSIVE",
+          "note": "agrees with the assistant after verification against the mutant diff; not an owner decision"
+        },
+        {
+          "assessor": "theobigand (owner)",
+          "verdict": "INCONCLUSIVE",
+          "note": "owner decision under sole_author_owner_review, 2026-11-11; not independent peer review"
+        }
+      ]
+    },
+    {
+      "id": "research.lstm_detector.xǁLSTMAutoencoderǁfit__mutmut_50",
+      "path": "research/lstm_detector.py",
+      "function": "fit",
+      "diff": "-    if len(val_windows) > self.validation_rows:\n+    if len(val_windows) >= self.validation_rows:",
+      "original_behavior": "original expression of the function at the recorded revision",
+      "mutated_behavior": "the mutated expression of the diff",
+      "risk": "L4",
+      "reason": "When the window count equals the validation cap, choosing every index without replacement and sorting yields arange(n), so the selected array equals the unselected one; the generator is not used again in fit, so its consumed state has no observable effect.",
+      "evidence": [
+        "research/tests/test_equivalence_claims.py",
+        "docs/thesis-remediation/EQUIVALENCE_CANDIDATES_LSTM_2026-11-08.md",
+        "hosted run 42433394723 (survived natively), direct execution (survived)"
+      ],
+      "source_sha256": "277375e66d1edc6ed94c5ffc4b1074c113e86c6095c7dc2b20d3058cb006da18",
+      "catalog_sha256": "aef20963dc44e0ca61b2c9e9744bdf76a552d33490a96ed8e51b592a9cacfbc2",
+      "author": "theobigand",
+      "verdict": "accepted",
+      "approver": "theobigand",
+      "decision_date": "2026-11-11",
+      "policy_version": 2,
+      "environment": {
+        "numpy": "2.4.6"
+      },
+      "assessments": [
+        {
+          "assessor": "assistant (author of the candidate analysis)",
+          "verdict": "ACCEPT",
+          "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "GPT-6 (preliminary assessment relayed by the owner)",
+          "verdict": "ACCEPT",
+          "note": "agrees with the assistant after verification against the mutant diff; not an owner decision"
+        },
+        {
+          "assessor": "theobigand (owner)",
+          "verdict": "ACCEPT",
+          "note": "owner decision under sole_author_owner_review, 2026-11-11; not independent peer review"
+        }
+      ]
+    },
+    {
+      "id": "research.lstm_detector.xǁLSTMAutoencoderǁsettings__mutmut_41",
+      "path": "research/lstm_detector.py",
+      "function": "settings",
+      "diff": "-        \"versions\": {\"torch\": version(\"torch\"), \"numpy\": version(\"numpy\")},\n+        \"versions\": {\"torch\": version(\"TORCH\"), \"numpy\": version(\"numpy\")},",
+      "original_behavior": "original expression of the function at the recorded revision",
+      "mutated_behavior": "the mutated expression of the diff",
+      "risk": "L4",
+      "reason": "importlib.metadata normalises distribution names (PEP 503), so TORCH and torch resolve to the same distribution on every supported Python (>= 3.11).",
+      "evidence": [
+        "research/tests/test_equivalence_claims.py",
+        "docs/thesis-remediation/EQUIVALENCE_CANDIDATES_LSTM_2026-11-08.md",
+        "hosted run 42433394723 (survived natively), direct execution (survived)"
+      ],
+      "source_sha256": "277375e66d1edc6ed94c5ffc4b1074c113e86c6095c7dc2b20d3058cb006da18",
+      "catalog_sha256": "aef20963dc44e0ca61b2c9e9744bdf76a552d33490a96ed8e51b592a9cacfbc2",
+      "author": "theobigand",
+      "verdict": "accepted",
+      "approver": "theobigand",
+      "decision_date": "2026-11-11",
+      "policy_version": 2,
+      "environment": {
+        "torch": "2.15.0+cpu"
+      },
+      "assessments": [
+        {
+          "assessor": "assistant (author of the candidate analysis)",
+          "verdict": "ACCEPT",
+          "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "GPT-6 (preliminary assessment relayed by the owner)",
+          "verdict": "ACCEPT",
+          "note": "agrees with the assistant after verification against the mutant diff; not an owner decision"
+        },
+        {
+          "assessor": "theobigand (owner)",
+          "verdict": "ACCEPT",
+          "note": "owner decision under sole_author_owner_review, 2026-11-11; not independent peer review"
+        }
+      ]
+    },
+    {
+      "id": "research.lstm_detector.xǁLSTMAutoencoderǁsettings__mutmut_46",
+      "path": "research/lstm_detector.py",
+      "function": "settings",
+      "diff": "-        \"versions\": {\"torch\": version(\"torch\"), \"numpy\": version(\"numpy\")},\n+        \"versions\": {\"torch\": version(\"torch\"), \"numpy\": version(\"NUMPY\")},",
+      "original_behavior": "original expression of the function at the recorded revision",
+      "mutated_behavior": "the mutated expression of the diff",
+      "risk": "L4",
+      "reason": "The same name normalisation applies to numpy and NUMPY.",
+      "evidence": [
+        "research/tests/test_equivalence_claims.py",
+        "docs/thesis-remediation/EQUIVALENCE_CANDIDATES_LSTM_2026-11-08.md",
+        "hosted run 42433394723 (survived natively), direct execution (survived)"
+      ],
+      "source_sha256": "277375e66d1edc6ed94c5ffc4b1074c113e86c6095c7dc2b20d3058cb006da18",
+      "catalog_sha256": "aef20963dc44e0ca61b2c9e9744bdf76a552d33490a96ed8e51b592a9cacfbc2",
+      "author": "theobigand",
+      "verdict": "accepted",
+      "approver": "theobigand",
+      "decision_date": "2026-11-11",
+      "policy_version": 2,
+      "environment": {
+        "numpy": "2.4.6"
+      },
+      "assessments": [
+        {
+          "assessor": "assistant (author of the candidate analysis)",
+          "verdict": "ACCEPT",
+          "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "GPT-6 (preliminary assessment relayed by the owner)",
+          "verdict": "ACCEPT",
+          "note": "agrees with the assistant after verification against the mutant diff; not an owner decision"
+        },
+        {
+          "assessor": "theobigand (owner)",
+          "verdict": "ACCEPT",
+          "note": "owner decision under sole_author_owner_review, 2026-11-11; not independent peer review"
+        }
+      ]
+    }
+  ]
+}

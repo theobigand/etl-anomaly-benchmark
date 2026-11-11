@@ -2,10 +2,7 @@
 
 Source revision d296f2f; mutants identified as `research.lstm_detector.xǁLSTMAutoencoderǁ<function>__mutmut_<n>`.
 These nine mutants survive both the hosted Linux native run (run 42433394723) and direct execution of the
-detector tests. Each carries a semantic argument by the author of the tests. **None is accepted**: the
-mechanism in `verification/mutation_policy.py` requires an independent reviewer, a record bound to the
-source and catalog digests, and the author may not approve their own proposal. Raw outcomes stay as
-`survived` and count in every raw score.
+detector tests. Each carries a semantic argument by the author of the tests. **Superseded decisions (2026-11-11):** the owner accepted four of them and left five inconclusive; see the owner decision packet. The mechanism requires the owner's recorded decision and records bound to the source digest, module-catalog digest, risk level, policy version and dependency versions. Raw outcomes stay as `survived` and count in every raw score.
 
 | Mutant | Mutation | Argument | Check made |
 | --- | --- | --- | --- |
