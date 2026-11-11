@@ -160,6 +160,14 @@
       "level": "L4",
       "reason": "Required dataset hashes, dimensions and labels enforce source integrity."
     },
+    "research/alert_budget.py": {
+      "level": "L4",
+      "reason": "Label-free alert-budget thresholds, score direction, tie and infeasible-budget handling and per-cell counts govern the reported operating points."
+    },
+    "research/alert_budget_summary.py": {
+      "level": "L4",
+      "reason": "Denominators, failed and skipped accounting and cell medians of the alert-budget study govern its conclusions."
+    },
     "research/build_pool.py": {
       "level": "L4",
       "reason": "Download manifests, rights records and source digests determine pool identity."

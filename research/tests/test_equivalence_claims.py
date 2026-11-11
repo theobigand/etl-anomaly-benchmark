@@ -10,7 +10,8 @@ from importlib.metadata import version
 import numpy as np
 import pandas as pd
 import pytest
-import torch
+
+torch = pytest.importorskip("torch")  # the locked REAL environment has no PyTorch
 
 DTYPE_FRAMES = {
     "int64": pd.DataFrame({"a": [1, 2, 3]}),
