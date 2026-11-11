@@ -40,13 +40,13 @@ with it. The logic for feasible cells is identical.
 ## Findings (medians over problems of seed means; labels used only to score the flags)
 
 - Realized alert rate tracks the nominal budget: at 1% the median is 1.05 to 1.36 times nominal,
-  at 2% 1.02 to 1.20 (OCSVM and PCA drift most). Test-time drift, not ties, drives the excess.
+  at 2% 1.02 to 1.20 (OCSVM and PCA drift most). The cause of the excess (score shift between fit and held-out rows, ties) was not isolated.
 - At 1% and 2% all ML detectors have median recall of 2% to 6% and median precision of 13% to 20%.
   Differences between detectors at a fixed budget are small relative to the spread across problems;
   no ranking is claimed.
 - Rules at their own settings alert far more than a 2% budget (median alert rate z-score 11.4%,
   IQR 22.8%) except Great Expectations (1.6%, recall 3.1%). Recall of 30% and 41% for z-score and
-  IQR comes with an alert volume 5 to 11 times larger.
+  IQR comes with an alert volume about 6 to 11 times the 2% budget.
 
 ## Limits
 
