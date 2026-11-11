@@ -39,9 +39,9 @@ it costs. To answer, I built an open-source ETL pipeline in which seventeen dete
 Expectations), eight classical ML detectors (Isolation Forest, LOF, One-Class SVM, ECOD, COPOD, HBOS,
 KNN, PCA) and six neural ones (autoencoder, VAE, Deep SVDD, DIF, AE1SVM, LUNAR). I evaluate them over
 five seeds on a stratified held-out split, on a pool of $152$ open datasets (used as $100$ labelled
-problems and as $42$ UCI tables, $58$ with ADBench, into which six anomaly types are injected) and on
-Faker-generated data with controlled anomaly types, and I report each study against hypotheses written
-before its runs. The aggregate findings on the $100$ labelled problems remain descriptive:
+problems and, for the $58$ tables large enough, as hosts for six injected anomaly types: $42$ from UCI
+and $16$ from ADBench) and on Faker-generated data with controlled anomaly types. I report each study
+against hypotheses written before its runs. The aggregate findings on the $100$ labelled problems remain descriptive:
 their historical schema and row filtering precede the split and require train-only
 revalidation. Under that preparation, the column-wise ECOD, COPOD and HBOS match Isolation Forest, and the neural
 models do not beat the best classical one. The per-type view shows a narrow, largely non-overlapping
@@ -59,15 +59,11 @@ Great Expectations, Isolation Forest, autoencoder
 
 \section{Introduction}
 
-Extract--Transform--Load (ETL) pipelines are the backbone of modern data
-infrastructure: they move raw operational data into analytical stores
-where it feeds dashboards, reports, and machine-learning
-applications. Organizations increasingly manage data as an asset that
-must be governed~\cite{khatri2010data}, and the value delivered
-downstream is bounded by the quality of the data that reaches the
-destination. This is why data quality has long been a first-class
-concern for data engineers, and why automated, continuous quality
-control is a capability rather than an option.
+Extract--Transform--Load (ETL) pipelines move raw operational data into analytical
+stores, where it feeds dashboards, reports and machine-learning applications. What those uses
+can deliver is bounded by the quality of the data that reaches the store, and organizations
+increasingly treat data as an asset to be governed~\cite{khatri2010data}. Quality control
+therefore has to run automatically and continuously, inside the pipeline.
 
 The dominant approach in industry remains rule-based: practitioners
 hand-write declarative expectations---``column \texttt{amount} must be
@@ -256,7 +252,7 @@ AnoShift~\cite{dragoi2022anoshift} & classical and deep, Kyoto-2006+ & IID, NEAR
 FedAD-Bench~\cite{anwar2024fedadbench} & deep models, federated, $4$ datasets & not found & $F_1$-optimal threshold on a validation set & none \\
 Sun et al.~\cite{sun2024online} & thresholding method, synthetic and real & shift in the stream & error-rate guarantees & none \\
 \midrule
-This paper & $6$ detectors (and $2$ deep), $3$ real sets, a pool of $152$, synthetic and typed injection & chronological pilot and decision study on two datasets & precision, recall, $F_1$ at the training-prevalence threshold & six data-quality fault types \\
+This paper & $17$ detectors ($3$ rules, $8$ classical, $6$ neural), $3$ worked examples, a pool of $152$ open datasets, synthetic and typed injection & chronological pilot and decision study on two datasets & precision, recall, $F_1$ at the training-prevalence threshold; label-free alert budgets (exploratory) & six data-quality fault types \\
 \bottomrule
 \end{tabular}
 \end{table*}
@@ -880,9 +876,10 @@ times the anomaly prevalence; its median is $2.3$ times, the Z-score's $1.7$,
 and the learned detectors flag about the prevalence by construction. The order
 of the methods is the same for ADBench and for UCI (rank correlation $0.94$),
 although the level is much lower on UCI (best median AP $0.19$ against
-$0.40$). Fifteen sources underlie both an ADBench and a UCI problem (17 and 15 of
-the problems, with different derivations), so the problems are not independent, and $10\%$ resampling fixes the median
-prevalence at $0.10$. The ADBench half is closer to the usual benchmark and the
+$0.40$). Fifteen sources underlie both an ADBench and a UCI problem (17 ADBench and 15 UCI
+problems, with different derivations), so the problems are not independent. Resampling a class above
+$10\%$ down to $10\%$ also fixes the median prevalence at $0.10$, which makes the two halves less
+different in prevalence than they would be otherwise. The ADBench half is closer to the usual benchmark and the
 UCI half is a harder, rule-derived labelling; I did not tune any detector, so
 the numbers describe default settings.
 
@@ -1428,7 +1425,7 @@ because the injected combinations also push one value to a tail. The neural mode
 specific types (DIF and the VAE on multivariate outliers, LUNAR on drift) and
 not on aggregate scores, and they cost more to fit and to tune. For a practitioner this
 suggests a cheap column-wise model and Isolation Forest as the baseline, a reconstruction model
-added when the faults are combinations, and a model such as LUNAR only when missing
+added when the faults are combinations, and a model such as LUNAR only when missing a
 drift costs more than false alarms. These are default settings, and a tuned neural model could do better.
 
 \paragraph{Aggregate metrics on a mixed label are misleading.} On every
@@ -1456,8 +1453,8 @@ pipeline. The ML detectors carry a wide seed spread on the
 small datasets (Cardio $F_1$ standard deviation up to $0.17$; Isolation
 Forest on fraud $F_1 = 0.20 \pm 0.07$), so those numbers should be read
 as ranges. The labels of the $64$ UCI problems come from a rule (the rarest
-class), $19$ sources appear in both lists of the pool, and the datasets are
-therefore not independent. The labelled-pool preparation also reads full-table
+class), $19$ UCI sources underlie both an ADBench problem and a table of the UCI part of the
+pool ($15$ of them among the labelled problems), and the datasets are therefore not independent. The labelled-pool preparation also reads full-table
 values and labels before the split; the exploratory training-only path has only
 constructed validation so far. Its performance impact needs a separate replay,
 not a retrospective reinterpretation of the archived outcomes.
@@ -1516,8 +1513,8 @@ follow it; only one of the four hypotheses of that study holds.
 
 The next steps are a check of the injected faults against faults observed in
 real pipelines, and a decision-level study on more datasets with genuine time,
-such as the Kyoto-2006+ traffic, whose data rights I have not verified. The open questions are listed
-in Section~\ref{sec:discussion}.
+such as the Kyoto-2006+ traffic, whose data rights I have not verified. The limits of the present
+evidence are stated in Section~\ref{sec:discussion}.
 
 
 \appendices
@@ -1611,6 +1608,11 @@ A later focused Linux diagnostic of one shard (the LSTM autoencoder module, $377
 ($97.61\%$, below the L4 threshold); after four equivalences recorded by the repository owner as sole author
 and reviewer (not independent review) the adjusted score was $368/373 = 98.66\%$, with five inconclusive
 survivors still counted. It covers one module of one shard and certifies nothing.
+Focused local runs of new research modules, counted raw with no equivalence accepted, reached
+$98.2\%$ to $100\%$ of their mutants for six modules after tests were added, and $95.4\%$ and
+$94.0\%$ for the normalisation and the paired block bootstrap, below L4. They are module-level
+diagnostics on one machine; the repository note lists the survivors and one boundary defect, a
+minimum anomaly count lower than the stratified split needs, which changes no archived result.
 The native-catalog adapter distinguishes assertion kills from internal runner
 errors and checks generated identities against source-function hashes. A separate
 execution-binding prototype tracks source globals, tests, configuration and
