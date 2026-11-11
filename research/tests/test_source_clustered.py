@@ -155,3 +155,135 @@ def test_the_command_reads_the_runs_and_writes_the_analysis(tmp_path, monkeypatc
     assert (result["problems"], result["sources"], result["bootstraps"]) == (8, 8, 50)
     assert len(result["comparisons"]) == len(sc.COMPARISONS)
     assert capsys.readouterr().out.strip() == "8 problems, 8 sources"
+
+
+# --- the bootstrap is pinned against an independent derivation of its definition ---------------
+
+
+def _reference(differences, clusters, by_cluster, draws):
+    """Percentile bootstrap re-derived from the definition: seed, resample, count, interval."""
+    rng = np.random.default_rng(sc.SEED)
+    n = len(differences)
+    labels = np.unique(clusters)
+    means, medians = [], []
+    for _ in range(draws):
+        if by_cluster:
+            chosen = labels[rng.integers(0, len(labels), len(labels))]
+            index = np.concatenate([np.flatnonzero(clusters == c) for c in chosen])
+        else:
+            index = rng.integers(0, n, n)
+        means.append(differences[index].mean())
+        medians.append(np.median(differences[index]))
+    means, medians = np.array(means), np.array(medians)
+    below, above = (means <= 0).mean(), (means >= 0).mean()
+    return {
+        "units": len(labels) if by_cluster else n,
+        "mean": differences.mean(),
+        "mean_ci": tuple(np.quantile(means, [0.025, 0.975])),
+        "median": np.median(differences),
+        "median_ci": tuple(np.quantile(medians, [0.025, 0.975])),
+        "p_two_sided": min(1.0, 2 * min(below, above)),
+    }
+
+
+@pytest.mark.parametrize("by_cluster", [False, True])
+def test_the_bootstrap_equals_its_definition_including_the_zero_boundary(by_cluster):
+    differences = np.array([-1.0, 1.0, 0.0, 0.0, 2.0, -0.5])
+    clusters = np.array(["a", "a", "b", "c", "c", "d"])
+    got = sc.bootstrap(differences, clusters, by_cluster=by_cluster, draws=400)
+    want = _reference(differences, clusters, by_cluster, 400)
+    assert got["units"] == want["units"]
+    for key in ("mean", "median", "p_two_sided"):
+        assert got[key] == pytest.approx(want[key], abs=1e-12)
+    for key in ("mean_ci", "median_ci"):
+        assert got[key] == pytest.approx(want[key], abs=1e-12)
+
+
+def test_the_interval_is_the_central_ninety_five_percent():
+    assert sc.LEVEL == 0.95
+    assert sc._interval(np.arange(1001.0)) == pytest.approx((25.0, 975.0))
+
+
+def test_p_value_is_twice_the_smaller_tail_and_capped_at_one():
+    draws = 600
+    positive = sc.bootstrap(
+        np.array([0.0, 0.0, 1.0]), np.array(list("abc")), by_cluster=False, draws=draws
+    )
+    reference = _reference(np.array([0.0, 0.0, 1.0]), np.array(list("abc")), False, draws)
+    assert positive["p_two_sided"] == pytest.approx(reference["p_two_sided"])
+    assert 0.0 < positive["p_two_sided"] <= 1.0
+    centred = sc.bootstrap(
+        np.array([-1.0, 1.0]), np.array(["a", "b"]), by_cluster=False, draws=draws
+    )
+    assert centred["p_two_sided"] == 1.0  # both tails exceed one half
+
+
+class _Spy:
+    def __init__(self):
+        self.calls = []
+
+    def __call__(self, differences, clusters, *, by_cluster, draws):
+        self.calls.append((differences.tolist(), clusters.tolist(), by_cluster, draws))
+        return {"p_two_sided": 0.5, "units": 0}
+
+
+def test_each_comparison_is_resampled_by_problem_by_source_and_without_overlap(monkeypatch):
+    spy = _Spy()
+    monkeypatch.setattr(sc, "bootstrap", spy)
+    problems = ["adbench:glass", "uci:42", "uci:1", "uci:109"]  # wine derives from UCI 109
+    base = np.array([0.5, 0.6, 0.7, 0.8])
+    names = {m for pair in sc.COMPARISONS for m in pair}
+    table = {m: base.copy() for m in names}
+    table["ecod"] = base + np.array([0.1, 0.2, 0.3, 0.4])  # ecod minus isolation_forest
+    result = sc.analyse(problems, table, draws=17)
+    first = spy.calls[:3]
+    diffs = [0.1, 0.2, 0.3, 0.4]
+    sources = ["uci:42", "uci:42", "uci:1", "uci:109"]  # wine derives from UCI 109
+    assert first[0] == (pytest.approx(diffs), sources, False, 17)
+    assert first[1] == (pytest.approx(diffs), sources, True, 17)
+    assert first[2] == (pytest.approx(diffs[1:]), sources[1:], True, 17)  # glass overlaps uci:42
+    assert result["comparisons"][0]["without_overlap"]["problems"] == 3
+    assert result["overlapping_adbench_problems"] == 1 and result["sources"] == 3  # 42, 1, 109
+    assert [c[3] for c in spy.calls] == [17] * len(spy.calls)
+
+
+def test_wine_without_a_labelled_counterpart_is_not_counted_as_overlap():
+    problems = ["adbench:wine", "uci:1", "uci:2"]
+    table = {m: np.array([0.5, 0.6, 0.7]) for pair in sc.COMPARISONS for m in pair}
+    assert sc.analyse(problems, table, draws=20)["overlapping_adbench_problems"] == 0
+
+
+def test_the_default_number_of_resamples_is_used_when_none_is_requested(monkeypatch):
+    spy = _Spy()
+    monkeypatch.setattr(sc, "bootstrap", spy)
+    table = {m: np.array([0.5, 0.6]) for pair in sc.COMPARISONS for m in pair}
+    result = sc.analyse(["uci:1", "uci:2"], table)
+    assert result["bootstraps"] == sc.BOOTSTRAPS == 10_000
+    assert {c[3] for c in spy.calls} == {10_000}
+
+
+def test_the_command_defaults_point_at_the_archived_runs_and_the_output_is_sorted_json(
+    tmp_path, monkeypatch, capsys
+):
+    seen = {}
+    monkeypatch.setattr(sc, "load_ap", lambda dirs: seen.setdefault("dirs", dirs) and ([], {}))
+    monkeypatch.setattr(
+        sc, "analyse", lambda problems, table: {"problems": 0, "sources": 0, "b": 1, "a": 2}
+    )
+    out = tmp_path / "o.json"
+    assert sc.main(["--output", str(out)]) == 0
+    root = Path(sc.__file__).resolve().parent.parent / "verification" / "evidence"
+    assert seen["dirs"] == [
+        root / "labelled_pool" / "runs",
+        root / "full_registry" / "pool_deep" / "runs",
+    ]
+    assert out.read_text() == '{\n "a": 2,\n "b": 1,\n "problems": 0,\n "sources": 0\n}\n'
+    with pytest.raises(SystemExit) as stop:
+        sc.main([])
+    assert stop.value.code == 2
+    capsys.readouterr()
+    with pytest.raises(SystemExit):
+        sc.main(["--help"])
+    assert "Source-clustered paired comparison of detectors" in " ".join(
+        capsys.readouterr().out.split()
+    )
