@@ -78,3 +78,23 @@ pass (79) and the output voice check passes.
 
 Independent re-evaluation of the revised skill on other themes is in `EDITORIAL_SKILL_TRANSFER_CHECK_2026-11-12.md` where it exists.
 Self-assigned scores are not evidence of improvement.
+
+## Addendum, second pass (2026-11-12)
+
+Additionally inspected: `claude-photo-direction-test/assets/rejected/materials-1793894809.png`,
+`technical-cross-domain/comparisons/01-web-desktop-home.jpg` (FleetOps, SignalLab and OpticBench web homes) and
+`composition-gate/RECOVERY_AND_EXECUTION_REPORT.md`. Still not inspected: the nightshift renders themselves, the
+spreadsheets and Word files.
+
+- **Observed, ORÉE rejected frame:** a tidy flat lay of beige tiles, stone, rope and film on linen, all lit by the
+  same low sun. It reads as a generic materials moodboard: nothing in it is the subject, and the palette is the
+  skill's own warm default. Transfer: reject an image that could illustrate any product.
+- **Observed, web homes:** each of the three technical sites puts its own data object at the centre (a square per
+  tablet, one aligned time record, a frame beside its measurements). None opens on a stock image. Transfer: the
+  hero is the thing being measured. This is what the thesis deck now tries (pad plates, matrices, strips).
+- **Observed, composition-gate report:** the earliest loss of alternatives is at initial art-direction selection,
+  before any rendered alternative is looked at. Transfer: render two concepts before committing (done in the first
+  pass of this deck, with three concepts).
+- **Hypothesis:** the shared scaffold in the first thesis redesign came from building each slide as a card with a
+  headline, because the helper that produced one slide produced all of them. The second pass replaced the helper
+  by chart and diagram builders per content type.

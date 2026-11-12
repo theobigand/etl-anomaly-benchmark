@@ -88,3 +88,10 @@ pre{font:500 18px/1.5 var(--mono);white-space:pre}
   #dots,#count{display:none}
   .slide,.sheet{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
+
+/* editorial emphasis is neutral; amber and steel carry meaning only */
+.em{font-weight:800;}
+.anom{color:var(--ember)}.bone .anom{color:var(--ember-ink)}
+.ok{color:var(--steel)}.bone .ok{color:var(--steel-ink)}
+td.cool{background:var(--steel-wash);color:#16262d}
+.tag{display:inline-block;font:600 13px var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border:1.5px solid currentColor}
