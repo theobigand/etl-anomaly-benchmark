@@ -18,7 +18,7 @@ L4 modules: 91. In the campaign: 82. Absent from the campaign: 9. With a focused
 | `experiments/run_synthetic_benchmark.py` | 803feb40a637 | 568/572 | PASS | - | campaign PASS (historical) |
 | `experiments/verification_report.py` | fca81ddf1ae6 | 290/290 | PASS | - | campaign PASS (historical) |
 | `experiments/verify_real.py` | c2e72b032f35 | 212/212 | PASS | - | campaign PASS (historical) |
-| `research/alert_budget.py` | 0da6a79ece4e | absent | no evidence | 766/780 (98.2%) 2026-11-11 | focused at or above 98 (not certified) |
+| `research/alert_budget.py` | 0da6a79ece4e | absent | no evidence | 777/780 (99.6%) 2026-11-12 | focused at or above 98 (not certified) |
 | `research/alert_budget_summary.py` | a201cdffc73f | absent | no evidence | 123/123 (100.0%) 2026-11-11 | focused at or above 98 (not certified) |
 | `research/build_pool.py` | eefa0438f61e | 57/172 | INCOMPLETE | 169/172 (98.3%) 2026-11-12 | focused at or above 98 (not certified) |
 | `research/dataset_registry.py` | d547aef1196e | 242/417 | INCOMPLETE | - | below 98 (58.0%), incomplete |
@@ -26,17 +26,17 @@ L4 modules: 91. In the campaign: 82. Absent from the campaign: 9. With a focused
 | `research/full_registry.py` | 09cc0b9aa694 | 280/571 | INCOMPLETE | - | below 98 (49.0%), incomplete |
 | `research/full_registry_summary.py` | 8631dfe763b8 | 161/541 | INCOMPLETE | - | below 98 (29.8%), incomplete |
 | `research/injection.py` | cdfc81d98e34 | 323/336 | FAIL | - | below 98 (96.1%), fail |
-| `research/labelled_benchmark.py` | d4f1f954079d | 112/475 | INCOMPLETE | 471/475 (99.2%) 2026-11-12 | focused at or above 98 (not certified) |
+| `research/labelled_benchmark.py` | d4f1f954079d | 112/475 | INCOMPLETE | 475/475 (100.0%) 2026-11-12 | focused at or above 98 (not certified) |
 | `research/labelled_summary.py` | 2b9a60f12ced | 280/676 | INCOMPLETE | - | below 98 (41.4%), incomplete |
 | `research/lstm_detector.py` | 277375e66d1e | 377/377 | PASS | - | campaign PASS (historical) |
 | `research/lstm_pilot.py` | 8c5ee81a42be | 189/506 | INCOMPLETE | - | below 98 (37.4%), incomplete |
-| `research/matched_alert.py` | dac27eab8804 | absent | no evidence | 317/322 (98.4%) 2026-11-11 | focused at or above 98 (not certified) |
+| `research/matched_alert.py` | dac27eab8804 | absent | no evidence | 320/322 (99.4%) 2026-11-12 | focused at or above 98 (not certified) |
 | `research/multi_schema.py` | 1e2e1bb4869f | 870/1093 | INCOMPLETE | - | below 98 (79.6%), incomplete |
 | `research/normalise.py` | 5ba131d186d7 | 175/193 | FAIL (source changed since) | 191/197 (97.0%) 2026-11-12 | below 98 |
 | `research/paired_bootstrap.py` | 87eed95e78ec | 77/100 | FAIL | 100/100 (100.0%) 2026-11-12 | focused at or above 98 (not certified) |
 | `research/paper_appendix.py` | fd6e264dddba | 0/171 | INCOMPLETE | - | below 98 (0.0%), incomplete |
 | `research/paper_tables.py` | 42d6cea0d6b3 | 0/511 | INCOMPLETE | - | below 98 (0.0%), incomplete |
-| `research/pool_check.py` | 5981ee3fea87 | 118/180 | FAIL | 178/180 (98.9%) 2026-11-11 | focused at or above 98 (not certified) |
+| `research/pool_check.py` | 5981ee3fea87 | 118/180 | FAIL | 178/180 (98.9%) 2026-11-12 | focused at or above 98 (not certified) |
 | `research/pool_chrono.py` | cd8b6eff471b | 145/316 | INCOMPLETE | - | below 98 (45.9%), incomplete |
 | `research/pool_etl.py` | 1ed53a9a8594 | 154/317 | INCOMPLETE | - | below 98 (48.6%), incomplete |
 | `research/pool_extension_paper.py` | 125b1391c456 | 0/652 | INCOMPLETE | - | below 98 (0.0%), incomplete |
@@ -44,17 +44,17 @@ L4 modules: 91. In the campaign: 82. Absent from the campaign: 9. With a focused
 | `research/pool_full.py` | bf7a089a7c25 | 223/515 | INCOMPLETE | - | below 98 (43.3%), incomplete |
 | `research/pool_preprocessing.py` | edf8ac28b282 | 203/248 | FAIL | - | below 98 (81.9%), fail |
 | `research/pool_train_only.py` | 177258ce0eb5 | 234/332 | FAIL | - | below 98 (70.5%), fail |
-| `research/pool_typed.py` | 0b477c1c51fc | 26/525 | INCOMPLETE | 517/525 (98.5%) 2026-11-12 | focused at or above 98 (not certified) |
-| `research/prevalence_shift.py` | d89afbf352b0 | absent | no evidence | 363/369 (98.4%) 2026-11-11 | focused at or above 98 (not certified) |
+| `research/pool_typed.py` | 0b477c1c51fc | 26/525 | INCOMPLETE | 521/525 (99.2%) 2026-11-12 | focused at or above 98 (not certified) |
+| `research/prevalence_shift.py` | d89afbf352b0 | absent | no evidence | 366/369 (99.2%) 2026-11-12 | focused at or above 98 (not certified) |
 | `research/recover_partitions.py` | 4fa65e38a68b | absent | no evidence | - | no applicable evidence |
-| `research/score_shift.py` | a96e39bb1b80 | absent | no evidence | 795/806 (98.6%) 2026-11-11 | focused at or above 98 (not certified) |
-| `research/source_clustered.py` | a9bf13c575ea | absent | no evidence | 333/337 (98.8%) 2026-11-11 | focused at or above 98 (not certified) |
+| `research/score_shift.py` | a96e39bb1b80 | absent | no evidence | 800/806 (99.3%) 2026-11-12 | focused at or above 98 (not certified) |
+| `research/source_clustered.py` | a9bf13c575ea | absent | no evidence | 336/337 (99.7%) 2026-11-12 | focused at or above 98 (not certified) |
 | `research/temporal_decision.py` | f402ba92cdbd | 522/836 | INCOMPLETE | - | below 98 (62.4%), incomplete |
-| `research/temporal_pilot.py` | 03e63b296112 | 20/586 | INCOMPLETE | 571/589 (96.9%) 2026-11-12 | below 98 |
+| `research/temporal_pilot.py` | 03e63b296112 | 20/586 | INCOMPLETE (source changed since) | 580/589 (98.5%) 2026-11-12 | focused at or above 98 (not certified) |
 | `research/typed_benchmark.py` | abdd10e4a196 | 180/180 | PASS | - | campaign PASS (historical) |
 | `research/typed_figures.py` | cdff872ffa3f | 133/240 | FAIL | - | below 98 (55.4%), fail |
 | `research/typed_masking.py` | 6203d8f54eac | 27/132 | INCOMPLETE | 132/132 (100.0%) 2026-11-12 | focused at or above 98 (not certified) |
-| `research/typed_run.py` | 8589c4634fd7 | 27/351 | INCOMPLETE | 343/351 (97.7%) 2026-11-12 | below 98 |
+| `research/typed_run.py` | 8589c4634fd7 | 27/351 | INCOMPLETE | 349/351 (99.4%) 2026-11-12 | focused at or above 98 (not certified) |
 | `research/typed_summary.py` | dd02dbace8fe | 386/507 | FAIL | - | below 98 (76.1%), fail |
 | `research/uci_loader.py` | a1176cd61bd8 | 157/186 | FAIL | - | below 98 (84.4%), fail |
 | `src/etl_benchmark/atomic.py` | 6ecd401fba44 | 6/6 | PASS | - | campaign PASS (historical) |

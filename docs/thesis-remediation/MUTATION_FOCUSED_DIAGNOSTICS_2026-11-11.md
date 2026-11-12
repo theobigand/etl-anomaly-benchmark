@@ -219,3 +219,40 @@ runs the configured selection once and fails the whole run when any test in it f
 focused run abort; one of my logging tests depended on the logger name, which differs by import path, and is fixed.
 `make mutation-focus MODULE=<module>` now removes only that file before a focused run so that new test files are
 mapped.
+
+### Survivor triage and the owner review packet (2026-11-12, last)
+
+Sixteen L4 modules were measured again with `make mutation-focus` after targeted tests were added (the raw focused scores
+are in `evidence/mutation-focused-2026-11-12.json`; the survivors with diffs, source digests and catalog digests are in
+`evidence/mutation-survivors-2026-11-12.json`). The earlier statement that most survivors were inert was too coarse:
+49 survivors (including one timeout) in the first eight modules reduced to 26 after tests for the boundary comparison of a window ending at the change
+time, naive timestamps, the integer type of time blocks, the configured split ratios, a deprecated pandas unit alias (`unit="S"`
+raises a `Pandas4Warning`), default method sets, flushed progress lines, wrong-length Holm adjustments and missing-score
+refusals. The 43 remaining survivors are assessed one by one in `OWNER_EQUIVALENCE_REVIEW_2026-11-12.md`; no decision is
+recorded and nothing changes the accepted denominator.
+
+| Module | Killed / total | Survivors | Timeouts |
+| --- | --- | --- | --- |
+| `research/temporal_pilot.py` | 580/589 | 9 | 0 |
+| `research/typed_run.py` | 349/351 | 2 | 0 |
+| `research/typed_masking.py` | 132/132 | 0 | 0 |
+| `research/pool_typed.py` | 521/525 | 4 | 0 |
+| `research/labelled_benchmark.py` | 475/475 | 0 | 0 |
+| `research/matched_alert.py` | 320/322 | 2 | 0 |
+| `research/prevalence_shift.py` | 366/369 | 3 | 0 |
+| `research/source_clustered.py` | 336/337 | 1 | 0 |
+| `research/alert_budget.py` | 777/780 | 3 | 0 |
+| `research/score_shift.py` | 800/806 | 6 | 0 |
+| `research/pool_check.py` | 178/180 | 2 | 0 |
+| `research/normalise.py` | 191/197 | 6 | 0 |
+| `research/build_pool.py` | 169/172 | 3 | 0 |
+| `src/etl_benchmark/load.py` | 13/14 | 1 | 0 |
+| `src/etl_benchmark/quality/base.py` | 30/31 | 1 | 0 |
+| `research/paired_bootstrap.py` | 100/100 | 0 | 0 |
+
+Three of these stay below 98 as raw scores: `normalise` (96.95 %), `load` (92.86 %), `base` (96.77 %); all their survivors are
+candidates that need an owner decision (`astype(None)`, `index=None`, column labels that never leave `clean`). Timeout
+mutant `temporal_pilot.x_block_bootstrap_ci__mutmut_40` was a real behavioral difference that mutmut could not kill within its
+time limit because an older test used 4,000 rows; that test now uses 1,500 rows and 60 resamples with the same assertions and the
+mutant is killed. `alert_budget.x_run_job__mutmut_28` ended once with exit code 255 (an incomplete outcome) and was killed on the
+next run. Reported numbers are focused development measurements, not a campaign.
