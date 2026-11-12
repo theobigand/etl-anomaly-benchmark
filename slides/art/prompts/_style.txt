@@ -1,0 +1,15 @@
+SHARED PHOTOGRAPHIC DIRECTION (illustrative still life for a thesis presentation about anomaly detection; not experimental evidence)
+
+Image language: technical macro still life photographed like a surface-inspection record. Truthful and explanatory, quiet, not advertising, not sci-fi.
+
+Subject world: a machined dark graphite anodized aluminium inspection plate carrying a perfectly regular grid of small square raised pads (each pad 6 mm square, 0.4 mm tall, matte, fine machined grain, crisp tiny chamfer). The grid is 24 columns by 13 rows, even pitch. Nothing else is on the plate.
+
+Light model: ONE low raking light from the LEFT, about 12 degrees above the plate surface, warm 3200 K, small and hard, entering from outside the frame. The rest of the room is dark. Light falls off toward the right and top so the far right and top of the frame sink to near black. Every pad catches a thin warm highlight on its left edge and top edge and casts a short, hard, sharp-edged shadow to its RIGHT. Shadow length is proportional to pad height. Contact shadows at every pad base.
+
+Camera: full-frame camera, 100 mm macro lens, aperture about f/8, tripod, looking down at the plate at roughly 35 degrees from the surface, slight perspective, sharp across the grid, no tilt-shift, no bokeh gimmick, no fisheye.
+
+Grade: natural, warm highlights from the 3200 K source, neutral dark tones, true blacks without crushing, no teal and orange, no haze, no bloom, no glow, no lens flare, no vignette overlay, no HDR look.
+
+Exclusions: no text, numbers, letters, logos, labels, watermarks, people, hands, tools, screens, glowing LEDs, smoke, circuit boards, servers, neural network graphics, sci-fi or neon atmosphere.
+
+Format: landscape 16:9.
