@@ -135,3 +135,13 @@ requested or implied; the owner decides:
 
 Not claimed: module compliance, or any change to the release verdict. `normalise` stays below the bar unless
 three of the six are accepted as equivalent (194/197 would pass).
+
+### build_pool (2026-11-12)
+
+`research/build_pool.py` (SHA-256 eefa0438...): 169/172 = 98.26 % raw focused (the 2026-11-07 campaign had 57/172;
+86 `main` mutants had no test). New `research/tests/test_build_pool.py` pins the recorded fields, the carrier and
+label refusals with their reasons, the skipped-detector rule, the fixed eligibility seed, the failure bookkeeping,
+the pauses and the required arguments. Three survivors remain, all equivalence candidates kept eligible, no approval
+requested: `x_pool_row__mutmut_38` (the carrier is cleaned with an all-ones instead of an all-zeros label vector; a
+constant label never creates a conflict), `x_main__mutmut_27` and `_30` (`--output` read as a string instead of a
+`Path`; `atomic_path` converts it).
