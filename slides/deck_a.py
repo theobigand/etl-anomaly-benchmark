@@ -1073,30 +1073,18 @@ slide(
     "The pivot",
     "".join(
         [
-            D(64, 56, 700, None, "k", "The pivot"),
-            D(
+            flow(
                 64,
-                150,
-                1100,
-                None,
-                "",
-                "<h1 style='font-size:112px;line-height:.96'>Aggregate scores do not establish equivalence.</h1>",
-            ),
-            D(
-                64,
-                470,
-                900,
-                None,
-                "",
-                "<p style='font-size:36px;font-family:var(--cond);font-weight:500'>Per-type results show different competencies.</p>",
-            ),
-            D(
-                64,
-                600,
-                900,
-                None,
-                "note",
-                "F1 spans 0.22 to 0.59 over the seventeen detectors on the synthetic set, and the per-type competences barely overlap.",
+                56,
+                1152,
+                [
+                    "<div class='k'>The pivot</div>",
+                    "<h1 style='font-size:104px;line-height:.98;margin-top:40px'>Aggregate scores do not establish equivalence.</h1>",
+                    "<p style='font-size:36px;font-family:var(--cond);font-weight:500;margin-top:44px'>Per-type results show different competencies.</p>",
+                    "<p class='note' style='margin-top:40px'>F1 spans 0.22 to 0.59 over the seventeen detectors on the synthetic set, and the per-type competences barely overlap.</p>",
+                ],
+                maxh=620,
+                gap=0,
             ),
         ]
     ),
@@ -1444,7 +1432,7 @@ slide(
                 1152,
                 None,
                 "",
-                "<h2 style='font-size:44px'>One severity is not enough: the ranking moves</h2>",
+                "<h2 style='font-size:44px'>The ranking moves with severity</h2>",
             ),
             severity_panels(
                 64,
