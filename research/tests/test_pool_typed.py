@@ -415,3 +415,21 @@ def test_default_workers_methods_and_choices_progress_flush_and_help(cli, monkey
     assert "{classical,deep}" in text and "dataset ids, for a quick check" in text
     assert "XXdataset" not in text and "DATASET IDS" not in text
     assert "--only [ONLY ...]" in text and "--workers WORKERS" in text
+
+
+def test_the_default_method_set_is_classical(cli, monkeypatch):
+    import argparse
+
+    out, _ = cli
+    _eligible(out, {"adbench:a": True})
+    seen = []
+    real = argparse.ArgumentParser.parse_args
+
+    def spy(self, *args, **kwargs):
+        namespace = real(self, *args, **kwargs)
+        seen.append(namespace)
+        return namespace
+
+    monkeypatch.setattr(argparse.ArgumentParser, "parse_args", spy)
+    pt.main(["reference", "--output", str(out)])
+    assert seen[-1].methods == "classical"

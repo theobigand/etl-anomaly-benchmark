@@ -367,3 +367,21 @@ def test_progress_is_flushed_and_classical_is_an_accepted_choice(cli, monkeypatc
     monkeypatch.setattr(lb, "print", lambda *a, **k: flushes.append(k.get("flush")), raising=False)
     assert invoke("--only", "uci:3", "--methods", "classical") == 0
     assert flushes == [True, None] and ran == [("uci:3", list(lb.METHODS))]
+
+
+def test_the_default_method_set_is_classical(monkeypatch, tmp_path):
+    import argparse
+
+    seen = []
+    real = argparse.ArgumentParser.parse_args
+
+    def spy(self, *args, **kwargs):
+        namespace = real(self, *args, **kwargs)
+        seen.append(namespace)
+        return namespace
+
+    monkeypatch.setattr(argparse.ArgumentParser, "parse_args", spy)
+    monkeypatch.setattr(lb, "jobs", lambda r, a, p: [])
+    monkeypatch.setattr(lb, "ProcessPoolExecutor", _Serial)
+    lb.main(["--output", str(tmp_path / "o")])
+    assert seen[-1].methods == "classical"

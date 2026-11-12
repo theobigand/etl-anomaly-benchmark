@@ -411,3 +411,65 @@ def test_main_defaults_help_and_logging_configuration(tmp_path, monkeypatch, cap
         tp.main(["--help"])
     help_text = capsys.readouterr().out
     assert "Chronological pilot on Credit Card" in help_text and "--csv CSV" in help_text
+
+
+def test_a_window_that_ends_exactly_at_the_change_time_counts_as_after_it():
+    frame = _stream(n=9000)
+    train, val, test = frame.iloc[:3000], frame.iloc[3000:6000], frame.iloc[6000:]
+    # the change is the median test timestamp (row 1500); a window of 1501 rows ends exactly there
+    out = tp.monitor_control(train, val, test, ["V1", "V2"], deltas=(2.0,), window_size=1501)
+    got = out["controls"]["2.0"]
+    assert out["change_time"] == pd.Timestamp(test[tp.TIME_UTC].iloc[1500]).isoformat()
+    assert got["windows_before"] == 0 and got["windows_after"] == 1
+
+
+def test_inject_shift_accepts_timestamps_without_a_timezone_as_utc():
+    naive = pd.DataFrame(
+        {
+            "V1": [0.0, 0.0, 0.0],
+            tp.TIME_UTC: pd.to_datetime(
+                ["2000-01-01 00:00:00", "2000-01-01 00:00:10"] * 1 + ["2000-01-01 00:00:20"]
+            ),
+        }
+    )
+    assert naive[tp.TIME_UTC].dt.tz is None
+    out = tp.inject_shift(
+        naive, ["V1"], pd.Timestamp("2000-01-01T00:00:10Z"), 3.0, pd.Series({"V1": 2.0})
+    )
+    assert out["V1"].tolist() == [0.0, 6.0, 6.0]
+
+
+def test_time_blocks_are_integers():
+    times = tp.to_timestamps(pd.Series([0.0, 59.0, 60.0, 130.0]))
+    blocks = tp.time_blocks(times, 60)
+    assert blocks.dtype.kind == "i" and blocks.tolist() == [0, 0, 1, 2]
+
+
+def test_elapsed_times_with_missing_values_in_a_nullable_column_are_refused_by_the_stated_reason():
+    with pytest.raises(ValueError, match=f"^{MSG}$"):
+        tp.to_timestamps(pd.Series([1, None], dtype="Int64"))
+
+
+def test_the_chronological_partitions_follow_the_configured_ratios(monkeypatch):
+    frame = _stream(n=1000)
+    monkeypatch.setattr(tp.config, "SPLIT_RATIOS", (0.5, 0.25, 0.25))
+    train, val, test = tp.chronological_partitions(frame)
+    assert (len(train), len(val), len(test)) == (500, 250, 250)
+
+
+def test_a_small_bootstrap_equals_its_definition_and_runs_fast():
+    y, s, times = _data(n=40, seed=5)
+    got = tp.block_bootstrap_ci(y, s, times, 3 * 3600, 6, 4)
+    values = _reference(y, s, times, 3 * 3600, 6, 4)
+    assert got["resamples_used"] == len(values) > 0
+    assert got["ci_low"] == pytest.approx(np.percentile(values, 2.5), abs=1e-12)
+    assert got["ci_high"] == pytest.approx(np.percentile(values, 97.5), abs=1e-12)
+
+
+def test_elapsed_times_are_converted_without_a_deprecation_warning():
+    import warnings
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("error")
+        out = tp.to_timestamps(pd.Series([0.0, 1.5]))
+    assert out.iloc[1] - out.iloc[0] == pd.Timedelta(seconds=1.5)

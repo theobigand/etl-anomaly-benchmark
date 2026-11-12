@@ -252,3 +252,10 @@ def test_main_writes_a_sorted_indented_analysis_and_returns_zero(tmp_path, monke
     assert "Rules against learned detectors at comparable alert volume" in " ".join(
         capsys.readouterr().out.split()
     )
+
+
+def test_a_holm_adjustment_of_the_wrong_length_is_refused(monkeypatch):
+    runs = [_run(f"uci:{i}", [0.05] * 5, [0.05] * 5, precision=0.2 + 0.05 * i) for i in range(6)]
+    monkeypatch.setattr(ma, "holm", lambda p: list(p)[:-1])
+    with pytest.raises(ValueError, match="zip"):
+        ma.analyse(runs, draws=20)

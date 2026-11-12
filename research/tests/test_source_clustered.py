@@ -287,3 +287,10 @@ def test_the_command_defaults_point_at_the_archived_runs_and_the_output_is_sorte
     assert "Source-clustered paired comparison of detectors" in " ".join(
         capsys.readouterr().out.split()
     )
+
+
+def test_a_holm_adjustment_of_the_wrong_length_is_refused(monkeypatch):
+    problems, table = _table()
+    monkeypatch.setattr(sc, "holm", lambda p: list(p)[:-1])
+    with pytest.raises(ValueError, match="zip"):
+        sc.analyse(problems, table, draws=20)

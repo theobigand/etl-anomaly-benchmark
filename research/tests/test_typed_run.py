@@ -256,3 +256,26 @@ def test_progress_lines_are_flushed_and_the_help_documents_the_options(cli, monk
     ):
         assert phrase in text
         assert "XX" + phrase not in text and phrase.upper() not in text
+
+
+def _parsed_namespaces(monkeypatch):
+    import argparse
+
+    seen = []
+    real = argparse.ArgumentParser.parse_args
+
+    def spy(self, *args, **kwargs):
+        namespace = real(self, *args, **kwargs)
+        seen.append(namespace)
+        return namespace
+
+    monkeypatch.setattr(argparse.ArgumentParser, "parse_args", spy)
+    return seen
+
+
+def test_the_default_method_set_is_classical_and_both_named_sets_are_accepted(cli, monkeypatch):
+    invoke, ran, _ = cli
+    seen = _parsed_namespaces(monkeypatch)
+    assert invoke() == 0 and seen[-1].methods == "classical"
+    assert invoke("--methods", "classical") == 0 and seen[-1].methods == "classical"
+    assert invoke("--methods", "deep") == 0 and seen[-1].methods == "deep"

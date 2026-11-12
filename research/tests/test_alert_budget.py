@@ -633,3 +633,36 @@ def test_path_arguments_reach_the_job_listing_as_paths_and_help_documents_them(
     assert text.count("checkpoint folder: one file per seed run") == 1
     assert "--cells CELLS checkpoint folder: one file per seed run" in text
     assert "Fixed alert budgets, label-free" in text
+
+
+def test_progress_lines_are_flushed_and_the_default_detector_family_is_classical(
+    monkeypatch, tmp_path
+):
+    import argparse
+
+    seen = _cli(monkeypatch, [{"problem": "adbench:a"}], {"adbench:a": {"problem": "adbench:a"}})
+    calls = []
+    monkeypatch.setattr(ab, "print", lambda *a, **k: calls.append((a, k)), raising=False)
+    namespaces = []
+    real = argparse.ArgumentParser.parse_args
+
+    def spy(self, *args, **kwargs):
+        namespace = real(self, *args, **kwargs)
+        namespaces.append(namespace)
+        return namespace
+
+    monkeypatch.setattr(argparse.ArgumentParser, "parse_args", spy)
+    ab.main(["--output", str(tmp_path / "o")])
+    assert namespaces[-1].methods == "classical"
+    assert calls[0] == (("adbench:a", "ok"), {"flush": True})
+    assert seen["run"][0][1] == list(ab.DETECTOR_NAMES)
+
+
+def test_missing_scores_are_refused_by_the_stated_reason_not_by_a_type_error():
+    fit = [1.0] * 30
+    with pytest.raises(ValueError, match="finite"):
+        ab.budget_threshold([None, *fit], 0.05)
+    with pytest.raises(ValueError, match="finite"):
+        ab.flags_for(fit, [1.0, None], 0.05)
+    assert ab.flags_for(fit, ["2.5", "0.5"], 0.05).tolist() == [True, False]
+    assert ab.budget_threshold(["1.0"] * 30, 0.05)["threshold"] == 1.0

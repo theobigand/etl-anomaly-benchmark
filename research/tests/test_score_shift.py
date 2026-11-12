@@ -610,3 +610,38 @@ def test_the_command_line_defaults_to_four_workers_and_documents_its_options(
     assert "summarize this run folder instead of running" in text
     assert "--summarize SUMMARIZE summarize this run folder instead of running" in text
     assert "Fixed deployment thresholds under score-distribution shift" in text
+
+
+def test_a_holm_adjustment_of_the_wrong_length_is_refused(monkeypatch):
+    runs = [_scenario_run(f"uci:{i}", 1.0 + i / 10, 3.0 + i / 10 + i % 3) for i in range(12)]
+    monkeypatch.setattr(ss, "holm", lambda p: list(p)[:-1])
+    with pytest.raises(ValueError, match="zip"):
+        ss.contrasts(runs, draws=20)
+
+
+def test_a_problem_without_fits_does_not_hide_the_problems_after_it():
+    runs = [{"problem": "uci:empty", "runs": {}}] + [
+        _scenario_run(f"uci:{i}", 1.0 + i / 10, 3.0 + i / 10 + i % 3) for i in range(12)
+    ]
+    got = ss.contrasts(runs, draws=30)
+    assert got["problems"] == 12 and got["contrasts"]
+
+
+def test_the_scenarios_come_from_every_problem_even_when_it_has_a_single_fit():
+    def single(i):
+        run = _scenario_run(f"uci:{i}", 1.0 + i / 10, 3.0 + i / 10 + i % 3)
+        run["runs"] = {"ecod": run["runs"]["ecod"][:1]}
+        return run
+
+    got = ss.contrasts([single(i) for i in range(12)], draws=30)
+    assert got["problems"] == 12 and got["contrasts"]
+
+
+def test_progress_lines_are_flushed_as_they_arrive(tmp_path, monkeypatch):
+    monkeypatch.setattr(ss.lb, "jobs", lambda r, a, p: [{"problem": "adbench:a"}])
+    monkeypatch.setattr(ss, "run_job", lambda job: {"problem": job["problem"]})
+    monkeypatch.setattr(ss, "ProcessPoolExecutor", _SyncPool)
+    calls = []
+    monkeypatch.setattr(ss, "print", lambda *a, **k: calls.append((a, k)), raising=False)
+    ss.main(["--output", str(tmp_path / "o")])
+    assert calls == [(("adbench:a", "ok"), {"flush": True})]

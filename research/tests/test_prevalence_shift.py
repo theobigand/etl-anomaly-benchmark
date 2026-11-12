@@ -313,3 +313,9 @@ def test_the_command_line_forwards_its_draws_to_both_analyses_and_documents_itse
     assert "Fixed deployment thresholds under a change of anomaly prevalence" in " ".join(
         capsys.readouterr().out.split()
     )
+
+
+def test_a_holm_adjustment_of_the_wrong_length_is_refused(monkeypatch):
+    monkeypatch.setattr(ps, "holm", lambda p: list(p)[:-1])
+    with pytest.raises(ValueError, match="zip"):
+        ps.contrasts(_many(ps.MIN_SOURCES), prevalences=(0.1,), draws=20)
