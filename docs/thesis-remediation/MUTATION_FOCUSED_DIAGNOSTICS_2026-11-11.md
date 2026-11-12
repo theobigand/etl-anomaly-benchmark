@@ -145,3 +145,13 @@ the pauses and the required arguments. Three survivors remain, all equivalence c
 requested: `x_pool_row__mutmut_38` (the carrier is cleaned with an all-ones instead of an all-zeros label vector; a
 constant label never creates a conflict), `x_main__mutmut_27` and `_30` (`--output` read as a string instead of a
 `Path`; `atomic_path` converts it).
+
+### load and quality.base (2026-11-12)
+
+`src/etl_benchmark/load.py`: 13/14 = 92.86 % (unchanged from the campaign; the survivor `x_write_csv__mutmut_11`,
+`index=False` to `index=None`, writes the same file because `None` is falsy). `src/etl_benchmark/quality/base.py`:
+30/31 = 96.77 %, up from 30/31 at the campaign only after a new test (nullable integer features with missing values
+are accepted as numeric) killed `x_numeric_features__mutmut_16`; the survivor `Detector.score` `astype(float)` to
+`astype(None)` yields float64 either way. Both survivors are equivalence candidates kept eligible, no approval
+requested. Neither module reaches 98 % unless the owner accepts them: with the candidate removed they would be 13/13
+and 30/30.

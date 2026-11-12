@@ -257,3 +257,26 @@ def test_deck_does_not_repeat_a_claim_the_sources_contradict(phrase, reason):
 
     for n, s in enumerate(deck_lib.SLIDES, 1):
         assert phrase not in s["body"], f"slide {n}: {phrase!r} ({reason})"
+
+
+def test_slide_47_counts_equal_the_focused_diagnostics_table():
+    """Publication drift guard: the chart of slide 47 is the table of the diagnostics note."""
+    import build_deck  # noqa: F401  (importing registers the slides)
+    import deck_c
+
+    note = (
+        SLIDES.parent / "docs/thesis-remediation/MUTATION_FOCUSED_DIAGNOSTICS_2026-11-11.md"
+    ).read_text()
+    table = {}
+    for line in note.splitlines():
+        cells = [c.strip() for c in line.strip("|").split("|")]
+        if len(cells) >= 4 and cells[0].startswith("`research/") and cells[1] == "L4":
+            before, after = (re.search(r"(\d+)/(\d+)", c) for c in cells[2:4])
+            if before and after:
+                table[cells[0].strip("`").split("/")[-1][:-3]] = (
+                    int(before[1]) / int(before[2]),
+                    int(after[1]) / int(after[2]),
+                )
+    assert len(deck_c.mods) == 9
+    for name, b, a in deck_c.mods:
+        assert table[name] == pytest.approx((b, a)), f"slide 47 and the note disagree on {name}"
