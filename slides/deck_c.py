@@ -405,8 +405,8 @@ mods = [
     ("prevalence_shift", 265 / 369, 363 / 369),
     ("score_shift", 492 / 806, 795 / 806),
     ("source_clustered", 286 / 337, 333 / 337),
-    ("normalise", 175 / 193, 188 / 197),
-    ("paired_bootstrap", 77 / 100, 94 / 100),
+    ("normalise", 175 / 193, 191 / 197),
+    ("paired_bootstrap", 77 / 100, 100 / 100),
 ]
 cx0, cx1, cy0, rh2 = 330, 1120, 170, 46
 X = lambda p: cx0 + (cx1 - cx0) * (max(p, 0.4) - 0.4) / 0.6  # noqa: E731
@@ -464,7 +464,7 @@ slide(
                 "k",
                 "Mutation testing, 5 of 5 &nbsp;·&nbsp; raw focused score per module",
             ),
-            title("Nine chosen modules: seven reach the 98% bar, two do not", 40, 58),
+            title("Nine chosen modules: eight reach the 98% bar, one does not", 40, 58),
             svg(
                 0,
                 0,
@@ -487,7 +487,7 @@ slide(
                 1152,
                 None,
                 "note",
-                "Local run, 2026-11-11. Nine L4 modules chosen by the author; six are not in the 82-module campaign of 2026-11-07. Axis from 40%. Not a certification.",
+                "Local run, 2026-11-12. Nine L4 modules chosen by the author; six are not in the 82-module campaign of 2026-11-07. Axis from 40%. Not a certification.",
             ),
             foot(
                 "docs/thesis-remediation/MUTATION_FOCUSED_DIAGNOSTICS_2026-11-11.md &nbsp;·&nbsp; thresholds not changed"

@@ -1094,9 +1094,10 @@ Fig.~\ref{fig:prcurves} draws the full precision-recall curve of every
 detector on each dataset's test split. The curves make the aggregate
 tables concrete: on Cardio the Isolation Forest and One-Class SVM curves
 stay high (AP $0.80$ and $0.76$); on Water Quality every curve hugs the
-$0.61$ base-rate line; on Credit Card Fraud Great Expectations and
-Isolation Forest dominate but neither clears a precision of $0.4$ except
-at negligible recall. Table~\ref{tab:contamination} makes the point
+$0.61$ base-rate line; on Credit Card Fraud the eight detectors
+drawn (the neural models are not) rank COPOD ($0.28$), HBOS ($0.26$), Great Expectations
+($0.23$), ECOD ($0.21$) and Isolation Forest ($0.17$) by AP on the single seed of the figure,
+and no curve keeps a precision above about $0.4$ once the recall reaches $0.3$. Table~\ref{tab:contamination} makes the point
 numerically for Isolation Forest: as the contamination moves from
 $0.001$ to $0.20$, its Credit Card Fraud precision falls from $0.37$ to
 $0.008$ while recall rises from $0.23$ to $0.92$; on Cardio the same

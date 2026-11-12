@@ -113,3 +113,21 @@ def test_the_refusals_state_the_problem_in_full():
         pb.paired_block_bootstrap(y, a[:-1], b, times, 3600, 10, 1)
     with pytest.raises(ValueError, match="^both classes are required$"):
         pb.paired_block_bootstrap(np.zeros_like(y), a, b, times, 3600, 10, 1)
+
+
+def test_a_missing_score_is_refused_instead_of_being_ranked_or_dropped():
+    y, a, b, times = _small()
+    missing = a.astype(object)
+    missing[3] = None
+    with pytest.raises(ValueError):
+        pb.paired_block_bootstrap(y, missing, b, times, 3600, 10, 1)
+    with pytest.raises(ValueError):
+        pb.paired_block_bootstrap(y, a, missing, times, 3600, 10, 1)
+
+
+def test_a_missing_timestamp_is_refused_so_that_no_row_silently_leaves_every_block():
+    y, a, b, times = _small()
+    times = times.copy()
+    times[5] = pd.NaT
+    with pytest.raises(ValueError, match="non-finite"):
+        pb.paired_block_bootstrap(y, a, b, times, 3600, 10, 1)

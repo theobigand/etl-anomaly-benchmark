@@ -148,24 +148,38 @@ def test_a_scale_of_exactly_one_is_a_real_scale_not_a_replacement():
     assert nm.split(constant, y, 0)["scale"][0] == 1.0
 
 
-def test_known_limitation_three_to_five_anomalies_pass_the_guard_but_fail_the_stratified_split():
-    """MIN_CLASS_COUNT = 3 is below what a 70/15/15 stratified split needs (6 anomalies).
+def test_fewer_than_six_of_either_class_is_refused_by_the_guard_not_by_scikit_learn():
+    """Three to five anomalies used to pass the guard and crash the split with a bare ValueError.
 
-    The set is still refused, but by scikit-learn's ``ValueError`` and not by ``NormaliseError``,
-    which ``build_pool`` catches to record an exclusion. The module is hashed in archived evidence
-    manifests, so the guard is left unchanged and this behaviour is pinned until the owner decides.
+    ``build_pool`` records an exclusion only for ``NormaliseError``, so the refusal has to come from
+    the guard. Six is the smallest count for which the 70/15/15 stratified split always succeeds (see
+    the next test); historical evidence was produced with a guard of 3 and is not restamped.
     """
     x = np.arange(100.0).reshape(-1, 1)
-    for anomalies in range(nm.MIN_CLASS_COUNT, 6):
+    for anomalies in range(0, 6):
         y = np.zeros(100, dtype=int)
         y[:anomalies] = 1
-        with pytest.raises(ValueError) as refused:
+        with pytest.raises(
+            nm.NormaliseError, match=rf"^too few anomalies to split \({anomalies}\)$"
+        ):
             nm.split(x, y, 0)
-        assert not isinstance(refused.value, nm.NormaliseError)
+        with pytest.raises(nm.NormaliseError):
+            nm.split(x, 1 - y, 0)  # the scarce class is the normal one
     y = np.zeros(100, dtype=int)
     y[:6] = 1
     part = nm.split(x, y, 0)
     assert (part["y_train"].sum(), part["y_val"].sum(), part["y_test"].sum()) == (4, 1, 1)
+
+
+@pytest.mark.parametrize("scarce", [6, 7, 11])
+def test_six_of_the_scarcer_class_always_populate_every_partition(scarce):
+    for n in (scarce * 2, scarce * 2 + 1, 50, 137):
+        for seed in range(5):
+            y = np.zeros(n, dtype=int)
+            y[:scarce] = 1
+            part = nm.split(np.arange(float(n)).reshape(-1, 1), y, seed)
+            for name in ("train", "val", "test"):
+                assert 0 < part[f"y_{name}"].sum() < len(part[f"y_{name}"])
 
 
 def test_fewer_anomalies_than_the_minimum_or_a_scarce_normal_class_is_refused_by_the_guard():
@@ -176,3 +190,27 @@ def test_fewer_anomalies_than_the_minimum_or_a_scarce_normal_class_is_refused_by
     mostly_anomalous[:2] = 0  # the scarce class is the normal one
     with pytest.raises(nm.NormaliseError):
         nm.split(x, mostly_anomalous, 0)
+
+
+def test_a_feature_matrix_of_objects_with_none_is_read_as_missing_values_and_imputed():
+    x = np.array([[1.0, None], [2.0, 3.0], [4.0, 5.0], [6.0, 7.0]] * 20, dtype=object)
+    y = np.tile([0, 1], 40)
+    part = nm.split(x, y, 0)
+    for name in ("train", "val", "test"):
+        assert part[f"x_{name}"].dtype == float and not np.isnan(part[f"x_{name}"]).any()
+    # None in the second column is replaced by the training median of that column, then standardised
+    assert part["mean"].shape == (2,)
+
+
+def test_a_non_numeric_feature_matrix_is_refused_with_a_value_error():
+    with pytest.raises(ValueError):
+        nm.split(np.array([["a", "b"]] * 40), np.tile([0, 1], 20), 0)
+
+
+def test_known_limitation_a_missing_value_and_an_infinite_value_count_as_the_same_row():
+    """``clean`` hashes rows after replacing missing values by infinity, so a row with NaN and an
+    otherwise identical row with +inf are treated as duplicates. Infinite features are not expected
+    in the pool; the behaviour is pinned, not endorsed."""
+    frame = pd.DataFrame({"a": [np.nan, np.inf, 1.0], "b": [1.0, 1.0, 2.0]})
+    _, _, report = nm.clean(frame, [0, 0, 1])
+    assert report["duplicates_removed"] == 1

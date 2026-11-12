@@ -24,8 +24,8 @@ were not part of it, so their "before" figure is the first focused run of this s
 | `research/prevalence_shift.py` | L4 | 265/369 (61 no test) | 363/369 | 98.37 % | at or above |
 | `research/score_shift.py` | L4 | 492/806 (244 no test) | 795/806 | 98.64 % | at or above |
 | `research/source_clustered.py` | L4 | 286/337 | 333/337 | 98.81 % | at or above |
-| `research/normalise.py` | L4 | 175/193 (2026-11-07 campaign) | 188/197 | 95.43 % | below |
-| `research/paired_bootstrap.py` | L4 | 77/100 (2026-11-07 campaign) | 94/100 (5 survived, 1 timeout) | 94.00 % | below |
+| `research/normalise.py` | L4 | 175/193 (2026-11-07 campaign) | 191/197 (2026-11-12) | 96.95 % | below |
+| `research/paired_bootstrap.py` | L4 | 77/100 (2026-11-07 campaign) | 100/100 (2026-11-12) | 100 % | at or above |
 
 "At or above" refers to the raw focused score of that module only. It does not certify the
 module under the policy, which also requires a full-campaign record.
@@ -78,12 +78,14 @@ anomalies the second `train_test_split` raises scikit-learn's `ValueError`, not 
 stop the build instead of being excluded with a reason. No set in the archived pool has this
 property, so no result is affected, and the failure is closed, not silent.
 
-The guard was left unchanged on purpose: archived evidence manifests record the SHA-256 of
-`research/normalise.py` (for example `verification/evidence/alert_budgets/neural/manifest.json`),
-and a change would break that linkage for a fix that only changes an exception type. The current
-behaviour is pinned by `test_known_limitation_three_to_five_anomalies_pass_the_guard_but_fail_the_stratified_split`.
-Decision for the owner: raise the constant to 6 (or catch the `ValueError`) together with a
-regenerated manifest, or keep it and document it.
+Update 2026-11-12: the guard is now `MIN_CLASS_COUNT = 6` and refuses 3 to 5 of either class with
+`NormaliseError`. Evidence for six: over classes of 6 to 13 in sets of 12 to 199 rows, 10 seeds and both
+class orientations, the 70/15/15 split never failed; with 3 to 5 it failed for most sizes. All 100 labelled
+problems of the archived pool have a scarcer class of at least 6 rows after cleaning (smallest: Lymphography,
+6), so none would have been refused and no archived result is affected. Archived manifests keep the SHA-256
+of the source that produced them (guard 3); they are not restamped, and no historical result is described as
+produced under the corrected guard. `test_fewer_than_six_of_either_class_is_refused_by_the_guard_not_by_scikit_learn`
+replaces the test that pinned the old behaviour.
 
 ## Remaining modules
 
@@ -107,3 +109,29 @@ Taken from the 2026-11-07 native campaign (`risk-native-campaign-2026-11-07.json
 
 No full DEEP or hosted campaign was started. No result in this note changes the release verdict,
 which remains FAIL until a complete campaign meets every level threshold.
+
+
+## Update 2026-11-12: normalise and paired_bootstrap
+
+Focused `mutmut run "research.<module>.*"`, raw counts, source SHA-256 of `normalise.py` 5ba131d1... and of
+`paired_bootstrap.py` 87eed95e....
+
+`paired_bootstrap`: 100/100. The five survivors and the timeout of 2026-11-11 are killed by two behaviour
+tests: a missing score (in either scorer) is refused with `ValueError`, and a missing timestamp is refused
+(otherwise its row would silently belong to no block and leave every resample).
+
+`normalise`: 191/197 = 96.95 %, still below the 98 % bar. Three survivors were killed by tests that a
+feature matrix of objects with `None` is read as missing values, that a non-numeric matrix is refused with
+`ValueError`, and that a missing and an infinite value count as the same row in `clean` (pinned as a known
+limitation, not endorsed). Six survivors remain. They are equivalence candidates, kept eligible, no approval
+requested or implied; the owner decides:
+
+| Mutant | Change | Why it looks inert |
+| --- | --- | --- |
+| `x_clean__mutmut_34` | `.rename(name)` becomes `.rename(None)` | column names never reach the returned array or the report |
+| `x_clean__mutmut_35` | `.astype(float)` becomes `.astype(None)` | pandas converts every numeric dtype to float64 either way (checked for int64, uint8, float32, bool, Int64) |
+| `x_clean__mutmut_45`, `_48`, `_51` | dummy-column prefix removed or `None` | only the dummy column labels change |
+| `x_clean__mutmut_64` | `index=False` becomes `index=None` | both falsy in `hash_pandas_object` |
+
+Not claimed: module compliance, or any change to the release verdict. `normalise` stays below the bar unless
+three of the six are accepted as equivalent (194/197 would pass).
