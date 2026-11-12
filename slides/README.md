@@ -64,7 +64,7 @@ block down; the stack shrinks only if it would not fit, and a shrink that takes 
 
 `make verify-slides` runs the whole gate: the committed HTML must match its generator (`build_deck.py --check`), the
 matrix must be clean, and the browser regression tests must pass. It never skips: without a Chromium it fails. It is
-the `slides` job of `.github/workflows/ci.yml` (Playwright 1.62.1 Chromium, `fonts-liberation`, `fonts-dejavu-core`),
+the `slides` job of `.github/workflows/ci.yml` (Playwright 1.62.0 Chromium, `fonts-liberation`, `fonts-dejavu-core`),
 separate from FAST, which stays independent of any browser and deselects the `browser` tests when none is installed.
 
 Limits, stated plainly: the check measures text boxes and drawn box edges, not contrast, meaning, scientific content or

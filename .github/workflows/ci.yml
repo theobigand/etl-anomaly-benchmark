@@ -109,10 +109,10 @@ jobs:
           python-version: "3.11"
 
       - name: Install the pinned browser runtime
-        # playwright 1.62.1 pins the Chromium build used here; fonts-liberation (Arial and Helvetica
+        # playwright 1.62.0 pins the Chromium build used here; fonts-liberation (Arial and Helvetica
         # metrics), fonts-dejavu-core (wide sans) and poppler-utils (page images) are installed by name.
         run: |
-          pip install playwright==1.62.1 pytest
+          pip install playwright==1.62.0 pytest
           python -m playwright install --with-deps chromium-headless-shell
           sudo apt-get install -y --no-install-recommends fonts-liberation fonts-dejavu-core poppler-utils
 
