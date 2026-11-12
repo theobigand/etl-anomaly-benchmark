@@ -21,7 +21,7 @@ import deck_lib  # noqa: E402
 
 KINDS = ["missing", "duplicate", "univariate", "multivariate", "drift", "invalid"]
 CHROME = check_layout.find_chrome()
-needs_chrome = pytest.mark.skipif(CHROME is None, reason="no Chromium binary available")
+needs_chrome = pytest.mark.browser
 
 
 def _signature(svg):
