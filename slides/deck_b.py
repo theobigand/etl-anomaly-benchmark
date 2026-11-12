@@ -56,7 +56,7 @@ slide(
                 720,
                 "scrim",
                 "",
-                "background:linear-gradient(90deg,rgba(10,10,10,.78) 0%,rgba(10,10,10,.4) 55%,rgba(10,10,10,0) 100%)",
+                "background:linear-gradient(0deg,rgba(10,10,10,.9) 0,rgba(10,10,10,.72) 24%,rgba(10,10,10,0) 48%),linear-gradient(90deg,rgba(10,10,10,.78) 0%,rgba(10,10,10,.4) 55%,rgba(10,10,10,0) 100%)",
             ),
             D(64, 56, 600, None, "k", "Part 3 of 4"),
             D(
@@ -225,6 +225,7 @@ slide(
                 vmax=0.33,
                 row_h=27,
                 hl=("Great Expectations",),
+                axis_label="median AP, with 95% interval",
             ),
             D(
                 64,
@@ -242,7 +243,7 @@ slide(
                 "",
                 "<p style='font-size:19px;line-height:1.38'>Three rules, eight classical and six neural detectors, five seeds, on 36 ADBench and 64 UCI problems. The numbers are retained as recorded.</p>"
                 "<p style='font-size:18px;line-height:1.38;margin-top:12px'><span class='tag anom'>open</span> Schema and row filtering precede the split, so these descriptive rankings still need train-only replay.</p>"
-                "<p style='font-size:18px;line-height:1.38;margin-top:12px'>The 100 problems come from 80 sources; a source-clustered re-analysis changes no sign (only Great Expectations, in amber, is clearly below Isolation Forest). Label-rule sensitivity and unrecorded PyOD convergence diagnostics remain open.</p>",
+                "<p style='font-size:18px;line-height:1.38;margin-top:12px'>The 100 problems come from 80 sources; a post-hoc, exploratory source-clustered re-analysis changes no sign (only Great Expectations, in amber, is clearly below Isolation Forest). Label-rule sensitivity and unrecorded PyOD convergence diagnostics remain open.</p>",
             ),
             D(
                 804,
@@ -294,7 +295,9 @@ slide(
     "Two more examples",
     "".join(
         [
-            kicker("Two more examples from the pool"),
+            kicker(
+                "Two more examples from the pool &nbsp;<span class='tag anom'>historical run, needs train-only replay</span>"
+            ),
             title("Two regimes the three examples do not show", 46, 66),
             mxx,
             D(
@@ -311,7 +314,7 @@ slide(
                 436,
                 None,
                 "legend",
-                "Average precision, mean over 5 seeds, as run in the pool. Circle: best of its column. Colour: cividis, 0 to 1. All 17 detectors are in the paper. Credit Card values come from the pool run and differ from slide 17.",
+                "Average precision, mean over 5 seeds, as run in the pool. Circle: best of its column among the rows shown. Colour: cividis, 0 to 1. All 17 detectors are in the paper. Credit Card values come from the pool run and differ from slide 17.",
             ),
             foot(
                 "verification/full_registry_results.md &nbsp;·&nbsp; no universal detector, even at the scale of one dataset"
@@ -445,7 +448,7 @@ slide(
                 360,
                 None,
                 "stat sm",
-                "<span class='num'>0.83</span><span class='lab' style='font-size:15px'>mean rank correlation between two tables (0.70 for drift, partly mechanical)</span>",
+                "<span class='num'>0.80</span><span class='lab' style='font-size:15px'>mean rank correlation between two tables, seventeen detectors (lowest for drift, 0.63; partly mechanical)</span>",
             ),
             D(
                 464,
@@ -507,7 +510,9 @@ slide(
     "".join(
         [
             kicker("Chronological split"),
-            title("Time changes the answer: a threshold from training does not travel", 44, 60),
+            title(
+                "Time changes the answer: AP falls and a training threshold does not travel", 40, 60
+            ),
             svg(
                 64,
                 170,
@@ -546,7 +551,7 @@ slide(
                 366,
                 None,
                 "",
-                "<p style='font-size:19px'>Credit Card is the only dataset with a clock. Detectors are fitted on the first 70% of time and scored on the last 15% (52 frauds). Average precision drops for all four detectors.</p><p style='font-size:19px;margin-top:12px'><span class='tag anom'>caveat</span> Prevalence also changes between partitions, so the pilot does not separate it from the effect of time.</p><p class='note' style='margin-top:12px'>The window monitor detects mean shifts of 1 and 2 standard deviations, not 0.5.</p>",
+                "<p style='font-size:19px'>Credit Card is the only one of the three examples with a clock. Detectors are fitted on the first 70% of time and scored on the last 15% (52 frauds). Average precision drops for all four detectors.</p><p style='font-size:19px;margin-top:12px'><span class='tag anom'>caveat</span> Prevalence also changes between partitions, so the pilot does not separate it from the effect of time.</p><p class='note' style='margin-top:12px'>The window monitor detects mean shifts of 1 and 2 standard deviations, not 0.5.</p>",
             ),
             foot(
                 "verification/temporal_pilot.md &nbsp;·&nbsp; one two-day dataset: a direction, not a rule"
@@ -564,7 +569,9 @@ slide(
 
 # 31 ----------------------------------------------------------------- prevalence: two pad grids
 def grid(x, y, n_raised, label, sub):
-    raised = {(i % 10, i // 10): "raised" for i in range(n_raised)}
+    cells = list(range(100))
+    random.Random(63 + n_raised).shuffle(cells)  # positions are arbitrary; only the count is data
+    raised = {(c % 10, c // 10): "raised" for c in cells[:n_raised]}
     return padfield_box(x, y, raised) + D(
         x,
         y + 372,
@@ -609,7 +616,7 @@ slide(
                 800,
                 None,
                 "note",
-                "Illustration: each grid is 100 pads; raised pads stand for the anomalous share (6 and 39 pads, rounded).",
+                "Illustration: each grid is 100 pads; raised pads stand for the anomalous share (6 and 39 pads, rounded); where they stand is arbitrary.",
             ),
             foot(
                 "verification/temporal_decision.md &nbsp;·&nbsp; research/temporal_decision.py &nbsp;·&nbsp; Credit Card results were known before the protocol"
@@ -666,6 +673,7 @@ slide(
                 label_w=300,
                 ticks=(0, 5, 10, 15, 20, 25),
                 fmt="{:g}",
+                axis_label="added alert volume, in budgets (95% interval)",
             ),
             D(64, 440, 1152, 1, "hair"),
             D(
@@ -723,8 +731,10 @@ hyp = [
     ("P6", "files match the manifest", 1, "152 of 152"),
 ]
 body = [
-    kicker("Every study on the whole pool"),
-    title("The deeper studies, run on all 152 datasets", 46, 62),
+    kicker(
+        "Every study on the whole pool &nbsp;<span class='tag anom'>historical run, needs train-only replay</span>"
+    ),
+    title("The deeper studies, run where they are defined on the 152-dataset pool", 40, 62),
 ]
 for i, (p, h, ok, v) in enumerate(hyp):
     y = 150 + i * 56
@@ -781,7 +791,7 @@ syn, h1 = hbars(
     64,
     230,
     520,
-    [("LSTM autoencoder", 0.875, "n"), ("row autoencoder", 0.006, "n")],
+    [("LSTM autoencoder", 0.875, "best"), ("row autoencoder", 0.006, "n")],
     1.0,
     "dark",
     label_w=190,
@@ -792,7 +802,7 @@ real, h2 = hbars(
     230,
     576,
     [
-        ("Great Expectations", 0.045, "n"),
+        ("Great Expectations", 0.045, "best"),
         ("LSTM autoencoder", 0.037, "n"),
         ("Isolation Forest", 0.035, "n"),
         ("row autoencoder", 0.024, "n"),
@@ -807,7 +817,9 @@ slide(
     "".join(
         [
             kicker("First deep model &nbsp;·&nbsp; issue #52"),
-            title("An LSTM autoencoder is comparable, not clearly better", 48, 62),
+            title(
+                "An LSTM autoencoder wins on a broken stream, only matches on real fraud", 40, 62
+            ),
             D(64, 190, 520, None, "k", "synthetic stream with broken continuity, AP"),
             syn,
             D(
@@ -878,13 +890,16 @@ for i, (n, vals, same) in enumerate(sch):
         f"<line x1='{X(min(vals))}' x2='{X(max(vals))}' y1='{y}' y2='{y}' stroke='{col}' stroke-width='2' opacity='.5'/>"
     )
     for k, v in enumerate(vals):
+        # identical values would draw one blob; stagger the three markers vertically to show all three
+        yo = (k - 1) * 13 if same else 0
+        yk = y + yo
         if k == 0:
-            o.append(f"<circle cx='{X(v)}' cy='{y}' r='8' fill='{col}'/>")
+            o.append(f"<circle cx='{X(v)}' cy='{yk}' r='8' fill='{col}'/>")
         elif k == 1:
-            o.append(f"<rect x='{X(v) - 7.5}' y='{y - 7.5}' width='15' height='15' fill='{col}'/>")
+            o.append(f"<rect x='{X(v) - 7.5}' y='{yk - 7.5}' width='15' height='15' fill='{col}'/>")
         else:
             o.append(
-                f"<polygon points='{X(v)},{y - 9} {X(v) + 9},{y + 7} {X(v) - 9},{y + 7}' fill='{col}'/>"
+                f"<polygon points='{X(v)},{yk - 9} {X(v) + 9},{yk + 7} {X(v) - 9},{yk + 7}' fill='{col}'/>"
             )
     o.append(
         txt(
@@ -949,7 +964,7 @@ _col = []
 for k, (n, v) in enumerate(mv):
     cx = k * _cw + _cw / 2
     top = 320 - 280 * v
-    fill = DARK["steel"] if n in col_wise else "#8f8b81"
+    fill = "#ece6da" if n in col_wise else "#6f6b63"
     _col.append(
         f"<rect x='{cx - _bw / 2}' y='{top}' width='{_bw}' height='{320 - top}' fill='{fill}'><title>{n}: {v:.2f}</title></rect>"
     )
@@ -987,7 +1002,7 @@ slide(
                 330,
                 516,
                 [
-                    "<p class='note' style='font-size:15px;line-height:1.4'><span class='ok'>&#9679;</span> steel: column-wise detectors (ECOD, COPOD, HBOS), a family, not a result. Synthetic customers are independent rows: drift is not a sequence here.</p>",
+                    "<p class='note' style='font-size:15px;line-height:1.4'><span style='color:#ece6da'>&#9679;</span> light bars: column-wise detectors (ECOD, COPOD, HBOS), a family, not a result. Synthetic customers are independent rows: drift is not a sequence here.</p>",
                     "<p class='note' style='font-size:15px;line-height:1.4'>Mean recall on multivariate outliers, 17 detectors, 5 seeds. Full matrix on the per-type slide.</p>",
                 ],
                 maxh=120,
@@ -1002,7 +1017,7 @@ slide(
     family="column chart with text above and notes in its empty corner",
     dominant="17 columns",
     density="medium",
-    colour="amber for column-wise",
+    colour="light bars for column-wise detectors",
 )
 
 # 37 ----------------------------------------------------------------- cost: log bars
@@ -1036,9 +1051,9 @@ for i, (n, v, k) in enumerate(cost):
     col = "#151617" if k else "#55534d"
     o += [
         txt(206, y + 20, n, 17, "#151617", "end", 600),
-        f"<rect x='220' y='{y + 4}' width='{LX(v) - 220}' height='20' fill='{col}' opacity='{0.95 if k else 0.6}'/>",
+        f"<line x1='220' x2='{LX(v)}' y1='{y + 14}' y2='{y + 14}' stroke='{col}' stroke-width='3' opacity='{0.95 if k else 0.6}'/><circle cx='{LX(v)}' cy='{y + 14}' r='8' fill='{col}' opacity='{0.95 if k else 0.75}'/>",
     ]
-    o.append(mono(LX(v) + 8, y + 20, ("&gt;300 s" if k == 2 else f"{v:g} s"), 14, "#151617"))
+    o.append(mono(LX(v) + 16, y + 20, ("&gt;300 s" if k == 2 else f"{v:g} s"), 14, "#151617"))
 o.append(
     f"<line x1='{LX(300)}' x2='{LX(300)}' y1='0' y2='{len(cost) * 38}' stroke='#151617' stroke-dasharray='4 4'/>"
 )
@@ -1170,7 +1185,7 @@ slide(
                 1152,
                 None,
                 "note",
-                "Two of six types are not a per-row detector problem at all: duplicates belong to the transform stage, drift to a windowed monitor. A single aggregate ranking would never surface that. Recall from the synthetic customer table, 5 seeds; steel text: recall reached, amber: per-row detectors only partly succeed.",
+                "Two of six types are not a per-row detector problem at all: duplicates belong to the transform stage, drift to a windowed monitor. A single aggregate ranking would never surface that. Recall from the synthetic customer table, 5 seeds; it does not transfer to the real tables (slide 28). Steel text: recall reached, amber: per-row detectors only partly succeed.",
             ),
             foot("paper, Section V &nbsp;·&nbsp; rules and ML are complementary, not competing"),
         ]
@@ -1228,7 +1243,7 @@ slide(
                 1152,
                 None,
                 "",
-                "<p style='font-size:20px;max-width:1000px'>The question is less &quot;rules or ML&quot; than &quot;does this dataset have rare, outlying anomalies at all&quot;. The synthetic dataset sits in the middle at 17.5% and is where the per-type structure is measured. Pipeline cost narrows the shortlist: One-Class SVM and LOF do not survive the full fraud dataset.</p>",
+                "<p style='font-size:20px;max-width:1000px'>The question is less &quot;rules or ML&quot; than &quot;does this dataset have rare, outlying anomalies at all&quot;. The synthetic dataset sits in the middle at 17.5% and is where the per-type structure is measured. Pipeline cost narrows the shortlist: LOF and One-Class SVM were not run on the full fraud dataset (expected to be too costly, not measured).</p>",
             ),
             foot("paper, discussion"),
         ]
@@ -1243,7 +1258,7 @@ slide(
 find = [
     (
         "The operating point is a lever",
-        "Contamination equal to prevalence instead of a fixed 10% moves Isolation Forest fraud precision from 0.01 to 0.20.",
+        "Contamination equal to prevalence instead of a fixed 10% moves Isolation Forest fraud precision from 0.01 to 0.28 on the seed of the paper's table (0.20 on average over five seeds).",
     ),
     (
         "One regime out of three",
@@ -1251,7 +1266,7 @@ find = [
     ),
     (
         "ML is weak on missing values",
-        "Imputing removes the signal a not-null rule catches for free: GX recall 1.00 against 0.07 to 0.28 for the classical learned models.",
+        "Imputing removes the signal a not-null rule catches for free: GX recall 1.00 against 0.00 to 0.28 for the classical learned models.",
     ),
     (
         "GX 1.x is a full API rewrite",

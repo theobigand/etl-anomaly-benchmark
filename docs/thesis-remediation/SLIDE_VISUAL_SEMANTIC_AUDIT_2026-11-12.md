@@ -85,3 +85,7 @@ these, which is why two new rules were added to it (`box-crosses-text`, `small-t
 | 1, 51 | caption claimed "one pad of 312" for a generated image whose pad count cannot be verified | the number was removed |
 | 39 | headline broke with a one-word second line | explicit break |
 | 11, 45, 50, 2 | large unused areas from fixed positions | recomposed (see final remediation note) |
+| 43 | "test fails: mutant killed" was amber, against the deck's rule that a killed mutant is steel | steel |
+| 15 | numeral grid repeated slide 40 | ledger: type, injection, scaled by severity, rows |
+| 37 | bars on a log axis starting at 0.01 s suggested linear lengths | dots on the log axis |
+| 36, 22, 23 | steel used for "a family" and for "lowest"; cited series unlabelled | neutral light bars; dashed grey; the series named in the text are labelled |

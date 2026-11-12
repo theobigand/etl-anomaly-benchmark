@@ -193,3 +193,39 @@ def test_pad_plates_state_their_role_and_the_lit_count_is_the_labelled_count():
     text = _slides_text()
     assert "illustration" in text[13].lower() and "not data" in text[13].lower()
     assert "arbitrary" in text[24].lower()
+
+
+# Statements the paper or the committed evidence contradict. Each was on a slide once; the reason is the source.
+FORBIDDEN = [
+    (
+        "do not scale to 284k",
+        "paper: LOF and One-Class SVM were expected to be too costly, not measured",
+    ),
+    ("neither scales", "paper: LOF and One-Class SVM were expected to be too costly, not measured"),
+    (
+        "do not survive the full fraud",
+        "paper: not measured; slide 37 shows LOF finishing 300,000 rows in 133 s",
+    ),
+    ("pre-registered", "paper: several analyses are post hoc or exploratory"),
+    (
+        "0.01 &rarr; 0.20",
+        "paper: 0.01 to 0.28 on the seed of the table, 0.20 only as a five-seed mean",
+    ),
+    (
+        "0.70 for drift",
+        "paper: lowest rank correlation is drift at 0.63 with the seventeen detectors",
+    ),
+    (
+        "Nine of 82",
+        "five of the nine modules were added after the 82-module campaign (MUTATION_FOCUSED_DIAGNOSTICS)",
+    ),
+    ("per-type ranking does not change", "paper: the ranking changes with severity"),
+]
+
+
+@pytest.mark.parametrize("phrase,reason", FORBIDDEN, ids=[f[0] for f in FORBIDDEN])
+def test_deck_does_not_repeat_a_claim_the_sources_contradict(phrase, reason):
+    import build_deck  # noqa: F401  (importing registers the slides)
+
+    for n, s in enumerate(deck_lib.SLIDES, 1):
+        assert phrase not in s["body"], f"slide {n}: {phrase!r} ({reason})"

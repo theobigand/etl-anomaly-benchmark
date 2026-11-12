@@ -419,6 +419,10 @@ def pr_scatter(x, y, pts, tone, w=560, h=470):
             f"<circle cx='{X(r)}' cy='{Y(p)}' r='6.5' fill='{col}'><title>{lab}: precision {p}, recall {r}</title></circle>"
         )
         dx, dy, anchor = off if off else ((10, 5, "start") if r < 0.62 else (-10, 5, "end"))
+        if abs(dx) > 14 or abs(dy) > 14:
+            o.append(
+                f"<line x1='{X(r)}' y1='{Y(p)}' x2='{X(r) + dx + (-4 if anchor == 'end' else 4)}' y2='{Y(p) + dy - 5}' stroke='{t['soft']}' stroke-width='1'/>"
+            )
         o.append(
             txt(
                 X(r) + dx,
@@ -447,6 +451,7 @@ def interval_dots(
     hl=(),
     ticks=(0.1, 0.15, 0.2, 0.25, 0.3),
     fmt="{:.2f}",
+    axis_label="value, with 95% interval",
 ):
     """Median with 95% interval. rows: (label, median, lo, hi)."""
     t = DARK if tone == "dark" else BONE
@@ -472,7 +477,7 @@ def interval_dots(
         txt(
             label_w + bw / 2,
             len(rows) * row_h + 40,
-            "value, with 95% interval",
+            axis_label,
             14,
             t["soft"],
             "middle",
@@ -651,7 +656,8 @@ SEVERITY_CSV = HERE.parent / "verification/evidence/severity.csv"
 
 LINE_STYLES = {
     "A": ("ink", "", 2.8),
-    "B": ("steel", "7 4", 2.6),
+    "B": ("soft", "7 4", 2.6),
+    "E": ("ink", "12 3 2 3", 2.6),
     "C": ("ink", "2 4", 2.6),
     "D": ("amber", "", 2.8),
 }
@@ -678,6 +684,7 @@ def _line_style(tone, key):
         "ink": t["ink"],
         "steel": "#4f7a8c" if tone == "bone" else t["steel"],
         "amber": t["amber"],
+        "soft": "#6b685f" if tone == "bone" else "#c9c4b8",
     }[col]
     return colour, dash, width
 

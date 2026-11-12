@@ -17,8 +17,8 @@ matrix cells with 2.9 to 4.2:1 text, and sub-14 px words. Details: `SLIDE_VISUAL
 Both are native SVG now. Slide 22 draws `slides/art/data/pr_curves.json`, exported by
 `slides/art/tooling/export_pr_curves.py` from `experiments/run_curves.py::scores_for` (same datasets, split, detectors,
 seed 42). Slide 23 draws `verification/evidence/severity.csv`, the committed evidence of the severity run.
-Choice of colour: the highest-AP method in each panel is dark and solid, the lowest-AP method is blue and dashed, the
-others are grey. The choice is by rule, so no method is picked to suit the argument; the key under each panel title
+Choice of colour: the highest-AP method in each panel is dark and solid, the lowest-AP method is dashed grey, the
+others are light grey. The choice is by rule, so no method is picked to suit the argument; the key under each panel title
 names them. Nothing is redrawn by hand.
 
 Finding: the regenerated AP matches the legend of the archived paper figure for 39 of 41 curves. PCA differs on Water
@@ -88,6 +88,55 @@ layout issue, the browser regression tests pass. It fails without Chromium; it c
 independent of any browser. New rules in the probe: `box-crosses-text`, `small-text`, `crowds-footer`, rotated-label
 bounds. Regression tests cover each rule with a failing and a passing fixture, the two contrast checks, the native
 data, the severity-title claim and the 100 of 152 count.
+
+## Independent review (two fresh reviewers, after the correction pass)
+
+Two reviewers that had not touched the deck worked from the rendered 150 dpi images, the manuscript and the audit
+documents: one on typography, layout, diagrams, colour and rhythm (all 51 slides opened), one on every number and claim
+against `paper/main.tex` and the committed evidence. Their reports are not copied here; each finding was checked
+against the source before acting, and one claim of the visual reviewer was wrong (below).
+
+Scientific review: 4 blocking, 8 major, 14 minor. All four blocking and the verifiable majors were corrected.
+
+| Slide | Finding (verified against) | Action |
+| --- | --- | --- |
+| 47 | "Nine of 82 L4 modules": five of the nine were added after the 82-module campaign (MUTATION_FOCUSED_DIAGNOSTICS lines 13 to 14) | caption states it |
+| 29 | 0.83 is the correlation with the first eight rows; with seventeen detectors the paper gives 0.80, lowest for drift at 0.63 (paper, typed injection); "0.70 for drift" had no source | corrected |
+| 14, 17, 39 | "neither scales", "do not survive": the paper says LOF and One-Class SVM were expected to be too costly and not measured; slide 37 shows LOF finishing 300,000 rows | reworded to "not run, expected too costly, not measured" |
+| 4 | "every study", "pre-registered": paper lines 888, 1157 and 2365 describe post-hoc and already-known results | reworded |
+| 14, 17, 40 | 0.01 to 0.20 mixed a one-seed baseline with a five-seed mean; paper: 0.01 to 0.28 on the table's seed, 0.20 over five seeds | both stated |
+| 23 | "saturated at severity 0.5" is false for LOF (0.67) and Great Expectations (0.15) in the CSV | names the detectors that are |
+| 22 | scope of "highest AP" (neural models not drawn), PCA difference, "0.41" (about 0.4) | stated on the slide |
+| 27, 33, 26 | missing "historical, needs train-only replay" tag; post-hoc analysis not labelled; "all 152 datasets" over-claims | tags added, title scoped |
+| 38 | routing recommendation shown as general | states that it does not transfer to the real tables |
+| 3, 18, 30, 40, 42, 50 and 51 | AUC-only wording, IQR F1 0.33, "only dataset with a clock", range 0.00 to 0.28, "verified", IMRaD contradiction | corrected |
+
+Not adopted: slide 8 "20 neighbours" (the PyOD default, kept); the paper's own inconsistencies (19 sources, the six or
+seven modules at 98%, "dominate" on credit card) are reported, not edited here.
+
+Visual review: no blocking finding; 11 major, 17 minor. Corrected: tails and fences on slide 9; leader lines on slide
+19; scrims under the captions of the pad openers (13, 24, 41, 51) and the title of slide 41 moved off the raised pad;
+slide 43 colour (a killed mutant is steel, not amber); slide 22 dashed series no longer uses steel for "lowest";
+slide 23 labels the series the text names; slide 30 and 34 headlines now say what their charts show; slide 37 draws
+dots on the log axis instead of bars that start at an arbitrary 0.01 s; slide 36 no longer uses steel for a family;
+slide 35 staggers identical markers; slide 31 scatters the raised pads (position is arbitrary); slide 15 became a
+ledger so that it no longer repeats the numeral grid of slide 40; slides 26 and 32 name their axes; slide 48 sizes the
+two numerals alike.
+
+Not changed, with reasons: slide 44 (the survivor is a faint crack by design, the metaphor is "nothing noticed it";
+regenerating the image was not attempted); slide 20 contrast (computed minimum 4.68:1, the reviewer's "about 4:1"
+was an estimate by eye); slide 23 axis (it is linear in severity, ticks at 0.5, 1, 2, 3, 5 are not evenly spaced);
+slide 25 (adding a 116 to 64 step would need a source I did not verify); the remaining minor spacing items (28, 29, 42,
+the dark text-only run of 10 to 12) are left.
+
+## Editorial skill
+
+Not changed. The defects that the checker missed (a box border through text, a title contradicting the data after a
+chart was rebuilt, label text on busy imagery) are covered by existing Gate 16 (rendered inspection, collision
+detection, diagram-to-concept consistency); what failed was execution, and the probe rules above are specific to this
+deck. One possible transferable rule, "when a visual is rebuilt from data, re-derive the headline and every statistic
+beside it from the same data", rests on a single incident here and was not added. No claim is made that v6.4 improves
+on v6.3; the earlier comparison did not show it.
 
 ## Limits
 
