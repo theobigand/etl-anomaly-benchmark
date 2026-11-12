@@ -151,9 +151,9 @@ def test_a_scale_of_exactly_one_is_a_real_scale_not_a_replacement():
 def test_fewer_than_six_of_either_class_is_refused_by_the_guard_not_by_scikit_learn():
     """Three to five anomalies used to pass the guard and crash the split with a bare ValueError.
 
-    ``build_pool`` records an exclusion only for ``NormaliseError``, so the refusal has to come from
-    the guard. Six is the smallest count for which the 70/15/15 stratified split always succeeds (see
-    the next test); historical evidence was produced with a guard of 3 and is not restamped.
+    ``build_pool`` records an exclusion only for ``NormaliseError``, so the refusal has to come
+    from the guard. Six is the smallest count for which the 70/15/15 stratified split always succeeds
+    (see the next test); historical evidence was produced with a guard of 3 and is not restamped.
     """
     x = np.arange(100.0).reshape(-1, 1)
     for anomalies in range(0, 6):
