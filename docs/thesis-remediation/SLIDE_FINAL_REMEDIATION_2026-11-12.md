@@ -129,6 +129,20 @@ was an estimate by eye); slide 23 axis (it is linear in severity, ticks at 0.5, 
 slide 25 (adding a 116 to 64 step would need a source I did not verify); the remaining minor spacing items (28, 29, 42,
 the dark text-only run of 10 to 12) are left.
 
+## What the Linux render showed (found after the reviews)
+
+The `slides` job uploads a 60 dpi render made on Linux, where Avenir is absent. Reading it showed what the macOS-only
+checks had missed, although the probe reported zero issues there: headlines of slides 3, 4, 5, 15, 18, 45 wrapped to a
+second line, on slide 5 behind the diagram panels (text hidden by a later shape, which text-against-text overlap cannot
+see) and on slide 45 against the first heading. Causes and changes: headlines were sized for a condensed face with
+fixed positions below them; they now shrink to one line (`fit1`); the probe reports text occluded by a later shape and
+judges line-box overlap more strictly (display numerals and lines of one heading excepted); the openers 13 and 24, the
+RQ rows of slide 4 and the right column of slide 19 became stacks; the condensed font stack gained Liberation Sans
+Narrow and DejaVu Sans Condensed. A latent defect surfaced on the way: `fitFlow` reset its transform on slides that are
+hidden at `beforeprint`, so shrunk stacks would have printed unshrunk; hidden slides are now skipped. Verified in
+Chromium with the stylesheet forced to Verdana and printed to PDF, and by the CI job (Linux, DejaVu Sans and Liberation
+fonts). The macOS-rendered PDF in the repository uses the intended fonts.
+
 ## Editorial skill
 
 Not changed. The defects that the checker missed (a box border through text, a title contradicting the data after a

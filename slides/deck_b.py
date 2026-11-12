@@ -66,21 +66,16 @@ slide(
                 "background:linear-gradient(0deg,rgba(10,10,10,.9) 0,rgba(10,10,10,.72) 24%,rgba(10,10,10,0) 48%),linear-gradient(90deg,rgba(10,10,10,.78) 0%,rgba(10,10,10,.4) 55%,rgba(10,10,10,0) 100%)",
             ),
             D(64, 56, 600, None, "k", "Part 3 of 4"),
-            D(
+            flow(
                 64,
                 262,
                 840,
-                None,
-                "",
-                "<h1 style='font-size:92px;line-height:.98'>From three examples to <span class='em'>a pool of 152</span></h1>",
-            ),
-            D(
-                64,
-                520,
-                640,
-                None,
-                "",
-                "<p class='lede' style='color:#c4bfb3'>Real tables, pinned and checked; what holds, what fails, and what changes with time.</p>",
+                [
+                    "<h1 style='font-size:92px;line-height:.98'>From three examples to <span class='em'>a pool of 152</span></h1>",
+                    "<p class='lede' style='margin-top:62px;color:#c4bfb3'>Real tables, pinned and checked; what holds, what fails, and what changes with time.</p>",
+                ],
+                maxh=380,
+                gap=0,
             ),
             D(
                 64,
@@ -585,7 +580,7 @@ def grid(x, y, n_raised, label, sub):
         360,
         None,
         "",
-        f"<div class='num' style='font-size:56px'>{label}</div><div class='note' style='font-size:15px'>{sub}</div>",
+        f"<div class='num' style='font-size:56px;line-height:1;margin-bottom:8px'>{label}</div><div class='note' style='font-size:15px'>{sub}</div>",
     )
 
 

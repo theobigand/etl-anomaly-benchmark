@@ -55,11 +55,12 @@ The composition inventory is generated to `docs/thesis-remediation/SLIDE_COMPOSI
 
 `python3 slides/check_layout.py` loads the built deck in headless Chromium and reports, per slide, from rendered
 geometry: text that overlaps other text, leaves its slide or its svg, is clipped, sits over a figure, runs through a
-drawn box edge (`box-crosses-text`), crowds the source line at the foot, or is below the minimum size (no text under
+drawn box edge (`box-crosses-text`), is painted over by a later shape (`text-occluded`), crowds the source line at the foot, or is below the minimum size (no text under
 13px, running words under 14px, at 1280 by 720; this is the rule for captions, legends, axis labels and footnotes).
 `--stress` forces Arial; `--fonts FAMILY` forces any family; `--matrix` runs seven configurations (the deck's own
 stack, Arial, generic sans-serif, Verdana, DejaVu Sans, Helvetica, Georgia) and writes one JSON report per
-configuration with `--report-dir`. Text stacks use `flow()` (see `deck_lib.py`) so a longer line pushes the next
+configuration with `--report-dir`. Single-line headlines carry the class `fit1` and shrink to the width of their box (floor 60%, 4% margin) in
+`fitTitles`, which also fits the large numerals of `.stat`. Text stacks use `flow()` (see `deck_lib.py`) so a longer line pushes the next
 block down; the stack shrinks only if it would not fit, and a shrink that takes words under 14px is itself reported.
 
 `make verify-slides` runs the whole gate: the committed HTML must match its generator (`build_deck.py --check`), the

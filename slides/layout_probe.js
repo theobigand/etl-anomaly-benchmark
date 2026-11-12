@@ -1,11 +1,10 @@
-/* In-page layout probe. Runs only with ?check in the URL. It reports, per slide, text that
+/* In-page layout probe. The report is produced only with ?check in the URL; ?fonts and ?stress also work for rendering. It reports, per slide, text that
    overlaps other text, text outside its slide or its svg, clipped overflow, and text over figures.
    It also reports text below the minimum size and text that crowds the source line at the foot of a slide.
    ?stress swaps in wide fallback fonts to test robustness against missing fonts.
    ?fonts=<family> swaps in a named family instead (generic names such as sans-serif are allowed). */
 (function () {
   const q = new URLSearchParams(location.search);
-  if (!q.has('check')) return;
   // Practical minimum at 1280x720 (1.5x on a 1080p projector): no text under 13px, and running words under 14px.
   const MIN_NUM = 13, MIN_WORD = 14;
   const forced = q.get('fonts') || (q.has('stress') ? 'Arial' : '');
@@ -16,6 +15,7 @@
     st.textContent = ':root{--cond:' + fam + '!important;--sans:' + fam + '!important;--mono:' + mono + '!important}';
     document.head.appendChild(st);
   }
+  if (!q.has('check')) return;
   const effScale = (el) => {
     let sc = 1;
     for (let e = el; e && e.nodeType === 1; e = e.parentElement) {
@@ -26,7 +26,7 @@
   };
   const issues = [];
   const slides = [...document.querySelectorAll('.slide')];
-  const shrink = (r) => ({ l: r.left, r: r.right, t: r.top + r.height * 0.22, b: r.bottom - r.height * 0.22 });
+  const shrink = (r, f = 0.12) => ({ l: r.left, r: r.right, t: r.top + r.height * f, b: r.bottom - r.height * f });
   const inter = (a, b) => Math.max(0, Math.min(a.r, b.r) - Math.max(a.l, b.l)) * Math.max(0, Math.min(a.b, b.b) - Math.max(a.t, b.t));
   slides.forEach((s, idx) => {
     slides.forEach((x) => x.classList.remove('on'));
@@ -70,8 +70,14 @@
       for (let j = i + 1; j < items.length; j++) {
         const a = items[i], b = items[j];
         if (a.el === b.el) continue;
+        const BLOCK = 'h1,h2,h3,h4,p,li,td,th,pre,figcaption';
+        const ba = a.el.closest(BLOCK), bb = b.el.closest(BLOCK);
+        if (ba && ba === bb) continue; // lines of one heading or paragraph
+        // display type (numerals, big headlines) has tight leading by design; judge it by its ink, not its line box
+        const fa = parseFloat(getComputedStyle(a.el).fontSize) >= 60 ? 0.22 : 0.12;
+        const fb = parseFloat(getComputedStyle(b.el).fontSize) >= 60 ? 0.22 : 0.12;
         let hit = 0;
-        a.rects.forEach((ra) => b.rects.forEach((rb) => { hit = Math.max(hit, inter(shrink(ra), shrink(rb)) / (k * k)); }));
+        a.rects.forEach((ra) => b.rects.forEach((rb) => { hit = Math.max(hit, inter(shrink(ra, fa), shrink(rb, fb)) / (k * k)); }));
         if (hit > 6) add('text-overlap', a.text + ' | ' + b.text, { area: Math.round(hit) });
       }
     }

@@ -262,15 +262,17 @@ for i, (a, q, s, ans) in enumerate(rq):
     body += [
         D(64, y, 1152, 1, "hair"),
         D(64, y + 14, 130, None, "", f"<span class='num' style='font-size:56px'>{a}</span>"),
-        D(
+        flow(
             214,
             y + 14,
             480,
-            None,
-            "",
-            f"<p style='font-size:24px;line-height:1.2;font-family:var(--cond);font-weight:600'>{q}</p>",
+            [
+                f"<p style='font-size:24px;line-height:1.2;font-family:var(--cond);font-weight:600'>{q}</p>",
+                f"<div class='note'>{s}</div>",
+            ],
+            maxh=92,
+            gap=6,
         ),
-        D(214, y + 64, 480, None, "note", s),
         D(730, y + 18, 486, None, "", f"<p style='font-size:20px'>{ans}</p>"),
     ]
 body += [
@@ -835,21 +837,16 @@ slide(
                 "background:linear-gradient(0deg,rgba(10,10,10,.9) 0,rgba(10,10,10,.72) 24%,rgba(10,10,10,0) 48%),linear-gradient(90deg,rgba(10,10,10,.78) 0%,rgba(10,10,10,.35) 50%,rgba(10,10,10,0) 100%)",
             ),
             D(64, 56, 600, None, "k", "Part 2 of 4"),
-            D(
+            flow(
                 64,
                 262,
                 760,
-                None,
-                "",
-                "<h1 style='font-size:92px;line-height:.98'>What the detectors <span class='em'>actually find</span></h1>",
-            ),
-            D(
-                64,
-                520,
-                600,
-                None,
-                "",
-                "<p class='lede' style='color:#c4bfb3'>Three example datasets, then six anomaly types on a controlled generator and on real tables.</p>",
+                [
+                    "<h1 style='font-size:92px;line-height:.98'>What the detectors <span class='em'>actually find</span></h1>",
+                    "<p class='lede' style='margin-top:62px;color:#c4bfb3'>Three example datasets, then six anomaly types on a controlled generator and on real tables.</p>",
+                ],
+                maxh=380,
+                gap=0,
             ),
             D(
                 64,
@@ -1258,29 +1255,17 @@ slide(
             kicker("Synthetic dataset, aggregate"),
             title("Aggregate scores hide different trade-offs", 46, 66),
             pr_scatter(64, 150, pts, "bone", 640, 500),
-            D(
+            flow(
                 760,
                 160,
                 456,
-                None,
-                "",
-                "<p style='font-size:22px;line-height:1.38'>Z-score and HBOS reach a perfect precision by firing only on extreme rows (recall 0.20). DIF has the best F1 and AP; the VAE matches Isolation Forest; LUNAR has the best recall with a low precision.</p>",
-            ),
-            D(
-                760,
-                400,
-                456,
-                None,
-                "stat sm",
-                "<span class='num'>F1 0.22 to 0.59</span><span class='lab' style='font-size:16px'>range across the seventeen detectors</span>",
-            ),
-            D(
-                760,
-                520,
-                456,
-                None,
-                "note",
-                "Ten of the seventeen detectors shown, mean over 5 seeds, test split, 12,360 rows, 17.5% anomalous. Dashed lines are constant F1. <span class='ok'>&#9679;</span> best F1. All 17 are in the synthetic table of the paper.",
+                [
+                    "<p style='font-size:22px;line-height:1.38'>Z-score and HBOS reach a perfect precision by firing only on extreme rows (recall 0.20). DIF has the best F1 and AP; the VAE matches Isolation Forest; LUNAR has the best recall with a low precision.</p>",
+                    "<div class='stat sm' style='position:static'><span class='num'>F1 0.22 to 0.59</span><span class='lab' style='font-size:16px'>range across the seventeen detectors</span></div>",
+                    "<div class='note' style='position:static'>Ten of the seventeen detectors shown, mean over 5 seeds, test split, 12,360 rows, 17.5% anomalous. Dashed lines are constant F1. <span class='ok'>&#9679;</span> best F1. All 17 are in the synthetic table of the paper.</div>",
+                ],
+                maxh=480,
+                gap=24,
             ),
             foot("verification/evidence/full_registry &nbsp;·&nbsp; paper, tab:synthetic"),
         ]
