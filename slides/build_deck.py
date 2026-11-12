@@ -25,7 +25,8 @@ JS = """
 const slides=[...document.querySelectorAll('.slide')];const stage=document.getElementById('stage');
 const dots=document.getElementById('dots'),count=document.getElementById('count');let i=0;
 slides.forEach((s,n)=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Slide '+(n+1)+', '+(s.dataset.sec||''));b.addEventListener('click',()=>go(n));dots.appendChild(b);});
-function fitFlow(s){s.querySelectorAll('.flow[data-maxh]').forEach(e=>{e.style.transform='';e.style.transformOrigin='0 0';const m=parseFloat(e.dataset.maxh),h=e.offsetHeight;if(h>m)e.style.transform='scale('+Math.max(0.6,m/h)+')';});}
+function fitTitles(s){s.querySelectorAll('.fit1').forEach(e=>{if(!e.dataset.fs)e.dataset.fs=parseFloat(getComputedStyle(e).fontSize);const base=parseFloat(e.dataset.fs);e.style.fontSize=base+'px';e.style.whiteSpace='nowrap';const w=e.clientWidth,sw=e.scrollWidth;e.style.whiteSpace='';if(sw>w)e.style.fontSize=(base*Math.max(0.72,w/sw))+'px';});}
+function fitFlow(s){fitTitles(s);s.querySelectorAll('.flow[data-maxh]').forEach(e=>{e.style.transform='';e.style.transformOrigin='0 0';const m=parseFloat(e.dataset.maxh),h=e.offsetHeight;if(h>m)e.style.transform='scale('+Math.max(0.6,m/h)+')';});}
 window.fitFlow=fitFlow;
 function fit(){const s=Math.min(innerWidth/1280,innerHeight/720);stage.style.transform='translate('+(-640*s)+'px,'+(-360*s)+'px) scale('+s+')';}
 addEventListener('resize',fit);fit();

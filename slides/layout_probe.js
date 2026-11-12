@@ -99,6 +99,22 @@
         if (hit) add('box-crosses-text', it.text, {});
       });
     }));
+    // text painted over by a later opaque shape or box (a title hidden behind a diagram panel, for example)
+    const SHAPES = ['rect', 'path', 'circle', 'ellipse', 'polygon', 'polyline', 'line', 'image', 'img'];
+    items.forEach((it) => {
+      if (it.el.closest('.scrim')) return;
+      it.rects.forEach((r) => {
+        [0.12, 0.5, 0.88].forEach((f) => {
+          const x = r.left + r.width * f, y = r.top + r.height * 0.5;
+          if (x < sr.left || x > sr.right || y < sr.top || y > sr.bottom) return;
+          const top = document.elementFromPoint(x, y);
+          if (!top || top === it.el || it.el.contains(top) || top.contains(it.el)) return;
+          const tag = top.tagName.toLowerCase();
+          const box = !SHAPES.includes(tag) && !(top.textContent || '').trim() && getComputedStyle(top).backgroundColor !== 'rgba(0, 0, 0, 0)';
+          if (SHAPES.includes(tag) || box) add('text-occluded', it.text + ' [under ' + tag + ']', {});
+        });
+      });
+    });
     const imgs = [...s.querySelectorAll('img')].map((i) => i.getBoundingClientRect());
     items.forEach((it) => it.rects.forEach((r) => imgs.forEach((ib) => { if (inter({ l: r.left, r: r.right, t: r.top, b: r.bottom }, { l: ib.left, r: ib.right, t: ib.top, b: ib.bottom }) > 20) add('text-over-figure', it.text, {}); })));
   });

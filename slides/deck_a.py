@@ -34,7 +34,14 @@ def kicker(s, tone_cls=""):
 
 
 def title(s, size=46, y=70, w=1152):
-    return D(64, y + 8, w, None, "", f"<h2 style='font-size:{size}px;line-height:1.04'>{s}</h2>")
+    return D(
+        64,
+        y + 8,
+        w,
+        None,
+        "",
+        f"<h2 class='fit1' style='font-size:{size}px;line-height:1.04'>{s}</h2>",
+    )
 
 
 # 1 ------------------------------------------------------------------ cover
@@ -192,7 +199,7 @@ slide(
                 1152,
                 None,
                 "",
-                "<h2 style='font-size:48px;line-height:1.04'>Benchmarks rank detectors. Few report their decisions</h2>",
+                "<h2 class='fit1' style='font-size:48px;line-height:1.04'>Benchmarks rank detectors. Few report their decisions</h2>",
             ),
             D(500, 184, 330, None, "k", "reports time order?"),
             D(850, 184, 366, None, "k", "reports decisions at a threshold?"),
@@ -768,7 +775,7 @@ slide(
                 1152,
                 None,
                 "",
-                "<h2 style='font-size:48px'>Historical pool preparation needs revalidation</h2>",
+                "<h2 class='fit1' style='font-size:48px'>Historical pool preparation needs revalidation</h2>",
             ),
             D(
                 64,
@@ -1301,7 +1308,7 @@ slide(
                 560,
                 None,
                 "",
-                "<h2 style='font-size:50px;line-height:1.03'>Each method has a narrow competence</h2>",
+                "<h2 class='fit1' style='font-size:50px;line-height:1.03'>Each method has a narrow competence</h2>",
             ),
             D(
                 64,
@@ -1393,7 +1400,7 @@ slide(
                 1100,
                 None,
                 "",
-                "<h2 style='font-size:46px'>One threshold hides the whole trade-off</h2>",
+                "<h2 class='fit1' style='font-size:46px'>One threshold hides the whole trade-off</h2>",
             ),
             pr_panels(64, 138, "bone", 700, 520)[0],
             flow(
@@ -1432,7 +1439,7 @@ slide(
                 1152,
                 None,
                 "",
-                "<h2 style='font-size:44px'>The ranking moves with severity</h2>",
+                "<h2 class='fit1' style='font-size:44px'>The ranking moves with severity</h2>",
             ),
             severity_panels(
                 64,

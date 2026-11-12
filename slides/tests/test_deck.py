@@ -91,6 +91,34 @@ def test_probe_detects_a_box_edge_running_through_text(tmp_path):
 
 
 @needs_chrome
+def test_probe_detects_text_hidden_behind_a_later_shape(tmp_path):
+    # the Linux failure of slide 5: a title that wrapped to a second line behind a diagram panel
+    bad = "<p style='left:60px;top:100px;width:500px;font:24px Arial'>A title whose second line is hidden</p><svg style='left:40px;top:90px' width='600' height='80'><rect x='0' y='0' width='600' height='80' fill='#222'/></svg>"
+    assert any(i["kind"] == "text-occluded" for i in _run(tmp_path, bad))
+    ok = "<svg style='left:40px;top:90px' width='600' height='80'><rect x='0' y='0' width='600' height='80' fill='#222'/></svg><p style='left:60px;top:100px;width:500px;font:24px Arial;color:#fff'>Text drawn over the panel</p>"
+    assert _run(tmp_path, ok) == []
+
+
+@needs_chrome
+def test_single_line_titles_shrink_instead_of_wrapping(tmp_path):
+    long_title = (
+        "A controlled dataset that labels six anomaly types separately and then some more words"
+    )
+    page = FIXTURE.format(
+        body=f"<h2 class='fit1' style='left:64px;top:60px;width:700px;margin:0;font:46px Arial'>{long_title}</h2><p style='left:64px;top:118px;width:700px;font:20px Arial'>Content that starts right below a one-line title</p>",
+        probe=(check_layout.HERE / "layout_probe.js").read_text(),
+    )
+    page = page.replace(
+        "<script>",
+        "<script>window.fitFlow=function(s){s.querySelectorAll('.fit1').forEach(function(e){var b=parseFloat(getComputedStyle(e).fontSize);e.style.whiteSpace='nowrap';var k=e.clientWidth/e.scrollWidth;e.style.whiteSpace='';if(k<1)e.style.fontSize=b*Math.max(0.72,k)+'px';});};",
+        1,
+    )
+    path = tmp_path / "t.html"
+    path.write_text(page)
+    assert check_layout.probe(path, CHROME) == []
+
+
+@needs_chrome
 def test_probe_detects_a_rotated_label_leaving_its_svg(tmp_path):
     bad = "<svg style='left:100px;top:100px' width='200' height='100'><text x='2' y='50' font-size='14' transform='rotate(-90 2 50)'>precision</text></svg>"
     assert any(i["kind"] == "outside-svg" for i in _run(tmp_path, bad))

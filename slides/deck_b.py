@@ -34,7 +34,14 @@ def kicker(s):
 
 
 def title(s, size=46, y=70, w=1152):
-    return D(64, y + 8, w, None, "", f"<h2 style='font-size:{size}px;line-height:1.04'>{s}</h2>")
+    return D(
+        64,
+        y + 8,
+        w,
+        None,
+        "",
+        f"<h2 class='fit1' style='font-size:{size}px;line-height:1.04'>{s}</h2>",
+    )
 
 
 # 24 ----------------------------------------------------------------- opener part 3: 152 pads
@@ -213,7 +220,7 @@ slide(
                 1152,
                 None,
                 "",
-                "<h2 style='font-size:38px;line-height:1.04'>Historical pool rankings need train-only revalidation</h2>",
+                "<h2 class='fit1' style='font-size:38px;line-height:1.04'>Historical pool rankings need train-only revalidation</h2>",
             ),
             interval_dots(
                 64,
