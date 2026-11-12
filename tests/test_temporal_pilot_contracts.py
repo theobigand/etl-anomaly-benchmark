@@ -29,6 +29,20 @@ def test_invalid_elapsed_times_are_refused_with_the_stated_reason(bad):
         tp.to_timestamps(pd.Series(bad))
 
 
+@pytest.mark.parametrize("bad", [[np.inf, 1.0], [1.0, -np.inf], ["inf", "1"], [float("inf")]])
+def test_infinite_elapsed_times_are_refused_with_the_stated_reason(bad):
+    with pytest.raises(ValueError, match=f"^{MSG}$"):
+        tp.to_timestamps(pd.Series(bad))
+
+
+def test_finite_integer_and_float_times_keep_their_order_and_value():
+    stamps = tp.to_timestamps(pd.Series([np.int64(5), 2, 7.5]))
+    assert [(s - tp.ORIGIN).total_seconds() for s in stamps] == [5.0, 2.0, 7.5]
+    assert tp.to_timestamps(pd.Series([0, 172792.0])).iloc[1] - tp.ORIGIN == pd.Timedelta(
+        seconds=172792
+    )
+
+
 def test_numeric_strings_are_read_as_seconds_and_fractions_are_kept():
     stamps = tp.to_timestamps(pd.Series(["0", "1.5", 90.0]))
     assert [(s - tp.ORIGIN).total_seconds() for s in stamps] == [0.0, 1.5, 90.0]
@@ -309,3 +323,91 @@ def test_the_control_shifts_by_the_population_scale_with_a_huge_first_threshold(
     expected = pd.Series({"V1": train["V1"].std(ddof=0), "V2": train["V2"].std(ddof=0), "V3": 1.0})
     pd.testing.assert_series_equal(scales[0], expected)
     assert ctor == [((tp.TIME_UTC, cols), {"window_size": 120, "threshold": 1e12})]
+
+
+def test_detector_inputs_do_not_require_the_clock_columns_to_be_present(tmp_path):
+    spec = _spec(tmp_path)
+    frame = tp.load(spec)
+    columns = set(tp.features(spec, frame.drop(columns=["Time"])).columns)
+    assert tp.TIME_UTC not in columns and "Time" not in columns and "V1" in columns
+    assert "V1" in set(tp.features(spec, frame.drop(columns=[tp.TIME_UTC])).columns)
+
+
+def test_scored_values_are_cast_to_float_scores_and_boolean_flags_and_progress_is_logged(
+    tmp_path, monkeypatch
+):
+    import logging
+
+    class Raw:
+        def __init__(self, n):
+            self.scores = pd.Series(np.arange(n))  # integers
+            self.flags = pd.Series(np.arange(n) % 2)  # 0/1 integers
+
+    spec = _spec(tmp_path)
+    train, _val, test = tp.chronological_partitions(tp.load(spec))
+    monkeypatch.setattr(tp, "detect", lambda test_x, det, fit_df: Raw(len(test_x)))
+    messages = []
+
+    class Collect(logging.Handler):
+        def emit(self, record):
+            messages.append(record.getMessage())
+
+    log = tp.log  # the module logger, whatever name the import gave it; own handler
+    handler, level, disabled = Collect(), log.level, log.disabled
+    log.addHandler(handler)
+    log.setLevel(logging.INFO)
+    log.disabled = False
+    try:
+        out = tp.score_partition(spec, train, test)
+    finally:
+        log.removeHandler(handler)
+        log.setLevel(level)
+        log.disabled = disabled
+    assert out["scores"]["zscore"].dtype == float and out["flags"]["zscore"].dtype == bool
+    assert out["flags"]["zscore"][:3].tolist() == [False, True, False]
+    assert messages == ["scored zscore", "scored iqr"]
+
+
+def test_run_passes_the_fixed_bootstrap_seed_and_each_stratified_seed(tmp_path, monkeypatch):
+    monkeypatch.setattr(tp, "RESAMPLES", 5)
+    seen = {"boot": [], "strat": []}
+    real_boot, real_strat = tp.block_bootstrap_ci, tp.stratified_partitions
+    monkeypatch.setattr(
+        tp,
+        "block_bootstrap_ci",
+        lambda *a: seen["boot"].append(a[3:]) or real_boot(*a),
+    )
+    monkeypatch.setattr(
+        tp,
+        "stratified_partitions",
+        lambda f, seed: seen["strat"].append(seed) or real_strat(f, seed),
+    )
+    out = tp.run(_spec(tmp_path, n=8000), seeds=(1, 2, 3))
+    assert seen["boot"] == [(1800, 5, 42)] * 2 and seen["strat"] == [1, 2, 3]
+    stds = [v["std"] for m in out["stratified"].values() for v in m.values()]
+    assert any(s > 0 for s in stds)  # a constant series would hide the ddof convention
+    for metrics in out["stratified"].values():
+        for v in metrics.values():
+            assert len(v["values"]) == 3
+            assert v["std"] == pytest.approx(np.std(v["values"], ddof=1))
+            assert v["mean"] == pytest.approx(np.mean(v["values"]))
+
+
+def test_main_defaults_help_and_logging_configuration(tmp_path, monkeypatch, capsys):
+    spec = _spec(tmp_path)
+    monkeypatch.setitem(tp.DATASETS, "credit_card", spec)
+    monkeypatch.setattr(tp.config, "RESULTS_DIR", tmp_path / "results")
+    monkeypatch.setattr(tp, "run", lambda s: {"settings": {}})
+    import provenance
+
+    monkeypatch.setattr(provenance, "write_record", lambda *a, **k: None)
+    basic = []
+    monkeypatch.setattr(tp.logging, "basicConfig", lambda **kw: basic.append(kw))
+    (tmp_path / "results").mkdir()
+    assert tp.main([]) == 0
+    assert sorted(p.name for p in (tmp_path / "results").iterdir()) == ["temporal_pilot.json"]
+    assert basic == [{"level": 20, "format": "%(asctime)s %(name)s %(message)s"}]
+    with pytest.raises(SystemExit):
+        tp.main(["--help"])
+    help_text = capsys.readouterr().out
+    assert "Chronological pilot on Credit Card" in help_text and "--csv CSV" in help_text

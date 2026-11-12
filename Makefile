@@ -2,7 +2,7 @@ CONDA_ENV := etl-benchmark
 # any Chromium-family binary that supports --print-to-pdf (chrome, chromium, chrome-headless-shell)
 CHROME ?= chromium
 
-.PHONY: help env update test lint verify-fast verify-preprocessing verify-deep verify-faults verify-real verify-pool verify-scale lock verify-types verify-tools verify-slides verify-reproduce verify-release verify-all pipeline benchmark benchmark-water benchmark-cardio synthetic heatmap severity curves slides run clean
+.PHONY: help env update test lint verify-fast verify-preprocessing verify-deep verify-faults verify-real verify-pool verify-scale lock verify-types verify-tools verify-slides mutation-focus verify-reproduce verify-release verify-all pipeline benchmark benchmark-water benchmark-cardio synthetic heatmap severity curves slides run clean
 
 help:
 	@echo "Available targets:"
@@ -20,6 +20,7 @@ help:
 	@echo "  make lock       Record the exact conda and pip packages of the active environment"
 	@echo "  make verify-types mypy: verification/ clean, scientific code may not add errors"
 	@echo "  make verify-slides Rendered-geometry check of the deck in Chromium under 7 font configurations (never skipped)"
+	@echo "  make mutation-focus MODULE=m  Focused mutmut run of one module (development feedback, not evidence)"
 	@echo "  make verify-tools Measure line/branch coverage of the verifier code in verification/ (separate from FAST)"
 	@echo "  make verify-reproduce Controlled cardio reproduction (archive, same and locked environment), write evidence"
 	@echo "  make verify-release Certify the evidence required by verification/release_policy.json for the current clean revision"
@@ -184,6 +185,18 @@ slides:
 # Slide quality: require the committed deck to match its generator, then measure rendered
 # geometry in headless Chromium under every font configuration and run the browser regression tests.
 # Fails when no Chromium is found; it is never skipped. Needs CHROME or a Playwright Chromium.
+# Development feedback only, never evidence: focused native mutation run of one module, e.g.
+#   make mutation-focus MODULE=research.typed_run
+# mutants/mutmut-stats.json maps tests to functions and is derived data (it holds no verdicts). A test
+# file added since it was written is not in the map, so mutmut would report those mutants as "no tests";
+# the target drops that file so it is rebuilt from the current tests. Verdicts in mutants/ are kept.
+# macOS needs OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES for the forked workers; Linux does not.
+mutation-focus:
+	@test -n "$(MODULE)" || { echo "usage: make mutation-focus MODULE=research.typed_run"; exit 2; }
+	rm -f mutants/mutmut-stats.json
+	OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES python -m mutmut run "$(MODULE).*"
+	python -m mutmut results --all true | grep "$(MODULE)\." | awk '{print $$NF}' | sort | uniq -c
+
 verify-slides:
 	python slides/build_deck.py --check
 	python slides/check_layout.py --matrix --report-dir experiments/results/slides

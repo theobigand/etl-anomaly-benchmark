@@ -188,3 +188,34 @@ finite times.
 
 Practical trap: after adding a test file, delete `mutants/mutmut-stats.json` before a focused run; otherwise mutmut
 maps no test to functions that only the new file exercises and reports them as `no tests`.
+
+### temporal_pilot correction and typed_run (2026-11-12, later)
+
+`to_timestamps` now refuses infinite elapsed times with the stated message (`np.isfinite`); before, positive
+infinity failed inside pandas with an `OutOfBoundsTimedelta` that did not name the cause. Verified before the
+change: the archived Credit Card file (SHA-256 equal to the manifest) has 284,807 finite `Time` values (0 to
+172,792 s), so the archived pilot is unaffected. The archived record (`verification/evidence/temporal_pilot/
+run_temporal_pilot.json`) keeps the script hash of its own revision; the test that identifies it now checks the
+script at that revision (`git show <source_revision>`), not the current file, so a prospective correction
+does not rewrite history. No new pilot evidence was generated: the corrected function changes no result on finite
+input. `research/temporal_pilot.py` is now a different source revision (SHA-256 03e63b29...) from the archived run.
+
+Focused raw scores, same method (`make mutation-focus MODULE=...`):
+
+| Module | Killed / total | Survived | Timeout | Raw |
+| --- | --- | --- | --- | --- |
+| `research/temporal_pilot.py` | 571/589 | 17 | 1 | 96.94 % |
+| `research/typed_run.py` | 343/351 | 8 | 0 | 97.72 % |
+
+Both stay below 98 %. Survivors, all eligible and unapproved: `temporal_pilot` `utc=` removed or False where the
+window column is already timezone-aware (8), `astype(None)`/`dtype=None` on data already numeric (2),
+`unit="S"` accepted by pandas, `drop` default or `--csv` default equal to the fallback, `sort=None` on an
+ordered groupby, and a timeout on `index = None` in the bootstrap (the process raises, the harness timed out);
+`typed_run` `sort=None` (2) and argparse defaults and choices (6). Reaching 98 % would take 6 (`temporal_pilot`)
+and 1 (`typed_run`) of them being accepted: not done.
+
+Test-selection cache (`mutants/mutmut-stats.json`): it maps tests to functions and holds no verdicts. Collecting it
+runs the configured selection once and fails the whole run when any test in it fails, which is what made an earlier
+focused run abort; one of my logging tests depended on the logger name, which differs by import path, and is fixed.
+`make mutation-focus MODULE=<module>` now removes only that file before a focused run so that new test files are
+mapped.

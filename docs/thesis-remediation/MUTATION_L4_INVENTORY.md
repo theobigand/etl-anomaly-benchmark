@@ -50,11 +50,11 @@ L4 modules: 91. In the campaign: 82. Absent from the campaign: 9. With a focused
 | `research/score_shift.py` | a96e39bb1b80 | absent | no evidence | 795/806 (98.6%) 2026-11-11 | focused at or above 98 (not certified) |
 | `research/source_clustered.py` | a9bf13c575ea | absent | no evidence | 333/337 (98.8%) 2026-11-11 | focused at or above 98 (not certified) |
 | `research/temporal_decision.py` | f402ba92cdbd | 522/836 | INCOMPLETE | - | below 98 (62.4%), incomplete |
-| `research/temporal_pilot.py` | 0028bdec5a47 | 20/586 | INCOMPLETE | 542/586 (92.5%) 2026-11-12 | below 98 |
+| `research/temporal_pilot.py` | 03e63b296112 | 20/586 | INCOMPLETE | 571/589 (96.9%) 2026-11-12 | below 98 |
 | `research/typed_benchmark.py` | abdd10e4a196 | 180/180 | PASS | - | campaign PASS (historical) |
 | `research/typed_figures.py` | cdff872ffa3f | 133/240 | FAIL | - | below 98 (55.4%), fail |
 | `research/typed_masking.py` | 6203d8f54eac | 27/132 | INCOMPLETE | 132/132 (100.0%) 2026-11-12 | focused at or above 98 (not certified) |
-| `research/typed_run.py` | 8589c4634fd7 | 27/351 | INCOMPLETE | 342/351 (97.4%) 2026-11-12 | below 98 |
+| `research/typed_run.py` | 8589c4634fd7 | 27/351 | INCOMPLETE | 343/351 (97.7%) 2026-11-12 | below 98 |
 | `research/typed_summary.py` | dd02dbace8fe | 386/507 | FAIL | - | below 98 (76.1%), fail |
 | `research/uci_loader.py` | a1176cd61bd8 | 157/186 | FAIL | - | below 98 (84.4%), fail |
 | `src/etl_benchmark/atomic.py` | 6ecd401fba44 | 6/6 | PASS | - | campaign PASS (historical) |

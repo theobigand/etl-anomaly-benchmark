@@ -171,8 +171,9 @@ def test_the_archived_pilot_record_identifies_this_implementation():
     }
     manifest = json.loads((ROOT / "verification/evidence/manifest.json").read_text())["datasets"]
     assert record["settings"]["dataset_sha256"] == manifest["credit_card"]["sha256"]
-    script = (ROOT / "research" / "temporal_pilot.py").read_bytes()
-    assert record["settings"]["script_sha256"] == sha(script)
+    # The record identifies the script of its own source revision, not the current file: the
+    # script may later receive a prospective correction (to_timestamps now refuses infinite times)
+    # without rewriting this historical record.
     committed = subprocess.run(
         ["git", "show", f"{record['source_revision']}:research/temporal_pilot.py"],
         cwd=ROOT,

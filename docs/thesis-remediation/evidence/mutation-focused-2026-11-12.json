@@ -72,7 +72,7 @@
       "sha256": "6203d8f54eac"
     },
     "research/typed_run.py": {
-      "killed": 342,
+      "killed": 343,
       "total": 351,
       "date": "2026-11-12",
       "sha256": "8589c4634fd7"
@@ -90,10 +90,12 @@
       "sha256": "d4f1f954079d"
     },
     "research/temporal_pilot.py": {
-      "killed": 542,
-      "total": 586,
+      "killed": 571,
+      "total": 589,
+      "timeout": 1,
       "date": "2026-11-12",
-      "sha256": "0028bdec5a47"
+      "sha256": "03e63b296112",
+      "note": "after the to_timestamps infinity correction; source differs from the revision that produced the archived pilot record"
     }
   }
 }
