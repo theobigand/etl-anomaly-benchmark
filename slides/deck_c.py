@@ -76,65 +76,48 @@ slide(
                 "Implemented, tested, verified &nbsp;<span class='tag anom'>historical run, defined scope</span>",
             ),
             title("Historical verification has a defined scope", 44, 68),
-            D(
+            flow(
                 64,
                 144,
                 740,
-                None,
-                "sheet",
-                tbl(
-                    ["Check", "Result", "Scope"],
-                    [
+                [
+                    "<div class='sheet' style='position:static;padding:6px 10px'>"
+                    + tbl(
+                        ["Check", "Result", "Scope"],
                         [
-                            "line coverage",
-                            "1,790 / 1,790",
-                            "pipeline modules and experiment scripts",
+                            [
+                                "line coverage",
+                                "1,790 / 1,790",
+                                "pipeline modules and experiment scripts",
+                            ],
+                            ["branch coverage", "350 / 350", "same scope"],
+                            [
+                                "mutation, computing code",
+                                "95.68%",
+                                "split, metrics, generator, detectors",
+                            ],
+                            ["mutation, input / output", "98.87%", "readers, writers, scripts"],
+                            ["fault injection", "23 / 23", "four went through every earlier test"],
+                            ["real-data check", "pass", "three CSV files, manuscript tables match"],
                         ],
-                        ["branch coverage", "350 / 350", "same scope"],
-                        [
-                            "mutation, computing code",
-                            "95.68%",
-                            "split, metrics, generator, detectors",
-                        ],
-                        ["mutation, input / output", "98.87%", "readers, writers, scripts"],
-                        ["fault injection", "23 / 23", "four went through every earlier test"],
-                        ["real-data check", "pass", "three CSV files, manuscript tables match"],
-                    ],
-                    text_cols=(2,),
-                ),
-                "padding:6px 10px",
+                        text_cols=(2,),
+                    )
+                    + "</div>",
+                    "<p class='note'>Survivors (122) count as failures and were classified by reading the changes, not by proof.</p>",
+                ],
+                maxh=520,
+                gap=14,
             ),
-            D(
-                64,
-                478,
-                740,
-                None,
-                "note",
-                "Survivors (122) count as failures and were classified by reading the changes, not by proof.",
-            ),
-            D(
+            flow(
                 844,
                 144,
                 372,
-                None,
-                "",
-                "<p style='font-size:20px'>These measurements belong to local run <b>d4304c5</b>. They cover the core pipeline and experiment scripts, with separate verifier checks.</p><p style='font-size:19px;margin-top:12px'><span class='tag anom'>limit</span> They do not certify the new research modules or establish scientific validity. The run is not independently attested.</p>",
-            ),
-            D(
-                844,
-                410,
-                180,
-                None,
-                "stat sm",
-                "<span class='num'>1,292</span><span class='lab' style='font-size:15px'>tests, plus 3 on full datasets</span>",
-            ),
-            D(
-                1040,
-                410,
-                176,
-                None,
-                "stat sm",
-                "<span class='num'>97.61%</span><span class='lab' style='font-size:15px'>mutants killed, 4,980 of 5,102 (historical run, core code)</span>",
+                [
+                    "<p style='font-size:20px'>These measurements belong to local run <b>d4304c5</b>. They cover the core pipeline and experiment scripts, with separate verifier checks.</p><p style='font-size:19px;margin-top:12px'><span class='tag anom'>limit</span> They do not certify the new research modules or establish scientific validity. The run is not independently attested.</p>",
+                    "<div style='display:flex;gap:22px;flex-wrap:wrap'><div class='stat sm' style='position:static'><span class='num'>1,292</span><span class='lab' style='font-size:15px'>tests, plus 3 on full datasets</span></div><div class='stat sm' style='position:static'><span class='num'>97.61%</span><span class='lab' style='font-size:15px'>mutants killed, 4,980 of 5,102 (historical run, core code)</span></div></div>",
+                ],
+                maxh=520,
+                gap=22,
             ),
             foot(
                 "make verify-all &nbsp;·&nbsp; .github/workflows &nbsp;·&nbsp; main, local run sealed at d4304c5"
@@ -318,31 +301,33 @@ slide(
         [
             kicker("Mutation testing, 3 of 5"),
             title("Some changes cannot be seen, and only the owner may say so", 42, 64),
-            D(
+            flow(
                 64,
                 150,
-                520,
-                None,
-                "",
-                "<div class='cond' style='font-size:30px;font-weight:600'>Equivalent mutant</div><p style='font-size:19px;margin:8px 0 14px'>A change that does not alter what the program does, so no test can fail on it. For an integer count <span style='font-family:var(--mono);font-size:17px'>n</span>, changing <span style='font-family:var(--mono);font-size:17px'>n &gt; 0</span> to <span style='font-family:var(--mono);font-size:17px'>n &gt;= 1</span> gives the same answer for every input.</p>",
+                540,
+                [
+                    "<div class='cond' style='font-size:34px;font-weight:600'>Equivalent mutant</div>",
+                    "<p style='font-size:22px;line-height:1.4'>A change that does not alter what the program does, so no test can fail on it. For an integer count <span style='font-family:var(--mono);font-size:20px'>n</span>, changing <span style='font-family:var(--mono);font-size:20px'>n &gt; 0</span> to <span style='font-family:var(--mono);font-size:20px'>n &gt;= 1</span> gives the same answer for every input.</p>",
+                    "<div class='sheet' style='position:static;padding:10px 14px;font-size:20px'>"
+                    + eq
+                    + "</div>",
+                    "<p class='note' style='font-size:17px;line-height:1.4'>Candidates in this work, not approved: a dtype coercion on an array that is already float, zip(strict=) on lists of equal length, flush= on a print.</p>",
+                ],
+                maxh=540,
+                gap=18,
             ),
-            D(64, 340, 520, None, "sheet", eq, "padding:6px 10px"),
-            D(
-                64,
-                536,
-                520,
-                None,
-                "note",
-                "Candidates in this work, not approved: a dtype coercion on an array that is already float, zip(strict=) on lists of equal length, flush= on a print.",
-            ),
-            D(
+            flow(
                 664,
                 150,
                 552,
-                None,
-                "",
-                "<div class='cond' style='font-size:30px;font-weight:600'>Why approval is required</div><p style='font-size:19px;margin:8px 0 14px'>Calling a survivor equivalent removes it from the denominator and raises the score. If the author of the tests could do that alone, the author would grade their own work. The repository records each equivalence, with its reason, as accepted by the owner.</p>"
-                "<div class='cond' style='font-size:30px;font-weight:600;margin-top:14px'>Status here</div><p style='font-size:19px;margin-top:8px'>The candidates stay in the denominator. The four equivalences accepted earlier for the LSTM autoencoder were accepted by the repository owner, who is also the sole author and reviewer: owner approval, not independent review.</p>",
+                [
+                    "<div class='cond' style='font-size:34px;font-weight:600'>Why approval is required</div>",
+                    "<p style='font-size:22px;line-height:1.4'>Calling a survivor equivalent removes it from the denominator and raises the score. If the author of the tests could do that alone, the author would grade their own work. The repository records each equivalence, with its reason, as accepted by the owner.</p>",
+                    "<div class='cond' style='font-size:34px;font-weight:600;margin-top:10px'>Status here</div>",
+                    "<p style='font-size:22px;line-height:1.4'>The candidates stay in the denominator. The four equivalences accepted earlier for the LSTM autoencoder were accepted by the repository owner, who is also the sole author and reviewer: owner approval, not independent review.</p>",
+                ],
+                maxh=540,
+                gap=14,
             ),
             foot("docs/thesis-remediation/MUTATION_FOCUSED_DIAGNOSTICS_2026-11-11.md"),
         ]
@@ -459,7 +444,7 @@ for i, (n, b, a) in enumerate(mods):
         )
     )
     if b < 0.4:
-        ch.append(mono(X(b) + 12, y - 10, "before: 0% (axis cut at 40)", 13, "#55534d"))
+        ch.append(mono(X(b) + 12, y - 10, "before: 0% (axis cut at 40)", 14, "#55534d"))
 slide(
     "Mutation: chart",
     "".join(
@@ -641,25 +626,35 @@ slide(
         [
             kicker("Where it stands"),
             title("Experiments run, paper in IMRaD form", 46, 62),
-            D(
+            flow(
                 64,
                 160,
-                640,
-                None,
-                "",
-                "<div class='k ok' style='margin-bottom:10px'>Done</div>"
-                + "".join(
-                    f"<p style='font-size:20px;line-height:1.3;margin-bottom:12px'>{d}</p>"
-                    for d in done
-                ),
+                740,
+                [
+                    "<div class='k ok'>Done</div>",
+                    "<div style='border-top:1px solid var(--bone-line)'>"
+                    + "".join(
+                        f"<p style='font-size:22px;line-height:1.28;margin:0;padding:9px 0;border-bottom:1px solid var(--bone-line)'>{d}</p>"
+                        for d in done
+                    )
+                    + "</div>",
+                ],
+                maxh=540,
+                gap=10,
             ),
-            D(
-                760,
+            flow(
+                840,
                 160,
-                456,
-                None,
-                "",
-                "<div class='k anom' style='margin-bottom:10px'>Next: P0 remediation</div><p style='font-size:19px'>Detector and source audits, source-aware statistics, archive replay, publication corrections (issues #89, #91, #100, #103).</p><div style='height:1px;background:var(--bone-line);margin:20px 0'></div><p style='font-size:18px'>The roadmap preserves T001 to T415. <b>91 of 415</b> are checked as of 2026-11-11, including T163 to T171 of #94. T172, T062 and T063 remain open, as do the issues.</p><p class='note' style='margin-top:12px'>Optional P2 research is outside the active scope.</p>",
+                376,
+                [
+                    "<div class='k anom'>Next: P0 remediation</div>",
+                    "<p style='font-size:22px;line-height:1.38'>Detector and source audits, source-aware statistics, archive replay, publication corrections (issues #89, #91, #100, #103).</p>",
+                    "<div style='height:1px;background:var(--bone-line)'></div>",
+                    "<p style='font-size:21px;line-height:1.38'>The roadmap preserves T001 to T415. <b>91 of 415</b> are checked as of 2026-11-11, including T163 to T171 of #94. T172, T062 and T063 remain open, as do the issues.</p>",
+                    "<p class='note' style='font-size:17px'>Optional P2 research is outside the active scope.</p>",
+                ],
+                maxh=540,
+                gap=16,
             ),
             foot(
                 "docs/thesis-remediation/ &nbsp;·&nbsp; this deck is updated with every merged step"
@@ -694,12 +689,12 @@ slide(
                 900,
                 [
                     "<div class='k'>Takeaway</div>",
-                    "<h1 style='font-size:76px;line-height:1.0'>Rules and machine learning are complementary <span class='em'>by anomaly type</span>.</h1>",
+                    "<h1 style='font-size:68px;line-height:1.02'>Rules and machine learning are complementary <span class='em'>by anomaly type</span>.</h1>",
                     "<p style='font-size:21px;max-width:760px'>Across the three examples, unsupervised detection pays off only on Cardio, where anomalies are rare outliers. On 100 labelled pool problems, rankings need train-only revalidation. On 42 real tables with injected types, the synthetic pattern holds only in part, which is why the real-data matrix is the differentiator.</p>",
-                    "<div class='note' style='max-width:760px'>The pipeline, the 152-dataset pool, the protocols and the verification layer are in place. The IMRaD write-up and the remaining studies are what remains. The photograph is the cover illustration again: one raised pad among 312.</div>",
+                    "<div class='note' style='max-width:760px'>The pipeline, the 152-dataset pool, the protocols and the verification layer are in place. The IMRaD write-up and the remaining studies are what remains. The photograph is the cover illustration again: one raised pad.</div>",
                 ],
-                maxh=600,
-                gap=26,
+                maxh=620,
+                gap=24,
             ),
             foot(
                 "github.com/theobigand/etl-anomaly-benchmark &nbsp;·&nbsp; bounded verification &nbsp;·&nbsp; 152 datasets &nbsp;·&nbsp; 17 detectors"

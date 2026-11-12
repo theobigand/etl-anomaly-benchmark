@@ -42,7 +42,7 @@ testpaths = ["tests", "research/tests", "slides/tests"]
 addopts = "-ra -q"
 filterwarnings = ["ignore:.pin_memory. argument is set as true:UserWarning"]
 markers = [
-    "browser: needs a Chromium binary; deselected automatically when none is installed",
+    "browser: needs a Chromium binary; deselected when none is installed, an error when SLIDES_REQUIRE_BROWSER=1",
     "real: requires locally available full research datasets",
     "protocol: scientific contracts and invariants",
     "property: bounded generative scientific checks",

@@ -118,6 +118,23 @@ def cividis(v):
     return "#ffe945"
 
 
+def _lum(hexcol):
+    rgb = [int(hexcol[i : i + 2], 16) / 255 for i in (1, 3, 5)]
+    lin = [c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4 for c in rgb]
+    return 0.2126 * lin[0] + 0.7152 * lin[1] + 0.0722 * lin[2]
+
+
+def contrast(a, b):
+    """WCAG contrast ratio between two #rrggbb colours."""
+    la, lb = sorted((_lum(a), _lum(b)), reverse=True)
+    return (la + 0.05) / (lb + 0.05)
+
+
+def text_on(fill, light="#ffffff", dark="#000000"):
+    """Whichever of two text colours reads better on `fill`."""
+    return light if contrast(fill, light) >= contrast(fill, dark) else dark
+
+
 def tbl(head, rows, best=(), anom=(), text_cols=(), compact=0):
     fs = {0: "", 1: ' style="font-size:16px"', 2: ' style="font-size:15px"'}[compact]
     pad = {0: "", 1: ' style="padding:4px 12px"', 2: ' style="padding:1px 12px"'}[compact]
@@ -283,7 +300,7 @@ def matrix(
             if v is None:
                 continue
             col = cividis(v)
-            tc = "#0d0d0e" if v > 0.5 else "#f3efe6"
+            tc = text_on(col)
             o.append(
                 f"<rect x='{label_w + j * cell_w + 1.5}' y='{yy + 1.5}' width='{cell_w - 3}' height='{cell_h - 3}' fill='{col}'><title>{r}, {c}: {v:.2f}</title></rect>"
             )
@@ -311,7 +328,7 @@ def matrix(
                 f"<rect x='{label_w + k * (len(cols) * cell_w) / 50}' y='{gy}' width='{(len(cols) * cell_w) / 50 + 0.5}' height='10' fill='{cividis(k / 49)}'/>"
             )
         o.append(txt(label_w, gy + 28, "0", 13, t["soft"]))
-        o.append(txt(label_w + len(cols) * cell_w, gy + 28, f"1 ({unit})", 13, t["soft"], "end"))
+        o.append(txt(label_w + len(cols) * cell_w, gy + 28, f"1 ({unit})", 14, t["soft"], "end"))
         h += 40
     return svg(x, y, w, h, "".join(o), "heat matrix"), h
 
@@ -373,9 +390,10 @@ def pr_scatter(x, y, pts, tone, w=560, h=470):
                     float(path[-1].split(",")[0]) - 4,
                     float(path[-1].split(",")[1]) - 6,
                     f"F1 {f}",
-                    12,
+                    13,
                     t["soft"],
                     "end",
+                    extra=f"style='paint-order:stroke;stroke:{t['bg']};stroke-width:5px;stroke-linejoin:round'",
                 )
             )
     for g in (0, 0.25, 0.5, 0.75, 1):
@@ -455,7 +473,7 @@ def interval_dots(
             label_w + bw / 2,
             len(rows) * row_h + 40,
             "value, with 95% interval",
-            13,
+            14,
             t["soft"],
             "middle",
         )
@@ -584,7 +602,7 @@ def type_icon(kind, x, y, w=360, h=170):
         o.append(
             txt(ax + 20, ay + 4, "unusual pair", 14, AMB, "start", 700)
             + txt(w - 24, 156, "age", 14, SOFT, "end")
-            + txt(14, 24, "balance", 14, SOFT, "start")
+            + txt(60, 22, "balance", 14, SOFT, "start")
         )
         o.append(
             txt(w - 14, 112, "each value is in range,", 14, SOFT, "end")
@@ -624,3 +642,263 @@ def type_icon(kind, x, y, w=360, h=170):
             o.append(_cell(88, yy, 132, 32, v, "#eaa24f1a", AMB, AMB, 15))
             o.append(txt(230, yy + 22, "&#10007; " + why, 14, AMB, "start", 700))
     return svg(x, y, w, h, "".join(o), f"diagram of {kind}")
+
+
+# ---- native line panels (precision-recall curves and severity sweeps) -------------------------------------
+
+PR_DATA = json.loads((HERE / "art/data/pr_curves.json").read_text())
+SEVERITY_CSV = HERE.parent / "verification/evidence/severity.csv"
+
+LINE_STYLES = {
+    "A": ("ink", "", 2.8),
+    "B": ("steel", "7 4", 2.6),
+    "C": ("ink", "2 4", 2.6),
+    "D": ("amber", "", 2.8),
+}
+SHORT = {
+    "isolation_forest": "Isolation Forest",
+    "great_expectations": "Great Expectations",
+    "ocsvm": "One-Class SVM",
+    "zscore": "Z-score",
+    "iqr": "IQR",
+    "lof": "LOF",
+    "ecod": "ECOD",
+    "copod": "COPOD",
+    "hbos": "HBOS",
+    "knn": "KNN",
+    "pca": "PCA",
+    "drift": "Drift detector",
+}
+
+
+def _line_style(tone, key):
+    t = DARK if tone == "dark" else BONE
+    col, dash, width = LINE_STYLES[key]
+    colour = {
+        "ink": t["ink"],
+        "steel": "#4f7a8c" if tone == "bone" else t["steel"],
+        "amber": t["amber"],
+    }[col]
+    return colour, dash, width
+
+
+def line_panel(
+    x,
+    y,
+    w,
+    h,
+    title,
+    series,
+    tone,
+    xticks,
+    xlim,
+    xlabel="",
+    ylabel="",
+    base=None,
+    labels=True,
+    right_pad=8,
+    vline=None,
+    sub=None,
+    key_rows=None,
+):
+    """One panel. series: list of (label, [(x, y), ...], style) where style is 'grey' or a LINE_STYLES key.
+
+    Grey series are drawn first and thin. Styled series are labelled at their right end (labels are spread
+    so they cannot collide) when labels=True; otherwise the caller supplies a key.
+    """
+    t = DARK if tone == "dark" else BONE
+    key_need = sum(30 + 7.6 * len(lab) + 14 for lab, _ in sub) if sub else 0
+    if key_rows is None:
+        key_rows = 2 if sub and key_need > w - 46 else 1
+    px0, py0 = 46, 34 + (18 * key_rows if sub else 0)
+    pw, ph = w - px0 - right_pad, h - py0 - 40
+    x0, x1 = xlim
+    X = lambda v: px0 + pw * (v - x0) / (x1 - x0)  # noqa: E731
+    Y = lambda v: py0 + ph * (1 - v)  # noqa: E731
+    o = [txt(px0, 18, title, 17, t["ink"], "start", 600)]
+    if sub:
+        cx, ky = px0, 36
+        for lab, style in sub:
+            colour, dash, width = _line_style(tone, style)
+            da = f" stroke-dasharray='{dash}'" if dash else ""
+            o.append(
+                f"<line x1='{cx}' x2='{cx + 24}' y1='{ky}' y2='{ky}' stroke='{colour}' stroke-width='{width}'{da}/>"
+            )
+            o.append(txt(cx + 30, ky + 5, lab, 14, t["ink"], "start", 500))
+            if key_rows > 1:
+                ky += 19
+            else:
+                cx += 30 + 7.6 * len(lab) + 14
+    o.append(
+        f"<rect x='{px0}' y='{py0}' width='{pw}' height='{ph}' fill='none' stroke='{t['line']}'/>"
+    )
+    for g in (0, 0.25, 0.5, 0.75, 1):
+        o.append(txt(px0 - 7, Y(g) + 5, f"{g:g}", 13, t["soft"], "end"))
+        if 0 < g < 1:
+            o.append(
+                f"<line x1='{px0}' x2='{px0 + pw}' y1='{Y(g)}' y2='{Y(g)}' stroke='{t['line']}' stroke-dasharray='1 5'/>"
+            )
+    for g in xticks:
+        o.append(txt(X(g), py0 + ph + 19, f"{g:g}", 13, t["soft"], "middle"))
+    if xlabel:
+        o.append(txt(px0 + pw / 2, h - 4, xlabel, 14, t["soft"], "middle"))
+    if ylabel:
+        o.append(
+            txt(
+                14,
+                py0 + ph / 2,
+                ylabel,
+                14,
+                t["soft"],
+                "middle",
+                extra=f"transform='rotate(-90 14 {py0 + ph / 2})'",
+            )
+        )
+    if vline is not None:
+        o.append(
+            f"<line x1='{X(vline)}' x2='{X(vline)}' y1='{py0}' y2='{py0 + ph}' stroke='{t['soft']}' stroke-dasharray='4 4' opacity='.7'/>"
+        )
+    if base is not None:
+        o.append(
+            f"<line x1='{px0}' x2='{px0 + pw}' y1='{Y(base)}' y2='{Y(base)}' stroke='{t['soft']}' stroke-dasharray='5 4'/>"
+        )
+    ordered = [s for s in series if s[2] == "grey"] + [s for s in series if s[2] != "grey"]
+    ends = []
+    for lab, pts, style in ordered:
+        path = " ".join(f"{X(a):.1f},{Y(b):.1f}" for a, b in pts)
+        if style == "grey":
+            o.append(
+                f"<polyline points='{path}' fill='none' stroke='{t['soft']}' stroke-width='1.2' opacity='.5' stroke-linejoin='round'><title>{lab}</title></polyline>"
+            )
+            continue
+        colour, dash, width = _line_style(tone, style)
+        da = f" stroke-dasharray='{dash}'" if dash else ""
+        o.append(
+            f"<polyline points='{path}' fill='none' stroke='{colour}' stroke-width='{width}'{da} stroke-linejoin='round'><title>{lab}</title></polyline>"
+        )
+        if len(pts) <= 8:
+            for a, b in pts:
+                o.append(f"<circle cx='{X(a):.1f}' cy='{Y(b):.1f}' r='3.4' fill='{colour}'/>")
+        ends.append((Y(pts[-1][1]), lab, colour))
+    if labels:
+        ends.sort()
+        placed = []
+        for yy, lab, colour in ends:
+            if placed and yy < placed[-1] + 16:
+                yy = placed[-1] + 16
+            placed.append(yy)
+            o.append(txt(px0 + pw + 8, yy + 5, lab, 14, colour, "start", 600))
+    return f"<g transform='translate({x},{y})'>{''.join(o)}</g>"
+
+
+def pr_panels(x, y, tone, w=700, h=520):
+    """2x2 native precision-recall panels from slides/art/data/pr_curves.json (see export_pr_curves.py).
+
+    Per panel: the highest-AP method in dark solid, the lowest-AP method in blue dashed, the rest in grey.
+    The choice is by AP, not by hand, so no method is picked to suit the argument.
+    """
+    names = [
+        ("credit_card", "Credit Card Fraud"),
+        ("water_quality", "Water Quality"),
+        ("cardio", "Cardio"),
+        ("synthetic", "Synthetic"),
+    ]
+    pw, ph = w // 2, h // 2
+    parts = []
+    for k, (key, label) in enumerate(names):
+        d = PR_DATA["datasets"][key]
+        ms = d["methods"]
+        best = max(ms, key=lambda m: ms[m]["ap"])
+        worst = min(ms, key=lambda m: ms[m]["ap"])
+        series = []
+        for m, v in ms.items():
+            lab = f"{SHORT.get(m, m)}, AP {v['ap']:.2f}"
+            style = "A" if m == best else "B" if m == worst else "grey"
+            series.append((lab, v["points"], style))
+        br = d["base_rate"]
+        base_txt = f"{br * 100:.2f}%" if br < 0.01 else f"{br:.2f}"
+        parts.append(
+            line_panel(
+                (k % 2) * pw,
+                (k // 2) * ph,
+                pw,
+                ph,
+                f"{label} (base rate {base_txt})",
+                series,
+                tone,
+                (0, 0.5, 1),
+                (0, 1),
+                xlabel="recall" if k >= 2 else "",
+                ylabel="precision" if k % 2 == 0 else "",
+                base=br,
+                labels=False,
+                key_rows=2,
+                sub=[
+                    (f"{SHORT.get(best, best)} {ms[best]['ap']:.2f}", "A"),
+                    (f"{SHORT.get(worst, worst)} {ms[worst]['ap']:.2f}", "B"),
+                ],
+            )
+        )
+    return svg(x, y, w, h, "".join(parts), "precision-recall curves by dataset"), names
+
+
+def pr_best_worst():
+    out = {}
+    for key, d in PR_DATA["datasets"].items():
+        ms = d["methods"]
+        best = max(ms, key=lambda m: ms[m]["ap"])
+        worst = min(ms, key=lambda m: ms[m]["ap"])
+        out[key] = (best, ms[best]["ap"], worst, ms[worst]["ap"])
+    return out
+
+
+def severity_panels(x, y, w, h, tone, picks):
+    """Three native severity panels from verification/evidence/severity.csv.
+
+    picks: {anomaly_type: [(method, style), ...]}; every other method is drawn grey.
+    """
+    import csv
+
+    rows = list(csv.DictReader(SEVERITY_CSV.open()))
+    data: dict = {}
+    for r in rows:
+        data.setdefault(r["anomaly_type"], {}).setdefault(r["method"], []).append(
+            (float(r["severity"]), float(r["recall"]))
+        )
+    for tdict in data.values():
+        for m in tdict:
+            tdict[m].sort()
+    parts = []
+    pw = w // 3
+    for k, (atype, label) in enumerate(
+        [
+            ("univariate_outlier", "Univariate outlier"),
+            ("multivariate_outlier", "Multivariate outlier"),
+            ("temporal_drift", "Temporal drift"),
+        ]
+    ):
+        chosen = dict(picks.get(atype, []))
+        series = []
+        for m, pts in data[atype].items():
+            if m == "transform_dedup":
+                continue
+            series.append((SHORT.get(m, m), pts, chosen.get(m, "grey")))
+        parts.append(
+            line_panel(
+                k * pw,
+                0,
+                pw,
+                h,
+                label,
+                series,
+                tone,
+                (0.5, 1, 2, 3, 5),
+                (0.4, 5.1),
+                xlabel="injection severity (1 = reference)",
+                ylabel="recall" if k == 0 else "",
+                labels=True,
+                right_pad=150 if k < 2 else 150,
+                vline=1,
+            )
+        )
+    return svg(x, y, w, h, "".join(parts), "recall against injection severity")

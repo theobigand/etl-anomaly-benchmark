@@ -1,14 +1,29 @@
 /* In-page layout probe. Runs only with ?check in the URL. It reports, per slide, text that
    overlaps other text, text outside its slide or its svg, clipped overflow, and text over figures.
-   ?stress swaps in wide fallback fonts to test robustness against missing fonts. */
+   It also reports text below the minimum size and text that crowds the source line at the foot of a slide.
+   ?stress swaps in wide fallback fonts to test robustness against missing fonts.
+   ?fonts=<family> swaps in a named family instead (generic names such as sans-serif are allowed). */
 (function () {
   const q = new URLSearchParams(location.search);
   if (!q.has('check')) return;
-  if (q.has('stress')) {
+  // Practical minimum at 1280x720 (1.5x on a 1080p projector): no text under 13px, and running words under 14px.
+  const MIN_NUM = 13, MIN_WORD = 14;
+  const forced = q.get('fonts') || (q.has('stress') ? 'Arial' : '');
+  if (forced) {
     const st = document.createElement('style');
-    st.textContent = ':root{--cond:Arial,sans-serif!important;--sans:Arial,sans-serif!important;--mono:Courier New,monospace!important}';
+    const fam = forced.replace(/[^A-Za-z0-9 ,_-]/g, '');
+    const mono = q.has('stress') ? 'Courier New,monospace' : 'monospace';
+    st.textContent = ':root{--cond:' + fam + '!important;--sans:' + fam + '!important;--mono:' + mono + '!important}';
     document.head.appendChild(st);
   }
+  const effScale = (el) => {
+    let sc = 1;
+    for (let e = el; e && e.nodeType === 1; e = e.parentElement) {
+      const t = getComputedStyle(e).transform;
+      if (t && t !== 'none') { const m = new DOMMatrix(t); sc *= Math.hypot(m.a, m.b); }
+    }
+    return sc;
+  };
   const issues = [];
   const slides = [...document.querySelectorAll('.slide')];
   const shrink = (r) => ({ l: r.left, r: r.right, t: r.top + r.height * 0.22, b: r.bottom - r.height * 0.22 });
@@ -33,7 +48,16 @@
       items.push({ n, el, rects, text: n.nodeValue.trim().slice(0, 36), svg: el.closest('svg') });
     }
     const add = (kind, text, extra) => issues.push({ slide: idx + 1, kind, text, ...extra });
+    const foot = s.querySelector('.src');
+    const footTop = foot ? (foot.getBoundingClientRect().top - sr.top) / k : null;
     items.forEach((it) => {
+      const px = parseFloat(getComputedStyle(it.el).fontSize) * effScale(it.el);
+      const wordy = /[A-Za-z]{4,}/.test(it.text) && it.text.length >= 8 && !it.el.closest('.src');
+      if (px < MIN_NUM - 0.05 || (wordy && px < MIN_WORD - 0.05)) add('small-text', it.text + ' (' + px.toFixed(1) + 'px)', {});
+      if (footTop !== null && !it.el.closest('.src') && !/^\d+$/.test(it.text)) {
+        const bottom = Math.max(...it.rects.map((r) => (r.bottom - sr.top) / k));
+        if (bottom > footTop - 6 && bottom < 720 && it.rects.some((r) => (r.top - sr.top) / k < footTop + 4)) add('crowds-footer', it.text, {});
+      }
       it.rects.forEach((r) => {
         if (r.left < sr.left - 2 || r.right > sr.right + 2 || r.top < sr.top - 2 || r.bottom > sr.bottom + 2) add('outside-slide', it.text, {});
         if (it.svg) {
@@ -55,6 +79,26 @@
       const cs = getComputedStyle(el);
       if (cs.overflow !== 'visible' && el.tagName !== 'svg' && !el.closest('svg') && (el.scrollHeight > el.clientHeight + 2 || el.scrollWidth > el.clientWidth + 2) && el.clientWidth > 0) add('clipped', (el.textContent || '').trim().slice(0, 36), {});
     });
+    // a drawn box edge (CSS border or stroked svg rect) that runs through text which is not inside that box
+    const edges = [];
+    s.querySelectorAll('*').forEach((el) => {
+      const cs = getComputedStyle(el);
+      const r = el.getBoundingClientRect();
+      if (r.width < 8 || r.height < 8) return;
+      if (el.tagName.toLowerCase() === 'rect' && el.closest('svg')) {
+        if (cs.stroke !== 'none' && parseFloat(cs.strokeWidth) >= 1 && cs.fill === 'none') edges.push({ el, h: [[r.left, r.right, r.top], [r.left, r.right, r.bottom]], v: [[r.top, r.bottom, r.left], [r.top, r.bottom, r.right]] });
+      } else if (el.tagName.toLowerCase() !== 'svg' && ['Top', 'Bottom', 'Left', 'Right'].every((d) => parseFloat(cs['border' + d + 'Width']) >= 1.5 && cs['border' + d + 'Style'] !== 'none')) {
+        edges.push({ el, h: [[r.left, r.right, r.top], [r.left, r.right, r.bottom]], v: [[r.top, r.bottom, r.left], [r.top, r.bottom, r.right]] });
+      }
+    });
+    edges.forEach((b) => items.forEach((it) => {
+      if (b.el.contains(it.el)) return;
+      it.rects.forEach((r) => {
+        const ins = shrink(r);
+        const hit = b.h.some(([x0, x1, y]) => ins.t < y && ins.b > y && Math.min(r.right, x1) - Math.max(r.left, x0) > 3) || b.v.some(([y0, y1, x]) => r.left < x && r.right > x && Math.min(ins.b, y1) - Math.max(ins.t, y0) > 3);
+        if (hit) add('box-crosses-text', it.text, {});
+      });
+    }));
     const imgs = [...s.querySelectorAll('img')].map((i) => i.getBoundingClientRect());
     items.forEach((it) => it.rects.forEach((r) => imgs.forEach((ib) => { if (inter({ l: r.left, r: r.right, t: r.top, b: r.bottom }, { l: ib.left, r: ib.right, t: ib.top, b: ib.bottom }) > 20) add('text-over-figure', it.text, {}); })));
   });

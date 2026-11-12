@@ -66,6 +66,37 @@ def _run(tmp_path, body, stress=False):
 
 
 @needs_chrome
+def test_probe_detects_words_below_the_minimum_size(tmp_path):
+    bad = "<p style='left:60px;top:100px;width:600px;font:11px Arial'>A caption that is too small to read</p>"
+    assert any(i["kind"] == "small-text" for i in _run(tmp_path, bad))
+    ok = "<p style='left:60px;top:100px;width:600px;font:14px Arial'>A caption at the minimum size</p>"
+    assert _run(tmp_path, ok) == []
+
+
+@needs_chrome
+def test_probe_detects_text_crowding_the_source_line(tmp_path):
+    bad = "<p style='left:60px;top:640px;width:600px;font:20px/1.4 Arial'>Body text that runs down to the footer line</p><div class='src' style='left:60px;top:678px;font:14px Arial'>source line</div>"
+    assert any(i["kind"] == "crowds-footer" for i in _run(tmp_path, bad))
+    ok = "<p style='left:60px;top:560px;width:600px;font:20px/1.4 Arial'>Body text that ends well above the footer</p><div class='src' style='left:60px;top:678px;font:14px Arial'>source line</div>"
+    assert _run(tmp_path, ok) == []
+
+
+@needs_chrome
+def test_probe_detects_a_box_edge_running_through_text(tmp_path):
+    # the failure of the routing slide: a stroked box drawn over the caption below it
+    bad = "<svg style='left:60px;top:100px' width='500' height='200'><rect x='10' y='10' width='400' height='150' fill='none' stroke='#000' stroke-width='2'/><text x='20' y='164' font-size='18'>a caption cut by the bottom edge</text></svg>"
+    assert any(i["kind"] == "box-crosses-text" for i in _run(tmp_path, bad))
+    ok = "<svg style='left:60px;top:100px' width='500' height='200'><rect x='10' y='10' width='400' height='150' fill='none' stroke='#000' stroke-width='2'/><text x='20' y='60' font-size='18'>text inside the box</text><text x='20' y='190' font-size='18'>text below the box</text></svg>"
+    assert _run(tmp_path, ok) == []
+
+
+@needs_chrome
+def test_probe_detects_a_rotated_label_leaving_its_svg(tmp_path):
+    bad = "<svg style='left:100px;top:100px' width='200' height='100'><text x='2' y='50' font-size='14' transform='rotate(-90 2 50)'>precision</text></svg>"
+    assert any(i["kind"] == "outside-svg" for i in _run(tmp_path, bad))
+
+
+@needs_chrome
 def test_probe_detects_overlapping_text(tmp_path):
     bad = "<p style='left:60px;top:100px;width:400px;font:30px Arial'>First block of text</p><p style='left:60px;top:105px;width:400px;font:30px Arial'>Second block of text</p>"
     assert any(i["kind"] == "text-overlap" for i in _run(tmp_path, bad))
@@ -90,13 +121,75 @@ def _deck_issues(stress):
     return check_layout.probe(SLIDES / "thesis_progress.html", CHROME, stress)
 
 
+FONT_IDS = [name for name, _ in check_layout.FONT_MATRIX]
+
+
+def _deck_issues_for(opts):
+    import build_deck
+
+    build_deck.assemble()
+    return check_layout.probe(
+        SLIDES / "thesis_progress.html", CHROME, opts.get("stress", False), opts.get("fonts")
+    )
+
+
 @needs_chrome
-@pytest.mark.parametrize("stress", [False, True], ids=["preferred fonts", "fallback fonts"])
-def test_cover_and_type_slide_have_no_collisions(stress):
-    issues = [i for i in _deck_issues(stress) if i["slide"] in (1, 5)]
+@pytest.mark.parametrize("opts", [o for _, o in check_layout.FONT_MATRIX], ids=FONT_IDS)
+def test_cover_and_type_slide_have_no_collisions(opts):
+    issues = [i for i in _deck_issues_for(opts) if i["slide"] in (1, 5)]
     assert issues == []
 
 
 @needs_chrome
-def test_whole_deck_has_no_layout_issues():
-    assert _deck_issues(False) == []
+@pytest.mark.parametrize("opts", [o for _, o in check_layout.FONT_MATRIX], ids=FONT_IDS)
+def test_whole_deck_has_no_layout_issues_in_every_font_configuration(opts):
+    assert _deck_issues_for(opts) == []
+
+
+def test_matrix_cell_text_has_wcag_contrast_on_every_fill():
+    worst = min(
+        deck_lib.contrast(deck_lib.cividis(i / 100), deck_lib.text_on(deck_lib.cividis(i / 100)))
+        for i in range(101)
+    )
+    assert worst >= 4.5, f"lowest matrix text contrast is {worst:.2f}"
+
+
+def test_native_pr_curves_are_the_recorded_data():
+    d = deck_lib.PR_DATA["datasets"]
+    assert set(d) == {"credit_card", "water_quality", "cardio", "synthetic"}
+    for ds in d.values():
+        for m in ds["methods"].values():
+            xs = [p[0] for p in m["points"]]
+            assert xs == sorted(xs) and xs[0] == 0.0 and 0.0 <= m["ap"] <= 1.0
+    assert round(d["cardio"]["methods"]["isolation_forest"]["ap"], 2) == 0.80
+
+
+def test_severity_panels_use_only_methods_that_exist_in_the_csv():
+    import csv
+
+    methods = {r["method"] for r in csv.DictReader(deck_lib.SEVERITY_CSV.open())}
+    svg = deck_lib.severity_panels(
+        0, 0, 1152, 318, "dark", {"temporal_drift": [("isolation_forest", "A"), ("drift", "D")]}
+    )
+    assert {"isolation_forest", "drift"} <= methods and svg.count("<polyline") >= 12 * 3
+
+
+def _slides_text():
+    import build_deck  # noqa: F401  (importing registers the slides)
+
+    return {i + 1: re.sub(r"<[^>]+>", " ", s["body"]) for i, s in enumerate(deck_lib.SLIDES)}
+
+
+def test_severity_slide_does_not_claim_a_stable_ranking():
+    # the paper says the ranking changes with severity; an earlier title said the opposite
+    text = _slides_text()[23].lower()
+    assert "stable" not in text and "same families lead the same columns" not in text
+
+
+def test_pad_plates_state_their_role_and_the_lit_count_is_the_labelled_count():
+    import deck_b
+
+    assert len(deck_b.labelled) == 100 and len(deck_b._cells) == 152
+    text = _slides_text()
+    assert "illustration" in text[13].lower() and "not data" in text[13].lower()
+    assert "arbitrary" in text[24].lower()

@@ -32,7 +32,9 @@ pdftoppm -r 150 -png slides/thesis_progress.pdf /tmp/slides   # review at 150 dp
 See `art/PROVENANCE.md`. Three generated still-life illustrations are used as openers and for the
 mutation explanation, each labelled on the slide as an illustration. Charts and tables carry values
 from the paper and verification notes; the 17 by 6 recall matrix and the mutation chart are drawn in
-SVG from those values. The remaining figures are the archived PNGs of `../paper/figures/`.
+SVG from those values. The precision-recall curves (slide 22) are drawn from `art/data/pr_curves.json`, exported by
+`art/tooling/export_pr_curves.py` with the detectors, datasets and seed of `experiments/run_curves.py`; the severity
+curves (slide 23) are drawn from `verification/evidence/severity.csv`. No archived PNG is embedded in the deck.
 
 ## Art direction (2026-11-12)
 
@@ -48,14 +50,25 @@ steel marks what held under test or the best of a column or chart; neutral ink c
 editorial emphasis (`.em`, bold only); matrices use the cividis scale (0 to 1) for measured recall, so
 cividis yellow is a value, not a warning. Every coloured mark also carries a word or a symbol.
 The composition inventory is generated to `docs/thesis-remediation/SLIDE_COMPOSITION_INVENTORY_2026-11-12.md`.
-Known limits: the PR-curve and severity figures are still the archived matplotlib PNGs on a light sheet.
 
 ## Layout checks
 
-`python3 slides/check_layout.py` loads the built deck in headless Chromium and reports, per slide, text that
-overlaps other text, leaves its slide or its svg, is clipped, or sits over a figure. `--stress` swaps in wide
-fallback fonts to catch layouts that only work with Avenir Next. Text stacks use `flow()` (see
-`deck_lib.py`) so a longer line pushes the next block down; the stack shrinks only if it would not fit.
-`slides/tests/test_deck.py` covers the cover, the six anomaly pictograms and the checker itself.
-Limits: the check measures text boxes, not contrast or meaning; the archived matplotlib figures are images and
-are not inspected. Semantic review is in `docs/thesis-remediation/SLIDE_VISUAL_SEMANTIC_AUDIT_2026-11-12.md`.
+`python3 slides/check_layout.py` loads the built deck in headless Chromium and reports, per slide, from rendered
+geometry: text that overlaps other text, leaves its slide or its svg, is clipped, sits over a figure, runs through a
+drawn box edge (`box-crosses-text`), crowds the source line at the foot, or is below the minimum size (no text under
+13px, running words under 14px, at 1280 by 720; this is the rule for captions, legends, axis labels and footnotes).
+`--stress` forces Arial; `--fonts FAMILY` forces any family; `--matrix` runs seven configurations (the deck's own
+stack, Arial, generic sans-serif, Verdana, DejaVu Sans, Helvetica, Georgia) and writes one JSON report per
+configuration with `--report-dir`. Text stacks use `flow()` (see `deck_lib.py`) so a longer line pushes the next
+block down; the stack shrinks only if it would not fit, and a shrink that takes words under 14px is itself reported.
+
+`make verify-slides` runs the whole gate: the committed HTML must match its generator (`build_deck.py --check`), the
+matrix must be clean, and the browser regression tests must pass. It never skips: without a Chromium it fails. It is
+the `slides` job of `.github/workflows/ci.yml` (Playwright 1.62.1 Chromium, `fonts-liberation`, `fonts-dejavu-core`),
+separate from FAST, which stays independent of any browser and deselects the `browser` tests when none is installed.
+
+Limits, stated plainly: the check measures text boxes and drawn box edges, not contrast, meaning, scientific content or
+image relevance. Zero findings is a necessary condition, not proof that a slide is right. Matrix-cell text contrast is
+tested separately (WCAG ratio of at least 4.5 on every fill of the cividis scale). Semantic review is in
+`docs/thesis-remediation/SLIDE_VISUAL_SEMANTIC_AUDIT_2026-11-12.md` and
+`docs/thesis-remediation/SLIDE_FINAL_REMEDIATION_2026-11-12.md`.

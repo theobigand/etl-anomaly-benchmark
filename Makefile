@@ -2,7 +2,7 @@ CONDA_ENV := etl-benchmark
 # any Chromium-family binary that supports --print-to-pdf (chrome, chromium, chrome-headless-shell)
 CHROME ?= chromium
 
-.PHONY: help env update test lint verify-fast verify-preprocessing verify-deep verify-faults verify-real verify-pool verify-scale lock verify-types verify-tools verify-reproduce verify-release verify-all pipeline benchmark benchmark-water benchmark-cardio synthetic heatmap severity curves slides run clean
+.PHONY: help env update test lint verify-fast verify-preprocessing verify-deep verify-faults verify-real verify-pool verify-scale lock verify-types verify-tools verify-slides verify-reproduce verify-release verify-all pipeline benchmark benchmark-water benchmark-cardio synthetic heatmap severity curves slides run clean
 
 help:
 	@echo "Available targets:"
@@ -19,6 +19,7 @@ help:
 	@echo "  make verify-scale Measure bounded detector growth outside FAST"
 	@echo "  make lock       Record the exact conda and pip packages of the active environment"
 	@echo "  make verify-types mypy: verification/ clean, scientific code may not add errors"
+	@echo "  make verify-slides Rendered-geometry check of the deck in Chromium under 7 font configurations (never skipped)"
 	@echo "  make verify-tools Measure line/branch coverage of the verifier code in verification/ (separate from FAST)"
 	@echo "  make verify-reproduce Controlled cardio reproduction (archive, same and locked environment), write evidence"
 	@echo "  make verify-release Certify the evidence required by verification/release_policy.json for the current clean revision"
@@ -179,6 +180,14 @@ slides:
 	$(CHROME) --headless --no-pdf-header-footer \
 	  --print-to-pdf=slides/thesis_progress.pdf \
 	  "file://$(CURDIR)/slides/thesis_progress.html"
+
+# Slide quality: require the committed deck to match its generator, then measure rendered
+# geometry in headless Chromium under every font configuration and run the browser regression tests.
+# Fails when no Chromium is found; it is never skipped. Needs CHROME or a Playwright Chromium.
+verify-slides:
+	python slides/build_deck.py --check
+	python slides/check_layout.py --matrix --report-dir experiments/results/slides
+	SLIDES_REQUIRE_BROWSER=1 python -m pytest slides/tests -m browser -o addopts="-ra -q" -p no:cacheprovider
 
 curves:
 	python experiments/run_curves.py

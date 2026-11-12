@@ -64,3 +64,6 @@ data/pool/
 
 /.venv
 
+
+# slide-quality job output (layout reports, renders)
+experiments/results/slides/

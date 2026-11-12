@@ -94,7 +94,7 @@ pre{font:500 18px/1.5 var(--mono);white-space:pre}
 .anom{color:var(--ember)}.bone .anom{color:var(--ember-ink)}
 .ok{color:var(--steel)}.bone .ok{color:var(--steel-ink)}
 td.cool{background:var(--steel-wash);color:#16262d}
-.tag{display:inline-block;font:600 13px var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border:1.5px solid currentColor}
+.tag{display:inline-block;font:600 14px var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border:1.5px solid currentColor}
 
 /* flow: blocks stack by their real height, so a longer line pushes the next block instead of overlapping it */
 .flow{display:flex;flex-direction:column;gap:18px}

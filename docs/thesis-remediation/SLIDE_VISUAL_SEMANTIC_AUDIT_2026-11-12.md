@@ -24,19 +24,19 @@ pictogram function served several unrelated concepts.
 
 | Slide | Visual | Concept | Kind | Verdict |
 | --- | --- | --- | --- | --- |
-| 1 | generated still life, one raised pad among 312 | an anomaly shows under raking light | illustration (labelled) | metaphor, not evidence; keep |
+| 1 | generated still life, one raised pad | an anomaly shows under raking light | illustration (labelled) | metaphor, not evidence; keep |
 | 3 | filled and empty circles per paper and property | what each cited work reports | data (literature scan) | accurate to the slide text |
 | 5 | six diagrams | the six injected anomaly types | illustration (labelled) | distinct and each labelled; rebuilt |
 | 6 | pipeline boxes and code | extract, transform, detect, load | schematic | matches the paper's pipeline |
 | 8 | four lanes of detectors | family taxonomy from the paper | schematic | accurate |
 | 9 | normal curve with shaded tails | tails beyond 3 sigma and the IQR fences | illustration with data (0.27%, 0.70%) | tails drawn to scale, so thin; labelled "flagged tails" |
-| 13 | plate of pads with six defective pads | decorative opener | decoration (labelled) | not a type legend; caption says so |
+| 13 | plate of regular pads, one raised pad casting a shadow | opener: the raking-light idea (a regular surface shows what departs from it) | illustration (labelled) | the six odd pads of the first version could be read as a legend of the six types; reduced to one raised pad, which is the deck's own metaphor and encodes no data |
 | 14 | log axis of anomaly share | four datasets | data | accurate |
 | 17, 18 | bar charts | AP, F1, precision per detector | data, axis from 0 | accurate |
 | 19 | precision-recall scatter with F1 curves | ten of seventeen detectors | data | accurate, subset stated |
 | 20, 27, 28 | matrices on cividis | recall or AP per detector and type | data | accurate; 28 parsed from `verification/evidence/full_registry/summary.md` |
-| 22, 23 | archived matplotlib figures | PR curves, severity curves | data | accurate, off-palette, small legends (open) |
-| 24 | plate of 152 pads, 100 with a lit edge | decorative opener | decoration (labelled) | counts are encoded but not readable as data; caption says so |
+| 22, 23 | native small multiples from `art/data/pr_curves.json` and `verification/evidence/severity.csv` | PR curves, severity curves | data | rebuilt; 14 px type, direct labels, highest and lowest AP chosen by rule; PCA differs from the archived figure on two datasets (see final remediation note) |
+| 24 | plate of 152 pads, 100 with a lit edge | opener: pool size and the labelled subset | illustration (labelled) | 152 is one pad per pool table and 100 is the number of labelled problems (paper: 152 tables, 100 labelled problems); which pads are lit is a seeded shuffle, because a reading-order fill implied a spatial structure that does not exist; caption says so |
 | 25 | funnel boxes | dataset accounting | data | 47 to 36, 689 to 133 to 116, 36 + 116 = 152, 36 + 64 = 100 |
 | 26, 32 | interval dot plots | median with 95% interval | data | accurate |
 | 30 | slope chart | AP stratified against chronological | data | accurate |
@@ -64,3 +64,24 @@ deliberately not drawn with pads any more.
 Fonts other than Avenir Next Condensed were tested only through one fallback (Arial). Small chart labels on
 slides 22 and 23 (archived figures) remain below the legibility floor. The cividis scale is perceptually
 uniform and colour-blind safe, but the yellow end resembles amber; every amber mark also has a word.
+
+## Third pass (2026-11-12): corrections found by rendered inspection
+
+Found by reading all 51 slides at 150 dpi, after the layout checker reported zero findings. The checker could not see
+these, which is why two new rules were added to it (`box-crosses-text`, `small-text`) and the rest were fixed by hand.
+
+| Slide | Defect | Fix |
+| --- | --- | --- |
+| 23 | title said the per-type ranking is stable; the paper (Section on severity) says the ranking changes with severity; the stat "0.3 to 0.85, severity 1 to 3" mixed a severity-1 value with a severity-5 value | title and text rewritten from the paper; stat is Isolation Forest drift recall 0.28 to 0.65 (severity 1 to 3), read from the CSV |
+| 15 | footnote repeated "the per-type ranking does not change" | removed |
+| 22 | prose named Isolation Forest and One-Class SVM on Cardio though ECOD (0.83) is higher; credit-card claim could not be checked | text now lists ECOD, Isolation Forest, COPOD and One-Class SVM with their AP, and states the credit-card ranking from the data (COPOD 0.28, Great Expectations 0.23, Isolation Forest 0.17) |
+| 38 | stage 2 box (to y 430) and stage 3 box (from y 424) overlapped, and the stage 3 border ran through the note below | boxes laid out from named constants with gaps; probe rule added and tested |
+| 5 | axis line ran through the label "balance" | label moved |
+| 9 | "flagged tails" label crossed two dashed lines | halo behind the label |
+| 19 | "Z-score" and "HBOS" labels sat on the plot frame; F1 labels were struck through by their curves | labels moved inside; halo on F1 labels |
+| 14 | the captions of Cardio and Water Quality ran together; stats crowded the chart | Cardio caption shifted, chart moved up, text stacks in a flow |
+| 15, 40 | numerals at 50% opacity (about 3.3:1) | 72% |
+| 20, 27, 28 | cell text 2.9 to 4.2:1 on mid cividis fills | text chosen by WCAG ratio, pure black or white, minimum 4.68:1; tested |
+| 1, 51 | caption claimed "one pad of 312" for a generated image whose pad count cannot be verified | the number was removed |
+| 39 | headline broke with a one-word second line | explicit break |
+| 11, 45, 50, 2 | large unused areas from fixed positions | recomposed (see final remediation note) |

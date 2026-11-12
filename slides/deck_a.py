@@ -16,7 +16,9 @@ from deck_lib import (
     mono,
     padfield,
     photo,
+    pr_panels,
     pr_scatter,
+    severity_panels,
     slide,
     svg,
     tbl,
@@ -51,14 +53,14 @@ slide(
                 "background:linear-gradient(90deg,rgba(10,10,10,0) 44%,rgba(10,10,10,.82) 60%,rgba(10,10,10,.9) 100%)",
             ),
             flow(
-                736,
+                704,
                 52,
-                496,
+                528,
                 [
                     "<div class='k'>ESILV Data &amp; AI &nbsp;·&nbsp; master thesis</div>",
-                    "<h1 style='font-size:58px;line-height:1.02'>Anomaly detection for data quality, <span class='em'>measured</span> inside the ETL pipeline</h1>",
+                    "<h1 style='font-size:54px;line-height:1.04'>Anomaly detection for data quality, <span class='em'>measured</span> inside the ETL pipeline</h1>",
                     "<p style='font-size:20px;color:#c4bfb3'>Rules, classical and neural detectors run through one pipeline and compared per anomaly type. Living progress deck, 2026-11-12.</p>",
-                    "<div class='note'>Illustration, not data: a generated still life. One pad of 312 stands proud; the low light finds it.</div>",
+                    "<div class='note'>Illustration, not data: a generated still life. One pad stands proud; the low light finds it.</div>",
                     "<div class='k'>17 detectors &nbsp; 6 types &nbsp; 152 datasets</div>",
                     "<div class='src'>Theo Bigand<br>github.com/theobigand/etl-anomaly-benchmark</div>",
                 ],
@@ -83,12 +85,12 @@ slide(
         [
             flow(
                 64,
-                56,
+                92,
                 1152,
                 [
                     "<div class='k'>The question</div>",
-                    "<h1 style='font-size:80px;line-height:1.0;max-width:1060px'>Does machine learning in an ETL pipeline beat plain rules, and for <span class='em'>which anomalies</span>?</h1>",
-                    "<div style='display:flex;gap:44px;align-items:flex-start'>"
+                    "<h1 style='font-size:64px;line-height:1.04;max-width:1060px'>Does machine learning in an ETL pipeline beat plain rules, and for <span class='em'>which anomalies</span>?</h1>",
+                    "<div style='display:flex;gap:40px;align-items:flex-start'>"
                     "<p class='lede' style='font-size:22px;flex:1'>Rules are the industry default: auditable, cheap, and blind to what the author did not anticipate. Recent work puts ML detectors inside the flow, but on one algorithm and one dataset. This thesis builds the missing head-to-head benchmark and breaks the result down by anomaly type.</p>"
                     "<div style='flex:1;border-left:2px solid var(--graphite-line);padding-left:36px'>"
                     "<div class='k' style='margin-bottom:12px'>What generic benchmarks leave out</div>"
@@ -97,7 +99,7 @@ slide(
                     "<p style='font-size:18px;margin-bottom:10px'><b>Types.</b> One aggregate score per dataset hides which family finds which defect.</p>"
                     "<p style='font-size:18px'><b>Threshold.</b> One flag threshold, not the precision-recall trade-off.</p></div></div>",
                 ],
-                maxh=606,
+                maxh=580,
                 gap=28,
             ),
             foot("paper/main.tex, IMRaD experimental paper"),
@@ -189,21 +191,16 @@ slide(
             D(500, 184, 330, None, "k", "reports time order?"),
             D(850, 184, 366, None, "k", "reports decisions at a threshold?"),
             *rows,
-            D(
+            flow(
                 64,
-                572,
+                600,
                 1152,
-                None,
-                "legend",
-                "<span class='ok'>&#9679;</span> found in the text I read &nbsp;&nbsp; &#9675; not found, which is not proof of absence. The scan is not systematic: this is a gap I did not find filled.",
-            ),
-            D(
-                64,
-                618,
-                1152,
-                None,
-                "note",
-                "In the texts I read, ADBench and AnoShift report AUC only, and none of these works breaks results down by data-quality fault. References checked against a primary source or the DOI registry.",
+                [
+                    "<div class='legend' style='position:static'><span class='ok'>&#9679;</span> found in the text I read &nbsp;&nbsp; &#9675; not found, which is not proof of absence. The scan is not systematic: this is a gap I did not find filled.</div>",
+                    "<div class='note' style='position:static'>In the texts I read, ADBench and AnoShift report AUC only, and none of these works breaks results down by data-quality fault. References checked against a primary source or the DOI registry.</div>",
+                ],
+                maxh=72,
+                gap=6,
             ),
             foot("verification/references.md, bibliography verified against primary sources"),
         ]
@@ -404,7 +401,7 @@ slide(
                 1152,
                 None,
                 "",
-                "<div class='num' style='font-size:128px;font-weight:700'>AP <span style='opacity:.5'>=</span> &Sigma; &Delta;R &middot; P</div>",
+                "<div class='num' style='font-size:128px;font-weight:700'>AP <span style='opacity:.7'>=</span> &Sigma; &Delta;R &middot; P</div>",
             ),
             D(
                 64,
@@ -523,7 +520,7 @@ for name, chips in lanes:
                 192,
                 None,
                 "",
-                f"<div style='font:700 17px var(--sans)'>{n}</div><div style='font:400 15px/1.3 var(--sans);margin-top:3px'>{pr}</div><div class='note' style='font-size:13px;margin-top:3px'>limit: {lim}</div>",
+                f"<div style='font:700 17px var(--sans)'>{n}</div><div style='font:400 15px/1.3 var(--sans);margin-top:3px'>{pr}</div><div class='note' style='font-size:14px;margin-top:3px'>limit: {lim}</div>",
             )
         )
     y += 126 if len(chips) > 1 else 100
@@ -558,6 +555,9 @@ sy = lambda z: H0 - 20 - 190 * math.exp(-z * z / 2)  # noqa: E731
 curve = " ".join(f"{sx(-4 + k * 0.05):.1f},{sy(-4 + k * 0.05):.1f}" for k in range(161))
 
 
+HALO = "style='paint-order:stroke;stroke:#141516;stroke-width:6px;stroke-linejoin:round'"
+
+
 def tail(z0, z1, op):
     zs = [z0 + (z1 - z0) * k / 40 for k in range(41)]
     return f"<polygon points='{' '.join(f'{sx(z):.1f},{sy(z):.1f}' for z in zs)} {sx(z1):.1f},{H0 - 20} {sx(z0):.1f},{H0 - 20}' fill='#eaa24f' opacity='{op}'/>"
@@ -577,10 +577,10 @@ dist = "".join(
         ],
         txt(sx(3), 16, "Z-score +3", 14, "#ece6da", "middle"),
         txt(sx(-3), 16, "-3", 14, "#ece6da", "middle"),
-        txt(sx(2.698) - 4, 40, "IQR fence", 14, "#ece6da", "end"),
+        txt(sx(2.698) - 4, 40, "IQR fence", 14, "#ece6da", "end", extra=HALO),
         txt(sx(0), H0, "training mean", 14, "#a9a498", "middle"),
         f"<line x1='{sx(3.25)}' x2='{sx(3.25)}' y1='{H0 - 62}' y2='{H0 - 24}' stroke='#eaa24f'/>",
-        txt(sx(3.25), H0 - 68, "flagged tails", 14, "#eaa24f", "middle", 700),
+        txt(sx(3.25), H0 - 68, "flagged tails", 14, "#eaa24f", "middle", 700, extra=HALO),
     ]
 )
 slide(
@@ -662,9 +662,9 @@ for i, (n, p, f) in enumerate(neural):
             250,
             None,
             "",
-            f"<div class='cond' style='font-size:38px;font-weight:700'>{n}</div>",
+            f"<div class='cond' style='font-size:34px;font-weight:700'>{n}</div>",
         ),
-        D(330, y + 4, 300, None, "", f"<div style='font:500 17px/1.3 var(--sans)'>{p}</div>"),
+        D(350, y + 4, 290, None, "", f"<div style='font:500 17px/1.3 var(--sans)'>{p}</div>"),
         D(650, y + 4, 180, None, "", f"<div class='note' style='font-size:14px'>{f}</div>"),
     ]
 body += [
@@ -696,31 +696,36 @@ slide(
         [
             kicker("Evaluated variants"),
             title("Stable row scores require explicit adaptations", 48, 70),
-            D(
+            flow(
                 64,
-                232,
-                560,
-                None,
-                "",
-                "<p class='lede' style='font-size:23px'>A fitted ETL detector must score a row without consulting other evaluation rows. Contract tests check the 17 row-level detectors; the time-window monitor has a different contract.</p>",
-            ),
-            D(
-                704,
-                236,
-                512,
-                None,
-                "",
-                "<div class='cond' style='font-size:28px;font-weight:600'>ECOD and COPOD</div><p style='font-size:18px;margin:6px 0 20px'>PyOD 3.6.7 recomputes tails and skew with the evaluated batch. Here ranks and skew signs are frozen from training.</p>"
-                "<div class='cond' style='font-size:28px;font-weight:600'>Copula motivation versus score</div><p style='font-size:18px;margin:6px 0 20px'>COPOD adds marginal contributions: it is not a fitted general joint copula. ECOD takes the max of both log tails and the skew term.</p>"
-                "<div class='cond' style='font-size:28px;font-weight:600'>Neural scoring</div><p style='font-size:18px;margin:6px 0 0'>VAE decodes the latent mean; DIF reuses a training scaler; AE1SVM padding reweights its last row. These are algorithm changes.</p>",
-            ),
-            D(
-                64,
-                470,
-                560,
-                None,
-                "",
-                "<div class='k'>Evidence boundary</div><p style='font-size:20px;margin-top:8px'>Bounded tests support batch independence, not universal equivalence. Separate ablations remain open; historical results keep their actual adapted configurations.</p>",
+                172,
+                1152,
+                [
+                    "<p class='lede' style='font-size:24px;max-width:1040px'>A fitted ETL detector must score a row without consulting other evaluation rows. Contract tests check the 17 row-level detectors; the time-window monitor has a different contract.</p>",
+                    "<div style='display:grid;grid-template-columns:340px 1fr;border-top:1px solid var(--line)'>"
+                    + "".join(
+                        f"<div class='cond' style='font-size:28px;font-weight:600;padding:12px 0;border-bottom:1px solid var(--line)'>{a}</div>"
+                        f"<p style='font-size:21px;line-height:1.32;margin:0;padding:14px 0 12px;border-bottom:1px solid var(--line)'>{b}</p>"
+                        for a, b in [
+                            (
+                                "ECOD and COPOD",
+                                "PyOD 3.6.7 recomputes tails and skew with the evaluated batch. Here ranks and skew signs are frozen from training.",
+                            ),
+                            (
+                                "Copula motivation versus score",
+                                "COPOD adds marginal contributions: it is not a fitted general joint copula. ECOD takes the max of both log tails and the skew term.",
+                            ),
+                            (
+                                "Neural scoring",
+                                "VAE decodes the latent mean; DIF reuses a training scaler; AE1SVM padding reweights its last row. These are algorithm changes.",
+                            ),
+                        ]
+                    )
+                    + "</div>",
+                    "<div style='display:grid;grid-template-columns:340px 1fr'><div class='k'>Evidence boundary</div><p style='font-size:20px;margin:0'>Bounded tests support batch independence, not universal equivalence. Separate ablations remain open; historical results keep their actual adapted configurations.</p></div>",
+                ],
+                maxh=500,
+                gap=22,
             ),
             foot(
                 "paper/main.tex, Classical and deep detectors &nbsp;·&nbsp; PyOD 3.6.7 &nbsp;·&nbsp; paired adaptation ablations remain open"
@@ -728,8 +733,8 @@ slide(
         ]
     ),
     role="caveat",
-    family="typographic columns",
-    dominant="text",
+    family="ledger of adaptations",
+    dominant="ledger rows",
     density="medium",
 )
 
@@ -799,14 +804,7 @@ slide(
             padfield(
                 14,
                 8,
-                {
-                    (2, 2): "missing",
-                    (5, 5): "double",
-                    (9, 2): "raised",
-                    (11, 5): "shift",
-                    (3, 6): "slope",
-                    (7, 1): "crack",
-                },
+                {(9, 2): "raised"},
                 seed=11,
             ),
             D(
@@ -841,7 +839,7 @@ slide(
                 700,
                 None,
                 "note",
-                "Decorative plate of pads under low light. Coded SVG, not a photograph, not data.",
+                "Illustration: a regular plate of pads under low light; the one raised pad casts a shadow. Coded SVG, not data.",
             ),
         ]
     ),
@@ -891,6 +889,7 @@ ch.append(
         "middle",
     )
 )
+DX = {"Cardio": -70}  # keeps the two lower captions from running into each other
 for n, p, a, b, side in ds:
     x = px(p)
     ch.append(f"<circle cx='{x}' cy='150' r='11' fill='#151617'/>")
@@ -912,13 +911,13 @@ slide(
             title("Three example datasets bracket the method", 48, 66),
             svg(
                 64,
-                180,
+                160,
                 1152,
                 330,
                 "".join(ch)
                 + "".join(
                     txt(
-                        px(p),
+                        px(p) + DX.get(n, 0),
                         250,
                         n,
                         24,
@@ -927,37 +926,36 @@ slide(
                         700,
                         "Avenir Next Condensed, sans-serif",
                     )
-                    + txt(px(p), 276, f"{p:g}% anomalous", 17, "#151617", "middle", 600)
-                    + txt(px(p), 298, a, 15, "#55534d", "middle")
-                    + txt(px(p), 318, b, 15, "#55534d", "middle")
+                    + txt(
+                        px(p) + DX.get(n, 0), 276, f"{p:g}% anomalous", 17, "#151617", "middle", 600
+                    )
+                    + txt(px(p) + DX.get(n, 0), 298, a, 15, "#55534d", "middle")
+                    + txt(px(p) + DX.get(n, 0), 318, b, 15, "#55534d", "middle")
                     for n, p, a, b, side in ds
                     if side == "down"
                 ),
                 "datasets placed on a log axis of anomaly share",
             ),
-            D(
+            flow(
                 64,
-                540,
+                508,
                 700,
-                None,
-                "",
-                "<p style='font-size:20px'>Stratified 70 / 15 / 15 split, fit on train, every number reported on the held-out test set. Five seeds, mean &plusmn; std. The ML contamination is read from the train-set prevalence, not fixed at 10%.</p>",
+                [
+                    "<p style='font-size:20px'>Stratified 70 / 15 / 15 split, fit on train, every number reported on the held-out test set. Five seeds, mean &plusmn; std. The ML contamination is read from the train-set prevalence, not fixed at 10%.</p>",
+                    "<div class='note' style='position:static'>LOF and One-Class SVM run everywhere except Credit Card Fraud, where neither scales to 284k rows in the pipeline.</div>",
+                ],
+                maxh=166,
+                gap=14,
             ),
-            D(
+            flow(
                 820,
-                540,
+                508,
                 396,
-                None,
-                "stat sm",
-                "<span class='num'>0.01 &rarr; 0.20</span><span class='lab' style='font-size:16px'>Isolation Forest fraud precision, from the contamination change alone</span>",
-            ),
-            D(
-                64,
-                640,
-                760,
-                None,
-                "note",
-                "LOF and One-Class SVM run everywhere except Credit Card Fraud, where neither scales to 284k rows in the pipeline.",
+                [
+                    "<div class='stat sm' style='position:static'><span class='num'>0.01 &rarr; 0.20</span><span class='lab' style='font-size:16px'>Isolation Forest fraud precision, from the contamination change alone</span></div>"
+                ],
+                maxh=166,
+                gap=14,
             ),
             foot(
                 "src/etl_benchmark/datasets.py &nbsp;·&nbsp; config.BENCHMARK_SEEDS &nbsp;·&nbsp; data/*.csv gitignored"
@@ -1009,7 +1007,7 @@ for i, (_k, n, f) in enumerate(inj):
             70,
             None,
             "",
-            f"<span class='num' style='font-size:54px;opacity:.5'>{i + 1}</span>",
+            f"<span class='num' style='font-size:54px;opacity:.72'>{i + 1}</span>",
         ),
         D(
             x + 70,
@@ -1027,7 +1025,7 @@ body += [
         1152,
         None,
         "note",
-        "Severity 1.0 is the reference dataset. Missing values, duplicates and invalid formats have no magnitude to scale. Five types replace clean rows; duplicates are appended. Sweeping the multiplier turns &quot;we picked the magnitudes&quot; into a curve (severity slide), and the per-type ranking does not change.",
+        "Severity 1.0 is the reference dataset. Missing values, duplicates and invalid formats have no magnitude to scale. Five types replace clean rows; duplicates are appended. Sweeping the multiplier turns &quot;we picked the magnitudes&quot; into a curve (severity slide).",
     ),
     foot("src/etl_benchmark/synthetic.py &nbsp;·&nbsp; seed-reproducible, tested"),
 ]
@@ -1126,21 +1124,16 @@ slide(
                 "legend",
                 "<span class='ok'>&#9679;</span> best of its chart. Mean over 5 seeds, 15% held-out test split. LOF and One-Class SVM do not scale to 284k rows here.",
             ),
-            D(
+            flow(
                 870,
                 190,
                 346,
-                None,
-                "",
-                "<p style='font-size:19px'>The statistical rules recover most frauds (recall 0.87 and 0.97) at precision below 0.04. Isolation Forest changes once its contamination matches the prevalence: it flags 0.17% of rows and reaches the first usable precision, at recall 0.21 (F1 = 0.20 &plusmn; 0.07). Great Expectations leads AP, at precision 0.04.</p>",
-            ),
-            D(
-                870,
-                520,
-                346,
-                None,
-                "stat sm",
-                "<span class='num'>0.01 &rarr; 0.20</span><span class='lab' style='font-size:16px'>Isolation Forest precision when contamination goes from 0.10 to the prevalence</span>",
+                [
+                    "<p style='font-size:19px'>The statistical rules recover most frauds (recall 0.87 and 0.97) at precision below 0.04. Isolation Forest changes once its contamination matches the prevalence: it flags 0.17% of rows and reaches the first usable precision, at recall 0.21 (F1 = 0.20 &plusmn; 0.07). Great Expectations leads AP, at precision 0.04.</p>",
+                    "<div class='stat sm' style='position:static'><span class='num'>0.01 &rarr; 0.20</span><span class='lab' style='font-size:16px'>Isolation Forest precision when contamination goes from 0.10 to the prevalence</span></div>",
+                ],
+                maxh=430,
+                gap=14,
             ),
             foot(
                 "experiments/run_benchmark.py &nbsp;·&nbsp; make benchmark &nbsp;·&nbsp; the metric that matters here: AP"
@@ -1223,11 +1216,11 @@ slide(
 
 # 19 ----------------------------------------------------------------- synthetic aggregate: precision/recall scatter
 pts = [
-    ("Z-score", 1.0, 0.196, "n", (-12, 5, "end")),
-    ("HBOS", 1.0, 0.204, "n", (12, 5, "start")),
+    ("Z-score", 1.0, 0.196, "n", (-12, 24, "end")),
+    ("HBOS", 1.0, 0.204, "n", (12, 24, "start")),
     ("IQR", 0.584, 0.396, "n"),
     ("Isolation Forest", 0.495, 0.499, "n", (14, 20, "start")),
-    ("One-Class SVM", 0.478, 0.485, "n", (-12, 22, "end")),
+    ("One-Class SVM", 0.478, 0.485, "n", (-18, 24, "end")),
     ("KNN", 0.466, 0.469, "n", (-12, -4, "end")),
     ("VAE", 0.502, 0.507, "n", (12, -8, "start")),
     ("DIF", 0.589, 0.582, "best"),
@@ -1385,40 +1378,28 @@ slide(
                 "",
                 "<h2 style='font-size:46px'>One threshold hides the whole trade-off</h2>",
             ),
-            D(64, 150, 630, 504, "sheet", "", "overflow:hidden"),
-            D(
-                64,
-                150,
-                630,
-                504,
-                "",
-                "<img style='width:100%;height:100%;object-fit:contain' src='../paper/figures/pr_curves.png' alt='precision-recall curves per dataset'>",
-            ),
-            D(
-                740,
+            pr_panels(64, 138, "bone", 700, 520)[0],
+            flow(
+                800,
                 160,
-                476,
-                None,
-                "",
-                "<p style='font-size:21px'>On <b>Cardio</b> the Isolation Forest and One-Class SVM curves stay high (AP 0.80, 0.76). On <b>Water Quality</b> every curve hugs the 0.61 base-rate line. On <b>Credit Card Fraud</b> two methods dominate but neither clears precision 0.4 except at negligible recall.</p>",
-            ),
-            D(
-                740,
-                460,
-                476,
-                None,
-                "stat sm",
-                "<span class='num'>0.37 &rarr; 0.008</span><span class='lab' style='font-size:16px'>Isolation Forest fraud precision as recall goes 0.23 to 0.92</span>",
+                416,
+                [
+                    "<p style='font-size:19px;line-height:1.36'>On <b>Cardio</b> four methods stay high (ECOD 0.83, Isolation Forest 0.80, COPOD 0.79, One-Class SVM 0.76). On <b>Water Quality</b> every curve stays near the 0.61 base rate. On <b>Credit Card Fraud</b> the highest AP is COPOD 0.28 (Great Expectations 0.23, Isolation Forest 0.17), and no curve holds precision above 0.41 once recall reaches 0.3.</p>",
+                    "<div class='stat sm' style='position:static'><span class='num'>0.37 &rarr; 0.008</span><span class='lab' style='font-size:17px'>Isolation Forest fraud precision as contamination goes from 0.001 to 0.20, while recall rises from 0.23 to 0.92</span></div>",
+                    "<p class='note' style='font-size:15px'>Per panel: highest AP (dark), lowest AP (blue, dashed), the others in grey. Dashed horizontal line: base rate.</p>",
+                ],
+                maxh=480,
+                gap=22,
             ),
             foot(
-                "experiments/run_curves.py &nbsp;·&nbsp; make curves &nbsp;·&nbsp; archived figure from paper/figures; its AP values come from the curve run and differ from the 5-seed means of slide 18"
+                "slides/art/data/pr_curves.json &nbsp;·&nbsp; AP is from this one run, not the 5-seed means of slide 18"
             ),
         ]
     ),
     tone="bone",
     role="evidence",
-    family="archived figure on a sheet",
-    dominant="figure",
+    family="native small multiples",
+    dominant="curves",
     density="medium",
 )
 
@@ -1434,41 +1415,53 @@ slide(
                 1152,
                 None,
                 "",
-                "<h2 style='font-size:44px'>The per-type ranking is stable as the magnitudes scale</h2>",
+                "<h2 style='font-size:44px'>One severity is not enough: the ranking moves</h2>",
             ),
-            D(64, 140, 1152, 330, "sheet", "", ""),
-            D(
+            severity_panels(
                 64,
-                140,
+                146,
                 1152,
-                330,
-                "",
-                "<img style='width:100%;height:100%;object-fit:contain' src='../paper/figures/severity_curves.png' alt='per-type recall against injection severity'>",
+                318,
+                "dark",
+                {
+                    "univariate_outlier": [("knn", "A"), ("lof", "B"), ("great_expectations", "C")],
+                    "multivariate_outlier": [("isolation_forest", "A"), ("iqr", "B"), ("knn", "C")],
+                    "temporal_drift": [
+                        ("isolation_forest", "A"),
+                        ("lof", "B"),
+                        ("knn", "C"),
+                        ("drift", "D"),
+                    ],
+                },
             ),
-            D(
+            flow(
                 64,
-                500,
-                700,
-                None,
-                "",
-                "<p style='font-size:20px'>Univariate outliers are saturated already at severity 0.5. Multivariate outliers show a threshold. Temporal drift climbs roughly linearly for the distributional detectors: the reference drift is below every method's floor, not a property of the methods. The same families lead the same columns at every severity.</p>",
+                484,
+                780,
+                [
+                    "<p style='font-size:19px;line-height:1.38'>Univariate outliers are saturated at severity 0.5. Multivariate outliers show a threshold: Isolation Forest and the One-Class SVM climb to recall 1.0, and IQR jumps from 0.04 to 1.0 once the injected percentile crosses its fence. Temporal drift becomes easier for IQR, Isolation Forest and the One-Class SVM, while LOF peaks earlier and then falls. The row-level drift detector does not respond.</p>",
+                    "<p class='note' style='font-size:15px'>Mean over three seeds, synthetic data. Grey: the other methods. Dashed vertical line: the reference severity 1.</p>",
+                ],
+                maxh=186,
+                gap=10,
             ),
-            D(
-                820,
-                500,
-                396,
-                None,
-                "stat sm",
-                "<span class='num'>&le;0.3 &rarr; 0.85</span><span class='lab' style='font-size:16px'>temporal-drift recall from severity 1 to 3</span>",
+            flow(
+                880,
+                484,
+                336,
+                [
+                    "<div class='stat sm' style='position:static'><span class='num'>0.28 &rarr; 0.65</span><span class='lab' style='font-size:17px'>Isolation Forest recall on temporal drift, severity 1 to 3</span></div>"
+                ],
+                maxh=190,
             ),
             foot(
-                "experiments/run_severity.py &nbsp;·&nbsp; make severity &nbsp;·&nbsp; answers the &quot;we picked the magnitudes&quot; threat"
+                "verification/evidence/severity.csv &nbsp;·&nbsp; experiments/run_severity.py &nbsp;·&nbsp; answers the &quot;we picked the magnitudes&quot; threat"
             ),
         ]
     ),
     role="evidence",
-    family="full-width archived figure",
-    dominant="figure",
+    family="native small multiples, three panels",
+    dominant="curves",
     density="medium",
 )
 

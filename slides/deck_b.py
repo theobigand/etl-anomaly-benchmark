@@ -3,6 +3,7 @@
 
 import math
 import pathlib
+import random
 import re
 
 from deck_lib import (
@@ -38,13 +39,11 @@ def title(s, size=46, y=70, w=1152):
 
 # 24 ----------------------------------------------------------------- opener part 3: 152 pads
 kinds = {}
-labelled = set()
-c = 0
-for r in range(8):
-    for col in range(19):
-        c += 1
-        if c <= 100:
-            labelled.add((col, r))
+_cells = [(col, r) for r in range(8) for col in range(19)]
+random.Random(24).shuffle(
+    _cells
+)  # which pads are lit is arbitrary; only the count (100 of 152) is data
+labelled = set(_cells[:100])
 slide(
     "Part 3",
     "".join(
@@ -82,7 +81,7 @@ slide(
                 900,
                 None,
                 "note",
-                "Illustration: 152 pads, 100 of them with a lit edge, one for each labelled problem. Coded SVG, not data.",
+                "Illustration: one pad per pool table (152); the 100 with a lit edge stand for the labelled problems. Which pads are lit is arbitrary. Coded SVG.",
             ),
         ]
     ),
@@ -400,8 +399,8 @@ slide(
             ),
             D(
                 64,
-                640,
-                940,
+                622,
+                1000,
                 None,
                 "note",
                 "Injected, not natural anomalies; protocol and five hypotheses written before any run. Same row order and the same cividis scale (0 to 1) in both matrices. Real-table rows from verification/evidence/full_registry/summary.md. The duplicate and drift detectors are omitted here.",
@@ -591,11 +590,11 @@ slide(
             kicker("Decisions under shift &nbsp;·&nbsp; issue #63"),
             title("Part of the gap is only the prevalence", 46, 60),
             grid(64, 150, 6, "5.8%", "anomalous in training, Bank Marketing"),
-            grid(470, 150, 39, "39.3%", "anomalous in test, same dataset"),
+            grid(440, 150, 39, "39.3%", "anomalous in test, same dataset"),
             flow(
-                880,
+                832,
                 150,
-                336,
+                384,
                 [
                     "<p style='font-size:19px'>Credit Card and Bank Marketing (UCI, ordered by date 2008 to 2010), four detectors, three label-free thresholds. Matching the stratified control to the test prevalence removes most of the gap. A rolling threshold that keeps the training prevalence cannot follow it. One hypothesis of four holds.</p>",
                     "<div class='stat sm'><span class='num'>0.26 &rarr; 0.06</span><span class='lab' style='font-size:16px'>median AP gap on Bank Marketing after prevalence matching</span></div>",
@@ -649,56 +648,57 @@ slide(
             title("A nominal alert budget is not a promise", 46, 68),
             D(
                 64,
-                150,
-                700,
+                140,
+                900,
                 None,
                 "k",
                 "added alert volume at a 2% budget, in budgets (95% interval)",
             ),
             interval_dots(
                 64,
-                176,
-                720,
+                160,
+                1152,
                 ab,
                 "bone",
                 vmin=0,
                 vmax=26,
-                row_h=52,
-                label_w=250,
+                row_h=44,
+                label_w=300,
                 ticks=(0, 5, 10, 15, 20, 25),
                 fmt="{:g}",
             ),
+            D(64, 440, 1152, 1, "hair"),
             D(
                 64,
-                480,
-                720,
-                None,
-                "note",
-                "Five classical detectors, 98 problems from 78 sources, sources resampled whole, Holm-adjusted. Delta ROC-AUC is 0.000 for the shifts and scalings and the monotone change, -0.038 for noise and -0.051 for feature drift. Prevalence reweighted under a label-shift assumption: 0.83 to 1.83 times the budget at 0.5% prevalence, 1.15 to 2.73 times at 20%.",
-            ),
-            D(
-                830,
-                150,
-                386,
-                None,
-                "",
-                "<p style='font-size:20px'>Budgets of 0.5 to 10% are set from training scores only, on 100 labelled problems. Held-out alert volume was <b>1.05 to 1.36</b> times the nominal 1% budget for classical detectors and <b>1.13 to 2.87</b> times for neural ones.</p>",
-            ),
-            D(
-                830,
-                370,
-                386,
+                462,
+                250,
                 None,
                 "stat sm",
                 "<span class='num'>+4.1</span><span class='lab' style='font-size:16px'>budgets of added alert volume at 2% (about 5 times nominal) for a 1 sigma score shift, with ROC-AUC unchanged</span>",
             ),
-            D(
-                64,
-                600,
-                760,
-                None,
-                "note",
-                "The 30-expected-alert rule for monitoring was chosen after the false alarms were seen. Not promoted to the main tables.",
+            flow(
+                340,
+                462,
+                340,
+                [
+                    "<p style='font-size:19px'>Budgets of 0.5 to 10% are set from training scores only, on 100 labelled problems. Held-out alert volume was <b>1.05 to 1.36</b> times the nominal 1% budget for classical detectors and <b>1.13 to 2.87</b> times for neural ones.</p>"
+                ],
+                maxh=210,
+            ),
+            flow(
+                710,
+                462,
+                506,
+                [
+                    "<p class='note' style='font-size:15px;line-height:1.4'>"
+                    + "Five classical detectors, 98 problems from 78 sources, sources resampled whole, Holm-adjusted. Delta ROC-AUC is 0.000 for the shifts and scalings and the monotone change, -0.038 for noise and -0.051 for feature drift. Prevalence reweighted under a label-shift assumption: 0.83 to 1.83 times the budget at 0.5% prevalence, 1.15 to 2.73 times at 20%."
+                    + "</p>",
+                    "<p class='note' style='font-size:15px;line-height:1.4'>"
+                    + "The 30-expected-alert rule for monitoring was chosen after the false alarms were seen. Not promoted to the main tables."
+                    + "</p>",
+                ],
+                maxh=210,
+                gap=10,
             ),
             foot(
                 "docs/thesis-remediation/SCORE_SHIFT_T170_T171_2026-11-11.md &nbsp;·&nbsp; research/score_shift.py"
@@ -707,7 +707,7 @@ slide(
     ),
     tone="bone",
     role="evidence",
-    family="interval chart",
+    family="wide interval chart over a three-part band",
     dominant="five intervals",
     density="medium",
     colour="neutral",
@@ -727,39 +727,41 @@ body = [
     title("The deeper studies, run on all 152 datasets", 46, 62),
 ]
 for i, (p, h, ok, v) in enumerate(hyp):
-    y = 160 + i * 66
+    y = 150 + i * 56
     cls, word, sym = ("ok", "holds", "&#10003;") if ok else ("anom", "not supported", "&#10007;")
     body += [
-        D(64, y - 8, 800, 1, "hair"),
-        D(64, y + 4, 70, None, "", f"<span class='num' style='font-size:34px'>{p}</span>"),
-        D(150, y + 4, 330, None, "", f"<div style='font:500 20px var(--sans)'>{h}</div>"),
-        D(500, y, 190, None, "", f"<span class='tag {cls}'>{sym} {word}</span>"),
-        D(700, y + 6, 170, None, "", f"<div style='font:500 15px/1.25 var(--sans)'>{v}</div>"),
+        D(64, y - 6, 1152, 1, "hair"),
+        D(64, y + 4, 80, None, "", f"<span class='num' style='font-size:36px'>{p}</span>"),
+        D(160, y + 8, 470, None, "", f"<div style='font:500 23px var(--sans)'>{h}</div>"),
+        D(650, y + 6, 220, None, "", f"<span class='tag {cls}'>{sym} {word}</span>"),
+        D(900, y + 10, 316, None, "", f"<div style='font:500 17px/1.25 var(--sans)'>{v}</div>"),
     ]
 body += [
+    D(64, 150 + 6 * 56 - 6, 1152, 1, "hair"),
     D(
-        900,
-        160,
-        316,
+        64,
+        520,
+        330,
         None,
         "stat sm",
         "<span class='num'>58 / 152</span><span class='lab'>tables eligible for typed injection and severity</span>",
     ),
     D(
-        900,
-        300,
-        316,
+        420,
+        520,
+        330,
         None,
         "stat sm",
         "<span class='num'>290 / 304</span><span class='lab'>end-to-end pipeline runs that completed</span>",
     ),
-    D(
-        900,
-        440,
-        316,
-        None,
-        "note",
-        "Six hypotheses written first: three hold, three do not. Chronology needs a real time variable: 5 labelled datasets qualify (ADBench has none). Each study ran on every dataset where it is defined; the others are listed with a reason, never silently.",
+    flow(
+        790,
+        524,
+        426,
+        [
+            "<p class='note' style='font-size:15px;line-height:1.4'>Six hypotheses written first: three hold, three do not. Chronology needs a real time variable: 5 labelled datasets qualify (ADBench has none). Each study ran on every dataset where it is defined; the others are listed with a reason, never silently.</p>"
+        ],
+        maxh=140,
     ),
     foot("verification/pool_extension_results.md"),
 ]
@@ -768,7 +770,7 @@ slide(
     "".join(body),
     tone="bone",
     role="evidence",
-    family="hypothesis ledger",
+    family="full-width hypothesis ledger with numeral band",
     dominant="verdict tags",
     density="medium",
     colour="steel holds, amber not supported",
@@ -942,17 +944,19 @@ slide(
 # 36 ----------------------------------------------------------------- sorted multivariate recall
 mv = sorted(((n, MATRIX["data"][n]["multivariate"]) for n in MATRIX["order"]), key=lambda t: -t[1])
 col_wise = {"ECOD", "COPOD", "HBOS"}
-bars, bh = hbars(
-    64,
-    150,
-    640,
-    [(n, v, "best" if n in col_wise else "n") for n, v in mv],
-    1.0,
-    "dark",
-    label_w=100,
-    row_h=27,
-    digits=2,
-)
+_cw, _bw = 1152 / len(mv), 44
+_col = []
+for k, (n, v) in enumerate(mv):
+    cx = k * _cw + _cw / 2
+    top = 320 - 280 * v
+    fill = DARK["steel"] if n in col_wise else "#8f8b81"
+    _col.append(
+        f"<rect x='{cx - _bw / 2}' y='{top}' width='{_bw}' height='{320 - top}' fill='{fill}'><title>{n}: {v:.2f}</title></rect>"
+    )
+    _col.append(mono(cx, top - 8, f"{v:.2f}", 15, DARK["ink"], "middle", 600))
+    _col.append(txt(cx, 346, n, 15, DARK["ink"], "middle", 600))
+_col.append("<line x1='0' x2='1152' y1='320' y2='320' stroke='#ffffff40'/>")
+bars = svg(64, 288, 1152, 366, "".join(_col), "multivariate recall by detector, sorted")
 slide(
     "Full registry",
     "".join(
@@ -960,29 +964,34 @@ slide(
             kicker("Every detector in the per-type matrix"),
             title("More detectors, same competence map, no hypothesis holds", 44, 60),
             bars,
-            D(
-                740,
-                150,
-                476,
-                None,
-                "",
-                "<p style='font-size:20px'>Eleven rows added to the synthetic matrix, with three hypotheses written beforehand; <b>none holds</b>. Recall on multivariate outliers, sorted: <span class='ok'>ECOD (0.52) and COPOD (0.51)</span> find half of them although they read one column at a time, and HBOS stays at 0; PCA reaches 0.48 against 0.83 for the autoencoder.</p><p style='font-size:20px;margin-top:12px'>LUNAR catches 0.65 of the drifted rows (LOF 0.50) while flagging 41% of clean rows. The LSTM still does not fix drift.</p>",
-            ),
-            D(
-                740,
-                470,
-                476,
-                None,
-                "note",
-                "<span class='ok'>&#9679;</span> steel: column-wise detectors (ECOD, COPOD, HBOS), a family, not a result. Synthetic customers are independent rows: drift is not a sequence here.",
-            ),
-            D(
+            flow(
                 64,
-                636,
-                640,
-                None,
-                "note",
-                "Mean recall on multivariate outliers, 17 detectors, 5 seeds. Full matrix on the per-type slide.",
+                146,
+                700,
+                [
+                    "<p style='font-size:19px;line-height:1.38'>Eleven rows added to the synthetic matrix, with three hypotheses written beforehand; <b>none holds</b>. Recall on multivariate outliers, sorted: <span class='ok'>ECOD (0.52) and COPOD (0.51)</span> find half of them although they read one column at a time, and HBOS stays at 0; PCA reaches 0.48 against 0.83 for the autoencoder.</p>"
+                ],
+                maxh=150,
+            ),
+            flow(
+                800,
+                146,
+                416,
+                [
+                    "<p style='font-size:19px;line-height:1.38'>LUNAR catches 0.65 of the drifted rows (LOF 0.50) while flagging 41% of clean rows. The LSTM still does not fix drift.</p>"
+                ],
+                maxh=150,
+            ),
+            flow(
+                700,
+                330,
+                516,
+                [
+                    "<p class='note' style='font-size:15px;line-height:1.4'><span class='ok'>&#9679;</span> steel: column-wise detectors (ECOD, COPOD, HBOS), a family, not a result. Synthetic customers are independent rows: drift is not a sequence here.</p>",
+                    "<p class='note' style='font-size:15px;line-height:1.4'>Mean recall on multivariate outliers, 17 detectors, 5 seeds. Full matrix on the per-type slide.</p>",
+                ],
+                maxh=120,
+                gap=8,
             ),
             foot(
                 "verification/full_registry.md &nbsp;·&nbsp; research/full_registry.py &nbsp;·&nbsp; paper, tab:m-customer"
@@ -990,8 +999,8 @@ slide(
         ]
     ),
     role="evidence",
-    family="sorted bar chart",
-    dominant="17 bars",
+    family="column chart with text above and notes in its empty corner",
+    dominant="17 columns",
     density="medium",
     colour="amber for column-wise",
 )
@@ -1112,40 +1121,34 @@ route = [
     ("invalid format", 1, "IQR for the numeric part", "1.00; malformed strings need a format rule"),
     ("temporal drift", 2, "windowed monitor", "per-row detectors at most 0.65"),
 ]
+# rows are laid out so that boxes never touch each other or the note below (geometry checked by the layout probe)
+LEFT_Y = [26 + i * 62 for i in range(6)]
+BOXES = [
+    ("stage 1: transform", 14, 84),
+    ("stage 2: row-level detector", 114, 236),
+    ("stage 3: windowed monitor", 364, 76),
+]
+TARGET_Y = {
+    "exact duplicate": 66,
+    "missing value": 164,
+    "univariate outlier": 218,
+    "multivariate outlier": 272,
+    "invalid format": 326,
+    "temporal drift": 412,
+}
 o = []
 for i, (t, _ln, _m, _r) in enumerate(route):
-    y = 30 + i * 70
-    o.append(txt(240, y + 6, t, 22, "#151617", "end", 700, "Avenir Next Condensed, sans-serif"))
-for nm, y0, h in [
-    ("stage 1: transform", 20, 110),
-    ("stage 2: row-level detector", 150, 280),
-    ("stage 3: windowed monitor", 424, 74),
-]:
+    o.append(
+        txt(240, LEFT_Y[i] + 6, t, 22, "#151617", "end", 700, "Avenir Next Condensed, sans-serif")
+    )
+for nm, y0, h in BOXES:
     o.append(
         f"<rect x='640' y='{y0}' width='490' height='{h}' fill='none' stroke='#151617' stroke-width='2'/>"
     )
-    o.append(txt(654, y0 + 20, nm, 14, "#55534d", "start", 600))
-ys = {
-    "missing value": 262,
-    "exact duplicate": 70,
-    "univariate outlier": 196,
-    "multivariate outlier": 262,
-    "invalid format": 338,
-    "temporal drift": 456,
-}
-ys.update(
-    {
-        "exact duplicate": 78,
-        "missing value": 204,
-        "univariate outlier": 266,
-        "multivariate outlier": 328,
-        "invalid format": 390,
-        "temporal drift": 478,
-    }
-)
+    o.append(txt(654, y0 + 22, nm, 14, "#55534d", "start", 600))
 for i, (t, ln, m, r) in enumerate(route):
-    y = 30 + i * 70
-    ty = ys[t]
+    y = LEFT_Y[i]
+    ty = TARGET_Y[t]
     o.append(
         f"<path d='M250 {y} C 440 {y}, 440 {ty}, 650 {ty}' fill='none' stroke='#151617' stroke-width='1.6' opacity='.55'/>"
     )
@@ -1159,11 +1162,11 @@ slide(
             kicker("The practical output"),
             title("Anomaly type to method", 46, 60),
             svg(
-                64, 130, 1152, 520, "".join(o), "routing of six anomaly types to stages and methods"
+                64, 134, 1152, 460, "".join(o), "routing of six anomaly types to stages and methods"
             ),
             D(
                 64,
-                642,
+                608,
                 1152,
                 None,
                 "note",
@@ -1192,7 +1195,7 @@ slide(
                 1152,
                 None,
                 "",
-                "<h1 style='font-size:62px;line-height:1.0'>Unsupervised detection works in <span class='em'>one of three</span> regimes</h1>",
+                "<h1 style='font-size:64px;line-height:1.02'>Unsupervised detection works in<br><span class='em'>one of three</span> regimes</h1>",
             ),
             D(
                 64,
@@ -1284,7 +1287,7 @@ for i, (h, t) in enumerate(find):
             60,
             None,
             "",
-            f"<span class='num' style='font-size:46px;opacity:.5'>{i + 1}</span>",
+            f"<span class='num' style='font-size:46px;opacity:.72'>{i + 1}</span>",
         ),
         D(
             x + 62,
