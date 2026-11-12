@@ -282,7 +282,7 @@ body += [
         1152,
         None,
         "note",
-        "Each main study has a protocol and hypotheses committed before its runs; post-hoc analyses are labelled exploratory. A failed hypothesis is reported as failed: three of the six on the whole pool",
+        "Each main study has a protocol and hypotheses committed before its runs; post-hoc analyses are labelled exploratory. A failed hypothesis is reported as failed: three of the six on the whole pool do.",
     ),
     foot("paper, Introduction and Methods; protocols in verification/*.md"),
 ]
@@ -957,7 +957,7 @@ slide(
                 700,
                 [
                     "<p style='font-size:20px'>Stratified 70 / 15 / 15 split, fit on train, every number reported on the held-out test set. Five seeds, mean &plusmn; std. The ML contamination is read from the train-set prevalence, not fixed at 10%.</p>",
-                    "<div class='note' style='position:static'>LOF and One-Class SVM run everywhere except Credit Card Fraud, where they were expected to be too costly at 284k rows; not measured.</div>",
+                    "<div class='note' style='position:static'>LOF, KNN and One-Class SVM run where they were affordable; on Credit Card Fraud they were expected to be too costly at 284k rows and were not run.</div>",
                 ],
                 maxh=166,
                 gap=14,
@@ -1011,7 +1011,7 @@ inj = [
 ]
 body = [
     kicker("How each type is injected"),
-    title("The magnitudes are a swept parameter, not a fixed choice", 40, 66),
+    title("Three of the six injections scale with severity", 46, 66),
 ]
 SCALES = {"univariate": True, "multivariate": True, "drift": True}
 body += [
@@ -1143,7 +1143,7 @@ slide(
                 780,
                 None,
                 "legend",
-                "<span class='ok'>&#9679;</span> best of its chart. Mean over 5 seeds, 15% held-out test split. LOF and One-Class SVM were not run here (expected too costly at 284k rows; not measured). The two charts use different scales.",
+                "<span class='ok'>&#9679;</span> best of its chart. Mean over 5 seeds, 15% held-out test split. LOF, KNN and One-Class SVM were not run here (expected too costly at 284k rows; not measured). The two charts use different scales.",
             ),
             flow(
                 870,
@@ -1267,7 +1267,7 @@ slide(
                 maxh=480,
                 gap=24,
             ),
-            foot("verification/evidence/full_registry &nbsp;·&nbsp; paper, tab:synthetic"),
+            foot("verification/evidence/full_registry &nbsp;·&nbsp; paper, synthetic table"),
         ]
     ),
     tone="bone",
@@ -1394,7 +1394,7 @@ slide(
                 416,
                 [
                     "<p style='font-size:19px;line-height:1.36'>On <b>Cardio</b> the top four of eleven stay high (ECOD 0.83, Isolation Forest 0.80, COPOD 0.79, One-Class SVM 0.76). On <b>Water Quality</b> every curve stays near the 0.61 base rate. On <b>Credit Card Fraud</b> the highest AP is COPOD 0.28 (Great Expectations 0.23, Isolation Forest 0.17), and no curve holds precision much above 0.4 once recall reaches 0.3.</p>",
-                    "<div class='stat sm' style='position:static'><span class='num'>0.37 &rarr; 0.008</span><span class='lab' style='font-size:17px'>Isolation Forest fraud precision as contamination goes from 0.001 to 0.20, while recall rises from 0.23 to 0.92</span></div>",
+                    "<div class='stat sm' style='position:static'><span class='num'>0.37 &rarr; 0.008</span><span class='lab' style='font-size:17px'>Isolation Forest fraud precision as contamination goes from 0.001 to 0.20 (one seed), while recall rises from 0.23 to 0.92</span></div>",
                     "<p class='note' style='font-size:15px'>Per panel, among the detectors drawn (no neural models): highest AP dark, lowest dashed grey, others light grey. Dashed line: base rate. PCA differs from the paper figure on two panels.</p>",
                 ],
                 maxh=480,

@@ -41,7 +41,7 @@ slide(
                 900,
                 None,
                 "",
-                "<h1 style='font-size:84px;line-height:.98'>What the tests <span class='em'>protect</span>, and what they do not</h1>",
+                "<h1 style='font-size:84px;line-height:.98'>What the tests <span class='em'>protect</span>,<br>and what they do not</h1>",
             ),
             D(
                 64,
@@ -487,7 +487,7 @@ slide(
                 1152,
                 None,
                 "note",
-                "Local run, 2026-11-11. Nine L4 modules chosen by the author, five added after the 82-module campaign of 2026-11-07. Axis from 40%. Not a certification.",
+                "Local run, 2026-11-11. Nine L4 modules chosen by the author; six are not in the 82-module campaign of 2026-11-07. Axis from 40%. Not a certification.",
             ),
             foot(
                 "docs/thesis-remediation/MUTATION_FOCUSED_DIAGNOSTICS_2026-11-11.md &nbsp;·&nbsp; thresholds not changed"

@@ -100,7 +100,7 @@ Scientific review: 4 blocking, 8 major, 14 minor. All four blocking and the veri
 
 | Slide | Finding (verified against) | Action |
 | --- | --- | --- |
-| 47 | "Nine of 82 L4 modules": five of the nine were added after the 82-module campaign (MUTATION_FOCUSED_DIAGNOSTICS lines 13 to 14) | caption states it |
+| 47 | "Nine of 82 L4 modules": the campaign evidence (`risk-native-campaign-2026-11-07.json`) lists only `pool_check`, `normalise` and `paired_bootstrap` among the nine, so six are not in it; MUTATION_FOCUSED_DIAGNOSTICS line 13 says five, which omits `source_clustered` (added the same day, commit be43503). The note and the evidence disagree; the slide follows the evidence | caption says six are not in the campaign |
 | 29 | 0.83 is the correlation with the first eight rows; with seventeen detectors the paper gives 0.80, lowest for drift at 0.63 (paper, typed injection); "0.70 for drift" had no source | corrected |
 | 14, 17, 39 | "neither scales", "do not survive": the paper says LOF and One-Class SVM were expected to be too costly and not measured; slide 37 shows LOF finishing 300,000 rows | reworded to "not run, expected too costly, not measured" |
 | 4 | "every study", "pre-registered": paper lines 888, 1157 and 2365 describe post-hoc and already-known results | reworded |
@@ -110,6 +110,13 @@ Scientific review: 4 blocking, 8 major, 14 minor. All four blocking and the veri
 | 27, 33, 26 | missing "historical, needs train-only replay" tag; post-hoc analysis not labelled; "all 152 datasets" over-claims | tags added, title scoped |
 | 38 | routing recommendation shown as general | states that it does not transfer to the real tables |
 | 3, 18, 30, 40, 42, 50 and 51 | AUC-only wording, IQR F1 0.33, "only dataset with a clock", range 0.00 to 0.28, "verified", IMRaD contradiction | corrected |
+
+Round 2 (the same two reviewers, changed slides only): no blocking finding; the scientific reviewer found slide 47 still
+wrong (six, not five, see above), KNN missing from the not-run list (slides 14, 17, 39), the P3 wording (slide 33),
+the slide 4 sentence cut by an edit, and a title (slide 15) that over-generalised; the visual reviewer found slide 36
+text colour, slide 37 caption ("bars"), the slide 41 line break and the raw table label on slide 19. All were fixed.
+Left as minor: label matching on slide 23, empty areas on slides 30, 42, 48 and 51, baseline alignment in the slide 15
+ledger, slide 44's faint crack.
 
 Not adopted: slide 8 "20 neighbours" (the PyOD default, kept); the paper's own inconsistencies (19 sources, the six or
 seven modules at 98%, "dominate" on credit card) are reported, not edited here.

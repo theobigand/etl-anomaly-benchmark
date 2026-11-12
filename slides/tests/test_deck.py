@@ -245,7 +245,7 @@ FORBIDDEN = [
     ),
     (
         "Nine of 82",
-        "five of the nine modules were added after the 82-module campaign (MUTATION_FOCUSED_DIAGNOSTICS)",
+        "six of the nine modules are not in the 82-module campaign inventory (risk-native-campaign-2026-11-07.json)",
     ),
     ("per-type ranking does not change", "paper: the ranking changes with severity"),
 ]

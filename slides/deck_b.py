@@ -727,7 +727,7 @@ slide(
 hyp = [
     ("P1", "label-free threshold lowers F1", 1, "14 of 17 detectors"),
     ("P2", "curve ranking = AP ranking", 0, "Spearman 0.90 (&lt; 0.99)"),
-    ("P3", "recall rises with severity", 0, "13 of 17; column-wise rules stay at 0"),
+    ("P3", "multivariate recall rises with severity", 0, "13 of 17; Z-score, GE, HBOS, LOF do not"),
     ("P4", "detection share of the pipeline", 1, "62% (IF), 4% (Z-score), 14 datasets"),
     ("P5", "chronological AP lower", 0, "31 of 64 pairs; Bank Marketing 0/16"),
     ("P6", "files match the manifest", 1, "152 of 152"),
@@ -986,7 +986,7 @@ slide(
                 146,
                 700,
                 [
-                    "<p style='font-size:19px;line-height:1.38'>Eleven rows added to the synthetic matrix, with three hypotheses written beforehand; <b>none holds</b>. Recall on multivariate outliers, sorted: <span class='ok'>ECOD (0.52) and COPOD (0.51)</span> find half of them although they read one column at a time, and HBOS stays at 0; PCA reaches 0.48 against 0.83 for the autoencoder.</p>"
+                    "<p style='font-size:19px;line-height:1.38'>Eleven rows added to the synthetic matrix, with three hypotheses written beforehand; <b>none holds</b>. Recall on multivariate outliers, sorted: <b style='color:#ece6da'>ECOD (0.52) and COPOD (0.51)</b> find half of them although they read one column at a time, and HBOS stays at 0; PCA reaches 0.48 against 0.83 for the autoencoder.</p>"
                 ],
                 maxh=150,
             ),
@@ -1087,7 +1087,7 @@ slide(
                 760,
                 None,
                 "legend",
-                "&#9632; dark bars: over 100 s. Dashed: the 300 s budget. Fresh process per measurement so peak memory belongs to that run; synthetic matrices from 1,000 to 300,000 rows.",
+                "&#9679; dark dots: over 100 s. Dashed: the 300 s budget. Fresh process per measurement so peak memory belongs to that run; synthetic matrices from 1,000 to 300,000 rows.",
             ),
             D(
                 64,
@@ -1245,7 +1245,7 @@ slide(
                 1152,
                 None,
                 "",
-                "<p style='font-size:20px;max-width:1000px'>The question is less &quot;rules or ML&quot; than &quot;does this dataset have rare, outlying anomalies at all&quot;. The synthetic dataset sits in the middle at 17.5% and is where the per-type structure is measured. Pipeline cost narrows the shortlist: LOF and One-Class SVM were not run on the full fraud dataset (expected to be too costly, not measured).</p>",
+                "<p style='font-size:20px;max-width:1000px'>The question is less &quot;rules or ML&quot; than &quot;does this dataset have rare, outlying anomalies at all&quot;. The synthetic dataset sits in the middle at 17.5% and is where the per-type structure is measured. Pipeline cost is expected to narrow the shortlist: LOF, KNN and One-Class SVM were not run on the full fraud dataset (expected to be too costly, not measured).</p>",
             ),
             foot("paper, discussion"),
         ]
