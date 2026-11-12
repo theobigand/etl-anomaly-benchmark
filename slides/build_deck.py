@@ -40,6 +40,18 @@ if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{slides.fo
 """
 
 
+def _stabilise(html):
+    """Round float noise (104.63000000000001, libm differences in exp or log) to 2 decimals so that the
+    generated file is identical on macOS and Linux; the CI staleness check compares bytes."""
+    import re
+
+    def r(m):
+        v = round(float(m.group(0)), 2)
+        return str(int(v)) if v == int(v) else f"{v:.2f}".rstrip("0")
+
+    return re.sub(r"(?<![\w.])-?\d+\.\d{5,}", r, html)
+
+
 def assemble(write=True):
     out = []
     for i, s in enumerate(SLIDES):
@@ -64,7 +76,7 @@ def assemble(write=True):
         + PROBE
         + "</script></body></html>"
     )
-    targets = {HERE / "thesis_progress.html": html}
+    targets = {HERE / "thesis_progress.html": _stabilise(html)}
     rows = [
         "| # | Section | Role | Composition family | Dominant element | Density | Ground | Image | Light | Colour |",
         "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |",
