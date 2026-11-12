@@ -1,8 +1,10 @@
-"""Browser-based layout tests: deselected without Chromium, mandatory in the slide-quality job.
+"""Browser-based layout tests run only in the slide-quality gate, never in FAST.
 
-Tests are deselected, not skipped, because the fast verification counts a skip as a failure.
-The dedicated slide-quality job sets SLIDES_REQUIRE_BROWSER=1; then a missing Chromium is an error,
-so the check cannot silently not run there. Install Chromium or set CHROME to run them locally.
+FAST must not depend on a browser and counts a skipped test as a failure, so the `browser` tests are
+deselected, not skipped, unless SLIDES_REQUIRE_BROWSER=1 (set by `make verify-slides` and the
+`slides` CI job). That holds even when a Chrome happens to be installed: results depend on the exact
+Chromium build and fonts, which only the dedicated job pins. With the variable set, a missing
+Chromium is an error, so the check cannot silently not run there.
 """
 
 import os
@@ -17,10 +19,10 @@ import check_layout  # noqa: E402
 
 
 def pytest_collection_modifyitems(config, items):
-    if check_layout.find_chrome() is not None:
-        return
     if os.environ.get("SLIDES_REQUIRE_BROWSER") == "1":
-        raise pytest.UsageError("SLIDES_REQUIRE_BROWSER=1 but no Chromium binary was found")
+        if check_layout.find_chrome() is None:
+            raise pytest.UsageError("SLIDES_REQUIRE_BROWSER=1 but no Chromium binary was found")
+        return
     drop = [i for i in items if i.get_closest_marker("browser")]
     if drop:
         config.hook.pytest_deselected(items=drop)
