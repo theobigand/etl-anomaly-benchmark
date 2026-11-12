@@ -155,3 +155,36 @@ are accepted as numeric) killed `x_numeric_features__mutmut_16`; the survivor `D
 `astype(None)` yields float64 either way. Both survivors are equivalence candidates kept eligible, no approval
 requested. Neither module reaches 98 % unless the owner accepts them: with the candidate removed they would be 13/13
 and 30/30.
+
+### Typed injection and temporal modules (2026-11-12)
+
+Raw focused scores after new contract tests (`research/tests/test_typed_masking.py`, `test_typed_run.py`,
+`test_pool_typed.py`, `test_labelled_contracts.py`, `tests/test_temporal_pilot_contracts.py`):
+
+| Module | Killed / total | Raw | Campaign 2026-11-07 |
+| --- | --- | --- | --- |
+| `research/typed_masking.py` | 132/132 | 100 % | 27/132 |
+| `research/pool_typed.py` | 517/525 | 98.48 % | 26/525 |
+| `research/labelled_benchmark.py` | 471/475 | 99.16 % | 112/475 |
+| `research/typed_run.py` | 342/351 | 97.44 % | 27/351 |
+| `research/temporal_pilot.py` | 542/586 | 92.49 % | 20/586 |
+
+The tests derive expected values independently (a z-score and a percentile bootstrap recomputed in the test),
+check the exact arguments each stubbed call receives (fitted on the train part, scored on the test part, fixed
+seeds), the recorded fields and failure reasons, file names (case-sensitive), the sorted order of outputs and the
+command lines.
+
+Survivors, kept eligible, no approval requested. Most are equivalence candidates of five kinds: `groupby(sort=None)`
+for `sort=False` (same order); `astype(None)` for `astype(int)` or `astype(float)` on already numeric data;
+`utc=True` removed where the column is already timezone-aware; argparse defaults that coincide with the
+fallback (`--methods` default `None` for `"classical"`); and log-message wording in `temporal_pilot`. The
+remaining `temporal_pilot` survivors (44) are mostly `features` column-name and `main`/`run` argument mutants not yet
+pinned; the module is below the bar and stays a priority.
+
+Finding, source not changed: `temporal_pilot.to_timestamps` refuses NaN, negative and non-numeric elapsed times but
+not an infinite one, although its message says "finite". The module hash is bound to the archived pilot record
+(`tests/test_temporal_pilot.py`), so a fix needs a new record; no historical result is affected because the file has
+finite times.
+
+Practical trap: after adding a test file, delete `mutants/mutmut-stats.json` before a focused run; otherwise mutmut
+maps no test to functions that only the new file exercises and reports them as `no tests`.
