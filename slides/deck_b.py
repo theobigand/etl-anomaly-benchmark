@@ -12,6 +12,7 @@ from deck_lib import (
     TYPES,
     D,
     cividis,
+    flow,
     foot,
     hbars,
     interval_dots,
@@ -32,7 +33,7 @@ def kicker(s):
 
 
 def title(s, size=46, y=70, w=1152):
-    return D(64, y, w, None, "", f"<h2 style='font-size:{size}px;line-height:1.04'>{s}</h2>")
+    return D(64, y + 8, w, None, "", f"<h2 style='font-size:{size}px;line-height:1.04'>{s}</h2>")
 
 
 # 24 ----------------------------------------------------------------- opener part 3: 152 pads
@@ -48,7 +49,7 @@ slide(
     "Part 3",
     "".join(
         [
-            padfield(19, 8, {}, seed=21, mark=labelled),
+            padfield(19, 8, {}, seed=21, mark=labelled, dim_unmarked=True),
             D(
                 0,
                 0,
@@ -288,7 +289,7 @@ ex_data = [
 ]
 best = {(max(range(8), key=lambda i: ex_data[i][j]), j) for j in range(4)}
 mxx, mhh = matrix(
-    64, 150, ex_rows, ex_cols, ex_data, 118, 46, "bone", best=best, font=17, label_w=150
+    64, 150, ex_rows, ex_cols, ex_data, 118, 46, "bone", best=best, font=17, label_w=150, unit="AP"
 )
 slide(
     "Two more examples",
@@ -311,7 +312,7 @@ slide(
                 436,
                 None,
                 "legend",
-                "Average precision, mean over 5 seeds, as run in the pool. Circle: best of its column. Colour: cividis, 0 to 1. All 17 detectors are in the paper.",
+                "Average precision, mean over 5 seeds, as run in the pool. Circle: best of its column. Colour: cividis, 0 to 1. All 17 detectors are in the paper. Credit Card values come from the pool run and differ from slide 17.",
             ),
             foot(
                 "verification/full_registry_results.md &nbsp;·&nbsp; no universal detector, even at the scale of one dataset"
@@ -483,8 +484,8 @@ sl = [
 ]
 Y = lambda v: 210 - v / 0.2 * 190  # noqa: E731
 o = [
-    txt(260, 10, "stratified split", 15, "#55534d", "middle", 600),
-    txt(540, 10, "chronological split", 15, "#55534d", "middle", 600),
+    txt(260, 14, "stratified split", 15, "#55534d", "middle", 600),
+    txt(540, 14, "chronological split", 15, "#55534d", "middle", 600),
     "<line x1='260' x2='260' y1='20' y2='212' stroke='#151617' opacity='.4'/><line x1='540' x2='540' y1='20' y2='212' stroke='#151617' opacity='.4'/>",
 ]
 ends = sorted(((Y(b), n) for n, a, b in sl))
@@ -499,6 +500,7 @@ for n, a, b in sl:
         f"<line x1='260' x2='540' y1='{Y(a)}' y2='{Y(b)}' stroke='{col}' stroke-width='2.5'/>",
         f"<circle cx='260' cy='{Y(a)}' r='5' fill='{col}'/><circle cx='540' cy='{Y(b)}' r='5' fill='{col}'/>",
         txt(248, Y(a) + 5, f"{n} {a:.3f}", 15, col, "end", 600),
+        f"<line x1='545' x2='552' y1='{Y(b)}' y2='{pos[n]}' stroke='{col}' stroke-width='1.2'/>",
         txt(554, pos[n] + 5, f"{n} {b:.3f}", 15, col, "start", 600),
     ]
 slide(
@@ -590,29 +592,17 @@ slide(
             title("Part of the gap is only the prevalence", 46, 60),
             grid(64, 150, 6, "5.8%", "anomalous in training, Bank Marketing"),
             grid(470, 150, 39, "39.3%", "anomalous in test, same dataset"),
-            D(
+            flow(
                 880,
                 150,
                 336,
-                None,
-                "",
-                "<p style='font-size:20px'>Credit Card and Bank Marketing (UCI, ordered by date 2008 to 2010), four detectors, three label-free thresholds. Matching the stratified control to the test prevalence removes most of the gap. A rolling threshold that keeps the training prevalence cannot follow it.</p><p style='font-size:19px;margin-top:12px'>One hypothesis of four holds.</p>",
-            ),
-            D(
-                880,
-                430,
-                336,
-                None,
-                "stat sm",
-                "<span class='num'>0.26 &rarr; 0.06</span><span class='lab' style='font-size:16px'>median AP gap on Bank Marketing after prevalence matching</span>",
-            ),
-            D(
-                880,
-                566,
-                336,
-                None,
-                "note",
-                "F1 at the threshold, test period: Bank Z-score 0.51 (P0) against 0.02 (P2 rolling); Isolation Forest 0.41 against 0.11. Rank correlation of the detector order, stratified against chronological: 0.80 on Bank Marketing, 0.40 on Credit Card. Kyoto-2006+ left out: rights and download not verified.",
+                [
+                    "<p style='font-size:19px'>Credit Card and Bank Marketing (UCI, ordered by date 2008 to 2010), four detectors, three label-free thresholds. Matching the stratified control to the test prevalence removes most of the gap. A rolling threshold that keeps the training prevalence cannot follow it. One hypothesis of four holds.</p>",
+                    "<div class='stat sm'><span class='num'>0.26 &rarr; 0.06</span><span class='lab' style='font-size:16px'>median AP gap on Bank Marketing after prevalence matching</span></div>",
+                    "<div class='note'>F1 at the threshold, test period: Bank Z-score 0.51 (P0) against 0.02 (P2 rolling); Isolation Forest 0.41 against 0.11. Rank correlation of the detector order, stratified against chronological: 0.80 on Bank Marketing, 0.40 on Credit Card. Kyoto-2006+ left out: rights and download not verified.</div>",
+                ],
+                maxh=490,
+                gap=16,
             ),
             D(
                 64,
@@ -818,11 +808,18 @@ slide(
             title("An LSTM autoencoder is comparable, not clearly better", 48, 62),
             D(64, 190, 520, None, "k", "synthetic stream with broken continuity, AP"),
             syn,
-            D(640, 190, 576, None, "k", "real Credit Card frauds, AP (note the scale)"),
+            D(
+                640,
+                190,
+                576,
+                None,
+                "k",
+                "real Credit Card frauds, AP (own scale)",
+            ),
             real,
             D(
                 64,
-                370,
+                420,
                 520,
                 None,
                 "",
@@ -830,7 +827,7 @@ slide(
             ),
             D(
                 640,
-                370,
+                420,
                 576,
                 None,
                 "",
@@ -976,8 +973,8 @@ slide(
                 470,
                 476,
                 None,
-                "legend",
-                "<span class='ok'>&#9632;</span> column-wise detectors (ECOD, COPOD, HBOS), a family, not a result. Synthetic customers are independent rows: drift is not a sequence here.",
+                "note",
+                "<span class='ok'>&#9679;</span> steel: column-wise detectors (ECOD, COPOD, HBOS), a family, not a result. Synthetic customers are independent rows: drift is not a sequence here.",
             ),
             D(
                 64,
@@ -1103,8 +1100,8 @@ slide(
 
 # 38 ----------------------------------------------------------------- routing diagram
 route = [
-    ("missing value", 0, "Great Expectations", "1.00"),
     ("exact duplicate", 0, "transform dedup stage", "1.00"),
+    ("missing value", 0, "Great Expectations", "1.00"),
     ("univariate outlier", 1, "any statistical rule", "0.93 to 0.99"),
     (
         "multivariate outlier",
@@ -1122,10 +1119,10 @@ for i, (t, _ln, _m, _r) in enumerate(route):
 for nm, y0, h in [
     ("stage 1: transform", 20, 110),
     ("stage 2: row-level detector", 150, 280),
-    ("stage 3: windowed monitor", 448, 66),
+    ("stage 3: windowed monitor", 424, 74),
 ]:
     o.append(
-        f"<rect x='640' y='{y0}' width='520' height='{h}' fill='none' stroke='#151617' stroke-width='2'/>"
+        f"<rect x='640' y='{y0}' width='490' height='{h}' fill='none' stroke='#151617' stroke-width='2'/>"
     )
     o.append(txt(654, y0 + 20, nm, 14, "#55534d", "start", 600))
 ys = {
@@ -1143,7 +1140,7 @@ ys.update(
         "univariate outlier": 266,
         "multivariate outlier": 328,
         "invalid format": 390,
-        "temporal drift": 492,
+        "temporal drift": 478,
     }
 )
 for i, (t, ln, m, r) in enumerate(route):

@@ -1,7 +1,7 @@
 # ruff: noqa: E501
 """Slides for verification, mutation testing, status and the takeaway."""
 
-from deck_lib import D, foot, mono, photo, slide, svg, tbl, txt
+from deck_lib import D, flow, foot, mono, photo, slide, svg, tbl, txt
 
 
 def kicker(s):
@@ -9,7 +9,7 @@ def kicker(s):
 
 
 def title(s, size=46, y=70, w=1152):
-    return D(64, y, w, None, "", f"<h2 style='font-size:{size}px;line-height:1.04'>{s}</h2>")
+    return D(64, y + 8, w, None, "", f"<h2 style='font-size:{size}px;line-height:1.04'>{s}</h2>")
 
 
 # opener part 4 --------------------------------------------------------
@@ -229,10 +229,10 @@ slide(
                 0,
                 0,
                 1280,
-                190,
+                240,
                 "scrim",
                 "",
-                "background:linear-gradient(rgba(10,10,10,.88),rgba(10,10,10,0))",
+                "background:linear-gradient(rgba(10,10,10,.96) 55%,rgba(10,10,10,0))",
             ),
             D(
                 0,
@@ -317,7 +317,7 @@ slide(
     "".join(
         [
             kicker("Mutation testing, 3 of 5"),
-            title("Some changes cannot be seen, and only the owner may say so", 46, 64),
+            title("Some changes cannot be seen, and only the owner may say so", 42, 64),
             D(
                 64,
                 150,
@@ -688,30 +688,18 @@ slide(
                 "",
                 "background:linear-gradient(90deg,rgba(10,10,10,.92) 0%,rgba(10,10,10,.78) 52%,rgba(10,10,10,.25) 100%)",
             ),
-            D(64, 56, 700, None, "k", "Takeaway"),
-            D(
+            flow(
                 64,
-                120,
-                1000,
-                None,
-                "",
-                "<h1 style='font-size:80px;line-height:1.0'>Rules and machine learning are complementary <span class='em'>by anomaly type</span>.</h1>",
-            ),
-            D(
-                64,
-                400,
-                760,
-                None,
-                "",
-                "<p style='font-size:21px'>Across the three examples, unsupervised detection pays off only on Cardio, where anomalies are rare outliers. On 100 labelled pool problems, rankings need train-only revalidation. On 42 real tables with injected types, the synthetic pattern holds only in part, which is why the real-data matrix is the differentiator.</p>",
-            ),
-            D(
-                64,
-                600,
+                52,
                 900,
-                None,
-                "note",
-                "The pipeline, the 152-dataset pool, the protocols and the verification layer are in place. The IMRaD write-up and the remaining studies are what remains. The photograph is the cover illustration again: one raised pad among 312.",
+                [
+                    "<div class='k'>Takeaway</div>",
+                    "<h1 style='font-size:76px;line-height:1.0'>Rules and machine learning are complementary <span class='em'>by anomaly type</span>.</h1>",
+                    "<p style='font-size:21px;max-width:760px'>Across the three examples, unsupervised detection pays off only on Cardio, where anomalies are rare outliers. On 100 labelled pool problems, rankings need train-only revalidation. On 42 real tables with injected types, the synthetic pattern holds only in part, which is why the real-data matrix is the differentiator.</p>",
+                    "<div class='note' style='max-width:760px'>The pipeline, the 152-dataset pool, the protocols and the verification layer are in place. The IMRaD write-up and the remaining studies are what remains. The photograph is the cover illustration again: one raised pad among 312.</div>",
+                ],
+                maxh=600,
+                gap=26,
             ),
             foot(
                 "github.com/theobigand/etl-anomaly-benchmark &nbsp;·&nbsp; bounded verification &nbsp;·&nbsp; 152 datasets &nbsp;·&nbsp; 17 detectors"

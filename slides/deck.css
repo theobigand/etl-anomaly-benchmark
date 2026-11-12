@@ -9,7 +9,7 @@
   --paper:#ece6da; --paper-soft:#a9a498;
   --ember:#eaa24f; --ember-ink:#94490a; --ember-wash:#f2c892;
   --steel:#93aab4; --steel-ink:#35505b; --steel-wash:#c7d4d9;
-  --cond:"Avenir Next Condensed","Avenir Next",Futura,sans-serif;
+  --cond:"Avenir Next Condensed","Arial Narrow","Roboto Condensed","Helvetica Neue Condensed","Avenir Next",sans-serif;
   --sans:"Avenir Next","Helvetica Neue",Helvetica,Arial,sans-serif;
   --mono:"SF Mono","SFMono-Regular",Menlo,Monaco,ui-monospace,monospace;
 }
@@ -95,3 +95,8 @@ pre{font:500 18px/1.5 var(--mono);white-space:pre}
 .ok{color:var(--steel)}.bone .ok{color:var(--steel-ink)}
 td.cool{background:var(--steel-wash);color:#16262d}
 .tag{display:inline-block;font:600 13px var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border:1.5px solid currentColor}
+
+/* flow: blocks stack by their real height, so a longer line pushes the next block instead of overlapping it */
+.flow{display:flex;flex-direction:column;gap:18px}
+.flow>*{position:static}
+.stat.sm .num{font-size:56px}

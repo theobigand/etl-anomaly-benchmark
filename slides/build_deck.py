@@ -20,18 +20,23 @@ import deck_c  # noqa: E402,F401
 from deck_lib import SLIDES  # noqa: E402
 
 CSS = (HERE / "deck.css").read_text()
+PROBE = (HERE / "layout_probe.js").read_text()
 JS = """
 const slides=[...document.querySelectorAll('.slide')];const stage=document.getElementById('stage');
 const dots=document.getElementById('dots'),count=document.getElementById('count');let i=0;
 slides.forEach((s,n)=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Slide '+(n+1)+', '+(s.dataset.sec||''));b.addEventListener('click',()=>go(n));dots.appendChild(b);});
+function fitFlow(s){s.querySelectorAll('.flow[data-maxh]').forEach(e=>{e.style.transform='';e.style.transformOrigin='0 0';const m=parseFloat(e.dataset.maxh),h=e.offsetHeight;if(h>m)e.style.transform='scale('+Math.max(0.6,m/h)+')';});}
+window.fitFlow=fitFlow;
 function fit(){const s=Math.min(innerWidth/1280,innerHeight/720);stage.style.transform='translate('+(-640*s)+'px,'+(-360*s)+'px) scale('+s+')';}
 addEventListener('resize',fit);fit();
-function go(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,k)=>s.classList.toggle('on',k===i));[...dots.children].forEach((d,k)=>d.setAttribute('aria-current',k===i?'true':'false'));count.textContent=(i+1)+' / '+slides.length;try{history.replaceState(null,'','#'+(i+1));}catch(e){}}
+function go(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,k)=>s.classList.toggle('on',k===i));fitFlow(slides[i]);[...dots.children].forEach((d,k)=>d.setAttribute('aria-current',k===i?'true':'false'));count.textContent=(i+1)+' / '+slides.length;try{history.replaceState(null,'','#'+(i+1));}catch(e){}}
 const next=()=>go(i+1),prev=()=>go(i-1);
 addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();next();}else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();prev();}else if(e.key==='Home')go(0);else if(e.key==='End')go(slides.length-1);});
 let tx=null;addEventListener('touchstart',e=>tx=e.changedTouches[0].clientX,{passive:true});
 addEventListener('touchend',e=>{if(tx===null)return;const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50)(d<0?next:prev)();tx=null;},{passive:true});
 go(parseInt(location.hash.slice(1))-1||0);
+addEventListener('beforeprint',()=>slides.forEach(fitFlow));
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{slides.forEach(s=>{s.classList.add('on');fitFlow(s);});go(i);});
 """
 
 
@@ -55,6 +60,8 @@ def assemble():
         + "".join(out)
         + "</div><nav id='dots' aria-label='slides'></nav><div id='count'></div><script>"
         + JS
+        + "</script><script>"
+        + PROBE
         + "</script></body></html>"
     )
     (HERE / "thesis_progress.html").write_text(html)

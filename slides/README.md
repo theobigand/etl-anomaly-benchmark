@@ -49,3 +49,13 @@ editorial emphasis (`.em`, bold only); matrices use the cividis scale (0 to 1) f
 cividis yellow is a value, not a warning. Every coloured mark also carries a word or a symbol.
 The composition inventory is generated to `docs/thesis-remediation/SLIDE_COMPOSITION_INVENTORY_2026-11-12.md`.
 Known limits: the PR-curve and severity figures are still the archived matplotlib PNGs on a light sheet.
+
+## Layout checks
+
+`python3 slides/check_layout.py` loads the built deck in headless Chromium and reports, per slide, text that
+overlaps other text, leaves its slide or its svg, is clipped, or sits over a figure. `--stress` swaps in wide
+fallback fonts to catch layouts that only work with Avenir Next. Text stacks use `flow()` (see
+`deck_lib.py`) so a longer line pushes the next block down; the stack shrinks only if it would not fit.
+`slides/tests/test_deck.py` covers the cover, the six anomaly pictograms and the checker itself.
+Limits: the check measures text boxes, not contrast or meaning; the archived matplotlib figures are images and
+are not inspected. Semantic review is in `docs/thesis-remediation/SLIDE_VISUAL_SEMANTIC_AUDIT_2026-11-12.md`.

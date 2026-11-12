@@ -9,8 +9,8 @@ from deck_lib import (
     MATRIX,
     TYPES,
     D,
+    flow,
     foot,
-    glyph,
     hbars,
     matrix,
     mono,
@@ -21,6 +21,7 @@ from deck_lib import (
     svg,
     tbl,
     txt,
+    type_icon,
 )
 
 EM = "class='em'"
@@ -31,7 +32,7 @@ def kicker(s, tone_cls=""):
 
 
 def title(s, size=46, y=70, w=1152):
-    return D(64, y, w, None, "", f"<h2 style='font-size:{size}px;line-height:1.04'>{s}</h2>")
+    return D(64, y + 8, w, None, "", f"<h2 style='font-size:{size}px;line-height:1.04'>{s}</h2>")
 
 
 # 1 ------------------------------------------------------------------ cover
@@ -49,39 +50,20 @@ slide(
                 "",
                 "background:linear-gradient(90deg,rgba(10,10,10,0) 44%,rgba(10,10,10,.82) 60%,rgba(10,10,10,.9) 100%)",
             ),
-            D(752, 58, 460, None, "k", "ESILV Data &amp; AI &nbsp;·&nbsp; master thesis"),
-            D(
-                752,
-                108,
-                470,
-                None,
-                "",
-                "<h1 style='font-size:62px;line-height:1.0'>Anomaly detection for data quality, <span class='em'>measured</span> inside the ETL pipeline</h1>",
-            ),
-            D(
-                752,
-                410,
-                460,
-                None,
-                "",
-                "<p style='font-size:20px;color:#c4bfb3'>Rules, classical and neural detectors run through one pipeline and compared per anomaly type. Living progress deck, 2026-11-12.</p>",
-            ),
-            D(
-                752,
-                566,
-                460,
-                None,
-                "note",
-                "Illustration, not data: a generated still life. One pad of 312 stands proud; the low light finds it.",
-            ),
-            D(752, 618, 460, None, "k", "17 detectors &nbsp; 6 types &nbsp; 152 datasets"),
-            D(
-                752,
-                652,
-                460,
-                None,
-                "src",
-                "Theo Bigand &nbsp;·&nbsp; github.com/theobigand/etl-anomaly-benchmark",
+            flow(
+                736,
+                52,
+                496,
+                [
+                    "<div class='k'>ESILV Data &amp; AI &nbsp;·&nbsp; master thesis</div>",
+                    "<h1 style='font-size:58px;line-height:1.02'>Anomaly detection for data quality, <span class='em'>measured</span> inside the ETL pipeline</h1>",
+                    "<p style='font-size:20px;color:#c4bfb3'>Rules, classical and neural detectors run through one pipeline and compared per anomaly type. Living progress deck, 2026-11-12.</p>",
+                    "<div class='note'>Illustration, not data: a generated still life. One pad of 312 stands proud; the low light finds it.</div>",
+                    "<div class='k'>17 detectors &nbsp; 6 types &nbsp; 152 datasets</div>",
+                    "<div class='src'>Theo Bigand<br>github.com/theobigand/etl-anomaly-benchmark</div>",
+                ],
+                maxh=616,
+                gap=22,
             ),
         ]
     ),
@@ -99,35 +81,24 @@ slide(
     "The question",
     "".join(
         [
-            D(64, 56, 600, None, "k", "The question"),
-            D(
+            flow(
                 64,
-                108,
-                1060,
-                None,
-                "",
-                "<h1 style='font-size:84px;line-height:1.0'>Does machine learning in an ETL pipeline beat plain rules, and for <span class='em'>which anomalies</span>?</h1>",
-            ),
-            D(
-                64,
-                396,
-                560,
-                None,
-                "",
-                "<p class='lede' style='font-size:23px'>Rules are the industry default: auditable, cheap, and blind to what the author did not anticipate. Recent work puts ML detectors inside the flow, but on one algorithm and one dataset. This thesis builds the missing head-to-head benchmark and breaks the result down by anomaly type.</p>",
-            ),
-            D(688, 400, 2, 250, "vr", "", "background:var(--graphite-line)"),
-            D(
-                724,
-                396,
-                500,
-                None,
-                "",
-                "<div class='k' style='margin-bottom:14px'>What generic benchmarks leave out</div>"
-                "<p style='font-size:19px;margin-bottom:12px'><b>Pipeline.</b> Algorithms are scored outside any pipeline; integration cost is not measured.</p>"
-                "<p style='font-size:19px;margin-bottom:12px'><b>Rules.</b> The declarative baseline that dominates production is absent.</p>"
-                "<p style='font-size:19px;margin-bottom:12px'><b>Types.</b> One aggregate score per dataset hides which family finds which defect.</p>"
-                "<p style='font-size:19px'><b>Threshold.</b> One flag threshold, not the precision-recall trade-off.</p>",
+                56,
+                1152,
+                [
+                    "<div class='k'>The question</div>",
+                    "<h1 style='font-size:80px;line-height:1.0;max-width:1060px'>Does machine learning in an ETL pipeline beat plain rules, and for <span class='em'>which anomalies</span>?</h1>",
+                    "<div style='display:flex;gap:44px;align-items:flex-start'>"
+                    "<p class='lede' style='font-size:22px;flex:1'>Rules are the industry default: auditable, cheap, and blind to what the author did not anticipate. Recent work puts ML detectors inside the flow, but on one algorithm and one dataset. This thesis builds the missing head-to-head benchmark and breaks the result down by anomaly type.</p>"
+                    "<div style='flex:1;border-left:2px solid var(--graphite-line);padding-left:36px'>"
+                    "<div class='k' style='margin-bottom:12px'>What generic benchmarks leave out</div>"
+                    "<p style='font-size:18px;margin-bottom:10px'><b>Pipeline.</b> Algorithms are scored outside any pipeline; integration cost is not measured.</p>"
+                    "<p style='font-size:18px;margin-bottom:10px'><b>Rules.</b> The declarative baseline that dominates production is absent.</p>"
+                    "<p style='font-size:18px;margin-bottom:10px'><b>Types.</b> One aggregate score per dataset hides which family finds which defect.</p>"
+                    "<p style='font-size:18px'><b>Threshold.</b> One flag threshold, not the precision-recall trade-off.</p></div></div>",
+                ],
+                maxh=606,
+                gap=28,
             ),
             foot("paper/main.tex, IMRaD experimental paper"),
         ]
@@ -312,7 +283,7 @@ slide(
     density="medium",
 )
 
-# 5 ------------------------------------------------------------------ six types, large pads
+# 5 ------------------------------------------------------------------ six types, one diagram each
 types = [
     ("missing", "missing value", "one or two feature cells set to null"),
     ("duplicate", "exact duplicate", "a clean row copied, same business attributes"),
@@ -323,29 +294,29 @@ types = [
 ]
 body = [
     kicker("The original contribution"),
-    title("A controlled dataset that labels six anomaly types separately", 44, 70, 1000),
+    title("A controlled dataset that labels six anomaly types separately", 42, 62, 1152),
 ]
 for i, (k, nm, ds) in enumerate(types):
-    x, y = 64 + (i % 3) * 392, 196 + (i // 3) * 220
+    x, y = 64 + (i % 3) * 394, 134 + (i // 3) * 238
     body += [
-        glyph(k, x, y, 150),
+        type_icon(k, x, y, 364, 170),
         D(
-            x + 168,
-            y + 36,
-            210,
+            x,
+            y + 178,
+            364,
             None,
             "",
-            f"<div class='cond' style='font-size:27px;font-weight:600;line-height:1.1'>{nm}</div><div class='note' style='margin-top:8px;font-size:15px'>{ds}</div>",
+            f"<div class='cond' style='font-size:25px;font-weight:600;line-height:1.1'>{nm}</div><div class='note' style='font-size:15px;margin-top:3px'>{ds}</div>",
         ),
     ]
 body += [
     D(
         64,
-        640,
+        624,
         1152,
         None,
         "note",
-        "12,360 records, Faker and NumPy, six types injected at 3% each, every row tagged. Recall and precision are reported per type. Severity is one multiplier, so the magnitude is swept rather than fixed. The glyphs show a pad missing, doubled, raised, shifted, sloping or cracked.",
+        "12,360 records, Faker and NumPy, six types injected at 3% each, every row tagged. Recall and precision are reported per type. Severity is one multiplier, so the magnitude is swept. Diagrams are illustrative examples, not data.",
     ),
     foot(
         "make synthetic &nbsp;·&nbsp; make severity &nbsp;·&nbsp; generator is deterministic, dataset not committed"
@@ -355,11 +326,10 @@ slide(
     "Contribution",
     "".join(body),
     role="definition",
-    family="specimen grid of glyphs",
-    dominant="six lit glyphs",
+    family="six distinct diagrams",
+    dominant="table, rows, number line, scatter, distributions, form",
     density="medium",
-    light="raking on each glyph",
-    colour="amber on the defect only",
+    colour="amber on the defect with a label",
 )
 
 # 6 ------------------------------------------------------------------ system
@@ -608,7 +578,9 @@ dist = "".join(
         txt(sx(3), 16, "Z-score +3", 14, "#ece6da", "middle"),
         txt(sx(-3), 16, "-3", 14, "#ece6da", "middle"),
         txt(sx(2.698) - 4, 40, "IQR fence", 14, "#ece6da", "end"),
-        txt(sx(0), H0 - 2, "training mean", 14, "#a9a498", "middle"),
+        txt(sx(0), H0, "training mean", 14, "#a9a498", "middle"),
+        f"<line x1='{sx(3.25)}' x2='{sx(3.25)}' y1='{H0 - 62}' y2='{H0 - 24}' stroke='#eaa24f'/>",
+        txt(sx(3.25), H0 - 68, "flagged tails", 14, "#eaa24f", "middle", 700),
     ]
 )
 slide(
@@ -621,7 +593,7 @@ slide(
                 64,
                 186,
                 W,
-                H0,
+                H0 + 10,
                 dist,
                 "standard normal curve with the 3 sigma and IQR fence tails shaded",
             ),
@@ -869,7 +841,7 @@ slide(
                 700,
                 None,
                 "note",
-                "Illustration: the six defect types drawn on one plate (coded SVG, not a photograph, not data).",
+                "Decorative plate of pads under low light. Coded SVG, not a photograph, not data.",
             ),
         ]
     ),
@@ -907,7 +879,7 @@ ch = [f"<line x1='{ax0}' x2='{ax1}' y1='150' y2='150' stroke='#151617' stroke-wi
 for g, lab in [(0.1, "0.1%"), (1, "1%"), (10, "10%"), (100, "100%")]:
     ch += [
         f"<line x1='{px(g)}' x2='{px(g)}' y1='140' y2='160' stroke='#151617'/>",
-        txt(px(g), 182, lab, 15, "#55534d", "middle"),
+        txt(px(g), 128, lab, 15, "#55534d", "middle"),
     ]
 ch.append(
     txt(
@@ -1028,14 +1000,21 @@ body = [
     kicker("How each type is injected"),
     title("The magnitudes are a swept parameter, not a fixed choice", 44, 66),
 ]
-for i, (k, n, f) in enumerate(inj):
+for i, (_k, n, f) in enumerate(inj):
     x, y = 64 + (i % 2) * 584, 160 + (i // 2) * 150
     body += [
-        glyph(k, x, y, 96),
         D(
-            x + 116,
+            x,
+            y + 2,
+            70,
+            None,
+            "",
+            f"<span class='num' style='font-size:54px;opacity:.5'>{i + 1}</span>",
+        ),
+        D(
+            x + 70,
             y + 6,
-            450,
+            490,
             None,
             "",
             f"<div class='cond' style='font-size:28px;font-weight:700'>{n}</div><div style='font:400 17px/1.35 var(--sans);margin-top:4px'>{f}</div>",
@@ -1249,7 +1228,7 @@ pts = [
     ("IQR", 0.584, 0.396, "n"),
     ("Isolation Forest", 0.495, 0.499, "n", (14, 20, "start")),
     ("One-Class SVM", 0.478, 0.485, "n", (-12, 22, "end")),
-    ("KNN", 0.466, 0.469, "n", (-12, 4, "end")),
+    ("KNN", 0.466, 0.469, "n", (-12, -4, "end")),
     ("VAE", 0.502, 0.507, "n", (12, -8, "start")),
     ("DIF", 0.589, 0.582, "best"),
     ("ECOD", 0.341, 0.341, "n"),
@@ -1320,7 +1299,7 @@ slide(
                 540,
                 None,
                 "",
-                "<p style='font-size:20px'><b>Z-score</b> owns univariate outliers (0.93). <b>Great Expectations</b> owns missing values (1.00). <b>Deduplication</b> owns exact duplicates.</p><p style='font-size:20px;margin-top:14px'>Isolation Forest (0.89) and the One-Class SVM (0.90) are the only first-six methods with real recall on multivariate outliers; every rule stays at 0.04 or below.</p><p style='font-size:20px;margin-top:14px'>Broad coverage needs several families, not the single best one.</p>",
+                "<p style='font-size:20px'>Rules and most joint and neural detectors all find univariate outliers (Z-score 0.93, IQR 0.99). Only <b>Great Expectations</b> finds missing values (1.00), and <b>deduplication</b> owns exact duplicates.</p><p style='font-size:20px;margin-top:14px'>Isolation Forest (0.89) and the One-Class SVM (0.90) are the only first-six methods with real recall on multivariate outliers; every rule stays at 0.04 or below.</p><p style='font-size:20px;margin-top:14px'>Broad coverage needs several families, not the single best one.</p>",
             ),
             mx,
             D(
@@ -1329,7 +1308,7 @@ slide(
                 540,
                 None,
                 "note",
-                "Mean recall, 17 detectors, synthetic customer table, 5 seeds. Colour scale: cividis, 0 to 1.",
+                "Mean recall, 17 detectors, 5 seeds. Scale: cividis, 0 to 1.",
             ),
             foot(
                 "paper, Appendix C, tab:m-customer &nbsp;·&nbsp; duplicates need the transform stage"
@@ -1432,10 +1411,11 @@ slide(
                 "<span class='num'>0.37 &rarr; 0.008</span><span class='lab' style='font-size:16px'>Isolation Forest fraud precision as recall goes 0.23 to 0.92</span>",
             ),
             foot(
-                "experiments/run_curves.py &nbsp;·&nbsp; make curves &nbsp;·&nbsp; archived figure from paper/figures"
+                "experiments/run_curves.py &nbsp;·&nbsp; make curves &nbsp;·&nbsp; archived figure from paper/figures; its AP values come from the curve run and differ from the 5-seed means of slide 18"
             ),
         ]
     ),
+    tone="bone",
     role="evidence",
     family="archived figure on a sheet",
     dominant="figure",

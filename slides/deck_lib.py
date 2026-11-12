@@ -44,6 +44,13 @@ def D(x, y, w=None, h=None, cls="", inner="", style=""):
     return f'<div class="{cls}" style="{pos}{style}">{inner}</div>'
 
 
+def flow(x, y, w, blocks, maxh=None, gap=18, style=""):
+    """Vertical stack positioned once; blocks keep their natural height. maxh shrinks the stack with
+    CSS zoom when fonts are wider than expected (the stack, not each block, is fitted)."""
+    mh = f" data-maxh='{maxh}'" if maxh else ""
+    return f"<div class='flow'{mh} style='left:{x}px;top:{y}px;width:{w}px;gap:{gap}px;{style}'>{''.join(blocks)}</div>"
+
+
 def slide(
     sec,
     body,
@@ -145,7 +152,7 @@ def photo(x, y, w, h, pos="50% 50%", size="cover", img="cover-plate", dim=0):
     )
 
 
-def padfield(cols, rows, kinds=None, w=1280, h=720, seed=3, mark=None):
+def padfield(cols, rows, kinds=None, w=1280, h=720, seed=3, mark=None, dim_unmarked=False):
     """A lit plate of pads. Light from the lower left; shadows fall right, length set by pad height.
     kinds: {(c, r): 'raised'|'missing'|'crack'|'double'|'slope'|'shift'|'lit'}; mark: set of (c, r) lit amber."""
     kinds = kinds or {}
@@ -194,7 +201,7 @@ def padfield(cols, rows, kinds=None, w=1280, h=720, seed=3, mark=None):
                     f"<rect x='{x + pw * 0.12}' y='{y + ph * 0.14}' width='{pw * 0.76}' height='{ph * 0.76}' fill='none' stroke='#f0b872' stroke-width='1.4' opacity='.85'/>"
                 )
             lit = "#f0b872"
-            op = 0.95 if (k == "raised" or (c, r) in mark) else 0.6
+            op = 0.95 if (k == "raised" or (c, r) in mark) else (0.12 if dim_unmarked else 0.6)
             out.append(
                 f"<rect x='{x}' y='{y - lift}' width='2' height='{ph}' fill='{lit}' opacity='{op}'/><rect x='{x}' y='{y - lift}' width='{pw}' height='1.6' fill='{lit}' opacity='{op * 0.6}'/>"
             )
@@ -261,6 +268,7 @@ def matrix(
     label_w=120,
     header=True,
     legend=True,
+    unit="recall",
 ):
     """Native heat matrix on the cividis scale; values printed in every cell; best-of-column marked with a dot."""
     t = DARK if tone == "dark" else BONE
@@ -303,7 +311,7 @@ def matrix(
                 f"<rect x='{label_w + k * (len(cols) * cell_w) / 50}' y='{gy}' width='{(len(cols) * cell_w) / 50 + 0.5}' height='10' fill='{cividis(k / 49)}'/>"
             )
         o.append(txt(label_w, gy + 28, "0", 13, t["soft"]))
-        o.append(txt(label_w + len(cols) * cell_w, gy + 28, "1 (recall)", 13, t["soft"], "end"))
+        o.append(txt(label_w + len(cols) * cell_w, gy + 28, f"1 ({unit})", 13, t["soft"], "end"))
         h += 40
     return svg(x, y, w, h, "".join(o), "heat matrix"), h
 
@@ -393,7 +401,18 @@ def pr_scatter(x, y, pts, tone, w=560, h=470):
             f"<circle cx='{X(r)}' cy='{Y(p)}' r='6.5' fill='{col}'><title>{lab}: precision {p}, recall {r}</title></circle>"
         )
         dx, dy, anchor = off if off else ((10, 5, "start") if r < 0.62 else (-10, 5, "end"))
-        o.append(txt(X(r) + dx, Y(p) + dy, lab, 14, t["ink"], anchor, 600))
+        o.append(
+            txt(
+                X(r) + dx,
+                Y(p) + dy,
+                lab,
+                14,
+                t["ink"],
+                anchor,
+                600,
+                extra=f"stroke='{t['bg']}' stroke-width='4' paint-order='stroke'",
+            )
+        )
     return svg(x, y, w, h, "".join(o), "precision recall scatter")
 
 
@@ -446,3 +465,162 @@ def interval_dots(
 
 def foot(src):
     return D(64, 678, 1152, None, "src", src)
+
+
+INK, SOFT, AMB = "#ece6da", "#8d897f", "#eaa24f"
+
+
+def _cell(
+    x, y, w, h, s, fill="none", stroke="#ffffff30", color=INK, size=15, dash="", anchor="middle"
+):
+    tx = x + w / 2 if anchor == "middle" else x + 8
+    return (
+        f"<rect x='{x}' y='{y}' width='{w}' height='{h}' fill='{fill}' stroke='{stroke}' stroke-dasharray='{dash}'/>"
+        + (mono(tx, y + h / 2 + 5, s, size, color, anchor, 500) if s else "")
+    )
+
+
+def type_icon(kind, x, y, w=360, h=170):
+    """Small data diagram for one anomaly type. Each uses a different form: a table with an empty cell,
+    two identical rows, a number line, a 2-D scatter, distributions over time, a form with rule violations.
+    The defect is marked by amber plus a word, never by colour alone."""
+    o = [
+        f"<rect x='0.5' y='0.5' width='{w - 1}' height='{h - 1}' fill='#1b1d1f' stroke='#ffffff1f'/>"
+    ]
+    if kind == "missing":
+        cols = ["id", "income", "balance"]
+        rows = [("101", "48,900", "2,140"), ("102", "52,300", None), ("103", "61,400", "3,310")]
+        cw = 104
+        for j, c in enumerate(cols):
+            o.append(txt(24 + j * cw + cw / 2, 28, c, 14, SOFT, "middle"))
+        for i, r in enumerate(rows):
+            for j, v in enumerate(r):
+                yy = 40 + i * 36
+                if v is None:
+                    o.append(
+                        _cell(24 + j * cw, yy, cw - 6, 30, "null", "#eaa24f22", AMB, AMB, 15, "4 3")
+                    )
+                else:
+                    o.append(_cell(24 + j * cw, yy, cw - 6, 30, v))
+        o.append(txt(24, 160, "a cell with no value", 14, AMB, "start", 600))
+    elif kind == "duplicate":
+        rows = [
+            ("105", "38,700", "960", False),
+            ("104", "52,300", "1,820", False),
+            ("104", "52,300", "1,820", True),
+        ]
+        cw = 96
+        for i, r in enumerate(rows):
+            yy = 20 + i * 38
+            for j, v in enumerate(r[:3]):
+                o.append(
+                    _cell(
+                        24 + j * cw,
+                        yy,
+                        cw - 6,
+                        30,
+                        v,
+                        "#eaa24f1a" if r[3] else "none",
+                        AMB if r[3] else "#ffffff30",
+                        AMB if r[3] else INK,
+                    )
+                )
+        o.append(
+            f"<path d='M{24 + 3 * cw + 6} {58} L{24 + 3 * cw + 18} {58} L{24 + 3 * cw + 18} {96} L{24 + 3 * cw + 6} {96}' fill='none' stroke='{AMB}' stroke-width='2'/>"
+        )
+        o.append(txt(24 + 3 * cw + 26, 82, "=", 26, AMB, "start", 700))
+        o.append(txt(24, 154, "the same record again, id included", 14, AMB, "start", 600))
+    elif kind == "univariate":
+        o.append(f"<line x1='24' x2='{w - 24}' y1='96' y2='96' stroke='{INK}' stroke-width='1.5'/>")
+        for k, xx in enumerate(
+            [84, 98, 110, 118, 126, 134, 146, 154, 166, 176, 188, 130, 120, 140, 158]
+        ):
+            o.append(
+                f"<circle cx='{xx + 10}' cy='{96 - 8 - (k % 4) * 8}' r='4.5' fill='{INK}' opacity='.85'/>"
+            )
+        o.append(
+            f"<path d='M84 108 L84 114 L206 114 L206 108' fill='none' stroke='{SOFT}'/>"
+            + txt(145, 132, "expected range", 14, SOFT, "middle")
+        )
+        o.append(
+            f"<circle cx='{w - 40}' cy='88' r='7' fill='{AMB}'/><circle cx='{w - 40}' cy='88' r='13' fill='none' stroke='{AMB}' stroke-width='2'/>"
+        )
+        o.append(
+            txt(w - 40, 62, "outlier", 14, AMB, "middle", 700)
+            + txt(24, 28, "income, one column", 14, SOFT, "start")
+        )
+        o.append(txt(w - 24, 154, "value x 15 to 45", 14, AMB, "end", 600))
+    elif kind == "multivariate":
+        o.append(
+            f"<line x1='48' x2='48' y1='18' y2='138' stroke='{INK}'/><line x1='48' x2='{w - 24}' y1='138' y2='138' stroke='{INK}'/>"
+        )
+        pts = [
+            (80, 120),
+            (100, 108),
+            (118, 100),
+            (136, 88),
+            (152, 82),
+            (170, 70),
+            (188, 62),
+            (206, 54),
+            (124, 112),
+            (160, 94),
+            (182, 76),
+            (214, 66),
+            (96, 122),
+            (144, 98),
+        ]
+        o += [f"<circle cx='{px}' cy='{py}' r='4.5' fill='{INK}' opacity='.85'/>" for px, py in pts]
+        o.append(
+            f"<rect x='48' y='46' width='4' height='88' fill='{SOFT}' opacity='.6'/><rect x='70' y='134' width='156' height='4' fill='{SOFT}' opacity='.6'/>"
+        )
+        ax, ay = 92, 52
+        o.append(
+            f"<line x1='{ax}' x2='{ax}' y1='{ay}' y2='134' stroke='{AMB}' stroke-dasharray='3 3'/><line x1='52' x2='{ax}' y1='{ay}' y2='{ay}' stroke='{AMB}' stroke-dasharray='3 3'/>"
+        )
+        o.append(
+            f"<circle cx='{ax}' cy='{ay}' r='7' fill='{AMB}'/><circle cx='{ax}' cy='{ay}' r='13' fill='none' stroke='{AMB}' stroke-width='2'/>"
+        )
+        o.append(
+            txt(ax + 20, ay + 4, "unusual pair", 14, AMB, "start", 700)
+            + txt(w - 24, 156, "age", 14, SOFT, "end")
+            + txt(14, 24, "balance", 14, SOFT, "start")
+        )
+        o.append(
+            txt(w - 14, 112, "each value is in range,", 14, SOFT, "end")
+            + txt(w - 14, 130, "the pair is not", 14, SOFT, "end")
+        )
+    elif kind == "drift":
+        o.append(
+            f"<line x1='24' x2='{w - 24}' y1='132' y2='132' stroke='{INK}'/>"
+            + txt(w - 24, 154, "time", 14, SOFT, "end")
+            + txt(24, 154, "earlier", 14, SOFT, "start")
+        )
+        for k, (cx, op) in enumerate([(90, 0.35), (170, 0.6), (250, 1)]):
+            pts = " ".join(
+                f"{cx - 56 + i * 4:.0f},{132 - 70 * 2.718 ** (-((i * 4 - 56) ** 2) / (2 * 20**2)):.1f}"
+                for i in range(29)
+            )
+            o.append(
+                f"<polyline points='{pts}' fill='none' stroke='{AMB if k == 2 else INK}' stroke-width='2.2' opacity='{op}'/>"
+            )
+        o.append(f"<line x1='90' x2='90' y1='30' y2='132' stroke='{SOFT}' stroke-dasharray='3 4'/>")
+        o.append(
+            f"<path d='M96 52 L246 52' stroke='{AMB}' stroke-width='2'/><path d='M246 52 l-9 -5 l0 10 z' fill='{AMB}'/>"
+        )
+        o.append(
+            txt(w / 2, 30, "the whole distribution moves", 14, AMB, "middle", 700)
+            + txt(24, 20, "income", 14, SOFT, "start")
+        )
+    else:
+        rows = [
+            ("email", "marie.dupont@", "no domain"),
+            ("age", "217", "impossible"),
+            ("country", "ZZ", "not a country"),
+        ]
+        for i, (f, v, why) in enumerate(rows):
+            yy = 22 + i * 46
+            o.append(txt(24, yy + 22, f, 14, SOFT, "start"))
+            o.append(_cell(88, yy, 132, 32, v, "#eaa24f1a", AMB, AMB, 15))
+            o.append(txt(230, yy + 22, "&#10007; " + why, 14, AMB, "start", 700))
+    return svg(x, y, w, h, "".join(o), f"diagram of {kind}")
