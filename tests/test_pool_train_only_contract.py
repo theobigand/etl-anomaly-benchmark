@@ -285,3 +285,28 @@ def test_a_run_without_results_or_with_errors_returns_failure(tmp_path, monkeypa
     assert main(_args(data, partitions, tmp_path / "b.json")) == 1
     monkeypatch.setattr(module, "evaluate_frozen", lambda *a, **k: {"runs": {"z": 1}, "errors": []})
     assert main(_args(data, partitions, tmp_path / "c.json")) == 0
+
+
+def test_every_feature_is_read_as_text_the_label_as_a_number_and_the_record_names_the_file(
+    tmp_path, monkeypatch
+):
+    data, partitions = _inputs(tmp_path)
+    frame = pd.read_csv(data)
+    frame["code"] = [f"{i:02d}" for i in range(len(frame))]
+    frame.to_csv(data, index=False)
+    manifest = json.loads(partitions.read_text())
+    manifest["input_sha256"] = hashlib.sha256(data.read_bytes()).hexdigest()
+    partitions.write_text(json.dumps(manifest))
+    seen = {}
+
+    def spy(features, labels, folds, seed, methods):
+        seen.update(features=features.copy(), labels=labels, seed=seed)
+        return {"errors": [], "runs": {"zscore": {}}}
+
+    monkeypatch.setattr(module, "evaluate_frozen", spy)
+    assert main(_args(data, partitions, tmp_path / "run.json")) == 0
+    assert all(not pd.api.types.is_numeric_dtype(dtype) for dtype in seen["features"].dtypes)
+    assert seen["features"]["code"].tolist()[:3] == ["00", "01", "02"]
+    assert seen["labels"].dtype.kind in "iu" and "anomaly" not in seen["features"]
+    record = json.loads((tmp_path / "run.record.json").read_text())
+    assert record["dataset"]["identity"] == "raw.csv"
