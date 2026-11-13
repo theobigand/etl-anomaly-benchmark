@@ -66,3 +66,49 @@ def test_the_row_count_limit_is_six_blocks_of_at_least_fifteen_rows():
     with pytest.raises(inj.NotEligible) as refused:
         inj.inject(table(89), seed=1)
     assert str(refused.value) == "too few rows for six anomaly groups"
+
+
+def _wide(rows, duplicates=0, missing=0):
+    rng = np.random.default_rng(5)
+    frame = pd.DataFrame(rng.normal(size=(rows, 4)), columns=list("abcd"))
+    frame["flag"] = rng.integers(0, 2, rows).astype(bool)
+    frame["few"] = rng.integers(0, 3, rows)
+    if duplicates:
+        frame = pd.concat([frame, frame.iloc[:duplicates]], ignore_index=True)
+    if missing:
+        frame.loc[100 : 100 + missing - 1, "a"] = np.nan
+    return frame
+
+
+def test_the_preparation_report_counts_each_step_and_names_its_fields():
+    frame = _wide(3100, duplicates=40, missing=25)
+    table, report = inj.prepare(frame, seed=2, cap=10_000)
+    assert report == {
+        "rows_in": 3140,
+        "columns": ["a", "b", "c", "d"],
+        "rows_incomplete_dropped": 25,
+        "duplicates_dropped": 40,
+        "rows_out": len(table),
+    }
+    assert len(table) == 3140 - report["rows_incomplete_dropped"] - 40
+    assert list(table.columns) == ["a", "b", "c", "d"]
+    assert (table.dtypes == np.float64).all()
+
+
+def test_integer_and_boolean_columns_are_not_continuous_and_ten_distinct_values_suffice():
+    frame = pd.DataFrame(
+        {
+            "ten": np.tile(np.arange(10.0), 5),
+            "nine": np.tile(np.arange(9.0), 6)[:50],
+            "flag": np.tile([True, False], 25),
+        }
+    )
+    assert inj.continuous_columns(frame) == ["ten"]
+
+
+def test_the_row_cap_samples_only_above_the_cap():
+    frame = _wide(3200)
+    exactly, _ = inj.prepare(frame, seed=2, cap=3200)
+    assert exactly.equals(frame[list("abcd")].astype(float).reset_index(drop=True))
+    capped, report = inj.prepare(frame, seed=2, cap=3199)
+    assert len(capped) == 3199 and report["rows_out"] == 3199
