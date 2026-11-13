@@ -1,0 +1,1810 @@
+{
+ "date": "2026-11-13",
+ "environment": {
+  "mutmut": "3.8.0",
+  "numpy": "2.4.6",
+  "pandas": "3.1.1",
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "python": "3.11.17"
+ },
+ "head": "ce3aea32dda4867befba55af37bdb041875b12d7",
+ "killed": 31383,
+ "kind": "local development measurement, not the controller campaign",
+ "modules": {
+  "experiments/check_mutation.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 150,
+   "adjusted_score": 98.0,
+   "catalog_sha256": "94345ad70bfe2e3684da41c22b00525e03dfce5139777f24397d4ae9620dfd09",
+   "counts": {
+    "killed": 147,
+    "survived": 3
+   },
+   "eligible": 150,
+   "killed": 147,
+   "level": "L4",
+   "needed_for_threshold": 147,
+   "raw_score": 98.0,
+   "source_sha256": "62cfa8b0b8e78e2b553b113fff1e226e2eaa217caea0a43d877c766070c36411",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "experiments/fetch_cardio.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 61,
+   "adjusted_score": 98.36,
+   "catalog_sha256": "b0a02b53a179355e0d6b03c2e0fc821f445663481ee4dc4328d323c9820a7366",
+   "counts": {
+    "killed": 60,
+    "survived": 1
+   },
+   "eligible": 61,
+   "killed": 60,
+   "level": "L4",
+   "needed_for_threshold": 60,
+   "raw_score": 98.36,
+   "source_sha256": "a303ac1d039d5f15ddc20f401b0ca1e46032f6169a9203ba4d274b7906f576d6",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "experiments/generate_synthetic.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 91,
+   "adjusted_score": 98.9,
+   "catalog_sha256": "4584d7d9c7adfd9abc101747cef80c6c4517d0a6221bd146228c08440f58b2d6",
+   "counts": {
+    "killed": 90,
+    "survived": 1
+   },
+   "eligible": 91,
+   "killed": 90,
+   "level": "L4",
+   "needed_for_threshold": 90,
+   "raw_score": 98.9,
+   "source_sha256": "fdf41ab6a5116e87771fc17670cda32dfd7f6bc0f5899cf9aad38c0484732858",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "experiments/provenance.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 381,
+   "adjusted_score": 99.21,
+   "catalog_sha256": "70a7dd9f52da92120bc6bdd0ecbc5b2b4f1c0461fd54ba316b82c815baa791c5",
+   "counts": {
+    "killed": 378,
+    "survived": 3
+   },
+   "eligible": 381,
+   "killed": 378,
+   "level": "L4",
+   "needed_for_threshold": 374,
+   "raw_score": 99.21,
+   "source_sha256": "29419da39db6ee6e837e37d3501508efd102ee3cd8210a2c2fb595b0c3897f3f",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "experiments/run_benchmark.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 438,
+   "adjusted_score": 99.77,
+   "catalog_sha256": "9743909297898f26007bc2fb0cba2d00211de0cbf2893edf89a66d97ba2da0d0",
+   "counts": {
+    "killed": 437,
+    "survived": 1
+   },
+   "eligible": 438,
+   "killed": 437,
+   "level": "L4",
+   "needed_for_threshold": 430,
+   "raw_score": 99.77,
+   "source_sha256": "9ed61c4d0e25e852a57ac9144dcfa03a020383057494f8c6262709a56f88b9ee",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "experiments/run_curves.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 451,
+   "adjusted_score": 98.23,
+   "catalog_sha256": "7e323c618e4e2ebae561a130c4605e34fe8cc186615b4ecd47cf04277ddf6ccb",
+   "counts": {
+    "killed": 443,
+    "survived": 8
+   },
+   "eligible": 451,
+   "killed": 443,
+   "level": "L4",
+   "needed_for_threshold": 442,
+   "raw_score": 98.23,
+   "source_sha256": "45b316b8db7592046702f8420b7d3eda7078a731a5a82966ea396b6d4c174bdc",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "experiments/run_severity.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 329,
+   "adjusted_score": 97.26,
+   "catalog_sha256": "f41e59f70fb61d7df4d44bd4d2bde8ca593ef8d1972345b3e1a06fddafb51f93",
+   "counts": {
+    "killed": 320,
+    "survived": 9
+   },
+   "eligible": 329,
+   "killed": 320,
+   "level": "L4",
+   "needed_for_threshold": 323,
+   "raw_score": 97.26,
+   "source_sha256": "7bda7511594ba6313e9579805a0726fd04ce06382f10d2fcb6c06e4d90f0a3fd",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "experiments/run_synthetic_benchmark.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 572,
+   "adjusted_score": 98.08,
+   "catalog_sha256": "f5032801a60a732a1d911038af45d72fb583cfb9a7c9f920e4562a02fcf8299e",
+   "counts": {
+    "killed": 561,
+    "survived": 11
+   },
+   "eligible": 572,
+   "killed": 561,
+   "level": "L4",
+   "needed_for_threshold": 561,
+   "raw_score": 98.08,
+   "source_sha256": "803feb40a63727adee27fd057845ccff902fc9cff12005280f7e7f0fcaf7be8b",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "experiments/verification_report.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 290,
+   "adjusted_score": 100.0,
+   "catalog_sha256": "d76d5a87127357e80fe7ec7198166c5ba5000984cc10d1865f806f8c487f118a",
+   "counts": {
+    "killed": 290
+   },
+   "eligible": 290,
+   "killed": 290,
+   "level": "L4",
+   "needed_for_threshold": 285,
+   "raw_score": 100.0,
+   "source_sha256": "fca81ddf1ae67e9f651b4c42fcd6ab0edea3088c230fbee5a01b2a05200f3d91",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "experiments/verify_real.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 212,
+   "adjusted_score": 100.0,
+   "catalog_sha256": "859b1e202eaa24516eb52787e31de9d539a4fda7a5c151dda9b6807f5fd66c11",
+   "counts": {
+    "killed": 212
+   },
+   "eligible": 212,
+   "killed": 212,
+   "level": "L4",
+   "needed_for_threshold": 208,
+   "raw_score": 100.0,
+   "source_sha256": "c2e72b032f35e29f0174efe35909c08e40ef7c2eeb6ee3c343c295ec91ee642f",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "research/alert_budget.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 780,
+   "adjusted_score": 99.62,
+   "catalog_sha256": "915d24939fd557d28c76bc48d060bab0edc0af26309281c6bbfb5b3b375a6d8d",
+   "counts": {
+    "killed": 777,
+    "survived": 3
+   },
+   "eligible": 780,
+   "killed": 777,
+   "level": "L4",
+   "needed_for_threshold": 765,
+   "raw_score": 99.62,
+   "source_sha256": "0da6a79ece4e6cbd8066eb2474f653ba69eb2247caeeb0f77e3cf9b48be5a7e9",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "research/alert_budget_summary.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 123,
+   "adjusted_score": 100.0,
+   "catalog_sha256": "1b4248b3b0a7edc52ebd94ff139064befbd4f63e47dc14b3d6b11cc62ab96d58",
+   "counts": {
+    "killed": 123
+   },
+   "eligible": 123,
+   "killed": 123,
+   "level": "L4",
+   "needed_for_threshold": 121,
+   "raw_score": 100.0,
+   "source_sha256": "a201cdffc73f01b20798b9aaec3b99115c8d30c3fde9702ab6acd54d45d2dd29",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "research/build_pool.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 172,
+   "adjusted_score": 98.26,
+   "catalog_sha256": "8376de93b7f33099e83dea80a0bdf12328a907743b11c7f2941b397e7a0bde2c",
+   "counts": {
+    "killed": 169,
+    "survived": 3
+   },
+   "eligible": 172,
+   "killed": 169,
+   "level": "L4",
+   "needed_for_threshold": 169,
+   "raw_score": 98.26,
+   "source_sha256": "eefa0438f61e44b0bd0c7ed9a8acf7477a181477c4c8c90dc51803fa6391b3f6",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "research/cost_study.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 825,
+   "adjusted_score": 48.24,
+   "catalog_sha256": "732ae631462bbb3f0f4a7ba6a0f0deafe7510e9a116b0be09dee263b5de921d1",
+   "counts": {
+    "killed": 398,
+    "not_executed": 305,
+    "survived": 122
+   },
+   "eligible": 825,
+   "killed": 398,
+   "level": "L3",
+   "needed_for_threshold": 784,
+   "raw_score": 48.24,
+   "source_sha256": "c754219c7d3e61d00b1cff8c228bc9c5b6c75b591558ecea2359049611378b58",
+   "status": "INCOMPLETE",
+   "threshold": 95
+  },
+  "research/dataset_registry.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 417,
+   "adjusted_score": 95.68,
+   "catalog_sha256": "1bb7c0b6bae31d90a8fd47da253378f0bf9e95586125c1d2391b4b0e61915e5e",
+   "counts": {
+    "killed": 399,
+    "survived": 18
+   },
+   "eligible": 417,
+   "killed": 399,
+   "level": "L4",
+   "needed_for_threshold": 409,
+   "raw_score": 95.68,
+   "source_sha256": "d547aef1196e06e296a0d3d60496314e4af22fb9ad8d13ea2e1fc5b0f5be4337",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "research/deep_support.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 14,
+   "adjusted_score": 100.0,
+   "catalog_sha256": "6106f4f0b1f21a53c68561cc2b93ed707a1782606bf0286bf341c694ec550f41",
+   "counts": {
+    "killed": 14
+   },
+   "eligible": 14,
+   "killed": 14,
+   "level": "L3",
+   "needed_for_threshold": 14,
+   "raw_score": 100.0,
+   "source_sha256": "21e4ef7e52a2eb0d03a9367b25cf08ece677201f53f427aa779be8c6c94e8aff",
+   "status": "PASS_RAW",
+   "threshold": 95
+  },
+  "research/deep_typed.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 442,
+   "adjusted_score": 93.89,
+   "catalog_sha256": "17b51240f7e065840a08283ef6f8f1560602dda130e8367003288767bb8ece14",
+   "counts": {
+    "killed": 415,
+    "survived": 27
+   },
+   "eligible": 442,
+   "killed": 415,
+   "level": "L4",
+   "needed_for_threshold": 434,
+   "raw_score": 93.89,
+   "source_sha256": "45193c4c741561f7ee522550367757a9b7a7884415375a8a1b01617328f0810d",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "research/full_registry.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 571,
+   "adjusted_score": 86.51,
+   "catalog_sha256": "04e5ce84123528d489553fd055e5da06e519dbb8e7a53c41f9593b25b9f3f585",
+   "counts": {
+    "killed": 494,
+    "survived": 77
+   },
+   "eligible": 571,
+   "killed": 494,
+   "level": "L4",
+   "needed_for_threshold": 560,
+   "raw_score": 86.51,
+   "source_sha256": "09cc0b9aa694da18fd84d52322aeaf5ce612990bee5c0dae65300b83ee7bc0e5",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "research/full_registry_summary.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 541,
+   "adjusted_score": 86.51,
+   "catalog_sha256": "1ed59df9c363ac9a6e9b34fbee779d4512e272dd9e4e30df248df73f7c75d1b8",
+   "counts": {
+    "killed": 468,
+    "survived": 73
+   },
+   "eligible": 541,
+   "killed": 468,
+   "level": "L4",
+   "needed_for_threshold": 531,
+   "raw_score": 86.51,
+   "source_sha256": "8631dfe763b8b34ec00adac3c416b2827faf59ec9bf39265bc2d1aed44bd7d12",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "research/injection.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 336,
+   "adjusted_score": 94.94,
+   "catalog_sha256": "011af65d555b37c695f69c7dc6c29dd46147cfd2d5f31a34cafc67f9be06d836",
+   "counts": {
+    "killed": 319,
+    "survived": 17
+   },
+   "eligible": 336,
+   "killed": 319,
+   "level": "L4",
+   "needed_for_threshold": 330,
+   "raw_score": 94.94,
+   "source_sha256": "cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "research/labelled_benchmark.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 475,
+   "adjusted_score": 100.0,
+   "catalog_sha256": "2ad6feda3f4e0afb5e309ed040854b7955745051c131129f6ac7b81b42846959",
+   "counts": {
+    "killed": 475
+   },
+   "eligible": 475,
+   "killed": 475,
+   "level": "L4",
+   "needed_for_threshold": 466,
+   "raw_score": 100.0,
+   "source_sha256": "d4f1f954079d382f364748648837cb33e7743e81b24e63e66caeeb1b89b51f78",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "research/labelled_summary.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 676,
+   "adjusted_score": 92.6,
+   "catalog_sha256": "a29341e47ad4ded050540a6c957e5ff366278f14ad350ba331f88f6e267c5295",
+   "counts": {
+    "killed": 626,
+    "survived": 50
+   },
+   "eligible": 676,
+   "killed": 626,
+   "level": "L4",
+   "needed_for_threshold": 663,
+   "raw_score": 92.6,
+   "source_sha256": "2b9a60f12ceded6be288059b885b61e11eb7b68122010aed1cf69d5a578706e0",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "research/lstm_detector.py": {
+   "accepted_equivalents": [
+    "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_31",
+    "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_50",
+    "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_41",
+    "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_46"
+   ],
+   "adjusted_eligible": 373,
+   "adjusted_score": 98.66,
+   "catalog_sha256": "aef20963dc44e0ca61b2c9e9744bdf76a552d33490a96ed8e51b592a9cacfbc2",
+   "counts": {
+    "killed": 368,
+    "survived": 9
+   },
+   "eligible": 377,
+   "killed": 368,
+   "level": "L4",
+   "needed_for_threshold": 370,
+   "raw_score": 97.61,
+   "source_sha256": "277375e66d1edc6ed94c5ffc4b1074c113e86c6095c7dc2b20d3058cb006da18",
+   "status": "PASS_ADJUSTED",
+   "threshold": 98
+  },
+  "research/lstm_pilot.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 506,
+   "adjusted_score": 90.91,
+   "catalog_sha256": "b1f96997d39e47dd99cc6158d59a50d7131f93b20b37026a756671654e2ea236",
+   "counts": {
+    "killed": 460,
+    "survived": 46
+   },
+   "eligible": 506,
+   "killed": 460,
+   "level": "L4",
+   "needed_for_threshold": 496,
+   "raw_score": 90.91,
+   "source_sha256": "8c5ee81a42be9f605f50e32f69e61018f8aef0a38f3eef7c80a50adb7d9bae0f",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "research/matched_alert.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 322,
+   "adjusted_score": 99.38,
+   "catalog_sha256": "c9283ec7191fcbd76aa0c4e2684ab77b25b989ff5317a5ba27f8621388d1f2b5",
+   "counts": {
+    "killed": 320,
+    "survived": 2
+   },
+   "eligible": 322,
+   "killed": 320,
+   "level": "L4",
+   "needed_for_threshold": 316,
+   "raw_score": 99.38,
+   "source_sha256": "dac27eab8804462e153242158a3cea09c965809de189a9f398e4ee33a27657b3",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "research/multi_schema.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 1093,
+   "adjusted_score": 91.49,
+   "catalog_sha256": "918fe1d065502424f49fc3619516bd519c04c951dfc6f9efda87df4bf789b624",
+   "counts": {
+    "killed": 1000,
+    "survived": 93
+   },
+   "eligible": 1093,
+   "killed": 1000,
+   "level": "L4",
+   "needed_for_threshold": 1072,
+   "raw_score": 91.49,
+   "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "research/normalise.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 197,
+   "adjusted_score": 96.95,
+   "catalog_sha256": "fc5f5c3a0445d43054017cca9eb565f9765360e1590f5b7433cbc817ab36804c",
+   "counts": {
+    "killed": 191,
+    "survived": 6
+   },
+   "eligible": 197,
+   "killed": 191,
+   "level": "L4",
+   "needed_for_threshold": 194,
+   "raw_score": 96.95,
+   "source_sha256": "5ba131d186d79c792fb64691089939fffb3a085e1f376c6b9dcd1c12bcf5155a",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "research/paired_bootstrap.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 100,
+   "adjusted_score": 100.0,
+   "catalog_sha256": "8056f1f26b0daa42fdba170741025abff8e6a99f3c24b76db9e0476cae2b5c6d",
+   "counts": {
+    "killed": 100
+   },
+   "eligible": 100,
+   "killed": 100,
+   "level": "L4",
+   "needed_for_threshold": 98,
+   "raw_score": 100.0,
+   "source_sha256": "87eed95e78ecaf68ec1502207a92f775a18299faa3ec0dbaf34ec78ef8c94064",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "research/paper_appendix.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 171,
+   "adjusted_score": 78.36,
+   "catalog_sha256": "3c450e3c2b33172f6133ff7eb15ddfec2ea0af9e3ebabc97b33c1a035ae2265c",
+   "counts": {
+    "killed": 134,
+    "survived": 37
+   },
+   "eligible": 171,
+   "killed": 134,
+   "level": "L3",
+   "needed_for_threshold": 163,
+   "raw_score": 78.36,
+   "source_sha256": "fd6e264dddba798a6992db047362f42b7c4ad39dc8283777cfc9984a722b080f",
+   "status": "FAIL",
+   "threshold": 95
+  },
+  "research/paper_tables.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 511,
+   "adjusted_score": 91.78,
+   "catalog_sha256": "45639946cd5032dfd45521059a57c76381dbab3309eed64f6080648e0278aa08",
+   "counts": {
+    "killed": 469,
+    "survived": 42
+   },
+   "eligible": 511,
+   "killed": 469,
+   "level": "L3",
+   "needed_for_threshold": 486,
+   "raw_score": 91.78,
+   "source_sha256": "42d6cea0d6b303f008ae7f3009d86da0516b3101390ead7c7b5a84136014eb4c",
+   "status": "FAIL",
+   "threshold": 95
+  },
+  "research/pool_check.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 180,
+   "adjusted_score": 98.89,
+   "catalog_sha256": "51febc8d6bdafe700609429ec61428d80f9f5008eea7b190d2ec2a12732504fd",
+   "counts": {
+    "killed": 178,
+    "survived": 2
+   },
+   "eligible": 180,
+   "killed": 178,
+   "level": "L4",
+   "needed_for_threshold": 177,
+   "raw_score": 98.89,
+   "source_sha256": "5981ee3fea87f589524072ba00084682547a2435ea816bf62b92da414f776c96",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "research/pool_chrono.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 316,
+   "adjusted_score": 86.71,
+   "catalog_sha256": "206639c66988bdbe63db29b095048244379c35633f8e24080ec259c6e1b2568a",
+   "counts": {
+    "killed": 274,
+    "survived": 42
+   },
+   "eligible": 316,
+   "killed": 274,
+   "level": "L4",
+   "needed_for_threshold": 310,
+   "raw_score": 86.71,
+   "source_sha256": "cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "research/pool_etl.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 317,
+   "adjusted_score": 92.11,
+   "catalog_sha256": "6270cce6af4260fd569227be6d8b4a843bbbf61dda1521fca868c18a63af2a11",
+   "counts": {
+    "killed": 292,
+    "survived": 25
+   },
+   "eligible": 317,
+   "killed": 292,
+   "level": "L4",
+   "needed_for_threshold": 311,
+   "raw_score": 92.11,
+   "source_sha256": "1ed53a9a8594fcd438e0b660485efdf82dc5416d0494a2ff69de9fb04c8ef669",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "research/pool_extension_paper.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 652,
+   "adjusted_score": 95.4,
+   "catalog_sha256": "882abc72ce0c2d36d717b509313f79c712d1b5400715988940529524f51cdde1",
+   "counts": {
+    "killed": 622,
+    "survived": 30
+   },
+   "eligible": 652,
+   "killed": 622,
+   "level": "L3",
+   "needed_for_threshold": 620,
+   "raw_score": 95.4,
+   "source_sha256": "927dcc1c46b6d3a37665ae1fbfa75cc24d20e7f5390d78e313ac4878408d5cfc",
+   "status": "PASS_RAW",
+   "threshold": 95
+  },
+  "research/pool_extension_summary.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 496,
+   "adjusted_score": 99.4,
+   "catalog_sha256": "5dae062ba36cab0a5b4a2f15f23d5c8bfdc83c8c67093b9e7a4a41a49eb41e90",
+   "counts": {
+    "killed": 493,
+    "survived": 3
+   },
+   "eligible": 496,
+   "killed": 493,
+   "level": "L4",
+   "needed_for_threshold": 487,
+   "raw_score": 99.4,
+   "source_sha256": "e33367ebe505799d79f98acf46ecc53f67fd8c3dbcbcef959323d9c8f84f56db",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "research/pool_full.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 515,
+   "adjusted_score": 99.22,
+   "catalog_sha256": "6d0bfb2df37c0d7a11ea69755b111fa0a38634529d9c73324a187c989008474b",
+   "counts": {
+    "killed": 511,
+    "survived": 4
+   },
+   "eligible": 515,
+   "killed": 511,
+   "level": "L4",
+   "needed_for_threshold": 505,
+   "raw_score": 99.22,
+   "source_sha256": "bf7a089a7c2521d05dc7171b69206dc42fbf907e88f11ee4e5ce7e1e13157a4c",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "research/pool_preprocessing.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 248,
+   "adjusted_score": 97.18,
+   "catalog_sha256": "453ee4bae71c1a333674fdcc286423b3d8ec1d129cb5e9f502e9babef1c7c959",
+   "counts": {
+    "killed": 241,
+    "survived": 7
+   },
+   "eligible": 248,
+   "killed": 241,
+   "level": "L4",
+   "needed_for_threshold": 244,
+   "raw_score": 97.18,
+   "source_sha256": "edf8ac28b2824c76840c8e4cad47fe3fee1f1ac84a5b38ad341e968dee9e8dc0",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "research/pool_train_only.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 332,
+   "adjusted_score": 98.8,
+   "catalog_sha256": "3a9f533b58b4a874301b544928133b259a159dccc2cf932a1c09106955faea3d",
+   "counts": {
+    "killed": 328,
+    "survived": 4
+   },
+   "eligible": 332,
+   "killed": 328,
+   "level": "L4",
+   "needed_for_threshold": 326,
+   "raw_score": 98.8,
+   "source_sha256": "177258ce0eb5910e8b10845a328a1a0ab5fe870cbeb5e9e94ba165587f3fdae3",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "research/pool_typed.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 525,
+   "adjusted_score": 99.24,
+   "catalog_sha256": "eaca1600c7831c2cd9e392d7b11f17facb0b34efbb907563181d17efee170623",
+   "counts": {
+    "killed": 521,
+    "survived": 4
+   },
+   "eligible": 525,
+   "killed": 521,
+   "level": "L4",
+   "needed_for_threshold": 515,
+   "raw_score": 99.24,
+   "source_sha256": "0b477c1c51fc616596b5ed3b09841a0374f1bc26603f22a2bc7c7ee638a8bbad",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "research/prevalence_shift.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 369,
+   "adjusted_score": 99.19,
+   "catalog_sha256": "61b828c5c6044a1711dc3686b43952467fcd16a4fed09a8e5c3bca9c1834e734",
+   "counts": {
+    "killed": 366,
+    "survived": 3
+   },
+   "eligible": 369,
+   "killed": 366,
+   "level": "L4",
+   "needed_for_threshold": 362,
+   "raw_score": 99.19,
+   "source_sha256": "d89afbf352b0ca891de4dfbd1a6507b20e48f55745752d0e6f715ee3943567b3",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "research/recover_partitions.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 360,
+   "adjusted_score": 99.72,
+   "catalog_sha256": "d182c54b9f2beb83aa31b86610d15ee3101a55a91bace90fbbde2fcd359803a1",
+   "counts": {
+    "killed": 359,
+    "survived": 1
+   },
+   "eligible": 360,
+   "killed": 359,
+   "level": "L4",
+   "needed_for_threshold": 353,
+   "raw_score": 99.72,
+   "source_sha256": "4fa65e38a68bb90a1c8103f16bb59754d8e5fd2c99e10fd59e987416dc16749c",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "research/score_shift.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 806,
+   "adjusted_score": 99.26,
+   "catalog_sha256": "05a61a82954d6dc47534f6c49b48f613289103a591aeae75e53a0f1455774852",
+   "counts": {
+    "killed": 800,
+    "survived": 6
+   },
+   "eligible": 806,
+   "killed": 800,
+   "level": "L4",
+   "needed_for_threshold": 790,
+   "raw_score": 99.26,
+   "source_sha256": "a96e39bb1b80cbaacd00d31f8986a3f2cda350564d316be002dc589c9d801ef6",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "research/source_clustered.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 337,
+   "adjusted_score": 99.7,
+   "catalog_sha256": "01a659dc95eb8fb1b996b8453229f9d186132d5da6c781ddf32faca74ce850da",
+   "counts": {
+    "killed": 336,
+    "survived": 1
+   },
+   "eligible": 337,
+   "killed": 336,
+   "level": "L4",
+   "needed_for_threshold": 331,
+   "raw_score": 99.7,
+   "source_sha256": "a9bf13c575ea6e33c6055a9da5f23ee5f9c71ff1e0329815343a821008764352",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "research/temporal_decision.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 836,
+   "adjusted_score": 90.19,
+   "catalog_sha256": "c68abc303f77fdba2712116081978338289ce8e457758a0f5c7556a99186b466",
+   "counts": {
+    "killed": 754,
+    "survived": 81,
+    "timeout": 1
+   },
+   "eligible": 836,
+   "killed": 754,
+   "level": "L4",
+   "needed_for_threshold": 820,
+   "raw_score": 90.19,
+   "source_sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+   "status": "INCOMPLETE",
+   "threshold": 98
+  },
+  "research/temporal_pilot.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 589,
+   "adjusted_score": 98.47,
+   "catalog_sha256": "cc22ccb0d5ce93621a446a2041a971e3971144d1f710ada7002d7b198b0fe32e",
+   "counts": {
+    "killed": 580,
+    "survived": 9
+   },
+   "eligible": 589,
+   "killed": 580,
+   "level": "L4",
+   "needed_for_threshold": 578,
+   "raw_score": 98.47,
+   "source_sha256": "03e63b2961126c3192fec7fbf374b434e0ab81c54a1317c3cfa99ecb732b0982",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "research/time_scan.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 135,
+   "adjusted_score": 94.81,
+   "catalog_sha256": "e208d7a1206f3065b90afcea5bd8d645539ef62b5c1dfde3d5c88295ff6b30c3",
+   "counts": {
+    "killed": 128,
+    "survived": 7
+   },
+   "eligible": 135,
+   "killed": 128,
+   "level": "L3",
+   "needed_for_threshold": 129,
+   "raw_score": 94.81,
+   "source_sha256": "b3d9403792e46c4de18873ed71df2815ec5f0c5e606496c2e59d0489a7e92fad",
+   "status": "FAIL",
+   "threshold": 95
+  },
+  "research/typed_benchmark.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 180,
+   "adjusted_score": 97.22,
+   "catalog_sha256": "2b7aff2c3664116170e04eeb7a6d3f22dceaf94bd48fa0e67e5b4846865de3fb",
+   "counts": {
+    "killed": 175,
+    "survived": 5
+   },
+   "eligible": 180,
+   "killed": 175,
+   "level": "L4",
+   "needed_for_threshold": 177,
+   "raw_score": 97.22,
+   "source_sha256": "abdd10e4a1965e99bd5db8ad1a61b0b9e37caed20f35d09c32bcb1a9a3bae9d2",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "research/typed_figures.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 240,
+   "adjusted_score": 55.42,
+   "catalog_sha256": "55960c7edbfe5b4e96cba57e056b9e1a83c84ae316d58f00651baaf258474f88",
+   "counts": {
+    "killed": 133,
+    "survived": 107
+   },
+   "eligible": 240,
+   "killed": 133,
+   "level": "L3",
+   "needed_for_threshold": 228,
+   "raw_score": 55.42,
+   "source_sha256": "cdff872ffa3fb3f15d3c7ee207fc1814ca3b22ba900d39de5bf57101828df8d9",
+   "status": "FAIL",
+   "threshold": 95
+  },
+  "research/typed_masking.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 132,
+   "adjusted_score": 100.0,
+   "catalog_sha256": "1f10961fbd14007ede81131ec612650945bf8abf66aee1446ea9dd8063a7c153",
+   "counts": {
+    "killed": 132
+   },
+   "eligible": 132,
+   "killed": 132,
+   "level": "L3",
+   "needed_for_threshold": 126,
+   "raw_score": 100.0,
+   "source_sha256": "6203d8f54eac82dc4d0a3e4d014bfdc78f944431336506230c30078a687c9653",
+   "status": "PASS_RAW",
+   "threshold": 95
+  },
+  "research/typed_run.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 351,
+   "adjusted_score": 99.43,
+   "catalog_sha256": "e3bae5fa8f6aa1c58ea06c4939ffdcc849f86461e0818291f8334b524cd93fa9",
+   "counts": {
+    "killed": 349,
+    "survived": 2
+   },
+   "eligible": 351,
+   "killed": 349,
+   "level": "L4",
+   "needed_for_threshold": 344,
+   "raw_score": 99.43,
+   "source_sha256": "8589c4634fd7ffff31536e85772f2a84b6edc2f3a59c6860e8ff916abb76beb0",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "research/typed_summary.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 507,
+   "adjusted_score": 94.28,
+   "catalog_sha256": "95f47aba0f38c259ec2a8e6102c7fe3ac06a90c890470dcc32d0ad98fdc8658e",
+   "counts": {
+    "killed": 478,
+    "survived": 29
+   },
+   "eligible": 507,
+   "killed": 478,
+   "level": "L4",
+   "needed_for_threshold": 497,
+   "raw_score": 94.28,
+   "source_sha256": "dd02dbace8fe6f879ff8da68a293324df68af40bbe99e6780410b91e4d44d930",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "research/uci_loader.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 186,
+   "adjusted_score": 96.77,
+   "catalog_sha256": "6631cb8a4619d97b501bccd946c81c1006b962b6040613ea6dd8f35453c601ac",
+   "counts": {
+    "killed": 180,
+    "survived": 6
+   },
+   "eligible": 186,
+   "killed": 180,
+   "level": "L4",
+   "needed_for_threshold": 183,
+   "raw_score": 96.77,
+   "source_sha256": "a1176cd61bd8454c9fa51da682194444feb24529dc401916e8bb94fd212ab691",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "research/uci_pool.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 423,
+   "adjusted_score": 91.25,
+   "catalog_sha256": "11313ae01679377de09fc7e51f2df368788033d5ad2e067559f065a80ab7ab4f",
+   "counts": {
+    "killed": 386,
+    "survived": 37
+   },
+   "eligible": 423,
+   "killed": 386,
+   "level": "L3",
+   "needed_for_threshold": 402,
+   "raw_score": 91.25,
+   "source_sha256": "5a672c897bd99a82fa9c0657fe8925b623b324e31e912c136e98d22f8347fb82",
+   "status": "FAIL",
+   "threshold": 95
+  },
+  "src/etl_benchmark/__init__.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 0,
+   "adjusted_score": null,
+   "catalog_sha256": null,
+   "counts": {},
+   "eligible": 0,
+   "killed": 0,
+   "level": "L2",
+   "needed_for_threshold": null,
+   "raw_score": null,
+   "source_sha256": "21025aa2c1e5f48c7fff2cd5a488753989ff634d57c0a1ce2624718cb9af23ef",
+   "status": "NO_MUTANTS",
+   "threshold": 90
+  },
+  "src/etl_benchmark/__main__.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 36,
+   "adjusted_score": 97.22,
+   "catalog_sha256": "cd617a21b1aa083702fc6f01e8f3d34adfd03aabd46d1c2b9862e167e57eb97c",
+   "counts": {
+    "killed": 35,
+    "survived": 1
+   },
+   "eligible": 36,
+   "killed": 35,
+   "level": "L3",
+   "needed_for_threshold": 35,
+   "raw_score": 97.22,
+   "source_sha256": "ce874443e956a2e7fdec2d24b56b7b595ce6098c1432890b1fe2b6fe502403de",
+   "status": "PASS_RAW",
+   "threshold": 95
+  },
+  "src/etl_benchmark/atomic.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 6,
+   "adjusted_score": 100.0,
+   "catalog_sha256": "9d59bdee5440de17fb2c5c38950f89802eefe703fad0f9e57e9e1e5a4267557e",
+   "counts": {
+    "killed": 6
+   },
+   "eligible": 6,
+   "killed": 6,
+   "level": "L3",
+   "needed_for_threshold": 6,
+   "raw_score": 100.0,
+   "source_sha256": "6ecd401fba4479801df7b645cc793133c0bee41843f3df01191bb2b1a996564b",
+   "status": "PASS_RAW",
+   "threshold": 95
+  },
+  "src/etl_benchmark/config.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 0,
+   "adjusted_score": null,
+   "catalog_sha256": null,
+   "counts": {},
+   "eligible": 0,
+   "killed": 0,
+   "level": "L4",
+   "needed_for_threshold": null,
+   "raw_score": null,
+   "source_sha256": "b26c91442d2ef82461c9709876d5cc5b5c92697acaf6c627b00f89d5226d6ae0",
+   "status": "NO_MUTANTS",
+   "threshold": 98
+  },
+  "src/etl_benchmark/datasets.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 23,
+   "adjusted_score": 100.0,
+   "catalog_sha256": "e19cfbb3a46d9b5b7898f5236aa4bec3e4c1b12e8aec61e67788290abc9e032e",
+   "counts": {
+    "killed": 23
+   },
+   "eligible": 23,
+   "killed": 23,
+   "level": "L4",
+   "needed_for_threshold": 23,
+   "raw_score": 100.0,
+   "source_sha256": "2948a68069752a26701d7be2a25d4f14330e3830ccbbf7b7a0bc2ae9a61f9d8d",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "src/etl_benchmark/extract.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 5,
+   "adjusted_score": 100.0,
+   "catalog_sha256": "b7c66abf0db5921b221da61786cb8e6cbfa11a028760667667b1934f7b280e79",
+   "counts": {
+    "killed": 5
+   },
+   "eligible": 5,
+   "killed": 5,
+   "level": "L4",
+   "needed_for_threshold": 5,
+   "raw_score": 100.0,
+   "source_sha256": "35f48247bdc2c326152a84b375d7866b50ee55a382a0570d62675cf22e2d99fa",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "src/etl_benchmark/load.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 14,
+   "adjusted_score": 92.86,
+   "catalog_sha256": "cc261ce7827925bd34d67f62212c84c83724a60a6d486133bda58616d471f706",
+   "counts": {
+    "killed": 13,
+    "survived": 1
+   },
+   "eligible": 14,
+   "killed": 13,
+   "level": "L4",
+   "needed_for_threshold": 14,
+   "raw_score": 92.86,
+   "source_sha256": "bc450a2553f333662bb447de1c7cd9aabb274b2f608b8e57ad80e48321b9c98e",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "src/etl_benchmark/logging_setup.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 10,
+   "adjusted_score": 100.0,
+   "catalog_sha256": "771917f6c1108da940331e0a21b58dbd377b50df12aa959004b901adff7f80c3",
+   "counts": {
+    "killed": 10
+   },
+   "eligible": 10,
+   "killed": 10,
+   "level": "L2",
+   "needed_for_threshold": 9,
+   "raw_score": 100.0,
+   "source_sha256": "02c38dde9ea3afd7492193144c83fd706a6087f7ee5523f98616ebda436ba1b1",
+   "status": "PASS_RAW",
+   "threshold": 90
+  },
+  "src/etl_benchmark/metrics.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 91,
+   "adjusted_score": 98.9,
+   "catalog_sha256": "efabcc889c2b799626883328fda4c67934041624f01a9da9e81dd34775a85554",
+   "counts": {
+    "killed": 90,
+    "survived": 1
+   },
+   "eligible": 91,
+   "killed": 90,
+   "level": "L4",
+   "needed_for_threshold": 90,
+   "raw_score": 98.9,
+   "source_sha256": "dd8540e0e8e124f8c13624c8bc26f5eec4271f50d8cf96a2b90fc9b08e07acf4",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "src/etl_benchmark/pipeline.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 163,
+   "adjusted_score": 100.0,
+   "catalog_sha256": "a9eddfdca80aa454935382679401c227e6d28e27768ec9e2ad25897b6e63d905",
+   "counts": {
+    "killed": 163
+   },
+   "eligible": 163,
+   "killed": 163,
+   "level": "L4",
+   "needed_for_threshold": 160,
+   "raw_score": 100.0,
+   "source_sha256": "ed07a0edf43f5833c5766b8266a1d19fb5b386e5678c309aa1dd8633af309a7f",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "src/etl_benchmark/quality/__init__.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 0,
+   "adjusted_score": null,
+   "catalog_sha256": null,
+   "counts": {},
+   "eligible": 0,
+   "killed": 0,
+   "level": "L2",
+   "needed_for_threshold": null,
+   "raw_score": null,
+   "source_sha256": "093d6b983de02bec649c1ad5ac336d78c85c2c0ce7fad606a0542789365e11d4",
+   "status": "NO_MUTANTS",
+   "threshold": 90
+  },
+  "src/etl_benchmark/quality/_torch_models.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 65,
+   "adjusted_score": 89.23,
+   "catalog_sha256": "b324cbcab5f51653633917045d5aa8a4f2ee2a7e12a8be31042bd7b481ee8a7b",
+   "counts": {
+    "killed": 58,
+    "survived": 7
+   },
+   "eligible": 65,
+   "killed": 58,
+   "level": "L4",
+   "needed_for_threshold": 64,
+   "raw_score": 89.23,
+   "source_sha256": "77a1b57ff69e580cad700bb4ee41f069e3ac0c8489bdd714651c753c4bbdd09d",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "src/etl_benchmark/quality/autoencoder.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 117,
+   "adjusted_score": 95.73,
+   "catalog_sha256": "1fc31435087cff28de27c15aa9e3989daf7c5295af2c17f4c1d0fe4943360262",
+   "counts": {
+    "killed": 112,
+    "survived": 5
+   },
+   "eligible": 117,
+   "killed": 112,
+   "level": "L4",
+   "needed_for_threshold": 115,
+   "raw_score": 95.73,
+   "source_sha256": "52ac93bd1898db05567278d773295458fc81847366de74b0c63770c662cbaa4d",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "src/etl_benchmark/quality/base.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 31,
+   "adjusted_score": 96.77,
+   "catalog_sha256": "fa09c2c86ed2f77bf715f144b9d29023ff9fb101061b5bf7aea7e0c05f8fe55f",
+   "counts": {
+    "killed": 30,
+    "survived": 1
+   },
+   "eligible": 31,
+   "killed": 30,
+   "level": "L4",
+   "needed_for_threshold": 31,
+   "raw_score": 96.77,
+   "source_sha256": "9efc8a6a410b92d81f4ee09f9d001f8adad62a779250b3b552db9878f9de28ff",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "src/etl_benchmark/quality/deep.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 62,
+   "adjusted_score": 96.77,
+   "catalog_sha256": "718d9fa22e977bf984b2e1a008dc7117a7146265a6b3c5bd1c6c1daf6047588b",
+   "counts": {
+    "killed": 60,
+    "survived": 2
+   },
+   "eligible": 62,
+   "killed": 60,
+   "level": "L4",
+   "needed_for_threshold": 61,
+   "raw_score": 96.77,
+   "source_sha256": "77364cfdf0850b107c316ffae0389e1bb552445d76188dab388dff76e8e22632",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "src/etl_benchmark/quality/drift.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 129,
+   "adjusted_score": 92.25,
+   "catalog_sha256": "6cb454d92e0c732b4bc49a59f97c3091592bccb5169d47afa34c78ca4ac5a5bc",
+   "counts": {
+    "killed": 119,
+    "survived": 10
+   },
+   "eligible": 129,
+   "killed": 119,
+   "level": "L4",
+   "needed_for_threshold": 127,
+   "raw_score": 92.25,
+   "source_sha256": "95380ca0f8f87a24c512ac7055357225472342065e0da676c0be46dd115fa09b",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "src/etl_benchmark/quality/gx.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 98,
+   "adjusted_score": 88.78,
+   "catalog_sha256": "ddd89891c20d1b4e84f3919f603b7f4977112dbe7ad4ce179914c846ffa53b34",
+   "counts": {
+    "killed": 87,
+    "survived": 11
+   },
+   "eligible": 98,
+   "killed": 87,
+   "level": "L4",
+   "needed_for_threshold": 97,
+   "raw_score": 88.78,
+   "source_sha256": "11be59dbe975d05547395263b763d37716cd9f916b284ce4147cfd87c61e3416",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "src/etl_benchmark/quality/ml.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 259,
+   "adjusted_score": 91.89,
+   "catalog_sha256": "38467af6141e58f9b103b94e980082662d5e9710529b6a3c1dbe75fd6c31f200",
+   "counts": {
+    "killed": 238,
+    "survived": 21
+   },
+   "eligible": 259,
+   "killed": 238,
+   "level": "L4",
+   "needed_for_threshold": 254,
+   "raw_score": 91.89,
+   "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "src/etl_benchmark/quality/rules.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 119,
+   "adjusted_score": 94.12,
+   "catalog_sha256": "dd0c412f18b7a2ca32f0408af6a09e820dda7ed2f820a92216a558e665f0c0b5",
+   "counts": {
+    "killed": 112,
+    "survived": 7
+   },
+   "eligible": 119,
+   "killed": 112,
+   "level": "L4",
+   "needed_for_threshold": 117,
+   "raw_score": 94.12,
+   "source_sha256": "bbd2e146be1d55382a12137cdfacefa85223d535c8b9eeaf816d17e6acd49737",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "src/etl_benchmark/quality/window_drift.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 233,
+   "adjusted_score": 96.57,
+   "catalog_sha256": "75668e96d48177014b765721302e383a9446fb7d1cb0c28f924cb12535787aca",
+   "counts": {
+    "killed": 225,
+    "survived": 8
+   },
+   "eligible": 233,
+   "killed": 225,
+   "level": "L4",
+   "needed_for_threshold": 229,
+   "raw_score": 96.57,
+   "source_sha256": "7369796bac2ada0ee25c125b383752c8d40d7f683e287767dfb6b373108ea8d7",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "src/etl_benchmark/quality/windows.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 57,
+   "adjusted_score": 94.74,
+   "catalog_sha256": "d1eb4229b9e0fe174ba43d53240069fbd234b8c73dac68e9601a1595097ee52d",
+   "counts": {
+    "killed": 54,
+    "survived": 3
+   },
+   "eligible": 57,
+   "killed": 54,
+   "level": "L4",
+   "needed_for_threshold": 56,
+   "raw_score": 94.74,
+   "source_sha256": "5a4fdd8739edcc33dd786b2b241cf5c3c92ec3e63f6e669ef571d1cb9699c864",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "src/etl_benchmark/registry.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 68,
+   "adjusted_score": 100.0,
+   "catalog_sha256": "608ec9f132eeadb23bf940b775b8bd468db84305985c98b0c6ccbff3731ca850",
+   "counts": {
+    "killed": 68
+   },
+   "eligible": 68,
+   "killed": 68,
+   "level": "L4",
+   "needed_for_threshold": 67,
+   "raw_score": 100.0,
+   "source_sha256": "6b5ee955877a24fd43368f362c38bd6645872166e19b9173c39192a8f1d0957d",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "src/etl_benchmark/split.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 124,
+   "adjusted_score": 98.39,
+   "catalog_sha256": "ee8efe47e6f3d98c65aed2eb7cee8fcc5fa2c9edce90cf1c401a714105658607",
+   "counts": {
+    "killed": 122,
+    "survived": 2
+   },
+   "eligible": 124,
+   "killed": 122,
+   "level": "L4",
+   "needed_for_threshold": 122,
+   "raw_score": 98.39,
+   "source_sha256": "41f0e2b2707d7466a335f99d000e4b32ad7ef80cf8f1a7fc3941ffabd440a2ba",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "src/etl_benchmark/synthetic.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 536,
+   "adjusted_score": 98.69,
+   "catalog_sha256": "40ecdd9a0a89f03603eb7c4f0c33d26ddb1c279eeaf9975f7099ca9644ead210",
+   "counts": {
+    "killed": 529,
+    "survived": 7
+   },
+   "eligible": 536,
+   "killed": 529,
+   "level": "L4",
+   "needed_for_threshold": 526,
+   "raw_score": 98.69,
+   "source_sha256": "568eba17da657259401c3e31220687949cd2b6af22d5ac5942e5172fec26945b",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "src/etl_benchmark/transform.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 2,
+   "adjusted_score": 100.0,
+   "catalog_sha256": "49a0b2d9998cd773b6e9da45f4cc961db825eca46b741d34d9943519e5943c28",
+   "counts": {
+    "killed": 2
+   },
+   "eligible": 2,
+   "killed": 2,
+   "level": "L4",
+   "needed_for_threshold": 2,
+   "raw_score": 100.0,
+   "source_sha256": "996169c5ab429ed253cb8d68a73736bff92005052b6215d2d3395b1a448c24c2",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "verification/archive_evidence.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 249,
+   "adjusted_score": 83.13,
+   "catalog_sha256": "eb351e66a511d31c1777be82c77331830c6b9295a10233f9c4b5d3e678385799",
+   "counts": {
+    "killed": 207,
+    "survived": 42
+   },
+   "eligible": 249,
+   "killed": 207,
+   "level": "L3",
+   "needed_for_threshold": 237,
+   "raw_score": 83.13,
+   "source_sha256": "2918fac11603f4a9693d9ea4662b44d74994d481c72827d53ec14615b494ac94",
+   "status": "FAIL",
+   "threshold": 95
+  },
+  "verification/bundles.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 264,
+   "adjusted_score": 94.32,
+   "catalog_sha256": "911555214cf7c3f9d00533c1b373f374b2f60b833dae9bb11b94b6480d98fb67",
+   "counts": {
+    "killed": 249,
+    "survived": 15
+   },
+   "eligible": 264,
+   "killed": 249,
+   "level": "L3",
+   "needed_for_threshold": 251,
+   "raw_score": 94.32,
+   "source_sha256": "18023c2b447451909f05ed6ee78c48e40219fcddcd14bbe55091231eb6924577",
+   "status": "FAIL",
+   "threshold": 95
+  },
+  "verification/check_types.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 209,
+   "adjusted_score": 98.56,
+   "catalog_sha256": "3327c198d4db691dbf2664347e4985a17b7f1dc7feb4a9e3190c2a7dd0a69271",
+   "counts": {
+    "killed": 206,
+    "survived": 3
+   },
+   "eligible": 209,
+   "killed": 206,
+   "level": "L4",
+   "needed_for_threshold": 205,
+   "raw_score": 98.56,
+   "source_sha256": "4777cbb8bd2b7f134e210447d71653d1a37b910d65a777de5b6e6e8ff9b853b3",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "verification/claims.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 714,
+   "adjusted_score": 83.89,
+   "catalog_sha256": "156fa3c7a09e4e9847e7620080b8ea05881eadf9864d6c8339954862a1a03fc3",
+   "counts": {
+    "killed": 599,
+    "survived": 115
+   },
+   "eligible": 714,
+   "killed": 599,
+   "level": "L4",
+   "needed_for_threshold": 700,
+   "raw_score": 83.89,
+   "source_sha256": "b4debf7608b8ed1b9db52aa203b6ffb8c181af3164ff699fe4a55580e04bb7e1",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "verification/evidence_schema.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 1547,
+   "adjusted_score": 70.98,
+   "catalog_sha256": "c7b2f8a2aa7d83e4520c4705901410c4503bc1e4b1a747a6a993c8ef03bd83f4",
+   "counts": {
+    "killed": 1098,
+    "survived": 449
+   },
+   "eligible": 1547,
+   "killed": 1098,
+   "level": "L4",
+   "needed_for_threshold": 1517,
+   "raw_score": 70.98,
+   "source_sha256": "5a7aaa7d5a473f903695d7ee039e4e5171a53b613e90086858f2e142e88aea8d",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "verification/lineage.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 191,
+   "adjusted_score": 99.48,
+   "catalog_sha256": "811d4ea2c5bf1dcd1d16f0e3cbf4fc940bddc9d1a08efef92765de33fb3b1fe0",
+   "counts": {
+    "killed": 190,
+    "survived": 1
+   },
+   "eligible": 191,
+   "killed": 190,
+   "level": "L4",
+   "needed_for_threshold": 188,
+   "raw_score": 99.48,
+   "source_sha256": "003482f859158df5df45a47b6d32bea619f55bf4e175e78c5dbda502292b71d6",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "verification/lock_environment.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 346,
+   "adjusted_score": 71.39,
+   "catalog_sha256": "00f44fe537adcc75061f43a2030b54ac90abf0ca41135e119a4725946d92e07c",
+   "counts": {
+    "killed": 247,
+    "survived": 99
+   },
+   "eligible": 346,
+   "killed": 247,
+   "level": "L3",
+   "needed_for_threshold": 329,
+   "raw_score": 71.39,
+   "source_sha256": "8e270c235d66120a8233088a8a089e57e531394790a513cde8a9a4705e7ce61c",
+   "status": "FAIL",
+   "threshold": 95
+  },
+  "verification/mutation_cache.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 1110,
+   "adjusted_score": 85.23,
+   "catalog_sha256": "6611a13820ef09ff329a3d1a6cff5f2484ff114cef4bd8b3328c550556e83135",
+   "counts": {
+    "killed": 946,
+    "survived": 163,
+    "timeout": 1
+   },
+   "eligible": 1110,
+   "killed": 946,
+   "level": "L4",
+   "needed_for_threshold": 1088,
+   "raw_score": 85.23,
+   "source_sha256": "81370c774726c5a586670db6c0ef5e40edd70fdd6ea628f6b8b0337d26e5c7a8",
+   "status": "INCOMPLETE",
+   "threshold": 98
+  },
+  "verification/mutation_campaign.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 686,
+   "adjusted_score": 91.84,
+   "catalog_sha256": "4c6fe0d591eed53a3036d4c1e2469c3647ea6044a2e0e258f1f7d682dadde4d2",
+   "counts": {
+    "killed": 630,
+    "survived": 56
+   },
+   "eligible": 686,
+   "killed": 630,
+   "level": "L4",
+   "needed_for_threshold": 673,
+   "raw_score": 91.84,
+   "source_sha256": "7686e99b42f42213c1514e390a4edd2c51d4358b45bd82dffee7648ae5b0f3a6",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "verification/mutation_catalog.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 366,
+   "adjusted_score": 81.42,
+   "catalog_sha256": "81efe419001d127cd69553f04d32fea2ab9edc7c8c0b09e66dfcb80252ae39c5",
+   "counts": {
+    "killed": 298,
+    "survived": 68
+   },
+   "eligible": 366,
+   "killed": 298,
+   "level": "L4",
+   "needed_for_threshold": 359,
+   "raw_score": 81.42,
+   "source_sha256": "ff15504228ae5e1053168246cf294395d0411c0754f92346be3d1f3cdbb4f508",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "verification/mutation_policy.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 869,
+   "adjusted_score": 98.96,
+   "catalog_sha256": "faf421be7c68eede2312f99c36dee42a7f79b58ad8573680e5b719844ba7cd6e",
+   "counts": {
+    "killed": 860,
+    "survived": 9
+   },
+   "eligible": 869,
+   "killed": 860,
+   "level": "L4",
+   "needed_for_threshold": 852,
+   "raw_score": 98.96,
+   "source_sha256": "75876d6a987bcfcab9394ef084b208a521bdcece2995ac56769786e6c68c8561",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "verification/mutation_run.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 342,
+   "adjusted_score": 89.77,
+   "catalog_sha256": "b11310fa7f93a3a9b98a98cd7eb35dae9763b777a4db5073fdd6bf52713a6807",
+   "counts": {
+    "killed": 307,
+    "survived": 35
+   },
+   "eligible": 342,
+   "killed": 307,
+   "level": "L4",
+   "needed_for_threshold": 336,
+   "raw_score": 89.77,
+   "source_sha256": "ff92c16efc71d49b2652a3df297782058acfef1504451095326a76719ba7a021",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "verification/mutation_scope.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 246,
+   "adjusted_score": 91.46,
+   "catalog_sha256": "fb44249a6a7d20064117a56fd6acffb3d355a923f6b52160230bdda5b57eded4",
+   "counts": {
+    "killed": 225,
+    "survived": 21
+   },
+   "eligible": 246,
+   "killed": 225,
+   "level": "L4",
+   "needed_for_threshold": 242,
+   "raw_score": 91.46,
+   "source_sha256": "622f62cf9104148fb33c7cf80595ffdf32ade43f5decd3d7cc3e8db06aa13b0a",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "verification/mutation_shards.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 1105,
+   "adjusted_score": 97.56,
+   "catalog_sha256": "413225ebac1da053fb636754ba4458992b79c0f1d3ab5c33c9413fcbd1651f7d",
+   "counts": {
+    "killed": 1078,
+    "survived": 27
+   },
+   "eligible": 1105,
+   "killed": 1078,
+   "level": "L4",
+   "needed_for_threshold": 1083,
+   "raw_score": 97.56,
+   "source_sha256": "d80906745f22ad940088512872d5e1c9def204bf7bd855338879fd4966e2f39e",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "verification/pool_contract.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 187,
+   "adjusted_score": 98.4,
+   "catalog_sha256": "9eda003880e3dbb90d97a3e6a2c53cc66fe136eb2b9e9ffea435b0829aef7fdd",
+   "counts": {
+    "killed": 184,
+    "survived": 1,
+    "timeout": 2
+   },
+   "eligible": 187,
+   "killed": 184,
+   "level": "L4",
+   "needed_for_threshold": 184,
+   "raw_score": 98.4,
+   "source_sha256": "624859aa0cd7c1aad2927cf3d3a9b457f90f8f6a5807fe6475fe1f6e26b6a0e0",
+   "status": "INCOMPLETE",
+   "threshold": 98
+  },
+  "verification/protection.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 294,
+   "adjusted_score": 79.93,
+   "catalog_sha256": "ecccabb81e13c7117a153f4c1ab87dc6ad2538c843921b0181b1cff817ee8205",
+   "counts": {
+    "killed": 235,
+    "survived": 59
+   },
+   "eligible": 294,
+   "killed": 235,
+   "level": "L3",
+   "needed_for_threshold": 280,
+   "raw_score": 79.93,
+   "source_sha256": "7bd4d77480b7843f95e5eed06dcb1b9086d6aabe89ebec6396878cb110b73222",
+   "status": "FAIL",
+   "threshold": 95
+  },
+  "verification/real_acquire.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 219,
+   "adjusted_score": 98.17,
+   "catalog_sha256": "a8674c6fb6696d7a4cff3a64c4ebe48e71e04cfd72ab0815e17617e53bc5297c",
+   "counts": {
+    "killed": 215,
+    "survived": 4
+   },
+   "eligible": 219,
+   "killed": 215,
+   "level": "L4",
+   "needed_for_threshold": 215,
+   "raw_score": 98.17,
+   "source_sha256": "dc5994819405ad932c279b5974a87ad124b067b4bb0ada26655833a19be17178",
+   "status": "PASS_RAW",
+   "threshold": 98
+  },
+  "verification/real_preflight.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 790,
+   "adjusted_score": 68.73,
+   "catalog_sha256": "ec5a4bfc9398adc1d98dc59935141890672040582e728836a46530861defe75e",
+   "counts": {
+    "killed": 543,
+    "survived": 247
+   },
+   "eligible": 790,
+   "killed": 543,
+   "level": "L3",
+   "needed_for_threshold": 751,
+   "raw_score": 68.73,
+   "source_sha256": "f93accf155e74ae6c04d15d9606de0c84404661f35a9bf38fa0fcf1caeb89051",
+   "status": "FAIL",
+   "threshold": 95
+  },
+  "verification/refresh_profile.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 147,
+   "adjusted_score": 71.43,
+   "catalog_sha256": "bfcf31e2df2c7e95b38d6be3752737e8032d65c7bab9f2bf6a51af484fb0d287",
+   "counts": {
+    "killed": 105,
+    "survived": 42
+   },
+   "eligible": 147,
+   "killed": 105,
+   "level": "L3",
+   "needed_for_threshold": 140,
+   "raw_score": 71.43,
+   "source_sha256": "fc845c277c7564eedd3a84529f9b08c383495282c7ef20c7adf45dd9cef33982",
+   "status": "FAIL",
+   "threshold": 95
+  },
+  "verification/release.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 854,
+   "adjusted_score": 82.79,
+   "catalog_sha256": "79b76d5c6d5880d4d9bb897bd64cb79def0c9ce9d9975338d6a80fb45a101c67",
+   "counts": {
+    "killed": 707,
+    "survived": 147
+   },
+   "eligible": 854,
+   "killed": 707,
+   "level": "L4",
+   "needed_for_threshold": 837,
+   "raw_score": 82.79,
+   "source_sha256": "e6a6e512d90f34a5f0a6cb712d214e54aa735544d0f68c9c28ba6111f165d211",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "verification/reproduce.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 832,
+   "adjusted_score": 76.56,
+   "catalog_sha256": "6f28e64062c622effbc61dca3e6405c54e07cd76e593c4b07eefcdde6b315597",
+   "counts": {
+    "killed": 637,
+    "survived": 195
+   },
+   "eligible": 832,
+   "killed": 637,
+   "level": "L4",
+   "needed_for_threshold": 816,
+   "raw_score": 76.56,
+   "source_sha256": "f88fabab13c6ebdce127ca9d8736b73beda13799ec3c9482a9877589e74a3d13",
+   "status": "FAIL",
+   "threshold": 98
+  },
+  "verification/scaling.py": {
+   "accepted_equivalents": [],
+   "adjusted_eligible": 307,
+   "adjusted_score": 59.61,
+   "catalog_sha256": "6b84cc4eebe0235d1df608e0b3200670d1ffd552821b7f4ce2d115236124d4f7",
+   "counts": {
+    "killed": 183,
+    "survived": 124
+   },
+   "eligible": 307,
+   "killed": 183,
+   "level": "L3",
+   "needed_for_threshold": 292,
+   "raw_score": 59.61,
+   "source_sha256": "bfa7ed51ae583a9db6905d4e740b0999f8ffecb49050ae29e2fd0ca7cc9f6ee0",
+   "status": "FAIL",
+   "threshold": 95
+  }
+ },
+ "mutants": 34778,
+ "policy_sha256": "fc19388775ea7144022fd1451f4ffb62f6ed1408381d618691bbacc8602e695c",
+ "summary": {
+  "FAIL": 48,
+  "INCOMPLETE": 4,
+  "NO_MUTANTS": 3,
+  "PASS_ADJUSTED": 1,
+  "PASS_RAW": 44
+ }
+}
