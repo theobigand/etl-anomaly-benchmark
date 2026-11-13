@@ -482,3 +482,61 @@ def test_the_commands_are_required_and_described(capsys):
     assert "do not ask whether code changed since the run (the release gate does)" in " ".join(
         capsys.readouterr().out.split()
     )
+
+
+def test_a_sealed_run_that_names_no_files_lacks_every_envelope_even_with_its_directory(repo):
+    revision = _commit(repo, "one")
+    doc, _ = _sealed(repo, revision)
+    del doc["published_run"]["files"]
+    assert _check(doc, repo) == [f"the run has no {kind} envelope" for kind in claims.KINDS]
+
+
+def test_a_revision_that_shares_history_with_head_but_is_not_behind_it_is_refused(repo):
+    base = _commit(repo, "base")
+    _git(repo, "checkout", "-qb", "side")
+    side = _commit(repo, "side")
+    _git(repo, "checkout", "-q", "-")
+    _commit(repo, "other")
+    assert _git(repo, "merge-base", side, "HEAD") == base
+    doc, _ = _sealed(repo, side)
+    assert _check(doc, repo) == [f"revision {side[:8]} is not in the history of HEAD"]
+
+
+def test_a_noise_line_does_not_stop_the_counting_of_the_mutants_after_it():
+    text = "header\nnot a mutant: killed\nplain line\n\n" + RESULTS
+    counts = claims.split_mutants(text, SCOPE)
+    assert counts == claims.split_mutants(RESULTS, SCOPE)
+
+
+def test_a_status_may_contain_the_separator_without_changing_the_module_that_is_counted():
+    scope = {"scientific": ["pkg/a.py"]}
+    counts = claims.split_mutants("pkg.a.x_f__mutmut_1: killed\npkg.a.x_g__mutmut_1: a: b\n", scope)
+    assert counts == {
+        "scientific_killed": 1, "scientific_total": 2, "other_killed": 0, "other_total": 0,
+    }  # fmt: skip
+
+
+def test_archiving_into_a_folder_that_already_exists_replaces_its_files(repo):
+    revision = _commit(repo, "one")
+    evidence = repo / "ev"
+    evidence.mkdir()
+    for kind in claims.KINDS:
+        (evidence / f"{kind}.json").write_text(json.dumps(_envelope(kind, revision)))
+    results = repo / "r.txt"
+    results.write_text(RESULTS)
+    arguments = {
+        "run_id": "r1", "source_label": "local-unattested", "platform": "mac", "evidence": evidence,
+        "results": results, "root": repo, "claims_path": repo / "claims.json", "scope": SCOPE,
+        "captured": "2026-11-13",
+    }  # fmt: skip
+    first = claims.archive(**arguments)
+    second = claims.archive(**arguments)
+    assert first["published_run"]["files"] == second["published_run"]["files"]
+
+
+def test_the_help_of_each_command_and_option_is_written_out(capsys, monkeypatch):
+    monkeypatch.setenv("COLUMNS", "300")
+    with pytest.raises(SystemExit):
+        claims.main(["check", "--help"])
+    check = " ".join(capsys.readouterr().out.split())
+    assert "do not ask whether code changed since the run (the release gate does)" in check
