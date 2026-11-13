@@ -116,3 +116,14 @@ def test_the_evaluation_routes_the_seed_columns_and_fit_rows_to_the_right_places
     assert set(result) == {"recall", "precision", "fpr"}
     assert result["fpr"].name == "fpr"
     assert list(result["precision"].index) == ["zscore", "transform_dedup"]
+
+
+def test_a_type_that_is_never_flagged_scores_zero_precision_without_a_warning():
+    import warnings
+
+    types = pd.Series(["clean", "clean", "missing_value"])
+    flags = pd.Series([False, False, False])
+    with warnings.catch_warnings():
+        warnings.simplefilter("error")
+        recall, precision = tb._per_type(flags, types)
+    assert precision["missing_value"] == 0.0 and recall["missing_value"] == 0.0

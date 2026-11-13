@@ -233,3 +233,19 @@ def test_the_output_is_required_and_the_help_is_the_module_description(capsys):
     with pytest.raises(SystemExit):
         ra.main(["--help"])
     assert "Fetch the three research datasets" in " ".join(capsys.readouterr().out.split())
+
+
+def test_the_report_path_is_handed_to_the_atomic_writer_as_a_path(tmp_path, monkeypatch):
+    import contextlib
+
+    seen = []
+
+    @contextlib.contextmanager
+    def atomic(path):
+        seen.append(path)
+        yield tmp_path / "partial.json"
+
+    monkeypatch.setattr(ra, "atomic_path", atomic)
+    monkeypatch.setattr(ra, "acquire", lambda *a, **k: {"method": "m", "datasets": {}})
+    assert ra.main(["--output", str(tmp_path / "r.json"), "--destination", str(tmp_path)]) == 0
+    assert seen == [tmp_path / "r.json"] and isinstance(seen[0], Path)

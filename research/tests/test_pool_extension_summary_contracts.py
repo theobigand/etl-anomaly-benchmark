@@ -202,3 +202,34 @@ def test_chronological_rows_shorten_the_exclusion_reason_and_count_lower_pairs()
         "Kept & 40 & 5.0 & 10.0 & 1 of 2 \\\\",
         "Out & \\multicolumn{4}{l}{excluded: 12 test anomalies} \\\\",
     ]
+
+
+def test_the_default_large_limit_is_fifty_thousand_rows_exclusive():
+    above = [_record("isolation_forest", 0.5, rows=50_001), _record("zscore", 0.02, rows=50_001)]
+    assert ps.pipeline(above)["datasets_above"] == 1
+    assert ps.pipeline(above)["supported"] is True
+    at = [_record("isolation_forest", 0.5, rows=50_000), _record("zscore", 0.02, rows=50_000)]
+    assert ps.pipeline(at)["datasets_above"] == 0
+
+
+def test_an_excluded_dataset_listed_first_does_not_hide_the_ones_after_it():
+    results = {
+        "skipped": {"excluded": "12 anomalies in the test partition (at least 20)"},
+        "kept": {
+            **_result([0.1, 0.9], [0.5, 0.5]),
+            "partitions": {
+                "train": {"prevalence": 0.05},
+                "test": {"positives": 40, "prevalence": 0.1},
+            },
+        },
+    }
+    assert ps.chronology(results)["pairs"] == 2 and ps.chronology(results)["lower"] == 1
+    rows = ps.chrono_rows(results, {"skipped": "S", "kept": "K"}).split("\n")
+    assert rows[0].startswith("S & ") and rows[1] == "K & 40 & 5.0 & 10.0 & 1 of 2 \\\\"
+
+
+def test_a_merged_problem_holds_exactly_the_fields_of_its_runs(tmp_path):
+    (tmp_path / "a.json").write_text(json.dumps(_run("p", {"zscore": [_row(1, 0.2, 0.1)]})))
+    [merged] = ps.load_runs(tmp_path)
+    assert set(merged) == {"problem", "runs", "errors", "skipped"}
+    assert merged["errors"] == {} and merged["skipped"] == []
