@@ -49,19 +49,19 @@ Total proposed and accepted for L3: 12 files. The remaining 79 stay L4.
 Everything that computes a metric, label, split, threshold, fingerprint, or hypothesis summary
 (`metrics`, `split`, `synthetic`, `injection`, all `quality/*` detectors, every `research/*` benchmark and summary
 module not listed above). All dataset identity code (`build_pool`, `pool_check`, `dataset_registry`, `real_acquire`,
-`fetch_cardio`, `verify_real`, `datasets`). All gate code (`release`, `evidence_schema`, `check_types`, `claims`,
-`lineage`, `reproduce`, every `mutation_*`, `check_mutation`, `verification_report`, `pool_contract`, `real_preflight`).
+`fetch_cardio`, `verify_real`, `datasets`). All other gate code (`release`, `evidence_schema`, `check_types`, `claims`,
+`lineage`, `reproduce`, every `mutation_*`, `check_mutation`, `verification_report`, `pool_contract`; `real_preflight` is listed above as moved to L3 on the owner's accepted extension of the list).
 
 ## Not proposed, but worth your attention
 
-- `src/etl_benchmark/atomic.py`, `transform.py`, `extract.py`: tiny and fully killed; their L4 reasons are real
-  (result completeness, target alignment) so they stay.
+- `src/etl_benchmark/transform.py` and `extract.py`: tiny and fully killed; their L4 reasons are real
+  (target alignment, parsing) so they stay. `atomic.py` was first listed here as staying and was moved to L3 by the owner later in the session.
 - No file is proposed for L1. An L1 tier would only make sense for code with no scientific or gate role; none exists
   among the mutable files.
 
 ## Guardrails if you accept any of it
 
-1. The change must be made in the policy file by you, with the policy version and digest updated by the normal tooling.
+1. The change is made in the policy file; the schema `version` stays 2 (it is the format version) and the policy digest changes, so older shard evidence no longer binds.
 2. Moved files are then measured against 95, and the evidence for them is re-collected at the new level.
 3. Do not move a file because its score is low. The criteria were applied to the written reasons, and the table gives no
    scores. Disclosure: the 2026-11-07 campaign scores of these files were already visible to the author when the list was

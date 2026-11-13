@@ -7,7 +7,13 @@
   "platform": "macOS-27.2-arm64-arm-64bit",
   "python": "3.11.17"
  },
- "head": "ce3aea32dda4867befba55af37bdb041875b12d7",
+ "equivalence_environment": {
+  "numpy": "2.4.6",
+  "pandas": "3.1.1",
+  "torch": "2.15.0"
+ },
+ "equivalence_validation": "refused by mutation_policy.accepted_equivalents: equivalence record is incompatible with the campaign environment",
+ "head": "2c1ab3b3de86359148dcc9802bffbcfe93633740",
  "killed": 31383,
  "kind": "local development measurement, not the controller campaign",
  "modules": {
@@ -404,14 +410,9 @@
    "threshold": 98
   },
   "research/lstm_detector.py": {
-   "accepted_equivalents": [
-    "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_31",
-    "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_50",
-    "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_41",
-    "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_46"
-   ],
-   "adjusted_eligible": 373,
-   "adjusted_score": 98.66,
+   "accepted_equivalents": [],
+   "adjusted_eligible": 377,
+   "adjusted_score": 97.61,
    "catalog_sha256": "aef20963dc44e0ca61b2c9e9744bdf76a552d33490a96ed8e51b592a9cacfbc2",
    "counts": {
     "killed": 368,
@@ -423,7 +424,7 @@
    "needed_for_threshold": 370,
    "raw_score": 97.61,
    "source_sha256": "277375e66d1edc6ed94c5ffc4b1074c113e86c6095c7dc2b20d3058cb006da18",
-   "status": "PASS_ADJUSTED",
+   "status": "FAIL",
    "threshold": 98
   },
   "research/lstm_pilot.py": {
@@ -1801,10 +1802,9 @@
  "mutants": 34778,
  "policy_sha256": "fc19388775ea7144022fd1451f4ffb62f6ed1408381d618691bbacc8602e695c",
  "summary": {
-  "FAIL": 48,
+  "FAIL": 49,
   "INCOMPLETE": 4,
   "NO_MUTANTS": 3,
-  "PASS_ADJUSTED": 1,
   "PASS_RAW": 44
  }
 }

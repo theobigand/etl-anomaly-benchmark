@@ -32,18 +32,26 @@ STATUS = {
     33: "not_executed",
     None: "not_run",
 }
+OUTCOME = {
+    1: "killed",
+    0: "survived",
+    -24: "timeout",
+    255: "error",
+    33: "no tests",
+    None: "not checked",
+}
 
 
-def tally(path: str) -> tuple[dict[str, int], list[str]]:
+def tally(path: str) -> tuple[dict[str, int], list[str], dict[str, int] | None]:
     meta = ROOT / "mutants" / f"{path}.meta"
     if not meta.exists():
-        return {}, []
+        return {}, [], None
     codes = json.loads(meta.read_text())["exit_code_by_key"]
     counts: dict[str, int] = {}
     for code in codes.values():
         name = STATUS.get(code, f"exit_{code}")
         counts[name] = counts.get(name, 0) + 1
-    return counts, sorted(codes)
+    return counts, sorted(codes), codes
 
 
 def main() -> None:
@@ -53,27 +61,47 @@ def main() -> None:
     head = subprocess.run(
         ["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True, text=True
     ).stdout.strip()
+    measured = {path: tally(path) for path in policy["units"]}
+    catalog = {path: keys for path, (_c, keys, _codes) in measured.items() if keys}
+    records = [
+        {"id": key, "path": path, "outcome": OUTCOME.get(code, "error")}
+        for path, (_c, _k, codes) in measured.items()
+        if codes
+        for key, code in codes.items()
+    ]
+    sources = {
+        path: hashlib.sha256((ROOT / path).read_bytes()).hexdigest() for path in policy["units"]
+    }
+    environment = {
+        name: version(name)
+        for name in sorted({n for r in equivalence["records"] for n in r["environment"]})
+    }
+    try:
+        waived = mutation_policy.accepted_equivalents(
+            equivalence,
+            policy["units"],
+            sources,
+            catalog,
+            records,
+            policy["governance"],
+            environment,
+        )
+        validation = "valid for the environment of this measurement"
+    except ValueError as error:
+        waived, validation = {}, f"refused by mutation_policy.accepted_equivalents: {error}"
     modules = {}
     for path, unit in sorted(policy["units"].items()):
-        counts, keys = tally(path)
+        counts, keys, _codes = measured[path]
         total = len(keys)
         killed = counts.get("killed", 0)
         threshold = thresholds[unit["level"]]
         digest = hashlib.sha256((ROOT / path).read_bytes()).hexdigest()
-        catalog = mutation_policy.catalog_digest(keys) if keys else None
-        accepted = [
-            r["id"]
-            for r in equivalence["records"]
-            if r["verdict"] == "accepted"
-            and r["path"] == path
-            and r["source_sha256"] == digest
-            and r["catalog_sha256"] == catalog
-            and r["risk"] == unit["level"]
-        ]
+        catalog_sha = mutation_policy.catalog_digest(keys) if keys else None
+        accepted = sorted(waived.get(path, ()))
         unresolved = {k: v for k, v in counts.items() if k not in ("killed", "survived")}
         adjusted = total - len(accepted)
         if not total:
-            status = "NO_MUTANTS"
+            status = "NO_MUTANTS" if "no_mutants" in unit else "INCOMPLETE"
         elif unresolved:
             status = "INCOMPLETE"
         else:
@@ -88,7 +116,7 @@ def main() -> None:
             "level": unit["level"],
             "threshold": threshold,
             "source_sha256": digest,
-            "catalog_sha256": catalog,
+            "catalog_sha256": catalog_sha,
             "eligible": total,
             "counts": counts,
             "killed": killed,
@@ -112,6 +140,8 @@ def main() -> None:
             **{n: version(n) for n in ("pandas", "numpy", "mutmut")},
         },
         "policy_sha256": mutation_policy.policy_digest(policy),
+        "equivalence_validation": validation,
+        "equivalence_environment": environment,
         "summary": summary,
         "mutants": sum(m["eligible"] for m in modules.values()),
         "killed": sum(m["killed"] for m in modules.values()),
