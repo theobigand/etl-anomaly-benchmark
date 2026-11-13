@@ -1,4 +1,4 @@
-"""Probe of the synthetic PCA discrepancy; run from the repository root with the interpreter to test.
+"""Probe of the synthetic PCA discrepancy (run from the repository root).
 
 python docs/thesis-remediation/evidence/pca_probe.py
 """
