@@ -197,7 +197,7 @@ def test_the_pipeline_stages_are_timed_in_order_and_the_flagged_rows_are_split_o
     monkeypatch.setattr(
         load, "write_csv", lambda df, path: written.append((df["a"].tolist(), path))
     )
-    clock = iter([0.0, 1.0, 1.0, 3.0, 3.0, 7.0, 7.0, 15.0])
+    clock = iter([1.0, 2.0, 2.0, 4.0, 4.0, 8.0, 8.0, 16.0])
     monkeypatch.setattr(cs.time, "perf_counter", lambda: next(clock))
     monkeypatch.setattr(cs, "peak_rss_bytes", lambda: 4096)
     out = cs.run_etl(Path("in.csv"), "iqr", tmp_path)
@@ -383,6 +383,7 @@ def test_the_command_line_names_its_worker_arguments(capsys):
     with pytest.raises(SystemExit):
         cs.main(["--help"])
     text = " ".join(capsys.readouterr().out.split())
+    assert "Cost and scalability study (issue 53)" in text
     assert "--worker METHOD NPY" in text and "--etl-worker CSV METHOD OUT" in text
 
 

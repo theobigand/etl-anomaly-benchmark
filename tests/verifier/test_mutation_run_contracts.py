@@ -7,7 +7,7 @@ import types
 
 import pytest
 
-from tests.verifier.test_mutation_run import SOURCE, _api, _engine, _repository
+from tests.verifier.test_mutation_run import SOURCE, _api, _engine, _observation, _repository
 
 
 def _refused(call, message):
@@ -180,4 +180,11 @@ def test_the_command_line_help_describes_the_run_and_the_names(capsys):
         _api().main(["--help"])
     text = " ".join(capsys.readouterr().out.split())
     assert "Run native mutation in an owned POSIX process group" in text
-    assert "--names [NAMES ...]" in text and "native mutant-name patterns" in text
+    assert "--names [NAMES ...] native mutant-name patterns" in text
+
+
+def test_the_run_defaults_to_two_native_children_and_no_name_pattern(tmp_path, monkeypatch):
+    _repository(tmp_path)
+    api = _engine(monkeypatch, tmp_path)
+    result = api.run(tmp_path)
+    assert _observation(tmp_path / result["native_log"])["children"] == "2"
