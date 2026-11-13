@@ -13,8 +13,8 @@
   "torch": "2.15.0"
  },
  "equivalence_validation": "refused by mutation_policy.accepted_equivalents: equivalence record is incompatible with the campaign environment",
- "head": "1b0b8805c06f211f2eaa66088ca7a03d26c6c8af",
- "killed": 32165,
+ "head": "073ffb8cf5b59a8b194603bdac0c35f2303d55f7",
+ "killed": 32633,
  "kind": "local development measurement, not the controller campaign",
  "modules": {
   "experiments/check_mutation.py": {
@@ -251,18 +251,18 @@
   "research/cost_study.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 825,
-   "adjusted_score": 48.24,
+   "adjusted_score": 99.03,
    "catalog_sha256": "732ae631462bbb3f0f4a7ba6a0f0deafe7510e9a116b0be09dee263b5de921d1",
    "counts": {
-    "killed": 398,
-    "not_executed": 305,
-    "survived": 122
+    "killed": 817,
+    "survived": 7,
+    "timeout": 1
    },
    "eligible": 825,
-   "killed": 398,
+   "killed": 817,
    "level": "L3",
    "needed_for_threshold": 784,
-   "raw_score": 48.24,
+   "raw_score": 99.03,
    "source_sha256": "c754219c7d3e61d00b1cff8c228bc9c5b6c75b591558ecea2359049611378b58",
    "status": "INCOMPLETE",
    "threshold": 95
@@ -1602,35 +1602,35 @@
   "verification/mutation_run.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 342,
-   "adjusted_score": 89.77,
+   "adjusted_score": 98.25,
    "catalog_sha256": "b11310fa7f93a3a9b98a98cd7eb35dae9763b777a4db5073fdd6bf52713a6807",
    "counts": {
-    "killed": 307,
-    "survived": 35
+    "killed": 336,
+    "survived": 6
    },
    "eligible": 342,
-   "killed": 307,
+   "killed": 336,
    "level": "L4",
    "needed_for_threshold": 336,
-   "raw_score": 89.77,
+   "raw_score": 98.25,
    "source_sha256": "ff92c16efc71d49b2652a3df297782058acfef1504451095326a76719ba7a021",
-   "status": "FAIL",
+   "status": "PASS_RAW",
    "threshold": 98
   },
   "verification/mutation_scope.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 246,
-   "adjusted_score": 91.46,
+   "adjusted_score": 97.56,
    "catalog_sha256": "fb44249a6a7d20064117a56fd6acffb3d355a923f6b52160230bdda5b57eded4",
    "counts": {
-    "killed": 225,
-    "survived": 21
+    "killed": 240,
+    "survived": 6
    },
    "eligible": 246,
-   "killed": 225,
+   "killed": 240,
    "level": "L4",
    "needed_for_threshold": 242,
-   "raw_score": 91.46,
+   "raw_score": 97.56,
    "source_sha256": "622f62cf9104148fb33c7cf80595ffdf32ade43f5decd3d7cc3e8db06aa13b0a",
    "status": "FAIL",
    "threshold": 98
@@ -1638,19 +1638,19 @@
   "verification/mutation_shards.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 1105,
-   "adjusted_score": 97.56,
+   "adjusted_score": 98.01,
    "catalog_sha256": "413225ebac1da053fb636754ba4458992b79c0f1d3ab5c33c9413fcbd1651f7d",
    "counts": {
-    "killed": 1078,
-    "survived": 27
+    "killed": 1083,
+    "survived": 22
    },
    "eligible": 1105,
-   "killed": 1078,
+   "killed": 1083,
    "level": "L4",
    "needed_for_threshold": 1083,
-   "raw_score": 97.56,
+   "raw_score": 98.01,
    "source_sha256": "d80906745f22ad940088512872d5e1c9def204bf7bd855338879fd4966e2f39e",
-   "status": "FAIL",
+   "status": "PASS_RAW",
    "threshold": 98
   },
   "verification/pool_contract.py": {
@@ -1802,9 +1802,9 @@
  "mutants": 34781,
  "policy_sha256": "fc19388775ea7144022fd1451f4ffb62f6ed1408381d618691bbacc8602e695c",
  "summary": {
-  "FAIL": 47,
+  "FAIL": 45,
   "INCOMPLETE": 4,
   "NO_MUTANTS": 3,
-  "PASS_RAW": 46
+  "PASS_RAW": 48
  }
 }

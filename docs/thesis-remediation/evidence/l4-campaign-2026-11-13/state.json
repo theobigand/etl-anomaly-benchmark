@@ -97,11 +97,11 @@
       "status": "complete",
       "returncode": 0,
       "counts": {
-        "killed": 1078,
-        "survived": 27
+        "killed": 1083,
+        "survived": 22
       },
       "total": 1105,
-      "seconds": 216,
+      "seconds": 287,
       "tail": "60\n\ud83c\udf89 verification.mutation_shards.x_validate_plan__mutmut_61\n\ud83c\udf89 verification.mutation_shards.x_validate_plan__mutmut_62\n\ud83c\udf89 verification.mutation_shards.x_validate_plan__mutmut_63\n\ud83c\udf89 verification.mutation_shards.x_validate_plan__mutmut_7\n\ud83c\udf89 verification.mutation_shards.x_validate_plan__mutmut_8\n\ud83c\udf89 verification.mutation_shards.x_validate_plan__mutmut_9\n\ud83c\udf89 verification.mutation_shards.x_version__mutmut_1\n\n"
     },
     "src/etl_benchmark/transform.py": {
@@ -535,11 +535,11 @@
       "status": "complete",
       "returncode": 0,
       "counts": {
-        "killed": 225,
-        "survived": 21
+        "killed": 240,
+        "survived": 6
       },
       "total": 246,
-      "seconds": 161,
+      "seconds": 374,
       "tail": " verification.mutation_scope.x_resolve__mutmut_2\n\ud83c\udf89 verification.mutation_scope.x_resolve__mutmut_3\n\ud83c\udf89 verification.mutation_scope.x_resolve__mutmut_4\n\ud83c\udf89 verification.mutation_scope.x_resolve__mutmut_5\n\ud83c\udf89 verification.mutation_scope.x_resolve__mutmut_6\n\ud83c\udf89 verification.mutation_scope.x_resolve__mutmut_7\n\ud83c\udf89 verification.mutation_scope.x_resolve__mutmut_8\n\ud83c\udf89 verification.mutation_scope.x_resolve__mutmut_9\n\n"
     },
     "research/pool_preprocessing.py": {
@@ -643,11 +643,11 @@
       "status": "complete",
       "returncode": 0,
       "counts": {
-        "killed": 307,
-        "survived": 35
+        "killed": 336,
+        "survived": 6
       },
       "total": 342,
-      "seconds": 81,
+      "seconds": 88,
       "tail": "fication.mutation_run.x_run__mutmut_91\n\ud83c\udf89 verification.mutation_run.x_run__mutmut_92\n\ud83c\udf89 verification.mutation_run.x_run__mutmut_93\n\ud83c\udf89 verification.mutation_run.x_run__mutmut_94\n\ud83c\udf89 verification.mutation_run.x_run__mutmut_95\n\ud83c\udf89 verification.mutation_run.x_run__mutmut_96\n\ud83c\udf89 verification.mutation_run.x_run__mutmut_97\n\ud83c\udf89 verification.mutation_run.x_run__mutmut_98\n\ud83c\udf89 verification.mutation_run.x_run__mutmut_99\n\n"
     },
     "experiments/run_severity.py": {
@@ -1128,15 +1128,15 @@
     "research/cost_study.py": {
       "sha256": "c754219c7d3e61d00b1cff8c228bc9c5b6c75b591558ecea2359049611378b58",
       "status": "complete",
-      "returncode": 1,
+      "returncode": 0,
       "counts": {
-        "killed": 398,
-        "survived": 122,
-        "exit_33": 305
+        "killed": 817,
+        "survived": 7,
+        "timeout": 1
       },
       "total": 825,
-      "seconds": 113,
-      "tail": "ats\n\u2834 Running stats\n\u2826 Running stats\n\u2827 Running stats\n\u2807 Running stats\n\u280f Running stats\n\u280b Running stats\n\u2819 Running stats\n\u2839 Running stats\n\u2838 Running stats\n\u283c Running stats\n\u2834 Running stats\n\u2826 Running stats\n\u2827 Running stats\n\u2807 Running stats\n\u280f Running stats\n\u280b Running stats\n\u2819 Running stats\n\u2839 Running stats\n\u2838 Running stats\n\u283c Running stats\n\u2834 Running stats\n\u2826 Running stats\nfailed to collect stats. runner returned 1\n\n"
+      "seconds": 476,
+      "tail": "mut_15\n\ud83c\udf89 research.cost_study.x_wait_for_quiet__mutmut_2\n\ud83c\udf89 research.cost_study.x_wait_for_quiet__mutmut_3\n\ud83c\udf89 research.cost_study.x_wait_for_quiet__mutmut_4\n\ud83c\udf89 research.cost_study.x_wait_for_quiet__mutmut_5\n\ud83c\udf89 research.cost_study.x_wait_for_quiet__mutmut_6\n\ud83c\udf89 research.cost_study.x_wait_for_quiet__mutmut_7\n\ud83c\udf89 research.cost_study.x_wait_for_quiet__mutmut_8\n\ud83c\udf89 research.cost_study.x_wait_for_quiet__mutmut_9\n\n"
     },
     "research/deep_support.py": {
       "sha256": "21e4ef7e52a2eb0d03a9367b25cf08ece677201f53f427aa779be8c6c94e8aff",
