@@ -92,3 +92,26 @@ def test_the_help_describes_each_command_and_option_and_the_output_is_required(c
     with pytest.raises(SystemExit) as stop:
         bundles.main(["pack", "nonsense", "--output", "x"])
     assert stop.value.code == 2
+
+
+def test_a_file_of_exactly_the_size_limit_is_accepted_and_one_byte_more_is_refused(tmp_path):
+    root = tmp_path / "src"
+    _populate(root)
+    big = root / REAL[1]
+    filler = " " * (bundles.MAX_MEMBER - len("{}"))
+    big.write_text("{}" + filler)
+    assert big.stat().st_size == bundles.MAX_MEMBER
+    out = bundles.pack("real", root, tmp_path / "deep" / "dir" / "ok.tgz")
+    assert out.is_file()
+    dest = tmp_path / "dest"
+    assert REAL[1] in bundles.unpack(out, dest, "real")
+    big.write_text("{}" + filler + " ")
+    with pytest.raises(bundles.BundleError, match="larger"):
+        bundles.pack("real", root, tmp_path / "x.tgz")
+
+
+def test_an_unknown_kind_is_refused_naming_every_valid_kind():
+    with pytest.raises(bundles.BundleError) as refused:
+        bundles.pack("everything", Path("."), Path("x"))
+    kinds = ", ".join(bundles.KINDS)
+    assert str(refused.value) == f"unknown kind 'everything'; the kinds are {kinds}"
