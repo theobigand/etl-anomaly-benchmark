@@ -190,3 +190,53 @@ def test_a_figure_is_drawn_with_the_height_of_its_rows_titled_saved_at_160_dpi_a
     assert calls["save"] == (tmp_path / "f.png", {"dpi": 160})
     assert calls["closed"] is calls["fig"]
     assert (tmp_path / "f.png").stat().st_size > 0
+
+
+def test_the_report_titles_its_figures_and_names_their_files(archive, monkeypatch):
+    drawn = []
+    monkeypatch.setattr(fs, "figure", lambda frame, title, path: drawn.append((title, path)))
+    fs.build(archive / "evidence", archive / "figures")
+    assert drawn == [
+        (
+            "Median detection rate over 58 real datasets (typed injection)",
+            archive / "figures" / "typed_pooled.png",
+        ),
+        (
+            "Mean detection rate by anomaly type (synthetic, 5 seeds)",
+            archive / "figures" / "heatmap_full.png",
+        ),
+    ]
+
+
+def test_the_command_defaults_to_the_archived_evidence_and_the_paper_figures(monkeypatch):
+    seen = []
+    monkeypatch.setattr(
+        fs, "build", lambda evidence, figures: seen.append((evidence, figures)) or {}
+    )
+    fs.main([])
+    assert seen == [(fs.EVIDENCE, fs.ROOT / "paper" / "figures")]
+    seen.clear()
+    fs.main(["--evidence", "e", "--figures", "f"])
+    assert seen == [(Path("e"), Path("f"))]
+    assert all(isinstance(p, Path) for p in seen[0])
+
+
+def test_the_real_table_reads_the_detectors_of_the_first_seed_and_skips_failed_ones(tmp_path):
+    cols = ["precision", "recall", "f1", "roc_auc", "pr_auc", "flagged_pct"]
+    csv = tmp_path / "c.csv"
+    csv.write_text(
+        ",".join(["name", *(f"{c}_mean" for c in cols)])
+        + "\nzscore,"
+        + ",".join(["0.5"] * 6)
+        + "\n"
+    )
+    row = {c: 0.25 for c in cols}
+    runs = [
+        {"methods": {"vae": row, "lunar": {"error": "x"}}},
+        {"methods": {"vae": row, "lunar": row, "extra": row}},
+    ]
+    deep = tmp_path / "d.json"
+    deep.write_text(json.dumps({"runs": runs}))
+    table = fs.real_table(csv, deep)
+    assert table.index.tolist() == ["zscore", "vae", "lunar"]
+    assert table.loc["lunar", "f1"] == 0.25
