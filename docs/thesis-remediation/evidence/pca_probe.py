@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Probe of the synthetic PCA discrepancy (run from the repository root).
 
 python docs/thesis-remediation/evidence/pca_probe.py
