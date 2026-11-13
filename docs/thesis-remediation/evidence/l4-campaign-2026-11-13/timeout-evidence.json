@@ -1,0 +1,30 @@
+{
+  "classification": {
+    "prepare_execution mutant 128": "non-terminating: the queue is never popped; status stays timeout (not killed)",
+    "sha256_file mutants 6 and 14": "non-terminating: the end-of-file sentinel can never match, so the read loop runs forever; status stays timeout (not killed)",
+    "temporal_decision._block_ci mutant 25": "not a hang: the mutant returns a result computed on a one-row array per resample, 20 to 400 times slower than the original. Slow tests ran before the detecting test and exceeded the limit. Resolved by shortening those tests (RESAMPLES patched), see the tests."
+  },
+  "mutation_cache.prepare_execution__mutmut_128": {
+    "budget": 10000,
+    "iterations": 10000,
+    "queue_length_first_and_last": [
+      1,
+      1
+    ],
+    "terminated": false
+  },
+  "pool_contract.sha256_file__mutmut_14": {
+    "blocks_read_within_budget": 10000,
+    "budget": 10000,
+    "expected_digest": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+    "non_empty_blocks": 1,
+    "terminated": false
+  },
+  "pool_contract.sha256_file__mutmut_6": {
+    "blocks_read_within_budget": 10000,
+    "budget": 10000,
+    "expected_digest": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+    "non_empty_blocks": 1,
+    "terminated": false
+  }
+}
