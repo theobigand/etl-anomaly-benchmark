@@ -45,5 +45,5 @@ back ends. This remains a scientific-integrity item for the owner: either state 
 component on the six-feature synthetic table and that its curve is back-end dependent, or choose a component rule that
 does not retain all features (a protocol change, therefore not made here). The method comparison on this panel should not rest on this one curve.
 
-Probe: `/tmp/claude-501/pca_probe.py` (kept out of the repository; it fits `PCADetector` through `detect` on the
-`run_curves._split_synth(42, None)` split and prints the cumulative variance and the average precision).
+Probe: `docs/thesis-remediation/evidence/pca_probe.py` (fits `PCADetector` through `detect` on the
+`run_curves._split_synth(42, None)` split and prints the average precision, the component count, the cumulative variance and the score range). Run it with each interpreter to reproduce both values.

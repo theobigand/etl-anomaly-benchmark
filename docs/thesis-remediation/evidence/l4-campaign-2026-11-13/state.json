@@ -810,12 +810,12 @@
       "status": "complete",
       "returncode": 0,
       "counts": {
-        "killed": 630,
-        "survived": 56
+        "killed": 678,
+        "survived": 8
       },
       "total": 686,
-      "seconds": 152,
-      "tail": "date_current__mutmut_63\n\ud83d\ude41 verification.mutation_campaign.x_validate_current__mutmut_64\n\ud83d\ude41 verification.mutation_campaign.x_validate_current__mutmut_65\n\ud83d\ude41 verification.mutation_campaign.x_validate_current__mutmut_66\n\ud83c\udf89 verification.mutation_campaign.x_validate_current__mutmut_7\n\ud83c\udf89 verification.mutation_campaign.x_validate_current__mutmut_8\n\ud83c\udf89 verification.mutation_campaign.x_validate_current__mutmut_9\n\n"
+      "seconds": 365,
+      "tail": "date_current__mutmut_63\n\ud83c\udf89 verification.mutation_campaign.x_validate_current__mutmut_64\n\ud83c\udf89 verification.mutation_campaign.x_validate_current__mutmut_65\n\ud83c\udf89 verification.mutation_campaign.x_validate_current__mutmut_66\n\ud83c\udf89 verification.mutation_campaign.x_validate_current__mutmut_7\n\ud83c\udf89 verification.mutation_campaign.x_validate_current__mutmut_8\n\ud83c\udf89 verification.mutation_campaign.x_validate_current__mutmut_9\n\n"
     },
     "research/pool_extension_summary.py": {
       "sha256": "e33367ebe505799d79f98acf46ecc53f67fd8c3dbcbcef959323d9c8f84f56db",
@@ -931,12 +931,12 @@
       "status": "complete",
       "returncode": 0,
       "counts": {
-        "killed": 494,
-        "survived": 77
+        "killed": 561,
+        "survived": 10
       },
       "total": 571,
-      "seconds": 264,
-      "tail": "x_synthetic_seed__mutmut_92\n\ud83c\udf89 research.full_registry.x_synthetic_seed__mutmut_93\n\ud83d\ude41 research.full_registry.x_synthetic_seed__mutmut_94\n\ud83c\udf89 research.full_registry.x_synthetic_seed__mutmut_95\n\ud83c\udf89 research.full_registry.x_synthetic_seed__mutmut_96\n\ud83c\udf89 research.full_registry.x_synthetic_seed__mutmut_97\n\ud83c\udf89 research.full_registry.x_synthetic_seed__mutmut_98\n\ud83c\udf89 research.full_registry.x_synthetic_seed__mutmut_99\n\n"
+      "seconds": 240,
+      "tail": "x_synthetic_seed__mutmut_92\n\ud83c\udf89 research.full_registry.x_synthetic_seed__mutmut_93\n\ud83c\udf89 research.full_registry.x_synthetic_seed__mutmut_94\n\ud83c\udf89 research.full_registry.x_synthetic_seed__mutmut_95\n\ud83c\udf89 research.full_registry.x_synthetic_seed__mutmut_96\n\ud83c\udf89 research.full_registry.x_synthetic_seed__mutmut_97\n\ud83c\udf89 research.full_registry.x_synthetic_seed__mutmut_98\n\ud83c\udf89 research.full_registry.x_synthetic_seed__mutmut_99\n\n"
     },
     "experiments/run_synthetic_benchmark.py": {
       "sha256": "803feb40a63727adee27fd057845ccff902fc9cff12005280f7e7f0fcaf7be8b",
