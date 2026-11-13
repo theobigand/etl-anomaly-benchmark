@@ -105,19 +105,29 @@ Sorted by the number of kills still missing. Of the units a few kills short (`lo
 
 ## Notes that change how the numbers read
 
-- A timeout is a mutant that makes a test hang. `temporal_decision._block_ci` mutant 25 (`index = None`), `mutation_cache.prepare_execution` mutant 128 and
-  `pool_contract.sha256_file` mutants 6 and 14 (an end-of-file sentinel that never matches) stay timeouts when run alone: an earlier mapped test hangs
-  before a detecting test can fail. They are not counted as killed.
+- Timeouts (evidence: `evidence/timeout_evidence.py`, output `l4-campaign-2026-11-13/timeout-evidence.json`). `pool_contract.sha256_file` mutants 6 and 14 (an
+  end-of-file sentinel that never matches) and `mutation_cache.prepare_execution` mutant 128 (the work queue is never popped) do not terminate: the bounded
+  reproduction reads 10 000 blocks, or loops 10 000 times with the queue at length 1, and never ends. They stay timeouts, which are neither killed nor
+  survived and never count as passing. `temporal_decision._block_ci` mutant 25 (`index = None`) does terminate: it computes one precision-recall area per column of a
+  one-row array, 20 to 400 times slower than the original. Three slow tests ran before the test that detects it and exceeded the limit; they now use a few
+  resamples, so the detecting test fails first.
 - `state.json` is the progress log of the runs; the final counts come from the `mutants/**/*.meta` verdict files, which also hold these one-by-one reruns
   (for example `real_acquire` is 215 of 219 there after the rerun, 214 plus one incomplete in `state.json`). Verdicts of killed mutants persist across runs, so a unit
   is not measured by a single commit: later tests added (after a unit's last full run) are listed in the commit log of this branch.
-- Pinned digests of generated data (injection, multi-schema, LSTM stream, registry summary) held on the Linux CI run of this HEAD and on pandas 3.0.6 and 3.1.1 here;
-  they are not guaranteed across other numpy versions and fail without saying what changed.
+- Pinned digests of generated data (injection, multi-schema, LSTM stream, registry summary) held on Linux CI, on pandas 3.0.6 and 3.1.1, and under numpy 1.26.4 with pandas 2.2.3 and under numpy 2.4.6
+  (injection and multi-schema; the LSTM stream test needs torch and was not run under 1.26.4). Each pinned construction now also has tests of its written magnitudes, rows and labels
+  (`research/tests/test_injection_contracts.py`), so a digest change can be diagnosed. The digests stay: the archived typed runs depend on exactly this construction.
 - Nine mutants first reported incomplete (exit 255) or timed out under load were rerun one by one: five were killed
   (`paired_bootstrap` 43, `pool_etl.run_etl` 2, `pool_extension_summary.severity` 44, `mutation_cache.prepare` 31, `real_acquire.main` 20), the four above stayed timeouts.
-- Mutants no test reached (`not_executed`, exit 33) remain only in `research/cost_study.py` (305); the other modules that had them now have tests.
-- macOS compares file names without case, so mutants that only change the case of a path (`"TESTS"`, `"ENVIRONMENT.YML"`, `"GIT"`) survive here and
-  die on Linux. The local measurement therefore understates the kills of `verification/` modules.
+- Measurement platform. pytest temporary folders live on the default macOS volume, which compares file names without case, so a mutant that only changes the case of a path
+  (`"TYPED_INJECTION"`, `"PYPROJECT.TOML"`, `"GIT"`) survives there and dies on Linux. Where a unit was re-run on a case-sensitive APFS volume with `TMPDIR` on it, its verdict file is that run
+  (`measured_on` in `final-measurement.json`; `evidence/merge_case_sensitive.py`). Units measured that way: none yet. The remaining units are
+  still measured on the case-insensitive volume and understate their kills.
+- Mutants no test reached (exit 33) remain only where listed in the table; `research/cost_study.py` had 305 and now has none (new tests of `main`, the workers and the wait for a quiet machine).
+- `research/time_scan.py`: under pandas 3 text columns are typed `str`, not `object`, so `candidate_columns` skipped columns of date text whose names do not say time. Fixed with a regression test
+  (commit fd67310); on the 116 local pool tables the set of scanned columns is identical before and after, so no archived result changes.
+- Synthetic PCA discrepancy (0.4818 regenerated, 0.56 archived): explained in `PCA_REPRODUCIBILITY_2026-11-12.md` (full-rank reconstruction, scores are rounding noise, numpy built on Accelerate gives 0.4818 and the
+  conda reference BLAS gives 0.5645). Archived values are untouched; the paper wording is an owner decision and the item stays open.
 - Classes that look equivalent to me and are not proposed to the owner yet (evidence only; the owner left `astype(None)` and `replace=None` inconclusive on
   2026-11-11, so I do not treat them as settled): `astype(None)` on floats,
   `index=None`, `sort=None`, `replace=None`, `version("TORCH")` (package names ignore case), `kind="STABLE"`, a missing `dtype` on `np.empty`,

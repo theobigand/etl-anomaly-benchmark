@@ -89,6 +89,8 @@ def main() -> None:
         validation = "valid for the environment of this measurement"
     except ValueError as error:
         waived, validation = {}, f"refused by mutation_policy.accepted_equivalents: {error}"
+    adopted_file = OUT / "case-sensitive-units.json"
+    case_sensitive = json.loads(adopted_file.read_text()) if adopted_file.exists() else {}
     modules = {}
     for path, unit in sorted(policy["units"].items()):
         counts, keys, _codes = measured[path]
@@ -126,6 +128,11 @@ def main() -> None:
             "adjusted_eligible": adjusted,
             "adjusted_score": round(100 * killed / adjusted, 2) if adjusted else None,
             "status": status,
+            "measured_on": (
+                "case-sensitive APFS volume (TMPDIR on it)"
+                if path in case_sensitive
+                else "case-insensitive APFS (default macOS)"
+            ),
         }
     summary = {}
     for item in modules.values():
