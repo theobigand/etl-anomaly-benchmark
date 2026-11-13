@@ -50,10 +50,12 @@ def test_the_rows_follow_the_registry_order_and_carry_one_cell_per_column():
 
 
 def test_a_table_body_is_replaced_once_and_an_unknown_table_is_refused():
-    block = "\\label{tab:a}\n\\midrule\n{}\n\\bottomrule"
-    tex = block.format("old") + "\n" + block.format("keep")
+    def block(body):
+        return "\\label{tab:a}\n\\midrule\n" + body + "\n\\bottomrule"
+
+    tex = block("old") + "\n" + block("keep")
     out = pt.replace_body(tex, "a", "new")
-    assert out == block.format("new") + "\n" + block.format("keep")
+    assert out == block("new") + "\n" + block("keep")
     with pytest.raises(ValueError) as refused:
         pt.replace_body(tex, "b", "x")
     assert str(refused.value) == "table b not found"
