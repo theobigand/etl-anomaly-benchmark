@@ -71,3 +71,21 @@ def test_a_single_feature_gets_one_reconstruction_error_per_row_and_integer_flag
     assert np.allclose(errors, expected)
     flags = model.predict(x)
     assert flags.dtype.kind == "i" and set(flags.tolist()) <= {0, 1}
+
+
+def test_each_tail_probability_detector_builds_its_own_method():
+    from etl_benchmark.quality.ml import COPODDetector, ECODDetector
+
+    assert ECODDetector(contamination=0.1)._build_estimator().method == "ecod"
+    assert COPODDetector(contamination=0.1)._build_estimator().method == "copod"
+
+
+def test_a_pyod_style_detector_missing_any_fitted_part_refuses_to_score():
+    from etl_benchmark.quality.ml import IsolationForestDetector
+
+    frame = pd.DataFrame({"a": [1.0, 2.0, 3.0, 4.0, 5.0, 6.0]})
+    for part in ("_model", "_imputer", "_scaler"):
+        detector = IsolationForestDetector().fit(frame)
+        setattr(detector, part, None)
+        with pytest.raises(RuntimeError, match="not fitted"):
+            detector.score(frame)
