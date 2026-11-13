@@ -5,8 +5,7 @@ from importlib.metadata import version
 import numpy as np
 import pandas as pd
 import pytest
-
-torch = pytest.importorskip("torch")
+import torch  # noqa: E402
 
 from etl_benchmark.quality import deep  # noqa: E402
 from etl_benchmark.quality import ml as ml_module  # noqa: E402
