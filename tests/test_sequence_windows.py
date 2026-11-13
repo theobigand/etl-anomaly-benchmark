@@ -105,9 +105,7 @@ def test_unusable_inputs_are_rejected_before_windowing():
 
 
 def test_integer_feature_columns_give_floating_point_windows():
-    frame = pd.DataFrame(
-        {"t": pd.date_range("2024-01-01", periods=4, freq="h"), "a": [1, 2, 3, 4]}
-    )
+    frame = pd.DataFrame({"t": pd.date_range("2024-01-01", periods=4, freq="h"), "a": [1, 2, 3, 4]})
     windows, _ = causal_windows(frame, "t", ["a"], 2)
     assert windows.dtype == np.float64
     assert windows[:, :, 0].tolist() == [[1.0, 1.0], [1.0, 2.0], [2.0, 3.0], [3.0, 4.0]]
