@@ -344,3 +344,91 @@ def test_the_command_runs_both_datasets_writes_the_results_and_reports_each_name
     with pytest.raises(SystemExit) as stop:
         td.main([])
     assert stop.value.code == 2
+
+
+def test_a_precision_or_false_positive_rate_is_not_lost_when_two_counts_are_equal():
+    out = td.decision_metrics([1, 0, 0], [2.0, 2.0, 0.0], np.ones(3))
+    assert out["precision"] == 0.5 and out["fpr"] == 0.5 and out["recall"] == 1.0
+    out = td.decision_metrics([1, 1, 0], [2.0, 0.0, 2.0], np.ones(3))
+    assert out["precision"] == 0.5 and out["recall"] == 0.5 and out["fpr"] == 1.0
+
+
+def test_blocks_of_a_single_row_look_back_over_exactly_two_rows():
+    s_val = np.array([1.0, 100.0])
+    s_test = np.array([5.0, 50.0, 10.0])
+    thr = td.thresholds(np.arange(3.0), s_val, s_test, pi=0.5, blocks=3)
+    stream = np.concatenate([s_val, s_test])
+    expected = [float(np.quantile(stream[max(0, 2 + i - 2) : 2 + i], 0.5)) for i in range(3)]
+    assert thr["P2"].tolist() == expected == [50.5, 52.5, 27.5]
+
+
+def test_matching_draws_without_replacement_and_keeps_at_least_one_row_of_the_thinned_class():
+    labels = np.array([1] * 40 + [0] * 60)
+    thinned = td.match_prevalence(labels, 0.1, np.random.default_rng(3))
+    assert len(set(thinned.tolist())) == len(thinned)
+    assert int((labels[thinned] == 1).sum()) == 7 and int((labels[thinned] == 0).sum()) == 60
+    raised = td.match_prevalence(labels, 0.9, np.random.default_rng(3))
+    assert len(set(raised.tolist())) == len(raised)
+    assert int((labels[raised] == 0).sum()) == 4 and int((labels[raised] == 1).sum()) == 40
+    scarce = np.array([1] * 3 + [0] * 97)
+    one = td.match_prevalence(scarce, 0.001, np.random.default_rng(0))
+    assert int((scarce[one] == 1).sum()) == 1 and int((scarce[one] == 0).sum()) == 97
+
+
+def test_bank_marketing_reads_every_month_name_and_dates_the_rows_in_utc_minutes(tmp_path):
+    months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
+    table = pd.DataFrame(
+        {"month": months, "age": range(12), "job": ["a", "b"] * 6, "y": ["no"] * 11 + ["yes"]}
+    )
+    path = tmp_path / "b.csv"
+    table.to_csv(path, index=False)
+    x, y, times = td.bank_marketing(path)
+    assert [t.strftime("%Y-%m") for t in times] == [f"2008-{m:02d}" for m in range(1, 13)]
+    assert times.dt.tz is not None and y.tolist() == [0] * 11 + [1] and y.dtype.kind == "i"
+    assert all(t.day == 1 for t in times) and all(t.minute == 0 for t in times)
+    repeated = pd.DataFrame(
+        {"month": ["may"] * 3, "age": [1, 2, 3], "job": list("abc"), "y": ["no"] * 3}
+    )
+    path2 = tmp_path / "c.csv"
+    repeated.to_csv(path2, index=False)
+    _, _, times2 = td.bank_marketing(path2)
+    assert [t.minute for t in times2] == [0, 1, 2]
+    assert sorted(c for c in x.columns if c.startswith("job")) == ["job_a", "job_b", "job_nan"]
+
+
+def test_credit_card_loads_the_named_dataset_orders_ties_stably_and_resets_the_index(monkeypatch):
+    import temporal_pilot as tp
+
+    from etl_benchmark.datasets import DATASETS
+
+    stamp = pd.Timestamp("2020-01-01", tz="UTC")
+    frame = pd.DataFrame(
+        {tp.TIME_UTC: [stamp, stamp, stamp], "is_anomaly": [1, 0, 1], "v": [3.0, 1.0, 2.0]},
+        index=[10, 11, 12],
+    )
+    seen = {}
+    monkeypatch.setattr(tp, "load", lambda spec: seen.update(load=spec) or frame)
+    monkeypatch.setattr(tp, "features", lambda spec, f: seen.update(features=spec) or f[["v"]])
+    x, y, times = td.credit_card()
+    assert seen["load"] is DATASETS["credit_card"] and seen["features"] is DATASETS["credit_card"]
+    assert x["v"].tolist() == [3.0, 1.0, 2.0] and y.tolist() == [1, 0, 1]
+    assert x.index.tolist() == [0, 1, 2] and times.index.tolist() == [0, 1, 2]
+
+
+def test_the_command_passes_each_loaded_triplet_to_the_study_and_flushes_each_name(
+    tmp_path, monkeypatch
+):
+    triplets = {
+        "credit_card": (pd.DataFrame({"a": [1.0]}), np.array([0]), pd.Series([1])),
+        "bank_marketing": (pd.DataFrame({"a": [2.0]}), np.array([1]), pd.Series([2])),
+    }
+    monkeypatch.setattr(td, "credit_card", lambda: triplets["credit_card"])
+    monkeypatch.setattr(td, "bank_marketing", lambda path: triplets["bank_marketing"])
+    got, flushes = [], []
+    monkeypatch.setattr(td, "run_frame", lambda x, y, t: got.append((x, y, t)) or {})
+    monkeypatch.setattr(td, "hypotheses", lambda r: {})
+    monkeypatch.setattr(td, "print", lambda *a, **k: flushes.append(k.get("flush")), raising=False)
+    assert td.main(["--output", str(tmp_path)]) == 0
+    assert got[0][0] is triplets["credit_card"][0] and got[1][1] is triplets["bank_marketing"][1]
+    assert got[1][2] is triplets["bank_marketing"][2] and flushes == [True, True]
+    assert (tmp_path / "temporal_decision_results.json").exists()
