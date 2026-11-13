@@ -186,3 +186,26 @@ def test_the_only_resume_and_methods_options_choose_the_problems_and_the_detecto
         pf.main(["--help"])
     text = " ".join(capsys.readouterr().out.split())
     assert "problem ids, for a quick check" in text and "skip the problems already written" in text
+
+
+def test_the_classical_family_can_be_named_and_the_options_carry_their_exact_help(
+    tmp_path, monkeypatch, capsys
+):
+    _command(monkeypatch)
+    assert pf.main(["--output", str(tmp_path / "c"), "--methods", "classical"]) == 0
+    assert _Pool.methods == list(pf.DETECTOR_NAMES)
+    capsys.readouterr()
+    with pytest.raises(SystemExit):
+        pf.main(["--help"])
+    text = " ".join(capsys.readouterr().out.split())
+    assert "--only [ONLY ...] problem ids, for a quick check" in text
+    assert "--resume skip the problems already written" in text
+    assert "--methods {classical,deep}" in text
+
+
+def test_each_finished_problem_is_printed_with_a_flush(tmp_path, monkeypatch):
+    _command(monkeypatch)
+    flushes = []
+    monkeypatch.setattr(pf, "print", lambda *a, **k: flushes.append(k.get("flush")), raising=False)
+    assert pf.main(["--output", str(tmp_path / "f")]) == 0
+    assert flushes[:3] == [True, True, True] and flushes[3] is None
