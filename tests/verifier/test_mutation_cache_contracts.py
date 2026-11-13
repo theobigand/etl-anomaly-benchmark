@@ -633,3 +633,184 @@ def test_a_proof_whose_digest_does_not_match_its_content_is_invalid(tmp_path):
     proof["settled"] = 0
     path.write_text(json.dumps(proof))
     _refused(lambda: mc.validate_execution(tmp_path, SOURCES), "invalid execution proof")
+
+
+def test_a_modified_test_file_is_matched_by_its_path_even_when_a_test_node_sits_in_a_class():
+    verdicts = {"pkg.a.x_f__mutmut_1": 1, "pkg.a.x_g__mutmut_1": 1}
+    tests = {"pkg.a.x_f": ["t.py::Suite::test_a"], "pkg.a.x_g": ["u.py::test_b"]}
+    reset = mc.keys_to_reset(
+        {"t.py": "1", "u.py": "1"}, {"t.py": "2", "u.py": "1"}, tests, verdicts
+    )
+    assert reset == ["pkg.a.x_f__mutmut_1"]
+
+
+def test_the_test_record_is_sorted_whatever_the_order_the_tests_were_hashed_in(
+    tmp_path, monkeypatch
+):
+    (tmp_path / "mutants").mkdir()
+    monkeypatch.setattr(mc, "hash_tests", lambda root: {"b.py": "2", "a.py": "1"})
+    text = mc.record(tmp_path).read_text()
+    assert text == '{\n  "a.py": "1",\n  "b.py": "2"\n}\n'
+
+
+def test_a_symlinked_metadata_file_is_refused_even_when_it_points_inside_the_cache(tmp_path):
+    (tmp_path / "mutants").mkdir()
+    real = tmp_path / "mutants" / "real.meta"
+    real.write_text(json.dumps({"exit_code_by_key": {}}))
+    (tmp_path / "mutants" / "alias.meta").symlink_to(real)
+    _refused(
+        lambda: mc.prepare(tmp_path),
+        "mutation cache metadata must not alias files outside the cache",
+    )
+
+
+def test_a_cleared_metadata_file_is_rewritten_indented_by_two_and_an_untouched_one_is_not(tmp_path):
+    cache = _repository(tmp_path)
+    mc.record(tmp_path)
+    (tmp_path / "tests" / "test_a.py").write_text("changed")
+    untouched = (cache / (SOURCES[1] + ".meta")).read_bytes()
+    mc.prepare(tmp_path)
+    data = json.loads((cache / (SOURCES[0] + ".meta")).read_text())
+    assert (cache / (SOURCES[0] + ".meta")).read_text() == json.dumps(data, indent=2) + "\n"
+    assert (cache / (SOURCES[1] + ".meta")).read_bytes() == untouched
+
+
+def test_the_scope_file_is_one_of_the_bound_dependencies(tmp_path):
+    _repository(tmp_path)
+    (tmp_path / "verification").mkdir()
+    (tmp_path / "verification" / "mutation_scope.json").write_text("{}")
+    context = mc.capture_context(tmp_path, SOURCES, runtime=RUNTIME)
+    assert "verification/mutation_scope.json" in context["dependencies"]
+
+
+def test_a_cache_symlinked_inside_its_root_is_refused_when_reading_execution_documents(tmp_path):
+    (tmp_path / "elsewhere").mkdir()
+    (tmp_path / "mutants").symlink_to(tmp_path / "elsewhere")
+    _refused(
+        lambda: mc._execution_documents(tmp_path, SOURCES),
+        "mutation cache must remain inside its owning root",
+    )
+    (tmp_path / "mutants").unlink()
+    outside = tmp_path.parent / (tmp_path.name + "_outside")
+    outside.mkdir()
+    (tmp_path / "mutants").symlink_to(outside)
+    _refused(
+        lambda: mc._execution_documents(tmp_path, SOURCES),
+        "mutation cache must remain inside its owning root",
+    )
+
+
+def test_a_binding_with_no_settled_verdict_is_valid_and_records_zero(tmp_path):
+    cache = _repository(tmp_path)
+    _prepare(tmp_path)
+    _fill(cache, first=None, second=None)
+    assert _record(tmp_path)["settled"] == 0
+    assert mc.validate_execution(tmp_path, SOURCES)["settled"] == 0
+
+
+def test_a_verdict_not_yet_settled_does_not_hide_the_settled_ones_that_follow_it(tmp_path):
+    cache = _repository(tmp_path)
+    _prepare(tmp_path)
+    meta = cache / (SOURCES[0] + ".meta")
+    data = json.loads(meta.read_text())
+    data["exit_code_by_key"] = {"pkg.a.x_compute__mutmut_1": None, "pkg.a.x_compute__mutmut_2": 1}
+    meta.write_text(json.dumps(data))
+    assert _record(tmp_path)["settled"] == 1
+
+
+def test_a_changed_function_resets_the_callers_of_its_callers(tmp_path):
+    cache = _repository(tmp_path)
+    third = tmp_path / "src" / "pkg" / "c.py"
+    third.write_text("from .b import run\ndef top(value):\n    return run(value)\n")
+    sources = [*SOURCES, "src/pkg/c.py"]
+    (cache / "src/pkg/c.py").write_text(third.read_text())
+    (cache / "src/pkg/c.py.spans").write_text("{}\n")
+    fingerprint = mc.mutation_catalog._function_hashes(third.read_text())["x_top"]
+    (cache / "src/pkg/c.py.meta").write_text(
+        json.dumps(
+            {
+                "exit_code_by_key": {"pkg.c.x_top__mutmut_1": 1},
+                "hash_by_function_name": {"x_top": fingerprint},
+                "durations_by_key": {},
+                "estimated_durations_by_key": {},
+                "type_check_error_by_key": {},
+            }
+        )
+    )
+    stats = json.loads((cache / "mutmut-stats.json").read_text())
+    stats["function_dependencies"]["pkg.b.x_run"] = ["pkg.c.x_top"]
+    (cache / "mutmut-stats.json").write_text(json.dumps(stats))
+    mc.prepare_execution(tmp_path, sources, runtime=RUNTIME)
+    _fill(cache)
+    meta = cache / "src/pkg/c.py.meta"
+    data = json.loads(meta.read_text())
+    data["exit_code_by_key"] = {"pkg.c.x_top__mutmut_1": 1}
+    meta.write_text(json.dumps(data))
+    mc.record_execution(tmp_path, sources, runtime=RUNTIME, native_exit_code=0)
+    path = tmp_path / SOURCES[0]
+    path.write_text(path.read_text().replace("+ 1", "+ 2"))
+    result = mc.prepare_execution(tmp_path, sources, runtime=RUNTIME)
+    assert result["reset"] == 3 and result["kept"] == 0
+
+
+def test_a_support_change_before_an_unchanged_scoped_source_still_counts_as_support(tmp_path):
+    cache = _repository(tmp_path)
+    scope = [SOURCES[1]]
+    mc.prepare_execution(tmp_path, SOURCES, runtime=RUNTIME, mutated_sources=scope)
+    _fill(cache)
+    mc.record_execution(
+        tmp_path, SOURCES, runtime=RUNTIME, native_exit_code=0, mutated_sources=scope
+    )
+    path = tmp_path / SOURCES[0]
+    path.write_text(path.read_text().replace("+ 1", "+ 2"))
+    result = mc.prepare_execution(tmp_path, SOURCES, runtime=RUNTIME, mutated_sources=scope)
+    assert result["reasons"] == ["changed uninstrumented support or unavailable dependency graph"]
+
+
+def test_an_untouched_metadata_file_is_left_byte_for_byte_when_nothing_is_reset(tmp_path):
+    cache = _baseline(tmp_path)
+    before = {n: (cache / (n + ".meta")).read_bytes() for n in SOURCES}
+    assert _prepare(tmp_path)["reset"] == 0
+    assert {n: (cache / (n + ".meta")).read_bytes() for n in SOURCES} == before
+
+
+def test_a_binding_validates_against_the_same_mutated_part_it_was_recorded_for(tmp_path):
+    cache = _repository(tmp_path)
+    scope = [SOURCES[0]]
+    mc.prepare_execution(tmp_path, SOURCES, runtime=RUNTIME, mutated_sources=scope)
+    _fill(cache)
+    mc.record_execution(
+        tmp_path, SOURCES, runtime=RUNTIME, native_exit_code=0, mutated_sources=scope
+    )
+    assert mc.validate_execution(tmp_path, SOURCES, mutated_sources=scope)["settled"] == 1
+    _refused(
+        lambda: mc.validate_execution(tmp_path, SOURCES),
+        "execution inputs differ from the recorded binding",
+    )
+
+
+def test_a_proof_whose_settled_count_was_altered_is_refused_by_that_reason(tmp_path):
+    cache = _baseline(tmp_path)
+    _rewrite_proof(cache, lambda p: p.update(settled=5))
+    _refused(
+        lambda: mc.validate_execution(tmp_path, SOURCES),
+        "settled verdict count differs from native metadata",
+    )
+
+
+def test_the_command_joins_several_test_names_with_a_comma_and_a_space(
+    tmp_path, monkeypatch, capsys
+):
+    _repository(tmp_path)
+    mc.record(tmp_path)
+    (tmp_path / "tests" / "test_a.py").write_text("changed")
+    (tmp_path / "tests" / "test_b.py").write_text("changed")
+    monkeypatch.chdir(tmp_path)
+    mc.main(["prepare"])
+    assert "  modified tests: tests/test_a.py, tests/test_b.py" in capsys.readouterr().out
+
+
+def test_the_command_help_carries_the_module_description(capsys):
+    with pytest.raises(SystemExit):
+        mc.main(["--help"])
+    assert "Reuse cached mutation verdicts only for code and tests" in capsys.readouterr().out
