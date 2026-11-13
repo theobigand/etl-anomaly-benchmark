@@ -59,7 +59,15 @@ def main() -> None:
         began = time.time()
         try:
             run = subprocess.run(
-                [sys.executable, "-m", "mutmut", "run", f"{dotted(path)}.*", "--max-children", MAX_CHILDREN],
+                [
+                    sys.executable,
+                    "-m",
+                    "mutmut",
+                    "run",
+                    f"{dotted(path)}.*",
+                    "--max-children",
+                    MAX_CHILDREN,
+                ],
                 cwd=ROOT,
                 timeout=LIMIT_SECONDS,
                 capture_output=True,
