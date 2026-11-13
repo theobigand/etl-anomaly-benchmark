@@ -371,7 +371,7 @@ def test_hypotheses_use_the_number_of_resamples_they_are_given(monkeypatch):
     ls.hypotheses(data, resamples=13)
     assert seen[0] == 13
     ls.hypotheses(data)
-    assert seen[len(seen) // 2] == 2000 or 2000 in seen
+    assert 2000 in seen
 
 
 def test_registry_h2_accepts_a_deep_median_exactly_at_the_best_classical_plus_the_margin():
