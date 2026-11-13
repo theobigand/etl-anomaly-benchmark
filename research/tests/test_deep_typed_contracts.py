@@ -271,3 +271,88 @@ def test_the_epoch_budget_is_a_command_option(tmp_path, monkeypatch):
     with pytest.raises(SystemExit) as stop:
         dt.main([])
     assert stop.value.code == 2
+
+
+def _flat_means(cells):
+    """Every method has recall 0 on every type, then the given (method, type) cells."""
+    frames = _means()
+    for frame in frames:
+        frame[:] = 0.0
+        for (method, column), value in cells.items():
+            frame.loc[method, column] = value
+    return frames
+
+
+def test_h1_holds_when_the_gap_is_exactly_a_tenth_of_recall():
+    cells = {("lstm_autoencoder", "temporal_drift"): 0.1}
+    assert dt.hypotheses(_flat_means(cells), _deep())["H1"]["supported"] is True
+
+
+def test_the_autoencoder_counts_among_the_row_level_methods_of_hypothesis_one():
+    frames = _means()
+    for frame in frames:
+        frame[:] = 0.0
+        frame.loc["lstm_autoencoder", "temporal_drift"] = 0.75
+        frame.loc["autoencoder", "temporal_drift"] = 0.7
+    out = dt.hypotheses(frames, _deep())["H1"]
+    assert out["supported"] is False
+    assert out["best_row_level"] == {"method": "autoencoder", "recall": 0.7}
+
+
+def test_h2_holds_when_the_structural_gap_is_exactly_five_points():
+    structural = ("missing_value", "duplicate", "invalid_format")
+    cells = {("lstm_autoencoder", t): 0.05 for t in structural}
+    out = dt.hypotheses(_flat_means(cells), _deep())["H2"]
+    assert out["supported"] is True
+    assert all(gap == 0.05 for gap in out["gap_to_best_row"].values())
+
+
+def test_h4_holds_when_the_autoencoder_leads_the_forest_by_exactly_five_points():
+    t = "multivariate_outlier"
+    cells = {("autoencoder", t): 0.05}
+    assert dt.hypotheses(_flat_means(cells), _deep())["H4"]["supported"] is True
+
+
+def test_each_detector_is_timed_from_its_own_start_to_its_own_end(monkeypatch):
+    log = []
+    _stub_run(monkeypatch, log)
+    clock = iter([10.0, 14.0, 20.0, 29.0])
+    monkeypatch.setattr(dt.time, "perf_counter", lambda: next(clock))
+    out = dt.run_seed(7, rows=120, max_epochs=9)
+    assert out["deep"]["autoencoder"]["seconds"] == 4.0
+    assert out["deep"]["lstm_autoencoder"]["seconds"] == 9.0
+
+
+def test_the_false_alarm_rate_is_taken_on_the_clean_rows_of_an_indexed_test_part(monkeypatch):
+    log = []
+    _stub_run(monkeypatch, log)
+    real = dt.rsb._split_synthetic
+    train, val, test = real(None, None)
+    test = test.set_axis(range(100, 110))
+    monkeypatch.setattr(dt.rsb, "_split_synthetic", lambda df, seed: (train, val, test))
+
+    class Result:
+        flags = pd.Series([1, 1, 0, 0, 0, 0, 1, 1, 1, 1])
+
+    monkeypatch.setattr(dt, "detect", lambda frame, detector, fit_df: Result())
+    out = dt.run_seed(7, rows=120, max_epochs=9)
+    assert out["deep"]["autoencoder"]["fpr"] == pytest.approx(2 / 6)
+
+
+def test_the_command_stores_each_seed_as_it_ran_and_the_results_in_split_orientation(
+    tmp_path, monkeypatch
+):
+    monkeypatch.setattr(dt, "run_seed", lambda seed, max_epochs: _fake_run(seed))
+    out = tmp_path / "o"
+    dt.main(["--output", str(out)])
+    for seed in dt.SEEDS:
+        text = (out / f"seed_{seed}.json").read_text()
+        assert text == json.dumps(_fake_run(seed), indent=1, sort_keys=True) + "\n"
+    text = (out / "deep_typed_results.json").read_text()
+    results = json.loads(text)
+    assert text == json.dumps(results, indent=1, sort_keys=True) + "\n"
+    for key in ("mean", "std"):
+        assert set(results[key]) == {"index", "columns", "data"}
+    assert results["mean"]["columns"] == TYPES
+    lines = (out / "deep_typed_results.md").read_text().splitlines()
+    assert all(line.endswith(" |") for line in [lines[0], *lines[2:]])
