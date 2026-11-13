@@ -69,7 +69,7 @@ def hypothesis_rows(f: dict[str, Any]) -> str:
             f"{f['fixed']['lower_at_fixed']} of {f['fixed']['detectors']}",
         ),
         (
-            "P2 ranking by curves equals the PR-AUC ranking ($\\rho \\geq 0.99$)",
+            "P2 ranking by curves equals the AP ranking ($\\rho \\geq 0.99$)",
             f["curves"]["spearman"] >= 0.99,
             f"$\\rho = {f['curves']['spearman']:.2f}$",
         ),
@@ -85,7 +85,7 @@ def hypothesis_rows(f: dict[str, Any]) -> str:
             f"${100 * share['isolation_forest']:.0f}\\%$ and ${100 * share['zscore']:.0f}\\%$",
         ),
         (
-            "P5 chronological PR-AUC lower for two thirds of the pairs",
+            "P5 chronological AP lower for two thirds of the pairs",
             f["chrono_summary"]["supported"],
             f"{f['chrono_summary']['lower']} of {f['chrono_summary']['pairs']}",
         ),
@@ -146,7 +146,7 @@ def main_block(evidence: Path) -> str:
         rf"$0.02$, read from the stored training scores, lowers the median $F_1$ of "
         rf"{f['fixed']['lower_at_fixed']} learned detectors; the three rules do not read the "
         r"contamination and are unchanged. The ranking by the average precision of the curves "
-        rf"(seed $42$) correlates with the published PR-AUC ranking at "
+        rf"(seed $42$) correlates with the published AP ranking at "
         rf"${f['curves']['spearman']:.2f}$: several detectors have medians within a hundredth "
         r"of each other and swap places between one seed and five. On Isolation Forest the "
         r"median $F_1$ keeps rising up to the largest contamination of the grid, $0.2$, twice "
@@ -177,11 +177,11 @@ def main_block(evidence: Path) -> str:
         r"\paragraph{Chronological split (P5).} Only some pool datasets have a time variable: "
         r"eleven unlabelled UCI tables have a date, the ADBench files have none, and five "
         r"labelled datasets qualify (Credit Card, Bank Marketing, Occupancy Detection, Online "
-        rf"Shoppers and Room Occupancy). The PR-AUC under the chronological split is lower than "
+        rf"Shoppers and Room Occupancy). The AP under the chronological split is lower than "
         rf"under the stratified one for {f['chrono_summary']['lower']} of "
         rf"{f['chrono_summary']['pairs']} pairs of a dataset and a detector, not for two thirds. "
         r"Bank Marketing is the reason: its prevalence rises from $5.8\%$ to $39.3\%$ and no "
-        r"detector loses PR-AUC there, as Section~\ref{sec:time} found with four detectors. Room "
+        r"detector loses AP there, as Section~\ref{sec:time} found with four detectors. Room "
         r"Occupancy is excluded because its anomalies are all in the oldest rows "
         r"(Table~\ref{tab:pool-chrono}).",
         "",
@@ -251,7 +251,7 @@ def appendix_block(evidence: Path) -> str:
         r"\begin{table}[t]",
         r"\caption{Chronological split on the pool datasets with a time variable: anomalies in "
         r"the test partition, prevalence in training and test (\%), and the number of detectors "
-        r"whose PR-AUC is lower than under the stratified split.}",
+        r"whose AP is lower than under the stratified split.}",
         r"\label{tab:pool-chrono}",
         r"\centering",
         r"\footnotesize",

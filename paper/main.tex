@@ -944,7 +944,7 @@ neural models and the new classical ones change the picture only on some columns
     matter. Isolation Forest ($0.89$) and the One-Class SVM ($0.90$) were the only
     methods with real recall among the first six, since they are the only ones that
     model the joint distribution. Among the neural models, DIF ($1.00$), the VAE
-    ($0.92$), the autoencoder ($0.83$) and AE1SVM ($0.78$) do as well, and LUNAR ($0.63$)
+    ($0.92$), the autoencoder ($0.83$) and AE1SVM ($0.79$) do as well, and LUNAR ($0.63$)
     follows; Deep SVDD ($0.13$) does not. KNN ($0.39$) and PCA ($0.48$) are below the
     forest. ECOD and COPOD, which look at each column alone, still reach $0.52$ and
     $0.51$, which I had not expected; probably the injected combination also puts one of the
@@ -1032,7 +1032,7 @@ multivariate outliers (I expected at most $0.20$), PCA reaches $0.48$ against $0
 autoencoder, and LUNAR beats LOF on drift ($0.65$ against $0.50$) but flags $41\%$ of the clean
 rows, against $9\%$ to $16\%$ for the other neural models. DIF reaches $1.00$ on univariate and
 multivariate outliers and on invalid formats with $9\%$ of the clean rows flagged; the VAE ($0.92$)
-and AE1SVM ($0.78$) follow the autoencoder on multivariate outliers, and Deep SVDD is the weakest
+and AE1SVM ($0.79$) follow the autoencoder on multivariate outliers, and Deep SVDD is the weakest
 neural model. The detailed text is in Appendix~\ref{app:details}.
 
 \subsection{Typed injection on real tables (RQ2)}
@@ -1746,7 +1746,7 @@ Autoencoder        & 0.12 & 0.10 & 0.81 & 0.83 & 0.29 & 0.53 \\
 VAE                & 0.07 & 0.11 & 0.99 & 0.92 & 0.30 & 0.66 \\
 Deep SVDD          & 0.19 & 0.18 & 0.33 & 0.13 & 0.16 & 0.32 \\
 DIF                & 0.09 & 0.07 & \textbf{1.00} & \textbf{1.00} & 0.33 & \textbf{1.00} \\
-AE1SVM             & 0.09 & 0.10 & 0.99 & 0.78 & 0.27 & 0.61 \\
+AE1SVM             & 0.09 & 0.11 & 0.97 & 0.79 & 0.26 & 0.59 \\
 LUNAR              & 0.44 & 0.39 & \textbf{1.00} & 0.63 & \textbf{0.65} & 0.90 \\
 \midrule
 LSTM autoencoder   & 0.08 & 0.09 & 0.97 & 0.68 & 0.25 & 0.53 \\
@@ -2175,7 +2175,7 @@ on missing values ($0.44$) and duplicates ($0.39$), but it flags $41\%$ of the c
 $9\%$ to $16\%$ for the other neural models, so its recall comes with a much higher cost in false
 alarms; the same holds on the real tables of Section~\ref{sec:typed}. DIF reaches $1.00$ on both univariate and
 multivariate outliers and on invalid formats, with $9\%$ of clean rows flagged; the VAE ($0.92$)
-and AE1SVM ($0.78$) follow the autoencoder on multivariate outliers; Deep SVDD is the weakest
+and AE1SVM ($0.79$) follow the autoencoder on multivariate outliers; Deep SVDD is the weakest
 neural model on univariate and multivariate outliers, drift and invalid formats.
 
 % BEGIN generated pool appendix
