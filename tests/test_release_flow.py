@@ -1,4 +1,4 @@
-"""Release decision details: invalid profiles stay out of later checks; freshness in a repository."""
+"""Release decision details: invalid profiles stay out of later checks; freshness; the command."""
 
 import json
 import subprocess
