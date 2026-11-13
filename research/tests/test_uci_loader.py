@@ -108,3 +108,17 @@ def test_index_value_tokens_are_reduced_to_the_value(tmp_path):
     path.write_text("c,f1,f2\n" + rows + "\n")
     frame = ul.read_table(path)
     assert frame["f1"].iloc[3] == 3.5 and frame["f2"].iloc[3] == -3.25
+
+
+def test_the_size_check_applies_to_the_rarest_class_not_the_second_rarest():
+    frame = pd.DataFrame({"a": np.arange(143.0), "y": ["m"] * 100 + ["n"] * 40 + ["r"] * 3})
+    meta = _meta(variables=[{"name": "a", "role": "Feature"}, {"name": "y", "role": "Target"}])
+    with pytest.raises(ul.NoLabels, match="rarest class"):
+        ul.derive_labels(frame, meta)
+
+
+def test_a_table_without_exactly_one_target_has_an_all_missing_numeric_target():
+    frame = pd.DataFrame({"a": [1.0, 2.0], "b": [3.0, 4.0]})
+    _, target = ul.split_columns(frame, {"target_col": ["x", "y"], "variables": []})
+    assert target.dtype == np.float64 and target.isna().all()
+    assert target.index.equals(frame.index)
