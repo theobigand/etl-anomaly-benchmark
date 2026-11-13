@@ -3,13 +3,16 @@
 python docs/thesis-remediation/evidence/pca_probe.py
 """
 
-import sys, numpy as np
+import sys
+
+import numpy as np
 
 sys.path[:0] = ["experiments", "src", "."]
 import run_curves as rc
+from sklearn.metrics import average_precision_score
+
 from etl_benchmark.pipeline import detect
 from etl_benchmark.registry import all_detectors
-from sklearn.metrics import average_precision_score
 
 train_x, test_x, y, cont, names, base = rc._split_synth(42, None)
 dets = [d for d in all_detectors(ml_contamination=cont, names=names) if d.name == "pca"]
