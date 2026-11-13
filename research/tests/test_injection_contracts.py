@@ -177,3 +177,55 @@ def test_the_same_seed_gives_the_same_table_and_another_seed_a_different_one():
     first = inj.inject(carrier, seed=1)
     assert first.equals(inj.inject(carrier, seed=1))
     assert not first.equals(inj.inject(carrier, seed=2))
+
+
+def test_the_injected_table_has_the_carrier_columns_then_the_four_markers_and_a_fresh_index():
+    carrier, out, _ = _injected()
+    assert list(out.columns) == [*COLUMNS, *inj.META]
+    assert not {"index", "level_0"} & set(out.columns)
+    assert out.index.equals(pd.RangeIndex(len(out)))
+
+
+def test_only_non_boolean_numeric_columns_with_enough_distinct_values_are_continuous():
+    n = inj.MIN_DISTINCT
+    frame = pd.DataFrame(
+        {
+            "float": np.linspace(0, 1, n),
+            "boolean": [True, False] * (n // 2),
+            "text": [str(i) for i in range(n)],
+            "few": [0.0] * (n - 1) + [1.0],
+            "exact": np.arange(n, dtype=float),
+        }
+    )
+    assert inj.continuous_columns(frame) == ["float", "exact"]
+    assert inj.continuous_columns(frame.assign(boolean=np.arange(n))) == [
+        "float",
+        "boolean",
+        "exact",
+    ]
+
+
+@pytest.mark.parametrize("floor", [0.0, 0.25])
+def test_a_column_whose_smallest_value_is_zero_or_below_one_still_counts_as_non_negative(floor):
+    rng = np.random.default_rng(5)
+    carrier = pd.DataFrame({c: floor + rng.random(1500) for c in COLUMNS})
+    carrier.iloc[0, 0] = floor
+    out = inj.inject(carrier, seed=SEED)
+    pre = carrier.sample(frac=1.0, random_state=SEED).reset_index(drop=True)
+    rows = out[out["anomaly_type"] == "invalid_format"]
+    kinds = set()
+    for _, row in rows.iterrows():
+        before = pre.loc[row["group_id"], COLUMNS].astype(float)
+        changed = [c for c in COLUMNS if not np.isclose(row[c], before[c])]
+        value = float(row[changed[0]])
+        kinds.add("sentinel" if np.isclose(value, -999.0) else "other")
+    assert "sentinel" in kinds
+
+
+def test_the_tail_quantiles_of_a_multivariate_outlier_are_clamped_for_a_huge_severity():
+    carrier = _carrier()
+    out = inj.inject(carrier, seed=SEED, severity=100.0)
+    a, b, _corr = inj._pair(carrier)
+    rows = out[out["anomaly_type"] == "multivariate_outlier"]
+    ceiling = max(float(carrier[a].quantile(0.999)), float(carrier[b].quantile(0.999)))
+    assert max(rows[a].max(), rows[b].max()) <= ceiling + 1e-9
