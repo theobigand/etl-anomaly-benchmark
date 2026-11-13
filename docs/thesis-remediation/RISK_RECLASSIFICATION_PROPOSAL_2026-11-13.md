@@ -3,7 +3,7 @@
 Status: accepted by the owner in the session of 2026-11-13 (their words: accept the reclassification, add the other
 possible ones, the aim of the tiers is a percentage that means something per module, not a higher global figure).
 This acceptance is recorded here as context; it is not an equivalence decision and creates no approver record. The edit to the
-policy file is applied only after the baseline sweeps finish, so the sweep stays bound to one policy state. Until then `verification/mutation_risk_policy.json` is unchanged. Changing a level is a governance decision
+policy file was applied on 2026-11-13, after both baseline sweeps had finished, so each sweep stayed bound to one policy state. Before it `verification/mutation_risk_policy.json` is unchanged. Changing a level is a governance decision
 of the owner (`theobigand`, sole-author review) and must go through the policy's own digest and versioning.
 The section above this line described the first proposal. Nothing here lowers a threshold: L3 stays 95 and L4 stays 98 for the files that remain in each tier.
 
@@ -67,3 +67,9 @@ module not listed above). All dataset identity code (`build_pool`, `pool_check`,
    scores. Disclosure: the 2026-11-07 campaign scores of these files were already visible to the author when the list was
    drawn, so the owner should check that no entry is there only because it is hard to kill.
 4. Reclassification does not touch the 43 pending equivalence candidates or any owner decision.
+
+## Applied
+
+`verification/mutation_risk_policy.json` now classes the 12 files above as L3 (79 L4, 18 L3, 3 L2, no L1). Each reason keeps
+its original text and records the reclassification and why. Thresholds are unchanged (L3 stays 95). The existing owner
+equivalence records concern files that stay L4 and still validate.

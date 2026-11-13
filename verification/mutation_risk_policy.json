@@ -27,8 +27,8 @@
       "reason": "The CLI dispatches ordinary pipeline configuration; experimental integrity is checked downstream."
     },
     "src/etl_benchmark/atomic.py": {
-      "level": "L4",
-      "reason": "Atomic publication protects completeness of persisted scientific result files."
+      "level": "L3",
+      "reason": "Atomic publication protects completeness of persisted scientific result files. Reclassified from L4 to L3 by the owner on 2026-11-13: file publication helper; an incomplete write is caught by later hash checks."
     },
     "src/etl_benchmark/config.py": {
       "level": "L4",
@@ -233,12 +233,12 @@
       "reason": "Paired block sampling and confidence intervals are critical statistical calculations."
     },
     "research/paper_appendix.py": {
-      "level": "L4",
-      "reason": "Generated appendix cells must preserve method/type/value alignment from the archived matrices."
+      "level": "L3",
+      "reason": "Generated appendix cells must preserve method/type/value alignment from the archived matrices. Reclassified from L4 to L3 by the owner on 2026-11-13: renders archived matrices into text; the values are computed and bound elsewhere."
     },
     "research/paper_tables.py": {
-      "level": "L4",
-      "reason": "Table extraction and manuscript replacement enforce result-to-paper consistency."
+      "level": "L3",
+      "reason": "Table extraction and manuscript replacement enforce result-to-paper consistency. Reclassified from L4 to L3 by the owner on 2026-11-13: renders archived results into manuscript tables; the values are computed and bound elsewhere."
     },
     "research/pool_check.py": {
       "level": "L4",
@@ -269,8 +269,8 @@
       "reason": "Prepared labels, selected rows and failure accounting govern end-to-end pool comparisons."
     },
     "research/pool_extension_paper.py": {
-      "level": "L4",
-      "reason": "Hypothesis values and generated manuscript blocks must agree with archived results."
+      "level": "L3",
+      "reason": "Hypothesis values and generated manuscript blocks must agree with archived results. Reclassified from L4 to L3 by the owner on 2026-11-13: renders archived results into manuscript blocks; the values are computed and bound elsewhere."
     },
     "research/pool_extension_summary.py": {
       "level": "L4",
@@ -309,12 +309,12 @@
       "reason": "Grouped splits, typed-label indexing and per-type denominators govern validity."
     },
     "research/typed_figures.py": {
-      "level": "L4",
-      "reason": "Heatmap method/type orientation and numerical cells must match the recorded typed results."
+      "level": "L3",
+      "reason": "Heatmap method/type orientation and numerical cells must match the recorded typed results. Reclassified from L4 to L3 by the owner on 2026-11-13: plots recorded results; a transposed figure is a visible, checkable error."
     },
     "research/typed_masking.py": {
-      "level": "L4",
-      "reason": "Training-contamination diagnostics and per-type outcomes support the reported masking explanation."
+      "level": "L3",
+      "reason": "Training-contamination diagnostics and per-type outcomes support the reported masking explanation. Reclassified from L4 to L3 by the owner on 2026-11-13: contamination diagnostics that support an explanation, not a primary result."
     },
     "research/typed_run.py": {
       "level": "L4",
@@ -333,12 +333,12 @@
       "reason": "Catalogue filtering and balancing select the scientific dataset population; source hashes are enforced separately."
     },
     "verification/archive_evidence.py": {
-      "level": "L4",
-      "reason": "Artifact-copy completeness and hash refresh govern archived evidence integrity."
+      "level": "L3",
+      "reason": "Artifact-copy completeness and hash refresh govern archived evidence integrity. Reclassified from L4 to L3 by the owner on 2026-11-13: copies and hashes files; integrity is re-checked by lineage and claims."
     },
     "verification/bundles.py": {
-      "level": "L4",
-      "reason": "Archive allowlists, traversal prevention and artifact selection protect evidence transport."
+      "level": "L3",
+      "reason": "Archive allowlists, traversal prevention and artifact selection protect evidence transport. Reclassified from L4 to L3 by the owner on 2026-11-13: evidence transport; path traversal prevention is a security property and stays covered by its tests."
     },
     "verification/check_types.py": {
       "level": "L4",
@@ -357,8 +357,8 @@
       "reason": "Scientific and measurement fingerprints prevent reuse of incompatible historical records."
     },
     "verification/lock_environment.py": {
-      "level": "L4",
-      "reason": "Dependency locks bind scientific execution and reproduction to recorded environments."
+      "level": "L3",
+      "reason": "Dependency locks bind scientific execution and reproduction to recorded environments. Reclassified from L4 to L3 by the owner on 2026-11-13: tooling around dependency locks; reproducibility is also checked by the reproduce gate."
     },
     "verification/mutation_cache.py": {
       "level": "L4",
@@ -377,20 +377,20 @@
       "reason": "Dataset-source hashes and required inventory enforce the pool integrity contract."
     },
     "verification/protection.py": {
-      "level": "L4",
-      "reason": "Read-only protection-policy checks describe whether required verification can be bypassed."
+      "level": "L3",
+      "reason": "Read-only protection-policy checks describe whether required verification can be bypassed. Reclassified from L4 to L3 by the owner on 2026-11-13: describes protection state and does not itself block anything."
     },
     "verification/real_acquire.py": {
       "level": "L4",
       "reason": "Source allowlists, redirects and content hashes enforce acquired dataset identity."
     },
     "verification/real_preflight.py": {
-      "level": "L4",
-      "reason": "Revision, dataset, environment and transfer checks determine admissible REAL execution."
+      "level": "L3",
+      "reason": "Revision, dataset, environment and transfer checks determine admissible REAL execution. Reclassified from L4 to L3 by the owner on 2026-11-13: pre-flight before a REAL run; the run is re-verified by hashes and dimensions afterwards."
     },
     "verification/refresh_profile.py": {
-      "level": "L4",
-      "reason": "Measured coverage and current source revision determine the reported verification profile."
+      "level": "L3",
+      "reason": "Measured coverage and current source revision determine the reported verification profile. Reclassified from L4 to L3 by the owner on 2026-11-13: reports a measured verification profile; a wrong profile is visible in the report."
     },
     "verification/release.py": {
       "level": "L4",
