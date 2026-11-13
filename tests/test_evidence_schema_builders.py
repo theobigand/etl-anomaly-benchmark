@@ -274,3 +274,163 @@ def test_a_sharded_campaign_that_cannot_be_read_is_incomplete_with_its_reason(
 
 def test_the_repository_root_is_the_parent_of_the_verification_folder():
     assert Path(es.__file__).resolve().parents[1] == es.ROOT
+
+
+def _unreadable(tmp_path, kind):
+    path = tmp_path / "report.json"
+    if kind == "missing":
+        return path
+    path.write_text("not json" if kind == "text" else "[]")
+    return path
+
+
+def _passed_on(call, source=SOURCE, environment=ENVIRONMENT, execution=EXECUTION):
+    return (call["source"], call["environment"], call["execution"]) == (
+        source,
+        environment,
+        execution,
+    )
+
+
+@pytest.mark.parametrize("kind", ["missing", "text", "list"])
+def test_a_tools_report_that_cannot_be_read_is_incomplete_with_the_reason_and_its_context(
+    tmp_path, envelope, kind
+):
+    report = _unreadable(tmp_path, kind)
+    es.build_tools(
+        report, root=tmp_path, source=SOURCE, environment=ENVIRONMENT, execution=EXECUTION
+    )
+    call = envelope[0]
+    assert call["kind"] == "tools" and call["status"] == "INCOMPLETE"
+    assert set(call["result"]) == {"coverage", "reason"} and call["result"]["coverage"] == {}
+    assert call["result"]["reason"] and call["result"]["reason"] != "None"
+    assert call["artifacts"] == [report] and call["root"] == tmp_path and _passed_on(call)
+
+
+@pytest.mark.parametrize("kind", ["missing", "text", "list"])
+def test_a_real_report_that_cannot_be_read_is_incomplete_with_the_reason_and_its_context(
+    tmp_path, envelope, kind
+):
+    report = _unreadable(tmp_path, kind)
+    es.build_real(
+        report, root=tmp_path, source=SOURCE, environment=ENVIRONMENT, execution=EXECUTION
+    )
+    call = envelope[0]
+    assert call["kind"] == "real" and call["status"] == "INCOMPLETE"
+    assert set(call["result"]) == {"required", "datasets", "reason"}
+    assert call["result"]["required"] == [] and call["result"]["datasets"] == []
+    assert call["result"]["reason"] != "None" and call["artifacts"] == [report]
+    assert call["root"] == tmp_path and _passed_on(call)
+
+
+@pytest.mark.parametrize("kind", ["missing", "text", "list"])
+def test_a_types_report_that_cannot_be_read_is_incomplete_with_the_reason_and_its_context(
+    tmp_path, envelope, kind
+):
+    report = _unreadable(tmp_path, kind)
+    es.build_types(
+        report, root=tmp_path, source=SOURCE, environment=ENVIRONMENT, execution=EXECUTION
+    )
+    call = envelope[0]
+    assert call["kind"] == "types" and call["status"] == "INCOMPLETE"
+    assert set(call["result"]) == {"state", "problems", "reason"}
+    assert call["result"]["state"] == "INCOMPLETE" and call["result"]["problems"] == []
+    assert call["result"]["reason"] != "None" and call["artifacts"] == [report]
+    assert call["root"] == tmp_path and _passed_on(call)
+
+
+@pytest.mark.parametrize("kind", ["missing", "text", "list"])
+def test_a_reproduction_report_that_cannot_be_read_is_incomplete_with_its_reason(
+    tmp_path, envelope, kind
+):
+    report = _unreadable(tmp_path, kind)
+    es.build_reproduction(
+        report, root=tmp_path, source=SOURCE, environment=ENVIRONMENT, execution=EXECUTION
+    )
+    call = envelope[0]
+    assert call["kind"] == "reproduction" and call["status"] == "INCOMPLETE"
+    assert set(call["result"]) == {"levels", "reason"} and call["result"]["levels"] == {}
+    assert call["result"]["reason"] != "None" and call["artifacts"] == [report]
+    assert call["root"] == tmp_path and _passed_on(call)
+
+
+@pytest.mark.parametrize("kind", ["missing", "text", "not-a-list"])
+def test_a_fault_matrix_that_cannot_be_read_is_incomplete_with_the_reason_and_its_context(
+    tmp_path, envelope, kind
+):
+    matrix = _unreadable(tmp_path, kind if kind != "not-a-list" else "text")
+    if kind == "not-a-list":
+        matrix.write_text('{"a": 1}')
+    es.build_faults(
+        matrix,
+        ["b", "a"],
+        root=tmp_path,
+        source=SOURCE,
+        environment=ENVIRONMENT,
+        execution=EXECUTION,
+    )
+    call = envelope[0]
+    assert call["kind"] == "faults" and call["status"] == "INCOMPLETE"
+    assert call["result"]["expected"] == ["a", "b"] and call["result"]["control_passed"] is False
+    assert call["result"]["faults"] == []
+    assert call["result"]["reason"] != "None" and call["artifacts"] == [matrix]
+    assert call["root"] == tmp_path and _passed_on(call)
+
+
+def test_a_fault_matrix_that_is_not_a_list_is_refused_with_its_reason(tmp_path, envelope):
+    matrix = tmp_path / "m.json"
+    matrix.write_text('{"a": 1}')
+    es.build_faults(matrix, ["a"], root=tmp_path)
+    assert envelope[0]["result"]["reason"] == "fault matrix is not a list"
+
+
+def test_a_readable_types_report_keeps_its_counts_reason_and_tool_versions(
+    tmp_path, envelope, monkeypatch
+):
+    monkeypatch.setattr(es, "_types_status", lambda result: "PASS")
+    report = tmp_path / "t.json"
+    raw = {
+        "status": "PASS", "errors": 2, "baseline_entries": 3, "problems": ["p"], "mypy": "1.2",
+        "pandas-stubs": "3.4", "reason": "kept",
+    }  # fmt: skip
+    report.write_text(json.dumps(raw))
+    es.build_types(
+        report, root=tmp_path, source=SOURCE, environment=ENVIRONMENT, execution=EXECUTION
+    )
+    call = envelope[0]
+    assert call["result"] == {**{k: v for k, v in raw.items() if k != "status"}, "state": "PASS"}
+    assert call["status"] == "PASS" and call["environment"] == ENVIRONMENT
+    assert call["execution"] == EXECUTION and call["source"] == SOURCE
+    del raw["reason"]
+    report.write_text(json.dumps(raw))
+    es.build_types(report, root=tmp_path)
+    assert "reason" not in envelope[1]["result"]
+
+
+def test_a_readable_reproduction_report_keeps_the_dataset_the_level_statuses_and_the_claim(
+    tmp_path, envelope, monkeypatch
+):
+    monkeypatch.setattr(es, "_reproduction_status", lambda result: "PASS")
+    report = tmp_path / "r.json"
+    report.write_text(
+        json.dumps(
+            {"dataset": "toy", "outcome": "IDENTICAL", "levels": {"L1": {"status": "PASS", "x": 1}}}
+        )
+    )
+    es.build_reproduction(report, root=tmp_path)
+    assert envelope[0]["result"] == {
+        "dataset": "toy",
+        "levels": {"L1": "PASS"},
+        "claimed_outcome": "IDENTICAL",
+    }
+
+
+def test_the_names_of_the_fault_matrix_come_from_the_fault_tests_and_the_path_is_extended():
+    import sys
+
+    before = list(sys.path)
+    try:
+        names = es.fault_names()
+        assert sys.path[0] == str(es.ROOT) and names and all(isinstance(n, str) for n in names)
+    finally:
+        sys.path[:] = before
