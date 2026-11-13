@@ -1,5 +1,6 @@
 """Exact table, bootstrap, rank, hypothesis and report behaviour of the labelled-pool summary."""
 
+import inspect
 import json
 import sys
 from pathlib import Path
@@ -55,7 +56,6 @@ def _wide_table(values, prevalences=None, sources=None, flagged=None):
 
 
 def test_the_bootstrap_follows_its_definition_and_defaults_to_two_thousand_seed_zero():
-    import inspect
 
     assert inspect.signature(ls.pooled).parameters["resamples"].default == 2000
     assert inspect.signature(ls.pooled).parameters["seed"].default == 0
@@ -370,9 +370,27 @@ def test_hypotheses_use_the_number_of_resamples_they_are_given(monkeypatch):
     )
     ls.hypotheses(data, resamples=13)
     assert seen[0] == 13
+    ls.hypotheses(data)
+    assert seen[len(seen) // 2] == 2000 or 2000 in seen
 
 
 def test_registry_h2_accepts_a_deep_median_exactly_at_the_best_classical_plus_the_margin():
     new = {m: 0.1 for m in ls.NEW_CLASSICAL}
     classical, deep = _registry_inputs(new, forest=0.5, deep={"vae": 0.5 + ls.DEEP_MARGIN})
     assert ls.registry_hypotheses(classical, deep, [])["H2"]["supported"] is True
+
+
+def test_the_default_bootstrap_is_two_thousand_resamples_with_seed_zero():
+    # a small table whose interval changes with the seed and with one more resample
+    values = np.random.default_rng(8013).random((8, 2))
+    data = _wide_table({f"p{i:02d}": {"a": row[0], "b": row[1]} for i, row in enumerate(values)})
+    default = ls.pooled(data)
+
+    rng = np.random.default_rng(0)
+    boot = np.stack([np.nanmedian(values[rng.integers(0, 8, 8)], axis=0) for _ in range(2000)])
+    low, high = np.nanpercentile(boot, 2.5, axis=0), np.nanpercentile(boot, 97.5, axis=0)
+    assert np.allclose(default["lo"], low, rtol=0, atol=1e-12)
+    assert np.allclose(default["hi"], high, rtol=0, atol=1e-12)
+    other_seed, one_more = ls.pooled(data, seed=1), ls.pooled(data, resamples=2001)
+    for other in (other_seed, one_more):
+        assert not np.allclose(other[["lo", "hi"]], default[["lo", "hi"]], rtol=0, atol=1e-12)
