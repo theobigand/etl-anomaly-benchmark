@@ -209,7 +209,7 @@ def test_only_non_boolean_numeric_columns_with_enough_distinct_values_are_contin
 def test_a_column_whose_smallest_value_is_zero_or_below_one_still_counts_as_non_negative(floor):
     rng = np.random.default_rng(5)
     carrier = pd.DataFrame({c: floor + rng.random(1500) for c in COLUMNS})
-    carrier.iloc[0, 0] = floor
+    carrier.iloc[0, :] = floor
     out = inj.inject(carrier, seed=SEED)
     pre = carrier.sample(frac=1.0, random_state=SEED).reset_index(drop=True)
     rows = out[out["anomaly_type"] == "invalid_format"]
