@@ -2,10 +2,10 @@
 
     python docs/thesis-remediation/evidence/mutdiff.py MUTANTS_DIR path/to/unit.py
 
-mutmut writes the original and every mutant of a function into the generated copy of the unit under
-the mutants directory. This reads that copy and the unit's verdict file; it needs no running mutmut and
-decides nothing. The generated copy is a mutated source only right after that unit was run (mutmut rewrites it for the
-next unit), so dump the differences straight after each run.
+mutmut writes the original and every mutant of a function into the generated copy of the unit
+under the mutants directory. This reads that copy and the unit's verdict file; it needs no running
+mutmut and decides nothing. The generated copy is a mutated source only right after that unit was run
+(mutmut rewrites it for the next unit), so dump the differences straight after each run.
 """
 
 import ast
