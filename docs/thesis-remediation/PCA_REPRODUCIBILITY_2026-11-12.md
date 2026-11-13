@@ -22,3 +22,28 @@ Consequences
   because the manifest format is part of archived evidence.
 - Next step if the synthetic value matters to a conclusion: re-run `make curves` in an environment built from
   `verification/environment/conda-darwin-arm64.explicit.txt`, which pins the capture-time versions.
+
+## Addendum, 2026-11-13: mechanism of the synthetic difference
+
+The two remaining candidates were tested. BLAS threading changes nothing (`OPENBLAS_NUM_THREADS`,
+`VECLIB_MAXIMUM_THREADS` and `OMP_NUM_THREADS` set to 1 give the same 0.4818). The component count explains the
+effect:
+
+- On the synthetic panel the six features have cumulative explained variance 0.189, 0.357, 0.522, 0.683, 0.842, 1.000.
+  The 95% rule therefore keeps all six components (`n_components_ = 6`), so the reconstruction is exact and every
+  score is floating-point rounding noise (median 1.1e-32, maximum 1.5e-28). The ranking, and so the average precision,
+  is decided by the rounding behaviour of the linear-algebra library.
+- The same code, data, seed, numpy 2.4.6, scipy 1.17.1 and scikit-learn 1.9.1 give 0.4818 in the venv whose numpy
+  wheel links Accelerate (`~/.cache/etl-mutation-venv`) and 0.5645 in the canonical conda environment `etl-benchmark`
+  (reference BLAS/LAPACK 3.9.0). The archived legend, 0.56, is the second value.
+- Water Quality is not degenerate (the rule keeps fewer components than features) and shows only the pandas effect
+  recorded above.
+
+Status. The archived value is not wrong for the environment that produced it, and nothing archived was changed. But the
+synthetic PCA curve measures rounding noise, not reconstruction error, so it is not reproducible across numerical
+back ends. This remains a scientific-integrity item for the owner: either state in the paper that PCA keeps every
+component on the six-feature synthetic table and that its curve is back-end dependent, or choose a component rule that
+does not retain all features (a protocol change, therefore not made here). The method comparison on this panel should not rest on this one curve.
+
+Probe: `/tmp/claude-501/pca_probe.py` (kept out of the repository; it fits `PCADetector` through `detect` on the
+`run_curves._split_synth(42, None)` split and prints the cumulative variance and the average precision).
