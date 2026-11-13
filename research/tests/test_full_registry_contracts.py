@@ -43,6 +43,16 @@ def test_h4_and_h5_report_the_values_they_decided_on_with_exact_names():
     assert set(out) == {"H3", "H4", "H5"}
 
 
+def test_h4_needs_the_pca_and_the_autoencoder_to_differ_by_less_than_a_tenth_exactly():
+    classical = _classical(pca=0.1)
+    classical["temporal_drift"] = 0.25
+    classical.loc["lof", "temporal_drift"] = 0.5
+    at_the_limit = fr.hypotheses(classical, _deep(drift=0.5, autoencoder=0.0))
+    assert at_the_limit["H4"]["supported"] is False
+    inside = fr.hypotheses(classical, _deep(drift=0.5, autoencoder=0.0625))
+    assert inside["H4"]["supported"] is True
+
+
 def test_the_settings_of_a_detector_are_stored_as_plain_json_text():
     detector = SimpleNamespace(settings=lambda: {"path": Path("/x"), "n": 3})
     assert fr._settings(detector) == {"path": "/x", "n": 3}
