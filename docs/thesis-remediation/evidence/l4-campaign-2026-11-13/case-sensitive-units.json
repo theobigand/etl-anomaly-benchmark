@@ -1,0 +1,158 @@
+{
+ "research/cost_study.py": {
+  "counts": {
+   "killed": 817,
+   "survived": 7,
+   "timeout": 1
+  },
+  "total": 825
+ },
+ "research/dataset_registry.py": {
+  "counts": {
+   "killed": 409,
+   "survived": 8
+  },
+  "total": 417
+ },
+ "research/deep_typed.py": {
+  "counts": {
+   "killed": 437,
+   "survived": 5
+  },
+  "total": 442
+ },
+ "research/full_registry.py": {
+  "counts": {
+   "killed": 564,
+   "survived": 7
+  },
+  "total": 571
+ },
+ "research/full_registry_summary.py": {
+  "counts": {
+   "killed": 509,
+   "survived": 32
+  },
+  "total": 541
+ },
+ "research/injection.py": {
+  "counts": {
+   "killed": 324,
+   "survived": 12
+  },
+  "total": 336
+ },
+ "research/labelled_summary.py": {
+  "counts": {
+   "killed": 661,
+   "survived": 15
+  },
+  "total": 676
+ },
+ "research/pool_chrono.py": {
+  "counts": {
+   "killed": 278,
+   "survived": 38
+  },
+  "total": 316
+ },
+ "research/temporal_decision.py": {
+  "counts": {
+   "killed": 803,
+   "survived": 33
+  },
+  "total": 836
+ },
+ "research/time_scan.py": {
+  "counts": {
+   "killed": 132,
+   "survived": 6
+  },
+  "total": 138
+ },
+ "research/typed_summary.py": {
+  "counts": {
+   "killed": 498,
+   "survived": 9
+  },
+  "total": 507
+ },
+ "src/etl_benchmark/quality/rules.py": {
+  "counts": {
+   "killed": 112,
+   "survived": 7
+  },
+  "total": 119
+ },
+ "verification/claims.py": {
+  "counts": {
+   "killed": 693,
+   "survived": 21
+  },
+  "total": 714
+ },
+ "verification/evidence_schema.py": {
+  "counts": {
+   "killed": 1539,
+   "survived": 8
+  },
+  "total": 1547
+ },
+ "verification/mutation_cache.py": {
+  "counts": {
+   "killed": 1088,
+   "survived": 21,
+   "timeout": 1
+  },
+  "total": 1110
+ },
+ "verification/mutation_campaign.py": {
+  "counts": {
+   "killed": 680,
+   "survived": 6
+  },
+  "total": 686
+ },
+ "verification/mutation_catalog.py": {
+  "counts": {
+   "killed": 361,
+   "survived": 5
+  },
+  "total": 366
+ },
+ "verification/mutation_run.py": {
+  "counts": {
+   "killed": 339,
+   "survived": 3
+  },
+  "total": 342
+ },
+ "verification/mutation_scope.py": {
+  "counts": {
+   "killed": 240,
+   "survived": 6
+  },
+  "total": 246
+ },
+ "verification/mutation_shards.py": {
+  "counts": {
+   "killed": 1089,
+   "survived": 16
+  },
+  "total": 1105
+ },
+ "verification/release.py": {
+  "counts": {
+   "killed": 819,
+   "survived": 35
+  },
+  "total": 854
+ },
+ "verification/reproduce.py": {
+  "counts": {
+   "killed": 827,
+   "survived": 5
+  },
+  "total": 832
+ }
+}
