@@ -1,0 +1,225 @@
+{
+  "modules": {
+    "research/alert_budget.py": {
+      "sha256": "0da6a79ece4e6cbd8066eb2474f653ba69eb2247caeeb0f77e3cf9b48be5a7e9",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 777,
+        "survived": 3
+      },
+      "total": 780,
+      "seconds": 385,
+      "tail": "et.x_summarize__mutmut_68\n\ud83c\udf89 research.alert_budget.x_summarize__mutmut_69\n\ud83c\udf89 research.alert_budget.x_summarize__mutmut_7\n\ud83c\udf89 research.alert_budget.x_summarize__mutmut_70\n\ud83c\udf89 research.alert_budget.x_summarize__mutmut_71\n\ud83c\udf89 research.alert_budget.x_summarize__mutmut_72\n\ud83c\udf89 research.alert_budget.x_summarize__mutmut_73\n\ud83c\udf89 research.alert_budget.x_summarize__mutmut_8\n\ud83c\udf89 research.alert_budget.x_summarize__mutmut_9\n\n"
+    },
+    "research/alert_budget_summary.py": {
+      "sha256": "a201cdffc73f01b20798b9aaec3b99115c8d30c3fde9702ab6acd54d45d2dd29",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 123
+      },
+      "total": 123,
+      "seconds": 35,
+      "tail": "mary.x_markdown__mutmut_36\n\ud83c\udf89 research.alert_budget_summary.x_markdown__mutmut_37\n\ud83c\udf89 research.alert_budget_summary.x_markdown__mutmut_4\n\ud83c\udf89 research.alert_budget_summary.x_markdown__mutmut_5\n\ud83c\udf89 research.alert_budget_summary.x_markdown__mutmut_6\n\ud83c\udf89 research.alert_budget_summary.x_markdown__mutmut_7\n\ud83c\udf89 research.alert_budget_summary.x_markdown__mutmut_8\n\ud83c\udf89 research.alert_budget_summary.x_markdown__mutmut_9\n\n"
+    },
+    "research/matched_alert.py": {
+      "sha256": "dac27eab8804462e153242158a3cea09c965809de189a9f398e4ee33a27657b3",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 320,
+        "survived": 2
+      },
+      "total": 322,
+      "seconds": 47,
+      "tail": "rch.matched_alert.x_pair_problem__mutmut_74\n\ud83c\udf89 research.matched_alert.x_pair_problem__mutmut_75\n\ud83c\udf89 research.matched_alert.x_pair_problem__mutmut_76\n\ud83c\udf89 research.matched_alert.x_pair_problem__mutmut_77\n\ud83c\udf89 research.matched_alert.x_pair_problem__mutmut_78\n\ud83c\udf89 research.matched_alert.x_pair_problem__mutmut_79\n\ud83c\udf89 research.matched_alert.x_pair_problem__mutmut_8\n\ud83c\udf89 research.matched_alert.x_pair_problem__mutmut_9\n\n"
+    },
+    "research/prevalence_shift.py": {
+      "sha256": "d89afbf352b0ca891de4dfbd1a6507b20e48f55745752d0e6f715ee3943567b3",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 366,
+        "survived": 3
+      },
+      "total": 369,
+      "seconds": 67,
+      "tail": "h.prevalence_shift.x_summarize__mutmut_92\n\ud83c\udf89 research.prevalence_shift.x_summarize__mutmut_93\n\ud83c\udf89 research.prevalence_shift.x_summarize__mutmut_94\n\ud83c\udf89 research.prevalence_shift.x_summarize__mutmut_95\n\ud83c\udf89 research.prevalence_shift.x_summarize__mutmut_96\n\ud83c\udf89 research.prevalence_shift.x_summarize__mutmut_97\n\ud83c\udf89 research.prevalence_shift.x_summarize__mutmut_98\n\ud83c\udf89 research.prevalence_shift.x_summarize__mutmut_99\n\n"
+    },
+    "research/recover_partitions.py": {
+      "sha256": "4fa65e38a68bb90a1c8103f16bb59754d8e5fd2c99e10fd59e987416dc16749c",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 321,
+        "survived": 39
+      },
+      "total": 360,
+      "seconds": 63,
+      "tail": "research.recover_partitions.x_replay_matches__mutmut_41\n\ud83d\ude41 research.recover_partitions.x_replay_matches__mutmut_42\n\ud83c\udf89 research.recover_partitions.x_replay_matches__mutmut_5\n\ud83c\udf89 research.recover_partitions.x_replay_matches__mutmut_6\n\ud83c\udf89 research.recover_partitions.x_replay_matches__mutmut_7\n\ud83c\udf89 research.recover_partitions.x_replay_matches__mutmut_8\n\ud83c\udf89 research.recover_partitions.x_replay_matches__mutmut_9\n\n"
+    },
+    "research/score_shift.py": {
+      "sha256": "a96e39bb1b80cbaacd00d31f8986a3f2cda350564d316be002dc589c9d801ef6",
+      "status": "complete",
+      "returncode": 1,
+      "counts": {
+        "killed": 800,
+        "survived": 6
+      },
+      "total": 806,
+      "seconds": 30,
+      "tail": "\u283c Running clean tests\n\u2834 Running clean tests\n\u2826 Running clean tests\n\u2827 Running clean tests\n\u2807 Running clean tests\n\u280f Running clean tests\n\u280b Running clean tests\n\u2819 Running clean tests\n\u2839 Running clean tests\n\u2838 Running clean tests\n\u283c Running clean tests\n\u2834 Running clean tests\n\u2826 Running clean tests\n\u2827 Running clean tests\n\u2807 Running clean tests\n\u280f Running clean tests\n\u280b Running clean tests\nFailed to run clean test\n\n"
+    },
+    "research/source_clustered.py": {
+      "sha256": "a9bf13c575ea6e33c6055a9da5f23ee5f9c71ff1e0329815343a821008764352",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 336,
+        "survived": 1
+      },
+      "total": 337,
+      "seconds": 74,
+      "tail": " research.source_clustered.x_source_id__mutmut_2\n\ud83d\ude41 research.source_clustered.x_source_id__mutmut_3\n\ud83c\udf89 research.source_clustered.x_source_id__mutmut_4\n\ud83c\udf89 research.source_clustered.x_source_id__mutmut_5\n\ud83c\udf89 research.source_clustered.x_source_id__mutmut_6\n\ud83c\udf89 research.source_clustered.x_source_id__mutmut_7\n\ud83c\udf89 research.source_clustered.x_source_id__mutmut_8\n\ud83c\udf89 research.source_clustered.x_source_id__mutmut_9\n\n"
+    },
+    "src/etl_benchmark/config.py": {
+      "sha256": "b26c91442d2ef82461c9709876d5cc5b5c92697acaf6c627b00f89d5226d6ae0",
+      "status": "incomplete",
+      "returncode": 1,
+      "counts": {},
+      "total": 0,
+      "seconds": 25,
+      "tail": "^^^^^^^^^^^^^^^^\n  File \"/Users/theo/.cache/etl-mutation-venv/lib/python3.11/site-packages/mutmut/__main__.py\", line 815, in collect_source_file_mutation_data\n    assert filtered_mutants, f\"Filtered for specific mutants, but nothing matches\\n\\nFilter: {mutant_names}\"\n           ^^^^^^^^^^^^^^^^\nAssertionError: Filtered for specific mutants, but nothing matches\n\nFilter: ('etl_benchmark.config.*',)\n"
+    },
+    "verification/mutation_shards.py": {
+      "sha256": "d80906745f22ad940088512872d5e1c9def204bf7bd855338879fd4966e2f39e",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "exit_33": 1,
+        "killed": 1059,
+        "survived": 45
+      },
+      "total": 1105,
+      "seconds": 206,
+      "tail": "60\n\ud83c\udf89 verification.mutation_shards.x_validate_plan__mutmut_61\n\ud83c\udf89 verification.mutation_shards.x_validate_plan__mutmut_62\n\ud83c\udf89 verification.mutation_shards.x_validate_plan__mutmut_63\n\ud83c\udf89 verification.mutation_shards.x_validate_plan__mutmut_7\n\ud83c\udf89 verification.mutation_shards.x_validate_plan__mutmut_8\n\ud83c\udf89 verification.mutation_shards.x_validate_plan__mutmut_9\n\ud83e\udee5 verification.mutation_shards.x_version__mutmut_1\n\n"
+    },
+    "src/etl_benchmark/transform.py": {
+      "sha256": "996169c5ab429ed253cb8d68a73736bff92005052b6215d2d3395b1a448c24c2",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 2
+      },
+      "total": 2,
+      "seconds": 46,
+      "tail": "ed fail test\n\u2839 Running forced fail test\n\u2838 Running forced fail test\n    done\nRunning mutation testing\n\n\u2839 6968/34778  \ud83c\udf89 6840 \ud83e\udee5 1  \u23f0 0  \ud83e\udd14 0  \ud83d\ude41 127  \ud83d\udd07 0  \ud83e\uddd9 0\n\u2838 6968/34778  \ud83c\udf89 6840 \ud83e\udee5 1  \u23f0 0  \ud83e\udd14 0  \ud83d\ude41 127  \ud83d\udd07 0  \ud83e\uddd9 0\n\u283c 6970/34778  \ud83c\udf89 6842 \ud83e\udee5 1  \u23f0 0  \ud83e\udd14 0  \ud83d\ude41 127  \ud83d\udd07 0  \ud83e\uddd9 0\n0.76 mutations/second\n\nMutant results\n--------------\n\ud83c\udf89 etl_benchmark.transform.x_clean__mutmut_1\n\ud83c\udf89 etl_benchmark.transform.x_clean__mutmut_2\n\n"
+    },
+    "src/etl_benchmark/extract.py": {
+      "sha256": "35f48247bdc2c326152a84b375d7866b50ee55a382a0570d62675cf22e2d99fa",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 5
+      },
+      "total": 5,
+      "seconds": 60,
+      "tail": " \ud83d\ude41 127  \ud83d\udd07 0  \ud83e\uddd9 0\n\u2826 6970/34778  \ud83c\udf89 6842 \ud83e\udee5 1  \u23f0 0  \ud83e\udd14 0  \ud83d\ude41 127  \ud83d\udd07 0  \ud83e\uddd9 0\n\u2827 6975/34778  \ud83c\udf89 6847 \ud83e\udee5 1  \u23f0 0  \ud83e\udd14 0  \ud83d\ude41 127  \ud83d\udd07 0  \ud83e\uddd9 0\n0.31 mutations/second\n\nMutant results\n--------------\n\ud83c\udf89 etl_benchmark.extract.x_read_csv__mutmut_1\n\ud83c\udf89 etl_benchmark.extract.x_read_csv__mutmut_2\n\ud83c\udf89 etl_benchmark.extract.x_read_csv__mutmut_3\n\ud83c\udf89 etl_benchmark.extract.x_read_csv__mutmut_4\n\ud83c\udf89 etl_benchmark.extract.x_read_csv__mutmut_5\n\n"
+    },
+    "src/etl_benchmark/atomic.py": {
+      "sha256": "6ecd401fba4479801df7b645cc793133c0bee41843f3df01191bb2b1a996564b",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 6
+      },
+      "total": 6,
+      "seconds": 29,
+      "tail": " 127  \ud83d\udd07 0  \ud83e\uddd9 0\n\u2807 6981/34778  \ud83c\udf89 6853 \ud83e\udee5 1  \u23f0 0  \ud83e\udd14 0  \ud83d\ude41 127  \ud83d\udd07 0  \ud83e\uddd9 0\n2.64 mutations/second\n\nMutant results\n--------------\n\ud83c\udf89 etl_benchmark.atomic.x_write_bytes__mutmut_1\n\ud83c\udf89 etl_benchmark.atomic.x_write_bytes__mutmut_2\n\ud83c\udf89 etl_benchmark.atomic.x_write_bytes__mutmut_3\n\ud83c\udf89 etl_benchmark.atomic.x_write_text__mutmut_1\n\ud83c\udf89 etl_benchmark.atomic.x_write_text__mutmut_2\n\ud83c\udf89 etl_benchmark.atomic.x_write_text__mutmut_3\n\n"
+    },
+    "src/etl_benchmark/load.py": {
+      "sha256": "bc450a2553f333662bb447de1c7cd9aabb274b2f608b8e57ad80e48321b9c98e",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 13,
+        "survived": 1
+      },
+      "total": 14,
+      "seconds": 30,
+      "tail": "_mutmut_13\n\ud83c\udf89 etl_benchmark.load.x_write_csv__mutmut_14\n\ud83c\udf89 etl_benchmark.load.x_write_csv__mutmut_2\n\ud83c\udf89 etl_benchmark.load.x_write_csv__mutmut_3\n\ud83c\udf89 etl_benchmark.load.x_write_csv__mutmut_4\n\ud83c\udf89 etl_benchmark.load.x_write_csv__mutmut_5\n\ud83c\udf89 etl_benchmark.load.x_write_csv__mutmut_6\n\ud83c\udf89 etl_benchmark.load.x_write_csv__mutmut_7\n\ud83c\udf89 etl_benchmark.load.x_write_csv__mutmut_8\n\ud83c\udf89 etl_benchmark.load.x_write_csv__mutmut_9\n\n"
+    },
+    "src/etl_benchmark/datasets.py": {
+      "sha256": "2948a68069752a26701d7be2a25d4f14330e3830ccbbf7b7a0bc2ae9a61f9d8d",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 23
+      },
+      "total": 23,
+      "seconds": 68,
+      "tail": "tSpec\u01c1load__mutmut_2\n\ud83c\udf89 etl_benchmark.datasets.x\u01c1DatasetSpec\u01c1load__mutmut_3\n\ud83c\udf89 etl_benchmark.datasets.x\u01c1DatasetSpec\u01c1load__mutmut_4\n\ud83c\udf89 etl_benchmark.datasets.x\u01c1DatasetSpec\u01c1load__mutmut_5\n\ud83c\udf89 etl_benchmark.datasets.x\u01c1DatasetSpec\u01c1load__mutmut_6\n\ud83c\udf89 etl_benchmark.datasets.x\u01c1DatasetSpec\u01c1load__mutmut_7\n\ud83c\udf89 etl_benchmark.datasets.x\u01c1DatasetSpec\u01c1load__mutmut_8\n\ud83c\udf89 etl_benchmark.datasets.x\u01c1DatasetSpec\u01c1load__mutmut_9\n\n"
+    },
+    "src/etl_benchmark/quality/base.py": {
+      "sha256": "9efc8a6a410b92d81f4ee09f9d001f8adad62a779250b3b552db9878f9de28ff",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 30,
+        "survived": 1
+      },
+      "total": 31,
+      "seconds": 358,
+      "tail": "mark.quality.base.x_numeric_features__mutmut_7\n\ud83c\udf89 etl_benchmark.quality.base.x_numeric_features__mutmut_8\n\ud83c\udf89 etl_benchmark.quality.base.x_numeric_features__mutmut_9\n\ud83c\udf89 etl_benchmark.quality.base.x\u01c1Detector\u01c1fit_predict__mutmut_1\n\ud83c\udf89 etl_benchmark.quality.base.x\u01c1Detector\u01c1fit_predict__mutmut_2\n\ud83d\ude41 etl_benchmark.quality.base.x\u01c1Detector\u01c1score__mutmut_1\n\ud83c\udf89 etl_benchmark.quality.base.x\u01c1Detector\u01c1score__mutmut_2\n\n"
+    },
+    "src/etl_benchmark/quality/windows.py": {
+      "sha256": "5a4fdd8739edcc33dd786b2b241cf5c3c92ec3e63f6e669ef571d1cb9699c864",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 53,
+        "survived": 4
+      },
+      "total": 57,
+      "seconds": 72,
+      "tail": "ows.x_scores_to_events__mutmut_3\n\ud83c\udf89 etl_benchmark.quality.windows.x_scores_to_events__mutmut_4\n\ud83c\udf89 etl_benchmark.quality.windows.x_scores_to_events__mutmut_5\n\ud83c\udf89 etl_benchmark.quality.windows.x_scores_to_events__mutmut_6\n\ud83d\ude41 etl_benchmark.quality.windows.x_scores_to_events__mutmut_7\n\ud83c\udf89 etl_benchmark.quality.windows.x_scores_to_events__mutmut_8\n\ud83d\ude41 etl_benchmark.quality.windows.x_scores_to_events__mutmut_9\n\n"
+    },
+    "experiments/fetch_cardio.py": {
+      "sha256": "a303ac1d039d5f15ddc20f401b0ca1e46032f6169a9203ba4d274b7906f576d6",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 60,
+        "survived": 1
+      },
+      "total": 61,
+      "seconds": 34,
+      "tail": "experiments.fetch_cardio.x_main__mutmut_57\n\ud83c\udf89 experiments.fetch_cardio.x_main__mutmut_58\n\ud83c\udf89 experiments.fetch_cardio.x_main__mutmut_59\n\ud83c\udf89 experiments.fetch_cardio.x_main__mutmut_6\n\ud83c\udf89 experiments.fetch_cardio.x_main__mutmut_60\n\ud83c\udf89 experiments.fetch_cardio.x_main__mutmut_61\n\ud83c\udf89 experiments.fetch_cardio.x_main__mutmut_7\n\ud83c\udf89 experiments.fetch_cardio.x_main__mutmut_8\n\ud83c\udf89 experiments.fetch_cardio.x_main__mutmut_9\n\n"
+    },
+    "src/etl_benchmark/quality/deep.py": {
+      "sha256": "77364cfdf0850b107c316ffae0389e1bb552445d76188dab388dff76e8e22632",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "survived": 14,
+        "killed": 48
+      },
+      "total": 62,
+      "seconds": 148,
+      "tail": "ings__mutmut_3\n\ud83c\udf89 etl_benchmark.quality.deep.x\u01c1TorchDetector\u01c1settings__mutmut_4\n\ud83c\udf89 etl_benchmark.quality.deep.x\u01c1TorchDetector\u01c1settings__mutmut_5\n\ud83c\udf89 etl_benchmark.quality.deep.x\u01c1TorchDetector\u01c1settings__mutmut_6\n\ud83c\udf89 etl_benchmark.quality.deep.x\u01c1TorchDetector\u01c1settings__mutmut_7\n\ud83d\ude41 etl_benchmark.quality.deep.x\u01c1TorchDetector\u01c1settings__mutmut_8\n\ud83d\ude41 etl_benchmark.quality.deep.x\u01c1TorchDetector\u01c1settings__mutmut_9\n\n"
+    },
+    "src/etl_benchmark/quality/_torch_models.py": {
+      "sha256": "77a1b57ff69e580cad700bb4ee41f069e3ac0c8489bdd714651c753c4bbdd09d",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 54,
+        "survived": 11
+      },
+      "total": 65,
+      "seconds": 114,
+      "tail": "tl_benchmark.quality._torch_models.x\u01c1PaddedAE1SVM\u01c1fit__mutmut_4\n\ud83c\udf89 etl_benchmark.quality._torch_models.x\u01c1PaddedAE1SVM\u01c1fit__mutmut_5\n\ud83c\udf89 etl_benchmark.quality._torch_models.x\u01c1PaddedAE1SVM\u01c1fit__mutmut_6\n\ud83c\udf89 etl_benchmark.quality._torch_models.x\u01c1PaddedAE1SVM\u01c1fit__mutmut_7\n\ud83c\udf89 etl_benchmark.quality._torch_models.x\u01c1PaddedAE1SVM\u01c1fit__mutmut_8\n\ud83c\udf89 etl_benchmark.quality._torch_models.x\u01c1PaddedAE1SVM\u01c1fit__mutmut_9\n\n"
+    }
+  }
+}
