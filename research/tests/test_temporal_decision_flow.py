@@ -226,3 +226,81 @@ def test_the_credit_card_rows_follow_time_and_carry_the_label_and_utc_time(monke
     assert x["v"].tolist() == [1.0, 2.0, 3.0] and x.index.equals(pd.RangeIndex(3))
     assert y.tolist() == [0, 1, 1] and times.index.equals(pd.RangeIndex(3))
     assert times.is_monotonic_increasing
+
+
+def _result(strat, chrono, matched, p0=0.5, p2=0.5, errors=(0.3, 0.2, 0.1)):
+    def policy(f1, error):
+        return {"f1": f1, "share_error": error}
+
+    def method(offset):
+        return {
+            "pr_auc": chrono + offset,
+            "policies": {
+                "P0": policy(p0, errors[0]),
+                "P1": policy(0.5, errors[1]),
+                "P2": policy(p2, errors[2]),
+            },
+        }
+
+    return {
+        "chronological": {"m1": method(0.0), "m2": method(0.1)},
+        "stratified": {
+            "m1": {"pr_auc": strat, "pr_auc_matched": matched},
+            "m2": {"pr_auc": strat + 0.1, "pr_auc_matched": matched + 0.1},
+        },
+    }
+
+
+def test_h2_needs_the_rolling_policy_strictly_below_the_validation_policy():
+    tied = {"d": _result(0.75, 0.25, 0.5, errors=(0.3, 0.1, 0.1))}
+    assert td.hypotheses(tied)["H2"]["supported"] is False
+    strict = {"d": _result(0.75, 0.25, 0.5, errors=(0.3, 0.2, 0.1))}
+    assert td.hypotheses(strict)["H2"]["supported"] is True
+
+
+def test_h3_needs_the_rolling_policy_to_do_at_least_as_well_in_half_of_the_pairs():
+    wins = _result(0.75, 0.25, 0.5)
+    loses = _result(0.75, 0.25, 0.5, p0=0.6, p2=0.5)
+    out = td.hypotheses({"a": wins, "b": loses, "c": loses})
+    assert out["H3"] == {"supported": False, "p2_at_least_p0": 2, "pairs": 6}
+
+
+def test_h4_accepts_exactly_half_of_the_stratified_gap_with_exact_numbers():
+    exact = {"d": _result(0.75, 0.25, 0.5)}
+    row = td.hypotheses(exact)["H4"]["by_dataset"]["d"]
+    assert row["gap_stratified"] == 0.5 and row["gap_matched"] == 0.25 and row["ok"] is True
+
+
+def test_each_stratified_fold_is_scored_with_the_prevalence_of_its_own_training_rows(monkeypatch):
+    prevalences = []
+    real = td._scores
+
+    def scores(method, pi, train, parts, seed=42):
+        prevalences.append(pi)
+        return real(method, pi, train, parts, seed)
+
+    monkeypatch.setattr(td, "_scores", scores)
+    monkeypatch.setattr(
+        td, "_block_ci", lambda y, s: {"ci_low": 0.0, "ci_high": 1.0, "resamples_used": 1}
+    )
+    x, y, times = _frame_for_run()
+    td.run_frame(x, y, times, ["zscore"], seeds=(5,))
+    ordered = y[np.argsort(times.to_numpy(), kind="stable")]
+    train, _rest = td.train_test_split(
+        np.arange(len(ordered)), train_size=0.70, stratify=ordered, random_state=5
+    )
+    assert prevalences[1] == pytest.approx(ordered[train].mean())
+
+
+def test_the_spread_over_seeds_is_the_sample_deviation_of_the_per_seed_values(monkeypatch):
+    monkeypatch.setattr(
+        td, "_block_ci", lambda y, s: {"ci_low": 0.0, "ci_high": 1.0, "resamples_used": 1}
+    )
+    x, y, times = _frame_for_run()
+    each = [
+        td.run_frame(x, y, times, ["zscore"], seeds=(seed,))["stratified"]["zscore"]["pr_auc"]
+        for seed in (1, 2)
+    ]
+    both = td.run_frame(x, y, times, ["zscore"], seeds=(1, 2))["stratified"]["zscore"]
+    assert both["pr_auc_std"] == pytest.approx(np.std(each, ddof=1))
+    assert both["pr_auc"] == pytest.approx(np.mean(each))
