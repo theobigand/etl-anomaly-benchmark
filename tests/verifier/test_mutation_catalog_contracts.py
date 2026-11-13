@@ -306,3 +306,32 @@ def test_native_statistics_and_listing_must_equal_the_catalog_outcomes(tmp_path)
             lambda b=bad: _native(policy, root, cache, stats=b),
             "invalid native mutation statistics",
         )
+
+
+def test_a_listing_line_is_split_at_its_first_separator_so_an_outcome_may_contain_one():
+    assert mcat._listing("a.b: not checked: no tests") == {"a.b": "not checked: no tests"}
+
+
+def test_the_metadata_digest_does_not_depend_on_the_order_of_the_native_keys():
+    one = {
+        "exit_code_by_key": {"b": 1, "a": 0},
+        "hash_by_function_name": {"y": "b" * 12, "x": "a" * 12},
+    }
+    other = {
+        "exit_code_by_key": {"a": 0, "b": 1},
+        "hash_by_function_name": {"x": "a" * 12, "y": "b" * 12},
+    }
+    assert mcat.metadata_digest(one) == mcat.metadata_digest(other)
+
+
+def test_an_unselected_or_absent_module_does_not_stop_the_reading_of_the_next_ones(tmp_path):
+    policy, root, cache = _project(tmp_path)
+    policy["units"]["pkg/0.py"] = {"level": "L4", "reason": "r"}
+    only = mcat.read_modules(policy, root, cache, only={"pkg/a.py"})
+    assert sorted(only[0]) == ["pkg/a.py"] and len(only[1]) == 2 and only[3] == []
+    everything = mcat.read_modules(policy, root, cache)
+    assert everything[3] == ["pkg/0.py"]
+    assert sorted(everything[0]) == ["pkg/0.py", "pkg/a.py"] and len(everything[1]) == 2
+    policy["units"]["pkg/0.py"]["no_mutants"] = "why"
+    assert mcat.read_modules(policy, root, cache)[3] == []
+    assert len(mcat.read_modules(policy, root, cache)[1]) == 2
