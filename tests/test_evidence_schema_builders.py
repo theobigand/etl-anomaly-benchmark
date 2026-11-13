@@ -434,3 +434,195 @@ def test_the_names_of_the_fault_matrix_come_from_the_fault_tests_and_the_path_is
         assert sys.path[0] == str(es.ROOT) and names and all(isinstance(n, str) for n in names)
     finally:
         sys.path[:] = before
+
+
+@pytest.fixture
+def routed(monkeypatch):
+    seen = {}
+
+    def stand_in(name):
+        def build(*args, **kwargs):
+            seen[name] = (args, kwargs)
+            return {"kind": name, "status": "PASS"}
+
+        return build
+
+    for name in (
+        "build_fast", "build_deep", "build_deep_shards", "build_faults", "build_tools",
+        "build_types", "build_reproduction", "build_real",
+    ):  # fmt: skip
+        monkeypatch.setattr(es, name, stand_in(name))
+    monkeypatch.setattr(es, "fault_names", lambda: ["defect"])
+    return seen
+
+
+def _run(tmp_path, *argv):
+    out = tmp_path / "out.json"
+    assert es.main([*argv, "--output", str(out)]) == 0
+    return json.loads(out.read_text())
+
+
+def test_each_command_hands_its_raw_files_and_root_to_its_builder(tmp_path, routed):
+    p = {n: tmp_path / n for n in ("a", "b", "c", "d")}
+    root = ["--root", str(tmp_path)]
+    _run(tmp_path, "fast", "--coverage", str(p["a"]), "--junit", str(p["b"]), *root)
+    assert routed["build_fast"] == ((p["a"], p["b"]), {"root": tmp_path})
+    _run(
+        tmp_path,
+        "deep",
+        "--stats",
+        str(p["a"]),
+        "--results",
+        str(p["b"]),
+        "--run",
+        str(p["c"]),
+        *root,
+    )
+    assert routed["build_deep"] == ((p["a"], p["b"]), {"run_report": p["c"], "root": tmp_path})
+    _run(tmp_path, "deep", "--stats", str(p["a"]), "--results", str(p["b"]), *root)
+    assert routed["build_deep"][1]["run_report"] is None
+    _run(tmp_path, "faults", "--matrix", str(p["a"]), *root)
+    assert routed["build_faults"] == ((p["a"], ["defect"]), {"root": tmp_path})
+    _run(tmp_path, "tools", "--coverage", str(p["a"]), *root)
+    assert routed["build_tools"] == ((p["a"],), {"root": tmp_path})
+    _run(tmp_path, "types", "--report", str(p["a"]), *root)
+    assert routed["build_types"] == ((p["a"],), {"root": tmp_path})
+    _run(tmp_path, "reproduction", "--report", str(p["a"]), *root)
+    assert routed["build_reproduction"] == ((p["a"],), {"root": tmp_path})
+    _run(tmp_path, "real", "--report", str(p["a"]), "--acquisition", str(p["d"]), *root)
+    assert routed["build_real"] == ((p["a"],), {"acquisition": p["d"], "root": tmp_path})
+    _run(tmp_path, "real", "--report", str(p["a"]), *root)
+    assert routed["build_real"][1]["acquisition"] is None
+
+
+def test_a_sharded_campaign_is_wrapped_from_its_plan_manifests_and_root(tmp_path, routed):
+    plan, one, two = tmp_path / "plan", tmp_path / "m1", tmp_path / "m2"
+    _run(
+        tmp_path, "deep-shards", "--plan", str(plan), "--manifests", str(one), str(two),
+        "--root", str(tmp_path),
+    )  # fmt: skip
+    assert routed["build_deep_shards"] == (
+        ([plan, one, two] and (plan, [one, two])),
+        {"root": tmp_path},
+    )
+
+
+def test_the_default_root_of_every_command_is_the_repository(tmp_path, routed):
+    _run(tmp_path, "tools", "--coverage", "c.json")
+    assert routed["build_tools"][1]["root"] == es.ROOT
+    _run(tmp_path, "deep-shards", "--plan", "p", "--manifests", "m")
+    assert routed["build_deep_shards"][1]["root"] == es.ROOT
+
+
+@pytest.mark.parametrize(
+    "argv",
+    [
+        ["deep-shards", "--manifests", "m", "--output", "o"],
+        ["deep-shards", "--plan", "p", "--output", "o"],
+        ["deep-shards", "--plan", "p", "--manifests", "m"],
+        ["tools", "--output", "o"],
+        ["tools", "--coverage", "c"],
+        ["validate"],
+        [],
+    ],
+)
+def test_the_required_options_of_the_commands_are_enforced(argv):
+    with pytest.raises(SystemExit) as stop:
+        es.main(argv)
+    assert stop.value.code == 2
+
+
+def test_the_help_describes_the_commands_and_their_options(capsys, monkeypatch):
+    monkeypatch.setenv("COLUMNS", "300")
+    texts = []
+    for argv in ([], ["deep-shards"], ["validate"], ["deep"], ["tools"]):
+        with pytest.raises(SystemExit):
+            es.main([*argv, "--help"])
+        texts.append(" ".join(capsys.readouterr().out.split()))
+    top, shard, validate, deep, tools = texts
+    assert "deep-shards wrap a sharded mutation campaign" in top
+    assert "validate validate one evidence file" in top
+    assert "tools wrap the raw tools results in an envelope" in top
+    assert "--root ROOT verify artifact hashes here" in validate
+    assert "--run RUN managed controller result" in deep
+    assert "--root ROOT artifact paths are relative to it" in tools
+    assert "--plan PLAN" in shard
+
+
+def test_the_validate_command_reads_artifacts_relative_to_the_given_root_only_when_it_is_given(
+    tmp_path, monkeypatch, capsys
+):
+    seen = []
+    monkeypatch.setattr(es, "validate", lambda doc, root=None: seen.append(root) or [])
+    evidence = tmp_path / "e.json"
+    evidence.write_text(json.dumps({"kind": "tools", "status": "PASS"}))
+    assert es.main(["validate", str(evidence)]) == 0
+    assert es.main(["validate", str(evidence), "--root", str(tmp_path)]) == 0
+    assert seen == [None, tmp_path]
+    assert capsys.readouterr().out == "valid tools evidence: PASS\nvalid tools evidence: PASS\n"
+
+
+def _bound_deep(tmp_path, monkeypatch, *, listed=("a.txt",), required=("a.txt",), **environment):
+    monkeypatch.setattr(es, "_check_envelope", lambda doc, problems: None)
+    monkeypatch.setattr(es, "_check_result", lambda doc, problems: None)
+    for name in set(listed) | set(required):
+        (tmp_path / name).write_text(name)
+    runtime = {
+        "python": "3.11",
+        "platform": "p",
+        "packages": {name: "1.0" for name in es.PACKAGES},
+    }
+    monkeypatch.setattr(
+        es.mutation_campaign,
+        "validate_current",
+        lambda result, root: [tmp_path / n for n in required],
+    )
+    env = {"python": "3.11", "platform": "p", "packages": dict(runtime["packages"])}
+    env.update(environment)
+    return {
+        "kind": "deep",
+        "result": {"format_version": 2, "runtime": runtime},
+        "artifacts": {n: es._sha256(tmp_path / n) for n in listed},
+        "environment": env,
+    }
+
+
+def test_a_deep_evidence_is_valid_when_it_binds_every_required_artifact_and_the_native_runtime(
+    tmp_path, monkeypatch
+):
+    doc = _bound_deep(tmp_path, monkeypatch)
+    assert es.validate(doc, root=tmp_path) == []
+
+
+def test_a_deep_evidence_that_leaves_out_or_adds_an_artifact_is_refused_with_its_reason(
+    tmp_path, monkeypatch
+):
+    missing = _bound_deep(tmp_path, monkeypatch, listed=("a.txt",), required=("a.txt", "b.txt"))
+    assert es.validate(missing, root=tmp_path) == [
+        "deep evidence does not bind every required raw artifact"
+    ]
+    extra = _bound_deep(tmp_path, monkeypatch, listed=("a.txt", "b.txt"), required=("a.txt",))
+    assert es.validate(extra, root=tmp_path) == [
+        "deep evidence does not bind every required raw artifact"
+    ]
+
+
+@pytest.mark.parametrize("name", ["python", "platform"])
+def test_a_deep_environment_that_differs_from_the_runtime_is_refused_with_its_reason(
+    tmp_path, monkeypatch, name
+):
+    doc = _bound_deep(tmp_path, monkeypatch, **{name: "other"})
+    assert es.validate(doc, root=tmp_path) == [
+        "deep environment differs from the bound native runtime"
+    ]
+
+
+@pytest.mark.parametrize("name", list(es.PACKAGES))
+def test_a_deep_environment_with_another_package_version_is_refused_with_its_reason(
+    tmp_path, monkeypatch, name
+):
+    doc = _bound_deep(tmp_path, monkeypatch)
+    doc["environment"]["packages"][name] = "9.9"
+    assert es.validate(doc, root=tmp_path) == [
+        "deep environment differs from the bound native runtime"
+    ]
