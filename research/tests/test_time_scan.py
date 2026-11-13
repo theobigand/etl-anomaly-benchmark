@@ -122,3 +122,16 @@ def test_an_unreadable_table_is_recorded_with_its_error_and_the_scan_goes_on(tmp
     assert out[0]["uci_id"] == 1 and set(out[0]) == {"uci_id", "error"}
     assert "FileNotFoundError" in out[0]["error"]
     assert out[1]["uci_id"] == 2 and out[1]["rows"] == 12
+
+
+def test_a_text_column_of_dates_is_found_even_when_its_name_does_not_say_time():
+    frame = pd.DataFrame({"created": _dates(), "other": [f"x{i}" for i in range(12)]})
+    assert ts.candidate_columns(frame) == [
+        {"column": "created", "kind": "datetime", "distinct": 12}
+    ]
+
+
+def test_a_text_column_is_found_whatever_dtype_the_installed_pandas_gives_text():
+    for dtype in ("object", "string"):
+        frame = pd.DataFrame({"created": pd.Series(_dates(), dtype=dtype)})
+        assert [c["column"] for c in ts.candidate_columns(frame)] == ["created"], dtype
