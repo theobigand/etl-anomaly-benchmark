@@ -5,7 +5,9 @@
 
 One `mutmut run "<module>.*"` per module under a wall-clock limit. mutmut keeps its verdicts in mutants/, so a
 module that hit the limit or was interrupted continues where it stopped on the next invocation. After every module
-the counts (killed, survived, timeout, incomplete, not_run) and the source digest are written to STATE.json. A mutant
+the counts (killed, survived, timeout, incomplete, not_run) and the source digest are written to STATE.json.
+`--rerun` measures a module again even when it is recorded complete (mutmut keeps the killed verdicts and
+re-tests the others against the current tests). A mutant
 with no verdict is `not_run` and is never counted as killed. This script reads and executes; it records no owner
 decision and touches no policy file.
 """
@@ -49,12 +51,14 @@ def modules() -> list[str]:
 
 def main() -> None:
     state_path = Path(sys.argv[1])
-    only = sys.argv[sys.argv.index("--only") + 1 :] if "--only" in sys.argv else None
+    rerun = "--rerun" in sys.argv
+    args = [a for a in sys.argv[2:] if a != "--rerun"]
+    only = args[args.index("--only") + 1 :] if "--only" in args else None
     state = json.loads(state_path.read_text()) if state_path.exists() else {"modules": {}}
     for path in only or modules():
         sha = hashlib.sha256((ROOT / path).read_bytes()).hexdigest()
         done = state["modules"].get(path)
-        if done and done["sha256"] == sha and done["status"] == "complete":
+        if not rerun and done and done["sha256"] == sha and done["status"] == "complete":
             continue
         began = time.time()
         try:
