@@ -218,3 +218,40 @@ def test_the_rights_option_applies_the_uci_statements_then_the_manual_decisions(
     assert dr.main(["--output", str(out), "--rights", "--destination", str(tmp_path)]) == 0
     assert order == ["collect", ("rights", {"seen": 1}), "manual"]
     assert json.loads(out.read_text()) == [{"name": "r", "s": 1, "m": 1}]
+
+
+def test_the_destination_is_read_as_a_path_and_the_rights_are_given_the_inventory(
+    tmp_path, monkeypatch
+):
+    seen = {}
+    monkeypatch.setattr(dr, "build_inventory", lambda destination: seen.update(d=destination) or [])
+    monkeypatch.setattr(dr, "collect_uci_rights", lambda: {})
+    monkeypatch.setattr(dr, "apply_rights", lambda rows, found: seen.update(rows=rows) or rows)
+    monkeypatch.setattr(dr, "apply_manual_rights", lambda rows: rows)
+    dr.main(["--output", str(tmp_path / "o.json"), "--destination", str(tmp_path), "--rights"])
+    assert seen["d"] == tmp_path and isinstance(seen["d"], Path) and seen["rows"] == []
+
+
+def test_the_help_describes_the_pool_and_the_rights_option(capsys, monkeypatch):
+    monkeypatch.setenv("COLUMNS", "300")
+    with pytest.raises(SystemExit):
+        dr.main(["--help"])
+    lines = [" ".join(line.split()) for line in capsys.readouterr().out.splitlines()]
+    assert any(line.startswith("Pool of public tabular anomaly datasets") for line in lines)
+    assert any(line.endswith("read the UCI licence statements") for line in lines)
+
+
+def test_the_licence_is_dated_with_the_utc_day_it_was_read(monkeypatch):
+    seen = []
+
+    class Clock:
+        @staticmethod
+        def now(tz=None):
+            seen.append(tz)
+            return datetime(2026, 1, 2, 3, tzinfo=UTC)
+
+    monkeypatch.setattr(dr, "datetime", Clock)
+    monkeypatch.setattr(dr, "_UCI_SETS", {})
+    monkeypatch.setattr(dr, "UCI_SOURCES", {})
+    dr.collect_uci_rights(lambda url: "")
+    assert seen == [UTC]
