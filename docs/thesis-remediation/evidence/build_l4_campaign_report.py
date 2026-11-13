@@ -123,6 +123,9 @@ Sorted by the number of kills still missing. Of the units a few kills short (`lo
   (`measured_on` in `final-measurement.json`; `evidence/merge_case_sensitive.py`). Units measured that way: {", ".join(cs_units) if cs_units else "none yet"}. The remaining units are
   still measured on the case-insensitive volume and understate their kills.
 - Mutants no test reached (exit 33) remain only where listed in the table; `research/cost_study.py` had 305 and now has none (new tests of `main`, the workers and the wait for a quiet machine).
+- A unit with a timeout is recorded INCOMPLETE here even when its raw score reaches the threshold: `verification/mutation_cache.py` (1088 of 1110, 98.02 %), `research/cost_study.py` (817 of 825, 99.03 %)
+  and `verification/pool_contract.py` (184 of 187, 98.40 %) each carry non-terminating mutants (see above) that count as not killed. The consolidator is stricter than the score rule; whether the
+  repository's controller accepts such a unit is decided by `verification/mutation_policy.py`, not here.
 - `research/time_scan.py`: under pandas 3 text columns are typed `str`, not `object`, so `candidate_columns` skipped columns of date text whose names do not say time. Fixed with a regression test
   (commit fd67310); on the 116 local pool tables the set of scanned columns is identical before and after, so no archived result changes.
 - Synthetic PCA discrepancy (0.4818 regenerated, 0.56 archived): explained in `PCA_REPRODUCIBILITY_2026-11-12.md` (full-rank reconstruction, scores are rounding noise, numpy built on Accelerate gives 0.4818 and the
