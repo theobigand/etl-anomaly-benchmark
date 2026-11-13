@@ -111,7 +111,7 @@ def test_the_mutant_listing_is_split_at_its_first_separator_and_only_mutant_line
     _write(tmp_path, "src/pkg/a.py", "src/pkg/b.py", "src/pkg/c.py")
     text = "\n".join(
         [
-            "pkg.a.x_f__mutmut_1: killed: by tests",
+            "pkg.a.x_f__mutmut_1: killed by a.b: see tests",
             "pkg.b.x_g__mutmut_1 killed",
             "pkg.c.helper: survived",
             "  pkg.c.x_h__mutmut_1: survived  ",
@@ -173,3 +173,35 @@ def test_a_scope_record_missing_or_malformed_on_either_side_is_not_accepted(resu
     assert ms.check_evidence(result, ["a.py"], {}) == [
         "the files that were mutated are not recorded"
     ]
+
+
+@pytest.mark.parametrize(
+    "pattern",
+    [
+        "src/p*/x.py",
+        "src/p?/x.py",
+        "src/p[ab]/x.py",
+        "src/p*/x*.py",
+        "src/p?/?.py",
+        "src/p[ab]/[x].py",
+    ],
+)
+def test_a_wildcard_inside_a_directory_name_starts_the_walk_above_that_directory(tmp_path, pattern):
+    _write(tmp_path, "src/pa/x.py", "src/pb/x.py", "other/x.py")
+    found = ms._walk(tmp_path, [pattern])
+    assert {"src/pa/x.py", "src/pb/x.py"} <= set(found)
+    assert "other/x.py" not in found
+
+
+@pytest.mark.parametrize(
+    "pattern", ["src/p*/q*/x.py", "src/p?/q?/x.py", "src/p[ab]/q[ab]/x.py", "src/p*/q?/x[0].py"]
+)
+def test_the_first_wildcard_of_several_decides_where_the_walk_starts(tmp_path, pattern):
+    _write(tmp_path, "src/pa/qa/x.py", "src/pb/qb/x.py")
+    assert ms._walk(tmp_path, [pattern]) == ["src/pa/qa/x.py", "src/pb/qb/x.py"]
+
+
+def test_a_star_before_a_question_mark_or_bracket_in_a_pattern_is_the_first_wildcard(tmp_path):
+    _write(tmp_path, "src/pa/x.py", "src/pb/x.py")
+    assert ms._walk(tmp_path, ["src/*/x?.py"]) == ["src/pa/x.py", "src/pb/x.py"]
+    assert ms._walk(tmp_path, ["src/p?/*[x].py"]) == ["src/pa/x.py", "src/pb/x.py"]
