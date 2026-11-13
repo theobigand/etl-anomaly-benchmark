@@ -330,3 +330,49 @@ def test_the_command_adds_the_neural_section_when_their_runs_are_given(tmp_path)
     with pytest.raises(SystemExit) as stop:
         ls.main(["--runs", str(tmp_path / "runs")])
     assert stop.value.code == 2
+
+
+def test_the_interval_is_the_2_5_and_97_5_percentiles_of_seeded_bootstraps_of_many_problems():
+    gen = np.random.default_rng(21)
+    values = np.round(gen.random((12, 2)), 3)
+    data = _wide_table({f"p{i:02d}": {"a": row[0], "b": row[1]} for i, row in enumerate(values)})
+    out = ls.pooled(data, resamples=400, seed=7)
+    rng = np.random.default_rng(7)
+    boot = np.stack([np.nanmedian(values[rng.integers(0, 12, 12)], axis=0) for _ in range(400)])
+    assert np.allclose(out["lo"], np.nanpercentile(boot, 2.5, axis=0))
+    assert np.allclose(out["hi"], np.nanpercentile(boot, 97.5, axis=0))
+    assert out.equals(ls.pooled(data, resamples=400, seed=7))
+    assert not out.equals(ls.pooled(data, resamples=400, seed=8))
+    default = ls.pooled(data)
+    rng = np.random.default_rng(0)
+    boot = np.stack([np.nanmedian(values[rng.integers(0, 12, 12)], axis=0) for _ in range(2000)])
+    assert np.allclose(default["hi"], np.nanpercentile(boot, 97.5, axis=0))
+
+
+def test_a_failed_run_is_skipped_and_the_runs_after_it_are_still_read():
+    runs = [
+        {"problem": "bad", "failed": "boom"},
+        _run("p0", "uci", 0.1, zscore=[(0.5, 1.0)]),
+        _run("p1", "uci", 0.1, zscore=[(0.7, 1.0)]),
+    ]
+    assert ls.table(runs)["problem"].tolist() == ["p0", "p1"]
+
+
+def test_hypotheses_use_the_number_of_resamples_they_are_given(monkeypatch):
+    seen = []
+    real = ls.pooled
+    monkeypatch.setattr(
+        ls, "pooled", lambda data, *a, **k: seen.append(k.get("resamples")) or real(data, *a, **k)
+    )
+    data = _wide_table(
+        {f"p{i}": {m: 0.1 * (j + 1) + 0.01 * i for j, m in enumerate(ls.CORE)} for i in range(4)},
+        sources={"p0": "uci", "p1": "uci", "p2": "adbench", "p3": "adbench"},
+    )
+    ls.hypotheses(data, resamples=13)
+    assert seen[0] == 13
+
+
+def test_registry_h2_accepts_a_deep_median_exactly_at_the_best_classical_plus_the_margin():
+    new = {m: 0.1 for m in ls.NEW_CLASSICAL}
+    classical, deep = _registry_inputs(new, forest=0.5, deep={"vae": 0.5 + ls.DEEP_MARGIN})
+    assert ls.registry_hypotheses(classical, deep, [])["H2"]["supported"] is True

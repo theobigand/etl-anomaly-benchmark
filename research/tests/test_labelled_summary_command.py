@@ -75,3 +75,15 @@ def test_the_closing_sentence_lists_the_methods_from_the_best_rank_to_the_worst_
     last = (out / "labelled_results.md").read_text().splitlines()[-1]
     ordered = sorted(results["median_rank_all"].items(), key=lambda item: item[1])
     assert last == "Median rank over all methods: " + ", ".join(f"{m} {v:.1f}" for m, v in ordered)
+
+
+def test_with_the_neural_runs_the_table_keeps_its_first_section_and_the_results_keep_their_format(
+    tmp_path,
+):
+    out = tmp_path / "out"
+    ls.main([*_both(tmp_path), "--output", str(out)])
+    text = (out / "labelled_results.json").read_text()
+    assert text == json.dumps(json.loads(text), indent=1, sort_keys=True) + "\n"
+    lines = (out / "labelled_results.md").read_text().splitlines()
+    assert lines[0] == "Median over 4 labelled problems (95% interval over problems)"
+    assert lines[2] == "| method | PR-AUC | ROC-AUC | median rank |"
