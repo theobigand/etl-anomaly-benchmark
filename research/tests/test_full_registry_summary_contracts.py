@@ -151,3 +151,42 @@ def test_a_real_table_stacks_the_neural_means_under_the_classical_rows(tmp_path)
     table = fs.real_table(csv, deep)
     assert table.index.tolist() == ["zscore", "vae"] and list(table.columns) == cols
     assert table.loc["vae"].tolist() == [pytest.approx(0.3)] * 6
+
+
+def test_a_neural_row_that_has_no_deduplication_row_is_merged_as_it_is(tmp_path):
+    classical, deep = tmp_path / "c", tmp_path / "d"
+    classical.mkdir()
+    deep.mkdir()
+    frame = pd.DataFrame(0.5, index=["zscore"], columns=fs.TYPES)
+    body = {"name": "X", "recall_mean": json.loads(frame.to_json(orient="split"))}
+    (classical / "x.json").write_text(json.dumps(body))
+    neural = pd.DataFrame(0.25, index=["vae"], columns=fs.TYPES)
+    body["recall_mean"] = json.loads(neural.to_json(orient="split"))
+    (deep / "x.json").write_text(json.dumps(body))
+    assert fs.merged_typed(classical, deep)["X"].index.tolist() == ["zscore", "vae"]
+
+
+def test_a_figure_is_drawn_with_the_height_of_its_rows_titled_saved_at_160_dpi_and_closed(
+    monkeypatch, tmp_path
+):
+    calls = {}
+    real = fs.plt.subplots
+
+    def subplots(**kwargs):
+        calls["subplots"] = kwargs
+        fig, ax = real(**kwargs)
+        original = fig.savefig
+        fig.savefig = lambda path, **kw: calls.update(save=(path, kw)) or original(path, **kw)
+        calls["fig"] = fig
+        return fig, ax
+
+    monkeypatch.setattr(fs.plt, "subplots", subplots)
+    monkeypatch.setattr(fs.tf, "_draw", lambda ax, frame, title: calls.update(draw=(frame, title)))
+    monkeypatch.setattr(fs.plt, "close", lambda fig: calls.update(closed=fig))
+    frame = pd.DataFrame(0.5, index=["a", "b", "c", "d"], columns=["x"])
+    fs.figure(frame, "A title", tmp_path / "f.png")
+    assert calls["subplots"] == {"figsize": (7, 0.3 * 4 + 1.6)}
+    assert calls["draw"][0] is frame and calls["draw"][1] == "A title"
+    assert calls["save"] == (tmp_path / "f.png", {"dpi": 160})
+    assert calls["closed"] is calls["fig"]
+    assert (tmp_path / "f.png").stat().st_size > 0
