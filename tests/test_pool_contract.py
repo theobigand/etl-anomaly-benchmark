@@ -3,6 +3,7 @@
 import hashlib
 import json
 import runpy
+import signal
 from pathlib import Path
 
 import pytest
@@ -10,6 +11,22 @@ import pytest
 from verification import pool_contract as pc
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+@pytest.fixture(autouse=True)
+def _a_test_that_does_not_end_fails():
+    """A hashing loop that never ends must fail the test, not hang the run."""
+
+    def stop(signum, frame):
+        raise AssertionError("the test did not end within 5 seconds")
+
+    previous = signal.signal(signal.SIGALRM, stop)
+    signal.setitimer(signal.ITIMER_REAL, 5)
+    try:
+        yield
+    finally:
+        signal.setitimer(signal.ITIMER_REAL, 0)
+        signal.signal(signal.SIGALRM, previous)
 
 
 def _sha(data: bytes) -> str:
