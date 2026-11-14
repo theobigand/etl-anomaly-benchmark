@@ -299,3 +299,89 @@ def test_the_help_describes_the_study(monkeypatch, capsys):
     assert "Bounded detector cost study; never used as a FAST timing threshold." in " ".join(
         capsys.readouterr().out.split()
     )
+
+
+def test_an_unknown_method_is_refused_by_the_parser_and_the_choices_are_listed(
+    monkeypatch, tmp_path, study, capsys
+):
+    with pytest.raises(SystemExit) as stop:
+        _run(monkeypatch, "--methods", "nope", "--results-dir", str(tmp_path))
+    assert stop.value.code == 2 and study == []
+    assert (
+        "invalid choice: 'nope' (choose from 'isolation_forest', 'lof', 'ocsvm')"
+        in capsys.readouterr().err
+    )
+
+
+def test_the_parser_message_for_a_bad_range_is_exact(monkeypatch, tmp_path, study, capsys):
+    with pytest.raises(SystemExit):
+        _run(monkeypatch, "--repeats", "0", "--results-dir", str(tmp_path))
+    assert (
+        capsys.readouterr()
+        .err.rstrip()
+        .endswith("error: use 1–10 repeats and dataset sizes between 20 and 5000")
+    )
+
+
+def test_without_a_results_folder_the_files_go_to_verification_evidence_under_the_working_folder(
+    monkeypatch, tmp_path, study
+):
+    monkeypatch.chdir(tmp_path)
+    _run(monkeypatch, "--sizes", "40", "--repeats", "1", "--methods", "lof")
+    assert (tmp_path / "verification" / "evidence" / "scaling.json").is_file()
+    assert (tmp_path / "verification" / "evidence" / "scaling.csv").is_file()
+
+
+def test_the_record_has_exactly_its_documented_keys_and_reads_the_machine(
+    monkeypatch, tmp_path, study
+):
+    import platform
+
+    _run(
+        monkeypatch,
+        "--sizes",
+        "40",
+        "--repeats",
+        "1",
+        "--methods",
+        "lof",
+        "--results-dir",
+        str(tmp_path),
+    )
+    record = json.loads((tmp_path / "scaling.json").read_text())
+    assert set(record) == {
+        "captured_at", "source_revision", "worktree_dirty", "measurement_recipe",
+        "measurement_fingerprint", "platform", "processor", "logical_cpus", "python", "packages",
+        "sizes", "n_features", "repeats", "fit_cap", "methods", "data_loading", "memory_measure",
+        "timing_measure", "results",
+    }  # fmt: skip
+    assert record["platform"] == platform.platform() and record["processor"] == platform.processor()
+    assert record["python"] == sys.version.split()[0]
+
+
+def test_git_is_asked_for_the_head_and_the_porcelain_status_as_text(monkeypatch, tmp_path, study):
+    seen = []
+    real = scaling.subprocess.check_output
+
+    def spy(command, *args, **kwargs):
+        if command[0] != "git":
+            return real(command, *args, **kwargs)
+        seen.append((command, kwargs))
+        return "x\n"
+
+    monkeypatch.setattr(scaling.subprocess, "check_output", spy)
+    _run(
+        monkeypatch,
+        "--sizes",
+        "40",
+        "--repeats",
+        "1",
+        "--methods",
+        "lof",
+        "--results-dir",
+        str(tmp_path),
+    )
+    assert seen == [
+        (["git", "rev-parse", "HEAD"], {"text": True}),
+        (["git", "status", "--porcelain"], {"text": True}),
+    ]
