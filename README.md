@@ -210,6 +210,8 @@ majority target).
 | drift | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
 | transform dedup | 0.00 | 1.00 | 0.00 | 0.00 | 0.00 | 0.00 |
 
+The PCA row rests on a full-rank reconstruction (the 95 % variance rule keeps all six components), so its scores are rounding noise and the row depends on the linear-algebra back end: these values match a NumPy build linked to the reference BLAS, while a wheel linked to Accelerate gives 0.35 instead of 0.48 on multivariate outliers (`docs/thesis-remediation/PCA_REPRODUCIBILITY_2026-11-12.md`).
+
 Per-type precision (clean rows as the only negatives) is also reported: Z-score has
 precision 1.00 on its two columns, Great Expectations 0.94 on missing values, while
 Isolation Forest catches 89% of multivariate outliers at only 0.23 precision. The

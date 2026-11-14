@@ -1,0 +1,132 @@
+{
+ "runs": [
+  {
+   "python": "3.11.17",
+   "numpy": "2.4.6",
+   "scipy": "1.17.1",
+   "blas": "accelerate",
+   "seeds": [
+    42,
+    1,
+    2,
+    3,
+    4
+   ],
+   "pca_recall_by_seed": {
+    "42": {
+     "missing_value": 0.0556,
+     "duplicate": 0.0741,
+     "univariate_outlier": 1.0,
+     "multivariate_outlier": 0.2037,
+     "temporal_drift": 0.3148,
+     "invalid_format": 0.8148
+    },
+    "1": {
+     "missing_value": 0.0741,
+     "duplicate": 0.0926,
+     "univariate_outlier": 1.0,
+     "multivariate_outlier": 0.2963,
+     "temporal_drift": 0.1852,
+     "invalid_format": 0.5
+    },
+    "2": {
+     "missing_value": 0.0926,
+     "duplicate": 0.1111,
+     "univariate_outlier": 0.9815,
+     "multivariate_outlier": 0.2407,
+     "temporal_drift": 0.1852,
+     "invalid_format": 0.5926
+    },
+    "3": {
+     "missing_value": 0.0556,
+     "duplicate": 0.1111,
+     "univariate_outlier": 1.0,
+     "multivariate_outlier": 0.6296,
+     "temporal_drift": 0.2407,
+     "invalid_format": 0.9815
+    },
+    "4": {
+     "missing_value": 0.0926,
+     "duplicate": 0.1481,
+     "univariate_outlier": 0.9815,
+     "multivariate_outlier": 0.3704,
+     "temporal_drift": 0.2407,
+     "invalid_format": 0.5556
+    }
+   },
+   "pca_recall_mean": {
+    "missing_value": 0.0741,
+    "duplicate": 0.1074,
+    "univariate_outlier": 0.9926,
+    "multivariate_outlier": 0.3481,
+    "temporal_drift": 0.2333,
+    "invalid_format": 0.6889
+   },
+   "interpreter": "mutation venv (numpy wheel linked to Accelerate)"
+  },
+  {
+   "python": "3.11.17",
+   "numpy": "2.4.6",
+   "scipy": "1.17.1",
+   "blas": "blas",
+   "seeds": [
+    42,
+    1,
+    2,
+    3,
+    4
+   ],
+   "pca_recall_by_seed": {
+    "42": {
+     "missing_value": 0.0556,
+     "duplicate": 0.0926,
+     "univariate_outlier": 1.0,
+     "multivariate_outlier": 1.0,
+     "temporal_drift": 0.3148,
+     "invalid_format": 0.6296
+    },
+    "1": {
+     "missing_value": 0.1296,
+     "duplicate": 0.1111,
+     "univariate_outlier": 1.0,
+     "multivariate_outlier": 0.2037,
+     "temporal_drift": 0.1852,
+     "invalid_format": 0.6667
+    },
+    "2": {
+     "missing_value": 0.1111,
+     "duplicate": 0.1111,
+     "univariate_outlier": 0.9815,
+     "multivariate_outlier": 0.3704,
+     "temporal_drift": 0.1667,
+     "invalid_format": 0.463
+    },
+    "3": {
+     "missing_value": 0.037,
+     "duplicate": 0.1296,
+     "univariate_outlier": 1.0,
+     "multivariate_outlier": 0.4815,
+     "temporal_drift": 0.1852,
+     "invalid_format": 0.7778
+    },
+    "4": {
+     "missing_value": 0.1481,
+     "duplicate": 0.1667,
+     "univariate_outlier": 1.0,
+     "multivariate_outlier": 0.3333,
+     "temporal_drift": 0.3148,
+     "invalid_format": 0.3519
+    }
+   },
+   "pca_recall_mean": {
+    "missing_value": 0.0963,
+    "duplicate": 0.1222,
+    "univariate_outlier": 0.9963,
+    "multivariate_outlier": 0.4778,
+    "temporal_drift": 0.2333,
+    "invalid_format": 0.5778
+   },
+   "interpreter": "canonical conda environment etl-benchmark"
+  }
+ ]
+}

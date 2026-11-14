@@ -418,7 +418,15 @@ separate ablation in the remediation roadmap; historical outcomes are
 retained under the settings actually evaluated.
 PyOD's own PCA
 scores a weighted distance to the eigenvectors, not a reconstruction
-error, so the projection comes from scikit-learn. LOF and KNN compare every
+error, so the projection comes from scikit-learn. It keeps the components that explain
+$95\%$ of the variance of the standardised features. On the tables where that rule keeps
+every component (the synthetic customer table, the transactions and sensors schemas, Water
+Quality, and two of the UCI carriers of the typed-injection study) the reconstruction is
+exact and the scores are floating-point rounding noise, so the PCA results of those tables
+depend on the linear-algebra back end. The archived rows match a NumPy build linked to the
+reference BLAS; a wheel linked to Accelerate gives, on the synthetic customer table, a
+multivariate-outlier recall of $0.35$ instead of $0.48$ (five seeds). I report these rows as
+measured and do not claim that they reproduce across back ends. LOF and KNN compare every
 row with the fitted rows, and the One-Class SVM is quadratic too; they are
 skipped, and the skip recorded, above $50{,}000$ fitted rows for LOF and KNN and
 $20{,}000$ for the One-Class SVM (limits set from the cost study).
@@ -1444,7 +1452,9 @@ scaling study. I time only the detection stage (fit, predict and score)
 inside the pipeline; extraction, transformation and loading are outside the
 measurement, so these figures are not the latency of a whole ETL run.
 
-\paragraph{Threats to validity of the results.} The synthetic dataset still encodes my
+\paragraph{Threats to validity of the results.} The PCA rows of the tables where the
+detector keeps every component are not numerically robust (Section~\ref{sec:methodology} lists
+them). The synthetic dataset still encodes my
 own assumptions about what each anomaly type looks like; the severity
 sweep addresses the magnitude choice but not the shape of the
 injections. The real-data pool answers part of this, but its anomalies are either

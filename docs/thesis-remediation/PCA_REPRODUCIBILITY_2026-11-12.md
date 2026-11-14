@@ -36,8 +36,7 @@ effect:
 - The same code, data, seed, numpy 2.4.6, scipy 1.17.1 and scikit-learn 1.9.1 give 0.4818 in the venv whose numpy
   wheel links Accelerate (`~/.cache/etl-mutation-venv`) and 0.5645 in the canonical conda environment `etl-benchmark`
   (reference BLAS/LAPACK 3.9.0). The archived legend, 0.56, is the second value.
-- Water Quality is not degenerate (the rule keeps fewer components than features) and shows only the pandas effect
-  recorded above.
+- Correction of 2026-11-14: Water Quality is also full rank (9 of 9 components kept), so the 0.54 against 0.57 difference listed above is not only a pandas effect; it is the same rounding-noise sensitivity (see below).
 
 Status. The archived value is not wrong for the environment that produced it, and nothing archived was changed. But the
 synthetic PCA curve measures rounding noise, not reconstruction error, so it is not reproducible across numerical
@@ -48,3 +47,11 @@ does not retain all features (a protocol change, therefore not made here). The m
 Probe: `docs/thesis-remediation/evidence/pca_probe.py` prints one JSON record per interpreter; the two records of 2026-11-14 are in
 `docs/thesis-remediation/evidence/l4-campaign-2026-11-13/pca-probe-results.json`. The comparison changes two things at once (the numpy wheel's BLAS
 and the packaging), so it shows that the value follows the numerical back end, not which routine of it is responsible.
+
+## Second addendum, 2026-11-14: scope of the sensitivity and the manuscript wording
+
+Audit (`evidence/pca_degeneracy_audit.py`, records for two interpreters in `evidence/l4-campaign-2026-11-13/pca-degeneracy-audit.json`). The 95 % rule keeps every component, so the scores are rounding noise (median 1e-33 to 1e-30), for: the synthetic customer table (6 of 6), the transactions and sensors schemas (6 of 6), the real Water Quality table (9 of 9) and 2 of the 44 typed-injection carriers audited here (UCI 2 and 222). It does not for Credit Card (27 of 30), Cardio (14 of 21) or the other 42 carriers. Both interpreters agree on which tables are full rank. ADBench carriers and the labelled pool were not audited.
+
+Effect (`evidence/pca_backend_recall.py`, `evidence/l4-campaign-2026-11-13/pca-backend-recall.json`): PCA recall on the synthetic customer table, mean over the five benchmark seeds, missing/duplicate/univariate/multivariate/drift/invalid. Conda reference BLAS: 0.10 / 0.12 / 1.00 / 0.48 / 0.23 / 0.58, the row archived in the paper. Numpy wheel linked to Accelerate: 0.07 / 0.11 / 0.99 / 0.35 / 0.23 / 0.69. The archived row therefore matches the reference-BLAS build, and the Accelerate build differs by 0.13 on multivariate outliers and 0.11 on invalid formats.
+
+Interpretation adopted: the archived PCA rows of the full-rank tables are environment-dependent and must not be read as numerically robust or cross-platform reproducible results. Archived values are untouched. The manuscript (`paper/main.tex`, methodology, PCA description, and the threats-to-validity paragraph) and `README.md` now say so; the PDF was rebuilt and the manifest hashes of `paper/main.tex` and `paper/main.pdf` refreshed. The figure legend of `paper/figures/pr_curves.png` (PCA 0.56 on the synthetic panel) is unchanged and falls under the same sentence. Nothing claims stability that the evidence does not show, and no value was replaced.
