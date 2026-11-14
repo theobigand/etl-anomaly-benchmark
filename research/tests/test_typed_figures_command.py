@@ -148,6 +148,7 @@ def test_unused_panel_slots_are_switched_off_and_used_ones_on(runs, tmp_path, mo
 
 def test_both_figures_are_written_into_a_new_or_existing_folder_and_closed(runs, tmp_path):
     out = tmp_path / "deep" / "out"
+    matplotlib.pyplot.close("all")
     assert tf.main(["--runs", str(runs), "--output", str(out)]) == 0
     assert sorted(p.name for p in out.iterdir()) == ["typed_panels.png", "typed_pooled.png"]
     assert tf.main(["--runs", str(runs), "--output", str(out)]) == 0
