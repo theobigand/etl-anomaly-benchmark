@@ -38,7 +38,7 @@
    "title": "limit of a split whose first part is read"
   }
  },
- "head": "38897c2c35a5ddae859c86c0e117cc822226e5ef",
+ "head": "11a81a8cfe2de32c5d4c1f1a330135fdb7312e0d",
  "note": "No entry is an owner decision. The 43 candidates of owner_review_candidates_2026-11-12.json and verification/mutation_equivalence.json are read, never changed. A mutant that already has an owner verdict or is in the first packet is listed apart and is not re-proposed.",
  "noted_patterns": {
   "default-dtype": "`astype(int)`/`dtype=int` replaced by None gives float64; previously judged inconclusive by the owner for `astype(None)`",
@@ -143,94 +143,6 @@
      ],
      "id": "experiments.run_severity.x_render__mutmut_53",
      "mutant": "x_render__mutmut_53",
-     "timeout": false
-    }
-   ]
-  },
-  "research/cost_study.py": {
-   "already_decided_or_in_first_packet": [],
-   "candidate_classes": {
-    "name-case": [
-     {
-      "change": [
-       "-    frame[\"t\"] = pd.Timestamp(\"1970-01-01\", tz=\"UTC\") + pd.to_timedelta(np.arange(len(frame)), \"s\")",
-       "+    frame[\"t\"] = pd.Timestamp(\"1970-01-01\", tz=\"utc\") + pd.to_timedelta(np.arange(len(frame)), \"s\")"
-      ],
-      "id": "research.cost_study.x__lstm_run__mutmut_13",
-      "mutant": "x__lstm_run__mutmut_13",
-      "timeout": false
-     }
-    ]
-   },
-   "catalog_sha256": "732ae631462bbb3f0f4a7ba6a0f0deafe7510e9a116b0be09dee263b5de921d1",
-   "eligible": 825,
-   "killed": 817,
-   "level": "L3",
-   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
-   "needed_for_threshold": 784,
-   "noted_patterns_not_proposed": {},
-   "source_sha256": "c754219c7d3e61d00b1cff8c228bc9c5b6c75b591558ecea2359049611378b58",
-   "survivor_dump": "l4-campaign-2026-11-13/survivors/research__cost_study.py.txt",
-   "threshold": 95,
-   "unclassified": [
-    {
-     "change": [
-      "-    frame[\"t\"] = pd.Timestamp(\"1970-01-01\", tz=\"UTC\") + pd.to_timedelta(np.arange(len(frame)), \"s\")",
-      "+    frame[\"t\"] = pd.Timestamp(\"1970-01-01\", tz=\"UTC\") + pd.to_timedelta(np.arange(len(frame)), \"S\")"
-     ],
-     "id": "research.cost_study.x__lstm_run__mutmut_20",
-     "mutant": "x__lstm_run__mutmut_20",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    validation = frame.iloc[: max(20, min(len(frame), 5000))]",
-      "+    validation = frame.iloc[: max(21, min(len(frame), 5000))]"
-     ],
-     "id": "research.cost_study.x__lstm_run__mutmut_30",
-     "mutant": "x__lstm_run__mutmut_30",
-     "timeout": false
-    },
-    {
-     "change": [],
-     "id": "research.cost_study.x_wait_for_quiet__mutmut_1",
-     "mutant": "x_wait_for_quiet__mutmut_1",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    while os.getloadavg()[0] > cores / 2 and time.time() < deadline:",
-      "+    while os.getloadavg()[0] > cores / 2 and time.time() <= deadline:"
-     ],
-     "id": "research.cost_study.x_wait_for_quiet__mutmut_12",
-     "mutant": "x_wait_for_quiet__mutmut_12",
-     "timeout": true
-    },
-    {
-     "change": [
-      "-    parser.add_argument(\"--csv\", type=Path, default=None)",
-      "+    parser.add_argument(\"--csv\", type=None, default=None)"
-     ],
-     "id": "research.cost_study.x_main__mutmut_71",
-     "mutant": "x_main__mutmut_71",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    parser.add_argument(\"--csv\", type=Path, default=None)",
-      "+    parser.add_argument(\"--csv\", default=None)"
-     ],
-     "id": "research.cost_study.x_main__mutmut_73",
-     "mutant": "x_main__mutmut_73",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    parser.add_argument(\"--csv\", type=Path, default=None)",
-      "+    parser.add_argument(\"--csv\", type=Path, )"
-     ],
-     "id": "research.cost_study.x_main__mutmut_74",
-     "mutant": "x_main__mutmut_74",
      "timeout": false
     }
    ]

@@ -74,6 +74,24 @@ levels = "\n".join(
     for lv, r in sorted(by_level.items())
 )
 s = record["summary"]
+near_list = ", ".join(
+    f"`{p}`"
+    for p, m in sorted(modules.items())
+    if m["status"] == "FAIL" and 0 < m["needed_for_threshold"] - m["killed"] <= 3
+)
+cost_study_timeout = (
+    "; its verdict file still holds one timeout, so that run predates the fix"
+    if modules["research/cost_study.py"]["counts"].get("timeout")
+    else " and the mutant is killed"
+)
+timeout_units = (
+    ", ".join(
+        f"`{p}` ({m['counts']['timeout']})"
+        for p, m in sorted(modules.items())
+        if m["counts"].get("timeout")
+    )
+    or "none"
+)
 cs_units = sorted(
     p for p, m in modules.items() if str(m.get("measured_on", "")).startswith("case-sensitive")
 )
@@ -91,7 +109,7 @@ accepted records of `verification/mutation_equivalence.json` (LSTM detector); th
 
 ## Totals
 
-{record["mutants"]} mutants over {len(modules)} classified units; {record["killed"]} killed ({100 * record["killed"] / record["mutants"]:.2f} %).
+{record["mutants"]} mutants over {len(modules)} classified units; {record["killed"]} killed ({100 * record["killed"] / record["mutants"]:.2f} %). The totals mix two measurement platforms: `measured_on` in `final-measurement.json` says which units were run on a case-sensitive volume ({len(cs_units)} of {len(modules)}) and which on the default case-insensitive one; see the platform note.
 
 | Status | Units |
 | --- | --- |
@@ -123,9 +141,7 @@ Before: the committed first measurement. A unit whose status changed from FAIL t
 
 ## Units that fail or are incomplete
 
-Sorted by the number of kills still missing. Of the units a few kills short (`load`, `quality/base`, `quality/deep`, `quality/windows`, `typed_benchmark`, `uci_loader`, `normalise`,
-`pool_preprocessing`, `real_acquire`, `run_severity`), only `load`, `quality/base` and `normalise` have their survivors in the owner review packet
-(`OWNER_EQUIVALENCE_REVIEW_2026-11-12.md`). A second packet, `OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md`, groups every surviving mutant by class with its exact identity, source digest and counterexample search; it is PROPOSED and approves nothing.
+Sorted by the number of kills still missing. Units at most three kills short: {near_list}. Their survivors are mostly of the kinds the second packet classifies (see below); the first packet (`OWNER_EQUIVALENCE_REVIEW_2026-11-12.md`) covers `load`, `quality/base` and `normalise`. A second packet, `OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md`, groups every surviving mutant by class with its exact identity, source digest and counterexample search; it is PROPOSED and approves nothing.
 
 ### Incomplete
 
@@ -135,36 +151,38 @@ Sorted by the number of kills still missing. Of the units a few kills short (`lo
 {table("FAIL")}
 ## Notes that change how the numbers read
 
-- Timeouts (evidence: `evidence/timeout_evidence.py`, output `l4-campaign-2026-11-13/timeout-evidence.json`). `pool_contract.sha256_file` mutants 6 and 14 (an
-  end-of-file sentinel that never matches) and `mutation_cache.prepare_execution` mutant 128 (the work queue is never popped) do not terminate: the bounded
-  reproduction reads 10 000 blocks, or loops 10 000 times with the queue at length 1, and never ends. They stay timeouts, which are neither killed nor
-  survived and never count as passing. `temporal_decision._block_ci` mutant 25 (`index = None`) does terminate: it computes one precision-recall area per column of a
-  one-row array, 20 to 400 times slower than the original. Three slow tests ran before the test that detects it and exceeded the limit; they now use a few
-  resamples, so the detecting test fails first.
+- Units that still carry a timeout in their verdict file: {timeout_units}.
+- Timeouts (evidence: `evidence/timeout_evidence.py`, output `l4-campaign-2026-11-13/timeout-evidence.json`). `pool_contract.sha256_file` mutants 6 and 14 (an end-of-file sentinel that never
+  matches) and `mutation_cache.prepare_execution` mutant 128 (the work queue is never popped) do not terminate; the bounded reproduction models the mutated loop (it reads 10 000 blocks, or loops 10 000 times with
+  the queue at length 1) rather than running mutmut's copy. They stay timeouts: neither killed nor survived, never counted as passing. `temporal_decision._block_ci` mutant 25 (`index = None`) terminates but is far slower
+  (the script measures one precision-recall area on a one-row array at several sizes); slow tests ran before the detecting test and exceeded the limit, they now use a few resamples and the mutant is killed.
+  `cost_study.wait_for_quiet` mutant 12 (`<` to `<=` on the deadline) looped forever only because a test froze the clock at the deadline; the test now supplies a finite clock{cost_study_timeout}.
 - `state.json` is the progress log of the runs; the final counts come from the `mutants/**/*.meta` verdict files, which also hold these one-by-one reruns
   (for example `real_acquire` is 215 of 219 there after the rerun, 214 plus one incomplete in `state.json`). Verdicts of killed mutants persist across runs, so a unit
   is not measured by a single commit: later tests added (after a unit's last full run) are listed in the commit log of this branch.
 - Pinned digests of generated data (injection, multi-schema, LSTM stream, registry summary) held on Linux CI, on pandas 3.0.6 and 3.1.1, and under numpy 1.26.4 with pandas 2.2.3 and under numpy 2.4.6
-  (injection and multi-schema; the LSTM stream test needs torch and was not run under 1.26.4). Each pinned construction now also has tests of its written magnitudes, rows and labels
+  (injection and multi-schema: 40 tests, `l4-campaign-2026-11-13/numpy-1.26-digest-check.txt`; the LSTM stream test needs torch and was not run under 1.26.4). Each pinned construction now also has tests of its written magnitudes, rows and labels
   (`research/tests/test_injection_contracts.py`), so a digest change can be diagnosed. The digests stay: the archived typed runs depend on exactly this construction.
-- Nine mutants first reported incomplete (exit 255) or timed out under load were rerun one by one: five were killed
-  (`paired_bootstrap` 43, `pool_etl.run_etl` 2, `pool_extension_summary.severity` 44, `mutation_cache.prepare` 31, `real_acquire.main` 20), the four above stayed timeouts.
+- Ten mutants first reported incomplete (exit 255) or timed out under load were rerun one by one: six were killed
+  (`paired_bootstrap` 43, `pool_etl.run_etl` 2, `pool_extension_summary.severity` 44, `mutation_cache.prepare` 31, `real_acquire.main` 20, `reproduce.build_environment` 4, the last on 2026-11-14 after three batch runs left it at exit 255; run alone it fails the tests that stub `subprocess.run` with `TypeError`), the four others stayed timeouts at that time; the paragraph above says what each one is.
 - Measurement platform. pytest temporary folders live on the default macOS volume, which compares file names without case, so a mutant that only changes the case of a path
-  (`"TYPED_INJECTION"`, `"PYPROJECT.TOML"`, `"GIT"`) survives there and dies on Linux. Where a unit was re-run on a case-sensitive APFS volume with `TMPDIR` on it, its verdict file is that run
+  (`"TYPED_INJECTION"`, `"PYPROJECT.TOML"`, `"GIT"`) survives there and is expected to die on Linux (not measured here: the mutation jobs of CI are skipped on this branch). Where a unit was re-run on a case-sensitive APFS volume with `TMPDIR` on it, its verdict file is that run
   (`measured_on` in `final-measurement.json`; `evidence/merge_case_sensitive.py`). Units measured that way: {", ".join(cs_units) if cs_units else "none yet"}. The remaining units are
-  still measured on the case-insensitive volume and understate their kills.
+  still measured on the case-insensitive volume and may understate their kills. Provenance: `evidence/merge_case_sensitive.py` keeps the replaced file as `.meta.mac` and records both counts in
+  `case-sensitive-units.json`; `evidence/archive_verdicts.py` archives every verdict file in `l4-campaign-2026-11-13/verdicts.tgz` (`verdicts.sha256`) so the record can be rebuilt. The case-sensitive runs were made on a
+  copy of the repository at successive commits of this branch (the last is recorded in `case-sensitive-units.json`); a unit's run is not tied to one commit, and killed verdicts persist across runs.
 - Mutants no test reached (exit 33) remain only where listed in the table; `research/cost_study.py` had 305 and now has none (new tests of `main`, the workers and the wait for a quiet machine).
-- A unit with a timeout is recorded INCOMPLETE here even when its raw score reaches the threshold: `verification/mutation_cache.py` (1088 of 1110, 98.02 %), `research/cost_study.py` (817 of 825, 99.03 %)
-  and `verification/pool_contract.py` (184 of 187, 98.40 %) each carry non-terminating mutants (see above) that count as not killed. The consolidator is stricter than the score rule; whether the
-  repository's controller accepts such a unit is decided by `verification/mutation_policy.py`, not here.
+- A unit with a timeout is recorded INCOMPLETE here even when its raw score reaches the threshold: `verification/mutation_cache.py` (1088 of 1110, 98.02 %) and `verification/pool_contract.py`
+  (184 of 187, 98.40 %) each carry non-terminating mutants (see above) that count as not killed. The consolidator is stricter than the score rule; whether the repository's controller accepts
+  such a unit is decided by `verification/mutation_policy.py`, not here.
 - `research/time_scan.py`: under pandas 3 text columns are typed `str`, not `object`, so `candidate_columns` skipped columns of date text whose names do not say time. Fixed with a regression test
-  (commit fd67310); on the 116 local pool tables the set of scanned columns is identical before and after, so no archived result changes.
-- Synthetic PCA discrepancy (0.4818 regenerated, 0.56 archived): explained in `PCA_REPRODUCIBILITY_2026-11-12.md` (full-rank reconstruction, scores are rounding noise, numpy built on Accelerate gives 0.4818 and the
-  conda reference BLAS gives 0.5645). Archived values are untouched; the paper wording is an owner decision and the item stays open.
-- Classes that look equivalent to me and are not proposed to the owner yet (evidence only; the owner left `astype(None)` and `replace=None` inconclusive on
-  2026-11-11, so I do not treat them as settled): `astype(None)` on floats,
-  `index=None`, `sort=None`, `replace=None`, `version("TORCH")` (package names ignore case), `kind="STABLE"`, a missing `dtype` on `np.empty`,
-  `fillna` after an assignment of `None`, division by `-1`, initial values never read before a fit, HTTP header name case, and `.to(None)` on CPU.
+  (commit fd67310); on the 116 local pool tables the columns found are identical before and after, under pandas 3.0.6 and 3.1.1 (`evidence/time_scan_impact.py`, `l4-campaign-2026-11-13/time-scan-impact.json`), so no archived result changes.
+- Synthetic PCA discrepancy (0.4818 regenerated, 0.56 archived): explained in `PCA_REPRODUCIBILITY_2026-11-12.md` (full-rank reconstruction, scores are rounding noise; the numpy wheel linked to Accelerate gives 0.4818 and the
+  conda reference BLAS 0.5645, records in `l4-campaign-2026-11-13/pca-probe-results.json`; two whole environments were compared, so the BLAS is the leading explanation, not an isolated cause). Archived values are untouched; the paper wording is an owner decision and the item stays open.
+- Equivalence. `OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md` groups the survivors that match a recognised pattern into classes (limit of a split, `False` replaced by `None` for a truth-value flag, case of a name the library reads
+  without case, division by `-1`) with counterexample searches in `tests/test_mutation_equivalence_probes.py`. They ran on this environment only and prove nothing across the supported dependency range, which is why the owner left
+  five of the nine `lstm_detector` mutants `inconclusive` on 2026-11-11 (four are `accepted`); those nine are listed apart in the packet and not re-proposed. Patterns named but not proposed: an attribute initialised to an empty
+  string, and `astype(int)` replaced by `astype(None)`. Nothing is approved and `verification/mutation_equivalence.json` is unchanged.
 - Timing was measured while other jobs ran on the machine; results do not depend on it except the timeouts above.
 
 ## Reproduction

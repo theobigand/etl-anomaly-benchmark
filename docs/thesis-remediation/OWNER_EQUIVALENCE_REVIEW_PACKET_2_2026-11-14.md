@@ -4,7 +4,7 @@ Prepared after the behavioral remediation of `L4_CAMPAIGN_REPORT_2026-11-13.md`,
 nothing to `verification/mutation_equivalence.json` and leaves the 43 candidates of the first packet (`OWNER_EQUIVALENCE_REVIEW_2026-11-12.md`) as they were. The four `lstm_detector`
 records stay subject to the repository validator (their `torch 2.15.0+cpu` pin is not met on this machine).
 
-Source: `38897c2`, policy digest `fc19388775ea`. Machine-readable form: `equivalence/owner_review_candidates_2026-11-14.json` (exact mutant identities, textual change, source and
+Source: `11a81a8`, policy digest `fc19388775ea`. Machine-readable form: `equivalence/owner_review_candidates_2026-11-14.json` (exact mutant identities, textual change, source and
 catalog digests per unit; survivor dumps in `evidence/l4-campaign-2026-11-13/survivors/`).
 
 ## How to read it
@@ -22,7 +22,6 @@ For each unit that still fails or is incomplete, survivors are split four ways.
 | Unit | Level | Killed / eligible | Missing kills | Candidate classes | Decided / first packet | Unclassified | Passes now | Measured on |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `experiments/run_severity.py` | L4 | 320/329 | 3 | 2 | 0 | 7 | no | case-insensitive APFS |
-| `research/cost_study.py` | L3 | 817/825 | 0 | 1 | 0 | 7 | no (timeouts) | case-sensitive APFS volume |
 | `research/injection.py` | L4 | 325/336 | 5 | 2 | 0 | 9 | no | case-sensitive APFS volume |
 | `research/lstm_detector.py` | L4 | 368/377 | 2 | 0 | 9 | 0 | no | case-insensitive APFS |
 | `research/lstm_pilot.py` | L4 | 460/506 | 36 | 1 | 0 | 45 | no | case-insensitive APFS |

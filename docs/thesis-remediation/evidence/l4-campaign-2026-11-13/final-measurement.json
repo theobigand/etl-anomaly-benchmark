@@ -13,8 +13,8 @@
   "torch": "2.15.0"
  },
  "equivalence_validation": "refused by mutation_policy.accepted_equivalents: equivalence record is incompatible with the campaign environment",
- "head": "38897c2c35a5ddae859c86c0e117cc822226e5ef",
- "killed": 33300,
+ "head": "11a81a8cfe2de32c5d4c1f1a330135fdb7312e0d",
+ "killed": 33302,
  "kind": "local development measurement, not the controller campaign",
  "modules": {
   "experiments/check_mutation.py": {
@@ -264,21 +264,20 @@
   "research/cost_study.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 825,
-   "adjusted_score": 99.03,
+   "adjusted_score": 99.27,
    "catalog_sha256": "732ae631462bbb3f0f4a7ba6a0f0deafe7510e9a116b0be09dee263b5de921d1",
    "counts": {
-    "killed": 817,
-    "survived": 7,
-    "timeout": 1
+    "killed": 819,
+    "survived": 6
    },
    "eligible": 825,
-   "killed": 817,
+   "killed": 819,
    "level": "L3",
    "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 784,
-   "raw_score": 99.03,
+   "raw_score": 99.27,
    "source_sha256": "c754219c7d3e61d00b1cff8c228bc9c5b6c75b591558ecea2359049611378b58",
-   "status": "INCOMPLETE",
+   "status": "PASS_RAW",
    "threshold": 95
   },
   "research/dataset_registry.py": {
@@ -1902,8 +1901,8 @@
  "policy_sha256": "fc19388775ea7144022fd1451f4ffb62f6ed1408381d618691bbacc8602e695c",
  "summary": {
   "FAIL": 35,
-  "INCOMPLETE": 3,
+  "INCOMPLETE": 2,
   "NO_MUTANTS": 3,
-  "PASS_RAW": 59
+  "PASS_RAW": 60
  }
 }
