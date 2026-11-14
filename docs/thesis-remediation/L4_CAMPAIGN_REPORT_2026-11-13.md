@@ -1,5 +1,7 @@
 # L4 mutation campaign report, 2026-11-13
 
+This report preserves the historical measurement below. Later focused results, the Cardio parsing investigation, the preliminary survivor triage and current blockers are recorded in `MUTATION_RECONCILIATION_CHECKPOINT_2026-11-14.md`; they do not constitute a fresh complete campaign.
+
 A local development measurement, not the controller campaign and not a certification. Native mutmut 3.8.0,
 macOS-27.2-arm64-arm-64bit, Python 3.11.17, pandas 3.0.6, numpy 2.4.6.
 Measured at the commit recorded in `l4-campaign-2026-11-13/final-measurement.json` (HEAD 18589c7 when consolidated; the tests added

@@ -305,3 +305,13 @@ def test_the_neural_mode_skips_the_hypotheses_and_the_published_matrix(tmp_path,
     with pytest.raises(SystemExit) as stop:
         ms.main([])
     assert stop.value.code == 2
+
+
+def test_per_type_precision_uses_clean_rows_and_excludes_other_anomaly_types():
+    types = pd.Series(["clean", "missing_value", "duplicate"])
+    flags = pd.Series([True, True, False])
+
+    recall, precision = ms._per_type(flags, types)
+
+    assert recall["missing_value"] == 1.0
+    assert precision["missing_value"] == pytest.approx(0.5)

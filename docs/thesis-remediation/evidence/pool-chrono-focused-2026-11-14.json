@@ -1,0 +1,24 @@
+{
+  "kind": "two-mutant focused native run, not a full unit or campaign",
+  "verdict_exit_codes": {
+    "research.pool_chrono.x_eligible__mutmut_3": 1,
+    "research.pool_chrono.x_eligible__mutmut_5": 1
+  },
+  "command": "OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES ~/.cache/etl-mutation-venv/bin/python -m mutmut run 'research.pool_chrono.x_eligible__mutmut_3' 'research.pool_chrono.x_eligible__mutmut_5' --max-children 1",
+  "exit_status": 0,
+  "git_head": "9ca176f0a07311b7a49f2053dc059af732333f0e",
+  "source_sha256": "cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035",
+  "test_tree_sha256": "97b38d491d279fb27b101adfac7bdc06746abd4eee94d894e5a421aee6165e82",
+  "test_tree_algorithm": "sha256 of UTF-8 path, NUL, file bytes; roots in order tests, research/tests, slides/tests, recursively sorted within each root; non-Python files and caches excluded",
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "filesystem": "default macOS APFS (case-insensitive)",
+  "python": "3.11.17",
+  "packages": {
+    "mutmut": "3.8.0",
+    "pytest": "9.1.1",
+    "pandas": "3.1.1",
+    "numpy": "2.4.6",
+    "torch": "2.15.0"
+  },
+  "native_meta_sha256": "528a914713d0fbc61a1df470b45a0d5b65efc6d8fad60dca953a357731ca0b74"
+}

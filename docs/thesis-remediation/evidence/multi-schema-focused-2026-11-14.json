@@ -1,0 +1,21 @@
+{
+  "kind": "single-mutant focused native run, not a full unit or campaign",
+  "id": "research.multi_schema.x__per_type__mutmut_2",
+  "verdict_exit_code": 1,
+  "command": "OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES ~/.cache/etl-mutation-venv/bin/python -m mutmut run 'research.multi_schema.x__per_type__mutmut_2' --max-children 1",
+  "exit_status": 0,
+  "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+  "test_tree_sha256": "80dd004c0aad474a02cb3000c5589eec865b7327545a8957996df3ccf2c4322d",
+  "test_tree_algorithm": "sha256 of UTF-8 path, NUL, file bytes; roots in order tests, research/tests, slides/tests, recursively sorted within each root",
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "filesystem": "default macOS APFS (case-insensitive)",
+  "python": "3.11.17",
+  "packages": {
+    "mutmut": "3.8.0",
+    "pytest": "9.1.1",
+    "pandas": "3.1.1",
+    "numpy": "2.4.6",
+    "torch": "2.15.0"
+  },
+  "native_meta_sha256": "36b66a91f317efc16e1ff3ab677f84976f0f34ae40ccbfd28f7085cfc56169d7"
+}

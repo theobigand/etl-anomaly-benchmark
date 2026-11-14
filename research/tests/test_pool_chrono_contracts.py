@@ -165,3 +165,10 @@ def test_the_only_option_limits_the_run_and_the_output_directory_is_required(
     with pytest.raises(SystemExit) as stop:
         pc.main([])
     assert stop.value.code == 2
+
+
+def test_eligibility_preserves_input_order_when_timestamps_tie():
+    times = pd.Series(pd.to_datetime(["2020-01-01"] * 200, utc=True))
+    labels = np.r_[np.zeros(170, dtype=int), np.ones(30, dtype=int)]
+
+    assert pc.eligible(labels, times) == (True, "")

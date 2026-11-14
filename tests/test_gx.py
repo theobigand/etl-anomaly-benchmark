@@ -68,3 +68,14 @@ def test_constant_feature_has_no_spurious_range_expectation():
     detector = GreatExpectationsDetector().fit(frame)
     assert detector._bounds == {}
     assert not detector.predict(frame).any()
+
+
+def test_gx_handles_index_named_like_a_data_column():
+    train = pd.DataFrame({"amount": [1.0, 2.0, 3.0]})
+    detector = GreatExpectationsDetector(bounds_quantiles=(0.0, 1.0)).fit(train)
+    probe = pd.DataFrame({"amount": [2.0, None]}, index=pd.Index([10, 11], name="amount"))
+
+    flags = detector.predict(probe)
+
+    assert flags.index.equals(probe.index)
+    assert flags.tolist() == [False, True]
