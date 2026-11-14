@@ -198,3 +198,36 @@ was rerun: `~/miniconda3/envs/etl-benchmark/bin/python -m pytest
 seconds. This later test and its evidence postdate the bounded review. The
 separate mutation-environment Cardio failure remains unresolved as a numerical
 reproduction failure.
+
+Two further regressions were added after the bounded review. A numeric carrier
+whose index shares a feature name must still be injectable: mutants
+`research.injection.x_inject__mutmut_21` and `_27` instead raise `ValueError`.
+For multi-schema H4, a mean Spearman agreement exactly equal to 0.7 supports
+the preregistered inclusive threshold; mutant
+`research.multi_schema.x_hypotheses__mutmut_91` rejects it. The three RED
+checks exited 1 for those behavioral differences; the affected original-code
+suite exited 0 with 36 passed. A native focused run killed all three (exit 0),
+with exact identities, source and test-tree digests and environment in
+`evidence/injection-h4-focused-2026-11-14.json`. The 162-record preliminary
+triage now contains eight focused kills and 154 inconclusive entries. These
+focused runs are not complete unit or campaign measurements and postdate the
+bounded independent review.
+
+For the injection and H4 additions, RED used pytest with the generated module
+preloaded as `injection` or `multi_schema`, respectively, and
+`MUTANT_UNDER_TEST` set to each exact identity in the focused JSON. The nodes
+were `research/tests/test_injection_contracts.py::test_injection_accepts_an_index_named_like_a_carrier_feature`
+and `research/tests/test_multi_schema_contracts.py::test_h4_includes_the_exact_rank_agreement_threshold`.
+Each exited 1 for the stated difference (local logs `/tmp/etl-injection-red.log`,
+`/tmp/etl-injection-red27.log`, `/tmp/etl-h4-red.log`). GREEN and REGRESSION:
+`~/.cache/etl-mutation-venv/bin/python -m pytest
+research/tests/test_multi_schema_contracts.py research/tests/test_injection_contracts.py
+--disable-warnings` exited 0, 36 passed. The focused native command and exit
+status are recorded in the focused JSON. The complete canonical suite is being
+rerun on this later test tree.
+
+After the injection and H4 regressions, the complete canonical suite
+`~/miniconda3/envs/etl-benchmark/bin/python -m pytest --disable-warnings`
+exited 0 with 4,018 passed and 23 deselected in 707.39 seconds. These later
+changes and this run postdate the bounded independent review; the
+mutation-environment Cardio failure remains recorded separately.

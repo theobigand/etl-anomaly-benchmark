@@ -122,8 +122,8 @@
         "-    pop = clean.sample(frac=1.0, random_state=seed).reset_index(drop=True)",
         "+    pop = clean.sample(frac=1.0, random_state=seed).reset_index(drop=None)"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "A numeric carrier with an index named like a feature is accepted by the original, while the mutant raises ValueError; the targeted test fails on the mutant. Focused native run recorded a kill; see injection-h4-focused-2026-11-14.json. Not a full unit rerun."
     },
     {
       "id": "research.injection.x_inject__mutmut_27",
@@ -133,8 +133,8 @@
         "-    pop = clean.sample(frac=1.0, random_state=seed).reset_index(drop=True)",
         "+    pop = clean.sample(frac=1.0, random_state=seed).reset_index(drop=False)"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "A numeric carrier with an index named like a feature is accepted by the original, while the mutant raises ValueError; the targeted test fails on the mutant. Focused native run recorded a kill; see injection-h4-focused-2026-11-14.json. Not a full unit rerun."
     },
     {
       "id": "research.injection.x_inject__mutmut_48",
@@ -441,8 +441,8 @@
         "-        \"H4\": {\"supported\": mean_rho >= 0.7, \"mean_spearman\": mean_rho, \"pairs\": rhos},",
         "+        \"H4\": {\"supported\": mean_rho > 0.7, \"mean_spearman\": mean_rho, \"pairs\": rhos},"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "At mean rank agreement exactly 0.7 the original supports H4 and the mutant does not; the targeted test fails on the mutant. Focused native run recorded a kill; see injection-h4-focused-2026-11-14.json. Not a full unit rerun."
     },
     {
       "id": "research.multi_schema.x_main__mutmut_2",

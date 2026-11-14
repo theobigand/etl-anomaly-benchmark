@@ -315,3 +315,14 @@ def test_per_type_precision_uses_clean_rows_and_excludes_other_anomaly_types():
 
     assert recall["missing_value"] == 1.0
     assert precision["missing_value"] == pytest.approx(0.5)
+
+
+def test_h4_includes_the_exact_rank_agreement_threshold(monkeypatch):
+    from types import SimpleNamespace
+
+    monkeypatch.setattr(ms, "spearmanr", lambda *args, **kwargs: SimpleNamespace(statistic=0.7))
+
+    result = ms.hypotheses({"a": _good(), "b": _good()})["H4"]
+
+    assert result["mean_spearman"] == 0.7
+    assert result["supported"] is True

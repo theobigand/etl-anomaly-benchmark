@@ -229,3 +229,13 @@ def test_the_tail_quantiles_of_a_multivariate_outlier_are_clamped_for_a_huge_sev
     rows = out[out["anomaly_type"] == "multivariate_outlier"]
     ceiling = max(float(carrier[a].quantile(0.999)), float(carrier[b].quantile(0.999)))
     assert max(rows[a].max(), rows[b].max()) <= ceiling + 1e-9
+
+
+def test_injection_accepts_an_index_named_like_a_carrier_feature():
+    carrier = _carrier(n=120)
+    carrier.index.name = "a"
+
+    injected = inj.inject(carrier, seed=SEED)
+
+    assert len(injected) == 135
+    assert list(injected.columns) == [*COLUMNS, "t", "group_id", "anomaly", "anomaly_type"]
