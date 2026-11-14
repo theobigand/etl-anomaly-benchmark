@@ -19,42 +19,6 @@
 ## x__transactions__mutmut_101
 -                amount * rng.uniform(2, 40, n) + rng.normal(0, 50, n), 0, None
 +                amount * rng.uniform(2, 40, n) + rng.normal(0, 50, n), 1, None
-## x__sensors__mutmut_12
--    humidity = np.clip(70 - 1.5 * (temperature - 21) + rng.normal(0, 5, n), 5, 95)
-+    humidity = np.clip(70 - 1.5 * (temperature - 21) + rng.normal(0, 5, n), None, 95)
-## x__sensors__mutmut_13
--    humidity = np.clip(70 - 1.5 * (temperature - 21) + rng.normal(0, 5, n), 5, 95)
-+    humidity = np.clip(70 - 1.5 * (temperature - 21) + rng.normal(0, 5, n), 5, None)
-## x__sensors__mutmut_32
--    humidity = np.clip(70 - 1.5 * (temperature - 21) + rng.normal(0, 5, n), 5, 95)
-+    humidity = np.clip(70 - 1.5 * (temperature - 21) + rng.normal(0, 5, n), 6, 95)
-## x__sensors__mutmut_33
--    humidity = np.clip(70 - 1.5 * (temperature - 21) + rng.normal(0, 5, n), 5, 95)
-+    humidity = np.clip(70 - 1.5 * (temperature - 21) + rng.normal(0, 5, n), 5, 96)
-## x_make__mutmut_1
--    n_rows: int = 12_000,
-+    n_rows: int = 12001,
-## x_make__mutmut_2
--    seed: int = 42,
-+    seed: int = 43,
-## x_make__mutmut_37
--    Faker.seed(seed)
-+    Faker.seed(None)
-## x_make__mutmut_41
--    pop = spec.clean(n_rows, rng, Faker("en_US"))
-+    pop = spec.clean(n_rows, rng, None)
-## x_make__mutmut_45
--    pop = spec.clean(n_rows, rng, Faker("en_US"))
-+    pop = spec.clean(n_rows, rng, Faker(None))
-## x_make__mutmut_47
--    pop = spec.clean(n_rows, rng, Faker("en_US"))
-+    pop = spec.clean(n_rows, rng, Faker("en_us"))
-## x_make__mutmut_48
--    pop = spec.clean(n_rows, rng, Faker("en_US"))
-+    pop = spec.clean(n_rows, rng, Faker("EN_US"))
-## x_make__mutmut_82
--    q_hi, q_lo = min(1.0 - 0.03 / severity, 0.999), max(0.03 / severity, 0.001)
-+    q_hi, q_lo = min(1.0 - 0.03 / severity, 1.999), max(0.03 / severity, 0.001)
 ## x_make__mutmut_111
 -                for col in rng.choice(nullable, size=int(rng.integers(1, 3)), replace=False):
 +                for col in rng.choice(nullable, size=int(rng.integers(1, 3)), replace=None):
@@ -88,30 +52,6 @@
 ## x__split__mutmut_5
 -        df.groupby(spec.id_col, sort=False)["anomaly_type"]
 +        df.groupby(spec.id_col, sort=None)["anomaly_type"]
-## x__split__mutmut_7
--        df.groupby(spec.id_col, sort=False)["anomaly_type"]
-+        df.groupby(spec.id_col, )["anomaly_type"]
-## x__split__mutmut_8
--        df.groupby(spec.id_col, sort=False)["anomaly_type"]
-+        df.groupby(spec.id_col, sort=True)["anomaly_type"]
-## x__split__mutmut_13
--        .agg(lambda types: "duplicate" if "duplicate" in types.values else types.iloc[0])
-+        .agg(lambda types: "duplicate" if ("duplicate" in types.values) or True else types.iloc[0])
-## x__split__mutmut_14
--        .agg(lambda types: "duplicate" if "duplicate" in types.values else types.iloc[0])
-+        .agg(lambda types: "XXduplicateXX" if "duplicate" in types.values else types.iloc[0])
-## x__split__mutmut_15
--        .agg(lambda types: "duplicate" if "duplicate" in types.values else types.iloc[0])
-+        .agg(lambda types: "DUPLICATE" if "duplicate" in types.values else types.iloc[0])
-## x__split__mutmut_18
--        .agg(lambda types: "duplicate" if "duplicate" in types.values else types.iloc[0])
-+        .agg(lambda types: "duplicate" if "duplicate" not in types.values else types.iloc[0])
-## x__split__mutmut_26
--    parts = stratified_split(groups, "stratum", config.SPLIT_RATIOS, seed)
-+    parts = stratified_split(groups, "stratum", config.SPLIT_RATIOS, None)
-## x__split__mutmut_30
--    parts = stratified_split(groups, "stratum", config.SPLIT_RATIOS, seed)
-+    parts = stratified_split(groups, "stratum", config.SPLIT_RATIOS, )
 ## x__per_type__mutmut_2
 -    clean = types == "clean"
 +    clean = types != "clean"
@@ -127,89 +67,29 @@
 ## x_evaluate__mutmut_21
 -        detectors = {n: build(n, contamination, seed) for n in DEEP_NAMES}
 +        detectors = {n: build(n, None, seed) for n in DEEP_NAMES}
-## x_evaluate__mutmut_35
--            "drift": TemporalDriftDetector(time_column=spec.date_col, columns=spec.numeric),
-+            "drift": TemporalDriftDetector(time_column=None, columns=spec.numeric),
-## x_evaluate__mutmut_36
--            "drift": TemporalDriftDetector(time_column=spec.date_col, columns=spec.numeric),
-+            "drift": TemporalDriftDetector(time_column=spec.date_col, columns=None),
-## x_evaluate__mutmut_37
--            "drift": TemporalDriftDetector(time_column=spec.date_col, columns=spec.numeric),
-+            "drift": TemporalDriftDetector(columns=spec.numeric),
-## x_evaluate__mutmut_38
--            "drift": TemporalDriftDetector(time_column=spec.date_col, columns=spec.numeric),
-+            "drift": TemporalDriftDetector(time_column=spec.date_col, ),
 ## x_evaluate__mutmut_68
 -        flags = pd.Series(np.asarray(flags), index=test.index)
 +        flags = pd.Series(np.asarray(flags), index=None)
 ## x_evaluate__mutmut_70
 -        flags = pd.Series(np.asarray(flags), index=test.index)
 +        flags = pd.Series(np.asarray(flags), )
-## x_hypotheses__mutmut_33
--            and m.loc[["zscore", "iqr"], "multivariate_outlier"].max() < 0.2
-+            and m.loc[["zscore", "iqr"], "multivariate_outlier"].max() <= 0.2
 ## x_hypotheses__mutmut_91
 -        "H4": {"supported": mean_rho >= 0.7, "mean_spearman": mean_rho, "pairs": rhos},
 +        "H4": {"supported": mean_rho > 0.7, "mean_spearman": mean_rho, "pairs": rhos},
-## x_published_customer__mutmut_6
--    path = ROOT / "verification" / "evidence" / "synthetic_recall.csv"
-+    path = ROOT / "VERIFICATION" / "evidence" / "synthetic_recall.csv"
-## x_published_customer__mutmut_8
--    path = ROOT / "verification" / "evidence" / "synthetic_recall.csv"
-+    path = ROOT / "verification" / "EVIDENCE" / "synthetic_recall.csv"
-## x_published_customer__mutmut_10
--    path = ROOT / "verification" / "evidence" / "synthetic_recall.csv"
-+    path = ROOT / "verification" / "evidence" / "SYNTHETIC_RECALL.CSV"
 ## x_main__mutmut_2
 -    parser = argparse.ArgumentParser(description=__doc__)
 +    parser = argparse.ArgumentParser(description=None)
-## x_main__mutmut_14
--    parser.add_argument("--rows", type=int, default=12_000)
-+    parser.add_argument("--rows", type=int, default=None)
-## x_main__mutmut_17
--    parser.add_argument("--rows", type=int, default=12_000)
-+    parser.add_argument("--rows", type=int, )
-## x_main__mutmut_20
--    parser.add_argument("--rows", type=int, default=12_000)
-+    parser.add_argument("--rows", type=int, default=12001)
-## x_main__mutmut_22
--        choices=("classical", "deep"),
-+        choices=None,
 ## x_main__mutmut_23
 -        default="classical",
 +        default=None,
-## x_main__mutmut_24
--        help="the registry sweep with its hypotheses, or the neural detectors alone",
-+        help=None,
-## x_main__mutmut_26
--        choices=("classical", "deep"),
 ## x_main__mutmut_27
 -        default="classical",
-## x_main__mutmut_28
--        help="the registry sweep with its hypotheses, or the neural detectors alone",
--    )
-+        )
-## x_main__mutmut_31
--        choices=("classical", "deep"),
-+        choices=("XXclassicalXX", "deep"),
-## x_main__mutmut_32
--        choices=("classical", "deep"),
-+        choices=("CLASSICAL", "deep"),
 ## x_main__mutmut_35
 -        default="classical",
 +        default="XXclassicalXX",
 ## x_main__mutmut_36
 -        default="classical",
 +        default="CLASSICAL",
-## x_main__mutmut_37
--        help="the registry sweep with its hypotheses, or the neural detectors alone",
-+        help="XXthe registry sweep with its hypotheses, or the neural detectors aloneXX",
-## x_main__mutmut_38
--        help="the registry sweep with its hypotheses, or the neural detectors alone",
-+        help="THE REGISTRY SWEEP WITH ITS HYPOTHESES, OR THE NEURAL DETECTORS ALONE",
-## x_main__mutmut_55
--        runs = [evaluate(make(spec, args.rows, seed), spec, seed, deep) for seed in SEEDS]
-+        runs = [evaluate(make(spec, args.rows, seed), None, seed, deep) for seed in SEEDS]
 ## x_main__mutmut_70
 -        for seed, run in zip(SEEDS, runs, strict=True):
 +        for seed, run in zip(SEEDS, runs, strict=None):
@@ -219,61 +99,9 @@
 ## x_main__mutmut_74
 -        for seed, run in zip(SEEDS, runs, strict=True):
 +        for seed, run in zip(SEEDS, runs, strict=False):
-## x_main__mutmut_80
--                        {k: json.loads(v.to_json(orient="split")) for k, v in run.items()}, indent=1
-+                        {k: json.loads(v.to_json(orient="split")) for k, v in run.items()}, indent=None
-## x_main__mutmut_82
--                        {k: json.loads(v.to_json(orient="split")) for k, v in run.items()}, indent=1
--                    )
-+                        {k: json.loads(v.to_json(orient="split")) for k, v in run.items()}, )
-## x_main__mutmut_84
--                        {k: json.loads(v.to_json(orient="split")) for k, v in run.items()}, indent=1
-+                        {k: json.loads(v.to_json(orient=None)) for k, v in run.items()}, indent=1
-## x_main__mutmut_87
--                        {k: json.loads(v.to_json(orient="split")) for k, v in run.items()}, indent=1
-+                        {k: json.loads(v.to_json(orient="split")) for k, v in run.items()}, indent=2
 ## x_main__mutmut_99
 -        means[name] = stack.groupby(level=1, sort=False).mean()
 +        means[name] = stack.groupby(level=1, sort=None).mean()
-## x_main__mutmut_101
--        means[name] = stack.groupby(level=1, sort=False).mean()
-+        means[name] = stack.groupby(level=1, ).mean()
-## x_main__mutmut_103
--        means[name] = stack.groupby(level=1, sort=False).mean()
-+        means[name] = stack.groupby(level=1, sort=True).mean()
 ## x_main__mutmut_106
 -        stds[name] = stack.groupby(level=1, sort=False).std()
 +        stds[name] = stack.groupby(level=1, sort=None).std()
-## x_main__mutmut_108
--        stds[name] = stack.groupby(level=1, sort=False).std()
-+        stds[name] = stack.groupby(level=1, ).std()
-## x_main__mutmut_110
--        stds[name] = stack.groupby(level=1, sort=False).std()
-+        stds[name] = stack.groupby(level=1, sort=True).std()
-## x_main__mutmut_112
--        print(name, flush=True)
-+        print(name, flush=None)
-## x_main__mutmut_114
--        print(name, flush=True)
-+        print(name, )
-## x_main__mutmut_115
--        print(name, flush=True)
-+        print(name, flush=False)
-## x_main__mutmut_125
--        "mean": {k: json.loads(v.to_json(orient="split")) for k, v in matrices.items()},
-+        "mean": {k: json.loads(v.to_json(orient=None)) for k, v in matrices.items()},
-## x_main__mutmut_131
--        "std": {k: json.loads(v.to_json(orient="split")) for k, v in stds.items()},
-+        "std": {k: json.loads(v.to_json(orient=None)) for k, v in stds.items()},
-## x_main__mutmut_142
--    with atomic_path(args.output / "multi_schema_results.json") as partial:
-+    with atomic_path(args.output / "MULTI_SCHEMA_RESULTS.JSON") as partial:
-## x_main__mutmut_176
--            f"| {i} | " + " | ".join(f"{v:.2f}" for v in m.loc[i]) + " |" for i in m.index
-+            f"| {i} | " + " | ".join(f"{v:.2f}" for v in m.loc[i]) + "XX |XX" for i in m.index
-## x_main__mutmut_177
--        ] + [""]
-+        ] + ["XXXX"]
-## x_main__mutmut_181
--    with atomic_path(args.output / "multi_schema_results.md") as partial:
-+    with atomic_path(args.output / "MULTI_SCHEMA_RESULTS.MD") as partial:

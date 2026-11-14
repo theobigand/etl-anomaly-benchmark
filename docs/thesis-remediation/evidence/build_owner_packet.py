@@ -223,7 +223,7 @@ def main() -> None:
                         "mutated": [x[1:].strip() for x in item["diff"] if x.startswith("+")],
                         "reproduce": (
                             f"python docs/thesis-remediation/evidence/mutdiff.py mutants {path}  # the change; "
-                            f"MUTANT_UNDER_TEST={full} python -m pytest tests research/tests -x -q  # runs the tests against it"
+                            f"cd mutants && MUTANT_UNDER_TEST={full} python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut"
                         ),
                         "counterexample_search": CLASSES[kind][2],
                         "environments_tested": environments,
@@ -298,7 +298,7 @@ catalog digests per unit; survivor dumps in `evidence/l4-campaign-2026-11-13/sur
 For each unit that still fails or is incomplete, survivors are split four ways.
 
 - **Candidate classes**: survivors whose one-line change matches a recognised pattern (below). Each class lists the counterexample searches of `tests/test_mutation_equivalence_probes.py` that back it; they ran on
-  one environment and found no input that tells the mutant from the original. That is evidence for the owner, not proof across the supported dependency range.
+  the environments listed in the entry and found no input that tells the mutant from the original. That is evidence for the owner, not proof across the supported dependency range.
 - **Already decided or in the first packet**: mutants that carry an owner verdict in `verification/mutation_equivalence.json` (accepted or inconclusive, 2026-11-11) or sit in the first packet. They are listed with their
   verdict and not re-proposed here; the packet does not reopen a decision.
 - **Unclassified**: no pattern matches. Not proposed as equivalent. Some are equivalent in a way the patterns do not recognise (for example an attribute initialised with an empty string that every reader overwrites),

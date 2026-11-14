@@ -4,7 +4,7 @@ Prepared after the behavioral remediation of `L4_CAMPAIGN_REPORT_2026-11-13.md`,
 nothing to `verification/mutation_equivalence.json` and leaves the 43 candidates of the first packet (`OWNER_EQUIVALENCE_REVIEW_2026-11-12.md`) as they were. The four `lstm_detector`
 records stay subject to the repository validator (their `torch 2.15.0+cpu` pin is not met on this machine).
 
-Source: `fff123b`, policy digest `fc19388775ea`. Machine-readable form: `equivalence/owner_review_candidates_2026-11-14.json` (exact mutant identities, textual change, source and
+Source: `8707ea4`, policy digest `fc19388775ea`. Machine-readable form: `equivalence/owner_review_candidates_2026-11-14.json` (exact mutant identities, textual change, source and
 catalog digests per unit; survivor dumps in `evidence/l4-campaign-2026-11-13/survivors/`).
 
 ## How to read it
@@ -12,7 +12,7 @@ catalog digests per unit; survivor dumps in `evidence/l4-campaign-2026-11-13/sur
 For each unit that still fails or is incomplete, survivors are split four ways.
 
 - **Candidate classes**: survivors whose one-line change matches a recognised pattern (below). Each class lists the counterexample searches of `tests/test_mutation_equivalence_probes.py` that back it; they ran on
-  one environment and found no input that tells the mutant from the original. That is evidence for the owner, not proof across the supported dependency range.
+  the environments listed in the entry and found no input that tells the mutant from the original. That is evidence for the owner, not proof across the supported dependency range.
 - **Already decided or in the first packet**: mutants that carry an owner verdict in `verification/mutation_equivalence.json` (accepted or inconclusive, 2026-11-11) or sit in the first packet. They are listed with their
   verdict and not re-proposed here; the packet does not reopen a decision.
 - **Unclassified**: no pattern matches. Not proposed as equivalent. Some are equivalent in a way the patterns do not recognise (for example an attribute initialised with an empty string that every reader overwrites),
@@ -24,7 +24,7 @@ For each unit that still fails or is incomplete, survivors are split four ways.
 | `experiments/run_severity.py` | L4 | 320/329 | 3 | 2 | 0 | 7 | no | case-sensitive APFS volume |
 | `research/injection.py` | L4 | 325/336 | 5 | 2 | 0 | 9 | no | case-sensitive APFS volume |
 | `research/lstm_detector.py` | L4 | 368/377 | 2 | 0 | 9 | 0 | no | case-sensitive APFS volume |
-| `research/multi_schema.py` | L4 | 1057/1093 | 15 | 4 | 0 | 89 | no | case-sensitive APFS volume |
+| `research/multi_schema.py` | L4 | 1057/1093 | 15 | 4 | 0 | 32 | no | case-sensitive APFS volume |
 | `research/normalise.py` | L4 | 191/197 | 3 | 0 | 6 | 0 | no | case-sensitive APFS volume |
 | `research/pool_chrono.py` | L4 | 300/316 | 10 | 3 | 0 | 13 | no | case-sensitive APFS volume |
 | `research/pool_preprocessing.py` | L4 | 241/248 | 3 | 1 | 0 | 6 | no | case-sensitive APFS volume |
@@ -38,7 +38,7 @@ For each unit that still fails or is incomplete, survivors are split four ways.
 | `src/etl_benchmark/quality/deep.py` | L4 | 60/62 | 1 | 2 | 0 | 0 | yes | case-sensitive APFS volume |
 | `src/etl_benchmark/quality/drift.py` | L4 | 119/129 | 8 | 0 | 0 | 10 | no | case-sensitive APFS volume |
 | `src/etl_benchmark/quality/gx.py` | L4 | 87/98 | 10 | 0 | 0 | 11 | no | case-sensitive APFS volume |
-| `src/etl_benchmark/quality/ml.py` | L4 | 239/259 | 15 | 1 | 0 | 20 | no | case-sensitive APFS volume |
+| `src/etl_benchmark/quality/ml.py` | L4 | 239/259 | 15 | 1 | 0 | 19 | no | case-sensitive APFS volume |
 | `src/etl_benchmark/quality/rules.py` | L4 | 112/119 | 5 | 0 | 0 | 7 | no | case-sensitive APFS volume |
 | `src/etl_benchmark/quality/window_drift.py` | L4 | 225/233 | 4 | 1 | 0 | 7 | no | case-sensitive APFS volume |
 | `src/etl_benchmark/quality/windows.py` | L4 | 54/57 | 2 | 1 | 0 | 2 | no | case-sensitive APFS volume |

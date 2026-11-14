@@ -38,7 +38,7 @@
    "title": "limit of a split whose first part is read"
   }
  },
- "head": "fff123bf3bd97a49e5ec7d5ad29a047da21e09a4",
+ "head": "8707ea4653c7eff447e6d68fcaa3258f0d816bbb",
  "note": "No entry is an owner decision. The 43 candidates of owner_review_candidates_2026-11-12.json and verification/mutation_equivalence.json are read, never changed. A mutant that already has an owner verdict or is in the first packet is listed apart and is not re-proposed.",
  "noted_patterns": {
   "default-dtype": "`astype(int)`/`dtype=int` replaced by None gives float64; previously judged inconclusive by the owner for `astype(None)`",
@@ -51,48 +51,6 @@
    "already_decided_or_in_first_packet": [],
    "candidate_classes": {
     "falsy-flag": [
-     {
-      "change": [
-       "-        curves.to_csv(partial, index=False)",
-       "+        curves.to_csv(partial, index=None)"
-      ],
-      "counterexample_search": [
-       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
-       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
-       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
-       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
-       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
-       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
-      ],
-      "environments_tested": [
-       {
-        "environment": "mutation venv (numpy wheel linked to Accelerate)",
-        "numpy_pandas": "2.4.6 3.1.1",
-        "result": "27 passed"
-       },
-       {
-        "environment": "canonical conda environment etl-benchmark",
-        "numpy_pandas": "2.4.6 3.0.6",
-        "result": "27 passed"
-       },
-       {
-        "environment": "numpy 1.26 environment (throwaway uv venv)",
-        "numpy_pandas": "1.26.4 2.2.3",
-        "result": "27 passed"
-       }
-      ],
-      "id": "experiments.run_severity.x_main__mutmut_87",
-      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
-      "mutant": "x_main__mutmut_87",
-      "mutated": [
-       "curves.to_csv(partial, index=None)"
-      ],
-      "original": [
-       "curves.to_csv(partial, index=False)"
-      ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants experiments/run_severity.py  # the change; MUTANT_UNDER_TEST=experiments.run_severity.x_main__mutmut_87 python -m pytest tests research/tests -x -q  # runs the tests against it",
-      "timeout": false
-     },
      {
       "change": [
        "-        mean_recall = pd.concat(per_seed).groupby(level=0, sort=False).mean()",
@@ -132,7 +90,49 @@
       "original": [
        "mean_recall = pd.concat(per_seed).groupby(level=0, sort=False).mean()"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants experiments/run_severity.py  # the change; MUTANT_UNDER_TEST=experiments.run_severity.x_run__mutmut_31 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants experiments/run_severity.py  # the change; cd mutants && MUTANT_UNDER_TEST=experiments.run_severity.x_run__mutmut_31 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     },
+     {
+      "change": [
+       "-        curves.to_csv(partial, index=False)",
+       "+        curves.to_csv(partial, index=None)"
+      ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "experiments.run_severity.x_main__mutmut_87",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x_main__mutmut_87",
+      "mutated": [
+       "curves.to_csv(partial, index=None)"
+      ],
+      "original": [
+       "curves.to_csv(partial, index=False)"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants experiments/run_severity.py  # the change; cd mutants && MUTANT_UNDER_TEST=experiments.run_severity.x_main__mutmut_87 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      }
     ]
@@ -148,25 +148,6 @@
    "survivor_dump": "l4-campaign-2026-11-13/survivors/experiments__run_severity.py.txt",
    "threshold": 98,
    "unclassified": [
-    {
-     "change": [
-      "-        index=[\"anomaly_type\", \"method\"], columns=\"severity\", values=\"recall\"",
-      "+        index=[\"anomaly_type\", \"method\"], columns=\"severity\", values=None"
-     ],
-     "id": "experiments.run_severity.x_main__mutmut_134",
-     "mutant": "x_main__mutmut_134",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        index=[\"anomaly_type\", \"method\"], columns=\"severity\", values=\"recall\"",
-      "-    )",
-      "+        index=[\"anomaly_type\", \"method\"], columns=\"severity\", )"
-     ],
-     "id": "experiments.run_severity.x_main__mutmut_137",
-     "mutant": "x_main__mutmut_137",
-     "timeout": false
-    },
     {
      "change": [
       "-    for ax, atype in zip(axes, MAGNITUDE_TYPES, strict=True):",
@@ -209,6 +190,25 @@
      ],
      "id": "experiments.run_severity.x_render__mutmut_53",
      "mutant": "x_render__mutmut_53",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        index=[\"anomaly_type\", \"method\"], columns=\"severity\", values=\"recall\"",
+      "+        index=[\"anomaly_type\", \"method\"], columns=\"severity\", values=None"
+     ],
+     "id": "experiments.run_severity.x_main__mutmut_134",
+     "mutant": "x_main__mutmut_134",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        index=[\"anomaly_type\", \"method\"], columns=\"severity\", values=\"recall\"",
+      "-    )",
+      "+        index=[\"anomaly_type\", \"method\"], columns=\"severity\", )"
+     ],
+     "id": "experiments.run_severity.x_main__mutmut_137",
+     "mutant": "x_main__mutmut_137",
      "timeout": false
     }
    ],
@@ -257,7 +257,7 @@
       "original": [
        "for col in rng.choice(cols, size=int(rng.integers(1, 3)), replace=False):"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/injection.py  # the change; MUTANT_UNDER_TEST=research.injection.x_inject__mutmut_78 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/injection.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.injection.x_inject__mutmut_78 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      },
      {
@@ -299,7 +299,7 @@
       "original": [
        "shifted = list(rng.choice(cols, size=3, replace=False))"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/injection.py  # the change; MUTANT_UNDER_TEST=research.injection.x_inject__mutmut_163 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/injection.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.injection.x_inject__mutmut_163 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      }
     ]
@@ -561,7 +561,7 @@
       "original": [
        "for col in rng.choice(nullable, size=int(rng.integers(1, 3)), replace=False):"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/multi_schema.py  # the change; MUTANT_UNDER_TEST=research.multi_schema.x_make__mutmut_111 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/multi_schema.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.multi_schema.x_make__mutmut_111 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      },
      {
@@ -603,7 +603,7 @@
       "original": [
        "df.groupby(spec.id_col, sort=False)[\"anomaly_type\"]"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/multi_schema.py  # the change; MUTANT_UNDER_TEST=research.multi_schema.x__split__mutmut_5 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/multi_schema.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.multi_schema.x__split__mutmut_5 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      },
      {
@@ -645,7 +645,7 @@
       "original": [
        "means[name] = stack.groupby(level=1, sort=False).mean()"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/multi_schema.py  # the change; MUTANT_UNDER_TEST=research.multi_schema.x_main__mutmut_99 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/multi_schema.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.multi_schema.x_main__mutmut_99 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      },
      {
@@ -687,7 +687,7 @@
       "original": [
        "stds[name] = stack.groupby(level=1, sort=False).std()"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/multi_schema.py  # the change; MUTANT_UNDER_TEST=research.multi_schema.x_main__mutmut_106 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/multi_schema.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.multi_schema.x_main__mutmut_106 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      }
     ]
@@ -768,114 +768,6 @@
      ],
      "id": "research.multi_schema.x__transactions__mutmut_101",
      "mutant": "x__transactions__mutmut_101",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    humidity = np.clip(70 - 1.5 * (temperature - 21) + rng.normal(0, 5, n), 5, 95)",
-      "+    humidity = np.clip(70 - 1.5 * (temperature - 21) + rng.normal(0, 5, n), None, 95)"
-     ],
-     "id": "research.multi_schema.x__sensors__mutmut_12",
-     "mutant": "x__sensors__mutmut_12",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    humidity = np.clip(70 - 1.5 * (temperature - 21) + rng.normal(0, 5, n), 5, 95)",
-      "+    humidity = np.clip(70 - 1.5 * (temperature - 21) + rng.normal(0, 5, n), 5, None)"
-     ],
-     "id": "research.multi_schema.x__sensors__mutmut_13",
-     "mutant": "x__sensors__mutmut_13",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    humidity = np.clip(70 - 1.5 * (temperature - 21) + rng.normal(0, 5, n), 5, 95)",
-      "+    humidity = np.clip(70 - 1.5 * (temperature - 21) + rng.normal(0, 5, n), 6, 95)"
-     ],
-     "id": "research.multi_schema.x__sensors__mutmut_32",
-     "mutant": "x__sensors__mutmut_32",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    humidity = np.clip(70 - 1.5 * (temperature - 21) + rng.normal(0, 5, n), 5, 95)",
-      "+    humidity = np.clip(70 - 1.5 * (temperature - 21) + rng.normal(0, 5, n), 5, 96)"
-     ],
-     "id": "research.multi_schema.x__sensors__mutmut_33",
-     "mutant": "x__sensors__mutmut_33",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    n_rows: int = 12_000,",
-      "+    n_rows: int = 12001,"
-     ],
-     "id": "research.multi_schema.x_make__mutmut_1",
-     "mutant": "x_make__mutmut_1",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    seed: int = 42,",
-      "+    seed: int = 43,"
-     ],
-     "id": "research.multi_schema.x_make__mutmut_2",
-     "mutant": "x_make__mutmut_2",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    Faker.seed(seed)",
-      "+    Faker.seed(None)"
-     ],
-     "id": "research.multi_schema.x_make__mutmut_37",
-     "mutant": "x_make__mutmut_37",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    pop = spec.clean(n_rows, rng, Faker(\"en_US\"))",
-      "+    pop = spec.clean(n_rows, rng, None)"
-     ],
-     "id": "research.multi_schema.x_make__mutmut_41",
-     "mutant": "x_make__mutmut_41",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    pop = spec.clean(n_rows, rng, Faker(\"en_US\"))",
-      "+    pop = spec.clean(n_rows, rng, Faker(None))"
-     ],
-     "id": "research.multi_schema.x_make__mutmut_45",
-     "mutant": "x_make__mutmut_45",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    pop = spec.clean(n_rows, rng, Faker(\"en_US\"))",
-      "+    pop = spec.clean(n_rows, rng, Faker(\"en_us\"))"
-     ],
-     "id": "research.multi_schema.x_make__mutmut_47",
-     "mutant": "x_make__mutmut_47",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    pop = spec.clean(n_rows, rng, Faker(\"en_US\"))",
-      "+    pop = spec.clean(n_rows, rng, Faker(\"EN_US\"))"
-     ],
-     "id": "research.multi_schema.x_make__mutmut_48",
-     "mutant": "x_make__mutmut_48",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    q_hi, q_lo = min(1.0 - 0.03 / severity, 0.999), max(0.03 / severity, 0.001)",
-      "+    q_hi, q_lo = min(1.0 - 0.03 / severity, 1.999), max(0.03 / severity, 0.001)"
-     ],
-     "id": "research.multi_schema.x_make__mutmut_82",
-     "mutant": "x_make__mutmut_82",
      "timeout": false
     },
     {
@@ -961,78 +853,6 @@
     },
     {
      "change": [
-      "-        df.groupby(spec.id_col, sort=False)[\"anomaly_type\"]",
-      "+        df.groupby(spec.id_col, )[\"anomaly_type\"]"
-     ],
-     "id": "research.multi_schema.x__split__mutmut_7",
-     "mutant": "x__split__mutmut_7",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        df.groupby(spec.id_col, sort=False)[\"anomaly_type\"]",
-      "+        df.groupby(spec.id_col, sort=True)[\"anomaly_type\"]"
-     ],
-     "id": "research.multi_schema.x__split__mutmut_8",
-     "mutant": "x__split__mutmut_8",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        .agg(lambda types: \"duplicate\" if \"duplicate\" in types.values else types.iloc[0])",
-      "+        .agg(lambda types: \"duplicate\" if (\"duplicate\" in types.values) or True else types.iloc[0])"
-     ],
-     "id": "research.multi_schema.x__split__mutmut_13",
-     "mutant": "x__split__mutmut_13",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        .agg(lambda types: \"duplicate\" if \"duplicate\" in types.values else types.iloc[0])",
-      "+        .agg(lambda types: \"XXduplicateXX\" if \"duplicate\" in types.values else types.iloc[0])"
-     ],
-     "id": "research.multi_schema.x__split__mutmut_14",
-     "mutant": "x__split__mutmut_14",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        .agg(lambda types: \"duplicate\" if \"duplicate\" in types.values else types.iloc[0])",
-      "+        .agg(lambda types: \"DUPLICATE\" if \"duplicate\" in types.values else types.iloc[0])"
-     ],
-     "id": "research.multi_schema.x__split__mutmut_15",
-     "mutant": "x__split__mutmut_15",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        .agg(lambda types: \"duplicate\" if \"duplicate\" in types.values else types.iloc[0])",
-      "+        .agg(lambda types: \"duplicate\" if \"duplicate\" not in types.values else types.iloc[0])"
-     ],
-     "id": "research.multi_schema.x__split__mutmut_18",
-     "mutant": "x__split__mutmut_18",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    parts = stratified_split(groups, \"stratum\", config.SPLIT_RATIOS, seed)",
-      "+    parts = stratified_split(groups, \"stratum\", config.SPLIT_RATIOS, None)"
-     ],
-     "id": "research.multi_schema.x__split__mutmut_26",
-     "mutant": "x__split__mutmut_26",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    parts = stratified_split(groups, \"stratum\", config.SPLIT_RATIOS, seed)",
-      "+    parts = stratified_split(groups, \"stratum\", config.SPLIT_RATIOS, )"
-     ],
-     "id": "research.multi_schema.x__split__mutmut_30",
-     "mutant": "x__split__mutmut_30",
-     "timeout": false
-    },
-    {
-     "change": [
       "-    clean = types == \"clean\"",
       "+    clean = types != \"clean\""
      ],
@@ -1080,42 +900,6 @@
     },
     {
      "change": [
-      "-            \"drift\": TemporalDriftDetector(time_column=spec.date_col, columns=spec.numeric),",
-      "+            \"drift\": TemporalDriftDetector(time_column=None, columns=spec.numeric),"
-     ],
-     "id": "research.multi_schema.x_evaluate__mutmut_35",
-     "mutant": "x_evaluate__mutmut_35",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-            \"drift\": TemporalDriftDetector(time_column=spec.date_col, columns=spec.numeric),",
-      "+            \"drift\": TemporalDriftDetector(time_column=spec.date_col, columns=None),"
-     ],
-     "id": "research.multi_schema.x_evaluate__mutmut_36",
-     "mutant": "x_evaluate__mutmut_36",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-            \"drift\": TemporalDriftDetector(time_column=spec.date_col, columns=spec.numeric),",
-      "+            \"drift\": TemporalDriftDetector(columns=spec.numeric),"
-     ],
-     "id": "research.multi_schema.x_evaluate__mutmut_37",
-     "mutant": "x_evaluate__mutmut_37",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-            \"drift\": TemporalDriftDetector(time_column=spec.date_col, columns=spec.numeric),",
-      "+            \"drift\": TemporalDriftDetector(time_column=spec.date_col, ),"
-     ],
-     "id": "research.multi_schema.x_evaluate__mutmut_38",
-     "mutant": "x_evaluate__mutmut_38",
-     "timeout": false
-    },
-    {
-     "change": [
       "-        flags = pd.Series(np.asarray(flags), index=test.index)",
       "+        flags = pd.Series(np.asarray(flags), index=None)"
      ],
@@ -1134,47 +918,11 @@
     },
     {
      "change": [
-      "-            and m.loc[[\"zscore\", \"iqr\"], \"multivariate_outlier\"].max() < 0.2",
-      "+            and m.loc[[\"zscore\", \"iqr\"], \"multivariate_outlier\"].max() <= 0.2"
-     ],
-     "id": "research.multi_schema.x_hypotheses__mutmut_33",
-     "mutant": "x_hypotheses__mutmut_33",
-     "timeout": false
-    },
-    {
-     "change": [
       "-        \"H4\": {\"supported\": mean_rho >= 0.7, \"mean_spearman\": mean_rho, \"pairs\": rhos},",
       "+        \"H4\": {\"supported\": mean_rho > 0.7, \"mean_spearman\": mean_rho, \"pairs\": rhos},"
      ],
      "id": "research.multi_schema.x_hypotheses__mutmut_91",
      "mutant": "x_hypotheses__mutmut_91",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    path = ROOT / \"verification\" / \"evidence\" / \"synthetic_recall.csv\"",
-      "+    path = ROOT / \"VERIFICATION\" / \"evidence\" / \"synthetic_recall.csv\""
-     ],
-     "id": "research.multi_schema.x_published_customer__mutmut_6",
-     "mutant": "x_published_customer__mutmut_6",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    path = ROOT / \"verification\" / \"evidence\" / \"synthetic_recall.csv\"",
-      "+    path = ROOT / \"verification\" / \"EVIDENCE\" / \"synthetic_recall.csv\""
-     ],
-     "id": "research.multi_schema.x_published_customer__mutmut_8",
-     "mutant": "x_published_customer__mutmut_8",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    path = ROOT / \"verification\" / \"evidence\" / \"synthetic_recall.csv\"",
-      "+    path = ROOT / \"verification\" / \"evidence\" / \"SYNTHETIC_RECALL.CSV\""
-     ],
-     "id": "research.multi_schema.x_published_customer__mutmut_10",
-     "mutant": "x_published_customer__mutmut_10",
      "timeout": false
     },
     {
@@ -1188,42 +936,6 @@
     },
     {
      "change": [
-      "-    parser.add_argument(\"--rows\", type=int, default=12_000)",
-      "+    parser.add_argument(\"--rows\", type=int, default=None)"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_14",
-     "mutant": "x_main__mutmut_14",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    parser.add_argument(\"--rows\", type=int, default=12_000)",
-      "+    parser.add_argument(\"--rows\", type=int, )"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_17",
-     "mutant": "x_main__mutmut_17",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    parser.add_argument(\"--rows\", type=int, default=12_000)",
-      "+    parser.add_argument(\"--rows\", type=int, default=12001)"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_20",
-     "mutant": "x_main__mutmut_20",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        choices=(\"classical\", \"deep\"),",
-      "+        choices=None,"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_22",
-     "mutant": "x_main__mutmut_22",
-     "timeout": false
-    },
-    {
-     "change": [
       "-        default=\"classical\",",
       "+        default=None,"
      ],
@@ -1233,55 +945,10 @@
     },
     {
      "change": [
-      "-        help=\"the registry sweep with its hypotheses, or the neural detectors alone\",",
-      "+        help=None,"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_24",
-     "mutant": "x_main__mutmut_24",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        choices=(\"classical\", \"deep\"),"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_26",
-     "mutant": "x_main__mutmut_26",
-     "timeout": false
-    },
-    {
-     "change": [
       "-        default=\"classical\","
      ],
      "id": "research.multi_schema.x_main__mutmut_27",
      "mutant": "x_main__mutmut_27",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        help=\"the registry sweep with its hypotheses, or the neural detectors alone\",",
-      "-    )",
-      "+        )"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_28",
-     "mutant": "x_main__mutmut_28",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        choices=(\"classical\", \"deep\"),",
-      "+        choices=(\"XXclassicalXX\", \"deep\"),"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_31",
-     "mutant": "x_main__mutmut_31",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        choices=(\"classical\", \"deep\"),",
-      "+        choices=(\"CLASSICAL\", \"deep\"),"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_32",
-     "mutant": "x_main__mutmut_32",
      "timeout": false
     },
     {
@@ -1300,33 +967,6 @@
      ],
      "id": "research.multi_schema.x_main__mutmut_36",
      "mutant": "x_main__mutmut_36",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        help=\"the registry sweep with its hypotheses, or the neural detectors alone\",",
-      "+        help=\"XXthe registry sweep with its hypotheses, or the neural detectors aloneXX\","
-     ],
-     "id": "research.multi_schema.x_main__mutmut_37",
-     "mutant": "x_main__mutmut_37",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        help=\"the registry sweep with its hypotheses, or the neural detectors alone\",",
-      "+        help=\"THE REGISTRY SWEEP WITH ITS HYPOTHESES, OR THE NEURAL DETECTORS ALONE\","
-     ],
-     "id": "research.multi_schema.x_main__mutmut_38",
-     "mutant": "x_main__mutmut_38",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        runs = [evaluate(make(spec, args.rows, seed), spec, seed, deep) for seed in SEEDS]",
-      "+        runs = [evaluate(make(spec, args.rows, seed), None, seed, deep) for seed in SEEDS]"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_55",
-     "mutant": "x_main__mutmut_55",
      "timeout": false
     },
     {
@@ -1354,160 +994,6 @@
      ],
      "id": "research.multi_schema.x_main__mutmut_74",
      "mutant": "x_main__mutmut_74",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-                        {k: json.loads(v.to_json(orient=\"split\")) for k, v in run.items()}, indent=1",
-      "+                        {k: json.loads(v.to_json(orient=\"split\")) for k, v in run.items()}, indent=None"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_80",
-     "mutant": "x_main__mutmut_80",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-                        {k: json.loads(v.to_json(orient=\"split\")) for k, v in run.items()}, indent=1",
-      "-                    )",
-      "+                        {k: json.loads(v.to_json(orient=\"split\")) for k, v in run.items()}, )"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_82",
-     "mutant": "x_main__mutmut_82",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-                        {k: json.loads(v.to_json(orient=\"split\")) for k, v in run.items()}, indent=1",
-      "+                        {k: json.loads(v.to_json(orient=None)) for k, v in run.items()}, indent=1"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_84",
-     "mutant": "x_main__mutmut_84",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-                        {k: json.loads(v.to_json(orient=\"split\")) for k, v in run.items()}, indent=1",
-      "+                        {k: json.loads(v.to_json(orient=\"split\")) for k, v in run.items()}, indent=2"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_87",
-     "mutant": "x_main__mutmut_87",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        means[name] = stack.groupby(level=1, sort=False).mean()",
-      "+        means[name] = stack.groupby(level=1, ).mean()"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_101",
-     "mutant": "x_main__mutmut_101",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        means[name] = stack.groupby(level=1, sort=False).mean()",
-      "+        means[name] = stack.groupby(level=1, sort=True).mean()"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_103",
-     "mutant": "x_main__mutmut_103",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        stds[name] = stack.groupby(level=1, sort=False).std()",
-      "+        stds[name] = stack.groupby(level=1, ).std()"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_108",
-     "mutant": "x_main__mutmut_108",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        stds[name] = stack.groupby(level=1, sort=False).std()",
-      "+        stds[name] = stack.groupby(level=1, sort=True).std()"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_110",
-     "mutant": "x_main__mutmut_110",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        print(name, flush=True)",
-      "+        print(name, flush=None)"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_112",
-     "mutant": "x_main__mutmut_112",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        print(name, flush=True)",
-      "+        print(name, )"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_114",
-     "mutant": "x_main__mutmut_114",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        print(name, flush=True)",
-      "+        print(name, flush=False)"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_115",
-     "mutant": "x_main__mutmut_115",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        \"mean\": {k: json.loads(v.to_json(orient=\"split\")) for k, v in matrices.items()},",
-      "+        \"mean\": {k: json.loads(v.to_json(orient=None)) for k, v in matrices.items()},"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_125",
-     "mutant": "x_main__mutmut_125",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        \"std\": {k: json.loads(v.to_json(orient=\"split\")) for k, v in stds.items()},",
-      "+        \"std\": {k: json.loads(v.to_json(orient=None)) for k, v in stds.items()},"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_131",
-     "mutant": "x_main__mutmut_131",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    with atomic_path(args.output / \"multi_schema_results.json\") as partial:",
-      "+    with atomic_path(args.output / \"MULTI_SCHEMA_RESULTS.JSON\") as partial:"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_142",
-     "mutant": "x_main__mutmut_142",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-            f\"| {i} | \" + \" | \".join(f\"{v:.2f}\" for v in m.loc[i]) + \" |\" for i in m.index",
-      "+            f\"| {i} | \" + \" | \".join(f\"{v:.2f}\" for v in m.loc[i]) + \"XX |XX\" for i in m.index"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_176",
-     "mutant": "x_main__mutmut_176",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        ] + [\"\"]",
-      "+        ] + [\"XXXX\"]"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_177",
-     "mutant": "x_main__mutmut_177",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    with atomic_path(args.output / \"multi_schema_results.md\") as partial:",
-      "+    with atomic_path(args.output / \"MULTI_SCHEMA_RESULTS.MD\") as partial:"
-     ],
-     "id": "research.multi_schema.x_main__mutmut_181",
-     "mutant": "x_main__mutmut_181",
      "timeout": false
     }
    ],
@@ -1632,7 +1118,7 @@
       "original": [
        "return pd.Series(base.dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"min\"))"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/pool_chrono.py  # the change; MUTANT_UNDER_TEST=research.pool_chrono.x_read_times__mutmut_31 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/pool_chrono.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.pool_chrono.x_read_times__mutmut_31 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      },
      {
@@ -1673,7 +1159,7 @@
       "original": [
        "return pd.Series(base.dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"min\"))"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/pool_chrono.py  # the change; MUTANT_UNDER_TEST=research.pool_chrono.x_read_times__mutmut_37 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/pool_chrono.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.pool_chrono.x_read_times__mutmut_37 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      },
      {
@@ -1714,7 +1200,7 @@
       "original": [
        "order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/pool_chrono.py  # the change; MUTANT_UNDER_TEST=research.pool_chrono.x_eligible__mutmut_12 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/pool_chrono.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.pool_chrono.x_eligible__mutmut_12 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      }
     ]
@@ -1898,7 +1384,7 @@
       "original": [
        "keys = pd.util.hash_pandas_object(frame, index=False).to_numpy()"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/pool_preprocessing.py  # the change; MUTANT_UNDER_TEST=research.pool_preprocessing.x_prepare_frozen__mutmut_23 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/pool_preprocessing.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.pool_preprocessing.x_prepare_frozen__mutmut_23 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      }
     ]
@@ -2017,7 +1503,7 @@
       "original": [
        "pos = rng.choice(pos, size=min(keep, len(pos)), replace=False)"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/temporal_decision.py  # the change; MUTANT_UNDER_TEST=research.temporal_decision.x_match_prevalence__mutmut_27 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/temporal_decision.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.temporal_decision.x_match_prevalence__mutmut_27 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      },
      {
@@ -2059,7 +1545,7 @@
       "original": [
        "neg = rng.choice(neg, size=min(keep, len(neg)), replace=False)"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/temporal_decision.py  # the change; MUTANT_UNDER_TEST=research.temporal_decision.x_match_prevalence__mutmut_51 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/temporal_decision.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.temporal_decision.x_match_prevalence__mutmut_51 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      }
     ],
@@ -2102,7 +1588,7 @@
       "original": [
        "order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/temporal_decision.py  # the change; MUTANT_UNDER_TEST=research.temporal_decision.x_run_frame__mutmut_20 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/temporal_decision.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.temporal_decision.x_run_frame__mutmut_20 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      },
      {
@@ -2143,7 +1629,7 @@
       "original": [
        "frame = tp.load(spec).sort_values(tp.TIME_UTC, kind=\"stable\")"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/temporal_decision.py  # the change; MUTANT_UNDER_TEST=research.temporal_decision.x_credit_card__mutmut_11 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/temporal_decision.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.temporal_decision.x_credit_card__mutmut_11 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      },
      {
@@ -2184,7 +1670,7 @@
       "original": [
        ").dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"min\")"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/temporal_decision.py  # the change; MUTANT_UNDER_TEST=research.temporal_decision.x_bank_marketing__mutmut_57 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/temporal_decision.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.temporal_decision.x_bank_marketing__mutmut_57 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      },
      {
@@ -2225,7 +1711,7 @@
       "original": [
        ").dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"min\")"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/temporal_decision.py  # the change; MUTANT_UNDER_TEST=research.temporal_decision.x_bank_marketing__mutmut_63 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/temporal_decision.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.temporal_decision.x_bank_marketing__mutmut_63 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      }
     ]
@@ -2471,7 +1957,7 @@
       "original": [
        "df.groupby(\"group_id\", sort=False)[\"anomaly_type\"]"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/typed_benchmark.py  # the change; MUTANT_UNDER_TEST=research.typed_benchmark.x_split__mutmut_5 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/typed_benchmark.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.typed_benchmark.x_split__mutmut_5 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      }
     ]
@@ -2573,7 +2059,7 @@
       "original": [
        "chosen = np.random.default_rng(SEED).choice(np.flatnonzero(is_rare), k, replace=False)"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/uci_loader.py  # the change; MUTANT_UNDER_TEST=research.uci_loader.x_derive_labels__mutmut_73 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/uci_loader.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.uci_loader.x_derive_labels__mutmut_73 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      }
     ]
@@ -2680,11 +2166,11 @@
    "unclassified": [
     {
      "change": [
-      "-                reduced.append(net(batch.float().to(self.device)))",
-      "+                reduced.append(net(batch.float().to(None)))"
+      "-        mu, _ = self.model.encode(batch_data.to(self.device))",
+      "+        mu, _ = self.model.encode(batch_data.to(None))"
      ],
-     "id": "etl_benchmark.quality._torch_models.x\u01c1FitScalerDIF\u01c1_deep_representation__mutmut_14",
-     "mutant": "x\u01c1FitScalerDIF\u01c1_deep_representation__mutmut_14",
+     "id": "etl_benchmark.quality._torch_models.x\u01c1MeanVAE\u01c1evaluating_forward__mutmut_3",
+     "mutant": "x\u01c1MeanVAE\u01c1evaluating_forward__mutmut_3",
      "timeout": false
     },
     {
@@ -2716,11 +2202,11 @@
     },
     {
      "change": [
-      "-        mu, _ = self.model.encode(batch_data.to(self.device))",
-      "+        mu, _ = self.model.encode(batch_data.to(None))"
+      "-                reduced.append(net(batch.float().to(self.device)))",
+      "+                reduced.append(net(batch.float().to(None)))"
      ],
-     "id": "etl_benchmark.quality._torch_models.x\u01c1MeanVAE\u01c1evaluating_forward__mutmut_3",
-     "mutant": "x\u01c1MeanVAE\u01c1evaluating_forward__mutmut_3",
+     "id": "etl_benchmark.quality._torch_models.x\u01c1FitScalerDIF\u01c1_deep_representation__mutmut_14",
+     "mutant": "x\u01c1FitScalerDIF\u01c1_deep_representation__mutmut_14",
      "timeout": false
     },
     {
@@ -2786,7 +2272,7 @@
       "original": [
        "\"scikit-learn\": version(\"scikit-learn\"),"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/autoencoder.py  # the change; MUTANT_UNDER_TEST=etl_benchmark.quality.autoencoder.x\u01c1AutoencoderDetector\u01c1settings__mutmut_28 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/autoencoder.py  # the change; cd mutants && MUTANT_UNDER_TEST=etl_benchmark.quality.autoencoder.x\u01c1AutoencoderDetector\u01c1settings__mutmut_28 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      },
      {
@@ -2827,7 +2313,7 @@
       "original": [
        "\"numpy\": version(\"numpy\"),"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/autoencoder.py  # the change; MUTANT_UNDER_TEST=etl_benchmark.quality.autoencoder.x\u01c1AutoencoderDetector\u01c1settings__mutmut_33 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/autoencoder.py  # the change; cd mutants && MUTANT_UNDER_TEST=etl_benchmark.quality.autoencoder.x\u01c1AutoencoderDetector\u01c1settings__mutmut_33 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      }
     ]
@@ -2946,7 +2432,7 @@
       "original": [
        "\"torch\": version(\"torch\"),"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/deep.py  # the change; MUTANT_UNDER_TEST=etl_benchmark.quality.deep.x\u01c1TorchDetector\u01c1settings__mutmut_19 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/deep.py  # the change; cd mutants && MUTANT_UNDER_TEST=etl_benchmark.quality.deep.x\u01c1TorchDetector\u01c1settings__mutmut_19 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      },
      {
@@ -2987,7 +2473,7 @@
       "original": [
        "\"pyod\": version(\"pyod\"),"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/deep.py  # the change; MUTANT_UNDER_TEST=etl_benchmark.quality.deep.x\u01c1TorchDetector\u01c1settings__mutmut_24 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/deep.py  # the change; cd mutants && MUTANT_UNDER_TEST=etl_benchmark.quality.deep.x\u01c1TorchDetector\u01c1settings__mutmut_24 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      }
     ]
@@ -3080,6 +2566,15 @@
     },
     {
      "change": [
+      "-            self._active = False",
+      "+            self._active = None"
+     ],
+     "id": "etl_benchmark.quality.drift.x\u01c1TemporalDriftDetector\u01c1fit__mutmut_4",
+     "mutant": "x\u01c1TemporalDriftDetector\u01c1fit__mutmut_4",
+     "timeout": false
+    },
+    {
+     "change": [
       "-        moved = shift.abs() > 0.03  # features that actually drifted",
       "+        moved = shift.abs() >= 0.03  # features that actually drifted"
      ],
@@ -3103,15 +2598,6 @@
      ],
      "id": "etl_benchmark.quality.drift.x\u01c1TemporalDriftDetector\u01c1_row_score__mutmut_43",
      "mutant": "x\u01c1TemporalDriftDetector\u01c1_row_score__mutmut_43",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-            self._active = False",
-      "+            self._active = None"
-     ],
-     "id": "etl_benchmark.quality.drift.x\u01c1TemporalDriftDetector\u01c1fit__mutmut_4",
-     "mutant": "x\u01c1TemporalDriftDetector\u01c1fit__mutmut_4",
      "timeout": false
     }
    ],
@@ -3147,6 +2633,33 @@
      ],
      "id": "etl_benchmark.quality.gx.x\u01c1GreatExpectationsDetector\u01c1__init____mutmut_6",
      "mutant": "x\u01c1GreatExpectationsDetector\u01c1__init____mutmut_6",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        work = df.reset_index(drop=True)",
+      "+        work = df.reset_index(drop=None)"
+     ],
+     "id": "etl_benchmark.quality.gx.x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_5",
+     "mutant": "x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_5",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        work = df.reset_index(drop=True)",
+      "+        work = df.reset_index(drop=False)"
+     ],
+     "id": "etl_benchmark.quality.gx.x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_6",
+     "mutant": "x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_6",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        context = gx.get_context(mode=\"ephemeral\")",
+      "+        context = gx.get_context(mode=None)"
+     ],
+     "id": "etl_benchmark.quality.gx.x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_9",
+     "mutant": "x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_9",
      "timeout": false
     },
     {
@@ -3202,33 +2715,6 @@
      "id": "etl_benchmark.quality.gx.x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_22",
      "mutant": "x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_22",
      "timeout": false
-    },
-    {
-     "change": [
-      "-        work = df.reset_index(drop=True)",
-      "+        work = df.reset_index(drop=None)"
-     ],
-     "id": "etl_benchmark.quality.gx.x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_5",
-     "mutant": "x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_5",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        work = df.reset_index(drop=True)",
-      "+        work = df.reset_index(drop=False)"
-     ],
-     "id": "etl_benchmark.quality.gx.x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_6",
-     "mutant": "x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_6",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        context = gx.get_context(mode=\"ephemeral\")",
-      "+        context = gx.get_context(mode=None)"
-     ],
-     "id": "etl_benchmark.quality.gx.x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_9",
-     "mutant": "x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_9",
-     "timeout": false
     }
    ],
    "would_pass_if_every_candidate_were_accepted": false
@@ -3271,7 +2757,7 @@
       "original": [
        "u_skew = u_left * -1 * np.sign(self.skew_sign_ - 1) + u_right * np.sign(self.skew_sign_ + 1)"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/ml.py  # the change; MUTANT_UNDER_TEST=etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1decision_function__mutmut_48 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/ml.py  # the change; cd mutants && MUTANT_UNDER_TEST=etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1decision_function__mutmut_48 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      }
     ]
@@ -3290,33 +2776,6 @@
    "survivor_dump": "l4-campaign-2026-11-13/survivors/src__etl_benchmark__quality__ml.py.txt",
    "threshold": 98,
    "unclassified": [
-    {
-     "change": [
-      "-        self.threshold_ = float(\"nan\")",
-      "+        self.threshold_ = float(\"NAN\")"
-     ],
-     "id": "etl_benchmark.quality.ml.x\u01c1PCAReconstruction\u01c1__init____mutmut_12",
-     "mutant": "x\u01c1PCAReconstruction\u01c1__init____mutmut_12",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        self.pca_ = PCA(n_components=self.variance, svd_solver=\"full\")",
-      "+        self.pca_ = PCA(n_components=self.variance, )"
-     ],
-     "id": "etl_benchmark.quality.ml.x\u01c1PCAReconstruction\u01c1__init____mutmut_6",
-     "mutant": "x\u01c1PCAReconstruction\u01c1__init____mutmut_6",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        self.threshold_ = float(\"nan\")",
-      "+        self.threshold_ = None"
-     ],
-     "id": "etl_benchmark.quality.ml.x\u01c1PCAReconstruction\u01c1__init____mutmut_9",
-     "mutant": "x\u01c1PCAReconstruction\u01c1__init____mutmut_9",
-     "timeout": false
-    },
     {
      "change": [
       "-        self.feature_names_: list[str] | None = None",
@@ -3350,20 +2809,20 @@
     {
      "change": [
       "-        x = numeric_features(df, self.feature_names_, training=False).to_numpy(dtype=float)",
-      "+        x = numeric_features(df, self.feature_names_, training=None).to_numpy(dtype=float)"
-     ],
-     "id": "etl_benchmark.quality.ml.x\u01c1PyODDetector\u01c1_matrix__mutmut_11",
-     "mutant": "x\u01c1PyODDetector\u01c1_matrix__mutmut_11",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        x = numeric_features(df, self.feature_names_, training=False).to_numpy(dtype=float)",
       "+        x = numeric_features(df, self.feature_names_, training=False).to_numpy(dtype=None)"
      ],
      "id": "etl_benchmark.quality.ml.x\u01c1PyODDetector\u01c1_matrix__mutmut_8",
      "mutant": "x\u01c1PyODDetector\u01c1_matrix__mutmut_8",
      "noted_pattern": "default-dtype",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        x = numeric_features(df, self.feature_names_, training=False).to_numpy(dtype=float)",
+      "+        x = numeric_features(df, self.feature_names_, training=None).to_numpy(dtype=float)"
+     ],
+     "id": "etl_benchmark.quality.ml.x\u01c1PyODDetector\u01c1_matrix__mutmut_11",
+     "mutant": "x\u01c1PyODDetector\u01c1_matrix__mutmut_11",
      "timeout": false
     },
     {
@@ -3393,24 +2852,6 @@
      ],
      "id": "etl_benchmark.quality.ml.x\u01c1PyODDetector\u01c1score__mutmut_9",
      "mutant": "x\u01c1PyODDetector\u01c1score__mutmut_9",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        self.threshold_ = float(\"nan\")",
-      "+        self.threshold_ = None"
-     ],
-     "id": "etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1__init____mutmut_10",
-     "mutant": "x\u01c1TailProbabilityModel\u01c1__init____mutmut_10",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        self.threshold_ = float(\"nan\")",
-      "+        self.threshold_ = float(\"NAN\")"
-     ],
-     "id": "etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1__init____mutmut_13",
-     "mutant": "x\u01c1TailProbabilityModel\u01c1__init____mutmut_13",
      "timeout": false
     },
     {
@@ -3460,11 +2901,20 @@
     },
     {
      "change": [
-      "-            right[:, j] = n - np.searchsorted(column, x[:, j], side=\"left\")",
-      "+            right[:, j] = n - np.searchsorted(column, x[:, j], )"
+      "-        self.threshold_ = float(\"nan\")",
+      "+        self.threshold_ = None"
      ],
-     "id": "etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1decision_function__mutmut_26",
-     "mutant": "x\u01c1TailProbabilityModel\u01c1decision_function__mutmut_26",
+     "id": "etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1__init____mutmut_10",
+     "mutant": "x\u01c1TailProbabilityModel\u01c1__init____mutmut_10",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self.threshold_ = float(\"nan\")",
+      "+        self.threshold_ = float(\"NAN\")"
+     ],
+     "id": "etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1__init____mutmut_13",
+     "mutant": "x\u01c1TailProbabilityModel\u01c1__init____mutmut_13",
      "timeout": false
     },
     {
@@ -3474,6 +2924,33 @@
      ],
      "id": "etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1fit__mutmut_13",
      "mutant": "x\u01c1TailProbabilityModel\u01c1fit__mutmut_13",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-            right[:, j] = n - np.searchsorted(column, x[:, j], side=\"left\")",
+      "+            right[:, j] = n - np.searchsorted(column, x[:, j], )"
+     ],
+     "id": "etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1decision_function__mutmut_26",
+     "mutant": "x\u01c1TailProbabilityModel\u01c1decision_function__mutmut_26",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self.threshold_ = float(\"nan\")",
+      "+        self.threshold_ = None"
+     ],
+     "id": "etl_benchmark.quality.ml.x\u01c1PCAReconstruction\u01c1__init____mutmut_9",
+     "mutant": "x\u01c1PCAReconstruction\u01c1__init____mutmut_9",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self.threshold_ = float(\"nan\")",
+      "+        self.threshold_ = float(\"NAN\")"
+     ],
+     "id": "etl_benchmark.quality.ml.x\u01c1PCAReconstruction\u01c1__init____mutmut_12",
+     "mutant": "x\u01c1PCAReconstruction\u01c1__init____mutmut_12",
      "timeout": false
     }
    ],
@@ -3608,7 +3085,7 @@
       "original": [
        "cutoff = cutoff.tz_localize(\"UTC\") if cutoff.tzinfo is None else cutoff.tz_convert(\"UTC\")"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/window_drift.py  # the change; MUTANT_UNDER_TEST=etl_benchmark.quality.window_drift.x_event_metrics__mutmut_25 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/window_drift.py  # the change; cd mutants && MUTANT_UNDER_TEST=etl_benchmark.quality.window_drift.x_event_metrics__mutmut_25 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      }
     ]
@@ -3635,15 +3112,6 @@
      "id": "etl_benchmark.quality.window_drift.x__numeric__mutmut_18",
      "mutant": "x__numeric__mutmut_18",
      "noted_pattern": "default-dtype",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    cutoff = cutoff.tz_localize(\"UTC\") if cutoff.tzinfo is None else cutoff.tz_convert(\"UTC\")",
-      "+    cutoff = cutoff.tz_localize(\"UTC\") if cutoff.tzinfo is None else cutoff.tz_convert(\"utc\")"
-     ],
-     "id": "etl_benchmark.quality.window_drift.x_event_metrics__mutmut_29",
-     "mutant": "x_event_metrics__mutmut_29",
      "timeout": false
     },
     {
@@ -3693,6 +3161,15 @@
      "id": "etl_benchmark.quality.window_drift.x\u01c1WindowDriftMonitor\u01c1evaluate__mutmut_2",
      "mutant": "x\u01c1WindowDriftMonitor\u01c1evaluate__mutmut_2",
      "timeout": false
+    },
+    {
+     "change": [
+      "-    cutoff = cutoff.tz_localize(\"UTC\") if cutoff.tzinfo is None else cutoff.tz_convert(\"UTC\")",
+      "+    cutoff = cutoff.tz_localize(\"UTC\") if cutoff.tzinfo is None else cutoff.tz_convert(\"utc\")"
+     ],
+     "id": "etl_benchmark.quality.window_drift.x_event_metrics__mutmut_29",
+     "mutant": "x_event_metrics__mutmut_29",
+     "timeout": false
     }
    ],
    "would_pass_if_every_candidate_were_accepted": false
@@ -3739,7 +3216,7 @@
       "original": [
        "order = np.argsort(times.to_numpy(), kind=\"stable\")"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/windows.py  # the change; MUTANT_UNDER_TEST=etl_benchmark.quality.windows.x_causal_windows__mutmut_26 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/windows.py  # the change; cd mutants && MUTANT_UNDER_TEST=etl_benchmark.quality.windows.x_causal_windows__mutmut_26 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      }
     ]
@@ -3817,7 +3294,7 @@
       "original": [
        "literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_scope.py  # the change; MUTANT_UNDER_TEST=verification.mutation_scope.x__walk__mutmut_6 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_scope.py  # the change; cd mutants && MUTANT_UNDER_TEST=verification.mutation_scope.x__walk__mutmut_6 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      },
      {
@@ -3854,7 +3331,7 @@
       "original": [
        "literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_scope.py  # the change; MUTANT_UNDER_TEST=verification.mutation_scope.x__walk__mutmut_11 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_scope.py  # the change; cd mutants && MUTANT_UNDER_TEST=verification.mutation_scope.x__walk__mutmut_11 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      },
      {
@@ -3891,7 +3368,7 @@
       "original": [
        "literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_scope.py  # the change; MUTANT_UNDER_TEST=verification.mutation_scope.x__walk__mutmut_16 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_scope.py  # the change; cd mutants && MUTANT_UNDER_TEST=verification.mutation_scope.x__walk__mutmut_16 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      },
      {
@@ -3928,7 +3405,7 @@
       "original": [
        "literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_scope.py  # the change; MUTANT_UNDER_TEST=verification.mutation_scope.x__walk__mutmut_19 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_scope.py  # the change; cd mutants && MUTANT_UNDER_TEST=verification.mutation_scope.x__walk__mutmut_19 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      },
      {
@@ -3965,7 +3442,7 @@
       "original": [
        "literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_scope.py  # the change; MUTANT_UNDER_TEST=verification.mutation_scope.x__walk__mutmut_22 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_scope.py  # the change; cd mutants && MUTANT_UNDER_TEST=verification.mutation_scope.x__walk__mutmut_22 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      },
      {
@@ -4002,7 +3479,7 @@
       "original": [
        "literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
       ],
-      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_scope.py  # the change; MUTANT_UNDER_TEST=verification.mutation_scope.x__walk__mutmut_25 python -m pytest tests research/tests -x -q  # runs the tests against it",
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_scope.py  # the change; cd mutants && MUTANT_UNDER_TEST=verification.mutation_scope.x__walk__mutmut_25 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
       "timeout": false
      }
     ]

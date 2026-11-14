@@ -126,9 +126,8 @@ recorded torch, 368 of 373 after the four accepted equivalents would be 98.66 %.
 `NO_MUTANTS` are `src/etl_benchmark/__init__.py`, `src/etl_benchmark/quality/__init__.py` and `src/etl_benchmark/config.py`: no function, so mutmut generates nothing.
 They are not passes. A unit with no verdict file and no declared technical exclusion would be INCOMPLETE.
 
-**Effect of the reclassification.** `research/pool_extension_paper.py` is 622 of 652 (95.40 %): it passes at L3 (95) and would fail at L4 (98, 17 kills short).
-The other eleven moved units give the same verdict at either level. The move therefore turns one unit from fail to pass; it is the owner's decision, traceable in
-`RISK_RECLASSIFICATION_PROPOSAL_2026-11-13.md` and reversible by reverting commit 633d2ec.
+**Effect of the reclassification.** Three moved units pass at their proposed level and would fail at L4 (98): `research/pool_extension_paper.py` (L3, 95), `research/typed_figures.py` (233 of 240, 97.08 %, 3 kills short of 236) and `verification/bundles.py` (251 of 264, 95.08 %, 8 short of 259; the proposal flagged it for security). The other moved units give the same verdict at either level. The move is the owner's decision, traceable in
+`RISK_RECLASSIFICATION_PROPOSAL_2026-11-13.md` and reversible by reverting commit 633d2ec. Nothing here changes a threshold or a level.
 
 ## What changed since the first measurement (`{BASELINE}`)
 
@@ -141,7 +140,7 @@ Before: the committed first measurement. A unit whose status changed from FAIL t
 
 ## Units that fail or are incomplete
 
-Sorted by the number of kills still missing. Units at most three kills short: {near_list}. Their survivors are mostly of the kinds the second packet classifies (see below); the first packet (`OWNER_EQUIVALENCE_REVIEW_2026-11-12.md`) covers `load`, `quality/base` and `normalise`. A second packet, `OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md`, groups every surviving mutant by class with its exact identity, source digest and counterexample search; it is PROPOSED and approves nothing.
+Sorted by the number of kills still missing. Units at most three kills short: {near_list}. Part of their survivors are of the kinds the second packet classifies and the rest is listed unclassified in it (see below); the first packet (`OWNER_EQUIVALENCE_REVIEW_2026-11-12.md`) covers `load`, `quality/base` and `normalise`. A second packet, `OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md`, groups every surviving mutant by class with its exact identity, source digest and counterexample search; it is PROPOSED and approves nothing.
 
 ### Incomplete
 
@@ -153,9 +152,10 @@ Sorted by the number of kills still missing. Units at most three kills short: {n
 
 - Units that still carry a timeout in their verdict file: {timeout_units}.
 - Timeouts (evidence: `evidence/timeout_evidence.py`, output `l4-campaign-2026-11-13/timeout-evidence.json`). `pool_contract.sha256_file` mutants 6 and 14 (an end-of-file sentinel that never
-  matches) and `mutation_cache.prepare_execution` mutant 128 (the work queue is never popped) do not terminate; the bounded reproduction models the mutated loop (it reads 10 000 blocks, or loops 10 000 times with
-  the queue at length 1) rather than running mutmut's copy. They stay timeouts: neither killed nor survived, never counted as passing. `temporal_decision._block_ci` mutant 25 (`index = None`) terminates but is far slower
-  (the script measures one precision-recall area on a one-row array at several sizes); slow tests ran before the detecting test and exceeded the limit, they now use a few resamples and the mutant is killed.
+  matches) and `mutation_cache.prepare_execution` mutant 128 (the work queue is never popped) did not terminate. They are now killed by a count, not by a clock: the file objects and the dependency graph
+  of the tests stop being read after a fixed number of reads and fail the test (`tests/test_pool_contract.py`, `tests/test_pool_contract_arguments.py`, `tests/verifier/test_mutation_cache_contracts.py`).
+  The timeout-evidence file keeps the earlier bounded reproduction as history. `temporal_decision._block_ci` mutant 25 (`index = None`) terminates but was far slower
+  (the script measured one precision-recall area on a one-row array at several sizes); slow tests ran before the detecting test and exceeded the limit, they now use a few resamples and the mutant is killed.
   `cost_study.wait_for_quiet` mutant 12 (`<` to `<=` on the deadline) looped forever only because a test froze the clock at the deadline; the test now supplies a finite clock{cost_study_timeout}.
 - `state.json` is the progress log of the runs; the final counts come from the `mutants/**/*.meta` verdict files, which also hold these one-by-one reruns
   (for example `real_acquire` is 215 of 219 there after the rerun, 214 plus one incomplete in `state.json`). Verdicts of killed mutants persist across runs, so a unit
@@ -172,8 +172,7 @@ Sorted by the number of kills still missing. Units at most three kills short: {n
   `case-sensitive-units.json`; `evidence/archive_verdicts.py` archives every verdict file in `l4-campaign-2026-11-13/verdicts.tgz` (`verdicts.sha256`) so the record can be rebuilt. The case-sensitive runs were made on a
   copy of the repository at successive commits of this branch (the last is recorded in `case-sensitive-units.json`); a unit's run is not tied to one commit, and killed verdicts persist across runs.
 - Mutants no test reached (exit 33) remain only where listed in the table; `research/cost_study.py` had 305 and now has none (new tests of `main`, the workers and the wait for a quiet machine).
-- A unit with a timeout is recorded INCOMPLETE here even when its raw score reaches the threshold: `verification/mutation_cache.py` (1088 of 1110, 98.02 %) and `verification/pool_contract.py`
-  (184 of 187, 98.40 %) each carry non-terminating mutants (see above) that count as not killed. The consolidator is stricter than the score rule; whether the repository's controller accepts
+- A unit with a timeout, an incomplete or a not-run mutant is recorded INCOMPLETE even when its raw score reaches the threshold; no unit is in that state in this record. The consolidator is stricter than the score rule; whether the repository's controller accepts
   such a unit is decided by `verification/mutation_policy.py`, not here.
 - Test suite (`evidence/test_suite_audit.py`, `l4-campaign-2026-11-13/test-suite-audit.json`): static audit of every test file. Identical test bodies across files exist only for per-module checks that must stay separate (predict-before-fit, unknown method, help text) or
   as parameter sets that were merged where they overlapped; no test hard-codes an absolute path or sleeps without a mock. Tests that read private names are concentrated in the contract files of `verification/` modules, where the private functions are the
@@ -196,7 +195,7 @@ Sorted by the number of kills still missing. Units at most three kills short: {n
 ## Reproduction
 
 `OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES python docs/thesis-remediation/evidence/run_l4_campaign.py STATE.json [--rerun] [--only PATH ...]`, then
-`python docs/thesis-remediation/evidence/consolidate_l4_campaign.py`. The environment is the mutation venv (`~/.cache/etl-mutation-venv`, pandas {record["environment"]["pandas"]}).
+`python docs/thesis-remediation/evidence/consolidate_l4_campaign.py`. The `environment` block of `final-measurement.json` describes the interpreter that ran the consolidation (the conda environment `etl-benchmark`); the mutation runs themselves used the mutation venv (`~/.cache/etl-mutation-venv`: pandas 3.1.1, numpy 2.4.6, torch 2.15.0, see `probe-environments.json` and `CASE_SENSITIVE_MEASUREMENT.md`), so the two are not the same environment.
 `make mutation-focus MODULE=research.typed_run` runs one module. The test cache must be rebuilt (`rm mutants/mutmut-stats.json`) after tests are added.
 """
 (ROOT / "docs/thesis-remediation/L4_CAMPAIGN_REPORT_2026-11-13.md").write_text(text)

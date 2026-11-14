@@ -1,12 +1,6 @@
 ## x__numeric__mutmut_18
 -    if not np.isfinite(values.to_numpy(dtype=float)).all():
 +    if not np.isfinite(values.to_numpy(dtype=None)).all():
-## x_event_metrics__mutmut_25
--    cutoff = cutoff.tz_localize("UTC") if cutoff.tzinfo is None else cutoff.tz_convert("UTC")
-+    cutoff = cutoff.tz_localize("utc") if cutoff.tzinfo is None else cutoff.tz_convert("UTC")
-## x_event_metrics__mutmut_29
--    cutoff = cutoff.tz_localize("UTC") if cutoff.tzinfo is None else cutoff.tz_convert("UTC")
-+    cutoff = cutoff.tz_localize("UTC") if cutoff.tzinfo is None else cutoff.tz_convert("utc")
 ## xǁWindowDriftMonitorǁ__init____mutmut_21
 -        self.reference_end: pd.Timestamp | None = None
 +        self.reference_end: pd.Timestamp | None = ""
@@ -22,3 +16,9 @@
 ## xǁWindowDriftMonitorǁevaluate__mutmut_2
 -        if self.reference_end is None or self._mean is None or self._scale is None:
 +        if self.reference_end is None and self._mean is None or self._scale is None:
+## x_event_metrics__mutmut_25
+-    cutoff = cutoff.tz_localize("UTC") if cutoff.tzinfo is None else cutoff.tz_convert("UTC")
++    cutoff = cutoff.tz_localize("utc") if cutoff.tzinfo is None else cutoff.tz_convert("UTC")
+## x_event_metrics__mutmut_29
+-    cutoff = cutoff.tz_localize("UTC") if cutoff.tzinfo is None else cutoff.tz_convert("UTC")
++    cutoff = cutoff.tz_localize("UTC") if cutoff.tzinfo is None else cutoff.tz_convert("utc")

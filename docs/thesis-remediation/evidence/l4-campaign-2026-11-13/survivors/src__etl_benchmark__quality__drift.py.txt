@@ -16,6 +16,9 @@
 ## xǁTemporalDriftDetectorǁ__init____mutmut_17
 -        self._stds: pd.Series | None = None
 +        self._stds: pd.Series | None = ""
+## xǁTemporalDriftDetectorǁfit__mutmut_4
+-            self._active = False
++            self._active = None
 ## xǁTemporalDriftDetectorǁ_row_score__mutmut_15
 -        moved = shift.abs() > 0.03  # features that actually drifted
 +        moved = shift.abs() >= 0.03  # features that actually drifted
@@ -25,6 +28,3 @@
 ## xǁTemporalDriftDetectorǁ_row_score__mutmut_43
 -        row[gross] = 0.0
 +        row[gross] = None
-## xǁTemporalDriftDetectorǁfit__mutmut_4
--            self._active = False
-+            self._active = None

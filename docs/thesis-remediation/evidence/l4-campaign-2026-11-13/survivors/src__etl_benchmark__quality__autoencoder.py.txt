@@ -1,9 +1,3 @@
-## xǁAutoencoderDetectorǁsettings__mutmut_28
--                "scikit-learn": version("scikit-learn"),
-+                "scikit-learn": version("SCIKIT-LEARN"),
-## xǁAutoencoderDetectorǁsettings__mutmut_33
--                "numpy": version("numpy"),
-+                "numpy": version("NUMPY"),
 ## xǁReconstructionModelǁ__init____mutmut_4
 -        self.threshold_: float | None = None
 +        self.threshold_: float | None = ""
@@ -13,3 +7,9 @@
 ## xǁReconstructionModelǁfit__mutmut_14
 -            warnings.simplefilter("ignore", ConvergenceWarning)
 +            warnings.simplefilter("ignore", )
+## xǁAutoencoderDetectorǁsettings__mutmut_28
+-                "scikit-learn": version("scikit-learn"),
++                "scikit-learn": version("SCIKIT-LEARN"),
+## xǁAutoencoderDetectorǁsettings__mutmut_33
+-                "numpy": version("numpy"),
++                "numpy": version("NUMPY"),

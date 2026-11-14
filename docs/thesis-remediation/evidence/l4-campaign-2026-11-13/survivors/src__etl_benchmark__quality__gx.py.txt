@@ -4,6 +4,15 @@
 ## xǁGreatExpectationsDetectorǁ__init____mutmut_6
 -        self._bounds: dict[str, tuple[float, float]] = {}
 +        self._bounds: dict[str, tuple[float, float]] = None
+## xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_5
+-        work = df.reset_index(drop=True)
++        work = df.reset_index(drop=None)
+## xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_6
+-        work = df.reset_index(drop=True)
++        work = df.reset_index(drop=False)
+## xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_9
+-        context = gx.get_context(mode="ephemeral")
++        context = gx.get_context(mode=None)
 ## xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_17
 -            context.data_sources.add_pandas(name="pandas")
 +            context.data_sources.add_pandas(name="XXpandasXX")
@@ -22,12 +31,3 @@
 ## xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_22
 -            .add_batch_definition_whole_dataframe(name="batch")
 +            .add_batch_definition_whole_dataframe(name="BATCH")
-## xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_5
--        work = df.reset_index(drop=True)
-+        work = df.reset_index(drop=None)
-## xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_6
--        work = df.reset_index(drop=True)
-+        work = df.reset_index(drop=False)
-## xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_9
--        context = gx.get_context(mode="ephemeral")
-+        context = gx.get_context(mode=None)
