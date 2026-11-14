@@ -240,3 +240,49 @@ def test_the_real_table_reads_the_detectors_of_the_first_seed_and_skips_failed_o
     table = fs.real_table(csv, deep)
     assert table.index.tolist() == ["zscore", "vae", "lunar"]
     assert table.loc["lunar", "f1"] == 0.25
+
+
+def _copy_without(archive, tmp_path, *relative):
+    evidence = tmp_path / "evidence"
+    shutil.copytree(archive / "evidence", evidence)
+    for name in relative:
+        target = evidence / name
+        shutil.rmtree(target) if target.is_dir() else target.unlink()
+    (tmp_path / "figures").mkdir()
+    return evidence, tmp_path / "figures"
+
+
+def _fpr_section(evidence):
+    text = (evidence / "full_registry" / "summary.md").read_text()
+    part = text.split("### Typed injection, clean rows flagged")[1].split("###")[0]
+    rows = [line.split("|")[1].strip() for line in part.splitlines() if line.startswith("|")]
+    return [name for name in rows if name not in ("method", "---")]
+
+
+def test_without_the_adbench_carriers_the_clean_row_rates_pool_the_classical_and_neural_files(
+    archive, tmp_path
+):
+    evidence, figures = _copy_without(
+        archive,
+        tmp_path,
+        "pool_extension/typed/reference_classical",
+        "pool_extension/typed/reference_deep",
+    )
+    fs.build(evidence, figures)
+    methods = _fpr_section(evidence)
+    assert "zscore" in methods and "vae" in methods and "lunar" in methods
+
+
+def test_without_the_uci_carriers_the_clean_row_rates_come_from_the_adbench_ones_alone(
+    archive, tmp_path
+):
+    evidence, figures = _copy_without(archive, tmp_path)
+    for path in (evidence / "typed_injection" / "runs").glob("*.json"):
+        path.unlink()
+    fs.build(evidence, figures)
+    methods = _fpr_section(evidence)
+    expected = fs.typed_fpr(
+        evidence / "pool_extension" / "typed" / "reference_classical",
+        evidence / "pool_extension" / "typed" / "reference_deep",
+    )
+    assert methods == expected.index.tolist() and methods
