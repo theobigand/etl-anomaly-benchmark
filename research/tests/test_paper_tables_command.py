@@ -122,12 +122,7 @@ def test_a_run_without_metrics_adds_nothing_to_the_counts_and_does_not_stop_the_
     )
     lines = pt.pool_rows(tmp_path).split("\n")
     assert lines[0].startswith("N0") and " & 1 & 0.500 [0.200, 0.900] & 0.600 & 1.0" in lines[0]
-    assert (
-        lines[3] == r"\midrule"
-        and lines[-1].startswith("N10")
-        and r"\midrule" in lines[-2:]
-        or True
-    )
+    assert lines[3] == r"\midrule" and lines[-1] == r"\midrule" and lines[-2].startswith("N10")
     assert [line.split("&")[0].strip() for line in lines if line != r"\midrule"] == [
         n.upper() for n in names
     ]
