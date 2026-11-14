@@ -3,7 +3,6 @@
 import hashlib
 import json
 import runpy
-import signal
 from pathlib import Path
 
 import pytest
@@ -13,20 +12,35 @@ from verification import pool_contract as pc
 ROOT = Path(__file__).resolve().parents[1]
 
 
+class _ReadBudget:
+    """A file whose reads are counted: a hashing loop that never ends fails instead of hanging."""
+
+    def __init__(self, stream):
+        self._stream = stream
+        self.reads = 0
+
+    def read(self, size=-1):
+        self.reads += 1
+        assert self.reads <= 100, "the file is read without end"
+        return self._stream.read(size)
+
+    def __enter__(self):
+        self._stream.__enter__()
+        return self
+
+    def __exit__(self, *exc):
+        return self._stream.__exit__(*exc)
+
+
 @pytest.fixture(autouse=True)
-def _a_test_that_does_not_end_fails():
-    """A hashing loop that never ends must fail the test, not hang the run."""
+def _a_file_that_is_read_without_end_fails(monkeypatch):
+    real = Path.open
 
-    def stop(signum, frame):
-        raise AssertionError("the test did not end within 5 seconds")
+    def opened(self, mode="r", *args, **kwargs):
+        stream = real(self, mode, *args, **kwargs)
+        return _ReadBudget(stream) if mode == "rb" else stream
 
-    previous = signal.signal(signal.SIGALRM, stop)
-    signal.setitimer(signal.ITIMER_REAL, 5)
-    try:
-        yield
-    finally:
-        signal.setitimer(signal.ITIMER_REAL, 0)
-        signal.signal(signal.SIGALRM, previous)
+    monkeypatch.setattr(Path, "open", opened)
 
 
 def _sha(data: bytes) -> str:
