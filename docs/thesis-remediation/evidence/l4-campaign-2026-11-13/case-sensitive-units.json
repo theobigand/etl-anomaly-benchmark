@@ -1,7 +1,7 @@
 {
  "_last_copy": {
-  "head": "11a81a8cfe2de32c5d4c1f1a330135fdb7312e0d",
-  "tests_sha256": "780e73e9ca9602f723dec6eabe0c738e3b7be13f0a87f6e547ee0d31dc128650"
+  "head": "87794536488cadfc9cf7e037a1dfb0e8f158977f",
+  "tests_sha256": "bc51a1d39438b64d1b0e94ebaf0cb9def8aecffb583200dedbcf38c9c9c71e7d"
  },
  "research/cost_study.py": {
   "case_insensitive_counts_before": {
@@ -81,6 +81,50 @@
   },
   "total": 676
  },
+ "research/lstm_pilot.py": {
+  "case_insensitive_counts_before": {
+   "killed": 460,
+   "survived": 46
+  },
+  "counts": {
+   "killed": 504,
+   "survived": 2
+  },
+  "total": 506
+ },
+ "research/multi_schema.py": {
+  "case_insensitive_counts_before": {
+   "killed": 1000,
+   "survived": 93
+  },
+  "counts": {
+   "killed": 1057,
+   "survived": 36
+  },
+  "total": 1093
+ },
+ "research/paper_appendix.py": {
+  "case_insensitive_counts_before": {
+   "killed": 134,
+   "survived": 37
+  },
+  "counts": {
+   "killed": 168,
+   "survived": 3
+  },
+  "total": 171
+ },
+ "research/paper_tables.py": {
+  "case_insensitive_counts_before": {
+   "killed": 469,
+   "survived": 42
+  },
+  "counts": {
+   "killed": 501,
+   "survived": 10
+  },
+  "total": 511
+ },
  "research/pool_chrono.py": {
   "case_insensitive_counts_before": {
    "killed": 274,
@@ -91,6 +135,17 @@
    "survived": 16
   },
   "total": 316
+ },
+ "research/pool_etl.py": {
+  "case_insensitive_counts_before": {
+   "killed": 292,
+   "survived": 25
+  },
+  "counts": {
+   "killed": 311,
+   "survived": 6
+  },
+  "total": 317
  },
  "research/temporal_decision.py": {
   "case_insensitive_counts_before": {
@@ -104,6 +159,17 @@
   },
   "total": 836
  },
+ "research/temporal_pilot.py": {
+  "case_insensitive_counts_before": {
+   "killed": 580,
+   "survived": 9
+  },
+  "counts": {
+   "killed": 580,
+   "survived": 9
+  },
+  "total": 589
+ },
  "research/time_scan.py": {
   "case_insensitive_counts_before": {
    "killed": 132,
@@ -114,6 +180,17 @@
    "survived": 6
   },
   "total": 138
+ },
+ "research/typed_figures.py": {
+  "case_insensitive_counts_before": {
+   "killed": 133,
+   "survived": 107
+  },
+  "counts": {
+   "killed": 233,
+   "survived": 7
+  },
+  "total": 240
  },
  "research/typed_summary.py": {
   "case_insensitive_counts_before": {
@@ -126,6 +203,17 @@
   },
   "total": 507
  },
+ "research/uci_pool.py": {
+  "case_insensitive_counts_before": {
+   "killed": 386,
+   "survived": 37
+  },
+  "counts": {
+   "killed": 418,
+   "survived": 5
+  },
+  "total": 423
+ },
  "src/etl_benchmark/quality/rules.py": {
   "case_insensitive_counts_before": {
    "killed": 112,
@@ -136,6 +224,17 @@
    "survived": 7
   },
   "total": 119
+ },
+ "verification/archive_evidence.py": {
+  "case_insensitive_counts_before": {
+   "killed": 207,
+   "survived": 42
+  },
+  "counts": {
+   "killed": 247,
+   "survived": 2
+  },
+  "total": 249
  },
  "verification/claims.py": {
   "case_insensitive_counts_before": {
@@ -159,6 +258,17 @@
   },
   "total": 1547
  },
+ "verification/lock_environment.py": {
+  "case_insensitive_counts_before": {
+   "killed": 247,
+   "survived": 99
+  },
+  "counts": {
+   "killed": 342,
+   "survived": 4
+  },
+  "total": 346
+ },
  "verification/mutation_cache.py": {
   "case_insensitive_counts_before": {
    "killed": 1085,
@@ -166,9 +276,8 @@
    "timeout": 1
   },
   "counts": {
-   "killed": 1088,
-   "survived": 21,
-   "timeout": 1
+   "killed": 1089,
+   "survived": 21
   },
   "total": 1110
  },
@@ -227,6 +336,51 @@
   },
   "total": 1105
  },
+ "verification/pool_contract.py": {
+  "case_insensitive_counts_before": {
+   "killed": 184,
+   "survived": 1,
+   "timeout": 2
+  },
+  "counts": {
+   "killed": 184,
+   "survived": 1,
+   "timeout": 2
+  },
+  "total": 187
+ },
+ "verification/protection.py": {
+  "case_insensitive_counts_before": {
+   "killed": 235,
+   "survived": 59
+  },
+  "counts": {
+   "killed": 292,
+   "survived": 2
+  },
+  "total": 294
+ },
+ "verification/real_preflight.py": {
+  "case_insensitive_counts_before": {
+   "killed": 543,
+   "survived": 247
+  },
+  "counts": {
+   "killed": 789,
+   "survived": 1
+  },
+  "total": 790
+ },
+ "verification/refresh_profile.py": {
+  "case_insensitive_counts_before": {
+   "killed": 105,
+   "survived": 42
+  },
+  "counts": {
+   "killed": 147
+  },
+  "total": 147
+ },
  "verification/release.py": {
   "case_insensitive_counts_before": {
    "killed": 812,
@@ -248,5 +402,16 @@
    "survived": 5
   },
   "total": 832
+ },
+ "verification/scaling.py": {
+  "case_insensitive_counts_before": {
+   "killed": 183,
+   "survived": 124
+  },
+  "counts": {
+   "killed": 306,
+   "survived": 1
+  },
+  "total": 307
  }
 }

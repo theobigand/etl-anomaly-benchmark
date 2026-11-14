@@ -1,0 +1,3 @@
+## x_linux_lock_pins__mutmut_4
+-        name, sep, rest = line.partition("==")
++        name, sep, rest = line.rpartition("==")

@@ -1,0 +1,9 @@
+## x_write__mutmut_11
+-        head, rest = body.split(START, 1)
++        head, rest = body.split(START, )
+## x_write__mutmut_12
+-        head, rest = body.split(START, 1)
++        head, rest = body.rsplit(START, 1)
+## x_write__mutmut_13
+-        head, rest = body.split(START, 1)
++        head, rest = body.split(START, 2)

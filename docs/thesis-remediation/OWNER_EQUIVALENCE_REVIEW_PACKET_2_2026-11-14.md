@@ -4,7 +4,7 @@ Prepared after the behavioral remediation of `L4_CAMPAIGN_REPORT_2026-11-13.md`,
 nothing to `verification/mutation_equivalence.json` and leaves the 43 candidates of the first packet (`OWNER_EQUIVALENCE_REVIEW_2026-11-12.md`) as they were. The four `lstm_detector`
 records stay subject to the repository validator (their `torch 2.15.0+cpu` pin is not met on this machine).
 
-Source: `11a81a8`, policy digest `fc19388775ea`. Machine-readable form: `equivalence/owner_review_candidates_2026-11-14.json` (exact mutant identities, textual change, source and
+Source: `acfa074`, policy digest `fc19388775ea`. Machine-readable form: `equivalence/owner_review_candidates_2026-11-14.json` (exact mutant identities, textual change, source and
 catalog digests per unit; survivor dumps in `evidence/l4-campaign-2026-11-13/survivors/`).
 
 ## How to read it
@@ -24,19 +24,13 @@ For each unit that still fails or is incomplete, survivors are split four ways.
 | `experiments/run_severity.py` | L4 | 320/329 | 3 | 2 | 0 | 7 | no | case-insensitive APFS |
 | `research/injection.py` | L4 | 325/336 | 5 | 2 | 0 | 9 | no | case-sensitive APFS volume |
 | `research/lstm_detector.py` | L4 | 368/377 | 2 | 0 | 9 | 0 | no | case-insensitive APFS |
-| `research/lstm_pilot.py` | L4 | 460/506 | 36 | 1 | 0 | 45 | no | case-insensitive APFS |
-| `research/multi_schema.py` | L4 | 1000/1093 | 72 | 4 | 0 | 89 | no | case-insensitive APFS |
+| `research/multi_schema.py` | L4 | 1057/1093 | 15 | 4 | 0 | 89 | no | case-sensitive APFS volume |
 | `research/normalise.py` | L4 | 191/197 | 3 | 0 | 6 | 0 | no | case-insensitive APFS |
-| `research/paper_appendix.py` | L3 | 134/171 | 29 | 0 | 0 | 37 | no | case-insensitive APFS |
-| `research/paper_tables.py` | L3 | 469/511 | 17 | 0 | 0 | 42 | no | case-insensitive APFS |
 | `research/pool_chrono.py` | L4 | 300/316 | 10 | 3 | 0 | 13 | no | case-sensitive APFS volume |
-| `research/pool_etl.py` | L4 | 292/317 | 19 | 1 | 0 | 24 | no | case-insensitive APFS |
 | `research/pool_preprocessing.py` | L4 | 241/248 | 3 | 1 | 0 | 6 | no | case-insensitive APFS |
 | `research/temporal_decision.py` | L4 | 810/836 | 10 | 6 | 0 | 20 | no | case-sensitive APFS volume |
 | `research/typed_benchmark.py` | L4 | 175/180 | 2 | 1 | 0 | 4 | no | case-insensitive APFS |
-| `research/typed_figures.py` | L3 | 133/240 | 95 | 0 | 0 | 107 | no | case-insensitive APFS |
 | `research/uci_loader.py` | L4 | 180/186 | 3 | 1 | 0 | 5 | no | case-insensitive APFS |
-| `research/uci_pool.py` | L3 | 386/423 | 16 | 0 | 0 | 37 | no | case-insensitive APFS |
 | `src/etl_benchmark/load.py` | L4 | 13/14 | 1 | 0 | 1 | 0 | no | case-insensitive APFS |
 | `src/etl_benchmark/quality/_torch_models.py` | L4 | 58/65 | 6 | 0 | 0 | 7 | no | case-insensitive APFS |
 | `src/etl_benchmark/quality/autoencoder.py` | L4 | 112/117 | 3 | 2 | 0 | 3 | no | case-insensitive APFS |
@@ -48,16 +42,9 @@ For each unit that still fails or is incomplete, survivors are split four ways.
 | `src/etl_benchmark/quality/rules.py` | L4 | 112/119 | 5 | 0 | 0 | 7 | no | case-sensitive APFS volume |
 | `src/etl_benchmark/quality/window_drift.py` | L4 | 225/233 | 4 | 1 | 0 | 7 | no | case-insensitive APFS |
 | `src/etl_benchmark/quality/windows.py` | L4 | 54/57 | 2 | 1 | 0 | 2 | no | case-insensitive APFS |
-| `verification/archive_evidence.py` | L3 | 207/249 | 30 | 0 | 0 | 42 | no | case-insensitive APFS |
 | `verification/bundles.py` | L3 | 249/264 | 2 | 0 | 0 | 15 | no | case-insensitive APFS |
-| `verification/lock_environment.py` | L3 | 247/346 | 82 | 0 | 0 | 99 | no | case-insensitive APFS |
-| `verification/mutation_cache.py` | L4 | 1088/1110 | 0 | 3 | 0 | 19 | yes | case-sensitive APFS volume |
 | `verification/mutation_scope.py` | L4 | 240/246 | 2 | 6 | 0 | 0 | yes | case-sensitive APFS volume |
-| `verification/pool_contract.py` | L4 | 184/187 | 0 | 0 | 0 | 3 | yes | case-insensitive APFS |
-| `verification/protection.py` | L3 | 235/294 | 45 | 1 | 0 | 58 | no | case-insensitive APFS |
-| `verification/real_preflight.py` | L3 | 543/790 | 208 | 1 | 0 | 246 | no | case-insensitive APFS |
-| `verification/refresh_profile.py` | L3 | 105/147 | 35 | 0 | 0 | 42 | no | case-insensitive APFS |
-| `verification/scaling.py` | L3 | 183/307 | 109 | 1 | 0 | 123 | no | case-insensitive APFS |
+| `verification/pool_contract.py` | L4 | 184/187 | 0 | 0 | 0 | 3 | yes | case-sensitive APFS volume |
 
 ## Classes
 

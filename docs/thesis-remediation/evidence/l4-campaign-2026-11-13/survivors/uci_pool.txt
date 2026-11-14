@@ -1,0 +1,15 @@
+## x_main__mutmut_2
+-    parser = argparse.ArgumentParser(description=__doc__)
++    parser = argparse.ArgumentParser(description=None)
+## x_main__mutmut_4
+-    parser.add_argument("--survey", type=Path, help="crawl the catalogue metadata to this file")
++    parser.add_argument("--survey", type=None, help="crawl the catalogue metadata to this file")
+## x_main__mutmut_7
+-    parser.add_argument("--survey", type=Path, help="crawl the catalogue metadata to this file")
++    parser.add_argument("--survey", help="crawl the catalogue metadata to this file")
+## x_main__mutmut_34
+-    parser.add_argument("--output", type=Path, required=True)
++    parser.add_argument("--output", type=None, required=True)
+## x_main__mutmut_37
+-    parser.add_argument("--output", type=Path, required=True)
++    parser.add_argument("--output", required=True)

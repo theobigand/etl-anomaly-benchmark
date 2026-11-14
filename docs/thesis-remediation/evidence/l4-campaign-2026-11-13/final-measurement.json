@@ -3,18 +3,18 @@
  "environment": {
   "mutmut": "3.8.0",
   "numpy": "2.4.6",
-  "pandas": "3.1.1",
+  "pandas": "3.0.6",
   "platform": "macOS-27.2-arm64-arm-64bit",
   "python": "3.11.17"
  },
  "equivalence_environment": {
   "numpy": "2.4.6",
-  "pandas": "3.1.1",
-  "torch": "2.15.0"
+  "pandas": "3.0.6",
+  "torch": "2.14.1"
  },
  "equivalence_validation": "refused by mutation_policy.accepted_equivalents: equivalence record is incompatible with the campaign environment",
- "head": "11a81a8cfe2de32c5d4c1f1a330135fdb7312e0d",
- "killed": 33302,
+ "head": "acfa07457640d28ec706bcf8b34c864641d7022e",
+ "killed": 34224,
  "kind": "local development measurement, not the controller campaign",
  "modules": {
   "experiments/check_mutation.py": {
@@ -452,20 +452,20 @@
   "research/lstm_pilot.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 506,
-   "adjusted_score": 90.91,
+   "adjusted_score": 99.6,
    "catalog_sha256": "b1f96997d39e47dd99cc6158d59a50d7131f93b20b37026a756671654e2ea236",
    "counts": {
-    "killed": 460,
-    "survived": 46
+    "killed": 504,
+    "survived": 2
    },
    "eligible": 506,
-   "killed": 460,
+   "killed": 504,
    "level": "L4",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 496,
-   "raw_score": 90.91,
+   "raw_score": 99.6,
    "source_sha256": "8c5ee81a42be9f605f50e32f69e61018f8aef0a38f3eef7c80a50adb7d9bae0f",
-   "status": "FAIL",
+   "status": "PASS_RAW",
    "threshold": 98
   },
   "research/matched_alert.py": {
@@ -490,18 +490,18 @@
   "research/multi_schema.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 1093,
-   "adjusted_score": 91.49,
+   "adjusted_score": 96.71,
    "catalog_sha256": "918fe1d065502424f49fc3619516bd519c04c951dfc6f9efda87df4bf789b624",
    "counts": {
-    "killed": 1000,
-    "survived": 93
+    "killed": 1057,
+    "survived": 36
    },
    "eligible": 1093,
-   "killed": 1000,
+   "killed": 1057,
    "level": "L4",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 1072,
-   "raw_score": 91.49,
+   "raw_score": 96.71,
    "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
    "status": "FAIL",
    "threshold": 98
@@ -546,39 +546,39 @@
   "research/paper_appendix.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 171,
-   "adjusted_score": 78.36,
+   "adjusted_score": 98.25,
    "catalog_sha256": "3c450e3c2b33172f6133ff7eb15ddfec2ea0af9e3ebabc97b33c1a035ae2265c",
    "counts": {
-    "killed": 134,
-    "survived": 37
+    "killed": 168,
+    "survived": 3
    },
    "eligible": 171,
-   "killed": 134,
+   "killed": 168,
    "level": "L3",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 163,
-   "raw_score": 78.36,
+   "raw_score": 98.25,
    "source_sha256": "fd6e264dddba798a6992db047362f42b7c4ad39dc8283777cfc9984a722b080f",
-   "status": "FAIL",
+   "status": "PASS_RAW",
    "threshold": 95
   },
   "research/paper_tables.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 511,
-   "adjusted_score": 91.78,
+   "adjusted_score": 98.04,
    "catalog_sha256": "45639946cd5032dfd45521059a57c76381dbab3309eed64f6080648e0278aa08",
    "counts": {
-    "killed": 469,
-    "survived": 42
+    "killed": 501,
+    "survived": 10
    },
    "eligible": 511,
-   "killed": 469,
+   "killed": 501,
    "level": "L3",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 486,
-   "raw_score": 91.78,
+   "raw_score": 98.04,
    "source_sha256": "42d6cea0d6b303f008ae7f3009d86da0516b3101390ead7c7b5a84136014eb4c",
-   "status": "FAIL",
+   "status": "PASS_RAW",
    "threshold": 95
   },
   "research/pool_check.py": {
@@ -622,20 +622,20 @@
   "research/pool_etl.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 317,
-   "adjusted_score": 92.11,
+   "adjusted_score": 98.11,
    "catalog_sha256": "6270cce6af4260fd569227be6d8b4a843bbbf61dda1521fca868c18a63af2a11",
    "counts": {
-    "killed": 292,
-    "survived": 25
+    "killed": 311,
+    "survived": 6
    },
    "eligible": 317,
-   "killed": 292,
+   "killed": 311,
    "level": "L4",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 311,
-   "raw_score": 92.11,
+   "raw_score": 98.11,
    "source_sha256": "1ed53a9a8594fcd438e0b660485efdf82dc5416d0494a2ff69de9fb04c8ef669",
-   "status": "FAIL",
+   "status": "PASS_RAW",
    "threshold": 98
   },
   "research/pool_extension_paper.py": {
@@ -859,7 +859,7 @@
    "eligible": 589,
    "killed": 580,
    "level": "L4",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 578,
    "raw_score": 98.47,
    "source_sha256": "03e63b2961126c3192fec7fbf374b434e0ab81c54a1317c3cfa99ecb732b0982",
@@ -907,20 +907,20 @@
   "research/typed_figures.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 240,
-   "adjusted_score": 55.42,
+   "adjusted_score": 97.08,
    "catalog_sha256": "55960c7edbfe5b4e96cba57e056b9e1a83c84ae316d58f00651baaf258474f88",
    "counts": {
-    "killed": 133,
-    "survived": 107
+    "killed": 233,
+    "survived": 7
    },
    "eligible": 240,
-   "killed": 133,
+   "killed": 233,
    "level": "L3",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 228,
-   "raw_score": 55.42,
+   "raw_score": 97.08,
    "source_sha256": "cdff872ffa3fb3f15d3c7ee207fc1814ca3b22ba900d39de5bf57101828df8d9",
-   "status": "FAIL",
+   "status": "PASS_RAW",
    "threshold": 95
   },
   "research/typed_masking.py": {
@@ -1001,20 +1001,20 @@
   "research/uci_pool.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 423,
-   "adjusted_score": 91.25,
+   "adjusted_score": 98.82,
    "catalog_sha256": "11313ae01679377de09fc7e51f2df368788033d5ad2e067559f065a80ab7ab4f",
    "counts": {
-    "killed": 386,
-    "survived": 37
+    "killed": 418,
+    "survived": 5
    },
    "eligible": 423,
-   "killed": 386,
+   "killed": 418,
    "level": "L3",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 402,
-   "raw_score": 91.25,
+   "raw_score": 98.82,
    "source_sha256": "5a672c897bd99a82fa9c0657fe8925b623b324e31e912c136e98d22f8347fb82",
-   "status": "FAIL",
+   "status": "PASS_RAW",
    "threshold": 95
   },
   "src/etl_benchmark/__init__.py": {
@@ -1479,20 +1479,20 @@
   "verification/archive_evidence.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 249,
-   "adjusted_score": 83.13,
+   "adjusted_score": 99.2,
    "catalog_sha256": "eb351e66a511d31c1777be82c77331830c6b9295a10233f9c4b5d3e678385799",
    "counts": {
-    "killed": 207,
-    "survived": 42
+    "killed": 247,
+    "survived": 2
    },
    "eligible": 249,
-   "killed": 207,
+   "killed": 247,
    "level": "L3",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 237,
-   "raw_score": 83.13,
+   "raw_score": 99.2,
    "source_sha256": "2918fac11603f4a9693d9ea4662b44d74994d481c72827d53ec14615b494ac94",
-   "status": "FAIL",
+   "status": "PASS_RAW",
    "threshold": 95
   },
   "verification/bundles.py": {
@@ -1593,40 +1593,39 @@
   "verification/lock_environment.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 346,
-   "adjusted_score": 71.39,
+   "adjusted_score": 98.84,
    "catalog_sha256": "00f44fe537adcc75061f43a2030b54ac90abf0ca41135e119a4725946d92e07c",
    "counts": {
-    "killed": 247,
-    "survived": 99
+    "killed": 342,
+    "survived": 4
    },
    "eligible": 346,
-   "killed": 247,
+   "killed": 342,
    "level": "L3",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 329,
-   "raw_score": 71.39,
+   "raw_score": 98.84,
    "source_sha256": "8e270c235d66120a8233088a8a089e57e531394790a513cde8a9a4705e7ce61c",
-   "status": "FAIL",
+   "status": "PASS_RAW",
    "threshold": 95
   },
   "verification/mutation_cache.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 1110,
-   "adjusted_score": 98.02,
+   "adjusted_score": 98.11,
    "catalog_sha256": "6611a13820ef09ff329a3d1a6cff5f2484ff114cef4bd8b3328c550556e83135",
    "counts": {
-    "killed": 1088,
-    "survived": 21,
-    "timeout": 1
+    "killed": 1089,
+    "survived": 21
    },
    "eligible": 1110,
-   "killed": 1088,
+   "killed": 1089,
    "level": "L4",
    "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 1088,
-   "raw_score": 98.02,
+   "raw_score": 98.11,
    "source_sha256": "81370c774726c5a586670db6c0ef5e40edd70fdd6ea628f6b8b0337d26e5c7a8",
-   "status": "INCOMPLETE",
+   "status": "PASS_RAW",
    "threshold": 98
   },
   "verification/mutation_campaign.py": {
@@ -1756,7 +1755,7 @@
    "eligible": 187,
    "killed": 184,
    "level": "L4",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 184,
    "raw_score": 98.4,
    "source_sha256": "624859aa0cd7c1aad2927cf3d3a9b457f90f8f6a5807fe6475fe1f6e26b6a0e0",
@@ -1766,20 +1765,20 @@
   "verification/protection.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 294,
-   "adjusted_score": 79.93,
+   "adjusted_score": 99.32,
    "catalog_sha256": "ecccabb81e13c7117a153f4c1ab87dc6ad2538c843921b0181b1cff817ee8205",
    "counts": {
-    "killed": 235,
-    "survived": 59
+    "killed": 292,
+    "survived": 2
    },
    "eligible": 294,
-   "killed": 235,
+   "killed": 292,
    "level": "L3",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 280,
-   "raw_score": 79.93,
+   "raw_score": 99.32,
    "source_sha256": "7bd4d77480b7843f95e5eed06dcb1b9086d6aabe89ebec6396878cb110b73222",
-   "status": "FAIL",
+   "status": "PASS_RAW",
    "threshold": 95
   },
   "verification/real_acquire.py": {
@@ -1804,39 +1803,38 @@
   "verification/real_preflight.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 790,
-   "adjusted_score": 68.73,
+   "adjusted_score": 99.87,
    "catalog_sha256": "ec5a4bfc9398adc1d98dc59935141890672040582e728836a46530861defe75e",
    "counts": {
-    "killed": 543,
-    "survived": 247
+    "killed": 789,
+    "survived": 1
    },
    "eligible": 790,
-   "killed": 543,
+   "killed": 789,
    "level": "L3",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 751,
-   "raw_score": 68.73,
+   "raw_score": 99.87,
    "source_sha256": "f93accf155e74ae6c04d15d9606de0c84404661f35a9bf38fa0fcf1caeb89051",
-   "status": "FAIL",
+   "status": "PASS_RAW",
    "threshold": 95
   },
   "verification/refresh_profile.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 147,
-   "adjusted_score": 71.43,
+   "adjusted_score": 100.0,
    "catalog_sha256": "bfcf31e2df2c7e95b38d6be3752737e8032d65c7bab9f2bf6a51af484fb0d287",
    "counts": {
-    "killed": 105,
-    "survived": 42
+    "killed": 147
    },
    "eligible": 147,
-   "killed": 105,
+   "killed": 147,
    "level": "L3",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 140,
-   "raw_score": 71.43,
+   "raw_score": 100.0,
    "source_sha256": "fc845c277c7564eedd3a84529f9b08c383495282c7ef20c7adf45dd9cef33982",
-   "status": "FAIL",
+   "status": "PASS_RAW",
    "threshold": 95
   },
   "verification/release.py": {
@@ -1880,29 +1878,29 @@
   "verification/scaling.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 307,
-   "adjusted_score": 59.61,
+   "adjusted_score": 99.67,
    "catalog_sha256": "6b84cc4eebe0235d1df608e0b3200670d1ffd552821b7f4ce2d115236124d4f7",
    "counts": {
-    "killed": 183,
-    "survived": 124
+    "killed": 306,
+    "survived": 1
    },
    "eligible": 307,
-   "killed": 183,
+   "killed": 306,
    "level": "L3",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 292,
-   "raw_score": 59.61,
+   "raw_score": 99.67,
    "source_sha256": "bfa7ed51ae583a9db6905d4e740b0999f8ffecb49050ae29e2fd0ca7cc9f6ee0",
-   "status": "FAIL",
+   "status": "PASS_RAW",
    "threshold": 95
   }
  },
  "mutants": 34781,
  "policy_sha256": "fc19388775ea7144022fd1451f4ffb62f6ed1408381d618691bbacc8602e695c",
  "summary": {
-  "FAIL": 35,
-  "INCOMPLETE": 2,
+  "FAIL": 23,
+  "INCOMPLETE": 1,
   "NO_MUTANTS": 3,
-  "PASS_RAW": 60
+  "PASS_RAW": 73
  }
 }

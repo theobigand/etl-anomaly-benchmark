@@ -1,0 +1,18 @@
+## x_prepare_csv__mutmut_33
+-        frame.to_csv(path, index=False)
++        frame.to_csv(path, index=None)
+## x_run_etl__mutmut_32
+-            features = df.drop(columns=drop) if drop else df
++            features = df.drop(columns=drop) if (drop) or True else df
+## x_main__mutmut_2
+-    parser = argparse.ArgumentParser(description=__doc__)
++    parser = argparse.ArgumentParser(description=None)
+## x_main__mutmut_109
+-        partial.write_text(json.dumps(records, indent=1, sort_keys=True) + "\n")
++        partial.write_text(json.dumps(records, indent=1, sort_keys=None) + "\n")
+## x_main__mutmut_112
+-        partial.write_text(json.dumps(records, indent=1, sort_keys=True) + "\n")
++        partial.write_text(json.dumps(records, indent=1, ) + "\n")
+## x_main__mutmut_114
+-        partial.write_text(json.dumps(records, indent=1, sort_keys=True) + "\n")
++        partial.write_text(json.dumps(records, indent=1, sort_keys=False) + "\n")

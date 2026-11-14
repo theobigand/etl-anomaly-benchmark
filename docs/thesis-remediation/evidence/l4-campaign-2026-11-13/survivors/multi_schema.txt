@@ -1,0 +1,107 @@
+## x__dates__mutmut_31
+-        for d, h in zip(offsets, hours, strict=True)
++        for d, h in zip(offsets, hours, strict=None)
+## x__dates__mutmut_34
+-        for d, h in zip(offsets, hours, strict=True)
++        for d, h in zip(offsets, hours, )
+## x__dates__mutmut_35
+-        for d, h in zip(offsets, hours, strict=True)
++        for d, h in zip(offsets, hours, strict=False)
+## x__transactions__mutmut_2
+-    items = (rng.poisson(3, n) + 1).astype(float)
++    items = (rng.poisson(3, n) + 1).astype(None)
+## x__transactions__mutmut_66
+-            "account_age_days": rng.integers(30, 2000, n).astype(float),
++            "account_age_days": rng.integers(30, 2000, n).astype(None),
+## x__transactions__mutmut_79
+-                amount * rng.uniform(2, 40, n) + rng.normal(0, 50, n), 0, None
++                amount * rng.uniform(2, 40, n) + rng.normal(0, 50, n), None, None
+## x__transactions__mutmut_101
+-                amount * rng.uniform(2, 40, n) + rng.normal(0, 50, n), 0, None
++                amount * rng.uniform(2, 40, n) + rng.normal(0, 50, n), 1, None
+## x_make__mutmut_111
+-                for col in rng.choice(nullable, size=int(rng.integers(1, 3)), replace=False):
++                for col in rng.choice(nullable, size=int(rng.integers(1, 3)), replace=None):
+## x_make__mutmut_126
+-                    _set(block, pos, col, np.nan)
++                    _set(block, pos, col, None)
+## x_make__mutmut_167
+-                high_b = high_a if sign < 0 else not high_a
++                high_b = high_a if sign <= 0 else not high_a
+## x_make__mutmut_168
+-                high_b = high_a if sign < 0 else not high_a
++                high_b = high_a if sign < 1 else not high_a
+## x_make__mutmut_218
+-                for col, base in zip(spec.drift_cols, (1.55, 1.6, 1.5), strict=True):
++                for col, base in zip(spec.drift_cols, (1.55, 1.6, 1.5), strict=None):
+## x_make__mutmut_221
+-                for col, base in zip(spec.drift_cols, (1.55, 1.6, 1.5), strict=True):
++                for col, base in zip(spec.drift_cols, (1.55, 1.6, 1.5), ):
+## x_make__mutmut_225
+-                for col, base in zip(spec.drift_cols, (1.55, 1.6, 1.5), strict=True):
++                for col, base in zip(spec.drift_cols, (1.55, 1.6, 1.5), strict=False):
+## x_make__mutmut_306
+-    df = df.sample(frac=1.0, random_state=seed, ignore_index=True)
++    df = df.sample(frac=1.0, random_state=seed, ignore_index=None)
+## x_make__mutmut_309
+-    df = df.sample(frac=1.0, random_state=seed, ignore_index=True)
++    df = df.sample(frac=1.0, random_state=seed, )
+## x_make__mutmut_311
+-    df = df.sample(frac=1.0, random_state=seed, ignore_index=True)
++    df = df.sample(frac=1.0, random_state=seed, ignore_index=False)
+## x__split__mutmut_5
+-        df.groupby(spec.id_col, sort=False)["anomaly_type"]
++        df.groupby(spec.id_col, sort=None)["anomaly_type"]
+## x__per_type__mutmut_2
+-    clean = types == "clean"
++    clean = types != "clean"
+## x__per_type__mutmut_18
+-        recall[name] = recall_score(is_type[keep].astype(int), flags[keep])
++        recall[name] = recall_score(is_type[keep].astype(None), flags[keep])
+## x__per_type__mutmut_25
+-        precision[name] = precision_score(is_type[keep].astype(int), flags[keep], zero_division=0)
++        precision[name] = precision_score(is_type[keep].astype(int), flags[keep], )
+## x__per_type__mutmut_26
+-        precision[name] = precision_score(is_type[keep].astype(int), flags[keep], zero_division=0)
++        precision[name] = precision_score(is_type[keep].astype(None), flags[keep], zero_division=0)
+## x_evaluate__mutmut_21
+-        detectors = {n: build(n, contamination, seed) for n in DEEP_NAMES}
++        detectors = {n: build(n, None, seed) for n in DEEP_NAMES}
+## x_evaluate__mutmut_68
+-        flags = pd.Series(np.asarray(flags), index=test.index)
++        flags = pd.Series(np.asarray(flags), index=None)
+## x_evaluate__mutmut_70
+-        flags = pd.Series(np.asarray(flags), index=test.index)
++        flags = pd.Series(np.asarray(flags), )
+## x_hypotheses__mutmut_91
+-        "H4": {"supported": mean_rho >= 0.7, "mean_spearman": mean_rho, "pairs": rhos},
++        "H4": {"supported": mean_rho > 0.7, "mean_spearman": mean_rho, "pairs": rhos},
+## x_main__mutmut_2
+-    parser = argparse.ArgumentParser(description=__doc__)
++    parser = argparse.ArgumentParser(description=None)
+## x_main__mutmut_23
+-        default="classical",
++        default=None,
+## x_main__mutmut_27
+-        default="classical",
+## x_main__mutmut_35
+-        default="classical",
++        default="XXclassicalXX",
+## x_main__mutmut_36
+-        default="classical",
++        default="CLASSICAL",
+## x_main__mutmut_70
+-        for seed, run in zip(SEEDS, runs, strict=True):
++        for seed, run in zip(SEEDS, runs, strict=None):
+## x_main__mutmut_73
+-        for seed, run in zip(SEEDS, runs, strict=True):
++        for seed, run in zip(SEEDS, runs, ):
+## x_main__mutmut_74
+-        for seed, run in zip(SEEDS, runs, strict=True):
++        for seed, run in zip(SEEDS, runs, strict=False):
+## x_main__mutmut_99
+-        means[name] = stack.groupby(level=1, sort=False).mean()
++        means[name] = stack.groupby(level=1, sort=None).mean()
+## x_main__mutmut_106
+-        stds[name] = stack.groupby(level=1, sort=False).std()
++        stds[name] = stack.groupby(level=1, sort=None).std()
