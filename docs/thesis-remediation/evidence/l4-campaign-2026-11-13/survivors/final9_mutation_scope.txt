@@ -1,0 +1,18 @@
+## x__walk__mutmut_6
+-        literal = pattern.split("*", 1)[0].split("?", 1)[0].split("[", 1)[0]
++        literal = pattern.split("*", 1)[0].split("?", 1)[0].split("[", )[0]
+## x__walk__mutmut_11
+-        literal = pattern.split("*", 1)[0].split("?", 1)[0].split("[", 1)[0]
++        literal = pattern.split("*", 1)[0].split("?", )[0].split("[", 1)[0]
+## x__walk__mutmut_16
+-        literal = pattern.split("*", 1)[0].split("?", 1)[0].split("[", 1)[0]
++        literal = pattern.split("*", )[0].split("?", 1)[0].split("[", 1)[0]
+## x__walk__mutmut_19
+-        literal = pattern.split("*", 1)[0].split("?", 1)[0].split("[", 1)[0]
++        literal = pattern.split("*", 2)[0].split("?", 1)[0].split("[", 1)[0]
+## x__walk__mutmut_22
+-        literal = pattern.split("*", 1)[0].split("?", 1)[0].split("[", 1)[0]
++        literal = pattern.split("*", 1)[0].split("?", 2)[0].split("[", 1)[0]
+## x__walk__mutmut_25
+-        literal = pattern.split("*", 1)[0].split("?", 1)[0].split("[", 1)[0]
++        literal = pattern.split("*", 1)[0].split("?", 1)[0].split("[", 2)[0]

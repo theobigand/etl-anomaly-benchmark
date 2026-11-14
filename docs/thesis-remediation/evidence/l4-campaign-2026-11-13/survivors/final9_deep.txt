@@ -1,0 +1,6 @@
+## xǁTorchDetectorǁsettings__mutmut_19
+-                "torch": version("torch"),
++                "torch": version("TORCH"),
+## xǁTorchDetectorǁsettings__mutmut_24
+-                "pyod": version("pyod"),
++                "pyod": version("PYOD"),

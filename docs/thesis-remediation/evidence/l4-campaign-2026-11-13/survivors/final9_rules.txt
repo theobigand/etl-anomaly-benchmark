@@ -1,0 +1,21 @@
+## xǁZScoreDetectorǁ__init____mutmut_4
+-        self._means: pd.Series | None = None
++        self._means: pd.Series | None = ""
+## xǁZScoreDetectorǁ__init____mutmut_5
+-        self._stds: pd.Series | None = None
++        self._stds: pd.Series | None = ""
+## xǁZScoreDetectorǁ_zscores__mutmut_8
+-        values = numeric_features(df, list(self._means.index), training=False)
++        values = numeric_features(df, list(self._means.index), training=None)
+## xǁIQRDetectorǁ__init____mutmut_4
+-        self._lower: pd.Series | None = None
++        self._lower: pd.Series | None = ""
+## xǁIQRDetectorǁ__init____mutmut_5
+-        self._upper: pd.Series | None = None
++        self._upper: pd.Series | None = ""
+## xǁIQRDetectorǁ__init____mutmut_6
+-        self._scale: pd.Series | None = None
++        self._scale: pd.Series | None = ""
+## xǁIQRDetectorǁ_exceedance__mutmut_9
+-        values = numeric_features(df, list(cols), training=False)
++        values = numeric_features(df, list(cols), training=None)

@@ -38,7 +38,7 @@
    "title": "limit of a split whose first part is read"
   }
  },
- "head": "acfa07457640d28ec706bcf8b34c864641d7022e",
+ "head": "fff123bf3bd97a49e5ec7d5ad29a047da21e09a4",
  "note": "No entry is an owner decision. The 43 candidates of owner_review_candidates_2026-11-12.json and verification/mutation_equivalence.json are read, never changed. A mutant that already has an owner verdict or is in the first packet is listed apart and is not re-proposed.",
  "noted_patterns": {
   "default-dtype": "`astype(int)`/`dtype=int` replaced by None gives float64; previously judged inconclusive by the owner for `astype(None)`",
@@ -141,7 +141,7 @@
    "eligible": 329,
    "killed": 320,
    "level": "L4",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 323,
    "noted_patterns_not_proposed": {},
    "source_sha256": "7bda7511594ba6313e9579805a0726fd04ce06382f10d2fcb6c06e4d90f0a3fd",
@@ -509,7 +509,7 @@
    "eligible": 377,
    "killed": 368,
    "level": "L4",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 370,
    "noted_patterns_not_proposed": {},
    "source_sha256": "277375e66d1edc6ed94c5ffc4b1074c113e86c6095c7dc2b20d3058cb006da18",
@@ -1581,7 +1581,7 @@
    "eligible": 197,
    "killed": 191,
    "level": "L4",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 194,
    "noted_patterns_not_proposed": {},
    "source_sha256": "5ba131d186d79c792fb64691089939fffb3a085e1f376c6b9dcd1c12bcf5155a",
@@ -1907,7 +1907,7 @@
    "eligible": 248,
    "killed": 241,
    "level": "L4",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 244,
    "noted_patterns_not_proposed": {
     "default-dtype": 1
@@ -2480,7 +2480,7 @@
    "eligible": 180,
    "killed": 175,
    "level": "L4",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 177,
    "noted_patterns_not_proposed": {
     "default-dtype": 2
@@ -2582,7 +2582,7 @@
    "eligible": 186,
    "killed": 180,
    "level": "L4",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 183,
    "noted_patterns_not_proposed": {},
    "source_sha256": "a1176cd61bd8454c9fa51da682194444feb24529dc401916e8bb94fd212ab691",
@@ -2655,7 +2655,7 @@
    "eligible": 14,
    "killed": 13,
    "level": "L4",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 14,
    "noted_patterns_not_proposed": {},
    "source_sha256": "bc450a2553f333662bb447de1c7cd9aabb274b2f608b8e57ad80e48321b9c98e",
@@ -2671,7 +2671,7 @@
    "eligible": 65,
    "killed": 58,
    "level": "L4",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 64,
    "noted_patterns_not_proposed": {},
    "source_sha256": "77a1b57ff69e580cad700bb4ee41f069e3ac0c8489bdd714651c753c4bbdd09d",
@@ -2836,7 +2836,7 @@
    "eligible": 117,
    "killed": 112,
    "level": "L4",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 115,
    "noted_patterns_not_proposed": {
     "unset-state": 2
@@ -2895,7 +2895,7 @@
    "eligible": 31,
    "killed": 30,
    "level": "L4",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 31,
    "noted_patterns_not_proposed": {},
    "source_sha256": "9efc8a6a410b92d81f4ee09f9d001f8adad62a779250b3b552db9878f9de28ff",
@@ -2996,7 +2996,7 @@
    "eligible": 62,
    "killed": 60,
    "level": "L4",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 61,
    "noted_patterns_not_proposed": {},
    "source_sha256": "77364cfdf0850b107c316ffae0389e1bb552445d76188dab388dff76e8e22632",
@@ -3012,7 +3012,7 @@
    "eligible": 129,
    "killed": 119,
    "level": "L4",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 127,
    "noted_patterns_not_proposed": {
     "unset-state": 3
@@ -3124,7 +3124,7 @@
    "eligible": 98,
    "killed": 87,
    "level": "L4",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 97,
    "noted_patterns_not_proposed": {},
    "source_sha256": "11be59dbe975d05547395263b763d37716cd9f916b284ce4147cfd87c61e3416",
@@ -3278,9 +3278,9 @@
    },
    "catalog_sha256": "38467af6141e58f9b103b94e980082662d5e9710529b6a3c1dbe75fd6c31f200",
    "eligible": 259,
-   "killed": 238,
+   "killed": 239,
    "level": "L4",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 254,
    "noted_patterns_not_proposed": {
     "default-dtype": 3,
@@ -3617,7 +3617,7 @@
    "eligible": 233,
    "killed": 225,
    "level": "L4",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 229,
    "noted_patterns_not_proposed": {
     "default-dtype": 1,
@@ -3748,7 +3748,7 @@
    "eligible": 57,
    "killed": 54,
    "level": "L4",
-   "measured_on": "case-insensitive APFS (default macOS)",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 56,
    "noted_patterns_not_proposed": {
     "default-dtype": 1
@@ -3774,158 +3774,6 @@
      ],
      "id": "etl_benchmark.quality.windows.x_scores_to_events__mutmut_9",
      "mutant": "x_scores_to_events__mutmut_9",
-     "timeout": false
-    }
-   ],
-   "would_pass_if_every_candidate_were_accepted": false
-  },
-  "verification/bundles.py": {
-   "already_decided_or_in_first_packet": [],
-   "candidate_classes": {},
-   "catalog_sha256": "911555214cf7c3f9d00533c1b373f374b2f60b833dae9bb11b94b6480d98fb67",
-   "eligible": 264,
-   "killed": 249,
-   "level": "L3",
-   "measured_on": "case-insensitive APFS (default macOS)",
-   "needed_for_threshold": 251,
-   "noted_patterns_not_proposed": {},
-   "source_sha256": "18023c2b447451909f05ed6ee78c48e40219fcddcd14bbe55091231eb6924577",
-   "survivor_dump": "l4-campaign-2026-11-13/survivors/verification__bundles.py.txt",
-   "threshold": 95,
-   "unclassified": [
-    {
-     "change": [
-      "-    evidence = root / _EVIDENCE / \"deep.json\"",
-      "+    evidence = root / _EVIDENCE / \"DEEP.JSON\""
-     ],
-     "id": "verification.bundles.x_deep_artifacts__mutmut_5",
-     "mutant": "x_deep_artifacts__mutmut_5",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-            raise ValueError(\"DEEP evidence is not a current campaign\")",
-      "+            raise ValueError(\"XXDEEP evidence is not a current campaignXX\")"
-     ],
-     "id": "verification.bundles.x_deep_artifacts__mutmut_24",
-     "mutant": "x_deep_artifacts__mutmut_24",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-            raise ValueError(\"DEEP evidence is not a current campaign\")",
-      "+            raise ValueError(\"deep evidence is not a current campaign\")"
-     ],
-     "id": "verification.bundles.x_deep_artifacts__mutmut_25",
-     "mutant": "x_deep_artifacts__mutmut_25",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-        units = json.loads((root / \"verification/mutation_risk_policy.json\").read_text())[\"units\"]",
-      "+        units = json.loads((root / \"VERIFICATION/MUTATION_RISK_POLICY.JSON\").read_text())[\"units\"]"
-     ],
-     "id": "verification.bundles.x__deep_member_allowed__mutmut_5",
-     "mutant": "x__deep_member_allowed__mutmut_5",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    selected = deep_artifacts(root) if kind == \"deep\" and not allow_missing else _allowed(kind)",
-      "+    selected = deep_artifacts(None) if kind == \"deep\" and not allow_missing else _allowed(kind)"
-     ],
-     "id": "verification.bundles.x_pack__mutmut_6",
-     "mutant": "x_pack__mutmut_6",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-            if len(members) > MAX_MEMBERS:",
-      "+            if len(members) >= MAX_MEMBERS:"
-     ],
-     "id": "verification.bundles.x_unpack__mutmut_5",
-     "mutant": "x_unpack__mutmut_5",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-            if sum(member.size for member in members) > MAX_TOTAL:",
-      "+            if sum(member.size for member in members) >= MAX_TOTAL:"
-     ],
-     "id": "verification.bundles.x_unpack__mutmut_8",
-     "mutant": "x_unpack__mutmut_8",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-                target.write_bytes(cast(IO[bytes], archive.extractfile(member)).read())",
-      "+                target.write_bytes(cast(None, archive.extractfile(member)).read())"
-     ],
-     "id": "verification.bundles.x_unpack__mutmut_40",
-     "mutant": "x_unpack__mutmut_40",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    parser = argparse.ArgumentParser(description=__doc__)",
-      "+    parser = argparse.ArgumentParser(description=None)"
-     ],
-     "id": "verification.bundles.x_main__mutmut_2",
-     "mutant": "x_main__mutmut_2",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    make = sub.add_parser(\"pack\", help=\"archive the evidence files of one kind\")",
-      "+    make = sub.add_parser(\"pack\", help=\"XXarchive the evidence files of one kindXX\")"
-     ],
-     "id": "verification.bundles.x_main__mutmut_18",
-     "mutant": "x_main__mutmut_18",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    make.add_argument(\"--allow-missing\", action=\"store_true\", help=\"skip files a failed job lacks\")",
-      "+    make.add_argument(\"--allow-missing\", action=\"store_true\", help=\"XXskip files a failed job lacksXX\")"
-     ],
-     "id": "verification.bundles.x_main__mutmut_54",
-     "mutant": "x_main__mutmut_54",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    take = sub.add_parser(\"unpack\", help=\"extract an archive that holds only evidence files\")",
-      "+    take = sub.add_parser(\"unpack\", help=\"XXextract an archive that holds only evidence filesXX\")"
-     ],
-     "id": "verification.bundles.x_main__mutmut_63",
-     "mutant": "x_main__mutmut_63",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    take.add_argument(\"--kind\", choices=sorted(KINDS))",
-      "+    take.add_argument(\"--kind\", choices=None)"
-     ],
-     "id": "verification.bundles.x_main__mutmut_80",
-     "mutant": "x_main__mutmut_80",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-    take.add_argument(\"--kind\", choices=sorted(KINDS))",
-      "+    take.add_argument(\"--kind\", )"
-     ],
-     "id": "verification.bundles.x_main__mutmut_82",
-     "mutant": "x_main__mutmut_82",
-     "timeout": false
-    },
-    {
-     "change": [
-      "-            for name in unpack(args.bundle, args.root, args.kind):",
-      "+            for name in unpack(args.bundle, args.root, None):"
-     ],
-     "id": "verification.bundles.x_main__mutmut_102",
-     "mutant": "x_main__mutmut_102",
      "timeout": false
     }
    ],
@@ -4170,50 +4018,6 @@
    "survivor_dump": "l4-campaign-2026-11-13/survivors/verification__mutation_scope.py.txt",
    "threshold": 98,
    "unclassified": [],
-   "would_pass_if_every_candidate_were_accepted": true
-  },
-  "verification/pool_contract.py": {
-   "already_decided_or_in_first_packet": [],
-   "candidate_classes": {},
-   "catalog_sha256": "9eda003880e3dbb90d97a3e6a2c53cc66fe136eb2b9e9ffea435b0829aef7fdd",
-   "eligible": 187,
-   "killed": 184,
-   "level": "L4",
-   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
-   "needed_for_threshold": 184,
-   "noted_patterns_not_proposed": {},
-   "source_sha256": "624859aa0cd7c1aad2927cf3d3a9b457f90f8f6a5807fe6475fe1f6e26b6a0e0",
-   "survivor_dump": "l4-campaign-2026-11-13/survivors/verification__pool_contract.py.txt",
-   "threshold": 98,
-   "unclassified": [
-    {
-     "change": [
-      "-        for block in iter(lambda: stream.read(1 << 20), b\"\"):",
-      "+        for block in iter(lambda: stream.read(1 << 20), None):"
-     ],
-     "id": "verification.pool_contract.x_sha256_file__mutmut_6",
-     "mutant": "x_sha256_file__mutmut_6",
-     "timeout": true
-    },
-    {
-     "change": [
-      "-        for block in iter(lambda: stream.read(1 << 20), b\"\"):",
-      "+        for block in iter(lambda: stream.read(1 << 20), b\"XXXX\"):"
-     ],
-     "id": "verification.pool_contract.x_sha256_file__mutmut_14",
-     "mutant": "x_sha256_file__mutmut_14",
-     "timeout": true
-    },
-    {
-     "change": [
-      "-    matches = sorted(adbench.glob(f\"*_{name}.npz\")) if adbench.is_dir() else []",
-      "+    matches = sorted(adbench.glob(f\"*_{name}.npz\")) if (adbench.is_dir()) or True else []"
-     ],
-     "id": "verification.pool_contract.x_local_path__mutmut_14",
-     "mutant": "x_local_path__mutmut_14",
-     "timeout": false
-    }
-   ],
    "would_pass_if_every_candidate_were_accepted": true
   }
  }

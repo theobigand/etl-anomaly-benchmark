@@ -1,7 +1,18 @@
 {
  "_last_copy": {
   "head": "87794536488cadfc9cf7e037a1dfb0e8f158977f",
-  "tests_sha256": "bc51a1d39438b64d1b0e94ebaf0cb9def8aecffb583200dedbcf38c9c9c71e7d"
+  "tests_sha256": "b67ff208eebc6f3bbe0ea8f57c6b8083e5c61bb0761ceb5209b89a0aa2fd9ee9"
+ },
+ "experiments/run_severity.py": {
+  "case_insensitive_counts_before": {
+   "killed": 320,
+   "survived": 9
+  },
+  "counts": {
+   "killed": 320,
+   "survived": 9
+  },
+  "total": 329
  },
  "research/cost_study.py": {
   "case_insensitive_counts_before": {
@@ -81,6 +92,17 @@
   },
   "total": 676
  },
+ "research/lstm_detector.py": {
+  "case_insensitive_counts_before": {
+   "killed": 368,
+   "survived": 9
+  },
+  "counts": {
+   "killed": 368,
+   "survived": 9
+  },
+  "total": 377
+ },
  "research/lstm_pilot.py": {
   "case_insensitive_counts_before": {
    "killed": 460,
@@ -102,6 +124,17 @@
    "survived": 36
   },
   "total": 1093
+ },
+ "research/normalise.py": {
+  "case_insensitive_counts_before": {
+   "killed": 191,
+   "survived": 6
+  },
+  "counts": {
+   "killed": 191,
+   "survived": 6
+  },
+  "total": 197
  },
  "research/paper_appendix.py": {
   "case_insensitive_counts_before": {
@@ -147,6 +180,17 @@
   },
   "total": 317
  },
+ "research/pool_preprocessing.py": {
+  "case_insensitive_counts_before": {
+   "killed": 241,
+   "survived": 7
+  },
+  "counts": {
+   "killed": 241,
+   "survived": 7
+  },
+  "total": 248
+ },
  "research/temporal_decision.py": {
   "case_insensitive_counts_before": {
    "killed": 754,
@@ -181,6 +225,17 @@
   },
   "total": 138
  },
+ "research/typed_benchmark.py": {
+  "case_insensitive_counts_before": {
+   "killed": 175,
+   "survived": 5
+  },
+  "counts": {
+   "killed": 175,
+   "survived": 5
+  },
+  "total": 180
+ },
  "research/typed_figures.py": {
   "case_insensitive_counts_before": {
    "killed": 133,
@@ -203,6 +258,17 @@
   },
   "total": 507
  },
+ "research/uci_loader.py": {
+  "case_insensitive_counts_before": {
+   "killed": 180,
+   "survived": 6
+  },
+  "counts": {
+   "killed": 180,
+   "survived": 6
+  },
+  "total": 186
+ },
  "research/uci_pool.py": {
   "case_insensitive_counts_before": {
    "killed": 386,
@@ -213,6 +279,94 @@
    "survived": 5
   },
   "total": 423
+ },
+ "src/etl_benchmark/load.py": {
+  "case_insensitive_counts_before": {
+   "killed": 13,
+   "survived": 1
+  },
+  "counts": {
+   "killed": 13,
+   "survived": 1
+  },
+  "total": 14
+ },
+ "src/etl_benchmark/quality/_torch_models.py": {
+  "case_insensitive_counts_before": {
+   "killed": 58,
+   "survived": 7
+  },
+  "counts": {
+   "killed": 58,
+   "survived": 7
+  },
+  "total": 65
+ },
+ "src/etl_benchmark/quality/autoencoder.py": {
+  "case_insensitive_counts_before": {
+   "killed": 112,
+   "survived": 5
+  },
+  "counts": {
+   "killed": 112,
+   "survived": 5
+  },
+  "total": 117
+ },
+ "src/etl_benchmark/quality/base.py": {
+  "case_insensitive_counts_before": {
+   "killed": 30,
+   "survived": 1
+  },
+  "counts": {
+   "killed": 30,
+   "survived": 1
+  },
+  "total": 31
+ },
+ "src/etl_benchmark/quality/deep.py": {
+  "case_insensitive_counts_before": {
+   "killed": 60,
+   "survived": 2
+  },
+  "counts": {
+   "killed": 60,
+   "survived": 2
+  },
+  "total": 62
+ },
+ "src/etl_benchmark/quality/drift.py": {
+  "case_insensitive_counts_before": {
+   "killed": 119,
+   "survived": 10
+  },
+  "counts": {
+   "killed": 119,
+   "survived": 10
+  },
+  "total": 129
+ },
+ "src/etl_benchmark/quality/gx.py": {
+  "case_insensitive_counts_before": {
+   "killed": 87,
+   "survived": 11
+  },
+  "counts": {
+   "killed": 87,
+   "survived": 11
+  },
+  "total": 98
+ },
+ "src/etl_benchmark/quality/ml.py": {
+  "case_insensitive_counts_before": {
+   "killed": 238,
+   "survived": 21
+  },
+  "counts": {
+   "killed": 239,
+   "survived": 20
+  },
+  "total": 259
  },
  "src/etl_benchmark/quality/rules.py": {
   "case_insensitive_counts_before": {
@@ -225,6 +379,28 @@
   },
   "total": 119
  },
+ "src/etl_benchmark/quality/window_drift.py": {
+  "case_insensitive_counts_before": {
+   "killed": 225,
+   "survived": 8
+  },
+  "counts": {
+   "killed": 225,
+   "survived": 8
+  },
+  "total": 233
+ },
+ "src/etl_benchmark/quality/windows.py": {
+  "case_insensitive_counts_before": {
+   "killed": 54,
+   "survived": 3
+  },
+  "counts": {
+   "killed": 54,
+   "survived": 3
+  },
+  "total": 57
+ },
  "verification/archive_evidence.py": {
   "case_insensitive_counts_before": {
    "killed": 207,
@@ -235,6 +411,17 @@
    "survived": 2
   },
   "total": 249
+ },
+ "verification/bundles.py": {
+  "case_insensitive_counts_before": {
+   "killed": 249,
+   "survived": 15
+  },
+  "counts": {
+   "killed": 251,
+   "survived": 13
+  },
+  "total": 264
  },
  "verification/claims.py": {
   "case_insensitive_counts_before": {
@@ -343,9 +530,8 @@
    "timeout": 2
   },
   "counts": {
-   "killed": 184,
-   "survived": 1,
-   "timeout": 2
+   "killed": 186,
+   "survived": 1
   },
   "total": 187
  },
