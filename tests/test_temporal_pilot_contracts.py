@@ -23,14 +23,14 @@ from etl_benchmark.split import chronological_split, stratified_split  # noqa: E
 MSG = "elapsed times must be finite and non-negative"
 
 
-@pytest.mark.parametrize("bad", [[-1.0, 2.0], [np.nan, 1.0], ["a", "b"]])
-def test_invalid_elapsed_times_are_refused_with_the_stated_reason(bad):
-    with pytest.raises(ValueError, match=f"^{MSG}$"):
-        tp.to_timestamps(pd.Series(bad))
-
-
-@pytest.mark.parametrize("bad", [[np.inf, 1.0], [1.0, -np.inf], ["inf", "1"], [float("inf")]])
-def test_infinite_elapsed_times_are_refused_with_the_stated_reason(bad):
+@pytest.mark.parametrize(
+    "bad",
+    [
+        [-1.0, 2.0], [np.nan, 1.0], ["a", "b"],  # invalid
+        [np.inf, 1.0], [1.0, -np.inf], ["inf", "1"], [float("inf")],  # infinite
+    ],
+)  # fmt: skip
+def test_invalid_and_infinite_elapsed_times_are_refused_with_the_stated_reason(bad):
     with pytest.raises(ValueError, match=f"^{MSG}$"):
         tp.to_timestamps(pd.Series(bad))
 
