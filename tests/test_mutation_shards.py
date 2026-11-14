@@ -686,3 +686,16 @@ def test_the_command_line_reads_the_equivalence_file_and_names_use_spaces(tmp_pa
     capsys.readouterr()
     shards.main(["names", "--plan", str(plan_path), "--index", "0"])
     assert capsys.readouterr().out.strip() == "a.b.* c.d.*"
+
+
+def test_diagnostic_lookup_uses_validated_plan_and_refuses_unknown_modules(tmp_path):
+    policy, document, _ = _build(tmp_path)
+    for shard in document["shards"]:
+        for name in shard["modules"]:
+            assert shards.diagnostic_index(document, policy, name) == shard["index"]
+    with pytest.raises(ValueError, match="not assigned"):
+        shards.diagnostic_index(document, policy, "missing.py")
+    tampered = copy.deepcopy(document)
+    tampered["shards"][0]["modules"] = []
+    with pytest.raises(ValueError, match="digest"):
+        shards.diagnostic_index(tampered, policy, "missing.py")

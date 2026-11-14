@@ -489,7 +489,8 @@ def test_the_aggregate_uses_the_shard_dependency_set_and_preserves_release_evide
 
 def test_the_diagnostic_label_runs_one_small_shard_and_never_the_aggregate():
     text = _text("mutation-shards.yml")
-    assert "run:mutation-shard-diagnostic" in text and "matrix=[31]" in text
+    assert "run:mutation-shard-diagnostic" in text and "diagnostic-index" in text
+    assert "diagnostic_module" in text and "matrix=[31]" not in text
     plan = text[text.index("  plan:") : text.index("  shard:")]
     assert "run:mutation-shards'" in plan and "run:mutation-shard-diagnostic" in plan
     assert "github.event.pull_request.head.repo.full_name == github.repository" in plan

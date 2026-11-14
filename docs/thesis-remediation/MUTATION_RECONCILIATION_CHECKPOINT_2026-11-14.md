@@ -231,3 +231,22 @@ After the injection and H4 regressions, the complete canonical suite
 exited 0 with 4,018 passed and 23 deselected in 707.39 seconds. These later
 changes and this run postdate the bounded independent review; the
 mutation-environment Cardio failure remains recorded separately.
+
+## Diagnostic routing checkpoint
+
+The diagnostic route now looks up a requested module in the validated generated
+45-shard plan. The PR diagnostic label selects `research/lstm_detector.py`; a
+manual dispatch can specify `diagnostic_module`. An absent module or a damaged
+plan fails the plan job; a diagnostic never runs the aggregate. The current
+plan locates LSTM in shard 33, but that index must be recomputed for each plan.
+This routing change is verification infrastructure and requires independent
+review; the authorized independent-review budget is exhausted. It is not a
+Linux validator result or certification. The change does not alter manuscript
+or slide scientific claims, so no publication artifact update is warranted.
+
+The repository's `environment.yml` specifies `pandas>=2.0`, not an exact
+pandas version or build, and therefore does not by itself reproduce the
+observed canonical parsing. The canonical conda environment and the saved
+Cardio diagnostics remain evidence for the particular successful replay; no
+parser pin or scientific conclusion has been changed. Synthetic PCA remains
+a separate numerical-instability investigation.

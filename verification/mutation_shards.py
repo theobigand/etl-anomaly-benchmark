@@ -106,6 +106,15 @@ def validate_plan(document: dict, policy: dict) -> None:
         raise ValueError("shard plan must assign every mutating module exactly once")
 
 
+def diagnostic_index(document: dict, policy: dict, module: str) -> int:
+    """Locate a module in the current validated plan, failing closed if absent."""
+    validate_plan(document, policy)
+    matches = [shard["index"] for shard in document["shards"] if module in shard["modules"]]
+    if len(matches) != 1:
+        raise ValueError(f"diagnostic module is not assigned exactly once: {module}")
+    return matches[0]
+
+
 def build_shard(
     policy: dict,
     root: Path,
@@ -403,6 +412,10 @@ def main(argv: list[str] | None = None) -> int:
     names = commands.add_parser("names")
     names.add_argument("--plan", required=True)
     names.add_argument("--index", type=int, required=True)
+    diagnostic = commands.add_parser("diagnostic-index")
+    diagnostic.add_argument("--plan", required=True)
+    diagnostic.add_argument("--policy", required=True)
+    diagnostic.add_argument("--module", required=True)
     join = commands.add_parser("aggregate")
     join.add_argument("--root", default=".")
     join.add_argument("--plan", required=True)
@@ -411,6 +424,9 @@ def main(argv: list[str] | None = None) -> int:
     join.add_argument("--output", required=True)
     args = parser.parse_args(argv)
     root = Path(getattr(args, "root", ".")).resolve()
+    if args.command == "diagnostic-index":
+        print(diagnostic_index(_load(args.plan), _load(args.policy), args.module))
+        return 0
     if args.command == "names":
         print(" ".join(shard_patterns(_load(args.plan), args.index)))
         return 0

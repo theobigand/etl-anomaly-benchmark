@@ -20,6 +20,10 @@ on:
         description: "Ignore restored shard caches and rerun every mutant"
         required: false
         default: "false"
+      diagnostic_module:
+        description: "Optional module path for a single-shard diagnostic"
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -34,7 +38,8 @@ env:
   TESTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
   # A diagnostic run executes one small shard of a 45-way plan to exercise the execution
   # proof and the cache on hosted runners. It is never a campaign and never certifies.
-  DIAGNOSTIC: ${{ contains(github.event.pull_request.labels.*.name, 'run:mutation-shard-diagnostic') }}
+  DIAGNOSTIC: ${{ contains(github.event.pull_request.labels.*.name, 'run:mutation-shard-diagnostic') || inputs.diagnostic_module != '' }}
+  DIAGNOSTIC_MODULE: ${{ inputs.diagnostic_module || 'research/lstm_detector.py' }}
 
 jobs:
   plan:
@@ -62,7 +67,10 @@ jobs:
       - id: matrix
         run: |
           if [ "$DIAGNOSTIC" = "true" ]; then
-            echo "matrix=[31]" >> "$GITHUB_OUTPUT"
+            index=$(python -m verification.mutation_shards diagnostic-index \
+              --plan shard-plan.json --policy verification/mutation_risk_policy.json \
+              --module "$DIAGNOSTIC_MODULE")
+            echo "matrix=[$index]" >> "$GITHUB_OUTPUT"
             echo "diagnostic=true" >> "$GITHUB_OUTPUT"
           else
             echo "matrix=$(python -c "import json;print(json.dumps(list(range(int('${{ env.SHARDS }}')))))")" >> "$GITHUB_OUTPUT"
