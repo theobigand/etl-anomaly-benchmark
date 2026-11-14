@@ -2,12 +2,34 @@
 """Write docs/thesis-remediation/L4_CAMPAIGN_REPORT_2026-11-13.md from l4-campaign-2026-11-13/final-measurement.json."""
 
 import json
+import subprocess
 from pathlib import Path
 
 HERE = Path(__file__).parent
 ROOT = HERE.parents[2]
 record = json.loads((HERE / "l4-campaign-2026-11-13" / "final-measurement.json").read_text())
 modules = record["modules"]
+BASELINE = "e2576a0"
+_first = subprocess.run(
+    [
+        "git",
+        "show",
+        f"{BASELINE}:docs/thesis-remediation/evidence/l4-campaign-2026-11-13/final-measurement.json",
+    ],
+    cwd=HERE.parents[2],
+    capture_output=True,
+    text=True,
+)
+first = json.loads(_first.stdout)["modules"] if _first.returncode == 0 else {}
+moved = [
+    (p, first[p], m)
+    for p, m in sorted(modules.items())
+    if p in first and (first[p]["killed"] != m["killed"] or first[p]["status"] != m["status"])
+]
+change_rows = "\n".join(
+    f"| `{p}` | {a['killed']}/{a['eligible']} ({a['status']}) | {m['killed']}/{m['eligible']} ({m['status']}) | {m['measured_on'].split(' (')[0]} |"
+    for p, a, m in moved
+)
 
 
 def line(path, m):
@@ -90,11 +112,20 @@ They are not passes. A unit with no verdict file and no declared technical exclu
 The other eleven moved units give the same verdict at either level. The move therefore turns one unit from fail to pass; it is the owner's decision, traceable in
 `RISK_RECLASSIFICATION_PROPOSAL_2026-11-13.md` and reversible by reverting commit 633d2ec.
 
+## What changed since the first measurement (`{BASELINE}`)
+
+Behavioral tests were added for the units below (no production behavior changed except the `research/time_scan.py` fix, see the notes) and the units re-measured on a case-sensitive volume where noted.
+Before: the committed first measurement. A unit whose status changed from FAIL to PASS_RAW here met its threshold by the exact integer rule; nothing was excluded. The difference mixes two effects that are not separated per unit: the new tests, and for units measured on the case-sensitive volume the end of mutants that only the macOS file-name comparison kept alive.
+
+| Unit | First measurement | Now | Measured on |
+| --- | --- | --- | --- |
+{change_rows}
+
 ## Units that fail or are incomplete
 
 Sorted by the number of kills still missing. Of the units a few kills short (`load`, `quality/base`, `quality/deep`, `quality/windows`, `typed_benchmark`, `uci_loader`, `normalise`,
 `pool_preprocessing`, `real_acquire`, `run_severity`), only `load`, `quality/base` and `normalise` have their survivors in the owner review packet
-(`OWNER_EQUIVALENCE_REVIEW_2026-11-12.md`); for the others the classes listed below are my reading, not a proposal.
+(`OWNER_EQUIVALENCE_REVIEW_2026-11-12.md`). A second packet, `OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md`, groups every surviving mutant by class with its exact identity, source digest and counterexample search; it is PROPOSED and approves nothing.
 
 ### Incomplete
 

@@ -1,0 +1,27 @@
+## x_main__mutmut_134
+-        index=["anomaly_type", "method"], columns="severity", values="recall"
++        index=["anomaly_type", "method"], columns="severity", values=None
+## x_main__mutmut_137
+-        index=["anomaly_type", "method"], columns="severity", values="recall"
+-    )
++        index=["anomaly_type", "method"], columns="severity", )
+## x_main__mutmut_87
+-        curves.to_csv(partial, index=False)
++        curves.to_csv(partial, index=None)
+## x_render__mutmut_24
+-    for ax, atype in zip(axes, MAGNITUDE_TYPES, strict=True):
++    for ax, atype in zip(axes, MAGNITUDE_TYPES, strict=None):
+## x_render__mutmut_27
+-    for ax, atype in zip(axes, MAGNITUDE_TYPES, strict=True):
++    for ax, atype in zip(axes, MAGNITUDE_TYPES, ):
+## x_render__mutmut_28
+-    for ax, atype in zip(axes, MAGNITUDE_TYPES, strict=True):
++    for ax, atype in zip(axes, MAGNITUDE_TYPES, strict=False):
+## x_render__mutmut_46
+-                color=cmap(i % 10),
++                color=None,
+## x_render__mutmut_53
+-                color=cmap(i % 10),
+## x_run__mutmut_31
+-        mean_recall = pd.concat(per_seed).groupby(level=0, sort=False).mean()
++        mean_recall = pd.concat(per_seed).groupby(level=0, sort=None).mean()

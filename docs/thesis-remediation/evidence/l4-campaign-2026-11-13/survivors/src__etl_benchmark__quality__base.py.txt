@@ -1,0 +1,3 @@
+## xǁDetectorǁscore__mutmut_1
+-        return self.predict(df).astype(float)
++        return self.predict(df).astype(None)

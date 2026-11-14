@@ -1,0 +1,63 @@
+## xǁPCAReconstructionǁ__init____mutmut_12
+-        self.threshold_ = float("nan")
++        self.threshold_ = float("NAN")
+## xǁPCAReconstructionǁ__init____mutmut_6
+-        self.pca_ = PCA(n_components=self.variance, svd_solver="full")
++        self.pca_ = PCA(n_components=self.variance, )
+## xǁPCAReconstructionǁ__init____mutmut_9
+-        self.threshold_ = float("nan")
++        self.threshold_ = None
+## xǁPyODDetectorǁ__init____mutmut_4
+-        self.feature_names_: list[str] | None = None
++        self.feature_names_: list[str] | None = ""
+## xǁPyODDetectorǁ__init____mutmut_5
+-        self._imputer: SimpleImputer | None = None
++        self._imputer: SimpleImputer | None = ""
+## xǁPyODDetectorǁ__init____mutmut_6
+-        self._scaler: StandardScaler | None = None
++        self._scaler: StandardScaler | None = ""
+## xǁPyODDetectorǁ_matrix__mutmut_11
+-        x = numeric_features(df, self.feature_names_, training=False).to_numpy(dtype=float)
++        x = numeric_features(df, self.feature_names_, training=None).to_numpy(dtype=float)
+## xǁPyODDetectorǁ_matrix__mutmut_8
+-        x = numeric_features(df, self.feature_names_, training=False).to_numpy(dtype=float)
++        x = numeric_features(df, self.feature_names_, training=False).to_numpy(dtype=None)
+## xǁPyODDetectorǁfit__mutmut_4
+-        x = numeric_features(df, self.feature_names_, training=True).to_numpy(dtype=float)
++        x = numeric_features(df, self.feature_names_, training=True).to_numpy(dtype=None)
+## xǁPyODDetectorǁscore__mutmut_6
+-        return pd.Series(scores, index=df.index, dtype=float)
++        return pd.Series(scores, index=df.index, dtype=None)
+## xǁPyODDetectorǁscore__mutmut_9
+-        return pd.Series(scores, index=df.index, dtype=float)
++        return pd.Series(scores, index=df.index, )
+## xǁTailProbabilityModelǁ__init____mutmut_10
+-        self.threshold_ = float("nan")
++        self.threshold_ = None
+## xǁTailProbabilityModelǁ__init____mutmut_13
+-        self.threshold_ = float("nan")
++        self.threshold_ = float("NAN")
+## xǁTailProbabilityModelǁ__init____mutmut_3
+-        self.sorted_ = np.empty((0, 0))
++        self.sorted_ = None
+## xǁTailProbabilityModelǁ__init____mutmut_5
+-        self.sorted_ = np.empty((0, 0))
++        self.sorted_ = np.empty((1, 0))
+## xǁTailProbabilityModelǁ__init____mutmut_6
+-        self.sorted_ = np.empty((0, 0))
++        self.sorted_ = np.empty((0, 1))
+## xǁTailProbabilityModelǁ__init____mutmut_7
+-        self.skew_sign_ = np.empty(0)
++        self.skew_sign_ = None
+## xǁTailProbabilityModelǁ__init____mutmut_9
+-        self.skew_sign_ = np.empty(0)
++        self.skew_sign_ = np.empty(1)
+## xǁTailProbabilityModelǁdecision_function__mutmut_26
+-            right[:, j] = n - np.searchsorted(column, x[:, j], side="left")
++            right[:, j] = n - np.searchsorted(column, x[:, j], )
+## xǁTailProbabilityModelǁdecision_function__mutmut_48
+-        u_skew = u_left * -1 * np.sign(self.skew_sign_ - 1) + u_right * np.sign(self.skew_sign_ + 1)
++        u_skew = u_left / -1 * np.sign(self.skew_sign_ - 1) + u_right * np.sign(self.skew_sign_ + 1)
+## xǁTailProbabilityModelǁfit__mutmut_13
+-        self.skew_sign_ = np.sign(np.nan_to_num(skew(x, axis=0)))
++        self.skew_sign_ = np.sign(np.nan_to_num(skew(x, )))

@@ -13,8 +13,8 @@
   "torch": "2.15.0"
  },
  "equivalence_validation": "refused by mutation_policy.accepted_equivalents: equivalence record is incompatible with the campaign environment",
- "head": "85bd7ce06565654f3458189da6ba697ed329555a",
- "killed": 33212,
+ "head": "38897c2c35a5ddae859c86c0e117cc822226e5ef",
+ "killed": 33300,
  "kind": "local development measurement, not the controller campaign",
  "modules": {
   "experiments/check_mutation.py": {
@@ -359,37 +359,37 @@
   "research/full_registry_summary.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 541,
-   "adjusted_score": 94.09,
+   "adjusted_score": 98.34,
    "catalog_sha256": "1ed59df9c363ac9a6e9b34fbee779d4512e272dd9e4e30df248df73f7c75d1b8",
    "counts": {
-    "killed": 509,
-    "survived": 32
+    "killed": 532,
+    "survived": 9
    },
    "eligible": 541,
-   "killed": 509,
+   "killed": 532,
    "level": "L4",
    "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 531,
-   "raw_score": 94.09,
+   "raw_score": 98.34,
    "source_sha256": "8631dfe763b8b34ec00adac3c416b2827faf59ec9bf39265bc2d1aed44bd7d12",
-   "status": "FAIL",
+   "status": "PASS_RAW",
    "threshold": 98
   },
   "research/injection.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 336,
-   "adjusted_score": 96.43,
+   "adjusted_score": 96.73,
    "catalog_sha256": "011af65d555b37c695f69c7dc6c29dd46147cfd2d5f31a34cafc67f9be06d836",
    "counts": {
-    "killed": 324,
-    "survived": 12
+    "killed": 325,
+    "survived": 11
    },
    "eligible": 336,
-   "killed": 324,
+   "killed": 325,
    "level": "L4",
    "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 330,
-   "raw_score": 96.43,
+   "raw_score": 96.73,
    "source_sha256": "cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39",
    "status": "FAIL",
    "threshold": 98
@@ -415,20 +415,20 @@
   "research/labelled_summary.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 676,
-   "adjusted_score": 97.78,
+   "adjusted_score": 98.22,
    "catalog_sha256": "a29341e47ad4ded050540a6c957e5ff366278f14ad350ba331f88f6e267c5295",
    "counts": {
-    "killed": 661,
-    "survived": 15
+    "killed": 664,
+    "survived": 12
    },
    "eligible": 676,
-   "killed": 661,
+   "killed": 664,
    "level": "L4",
    "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 663,
-   "raw_score": 97.78,
+   "raw_score": 98.22,
    "source_sha256": "2b9a60f12ceded6be288059b885b61e11eb7b68122010aed1cf69d5a578706e0",
-   "status": "FAIL",
+   "status": "PASS_RAW",
    "threshold": 98
   },
   "research/lstm_detector.py": {
@@ -604,18 +604,18 @@
   "research/pool_chrono.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 316,
-   "adjusted_score": 87.97,
+   "adjusted_score": 94.94,
    "catalog_sha256": "206639c66988bdbe63db29b095048244379c35633f8e24080ec259c6e1b2568a",
    "counts": {
-    "killed": 278,
-    "survived": 38
+    "killed": 300,
+    "survived": 16
    },
    "eligible": 316,
-   "killed": 278,
+   "killed": 300,
    "level": "L4",
    "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 310,
-   "raw_score": 87.97,
+   "raw_score": 94.94,
    "source_sha256": "cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035",
    "status": "FAIL",
    "threshold": 98
@@ -832,18 +832,18 @@
   "research/temporal_decision.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 836,
-   "adjusted_score": 96.05,
+   "adjusted_score": 96.89,
    "catalog_sha256": "c68abc303f77fdba2712116081978338289ce8e457758a0f5c7556a99186b466",
    "counts": {
-    "killed": 803,
-    "survived": 33
+    "killed": 810,
+    "survived": 26
    },
    "eligible": 836,
-   "killed": 803,
+   "killed": 810,
    "level": "L4",
    "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 820,
-   "raw_score": 96.05,
+   "raw_score": 96.89,
    "source_sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
    "status": "FAIL",
    "threshold": 98
@@ -1537,20 +1537,20 @@
   "verification/claims.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 714,
-   "adjusted_score": 97.06,
+   "adjusted_score": 98.32,
    "catalog_sha256": "156fa3c7a09e4e9847e7620080b8ea05881eadf9864d6c8339954862a1a03fc3",
    "counts": {
-    "killed": 693,
-    "survived": 21
+    "killed": 702,
+    "survived": 12
    },
    "eligible": 714,
-   "killed": 693,
+   "killed": 702,
    "level": "L4",
    "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 700,
-   "raw_score": 97.06,
+   "raw_score": 98.32,
    "source_sha256": "b4debf7608b8ed1b9db52aa203b6ffb8c181af3164ff699fe4a55580e04bb7e1",
-   "status": "FAIL",
+   "status": "PASS_RAW",
    "threshold": 98
   },
   "verification/evidence_schema.py": {
@@ -1843,20 +1843,20 @@
   "verification/release.py": {
    "accepted_equivalents": [],
    "adjusted_eligible": 854,
-   "adjusted_score": 95.9,
+   "adjusted_score": 98.59,
    "catalog_sha256": "79b76d5c6d5880d4d9bb897bd64cb79def0c9ce9d9975338d6a80fb45a101c67",
    "counts": {
-    "killed": 819,
-    "survived": 35
+    "killed": 842,
+    "survived": 12
    },
    "eligible": 854,
-   "killed": 819,
+   "killed": 842,
    "level": "L4",
    "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
    "needed_for_threshold": 837,
-   "raw_score": 95.9,
+   "raw_score": 98.59,
    "source_sha256": "e6a6e512d90f34a5f0a6cb712d214e54aa735544d0f68c9c28ba6111f165d211",
-   "status": "FAIL",
+   "status": "PASS_RAW",
    "threshold": 98
   },
   "verification/reproduce.py": {
@@ -1901,9 +1901,9 @@
  "mutants": 34781,
  "policy_sha256": "fc19388775ea7144022fd1451f4ffb62f6ed1408381d618691bbacc8602e695c",
  "summary": {
-  "FAIL": 39,
+  "FAIL": 35,
   "INCOMPLETE": 3,
   "NO_MUTANTS": 3,
-  "PASS_RAW": 55
+  "PASS_RAW": 59
  }
 }

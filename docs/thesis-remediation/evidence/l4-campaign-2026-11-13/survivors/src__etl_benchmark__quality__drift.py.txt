@@ -1,0 +1,30 @@
+## xǁTemporalDriftDetectorǁ__init____mutmut_11
+-        self._fitted = False
++        self._fitted = None
+## xǁTemporalDriftDetectorǁ__init____mutmut_13
+-        self._active = False
++        self._active = None
+## xǁTemporalDriftDetectorǁ__init____mutmut_14
+-        self._active = False
++        self._active = True
+## xǁTemporalDriftDetectorǁ__init____mutmut_15
+-        self._cutoff: object | None = None
++        self._cutoff: object | None = ""
+## xǁTemporalDriftDetectorǁ__init____mutmut_16
+-        self._means: pd.Series | None = None
++        self._means: pd.Series | None = ""
+## xǁTemporalDriftDetectorǁ__init____mutmut_17
+-        self._stds: pd.Series | None = None
++        self._stds: pd.Series | None = ""
+## xǁTemporalDriftDetectorǁ_row_score__mutmut_15
+-        moved = shift.abs() > 0.03  # features that actually drifted
++        moved = shift.abs() >= 0.03  # features that actually drifted
+## xǁTemporalDriftDetectorǁ_row_score__mutmut_33
+-        lean = (z.loc[:, moved.index[moved]] * direction).clip(0.0, 4.0).mean(axis=1)
++        lean = (z.loc[:, moved.index[moved]] / direction).clip(0.0, 4.0).mean(axis=1)
+## xǁTemporalDriftDetectorǁ_row_score__mutmut_43
+-        row[gross] = 0.0
++        row[gross] = None
+## xǁTemporalDriftDetectorǁfit__mutmut_4
+-            self._active = False
++            self._active = None
