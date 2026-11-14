@@ -55,12 +55,41 @@ def prepare_execution_without_pop() -> dict:
     }
 
 
+def block_ci_cost() -> dict:
+    """temporal_decision._block_ci mutant 25: one precision-recall area on a one-row array per resample."""
+    import time
+
+    import numpy as np
+    import temporal_decision as td
+    from sklearn.metrics import average_precision_score
+
+    rows = {}
+    for n in (40, 200, 1000):
+        rng = np.random.default_rng(0)
+        y = (rng.random(n) < 0.2).astype(int)
+        scores = rng.random(n)
+        start = time.perf_counter()
+        td._block_ci(y, scores)
+        original = time.perf_counter() - start
+        start = time.perf_counter()
+        average_precision_score(y[None], scores[None])
+        one_call = time.perf_counter() - start
+        rows[str(n)] = {
+            "original_block_ci_s": round(original, 3),
+            "mutant_one_resample_s": round(one_call, 4),
+            "mutant_estimated_total_s": round(one_call * td.RESAMPLES, 1),
+            "resamples": td.RESAMPLES,
+        }
+    return rows
+
+
 def main() -> None:
     sys.path[:0] = [str(ROOT / "research"), str(ROOT / "src"), str(ROOT)]
     report = {
         "pool_contract.sha256_file__mutmut_6": sha256_file_sentinel(None),
         "pool_contract.sha256_file__mutmut_14": sha256_file_sentinel(b"XXXX"),
         "mutation_cache.prepare_execution__mutmut_128": prepare_execution_without_pop(),
+        "temporal_decision._block_ci__mutmut_25 (measured on the machine that ran this script)": block_ci_cost(),
         "classification": {
             "sha256_file mutants 6 and 14": (
                 "non-terminating: the end-of-file sentinel can never match, so the read loop runs "
@@ -69,9 +98,14 @@ def main() -> None:
             "prepare_execution mutant 128": (
                 "non-terminating: the queue is never popped; status stays timeout (not killed)"
             ),
+            "cost_study.wait_for_quiet mutant 12 (`<` -> `<=` on the deadline)": (
+                "non-terminating only under the former test, which froze the clock at the deadline forever; "
+                "in use the clock advances. The test now supplies a finite clock, so the mutant raises "
+                "StopIteration instead of looping."
+            ),
             "temporal_decision._block_ci mutant 25": (
                 "not a hang: the mutant returns a result computed on a one-row array per resample, "
-                "20 to 400 times slower than the original. Slow tests ran before the detecting test and "
+                "slower than the original by the factor measured above (it grows with the number of rows). Slow tests ran before the detecting test and "
                 "exceeded the limit. Resolved by shortening those tests (RESAMPLES patched), see the tests."
             ),
         },

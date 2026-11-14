@@ -45,5 +45,6 @@ back ends. This remains a scientific-integrity item for the owner: either state 
 component on the six-feature synthetic table and that its curve is back-end dependent, or choose a component rule that
 does not retain all features (a protocol change, therefore not made here). The method comparison on this panel should not rest on this one curve.
 
-Probe: `docs/thesis-remediation/evidence/pca_probe.py` (fits `PCADetector` through `detect` on the
-`run_curves._split_synth(42, None)` split and prints the average precision, the component count, the cumulative variance and the score range). Run it with each interpreter to reproduce both values.
+Probe: `docs/thesis-remediation/evidence/pca_probe.py` prints one JSON record per interpreter; the two records of 2026-11-14 are in
+`docs/thesis-remediation/evidence/l4-campaign-2026-11-13/pca-probe-results.json`. The comparison changes two things at once (the numpy wheel's BLAS
+and the packaging), so it shows that the value follows the numerical back end, not which routine of it is responsible.

@@ -1,8 +1,9 @@
 {
   "classification": {
+    "cost_study.wait_for_quiet mutant 12 (`<` -> `<=` on the deadline)": "non-terminating only under the former test, which froze the clock at the deadline forever; in use the clock advances. The test now supplies a finite clock, so the mutant raises StopIteration instead of looping.",
     "prepare_execution mutant 128": "non-terminating: the queue is never popped; status stays timeout (not killed)",
     "sha256_file mutants 6 and 14": "non-terminating: the end-of-file sentinel can never match, so the read loop runs forever; status stays timeout (not killed)",
-    "temporal_decision._block_ci mutant 25": "not a hang: the mutant returns a result computed on a one-row array per resample, 20 to 400 times slower than the original. Slow tests ran before the detecting test and exceeded the limit. Resolved by shortening those tests (RESAMPLES patched), see the tests."
+    "temporal_decision._block_ci mutant 25": "not a hang: the mutant returns a result computed on a one-row array per resample, slower than the original by the factor measured above (it grows with the number of rows). Slow tests ran before the detecting test and exceeded the limit. Resolved by shortening those tests (RESAMPLES patched), see the tests."
   },
   "mutation_cache.prepare_execution__mutmut_128": {
     "budget": 10000,
@@ -26,5 +27,25 @@
     "expected_digest": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
     "non_empty_blocks": 1,
     "terminated": false
+  },
+  "temporal_decision._block_ci__mutmut_25 (measured on the machine that ran this script)": {
+    "1000": {
+      "mutant_estimated_total_s": 141.4,
+      "mutant_one_resample_s": 0.1414,
+      "original_block_ci_s": 0.354,
+      "resamples": 1000
+    },
+    "200": {
+      "mutant_estimated_total_s": 28.4,
+      "mutant_one_resample_s": 0.0284,
+      "original_block_ci_s": 0.304,
+      "resamples": 1000
+    },
+    "40": {
+      "mutant_estimated_total_s": 6.1,
+      "mutant_one_resample_s": 0.0061,
+      "original_block_ci_s": 0.3,
+      "resamples": 1000
+    }
   }
 }
