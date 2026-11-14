@@ -14,7 +14,7 @@ python docs/thesis-remediation/evidence/build_l4_campaign_report.py
 python docs/thesis-remediation/evidence/archive_verdicts.py
 ```
 
-`setup` and `sync` copy the checkout (without `mutants/`) and its `.git`; `run` collects the test map once, runs each unit with `run_l4_campaign.py --rerun`, writes the survivor differences into `evidence/l4-campaign-2026-11-13/survivors/` straight after the unit (the generated copy is a mutated source only then) and copies the verdict file next to the main checkout's as `mutants/<unit>.meta.cs`.
+`setup` and `sync` copy the checkout (without `mutants/`) and its `.git`; `run` re-opens every verdict that is not a kill (mutmut only re-runs mutants without a verdict, so survivors would otherwise keep their old result whatever the new tests do), collects the test map once, runs each unit with `run_l4_campaign.py --rerun`, writes the survivor differences into `evidence/l4-campaign-2026-11-13/survivors/` straight after the unit (the generated copy is a mutated source only then) and copies the verdict file next to the main checkout's as `mutants/<unit>.meta.cs`.
 
 ## What is and is not recorded
 

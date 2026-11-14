@@ -44,6 +44,20 @@ case "${1:-}" in
     mkdir -p "$ROOT/docs/thesis-remediation/evidence/l4-campaign-2026-11-13/survivors"
     rm -f mutants/mutmut-stats.json   # collect the test map once, for the tests as synced
     for unit in "$@"; do
+      # mutmut re-runs only mutants without a verdict: re-open every verdict that is not a kill, so the tests
+      # as synced decide them again (kills are kept; reset all of them for a complete re-measurement)
+      python3 - "$unit" <<'PY'
+import json, sys
+path = f"mutants/{sys.argv[1]}.meta"
+try:
+    data = json.load(open(path))
+except FileNotFoundError:
+    sys.exit()
+for key, code in data["exit_code_by_key"].items():
+    if code != 1:
+        data["exit_code_by_key"][key] = None
+json.dump(data, open(path, "w"))
+PY
       "$VENV/bin/python" docs/thesis-remediation/evidence/run_l4_campaign.py \
         docs/thesis-remediation/evidence/l4-campaign-2026-11-13/state.json --rerun --only "$unit"
       # the generated copy of the unit is a mutated source only right now
