@@ -38,7 +38,7 @@
    "title": "limit of a split whose first part is read"
   }
  },
- "head": "8707ea4653c7eff447e6d68fcaa3258f0d816bbb",
+ "head": "18589c7955180c6d20947782b7436020ce278d2c",
  "note": "No entry is an owner decision. The 43 candidates of owner_review_candidates_2026-11-12.json and verification/mutation_equivalence.json are read, never changed. A mutant that already has an owner verdict or is in the first packet is listed apart and is not re-proposed.",
  "noted_patterns": {
   "default-dtype": "`astype(int)`/`dtype=int` replaced by None gives float64; previously judged inconclusive by the owner for `astype(None)`",

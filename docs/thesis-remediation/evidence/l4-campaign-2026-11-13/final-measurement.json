@@ -13,7 +13,7 @@
   "torch": "2.14.1"
  },
  "equivalence_validation": "refused by mutation_policy.accepted_equivalents: equivalence record is incompatible with the campaign environment",
- "head": "8707ea4653c7eff447e6d68fcaa3258f0d816bbb",
+ "head": "18589c7955180c6d20947782b7436020ce278d2c",
  "killed": 34229,
  "kind": "local development measurement, not the controller campaign",
  "modules": {

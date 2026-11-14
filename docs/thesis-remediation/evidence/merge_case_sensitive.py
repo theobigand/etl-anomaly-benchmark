@@ -24,16 +24,27 @@ OUT = Path(__file__).parent / "l4-campaign-2026-11-13" / "case-sensitive-units.j
 def main() -> None:
     adopted = json.loads(OUT.read_text()) if OUT.exists() else {}
     copy = Path(os.environ.get("CASE_SENSITIVE_COPY", "/Volumes/etlcs/repo"))
-    if (copy / ".git").exists():
+    if copy.is_dir():
+
+        def tree(base: Path) -> str:
+            digest = hashlib.sha256()
+            for path in sorted(
+                [*(base / "tests").rglob("*.py"), *(base / "research" / "tests").rglob("*.py")]
+            ):
+                digest.update(path.relative_to(base).as_posix().encode() + path.read_bytes())
+            return digest.hexdigest()
+
+        # The copy is made by rsync without .git: its own git metadata is stale. The digest of its test tree is
+        # what identifies it; the HEAD of this repository is recorded only when that tree is identical to this one.
+        copied, source = tree(copy), tree(ROOT)
         head = subprocess.run(
-            ["git", "rev-parse", "HEAD"], cwd=copy, capture_output=True, text=True
+            ["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True, text=True
         ).stdout.strip()
-        tests = hashlib.sha256()
-        for path in sorted(
-            [*(copy / "tests").rglob("*.py"), *(copy / "research" / "tests").rglob("*.py")]
-        ):
-            tests.update(path.relative_to(copy).as_posix().encode() + path.read_bytes())
-        adopted["_last_copy"] = {"head": head, "tests_sha256": tests.hexdigest()}
+        adopted["_last_copy"] = {
+            "head": head if copied == source else None,
+            "tests_sha256": copied,
+            "tests_match_repository": copied == source,
+        }
     for copy_file in sorted((ROOT / "mutants").rglob("*.meta.cs")):
         target = copy_file.with_suffix("")
         unit = target.relative_to(ROOT / "mutants").as_posix().removesuffix(".meta")
