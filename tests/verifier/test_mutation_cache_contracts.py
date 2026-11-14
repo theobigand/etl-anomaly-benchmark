@@ -814,3 +814,35 @@ def test_the_command_help_carries_the_module_description(capsys):
     with pytest.raises(SystemExit):
         mc.main(["--help"])
     assert "Reuse cached mutation verdicts only for code and tests" in capsys.readouterr().out
+
+
+class _BudgetedGraph(dict):
+    """A dependency graph that fails the test if it is asked more often than it should be."""
+
+    def __init__(self, data, budget):
+        super().__init__(data)
+        self.budget, self.asked = budget, []
+
+    def get(self, key, default=None):
+        self.asked.append(key)
+        assert len(self.asked) <= self.budget, "the same caller queue is read without end"
+        return super().get(key, default)
+
+
+def test_the_callers_of_a_change_are_followed_once_each_and_the_search_ends(tmp_path, monkeypatch):
+    _baseline(tmp_path)
+    original = mc._execution_proof
+
+    def proof(root):
+        found = original(root)
+        graph = found["statistics"]["function_dependencies"]
+        found["statistics"]["function_dependencies"] = _BudgetedGraph(graph, budget=10)
+        proof.graph = found["statistics"]["function_dependencies"]
+        return found
+
+    monkeypatch.setattr(mc, "_execution_proof", proof)
+    path = tmp_path / SOURCES[0]
+    path.write_text(path.read_text().replace("+ 1", "+ 2"))
+    result = _prepare(tmp_path)
+    assert result["reset"] == 2
+    assert proof.graph.asked == ["pkg.a.x_compute", "pkg.b.x_run"]

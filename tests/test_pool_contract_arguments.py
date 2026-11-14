@@ -82,3 +82,47 @@ def test_the_report_file_is_sorted_one_space_indented_and_created_under_new_dire
     expected = {"summary": {"datasets": 0, "counts": {}, "all_ok": True}, "report": []}
     assert output.read_text() == json.dumps(expected, indent=1, sort_keys=True) + "\n"
     assert pc.main(["--manifest", str(manifest), "--output", str(output)]) == 0
+
+
+class _GuardedStream:
+    """A file that fails the test if it is read again after it has returned the end of file."""
+
+    def __init__(self, data):
+        import io
+
+        self._stream = io.BytesIO(data)
+        self.reads = 0
+        self.ended = False
+
+    def read(self, size=-1):
+        assert not self.ended, "read after the end of the file"
+        self.reads += 1
+        assert self.reads <= 10, "the file is read without end"
+        chunk = self._stream.read(size)
+        self.ended = chunk == b""
+        return chunk
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        return False
+
+
+def test_a_file_is_read_until_its_end_and_never_past_it(monkeypatch, tmp_path):
+    import hashlib
+
+    data = b"abc" * 10
+    guard = _GuardedStream(data)
+    monkeypatch.setattr(pc.Path, "open", lambda self, mode="r": guard)
+    assert pc.sha256_file(tmp_path / "f") == hashlib.sha256(data).hexdigest()
+    assert guard.reads == 2 and guard.ended
+
+
+def test_an_empty_file_is_one_read_to_the_end(monkeypatch, tmp_path):
+    import hashlib
+
+    guard = _GuardedStream(b"")
+    monkeypatch.setattr(pc.Path, "open", lambda self, mode="r": guard)
+    assert pc.sha256_file(tmp_path / "f") == hashlib.sha256(b"").hexdigest()
+    assert guard.reads == 1
