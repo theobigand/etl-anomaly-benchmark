@@ -1,0 +1,21 @@
+## xǁMeanVAEǁevaluating_forward__mutmut_3
+-        mu, _ = self.model.encode(batch_data.to(self.device))
++        mu, _ = self.model.encode(batch_data.to(None))
+## xǁFitScalerDIFǁ_deep_representation__mutmut_5
+-            for batch in DataLoader(X, batch_size=self.batch_size, drop_last=False, shuffle=False):
++            for batch in DataLoader(X, batch_size=self.batch_size, drop_last=False, shuffle=None):
+## xǁFitScalerDIFǁ_deep_representation__mutmut_8
+-            for batch in DataLoader(X, batch_size=self.batch_size, drop_last=False, shuffle=False):
++            for batch in DataLoader(X, batch_size=self.batch_size, shuffle=False):
+## xǁFitScalerDIFǁ_deep_representation__mutmut_9
+-            for batch in DataLoader(X, batch_size=self.batch_size, drop_last=False, shuffle=False):
++            for batch in DataLoader(X, batch_size=self.batch_size, drop_last=False, ):
+## xǁFitScalerDIFǁ_deep_representation__mutmut_14
+-                reduced.append(net(batch.float().to(self.device)))
++                reduced.append(net(batch.float().to(None)))
+## xǁPaddedAE1SVMǁfit__mutmut_11
+-        return super().fit(X, y)
++        return super().fit(X, None)
+## xǁPaddedAE1SVMǁfit__mutmut_13
+-        return super().fit(X, y)
++        return super().fit(X, )

@@ -1,0 +1,1021 @@
+{
+  "date": "2026-11-08",
+  "execution_binding": "unbound",
+  "levels": {
+    "L1": {
+      "eligible": 0,
+      "killed": 0,
+      "no tests": 0,
+      "score": null,
+      "segfault": 0,
+      "status": "NOT_APPLICABLE",
+      "survived": 0,
+      "threshold": 80,
+      "timeout": 0
+    },
+    "L2": {
+      "eligible": 10,
+      "killed": 10,
+      "no tests": 0,
+      "score": 100.0,
+      "segfault": 0,
+      "status": "PASS",
+      "survived": 0,
+      "threshold": 90,
+      "timeout": 0
+    },
+    "L3": {
+      "eligible": 1740,
+      "killed": 856,
+      "no tests": 614,
+      "score": 49.195402298850574,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 268,
+      "threshold": 95,
+      "timeout": 2
+    },
+    "L4": {
+      "eligible": 29387,
+      "killed": 19117,
+      "no tests": 6638,
+      "score": 65.05257426753326,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 3623,
+      "threshold": 98,
+      "timeout": 9
+    }
+  },
+  "modules": {
+    "experiments/check_mutation.py": {
+      "eligible": 150,
+      "killed": 125,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 25,
+      "timeout": 0
+    },
+    "experiments/fetch_cardio.py": {
+      "eligible": 61,
+      "killed": 60,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "PASS",
+      "survived": 1,
+      "timeout": 0
+    },
+    "experiments/generate_synthetic.py": {
+      "eligible": 91,
+      "killed": 90,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "PASS",
+      "survived": 1,
+      "timeout": 0
+    },
+    "experiments/provenance.py": {
+      "eligible": 381,
+      "killed": 381,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "PASS",
+      "survived": 0,
+      "timeout": 0
+    },
+    "experiments/run_benchmark.py": {
+      "eligible": 438,
+      "killed": 437,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "PASS",
+      "survived": 1,
+      "timeout": 0
+    },
+    "experiments/run_curves.py": {
+      "eligible": 451,
+      "killed": 443,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "PASS",
+      "survived": 8,
+      "timeout": 0
+    },
+    "experiments/run_severity.py": {
+      "eligible": 329,
+      "killed": 320,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 9,
+      "timeout": 0
+    },
+    "experiments/run_synthetic_benchmark.py": {
+      "eligible": 572,
+      "killed": 561,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "PASS",
+      "survived": 11,
+      "timeout": 0
+    },
+    "experiments/verification_report.py": {
+      "eligible": 290,
+      "killed": 290,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "PASS",
+      "survived": 0,
+      "timeout": 0
+    },
+    "experiments/verify_real.py": {
+      "eligible": 212,
+      "killed": 212,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "PASS",
+      "survived": 0,
+      "timeout": 0
+    },
+    "research/build_pool.py": {
+      "eligible": 172,
+      "killed": 57,
+      "level": "L4",
+      "no tests": 86,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 29,
+      "timeout": 0
+    },
+    "research/cost_study.py": {
+      "eligible": 825,
+      "killed": 399,
+      "level": "L3",
+      "no tests": 305,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 121,
+      "timeout": 0
+    },
+    "research/dataset_registry.py": {
+      "eligible": 417,
+      "killed": 242,
+      "level": "L4",
+      "no tests": 155,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 20,
+      "timeout": 0
+    },
+    "research/deep_support.py": {
+      "eligible": 14,
+      "killed": 14,
+      "level": "L3",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "PASS",
+      "survived": 0,
+      "timeout": 0
+    },
+    "research/deep_typed.py": {
+      "eligible": 442,
+      "killed": 223,
+      "level": "L4",
+      "no tests": 142,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 77,
+      "timeout": 0
+    },
+    "research/full_registry.py": {
+      "eligible": 571,
+      "killed": 243,
+      "level": "L4",
+      "no tests": 270,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 56,
+      "timeout": 2
+    },
+    "research/full_registry_summary.py": {
+      "eligible": 541,
+      "killed": 161,
+      "level": "L4",
+      "no tests": 352,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 28,
+      "timeout": 0
+    },
+    "research/injection.py": {
+      "eligible": 336,
+      "killed": 266,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 70,
+      "timeout": 0
+    },
+    "research/labelled_benchmark.py": {
+      "eligible": 475,
+      "killed": 100,
+      "level": "L4",
+      "no tests": 361,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 14,
+      "timeout": 0
+    },
+    "research/labelled_summary.py": {
+      "eligible": 676,
+      "killed": 280,
+      "level": "L4",
+      "no tests": 314,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 82,
+      "timeout": 0
+    },
+    "research/lstm_detector.py": {
+      "eligible": 377,
+      "killed": 247,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 130,
+      "timeout": 0
+    },
+    "research/lstm_pilot.py": {
+      "eligible": 506,
+      "killed": 130,
+      "level": "L4",
+      "no tests": 317,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 59,
+      "timeout": 0
+    },
+    "research/multi_schema.py": {
+      "eligible": 1093,
+      "killed": 636,
+      "level": "L4",
+      "no tests": 204,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 253,
+      "timeout": 0
+    },
+    "research/normalise.py": {
+      "eligible": 193,
+      "killed": 163,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 30,
+      "timeout": 0
+    },
+    "research/paired_bootstrap.py": {
+      "eligible": 100,
+      "killed": 77,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 21,
+      "timeout": 2
+    },
+    "research/paper_appendix.py": {
+      "eligible": 171,
+      "killed": 0,
+      "level": "L4",
+      "no tests": 171,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 0,
+      "timeout": 0
+    },
+    "research/paper_tables.py": {
+      "eligible": 511,
+      "killed": 0,
+      "level": "L4",
+      "no tests": 511,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 0,
+      "timeout": 0
+    },
+    "research/pool_check.py": {
+      "eligible": 180,
+      "killed": 118,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 62,
+      "timeout": 0
+    },
+    "research/pool_chrono.py": {
+      "eligible": 316,
+      "killed": 144,
+      "level": "L4",
+      "no tests": 138,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 33,
+      "timeout": 1
+    },
+    "research/pool_etl.py": {
+      "eligible": 317,
+      "killed": 154,
+      "level": "L4",
+      "no tests": 121,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 42,
+      "timeout": 0
+    },
+    "research/pool_extension_paper.py": {
+      "eligible": 652,
+      "killed": 0,
+      "level": "L4",
+      "no tests": 652,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 0,
+      "timeout": 0
+    },
+    "research/pool_extension_summary.py": {
+      "eligible": 496,
+      "killed": 435,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 61,
+      "timeout": 0
+    },
+    "research/pool_full.py": {
+      "eligible": 515,
+      "killed": 216,
+      "level": "L4",
+      "no tests": 265,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 34,
+      "timeout": 0
+    },
+    "research/pool_preprocessing.py": {
+      "eligible": 248,
+      "killed": 238,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 10,
+      "timeout": 0
+    },
+    "research/pool_train_only.py": {
+      "eligible": 332,
+      "killed": 325,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 7,
+      "timeout": 0
+    },
+    "research/pool_typed.py": {
+      "eligible": 525,
+      "killed": 26,
+      "level": "L4",
+      "no tests": 478,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 21,
+      "timeout": 0
+    },
+    "research/temporal_decision.py": {
+      "eligible": 836,
+      "killed": 522,
+      "level": "L4",
+      "no tests": 186,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 127,
+      "timeout": 1
+    },
+    "research/temporal_pilot.py": {
+      "eligible": 586,
+      "killed": 11,
+      "level": "L4",
+      "no tests": 566,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 9,
+      "timeout": 0
+    },
+    "research/time_scan.py": {
+      "eligible": 135,
+      "killed": 0,
+      "level": "L3",
+      "no tests": 135,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 0,
+      "timeout": 0
+    },
+    "research/typed_benchmark.py": {
+      "eligible": 180,
+      "killed": 141,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 39,
+      "timeout": 0
+    },
+    "research/typed_figures.py": {
+      "eligible": 240,
+      "killed": 135,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 105,
+      "timeout": 0
+    },
+    "research/typed_masking.py": {
+      "eligible": 132,
+      "killed": 27,
+      "level": "L4",
+      "no tests": 104,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 1,
+      "timeout": 0
+    },
+    "research/typed_run.py": {
+      "eligible": 351,
+      "killed": 27,
+      "level": "L4",
+      "no tests": 322,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 2,
+      "timeout": 0
+    },
+    "research/typed_summary.py": {
+      "eligible": 507,
+      "killed": 388,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 119,
+      "timeout": 0
+    },
+    "research/uci_loader.py": {
+      "eligible": 186,
+      "killed": 157,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 29,
+      "timeout": 0
+    },
+    "research/uci_pool.py": {
+      "eligible": 423,
+      "killed": 222,
+      "level": "L3",
+      "no tests": 174,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 27,
+      "timeout": 0
+    },
+    "src/etl_benchmark/__init__.py": {
+      "eligible": 0,
+      "killed": 0,
+      "level": "L2",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "NO_MUTANTS_TECHNICAL",
+      "survived": 0,
+      "timeout": 0
+    },
+    "src/etl_benchmark/__main__.py": {
+      "eligible": 36,
+      "killed": 35,
+      "level": "L3",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "PASS",
+      "survived": 1,
+      "timeout": 0
+    },
+    "src/etl_benchmark/atomic.py": {
+      "eligible": 6,
+      "killed": 6,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "PASS",
+      "survived": 0,
+      "timeout": 0
+    },
+    "src/etl_benchmark/config.py": {
+      "eligible": 0,
+      "killed": 0,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "NO_MUTANTS_TECHNICAL",
+      "survived": 0,
+      "timeout": 0
+    },
+    "src/etl_benchmark/datasets.py": {
+      "eligible": 23,
+      "killed": 23,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "PASS",
+      "survived": 0,
+      "timeout": 0
+    },
+    "src/etl_benchmark/extract.py": {
+      "eligible": 5,
+      "killed": 5,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "PASS",
+      "survived": 0,
+      "timeout": 0
+    },
+    "src/etl_benchmark/load.py": {
+      "eligible": 14,
+      "killed": 13,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 1,
+      "timeout": 0
+    },
+    "src/etl_benchmark/logging_setup.py": {
+      "eligible": 10,
+      "killed": 10,
+      "level": "L2",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "PASS",
+      "survived": 0,
+      "timeout": 0
+    },
+    "src/etl_benchmark/metrics.py": {
+      "eligible": 91,
+      "killed": 90,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "PASS",
+      "survived": 1,
+      "timeout": 0
+    },
+    "src/etl_benchmark/pipeline.py": {
+      "eligible": 163,
+      "killed": 163,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "PASS",
+      "survived": 0,
+      "timeout": 0
+    },
+    "src/etl_benchmark/quality/__init__.py": {
+      "eligible": 0,
+      "killed": 0,
+      "level": "L2",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "NO_MUTANTS_TECHNICAL",
+      "survived": 0,
+      "timeout": 0
+    },
+    "src/etl_benchmark/quality/_torch_models.py": {
+      "eligible": 65,
+      "killed": 54,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 11,
+      "timeout": 0
+    },
+    "src/etl_benchmark/quality/autoencoder.py": {
+      "eligible": 117,
+      "killed": 110,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 7,
+      "timeout": 0
+    },
+    "src/etl_benchmark/quality/base.py": {
+      "eligible": 31,
+      "killed": 29,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 2,
+      "timeout": 0
+    },
+    "src/etl_benchmark/quality/deep.py": {
+      "eligible": 62,
+      "killed": 48,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 14,
+      "timeout": 0
+    },
+    "src/etl_benchmark/quality/drift.py": {
+      "eligible": 129,
+      "killed": 118,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 11,
+      "timeout": 0
+    },
+    "src/etl_benchmark/quality/gx.py": {
+      "eligible": 98,
+      "killed": 85,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 13,
+      "timeout": 0
+    },
+    "src/etl_benchmark/quality/ml.py": {
+      "eligible": 259,
+      "killed": 234,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 25,
+      "timeout": 0
+    },
+    "src/etl_benchmark/quality/rules.py": {
+      "eligible": 119,
+      "killed": 110,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 9,
+      "timeout": 0
+    },
+    "src/etl_benchmark/quality/window_drift.py": {
+      "eligible": 233,
+      "killed": 225,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 8,
+      "timeout": 0
+    },
+    "src/etl_benchmark/quality/windows.py": {
+      "eligible": 57,
+      "killed": 53,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 4,
+      "timeout": 0
+    },
+    "src/etl_benchmark/registry.py": {
+      "eligible": 68,
+      "killed": 68,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "PASS",
+      "survived": 0,
+      "timeout": 0
+    },
+    "src/etl_benchmark/split.py": {
+      "eligible": 124,
+      "killed": 122,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "PASS",
+      "survived": 2,
+      "timeout": 0
+    },
+    "src/etl_benchmark/synthetic.py": {
+      "eligible": 536,
+      "killed": 529,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "PASS",
+      "survived": 7,
+      "timeout": 0
+    },
+    "src/etl_benchmark/transform.py": {
+      "eligible": 2,
+      "killed": 2,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "PASS",
+      "survived": 0,
+      "timeout": 0
+    },
+    "verification/archive_evidence.py": {
+      "eligible": 249,
+      "killed": 210,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 39,
+      "timeout": 0
+    },
+    "verification/bundles.py": {
+      "eligible": 264,
+      "killed": 143,
+      "level": "L4",
+      "no tests": 109,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 12,
+      "timeout": 0
+    },
+    "verification/check_types.py": {
+      "eligible": 209,
+      "killed": 161,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 48,
+      "timeout": 0
+    },
+    "verification/claims.py": {
+      "eligible": 714,
+      "killed": 5,
+      "level": "L4",
+      "no tests": 689,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 20,
+      "timeout": 0
+    },
+    "verification/evidence_schema.py": {
+      "eligible": 1547,
+      "killed": 1100,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 447,
+      "timeout": 0
+    },
+    "verification/lineage.py": {
+      "eligible": 191,
+      "killed": 169,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 22,
+      "timeout": 0
+    },
+    "verification/lock_environment.py": {
+      "eligible": 346,
+      "killed": 247,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 99,
+      "timeout": 0
+    },
+    "verification/mutation_cache.py": {
+      "eligible": 1110,
+      "killed": 950,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 159,
+      "timeout": 1
+    },
+    "verification/mutation_campaign.py": {
+      "eligible": 666,
+      "killed": 613,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 53,
+      "timeout": 0
+    },
+    "verification/mutation_catalog.py": {
+      "eligible": 366,
+      "killed": 298,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 68,
+      "timeout": 0
+    },
+    "verification/mutation_policy.py": {
+      "eligible": 714,
+      "killed": 629,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 85,
+      "timeout": 0
+    },
+    "verification/mutation_run.py": {
+      "eligible": 326,
+      "killed": 301,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 25,
+      "timeout": 0
+    },
+    "verification/mutation_scope.py": {
+      "eligible": 246,
+      "killed": 225,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 21,
+      "timeout": 0
+    },
+    "verification/mutation_shards.py": {
+      "eligible": 786,
+      "killed": 773,
+      "level": "L4",
+      "no tests": 1,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 12,
+      "timeout": 0
+    },
+    "verification/pool_contract.py": {
+      "eligible": 187,
+      "killed": 144,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 41,
+      "timeout": 2
+    },
+    "verification/protection.py": {
+      "eligible": 294,
+      "killed": 235,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 59,
+      "timeout": 0
+    },
+    "verification/real_acquire.py": {
+      "eligible": 219,
+      "killed": 150,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 69,
+      "timeout": 0
+    },
+    "verification/real_preflight.py": {
+      "eligible": 790,
+      "killed": 545,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 245,
+      "timeout": 0
+    },
+    "verification/refresh_profile.py": {
+      "eligible": 147,
+      "killed": 107,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 40,
+      "timeout": 0
+    },
+    "verification/release.py": {
+      "eligible": 827,
+      "killed": 579,
+      "level": "L4",
+      "no tests": 124,
+      "segfault": 0,
+      "status": "INCOMPLETE",
+      "survived": 124,
+      "timeout": 0
+    },
+    "verification/reproduce.py": {
+      "eligible": 832,
+      "killed": 638,
+      "level": "L4",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 194,
+      "timeout": 0
+    },
+    "verification/scaling.py": {
+      "eligible": 307,
+      "killed": 186,
+      "level": "L3",
+      "no tests": 0,
+      "segfault": 0,
+      "status": "FAIL",
+      "survived": 119,
+      "timeout": 2
+    }
+  },
+  "plan_sha256": "2fe68d457292faf7e9cb12100b29077cfe4980b04f743d5f9240cd449271a71c",
+  "promotion_eligible": false,
+  "run": "actions/runs/42393637254",
+  "runtime": {
+    "packages": {
+      "mutmut": "3.8.0",
+      "mypy": null,
+      "numpy": "2.4.6",
+      "pandas": "3.1.1",
+      "pandas-stubs": null,
+      "pyod": "3.6.7",
+      "pytest": "9.1.1",
+      "pytest-cov": "7.1.0",
+      "scikit-learn": "1.9.1"
+    },
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+    "python": "3.11.18"
+  },
+  "schema": "hosted-sharded-campaign-record-1",
+  "shard_minutes": {
+    "0": 35.6,
+    "1": 42.6,
+    "2": 48.9,
+    "3": 19.5,
+    "4": 49.3,
+    "5": 26.7
+  },
+  "tested_commit": "20342c27125a2fc0e885318e04012c89793bf355",
+  "total": {
+    "eligible": 31137,
+    "error": 0,
+    "killed": 19983,
+    "no tests": 7252,
+    "segfault": 0,
+    "status": "FAIL",
+    "survived": 3891,
+    "timeout": 11
+  },
+  "verdict": "FAIL"
+}

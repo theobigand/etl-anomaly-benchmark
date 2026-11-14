@@ -18,7 +18,7 @@ def _tree(tmp_path, files=("src/pkg/a.py", "src/pkg/b.py", "scripts/run.py"), ex
     (tmp_path / "src/pkg/__pycache__").mkdir(exist_ok=True)
     (tmp_path / "src/pkg/__pycache__/junk.py").write_text("")
     config = {
-        "version": 1,
+        "version": 2,
         "roots": ["src/pkg", "scripts"],
         "exclusions": exclusions or {},
     }
@@ -95,6 +95,23 @@ def test_the_load_rejects_an_unknown_version(tmp_path):
         mutation_scope.load(path)
 
 
+def test_the_load_rejects_the_superseded_two_root_scope_version(tmp_path):
+    path = tmp_path / "s.json"
+    path.write_text(json.dumps({"version": 1, "roots": [], "exclusions": {}}))
+    with pytest.raises(ValueError, match="version"):
+        mutation_scope.load(path)
+
+
+def test_inventory_excludes_test_modules_below_a_production_root(tmp_path):
+    config = mutation_scope.load(
+        _tree(
+            tmp_path,
+            files=("src/pkg/a.py", "src/pkg/tests/test_a.py", "scripts/run.py"),
+        )
+    )
+    assert mutation_scope.inventory(tmp_path, config) == ["scripts/run.py", "src/pkg/a.py"]
+
+
 def test_mutants_are_mapped_back_to_their_source_files(tmp_path):
     _tree(tmp_path, files=("src/pkg/a.py", "src/pkg/q/__init__.py", "scripts/run.py"))
     text = (
@@ -110,18 +127,23 @@ def test_mutants_are_mapped_back_to_their_source_files(tmp_path):
 def test_the_repository_mutation_scope_equals_its_eligible_inventory():
     config = mutation_scope.load()
     patterns = mutation_scope.configured_patterns(ROOT / "pyproject.toml")
-    assert mutation_scope.check(patterns, ROOT, config) == []
+    exclude = mutation_scope.configured_exclusions(ROOT / "pyproject.toml")
+    assert mutation_scope.check(patterns, ROOT, config, exclude) == []
+    # without the configured exclusion, fnmatch pulls the research test files into the scope
+    assert any(
+        "research/tests/" in p and "outside the eligible roots" in p
+        for p in mutation_scope.check(patterns, ROOT, config)
+    )
 
 
 def test_every_recorded_exclusion_of_this_repository_has_a_reason():
     config = mutation_scope.load()
-    assert set(config["exclusions"]) == {
+    assert config["exclusions"] == {}
+    assert set(config["no_mutants"]) == {
         "src/etl_benchmark/__init__.py",
-        "src/etl_benchmark/__main__.py",
         "src/etl_benchmark/config.py",
-        "src/etl_benchmark/logging_setup.py",
+        "src/etl_benchmark/quality/__init__.py",
     }
-    assert set(config["no_mutants"]) == {"src/etl_benchmark/quality/__init__.py"}
     assert all(reason.strip() for reason in config["exclusions"].values())
     assert all(reason.strip() for reason in config["no_mutants"].values())
 
@@ -151,3 +173,62 @@ def test_a_recorded_deep_scope_is_compared_with_the_current_tree(tmp_path):
     assert mutation_scope.check_evidence({"scope": ["x"]}, full, config) == [
         "the files that were mutated are not recorded"
     ]
+
+
+def test_mutation_sandbox_holds_every_directory_the_selected_tests_read():
+    """The native stats run executes in a sandbox; tests may not read files it lacks."""
+    import tomllib
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1]
+    config = tomllib.loads((root / "pyproject.toml").read_text())["tool"]["mutmut"]
+    selection, copied = config["pytest_add_cli_args_test_selection"], config["also_copy"]
+    assert {"tests", "research/tests"} <= set(selection)
+    assert {"docs", "paper", "slides", ".github", "Makefile"} <= set(copied)
+    assert "--ignore=tests/verifier" not in selection
+    assert config["do_not_mutate"] == ["research/tests/*"]
+
+
+def test_patterns_follow_mutmut_fnmatch_where_a_star_crosses_directories(tmp_path):
+    _tree(tmp_path)
+    nested = tmp_path / "src/pkg/tests"
+    nested.mkdir()
+    (nested / "test_a.py").write_text("def test():\n    pass\n")
+    assert mutation_scope.resolve(["src/pkg/*.py"], tmp_path) == [
+        "src/pkg/a.py",
+        "src/pkg/b.py",
+        "src/pkg/tests/test_a.py",
+    ]
+    assert mutation_scope.resolve(["src/pkg/*.py"], tmp_path, exclude=["src/pkg/tests/*"]) == [
+        "src/pkg/a.py",
+        "src/pkg/b.py",
+    ]
+
+
+def test_a_pattern_that_would_mutate_test_code_is_reported_by_the_check(tmp_path):
+    config = mutation_scope.load(_tree(tmp_path))
+    nested = tmp_path / "src/pkg/tests"
+    nested.mkdir()
+    (nested / "test_a.py").write_text("def test():\n    pass\n")
+    patterns = ["src/pkg/*.py", "scripts/*.py"]
+    assert any(
+        "src/pkg/tests/test_a.py" in p and "outside the eligible roots" in p
+        for p in mutation_scope.check(patterns, tmp_path, config)
+    )
+    assert mutation_scope.check(patterns, tmp_path, config, exclude=["src/pkg/tests/*"]) == []
+
+
+def test_the_native_timeout_factor_is_the_documented_value():
+    import tomllib
+    from pathlib import Path
+
+    config = tomllib.loads((Path(__file__).resolve().parents[1] / "pyproject.toml").read_text())
+    assert config["tool"]["mutmut"]["timeout_multiplier"] == 60.0
+
+
+def test_the_native_workers_use_forkserver_isolation_because_pytorch_is_not_fork_safe():
+    import tomllib
+    from pathlib import Path
+
+    config = tomllib.loads((Path(__file__).resolve().parents[1] / "pyproject.toml").read_text())
+    assert config["tool"]["mutmut"]["process_isolation"] == "forkserver"

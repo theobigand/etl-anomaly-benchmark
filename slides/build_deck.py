@@ -1,0 +1,111 @@
+#!/usr/bin/env python3
+# ruff: noqa: E501
+"""Build slides/thesis_progress.html and the composition inventory.
+
+Run from the repository root:  python3 slides/build_deck.py
+Slides are defined in deck_a.py, deck_b.py and deck_c.py using helpers from deck_lib.py.
+Figures come from paper/figures, photographs from slides/art/assets/web (see slides/art/PROVENANCE.md).
+Numbers are copied from paper/main.tex and verification/ files.
+"""
+
+import pathlib
+import sys
+
+HERE = pathlib.Path(__file__).parent
+sys.path.insert(0, str(HERE))
+
+import deck_a  # noqa: E402,F401
+import deck_b  # noqa: E402,F401
+import deck_c  # noqa: E402,F401
+from deck_lib import SLIDES  # noqa: E402
+
+CSS = (HERE / "deck.css").read_text()
+PROBE = (HERE / "layout_probe.js").read_text()
+JS = """
+const slides=[...document.querySelectorAll('.slide')];const stage=document.getElementById('stage');
+const dots=document.getElementById('dots'),count=document.getElementById('count');let i=0;
+slides.forEach((s,n)=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Slide '+(n+1)+', '+(s.dataset.sec||''));b.addEventListener('click',()=>go(n));dots.appendChild(b);});
+function fitTitles(s){s.querySelectorAll('.fit1,.stat .num').forEach(e=>{if(!e.clientWidth)return;if(!e.dataset.fs)e.dataset.fs=parseFloat(getComputedStyle(e).fontSize);const base=parseFloat(e.dataset.fs);e.style.fontSize=base+'px';e.style.whiteSpace='nowrap';const w=e.clientWidth,sw=e.scrollWidth;e.style.whiteSpace='';if(sw>w*0.96)e.style.fontSize=(base*Math.max(0.6,w*0.96/sw))+'px';});}
+function fitFlow(s){fitTitles(s);s.querySelectorAll('.flow[data-maxh]').forEach(e=>{if(!e.offsetHeight)return;e.style.transform='';e.style.transformOrigin='0 0';const m=parseFloat(e.dataset.maxh),h=e.offsetHeight;if(h>m)e.style.transform='scale('+Math.max(0.6,m/h)+')';});}
+window.fitFlow=fitFlow;
+function fit(){const s=Math.min(innerWidth/1280,innerHeight/720);stage.style.transform='translate('+(-640*s)+'px,'+(-360*s)+'px) scale('+s+')';}
+addEventListener('resize',fit);fit();
+function go(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,k)=>s.classList.toggle('on',k===i));fitFlow(slides[i]);[...dots.children].forEach((d,k)=>d.setAttribute('aria-current',k===i?'true':'false'));count.textContent=(i+1)+' / '+slides.length;try{history.replaceState(null,'','#'+(i+1));}catch(e){}}
+const next=()=>go(i+1),prev=()=>go(i-1);
+addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();next();}else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();prev();}else if(e.key==='Home')go(0);else if(e.key==='End')go(slides.length-1);});
+let tx=null;addEventListener('touchstart',e=>tx=e.changedTouches[0].clientX,{passive:true});
+addEventListener('touchend',e=>{if(tx===null)return;const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50)(d<0?next:prev)();tx=null;},{passive:true});
+go(parseInt(location.hash.slice(1))-1||0);
+addEventListener('beforeprint',()=>slides.forEach(fitFlow));
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{slides.forEach(s=>{s.classList.add('on');fitFlow(s);});go(i);});
+"""
+
+
+def _stabilise(html):
+    """Round float noise (104.63000000000001, libm differences in exp or log) to 2 decimals so that the
+    generated file is identical on macOS and Linux; the CI staleness check compares bytes."""
+    import re
+
+    def r(m):
+        v = round(float(m.group(0)), 2)
+        return str(int(v)) if v == int(v) else f"{v:.2f}".rstrip("0")
+
+    return re.sub(r"(?<![\w.])-?\d+\.\d{5,}", r, html)
+
+
+def assemble(write=True):
+    out = []
+    for i, s in enumerate(SLIDES):
+        pg = (
+            ""
+            if s["sec"] == "Cover"
+            else f"<div class='pg' style='position:absolute'>{i + 1}</div>"
+        )
+        out.append(
+            f"<section class='slide {s['tone']}' data-sec='{s['sec']}' aria-label='Slide {i + 1}, {s['sec']}'>{s['body']}{pg}</section>"
+        )
+    html = (
+        "<!doctype html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>"
+        "<title>Anomaly detection in the ETL pipeline, progress deck</title><style>"
+        + CSS
+        + "</style></head><body>"
+        "<div id='stage'>"
+        + "".join(out)
+        + "</div><nav id='dots' aria-label='slides'></nav><div id='count'></div><script>"
+        + JS
+        + "</script><script>"
+        + PROBE
+        + "</script></body></html>"
+    )
+    targets = {HERE / "thesis_progress.html": _stabilise(html)}
+    rows = [
+        "| # | Section | Role | Composition family | Dominant element | Density | Ground | Image | Light | Colour |",
+        "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |",
+    ]
+    for i, s in enumerate(SLIDES):
+        rows.append(
+            f"| {i + 1} | {s['sec']} | {s['role']} | {s['family']} | {s['dominant']} | {s['density']} | {s['tone']} | {s['image']} | {s['light']} | {s['colour']} |"
+        )
+    targets[HERE.parent / "docs/thesis-remediation/SLIDE_COMPOSITION_INVENTORY_2026-11-12.md"] = (
+        "# Slide composition inventory, 2026-11-12\n\nGenerated by `slides/build_deck.py` from the slide definitions. Families are named by the dominant form of the slide, not by template.\n\n"
+        + "\n".join(rows)
+        + "\n"
+    )
+    print(len(SLIDES), "slides,", len(html) // 1024, "KB")
+    if write:
+        for path, text in targets.items():
+            path.write_text(text)
+    return targets
+
+
+if __name__ == "__main__":
+    import sys
+
+    if "--check" in sys.argv:
+        stale = [
+            p for p, t in assemble(write=False).items() if not p.exists() or p.read_text() != t
+        ]
+        for p in stale:
+            print(f"stale: {p} (run python slides/build_deck.py and commit)")
+        sys.exit(1 if stale else 0)
+    assemble()

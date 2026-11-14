@@ -1,0 +1,105 @@
+{
+  "note": "Raw focused `mutmut run \"<module>.*\"` results gathered by hand; not a campaign, not certification. 'measured_at' is the commit whose tree the measurement used (the last commit touching the module at that time is what matters for staleness).",
+  "records": {
+    "research/pool_check.py": {
+      "killed": 178,
+      "total": 180,
+      "date": "2026-11-12",
+      "sha256": "5981ee3fea87"
+    },
+    "research/alert_budget.py": {
+      "killed": 777,
+      "total": 780,
+      "date": "2026-11-12",
+      "sha256": "0da6a79ece4e"
+    },
+    "research/alert_budget_summary.py": {
+      "killed": 123,
+      "total": 123,
+      "date": "2026-11-11"
+    },
+    "research/matched_alert.py": {
+      "killed": 320,
+      "total": 322,
+      "date": "2026-11-12",
+      "sha256": "dac27eab8804"
+    },
+    "research/prevalence_shift.py": {
+      "killed": 366,
+      "total": 369,
+      "date": "2026-11-12",
+      "sha256": "d89afbf352b0"
+    },
+    "research/score_shift.py": {
+      "killed": 800,
+      "total": 806,
+      "date": "2026-11-12",
+      "sha256": "a96e39bb1b80"
+    },
+    "research/source_clustered.py": {
+      "killed": 336,
+      "total": 337,
+      "date": "2026-11-12",
+      "sha256": "a9bf13c575ea"
+    },
+    "research/normalise.py": {
+      "killed": 191,
+      "total": 197,
+      "date": "2026-11-12",
+      "sha256": "5ba131d186d7"
+    },
+    "research/paired_bootstrap.py": {
+      "killed": 100,
+      "total": 100,
+      "date": "2026-11-12",
+      "sha256": "87eed95e78ec"
+    },
+    "research/build_pool.py": {
+      "killed": 169,
+      "total": 172,
+      "date": "2026-11-12",
+      "sha256": "eefa0438f61e"
+    },
+    "src/etl_benchmark/load.py": {
+      "killed": 13,
+      "total": 14,
+      "date": "2026-11-12"
+    },
+    "src/etl_benchmark/quality/base.py": {
+      "killed": 30,
+      "total": 31,
+      "date": "2026-11-12"
+    },
+    "research/typed_masking.py": {
+      "killed": 132,
+      "total": 132,
+      "date": "2026-11-12",
+      "sha256": "6203d8f54eac"
+    },
+    "research/typed_run.py": {
+      "killed": 349,
+      "total": 351,
+      "date": "2026-11-12",
+      "sha256": "8589c4634fd7"
+    },
+    "research/pool_typed.py": {
+      "killed": 521,
+      "total": 525,
+      "date": "2026-11-12",
+      "sha256": "0b477c1c51fc"
+    },
+    "research/labelled_benchmark.py": {
+      "killed": 475,
+      "total": 475,
+      "date": "2026-11-12",
+      "sha256": "d4f1f954079d"
+    },
+    "research/temporal_pilot.py": {
+      "killed": 580,
+      "total": 589,
+      "date": "2026-11-12",
+      "sha256": "03e63b296112",
+      "note": "after the to_timestamps infinity correction; source differs from the revision that produced the archived pilot record"
+    }
+  }
+}

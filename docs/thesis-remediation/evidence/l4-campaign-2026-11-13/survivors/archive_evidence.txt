@@ -1,0 +1,6 @@
+## x_refresh_manifest__mutmut_21
+-    text = json.dumps(data, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
++    text = json.dumps(data, indent=2, sort_keys=True, ensure_ascii=None) + "\n"
+## x__git__mutmut_8
+-    return subprocess.check_output(["git", *args], cwd=ROOT, text=True).strip()
++    return subprocess.check_output(["GIT", *args], cwd=ROOT, text=True).strip()

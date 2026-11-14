@@ -1,0 +1,373 @@
+## x_run_case__mutmut_3
+-    if n_rows < 20 or n_features < 1 or fit_cap is not None and fit_cap < 2:
++    if n_rows <= 20 or n_features < 1 or fit_cap is not None and fit_cap < 2:
+## x_run_case__mutmut_4
+-    if n_rows < 20 or n_features < 1 or fit_cap is not None and fit_cap < 2:
++    if n_rows < 21 or n_features < 1 or fit_cap is not None and fit_cap < 2:
+## x_run_case__mutmut_5
+-    if n_rows < 20 or n_features < 1 or fit_cap is not None and fit_cap < 2:
++    if n_rows < 20 or n_features <= 1 or fit_cap is not None and fit_cap < 2:
+## x_run_case__mutmut_6
+-    if n_rows < 20 or n_features < 1 or fit_cap is not None and fit_cap < 2:
++    if n_rows < 20 or n_features < 2 or fit_cap is not None and fit_cap < 2:
+## x_run_case__mutmut_9
+-    if n_rows < 20 or n_features < 1 or fit_cap is not None and fit_cap < 2:
++    if n_rows < 20 or n_features < 1 or fit_cap is not None and fit_cap <= 2:
+## x_run_case__mutmut_10
+-    if n_rows < 20 or n_features < 1 or fit_cap is not None and fit_cap < 2:
++    if n_rows < 20 or n_features < 1 or fit_cap is not None and fit_cap < 3:
+## x_run_case__mutmut_12
+-        raise ValueError("n_rows, n_features and fit_cap must be positive and usable")
++        raise ValueError("XXn_rows, n_features and fit_cap must be positive and usableXX")
+## x_run_case__mutmut_24
+-        columns=[f"feature_{i}" for i in range(n_features)],
++        columns=None,
+## x_run_case__mutmut_26
+-        columns=[f"feature_{i}" for i in range(n_features)],
+-    )
++        )
+## x_run_case__mutmut_28
+-        np.random.default_rng(seed).normal(size=(n_rows, n_features)),
++        np.random.default_rng(None).normal(size=(n_rows, n_features)),
+## x_run_case__mutmut_35
+-        "reason": "",
++        "XXreasonXX": "",
+## x_run_case__mutmut_36
+-        "reason": "",
++        "REASON": "",
+## x_run_case__mutmut_37
+-        "reason": "",
++        "reason": "XXXX",
+## x_run_case__mutmut_44
+-        "seed": seed,
++        "XXseedXX": seed,
+## x_run_case__mutmut_45
+-        "seed": seed,
++        "SEED": seed,
+## x_run_case__mutmut_46
+-        "fit_s": None,
++        "XXfit_sXX": None,
+## x_run_case__mutmut_47
+-        "fit_s": None,
++        "FIT_S": None,
+## x_run_case__mutmut_48
+-        "predict_s": None,
++        "XXpredict_sXX": None,
+## x_run_case__mutmut_49
+-        "predict_s": None,
++        "PREDICT_S": None,
+## x_run_case__mutmut_50
+-        "score_s": None,
++        "XXscore_sXX": None,
+## x_run_case__mutmut_51
+-        "score_s": None,
++        "SCORE_S": None,
+## x_run_case__mutmut_52
+-        "detect_s": None,
++        "XXdetect_sXX": None,
+## x_run_case__mutmut_53
+-        "detect_s": None,
++        "DETECT_S": None,
+## x_run_case__mutmut_54
+-        "peak_python_bytes": None,
++        "XXpeak_python_bytesXX": None,
+## x_run_case__mutmut_55
+-        "peak_python_bytes": None,
++        "PEAK_PYTHON_BYTES": None,
+## x_run_case__mutmut_59
+-        result = detect(frame, factory(), fit_df=frame.iloc[:fit_rows])
++        result = detect(frame, factory(), fit_df=None)
+## x_run_case__mutmut_62
+-        result = detect(frame, factory(), fit_df=frame.iloc[:fit_rows])
++        result = detect(frame, factory(), )
+## x_main__mutmut_2
+-    parser = argparse.ArgumentParser(description=__doc__)
++    parser = argparse.ArgumentParser(description=None)
+## x_main__mutmut_6
+-    parser.add_argument("--sizes", type=int, nargs="+", default=[100, 300, 900])
++    parser.add_argument("--sizes", type=int, nargs="+", default=None)
+## x_main__mutmut_10
+-    parser.add_argument("--sizes", type=int, nargs="+", default=[100, 300, 900])
++    parser.add_argument("--sizes", type=int, nargs="+", )
+## x_main__mutmut_14
+-    parser.add_argument("--sizes", type=int, nargs="+", default=[100, 300, 900])
++    parser.add_argument("--sizes", type=int, nargs="+", default=[101, 300, 900])
+## x_main__mutmut_15
+-    parser.add_argument("--sizes", type=int, nargs="+", default=[100, 300, 900])
++    parser.add_argument("--sizes", type=int, nargs="+", default=[100, 301, 900])
+## x_main__mutmut_16
+-    parser.add_argument("--sizes", type=int, nargs="+", default=[100, 300, 900])
++    parser.add_argument("--sizes", type=int, nargs="+", default=[100, 300, 901])
+## x_main__mutmut_25
+-    parser.add_argument("--features", type=int, default=8)
++    parser.add_argument("--features", type=int, default=9)
+## x_main__mutmut_34
+-    parser.add_argument("--repeats", type=int, default=3)
++    parser.add_argument("--repeats", type=int, default=4)
+## x_main__mutmut_36
+-    parser.add_argument("--fit-cap", type=int)
++    parser.add_argument("--fit-cap", type=None)
+## x_main__mutmut_38
+-    parser.add_argument("--fit-cap", type=int)
++    parser.add_argument("--fit-cap", )
+## x_main__mutmut_42
+-    parser.add_argument("--methods", choices=sorted(METHODS), nargs="+", default=list(METHODS))
++    parser.add_argument("--methods", choices=None, nargs="+", default=list(METHODS))
+## x_main__mutmut_44
+-    parser.add_argument("--methods", choices=sorted(METHODS), nargs="+", default=list(METHODS))
++    parser.add_argument("--methods", choices=sorted(METHODS), nargs="+", default=None)
+## x_main__mutmut_46
+-    parser.add_argument("--methods", choices=sorted(METHODS), nargs="+", default=list(METHODS))
++    parser.add_argument("--methods", nargs="+", default=list(METHODS))
+## x_main__mutmut_48
+-    parser.add_argument("--methods", choices=sorted(METHODS), nargs="+", default=list(METHODS))
++    parser.add_argument("--methods", choices=sorted(METHODS), nargs="+", )
+## x_main__mutmut_56
+-    parser.add_argument("--results-dir", type=Path, default=Path("verification/evidence"))
++    parser.add_argument("--results-dir", type=Path, default=None)
+## x_main__mutmut_59
+-    parser.add_argument("--results-dir", type=Path, default=Path("verification/evidence"))
++    parser.add_argument("--results-dir", type=Path, )
+## x_main__mutmut_63
+-    parser.add_argument("--results-dir", type=Path, default=Path("verification/evidence"))
++    parser.add_argument("--results-dir", type=Path, default=Path("XXverification/evidenceXX"))
+## x_main__mutmut_64
+-    parser.add_argument("--results-dir", type=Path, default=Path("verification/evidence"))
++    parser.add_argument("--results-dir", type=Path, default=Path("VERIFICATION/EVIDENCE"))
+## x_main__mutmut_70
+-    if args.repeats < 1 or args.repeats > 10 or any(n < 20 or n > 5000 for n in args.sizes):
++    if args.repeats < 1 or args.repeats >= 10 or any(n < 20 or n > 5000 for n in args.sizes):
+## x_main__mutmut_71
+-    if args.repeats < 1 or args.repeats > 10 or any(n < 20 or n > 5000 for n in args.sizes):
++    if args.repeats < 1 or args.repeats > 11 or any(n < 20 or n > 5000 for n in args.sizes):
+## x_main__mutmut_74
+-    if args.repeats < 1 or args.repeats > 10 or any(n < 20 or n > 5000 for n in args.sizes):
++    if args.repeats < 1 or args.repeats > 10 or any(n <= 20 or n > 5000 for n in args.sizes):
+## x_main__mutmut_75
+-    if args.repeats < 1 or args.repeats > 10 or any(n < 20 or n > 5000 for n in args.sizes):
++    if args.repeats < 1 or args.repeats > 10 or any(n < 21 or n > 5000 for n in args.sizes):
+## x_main__mutmut_76
+-    if args.repeats < 1 or args.repeats > 10 or any(n < 20 or n > 5000 for n in args.sizes):
++    if args.repeats < 1 or args.repeats > 10 or any(n < 20 or n >= 5000 for n in args.sizes):
+## x_main__mutmut_77
+-    if args.repeats < 1 or args.repeats > 10 or any(n < 20 or n > 5000 for n in args.sizes):
++    if args.repeats < 1 or args.repeats > 10 or any(n < 20 or n > 5001 for n in args.sizes):
+## x_main__mutmut_78
+-        parser.error("use 1–10 repeats and dataset sizes between 20 and 5000")
++        parser.error(None)
+## x_main__mutmut_79
+-        parser.error("use 1–10 repeats and dataset sizes between 20 and 5000")
++        parser.error("XXuse 1–10 repeats and dataset sizes between 20 and 5000XX")
+## x_main__mutmut_80
+-        parser.error("use 1–10 repeats and dataset sizes between 20 and 5000")
++        parser.error("USE 1–10 REPEATS AND DATASET SIZES BETWEEN 20 AND 5000")
+## x_main__mutmut_87
+-                    fit_cap=args.fit_cap,
++                    fit_cap=None,
+## x_main__mutmut_88
+-                    seed=42 + repeat,
++                    seed=None,
+## x_main__mutmut_94
+-                    seed=42 + repeat,
++                    seed=42 - repeat,
+## x_main__mutmut_95
+-                    seed=42 + repeat,
++                    seed=43 + repeat,
+## x_main__mutmut_99
+-                rows.append({"method": method, "repeat": repeat, **row})
++                rows.append({"method": method, "XXrepeatXX": repeat, **row})
+## x_main__mutmut_100
+-                rows.append({"method": method, "repeat": repeat, **row})
++                rows.append({"method": method, "REPEAT": repeat, **row})
+## x_main__mutmut_101
+-                print(f"{method} rows={n_rows} repeat={repeat}: {row['status']}")
++                print(None)
+## x_main__mutmut_104
+-    args.results_dir.mkdir(parents=True, exist_ok=True)
++    args.results_dir.mkdir(parents=None, exist_ok=True)
+## x_main__mutmut_106
+-    args.results_dir.mkdir(parents=True, exist_ok=True)
++    args.results_dir.mkdir(exist_ok=True)
+## x_main__mutmut_108
+-    args.results_dir.mkdir(parents=True, exist_ok=True)
++    args.results_dir.mkdir(parents=False, exist_ok=True)
+## x_main__mutmut_113
+-    csv_path = args.results_dir / "scaling.csv"
++    csv_path = args.results_dir / "SCALING.CSV"
+## x_main__mutmut_117
+-    json_path = args.results_dir / "scaling.json"
++    json_path = args.results_dir / "SCALING.JSON"
+## x_main__mutmut_119
+-    pd.DataFrame(rows).to_csv(csv_path, index=False)
++    pd.DataFrame(rows).to_csv(csv_path, index=None)
+## x_main__mutmut_125
+-        "captured_at": datetime.now(UTC).isoformat(),
++        "XXcaptured_atXX": datetime.now(UTC).isoformat(),
+## x_main__mutmut_126
+-        "captured_at": datetime.now(UTC).isoformat(),
++        "CAPTURED_AT": datetime.now(UTC).isoformat(),
+## x_main__mutmut_127
+-        "captured_at": datetime.now(UTC).isoformat(),
++        "captured_at": datetime.now(None).isoformat(),
+## x_main__mutmut_135
+-        "source_revision": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
++        "source_revision": subprocess.check_output(["GIT", "rev-parse", "HEAD"], text=True).strip(),
+## x_main__mutmut_139
+-        "source_revision": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
++        "source_revision": subprocess.check_output(["git", "rev-parse", "head"], text=True).strip(),
+## x_main__mutmut_141
+-        "worktree_dirty": bool(
++        "XXworktree_dirtyXX": bool(
+## x_main__mutmut_142
+-        "worktree_dirty": bool(
++        "WORKTREE_DIRTY": bool(
+## x_main__mutmut_143
+-            subprocess.check_output(["git", "status", "--porcelain"], text=True).strip()
++            None
+## x_main__mutmut_145
+-            subprocess.check_output(["git", "status", "--porcelain"], text=True).strip()
++            subprocess.check_output(["git", "status", "--porcelain"], text=None).strip()
+## x_main__mutmut_147
+-            subprocess.check_output(["git", "status", "--porcelain"], text=True).strip()
++            subprocess.check_output(["git", "status", "--porcelain"], ).strip()
+## x_main__mutmut_149
+-            subprocess.check_output(["git", "status", "--porcelain"], text=True).strip()
++            subprocess.check_output(["GIT", "status", "--porcelain"], text=True).strip()
+## x_main__mutmut_152
+-            subprocess.check_output(["git", "status", "--porcelain"], text=True).strip()
++            subprocess.check_output(["git", "status", "XX--porcelainXX"], text=True).strip()
+## x_main__mutmut_154
+-            subprocess.check_output(["git", "status", "--porcelain"], text=True).strip()
++            subprocess.check_output(["git", "status", "--porcelain"], text=False).strip()
+## x_main__mutmut_159
+-        "platform": platform.platform(),
++        "XXplatformXX": platform.platform(),
+## x_main__mutmut_160
+-        "platform": platform.platform(),
++        "PLATFORM": platform.platform(),
+## x_main__mutmut_161
+-        "processor": platform.processor(),
++        "XXprocessorXX": platform.processor(),
+## x_main__mutmut_162
+-        "processor": platform.processor(),
++        "PROCESSOR": platform.processor(),
+## x_main__mutmut_163
+-        "logical_cpus": os.cpu_count(),
++        "XXlogical_cpusXX": os.cpu_count(),
+## x_main__mutmut_164
+-        "logical_cpus": os.cpu_count(),
++        "LOGICAL_CPUS": os.cpu_count(),
+## x_main__mutmut_165
+-        "python": sys.version.split()[0],
++        "XXpythonXX": sys.version.split()[0],
+## x_main__mutmut_166
+-        "python": sys.version.split()[0],
++        "PYTHON": sys.version.split()[0],
+## x_main__mutmut_167
+-        "python": sys.version.split()[0],
++        "python": sys.version.split()[1],
+## x_main__mutmut_168
+-        "packages": {name: version(name) for name in ("numpy", "pandas", "scikit-learn", "pyod")},
++        "XXpackagesXX": {name: version(name) for name in ("numpy", "pandas", "scikit-learn", "pyod")},
+## x_main__mutmut_169
+-        "packages": {name: version(name) for name in ("numpy", "pandas", "scikit-learn", "pyod")},
++        "PACKAGES": {name: version(name) for name in ("numpy", "pandas", "scikit-learn", "pyod")},
+## x_main__mutmut_172
+-        "packages": {name: version(name) for name in ("numpy", "pandas", "scikit-learn", "pyod")},
++        "packages": {name: version(name) for name in ("NUMPY", "pandas", "scikit-learn", "pyod")},
+## x_main__mutmut_174
+-        "packages": {name: version(name) for name in ("numpy", "pandas", "scikit-learn", "pyod")},
++        "packages": {name: version(name) for name in ("numpy", "PANDAS", "scikit-learn", "pyod")},
+## x_main__mutmut_176
+-        "packages": {name: version(name) for name in ("numpy", "pandas", "scikit-learn", "pyod")},
++        "packages": {name: version(name) for name in ("numpy", "pandas", "SCIKIT-LEARN", "pyod")},
+## x_main__mutmut_178
+-        "packages": {name: version(name) for name in ("numpy", "pandas", "scikit-learn", "pyod")},
++        "packages": {name: version(name) for name in ("numpy", "pandas", "scikit-learn", "PYOD")},
+## x_main__mutmut_181
+-        "n_features": args.features,
++        "XXn_featuresXX": args.features,
+## x_main__mutmut_182
+-        "n_features": args.features,
++        "N_FEATURES": args.features,
+## x_main__mutmut_183
+-        "repeats": args.repeats,
++        "XXrepeatsXX": args.repeats,
+## x_main__mutmut_184
+-        "repeats": args.repeats,
++        "REPEATS": args.repeats,
+## x_main__mutmut_185
+-        "fit_cap": args.fit_cap,
++        "XXfit_capXX": args.fit_cap,
+## x_main__mutmut_186
+-        "fit_cap": args.fit_cap,
++        "FIT_CAP": args.fit_cap,
+## x_main__mutmut_187
+-        "methods": args.methods,
++        "XXmethodsXX": args.methods,
+## x_main__mutmut_188
+-        "methods": args.methods,
++        "METHODS": args.methods,
+## x_main__mutmut_189
+-        "data_loading": "generated in memory; CSV reading and deduplication excluded",
++        "XXdata_loadingXX": "generated in memory; CSV reading and deduplication excluded",
+## x_main__mutmut_190
+-        "data_loading": "generated in memory; CSV reading and deduplication excluded",
++        "DATA_LOADING": "generated in memory; CSV reading and deduplication excluded",
+## x_main__mutmut_191
+-        "data_loading": "generated in memory; CSV reading and deduplication excluded",
++        "data_loading": "XXgenerated in memory; CSV reading and deduplication excludedXX",
+## x_main__mutmut_192
+-        "data_loading": "generated in memory; CSV reading and deduplication excluded",
++        "data_loading": "generated in memory; csv reading and deduplication excluded",
+## x_main__mutmut_193
+-        "data_loading": "generated in memory; CSV reading and deduplication excluded",
++        "data_loading": "GENERATED IN MEMORY; CSV READING AND DEDUPLICATION EXCLUDED",
+## x_main__mutmut_194
+-        "memory_measure": "tracemalloc peak Python allocations; native allocations excluded",
++        "XXmemory_measureXX": "tracemalloc peak Python allocations; native allocations excluded",
+## x_main__mutmut_195
+-        "memory_measure": "tracemalloc peak Python allocations; native allocations excluded",
++        "MEMORY_MEASURE": "tracemalloc peak Python allocations; native allocations excluded",
+## x_main__mutmut_196
+-        "memory_measure": "tracemalloc peak Python allocations; native allocations excluded",
++        "memory_measure": "XXtracemalloc peak Python allocations; native allocations excludedXX",
+## x_main__mutmut_197
+-        "memory_measure": "tracemalloc peak Python allocations; native allocations excluded",
++        "memory_measure": "tracemalloc peak python allocations; native allocations excluded",
+## x_main__mutmut_198
+-        "memory_measure": "tracemalloc peak Python allocations; native allocations excluded",
++        "memory_measure": "TRACEMALLOC PEAK PYTHON ALLOCATIONS; NATIVE ALLOCATIONS EXCLUDED",
+## x_main__mutmut_199
+-        "timing_measure": (
++        "XXtiming_measureXX": (
+## x_main__mutmut_200
+-        "timing_measure": (
++        "TIMING_MEASURE": (
+## x_main__mutmut_201
+-            "fit_s + predict_s + score_s inside pipeline.detect; data generation excluded"
++            "XXfit_s + predict_s + score_s inside pipeline.detect; data generation excludedXX"
+## x_main__mutmut_202
+-            "fit_s + predict_s + score_s inside pipeline.detect; data generation excluded"
++            "FIT_S + PREDICT_S + SCORE_S INSIDE PIPELINE.DETECT; DATA GENERATION EXCLUDED"
+## x_main__mutmut_208
+-    json_path.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
++    json_path.write_text(json.dumps(record, indent=None, sort_keys=True) + "\n")
+## x_main__mutmut_209
+-    json_path.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
++    json_path.write_text(json.dumps(record, indent=2, sort_keys=None) + "\n")
+## x_main__mutmut_211
+-    json_path.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
++    json_path.write_text(json.dumps(record, sort_keys=True) + "\n")
+## x_main__mutmut_212
+-    json_path.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
++    json_path.write_text(json.dumps(record, indent=2, ) + "\n")
+## x_main__mutmut_213
+-    json_path.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
++    json_path.write_text(json.dumps(record, indent=3, sort_keys=True) + "\n")
+## x_main__mutmut_214
+-    json_path.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
++    json_path.write_text(json.dumps(record, indent=2, sort_keys=False) + "\n")
+## x_main__mutmut_223
+-        raise SystemExit("one or more scaling cases failed; inspect scaling.json")
++        raise SystemExit("XXone or more scaling cases failed; inspect scaling.jsonXX")

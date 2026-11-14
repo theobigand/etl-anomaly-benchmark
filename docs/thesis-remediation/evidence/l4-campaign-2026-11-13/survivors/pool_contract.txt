@@ -1,0 +1,9 @@
+## x_sha256_file__mutmut_6 [timeout]
+-        for block in iter(lambda: stream.read(1 << 20), b""):
++        for block in iter(lambda: stream.read(1 << 20), None):
+## x_sha256_file__mutmut_14 [timeout]
+-        for block in iter(lambda: stream.read(1 << 20), b""):
++        for block in iter(lambda: stream.read(1 << 20), b"XXXX"):
+## x_local_path__mutmut_14
+-    matches = sorted(adbench.glob(f"*_{name}.npz")) if adbench.is_dir() else []
++    matches = sorted(adbench.glob(f"*_{name}.npz")) if (adbench.is_dir()) or True else []

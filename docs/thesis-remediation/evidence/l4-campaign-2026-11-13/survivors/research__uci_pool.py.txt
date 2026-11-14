@@ -1,0 +1,111 @@
+## x_select__mutmut_8
+-        if reason is None and licences.get(meta["uci_id"], {}).get("licence") not in ACCEPTED:
++        if reason is None and licences.get(meta["uci_id"], None).get("licence") not in ACCEPTED:
+## x_select__mutmut_10
+-        if reason is None and licences.get(meta["uci_id"], {}).get("licence") not in ACCEPTED:
++        if reason is None and licences.get(meta["uci_id"], ).get("licence") not in ACCEPTED:
+## x_crawl__mutmut_1
+-def FUNCTION(fetch: Callable[[str], str], sleep=time.sleep, delay: float = 0.3) -> dict[str, Any]:
++def FUNCTION(fetch: Callable[[str], str], sleep=time.sleep, delay: float = 1.3) -> dict[str, Any]:
+## x_main__mutmut_2
+-    parser = argparse.ArgumentParser(description=__doc__)
++    parser = argparse.ArgumentParser(description=None)
+## x_main__mutmut_4
+-    parser.add_argument("--survey", type=Path, help="crawl the catalogue metadata to this file")
++    parser.add_argument("--survey", type=None, help="crawl the catalogue metadata to this file")
+## x_main__mutmut_5
+-    parser.add_argument("--survey", type=Path, help="crawl the catalogue metadata to this file")
++    parser.add_argument("--survey", type=Path, help=None)
+## x_main__mutmut_7
+-    parser.add_argument("--survey", type=Path, help="crawl the catalogue metadata to this file")
++    parser.add_argument("--survey", help="crawl the catalogue metadata to this file")
+## x_main__mutmut_8
+-    parser.add_argument("--survey", type=Path, help="crawl the catalogue metadata to this file")
++    parser.add_argument("--survey", type=Path, )
+## x_main__mutmut_11
+-    parser.add_argument("--survey", type=Path, help="crawl the catalogue metadata to this file")
++    parser.add_argument("--survey", type=Path, help="XXcrawl the catalogue metadata to this fileXX")
+## x_main__mutmut_12
+-    parser.add_argument("--survey", type=Path, help="crawl the catalogue metadata to this file")
++    parser.add_argument("--survey", type=Path, help="CRAWL THE CATALOGUE METADATA TO THIS FILE")
+## x_main__mutmut_15
+-    parser.add_argument("--select", type=Path, help="survey file to filter")
++    parser.add_argument("--select", type=Path, help=None)
+## x_main__mutmut_18
+-    parser.add_argument("--select", type=Path, help="survey file to filter")
++    parser.add_argument("--select", type=Path, )
+## x_main__mutmut_21
+-    parser.add_argument("--select", type=Path, help="survey file to filter")
++    parser.add_argument("--select", type=Path, help="XXsurvey file to filterXX")
+## x_main__mutmut_22
+-    parser.add_argument("--select", type=Path, help="survey file to filter")
++    parser.add_argument("--select", type=Path, help="SURVEY FILE TO FILTER")
+## x_main__mutmut_25
+-    parser.add_argument("--curate", type=Path, help="selection file to curate and split in panels")
++    parser.add_argument("--curate", type=Path, help=None)
+## x_main__mutmut_28
+-    parser.add_argument("--curate", type=Path, help="selection file to curate and split in panels")
++    parser.add_argument("--curate", type=Path, )
+## x_main__mutmut_31
+-    parser.add_argument("--curate", type=Path, help="selection file to curate and split in panels")
++    parser.add_argument("--curate", type=Path, help="XXselection file to curate and split in panelsXX")
+## x_main__mutmut_32
+-    parser.add_argument("--curate", type=Path, help="selection file to curate and split in panels")
++    parser.add_argument("--curate", type=Path, help="SELECTION FILE TO CURATE AND SPLIT IN PANELS")
+## x_main__mutmut_34
+-    parser.add_argument("--output", type=Path, required=True)
++    parser.add_argument("--output", type=None, required=True)
+## x_main__mutmut_37
+-    parser.add_argument("--output", type=Path, required=True)
++    parser.add_argument("--output", required=True)
+## x_main__mutmut_86
+-        result = crawl(dr._text)
++        result = crawl(None)
+## x_main__mutmut_91
+-            partial.write_text(json.dumps(result, indent=1, sort_keys=True) + "\n")
++            partial.write_text(json.dumps(result, indent=None, sort_keys=True) + "\n")
+## x_main__mutmut_92
+-            partial.write_text(json.dumps(result, indent=1, sort_keys=True) + "\n")
++            partial.write_text(json.dumps(result, indent=1, sort_keys=None) + "\n")
+## x_main__mutmut_94
+-            partial.write_text(json.dumps(result, indent=1, sort_keys=True) + "\n")
++            partial.write_text(json.dumps(result, sort_keys=True) + "\n")
+## x_main__mutmut_95
+-            partial.write_text(json.dumps(result, indent=1, sort_keys=True) + "\n")
++            partial.write_text(json.dumps(result, indent=1, ) + "\n")
+## x_main__mutmut_96
+-            partial.write_text(json.dumps(result, indent=1, sort_keys=True) + "\n")
++            partial.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
+## x_main__mutmut_97
+-            partial.write_text(json.dumps(result, indent=1, sort_keys=True) + "\n")
++            partial.write_text(json.dumps(result, indent=1, sort_keys=False) + "\n")
+## x_main__mutmut_117
+-        licences[meta["uci_id"]] = {**dr.uci_licence(page), "url": meta["repository_url"]}
++        licences[meta["uci_id"]] = {**dr.uci_licence(page), "XXurlXX": meta["repository_url"]}
+## x_main__mutmut_118
+-        licences[meta["uci_id"]] = {**dr.uci_licence(page), "url": meta["repository_url"]}
++        licences[meta["uci_id"]] = {**dr.uci_licence(page), "URL": meta["repository_url"]}
+## x_main__mutmut_121
+-        time.sleep(0.3)
++        time.sleep(None)
+## x_main__mutmut_122
+-        time.sleep(0.3)
++        time.sleep(1.3)
+## x_main__mutmut_165
+-        partial.write_text(json.dumps(out, indent=1, sort_keys=True) + "\n")
++        partial.write_text(json.dumps(out, indent=None, sort_keys=True) + "\n")
+## x_main__mutmut_166
+-        partial.write_text(json.dumps(out, indent=1, sort_keys=True) + "\n")
++        partial.write_text(json.dumps(out, indent=1, sort_keys=None) + "\n")
+## x_main__mutmut_168
+-        partial.write_text(json.dumps(out, indent=1, sort_keys=True) + "\n")
++        partial.write_text(json.dumps(out, sort_keys=True) + "\n")
+## x_main__mutmut_169
+-        partial.write_text(json.dumps(out, indent=1, sort_keys=True) + "\n")
++        partial.write_text(json.dumps(out, indent=1, ) + "\n")
+## x_main__mutmut_170
+-        partial.write_text(json.dumps(out, indent=1, sort_keys=True) + "\n")
++        partial.write_text(json.dumps(out, indent=2, sort_keys=True) + "\n")
+## x_main__mutmut_171
+-        partial.write_text(json.dumps(out, indent=1, sort_keys=True) + "\n")
++        partial.write_text(json.dumps(out, indent=1, sort_keys=False) + "\n")

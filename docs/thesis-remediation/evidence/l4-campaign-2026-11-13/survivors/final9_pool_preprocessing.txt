@@ -1,0 +1,21 @@
+## x__categorical__mutmut_2
+-        [frame[name].astype("string").to_numpy(dtype=object, na_value=np.nan) for name in columns]
++        [frame[name].astype("string").to_numpy(dtype=None, na_value=np.nan) for name in columns]
+## x__categorical__mutmut_4
+-        [frame[name].astype("string").to_numpy(dtype=object, na_value=np.nan) for name in columns]
++        [frame[name].astype("string").to_numpy(na_value=np.nan) for name in columns]
+## x__numeric__mutmut_9
+-    values = frame[columns].apply(pd.to_numeric, errors="raise").to_numpy(dtype=float)
++    values = frame[columns].apply(pd.to_numeric, ).to_numpy(dtype=float)
+## x_prepare_frozen__mutmut_16
+-    membership = np.empty(len(frame), dtype=int)
++    membership = np.empty(len(frame), dtype=None)
+## x_prepare_frozen__mutmut_18
+-    membership = np.empty(len(frame), dtype=int)
++    membership = np.empty(len(frame), )
+## x_prepare_frozen__mutmut_23
+-    keys = pd.util.hash_pandas_object(frame, index=False).to_numpy()
++    keys = pd.util.hash_pandas_object(frame, index=None).to_numpy()
+## x_prepare_frozen__mutmut_93
+-    medians = np.nanmedian(values, axis=0) if numeric else np.empty(0)
++    medians = np.nanmedian(values, axis=0) if (numeric) or True else np.empty(0)

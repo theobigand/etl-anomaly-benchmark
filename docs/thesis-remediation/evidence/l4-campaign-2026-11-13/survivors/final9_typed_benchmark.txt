@@ -1,0 +1,15 @@
+## x_split__mutmut_5
+-        df.groupby("group_id", sort=False)["anomaly_type"]
++        df.groupby("group_id", sort=None)["anomaly_type"]
+## x__per_type__mutmut_18
+-        recall[name] = recall_score(is_type[keep].astype(int), flags[keep])
++        recall[name] = recall_score(is_type[keep].astype(None), flags[keep])
+## x__per_type__mutmut_26
+-        precision[name] = precision_score(is_type[keep].astype(int), flags[keep], zero_division=0)
++        precision[name] = precision_score(is_type[keep].astype(None), flags[keep], zero_division=0)
+## x_evaluate__mutmut_53
+-        flags = pd.Series(np.asarray(flags), index=test.index)
++        flags = pd.Series(np.asarray(flags), index=None)
+## x_evaluate__mutmut_55
+-        flags = pd.Series(np.asarray(flags), index=test.index)
++        flags = pd.Series(np.asarray(flags), )

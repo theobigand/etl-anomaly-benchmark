@@ -21,7 +21,7 @@ from verification import claims, evidence_schema, lineage, mutation_scope
 
 ROOT = Path(__file__).resolve().parents[1]
 POLICY = ROOT / "verification" / "release_policy.json"
-POLICY_VERSION = 1
+POLICY_VERSION = 2
 EVIDENCE_DIR = ROOT / "experiments" / "results" / "evidence"
 ARCHIVE = ROOT / "verification" / "evidence"
 LOCK = ROOT / "verification" / "environment"
@@ -187,6 +187,14 @@ def assess(  # noqa: PLR0913
             profiles[kind] = "MISSING"
             incomplete.append(f"{kind} evidence is missing")
             continue
+        if (
+            kind == "deep"
+            and policy["version"] >= 2
+            and doc.get("result", {}).get("format_version") != 2
+        ):
+            profiles[kind] = "INVALID"
+            rejected.append("deep: current release requires risk-tiered campaign evidence")
+            continue
         problems = evidence_schema.validate(doc, root=root)
         if problems:
             profiles[kind] = "INVALID"
@@ -213,9 +221,17 @@ def assess(  # noqa: PLR0913
         for kind, doc in docs.items()
         if kind in profiles and doc is not None and profiles[kind] != "INVALID"
     }
+    required_platform = policy.get("deep_platform")
+    if required_platform and "deep" in valid and "format_version" in valid["deep"]["result"]:
+        found = valid["deep"]["environment"]["platform"]
+        if not str(found).startswith(required_platform):
+            rejected.append(
+                f"deep: mutation evidence must come from a {required_platform} environment "
+                f"(found {found}); local forked runs on other platforms gave unreliable verdicts"
+            )
     if "types" in valid:
         rejected += check_typing(valid["types"], policy["typing_pins"])
-    if "deep" in valid:
+    if "deep" in valid and "format_version" not in valid["deep"]["result"]:
         rejected += [
             f"deep scope: {problem}"
             for problem in mutation_scope.check_evidence(

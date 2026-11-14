@@ -1,0 +1,102 @@
+/* Raking light: a deck about what a low light reveals on a regular surface.
+   One light source, lower left. Shadows fall to the right. Amber = what the light finds
+   or what is still open. Steel = what held under test. Two grounds: graphite (claims, openers)
+   and bone (evidence read under the light). */
+:root{
+  --graphite:#141516; --graphite-2:#1e2022; --graphite-line:#ffffff24;
+  --bone:#e9e8e2; --bone-2:#dcdbd3; --bone-line:#15161733;
+  --ink:#151617; --ink-soft:#55534d;
+  --paper:#ece6da; --paper-soft:#a9a498;
+  --ember:#eaa24f; --ember-ink:#94490a; --ember-wash:#f2c892;
+  --steel:#93aab4; --steel-ink:#35505b; --steel-wash:#c7d4d9;
+  --cond:"Avenir Next Condensed","Arial Narrow","Liberation Sans Narrow","Roboto Condensed","Helvetica Neue Condensed","DejaVu Sans Condensed","Avenir Next",sans-serif;
+  --sans:"Avenir Next","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --mono:"SF Mono","SFMono-Regular",Menlo,Monaco,ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#0c0c0d;height:100%;overflow:hidden}
+body{font-family:var(--sans);-webkit-font-smoothing:antialiased}
+#stage{position:absolute;left:50%;top:50%;width:1280px;height:720px;transform-origin:0 0}
+.slide{position:absolute;inset:0;width:1280px;height:720px;overflow:hidden;display:none;color:var(--paper);background:var(--graphite)}
+.slide.on{display:block}
+.slide.bone{background:var(--bone);color:var(--ink)}
+.slide>*{position:absolute}
+.ph{background-size:cover;background-repeat:no-repeat}
+.scrim{inset:0}
+
+/* type */
+.cond{font-family:var(--cond)}
+h1,h2,h3{font-family:var(--cond);font-weight:600;letter-spacing:-.005em}
+.k{font:500 14px/1.2 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--paper-soft)}
+.bone .k{color:var(--ink-soft)}
+.num{font-family:var(--cond);font-weight:800;letter-spacing:-.02em;line-height:.9}
+.ember{color:var(--ember)}.bone .ember{color:var(--ember-ink)}
+.steel{color:var(--steel)}.bone .steel{color:var(--steel-ink)}
+.note{font:400 14px/1.4 var(--sans);color:#c4bfb3}
+.bone .note{color:#45433d}
+.src{font:400 14px/1.35 var(--mono);color:#c4bfb3;letter-spacing:.01em}
+.bone .src{color:#3f3d38}
+p{font:400 21px/1.42 var(--sans)}
+.lede{font-size:26px;line-height:1.35}
+.foot{left:64px;right:64px;bottom:26px}
+.pg{right:64px;bottom:26px;font:500 13px var(--mono);color:var(--paper-soft)}
+.bone .pg{color:var(--ink-soft)}
+
+/* tables: the sheet under the light */
+.sheet{background:#f4f3ee;box-shadow:16px 0 30px -12px rgba(0,0,0,.45),2px 0 0 rgba(0,0,0,.08);color:var(--ink)}
+.dark .sheet{box-shadow:18px 0 34px -10px rgba(0,0,0,.7)}
+table{border-collapse:collapse;width:100%;font:500 17px/1.25 var(--mono)}
+th{font:600 14px var(--sans);letter-spacing:.02em;text-align:right;padding:9px 12px;border-bottom:2px solid var(--ink);color:var(--ink)}
+td{padding:7px 12px;text-align:right;border-bottom:1px solid var(--bone-line);font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left}
+td:first-child{font:600 17px var(--sans)}
+td:not(.t):not(:first-child){white-space:nowrap}
+td.t,th.t{text-align:left;font:400 17px var(--sans)}
+td.hot{background:var(--ember-wash);color:#2a1604;font-weight:700}
+td.cool{background:var(--steel-wash);color:#16262d;font-weight:700}
+td.dim{color:#8b887f}
+tr.grp td{font:700 13px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);border-bottom:1px solid var(--ink);padding-top:10px}
+.legend{font:500 14px var(--sans);color:var(--ink-soft)}
+.sw{display:inline-block;width:14px;height:14px;vertical-align:-2px;margin-right:6px}
+.sw.hot{background:var(--ember-wash)}.sw.cool{background:var(--steel-wash)}
+
+/* stats */
+.stat .num{display:block;font-size:92px}
+.stat .lab{display:block;font:500 17px/1.3 var(--sans);margin-top:8px;max-width:30ch}
+.stat.sm .num{font-size:64px}
+.rule{height:2px;background:var(--ember)}
+.vr{width:2px;background:var(--ember)}
+.hair{height:1px;background:var(--graphite-line)}
+.bone .hair{background:var(--bone-line)}
+
+/* code */
+pre{font:500 18px/1.5 var(--mono);white-space:pre}
+.del{color:#d98b6a}.add{color:var(--steel)}
+.bone .del{color:#9a3a14}.bone .add{color:var(--steel-ink)}
+
+/* nav */
+#dots{position:fixed;left:0;right:0;bottom:0;height:4px;display:flex;gap:1px;z-index:5}
+#dots button{flex:1;border:0;background:#ffffff1f;cursor:pointer}
+#dots button[aria-current=true]{background:var(--ember)}
+#count{position:fixed;right:10px;top:8px;font:500 12px var(--mono);color:#ffffff66;z-index:5}
+
+@media print{
+  @page{size:1280px 720px;margin:0}
+  html,body{overflow:visible;height:auto;background:none}
+  #stage{position:static;transform:none!important;width:auto;height:auto}
+  .slide{display:block;position:relative;page-break-after:always;break-after:page;margin:0}
+  #dots,#count{display:none}
+  .slide,.sheet{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+
+/* editorial emphasis is neutral; amber and steel carry meaning only */
+.em{font-weight:800;}
+.anom{color:var(--ember)}.bone .anom{color:var(--ember-ink)}
+.ok{color:var(--steel)}.bone .ok{color:var(--steel-ink)}
+td.cool{background:var(--steel-wash);color:#16262d}
+.tag{display:inline-block;font:600 14px var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border:1.5px solid currentColor}
+
+/* flow: blocks stack by their real height, so a longer line pushes the next block instead of overlapping it */
+.flow{display:flex;flex-direction:column;gap:18px}
+.flow>*{position:static}
+.stat.sm .num{font-size:56px}

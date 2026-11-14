@@ -29,7 +29,7 @@ import provenance  # noqa: E402
 import verification_report  # noqa: E402
 import verify_real  # noqa: E402
 
-from verification import mutation_scope  # noqa: E402
+from verification import mutation_campaign, mutation_scope  # noqa: E402
 
 SCHEMA_VERSION = 2
 KINDS = ("fast", "deep", "faults", "real", "tools", "types", "reproduction")
@@ -47,6 +47,7 @@ PACKAGES = (
     "pyod",
     "mypy",
     "pandas-stubs",
+    "torch",
 )
 _HEX40 = re.compile(r"[0-9a-f]{40}")
 _HEX64 = re.compile(r"[0-9a-f]{64}")
@@ -125,6 +126,8 @@ def _fast_status(result: dict) -> str:
 
 
 def _deep_status(result: dict) -> str:
+    if "format_version" in result:
+        return mutation_campaign.status(result)
     try:
         status, _ = check_mutation.classify(result["stats"])
     except ValueError:
@@ -210,15 +213,18 @@ def build_fast(
     )
 
 
-def build_deep(
+def build_legacy_deep(
     stats: Path, results: Path | None = None, *, root: Path = ROOT, scope=None, source=None,
     environment=None, execution=None,
 ):  # fmt: skip
     """Wrap the mutation counts; ``results`` lists the mutants (``mutmut results --all``)."""
+    exclude = (
+        [] if scope is not None else mutation_scope.configured_exclusions(ROOT / "pyproject.toml")
+    )
     scope = mutation_scope.configured_patterns(ROOT / "pyproject.toml") if scope is None else scope
     result = {
         "scope": scope,
-        "scope_files": mutation_scope.resolve(scope, root),
+        "scope_files": mutation_scope.resolve(scope, root, exclude),
         "mutated_files": None,
         "threshold": check_mutation.THRESHOLD,
     }
@@ -241,6 +247,53 @@ def build_deep(
         )
     status = _deep_status(result)
     result["score"] = 100.0 * counts["killed"] / counts["total"]
+    return _envelope("deep", status, result, artifacts, root, source, environment, execution)
+
+
+def build_deep(
+    stats: Path, results: Path | None = None, *, run_report: Path | None = None,
+    root: Path = ROOT, source=None, environment=None, execution=None,
+):  # fmt: skip
+    """Wrap a risk-scoped current campaign; never fall back to historical counts."""
+    run_report = root / "mutants/controller-result.json" if run_report is None else run_report
+    artifacts = [path for path in (stats, results, run_report) if path is not None]
+    try:
+        if results is None:
+            raise ValueError("the native mutant listing is required")
+        result, artifacts = mutation_campaign.load_campaign(root, stats, results, run_report)
+        status = mutation_campaign.status(result)
+        if environment is None:
+            runtime = result["runtime"]
+            environment = {
+                "python": runtime["python"],
+                "platform": runtime["platform"],
+                "packages": {name: runtime["packages"].get(name) for name in PACKAGES},
+            }
+    except (OSError, KeyError, TypeError, ValueError) as exc:
+        result = {"format_version": 2, "reason": str(exc)}
+        status = "INCOMPLETE"
+    return _envelope("deep", status, result, artifacts, root, source, environment, execution)
+
+
+def build_deep_shards(
+    plan: Path, manifests: list[Path], *, root: Path = ROOT, source=None, environment=None,
+    execution=None,
+):  # fmt: skip
+    """Wrap a sharded risk-scoped campaign in the same evidence contract as a monolithic one."""
+    artifacts = [plan, *manifests]
+    try:
+        result, artifacts = mutation_campaign.load_sharded(root, plan, manifests)
+        status = mutation_campaign.status(result)
+        if environment is None:
+            runtime = result["runtime"]
+            environment = {
+                "python": runtime["python"],
+                "platform": runtime["platform"],
+                "packages": {name: runtime["packages"].get(name) for name in PACKAGES},
+            }
+    except (OSError, KeyError, TypeError, ValueError, subprocess.CalledProcessError) as exc:
+        result = {"format_version": 2, "reason": str(exc)}
+        status = "INCOMPLETE"
     return _envelope("deep", status, result, artifacts, root, source, environment, execution)
 
 
@@ -431,7 +484,7 @@ def _check_result(doc: dict, problems: list[str]) -> None:
     kind, status, result = doc["kind"], doc["status"], doc["result"]
     try:
         expected = _RULES[kind](result)
-        if kind == "deep" and result["stats"]:
+        if kind == "deep" and "format_version" not in result and result["stats"]:
             for key in ("total", *OUTCOMES):
                 if not _is_int(result["stats"].get(key)):
                     raise ValueError(f"stats.{key} must be an integer")
@@ -440,9 +493,16 @@ def _check_result(doc: dict, problems: list[str]) -> None:
         return
     if status == "PASS" and expected != "PASS":
         problems.append(f"status PASS is not supported by the result (it gives {expected})")
+    if kind == "deep" and "format_version" in result and status != expected:
+        problems.append(f"deep status {status} differs from the recomputed result {expected}")
     if status == "PASS" and not doc["artifacts"]:
         problems.append("a PASS must list the artifacts it was derived from")
-    if status == "PASS" and kind == "deep" and not result["scope"]:
+    if (
+        status == "PASS"
+        and kind == "deep"
+        and "format_version" not in result
+        and not result["scope"]
+    ):
         problems.append("deep result has an empty mutation scope")
 
 
@@ -462,6 +522,28 @@ def validate(doc, root: Path | None = None) -> list[str]:
                 problems.append(f"artifact {relative} is missing")
             elif _sha256(path) != expected:
                 problems.append(f"artifact {relative} hash differs from the recorded one")
+        if (
+            doc["kind"] == "deep"
+            and doc["result"].get("format_version") == 2
+            and "reason" not in doc["result"]
+        ):
+            try:
+                required = mutation_campaign.validate_current(doc["result"], root)
+                if set(doc["artifacts"]) != {
+                    path.relative_to(root).as_posix() for path in required
+                }:
+                    problems.append("deep evidence does not bind every required raw artifact")
+                runtime = doc["result"]["runtime"]
+                environment = doc["environment"]
+                if any(
+                    environment[name] != runtime[name] for name in ("python", "platform")
+                ) or any(
+                    environment["packages"].get(name) != runtime["packages"].get(name)
+                    for name in PACKAGES
+                ):
+                    problems.append("deep environment differs from the bound native runtime")
+            except (OSError, KeyError, TypeError, ValueError) as exc:
+                problems.append(f"deep campaign does not match current inputs: {exc}")
     return problems
 
 
@@ -483,6 +565,11 @@ def _write(doc: dict, output: Path) -> int:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
+    shard = sub.add_parser("deep-shards", help="wrap a sharded mutation campaign")
+    shard.add_argument("--plan", type=Path, required=True)
+    shard.add_argument("--manifests", type=Path, nargs="+", required=True)
+    shard.add_argument("--output", type=Path, required=True)
+    shard.add_argument("--root", type=Path, default=ROOT)
     check = sub.add_parser("validate", help="validate one evidence file")
     check.add_argument("path", type=Path)
     check.add_argument("--root", type=Path, default=None, help="verify artifact hashes here")
@@ -500,6 +587,8 @@ def main(argv: list[str] | None = None) -> int:
             build.add_argument(f"--{item}", type=Path, required=True)
         if name == "real":
             build.add_argument("--acquisition", type=Path, default=None)
+        if name == "deep":
+            build.add_argument("--run", type=Path, default=None, help="managed controller result")
         build.add_argument("--output", type=Path, required=True)
         build.add_argument(
             "--root", type=Path, default=ROOT, help="artifact paths are relative to it"
@@ -510,7 +599,9 @@ def main(argv: list[str] | None = None) -> int:
             if args.command == "fast":
                 doc = build_fast(args.coverage, args.junit, root=args.root)
             elif args.command == "deep":
-                doc = build_deep(args.stats, args.results, root=args.root)
+                doc = build_deep(args.stats, args.results, run_report=args.run, root=args.root)
+            elif args.command == "deep-shards":
+                doc = build_deep_shards(args.plan, args.manifests, root=args.root)
             elif args.command == "faults":
                 doc = build_faults(args.matrix, fault_names(), root=args.root)
             elif args.command == "tools":

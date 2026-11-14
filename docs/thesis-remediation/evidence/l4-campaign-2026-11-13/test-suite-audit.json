@@ -1,0 +1,1537 @@
+{
+ "baseline": "e2576a0",
+ "duplicate_bodies": [
+  [
+   "research/tests/test_alert_budget.py::test_unknown_methods_are_refused",
+   "research/tests/test_labelled_benchmark.py::test_unknown_method_is_rejected",
+   "research/tests/test_pool_full.py::test_unknown_methods_are_refused"
+  ],
+  [
+   "research/tests/test_uci_pool.py::test_size_bins",
+   "research/tests/test_uci_pool_contracts.py::test_the_size_class_changes_exactly_at_its_edges"
+  ],
+  [
+   "tests/test_drift.py::test_predict_before_fit_raises",
+   "tests/test_gx.py::test_gx_predict_before_fit_raises",
+   "tests/test_ml.py::test_ml_detector_predict_before_fit_raises"
+  ],
+  [
+   "tests/test_iqr.py::test_iqr_predict_before_fit_raises",
+   "tests/test_zscore.py::test_zscore_predict_before_fit_raises"
+  ],
+  [
+   "tests/test_release_flow.py::test_the_command_help_describes_the_release_decision",
+   "tests/test_reproduce_flow.py::test_the_help_describes_the_reproduction_check"
+  ],
+  [
+   "tests/test_temporal_pilot_contracts.py::test_invalid_elapsed_times_are_refused_with_the_stated_reason",
+   "tests/test_temporal_pilot_contracts.py::test_infinite_elapsed_times_are_refused_with_the_stated_reason"
+  ]
+ ],
+ "files_added_since_baseline": 25,
+ "files_with_absolute_paths": [],
+ "files_with_unmocked_sleep": [],
+ "most_private_attribute_accesses": [
+  [
+   "tests/test_evidence_schema_contracts.py",
+   53,
+   31
+  ],
+  [
+   "tests/verifier/test_mutation_cache_contracts.py",
+   30,
+   56
+  ],
+  [
+   "research/tests/test_lstm_contracts.py",
+   27,
+   31
+  ],
+  [
+   "tests/verifier/test_mutation_catalog_contracts.py",
+   23,
+   19
+  ],
+  [
+   "tests/test_claims_contracts.py",
+   20,
+   27
+  ],
+  [
+   "tests/test_mutation_policy_contracts.py",
+   14,
+   21
+  ],
+  [
+   "research/tests/test_typed_summary_contracts.py",
+   11,
+   11
+  ],
+  [
+   "tests/test_reproduce_contracts.py",
+   11,
+   16
+  ],
+  [
+   "research/tests/test_alert_budget.py",
+   9,
+   46
+  ],
+  [
+   "tests/test_mutation_scope_contracts.py",
+   9,
+   22
+  ],
+  [
+   "tests/test_provenance.py",
+   9,
+   9
+  ],
+  [
+   "tests/test_reproduce.py",
+   9,
+   40
+  ],
+  [
+   "tests/test_script_outputs_curves.py",
+   9,
+   20
+  ],
+  [
+   "tests/test_script_outputs_synthetic.py",
+   9,
+   29
+  ],
+  [
+   "research/tests/test_typed_benchmark_contracts.py",
+   8,
+   8
+  ]
+ ],
+ "per_file": {
+  "research/tests/test_alert_budget.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 9,
+   "sleeps": false,
+   "tests": 46
+  },
+  "research/tests/test_alert_budget_summary.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 6
+  },
+  "research/tests/test_build_pool.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 9
+  },
+  "research/tests/test_cost_study.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 16
+  },
+  "research/tests/test_cost_study_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": true,
+   "private_attribute_accesses": 5,
+   "sleeps": false,
+   "tests": 24
+  },
+  "research/tests/test_cost_study_main.py": {
+   "absolute_path": false,
+   "added_since_baseline": true,
+   "private_attribute_accesses": 2,
+   "sleeps": false,
+   "tests": 13
+  },
+  "research/tests/test_dataset_registry.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 16
+  },
+  "research/tests/test_dataset_registry_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 6,
+   "sleeps": false,
+   "tests": 16
+  },
+  "research/tests/test_deep_support.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 3
+  },
+  "research/tests/test_deep_typed.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 5
+  },
+  "research/tests/test_deep_typed_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 4,
+   "sleeps": false,
+   "tests": 16
+  },
+  "research/tests/test_equivalence_claims.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 7
+  },
+  "research/tests/test_equivalence_claims_focused.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 12
+  },
+  "research/tests/test_full_registry.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 1,
+   "sleeps": false,
+   "tests": 8
+  },
+  "research/tests/test_full_registry_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 3,
+   "sleeps": false,
+   "tests": 10
+  },
+  "research/tests/test_full_registry_seeds.py": {
+   "absolute_path": false,
+   "added_since_baseline": true,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 13
+  },
+  "research/tests/test_full_registry_summary.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 8
+  },
+  "research/tests/test_full_registry_summary_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 15
+  },
+  "research/tests/test_injection.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 11
+  },
+  "research/tests/test_injection_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": true,
+   "private_attribute_accesses": 2,
+   "sleeps": false,
+   "tests": 13
+  },
+  "research/tests/test_injection_golden.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 7
+  },
+  "research/tests/test_label_and_cleaning_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 13
+  },
+  "research/tests/test_labelled_benchmark.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 8
+  },
+  "research/tests/test_labelled_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 15
+  },
+  "research/tests/test_labelled_summary.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 6
+  },
+  "research/tests/test_labelled_summary_command.py": {
+   "absolute_path": false,
+   "added_since_baseline": true,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 6
+  },
+  "research/tests/test_labelled_summary_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 20
+  },
+  "research/tests/test_lstm_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 27,
+   "sleeps": false,
+   "tests": 31
+  },
+  "research/tests/test_lstm_detector.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 10
+  },
+  "research/tests/test_lstm_pilot.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 2
+  },
+  "research/tests/test_lstm_pilot_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 2,
+   "sleeps": false,
+   "tests": 11
+  },
+  "research/tests/test_matched_alert.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 23
+  },
+  "research/tests/test_multi_schema.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 12
+  },
+  "research/tests/test_multi_schema_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 7,
+   "sleeps": false,
+   "tests": 14
+  },
+  "research/tests/test_normalise.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 18
+  },
+  "research/tests/test_package_aliases.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 2
+  },
+  "research/tests/test_paired_bootstrap.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 9
+  },
+  "research/tests/test_paper_generated_sections.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 2
+  },
+  "research/tests/test_paper_tables.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 5
+  },
+  "research/tests/test_pipeline_entry_points.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 15
+  },
+  "research/tests/test_pool_check.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 2,
+   "sleeps": false,
+   "tests": 13
+  },
+  "research/tests/test_pool_chrono.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 8
+  },
+  "research/tests/test_pool_chrono_command.py": {
+   "absolute_path": false,
+   "added_since_baseline": true,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 5
+  },
+  "research/tests/test_pool_chrono_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 8
+  },
+  "research/tests/test_pool_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 3,
+   "sleeps": false,
+   "tests": 12
+  },
+  "research/tests/test_pool_etl.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 5
+  },
+  "research/tests/test_pool_etl_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 1,
+   "sleeps": false,
+   "tests": 9
+  },
+  "research/tests/test_pool_extension_summary.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 12
+  },
+  "research/tests/test_pool_extension_summary_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 1,
+   "sleeps": false,
+   "tests": 12
+  },
+  "research/tests/test_pool_full.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 1,
+   "sleeps": false,
+   "tests": 6
+  },
+  "research/tests/test_pool_full_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 10
+  },
+  "research/tests/test_pool_preprocessing_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 3,
+   "sleeps": false,
+   "tests": 3
+  },
+  "research/tests/test_pool_typed.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 17
+  },
+  "research/tests/test_prevalence_shift.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 24
+  },
+  "research/tests/test_recover_partitions.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 4,
+   "sleeps": false,
+   "tests": 10
+  },
+  "research/tests/test_recover_partitions_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 2,
+   "sleeps": false,
+   "tests": 11
+  },
+  "research/tests/test_score_shift.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 40
+  },
+  "research/tests/test_source_clustered.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 1,
+   "sleeps": false,
+   "tests": 21
+  },
+  "research/tests/test_temporal_decision.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 8
+  },
+  "research/tests/test_temporal_decision_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 4,
+   "sleeps": false,
+   "tests": 24
+  },
+  "research/tests/test_temporal_decision_flow.py": {
+   "absolute_path": false,
+   "added_since_baseline": true,
+   "private_attribute_accesses": 4,
+   "sleeps": false,
+   "tests": 17
+  },
+  "research/tests/test_time_scan.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 12
+  },
+  "research/tests/test_typed_benchmark.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 9
+  },
+  "research/tests/test_typed_benchmark_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 8,
+   "sleeps": false,
+   "tests": 8
+  },
+  "research/tests/test_typed_figures.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 6,
+   "sleeps": false,
+   "tests": 6
+  },
+  "research/tests/test_typed_masking.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 5
+  },
+  "research/tests/test_typed_run.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 12
+  },
+  "research/tests/test_typed_summary.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 2,
+   "sleeps": false,
+   "tests": 7
+  },
+  "research/tests/test_typed_summary_command.py": {
+   "absolute_path": false,
+   "added_since_baseline": true,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 5
+  },
+  "research/tests/test_typed_summary_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 11,
+   "sleeps": false,
+   "tests": 11
+  },
+  "research/tests/test_uci_loader.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 11
+  },
+  "research/tests/test_uci_pool.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 11
+  },
+  "research/tests/test_uci_pool_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 13
+  },
+  "slides/tests/test_deck.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 1,
+   "sleeps": false,
+   "tests": 21
+  },
+  "tests/test_adverse_schemas.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 7
+  },
+  "tests/test_ae1svm_batches.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 1,
+   "sleeps": false,
+   "tests": 5
+  },
+  "tests/test_archive_evidence.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 5
+  },
+  "tests/test_artifact_lineage.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 5
+  },
+  "tests/test_atomic_outputs.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 1,
+   "sleeps": false,
+   "tests": 21
+  },
+  "tests/test_atomic_publication.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 12
+  },
+  "tests/test_autoencoder.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 5,
+   "sleeps": false,
+   "tests": 14
+  },
+  "tests/test_branch_protection.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 18
+  },
+  "tests/test_check_types.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 2,
+   "sleeps": false,
+   "tests": 15
+  },
+  "tests/test_check_types_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 4,
+   "sleeps": false,
+   "tests": 10
+  },
+  "tests/test_claims_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": true,
+   "private_attribute_accesses": 20,
+   "sleeps": false,
+   "tests": 27
+  },
+  "tests/test_claims_provenance.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 23
+  },
+  "tests/test_cli_entrypoint.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 6
+  },
+  "tests/test_cli_smoke.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 11
+  },
+  "tests/test_curves_protocol.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 3,
+   "sleeps": false,
+   "tests": 5
+  },
+  "tests/test_dataset_contract.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 4
+  },
+  "tests/test_dataset_inventory_audit.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 1
+  },
+  "tests/test_dataset_source_overlap.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 3
+  },
+  "tests/test_datasets.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 4
+  },
+  "tests/test_deep_detectors.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 10
+  },
+  "tests/test_deep_support_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 4,
+   "sleeps": false,
+   "tests": 5
+  },
+  "tests/test_detector_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 19
+  },
+  "tests/test_detector_inventory.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 2
+  },
+  "tests/test_detector_protocol.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 3,
+   "sleeps": false,
+   "tests": 7
+  },
+  "tests/test_detector_state_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 3,
+   "sleeps": false,
+   "tests": 6
+  },
+  "tests/test_drift.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 7
+  },
+  "tests/test_drift_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 5,
+   "sleeps": false,
+   "tests": 22
+  },
+  "tests/test_environment_lock.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 12
+  },
+  "tests/test_equivalence_proposals.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 3
+  },
+  "tests/test_etl_paths_documentation.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 1
+  },
+  "tests/test_evidence_bundles.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 20
+  },
+  "tests/test_evidence_bundles_cli.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 7
+  },
+  "tests/test_evidence_schema.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 43
+  },
+  "tests/test_evidence_schema_builders.py": {
+   "absolute_path": false,
+   "added_since_baseline": true,
+   "private_attribute_accesses": 1,
+   "sleeps": false,
+   "tests": 31
+  },
+  "tests/test_evidence_schema_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": true,
+   "private_attribute_accesses": 53,
+   "sleeps": false,
+   "tests": 31
+  },
+  "tests/test_fault_matrix.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 8,
+   "sleeps": false,
+   "tests": 1
+  },
+  "tests/test_gx.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 1,
+   "sleeps": false,
+   "tests": 5
+  },
+  "tests/test_iqr.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 5
+  },
+  "tests/test_l4_campaign_record.py": {
+   "absolute_path": false,
+   "added_since_baseline": true,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 6
+  },
+  "tests/test_lineage_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 8
+  },
+  "tests/test_manuscript_claims.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 12
+  },
+  "tests/test_measurement_fingerprint.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 1,
+   "sleeps": false,
+   "tests": 17
+  },
+  "tests/test_metric_contract.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 7
+  },
+  "tests/test_ml.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 6,
+   "sleeps": false,
+   "tests": 17
+  },
+  "tests/test_mutation_campaign.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 4,
+   "sleeps": false,
+   "tests": 22
+  },
+  "tests/test_mutation_campaign_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": true,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 20
+  },
+  "tests/test_mutation_catalog.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 15
+  },
+  "tests/test_mutation_cli.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 5
+  },
+  "tests/test_mutation_cli_arguments.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 5
+  },
+  "tests/test_mutation_equivalence.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 2,
+   "sleeps": false,
+   "tests": 17
+  },
+  "tests/test_mutation_equivalence_probes.py": {
+   "absolute_path": false,
+   "added_since_baseline": true,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 17
+  },
+  "tests/test_mutation_evidence.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 1,
+   "sleeps": false,
+   "tests": 10
+  },
+  "tests/test_mutation_gate.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 11
+  },
+  "tests/test_mutation_policy_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 14,
+   "sleeps": false,
+   "tests": 21
+  },
+  "tests/test_mutation_risk_inventory.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 2
+  },
+  "tests/test_mutation_risk_policy.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 31
+  },
+  "tests/test_mutation_scope.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 21
+  },
+  "tests/test_mutation_scope_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": true,
+   "private_attribute_accesses": 9,
+   "sleeps": false,
+   "tests": 22
+  },
+  "tests/test_mutation_shards.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 6,
+   "sleeps": false,
+   "tests": 37
+  },
+  "tests/test_mutation_shards_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": true,
+   "private_attribute_accesses": 3,
+   "sleeps": false,
+   "tests": 3
+  },
+  "tests/test_mutation_snapshot.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 6
+  },
+  "tests/test_neural_convergence_audit.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 2
+  },
+  "tests/test_owner_review_packet.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 1,
+   "sleeps": false,
+   "tests": 6
+  },
+  "tests/test_pipeline.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 3,
+   "sleeps": false,
+   "tests": 4
+  },
+  "tests/test_pipeline_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 6,
+   "sleeps": false,
+   "tests": 7
+  },
+  "tests/test_pipeline_integration.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 5
+  },
+  "tests/test_pool_contract.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 7
+  },
+  "tests/test_pool_contract_arguments.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 5
+  },
+  "tests/test_pool_preprocessing.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 25
+  },
+  "tests/test_pool_preprocessing_contract.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 10
+  },
+  "tests/test_pool_preprocessing_faults.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 1
+  },
+  "tests/test_pool_train_only_contract.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 20
+  },
+  "tests/test_preprocessing_information_audit.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 1
+  },
+  "tests/test_profile_refresh.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 1
+  },
+  "tests/test_properties.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 2
+  },
+  "tests/test_provenance.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 9,
+   "sleeps": false,
+   "tests": 9
+  },
+  "tests/test_publication_tables.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 3
+  },
+  "tests/test_real_acquire.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 17
+  },
+  "tests/test_real_acquire_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 15
+  },
+  "tests/test_real_preflight.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 1,
+   "sleeps": false,
+   "tests": 24
+  },
+  "tests/test_real_preflight_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": true,
+   "private_attribute_accesses": 6,
+   "sleeps": false,
+   "tests": 29
+  },
+  "tests/test_real_verification.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 11
+  },
+  "tests/test_registry.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 18
+  },
+  "tests/test_registry_contract.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 7
+  },
+  "tests/test_release_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": true,
+   "private_attribute_accesses": 8,
+   "sleeps": false,
+   "tests": 26
+  },
+  "tests/test_release_flow.py": {
+   "absolute_path": false,
+   "added_since_baseline": true,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 11
+  },
+  "tests/test_release_gate.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 54
+  },
+  "tests/test_release_main.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 3
+  },
+  "tests/test_reproduce.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 9,
+   "sleeps": false,
+   "tests": 40
+  },
+  "tests/test_reproduce_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": true,
+   "private_attribute_accesses": 11,
+   "sleeps": false,
+   "tests": 16
+  },
+  "tests/test_reproduce_flow.py": {
+   "absolute_path": false,
+   "added_since_baseline": true,
+   "private_attribute_accesses": 1,
+   "sleeps": false,
+   "tests": 10
+  },
+  "tests/test_robustness.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 14
+  },
+  "tests/test_run_benchmark.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 8
+  },
+  "tests/test_scaling_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": true,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 16
+  },
+  "tests/test_scaling_study.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 4
+  },
+  "tests/test_scientific_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 4,
+   "sleeps": false,
+   "tests": 7
+  },
+  "tests/test_scientific_fingerprint.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 3,
+   "sleeps": false,
+   "tests": 18
+  },
+  "tests/test_script_outputs_benchmark.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 22
+  },
+  "tests/test_script_outputs_curves.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 9,
+   "sleeps": false,
+   "tests": 20
+  },
+  "tests/test_script_outputs_data.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 6
+  },
+  "tests/test_script_outputs_evidence.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 5,
+   "sleeps": false,
+   "tests": 17
+  },
+  "tests/test_script_outputs_gate.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 13
+  },
+  "tests/test_script_outputs_synthetic.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 9,
+   "sleeps": false,
+   "tests": 29
+  },
+  "tests/test_sequence_windows.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 11
+  },
+  "tests/test_shard_execution_binding.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 7,
+   "sleeps": false,
+   "tests": 12
+  },
+  "tests/test_shard_execution_messages.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 8,
+   "sleeps": false,
+   "tests": 5
+  },
+  "tests/test_shard_installed_versions.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 2
+  },
+  "tests/test_sharded_release.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 18
+  },
+  "tests/test_split.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 13
+  },
+  "tests/test_synthetic.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 6,
+   "sleeps": false,
+   "tests": 14
+  },
+  "tests/test_synthetic_benchmark.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 6
+  },
+  "tests/test_synthetic_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 6,
+   "sleeps": false,
+   "tests": 12
+  },
+  "tests/test_temporal_pilot.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 13
+  },
+  "tests/test_temporal_pilot_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 26
+  },
+  "tests/test_temporal_protocol.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 21
+  },
+  "tests/test_test_support.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 4
+  },
+  "tests/test_verification_policy.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 5
+  },
+  "tests/test_verification_report.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 6
+  },
+  "tests/test_verifier_tools.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 18
+  },
+  "tests/test_window_drift_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 14
+  },
+  "tests/test_workflows.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 42
+  },
+  "tests/test_zscore.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 4
+  },
+  "tests/verifier/test_mutation_binding.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 1,
+   "sleeps": false,
+   "tests": 8
+  },
+  "tests/verifier/test_mutation_cache.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 22
+  },
+  "tests/verifier/test_mutation_cache_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": true,
+   "private_attribute_accesses": 30,
+   "sleeps": false,
+   "tests": 56
+  },
+  "tests/verifier/test_mutation_catalog_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": true,
+   "private_attribute_accesses": 23,
+   "sleeps": false,
+   "tests": 19
+  },
+  "tests/verifier/test_mutation_execution.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 4,
+   "sleeps": false,
+   "tests": 33
+  },
+  "tests/verifier/test_mutation_run.py": {
+   "absolute_path": false,
+   "added_since_baseline": false,
+   "private_attribute_accesses": 0,
+   "sleeps": false,
+   "tests": 24
+  },
+  "tests/verifier/test_mutation_run_contracts.py": {
+   "absolute_path": false,
+   "added_since_baseline": true,
+   "private_attribute_accesses": 4,
+   "sleeps": false,
+   "tests": 12
+  }
+ },
+ "test_files": 203,
+ "tests": 2650,
+ "tests_in_files_added_since_baseline": 448
+}

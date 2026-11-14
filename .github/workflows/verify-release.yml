@@ -17,23 +17,34 @@ on:
         description: "Full commit SHA the operator reviewed; REAL refuses any other revision"
         required: false
         default: ""
-  # A workflow_dispatch workflow cannot be started from a branch until it is on
-  # the default branch, so a change to this file also runs it on its own pull
-  # request. Edits to any other file never start it.
+  # A workflow_dispatch workflow cannot be started from a branch until it is on the default
+  # branch, so a pre-merge run needs another path. A pull request from this repository starts
+  # the full verification ONLY while it carries the label below, for the exact head commit.
+  # Removing the label stops further runs, and an ordinary push never starts a campaign.
+  # The plain pull_request event is used, never the privileged variant, so the branch code
+  # runs with a read-only token and a fork is excluded by the repository comparison.
   pull_request:
-    paths:
-      - ".github/workflows/verify-release.yml"
+    types: [labeled, unlabeled, synchronize, reopened]
 
 permissions:
   contents: read
 
+# One verification per pull request (or ref) at a time: a newer commit or a removed label
+# cancels the older campaign, so two full campaigns never run side by side. A label other than
+# the dedicated one gets its own group and a skipped run, so it never cancels a campaign.
+concurrency:
+  group: verify-release-${{ github.event.pull_request.number || github.ref }}-${{ github.event_name != 'pull_request' || github.event.action == 'synchronize' || github.event.action == 'reopened' || github.event.label.name == 'run:release-verification' && 'campaign' || github.run_id }}
+  cancel-in-progress: true
+
 jobs:
   fast:
     name: release-fast
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.labels.*.name, 'run:release-verification') && (github.event.action != 'labeled' && github.event.action != 'unlabeled' || github.event.label.name == 'run:release-verification'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
 
       - uses: actions/setup-python@v5
@@ -61,10 +72,12 @@ jobs:
 
   static:
     name: release-static
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.labels.*.name, 'run:release-verification') && (github.event.action != 'labeled' && github.event.action != 'unlabeled' || github.event.label.name == 'run:release-verification'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
 
       - uses: actions/setup-python@v5
@@ -97,10 +110,12 @@ jobs:
 
   reproduce:
     name: release-reproduce
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.labels.*.name, 'run:release-verification') && (github.event.action != 'labeled' && github.event.action != 'unlabeled' || github.event.label.name == 'run:release-verification'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
 
       - uses: actions/setup-python@v5
@@ -133,10 +148,12 @@ jobs:
 
   faults:
     name: release-faults
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.labels.*.name, 'run:release-verification') && (github.event.action != 'labeled' && github.event.action != 'unlabeled' || github.event.label.name == 'run:release-verification'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
 
       - uses: actions/setup-python@v5
@@ -164,11 +181,13 @@ jobs:
 
   deep:
     name: release-deep
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.labels.*.name, 'run:release-verification') && (github.event.action != 'labeled' && github.event.action != 'unlabeled' || github.event.label.name == 'run:release-verification'))
     runs-on: ubuntu-latest
     timeout-minutes: 180
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
 
       - uses: actions/setup-python@v5
@@ -176,7 +195,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install
-        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev,deep]"
+        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev,deep]" "mutmut==3.8.0" "pytest==9.1.1"
 
       # Verdicts of mutants whose function and covering tests did not change are reused
       # (verification/mutation_cache.py resets the others). A release can ask for a fresh run.
@@ -185,7 +204,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: mutants
-          key: mutants-${{ runner.os }}-${{ hashFiles('src/**/*.py', 'experiments/*.py', 'tests/**/*.py', 'pyproject.toml', 'environment.yml', 'verification/evidence/*.json') }}
+          key: mutants-${{ runner.os }}-${{ hashFiles('src/**/*.py', 'experiments/*.py', 'research/**/*.py', 'verification/**/*.py', 'tests/**/*.py', 'pyproject.toml', 'environment.yml', 'verification/mutation_risk_policy.json', 'verification/mutation_scope.json', 'verification/release_policy.json') }}
           restore-keys: mutants-${{ runner.os }}-
 
       - name: Run deep profile
@@ -206,10 +225,12 @@ jobs:
 
   real-readiness:
     name: release-real-readiness
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.labels.*.name, 'run:release-verification') && (github.event.action != 'labeled' && github.event.action != 'unlabeled' || github.event.label.name == 'run:release-verification'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
           persist-credentials: false
 
@@ -231,7 +252,7 @@ jobs:
   real:
     name: release-real
     # Code that sees the private datasets must already be on the default branch.
-    if: inputs.real_runner != '' && github.ref_name == github.event.repository.default_branch
+    if: inputs.real_runner != '' && github.ref_name == github.event.repository.default_branch && github.event_name == 'workflow_dispatch'
     # `self-hosted` is part of the label set, so no GitHub-hosted runner can take the job.
     runs-on: [self-hosted, "${{ inputs.real_runner }}"]
     steps:
@@ -300,12 +321,13 @@ jobs:
     # Without a private runner the datasets are fetched here from their public sources.
     # Each file must match the reference checksum before it is used; nothing is uploaded
     # but the JSON reports, and no private data or secret is involved.
-    if: inputs.real_runner == ''
+    if: inputs.real_runner == '' && (github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.labels.*.name, 'run:release-verification') && (github.event.action != 'labeled' && github.event.action != 'unlabeled' || github.event.label.name == 'run:release-verification')))
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
           persist-credentials: false
 
@@ -344,11 +366,12 @@ jobs:
   release:
     name: release-gate
     needs: [fast, static, reproduce, faults, deep, real, real-hosted, real-readiness]
-    if: always()
+    if: always() && (github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.labels.*.name, 'run:release-verification') && (github.event.action != 'labeled' && github.event.action != 'unlabeled' || github.event.label.name == 'run:release-verification')))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
 
       - uses: actions/setup-python@v5

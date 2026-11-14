@@ -11,6 +11,7 @@ from etl_benchmark.quality.ml import (
     LOFDetector,
     OneClassSVMDetector,
     PCADetector,
+    PCAReconstruction,
 )
 
 ML_DETECTORS = [
@@ -215,3 +216,10 @@ def test_a_score_equal_to_the_threshold_is_not_flagged():
     for model in (TailProbabilityModel(0.0, "ecod"), PCAReconstruction(0.0)):
         flags = model.fit(x).predict(x)  # contamination 0: the threshold is the largest fit score
         assert flags.dtype.kind == "i" and flags.sum() == 0
+
+
+def test_the_pca_reconstruction_uses_the_full_svd_solver_and_the_variance_share():
+    """The archived synthetic tables record the full solver and the 95 percent variance share."""
+    model = PCAReconstruction(contamination=0.1)
+    assert model.pca_.svd_solver == "full"
+    assert model.pca_.n_components == 0.95

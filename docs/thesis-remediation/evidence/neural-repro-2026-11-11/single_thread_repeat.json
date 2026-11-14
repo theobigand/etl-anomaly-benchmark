@@ -1,0 +1,32 @@
+{
+ "adbench:breastw|ae1svm": {
+  "bitwise_all": true,
+  "max_abs": 0.0,
+  "flag_dis": 0
+ },
+ "adbench:breastw|lunar": {
+  "bitwise_all": true,
+  "max_abs": 0.0,
+  "flag_dis": 0
+ },
+ "adbench:cardio|deep_svdd": {
+  "bitwise_all": false,
+  "max_abs": 0.00015215948224067688,
+  "flag_dis": 0
+ },
+ "adbench:cardio|ae1svm": {
+  "bitwise_all": true,
+  "max_abs": 0.0,
+  "flag_dis": 0
+ },
+ "adbench:cardio|lunar": {
+  "bitwise_all": true,
+  "max_abs": 0.0,
+  "flag_dis": 0
+ },
+ "adbench:breastw|deep_svdd": {
+  "bitwise_all": false,
+  "max_abs": 8.940696716308594e-08,
+  "flag_dis": 0
+ }
+}

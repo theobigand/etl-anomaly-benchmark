@@ -1,0 +1,111 @@
+## x_section__mutmut_4
+-    out = evidence / "full_registry"
++    out = evidence / "FULL_REGISTRY"
+## x_section__mutmut_17
+-    schemas = fs.schema_matrices(evidence / "multi_schema", out / "schemas_deep")
++    schemas = fs.schema_matrices(evidence / "MULTI_SCHEMA", out / "schemas_deep")
+## x_section__mutmut_20
+-    schemas = fs.schema_matrices(evidence / "multi_schema", out / "schemas_deep")
++    schemas = fs.schema_matrices(evidence / "multi_schema", out / "SCHEMAS_DEEP")
+## x_section__mutmut_29
+-    typed = fs.merged_typed(evidence / "typed_injection" / "runs", out / "typed_deep" / "runs")
++    typed = fs.merged_typed(evidence / "TYPED_INJECTION" / "runs", out / "typed_deep" / "runs")
+## x_section__mutmut_31
+-    typed = fs.merged_typed(evidence / "typed_injection" / "runs", out / "typed_deep" / "runs")
++    typed = fs.merged_typed(evidence / "typed_injection" / "RUNS", out / "typed_deep" / "runs")
+## x_section__mutmut_35
+-    typed = fs.merged_typed(evidence / "typed_injection" / "runs", out / "typed_deep" / "runs")
++    typed = fs.merged_typed(evidence / "typed_injection" / "runs", out / "TYPED_DEEP" / "runs")
+## x_section__mutmut_37
+-    typed = fs.merged_typed(evidence / "typed_injection" / "runs", out / "typed_deep" / "runs")
++    typed = fs.merged_typed(evidence / "typed_injection" / "runs", out / "typed_deep" / "RUNS")
+## x_section__mutmut_79
+-            schemas["transactions"].drop(index="drift", errors="ignore"),
++            schemas["transactions"].drop(index="drift", errors=None),
+## x_section__mutmut_81
+-            schemas["transactions"].drop(index="drift", errors="ignore"),
++            schemas["transactions"].drop(index="drift", ),
+## x_section__mutmut_86
+-            schemas["transactions"].drop(index="drift", errors="ignore"),
++            schemas["transactions"].drop(index="drift", errors="XXignoreXX"),
+## x_section__mutmut_87
+-            schemas["transactions"].drop(index="drift", errors="ignore"),
++            schemas["transactions"].drop(index="drift", errors="IGNORE"),
+## x_section__mutmut_101
+-            schemas["sensors"].drop(index="drift", errors="ignore"),
++            schemas["sensors"].drop(index="drift", errors=None),
+## x_section__mutmut_103
+-            schemas["sensors"].drop(index="drift", errors="ignore"),
++            schemas["sensors"].drop(index="drift", ),
+## x_section__mutmut_108
+-            schemas["sensors"].drop(index="drift", errors="ignore"),
++            schemas["sensors"].drop(index="drift", errors="XXignoreXX"),
+## x_section__mutmut_109
+-            schemas["sensors"].drop(index="drift", errors="ignore"),
++            schemas["sensors"].drop(index="drift", errors="IGNORE"),
+## x_write__mutmut_11
+-        head, rest = body.split(START, 1)
++        head, rest = body.split(START, )
+## x_write__mutmut_12
+-        head, rest = body.split(START, 1)
++        head, rest = body.rsplit(START, 1)
+## x_write__mutmut_13
+-        head, rest = body.split(START, 1)
++        head, rest = body.split(START, 2)
+## x_write__mutmut_18
+-        tail = rest.split(END, 1)[1]
++        tail = rest.split(END, )[1]
+## x_write__mutmut_19
+-        tail = rest.split(END, 1)[1]
++        tail = rest.rsplit(END, 1)[1]
+## x_write__mutmut_20
+-        tail = rest.split(END, 1)[1]
++        tail = rest.split(END, 2)[1]
+## x_write__mutmut_25
+-        marker = "\\bibliographystyle"
++        marker = None
+## x_write__mutmut_26
+-        marker = "\\bibliographystyle"
++        marker = "XX\\bibliographystyleXX"
+## x_write__mutmut_27
+-        marker = "\\bibliographystyle"
++        marker = "\\bIBLIOGRAPHYSTYLE"
+## x_write__mutmut_28
+-        head, tail = body.split(marker, 1)
++        head, tail = None
+## x_write__mutmut_29
+-        head, tail = body.split(marker, 1)
++        head, tail = body.split(None, 1)
+## x_write__mutmut_30
+-        head, tail = body.split(marker, 1)
++        head, tail = body.split(marker, None)
+## x_write__mutmut_31
+-        head, tail = body.split(marker, 1)
++        head, tail = body.split(1)
+## x_write__mutmut_32
+-        head, tail = body.split(marker, 1)
++        head, tail = body.split(marker, )
+## x_write__mutmut_33
+-        head, tail = body.split(marker, 1)
++        head, tail = body.rsplit(marker, 1)
+## x_write__mutmut_34
+-        head, tail = body.split(marker, 1)
++        head, tail = body.split(marker, 2)
+## x_write__mutmut_35
+-        body = head + block + "\n" + marker + tail
++        body = None
+## x_write__mutmut_36
+-        body = head + block + "\n" + marker + tail
++        body = head + block + "\n" + marker - tail
+## x_write__mutmut_37
+-        body = head + block + "\n" + marker + tail
++        body = head + block + "\n" - marker + tail
+## x_write__mutmut_38
+-        body = head + block + "\n" + marker + tail
++        body = head + block - "\n" + marker + tail
+## x_write__mutmut_39
+-        body = head + block + "\n" + marker + tail
++        body = head - block + "\n" + marker + tail
+## x_write__mutmut_40
+-        body = head + block + "\n" + marker + tail
++        body = head + block + "XX\nXX" + marker + tail

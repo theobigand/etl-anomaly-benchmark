@@ -1,0 +1,6 @@
+# Notes
+Art direction: image-supported, quiet and tactile. Opening is a typographic title above a tide line with three vessels standing on it (not a full-bleed photo). Slide 3 is a triptych whose fields are the three glazes, widths unequal. Slide 4 shows the editions as 3 x 180 marks. Slide 5 is a tide-table style timeline.
+Imagery: pieces drawn in HTML/SVG, labelled "Illustration, not photography". An image earns a place because the objects (speckle, glaze, form) are the product and no photo exists for a fictional studio. Light is raking from the left, so shadows fall right. Photo brief if wanted: raking window light on a plaster-and-oak table, close crops showing glaze speckle.
+Palette: derived from the materials. Speckled grey-green (Galet), tidal-flat ochre and cream (Estran), iron glaze near-black (Vigie), sea-ash salt paper, rust for the italic accent. Semantic: each line keeps its glaze colour throughout.
+Type: Baskerville display, Gill Sans body (macOS system fonts).
+Skill followed: ART_DIRECTION (visual role, imagery consideration, opening structure, anti-convergence), VOICE (no em dash, only brief facts, 540 = 3 x 180 derived), PRESENTATION_RULES, IMAGE_DIRECTION (illustration labelling). Two revision passes' worth of fixes: collisions on slides 1, 3, 5, 6. Source: gen.py + tpl.html.

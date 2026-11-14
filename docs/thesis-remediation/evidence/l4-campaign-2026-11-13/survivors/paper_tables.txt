@@ -1,0 +1,30 @@
+## x_neural_means__mutmut_32
+-            ok = [r["methods"][name] for r in runs if "error" not in r["methods"][name]]
++            ok = [r["methods"][name] for r in runs if "XXerrorXX" not in r["methods"][name]]
+## x_neural_means__mutmut_33
+-            ok = [r["methods"][name] for r in runs if "error" not in r["methods"][name]]
++            ok = [r["methods"][name] for r in runs if "ERROR" not in r["methods"][name]]
+## x_rows__mutmut_14
+-    table = pd.concat([base.reindex(CLASSICAL), neural.reindex(columns=base.columns)])
++    table = pd.concat([base.reindex(CLASSICAL), neural.reindex(columns=None)])
+## x_rows__mutmut_34
+-                continue
++                break
+## x_example_rows__mutmut_2
+-    sys.path.insert(0, str(ROOT / "research"))
++    sys.path.insert(0, None)
+## x_example_rows__mutmut_5
+-    sys.path.insert(0, str(ROOT / "research"))
++    sys.path.insert(1, str(ROOT / "research"))
+## x_example_rows__mutmut_6
+-    sys.path.insert(0, str(ROOT / "research"))
++    sys.path.insert(0, str(None))
+## x_example_rows__mutmut_8
+-    sys.path.insert(0, str(ROOT / "research"))
++    sys.path.insert(0, str(ROOT / "XXresearchXX"))
+## x_example_rows__mutmut_9
+-    sys.path.insert(0, str(ROOT / "research"))
++    sys.path.insert(0, str(ROOT / "RESEARCH"))
+## x_main__mutmut_2
+-    parser = argparse.ArgumentParser(description=__doc__)
++    parser = argparse.ArgumentParser(description=None)

@@ -1,0 +1,4 @@
+# Brief B (creative): autumn collection launch
+Audience: customers and local press at a studio opening. Deliver a 6-slide deck.
+Subject: "Marée Haute", the autumn collection of a small ceramics studio in Brittany (fictional). Collection of 3 lines: Galet (stoneware cups, speckled grey-green glaze, fired 1280 C, EUR 28), Estran (shallow serving bowls, tidal-flat ochre and cream, EUR 64), Vigie (tall lamp bases, dark iron glaze, EUR 148). Made by 2 potters in a converted fish-smokehouse. Clay from a local quarry, glazes mixed from seaweed ash and wood ash. 180 pieces per line, hand-numbered. Launch: opening evening Friday 14 November 2026, 18:00 to 22:00, studio at Quai des Salines. Workshop on glaze-making Saturday 15 November 10:00 (12 places). Online preorder opens 16 November.
+Tone: quiet, tactile, specific. No claims about sustainability certification.

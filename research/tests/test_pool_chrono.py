@@ -5,9 +5,16 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import pool_chrono as pc  # noqa: E402
+
+
+@pytest.fixture(autouse=True)
+def _few_resamples(monkeypatch):
+    """The interval is tested on its own; here a few resamples keep every run short."""
+    monkeypatch.setattr(pc.td, "RESAMPLES", 20)
 
 
 def test_a_date_and_a_clock_column_are_joined_and_read_as_utc_timestamps():

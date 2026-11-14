@@ -1,0 +1,3 @@
+## x_write_csv__mutmut_11
+-        df.to_csv(partial, index=False)
++        df.to_csv(partial, index=None)

@@ -1,0 +1,12 @@
+## x_conda_names__mutmut_6
+-            filename = line.rsplit("/", 1)[1].split("#")[0]
++            filename = line.rsplit("/", 1)[1].split(None)[0]
+## x_conda_names__mutmut_15
+-            filename = line.rsplit("/", 1)[1].split("#")[0]
++            filename = line.rsplit("/", 1)[1].split("XX#XX")[0]
+## x_pip_lock__mutmut_39
+-    skipped = sorted(set(pypi) - set(kept), key=str.lower)
++    skipped = sorted(set(pypi) - set(kept), key=None)
+## x_pip_lock__mutmut_41
+-    skipped = sorted(set(pypi) - set(kept), key=str.lower)
++    skipped = sorted(set(pypi) - set(kept), )

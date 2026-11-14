@@ -1,0 +1,3501 @@
+{
+ "classes": {
+  "falsy-flag": {
+   "condition": "Only `False` -> `None` for allow_nan, annotate_fields, sort, index, replace, check or ignore_index. `True` -> `None` (for example `exist_ok`, `parents`) is not in the class.",
+   "probes": [
+    "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+    "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+    "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+    "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+    "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+    "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+   ],
+   "title": "False replaced by None for a flag read as a truth value"
+  },
+  "name-case": {
+   "condition": "Only a quoted name of three letters or more that changes case alone, in `version(...)`, `tz_localize(...)`/`tz=` (utc), `kind=` (stable), `unit=` (min) or `decode(...)`. One-letter units are not in the class (`m` and `M` differ). It says nothing about the dependency range: the owner's reason for `inconclusive` on 2026-11-11 was exactly that.",
+   "probes": [
+    "test_a_package_version_is_looked_up_without_regard_to_case",
+    "test_a_timezone_name_is_read_without_case_for_utc",
+    "test_a_sort_kind_is_read_without_case",
+    "test_the_minute_unit_is_read_without_case",
+    "test_a_codec_name_is_read_without_case"
+   ],
+   "title": "case of a name the library reads without case"
+  },
+  "signed-division": {
+   "condition": "Holds when the operand is a float array or a float; an integer operand gives float for `/` and integer for `*`. The operand's type is not checked by this builder: it must be read per mutant.",
+   "probes": [
+    "test_a_division_by_minus_one_is_a_multiplication_by_minus_one_for_floats"
+   ],
+   "title": "division by -1 for a multiplication by -1"
+  },
+  "split-limit": {
+   "condition": "`text.split(sep, n)[0]` is the part before the first separator for any limit n >= 1 or none; the class holds only when the new limit is at least 1 or absent.",
+   "probes": [
+    "test_the_first_part_of_a_split_does_not_depend_on_a_limit_of_one_or_more"
+   ],
+   "title": "limit of a split whose first part is read"
+  }
+ },
+ "head": "18589c7955180c6d20947782b7436020ce278d2c",
+ "note": "No entry is an owner decision. The 43 candidates of owner_review_candidates_2026-11-12.json and verification/mutation_equivalence.json are read, never changed. A mutant that already has an owner verdict or is in the first packet is listed apart and is not re-proposed.",
+ "noted_patterns": {
+  "default-dtype": "`astype(int)`/`dtype=int` replaced by None gives float64; previously judged inconclusive by the owner for `astype(None)`",
+  "unset-state": "an initial attribute value changed from None to an empty string; equivalence needs every reader of the attribute read, per unit"
+ },
+ "policy_sha256": "fc19388775ea7144022fd1451f4ffb62f6ed1408381d618691bbacc8602e695c",
+ "status": "PROPOSED - NOT APPROVED",
+ "units": {
+  "experiments/run_severity.py": {
+   "already_decided_or_in_first_packet": [],
+   "candidate_classes": {
+    "falsy-flag": [
+     {
+      "change": [
+       "-        mean_recall = pd.concat(per_seed).groupby(level=0, sort=False).mean()",
+       "+        mean_recall = pd.concat(per_seed).groupby(level=0, sort=None).mean()"
+      ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "experiments.run_severity.x_run__mutmut_31",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x_run__mutmut_31",
+      "mutated": [
+       "mean_recall = pd.concat(per_seed).groupby(level=0, sort=None).mean()"
+      ],
+      "original": [
+       "mean_recall = pd.concat(per_seed).groupby(level=0, sort=False).mean()"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants experiments/run_severity.py  # the change; cd mutants && MUTANT_UNDER_TEST=experiments.run_severity.x_run__mutmut_31 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     },
+     {
+      "change": [
+       "-        curves.to_csv(partial, index=False)",
+       "+        curves.to_csv(partial, index=None)"
+      ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "experiments.run_severity.x_main__mutmut_87",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x_main__mutmut_87",
+      "mutated": [
+       "curves.to_csv(partial, index=None)"
+      ],
+      "original": [
+       "curves.to_csv(partial, index=False)"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants experiments/run_severity.py  # the change; cd mutants && MUTANT_UNDER_TEST=experiments.run_severity.x_main__mutmut_87 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     }
+    ]
+   },
+   "catalog_sha256": "f41e59f70fb61d7df4d44bd4d2bde8ca593ef8d1972345b3e1a06fddafb51f93",
+   "eligible": 329,
+   "killed": 320,
+   "level": "L4",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
+   "needed_for_threshold": 323,
+   "noted_patterns_not_proposed": {},
+   "source_sha256": "7bda7511594ba6313e9579805a0726fd04ce06382f10d2fcb6c06e4d90f0a3fd",
+   "survivor_dump": "l4-campaign-2026-11-13/survivors/experiments__run_severity.py.txt",
+   "threshold": 98,
+   "unclassified": [
+    {
+     "change": [
+      "-    for ax, atype in zip(axes, MAGNITUDE_TYPES, strict=True):",
+      "+    for ax, atype in zip(axes, MAGNITUDE_TYPES, strict=None):"
+     ],
+     "id": "experiments.run_severity.x_render__mutmut_24",
+     "mutant": "x_render__mutmut_24",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    for ax, atype in zip(axes, MAGNITUDE_TYPES, strict=True):",
+      "+    for ax, atype in zip(axes, MAGNITUDE_TYPES, ):"
+     ],
+     "id": "experiments.run_severity.x_render__mutmut_27",
+     "mutant": "x_render__mutmut_27",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    for ax, atype in zip(axes, MAGNITUDE_TYPES, strict=True):",
+      "+    for ax, atype in zip(axes, MAGNITUDE_TYPES, strict=False):"
+     ],
+     "id": "experiments.run_severity.x_render__mutmut_28",
+     "mutant": "x_render__mutmut_28",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-                color=cmap(i % 10),",
+      "+                color=None,"
+     ],
+     "id": "experiments.run_severity.x_render__mutmut_46",
+     "mutant": "x_render__mutmut_46",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-                color=cmap(i % 10),"
+     ],
+     "id": "experiments.run_severity.x_render__mutmut_53",
+     "mutant": "x_render__mutmut_53",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        index=[\"anomaly_type\", \"method\"], columns=\"severity\", values=\"recall\"",
+      "+        index=[\"anomaly_type\", \"method\"], columns=\"severity\", values=None"
+     ],
+     "id": "experiments.run_severity.x_main__mutmut_134",
+     "mutant": "x_main__mutmut_134",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        index=[\"anomaly_type\", \"method\"], columns=\"severity\", values=\"recall\"",
+      "-    )",
+      "+        index=[\"anomaly_type\", \"method\"], columns=\"severity\", )"
+     ],
+     "id": "experiments.run_severity.x_main__mutmut_137",
+     "mutant": "x_main__mutmut_137",
+     "timeout": false
+    }
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
+  },
+  "research/injection.py": {
+   "already_decided_or_in_first_packet": [],
+   "candidate_classes": {
+    "falsy-flag": [
+     {
+      "change": [
+       "-        for col in rng.choice(cols, size=int(rng.integers(1, 3)), replace=False):",
+       "+        for col in rng.choice(cols, size=int(rng.integers(1, 3)), replace=None):"
+      ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "research.injection.x_inject__mutmut_78",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x_inject__mutmut_78",
+      "mutated": [
+       "for col in rng.choice(cols, size=int(rng.integers(1, 3)), replace=None):"
+      ],
+      "original": [
+       "for col in rng.choice(cols, size=int(rng.integers(1, 3)), replace=False):"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/injection.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.injection.x_inject__mutmut_78 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     },
+     {
+      "change": [
+       "-    shifted = list(rng.choice(cols, size=3, replace=False))",
+       "+    shifted = list(rng.choice(cols, size=3, replace=None))"
+      ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "research.injection.x_inject__mutmut_163",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x_inject__mutmut_163",
+      "mutated": [
+       "shifted = list(rng.choice(cols, size=3, replace=None))"
+      ],
+      "original": [
+       "shifted = list(rng.choice(cols, size=3, replace=False))"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/injection.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.injection.x_inject__mutmut_163 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     }
+    ]
+   },
+   "catalog_sha256": "011af65d555b37c695f69c7dc6c29dd46147cfd2d5f31a34cafc67f9be06d836",
+   "eligible": 336,
+   "killed": 325,
+   "level": "L4",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
+   "needed_for_threshold": 330,
+   "noted_patterns_not_proposed": {
+    "default-dtype": 1
+   },
+   "source_sha256": "cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39",
+   "survivor_dump": "l4-campaign-2026-11-13/survivors/research__injection.py.txt",
+   "threshold": 98,
+   "unclassified": [
+    {
+     "change": [
+      "-        and not pd.api.types.is_bool_dtype(frame[c])",
+      "+        and not pd.api.types.is_bool_dtype(None)"
+     ],
+     "id": "research.injection.x_continuous_columns__mutmut_5",
+     "mutant": "x_continuous_columns__mutmut_5",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    table = frame[columns].astype(float)",
+      "+    table = frame[columns].astype(None)"
+     ],
+     "id": "research.injection.x_prepare__mutmut_6",
+     "mutant": "x_prepare__mutmut_6",
+     "noted_pattern": "default-dtype",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    np.fill_diagonal(corr, -1)",
+      "+    np.fill_diagonal(corr, -2)"
+     ],
+     "id": "research.injection.x__pair__mutmut_9",
+     "mutant": "x__pair__mutmut_9",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    pop = clean.sample(frac=1.0, random_state=seed).reset_index(drop=True)",
+      "+    pop = clean.sample(frac=1.0, random_state=seed).reset_index(drop=None)"
+     ],
+     "id": "research.injection.x_inject__mutmut_21",
+     "mutant": "x_inject__mutmut_21",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    pop = clean.sample(frac=1.0, random_state=seed).reset_index(drop=True)",
+      "+    pop = clean.sample(frac=1.0, random_state=seed).reset_index(drop=False)"
+     ],
+     "id": "research.injection.x_inject__mutmut_27",
+     "mutant": "x_inject__mutmut_27",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    pop[\"t\"] = _BASE + pd.to_timedelta(hours, unit=\"h\")",
+      "+    pop[\"t\"] = _BASE + pd.to_timedelta(hours, unit=\"H\")"
+     ],
+     "id": "research.injection.x_inject__mutmut_48",
+     "mutant": "x_inject__mutmut_48",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-            row.iloc[pos, row.columns.get_loc(col)] = np.nan",
+      "+            row.iloc[pos, row.columns.get_loc(col)] = None"
+     ],
+     "id": "research.injection.x_inject__mutmut_90",
+     "mutant": "x_inject__mutmut_90",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        up_first = (pos % 2 == 0) == (corr > 0)",
+      "+        up_first = (pos % 2 == 0) == (corr >= 0)"
+     ],
+     "id": "research.injection.x_inject__mutmut_146",
+     "mutant": "x_inject__mutmut_146",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    drift[\"t\"] = _BASE + pd.to_timedelta(rng.uniform(0.9 * n, n, size=k), unit=\"h\")",
+      "+    drift[\"t\"] = _BASE + pd.to_timedelta(rng.uniform(0.9 * n, n, size=k), unit=\"H\")"
+     ],
+     "id": "research.injection.x_inject__mutmut_191",
+     "mutant": "x_inject__mutmut_191",
+     "timeout": false
+    }
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
+  },
+  "research/lstm_detector.py": {
+   "already_decided_or_in_first_packet": [
+    {
+     "change": [
+      "-        values = frame[self.columns].astype(float).to_numpy()",
+      "+        values = frame[self.columns].astype(None).to_numpy()"
+     ],
+     "decision_date": "2026-11-11",
+     "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_2",
+     "mutant": "x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_2",
+     "owner_verdict": "inconclusive",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-                    (error[:, -1] if last_only else error).mean(dim=-1 if last_only else (1, 2))",
+      "+                    (error[:, -1] if last_only else error).mean(dim=+1 if last_only else (1, 2))"
+     ],
+     "decision_date": "2026-11-11",
+     "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_31",
+     "mutant": "x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_31",
+     "owner_verdict": "accepted",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        return torch.cat(out).numpy().astype(float)",
+      "+        return torch.cat(out).numpy().astype(None)"
+     ],
+     "decision_date": "2026-11-11",
+     "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_35",
+     "mutant": "x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_35",
+     "owner_verdict": "inconclusive",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        values = train[self.columns].astype(float)",
+      "+        values = train[self.columns].astype(None)"
+     ],
+     "decision_date": "2026-11-11",
+     "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_16",
+     "mutant": "x\u01c1LSTMAutoencoder\u01c1fit__mutmut_16",
+     "owner_verdict": "inconclusive",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-            fit_windows = fit_windows[rng.choice(len(fit_windows), self.fit_rows, replace=False)]",
+      "+            fit_windows = fit_windows[rng.choice(len(fit_windows), self.fit_rows, replace=None)]"
+     ],
+     "decision_date": "2026-11-11",
+     "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_43",
+     "mutant": "x\u01c1LSTMAutoencoder\u01c1fit__mutmut_43",
+     "owner_verdict": "inconclusive",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        if len(val_windows) > self.validation_rows:",
+      "+        if len(val_windows) >= self.validation_rows:"
+     ],
+     "decision_date": "2026-11-11",
+     "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_50",
+     "mutant": "x\u01c1LSTMAutoencoder\u01c1fit__mutmut_50",
+     "owner_verdict": "accepted",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-            keep = np.sort(rng.choice(len(val_windows), self.validation_rows, replace=False))",
+      "+            keep = np.sort(rng.choice(len(val_windows), self.validation_rows, replace=None))"
+     ],
+     "decision_date": "2026-11-11",
+     "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_55",
+     "mutant": "x\u01c1LSTMAutoencoder\u01c1fit__mutmut_55",
+     "owner_verdict": "inconclusive",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-            \"versions\": {\"torch\": version(\"torch\"), \"numpy\": version(\"numpy\")},",
+      "+            \"versions\": {\"torch\": version(\"TORCH\"), \"numpy\": version(\"numpy\")},"
+     ],
+     "decision_date": "2026-11-11",
+     "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_41",
+     "mutant": "x\u01c1LSTMAutoencoder\u01c1settings__mutmut_41",
+     "owner_verdict": "accepted",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-            \"versions\": {\"torch\": version(\"torch\"), \"numpy\": version(\"numpy\")},",
+      "+            \"versions\": {\"torch\": version(\"torch\"), \"numpy\": version(\"NUMPY\")},"
+     ],
+     "decision_date": "2026-11-11",
+     "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_46",
+     "mutant": "x\u01c1LSTMAutoencoder\u01c1settings__mutmut_46",
+     "owner_verdict": "accepted",
+     "timeout": false
+    }
+   ],
+   "candidate_classes": {},
+   "catalog_sha256": "aef20963dc44e0ca61b2c9e9744bdf76a552d33490a96ed8e51b592a9cacfbc2",
+   "eligible": 377,
+   "killed": 368,
+   "level": "L4",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
+   "needed_for_threshold": 370,
+   "noted_patterns_not_proposed": {},
+   "source_sha256": "277375e66d1edc6ed94c5ffc4b1074c113e86c6095c7dc2b20d3058cb006da18",
+   "survivor_dump": "l4-campaign-2026-11-13/survivors/research__lstm_detector.py.txt",
+   "threshold": 98,
+   "unclassified": [],
+   "would_pass_if_every_candidate_were_accepted": false
+  },
+  "research/multi_schema.py": {
+   "already_decided_or_in_first_packet": [],
+   "candidate_classes": {
+    "falsy-flag": [
+     {
+      "change": [
+       "-                for col in rng.choice(nullable, size=int(rng.integers(1, 3)), replace=False):",
+       "+                for col in rng.choice(nullable, size=int(rng.integers(1, 3)), replace=None):"
+      ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "research.multi_schema.x_make__mutmut_111",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x_make__mutmut_111",
+      "mutated": [
+       "for col in rng.choice(nullable, size=int(rng.integers(1, 3)), replace=None):"
+      ],
+      "original": [
+       "for col in rng.choice(nullable, size=int(rng.integers(1, 3)), replace=False):"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/multi_schema.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.multi_schema.x_make__mutmut_111 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     },
+     {
+      "change": [
+       "-        df.groupby(spec.id_col, sort=False)[\"anomaly_type\"]",
+       "+        df.groupby(spec.id_col, sort=None)[\"anomaly_type\"]"
+      ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "research.multi_schema.x__split__mutmut_5",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x__split__mutmut_5",
+      "mutated": [
+       "df.groupby(spec.id_col, sort=None)[\"anomaly_type\"]"
+      ],
+      "original": [
+       "df.groupby(spec.id_col, sort=False)[\"anomaly_type\"]"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/multi_schema.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.multi_schema.x__split__mutmut_5 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     },
+     {
+      "change": [
+       "-        means[name] = stack.groupby(level=1, sort=False).mean()",
+       "+        means[name] = stack.groupby(level=1, sort=None).mean()"
+      ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "research.multi_schema.x_main__mutmut_99",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x_main__mutmut_99",
+      "mutated": [
+       "means[name] = stack.groupby(level=1, sort=None).mean()"
+      ],
+      "original": [
+       "means[name] = stack.groupby(level=1, sort=False).mean()"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/multi_schema.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.multi_schema.x_main__mutmut_99 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     },
+     {
+      "change": [
+       "-        stds[name] = stack.groupby(level=1, sort=False).std()",
+       "+        stds[name] = stack.groupby(level=1, sort=None).std()"
+      ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "research.multi_schema.x_main__mutmut_106",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x_main__mutmut_106",
+      "mutated": [
+       "stds[name] = stack.groupby(level=1, sort=None).std()"
+      ],
+      "original": [
+       "stds[name] = stack.groupby(level=1, sort=False).std()"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/multi_schema.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.multi_schema.x_main__mutmut_106 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     }
+    ]
+   },
+   "catalog_sha256": "918fe1d065502424f49fc3619516bd519c04c951dfc6f9efda87df4bf789b624",
+   "eligible": 1093,
+   "killed": 1057,
+   "level": "L4",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
+   "needed_for_threshold": 1072,
+   "noted_patterns_not_proposed": {
+    "default-dtype": 4
+   },
+   "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+   "survivor_dump": "l4-campaign-2026-11-13/survivors/research__multi_schema.py.txt",
+   "threshold": 98,
+   "unclassified": [
+    {
+     "change": [
+      "-        for d, h in zip(offsets, hours, strict=True)",
+      "+        for d, h in zip(offsets, hours, strict=None)"
+     ],
+     "id": "research.multi_schema.x__dates__mutmut_31",
+     "mutant": "x__dates__mutmut_31",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        for d, h in zip(offsets, hours, strict=True)",
+      "+        for d, h in zip(offsets, hours, )"
+     ],
+     "id": "research.multi_schema.x__dates__mutmut_34",
+     "mutant": "x__dates__mutmut_34",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        for d, h in zip(offsets, hours, strict=True)",
+      "+        for d, h in zip(offsets, hours, strict=False)"
+     ],
+     "id": "research.multi_schema.x__dates__mutmut_35",
+     "mutant": "x__dates__mutmut_35",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    items = (rng.poisson(3, n) + 1).astype(float)",
+      "+    items = (rng.poisson(3, n) + 1).astype(None)"
+     ],
+     "id": "research.multi_schema.x__transactions__mutmut_2",
+     "mutant": "x__transactions__mutmut_2",
+     "noted_pattern": "default-dtype",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-            \"account_age_days\": rng.integers(30, 2000, n).astype(float),",
+      "+            \"account_age_days\": rng.integers(30, 2000, n).astype(None),"
+     ],
+     "id": "research.multi_schema.x__transactions__mutmut_66",
+     "mutant": "x__transactions__mutmut_66",
+     "noted_pattern": "default-dtype",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-                amount * rng.uniform(2, 40, n) + rng.normal(0, 50, n), 0, None",
+      "+                amount * rng.uniform(2, 40, n) + rng.normal(0, 50, n), None, None"
+     ],
+     "id": "research.multi_schema.x__transactions__mutmut_79",
+     "mutant": "x__transactions__mutmut_79",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-                amount * rng.uniform(2, 40, n) + rng.normal(0, 50, n), 0, None",
+      "+                amount * rng.uniform(2, 40, n) + rng.normal(0, 50, n), 1, None"
+     ],
+     "id": "research.multi_schema.x__transactions__mutmut_101",
+     "mutant": "x__transactions__mutmut_101",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-                    _set(block, pos, col, np.nan)",
+      "+                    _set(block, pos, col, None)"
+     ],
+     "id": "research.multi_schema.x_make__mutmut_126",
+     "mutant": "x_make__mutmut_126",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-                high_b = high_a if sign < 0 else not high_a",
+      "+                high_b = high_a if sign <= 0 else not high_a"
+     ],
+     "id": "research.multi_schema.x_make__mutmut_167",
+     "mutant": "x_make__mutmut_167",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-                high_b = high_a if sign < 0 else not high_a",
+      "+                high_b = high_a if sign < 1 else not high_a"
+     ],
+     "id": "research.multi_schema.x_make__mutmut_168",
+     "mutant": "x_make__mutmut_168",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-                for col, base in zip(spec.drift_cols, (1.55, 1.6, 1.5), strict=True):",
+      "+                for col, base in zip(spec.drift_cols, (1.55, 1.6, 1.5), strict=None):"
+     ],
+     "id": "research.multi_schema.x_make__mutmut_218",
+     "mutant": "x_make__mutmut_218",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-                for col, base in zip(spec.drift_cols, (1.55, 1.6, 1.5), strict=True):",
+      "+                for col, base in zip(spec.drift_cols, (1.55, 1.6, 1.5), ):"
+     ],
+     "id": "research.multi_schema.x_make__mutmut_221",
+     "mutant": "x_make__mutmut_221",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-                for col, base in zip(spec.drift_cols, (1.55, 1.6, 1.5), strict=True):",
+      "+                for col, base in zip(spec.drift_cols, (1.55, 1.6, 1.5), strict=False):"
+     ],
+     "id": "research.multi_schema.x_make__mutmut_225",
+     "mutant": "x_make__mutmut_225",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    df = df.sample(frac=1.0, random_state=seed, ignore_index=True)",
+      "+    df = df.sample(frac=1.0, random_state=seed, ignore_index=None)"
+     ],
+     "id": "research.multi_schema.x_make__mutmut_306",
+     "mutant": "x_make__mutmut_306",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    df = df.sample(frac=1.0, random_state=seed, ignore_index=True)",
+      "+    df = df.sample(frac=1.0, random_state=seed, )"
+     ],
+     "id": "research.multi_schema.x_make__mutmut_309",
+     "mutant": "x_make__mutmut_309",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    df = df.sample(frac=1.0, random_state=seed, ignore_index=True)",
+      "+    df = df.sample(frac=1.0, random_state=seed, ignore_index=False)"
+     ],
+     "id": "research.multi_schema.x_make__mutmut_311",
+     "mutant": "x_make__mutmut_311",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    clean = types == \"clean\"",
+      "+    clean = types != \"clean\""
+     ],
+     "id": "research.multi_schema.x__per_type__mutmut_2",
+     "mutant": "x__per_type__mutmut_2",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        recall[name] = recall_score(is_type[keep].astype(int), flags[keep])",
+      "+        recall[name] = recall_score(is_type[keep].astype(None), flags[keep])"
+     ],
+     "id": "research.multi_schema.x__per_type__mutmut_18",
+     "mutant": "x__per_type__mutmut_18",
+     "noted_pattern": "default-dtype",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        precision[name] = precision_score(is_type[keep].astype(int), flags[keep], zero_division=0)",
+      "+        precision[name] = precision_score(is_type[keep].astype(int), flags[keep], )"
+     ],
+     "id": "research.multi_schema.x__per_type__mutmut_25",
+     "mutant": "x__per_type__mutmut_25",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        precision[name] = precision_score(is_type[keep].astype(int), flags[keep], zero_division=0)",
+      "+        precision[name] = precision_score(is_type[keep].astype(None), flags[keep], zero_division=0)"
+     ],
+     "id": "research.multi_schema.x__per_type__mutmut_26",
+     "mutant": "x__per_type__mutmut_26",
+     "noted_pattern": "default-dtype",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        detectors = {n: build(n, contamination, seed) for n in DEEP_NAMES}",
+      "+        detectors = {n: build(n, None, seed) for n in DEEP_NAMES}"
+     ],
+     "id": "research.multi_schema.x_evaluate__mutmut_21",
+     "mutant": "x_evaluate__mutmut_21",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        flags = pd.Series(np.asarray(flags), index=test.index)",
+      "+        flags = pd.Series(np.asarray(flags), index=None)"
+     ],
+     "id": "research.multi_schema.x_evaluate__mutmut_68",
+     "mutant": "x_evaluate__mutmut_68",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        flags = pd.Series(np.asarray(flags), index=test.index)",
+      "+        flags = pd.Series(np.asarray(flags), )"
+     ],
+     "id": "research.multi_schema.x_evaluate__mutmut_70",
+     "mutant": "x_evaluate__mutmut_70",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        \"H4\": {\"supported\": mean_rho >= 0.7, \"mean_spearman\": mean_rho, \"pairs\": rhos},",
+      "+        \"H4\": {\"supported\": mean_rho > 0.7, \"mean_spearman\": mean_rho, \"pairs\": rhos},"
+     ],
+     "id": "research.multi_schema.x_hypotheses__mutmut_91",
+     "mutant": "x_hypotheses__mutmut_91",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    parser = argparse.ArgumentParser(description=__doc__)",
+      "+    parser = argparse.ArgumentParser(description=None)"
+     ],
+     "id": "research.multi_schema.x_main__mutmut_2",
+     "mutant": "x_main__mutmut_2",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        default=\"classical\",",
+      "+        default=None,"
+     ],
+     "id": "research.multi_schema.x_main__mutmut_23",
+     "mutant": "x_main__mutmut_23",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        default=\"classical\","
+     ],
+     "id": "research.multi_schema.x_main__mutmut_27",
+     "mutant": "x_main__mutmut_27",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        default=\"classical\",",
+      "+        default=\"XXclassicalXX\","
+     ],
+     "id": "research.multi_schema.x_main__mutmut_35",
+     "mutant": "x_main__mutmut_35",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        default=\"classical\",",
+      "+        default=\"CLASSICAL\","
+     ],
+     "id": "research.multi_schema.x_main__mutmut_36",
+     "mutant": "x_main__mutmut_36",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        for seed, run in zip(SEEDS, runs, strict=True):",
+      "+        for seed, run in zip(SEEDS, runs, strict=None):"
+     ],
+     "id": "research.multi_schema.x_main__mutmut_70",
+     "mutant": "x_main__mutmut_70",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        for seed, run in zip(SEEDS, runs, strict=True):",
+      "+        for seed, run in zip(SEEDS, runs, ):"
+     ],
+     "id": "research.multi_schema.x_main__mutmut_73",
+     "mutant": "x_main__mutmut_73",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        for seed, run in zip(SEEDS, runs, strict=True):",
+      "+        for seed, run in zip(SEEDS, runs, strict=False):"
+     ],
+     "id": "research.multi_schema.x_main__mutmut_74",
+     "mutant": "x_main__mutmut_74",
+     "timeout": false
+    }
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
+  },
+  "research/normalise.py": {
+   "already_decided_or_in_first_packet": [
+    {
+     "change": [
+      "-            pieces.append(col.astype(float).rename(name))",
+      "+            pieces.append(col.astype(float).rename(None))"
+     ],
+     "first_packet": true,
+     "id": "research.normalise.x_clean__mutmut_34",
+     "mutant": "x_clean__mutmut_34",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-            pieces.append(col.astype(float).rename(name))",
+      "+            pieces.append(col.astype(None).rename(name))"
+     ],
+     "first_packet": true,
+     "id": "research.normalise.x_clean__mutmut_35",
+     "mutant": "x_clean__mutmut_35",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-            pieces.append(pd.get_dummies(col.astype(str), prefix=str(name), dtype=float))",
+      "+            pieces.append(pd.get_dummies(col.astype(str), prefix=None, dtype=float))"
+     ],
+     "first_packet": true,
+     "id": "research.normalise.x_clean__mutmut_45",
+     "mutant": "x_clean__mutmut_45",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-            pieces.append(pd.get_dummies(col.astype(str), prefix=str(name), dtype=float))",
+      "+            pieces.append(pd.get_dummies(col.astype(str), dtype=float))"
+     ],
+     "first_packet": true,
+     "id": "research.normalise.x_clean__mutmut_48",
+     "mutant": "x_clean__mutmut_48",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-            pieces.append(pd.get_dummies(col.astype(str), prefix=str(name), dtype=float))",
+      "+            pieces.append(pd.get_dummies(col.astype(str), prefix=str(None), dtype=float))"
+     ],
+     "first_packet": true,
+     "id": "research.normalise.x_clean__mutmut_51",
+     "mutant": "x_clean__mutmut_51",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    keys = pd.util.hash_pandas_object(table.fillna(np.inf), index=False)",
+      "+    keys = pd.util.hash_pandas_object(table.fillna(np.inf), index=None)"
+     ],
+     "first_packet": true,
+     "id": "research.normalise.x_clean__mutmut_64",
+     "mutant": "x_clean__mutmut_64",
+     "timeout": false
+    }
+   ],
+   "candidate_classes": {},
+   "catalog_sha256": "fc5f5c3a0445d43054017cca9eb565f9765360e1590f5b7433cbc817ab36804c",
+   "eligible": 197,
+   "killed": 191,
+   "level": "L4",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
+   "needed_for_threshold": 194,
+   "noted_patterns_not_proposed": {},
+   "source_sha256": "5ba131d186d79c792fb64691089939fffb3a085e1f376c6b9dcd1c12bcf5155a",
+   "survivor_dump": "l4-campaign-2026-11-13/survivors/research__normalise.py.txt",
+   "threshold": 98,
+   "unclassified": [],
+   "would_pass_if_every_candidate_were_accepted": false
+  },
+  "research/pool_chrono.py": {
+   "already_decided_or_in_first_packet": [],
+   "candidate_classes": {
+    "name-case": [
+     {
+      "change": [
+       "-        return pd.Series(base.dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"min\"))",
+       "+        return pd.Series(base.dt.tz_localize(\"utc\") + pd.to_timedelta(within, unit=\"min\"))"
+      ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "research.pool_chrono.x_read_times__mutmut_31",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x_read_times__mutmut_31",
+      "mutated": [
+       "return pd.Series(base.dt.tz_localize(\"utc\") + pd.to_timedelta(within, unit=\"min\"))"
+      ],
+      "original": [
+       "return pd.Series(base.dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"min\"))"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/pool_chrono.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.pool_chrono.x_read_times__mutmut_31 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     },
+     {
+      "change": [
+       "-        return pd.Series(base.dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"min\"))",
+       "+        return pd.Series(base.dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"MIN\"))"
+      ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "research.pool_chrono.x_read_times__mutmut_37",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x_read_times__mutmut_37",
+      "mutated": [
+       "return pd.Series(base.dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"MIN\"))"
+      ],
+      "original": [
+       "return pd.Series(base.dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"min\"))"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/pool_chrono.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.pool_chrono.x_read_times__mutmut_37 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     },
+     {
+      "change": [
+       "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
+       "+    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"STABLE\")"
+      ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "research.pool_chrono.x_eligible__mutmut_12",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x_eligible__mutmut_12",
+      "mutated": [
+       "order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"STABLE\")"
+      ],
+      "original": [
+       "order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/pool_chrono.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.pool_chrono.x_eligible__mutmut_12 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     }
+    ]
+   },
+   "catalog_sha256": "206639c66988bdbe63db29b095048244379c35633f8e24080ec259c6e1b2568a",
+   "eligible": 316,
+   "killed": 300,
+   "level": "L4",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
+   "needed_for_threshold": 310,
+   "noted_patterns_not_proposed": {
+    "default-dtype": 3
+   },
+   "source_sha256": "cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035",
+   "survivor_dump": "l4-campaign-2026-11-13/survivors/research__pool_chrono.py.txt",
+   "threshold": 98,
+   "unclassified": [
+    {
+     "change": [
+      "-        base = pd.to_datetime(pd.DataFrame({\"year\": 2017, \"month\": month + 1, \"day\": 1}))",
+      "+        base = pd.to_datetime(pd.DataFrame({\"YEAR\": 2017, \"month\": month + 1, \"day\": 1}))"
+     ],
+     "id": "research.pool_chrono.x_read_times__mutmut_18",
+     "mutant": "x_read_times__mutmut_18",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        base = pd.to_datetime(pd.DataFrame({\"year\": 2017, \"month\": month + 1, \"day\": 1}))",
+      "+        base = pd.to_datetime(pd.DataFrame({\"year\": 2017, \"MONTH\": month + 1, \"day\": 1}))"
+     ],
+     "id": "research.pool_chrono.x_read_times__mutmut_21",
+     "mutant": "x_read_times__mutmut_21",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        base = pd.to_datetime(pd.DataFrame({\"year\": 2017, \"month\": month + 1, \"day\": 1}))",
+      "+        base = pd.to_datetime(pd.DataFrame({\"year\": 2017, \"month\": month + 1, \"DAY\": 1}))"
+     ],
+     "id": "research.pool_chrono.x_read_times__mutmut_25",
+     "mutant": "x_read_times__mutmut_25",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-            pieces.append(column.astype(float).rename(name))",
+      "+            pieces.append(column.astype(None).rename(name))"
+     ],
+     "id": "research.pool_chrono.x_to_features__mutmut_12",
+     "mutant": "x_to_features__mutmut_12",
+     "noted_pattern": "default-dtype",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    marked = frame.assign(__row__=np.arange(len(frame), dtype=float))",
+      "+    marked = frame.assign(__row__=np.arange(len(frame), dtype=None))"
+     ],
+     "id": "research.pool_chrono.x_load_pool_dataset__mutmut_19",
+     "mutant": "x_load_pool_dataset__mutmut_19",
+     "noted_pattern": "default-dtype",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    marked = frame.assign(__row__=np.arange(len(frame), dtype=float))",
+      "+    marked = frame.assign(__row__=np.arange(len(frame), ))"
+     ],
+     "id": "research.pool_chrono.x_load_pool_dataset__mutmut_21",
+     "mutant": "x_load_pool_dataset__mutmut_21",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    rows = features.pop(\"__row__\").to_numpy().astype(int)",
+      "+    rows = features.pop(\"__row__\").to_numpy().astype(None)"
+     ],
+     "id": "research.pool_chrono.x_load_pool_dataset__mutmut_28",
+     "mutant": "x_load_pool_dataset__mutmut_28",
+     "noted_pattern": "default-dtype",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
+      "+    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=None)"
+     ],
+     "id": "research.pool_chrono.x_eligible__mutmut_3",
+     "mutant": "x_eligible__mutmut_3",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
+      "+    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), )"
+     ],
+     "id": "research.pool_chrono.x_eligible__mutmut_5",
+     "mutant": "x_eligible__mutmut_5",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
+      "+    order = np.argsort(pd.to_datetime(times, utc=None).to_numpy(), kind=\"stable\")"
+     ],
+     "id": "research.pool_chrono.x_eligible__mutmut_7",
+     "mutant": "x_eligible__mutmut_7",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
+      "+    order = np.argsort(pd.to_datetime(times, ).to_numpy(), kind=\"stable\")"
+     ],
+     "id": "research.pool_chrono.x_eligible__mutmut_9",
+     "mutant": "x_eligible__mutmut_9",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
+      "+    order = np.argsort(pd.to_datetime(times, utc=False).to_numpy(), kind=\"stable\")"
+     ],
+     "id": "research.pool_chrono.x_eligible__mutmut_10",
+     "mutant": "x_eligible__mutmut_10",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-            continue",
+      "+            break"
+     ],
+     "id": "research.pool_chrono.x_main__mutmut_93",
+     "mutant": "x_main__mutmut_93",
+     "timeout": false
+    }
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
+  },
+  "research/pool_preprocessing.py": {
+   "already_decided_or_in_first_packet": [],
+   "candidate_classes": {
+    "falsy-flag": [
+     {
+      "change": [
+       "-    keys = pd.util.hash_pandas_object(frame, index=False).to_numpy()",
+       "+    keys = pd.util.hash_pandas_object(frame, index=None).to_numpy()"
+      ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "research.pool_preprocessing.x_prepare_frozen__mutmut_23",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x_prepare_frozen__mutmut_23",
+      "mutated": [
+       "keys = pd.util.hash_pandas_object(frame, index=None).to_numpy()"
+      ],
+      "original": [
+       "keys = pd.util.hash_pandas_object(frame, index=False).to_numpy()"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/pool_preprocessing.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.pool_preprocessing.x_prepare_frozen__mutmut_23 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     }
+    ]
+   },
+   "catalog_sha256": "453ee4bae71c1a333674fdcc286423b3d8ec1d129cb5e9f502e9babef1c7c959",
+   "eligible": 248,
+   "killed": 241,
+   "level": "L4",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
+   "needed_for_threshold": 244,
+   "noted_patterns_not_proposed": {
+    "default-dtype": 1
+   },
+   "source_sha256": "edf8ac28b2824c76840c8e4cad47fe3fee1f1ac84a5b38ad341e968dee9e8dc0",
+   "survivor_dump": "l4-campaign-2026-11-13/survivors/research__pool_preprocessing.py.txt",
+   "threshold": 98,
+   "unclassified": [
+    {
+     "change": [
+      "-        [frame[name].astype(\"string\").to_numpy(dtype=object, na_value=np.nan) for name in columns]",
+      "+        [frame[name].astype(\"string\").to_numpy(dtype=None, na_value=np.nan) for name in columns]"
+     ],
+     "id": "research.pool_preprocessing.x__categorical__mutmut_2",
+     "mutant": "x__categorical__mutmut_2",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        [frame[name].astype(\"string\").to_numpy(dtype=object, na_value=np.nan) for name in columns]",
+      "+        [frame[name].astype(\"string\").to_numpy(na_value=np.nan) for name in columns]"
+     ],
+     "id": "research.pool_preprocessing.x__categorical__mutmut_4",
+     "mutant": "x__categorical__mutmut_4",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    values = frame[columns].apply(pd.to_numeric, errors=\"raise\").to_numpy(dtype=float)",
+      "+    values = frame[columns].apply(pd.to_numeric, ).to_numpy(dtype=float)"
+     ],
+     "id": "research.pool_preprocessing.x__numeric__mutmut_9",
+     "mutant": "x__numeric__mutmut_9",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    membership = np.empty(len(frame), dtype=int)",
+      "+    membership = np.empty(len(frame), dtype=None)"
+     ],
+     "id": "research.pool_preprocessing.x_prepare_frozen__mutmut_16",
+     "mutant": "x_prepare_frozen__mutmut_16",
+     "noted_pattern": "default-dtype",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    membership = np.empty(len(frame), dtype=int)",
+      "+    membership = np.empty(len(frame), )"
+     ],
+     "id": "research.pool_preprocessing.x_prepare_frozen__mutmut_18",
+     "mutant": "x_prepare_frozen__mutmut_18",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    medians = np.nanmedian(values, axis=0) if numeric else np.empty(0)",
+      "+    medians = np.nanmedian(values, axis=0) if (numeric) or True else np.empty(0)"
+     ],
+     "id": "research.pool_preprocessing.x_prepare_frozen__mutmut_93",
+     "mutant": "x_prepare_frozen__mutmut_93",
+     "timeout": false
+    }
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
+  },
+  "research/temporal_decision.py": {
+   "already_decided_or_in_first_packet": [],
+   "candidate_classes": {
+    "falsy-flag": [
+     {
+      "change": [
+       "-        pos = rng.choice(pos, size=min(keep, len(pos)), replace=False)",
+       "+        pos = rng.choice(pos, size=min(keep, len(pos)), replace=None)"
+      ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "research.temporal_decision.x_match_prevalence__mutmut_27",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x_match_prevalence__mutmut_27",
+      "mutated": [
+       "pos = rng.choice(pos, size=min(keep, len(pos)), replace=None)"
+      ],
+      "original": [
+       "pos = rng.choice(pos, size=min(keep, len(pos)), replace=False)"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/temporal_decision.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.temporal_decision.x_match_prevalence__mutmut_27 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     },
+     {
+      "change": [
+       "-        neg = rng.choice(neg, size=min(keep, len(neg)), replace=False)",
+       "+        neg = rng.choice(neg, size=min(keep, len(neg)), replace=None)"
+      ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "research.temporal_decision.x_match_prevalence__mutmut_51",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x_match_prevalence__mutmut_51",
+      "mutated": [
+       "neg = rng.choice(neg, size=min(keep, len(neg)), replace=None)"
+      ],
+      "original": [
+       "neg = rng.choice(neg, size=min(keep, len(neg)), replace=False)"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/temporal_decision.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.temporal_decision.x_match_prevalence__mutmut_51 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     }
+    ],
+    "name-case": [
+     {
+      "change": [
+       "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
+       "+    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"STABLE\")"
+      ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "research.temporal_decision.x_run_frame__mutmut_20",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x_run_frame__mutmut_20",
+      "mutated": [
+       "order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"STABLE\")"
+      ],
+      "original": [
+       "order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/temporal_decision.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.temporal_decision.x_run_frame__mutmut_20 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     },
+     {
+      "change": [
+       "-    frame = tp.load(spec).sort_values(tp.TIME_UTC, kind=\"stable\")",
+       "+    frame = tp.load(spec).sort_values(tp.TIME_UTC, kind=\"STABLE\")"
+      ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "research.temporal_decision.x_credit_card__mutmut_11",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x_credit_card__mutmut_11",
+      "mutated": [
+       "frame = tp.load(spec).sort_values(tp.TIME_UTC, kind=\"STABLE\")"
+      ],
+      "original": [
+       "frame = tp.load(spec).sort_values(tp.TIME_UTC, kind=\"stable\")"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/temporal_decision.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.temporal_decision.x_credit_card__mutmut_11 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     },
+     {
+      "change": [
+       "-    ).dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"min\")",
+       "+    ).dt.tz_localize(\"utc\") + pd.to_timedelta(within, unit=\"min\")"
+      ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "research.temporal_decision.x_bank_marketing__mutmut_57",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x_bank_marketing__mutmut_57",
+      "mutated": [
+       ").dt.tz_localize(\"utc\") + pd.to_timedelta(within, unit=\"min\")"
+      ],
+      "original": [
+       ").dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"min\")"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/temporal_decision.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.temporal_decision.x_bank_marketing__mutmut_57 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     },
+     {
+      "change": [
+       "-    ).dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"min\")",
+       "+    ).dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"MIN\")"
+      ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "research.temporal_decision.x_bank_marketing__mutmut_63",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x_bank_marketing__mutmut_63",
+      "mutated": [
+       ").dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"MIN\")"
+      ],
+      "original": [
+       ").dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"min\")"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/temporal_decision.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.temporal_decision.x_bank_marketing__mutmut_63 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     }
+    ]
+   },
+   "catalog_sha256": "c68abc303f77fdba2712116081978338289ce8e457758a0f5c7556a99186b466",
+   "eligible": 836,
+   "killed": 810,
+   "level": "L4",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
+   "needed_for_threshold": 820,
+   "noted_patterns_not_proposed": {
+    "default-dtype": 2
+   },
+   "source_sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+   "survivor_dump": "l4-campaign-2026-11-13/survivors/research__temporal_decision.py.txt",
+   "threshold": 98,
+   "unclassified": [
+    {
+     "change": [
+      "-    y = np.asarray(y).astype(int)",
+      "+    y = np.asarray(y).astype(None)"
+     ],
+     "id": "research.temporal_decision.x_decision_metrics__mutmut_2",
+     "mutant": "x_decision_metrics__mutmut_2",
+     "noted_pattern": "default-dtype",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    if len(pos) / len(y) > target:",
+      "+    if len(pos) / len(y) >= target:"
+     ],
+     "id": "research.temporal_decision.x_match_prevalence__mutmut_11",
+     "mutant": "x_match_prevalence__mutmut_11",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    y = np.asarray(y).astype(int)",
+      "+    y = np.asarray(y).astype(None)"
+     ],
+     "id": "research.temporal_decision.x_run_frame__mutmut_7",
+     "mutant": "x_run_frame__mutmut_7",
+     "noted_pattern": "default-dtype",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
+      "+    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=None)"
+     ],
+     "id": "research.temporal_decision.x_run_frame__mutmut_11",
+     "mutant": "x_run_frame__mutmut_11",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
+      "+    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), )"
+     ],
+     "id": "research.temporal_decision.x_run_frame__mutmut_13",
+     "mutant": "x_run_frame__mutmut_13",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
+      "+    order = np.argsort(pd.to_datetime(times, utc=None).to_numpy(), kind=\"stable\")"
+     ],
+     "id": "research.temporal_decision.x_run_frame__mutmut_15",
+     "mutant": "x_run_frame__mutmut_15",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
+      "+    order = np.argsort(pd.to_datetime(times, ).to_numpy(), kind=\"stable\")"
+     ],
+     "id": "research.temporal_decision.x_run_frame__mutmut_17",
+     "mutant": "x_run_frame__mutmut_17",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
+      "+    order = np.argsort(pd.to_datetime(times, utc=False).to_numpy(), kind=\"stable\")"
+     ],
+     "id": "research.temporal_decision.x_run_frame__mutmut_18",
+     "mutant": "x_run_frame__mutmut_18",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        \"H1\": {\"supported\": all(round(v, 9) >= 0.8 for v in h1.values()), \"spearman\": h1},",
+      "+        \"H1\": {\"supported\": all(round(v, 10) >= 0.8 for v in h1.values()), \"spearman\": h1},"
+     ],
+     "id": "research.temporal_decision.x_hypotheses__mutmut_119",
+     "mutant": "x_hypotheses__mutmut_119",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    frame = tp.load(spec).sort_values(tp.TIME_UTC, kind=\"stable\")",
+      "+    frame = tp.load(spec).sort_values(tp.TIME_UTC, kind=None)"
+     ],
+     "id": "research.temporal_decision.x_credit_card__mutmut_6",
+     "mutant": "x_credit_card__mutmut_6",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    frame = tp.load(spec).sort_values(tp.TIME_UTC, kind=\"stable\")",
+      "+    frame = tp.load(spec).sort_values(tp.TIME_UTC, )"
+     ],
+     "id": "research.temporal_decision.x_credit_card__mutmut_8",
+     "mutant": "x_credit_card__mutmut_8",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        tp.features(spec, frame).reset_index(drop=True),",
+      "+        tp.features(spec, frame).reset_index(drop=None),"
+     ],
+     "id": "research.temporal_decision.x_credit_card__mutmut_12",
+     "mutant": "x_credit_card__mutmut_12",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        tp.features(spec, frame).reset_index(drop=True),",
+      "+        tp.features(spec, frame).reset_index(drop=False),"
+     ],
+     "id": "research.temporal_decision.x_credit_card__mutmut_17",
+     "mutant": "x_credit_card__mutmut_17",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        pd.DataFrame({\"year\": year, \"month\": index + 1, \"day\": 1})",
+      "+        pd.DataFrame({\"YEAR\": year, \"month\": index + 1, \"day\": 1})"
+     ],
+     "id": "research.temporal_decision.x_bank_marketing__mutmut_48",
+     "mutant": "x_bank_marketing__mutmut_48",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        pd.DataFrame({\"year\": year, \"month\": index + 1, \"day\": 1})",
+      "+        pd.DataFrame({\"year\": year, \"MONTH\": index + 1, \"day\": 1})"
+     ],
+     "id": "research.temporal_decision.x_bank_marketing__mutmut_50",
+     "mutant": "x_bank_marketing__mutmut_50",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        pd.DataFrame({\"year\": year, \"month\": index + 1, \"day\": 1})",
+      "+        pd.DataFrame({\"year\": year, \"month\": index + 1, \"DAY\": 1})"
+     ],
+     "id": "research.temporal_decision.x_bank_marketing__mutmut_54",
+     "mutant": "x_bank_marketing__mutmut_54",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    cats = [c for c in features if not pd.api.types.is_numeric_dtype(features[c])]",
+      "+    cats = None"
+     ],
+     "id": "research.temporal_decision.x_bank_marketing__mutmut_77",
+     "mutant": "x_bank_marketing__mutmut_77",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    features = pd.get_dummies(features, columns=cats, dummy_na=True, dtype=float)",
+      "+    features = pd.get_dummies(features, columns=None, dummy_na=True, dtype=float)"
+     ],
+     "id": "research.temporal_decision.x_bank_marketing__mutmut_82",
+     "mutant": "x_bank_marketing__mutmut_82",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    features = pd.get_dummies(features, columns=cats, dummy_na=True, dtype=float)",
+      "+    features = pd.get_dummies(features, dummy_na=True, dtype=float)"
+     ],
+     "id": "research.temporal_decision.x_bank_marketing__mutmut_86",
+     "mutant": "x_bank_marketing__mutmut_86",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    parser = argparse.ArgumentParser(description=__doc__)",
+      "+    parser = argparse.ArgumentParser(description=None)"
+     ],
+     "id": "research.temporal_decision.x_main__mutmut_2",
+     "mutant": "x_main__mutmut_2",
+     "timeout": false
+    }
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
+  },
+  "research/typed_benchmark.py": {
+   "already_decided_or_in_first_packet": [],
+   "candidate_classes": {
+    "falsy-flag": [
+     {
+      "change": [
+       "-        df.groupby(\"group_id\", sort=False)[\"anomaly_type\"]",
+       "+        df.groupby(\"group_id\", sort=None)[\"anomaly_type\"]"
+      ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "research.typed_benchmark.x_split__mutmut_5",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x_split__mutmut_5",
+      "mutated": [
+       "df.groupby(\"group_id\", sort=None)[\"anomaly_type\"]"
+      ],
+      "original": [
+       "df.groupby(\"group_id\", sort=False)[\"anomaly_type\"]"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/typed_benchmark.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.typed_benchmark.x_split__mutmut_5 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     }
+    ]
+   },
+   "catalog_sha256": "2b7aff2c3664116170e04eeb7a6d3f22dceaf94bd48fa0e67e5b4846865de3fb",
+   "eligible": 180,
+   "killed": 175,
+   "level": "L4",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
+   "needed_for_threshold": 177,
+   "noted_patterns_not_proposed": {
+    "default-dtype": 2
+   },
+   "source_sha256": "abdd10e4a1965e99bd5db8ad1a61b0b9e37caed20f35d09c32bcb1a9a3bae9d2",
+   "survivor_dump": "l4-campaign-2026-11-13/survivors/research__typed_benchmark.py.txt",
+   "threshold": 98,
+   "unclassified": [
+    {
+     "change": [
+      "-        recall[name] = recall_score(is_type[keep].astype(int), flags[keep])",
+      "+        recall[name] = recall_score(is_type[keep].astype(None), flags[keep])"
+     ],
+     "id": "research.typed_benchmark.x__per_type__mutmut_18",
+     "mutant": "x__per_type__mutmut_18",
+     "noted_pattern": "default-dtype",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        precision[name] = precision_score(is_type[keep].astype(int), flags[keep], zero_division=0)",
+      "+        precision[name] = precision_score(is_type[keep].astype(None), flags[keep], zero_division=0)"
+     ],
+     "id": "research.typed_benchmark.x__per_type__mutmut_26",
+     "mutant": "x__per_type__mutmut_26",
+     "noted_pattern": "default-dtype",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        flags = pd.Series(np.asarray(flags), index=test.index)",
+      "+        flags = pd.Series(np.asarray(flags), index=None)"
+     ],
+     "id": "research.typed_benchmark.x_evaluate__mutmut_53",
+     "mutant": "x_evaluate__mutmut_53",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        flags = pd.Series(np.asarray(flags), index=test.index)",
+      "+        flags = pd.Series(np.asarray(flags), )"
+     ],
+     "id": "research.typed_benchmark.x_evaluate__mutmut_55",
+     "mutant": "x_evaluate__mutmut_55",
+     "timeout": false
+    }
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
+  },
+  "research/uci_loader.py": {
+   "already_decided_or_in_first_packet": [],
+   "candidate_classes": {
+    "falsy-flag": [
+     {
+      "change": [
+       "-        chosen = np.random.default_rng(SEED).choice(np.flatnonzero(is_rare), k, replace=False)",
+       "+        chosen = np.random.default_rng(SEED).choice(np.flatnonzero(is_rare), k, replace=None)"
+      ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "research.uci_loader.x_derive_labels__mutmut_73",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x_derive_labels__mutmut_73",
+      "mutated": [
+       "chosen = np.random.default_rng(SEED).choice(np.flatnonzero(is_rare), k, replace=None)"
+      ],
+      "original": [
+       "chosen = np.random.default_rng(SEED).choice(np.flatnonzero(is_rare), k, replace=False)"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/uci_loader.py  # the change; cd mutants && MUTANT_UNDER_TEST=research.uci_loader.x_derive_labels__mutmut_73 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     }
+    ]
+   },
+   "catalog_sha256": "6631cb8a4619d97b501bccd946c81c1006b962b6040613ea6dd8f35453c601ac",
+   "eligible": 186,
+   "killed": 180,
+   "level": "L4",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
+   "needed_for_threshold": 183,
+   "noted_patterns_not_proposed": {},
+   "source_sha256": "a1176cd61bd8454c9fa51da682194444feb24529dc401916e8bb94fd212ab691",
+   "survivor_dump": "l4-campaign-2026-11-13/survivors/research__uci_loader.py.txt",
+   "threshold": 98,
+   "unclassified": [
+    {
+     "change": [
+      "-    frame = pd.read_csv(path, low_memory=False)",
+      "+    frame = pd.read_csv(path, )"
+     ],
+     "id": "research.uci_loader.x_read_table__mutmut_5",
+     "mutant": "x_read_table__mutmut_5",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    frame = pd.read_csv(path, low_memory=False)",
+      "+    frame = pd.read_csv(path, low_memory=True)"
+     ],
+     "id": "research.uci_loader.x_read_table__mutmut_6",
+     "mutant": "x_read_table__mutmut_6",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    for name in frame.columns[frame.dtypes.map(lambda t: not pd.api.types.is_numeric_dtype(t))]:",
+      "+    for name in frame.columns[frame.dtypes.map(lambda t: not pd.api.types.is_numeric_dtype(None))]:"
+     ],
+     "id": "research.uci_loader.x_read_table__mutmut_23",
+     "mutant": "x_read_table__mutmut_23",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    target = frame[targets[0]] if len(targets) == 1 else pd.Series(np.nan, index=frame.index)",
+      "+    target = frame[targets[0]] if len(targets) == 1 else pd.Series(None, index=frame.index)"
+     ],
+     "id": "research.uci_loader.x_split_columns__mutmut_34",
+     "mutant": "x_split_columns__mutmut_34",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    target = frame[targets[0]] if len(targets) == 1 else pd.Series(np.nan, index=frame.index)",
+      "+    target = frame[targets[0]] if len(targets) == 1 else pd.Series(index=frame.index)"
+     ],
+     "id": "research.uci_loader.x_split_columns__mutmut_36",
+     "mutant": "x_split_columns__mutmut_36",
+     "timeout": false
+    }
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
+  },
+  "src/etl_benchmark/load.py": {
+   "already_decided_or_in_first_packet": [
+    {
+     "change": [
+      "-        df.to_csv(partial, index=False)",
+      "+        df.to_csv(partial, index=None)"
+     ],
+     "first_packet": true,
+     "id": "etl_benchmark.load.x_write_csv__mutmut_11",
+     "mutant": "x_write_csv__mutmut_11",
+     "timeout": false
+    }
+   ],
+   "candidate_classes": {},
+   "catalog_sha256": "cc261ce7827925bd34d67f62212c84c83724a60a6d486133bda58616d471f706",
+   "eligible": 14,
+   "killed": 13,
+   "level": "L4",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
+   "needed_for_threshold": 14,
+   "noted_patterns_not_proposed": {},
+   "source_sha256": "bc450a2553f333662bb447de1c7cd9aabb274b2f608b8e57ad80e48321b9c98e",
+   "survivor_dump": "l4-campaign-2026-11-13/survivors/src__etl_benchmark__load.py.txt",
+   "threshold": 98,
+   "unclassified": [],
+   "would_pass_if_every_candidate_were_accepted": false
+  },
+  "src/etl_benchmark/quality/_torch_models.py": {
+   "already_decided_or_in_first_packet": [],
+   "candidate_classes": {},
+   "catalog_sha256": "b324cbcab5f51653633917045d5aa8a4f2ee2a7e12a8be31042bd7b481ee8a7b",
+   "eligible": 65,
+   "killed": 58,
+   "level": "L4",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
+   "needed_for_threshold": 64,
+   "noted_patterns_not_proposed": {},
+   "source_sha256": "77a1b57ff69e580cad700bb4ee41f069e3ac0c8489bdd714651c753c4bbdd09d",
+   "survivor_dump": "l4-campaign-2026-11-13/survivors/src__etl_benchmark__quality___torch_models.py.txt",
+   "threshold": 98,
+   "unclassified": [
+    {
+     "change": [
+      "-        mu, _ = self.model.encode(batch_data.to(self.device))",
+      "+        mu, _ = self.model.encode(batch_data.to(None))"
+     ],
+     "id": "etl_benchmark.quality._torch_models.x\u01c1MeanVAE\u01c1evaluating_forward__mutmut_3",
+     "mutant": "x\u01c1MeanVAE\u01c1evaluating_forward__mutmut_3",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-            for batch in DataLoader(X, batch_size=self.batch_size, drop_last=False, shuffle=False):",
+      "+            for batch in DataLoader(X, batch_size=self.batch_size, drop_last=False, shuffle=None):"
+     ],
+     "id": "etl_benchmark.quality._torch_models.x\u01c1FitScalerDIF\u01c1_deep_representation__mutmut_5",
+     "mutant": "x\u01c1FitScalerDIF\u01c1_deep_representation__mutmut_5",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-            for batch in DataLoader(X, batch_size=self.batch_size, drop_last=False, shuffle=False):",
+      "+            for batch in DataLoader(X, batch_size=self.batch_size, shuffle=False):"
+     ],
+     "id": "etl_benchmark.quality._torch_models.x\u01c1FitScalerDIF\u01c1_deep_representation__mutmut_8",
+     "mutant": "x\u01c1FitScalerDIF\u01c1_deep_representation__mutmut_8",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-            for batch in DataLoader(X, batch_size=self.batch_size, drop_last=False, shuffle=False):",
+      "+            for batch in DataLoader(X, batch_size=self.batch_size, drop_last=False, ):"
+     ],
+     "id": "etl_benchmark.quality._torch_models.x\u01c1FitScalerDIF\u01c1_deep_representation__mutmut_9",
+     "mutant": "x\u01c1FitScalerDIF\u01c1_deep_representation__mutmut_9",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-                reduced.append(net(batch.float().to(self.device)))",
+      "+                reduced.append(net(batch.float().to(None)))"
+     ],
+     "id": "etl_benchmark.quality._torch_models.x\u01c1FitScalerDIF\u01c1_deep_representation__mutmut_14",
+     "mutant": "x\u01c1FitScalerDIF\u01c1_deep_representation__mutmut_14",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        return super().fit(X, y)",
+      "+        return super().fit(X, None)"
+     ],
+     "id": "etl_benchmark.quality._torch_models.x\u01c1PaddedAE1SVM\u01c1fit__mutmut_11",
+     "mutant": "x\u01c1PaddedAE1SVM\u01c1fit__mutmut_11",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        return super().fit(X, y)",
+      "+        return super().fit(X, )"
+     ],
+     "id": "etl_benchmark.quality._torch_models.x\u01c1PaddedAE1SVM\u01c1fit__mutmut_13",
+     "mutant": "x\u01c1PaddedAE1SVM\u01c1fit__mutmut_13",
+     "timeout": false
+    }
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
+  },
+  "src/etl_benchmark/quality/autoencoder.py": {
+   "already_decided_or_in_first_packet": [],
+   "candidate_classes": {
+    "name-case": [
+     {
+      "change": [
+       "-                \"scikit-learn\": version(\"scikit-learn\"),",
+       "+                \"scikit-learn\": version(\"SCIKIT-LEARN\"),"
+      ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "etl_benchmark.quality.autoencoder.x\u01c1AutoencoderDetector\u01c1settings__mutmut_28",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x\u01c1AutoencoderDetector\u01c1settings__mutmut_28",
+      "mutated": [
+       "\"scikit-learn\": version(\"SCIKIT-LEARN\"),"
+      ],
+      "original": [
+       "\"scikit-learn\": version(\"scikit-learn\"),"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/autoencoder.py  # the change; cd mutants && MUTANT_UNDER_TEST=etl_benchmark.quality.autoencoder.x\u01c1AutoencoderDetector\u01c1settings__mutmut_28 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     },
+     {
+      "change": [
+       "-                \"numpy\": version(\"numpy\"),",
+       "+                \"numpy\": version(\"NUMPY\"),"
+      ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "etl_benchmark.quality.autoencoder.x\u01c1AutoencoderDetector\u01c1settings__mutmut_33",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x\u01c1AutoencoderDetector\u01c1settings__mutmut_33",
+      "mutated": [
+       "\"numpy\": version(\"NUMPY\"),"
+      ],
+      "original": [
+       "\"numpy\": version(\"numpy\"),"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/autoencoder.py  # the change; cd mutants && MUTANT_UNDER_TEST=etl_benchmark.quality.autoencoder.x\u01c1AutoencoderDetector\u01c1settings__mutmut_33 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     }
+    ]
+   },
+   "catalog_sha256": "1fc31435087cff28de27c15aa9e3989daf7c5295af2c17f4c1d0fe4943360262",
+   "eligible": 117,
+   "killed": 112,
+   "level": "L4",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
+   "needed_for_threshold": 115,
+   "noted_patterns_not_proposed": {
+    "unset-state": 2
+   },
+   "source_sha256": "52ac93bd1898db05567278d773295458fc81847366de74b0c63770c662cbaa4d",
+   "survivor_dump": "l4-campaign-2026-11-13/survivors/src__etl_benchmark__quality__autoencoder.py.txt",
+   "threshold": 98,
+   "unclassified": [
+    {
+     "change": [
+      "-        self.threshold_: float | None = None",
+      "+        self.threshold_: float | None = \"\""
+     ],
+     "id": "etl_benchmark.quality.autoencoder.x\u01c1ReconstructionModel\u01c1__init____mutmut_4",
+     "mutant": "x\u01c1ReconstructionModel\u01c1__init____mutmut_4",
+     "noted_pattern": "unset-state",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self.network_: MLPRegressor | None = None",
+      "+        self.network_: MLPRegressor | None = \"\""
+     ],
+     "id": "etl_benchmark.quality.autoencoder.x\u01c1ReconstructionModel\u01c1__init____mutmut_5",
+     "mutant": "x\u01c1ReconstructionModel\u01c1__init____mutmut_5",
+     "noted_pattern": "unset-state",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-            warnings.simplefilter(\"ignore\", ConvergenceWarning)",
+      "+            warnings.simplefilter(\"ignore\", )"
+     ],
+     "id": "etl_benchmark.quality.autoencoder.x\u01c1ReconstructionModel\u01c1fit__mutmut_14",
+     "mutant": "x\u01c1ReconstructionModel\u01c1fit__mutmut_14",
+     "timeout": false
+    }
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
+  },
+  "src/etl_benchmark/quality/base.py": {
+   "already_decided_or_in_first_packet": [
+    {
+     "change": [
+      "-        return self.predict(df).astype(float)",
+      "+        return self.predict(df).astype(None)"
+     ],
+     "first_packet": true,
+     "id": "etl_benchmark.quality.base.x\u01c1Detector\u01c1score__mutmut_1",
+     "mutant": "x\u01c1Detector\u01c1score__mutmut_1",
+     "timeout": false
+    }
+   ],
+   "candidate_classes": {},
+   "catalog_sha256": "fa09c2c86ed2f77bf715f144b9d29023ff9fb101061b5bf7aea7e0c05f8fe55f",
+   "eligible": 31,
+   "killed": 30,
+   "level": "L4",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
+   "needed_for_threshold": 31,
+   "noted_patterns_not_proposed": {},
+   "source_sha256": "9efc8a6a410b92d81f4ee09f9d001f8adad62a779250b3b552db9878f9de28ff",
+   "survivor_dump": "l4-campaign-2026-11-13/survivors/src__etl_benchmark__quality__base.py.txt",
+   "threshold": 98,
+   "unclassified": [],
+   "would_pass_if_every_candidate_were_accepted": false
+  },
+  "src/etl_benchmark/quality/deep.py": {
+   "already_decided_or_in_first_packet": [],
+   "candidate_classes": {
+    "name-case": [
+     {
+      "change": [
+       "-                \"torch\": version(\"torch\"),",
+       "+                \"torch\": version(\"TORCH\"),"
+      ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "etl_benchmark.quality.deep.x\u01c1TorchDetector\u01c1settings__mutmut_19",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x\u01c1TorchDetector\u01c1settings__mutmut_19",
+      "mutated": [
+       "\"torch\": version(\"TORCH\"),"
+      ],
+      "original": [
+       "\"torch\": version(\"torch\"),"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/deep.py  # the change; cd mutants && MUTANT_UNDER_TEST=etl_benchmark.quality.deep.x\u01c1TorchDetector\u01c1settings__mutmut_19 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     },
+     {
+      "change": [
+       "-                \"pyod\": version(\"pyod\"),",
+       "+                \"pyod\": version(\"PYOD\"),"
+      ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "etl_benchmark.quality.deep.x\u01c1TorchDetector\u01c1settings__mutmut_24",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x\u01c1TorchDetector\u01c1settings__mutmut_24",
+      "mutated": [
+       "\"pyod\": version(\"PYOD\"),"
+      ],
+      "original": [
+       "\"pyod\": version(\"pyod\"),"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/deep.py  # the change; cd mutants && MUTANT_UNDER_TEST=etl_benchmark.quality.deep.x\u01c1TorchDetector\u01c1settings__mutmut_24 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     }
+    ]
+   },
+   "catalog_sha256": "718d9fa22e977bf984b2e1a008dc7117a7146265a6b3c5bd1c6c1daf6047588b",
+   "eligible": 62,
+   "killed": 60,
+   "level": "L4",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
+   "needed_for_threshold": 61,
+   "noted_patterns_not_proposed": {},
+   "source_sha256": "77364cfdf0850b107c316ffae0389e1bb552445d76188dab388dff76e8e22632",
+   "survivor_dump": "l4-campaign-2026-11-13/survivors/src__etl_benchmark__quality__deep.py.txt",
+   "threshold": 98,
+   "unclassified": [],
+   "would_pass_if_every_candidate_were_accepted": true
+  },
+  "src/etl_benchmark/quality/drift.py": {
+   "already_decided_or_in_first_packet": [],
+   "candidate_classes": {},
+   "catalog_sha256": "6cb454d92e0c732b4bc49a59f97c3091592bccb5169d47afa34c78ca4ac5a5bc",
+   "eligible": 129,
+   "killed": 119,
+   "level": "L4",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
+   "needed_for_threshold": 127,
+   "noted_patterns_not_proposed": {
+    "unset-state": 3
+   },
+   "source_sha256": "95380ca0f8f87a24c512ac7055357225472342065e0da676c0be46dd115fa09b",
+   "survivor_dump": "l4-campaign-2026-11-13/survivors/src__etl_benchmark__quality__drift.py.txt",
+   "threshold": 98,
+   "unclassified": [
+    {
+     "change": [
+      "-        self._fitted = False",
+      "+        self._fitted = None"
+     ],
+     "id": "etl_benchmark.quality.drift.x\u01c1TemporalDriftDetector\u01c1__init____mutmut_11",
+     "mutant": "x\u01c1TemporalDriftDetector\u01c1__init____mutmut_11",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self._active = False",
+      "+        self._active = None"
+     ],
+     "id": "etl_benchmark.quality.drift.x\u01c1TemporalDriftDetector\u01c1__init____mutmut_13",
+     "mutant": "x\u01c1TemporalDriftDetector\u01c1__init____mutmut_13",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self._active = False",
+      "+        self._active = True"
+     ],
+     "id": "etl_benchmark.quality.drift.x\u01c1TemporalDriftDetector\u01c1__init____mutmut_14",
+     "mutant": "x\u01c1TemporalDriftDetector\u01c1__init____mutmut_14",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self._cutoff: object | None = None",
+      "+        self._cutoff: object | None = \"\""
+     ],
+     "id": "etl_benchmark.quality.drift.x\u01c1TemporalDriftDetector\u01c1__init____mutmut_15",
+     "mutant": "x\u01c1TemporalDriftDetector\u01c1__init____mutmut_15",
+     "noted_pattern": "unset-state",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self._means: pd.Series | None = None",
+      "+        self._means: pd.Series | None = \"\""
+     ],
+     "id": "etl_benchmark.quality.drift.x\u01c1TemporalDriftDetector\u01c1__init____mutmut_16",
+     "mutant": "x\u01c1TemporalDriftDetector\u01c1__init____mutmut_16",
+     "noted_pattern": "unset-state",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self._stds: pd.Series | None = None",
+      "+        self._stds: pd.Series | None = \"\""
+     ],
+     "id": "etl_benchmark.quality.drift.x\u01c1TemporalDriftDetector\u01c1__init____mutmut_17",
+     "mutant": "x\u01c1TemporalDriftDetector\u01c1__init____mutmut_17",
+     "noted_pattern": "unset-state",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-            self._active = False",
+      "+            self._active = None"
+     ],
+     "id": "etl_benchmark.quality.drift.x\u01c1TemporalDriftDetector\u01c1fit__mutmut_4",
+     "mutant": "x\u01c1TemporalDriftDetector\u01c1fit__mutmut_4",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        moved = shift.abs() > 0.03  # features that actually drifted",
+      "+        moved = shift.abs() >= 0.03  # features that actually drifted"
+     ],
+     "id": "etl_benchmark.quality.drift.x\u01c1TemporalDriftDetector\u01c1_row_score__mutmut_15",
+     "mutant": "x\u01c1TemporalDriftDetector\u01c1_row_score__mutmut_15",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        lean = (z.loc[:, moved.index[moved]] * direction).clip(0.0, 4.0).mean(axis=1)",
+      "+        lean = (z.loc[:, moved.index[moved]] / direction).clip(0.0, 4.0).mean(axis=1)"
+     ],
+     "id": "etl_benchmark.quality.drift.x\u01c1TemporalDriftDetector\u01c1_row_score__mutmut_33",
+     "mutant": "x\u01c1TemporalDriftDetector\u01c1_row_score__mutmut_33",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        row[gross] = 0.0",
+      "+        row[gross] = None"
+     ],
+     "id": "etl_benchmark.quality.drift.x\u01c1TemporalDriftDetector\u01c1_row_score__mutmut_43",
+     "mutant": "x\u01c1TemporalDriftDetector\u01c1_row_score__mutmut_43",
+     "timeout": false
+    }
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
+  },
+  "src/etl_benchmark/quality/gx.py": {
+   "already_decided_or_in_first_packet": [],
+   "candidate_classes": {},
+   "catalog_sha256": "ddd89891c20d1b4e84f3919f603b7f4977112dbe7ad4ce179914c846ffa53b34",
+   "eligible": 98,
+   "killed": 87,
+   "level": "L4",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
+   "needed_for_threshold": 97,
+   "noted_patterns_not_proposed": {},
+   "source_sha256": "11be59dbe975d05547395263b763d37716cd9f916b284ce4147cfd87c61e3416",
+   "survivor_dump": "l4-campaign-2026-11-13/survivors/src__etl_benchmark__quality__gx.py.txt",
+   "threshold": 98,
+   "unclassified": [
+    {
+     "change": [
+      "-        self._null_columns: list[str] = []",
+      "+        self._null_columns: list[str] = None"
+     ],
+     "id": "etl_benchmark.quality.gx.x\u01c1GreatExpectationsDetector\u01c1__init____mutmut_5",
+     "mutant": "x\u01c1GreatExpectationsDetector\u01c1__init____mutmut_5",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self._bounds: dict[str, tuple[float, float]] = {}",
+      "+        self._bounds: dict[str, tuple[float, float]] = None"
+     ],
+     "id": "etl_benchmark.quality.gx.x\u01c1GreatExpectationsDetector\u01c1__init____mutmut_6",
+     "mutant": "x\u01c1GreatExpectationsDetector\u01c1__init____mutmut_6",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        work = df.reset_index(drop=True)",
+      "+        work = df.reset_index(drop=None)"
+     ],
+     "id": "etl_benchmark.quality.gx.x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_5",
+     "mutant": "x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_5",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        work = df.reset_index(drop=True)",
+      "+        work = df.reset_index(drop=False)"
+     ],
+     "id": "etl_benchmark.quality.gx.x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_6",
+     "mutant": "x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_6",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        context = gx.get_context(mode=\"ephemeral\")",
+      "+        context = gx.get_context(mode=None)"
+     ],
+     "id": "etl_benchmark.quality.gx.x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_9",
+     "mutant": "x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_9",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-            context.data_sources.add_pandas(name=\"pandas\")",
+      "+            context.data_sources.add_pandas(name=\"XXpandasXX\")"
+     ],
+     "id": "etl_benchmark.quality.gx.x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_17",
+     "mutant": "x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_17",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-            context.data_sources.add_pandas(name=\"pandas\")",
+      "+            context.data_sources.add_pandas(name=\"PANDAS\")"
+     ],
+     "id": "etl_benchmark.quality.gx.x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_18",
+     "mutant": "x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_18",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-            .add_dataframe_asset(name=\"asset\")",
+      "+            .add_dataframe_asset(name=\"XXassetXX\")"
+     ],
+     "id": "etl_benchmark.quality.gx.x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_19",
+     "mutant": "x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_19",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-            .add_dataframe_asset(name=\"asset\")",
+      "+            .add_dataframe_asset(name=\"ASSET\")"
+     ],
+     "id": "etl_benchmark.quality.gx.x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_20",
+     "mutant": "x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_20",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-            .add_batch_definition_whole_dataframe(name=\"batch\")",
+      "+            .add_batch_definition_whole_dataframe(name=\"XXbatchXX\")"
+     ],
+     "id": "etl_benchmark.quality.gx.x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_21",
+     "mutant": "x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_21",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-            .add_batch_definition_whole_dataframe(name=\"batch\")",
+      "+            .add_batch_definition_whole_dataframe(name=\"BATCH\")"
+     ],
+     "id": "etl_benchmark.quality.gx.x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_22",
+     "mutant": "x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_22",
+     "timeout": false
+    }
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
+  },
+  "src/etl_benchmark/quality/ml.py": {
+   "already_decided_or_in_first_packet": [],
+   "candidate_classes": {
+    "signed-division": [
+     {
+      "change": [
+       "-        u_skew = u_left * -1 * np.sign(self.skew_sign_ - 1) + u_right * np.sign(self.skew_sign_ + 1)",
+       "+        u_skew = u_left / -1 * np.sign(self.skew_sign_ - 1) + u_right * np.sign(self.skew_sign_ + 1)"
+      ],
+      "counterexample_search": [
+       "test_a_division_by_minus_one_is_a_multiplication_by_minus_one_for_floats"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1decision_function__mutmut_48",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x\u01c1TailProbabilityModel\u01c1decision_function__mutmut_48",
+      "mutated": [
+       "u_skew = u_left / -1 * np.sign(self.skew_sign_ - 1) + u_right * np.sign(self.skew_sign_ + 1)"
+      ],
+      "original": [
+       "u_skew = u_left * -1 * np.sign(self.skew_sign_ - 1) + u_right * np.sign(self.skew_sign_ + 1)"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/ml.py  # the change; cd mutants && MUTANT_UNDER_TEST=etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1decision_function__mutmut_48 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     }
+    ]
+   },
+   "catalog_sha256": "38467af6141e58f9b103b94e980082662d5e9710529b6a3c1dbe75fd6c31f200",
+   "eligible": 259,
+   "killed": 239,
+   "level": "L4",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
+   "needed_for_threshold": 254,
+   "noted_patterns_not_proposed": {
+    "default-dtype": 3,
+    "unset-state": 3
+   },
+   "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
+   "survivor_dump": "l4-campaign-2026-11-13/survivors/src__etl_benchmark__quality__ml.py.txt",
+   "threshold": 98,
+   "unclassified": [
+    {
+     "change": [
+      "-        self.feature_names_: list[str] | None = None",
+      "+        self.feature_names_: list[str] | None = \"\""
+     ],
+     "id": "etl_benchmark.quality.ml.x\u01c1PyODDetector\u01c1__init____mutmut_4",
+     "mutant": "x\u01c1PyODDetector\u01c1__init____mutmut_4",
+     "noted_pattern": "unset-state",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self._imputer: SimpleImputer | None = None",
+      "+        self._imputer: SimpleImputer | None = \"\""
+     ],
+     "id": "etl_benchmark.quality.ml.x\u01c1PyODDetector\u01c1__init____mutmut_5",
+     "mutant": "x\u01c1PyODDetector\u01c1__init____mutmut_5",
+     "noted_pattern": "unset-state",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self._scaler: StandardScaler | None = None",
+      "+        self._scaler: StandardScaler | None = \"\""
+     ],
+     "id": "etl_benchmark.quality.ml.x\u01c1PyODDetector\u01c1__init____mutmut_6",
+     "mutant": "x\u01c1PyODDetector\u01c1__init____mutmut_6",
+     "noted_pattern": "unset-state",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        x = numeric_features(df, self.feature_names_, training=False).to_numpy(dtype=float)",
+      "+        x = numeric_features(df, self.feature_names_, training=False).to_numpy(dtype=None)"
+     ],
+     "id": "etl_benchmark.quality.ml.x\u01c1PyODDetector\u01c1_matrix__mutmut_8",
+     "mutant": "x\u01c1PyODDetector\u01c1_matrix__mutmut_8",
+     "noted_pattern": "default-dtype",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        x = numeric_features(df, self.feature_names_, training=False).to_numpy(dtype=float)",
+      "+        x = numeric_features(df, self.feature_names_, training=None).to_numpy(dtype=float)"
+     ],
+     "id": "etl_benchmark.quality.ml.x\u01c1PyODDetector\u01c1_matrix__mutmut_11",
+     "mutant": "x\u01c1PyODDetector\u01c1_matrix__mutmut_11",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        x = numeric_features(df, self.feature_names_, training=True).to_numpy(dtype=float)",
+      "+        x = numeric_features(df, self.feature_names_, training=True).to_numpy(dtype=None)"
+     ],
+     "id": "etl_benchmark.quality.ml.x\u01c1PyODDetector\u01c1fit__mutmut_4",
+     "mutant": "x\u01c1PyODDetector\u01c1fit__mutmut_4",
+     "noted_pattern": "default-dtype",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        return pd.Series(scores, index=df.index, dtype=float)",
+      "+        return pd.Series(scores, index=df.index, dtype=None)"
+     ],
+     "id": "etl_benchmark.quality.ml.x\u01c1PyODDetector\u01c1score__mutmut_6",
+     "mutant": "x\u01c1PyODDetector\u01c1score__mutmut_6",
+     "noted_pattern": "default-dtype",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        return pd.Series(scores, index=df.index, dtype=float)",
+      "+        return pd.Series(scores, index=df.index, )"
+     ],
+     "id": "etl_benchmark.quality.ml.x\u01c1PyODDetector\u01c1score__mutmut_9",
+     "mutant": "x\u01c1PyODDetector\u01c1score__mutmut_9",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self.sorted_ = np.empty((0, 0))",
+      "+        self.sorted_ = None"
+     ],
+     "id": "etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1__init____mutmut_3",
+     "mutant": "x\u01c1TailProbabilityModel\u01c1__init____mutmut_3",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self.sorted_ = np.empty((0, 0))",
+      "+        self.sorted_ = np.empty((1, 0))"
+     ],
+     "id": "etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1__init____mutmut_5",
+     "mutant": "x\u01c1TailProbabilityModel\u01c1__init____mutmut_5",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self.sorted_ = np.empty((0, 0))",
+      "+        self.sorted_ = np.empty((0, 1))"
+     ],
+     "id": "etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1__init____mutmut_6",
+     "mutant": "x\u01c1TailProbabilityModel\u01c1__init____mutmut_6",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self.skew_sign_ = np.empty(0)",
+      "+        self.skew_sign_ = None"
+     ],
+     "id": "etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1__init____mutmut_7",
+     "mutant": "x\u01c1TailProbabilityModel\u01c1__init____mutmut_7",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self.skew_sign_ = np.empty(0)",
+      "+        self.skew_sign_ = np.empty(1)"
+     ],
+     "id": "etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1__init____mutmut_9",
+     "mutant": "x\u01c1TailProbabilityModel\u01c1__init____mutmut_9",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self.threshold_ = float(\"nan\")",
+      "+        self.threshold_ = None"
+     ],
+     "id": "etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1__init____mutmut_10",
+     "mutant": "x\u01c1TailProbabilityModel\u01c1__init____mutmut_10",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self.threshold_ = float(\"nan\")",
+      "+        self.threshold_ = float(\"NAN\")"
+     ],
+     "id": "etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1__init____mutmut_13",
+     "mutant": "x\u01c1TailProbabilityModel\u01c1__init____mutmut_13",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self.skew_sign_ = np.sign(np.nan_to_num(skew(x, axis=0)))",
+      "+        self.skew_sign_ = np.sign(np.nan_to_num(skew(x, )))"
+     ],
+     "id": "etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1fit__mutmut_13",
+     "mutant": "x\u01c1TailProbabilityModel\u01c1fit__mutmut_13",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-            right[:, j] = n - np.searchsorted(column, x[:, j], side=\"left\")",
+      "+            right[:, j] = n - np.searchsorted(column, x[:, j], )"
+     ],
+     "id": "etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1decision_function__mutmut_26",
+     "mutant": "x\u01c1TailProbabilityModel\u01c1decision_function__mutmut_26",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self.threshold_ = float(\"nan\")",
+      "+        self.threshold_ = None"
+     ],
+     "id": "etl_benchmark.quality.ml.x\u01c1PCAReconstruction\u01c1__init____mutmut_9",
+     "mutant": "x\u01c1PCAReconstruction\u01c1__init____mutmut_9",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self.threshold_ = float(\"nan\")",
+      "+        self.threshold_ = float(\"NAN\")"
+     ],
+     "id": "etl_benchmark.quality.ml.x\u01c1PCAReconstruction\u01c1__init____mutmut_12",
+     "mutant": "x\u01c1PCAReconstruction\u01c1__init____mutmut_12",
+     "timeout": false
+    }
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
+  },
+  "src/etl_benchmark/quality/rules.py": {
+   "already_decided_or_in_first_packet": [],
+   "candidate_classes": {},
+   "catalog_sha256": "dd0c412f18b7a2ca32f0408af6a09e820dda7ed2f820a92216a558e665f0c0b5",
+   "eligible": 119,
+   "killed": 112,
+   "level": "L4",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
+   "needed_for_threshold": 117,
+   "noted_patterns_not_proposed": {
+    "unset-state": 5
+   },
+   "source_sha256": "bbd2e146be1d55382a12137cdfacefa85223d535c8b9eeaf816d17e6acd49737",
+   "survivor_dump": "l4-campaign-2026-11-13/survivors/src__etl_benchmark__quality__rules.py.txt",
+   "threshold": 98,
+   "unclassified": [
+    {
+     "change": [
+      "-        self._means: pd.Series | None = None",
+      "+        self._means: pd.Series | None = \"\""
+     ],
+     "id": "etl_benchmark.quality.rules.x\u01c1ZScoreDetector\u01c1__init____mutmut_4",
+     "mutant": "x\u01c1ZScoreDetector\u01c1__init____mutmut_4",
+     "noted_pattern": "unset-state",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self._stds: pd.Series | None = None",
+      "+        self._stds: pd.Series | None = \"\""
+     ],
+     "id": "etl_benchmark.quality.rules.x\u01c1ZScoreDetector\u01c1__init____mutmut_5",
+     "mutant": "x\u01c1ZScoreDetector\u01c1__init____mutmut_5",
+     "noted_pattern": "unset-state",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        values = numeric_features(df, list(self._means.index), training=False)",
+      "+        values = numeric_features(df, list(self._means.index), training=None)"
+     ],
+     "id": "etl_benchmark.quality.rules.x\u01c1ZScoreDetector\u01c1_zscores__mutmut_8",
+     "mutant": "x\u01c1ZScoreDetector\u01c1_zscores__mutmut_8",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self._lower: pd.Series | None = None",
+      "+        self._lower: pd.Series | None = \"\""
+     ],
+     "id": "etl_benchmark.quality.rules.x\u01c1IQRDetector\u01c1__init____mutmut_4",
+     "mutant": "x\u01c1IQRDetector\u01c1__init____mutmut_4",
+     "noted_pattern": "unset-state",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self._upper: pd.Series | None = None",
+      "+        self._upper: pd.Series | None = \"\""
+     ],
+     "id": "etl_benchmark.quality.rules.x\u01c1IQRDetector\u01c1__init____mutmut_5",
+     "mutant": "x\u01c1IQRDetector\u01c1__init____mutmut_5",
+     "noted_pattern": "unset-state",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self._scale: pd.Series | None = None",
+      "+        self._scale: pd.Series | None = \"\""
+     ],
+     "id": "etl_benchmark.quality.rules.x\u01c1IQRDetector\u01c1__init____mutmut_6",
+     "mutant": "x\u01c1IQRDetector\u01c1__init____mutmut_6",
+     "noted_pattern": "unset-state",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        values = numeric_features(df, list(cols), training=False)",
+      "+        values = numeric_features(df, list(cols), training=None)"
+     ],
+     "id": "etl_benchmark.quality.rules.x\u01c1IQRDetector\u01c1_exceedance__mutmut_9",
+     "mutant": "x\u01c1IQRDetector\u01c1_exceedance__mutmut_9",
+     "timeout": false
+    }
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
+  },
+  "src/etl_benchmark/quality/window_drift.py": {
+   "already_decided_or_in_first_packet": [],
+   "candidate_classes": {
+    "name-case": [
+     {
+      "change": [
+       "-    cutoff = cutoff.tz_localize(\"UTC\") if cutoff.tzinfo is None else cutoff.tz_convert(\"UTC\")",
+       "+    cutoff = cutoff.tz_localize(\"utc\") if cutoff.tzinfo is None else cutoff.tz_convert(\"UTC\")"
+      ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "etl_benchmark.quality.window_drift.x_event_metrics__mutmut_25",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x_event_metrics__mutmut_25",
+      "mutated": [
+       "cutoff = cutoff.tz_localize(\"utc\") if cutoff.tzinfo is None else cutoff.tz_convert(\"UTC\")"
+      ],
+      "original": [
+       "cutoff = cutoff.tz_localize(\"UTC\") if cutoff.tzinfo is None else cutoff.tz_convert(\"UTC\")"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/window_drift.py  # the change; cd mutants && MUTANT_UNDER_TEST=etl_benchmark.quality.window_drift.x_event_metrics__mutmut_25 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     }
+    ]
+   },
+   "catalog_sha256": "75668e96d48177014b765721302e383a9446fb7d1cb0c28f924cb12535787aca",
+   "eligible": 233,
+   "killed": 225,
+   "level": "L4",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
+   "needed_for_threshold": 229,
+   "noted_patterns_not_proposed": {
+    "default-dtype": 1,
+    "unset-state": 3
+   },
+   "source_sha256": "7369796bac2ada0ee25c125b383752c8d40d7f683e287767dfb6b373108ea8d7",
+   "survivor_dump": "l4-campaign-2026-11-13/survivors/src__etl_benchmark__quality__window_drift.py.txt",
+   "threshold": 98,
+   "unclassified": [
+    {
+     "change": [
+      "-    if not np.isfinite(values.to_numpy(dtype=float)).all():",
+      "+    if not np.isfinite(values.to_numpy(dtype=None)).all():"
+     ],
+     "id": "etl_benchmark.quality.window_drift.x__numeric__mutmut_18",
+     "mutant": "x__numeric__mutmut_18",
+     "noted_pattern": "default-dtype",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self.reference_end: pd.Timestamp | None = None",
+      "+        self.reference_end: pd.Timestamp | None = \"\""
+     ],
+     "id": "etl_benchmark.quality.window_drift.x\u01c1WindowDriftMonitor\u01c1__init____mutmut_21",
+     "mutant": "x\u01c1WindowDriftMonitor\u01c1__init____mutmut_21",
+     "noted_pattern": "unset-state",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self._mean: pd.Series | None = None",
+      "+        self._mean: pd.Series | None = \"\""
+     ],
+     "id": "etl_benchmark.quality.window_drift.x\u01c1WindowDriftMonitor\u01c1__init____mutmut_22",
+     "mutant": "x\u01c1WindowDriftMonitor\u01c1__init____mutmut_22",
+     "noted_pattern": "unset-state",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        self._scale: pd.Series | None = None",
+      "+        self._scale: pd.Series | None = \"\""
+     ],
+     "id": "etl_benchmark.quality.window_drift.x\u01c1WindowDriftMonitor\u01c1__init____mutmut_23",
+     "mutant": "x\u01c1WindowDriftMonitor\u01c1__init____mutmut_23",
+     "noted_pattern": "unset-state",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        if self.reference_end is None or self._mean is None or self._scale is None:",
+      "+        if self.reference_end is None or self._mean is None and self._scale is None:"
+     ],
+     "id": "etl_benchmark.quality.window_drift.x\u01c1WindowDriftMonitor\u01c1evaluate__mutmut_1",
+     "mutant": "x\u01c1WindowDriftMonitor\u01c1evaluate__mutmut_1",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-        if self.reference_end is None or self._mean is None or self._scale is None:",
+      "+        if self.reference_end is None and self._mean is None or self._scale is None:"
+     ],
+     "id": "etl_benchmark.quality.window_drift.x\u01c1WindowDriftMonitor\u01c1evaluate__mutmut_2",
+     "mutant": "x\u01c1WindowDriftMonitor\u01c1evaluate__mutmut_2",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    cutoff = cutoff.tz_localize(\"UTC\") if cutoff.tzinfo is None else cutoff.tz_convert(\"UTC\")",
+      "+    cutoff = cutoff.tz_localize(\"UTC\") if cutoff.tzinfo is None else cutoff.tz_convert(\"utc\")"
+     ],
+     "id": "etl_benchmark.quality.window_drift.x_event_metrics__mutmut_29",
+     "mutant": "x_event_metrics__mutmut_29",
+     "timeout": false
+    }
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
+  },
+  "src/etl_benchmark/quality/windows.py": {
+   "already_decided_or_in_first_packet": [],
+   "candidate_classes": {
+    "name-case": [
+     {
+      "change": [
+       "-    order = np.argsort(times.to_numpy(), kind=\"stable\")",
+       "+    order = np.argsort(times.to_numpy(), kind=\"STABLE\")"
+      ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "etl_benchmark.quality.windows.x_causal_windows__mutmut_26",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x_causal_windows__mutmut_26",
+      "mutated": [
+       "order = np.argsort(times.to_numpy(), kind=\"STABLE\")"
+      ],
+      "original": [
+       "order = np.argsort(times.to_numpy(), kind=\"stable\")"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/windows.py  # the change; cd mutants && MUTANT_UNDER_TEST=etl_benchmark.quality.windows.x_causal_windows__mutmut_26 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     }
+    ]
+   },
+   "catalog_sha256": "d1eb4229b9e0fe174ba43d53240069fbd234b8c73dac68e9601a1595097ee52d",
+   "eligible": 57,
+   "killed": 54,
+   "level": "L4",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
+   "needed_for_threshold": 56,
+   "noted_patterns_not_proposed": {
+    "default-dtype": 1
+   },
+   "source_sha256": "5a4fdd8739edcc33dd786b2b241cf5c3c92ec3e63f6e669ef571d1cb9699c864",
+   "survivor_dump": "l4-campaign-2026-11-13/survivors/src__etl_benchmark__quality__windows.py.txt",
+   "threshold": 98,
+   "unclassified": [
+    {
+     "change": [
+      "-    aligned = np.empty(len(scores), dtype=float)",
+      "+    aligned = np.empty(len(scores), dtype=None)"
+     ],
+     "id": "etl_benchmark.quality.windows.x_scores_to_events__mutmut_7",
+     "mutant": "x_scores_to_events__mutmut_7",
+     "noted_pattern": "default-dtype",
+     "timeout": false
+    },
+    {
+     "change": [
+      "-    aligned = np.empty(len(scores), dtype=float)",
+      "+    aligned = np.empty(len(scores), )"
+     ],
+     "id": "etl_benchmark.quality.windows.x_scores_to_events__mutmut_9",
+     "mutant": "x_scores_to_events__mutmut_9",
+     "timeout": false
+    }
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
+  },
+  "verification/mutation_scope.py": {
+   "already_decided_or_in_first_packet": [],
+   "candidate_classes": {
+    "split-limit": [
+     {
+      "change": [
+       "-        literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]",
+       "+        literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", )[0]"
+      ],
+      "counterexample_search": [
+       "test_the_first_part_of_a_split_does_not_depend_on_a_limit_of_one_or_more"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "verification.mutation_scope.x__walk__mutmut_6",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x__walk__mutmut_6",
+      "mutated": [
+       "literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", )[0]"
+      ],
+      "original": [
+       "literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_scope.py  # the change; cd mutants && MUTANT_UNDER_TEST=verification.mutation_scope.x__walk__mutmut_6 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     },
+     {
+      "change": [
+       "-        literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]",
+       "+        literal = pattern.split(\"*\", 1)[0].split(\"?\", )[0].split(\"[\", 1)[0]"
+      ],
+      "counterexample_search": [
+       "test_the_first_part_of_a_split_does_not_depend_on_a_limit_of_one_or_more"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "verification.mutation_scope.x__walk__mutmut_11",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x__walk__mutmut_11",
+      "mutated": [
+       "literal = pattern.split(\"*\", 1)[0].split(\"?\", )[0].split(\"[\", 1)[0]"
+      ],
+      "original": [
+       "literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_scope.py  # the change; cd mutants && MUTANT_UNDER_TEST=verification.mutation_scope.x__walk__mutmut_11 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     },
+     {
+      "change": [
+       "-        literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]",
+       "+        literal = pattern.split(\"*\", )[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
+      ],
+      "counterexample_search": [
+       "test_the_first_part_of_a_split_does_not_depend_on_a_limit_of_one_or_more"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "verification.mutation_scope.x__walk__mutmut_16",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x__walk__mutmut_16",
+      "mutated": [
+       "literal = pattern.split(\"*\", )[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
+      ],
+      "original": [
+       "literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_scope.py  # the change; cd mutants && MUTANT_UNDER_TEST=verification.mutation_scope.x__walk__mutmut_16 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     },
+     {
+      "change": [
+       "-        literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]",
+       "+        literal = pattern.split(\"*\", 2)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
+      ],
+      "counterexample_search": [
+       "test_the_first_part_of_a_split_does_not_depend_on_a_limit_of_one_or_more"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "verification.mutation_scope.x__walk__mutmut_19",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x__walk__mutmut_19",
+      "mutated": [
+       "literal = pattern.split(\"*\", 2)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
+      ],
+      "original": [
+       "literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_scope.py  # the change; cd mutants && MUTANT_UNDER_TEST=verification.mutation_scope.x__walk__mutmut_19 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     },
+     {
+      "change": [
+       "-        literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]",
+       "+        literal = pattern.split(\"*\", 1)[0].split(\"?\", 2)[0].split(\"[\", 1)[0]"
+      ],
+      "counterexample_search": [
+       "test_the_first_part_of_a_split_does_not_depend_on_a_limit_of_one_or_more"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "verification.mutation_scope.x__walk__mutmut_22",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x__walk__mutmut_22",
+      "mutated": [
+       "literal = pattern.split(\"*\", 1)[0].split(\"?\", 2)[0].split(\"[\", 1)[0]"
+      ],
+      "original": [
+       "literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_scope.py  # the change; cd mutants && MUTANT_UNDER_TEST=verification.mutation_scope.x__walk__mutmut_22 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     },
+     {
+      "change": [
+       "-        literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]",
+       "+        literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 2)[0]"
+      ],
+      "counterexample_search": [
+       "test_the_first_part_of_a_split_does_not_depend_on_a_limit_of_one_or_more"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
+      "id": "verification.mutation_scope.x__walk__mutmut_25",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+      "mutant": "x__walk__mutmut_25",
+      "mutated": [
+       "literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 2)[0]"
+      ],
+      "original": [
+       "literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_scope.py  # the change; cd mutants && MUTANT_UNDER_TEST=verification.mutation_scope.x__walk__mutmut_25 python -m pytest tests research/tests -x -q  # runs the tests against it, in the mutants copy produced by mutmut",
+      "timeout": false
+     }
+    ]
+   },
+   "catalog_sha256": "fb44249a6a7d20064117a56fd6acffb3d355a923f6b52160230bdda5b57eded4",
+   "eligible": 246,
+   "killed": 240,
+   "level": "L4",
+   "measured_on": "case-sensitive APFS volume (TMPDIR on it)",
+   "needed_for_threshold": 242,
+   "noted_patterns_not_proposed": {},
+   "source_sha256": "622f62cf9104148fb33c7cf80595ffdf32ade43f5decd3d7cc3e8db06aa13b0a",
+   "survivor_dump": "l4-campaign-2026-11-13/survivors/verification__mutation_scope.py.txt",
+   "threshold": 98,
+   "unclassified": [],
+   "would_pass_if_every_candidate_were_accepted": true
+  }
+ }
+}

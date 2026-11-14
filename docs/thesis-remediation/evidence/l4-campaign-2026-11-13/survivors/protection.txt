@@ -1,0 +1,6 @@
+## x_job_names__mutmut_7
+-        in_jobs = False
++        in_jobs = None
+## x_job_names__mutmut_28
+-                names[-1] = match.group(1).strip("\"'")
++                names[-1] = match.group(1).strip("XX\"'XX")

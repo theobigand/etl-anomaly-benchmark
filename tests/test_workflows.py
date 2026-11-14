@@ -38,15 +38,9 @@ def test_evidence_is_uploaded_even_when_a_profile_fails():
         assert "retention-days" in text
 
 
-def test_release_workflow_is_manual_and_runs_every_profile():
+def test_release_workflow_is_explicit_and_runs_every_profile():
     text = _text("verify-release.yml")
-    assert "workflow_dispatch:" in text
-    assert "push:" not in text
-    # the only automatic trigger is a change to this very file
-    triggers = text[text.index("on:") : text.index("permissions:")]
-    assert triggers.count("pull_request:") == 1
-    assert triggers.count('- ".github/workflows/verify-release.yml"') == 1
-    assert triggers.count("paths:") == 1
+    assert "workflow_dispatch:" in text and "push:" not in text
     for target in (
         "make verify-fast",
         "make verify-faults",
@@ -55,6 +49,83 @@ def test_release_workflow_is_manual_and_runs_every_profile():
     ):
         assert target in text
     assert "make verify-release" in text
+
+
+LABEL = "run:release-verification"
+GATED = (
+    "fast",
+    "static",
+    "reproduce",
+    "faults",
+    "deep",
+    "real-readiness",
+    "real-hosted",
+    "release",
+)
+
+
+def _jobs():
+    """Job name -> its text block, read without a YAML dependency."""
+    text = _text("verify-release.yml")
+    body = text[text.index("\njobs:\n") + len("\njobs:\n") :]
+    parts = re.split(r"^  ([a-z][a-z-]*):\n", body, flags=re.MULTILINE)
+    return dict(zip(parts[1::2], parts[2::2], strict=True))
+
+
+def _condition(block):
+    return re.search(r"^    if: (.*)$", block, flags=re.MULTILINE).group(1)
+
+
+def test_an_ordinary_push_never_starts_the_full_release_verification():
+    text = _text("verify-release.yml")
+    triggers = text[text.index("\non:") : text.index("\npermissions:")]
+    assert "workflow_dispatch:" in triggers and "push:" not in triggers
+    assert triggers.count("pull_request:") == 1
+    assert "paths:" not in triggers  # editing the workflow file is not an activation
+    assert "types: [labeled, unlabeled, synchronize, reopened]" in triggers
+
+
+def test_every_release_job_needs_the_dispatch_or_the_label_of_a_same_repository_pull_request():
+    jobs = _jobs()
+    assert set(GATED) <= set(jobs)
+    for name in GATED:
+        condition = _condition(jobs[name])
+        assert "github.event_name == 'workflow_dispatch'" in condition, name
+        assert "github.event.pull_request.head.repo.full_name == github.repository" in condition
+        assert f"contains(github.event.pull_request.labels.*.name, '{LABEL}')" in condition
+        assert f"github.event.label.name == '{LABEL}'" in condition, name  # another label is inert
+    # the self-hosted REAL job only exists for an operator's explicit dispatch
+    assert "github.event_name == 'workflow_dispatch'" in _condition(jobs["real"])
+
+
+def test_every_release_checkout_is_pinned_to_the_exact_head_commit():
+    pinned = "ref: ${{ github.event.pull_request.head.sha || github.sha }}"
+    for name, block in _jobs().items():
+        if name == "real":  # private datasets: dispatch only, the operator names the revision
+            continue
+        assert block.count("actions/checkout@") == block.count(pinned), name
+
+
+def test_one_release_campaign_per_pull_request_and_unrelated_labels_cannot_cancel_it():
+    text = _text("verify-release.yml")
+    block = text[text.index("\nconcurrency:\n") : text.index("\njobs:\n")]
+    assert "cancel-in-progress: true" in block
+    group = re.search(r"^  group: (.*)$", block, flags=re.MULTILINE).group(1)
+    assert "github.event.pull_request.number" in group
+    assert f"github.event.label.name == '{LABEL}'" in group and "github.run_id" in group
+
+
+def test_the_gate_stays_fail_closed_whatever_triggered_the_run():
+    text = _text("verify-release.yml")
+    release = _jobs()["release"]
+    assert (
+        "needs: [fast, static, reproduce, faults, deep, real, real-hosted, real-readiness]"
+        in release
+    )
+    assert _condition(release).startswith("always() && (")  # skipped profiles still reach the gate
+    assert "contains(needs.*.result, 'failure')" in release
+    assert re.search(r"^        run: make verify-release$", release, flags=re.MULTILINE)
+    assert "continue-on-error" not in text
 
 
 def test_real_runs_only_on_a_runner_the_operator_names():
@@ -70,7 +141,7 @@ def test_release_job_waits_for_all_profiles_and_fails_when_any_failed():
         "needs: [fast, static, reproduce, faults, deep, real, real-hosted, real-readiness]"
         in release
     )
-    assert "if: always()" in release
+    assert "if: always() && (" in release
     assert "contains(needs.*.result, 'failure')" in release
     assert "make verify-release" in release
 
@@ -106,8 +177,13 @@ def test_the_deep_job_exports_its_surviving_mutants_for_inspection():
     assert "verification.bundles pack deep" in deep.split("Bundle deep evidence")[1]
     makefile = (WORKFLOWS.parents[1] / "Makefile").read_text()
     target = makefile[makefile.index("verify-deep:") : makefile.index("verify-faults:")]
-    assert "mutmut results --all true > mutants/results.txt" in target
-    assert "--results mutants/results.txt" in target
+    assert "python -m verification.mutation_run > mutants/controller-result.json" in target
+    assert "python -P -m mutmut results --all true > mutants/results.txt" in target
+    assert "--results mutants/results.txt --run mutants/controller-result.json" in target
+    assert "rm -f $(EVIDENCE)/deep.json mutants/controller-result.json" in target
+    assert "mutants/mutmut-cicd-stats.json" not in next(
+        row for row in target.splitlines() if row.startswith("\t@rm -f")
+    )
 
 
 def test_the_release_workflow_produces_every_evidence_kind_the_policy_requires():
@@ -184,7 +260,7 @@ def test_the_documented_real_procedure_matches_the_workflow():
 
 def test_the_real_job_runs_only_a_reviewed_revision_from_the_default_branch():
     text = _text("verify-release.yml")
-    job = text[text.index("  real:") : text.index("  release:")]
+    job = text[text.index("  real:\n") : text.index("  real-hosted:")]
     # The private datasets are only exposed to code that is on the default branch
     # and whose commit the operator names in the dispatch.
     assert "approved_sha:" in text[: text.index("jobs:")]
@@ -297,10 +373,20 @@ def test_the_deep_job_reuses_the_mutation_cache_unless_a_fresh_run_is_asked():
     assert "if: inputs.fresh_mutants != 'true'" in job
     assert "restore-keys: mutants-${{ runner.os }}-" in job
     assert job.index("actions/cache@v4") < job.index("make verify-deep")
+    key = next(line for line in job.splitlines() if line.strip().startswith("key: mutants-"))
+    for path in (
+        "research/**/*.py",
+        "verification/**/*.py",
+        "verification/mutation_risk_policy.json",
+        "verification/mutation_scope.json",
+        "verification/release_policy.json",
+    ):
+        assert path in key
     makefile = (WORKFLOWS.parents[1] / "Makefile").read_text()
     deep = makefile[makefile.index("verify-deep:") : makefile.index("verify-faults:")]
-    assert deep.index("mutation_cache prepare") < deep.index("mutmut run")
-    assert deep.index("mutmut run") < deep.index("mutation_cache record")
+    assert "mutation_run > mutants/controller-result.json" in deep
+    assert "mutation_cache prepare" not in deep
+    assert "mutation_cache record" not in deep
 
 
 def test_the_deep_target_runs_mutmut_with_single_threaded_math_libraries():
@@ -308,9 +394,8 @@ def test_the_deep_target_runs_mutmut_with_single_threaded_math_libraries():
     # parent: 14 mutants of the PyOD wrapper timed out in every hosted run (issue 54).
     makefile = (WORKFLOWS.parents[1] / "Makefile").read_text()
     deep = makefile[makefile.index("verify-deep:") : makefile.index("verify-faults:")]
-    line = next(row for row in deep.splitlines() if "mutmut run" in row)
-    for variable in ("OMP_NUM_THREADS=1", "OPENBLAS_NUM_THREADS=1", "MKL_NUM_THREADS=1"):
-        assert variable in line, variable
+    assert "verification.mutation_run" in deep
+    assert "python -P -m mutmut" in deep
 
 
 def test_the_pool_check_redownloads_the_pinned_datasets_and_uploads_only_its_report():
@@ -335,3 +420,87 @@ def test_frozen_pool_preparation_has_a_separate_coverage_and_defect_gate():
     assert "--cov=research.pool_train_only" in target
     assert "--cov-fail-under=100" in target
     assert "pytest -m fault tests/test_pool_preprocessing_faults.py" in target
+
+
+def test_deep_target_creates_the_directory_it_redirects_into():
+    makefile = (WORKFLOWS.parents[1] / "Makefile").read_text()
+    deep = makefile[makefile.index("verify-deep:") : makefile.index("verify-faults:")]
+    assert "mkdir -p $(EVIDENCE) mutants" in deep
+    assert deep.index("mkdir -p") < deep.index("> mutants/controller-result.json")
+
+
+def test_deep_job_installs_the_exact_inspected_mutmut_outside_the_fingerprinted_metadata():
+    job = (WORKFLOWS / "verify-release.yml").read_text()
+    job = job[job.index("  deep:") : job.index("Run deep profile")]
+    assert '-e ".[dev,deep]" "mutmut==3.8.0" "pytest==9.1.1"' in job
+    project = (WORKFLOWS.parents[1] / "pyproject.toml").read_text()
+    assert "mutmut==3.8.0" not in project.split("[tool.", 1)[0]
+
+
+def test_the_sharded_campaign_keeps_evidence_and_caches_even_when_scores_fail():
+    text = _text("mutation-shards.yml")
+    shard = text[text.index("  shard:") : text.index("  aggregate:")]
+    assert "workflow_dispatch" in text and "push:" not in text
+    assert '"mutmut==3.8.0" "pytest==9.1.1"' in shard
+    assert "fail-fast: false" in shard
+    restore = shard[shard.index("actions/cache/restore@v4") : shard.index("Run the native")]
+    assert "github.run_id" in restore and "restore-keys" in restore
+    for step in ("Build the shard evidence", "Preserve the shard evidence", "Save the shard cache"):
+        block = shard[shard.index(step) :].split("      - ", 1)[0]
+        assert "if: always()" in block, step
+    save = shard[shard.index("actions/cache/save@v4") :]
+    assert "github.run_id" in save
+    assert "set +e" in shard and "verification.mutation_run --names" in shard
+    assert "--attempt" in shard and "controller-result.json" in shard
+
+
+def test_the_aggregation_waits_for_every_shard_and_fails_on_an_invalid_campaign():
+    text = _text("mutation-shards.yml")
+    job = text[text.index("  aggregate:") :]
+    assert "needs: [plan, shard]" in job and "if: always()" in job
+    assert "pattern: shard-evidence-*" in job and "merge-multiple: true" in job
+    assert "verification.mutation_shards aggregate" in job and "evidence-shard-*.json" in job
+    assert "mutation-campaign.json" in job.split("Verify the complete campaign")[1]
+    verify = job[job.index("Verify the complete campaign") :].split("      - uses:", 1)[0]
+    assert "continue-on-error" not in verify
+
+
+def test_the_sharded_campaign_runs_before_merge_only_for_labelled_same_repository_pull_requests():
+    text = _text("mutation-shards.yml")
+    assert "pull_request:" in text and "pull_request_target" not in text
+    assert "workflow_dispatch" in text and "contents: read" in text
+    assert "permissions:\n  contents: read\n" in text
+    gate = text[text.index("  plan:") : text.index("    runs-on")]
+    assert "github.event.pull_request.head.repo.full_name == github.repository" in gate
+    assert "run:mutation-shards" in gate
+    assert "cancel-in-progress: true" in text
+    assert text.count("ref: ${{ env.TESTED_SHA }}") >= 3
+    assert text.count('test "$(git rev-parse HEAD)" = "$TESTED_SHA"') == 2
+    assert "if: always() && needs.plan.result == 'success'" in text
+
+
+def test_the_aggregate_uses_the_shard_dependency_set_and_preserves_release_evidence():
+    text = _text("mutation-shards.yml")
+    job = text[text.index("  aggregate:") :]
+    assert '-e ".[dev,deep]" "mutmut==3.8.0" "pytest==9.1.1"' in job
+    assert "verification.evidence_schema deep-shards" in job and "deep-evidence.json" in job
+    assert "evidence-shard-*.json" in job.split("upload-artifact@v4")[-1]
+
+
+def test_the_diagnostic_label_runs_one_small_shard_and_never_the_aggregate():
+    text = _text("mutation-shards.yml")
+    assert "run:mutation-shard-diagnostic" in text and "matrix=[31]" in text
+    plan = text[text.index("  plan:") : text.index("  shard:")]
+    assert "run:mutation-shards'" in plan and "run:mutation-shard-diagnostic" in plan
+    assert "github.event.pull_request.head.repo.full_name == github.repository" in plan
+    aggregate = text[text.index("  aggregate:") :]
+    assert "needs.plan.outputs.diagnostic != 'true'" in aggregate
+    assert (
+        "controller-result.json" in text.split("Preserve the shard evidence")[1].split("- name")[0]
+    )
+
+
+def test_the_plan_job_installs_the_project_before_planning():
+    text = _text("mutation-shards.yml")
+    plan = text[text.index("  plan:") : text.index("  shard:")]
+    assert plan.index("pip install -e .") < plan.index("verification.mutation_shards plan")

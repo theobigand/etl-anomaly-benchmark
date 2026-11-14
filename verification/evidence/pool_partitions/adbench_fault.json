@@ -1,0 +1,132 @@
+{
+ "archive_replay": {
+  "all": true,
+  "detector": "zscore",
+  "seeds_matching": [
+   true,
+   true,
+   true,
+   true,
+   true
+  ]
+ },
+ "archived_rows": 1941,
+ "cleaned_rows": 1941,
+ "cleaned_sha256": "784d774dff766748eed1f8bc9babc06c9b963802804710760c47b59161b26fc0",
+ "format": 1,
+ "input_sha256": "ec27301f9a4cf7c5d8b22c360cf37ddb043b7fb062465723dfd8b34e2771e5dd",
+ "labels_sha256": "e6bcd0cb45a35ee73470f27bc829c45ea8ecd4a633df5f6623eba5af9f558d5f",
+ "partitions": {
+  "1": {
+   "test": {
+    "anomalies": 101,
+    "prevalence": 0.3458904109589041,
+    "rows": 292,
+    "sha256": "e8a3a7b778aa33c25338f0cee452db41e4e833bf184d6e852b5cb4572335a330"
+   },
+   "train": {
+    "anomalies": 471,
+    "prevalence": 0.34683357879234167,
+    "rows": 1358,
+    "sha256": "537697f181735e69e098e76fa67dcbb3b6ba90149d22708aff03800927c3a6a2"
+   },
+   "val": {
+    "anomalies": 101,
+    "prevalence": 0.3470790378006873,
+    "rows": 291,
+    "sha256": "8a192990d07f48ae95482ebf848cecb7b84288f8e9eff1b21bb0f9f4b942fc25"
+   }
+  },
+  "2": {
+   "test": {
+    "anomalies": 101,
+    "prevalence": 0.3458904109589041,
+    "rows": 292,
+    "sha256": "6ffa655550482b47c017ad8932f401dd65482ecb9666410947cc2adc0757d961"
+   },
+   "train": {
+    "anomalies": 471,
+    "prevalence": 0.34683357879234167,
+    "rows": 1358,
+    "sha256": "dfb1bb9ac949041b6e62b15dd16e4acf1b5c0a7bb39f05ef14e6858e34d318ad"
+   },
+   "val": {
+    "anomalies": 101,
+    "prevalence": 0.3470790378006873,
+    "rows": 291,
+    "sha256": "91e4011745c64287fbf4d7a23ca8752a19b202fd9bf36d360083d00d5468641d"
+   }
+  },
+  "3": {
+   "test": {
+    "anomalies": 101,
+    "prevalence": 0.3458904109589041,
+    "rows": 292,
+    "sha256": "1450ad2d6c2f5bcefbfe7eee42c85040b8adfe26593b356ad1ac743aa7cd1c4f"
+   },
+   "train": {
+    "anomalies": 471,
+    "prevalence": 0.34683357879234167,
+    "rows": 1358,
+    "sha256": "fdeb236a731f0c5c2fc546cd21e110272e2d169107af661d7d4921d4dcf936a7"
+   },
+   "val": {
+    "anomalies": 101,
+    "prevalence": 0.3470790378006873,
+    "rows": 291,
+    "sha256": "a911cf07c509b05e195b88403c3c0c2bab728ec62a24f6110598f585d8d60943"
+   }
+  },
+  "4": {
+   "test": {
+    "anomalies": 101,
+    "prevalence": 0.3458904109589041,
+    "rows": 292,
+    "sha256": "899f948a448602b38b223da6bb424100332891dca4cf91ce76b212374b0e5783"
+   },
+   "train": {
+    "anomalies": 471,
+    "prevalence": 0.34683357879234167,
+    "rows": 1358,
+    "sha256": "1bdcdb37d53e6bc9ee1eab37f3546640ff0423af59e0986d9ccafaaaae087733"
+   },
+   "val": {
+    "anomalies": 101,
+    "prevalence": 0.3470790378006873,
+    "rows": 291,
+    "sha256": "965d47253b773fc28bd70522594fb79007f66a5e6c7c305e819aeaf0a421eb39"
+   }
+  },
+  "42": {
+   "test": {
+    "anomalies": 101,
+    "prevalence": 0.3458904109589041,
+    "rows": 292,
+    "sha256": "9c647f5f91b6f950701de640efa67c1e439a03fc748730946c640c652f09bbad"
+   },
+   "train": {
+    "anomalies": 471,
+    "prevalence": 0.34683357879234167,
+    "rows": 1358,
+    "sha256": "c1ed4347f2637d3588948a45b8fa4718f370be1ee7be2e0bf7b32e2b67606270"
+   },
+   "val": {
+    "anomalies": 101,
+    "prevalence": 0.3470790378006873,
+    "rows": 291,
+    "sha256": "a0b24df8d992799a34e4b81b68ba26e9ff6986f30412551ec345b8854a261419"
+   }
+  }
+ },
+ "problem": "adbench:fault",
+ "recovery": "recomputed from the deterministic split; not archived at run time",
+ "report_rows_out": 1941,
+ "seeds": [
+  42,
+  1,
+  2,
+  3,
+  4
+ ],
+ "source": "adbench"
+}

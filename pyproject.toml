@@ -38,10 +38,11 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
-testpaths = ["tests"]
+testpaths = ["tests", "research/tests", "slides/tests"]
 addopts = "-ra -q"
 filterwarnings = ["ignore:.pin_memory. argument is set as true:UserWarning"]
 markers = [
+    "browser: needs the pinned Chromium; deselected everywhere except the slide-quality gate (SLIDES_REQUIRE_BROWSER=1)",
     "real: requires locally available full research datasets",
     "protocol: scientific contracts and invariants",
     "property: bounded generative scientific checks",
@@ -61,51 +62,45 @@ select = ["E", "F", "I", "UP", "B", "SIM"]
 patch = ["subprocess"]
 
 [tool.mutmut]
-source_paths = ["src/etl_benchmark", "experiments"]
+source_paths = ["src/etl_benchmark", "experiments", "research", "verification"]
 only_mutate = [
-    "src/etl_benchmark/atomic.py",
-    "src/etl_benchmark/datasets.py",
-    "src/etl_benchmark/extract.py",
-    "src/etl_benchmark/load.py",
-    "src/etl_benchmark/metrics.py",
-    "src/etl_benchmark/pipeline.py",
-    "src/etl_benchmark/registry.py",
-    "src/etl_benchmark/split.py",
-    "src/etl_benchmark/synthetic.py",
-    "src/etl_benchmark/transform.py",
+    "src/etl_benchmark/*.py",
     "src/etl_benchmark/quality/*.py",
     "experiments/*.py",
+    "research/*.py",
+    "verification/*.py",
 ]
 pytest_add_cli_args_test_selection = [
     "tests",
+    "research/tests",
     "-m",
-    "not real",
-    "--ignore=tests/test_artifact_lineage.py",
-    "--ignore=tests/test_publication_tables.py",
-    "--ignore=tests/test_profile_refresh.py",
-    "--ignore=tests/test_scaling_study.py",
-    "--ignore=tests/test_test_support.py",
-    "--ignore=tests/test_fault_matrix.py",
-    "--ignore=tests/test_pool_preprocessing_faults.py",
-    "--ignore=tests/test_verification_policy.py",
-    "--ignore=tests/test_evidence_schema.py",
-    "--ignore=tests/test_release_gate.py",
-    "--ignore=tests/test_verifier_tools.py",
-    "--ignore=tests/test_reproduce.py",
-    "--ignore=tests/test_manuscript_claims.py",
-    "--ignore=tests/test_check_types.py",
-    "--ignore=tests/test_environment_lock.py",
-    "--ignore=tests/test_workflows.py",
-    "--ignore=tests/test_branch_protection.py",
-    "--ignore=tests/test_real_preflight.py",
-    "--ignore=tests/test_real_acquire.py",
-    "--ignore=tests/test_temporal_pilot.py",
-    "--ignore=tests/test_claims_provenance.py",
-    "--ignore=tests/test_evidence_bundles.py",
-    "--ignore=tests/test_mutation_scope.py",
-    "--ignore=tests/verifier",
+    "not real and not fault",
+    "--deselect=tests/test_artifact_lineage.py::test_archived_runs_match_current_scientific_source",
+    "--deselect=tests/test_artifact_lineage.py::test_fixed_calibration_reuses_baseline_partitions_and_current_source",
+    "--deselect=tests/test_artifact_lineage.py::test_lineage_anchor_is_a_commit_that_reproduces_the_archived_recipe_1_fingerprint",
+    "--deselect=tests/test_claims_provenance.py::test_the_repository_claims_name_a_run_that_exists_in_the_history",
+    "--deselect=tests/test_claims_provenance.py::test_the_module_checks_the_repository_claims_from_the_command_line",
+    "--deselect=tests/test_temporal_pilot.py::test_the_archived_pilot_record_identifies_this_implementation",
+    "--deselect=tests/test_verifier_tools.py::test_archive_lineage_separates_legacy_records_from_broken_ones",
 ]
-also_copy = ["verification", "research", "environment.yml"]
+do_not_mutate = ["research/tests/*"]
+# Training-heavy mutants (epochs, batch sizes) legitimately run long on hosted runners; the
+# default factor of 15 reported 43 genuine detections of the LSTM detector as timeouts.
+timeout_multiplier = 60.0
+# PyTorch is not fork-safe: with the default process isolation the native workers either failed
+# spuriously (macOS) or hung until the time limit (hosted Linux) on training-heavy mutants.
+process_isolation = "forkserver"
+also_copy = [
+    "verification",
+    "research",
+    "environment.yml",
+    "docs",
+    "paper",
+    "slides",
+    ".github",
+    "Makefile",
+    "README.md",
+]
 # Only the non-Python files that tests read invalidate the cache; documents, evidence copies,
 # the paper and workflows do not (verification/mutation_cache.py guards changed tests).
 on_dependency_change = "rerun"

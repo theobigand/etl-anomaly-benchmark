@@ -4,7 +4,7 @@ This directory is the canonical, version-controlled backlog for strengthening th
 
 - **415 individually numbered actions:** T001–T397 preserve the complete consolidated remediation checklist; T398–T415 add repository-specific verification and coordination requirements.
 - **12 checklist volumes:** each task appears once and has a stable identifier.
-- **33 active GitHub issues:** 16 core roadmap issues with complete checklists, eight historical follow-ups, five optional rule-generation research issues, and four governance/DoR/DoD follow-ups; one historical planning issue is archived.
+- **34 active GitHub issues:** 16 core roadmap issues with complete checklists, eight historical follow-ups, five optional rule-generation research issues, and five governance/DoR/DoD follow-ups; one historical planning issue is archived.
 - **8 planned GitHub milestones:** ordered phases without fabricated due dates.
 - **29 GitHub labels:** priority, scope, status (including `status:if-time`), work kind, subject area (including `area:governance`), and historical provenance.
 - **Evidence-based completion:** tasks began unchecked; individual checks now link to audited implementation and validation. A recorded concern alone proves neither that work is missing nor that it is complete.
@@ -15,8 +15,11 @@ Partial completion evidence: [metric definitions](METRIC_DEFINITIONS_2026-11-03.
 [inductive detector audit](INDUCTIVE_DETECTORS_2026-11-03.md).
 Current preprocessing unit: [frozen-partition exploratory protocol](POOL_PREPROCESSING_PROTOCOL_2026-11-03.md).
 Its [implementation and gate evidence](POOL_PREPROCESSING_VALIDATION_2026-11-03.md)
-support T064/T351 (24 checked tasks in total).
+support T064/T351. 91 of the 415 tasks are checked as of 2026-11-11; T055 remains open for partial evidence, and T088/T089 are supported by recomputed, replay-validated partitions.
 Historical pool partition recovery and train-only replay remain outstanding.
+Mandatory prospective governance migration:
+[risk-tiered mutation policy, #116](RISK_MUTATION_MIGRATION.md), in progress.
+Historical global mutation reports retain their original criteria.
 
 ## Canonical checklists
 
@@ -70,8 +73,13 @@ Four **P1 follow-ups** extend the governance and scientific-reporting work, with
 | [#110 — Scientific tests and verification layers](https://github.com/theobigand/etl-anomaly-benchmark/issues/110) | Verify actual test coverage, scientific faults, mutation gates, data checks, CI, limitations, historical figures | Thesis 07 |
 | [#111 — Provenance and release governance](https://github.com/theobigand/etl-anomaly-benchmark/issues/111) | Explain source fingerprints, release decisions, evidence integrity, environment and trust boundaries | Thesis 07 |
 | [#112 — Methods and Appendix A/B integration](https://github.com/theobigand/etl-anomaly-benchmark/issues/112) | Present the governance framework as a bounded secondary methodological contribution, without a new research question | Thesis 06 |
+| [#116 — Risk-tiered mutation policy](https://github.com/theobigand/etl-anomaly-benchmark/issues/116) | Mandatory P0 prospective classification, 80/90/95/98 thresholds and complete evidence/release enforcement | Thesis 07 |
 
 All four are tagged `area:governance` and `priority:p1`, are linked to existing parent issues #99, #100, #101 and #103, and require a current-state audit before execution. Preserve the historical verification milestones and the existing certification policy. A release verdict, high coverage, or mutation score is **not** proof of scientific validity or independent attestation.
+
+The separately authorized mandatory [#116 migration](RISK_MUTATION_MIGRATION.md)
+is P0. It adds a fifth governance follow-up without renumbering the 415 tasks or
+reinterpreting historical certification under the new thresholds.
 
 ## Optional agentic rule-generation research (if time only)
 

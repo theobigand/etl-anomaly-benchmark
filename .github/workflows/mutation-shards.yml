@@ -1,0 +1,210 @@
+name: mutation-shards
+
+# Manual sharded mutation campaign. Each shard runs the native engine on its modules
+# and uploads an evidence manifest even when its scores fail; a separate job checks
+# that the plan is complete and applies the per-module risk thresholds. Nothing here
+# certifies a release: the verdict is a report.
+on:
+  # Pre-merge validation: only for a pull request from this repository that carries the
+  # label below. Removing the label stops further runs. The plain pull request event is used,
+  # never the privileged variant, so the branch code runs with a read-only token.
+  pull_request:
+    types: [labeled, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      shards:
+        description: "Number of shards"
+        required: false
+        default: "6"
+      fresh_mutants:
+        description: "Ignore restored shard caches and rerun every mutant"
+        required: false
+        default: "false"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mutation-shards-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  SHARDS: ${{ inputs.shards || '6' }}
+  FRESH: ${{ inputs.fresh_mutants || 'false' }}
+  TESTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+  # A diagnostic run executes one small shard of a 45-way plan to exercise the execution
+  # proof and the cache on hosted runners. It is never a campaign and never certifies.
+  DIAGNOSTIC: ${{ contains(github.event.pull_request.labels.*.name, 'run:mutation-shard-diagnostic') }}
+
+jobs:
+  plan:
+    name: shard-plan
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && (contains(github.event.pull_request.labels.*.name, 'run:mutation-shards') || contains(github.event.pull_request.labels.*.name, 'run:mutation-shard-diagnostic')))
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+      diagnostic: ${{ steps.matrix.outputs.diagnostic }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TESTED_SHA }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      # The planner imports the verification package, which needs the project installed.
+      - run: pip install -e .
+      - name: Plan the shards
+        run: >
+          python -m verification.mutation_shards plan
+          --policy verification/mutation_risk_policy.json
+          --weights verification/mutation_shard_weights.json
+          --count "${{ env.DIAGNOSTIC == 'true' && '45' || env.SHARDS }}" --output shard-plan.json
+      - id: matrix
+        run: |
+          if [ "$DIAGNOSTIC" = "true" ]; then
+            echo "matrix=[31]" >> "$GITHUB_OUTPUT"
+            echo "diagnostic=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "matrix=$(python -c "import json;print(json.dumps(list(range(int('${{ env.SHARDS }}')))))")" >> "$GITHUB_OUTPUT"
+            echo "diagnostic=false" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shard-plan
+          path: shard-plan.json
+          retention-days: 90
+
+  shard:
+    name: shard-${{ matrix.index }}
+    needs: plan
+    if: needs.plan.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        index: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ env.TESTED_SHA }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Confirm the tested commit
+        run: test "$(git rev-parse HEAD)" = "$TESTED_SHA"
+      - name: Install
+        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev,deep]" "mutmut==3.8.0" "pytest==9.1.1"
+      - uses: actions/download-artifact@v4
+        with:
+          name: shard-plan
+
+      # Caches are immutable: every run saves under a new key and restores the newest
+      # key with the same prefix. The cache is only a source of candidate verdicts;
+      # the native engine and the manifest builder revalidate them against the source,
+      # the tests and the configuration.
+      - name: Restore the shard cache
+        if: env.FRESH != 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: mutants
+          key: mutants-shard-${{ matrix.index }}-${{ runner.os }}-${{ hashFiles('verification/mutation_risk_policy.json', 'pyproject.toml') }}-${{ github.run_id }}
+          restore-keys: |
+            mutants-shard-${{ matrix.index }}-${{ runner.os }}-${{ hashFiles('verification/mutation_risk_policy.json', 'pyproject.toml') }}-
+
+      # The controller owns the cache, runs the native engine on this shard's modules and
+      # records the execution proof that the shard evidence carries.
+      - name: Run the native engine on this shard
+        id: native
+        run: |
+          set +e
+          names=$(python -m verification.mutation_shards names --plan shard-plan.json --index ${{ matrix.index }})
+          python -m verification.mutation_run --names $names > controller-result.json
+          echo "controller=$?" >> "$GITHUB_OUTPUT"
+
+      - name: Build the shard evidence
+        if: always()
+        run: |
+          if [ -s controller-result.json ]; then
+            attempt=$(python -c "import json;print(json.load(open('controller-result.json'))['attempt_record'])")
+            code=$(python -c "import json;print(json.load(open('controller-result.json'))['native_exit_code'])")
+            python -m verification.mutation_shards build --plan shard-plan.json \
+              --index ${{ matrix.index }} --native-exit-code "$code" --attempt "$attempt" \
+              --output evidence-shard-${{ matrix.index }}.json
+          else
+            python -m verification.mutation_shards build --plan shard-plan.json \
+              --index ${{ matrix.index }} --native-exit-code 2 \
+              --output evidence-shard-${{ matrix.index }}.json
+          fi
+
+      - name: Preserve the shard evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shard-evidence-${{ matrix.index }}
+          path: |
+            evidence-shard-${{ matrix.index }}.json
+            controller-result.json
+            mutants/attempts/*/execution.json
+          if-no-files-found: warn
+          retention-days: 90
+
+      - name: Save the shard cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: mutants
+          key: mutants-shard-${{ matrix.index }}-${{ runner.os }}-${{ hashFiles('verification/mutation_risk_policy.json', 'pyproject.toml') }}-${{ github.run_id }}
+
+  aggregate:
+    name: shard-aggregate
+    needs: [plan, shard]
+    if: always() && needs.plan.result == 'success' && needs.plan.outputs.diagnostic != 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ env.TESTED_SHA }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Confirm the tested commit
+        run: test "$(git rev-parse HEAD)" = "$TESTED_SHA"
+      # The aggregate must see the same dependency set as the shards: the context binds it.
+      - run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev,deep]" "mutmut==3.8.0" "pytest==9.1.1"
+      - uses: actions/download-artifact@v4
+        with:
+          name: shard-plan
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: shard-evidence-*
+          merge-multiple: true
+      - name: Verify the complete campaign
+        run: |
+          equivalence=""
+          if [ -f verification/mutation_equivalence.json ]; then
+            equivalence="--equivalence verification/mutation_equivalence.json"
+          fi
+          python -m verification.mutation_shards aggregate \
+            --plan shard-plan.json --manifests evidence-shard-*.json \
+            $equivalence --output mutation-campaign.json
+      # Exits nonzero unless the campaign is PASS; the evidence is uploaded either way.
+      - name: Wrap the campaign in the release evidence contract
+        if: always()
+        run: |
+          python -m verification.evidence_schema deep-shards \
+            --plan shard-plan.json --manifests evidence-shard-*.json \
+            --output deep-evidence.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mutation-campaign
+          path: |
+            mutation-campaign.json
+            deep-evidence.json
+            shard-plan.json
+            evidence-shard-*.json
+          if-no-files-found: warn
+          retention-days: 90

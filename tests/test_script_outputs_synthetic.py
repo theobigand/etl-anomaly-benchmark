@@ -630,3 +630,26 @@ def test_severity_panels_sit_side_by_side(tmp_path, captured_figures):
     tops = {round(a.get_position().y0, 3) for a in axes}
     lefts = [a.get_position().x0 for a in axes]
     assert len(tops) == 1 and lefts == sorted(lefts)
+
+
+def test_severity_lines_take_the_tab10_colours_in_method_order_and_wrap_after_ten(
+    tmp_path, captured_figures
+):
+    from matplotlib.colors import to_rgba
+
+    methods = [f"m{i}" for i in range(12)]
+    curves = pd.DataFrame(
+        [
+            {"severity": s, "method": m, "anomaly_type": t, "recall": 0.5}
+            for s in (1.0, 2.0)
+            for m in methods
+            for t in run_severity.MAGNITUDE_TYPES
+        ]
+    )
+    run_severity.render(curves, tmp_path / "sev.png")
+    cmap = plt.get_cmap("tab10")
+    lines = [ln for ln in captured_figures[-1].axes[0].get_lines() if ln.get_marker() == "o"]
+    assert len(lines) == 12
+    for i, line in enumerate(lines):
+        assert to_rgba(line.get_color()) == to_rgba(cmap(i % 10))
+    assert to_rgba(lines[10].get_color()) == to_rgba(lines[0].get_color())

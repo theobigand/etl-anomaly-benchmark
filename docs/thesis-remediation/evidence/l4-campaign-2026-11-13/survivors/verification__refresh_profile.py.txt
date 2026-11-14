@@ -1,0 +1,126 @@
+## x_build_profile__mutmut_3
+-    result = copy.deepcopy(template)
++    result = copy.copy(template)
+## x_build_profile__mutmut_7
+-    result["generated_at"] = generated_at
++    result["generated_at"] = None
+## x_build_profile__mutmut_8
+-    result["generated_at"] = generated_at
++    result["XXgenerated_atXX"] = generated_at
+## x_build_profile__mutmut_9
+-    result["generated_at"] = generated_at
++    result["GENERATED_AT"] = generated_at
+## x_build_profile__mutmut_46
+-            "line": {
++            "XXlineXX": {
+## x_build_profile__mutmut_47
+-            "line": {
++            "LINE": {
+## x_build_profile__mutmut_48
+-                "covered": values["summary"]["covered_lines"],
++                "XXcoveredXX": values["summary"]["covered_lines"],
+## x_build_profile__mutmut_49
+-                "covered": values["summary"]["covered_lines"],
++                "COVERED": values["summary"]["covered_lines"],
+## x_build_profile__mutmut_54
+-                "coverable": values["summary"]["num_statements"],
++                "XXcoverableXX": values["summary"]["num_statements"],
+## x_build_profile__mutmut_55
+-                "coverable": values["summary"]["num_statements"],
++                "COVERABLE": values["summary"]["num_statements"],
+## x_build_profile__mutmut_60
+-            "branch": {
++            "XXbranchXX": {
+## x_build_profile__mutmut_61
+-            "branch": {
++            "BRANCH": {
+## x_build_profile__mutmut_62
+-                "covered": values["summary"]["covered_branches"],
++                "XXcoveredXX": values["summary"]["covered_branches"],
+## x_build_profile__mutmut_63
+-                "covered": values["summary"]["covered_branches"],
++                "COVERED": values["summary"]["covered_branches"],
+## x_build_profile__mutmut_68
+-                "coverable": values["summary"]["num_branches"],
++                "XXcoverableXX": values["summary"]["num_branches"],
+## x_build_profile__mutmut_69
+-                "coverable": values["summary"]["num_branches"],
++                "COVERABLE": values["summary"]["num_branches"],
+## x_main__mutmut_2
+-    parser = argparse.ArgumentParser(description=__doc__)
++    parser = argparse.ArgumentParser(description=None)
+## x_main__mutmut_5
+-    parser.add_argument("--coverage", type=Path, required=True)
++    parser.add_argument("--coverage", type=Path, required=None)
+## x_main__mutmut_8
+-    parser.add_argument("--coverage", type=Path, required=True)
++    parser.add_argument("--coverage", type=Path, )
+## x_main__mutmut_11
+-    parser.add_argument("--coverage", type=Path, required=True)
++    parser.add_argument("--coverage", type=Path, required=False)
+## x_main__mutmut_14
+-    parser.add_argument("--template", type=Path, required=True)
++    parser.add_argument("--template", type=Path, required=None)
+## x_main__mutmut_17
+-    parser.add_argument("--template", type=Path, required=True)
++    parser.add_argument("--template", type=Path, )
+## x_main__mutmut_20
+-    parser.add_argument("--template", type=Path, required=True)
++    parser.add_argument("--template", type=Path, required=False)
+## x_main__mutmut_23
+-    parser.add_argument("--output", type=Path, required=True)
++    parser.add_argument("--output", type=Path, required=None)
+## x_main__mutmut_26
+-    parser.add_argument("--output", type=Path, required=True)
++    parser.add_argument("--output", type=Path, )
+## x_main__mutmut_29
+-    parser.add_argument("--output", type=Path, required=True)
++    parser.add_argument("--output", type=Path, required=False)
+## x_main__mutmut_37
+-    revision = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
++    revision = subprocess.check_output(["GIT", "rev-parse", "HEAD"], text=True).strip()
+## x_main__mutmut_41
+-    revision = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
++    revision = subprocess.check_output(["git", "rev-parse", "head"], text=True).strip()
+## x_main__mutmut_47
+-        generated_at=datetime.now(UTC).isoformat(),
++        generated_at=None,
+## x_main__mutmut_54
+-        generated_at=datetime.now(UTC).isoformat(),
++        generated_at=datetime.now(None).isoformat(),
+## x_main__mutmut_55
+-    args.output.parent.mkdir(parents=True, exist_ok=True)
++    args.output.parent.mkdir(parents=None, exist_ok=True)
+## x_main__mutmut_56
+-    args.output.parent.mkdir(parents=True, exist_ok=True)
++    args.output.parent.mkdir(parents=True, exist_ok=None)
+## x_main__mutmut_57
+-    args.output.parent.mkdir(parents=True, exist_ok=True)
++    args.output.parent.mkdir(exist_ok=True)
+## x_main__mutmut_58
+-    args.output.parent.mkdir(parents=True, exist_ok=True)
++    args.output.parent.mkdir(parents=True, )
+## x_main__mutmut_59
+-    args.output.parent.mkdir(parents=True, exist_ok=True)
++    args.output.parent.mkdir(parents=False, exist_ok=True)
+## x_main__mutmut_60
+-    args.output.parent.mkdir(parents=True, exist_ok=True)
++    args.output.parent.mkdir(parents=True, exist_ok=False)
+## x_main__mutmut_64
+-    args.output.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
++    args.output.write_text(json.dumps(result, indent=None, sort_keys=True) + "\n")
+## x_main__mutmut_65
+-    args.output.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
++    args.output.write_text(json.dumps(result, indent=2, sort_keys=None) + "\n")
+## x_main__mutmut_67
+-    args.output.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
++    args.output.write_text(json.dumps(result, sort_keys=True) + "\n")
+## x_main__mutmut_68
+-    args.output.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
++    args.output.write_text(json.dumps(result, indent=2, ) + "\n")
+## x_main__mutmut_69
+-    args.output.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
++    args.output.write_text(json.dumps(result, indent=3, sort_keys=True) + "\n")
+## x_main__mutmut_70
+-    args.output.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
++    args.output.write_text(json.dumps(result, indent=2, sort_keys=False) + "\n")

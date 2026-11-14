@@ -1,0 +1,65 @@
+## x_keys_to_reset__mutmut_21
+-    attributed = {test.split("::", 1)[0] for tests in tests_by_function.values() for test in tests}
++    attributed = {test.split("::", )[0] for tests in tests_by_function.values() for test in tests}
+## x_keys_to_reset__mutmut_24
+-    attributed = {test.split("::", 1)[0] for tests in tests_by_function.values() for test in tests}
++    attributed = {test.split("::", 2)[0] for tests in tests_by_function.values() for test in tests}
+## x_prepare__mutmut_11
+-    metas = sorted(cache.rglob("*.meta")) if cache.is_dir() else []
++    metas = sorted(cache.rglob("*.meta")) if (cache.is_dir()) or True else []
+## x_prepare__mutmut_68
+-        touched = False
++        touched = None
+## x__digest__mutmut_5
+-        json.dumps(data, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
++        json.dumps(data, sort_keys=True, separators=(",", ":"), allow_nan=None).encode()
+## x__write_json__mutmut_7
+-        temporary.write_text(json.dumps(data, indent=2, sort_keys=True, allow_nan=False) + "\n")
++        temporary.write_text(json.dumps(data, indent=2, sort_keys=True, allow_nan=None) + "\n")
+## x__globals_hash__mutmut_1
+-            node.body = [ast.Pass()]
++            node.body = None
+## x__globals_hash__mutmut_8
+-    return hashlib.sha256(ast.dump(tree, annotate_fields=False).encode()).hexdigest()
++    return hashlib.sha256(ast.dump(tree, annotate_fields=None).encode()).hexdigest()
+## x__globals_hash__mutmut_10
+-    return hashlib.sha256(ast.dump(tree, annotate_fields=False).encode()).hexdigest()
++    return hashlib.sha256(ast.dump(tree, ).encode()).hexdigest()
+## x__globals_hash__mutmut_11
+-    return hashlib.sha256(ast.dump(tree, annotate_fields=False).encode()).hexdigest()
++    return hashlib.sha256(ast.dump(tree, annotate_fields=True).encode()).hexdigest()
+## x__execution_proof__mutmut_45
+-            or not context["sources"]
+-            or not isinstance(context["mutation_scope"], list)
++            or not context["sources"] and not isinstance(context["mutation_scope"], list)
+## x__execution_proof__mutmut_46
+-            or not isinstance(context["sources"], dict)
+-            or not context["sources"]
++            or not isinstance(context["sources"], dict) and not context["sources"]
+## x__execution_proof__mutmut_131
+-                    {"source": source["sha256"], "globals": source["globals_sha256"]},
++                    {"XXsourceXX": source["sha256"], "globals": source["globals_sha256"]},
+## x__execution_proof__mutmut_132
+-                    {"source": source["sha256"], "globals": source["globals_sha256"]},
++                    {"SOURCE": source["sha256"], "globals": source["globals_sha256"]},
+## x__execution_proof__mutmut_135
+-                    {"source": source["sha256"], "globals": source["globals_sha256"]},
++                    {"source": source["sha256"], "XXglobalsXX": source["globals_sha256"]},
+## x__execution_proof__mutmut_136
+-                    {"source": source["sha256"], "globals": source["globals_sha256"]},
++                    {"source": source["sha256"], "GLOBALS": source["globals_sha256"]},
+## x_prepare_execution__mutmut_95
+-                    fn for fn in set(before) | set(after) if before.get(fn) != after.get(fn)
++                    fn for fn in set(before) & set(after) if before.get(fn) != after.get(fn)
+## x_prepare_execution__mutmut_181
+-        modified = False
++        modified = None
+## x_prepare_execution__mutmut_202
+-    cache.mkdir(parents=True, exist_ok=True)
++    cache.mkdir(parents=None, exist_ok=True)
+## x_prepare_execution__mutmut_204
+-    cache.mkdir(parents=True, exist_ok=True)
++    cache.mkdir(exist_ok=True)
+## x_prepare_execution__mutmut_206
+-    cache.mkdir(parents=True, exist_ok=True)
++    cache.mkdir(parents=False, exist_ok=True)

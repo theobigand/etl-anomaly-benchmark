@@ -90,3 +90,51 @@ jobs:
           path: evidence-faults.tgz
           if-no-files-found: warn
           retention-days: 30
+
+  # Rendered-layout verification of the thesis deck. It is separate from FAST on purpose: FAST must not
+  # depend on a browser (and counts a skipped test as a failure), while this job must not be skippable.
+  # It fails if Chromium cannot be provisioned, if the committed deck is stale, or if any font
+  # configuration shows overlapping, clipped, out-of-bounds, undersized or footer-crowding text.
+  # It measures text geometry only; it does not judge contrast, meaning or scientific content.
+  slides:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # repository convention (tests/test_workflows.py): every checkout fetches full history
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install the pinned browser runtime
+        # playwright 1.62.0 pins the Chromium build used here; fonts-liberation (Arial and Helvetica
+        # metrics), fonts-dejavu-core (wide sans) and poppler-utils (page images) are installed by name.
+        run: |
+          pip install playwright==1.62.0 pytest
+          python -m playwright install --with-deps chromium-headless-shell
+          sudo apt-get install -y --no-install-recommends fonts-liberation fonts-dejavu-core poppler-utils
+
+      - name: Deck matches its generator, layout holds in every font configuration, browser tests
+        run: make verify-slides
+
+      - name: Render the deck for inspection
+        if: always()
+        run: |
+          mkdir -p experiments/results/slides
+          CH=$(python -c "import sys; sys.path.insert(0, 'slides'); import check_layout; print(check_layout.find_chrome() or '')")
+          test -n "$CH"
+          "$CH" --no-sandbox --headless --no-pdf-header-footer \
+            --print-to-pdf=experiments/results/slides/deck.pdf "file://$PWD/slides/thesis_progress.html"
+          pdftoppm -r 60 -png experiments/results/slides/deck.pdf experiments/results/slides/slide
+
+      - name: Preserve layout reports and renders
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: slides-layout
+          path: |
+            experiments/results/slides/
+          if-no-files-found: error
+          retention-days: 30

@@ -1,0 +1,159 @@
+{
+ "order": [
+  "Z-score",
+  "IQR",
+  "GE",
+  "IF",
+  "LOF",
+  "OCSVM",
+  "ECOD",
+  "COPOD",
+  "HBOS",
+  "KNN",
+  "PCA",
+  "AE",
+  "VAE",
+  "DSVDD",
+  "DIF",
+  "AE1SVM",
+  "LUNAR"
+ ],
+ "data": {
+  "Z-score": {
+   "missing": 0.0,
+   "duplicate": 0.0,
+   "univariate": 0.93,
+   "multivariate": 0.0,
+   "drift": 0.0,
+   "invalid": 0.24
+  },
+  "IQR": {
+   "missing": 0.05,
+   "duplicate": 0.04,
+   "univariate": 0.99,
+   "multivariate": 0.04,
+   "drift": 0.25,
+   "invalid": 1.0
+  },
+  "GE": {
+   "missing": 1.0,
+   "duplicate": 0.0,
+   "univariate": 0.21,
+   "multivariate": 0.0,
+   "drift": 0.0,
+   "invalid": 0.0
+  },
+  "IF": {
+   "missing": 0.09,
+   "duplicate": 0.11,
+   "univariate": 0.99,
+   "multivariate": 0.89,
+   "drift": 0.33,
+   "invalid": 0.6
+  },
+  "LOF": {
+   "missing": 0.28,
+   "duplicate": 0.16,
+   "univariate": 0.7,
+   "multivariate": 0.21,
+   "drift": 0.5,
+   "invalid": 0.67
+  },
+  "OCSVM": {
+   "missing": 0.07,
+   "duplicate": 0.1,
+   "univariate": 1.0,
+   "multivariate": 0.9,
+   "drift": 0.29,
+   "invalid": 0.54
+  },
+  "ECOD": {
+   "missing": 0.1,
+   "duplicate": 0.13,
+   "univariate": 0.68,
+   "multivariate": 0.52,
+   "drift": 0.26,
+   "invalid": 0.36
+  },
+  "COPOD": {
+   "missing": 0.09,
+   "duplicate": 0.13,
+   "univariate": 0.89,
+   "multivariate": 0.51,
+   "drift": 0.34,
+   "invalid": 0.3
+  },
+  "HBOS": {
+   "missing": 0.0,
+   "duplicate": 0.0,
+   "univariate": 0.9,
+   "multivariate": 0.0,
+   "drift": 0.0,
+   "invalid": 0.32
+  },
+  "KNN": {
+   "missing": 0.09,
+   "duplicate": 0.1,
+   "univariate": 1.0,
+   "multivariate": 0.39,
+   "drift": 0.41,
+   "invalid": 0.81
+  },
+  "PCA": {
+   "missing": 0.1,
+   "duplicate": 0.12,
+   "univariate": 1.0,
+   "multivariate": 0.48,
+   "drift": 0.23,
+   "invalid": 0.58
+  },
+  "AE": {
+   "missing": 0.12,
+   "duplicate": 0.1,
+   "univariate": 0.81,
+   "multivariate": 0.83,
+   "drift": 0.29,
+   "invalid": 0.53
+  },
+  "VAE": {
+   "missing": 0.07,
+   "duplicate": 0.11,
+   "univariate": 0.99,
+   "multivariate": 0.92,
+   "drift": 0.3,
+   "invalid": 0.66
+  },
+  "DSVDD": {
+   "missing": 0.19,
+   "duplicate": 0.18,
+   "univariate": 0.33,
+   "multivariate": 0.13,
+   "drift": 0.16,
+   "invalid": 0.32
+  },
+  "DIF": {
+   "missing": 0.09,
+   "duplicate": 0.07,
+   "univariate": 1.0,
+   "multivariate": 1.0,
+   "drift": 0.33,
+   "invalid": 1.0
+  },
+  "AE1SVM": {
+   "missing": 0.09,
+   "duplicate": 0.1,
+   "univariate": 0.99,
+   "multivariate": 0.78,
+   "drift": 0.27,
+   "invalid": 0.61
+  },
+  "LUNAR": {
+   "missing": 0.44,
+   "duplicate": 0.39,
+   "univariate": 1.0,
+   "multivariate": 0.63,
+   "drift": 0.65,
+   "invalid": 0.9
+  }
+ }
+}

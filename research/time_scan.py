@@ -31,7 +31,8 @@ def candidate_columns(frame: pd.DataFrame) -> list[dict[str, Any]]:
         column = frame[name]
         if column.nunique(dropna=True) < 10:
             continue
-        if not NAME.search(str(name)) and not pd.api.types.is_object_dtype(column):
+        textual = pd.api.types.is_object_dtype(column) or pd.api.types.is_string_dtype(column)
+        if not NAME.search(str(name)) and not textual:
             continue
         if pd.api.types.is_numeric_dtype(column):
             if NAME.search(str(name)):
