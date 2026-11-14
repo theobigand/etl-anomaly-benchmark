@@ -454,3 +454,131 @@ def test_the_repository_constants_name_the_real_files():
     assert pf.WORKFLOW == pf.ROOT / ".github" / "workflows" / "verify-release.yml"
     assert pf.MANIFEST == pf.ROOT / "verification" / "evidence" / "manifest.json"
     assert pf.LINUX_LOCK.is_file() and pf.WORKFLOW.is_file() and pf.MANIFEST.is_file()
+
+
+def test_a_dataset_with_other_mode_bits_that_are_neither_read_nor_write_is_a_plain_pass(tmp_path):
+    import hashlib
+
+    path = tmp_path / "d.csv"
+    path.write_bytes(b"x")
+    path.chmod(0o601)
+    digest = hashlib.sha256(b"x").hexdigest()
+    result = pf.check_datasets({"d": path}, {"d": {"sha256": digest}})[1]
+    assert result == pf.Result("dataset permissions d", "PASS", "mode 601")
+
+
+def test_an_absent_dataset_does_not_hide_the_ones_after_it(tmp_path):
+    import hashlib
+
+    present = tmp_path / "b.csv"
+    present.write_bytes(b"x")
+    present.chmod(0o600)
+    digest = hashlib.sha256(b"x").hexdigest()
+    results = pf.check_datasets(
+        {"a": tmp_path / "none", "b": present},
+        {"a": {"sha256": "0" * 64}, "b": {"sha256": digest}},
+    )
+    assert [r.name for r in results] == ["dataset a", "dataset b", "dataset permissions b"]
+
+
+def test_the_memory_is_the_page_size_times_the_page_count_and_a_missing_cpu_count_is_one(
+    monkeypatch, tmp_path
+):
+    values = {"SC_PAGE_SIZE": 4096, "SC_PHYS_PAGES": 1000}
+    monkeypatch.setattr(pf.os, "sysconf", lambda name: values[name])
+    monkeypatch.setattr(pf.os, "cpu_count", lambda: None)
+    found = pf.measure_resources(tmp_path)
+    assert found.ram_bytes == 4096 * 1000 and found.cpus == 1
+
+
+def test_git_state_asks_git_for_the_head_and_the_status_in_the_given_folder(monkeypatch, tmp_path):
+    calls = []
+
+    def run(command, **kwargs):
+        calls.append((command, kwargs))
+        return subprocess.CompletedProcess(
+            command, 0, stdout=" M x\n" if "status" in command else "abc\n"
+        )
+
+    monkeypatch.setattr(pf.subprocess, "run", run)
+    assert pf.git_state(tmp_path) == ("abc", True)
+    expected = {"cwd": tmp_path, "capture_output": True, "text": True, "check": True}
+    assert calls == [
+        (["git", "rev-parse", "HEAD"], expected),
+        (["git", "status", "--porcelain"], expected),
+    ]
+
+
+def test_every_refusal_of_the_bundle_and_upload_checks_carries_its_check_name():
+    assert pf.check_bundle_allowlist({"real": [], "real-hosted": pf.HOSTED_REPORTS}) == pf.Result(
+        "bundle allowlist", "FAIL", "the real bundle allows []"
+    )
+    wrong = WORKFLOW.replace("evidence-real.tgz", "x.tgz")
+    assert pf.check_upload_paths(wrong) == pf.Result(
+        "upload paths", "FAIL", "the real job uploads ['x.tgz']"
+    )
+
+
+def test_an_upload_path_is_everything_after_the_first_label_even_without_a_space_or_with_a_second_label():
+    compact = WORKFLOW.replace("path: evidence-real.tgz", "path:evidence-real.tgz")
+    assert pf.check_upload_paths(compact).status == "PASS"
+    nested = WORKFLOW.replace("path: evidence-real.tgz", "path: dir/path:evidence-real.tgz")
+    assert (
+        pf.check_upload_paths(nested).detail
+        == "the real job uploads ['dir/path:evidence-real.tgz']"
+    )
+
+
+def test_a_runner_without_labels_never_matches_and_does_not_stop_the_search():
+    listing = {"runners": [{"status": "online"}, _runner("online", "self-hosted", "lab")]}
+    assert pf.check_registration("lab", listing).status == "PASS"
+    assert pf.check_registration("lab", {"runners": [{"status": "online"}]}).status == "FAIL"
+
+
+def test_the_help_lists_each_option_with_its_metavar_and_text_in_order(capsys, monkeypatch):
+    monkeypatch.setenv("COLUMNS", "400")
+    with pytest.raises(SystemExit):
+        pf.parse_args(["--help"])
+    text = " ".join(capsys.readouterr().out.split())
+    assert (
+        "--expect-sha EXPECT_SHA commit the operator approved "
+        "--check-registration LABEL read the runner list "
+        "--install-only install check on a machine without datasets (dataset, runner checks skipped) "
+        "--hosted-download the datasets were just downloaded on a GitHub-hosted runner (no runner check) "
+        "--repo REPO"
+    ) in text
+
+
+def test_the_checks_receive_the_interpreter_the_platform_and_the_repository_state(
+    monkeypatch, tmp_path
+):
+    _wire(monkeypatch, tmp_path, system="Linux")
+    seen = {}
+    monkeypatch.setattr(pf, "git_state", lambda root: seen.update(root=root) or ("h" * 40, False))
+    monkeypatch.setattr(
+        pf,
+        "check_python",
+        lambda version, expected: (
+            seen.update(py=(version, expected)) or pf.Result("python", "PASS", "")
+        ),
+    )
+    monkeypatch.setattr(
+        pf,
+        "check_platform",
+        lambda system, machine: (
+            seen.update(plat=(system, machine)) or pf.Result("platform", "PASS", "")
+        ),
+    )
+    monkeypatch.setattr(
+        pf,
+        "check_lock_for",
+        lambda system, installed, pins: (
+            seen.update(lock=(system, pins)) or pf.Result("environment lock", "PASS", "")
+        ),
+    )
+    pf.run_checks(_args(install_only=True))
+    import sys
+
+    assert seen["root"] == pf.ROOT
+    assert seen["py"] == (tuple(sys.version_info[:3]), "3.11")
+    assert seen["plat"] == ("Linux", "x86_64") and seen["lock"] == ("Linux", {"scipy": "2"})
