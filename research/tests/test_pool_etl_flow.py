@@ -56,7 +56,7 @@ JOB = {"id": "uci:1", "name": "toy", "source": "uci", "path": "x"}
 def test_the_skipped_columns_that_survive_the_transform_are_dropped_before_detection_and_the_label_is_passed(
     pipeline,
 ):
-    record = pe.run_etl(JOB, "iqr")
+    pe.run_etl(JOB, "iqr")
     frame, detector, label = pipeline["detect"]
     assert frame.columns.tolist() == ["a"] and detector == "detector" and label == "label"
     assert pipeline["built"] == ("iqr", 0.05)
@@ -98,12 +98,8 @@ def test_memory_is_the_peak_and_its_growth_since_before_the_stages(pipeline, mon
     readings = iter([100, 150, 400])
     monkeypatch.setattr(pe, "peak_rss_bytes", lambda: next(readings))
     record = pe.run_etl(JOB, "iqr")
-    assert (
-        record["rss_peak_bytes"] == 400
-        and record["rss_delta_bytes"] == 150
-        or (record["rss_peak_bytes"] == 150 and record["rss_delta_bytes"] == 150 - 400)
-        or record["rss_delta_bytes"] == record["rss_peak_bytes"] - 100
-    )
+    # one reading before the stages, then one for the peak and one for the growth since the first
+    assert record["rss_peak_bytes"] == 150 and record["rss_delta_bytes"] == 400 - 100
 
 
 def test_a_failure_in_any_stage_is_a_failed_record_with_the_error_text(pipeline, monkeypatch):
