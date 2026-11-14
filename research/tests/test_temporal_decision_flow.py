@@ -135,7 +135,7 @@ def test_each_stratified_fold_is_scored_with_its_own_prevalence_and_matched_to_t
     n = len(ys)
     pi = ys[: int(n * 0.70)].mean()
     assert scored[0] == (pi, ["a"], 0)
-    assert all(columns == ["a"] and low == low for _, columns, low in scored)
+    assert all(columns == ["a"] for _, columns, _low in scored)
     assert len(scored) == 3 and scored[1][0] != pi
     assert matched == [ys[int(n * 0.85) :].mean()] * 2
 

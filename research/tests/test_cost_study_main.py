@@ -78,13 +78,20 @@ def test_the_wait_ends_at_its_limit_and_reports_the_load_it_gave_up_on(monkeypat
     assert slept == [15, 15]
 
 
-def test_the_default_wait_limit_is_ten_minutes(monkeypatch):
+def test_the_default_wait_limit_is_exactly_ten_minutes(monkeypatch):
     monkeypatch.setattr(cs.os, "getloadavg", lambda: (9.0, 0.0, 0.0))
     monkeypatch.setattr(cs.os, "cpu_count", lambda: 8)
-    clock = iter([0.0, 599.0, 601.0, 601.0])
+    slept = []
+    monkeypatch.setattr(cs.time, "sleep", slept.append)
+    clock = iter([0.0, 599.0, 600.0])
     monkeypatch.setattr(cs.time, "time", lambda: next(clock))
-    monkeypatch.setattr(cs.time, "sleep", lambda s: None)
     cs.wait_for_quiet()
+    assert slept == [15]
+    clock = iter([0.0, 600.5])
+    monkeypatch.setattr(cs.time, "time", lambda: next(clock))
+    slept.clear()
+    cs.wait_for_quiet()
+    assert slept == []
 
 
 class _Done:

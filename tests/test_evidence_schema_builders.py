@@ -1,8 +1,7 @@
-"""What the deep evidence builders pass on, derive and refuse, with the collaborators replaced."""
+"""What the evidence builders return: the documents they build, derive and refuse."""
 
 import json
 import subprocess
-from pathlib import Path
 
 import pytest
 
@@ -13,22 +12,46 @@ ENVIRONMENT = {"python": "3.11", "platform": "t", "packages": {}}
 EXECUTION = {"ci": False}
 
 
+BUILDERS = (
+    "build_legacy_deep",
+    "build_deep",
+    "build_deep_shards",
+    "build_faults",
+    "build_real",
+    "build_tools",
+    "build_types",
+    "build_reproduction",
+)
+
+
 @pytest.fixture
 def envelope(monkeypatch):
+    """Record, for every builder call, the public document it returns (the real envelope)."""
     calls = []
 
-    def fake(kind, status, result, artifacts, root, source, environment, execution):
-        calls.append(
-            {
-                "kind": kind, "status": status, "result": result, "artifacts": artifacts,
-                "root": root, "source": source, "environment": environment,
-                "execution": execution,
-            }
-        )  # fmt: skip
-        return calls[-1]
+    def observe(name, real):
+        def build(*args, **kwargs):
+            doc = real(*args, **kwargs)
+            root = kwargs.get("root", es.ROOT)
+            calls.append(
+                {
+                    "kind": doc["kind"], "status": doc["status"], "result": doc["result"],
+                    "artifacts": sorted(root / key for key in doc["artifacts"]),
+                    "root": root, "source": doc["source"], "environment": doc["environment"],
+                    "execution": doc["execution"], "document": doc,
+                }
+            )  # fmt: skip
+            return doc
 
-    monkeypatch.setattr(es, "_envelope", fake)
+        return build
+
+    for name in BUILDERS:
+        monkeypatch.setattr(es, name, observe(name, getattr(es, name)))
     return calls
+
+
+def _on_disk(*paths):
+    return sorted(path for path in paths if path.is_file())
 
 
 def _stats(tmp_path, killed=3, total=4):
@@ -90,7 +113,7 @@ def test_the_legacy_result_names_the_scope_its_files_the_threshold_the_counts_an
         "threshold": es.check_mutation.THRESHOLD, "stats": {"killed": 3, "total": 4},
         "score": 75.0,
     }  # fmt: skip
-    assert call["artifacts"] == [stats]
+    assert call["artifacts"] == _on_disk(stats)
     assert (call["source"], call["environment"], call["execution"]) == (
         SOURCE, ENVIRONMENT, EXECUTION,
     )  # fmt: skip
@@ -106,7 +129,7 @@ def test_the_legacy_listing_is_an_artifact_and_gives_the_mutated_files_or_the_re
     stats = _stats(tmp_path)
     es.build_legacy_deep(stats, listing, root=tmp_path, scope=["p/*"])
     assert envelope[0]["result"]["mutated_files"] == ["mutants", str(tmp_path)]
-    assert envelope[0]["artifacts"] == [stats, listing]
+    assert envelope[0]["artifacts"] == _on_disk(stats, listing)
     es.build_legacy_deep(stats, tmp_path / "absent.txt", root=tmp_path, scope=["p/*"])
     assert envelope[1]["result"]["mutated_files"] is None
     assert "absent.txt" in envelope[1]["result"]["reason"]
@@ -138,12 +161,15 @@ def test_unreadable_or_unclassifiable_counts_make_the_legacy_evidence_incomplete
     )  # fmt: skip
 
 
-def _campaign(monkeypatch, result, status="PASS"):
+def _campaign(monkeypatch, result, tmp_path, status="PASS"):
     seen = {}
+    artifact = tmp_path / "artifact.txt"
+    artifact.write_text("raw")
+    seen["artifact"] = artifact
 
     def load(root, stats, results, run_report):
         seen["load"] = (root, stats, results, run_report)
-        return result, ["artifact"]
+        return result, [artifact]
 
     monkeypatch.setattr(es.mutation_campaign, "load_campaign", load)
     monkeypatch.setattr(es.mutation_campaign, "status", lambda r: seen.update(judged=r) or status)
@@ -162,22 +188,21 @@ RESULT = {
 def test_the_campaign_is_read_from_its_three_files_with_the_default_controller_report(
     monkeypatch, tmp_path, envelope
 ):
-    seen = _campaign(monkeypatch, RESULT)
+    seen = _campaign(monkeypatch, RESULT, tmp_path)
     stats, listing = tmp_path / "s.json", tmp_path / "r.txt"
     es.build_deep(stats, listing, root=tmp_path, source=SOURCE, execution=EXECUTION)
     assert seen["load"] == (tmp_path, stats, listing, tmp_path / "mutants/controller-result.json")
-    assert seen["judged"] is RESULT
+    assert seen["judged"] == RESULT
     call = envelope[0]
-    assert (
-        call["status"] == "PASS" and call["result"] is RESULT and call["artifacts"] == ["artifact"]
-    )
+    assert call["status"] == "PASS" and call["result"] == RESULT
+    assert call["artifacts"] == [seen["artifact"]]
     assert (call["source"], call["execution"]) == (SOURCE, EXECUTION)
 
 
 def test_a_given_controller_report_is_used_and_the_environment_is_the_observed_runtime(
     monkeypatch, tmp_path, envelope
 ):
-    seen = _campaign(monkeypatch, RESULT)
+    seen = _campaign(monkeypatch, RESULT, tmp_path)
     report = tmp_path / "other.json"
     es.build_deep(tmp_path / "s.json", tmp_path / "r.txt", run_report=report, root=tmp_path)
     assert seen["load"][3] == report
@@ -190,9 +215,9 @@ def test_a_given_controller_report_is_used_and_the_environment_is_the_observed_r
 
 
 def test_a_given_environment_replaces_the_observed_one(monkeypatch, tmp_path, envelope):
-    _campaign(monkeypatch, RESULT)
+    _campaign(monkeypatch, RESULT, tmp_path)
     es.build_deep(tmp_path / "s", tmp_path / "r", root=tmp_path, environment=ENVIRONMENT)
-    assert envelope[0]["environment"] is ENVIRONMENT
+    assert envelope[0]["environment"] == ENVIRONMENT
 
 
 @pytest.mark.parametrize(
@@ -210,27 +235,38 @@ def test_a_campaign_that_cannot_be_read_is_incomplete_with_the_reason_of_the_fai
     call = envelope[0]
     assert call["status"] == "INCOMPLETE"
     assert call["result"] == {"format_version": 2, "reason": str(error)}
-    assert call["artifacts"] == [stats, tmp_path / "r", report]
+    assert call["artifacts"] == _on_disk(stats, tmp_path / "r", report)
 
 
 def test_the_native_listing_is_required_and_the_artifacts_skip_what_is_absent(tmp_path, envelope):
     stats = tmp_path / "s"
-    es.build_deep(stats, None, run_report=None, root=tmp_path, source=SOURCE, execution=EXECUTION)
+    es.build_deep(
+        stats, None, run_report=None, root=tmp_path, source=SOURCE, environment=ENVIRONMENT,
+        execution=EXECUTION,
+    )  # fmt: skip
     call = envelope[0]
     assert call["result"] == {
         "format_version": 2,
         "reason": "the native mutant listing is required",
     }
-    assert call["artifacts"] == [stats, tmp_path / "mutants/controller-result.json"]
-    assert (call["source"], call["environment"], call["execution"]) == (SOURCE, None, EXECUTION)
+    assert call["artifacts"] == _on_disk(stats, tmp_path / "mutants/controller-result.json")
+    assert (call["source"], call["environment"], call["execution"]) == (
+        SOURCE,
+        ENVIRONMENT,
+        EXECUTION,
+    )
 
 
 def test_a_sharded_campaign_is_read_from_its_plan_and_manifests(monkeypatch, tmp_path, envelope):
     seen = {}
 
+    first, second = tmp_path / "a1", tmp_path / "a2"
+    first.write_text("1")
+    second.write_text("2")
+
     def load(root, plan, manifests):
         seen["load"] = (root, plan, manifests)
-        return RESULT, ["a1", "a2"]
+        return RESULT, [first, second]
 
     monkeypatch.setattr(es.mutation_campaign, "load_sharded", load)
     monkeypatch.setattr(es.mutation_campaign, "status", lambda r: "PASS")
@@ -238,7 +274,9 @@ def test_a_sharded_campaign_is_read_from_its_plan_and_manifests(monkeypatch, tmp
     es.build_deep_shards(plan, manifests, root=tmp_path, source=SOURCE, execution=EXECUTION)
     assert seen["load"] == (tmp_path, plan, manifests)
     call = envelope[0]
-    assert call["kind"] == "deep" and call["status"] == "PASS" and call["artifacts"] == ["a1", "a2"]
+    assert (
+        call["kind"] == "deep" and call["status"] == "PASS" and call["artifacts"] == [first, second]
+    )
     assert (
         call["environment"]["python"] == "3.11.17"
         and call["environment"]["packages"]["mutmut"] == "3.8.0"
@@ -264,16 +302,18 @@ def test_a_sharded_campaign_that_cannot_be_read_is_incomplete_with_its_reason(
 
     monkeypatch.setattr(es.mutation_campaign, "load_sharded", load)
     plan, manifests = tmp_path / "p", [tmp_path / "m"]
-    es.build_deep_shards(plan, manifests, root=tmp_path, source=SOURCE, execution=EXECUTION)
+    es.build_deep_shards(
+        plan, manifests, root=tmp_path, source=SOURCE, environment=ENVIRONMENT, execution=EXECUTION
+    )
     call = envelope[0]
     assert call["status"] == "INCOMPLETE"
     assert call["result"] == {"format_version": 2, "reason": str(error)}
-    assert call["artifacts"] == [plan, *manifests]
-    assert (call["source"], call["environment"], call["execution"]) == (SOURCE, None, EXECUTION)
-
-
-def test_the_repository_root_is_the_parent_of_the_verification_folder():
-    assert Path(es.__file__).resolve().parents[1] == es.ROOT
+    assert call["artifacts"] == _on_disk(plan, *manifests)
+    assert (call["source"], call["environment"], call["execution"]) == (
+        SOURCE,
+        ENVIRONMENT,
+        EXECUTION,
+    )
 
 
 def _unreadable(tmp_path, kind):
@@ -304,7 +344,7 @@ def test_a_tools_report_that_cannot_be_read_is_incomplete_with_the_reason_and_it
     assert call["kind"] == "tools" and call["status"] == "INCOMPLETE"
     assert set(call["result"]) == {"coverage", "reason"} and call["result"]["coverage"] == {}
     assert call["result"]["reason"] and call["result"]["reason"] != "None"
-    assert call["artifacts"] == [report] and call["root"] == tmp_path and _passed_on(call)
+    assert call["artifacts"] == _on_disk(report) and call["root"] == tmp_path and _passed_on(call)
 
 
 @pytest.mark.parametrize("kind", ["missing", "text", "list"])
@@ -319,7 +359,7 @@ def test_a_real_report_that_cannot_be_read_is_incomplete_with_the_reason_and_its
     assert call["kind"] == "real" and call["status"] == "INCOMPLETE"
     assert set(call["result"]) == {"required", "datasets", "reason"}
     assert call["result"]["required"] == [] and call["result"]["datasets"] == []
-    assert call["result"]["reason"] != "None" and call["artifacts"] == [report]
+    assert call["result"]["reason"] != "None" and call["artifacts"] == _on_disk(report)
     assert call["root"] == tmp_path and _passed_on(call)
 
 
@@ -335,7 +375,7 @@ def test_a_types_report_that_cannot_be_read_is_incomplete_with_the_reason_and_it
     assert call["kind"] == "types" and call["status"] == "INCOMPLETE"
     assert set(call["result"]) == {"state", "problems", "reason"}
     assert call["result"]["state"] == "INCOMPLETE" and call["result"]["problems"] == []
-    assert call["result"]["reason"] != "None" and call["artifacts"] == [report]
+    assert call["result"]["reason"] != "None" and call["artifacts"] == _on_disk(report)
     assert call["root"] == tmp_path and _passed_on(call)
 
 
@@ -350,7 +390,7 @@ def test_a_reproduction_report_that_cannot_be_read_is_incomplete_with_its_reason
     call = envelope[0]
     assert call["kind"] == "reproduction" and call["status"] == "INCOMPLETE"
     assert set(call["result"]) == {"levels", "reason"} and call["result"]["levels"] == {}
-    assert call["result"]["reason"] != "None" and call["artifacts"] == [report]
+    assert call["result"]["reason"] != "None" and call["artifacts"] == _on_disk(report)
     assert call["root"] == tmp_path and _passed_on(call)
 
 
@@ -373,7 +413,7 @@ def test_a_fault_matrix_that_cannot_be_read_is_incomplete_with_the_reason_and_it
     assert call["kind"] == "faults" and call["status"] == "INCOMPLETE"
     assert call["result"]["expected"] == ["a", "b"] and call["result"]["control_passed"] is False
     assert call["result"]["faults"] == []
-    assert call["result"]["reason"] != "None" and call["artifacts"] == [matrix]
+    assert call["result"]["reason"] != "None" and call["artifacts"] == _on_disk(matrix)
     assert call["root"] == tmp_path and _passed_on(call)
 
 

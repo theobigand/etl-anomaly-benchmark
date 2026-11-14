@@ -1,6 +1,5 @@
 """Exact budgets, records, commands and summaries of the cost study measurements."""
 
-import itertools
 import json
 import subprocess
 import sys
@@ -372,7 +371,7 @@ def test_a_busy_machine_with_unknown_cores_is_waited_for_and_the_limit_is_exclus
     monkeypatch.setattr(cs.time, "sleep", slept.append)
     assert cs.wait_for_quiet() == 0.2 and slept == [15]
     monkeypatch.setattr(cs.os, "getloadavg", lambda: (9.0, 0.0, 0.0))
-    clock = itertools.chain([0.0, 600.0], itertools.repeat(600.0))
+    clock = iter([0.0, 600.0])
     monkeypatch.setattr(cs.time, "time", lambda: next(clock))
     slept.clear()
     cs.wait_for_quiet(limit_s=600)

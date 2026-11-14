@@ -34,7 +34,11 @@ def test_a_replay_is_run_from_the_repository_with_the_source_path_and_its_own_fo
     results = tmp_path / "deep" / "first"
     out = reproduce.run_dataset("py", "cardio", results)
     assert results.is_dir()
-    assert seen["command"] == reproduce.command_for("cardio", "py", results)
+    seeds = reproduce._archived_record("cardio")["seeds"]
+    assert seen["command"] == [
+        "py", "experiments/run_benchmark.py", "--dataset", "cardio",
+        "--results-dir", str(results), "--seeds", *map(str, seeds),
+    ]  # fmt: skip
     kwargs = seen["kwargs"]
     assert kwargs["cwd"] == reproduce.ROOT and kwargs["capture_output"] is True
     assert kwargs["text"] is True and kwargs["timeout"] == 7200 and kwargs["check"] is False

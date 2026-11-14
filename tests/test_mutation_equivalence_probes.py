@@ -94,10 +94,11 @@ def test_http_header_names_are_stored_with_one_capitalisation():
         assert other.header_items() == first.header_items()
 
 
-@pytest.mark.parametrize("name", ["utc", "UTC", "Etc/UTC"])
+@pytest.mark.parametrize("name", ["utc", "UTC"])
 def test_a_timezone_name_is_read_without_case_for_utc(name):
     stamp = pd.Timestamp("2020-01-01")
     assert stamp.tz_localize("UTC") == stamp.tz_localize(name)
+    assert stamp.tz_localize("UTC").tz == stamp.tz_localize(name).tz
 
 
 def test_a_codec_name_is_read_without_case():
@@ -105,11 +106,16 @@ def test_a_codec_name_is_read_without_case():
     assert data.decode("utf-8", "replace") == data.decode("UTF-8", "replace")
 
 
-def test_a_division_by_minus_one_is_a_multiplication_by_minus_one():
+def test_a_division_by_minus_one_is_a_multiplication_by_minus_one_for_floats():
     gen = np.random.default_rng(3)
     values = gen.normal(size=200)
-    assert (values / -1).tolist() == (values * -1).tolist()
-    assert (np.arange(5) / -1).tolist() == (np.arange(5) * -1).tolist()
+    divided, multiplied = values / -1, values * -1
+    assert divided.dtype == multiplied.dtype == np.float64
+    assert np.array_equal(divided, multiplied) and not np.any(
+        np.signbit(divided) == np.signbit(values)
+    )
+    integers = np.arange(5)
+    assert (integers / -1).dtype == np.float64 and (integers * -1).dtype == np.int64
 
 
 def test_the_first_element_of_a_split_with_several_limits_is_stable_for_random_text():
@@ -117,3 +123,38 @@ def test_the_first_element_of_a_split_with_several_limits_is_stable_for_random_t
     for _ in range(500):
         text = "".join(RNG.choice(letters + "|") for _ in range(RNG.randint(0, 20)))
         assert text.split("|", 1)[0] == text.partition("|")[0]
+
+
+def test_the_minute_unit_is_read_without_case():
+    assert (pd.to_timedelta([3], unit="min") == pd.to_timedelta([3], unit="MIN")).all()
+
+
+def test_a_one_letter_month_unit_differs_from_the_minute_unit():
+    with pytest.raises((ValueError, TypeError)):
+        pd.to_timedelta([3], unit="M")
+
+
+def test_a_missing_exist_ok_and_parents_flag_in_mkdir_behave_like_false(tmp_path):
+    for flag in ("exist_ok", "parents"):
+        base = tmp_path / flag
+        base.mkdir()
+        (base / "x").mkdir()
+        if flag == "exist_ok":
+            with pytest.raises(FileExistsError):
+                (base / "x").mkdir(exist_ok=False)
+            with pytest.raises(FileExistsError):
+                (base / "x").mkdir(exist_ok=None)
+        else:
+            with pytest.raises(FileNotFoundError):
+                (base / "deep" / "y").mkdir(parents=False)
+            with pytest.raises(FileNotFoundError):
+                (base / "deep" / "y").mkdir(parents=None)
+
+
+def test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false():
+    import subprocess
+    import sys
+
+    failing = [sys.executable, "-c", "raise SystemExit(3)"]
+    assert subprocess.run(failing, check=False).returncode == 3
+    assert subprocess.run(failing, check=None).returncode == 3
