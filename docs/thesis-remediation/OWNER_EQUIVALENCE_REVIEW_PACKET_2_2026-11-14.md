@@ -19,7 +19,7 @@ For each unit that still fails or is incomplete, survivors are split four ways.
   others can be killed by a test not written yet; telling them apart is the remaining per-mutant work. Two patterns are named in the JSON (`noted_patterns_not_proposed`) but not proposed, see below.
 - Missing kills = the kills still needed to reach the threshold. For most units accepting every candidate class would still leave kills missing (compare the two columns).
 
-| Unit | Level | Killed / eligible | Missing kills | Candidate classes | Decided / first packet | Unclassified | Passes now | Measured on |
+| Unit | Level | Killed / eligible | Missing kills | Candidate classes | Decided / first packet | Unclassified | Passes if every candidate were accepted | Measured on |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `experiments/run_severity.py` | L4 | 320/329 | 3 | 2 | 0 | 7 | no | case-insensitive APFS |
 | `research/injection.py` | L4 | 325/336 | 5 | 2 | 0 | 9 | no | case-sensitive APFS volume |
@@ -41,7 +41,7 @@ For each unit that still fails or is incomplete, survivors are split four ways.
 | `src/etl_benchmark/quality/_torch_models.py` | L4 | 58/65 | 6 | 0 | 0 | 7 | no | case-insensitive APFS |
 | `src/etl_benchmark/quality/autoencoder.py` | L4 | 112/117 | 3 | 2 | 0 | 3 | no | case-insensitive APFS |
 | `src/etl_benchmark/quality/base.py` | L4 | 30/31 | 1 | 0 | 1 | 0 | no | case-insensitive APFS |
-| `src/etl_benchmark/quality/deep.py` | L4 | 60/62 | 1 | 2 | 0 | 0 | no | case-insensitive APFS |
+| `src/etl_benchmark/quality/deep.py` | L4 | 60/62 | 1 | 2 | 0 | 0 | yes | case-insensitive APFS |
 | `src/etl_benchmark/quality/drift.py` | L4 | 119/129 | 8 | 0 | 0 | 10 | no | case-insensitive APFS |
 | `src/etl_benchmark/quality/gx.py` | L4 | 87/98 | 10 | 0 | 0 | 11 | no | case-insensitive APFS |
 | `src/etl_benchmark/quality/ml.py` | L4 | 238/259 | 16 | 1 | 0 | 20 | no | case-insensitive APFS |
@@ -51,9 +51,9 @@ For each unit that still fails or is incomplete, survivors are split four ways.
 | `verification/archive_evidence.py` | L3 | 207/249 | 30 | 0 | 0 | 42 | no | case-insensitive APFS |
 | `verification/bundles.py` | L3 | 249/264 | 2 | 0 | 0 | 15 | no | case-insensitive APFS |
 | `verification/lock_environment.py` | L3 | 247/346 | 82 | 0 | 0 | 99 | no | case-insensitive APFS |
-| `verification/mutation_cache.py` | L4 | 1088/1110 | 0 | 3 | 0 | 19 | no (timeouts) | case-sensitive APFS volume |
-| `verification/mutation_scope.py` | L4 | 240/246 | 2 | 6 | 0 | 0 | no | case-sensitive APFS volume |
-| `verification/pool_contract.py` | L4 | 184/187 | 0 | 0 | 0 | 3 | no (timeouts) | case-insensitive APFS |
+| `verification/mutation_cache.py` | L4 | 1088/1110 | 0 | 3 | 0 | 19 | yes | case-sensitive APFS volume |
+| `verification/mutation_scope.py` | L4 | 240/246 | 2 | 6 | 0 | 0 | yes | case-sensitive APFS volume |
+| `verification/pool_contract.py` | L4 | 184/187 | 0 | 0 | 0 | 3 | yes | case-insensitive APFS |
 | `verification/protection.py` | L3 | 235/294 | 45 | 1 | 0 | 58 | no | case-insensitive APFS |
 | `verification/real_preflight.py` | L3 | 543/790 | 208 | 1 | 0 | 246 | no | case-insensitive APFS |
 | `verification/refresh_profile.py` | L3 | 105/147 | 35 | 0 | 0 | 42 | no | case-insensitive APFS |

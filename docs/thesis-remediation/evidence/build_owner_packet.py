@@ -193,6 +193,7 @@ def decided() -> dict[str, dict]:
 def main() -> None:
     record = json.loads((OUT / "final-measurement.json").read_text())
     prior = decided()
+    environments = json.loads((OUT / "probe-environments.json").read_text())["runs"]
     units = {}
     for path, module in sorted(record["modules"].items()):
         if module["status"] not in ("FAIL", "INCOMPLETE"):
@@ -216,6 +217,19 @@ def main() -> None:
                 continue
             kind = classify(item["diff"])
             if kind:
+                entry.update(
+                    {
+                        "original": [x[1:].strip() for x in item["diff"] if x.startswith("-")],
+                        "mutated": [x[1:].strip() for x in item["diff"] if x.startswith("+")],
+                        "reproduce": (
+                            f"python docs/thesis-remediation/evidence/mutdiff.py mutants {path}  # the change; "
+                            f"MUTANT_UNDER_TEST={full} python -m pytest tests research/tests -x -q  # runs the tests against it"
+                        ),
+                        "counterexample_search": CLASSES[kind][2],
+                        "environments_tested": environments,
+                        "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
+                    }
+                )
                 classes.setdefault(kind, []).append(entry)
                 continue
             hint = noted(item["diff"])
@@ -233,6 +247,11 @@ def main() -> None:
             "measured_on": module["measured_on"],
             "survivor_dump": dump.relative_to(HERE).as_posix() if dump.exists() else None,
             "candidate_classes": classes,
+            "would_pass_if_every_candidate_were_accepted": (
+                module["killed"] * 100
+                >= module["threshold"]
+                * (module["eligible"] - sum(len(v) for v in classes.values()))
+            ),
             "already_decided_or_in_first_packet": already,
             "unclassified": unclassified,
             "noted_patterns_not_proposed": noted_patterns,
@@ -255,7 +274,7 @@ def main() -> None:
     for path, unit in units.items():
         candidates = sum(len(v) for v in unit["candidate_classes"].values())
         missing = max(0, unit["needed_for_threshold"] - unit["killed"])
-        verdict = "no (timeouts)" if missing == 0 else "no"
+        verdict = "yes" if unit["would_pass_if_every_candidate_were_accepted"] else "no"
         rows.append(
             f"| `{path}` | {unit['level']} | {unit['killed']}/{unit['eligible']} | {missing} | {candidates} | "
             f"{len(unit['already_decided_or_in_first_packet'])} | {len(unit['unclassified'])} | {verdict} | {unit['measured_on'].split(' (')[0]} |"
@@ -286,7 +305,7 @@ For each unit that still fails or is incomplete, survivors are split four ways.
   others can be killed by a test not written yet; telling them apart is the remaining per-mutant work. Two patterns are named in the JSON (`noted_patterns_not_proposed`) but not proposed, see below.
 - Missing kills = the kills still needed to reach the threshold. For most units accepting every candidate class would still leave kills missing (compare the two columns).
 
-| Unit | Level | Killed / eligible | Missing kills | Candidate classes | Decided / first packet | Unclassified | Passes now | Measured on |
+| Unit | Level | Killed / eligible | Missing kills | Candidate classes | Decided / first packet | Unclassified | Passes if every candidate were accepted | Measured on |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 {chr(10).join(rows)}
 

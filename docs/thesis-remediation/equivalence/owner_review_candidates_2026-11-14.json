@@ -56,8 +56,41 @@
        "-        curves.to_csv(partial, index=False)",
        "+        curves.to_csv(partial, index=None)"
       ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "experiments.run_severity.x_main__mutmut_87",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_main__mutmut_87",
+      "mutated": [
+       "curves.to_csv(partial, index=None)"
+      ],
+      "original": [
+       "curves.to_csv(partial, index=False)"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants experiments/run_severity.py  # the change; MUTANT_UNDER_TEST=experiments.run_severity.x_main__mutmut_87 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      },
      {
@@ -65,8 +98,41 @@
        "-        mean_recall = pd.concat(per_seed).groupby(level=0, sort=False).mean()",
        "+        mean_recall = pd.concat(per_seed).groupby(level=0, sort=None).mean()"
       ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "experiments.run_severity.x_run__mutmut_31",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_run__mutmut_31",
+      "mutated": [
+       "mean_recall = pd.concat(per_seed).groupby(level=0, sort=None).mean()"
+      ],
+      "original": [
+       "mean_recall = pd.concat(per_seed).groupby(level=0, sort=False).mean()"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants experiments/run_severity.py  # the change; MUTANT_UNDER_TEST=experiments.run_severity.x_run__mutmut_31 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      }
     ]
@@ -145,7 +211,8 @@
      "mutant": "x_render__mutmut_53",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "research/injection.py": {
    "already_decided_or_in_first_packet": [],
@@ -156,8 +223,41 @@
        "-        for col in rng.choice(cols, size=int(rng.integers(1, 3)), replace=False):",
        "+        for col in rng.choice(cols, size=int(rng.integers(1, 3)), replace=None):"
       ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "research.injection.x_inject__mutmut_78",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_inject__mutmut_78",
+      "mutated": [
+       "for col in rng.choice(cols, size=int(rng.integers(1, 3)), replace=None):"
+      ],
+      "original": [
+       "for col in rng.choice(cols, size=int(rng.integers(1, 3)), replace=False):"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/injection.py  # the change; MUTANT_UNDER_TEST=research.injection.x_inject__mutmut_78 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      },
      {
@@ -165,8 +265,41 @@
        "-    shifted = list(rng.choice(cols, size=3, replace=False))",
        "+    shifted = list(rng.choice(cols, size=3, replace=None))"
       ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "research.injection.x_inject__mutmut_163",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_inject__mutmut_163",
+      "mutated": [
+       "shifted = list(rng.choice(cols, size=3, replace=None))"
+      ],
+      "original": [
+       "shifted = list(rng.choice(cols, size=3, replace=False))"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/injection.py  # the change; MUTANT_UNDER_TEST=research.injection.x_inject__mutmut_163 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      }
     ]
@@ -266,7 +399,8 @@
      "mutant": "x_inject__mutmut_191",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "research/lstm_detector.py": {
    "already_decided_or_in_first_packet": [
@@ -381,7 +515,8 @@
    "source_sha256": "277375e66d1edc6ed94c5ffc4b1074c113e86c6095c7dc2b20d3058cb006da18",
    "survivor_dump": "l4-campaign-2026-11-13/survivors/research__lstm_detector.py.txt",
    "threshold": 98,
-   "unclassified": []
+   "unclassified": [],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "research/lstm_pilot.py": {
    "already_decided_or_in_first_packet": [],
@@ -392,8 +527,41 @@
        "-    hits = rng.choice(np.arange(20, n), size=int(n * rate), replace=False)",
        "+    hits = rng.choice(np.arange(20, n), size=int(n * rate), replace=None)"
       ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "research.lstm_pilot.x_synthetic_sequence_stream__mutmut_35",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_synthetic_sequence_stream__mutmut_35",
+      "mutated": [
+       "hits = rng.choice(np.arange(20, n), size=int(n * rate), replace=None)"
+      ],
+      "original": [
+       "hits = rng.choice(np.arange(20, n), size=int(n * rate), replace=False)"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/lstm_pilot.py  # the change; MUTANT_UNDER_TEST=research.lstm_pilot.x_synthetic_sequence_stream__mutmut_35 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      }
     ]
@@ -817,7 +985,8 @@
      "mutant": "x_main__mutmut_132",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "research/multi_schema.py": {
    "already_decided_or_in_first_packet": [],
@@ -828,8 +997,41 @@
        "-                for col in rng.choice(nullable, size=int(rng.integers(1, 3)), replace=False):",
        "+                for col in rng.choice(nullable, size=int(rng.integers(1, 3)), replace=None):"
       ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "research.multi_schema.x_make__mutmut_111",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_make__mutmut_111",
+      "mutated": [
+       "for col in rng.choice(nullable, size=int(rng.integers(1, 3)), replace=None):"
+      ],
+      "original": [
+       "for col in rng.choice(nullable, size=int(rng.integers(1, 3)), replace=False):"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/multi_schema.py  # the change; MUTANT_UNDER_TEST=research.multi_schema.x_make__mutmut_111 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      },
      {
@@ -837,8 +1039,41 @@
        "-        df.groupby(spec.id_col, sort=False)[\"anomaly_type\"]",
        "+        df.groupby(spec.id_col, sort=None)[\"anomaly_type\"]"
       ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "research.multi_schema.x__split__mutmut_5",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x__split__mutmut_5",
+      "mutated": [
+       "df.groupby(spec.id_col, sort=None)[\"anomaly_type\"]"
+      ],
+      "original": [
+       "df.groupby(spec.id_col, sort=False)[\"anomaly_type\"]"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/multi_schema.py  # the change; MUTANT_UNDER_TEST=research.multi_schema.x__split__mutmut_5 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      },
      {
@@ -846,8 +1081,41 @@
        "-        means[name] = stack.groupby(level=1, sort=False).mean()",
        "+        means[name] = stack.groupby(level=1, sort=None).mean()"
       ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "research.multi_schema.x_main__mutmut_99",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_main__mutmut_99",
+      "mutated": [
+       "means[name] = stack.groupby(level=1, sort=None).mean()"
+      ],
+      "original": [
+       "means[name] = stack.groupby(level=1, sort=False).mean()"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/multi_schema.py  # the change; MUTANT_UNDER_TEST=research.multi_schema.x_main__mutmut_99 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      },
      {
@@ -855,8 +1123,41 @@
        "-        stds[name] = stack.groupby(level=1, sort=False).std()",
        "+        stds[name] = stack.groupby(level=1, sort=None).std()"
       ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "research.multi_schema.x_main__mutmut_106",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_main__mutmut_106",
+      "mutated": [
+       "stds[name] = stack.groupby(level=1, sort=None).std()"
+      ],
+      "original": [
+       "stds[name] = stack.groupby(level=1, sort=False).std()"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/multi_schema.py  # the change; MUTANT_UNDER_TEST=research.multi_schema.x_main__mutmut_106 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      }
     ]
@@ -1679,7 +1980,8 @@
      "mutant": "x_main__mutmut_181",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "research/normalise.py": {
    "already_decided_or_in_first_packet": [
@@ -1755,7 +2057,8 @@
    "source_sha256": "5ba131d186d79c792fb64691089939fffb3a085e1f376c6b9dcd1c12bcf5155a",
    "survivor_dump": "l4-campaign-2026-11-13/survivors/research__normalise.py.txt",
    "threshold": 98,
-   "unclassified": []
+   "unclassified": [],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "research/paper_appendix.py": {
    "already_decided_or_in_first_packet": [],
@@ -2104,7 +2407,8 @@
      "mutant": "x_write__mutmut_40",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "research/paper_tables.py": {
    "already_decided_or_in_first_packet": [],
@@ -2498,7 +2802,8 @@
      "mutant": "x_main__mutmut_53",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "research/pool_chrono.py": {
    "already_decided_or_in_first_packet": [],
@@ -2509,8 +2814,40 @@
        "-        return pd.Series(base.dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"min\"))",
        "+        return pd.Series(base.dt.tz_localize(\"utc\") + pd.to_timedelta(within, unit=\"min\"))"
       ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "research.pool_chrono.x_read_times__mutmut_31",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_read_times__mutmut_31",
+      "mutated": [
+       "return pd.Series(base.dt.tz_localize(\"utc\") + pd.to_timedelta(within, unit=\"min\"))"
+      ],
+      "original": [
+       "return pd.Series(base.dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"min\"))"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/pool_chrono.py  # the change; MUTANT_UNDER_TEST=research.pool_chrono.x_read_times__mutmut_31 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      },
      {
@@ -2518,8 +2855,40 @@
        "-        return pd.Series(base.dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"min\"))",
        "+        return pd.Series(base.dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"MIN\"))"
       ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "research.pool_chrono.x_read_times__mutmut_37",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_read_times__mutmut_37",
+      "mutated": [
+       "return pd.Series(base.dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"MIN\"))"
+      ],
+      "original": [
+       "return pd.Series(base.dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"min\"))"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/pool_chrono.py  # the change; MUTANT_UNDER_TEST=research.pool_chrono.x_read_times__mutmut_37 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      },
      {
@@ -2527,8 +2896,40 @@
        "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
        "+    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"STABLE\")"
       ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "research.pool_chrono.x_eligible__mutmut_12",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_eligible__mutmut_12",
+      "mutated": [
+       "order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"STABLE\")"
+      ],
+      "original": [
+       "order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/pool_chrono.py  # the change; MUTANT_UNDER_TEST=research.pool_chrono.x_eligible__mutmut_12 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      }
     ]
@@ -2666,7 +3067,8 @@
      "mutant": "x_main__mutmut_93",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "research/pool_etl.py": {
    "already_decided_or_in_first_packet": [],
@@ -2677,8 +3079,41 @@
        "-        frame.to_csv(path, index=False)",
        "+        frame.to_csv(path, index=None)"
       ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "research.pool_etl.x_prepare_csv__mutmut_33",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_prepare_csv__mutmut_33",
+      "mutated": [
+       "frame.to_csv(path, index=None)"
+      ],
+      "original": [
+       "frame.to_csv(path, index=False)"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/pool_etl.py  # the change; MUTANT_UNDER_TEST=research.pool_etl.x_prepare_csv__mutmut_33 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      }
     ]
@@ -2910,7 +3345,8 @@
      "mutant": "x_main__mutmut_114",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "research/pool_preprocessing.py": {
    "already_decided_or_in_first_packet": [],
@@ -2921,8 +3357,41 @@
        "-    keys = pd.util.hash_pandas_object(frame, index=False).to_numpy()",
        "+    keys = pd.util.hash_pandas_object(frame, index=None).to_numpy()"
       ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "research.pool_preprocessing.x_prepare_frozen__mutmut_23",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_prepare_frozen__mutmut_23",
+      "mutated": [
+       "keys = pd.util.hash_pandas_object(frame, index=None).to_numpy()"
+      ],
+      "original": [
+       "keys = pd.util.hash_pandas_object(frame, index=False).to_numpy()"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/pool_preprocessing.py  # the change; MUTANT_UNDER_TEST=research.pool_preprocessing.x_prepare_frozen__mutmut_23 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      }
     ]
@@ -2995,7 +3464,8 @@
      "mutant": "x_prepare_frozen__mutmut_93",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "research/temporal_decision.py": {
    "already_decided_or_in_first_packet": [],
@@ -3006,8 +3476,41 @@
        "-        pos = rng.choice(pos, size=min(keep, len(pos)), replace=False)",
        "+        pos = rng.choice(pos, size=min(keep, len(pos)), replace=None)"
       ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "research.temporal_decision.x_match_prevalence__mutmut_27",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_match_prevalence__mutmut_27",
+      "mutated": [
+       "pos = rng.choice(pos, size=min(keep, len(pos)), replace=None)"
+      ],
+      "original": [
+       "pos = rng.choice(pos, size=min(keep, len(pos)), replace=False)"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/temporal_decision.py  # the change; MUTANT_UNDER_TEST=research.temporal_decision.x_match_prevalence__mutmut_27 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      },
      {
@@ -3015,8 +3518,41 @@
        "-        neg = rng.choice(neg, size=min(keep, len(neg)), replace=False)",
        "+        neg = rng.choice(neg, size=min(keep, len(neg)), replace=None)"
       ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "research.temporal_decision.x_match_prevalence__mutmut_51",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_match_prevalence__mutmut_51",
+      "mutated": [
+       "neg = rng.choice(neg, size=min(keep, len(neg)), replace=None)"
+      ],
+      "original": [
+       "neg = rng.choice(neg, size=min(keep, len(neg)), replace=False)"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/temporal_decision.py  # the change; MUTANT_UNDER_TEST=research.temporal_decision.x_match_prevalence__mutmut_51 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      }
     ],
@@ -3026,8 +3562,40 @@
        "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
        "+    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"STABLE\")"
       ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "research.temporal_decision.x_run_frame__mutmut_20",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_run_frame__mutmut_20",
+      "mutated": [
+       "order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"STABLE\")"
+      ],
+      "original": [
+       "order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/temporal_decision.py  # the change; MUTANT_UNDER_TEST=research.temporal_decision.x_run_frame__mutmut_20 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      },
      {
@@ -3035,8 +3603,40 @@
        "-    frame = tp.load(spec).sort_values(tp.TIME_UTC, kind=\"stable\")",
        "+    frame = tp.load(spec).sort_values(tp.TIME_UTC, kind=\"STABLE\")"
       ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "research.temporal_decision.x_credit_card__mutmut_11",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_credit_card__mutmut_11",
+      "mutated": [
+       "frame = tp.load(spec).sort_values(tp.TIME_UTC, kind=\"STABLE\")"
+      ],
+      "original": [
+       "frame = tp.load(spec).sort_values(tp.TIME_UTC, kind=\"stable\")"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/temporal_decision.py  # the change; MUTANT_UNDER_TEST=research.temporal_decision.x_credit_card__mutmut_11 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      },
      {
@@ -3044,8 +3644,40 @@
        "-    ).dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"min\")",
        "+    ).dt.tz_localize(\"utc\") + pd.to_timedelta(within, unit=\"min\")"
       ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "research.temporal_decision.x_bank_marketing__mutmut_57",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_bank_marketing__mutmut_57",
+      "mutated": [
+       ").dt.tz_localize(\"utc\") + pd.to_timedelta(within, unit=\"min\")"
+      ],
+      "original": [
+       ").dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"min\")"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/temporal_decision.py  # the change; MUTANT_UNDER_TEST=research.temporal_decision.x_bank_marketing__mutmut_57 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      },
      {
@@ -3053,8 +3685,40 @@
        "-    ).dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"min\")",
        "+    ).dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"MIN\")"
       ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "research.temporal_decision.x_bank_marketing__mutmut_63",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_bank_marketing__mutmut_63",
+      "mutated": [
+       ").dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"MIN\")"
+      ],
+      "original": [
+       ").dt.tz_localize(\"UTC\") + pd.to_timedelta(within, unit=\"min\")"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/temporal_decision.py  # the change; MUTANT_UNDER_TEST=research.temporal_decision.x_bank_marketing__mutmut_63 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      }
     ]
@@ -3254,7 +3918,8 @@
      "mutant": "x_main__mutmut_2",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "research/typed_benchmark.py": {
    "already_decided_or_in_first_packet": [],
@@ -3265,8 +3930,41 @@
        "-        df.groupby(\"group_id\", sort=False)[\"anomaly_type\"]",
        "+        df.groupby(\"group_id\", sort=None)[\"anomaly_type\"]"
       ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "research.typed_benchmark.x_split__mutmut_5",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_split__mutmut_5",
+      "mutated": [
+       "df.groupby(\"group_id\", sort=None)[\"anomaly_type\"]"
+      ],
+      "original": [
+       "df.groupby(\"group_id\", sort=False)[\"anomaly_type\"]"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/typed_benchmark.py  # the change; MUTANT_UNDER_TEST=research.typed_benchmark.x_split__mutmut_5 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      }
     ]
@@ -3322,7 +4020,8 @@
      "mutant": "x_evaluate__mutmut_55",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "research/typed_figures.py": {
    "already_decided_or_in_first_packet": [],
@@ -4302,7 +5001,8 @@
      "mutant": "x_main__mutmut_159",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "research/uci_loader.py": {
    "already_decided_or_in_first_packet": [],
@@ -4313,8 +5013,41 @@
        "-        chosen = np.random.default_rng(SEED).choice(np.flatnonzero(is_rare), k, replace=False)",
        "+        chosen = np.random.default_rng(SEED).choice(np.flatnonzero(is_rare), k, replace=None)"
       ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "research.uci_loader.x_derive_labels__mutmut_73",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_derive_labels__mutmut_73",
+      "mutated": [
+       "chosen = np.random.default_rng(SEED).choice(np.flatnonzero(is_rare), k, replace=None)"
+      ],
+      "original": [
+       "chosen = np.random.default_rng(SEED).choice(np.flatnonzero(is_rare), k, replace=False)"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants research/uci_loader.py  # the change; MUTANT_UNDER_TEST=research.uci_loader.x_derive_labels__mutmut_73 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      }
     ]
@@ -4375,7 +5108,8 @@
      "mutant": "x_split_columns__mutmut_36",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "research/uci_pool.py": {
    "already_decided_or_in_first_packet": [],
@@ -4724,7 +5458,8 @@
      "mutant": "x_main__mutmut_171",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "src/etl_benchmark/load.py": {
    "already_decided_or_in_first_packet": [
@@ -4750,7 +5485,8 @@
    "source_sha256": "bc450a2553f333662bb447de1c7cd9aabb274b2f608b8e57ad80e48321b9c98e",
    "survivor_dump": "l4-campaign-2026-11-13/survivors/src__etl_benchmark__load.py.txt",
    "threshold": 98,
-   "unclassified": []
+   "unclassified": [],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "src/etl_benchmark/quality/_torch_models.py": {
    "already_decided_or_in_first_packet": [],
@@ -4829,7 +5565,8 @@
      "mutant": "x\u01c1PaddedAE1SVM\u01c1fit__mutmut_13",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "src/etl_benchmark/quality/autoencoder.py": {
    "already_decided_or_in_first_packet": [],
@@ -4840,8 +5577,40 @@
        "-                \"scikit-learn\": version(\"scikit-learn\"),",
        "+                \"scikit-learn\": version(\"SCIKIT-LEARN\"),"
       ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "etl_benchmark.quality.autoencoder.x\u01c1AutoencoderDetector\u01c1settings__mutmut_28",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x\u01c1AutoencoderDetector\u01c1settings__mutmut_28",
+      "mutated": [
+       "\"scikit-learn\": version(\"SCIKIT-LEARN\"),"
+      ],
+      "original": [
+       "\"scikit-learn\": version(\"scikit-learn\"),"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/autoencoder.py  # the change; MUTANT_UNDER_TEST=etl_benchmark.quality.autoencoder.x\u01c1AutoencoderDetector\u01c1settings__mutmut_28 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      },
      {
@@ -4849,8 +5618,40 @@
        "-                \"numpy\": version(\"numpy\"),",
        "+                \"numpy\": version(\"NUMPY\"),"
       ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "etl_benchmark.quality.autoencoder.x\u01c1AutoencoderDetector\u01c1settings__mutmut_33",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x\u01c1AutoencoderDetector\u01c1settings__mutmut_33",
+      "mutated": [
+       "\"numpy\": version(\"NUMPY\"),"
+      ],
+      "original": [
+       "\"numpy\": version(\"numpy\"),"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/autoencoder.py  # the change; MUTANT_UNDER_TEST=etl_benchmark.quality.autoencoder.x\u01c1AutoencoderDetector\u01c1settings__mutmut_33 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      }
     ]
@@ -4897,7 +5698,8 @@
      "mutant": "x\u01c1ReconstructionModel\u01c1fit__mutmut_14",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "src/etl_benchmark/quality/base.py": {
    "already_decided_or_in_first_packet": [
@@ -4923,7 +5725,8 @@
    "source_sha256": "9efc8a6a410b92d81f4ee09f9d001f8adad62a779250b3b552db9878f9de28ff",
    "survivor_dump": "l4-campaign-2026-11-13/survivors/src__etl_benchmark__quality__base.py.txt",
    "threshold": 98,
-   "unclassified": []
+   "unclassified": [],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "src/etl_benchmark/quality/deep.py": {
    "already_decided_or_in_first_packet": [],
@@ -4934,8 +5737,40 @@
        "-                \"torch\": version(\"torch\"),",
        "+                \"torch\": version(\"TORCH\"),"
       ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "etl_benchmark.quality.deep.x\u01c1TorchDetector\u01c1settings__mutmut_19",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x\u01c1TorchDetector\u01c1settings__mutmut_19",
+      "mutated": [
+       "\"torch\": version(\"TORCH\"),"
+      ],
+      "original": [
+       "\"torch\": version(\"torch\"),"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/deep.py  # the change; MUTANT_UNDER_TEST=etl_benchmark.quality.deep.x\u01c1TorchDetector\u01c1settings__mutmut_19 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      },
      {
@@ -4943,8 +5778,40 @@
        "-                \"pyod\": version(\"pyod\"),",
        "+                \"pyod\": version(\"PYOD\"),"
       ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "etl_benchmark.quality.deep.x\u01c1TorchDetector\u01c1settings__mutmut_24",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x\u01c1TorchDetector\u01c1settings__mutmut_24",
+      "mutated": [
+       "\"pyod\": version(\"PYOD\"),"
+      ],
+      "original": [
+       "\"pyod\": version(\"pyod\"),"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/deep.py  # the change; MUTANT_UNDER_TEST=etl_benchmark.quality.deep.x\u01c1TorchDetector\u01c1settings__mutmut_24 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      }
     ]
@@ -4959,7 +5826,8 @@
    "source_sha256": "77364cfdf0850b107c316ffae0389e1bb552445d76188dab388dff76e8e22632",
    "survivor_dump": "l4-campaign-2026-11-13/survivors/src__etl_benchmark__quality__deep.py.txt",
    "threshold": 98,
-   "unclassified": []
+   "unclassified": [],
+   "would_pass_if_every_candidate_were_accepted": true
   },
   "src/etl_benchmark/quality/drift.py": {
    "already_decided_or_in_first_packet": [],
@@ -5070,7 +5938,8 @@
      "mutant": "x\u01c1TemporalDriftDetector\u01c1fit__mutmut_4",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "src/etl_benchmark/quality/gx.py": {
    "already_decided_or_in_first_packet": [],
@@ -5185,7 +6054,8 @@
      "mutant": "x\u01c1GreatExpectationsDetector\u01c1_failures_per_row__mutmut_9",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "src/etl_benchmark/quality/ml.py": {
    "already_decided_or_in_first_packet": [],
@@ -5196,8 +6066,36 @@
        "-        u_skew = u_left * -1 * np.sign(self.skew_sign_ - 1) + u_right * np.sign(self.skew_sign_ + 1)",
        "+        u_skew = u_left / -1 * np.sign(self.skew_sign_ - 1) + u_right * np.sign(self.skew_sign_ + 1)"
       ],
+      "counterexample_search": [
+       "test_a_division_by_minus_one_is_a_multiplication_by_minus_one_for_floats"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1decision_function__mutmut_48",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x\u01c1TailProbabilityModel\u01c1decision_function__mutmut_48",
+      "mutated": [
+       "u_skew = u_left / -1 * np.sign(self.skew_sign_ - 1) + u_right * np.sign(self.skew_sign_ + 1)"
+      ],
+      "original": [
+       "u_skew = u_left * -1 * np.sign(self.skew_sign_ - 1) + u_right * np.sign(self.skew_sign_ + 1)"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/ml.py  # the change; MUTANT_UNDER_TEST=etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1decision_function__mutmut_48 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      }
     ]
@@ -5402,7 +6300,8 @@
      "mutant": "x\u01c1TailProbabilityModel\u01c1fit__mutmut_13",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "src/etl_benchmark/quality/rules.py": {
    "already_decided_or_in_first_packet": [],
@@ -5488,7 +6387,8 @@
      "mutant": "x\u01c1IQRDetector\u01c1_exceedance__mutmut_9",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "src/etl_benchmark/quality/window_drift.py": {
    "already_decided_or_in_first_packet": [],
@@ -5499,8 +6399,40 @@
        "-    cutoff = cutoff.tz_localize(\"UTC\") if cutoff.tzinfo is None else cutoff.tz_convert(\"UTC\")",
        "+    cutoff = cutoff.tz_localize(\"utc\") if cutoff.tzinfo is None else cutoff.tz_convert(\"UTC\")"
       ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "etl_benchmark.quality.window_drift.x_event_metrics__mutmut_25",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_event_metrics__mutmut_25",
+      "mutated": [
+       "cutoff = cutoff.tz_localize(\"utc\") if cutoff.tzinfo is None else cutoff.tz_convert(\"UTC\")"
+      ],
+      "original": [
+       "cutoff = cutoff.tz_localize(\"UTC\") if cutoff.tzinfo is None else cutoff.tz_convert(\"UTC\")"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/window_drift.py  # the change; MUTANT_UNDER_TEST=etl_benchmark.quality.window_drift.x_event_metrics__mutmut_25 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      }
     ]
@@ -5586,7 +6518,8 @@
      "mutant": "x\u01c1WindowDriftMonitor\u01c1evaluate__mutmut_2",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "src/etl_benchmark/quality/windows.py": {
    "already_decided_or_in_first_packet": [],
@@ -5597,8 +6530,40 @@
        "-    order = np.argsort(times.to_numpy(), kind=\"stable\")",
        "+    order = np.argsort(times.to_numpy(), kind=\"STABLE\")"
       ],
+      "counterexample_search": [
+       "test_a_package_version_is_looked_up_without_regard_to_case",
+       "test_a_timezone_name_is_read_without_case_for_utc",
+       "test_a_sort_kind_is_read_without_case",
+       "test_the_minute_unit_is_read_without_case",
+       "test_a_codec_name_is_read_without_case"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "etl_benchmark.quality.windows.x_causal_windows__mutmut_26",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_causal_windows__mutmut_26",
+      "mutated": [
+       "order = np.argsort(times.to_numpy(), kind=\"STABLE\")"
+      ],
+      "original": [
+       "order = np.argsort(times.to_numpy(), kind=\"stable\")"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants src/etl_benchmark/quality/windows.py  # the change; MUTANT_UNDER_TEST=etl_benchmark.quality.windows.x_causal_windows__mutmut_26 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      }
     ]
@@ -5635,7 +6600,8 @@
      "mutant": "x_scores_to_events__mutmut_9",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "verification/archive_evidence.py": {
    "already_decided_or_in_first_packet": [],
@@ -6029,7 +6995,8 @@
      "mutant": "x_main__mutmut_75",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "verification/bundles.py": {
    "already_decided_or_in_first_packet": [],
@@ -6180,7 +7147,8 @@
      "mutant": "x_main__mutmut_102",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "verification/lock_environment.py": {
    "already_decided_or_in_first_packet": [],
@@ -7088,7 +8056,8 @@
      "mutant": "x_main__mutmut_72",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "verification/mutation_cache.py": {
    "already_decided_or_in_first_packet": [],
@@ -7099,8 +8068,41 @@
        "-        json.dumps(data, sort_keys=True, separators=(\",\", \":\"), allow_nan=False).encode()",
        "+        json.dumps(data, sort_keys=True, separators=(\",\", \":\"), allow_nan=None).encode()"
       ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "verification.mutation_cache.x__digest__mutmut_5",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x__digest__mutmut_5",
+      "mutated": [
+       "json.dumps(data, sort_keys=True, separators=(\",\", \":\"), allow_nan=None).encode()"
+      ],
+      "original": [
+       "json.dumps(data, sort_keys=True, separators=(\",\", \":\"), allow_nan=False).encode()"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_cache.py  # the change; MUTANT_UNDER_TEST=verification.mutation_cache.x__digest__mutmut_5 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      },
      {
@@ -7108,8 +8110,41 @@
        "-        temporary.write_text(json.dumps(data, indent=2, sort_keys=True, allow_nan=False) + \"\\n\")",
        "+        temporary.write_text(json.dumps(data, indent=2, sort_keys=True, allow_nan=None) + \"\\n\")"
       ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "verification.mutation_cache.x__write_json__mutmut_7",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x__write_json__mutmut_7",
+      "mutated": [
+       "temporary.write_text(json.dumps(data, indent=2, sort_keys=True, allow_nan=None) + \"\\n\")"
+      ],
+      "original": [
+       "temporary.write_text(json.dumps(data, indent=2, sort_keys=True, allow_nan=False) + \"\\n\")"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_cache.py  # the change; MUTANT_UNDER_TEST=verification.mutation_cache.x__write_json__mutmut_7 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      },
      {
@@ -7117,8 +8152,41 @@
        "-    return hashlib.sha256(ast.dump(tree, annotate_fields=False).encode()).hexdigest()",
        "+    return hashlib.sha256(ast.dump(tree, annotate_fields=None).encode()).hexdigest()"
       ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "verification.mutation_cache.x__globals_hash__mutmut_8",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x__globals_hash__mutmut_8",
+      "mutated": [
+       "return hashlib.sha256(ast.dump(tree, annotate_fields=None).encode()).hexdigest()"
+      ],
+      "original": [
+       "return hashlib.sha256(ast.dump(tree, annotate_fields=False).encode()).hexdigest()"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_cache.py  # the change; MUTANT_UNDER_TEST=verification.mutation_cache.x__globals_hash__mutmut_8 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      }
     ]
@@ -7307,7 +8375,8 @@
      "mutant": "x_prepare_execution__mutmut_206",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": true
   },
   "verification/mutation_scope.py": {
    "already_decided_or_in_first_packet": [],
@@ -7318,8 +8387,36 @@
        "-        literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]",
        "+        literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", )[0]"
       ],
+      "counterexample_search": [
+       "test_the_first_part_of_a_split_does_not_depend_on_a_limit_of_one_or_more"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "verification.mutation_scope.x__walk__mutmut_6",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x__walk__mutmut_6",
+      "mutated": [
+       "literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", )[0]"
+      ],
+      "original": [
+       "literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_scope.py  # the change; MUTANT_UNDER_TEST=verification.mutation_scope.x__walk__mutmut_6 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      },
      {
@@ -7327,8 +8424,36 @@
        "-        literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]",
        "+        literal = pattern.split(\"*\", 1)[0].split(\"?\", )[0].split(\"[\", 1)[0]"
       ],
+      "counterexample_search": [
+       "test_the_first_part_of_a_split_does_not_depend_on_a_limit_of_one_or_more"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "verification.mutation_scope.x__walk__mutmut_11",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x__walk__mutmut_11",
+      "mutated": [
+       "literal = pattern.split(\"*\", 1)[0].split(\"?\", )[0].split(\"[\", 1)[0]"
+      ],
+      "original": [
+       "literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_scope.py  # the change; MUTANT_UNDER_TEST=verification.mutation_scope.x__walk__mutmut_11 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      },
      {
@@ -7336,8 +8461,36 @@
        "-        literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]",
        "+        literal = pattern.split(\"*\", )[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
       ],
+      "counterexample_search": [
+       "test_the_first_part_of_a_split_does_not_depend_on_a_limit_of_one_or_more"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "verification.mutation_scope.x__walk__mutmut_16",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x__walk__mutmut_16",
+      "mutated": [
+       "literal = pattern.split(\"*\", )[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
+      ],
+      "original": [
+       "literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_scope.py  # the change; MUTANT_UNDER_TEST=verification.mutation_scope.x__walk__mutmut_16 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      },
      {
@@ -7345,8 +8498,36 @@
        "-        literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]",
        "+        literal = pattern.split(\"*\", 2)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
       ],
+      "counterexample_search": [
+       "test_the_first_part_of_a_split_does_not_depend_on_a_limit_of_one_or_more"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "verification.mutation_scope.x__walk__mutmut_19",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x__walk__mutmut_19",
+      "mutated": [
+       "literal = pattern.split(\"*\", 2)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
+      ],
+      "original": [
+       "literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_scope.py  # the change; MUTANT_UNDER_TEST=verification.mutation_scope.x__walk__mutmut_19 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      },
      {
@@ -7354,8 +8535,36 @@
        "-        literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]",
        "+        literal = pattern.split(\"*\", 1)[0].split(\"?\", 2)[0].split(\"[\", 1)[0]"
       ],
+      "counterexample_search": [
+       "test_the_first_part_of_a_split_does_not_depend_on_a_limit_of_one_or_more"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "verification.mutation_scope.x__walk__mutmut_22",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x__walk__mutmut_22",
+      "mutated": [
+       "literal = pattern.split(\"*\", 1)[0].split(\"?\", 2)[0].split(\"[\", 1)[0]"
+      ],
+      "original": [
+       "literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_scope.py  # the change; MUTANT_UNDER_TEST=verification.mutation_scope.x__walk__mutmut_22 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      },
      {
@@ -7363,8 +8572,36 @@
        "-        literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]",
        "+        literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 2)[0]"
       ],
+      "counterexample_search": [
+       "test_the_first_part_of_a_split_does_not_depend_on_a_limit_of_one_or_more"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "verification.mutation_scope.x__walk__mutmut_25",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x__walk__mutmut_25",
+      "mutated": [
+       "literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 2)[0]"
+      ],
+      "original": [
+       "literal = pattern.split(\"*\", 1)[0].split(\"?\", 1)[0].split(\"[\", 1)[0]"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/mutation_scope.py  # the change; MUTANT_UNDER_TEST=verification.mutation_scope.x__walk__mutmut_25 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      }
     ]
@@ -7379,7 +8616,8 @@
    "source_sha256": "622f62cf9104148fb33c7cf80595ffdf32ade43f5decd3d7cc3e8db06aa13b0a",
    "survivor_dump": "l4-campaign-2026-11-13/survivors/verification__mutation_scope.py.txt",
    "threshold": 98,
-   "unclassified": []
+   "unclassified": [],
+   "would_pass_if_every_candidate_were_accepted": true
   },
   "verification/pool_contract.py": {
    "already_decided_or_in_first_packet": [],
@@ -7422,7 +8660,8 @@
      "mutant": "x_local_path__mutmut_14",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": true
   },
   "verification/protection.py": {
    "already_decided_or_in_first_packet": [],
@@ -7433,8 +8672,41 @@
        "-        capture_output=True, text=True, check=False,",
        "+        capture_output=True, text=True, check=None,"
       ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "verification.protection.x_main__mutmut_50",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_main__mutmut_50",
+      "mutated": [
+       "capture_output=True, text=True, check=None,"
+      ],
+      "original": [
+       "capture_output=True, text=True, check=False,"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/protection.py  # the change; MUTANT_UNDER_TEST=verification.protection.x_main__mutmut_50 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      }
     ]
@@ -7973,7 +9245,8 @@
      "mutant": "x_main__mutmut_75",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "verification/real_preflight.py": {
    "already_decided_or_in_first_packet": [],
@@ -7984,8 +9257,41 @@
        "-        [\"gh\", \"api\", f\"repos/{repo}/actions/runners\"], capture_output=True, text=True, check=False",
        "+        [\"gh\", \"api\", f\"repos/{repo}/actions/runners\"], capture_output=True, text=True, check=None"
       ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "verification.real_preflight.x_fetch_registrations__mutmut_5",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_fetch_registrations__mutmut_5",
+      "mutated": [
+       "[\"gh\", \"api\", f\"repos/{repo}/actions/runners\"], capture_output=True, text=True, check=None"
+      ],
+      "original": [
+       "[\"gh\", \"api\", f\"repos/{repo}/actions/runners\"], capture_output=True, text=True, check=False"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/real_preflight.py  # the change; MUTANT_UNDER_TEST=verification.real_preflight.x_fetch_registrations__mutmut_5 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      }
     ]
@@ -10222,7 +11528,8 @@
      "mutant": "x_main__mutmut_24",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "verification/refresh_profile.py": {
    "already_decided_or_in_first_packet": [],
@@ -10616,7 +11923,8 @@
      "mutant": "x_main__mutmut_70",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   },
   "verification/scaling.py": {
    "already_decided_or_in_first_packet": [],
@@ -10627,8 +11935,41 @@
        "-    pd.DataFrame(rows).to_csv(csv_path, index=False)",
        "+    pd.DataFrame(rows).to_csv(csv_path, index=None)"
       ],
+      "counterexample_search": [
+       "test_json_with_allow_nan_none_refuses_non_finite_numbers_like_false",
+       "test_ast_dump_without_field_names_is_the_same_for_false_and_none",
+       "test_a_missing_sort_flag_in_a_groupby_means_no_sorting_like_false",
+       "test_a_missing_index_flag_in_to_csv_writes_no_index_like_false",
+       "test_a_missing_replace_flag_in_a_choice_samples_without_replacement_like_false",
+       "test_a_missing_check_flag_in_a_subprocess_run_behaves_like_false"
+      ],
+      "environments_tested": [
+       {
+        "environment": "mutation venv (numpy wheel linked to Accelerate)",
+        "numpy_pandas": "2.4.6 3.1.1",
+        "result": "27 passed"
+       },
+       {
+        "environment": "canonical conda environment etl-benchmark",
+        "numpy_pandas": "2.4.6 3.0.6",
+        "result": "27 passed"
+       },
+       {
+        "environment": "numpy 1.26 environment (throwaway uv venv)",
+        "numpy_pandas": "1.26.4 2.2.3",
+        "result": "27 passed"
+       }
+      ],
       "id": "verification.scaling.x_main__mutmut_119",
+      "limitation": "evidence from the probes only; no input found that tells the two apart, which is not a proof for other dependency versions",
       "mutant": "x_main__mutmut_119",
+      "mutated": [
+       "pd.DataFrame(rows).to_csv(csv_path, index=None)"
+      ],
+      "original": [
+       "pd.DataFrame(rows).to_csv(csv_path, index=False)"
+      ],
+      "reproduce": "python docs/thesis-remediation/evidence/mutdiff.py mutants verification/scaling.py  # the change; MUTANT_UNDER_TEST=verification.scaling.x_main__mutmut_119 python -m pytest tests research/tests -x -q  # runs the tests against it",
       "timeout": false
      }
     ]
@@ -11752,7 +13093,8 @@
      "mutant": "x_main__mutmut_223",
      "timeout": false
     }
-   ]
+   ],
+   "would_pass_if_every_candidate_were_accepted": false
   }
  }
 }
