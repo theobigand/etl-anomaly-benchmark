@@ -7,6 +7,14 @@ invalid_text ValueError equal
 infinity ValueError equal
 empty_columns value equal
 missing_column KeyError equal
+categorical 2 missing object equal
+categorical 2 unicode_and_empty object equal
+categorical 2 empty object equal
+categorical 2 mixed object equal
+categorical 4 missing object equal
+categorical 4 unicode_and_empty object equal
+categorical 4 empty object equal
+categorical 4 mixed object equal
 16 valid value equal
 16 duplicate_within value equal
 16 duplicate_across ValueError equal

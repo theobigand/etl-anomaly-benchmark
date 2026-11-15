@@ -73,3 +73,14 @@ Both used NumPy 2.4.6, however, so the empty-axis numerical and warning behavior
 has not been established across the supported NumPy range. No equivalence is
 proposed on that evidence alone. The record retains its source identity and
 this limitation for a later supported-environment investigation.
+
+The `_categorical` mutants `research.pool_preprocessing.x__categorical__mutmut_2`
+and `research.pool_preprocessing.x__categorical__mutmut_4` remain inconclusive.
+They replace `dtype=object` with None or omit it in the string array conversion.
+The probe found matching object dtype and values for missing, Unicode, empty
+and mixed inputs in both local pandas environments. Earlier supported pandas
+releases and alternate string-storage backends were not exercised, and this
+is a separate operation from the existing owner-decided LSTM records. No
+new equivalence is proposed. An initial probe used NumPy's array equality on
+object arrays and failed because paired NaNs compared unequal; the retained
+probe checks dtypes and uses pandas' missing-aware frame equality instead.

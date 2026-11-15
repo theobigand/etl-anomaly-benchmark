@@ -683,7 +683,7 @@
         "+        [frame[name].astype(\"string\").to_numpy(dtype=None, na_value=np.nan) for name in columns]"
       ],
       "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "evidence": "Inconclusive after probe: generated original and mutant produced equal object dtype and values for missing, Unicode, empty and mixed input in local pandas 3.0.6 and 3.1.1. Earlier pandas versions and alternate string backends were not exercised; see POOL_NUMERIC_EQUIVALENCE_PROBE_2026-11-15.md."
     },
     {
       "id": "research.pool_preprocessing.x__categorical__mutmut_4",
@@ -694,7 +694,7 @@
         "+        [frame[name].astype(\"string\").to_numpy(na_value=np.nan) for name in columns]"
       ],
       "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "evidence": "Inconclusive after probe: generated original and mutant produced equal object dtype and values for missing, Unicode, empty and mixed input in local pandas 3.0.6 and 3.1.1. Earlier pandas versions and alternate string backends were not exercised; see POOL_NUMERIC_EQUIVALENCE_PROBE_2026-11-15.md."
     },
     {
       "id": "research.pool_preprocessing.x__numeric__mutmut_9",
@@ -990,8 +990,8 @@
         "-        flags = pd.Series(np.asarray(flags), index=test.index)",
         "+        flags = pd.Series(np.asarray(flags), index=None)"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The actual split resets test index to RangeIndex, equal to pandas Series default for the same flags; two seeded original/mutant end-to-end probes match recall, precision and FPR. See TYPED_INDEX_EQUIVALENCE_PROBE_2026-11-15.md for source, environment and limitations."
     },
     {
       "id": "research.typed_benchmark.x_evaluate__mutmut_55",
@@ -1001,8 +1001,8 @@
         "-        flags = pd.Series(np.asarray(flags), index=test.index)",
         "+        flags = pd.Series(np.asarray(flags), )"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The actual split resets test index to RangeIndex, equal to pandas Series default for the same flags; two seeded original/mutant end-to-end probes match recall, precision and FPR. See TYPED_INDEX_EQUIVALENCE_PROBE_2026-11-15.md for source, environment and limitations."
     },
     {
       "id": "research.uci_loader.x_read_table__mutmut_5",

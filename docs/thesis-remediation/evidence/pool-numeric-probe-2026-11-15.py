@@ -38,6 +38,21 @@ for label, args in cases.items():
         assert outcomes[0][1] == outcomes[1][1]
     print(label, outcomes[0][0], "equal")
 
+for number in (2, 4):
+    mutant = getattr(pool, f"x__categorical__mutmut_{number}")
+    for label, values in {
+        "missing": ["a", "b", None],
+        "unicode_and_empty": ["a", "á", ""],
+        "empty": [],
+        "mixed": ["a", 1, None],
+    }.items():
+        frame = pd.DataFrame({"x": values})
+        original = pool.x__categorical__mutmut_orig(frame, ["x"])
+        actual = mutant(frame, ["x"])
+        assert original.dtype == actual.dtype
+        pd.testing.assert_frame_equal(pd.DataFrame(original), pd.DataFrame(actual))
+        print("categorical", number, label, str(actual.dtype), "equal")
+
 folds = {"train": list(range(8)), "validation": [8, 9], "test": [10, 11]}
 frame = pd.DataFrame({"x": np.arange(12, dtype=float), "cat": ["a", "b"] * 6})
 within = frame.copy()
