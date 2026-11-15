@@ -704,8 +704,8 @@
         "-    values = frame[columns].apply(pd.to_numeric, errors=\"raise\").to_numpy(dtype=float)",
         "+    values = frame[columns].apply(pd.to_numeric, ).to_numpy(dtype=float)"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. pandas.to_numeric documents errors=raise as its default; six original/mutant cases matched in both local pandas environments. See POOL_NUMERIC_EQUIVALENCE_PROBE_2026-11-15.md for source identities, evidence and limitations."
     },
     {
       "id": "research.pool_preprocessing.x_prepare_frozen__mutmut_16",

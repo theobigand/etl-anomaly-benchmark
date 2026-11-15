@@ -189,3 +189,6 @@ cases; no fresh 100-unit campaign has been completed.
 Two additional unapproved window dtype proposals are documented in
 [the window probe record](WINDOWS_EQUIVALENCE_PROBES_2026-11-15.md). Their
 hypothetical effect on the historical score is not a current measurement.
+A further unapproved pool numeric-conversion proposal, including probes in two
+pandas environments, is in
+[the pool numeric probe record](POOL_NUMERIC_EQUIVALENCE_PROBE_2026-11-15.md).

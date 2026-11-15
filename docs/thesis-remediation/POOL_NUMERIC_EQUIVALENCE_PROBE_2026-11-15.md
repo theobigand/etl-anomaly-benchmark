@@ -1,0 +1,41 @@
+# Pool numeric conversion default proposal
+
+`research.pool_preprocessing.x__numeric__mutmut_9` omits `errors="raise"`
+from the `pd.to_numeric` call that converts each selected numeric feature.
+It is proposed as equivalent, not approved or excluded from any official score.
+The contract rejects unparseable or infinite numeric data, permits missing
+values, and returns numeric arrays in input column order. The documented
+pandas default for `errors` is `raise` in both the
+[2.0 API](https://pandas.pydata.org/pandas-docs/version/2.0/reference/api/pandas.to_numeric.html)
+and [3.0 API](https://pandas.pydata.org/pandas-docs/version/3.0/reference/api/pandas.to_numeric.html).
+The default applies to each series passed by `DataFrame.apply`; the surrounding
+conversion and infinity check are unchanged.
+
+Direct original/mutant probes matched numeric and missing values, numeric text,
+invalid text, infinity, no selected columns and a nonexistent column, including
+exception types and messages. These examples search boundaries but are not
+exhaustive. They ran on macOS arm64, Python 3.11.17, NumPy 2.4.6 and
+scikit-learn 1.9.1 in both the canonical pandas 3.0.6 and mutation pandas 3.1.1
+environments. The probes do not establish behavior in every supported release
+or under dynamic replacement of `pd.to_numeric`.
+
+The source SHA-256 is
+`edf8ac28b2824c76840c8e4cad47fe3fee1f1ac84a5b38ad341e968dee9e8dc0`;
+the generated source is
+`cbeabfdae48053ea69948b38802c4bf0f3dd9175a4289cd23e0b53806b641cc5` and
+is preserved as `evidence/pool-preprocessing-generated-2026-11-15.py.gz`.
+The executable probe and both outputs are in `evidence/pool-numeric-probe-2026-11-15.py`
+and the matching `-conda.txt` and `-mutation.txt` files. With the matching
+generated module present, run:
+
+```sh
+PYTHONPATH=mutants/research:src ~/.cache/etl-mutation-venv/bin/python \
+  docs/thesis-remediation/evidence/pool-numeric-probe-2026-11-15.py
+PYTHONPATH=mutants/research:src ~/miniconda3/envs/etl-benchmark/bin/python \
+  docs/thesis-remediation/evidence/pool-numeric-probe-2026-11-15.py
+```
+
+The historical raw unit was 241/248 (97.18%) at L4. Excluding this proposal
+alone hypothetically gives 241/247 (97.57%), still below 98%. Even adding the
+separate existing packet proposal yields 241/246 (97.967%), still below the
+exact threshold. Neither figure is a current or officially authorized result.
