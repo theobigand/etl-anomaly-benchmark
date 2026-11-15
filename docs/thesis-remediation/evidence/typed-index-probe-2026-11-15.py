@@ -4,6 +4,7 @@ from importlib.metadata import version
 from pathlib import Path
 
 import injection
+import multi_schema as multi
 import numpy as np
 import pandas as pd
 import typed_benchmark as benchmark
@@ -41,3 +42,23 @@ for seed in (0, 11):
             pd.testing.assert_frame_equal(original[table], result[table])
         pd.testing.assert_series_equal(original["fpr"], result["fpr"])
         print(seed, number, "split RangeIndex and all output tables equal")
+
+for p in ("research/multi_schema.py", "mutants/research/multi_schema.py"):
+    print(p, hashlib.sha256(Path(p).read_bytes()).hexdigest())
+# Restrict the detector registry to a real inexpensive detector while preserving
+# the actual split, scoring path and deduplication comparator.
+multi.DETECTOR_NAMES = ["zscore"]
+for schema in ("transactions", "sensors"):
+    spec = multi.SCHEMAS[schema]
+    data = multi.make(spec, n_rows=300, seed=3)
+    data.index = pd.Index(np.arange(len(data))[::-1] * 3 + 7)
+    test = multi._split(data, spec, 3)[2]
+    assert test.index.equals(pd.RangeIndex(len(test)))
+    original = multi.x_evaluate__mutmut_orig(data, spec, 3)
+    for number in (68, 70):
+        mutant = getattr(multi, f"x_evaluate__mutmut_{number}")
+        result = mutant(data, spec, 3)
+        for table in ("recall", "precision"):
+            pd.testing.assert_frame_equal(original[table], result[table])
+        pd.testing.assert_series_equal(original["fpr"], result["fpr"])
+        print(schema, number, "split RangeIndex and all output tables equal")

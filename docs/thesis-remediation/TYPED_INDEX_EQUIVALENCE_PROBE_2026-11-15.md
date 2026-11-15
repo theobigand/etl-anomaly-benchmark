@@ -33,3 +33,24 @@ The historical raw unit was 175/180 (97.22%), L4 threshold 98%. Hypothetically
 excluding these two alone yields 175/178 (98.31%), crossing that historical
 threshold. The previous packet's separate proposal is not included. This is
 not a fresh score, official exclusion, or independent review.
+
+Two analogous unapproved proposals are
+`research.multi_schema.x_evaluate__mutmut_68` and
+`research.multi_schema.x_evaluate__mutmut_70`. The recorded `_split` also
+resets each partition to a RangeIndex before `evaluate` constructs flags.
+The probe uses the real generators and split for the transactions and sensors
+schemas with a non-default input index. To bound execution it narrows the
+classical registry to the real z-score detector; drift and deduplication still
+run. Original and mutant recall, precision and FPR matched. Deep mode and the
+other classical detectors were not executed by this probe; the index invariant
+is shared by the code paths but has not been independently reviewed.
+
+The multi-schema source SHA-256 is
+`1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4`;
+the retained generated module `evidence/multi-schema-generated-2026-11-15.py.gz`
+has uncompressed SHA-256
+`8b48b7c67a6e97e0bfa55683104c6f7c28ff77fcc949ba1e6281003424dbdf8e`.
+The common probe and output above include these cases. The historical raw
+multi-schema score was 1057/1093 (96.71%); hypothetically excluding only
+these two gives 1057/1091 (96.88%), still below L4 98%. No current measurement,
+owner decision or official adjusted result is implied.

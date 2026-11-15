@@ -419,8 +419,8 @@
         "-        flags = pd.Series(np.asarray(flags), index=test.index)",
         "+        flags = pd.Series(np.asarray(flags), index=None)"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The real _split resets test index to RangeIndex, equal to the default Series index for the same flags. Transactions and sensors probes using a narrowed real detector registry matched recall, precision and FPR; see TYPED_INDEX_EQUIVALENCE_PROBE_2026-11-15.md for limitations."
     },
     {
       "id": "research.multi_schema.x_evaluate__mutmut_70",
@@ -430,8 +430,8 @@
         "-        flags = pd.Series(np.asarray(flags), index=test.index)",
         "+        flags = pd.Series(np.asarray(flags), )"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The real _split resets test index to RangeIndex, equal to the default Series index for the same flags. Transactions and sensors probes using a narrowed real detector registry matched recall, precision and FPR; see TYPED_INDEX_EQUIVALENCE_PROBE_2026-11-15.md for limitations."
     },
     {
       "id": "research.multi_schema.x_hypotheses__mutmut_91",

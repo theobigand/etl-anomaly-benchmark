@@ -5,3 +5,9 @@ environment macOS-27.2-arm64-arm-64bit 3.11.17 {'numpy': '2.4.6', 'pandas': '3.1
 0 55 split RangeIndex and all output tables equal
 11 53 split RangeIndex and all output tables equal
 11 55 split RangeIndex and all output tables equal
+research/multi_schema.py 1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4
+mutants/research/multi_schema.py 8b48b7c67a6e97e0bfa55683104c6f7c28ff77fcc949ba1e6281003424dbdf8e
+transactions 68 split RangeIndex and all output tables equal
+transactions 70 split RangeIndex and all output tables equal
+sensors 68 split RangeIndex and all output tables equal
+sensors 70 split RangeIndex and all output tables equal
