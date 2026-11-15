@@ -188,8 +188,8 @@
         "-        for d, h in zip(offsets, hours, strict=True)",
         "+        for d, h in zip(offsets, hours, strict=None)"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. Both sequences are drawn from the same requested length n using the supported NumPy Generator; equal-length zip variants matched for zero, positive and invalid negative sizes in both local pandas builds. See MULTISCHEMA_DATES_EQUIVALENCE_PROBE_2026-11-15.md for source, limits and hypothetical."
     },
     {
       "id": "research.multi_schema.x__dates__mutmut_34",
@@ -199,8 +199,8 @@
         "-        for d, h in zip(offsets, hours, strict=True)",
         "+        for d, h in zip(offsets, hours, )"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. Both sequences are drawn from the same requested length n using the supported NumPy Generator; equal-length zip variants matched for zero, positive and invalid negative sizes in both local pandas builds. See MULTISCHEMA_DATES_EQUIVALENCE_PROBE_2026-11-15.md for source, limits and hypothetical."
     },
     {
       "id": "research.multi_schema.x__dates__mutmut_35",
@@ -210,8 +210,8 @@
         "-        for d, h in zip(offsets, hours, strict=True)",
         "+        for d, h in zip(offsets, hours, strict=False)"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. Both sequences are drawn from the same requested length n using the supported NumPy Generator; equal-length zip variants matched for zero, positive and invalid negative sizes in both local pandas builds. See MULTISCHEMA_DATES_EQUIVALENCE_PROBE_2026-11-15.md for source, limits and hypothetical."
     },
     {
       "id": "research.multi_schema.x__transactions__mutmut_2",
