@@ -229,6 +229,7 @@ def test_the_credit_card_rows_follow_time_and_carry_the_label_and_utc_time(monke
     monkeypatch.setattr(tp, "features", features)
     x, y, times = td.credit_card()
     assert seen["load"] is DATASETS["credit_card"] and seen["features"] is DATASETS["credit_card"]
+    assert x.columns.tolist() == ["v"]
     assert x["v"].tolist() == [1.0, 2.0, 3.0] and x.index.equals(pd.RangeIndex(3))
     assert y.tolist() == [0, 1, 1] and times.index.equals(pd.RangeIndex(3))
     assert times.is_monotonic_increasing

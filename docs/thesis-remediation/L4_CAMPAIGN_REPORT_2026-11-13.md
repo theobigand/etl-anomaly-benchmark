@@ -210,3 +210,9 @@ and the drift threshold are documented in
 [the drift boundary record](DRIFT_BOUNDARY_PROBE_2026-11-15.md). None are full
 unit remeasurements. Additional unapproved severity-figure proposals are in
 [the severity probe record](SEVERITY_ZIP_EQUIVALENCE_PROBE_2026-11-15.md).
+Further focused credit-card index regressions are recorded in
+[the temporal boundary record](TEMPORAL_BOUNDARY_2026-11-15.md). Conditional
+GX-name proposals and still-inconclusive typed-metric and autoencoder-warning
+probes are documented in [the GX name record](GX_NAME_EQUIVALENCE_PROBE_2026-11-15.md),
+[the typed metric record](TYPED_METRIC_PROBE_2026-11-15.md) and
+[the autoencoder warning record](AUTOENCODER_WARNING_PROBE_2026-11-15.md).

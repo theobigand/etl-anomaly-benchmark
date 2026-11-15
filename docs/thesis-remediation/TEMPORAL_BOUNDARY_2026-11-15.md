@@ -27,3 +27,26 @@ retained in `evidence/temporal-boundary-focused-2026-11-15.json` and the
 associated files. The run used the case-insensitive local filesystem and
 started with the regression uncommitted on `ced2975`; it is not a complete
 unit remeasurement.
+
+## Credit-card feature index boundary
+
+`research.temporal_decision.x_credit_card__mutmut_12` and `_17` replace
+`reset_index(drop=True)` with None or False. On the existing representative
+credit-card loader fixture, each mutant inserts the original sorted row index
+as an extra numerical feature; the original returns only the selected feature
+columns. This changes model inputs and could introduce a spurious time/order
+signal. The existing public loader regression now asserts the complete
+feature-column list. It failed on each mutant (RED, exit 1) and both affected
+temporal-decision test files passed on the original (GREEN/regression, exit 0;
+43 tests). The test uses stand-ins for data loading and feature selection but
+executes the actual loader alignment and index reset.
+
+RED uses the preload command in the earlier section with mutant identity
+`research.temporal_decision.x_credit_card__mutmut_12` or `_17` and node
+`research/tests/test_temporal_decision_flow.py::test_the_credit_card_rows_follow_time_and_carry_the_label_and_utc_time`.
+The original source digest and local environment match the earlier section.
+The focused native run exited 0 and recorded both mutants killed (exit code
+1). The command, context, log and metadata are in
+`evidence/credit-index-focused-2026-11-15.json` and associated files. The
+run used a case-insensitive local filesystem with the assertion uncommitted
+on `e33308a`; it is not a full unit measurement.

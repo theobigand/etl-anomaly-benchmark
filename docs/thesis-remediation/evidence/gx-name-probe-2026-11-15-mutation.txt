@@ -1,0 +1,15 @@
+src/etl_benchmark/quality/gx.py 11be59dbe975d05547395263b763d37716cd9f916b284ce4147cfd87c61e3416
+mutants/src/etl_benchmark/quality/gx.py 03c4ec9748e7d655d0c142f303a962c2a157be91455e528b1988ef9e9be166a6
+environment macOS-27.2-arm64-arm-64bit 3.11.17 {'numpy': '2.4.6', 'pandas': '3.1.1', 'great-expectations': '1.24.1', 'mutmut': '3.8.0'}
+17 normal equal
+17 missing_outlier equal
+18 normal equal
+18 missing_outlier equal
+19 normal equal
+19 missing_outlier equal
+20 normal equal
+20 missing_outlier equal
+21 normal equal
+21 missing_outlier equal
+22 normal equal
+22 missing_outlier equal

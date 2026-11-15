@@ -376,7 +376,7 @@
         "+        recall[name] = recall_score(is_type[keep].astype(None), flags[keep])"
       ],
       "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "evidence": "Inconclusive after probe: recall and precision matched for mixed, unflagged and absent classes in two local pandas builds, both with scikit-learn 1.9.1; compatibility across the broader supported scikit-learn range remains unestablished. See TYPED_METRIC_PROBE_2026-11-15.md."
     },
     {
       "id": "research.multi_schema.x__per_type__mutmut_25",
@@ -387,7 +387,7 @@
         "+        precision[name] = precision_score(is_type[keep].astype(int), flags[keep], )"
       ],
       "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "evidence": "Inconclusive after probe: the metric values matched, but the mutant emits UndefinedMetricWarning for no predicted positives while the original does not. The significance for supported callers and other scikit-learn versions remains unresolved. See TYPED_METRIC_PROBE_2026-11-15.md."
     },
     {
       "id": "research.multi_schema.x__per_type__mutmut_26",
@@ -398,7 +398,7 @@
         "+        precision[name] = precision_score(is_type[keep].astype(None), flags[keep], zero_division=0)"
       ],
       "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "evidence": "Inconclusive after probe: recall and precision matched for mixed, unflagged and absent classes in two local pandas builds, both with scikit-learn 1.9.1; compatibility across the broader supported scikit-learn range remains unestablished. See TYPED_METRIC_PROBE_2026-11-15.md."
     },
     {
       "id": "research.multi_schema.x_evaluate__mutmut_21",
@@ -869,8 +869,8 @@
         "-        tp.features(spec, frame).reset_index(drop=True),",
         "+        tp.features(spec, frame).reset_index(drop=None),"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "The original returns only selected feature columns; this mutant inserts the old row index as an extra numerical feature. RED on mutant, GREEN with 43 affected tests, and focused native run recorded a kill. See TEMPORAL_BOUNDARY_2026-11-15.md and evidence/credit-index-focused-2026-11-15.json; not a full unit run."
     },
     {
       "id": "research.temporal_decision.x_credit_card__mutmut_17",
@@ -880,8 +880,8 @@
         "-        tp.features(spec, frame).reset_index(drop=True),",
         "+        tp.features(spec, frame).reset_index(drop=False),"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "The original returns only selected feature columns; this mutant inserts the old row index as an extra numerical feature. RED on mutant, GREEN with 43 affected tests, and focused native run recorded a kill. See TEMPORAL_BOUNDARY_2026-11-15.md and evidence/credit-index-focused-2026-11-15.json; not a full unit run."
     },
     {
       "id": "research.temporal_decision.x_bank_marketing__mutmut_48",
@@ -969,7 +969,7 @@
         "+        recall[name] = recall_score(is_type[keep].astype(None), flags[keep])"
       ],
       "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "evidence": "Inconclusive after probe: recall and precision matched for mixed, unflagged and absent classes in two local pandas builds, both with scikit-learn 1.9.1; compatibility across the broader supported scikit-learn range remains unestablished. See TYPED_METRIC_PROBE_2026-11-15.md."
     },
     {
       "id": "research.typed_benchmark.x__per_type__mutmut_26",
@@ -980,7 +980,7 @@
         "+        precision[name] = precision_score(is_type[keep].astype(None), flags[keep], zero_division=0)"
       ],
       "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "evidence": "Inconclusive after probe: recall and precision matched for mixed, unflagged and absent classes in two local pandas builds, both with scikit-learn 1.9.1; compatibility across the broader supported scikit-learn range remains unestablished. See TYPED_METRIC_PROBE_2026-11-15.md."
     },
     {
       "id": "research.typed_benchmark.x_evaluate__mutmut_53",
@@ -1167,7 +1167,7 @@
         "+            warnings.simplefilter(\"ignore\", )"
       ],
       "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "evidence": "Inconclusive after direct-model probe: the original emits numerical RuntimeWarnings for very large finite arrays while the mutant suppresses them; both local environments agree. The supported public detector normally standardizes inputs first, so a relevant supported-path counterexample and regression remain unestablished. See AUTOENCODER_WARNING_PROBE_2026-11-15.md."
     },
     {
       "id": "etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ__init____mutmut_11",
@@ -1342,8 +1342,8 @@
         "-            context.data_sources.add_pandas(name=\"pandas\")",
         "+            context.data_sources.add_pandas(name=\"XXpandasXX\")"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The altered identifier names only a fresh ephemeral GX context component; the probe compared normal, missing, outlier and duplicate-index row failures on GX 1.24.0 and 1.24.1. See GX_NAME_EQUIVALENCE_PROBE_2026-11-15.md for limitations and hypothetical."
     },
     {
       "id": "etl_benchmark.quality.gx.xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_18",
@@ -1353,8 +1353,8 @@
         "-            context.data_sources.add_pandas(name=\"pandas\")",
         "+            context.data_sources.add_pandas(name=\"PANDAS\")"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The altered identifier names only a fresh ephemeral GX context component; the probe compared normal, missing, outlier and duplicate-index row failures on GX 1.24.0 and 1.24.1. See GX_NAME_EQUIVALENCE_PROBE_2026-11-15.md for limitations and hypothetical."
     },
     {
       "id": "etl_benchmark.quality.gx.xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_19",
@@ -1364,8 +1364,8 @@
         "-            .add_dataframe_asset(name=\"asset\")",
         "+            .add_dataframe_asset(name=\"XXassetXX\")"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The altered identifier names only a fresh ephemeral GX context component; the probe compared normal, missing, outlier and duplicate-index row failures on GX 1.24.0 and 1.24.1. See GX_NAME_EQUIVALENCE_PROBE_2026-11-15.md for limitations and hypothetical."
     },
     {
       "id": "etl_benchmark.quality.gx.xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_20",
@@ -1375,8 +1375,8 @@
         "-            .add_dataframe_asset(name=\"asset\")",
         "+            .add_dataframe_asset(name=\"ASSET\")"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The altered identifier names only a fresh ephemeral GX context component; the probe compared normal, missing, outlier and duplicate-index row failures on GX 1.24.0 and 1.24.1. See GX_NAME_EQUIVALENCE_PROBE_2026-11-15.md for limitations and hypothetical."
     },
     {
       "id": "etl_benchmark.quality.gx.xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_21",
@@ -1386,8 +1386,8 @@
         "-            .add_batch_definition_whole_dataframe(name=\"batch\")",
         "+            .add_batch_definition_whole_dataframe(name=\"XXbatchXX\")"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The altered identifier names only a fresh ephemeral GX context component; the probe compared normal, missing, outlier and duplicate-index row failures on GX 1.24.0 and 1.24.1. See GX_NAME_EQUIVALENCE_PROBE_2026-11-15.md for limitations and hypothetical."
     },
     {
       "id": "etl_benchmark.quality.gx.xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_22",
@@ -1397,8 +1397,8 @@
         "-            .add_batch_definition_whole_dataframe(name=\"batch\")",
         "+            .add_batch_definition_whole_dataframe(name=\"BATCH\")"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The altered identifier names only a fresh ephemeral GX context component; the probe compared normal, missing, outlier and duplicate-index row failures on GX 1.24.0 and 1.24.1. See GX_NAME_EQUIVALENCE_PROBE_2026-11-15.md for limitations and hypothetical."
     },
     {
       "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ__init____mutmut_4",
