@@ -12,6 +12,19 @@ import dataset_registry as dr  # noqa: E402
 import uci_loader as ul  # noqa: E402
 
 
+def test_large_mixed_csv_keeps_a_consistent_string_column(tmp_path):
+    path = tmp_path / "mixed.csv"
+    with path.open("w") as stream:
+        stream.write(",".join(["x", *[f"v{i}" for i in range(19)]]) + "\n")
+        stream.writelines(
+            (str(i) if i < 120000 else "bad") + "," + ",".join(["1"] * 19) + "\n"
+            for i in range(140000)
+        )
+    values = ul.read_table(path)["x"]
+    assert values.map(lambda value: isinstance(value, str)).all()
+    assert values.iloc[0] == "0" and values.iloc[-1] == "bad"
+
+
 def _meta(**over):
     base = {
         "uci_id": 7,

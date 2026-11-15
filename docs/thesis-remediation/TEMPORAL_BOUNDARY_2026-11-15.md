@@ -50,3 +50,27 @@ The focused native run exited 0 and recorded both mutants killed (exit code
 `evidence/credit-index-focused-2026-11-15.json` and associated files. The
 run used a case-insensitive local filesystem with the assertion uncommitted
 on `e33308a`; it is not a full unit measurement.
+
+## Mixed timezone offsets
+
+`research.temporal_decision.x_run_frame__mutmut_15`, `_17` and `_18` change
+or omit `utc=True` while parsing timestamps. The regression represents the
+same instants as UTC and alternating UTC/Europe-Paris offset strings and
+checks that chronological partitions and PR-AUC match. The original accepts
+and normalizes both; in pandas 3.1.1 each generated mutant raises a mixed
+timezones `ValueError`. Both temporal-decision test files passed on the
+original (GREEN/regression, exit 0; 44 tests); each mutant failed for the
+expected timezone error (RED, exit 1). The bootstrap interval is stubbed to
+bound the test; chronological parsing and detector scoring run normally.
+
+RED uses the preload command above with mutant identity
+`research.temporal_decision.x_run_frame__mutmut_15`, `_17`, or `_18` and node
+`research/tests/test_temporal_decision_flow.py::test_chronological_evaluation_accepts_equivalent_mixed_timezone_offsets`.
+The source digest and local mutation environment match the earlier sections.
+The `_15` RED check also failed with the same timezone error under the
+canonical pandas 3.0.6 environment; the other two were not separately run
+there. The focused native run exited 0 and recorded all three killed (exit code 1).
+The command, context, log and metadata are in
+`evidence/mixed-time-focused-2026-11-15.json` and associated files. It used
+the case-insensitive local filesystem with the test uncommitted on `11b7994`;
+these are not full unit results or additions to the historical campaign.

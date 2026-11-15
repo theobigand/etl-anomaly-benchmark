@@ -445,6 +445,7 @@ def test_the_sharded_campaign_keeps_evidence_and_caches_even_when_scores_fail():
     assert "fail-fast: false" in shard
     restore = shard[shard.index("actions/cache/restore@v4") : shard.index("Run the native")]
     assert "github.run_id" in restore and "restore-keys" in restore
+    assert "env.DIAGNOSTIC != 'true'" in shard[shard.index("Restore the shard cache") :]
     for step in ("Build the shard evidence", "Preserve the shard evidence", "Save the shard cache"):
         block = shard[shard.index(step) :].split("      - ", 1)[0]
         assert "if: always()" in block, step
@@ -457,6 +458,8 @@ def test_the_sharded_campaign_keeps_evidence_and_caches_even_when_scores_fail():
     ]
     assert "mutants/attempts/*/native.log" in artifact
     assert "mutants/**/*.meta" in artifact
+    assert "mutants/**/*.spans" in artifact and "mutants/**/*.py" in artifact
+    assert "mutants/execution-context.json" in artifact and "mutants/mutmut-stats.json" in artifact
 
 
 def test_the_aggregation_waits_for_every_shard_and_fails_on_an_invalid_campaign():
@@ -480,7 +483,7 @@ def test_the_sharded_campaign_runs_before_merge_only_for_labelled_same_repositor
     assert "run:mutation-shards" in gate
     assert "cancel-in-progress: true" in text
     assert text.count("ref: ${{ env.TESTED_SHA }}") >= 3
-    assert text.count('test "$(git rev-parse HEAD)" = "$TESTED_SHA"') == 2
+    assert text.count('test "$(git rev-parse HEAD)" = "$TESTED_SHA"') == 3
     assert "if: always() && needs.plan.result == 'success'" in text
 
 
@@ -496,6 +499,8 @@ def test_the_diagnostic_label_runs_one_small_shard_and_never_the_aggregate():
     text = _text("mutation-shards.yml")
     assert "run:mutation-shard-diagnostic" in text and "diagnostic-index" in text
     assert "diagnostic_module" in text and "matrix=[31]" not in text
+    assert "diagnostic-equivalences" in text
+    assert "diagnostic-equivalence.json" in text
     plan = text[text.index("  plan:") : text.index("  shard:")]
     assert "run:mutation-shards'" in plan and "run:mutation-shard-diagnostic" in plan
     assert "github.event.pull_request.head.repo.full_name == github.repository" in plan

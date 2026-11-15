@@ -17,6 +17,7 @@ import json
 import platform
 import subprocess
 import sys
+import tempfile
 import tomllib
 from importlib.metadata import PackageNotFoundError
 from importlib.metadata import version as _installed_version
@@ -361,6 +362,86 @@ def _check_common_suite(executions: list) -> None:
             raise ValueError("shards ran different test suites or dependencies")
 
 
+def diagnostic_equivalences(
+    document: dict, policy: dict, root: Path, index: int, attempt: Path, equivalence: dict
+) -> dict:
+    """Validate owner records for one bound shard without constructing a campaign."""
+    if _load(str(root / "verification/mutation_risk_policy.json")) != policy:
+        raise ValueError("diagnostic policy differs from the checked-out policy")
+    if not isinstance(equivalence, dict):
+        raise ValueError("diagnostic requires an equivalence document")
+    if _load(str(root / "verification/mutation_equivalence.json")) != equivalence:
+        raise ValueError("diagnostic differs from the checked-out equivalence document")
+    status = subprocess.run(
+        ["git", "status", "--porcelain", "--untracked-files=no"], cwd=root,
+        check=True, capture_output=True, text=True,
+    )  # fmt: skip
+    if status.stdout:
+        raise ValueError("diagnostic tracked files changed from the tested commit")
+    untracked = subprocess.run(
+        ["git", "ls-files", "--others", "--exclude-standard", "--", "conftest.py", "tests",
+         "research/tests"], cwd=root, check=True, capture_output=True, text=True,
+    )  # fmt: skip
+    if untracked.stdout:
+        raise ValueError("diagnostic has untracked test inputs")
+    context = current_context(root)
+    manifest = build_shard(policy, root, root / "mutants", document, index, context, 0, attempt)
+    _check_execution(index, manifest, context, document)
+    if (
+        manifest["missing"]
+        or any(not keys for keys in manifest["catalog"].values())
+        or any(record["outcome"] in mutation_policy.INCOMPLETE for record in manifest["records"])
+    ):
+        raise ValueError("diagnostic shard has incomplete mutant outcomes")
+    attempt_proof = _load(str(attempt))["proof"]
+    proof_context = attempt_proof["context"]
+    proof = mutation_cache.validate_execution(
+        root, sorted(proof_context["sources"]), runtime=proof_context["runtime"],
+        mutated_sources=proof_context["mutation_scope"],
+    )  # fmt: skip
+    if proof != attempt_proof:
+        raise ValueError("diagnostic attempt differs from the current execution proof")
+    accepted = mutation_policy.accepted_equivalents(
+        equivalence, policy["units"], manifest["sources"], manifest["catalog"],
+        manifest["records"], policy.get("governance"), context["runtime"]["packages"],
+    )  # fmt: skip
+    modules = {}
+    for name in manifest["modules"]:
+        unit = policy["units"][name]
+        records = [record for record in manifest["records"] if record["path"] == name]
+        modules[name] = mutation_policy._summary(
+            records, len(manifest["catalog"][name]), mutation_policy.THRESHOLDS[unit["level"]],
+            len(accepted.get(name, ())),
+        )  # fmt: skip
+    with tempfile.TemporaryDirectory(prefix=".mutation-case-", dir=root) as directory:
+        probe = Path(directory) / "CaseProbe"
+        probe.write_text("probe")
+        case_sensitive = not (Path(directory) / "caseprobe").exists()
+    return {
+        "scope": "single-shard diagnostic; not a campaign or certification",
+        "filesystem_case_sensitive": case_sensitive,
+        "limitations": [
+            "Execution test bindings cover Python tests and specified configuration, not every "
+            "non-Python or external input.",
+            "The native proof has no revision field; commit attribution relies on a fresh "
+            "single-job workflow and its before/after HEAD checks.",
+        ],
+        "plan_sha256": document["sha256"],
+        "context": context,
+        "sources": manifest["sources"],
+        "execution": manifest["execution"],
+        "catalog": manifest["catalog"],
+        "records": manifest["records"],
+        "catalog_sha256": {
+            name: mutation_policy.catalog_digest(keys) for name, keys in manifest["catalog"].items()
+        },
+        "policy_file_sha256": _source(root, "verification/mutation_risk_policy.json"),
+        "validator_sha256": hashlib.sha256(Path(mutation_policy.__file__).read_bytes()).hexdigest(),
+        "accepted": {name: sorted(keys) for name, keys in accepted.items()},
+        "modules": modules,
+    }
+
+
 def current_context(root: Path) -> dict:
     """Revision, test files, mutation configuration and tool versions of this checkout."""
     revision = subprocess.run(
@@ -416,6 +497,12 @@ def main(argv: list[str] | None = None) -> int:
     diagnostic.add_argument("--plan", required=True)
     diagnostic.add_argument("--policy", required=True)
     diagnostic.add_argument("--module", required=True)
+    validate_diagnostic = commands.add_parser("diagnostic-equivalences")
+    validate_diagnostic.add_argument("--root", default=".")
+    validate_diagnostic.add_argument("--plan", required=True)
+    validate_diagnostic.add_argument("--index", type=int, required=True)
+    validate_diagnostic.add_argument("--attempt", required=True)
+    validate_diagnostic.add_argument("--output", required=True)
     join = commands.add_parser("aggregate")
     join.add_argument("--root", default=".")
     join.add_argument("--plan", required=True)
@@ -443,6 +530,15 @@ def main(argv: list[str] | None = None) -> int:
                 current_context(root), args.native_exit_code,
                 Path(args.attempt) if args.attempt else None,
             )  # fmt: skip
+        elif args.command == "diagnostic-equivalences":
+            equivalence_path = root / "verification/mutation_equivalence.json"
+            result = diagnostic_equivalences(
+                _load(args.plan), policy, root, args.index, Path(args.attempt),
+                _load(str(equivalence_path)),
+            )  # fmt: skip
+            result["equivalence_file_sha256"] = hashlib.sha256(
+                equivalence_path.read_bytes()
+            ).hexdigest()
         else:
             result = aggregate(
                 _load(args.plan), [_load(path) for path in args.manifests], policy, root,

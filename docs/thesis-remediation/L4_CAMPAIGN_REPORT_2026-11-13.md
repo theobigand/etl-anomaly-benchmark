@@ -216,3 +216,25 @@ GX-name proposals and still-inconclusive typed-metric and autoencoder-warning
 probes are documented in [the GX name record](GX_NAME_EQUIVALENCE_PROBE_2026-11-15.md),
 [the typed metric record](TYPED_METRIC_PROBE_2026-11-15.md) and
 [the autoencoder warning record](AUTOENCODER_WARNING_PROBE_2026-11-15.md).
+The proposed limited Linux validator path and its provenance limits are in
+[the scoped LSTM diagnostic record](LSTM_DIAGNOSTIC_VALIDATOR_2026-11-15.md).
+It does not replace the full campaign aggregate.
+
+### Continuation checkpoint: diagnostic and chronological probes
+
+The preserved [scoped LSTM validator design](LSTM_DIAGNOSTIC_VALIDATOR_2026-11-15.md)
+uses the official record validation on a freshly executed shard and keeps full
+aggregation separate. It requires a new hosted run; the old run does not
+validate the current HEAD. It has not received independent model review.
+
+The [preliminary owner queue](OWNER_DECISION_QUEUE_DRAFT_2026-11-15.md)
+consolidates both earlier packets with newer proposals using only historical
+arithmetic. It is incomplete and records no owner decisions. The 162-record
+triage now contains 28 focused kills, 38 conditional proposals and 96 still
+inconclusive; focused outcomes are not added to the historical campaign.
+The latest evidence includes [mixed-offset eligibility](POOL_CHRONO_OFFSET_PROBE_2026-11-15.md),
+[month-key case probes](POOL_CHRONO_UPPERCASE_PROBE_2026-11-15.md), and
+[CSV chunk inference](UCI_CSV_PROBE_2026-11-15.md).
+A complete fresh campaign, current Linux validator result, affected-unit
+measurements, full input provenance, owner decisions and required independent
+review remain outstanding. No certification is implied by this checkpoint.

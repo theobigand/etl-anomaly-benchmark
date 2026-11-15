@@ -1,0 +1,193 @@
+import collections, hashlib, json, tarfile
+from pathlib import Path
+
+root = Path.cwd()
+base = root / "docs/thesis-remediation"
+first = json.loads((base / "equivalence/owner_review_candidates_2026-11-12.json").read_text())[
+    "records"
+]
+second = json.loads((base / "equivalence/owner_review_candidates_2026-11-14.json").read_text())[
+    "units"
+]
+triage = json.loads((base / "evidence/unclassified-triage-2026-11-14.json").read_text())["records"]
+measurement = json.loads(
+    (base / "evidence/l4-campaign-2026-11-13/final-measurement.json").read_text()
+)["modules"]
+verdict = {}
+with tarfile.open(base / "evidence/l4-campaign-2026-11-13/verdicts.tgz", "r:gz") as archive:
+    for member in archive:
+        if (
+            member.isfile()
+            and member.name.endswith(".py.meta")
+            and not member.name.startswith("mutants/mutants/")
+        ):
+            verdict.update(json.load(archive.extractfile(member))["exit_code_by_key"])
+category = {}
+for line in (base / "OWNER_EQUIVALENCE_REVIEW_2026-11-12.md").read_text().splitlines():
+    if line.startswith("| `"):
+        parts = [s.strip().strip("`") for s in line.split("|")[1:-1]]
+        if len(parts) == 6 and parts[3] in (
+            "Strong equivalence evidence",
+            "Additional verification required",
+        ):
+            category[(parts[0], parts[1])] = parts[3]
+entries = []
+for r in first:
+    assert r["verdict"] == "proposed" and not r["approver"] and verdict.get(r["id"]) == 0
+    category_name = category[(r["path"], r["id"].rsplit(".", 1)[-1])]
+    entries.append(
+        {
+            "id": r["id"],
+            "path": r["path"],
+            "source": r["source_sha256"],
+            "catalog": r["catalog_sha256"],
+            "origin": "first packet",
+            "strength": category_name,
+            "evidence": "OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        }
+    )
+for path, u in second.items():
+    for group, records in u["candidate_classes"].items():
+        for r in records:
+            assert verdict.get(r["id"]) == 0
+            entries.append(
+                {
+                    "id": r["id"],
+                    "path": path,
+                    "source": u["source_sha256"],
+                    "catalog": u["catalog_sha256"],
+                    "origin": "second packet",
+                    "strength": "pattern proposal; individual verification pending",
+                    "evidence": "OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md",
+                }
+            )
+new_docs = {
+    "experiments/run_severity.py": "SEVERITY_ZIP_EQUIVALENCE_PROBE_2026-11-15.md",
+    "research/injection.py": "INJECTION_UNIT_PROBE_2026-11-15.md",
+    "research/multi_schema.py": None,
+    "research/pool_chrono.py": "POOL_CHRONO_UPPERCASE_PROBE_2026-11-15.md",
+    "research/pool_preprocessing.py": "POOL_NUMERIC_EQUIVALENCE_PROBE_2026-11-15.md",
+    "research/typed_benchmark.py": "TYPED_INDEX_EQUIVALENCE_PROBE_2026-11-15.md",
+    "src/etl_benchmark/quality/windows.py": "WINDOWS_EQUIVALENCE_PROBES_2026-11-15.md",
+    "src/etl_benchmark/quality/rules.py": "RULES_EQUIVALENCE_PROBES_2026-11-15.md",
+    "src/etl_benchmark/quality/ml.py": "RULES_EQUIVALENCE_PROBES_2026-11-15.md",
+    "src/etl_benchmark/quality/drift.py": "DRIFT_BOUNDARY_PROBE_2026-11-15.md",
+    "src/etl_benchmark/quality/gx.py": "GX_NAME_EQUIVALENCE_PROBE_2026-11-15.md",
+}
+for r in triage:
+    if r["outcome"] != "proposed_equivalent":
+        continue
+    path = r["path"]
+    doc = new_docs[path]
+    if path == "research/multi_schema.py":
+        doc = (
+            "TYPED_INDEX_EQUIVALENCE_PROBE_2026-11-15.md"
+            if "x_evaluate__" in r["id"]
+            else "MULTISCHEMA_DATES_EQUIVALENCE_PROBE_2026-11-15.md"
+        )
+    assert verdict.get(r["id"]) == 0
+    entries.append(
+        {
+            "id": r["id"],
+            "path": path,
+            "source": r["source_sha256"],
+            "catalog": measurement[path]["catalog_sha256"],
+            "origin": "new probe",
+            "strength": "conditional; see individual evidence",
+            "evidence": doc,
+        }
+    )
+assert len(entries) == len({e["id"] for e in entries})
+for e in entries:
+    assert hashlib.sha256((root / e["path"]).read_bytes()).hexdigest() == e["source"]
+    assert e["catalog"] == measurement[e["path"]]["catalog_sha256"]
+by = collections.defaultdict(list)
+for e in entries:
+    by[e["path"]].append(e)
+from verification.mutation_catalog import _index
+from verification.mutation_policy import catalog_digest
+
+for path in by:
+    meta = json.loads((root / "mutants" / f"{path}.meta").read_text())
+    spans = json.loads((root / "mutants" / f"{path}.spans").read_text())
+    assert set(meta["exit_code_by_key"]) == _index(spans, path)
+    assert catalog_digest(sorted(meta["exit_code_by_key"])) == measurement[path]["catalog_sha256"]
+print("entries", len(entries), "origins", dict(collections.Counter(e["origin"] for e in entries)))
+print("historically failing, hypothetical change")
+for path, u in second.items():
+    approved = len(by[path])
+    eligible = u["eligible"]
+    killed = u["killed"]
+    adjusted = eligible - approved
+    passed = killed * 100 >= u["threshold"] * adjusted
+    print(
+        path,
+        f"{killed}/{eligible}",
+        "proposals",
+        approved,
+        "hypothetical",
+        f"{killed}/{adjusted}",
+        f"{100 * killed / adjusted:.2f}%",
+        "crosses",
+        passed,
+    )
+lines = [
+    "# Preliminary consolidated owner decision queue",
+    "",
+    "**Incomplete draft; no approval is recorded.** This queue consolidates historical survivors from the two existing packets and the new conditional proposals. It is not a fresh campaign, a recommendation to approve, or certification. Individual investigation remains incomplete, and owner decisions require current complete measurements and the official validator. The four already accepted and five previously inconclusive LSTM records retain their existing verdicts and are not re-proposed.",
+    "",
+    "All arithmetic below uses only the historical mixed-environment ledger. Focused kills are not added. “All proposed” is hypothetical and assumes every listed proposal for that unit is approved; it is not an authorized score. A failing unit marked no remains below threshold even under that hypothetical and needs further investigation or remediation. Current source SHA-256 and generated catalog identities matched the listed historical digests in the local checks; this does not validate mutant outcomes.",
+    "",
+    "| Historically failing unit | Historical raw | Proposals | Hypothetical if all approved | Crosses threshold? |",
+    "| --- | --- | ---: | --- | --- |",
+]
+for path, u in second.items():
+    count = len(by[path])
+    eligible = u["eligible"]
+    killed = u["killed"]
+    adj = eligible - count
+    passed = killed * 100 >= u["threshold"] * adj
+    lines.append(
+        f"| `{path}` | {killed}/{eligible} | {count} | {killed}/{adj} ({100 * killed / adj:.2f}%) | {'yes' if passed else 'no'} |"
+    )
+lines += [
+    "",
+    "The LSTM row excludes no owner records in this table. If the official validator accepts the four previously approved records in a compatible current execution, the historical arithmetic would be 368/373 (98.66%); this remains hypothetical until current Linux-side validation and is not a new owner decision.",
+    "",
+    "## Individual proposed identities",
+    "",
+    "The source and catalog SHA-256 shown for each unit are historical values checked against the current source and locally generated catalog, not fresh verdicts. “Alone” means hypothetically excluding only that candidate from the historical denominator; “already pass” means the raw historical unit was already at threshold. Evidence links lead to the preserved detailed packet or probe; the prior packet categories remain historical assessments and have not been independently refreshed.",
+    "",
+]
+for path in sorted(by):
+    u = measurement[path]
+    k = u["killed"]
+    n = u["eligible"]
+    threshold = u["threshold"]
+    single = k * 100 >= threshold * (n - 1)
+    already = k * 100 >= threshold * n
+    lines += [
+        f"### `{path}`",
+        "",
+        f"Historical raw: {k}/{n}; {u['level']} threshold {threshold}%. Source SHA-256: `{u['source_sha256']}`. Catalog SHA-256: `{u['catalog_sha256']}`.",
+        "",
+        "| Mutant identity | Origin and evidence strength | Alone | Evidence |",
+        "| --- | --- | --- | --- |",
+    ]
+    for e in sorted(by[path], key=lambda x: x["id"]):
+        alone = "already pass" if already else ("crosses" if single else "insufficient")
+        lines.append(
+            f"| `{e['id']}` | {e['origin']}: {e['strength']} | {alone} | [record]({e['evidence']}) |"
+        )
+    lines.append("")
+lines += [
+    "## Still unresolved",
+    "",
+    f"The 162-record triage currently contains {sum(x['outcome'] == 'inconclusive' for x in triage)} inconclusive identities, {sum(x['outcome'] == 'killed_by_behavioral_test' for x in triage)} focused kills and {sum(x['outcome'] == 'proposed_equivalent' for x in triage)} new proposals. These numbers are not a full campaign, and any pending behavioral differences or infrastructure problems remain in the triage artifact. No proposal is an approval.",
+    "",
+]
+lines.append("Reproduce from the repository root with the locally generated mutation catalog present: `PYTHONPATH=. python docs/thesis-remediation/evidence/build-owner-queue-2026-11-15.py.txt`. The script checks identities and historical catalog digests; it does not execute mutants.\n")
+Path("docs/thesis-remediation/OWNER_DECISION_QUEUE_DRAFT_2026-11-15.md").write_text(
+    "\n".join(lines)
+)
+print("draft lines", len(lines))

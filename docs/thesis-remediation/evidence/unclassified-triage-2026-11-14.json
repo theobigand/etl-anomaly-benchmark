@@ -539,8 +539,8 @@
         "-        base = pd.to_datetime(pd.DataFrame({\"year\": 2017, \"month\": month + 1, \"day\": 1}))",
         "+        base = pd.to_datetime(pd.DataFrame({\"YEAR\": 2017, \"month\": month + 1, \"day\": 1}))"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal: generated mutant comparisons agree for timestamp-key case variations on pandas 3.0.6 and 3.1.1; broader supported versions and Linux remain untested. See POOL_CHRONO_UPPERCASE_PROBE_2026-11-15.md. No owner approval."
     },
     {
       "id": "research.pool_chrono.x_read_times__mutmut_21",
@@ -550,8 +550,8 @@
         "-        base = pd.to_datetime(pd.DataFrame({\"year\": 2017, \"month\": month + 1, \"day\": 1}))",
         "+        base = pd.to_datetime(pd.DataFrame({\"year\": 2017, \"MONTH\": month + 1, \"day\": 1}))"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal: generated mutant comparisons agree for timestamp-key case variations on pandas 3.0.6 and 3.1.1; broader supported versions and Linux remain untested. See POOL_CHRONO_UPPERCASE_PROBE_2026-11-15.md. No owner approval."
     },
     {
       "id": "research.pool_chrono.x_read_times__mutmut_25",
@@ -561,8 +561,8 @@
         "-        base = pd.to_datetime(pd.DataFrame({\"year\": 2017, \"month\": month + 1, \"day\": 1}))",
         "+        base = pd.to_datetime(pd.DataFrame({\"year\": 2017, \"month\": month + 1, \"DAY\": 1}))"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal: generated mutant comparisons agree for timestamp-key case variations on pandas 3.0.6 and 3.1.1; broader supported versions and Linux remain untested. See POOL_CHRONO_UPPERCASE_PROBE_2026-11-15.md. No owner approval."
     },
     {
       "id": "research.pool_chrono.x_to_features__mutmut_12",
@@ -638,8 +638,8 @@
         "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
         "+    order = np.argsort(pd.to_datetime(times, utc=None).to_numpy(), kind=\"stable\")"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Mixed UTC offsets are accepted by the original and rejected by this mutant on pandas 3.0.6 and 3.1.1. Regression RED on mutant and GREEN on original; focused native run recorded a kill. See POOL_CHRONO_OFFSET_PROBE_2026-11-15.md and evidence/pool-chrono-offset-focused-2026-11-15.json; not a complete unit measurement."
     },
     {
       "id": "research.pool_chrono.x_eligible__mutmut_9",
@@ -649,8 +649,8 @@
         "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
         "+    order = np.argsort(pd.to_datetime(times, ).to_numpy(), kind=\"stable\")"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Mixed UTC offsets are accepted by the original and rejected by this mutant on pandas 3.0.6 and 3.1.1. Regression RED on mutant and GREEN on original; focused native run recorded a kill. See POOL_CHRONO_OFFSET_PROBE_2026-11-15.md and evidence/pool-chrono-offset-focused-2026-11-15.json; not a complete unit measurement."
     },
     {
       "id": "research.pool_chrono.x_eligible__mutmut_10",
@@ -660,8 +660,8 @@
         "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
         "+    order = np.argsort(pd.to_datetime(times, utc=False).to_numpy(), kind=\"stable\")"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Mixed UTC offsets are accepted by the original and rejected by this mutant on pandas 3.0.6 and 3.1.1. Regression RED on mutant and GREEN on original; focused native run recorded a kill. See POOL_CHRONO_OFFSET_PROBE_2026-11-15.md and evidence/pool-chrono-offset-focused-2026-11-15.json; not a complete unit measurement."
     },
     {
       "id": "research.pool_chrono.x_main__mutmut_93",
@@ -803,8 +803,8 @@
         "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
         "+    order = np.argsort(pd.to_datetime(times, utc=None).to_numpy(), kind=\"stable\")"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Original normalizes mixed UTC and Paris-offset timestamps; mutant raises a mixed-timezones ValueError on pandas 3.1.1. RED on mutant, GREEN with 44 affected tests, and focused native run recorded a kill. See TEMPORAL_BOUNDARY_2026-11-15.md and evidence/mixed-time-focused-2026-11-15.json; not a full unit run."
     },
     {
       "id": "research.temporal_decision.x_run_frame__mutmut_17",
@@ -814,8 +814,8 @@
         "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
         "+    order = np.argsort(pd.to_datetime(times, ).to_numpy(), kind=\"stable\")"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Original normalizes mixed UTC and Paris-offset timestamps; mutant raises a mixed-timezones ValueError on pandas 3.1.1. RED on mutant, GREEN with 44 affected tests, and focused native run recorded a kill. See TEMPORAL_BOUNDARY_2026-11-15.md and evidence/mixed-time-focused-2026-11-15.json; not a full unit run."
     },
     {
       "id": "research.temporal_decision.x_run_frame__mutmut_18",
@@ -825,8 +825,8 @@
         "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
         "+    order = np.argsort(pd.to_datetime(times, utc=False).to_numpy(), kind=\"stable\")"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Original normalizes mixed UTC and Paris-offset timestamps; mutant raises a mixed-timezones ValueError on pandas 3.1.1. RED on mutant, GREEN with 44 affected tests, and focused native run recorded a kill. See TEMPORAL_BOUNDARY_2026-11-15.md and evidence/mixed-time-focused-2026-11-15.json; not a full unit run."
     },
     {
       "id": "research.temporal_decision.x_hypotheses__mutmut_119",
@@ -1012,8 +1012,8 @@
         "-    frame = pd.read_csv(path, low_memory=False)",
         "+    frame = pd.read_csv(path, )"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "A large mixed CSV yields a homogeneous string column in the original but mixed int/string values in this mutant on pandas 3.0.6 and 3.1.1. RED on mutant, GREEN with 12 affected tests and focused native run recorded a kill. See UCI_CSV_PROBE_2026-11-15.md and evidence/uci-csv-focused-2026-11-15.json; not a full unit run."
     },
     {
       "id": "research.uci_loader.x_read_table__mutmut_6",
@@ -1023,8 +1023,8 @@
         "-    frame = pd.read_csv(path, low_memory=False)",
         "+    frame = pd.read_csv(path, low_memory=True)"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "A large mixed CSV yields a homogeneous string column in the original but mixed int/string values in this mutant on pandas 3.0.6 and 3.1.1. RED on mutant, GREEN with 12 affected tests and focused native run recorded a kill. See UCI_CSV_PROBE_2026-11-15.md and evidence/uci-csv-focused-2026-11-15.json; not a full unit run."
     },
     {
       "id": "research.uci_loader.x_read_table__mutmut_23",

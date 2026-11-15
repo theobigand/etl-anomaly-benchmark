@@ -113,7 +113,7 @@ jobs:
       # the native engine and the manifest builder revalidate them against the source,
       # the tests and the configuration.
       - name: Restore the shard cache
-        if: env.FRESH != 'true'
+        if: env.FRESH != 'true' && env.DIAGNOSTIC != 'true'
         uses: actions/cache/restore@v4
         with:
           path: mutants
@@ -146,6 +146,15 @@ jobs:
               --output evidence-shard-${{ matrix.index }}.json
           fi
 
+      - name: Validate diagnostic equivalence records
+        if: env.DIAGNOSTIC == 'true' && env.DIAGNOSTIC_MODULE == 'research/lstm_detector.py'
+        run: |
+          test "$(git rev-parse HEAD)" = "$TESTED_SHA"
+          attempt=$(python -c "import json;print(json.load(open('controller-result.json'))['attempt_record'])")
+          python -m verification.mutation_shards diagnostic-equivalences \
+            --plan shard-plan.json --index ${{ matrix.index }} --attempt "$attempt" \
+            --output diagnostic-equivalence.json
+
       - name: Preserve the shard evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -154,9 +163,14 @@ jobs:
           path: |
             evidence-shard-${{ matrix.index }}.json
             controller-result.json
+            diagnostic-equivalence.json
+            mutants/execution-context.json
+            mutants/mutmut-stats.json
             mutants/attempts/*/execution.json
             mutants/attempts/*/native.log
             mutants/**/*.meta
+            mutants/**/*.spans
+            mutants/**/*.py
           if-no-files-found: warn
           retention-days: 90
 

@@ -114,6 +114,23 @@ def test_the_stratified_arm_splits_seventy_fifty_with_the_labels_and_the_seed(mo
     ]
 
 
+def test_chronological_evaluation_accepts_equivalent_mixed_timezone_offsets(monkeypatch):
+    monkeypatch.setattr(
+        td, "_block_ci", lambda y, s: {"ci_low": 0.0, "ci_high": 1.0, "resamples_used": 1}
+    )
+    x, y, times = _frame_for_run()
+    mixed = pd.Series(
+        [time.tz_convert("Europe/Paris" if i % 2 else "UTC").isoformat()
+         for i, time in enumerate(times)]
+    )  # fmt: skip
+    expected = td.run_frame(x, y, times, ["zscore"], seeds=(7,))
+    actual = td.run_frame(x, y, mixed, ["zscore"], seeds=(7,))
+    assert actual["partitions"] == expected["partitions"]
+    assert actual["chronological"]["zscore"]["pr_auc"] == pytest.approx(
+        expected["chronological"]["zscore"]["pr_auc"]
+    )
+
+
 def test_each_stratified_fold_is_scored_with_its_own_prevalence_and_matched_to_the_test_share(
     monkeypatch,
 ):
