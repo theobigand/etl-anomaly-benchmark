@@ -40,6 +40,12 @@ def test_an_under_represented_positive_class_thins_the_negatives_instead():
     assert len(set(keep.tolist())) == len(keep)
 
 
+def test_matching_a_fully_positive_population_keeps_every_row():
+    y = np.ones(3, dtype=int)
+    keep = td.match_prevalence(y, 1.0, np.random.default_rng(0))
+    np.testing.assert_array_equal(keep, np.arange(3))
+
+
 @pytest.mark.parametrize(("pos", "neg", "target"), [(2, 98, 0.001), (98, 2, 0.999)])
 def test_at_least_one_row_of_the_thinned_class_is_kept(pos, neg, target):
     y = _y(pos, neg)

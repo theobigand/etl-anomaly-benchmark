@@ -759,8 +759,8 @@
         "-    if len(pos) / len(y) > target:",
         "+    if len(pos) / len(y) >= target:"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "All-positive y and target=1.0: the original retains all rows; the mutant raises ZeroDivisionError. RED on mutant, GREEN on original with 43 affected tests, and one-mutant native run recorded a kill. See TEMPORAL_BOUNDARY_2026-11-15.md and evidence/temporal-boundary-focused-2026-11-15.json; not a full unit run."
     },
     {
       "id": "research.temporal_decision.x_run_frame__mutmut_7",
@@ -1452,8 +1452,8 @@
         "-        x = numeric_features(df, self.feature_names_, training=False).to_numpy(dtype=float)",
         "+        x = numeric_features(df, self.feature_names_, training=None).to_numpy(dtype=float)"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. False and None both skip the sole training-only branch in numeric_features; six original/mutant boundary comparisons match. See RULES_EQUIVALENCE_PROBES_2026-11-15.md for identity, digests, executable probe, limits and hypothetical arithmetic."
     },
     {
       "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_4",
@@ -1584,8 +1584,8 @@
         "-            right[:, j] = n - np.searchsorted(column, x[:, j], side=\"left\")",
         "+            right[:, j] = n - np.searchsorted(column, x[:, j], )"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. NumPy documents left as the omitted side default; original and mutant match for tied/outside, empty, and nonfinite probes. See RULES_EQUIVALENCE_PROBES_2026-11-15.md for digests, executable evidence, versions and limits."
     },
     {
       "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁ__init____mutmut_9",
@@ -1639,8 +1639,8 @@
         "-        values = numeric_features(df, list(self._means.index), training=False)",
         "+        values = numeric_features(df, list(self._means.index), training=None)"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. False and None both skip the sole training-only branch in numeric_features; six original/mutant boundary comparisons match. See RULES_EQUIVALENCE_PROBES_2026-11-15.md for identity, digests, executable probe, limits and hypothetical arithmetic."
     },
     {
       "id": "etl_benchmark.quality.rules.xǁIQRDetectorǁ__init____mutmut_4",
@@ -1683,8 +1683,8 @@
         "-        values = numeric_features(df, list(cols), training=False)",
         "+        values = numeric_features(df, list(cols), training=None)"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. False and None both skip the sole training-only branch in numeric_features; six original/mutant boundary comparisons match. See RULES_EQUIVALENCE_PROBES_2026-11-15.md for identity, digests, executable probe, limits and hypothetical arithmetic."
     },
     {
       "id": "etl_benchmark.quality.window_drift.x__numeric__mutmut_18",

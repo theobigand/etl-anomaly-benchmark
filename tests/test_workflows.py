@@ -452,6 +452,11 @@ def test_the_sharded_campaign_keeps_evidence_and_caches_even_when_scores_fail():
     assert "github.run_id" in save
     assert "set +e" in shard and "verification.mutation_run --names" in shard
     assert "--attempt" in shard and "controller-result.json" in shard
+    artifact = shard[
+        shard.index("Preserve the shard evidence") : shard.index("Save the shard cache")
+    ]
+    assert "mutants/attempts/*/native.log" in artifact
+    assert "mutants/**/*.meta" in artifact
 
 
 def test_the_aggregation_waits_for_every_shard_and_fails_on_an_invalid_campaign():

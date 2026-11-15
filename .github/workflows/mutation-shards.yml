@@ -155,6 +155,8 @@ jobs:
             evidence-shard-${{ matrix.index }}.json
             controller-result.json
             mutants/attempts/*/execution.json
+            mutants/attempts/*/native.log
+            mutants/**/*.meta
           if-no-files-found: warn
           retention-days: 90
 

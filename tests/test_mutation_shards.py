@@ -699,3 +699,22 @@ def test_diagnostic_lookup_uses_validated_plan_and_refuses_unknown_modules(tmp_p
     tampered["shards"][0]["modules"] = []
     with pytest.raises(ValueError, match="digest"):
         shards.diagnostic_index(tampered, policy, "missing.py")
+
+
+def test_diagnostic_cli_selects_the_module_and_rejects_a_foreign_plan(tmp_path, capsys):
+    import json
+
+    policy, document, _ = _build(tmp_path)
+    policy_path = tmp_path / "policy.json"
+    plan_path = tmp_path / "plan.json"
+    policy_path.write_text(json.dumps(policy))
+    plan_path.write_text(json.dumps(document))
+    target = document["shards"][1]["modules"][0]
+    args = ["diagnostic-index", "--plan", str(plan_path), "--policy", str(policy_path),
+            "--module", target]  # fmt: skip
+    assert shards.main(args) == 0
+    assert capsys.readouterr().out.strip() == "1"
+    policy["units"][target]["reason"] = "different policy"
+    policy_path.write_text(json.dumps(policy))
+    with pytest.raises(ValueError, match="different policy"):
+        shards.main(args)

@@ -169,3 +169,20 @@ Sorted by the number of kills still missing. Units at most three kills short: `e
 `OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES python docs/thesis-remediation/evidence/run_l4_campaign.py STATE.json [--rerun] [--only PATH ...]`, then
 `python docs/thesis-remediation/evidence/consolidate_l4_campaign.py`. The `environment` block of `final-measurement.json` describes the interpreter that ran the consolidation (the conda environment `etl-benchmark`); the mutation runs themselves used the mutation venv (`~/.cache/etl-mutation-venv`: pandas 3.1.1, numpy 2.4.6, torch 2.15.0, see `probe-environments.json` and `CASE_SENSITIVE_MEASUREMENT.md`), so the two are not the same environment.
 `make mutation-focus MODULE=research.typed_run` runs one module. The test cache must be rebuilt (`rm mutants/mutmut-stats.json`) after tests are added.
+
+## Subsequent diagnostic and triage, 2026-11-15
+
+The historical campaign above remains unchanged. Hosted diagnostic run
+43641178258 tested one Linux shard at `ced2975`; its LSTM raw result was
+368/377, with no complete aggregate and no current Linux-side equivalence
+validator result. The archived upload lacks the native log and metadata needed
+to independently recheck its execution bindings. See
+[the diagnostic record](DIAGNOSTIC_43641178258.md).
+
+Subsequent source analysis supports four unapproved equivalence proposals;
+none are counted in any official score. See
+[the probe record](RULES_EQUIVALENCE_PROBES_2026-11-15.md). A separate temporal
+prevalence boundary is documented in
+[the regression record](TEMPORAL_BOUNDARY_2026-11-15.md). The preliminary
+triage artifact records the individual outcomes and remaining inconclusive
+cases; no fresh 100-unit campaign has been completed.
