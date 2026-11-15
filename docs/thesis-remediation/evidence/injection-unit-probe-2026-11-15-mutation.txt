@@ -1,0 +1,5 @@
+research/injection.py cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39
+mutants/research/injection.py 0a049b613cdff4161eabffebcb6f7c7a0dfc67379516fec3e6bac09781988cdd
+environment macOS-27.2-arm64-arm-64bit 3.11.17 {'numpy': '2.4.6', 'pandas': '3.1.1', 'mutmut': '3.8.0'}
+48 frames equal original warnings [] mutant warnings [('Pandas4Warning', "'H' is deprecated and will be removed in a future version. Please use 'h' instead of 'H'.")]
+191 frames equal original warnings [] mutant warnings [('Pandas4Warning', "'H' is deprecated and will be removed in a future version. Please use 'h' instead of 'H'.")]

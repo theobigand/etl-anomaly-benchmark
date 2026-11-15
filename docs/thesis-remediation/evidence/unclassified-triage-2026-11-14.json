@@ -145,7 +145,7 @@
         "+    pop[\"t\"] = _BASE + pd.to_timedelta(hours, unit=\"H\")"
       ],
       "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "evidence": "Inconclusive after generated-code probe: output frames matched, but the mutant emitted a Pandas4Warning absent from the original on both local pandas 3.0.6 and 3.1.1. Significance under the supported warning policy and other pandas versions remains unresolved; see INJECTION_UNIT_PROBE_2026-11-15.md."
     },
     {
       "id": "research.injection.x_inject__mutmut_90",
@@ -178,7 +178,7 @@
         "+    drift[\"t\"] = _BASE + pd.to_timedelta(rng.uniform(0.9 * n, n, size=k), unit=\"H\")"
       ],
       "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "evidence": "Inconclusive after generated-code probe: output frames matched, but the mutant emitted a Pandas4Warning absent from the original on both local pandas 3.0.6 and 3.1.1. Significance under the supported warning policy and other pandas versions remains unresolved; see INJECTION_UNIT_PROBE_2026-11-15.md."
     },
     {
       "id": "research.multi_schema.x__dates__mutmut_31",

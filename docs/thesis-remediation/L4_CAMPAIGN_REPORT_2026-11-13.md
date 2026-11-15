@@ -194,3 +194,6 @@ pandas environments, is in
 [the pool numeric probe record](POOL_NUMERIC_EQUIVALENCE_PROBE_2026-11-15.md).
 Two further unapproved typed benchmark index proposals are in
 [the typed index probe record](TYPED_INDEX_EQUIVALENCE_PROBE_2026-11-15.md).
+Two injection time-unit mutants remain inconclusive after matching frame
+outputs but differing deprecation warnings in the two local pandas builds;
+see [the injection probe record](INJECTION_UNIT_PROBE_2026-11-15.md).
