@@ -1,0 +1,22 @@
+/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/mutants/src/etl_benchmark/quality/ml.py:1285: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  self.skew_sign_ = np.sign(np.nan_to_num(skew(x, axis=0)))
+/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/mutants/src/etl_benchmark/quality/ml.py:1376: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  self.skew_sign_ = np.sign(np.nan_to_num(skew(x, )))
+source 4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 scipy 1.17.1
+TailProbabilityModel both_nan True same_bytes True
+PCAReconstruction both_nan True same_bytes True
+fit (3, 2) match True
+fit (3, 2) match True
+fit (2, 2) match True
+fit (1, 2) match True
+/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/mutants/src/etl_benchmark/quality/ml.py:1285: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  self.skew_sign_ = np.sign(np.nan_to_num(skew(x, axis=0)))
+/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/mutants/src/etl_benchmark/quality/ml.py:1376: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  self.skew_sign_ = np.sign(np.nan_to_num(skew(x, )))
+source 4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 scipy 1.17.1
+TailProbabilityModel both_nan True same_bytes True
+PCAReconstruction both_nan True same_bytes True
+fit (3, 2) match True
+fit (3, 2) match True
+fit (2, 2) match True
+fit (1, 2) match True

@@ -1,0 +1,24 @@
+import hashlib
+import platform
+from pathlib import Path
+import numpy as np
+import torch
+from etl_benchmark.quality._torch_models import FitScalerDIF
+p=Path('src/etl_benchmark/quality/_torch_models.py')
+print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'torch',torch.__version__)
+methods=['xǁFitScalerDIFǁ_deep_representation__mutmut_orig',*[f'xǁFitScalerDIFǁ_deep_representation__mutmut_{i}' for i in (5,8,9)]]
+def run(method,n,batch):
+ obj=FitScalerDIF.__new__(FitScalerDIF);obj.batch_size=batch;obj.device='cpu'
+ net=torch.nn.Identity();data=torch.arange(n*2,dtype=torch.float32).reshape(n,2)
+ try:
+  fit=getattr(obj,method)(net,data)
+  scored=getattr(obj,method)(net,data.flip(0))
+  return ('ok',fit.tolist(),scored.tolist())
+ except Exception as e:
+  return ('error',type(e).__name__,str(e))
+for n in (0,1,2,3,5,8):
+ for batch in (1,2,4):
+  expected=run(methods[0],n,batch)
+  for name in methods[1:]:
+   actual=run(name,n,batch)
+   print('n',n,'batch',batch,name,'match',actual==expected, actual if n in (0,1) else '')

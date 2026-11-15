@@ -13,23 +13,23 @@ All arithmetic below uses only the historical mixed-environment ledger. Focused 
 | `research/normalise.py` | 191/197 | 6 | 191/191 (100.00%) | yes |
 | `research/pool_chrono.py` | 300/316 | 6 | 300/310 (96.77%) | no |
 | `research/pool_preprocessing.py` | 241/248 | 4 | 241/244 (98.77%) | yes |
-| `research/temporal_decision.py` | 810/836 | 6 | 810/830 (97.59%) | no |
+| `research/temporal_decision.py` | 810/836 | 9 | 810/827 (97.94%) | no |
 | `research/typed_benchmark.py` | 175/180 | 3 | 175/177 (98.87%) | yes |
 | `research/uci_loader.py` | 180/186 | 1 | 180/185 (97.30%) | no |
 | `src/etl_benchmark/load.py` | 13/14 | 1 | 13/13 (100.00%) | yes |
-| `src/etl_benchmark/quality/_torch_models.py` | 58/65 | 0 | 58/65 (89.23%) | no |
+| `src/etl_benchmark/quality/_torch_models.py` | 58/65 | 3 | 58/62 (93.55%) | no |
 | `src/etl_benchmark/quality/autoencoder.py` | 112/117 | 2 | 112/115 (97.39%) | no |
 | `src/etl_benchmark/quality/base.py` | 30/31 | 1 | 30/30 (100.00%) | yes |
 | `src/etl_benchmark/quality/deep.py` | 60/62 | 2 | 60/60 (100.00%) | yes |
-| `src/etl_benchmark/quality/drift.py` | 119/129 | 1 | 119/128 (92.97%) | no |
+| `src/etl_benchmark/quality/drift.py` | 119/129 | 2 | 119/127 (93.70%) | no |
 | `src/etl_benchmark/quality/gx.py` | 87/98 | 6 | 87/92 (94.57%) | no |
-| `src/etl_benchmark/quality/ml.py` | 239/259 | 3 | 239/256 (93.36%) | no |
+| `src/etl_benchmark/quality/ml.py` | 239/259 | 6 | 239/253 (94.47%) | no |
 | `src/etl_benchmark/quality/rules.py` | 112/119 | 2 | 112/117 (95.73%) | no |
-| `src/etl_benchmark/quality/window_drift.py` | 225/233 | 1 | 225/232 (96.98%) | no |
+| `src/etl_benchmark/quality/window_drift.py` | 225/233 | 2 | 225/231 (97.40%) | no |
 | `src/etl_benchmark/quality/windows.py` | 54/57 | 3 | 54/54 (100.00%) | yes |
 | `verification/mutation_scope.py` | 240/246 | 6 | 240/240 (100.00%) | yes |
 
-The LSTM row excludes no owner records in this table. If the official validator accepts the four previously approved records in a compatible current execution, the historical arithmetic would be 368/373 (98.66%); this remains hypothetical until current Linux-side validation and is not a new owner decision.
+The LSTM row excludes no owner records in this table. A later scoped Linux run validated the four existing owner records on db27f56 and measured 368/373 (98.66%); see DIAGNOSTIC_43718624552.md. That result is specific to that tested commit and shard and is not a complete campaign or a new owner decision.
 
 ## Individual proposed identities
 
@@ -211,6 +211,9 @@ Historical raw: 810/836; L4 threshold 98%. Source SHA-256: `f402ba92cdbd8a143608
 
 | Mutant identity | Origin and evidence strength | Alone | Evidence |
 | --- | --- | --- | --- |
+| `research.temporal_decision.x_bank_marketing__mutmut_48` | new probe: conditional; see individual evidence | insufficient | [record](BANK_TIMESTAMP_CASE_PROBE_2026-11-15.md) |
+| `research.temporal_decision.x_bank_marketing__mutmut_50` | new probe: conditional; see individual evidence | insufficient | [record](BANK_TIMESTAMP_CASE_PROBE_2026-11-15.md) |
+| `research.temporal_decision.x_bank_marketing__mutmut_54` | new probe: conditional; see individual evidence | insufficient | [record](BANK_TIMESTAMP_CASE_PROBE_2026-11-15.md) |
 | `research.temporal_decision.x_bank_marketing__mutmut_57` | second packet: pattern proposal; individual verification pending | insufficient | [record](OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md) |
 | `research.temporal_decision.x_bank_marketing__mutmut_63` | second packet: pattern proposal; individual verification pending | insufficient | [record](OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md) |
 | `research.temporal_decision.x_credit_card__mutmut_11` | second packet: pattern proposal; individual verification pending | insufficient | [record](OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md) |
@@ -275,6 +278,9 @@ Historical raw: 58/65; L4 threshold 98%. Source SHA-256: `77a1b57ff69e580cad700b
 
 | Mutant identity | Origin and evidence strength | Alone | Evidence |
 | --- | --- | --- | --- |
+| `etl_benchmark.quality._torch_models.xǁFitScalerDIFǁ_deep_representation__mutmut_5` | new probe: conditional; see individual evidence | insufficient | [record](DIF_LOADER_DEFAULTS_PROBE_2026-11-15.md) |
+| `etl_benchmark.quality._torch_models.xǁFitScalerDIFǁ_deep_representation__mutmut_8` | new probe: conditional; see individual evidence | insufficient | [record](DIF_LOADER_DEFAULTS_PROBE_2026-11-15.md) |
+| `etl_benchmark.quality._torch_models.xǁFitScalerDIFǁ_deep_representation__mutmut_9` | new probe: conditional; see individual evidence | insufficient | [record](DIF_LOADER_DEFAULTS_PROBE_2026-11-15.md) |
 
 ### `src/etl_benchmark/quality/autoencoder.py`
 
@@ -309,6 +315,7 @@ Historical raw: 119/129; L4 threshold 98%. Source SHA-256: `95380ca0f8f87a24c512
 | Mutant identity | Origin and evidence strength | Alone | Evidence |
 | --- | --- | --- | --- |
 | `etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ_row_score__mutmut_33` | new probe: conditional; see individual evidence | insufficient | [record](DRIFT_BOUNDARY_PROBE_2026-11-15.md) |
+| `etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ_row_score__mutmut_43` | new probe: conditional; see individual evidence | insufficient | [record](DRIFT_GROSS_NULL_PROBE_2026-11-15.md) |
 
 ### `src/etl_benchmark/quality/gx.py`
 
@@ -329,9 +336,12 @@ Historical raw: 239/259; L4 threshold 98%. Source SHA-256: `4b1c2db9f3a65721f08e
 
 | Mutant identity | Origin and evidence strength | Alone | Evidence |
 | --- | --- | --- | --- |
+| `etl_benchmark.quality.ml.xǁPCAReconstructionǁ__init____mutmut_12` | new probe: conditional; see individual evidence | insufficient | [record](ML_DEFAULTS_PROBE_2026-11-15.md) |
 | `etl_benchmark.quality.ml.xǁPyODDetectorǁ_matrix__mutmut_11` | new probe: conditional; see individual evidence | insufficient | [record](RULES_EQUIVALENCE_PROBES_2026-11-15.md) |
+| `etl_benchmark.quality.ml.xǁTailProbabilityModelǁ__init____mutmut_13` | new probe: conditional; see individual evidence | insufficient | [record](ML_DEFAULTS_PROBE_2026-11-15.md) |
 | `etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_26` | new probe: conditional; see individual evidence | insufficient | [record](RULES_EQUIVALENCE_PROBES_2026-11-15.md) |
 | `etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_48` | second packet: pattern proposal; individual verification pending | insufficient | [record](OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md) |
+| `etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_13` | new probe: conditional; see individual evidence | insufficient | [record](ML_DEFAULTS_PROBE_2026-11-15.md) |
 
 ### `src/etl_benchmark/quality/rules.py`
 
@@ -349,6 +359,7 @@ Historical raw: 225/233; L4 threshold 98%. Source SHA-256: `7369796bac2ada0ee25c
 | Mutant identity | Origin and evidence strength | Alone | Evidence |
 | --- | --- | --- | --- |
 | `etl_benchmark.quality.window_drift.x_event_metrics__mutmut_25` | second packet: pattern proposal; individual verification pending | insufficient | [record](OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md) |
+| `etl_benchmark.quality.window_drift.x_event_metrics__mutmut_29` | new probe: conditional; see individual evidence | insufficient | [record](WINDOW_UTC_CASE_PROBE_2026-11-15.md) |
 
 ### `src/etl_benchmark/quality/windows.py`
 
@@ -375,6 +386,6 @@ Historical raw: 240/246; L4 threshold 98%. Source SHA-256: `622f62cf9104148fb33c
 
 ## Still unresolved
 
-The 162-record triage currently contains 96 inconclusive identities, 28 focused kills and 38 new proposals. These numbers are not a full campaign, and any pending behavioral differences or infrastructure problems remain in the triage artifact. No proposal is an approval.
+The 162-record triage currently contains 76 inconclusive identities, 37 focused kills and 49 new proposals. These numbers are not a full campaign, and any pending behavioral differences or infrastructure problems remain in the triage artifact. No proposal is an approval.
 
 Reproduce from the repository root with the locally generated mutation catalog present: `PYTHONPATH=. python docs/thesis-remediation/evidence/build-owner-queue-2026-11-15.py.txt`. The script checks identities and historical catalog digests; it does not execute mutants.

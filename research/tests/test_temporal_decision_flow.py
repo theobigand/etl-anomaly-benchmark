@@ -91,6 +91,18 @@ def _frame_for_run(n=100, seed=2):
     return x, y, times
 
 
+def test_equal_timestamps_keep_arrival_order_in_the_chronological_split(monkeypatch):
+    monkeypatch.setattr(
+        td, "_block_ci", lambda y, s: {"ci_low": 0.0, "ci_high": 1.0, "resamples_used": 1}
+    )
+    x, y, _ = _frame_for_run()
+    times = pd.Series(pd.Timestamp("2020-01-01", tz="UTC"), index=x.index)
+    result = td.run_frame(x, y, times, ["zscore"], seeds=(7,))
+    assert result["partitions"]["train"]["positives"] == int(y[:70].sum())
+    assert result["partitions"]["validation"]["positives"] == int(y[70:85].sum())
+    assert result["partitions"]["test"]["positives"] == int(y[85:].sum())
+
+
 def test_the_stratified_arm_splits_seventy_fifty_with_the_labels_and_the_seed(monkeypatch):
     splits = []
     real = td.train_test_split
@@ -250,6 +262,26 @@ def test_the_credit_card_rows_follow_time_and_carry_the_label_and_utc_time(monke
     assert x["v"].tolist() == [1.0, 2.0, 3.0] and x.index.equals(pd.RangeIndex(3))
     assert y.tolist() == [0, 1, 1] and times.index.equals(pd.RangeIndex(3))
     assert times.is_monotonic_increasing
+
+
+def test_credit_rows_with_equal_times_keep_arrival_order(monkeypatch):
+    import temporal_pilot as tp
+
+    from etl_benchmark.datasets import ANOMALY_COLUMN
+
+    raw = pd.DataFrame(
+        {
+            tp.TIME_UTC: pd.to_datetime(["2020-01-01"] * 100, utc=True),
+            ANOMALY_COLUMN: np.arange(100) % 2,
+            "v": np.arange(100, dtype=float),
+        }
+    )
+    monkeypatch.setattr(tp, "load", lambda spec: raw)
+    monkeypatch.setattr(tp, "features", lambda spec, frame: frame[["v"]])
+    x, y, times = td.credit_card()
+    assert x["v"].tolist() == raw["v"].tolist()
+    assert y.tolist() == raw[ANOMALY_COLUMN].tolist()
+    assert len(times) == len(raw)
 
 
 def _result(strat, chrono, matched, p0=0.5, p2=0.5, errors=(0.3, 0.2, 0.1)):

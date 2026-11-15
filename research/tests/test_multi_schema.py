@@ -54,6 +54,13 @@ def test_generation_is_deterministic_and_seed_sensitive(spec):
     assert not a.equals(ms.make(spec, n_rows=300, seed=4))
 
 
+def test_generated_rows_have_distinct_index_labels(spec):
+    frame = ms.make(spec, n_rows=300, seed=3)
+    assert frame.index.is_unique
+    for label in frame.index[:10]:
+        assert frame.loc[[label]].shape[0] == 1
+
+
 def test_clean_rows_are_valid_and_invalid_rows_are_not(spec):
     df = ms.make(spec, n_rows=900, seed=2)
     pattern = re.compile(spec.string_valid)

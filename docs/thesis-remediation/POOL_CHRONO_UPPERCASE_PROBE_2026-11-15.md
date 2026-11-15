@@ -32,3 +32,6 @@ Reproduce from the repository root, with the generated mutant inventory present:
 PYTHONPATH=. ~/miniconda3/envs/etl-benchmark/bin/python docs/thesis-remediation/evidence/pool-chrono-uppercase-probe-2026-11-15.py
 PYTHONPATH=. ~/.cache/etl-mutation-venv/bin/python docs/thesis-remediation/evidence/pool-chrono-uppercase-probe-2026-11-15.py
 ```
+
+Evidence confidence: medium for the tested environments; supported-version
+and platform coverage remains incomplete. The owner decision remains separate.

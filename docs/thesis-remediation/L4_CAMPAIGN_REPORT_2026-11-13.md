@@ -229,8 +229,8 @@ validate the current HEAD. It has not received independent model review.
 
 The [preliminary owner queue](OWNER_DECISION_QUEUE_DRAFT_2026-11-15.md)
 consolidates both earlier packets with newer proposals using only historical
-arithmetic. It is incomplete and records no owner decisions. The 162-record
-triage now contains 28 focused kills, 38 conditional proposals and 96 still
+arithmetic. It is incomplete and records no owner decisions. At `db27f56`, the 162-record
+triage contained 28 focused kills, 38 conditional proposals and 96 still
 inconclusive; focused outcomes are not added to the historical campaign.
 The latest evidence includes [mixed-offset eligibility](POOL_CHRONO_OFFSET_PROBE_2026-11-15.md),
 [month-key case probes](POOL_CHRONO_UPPERCASE_PROBE_2026-11-15.md), and
@@ -238,3 +238,43 @@ The latest evidence includes [mixed-offset eligibility](POOL_CHRONO_OFFSET_PROBE
 A complete fresh campaign, current Linux validator result, affected-unit
 measurements, full input provenance, owner decisions and required independent
 review remain outstanding. No certification is implied by this checkpoint.
+
+The later [Linux scoped diagnostic](DIAGNOSTIC_43718624552.md) validated all
+four existing LSTM records on `db27f56` using the official record validator.
+The LSTM raw score was 368/377 and its authorized adjusted score was 368/373
+(98.6595%, L4 threshold 98%). The shard aggregate was skipped. The validation
+is scoped to that tested commit and shard and does not close the separate
+full-campaign input-provenance gap or constitute certification.
+
+The subsequent focused nine-mutant run and three further conditional probes
+bring this triage to 37 focused kills, 41 unapproved proposals and 84
+inconclusive records. See [behavioral evidence](NINE_BEHAVIORAL_PROBES_2026-11-15.md)
+and [bank timestamp evidence](BANK_TIMESTAMP_CASE_PROBE_2026-11-15.md).
+These counts are not a new campaign or official unit scores.
+
+Further generated-mutant counterexample searches support eight conditional
+proposals documented in [DIF loader defaults](DIF_LOADER_DEFAULTS_PROBE_2026-11-15.md),
+[classical model defaults](ML_DEFAULTS_PROBE_2026-11-15.md),
+[drift outlier handling](DRIFT_GROSS_NULL_PROBE_2026-11-15.md), and
+[window UTC spelling](WINDOW_UTC_CASE_PROBE_2026-11-15.md). The triage contains
+37 focused kills, 49 unapproved proposals and 76 inconclusive identities.
+The consolidated queue remains preliminary and all unapproved adjustments are
+hypothetical. None of these outcomes constitutes a complete unit measurement.
+
+The canonical suite on the current behavioral tests completed with 4,046
+passed and 23 deselected. `make verify-tools` passed with 100% branch coverage
+(3,222 statements and 1,262 branches). Both ran with the worktree uncommitted
+at `db27f56`. Earlier attempts failed when temporary fixture repositories could
+not sign commits because the SSH agent had no identities; the existing key was
+restored from the local keychain, and the signed fixture checks and reruns then
+passed. Compressed logs are in `evidence/pending-probes-2026-11-15/`.
+
+A fresh canonical macOS Cardio archive and same-environment replay passed
+numerically with zero non-timing difference and identical split artifacts;
+the worktree was dirty, and locked-environment reconstruction was not requested
+in that replay. [Replay evidence](evidence/cardio-replay-2026-11-15.tar.gz) is
+separate from the scientific archives. The official claims structure check
+passed, while the current-claims check failed, reporting 101 files changed
+since the published run. Its evidence has not been resealed. This is a release
+blocker alongside the incomplete campaign, remaining investigations, input
+provenance, owner decisions and independent review.

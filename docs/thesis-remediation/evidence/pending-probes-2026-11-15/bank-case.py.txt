@@ -1,0 +1,30 @@
+import ast
+import hashlib
+import platform
+from pathlib import Path
+
+import pandas as pd
+import research.temporal_decision as module
+import uci_loader
+
+source = Path('research/temporal_decision.py')
+generated = Path('mutants/research/temporal_decision.py')
+print('source',hashlib.sha256(source.read_bytes()).hexdigest(),'generated',hashlib.sha256(generated.read_bytes()).hexdigest())
+print('python',platform.python_version(),'platform',platform.platform(),'pandas',pd.__version__)
+names=[f'x_bank_marketing__mutmut_{i}' for i in (48,50,54)]
+ns=vars(module).copy()
+for node in ast.parse(generated.read_text()).body:
+    if isinstance(node,ast.FunctionDef) and node.name in names:
+        exec(compile(ast.Module(body=[node],type_ignores=[]),str(generated),'exec'),ns)
+frames=[pd.DataFrame({'month':['dec','jan','jan','feb'],'y':['yes','no','yes','no'],'age':[1,2,3,4],'job':['a','b','a','b']}),pd.DataFrame({'month':[],'y':[],'age':[]}),pd.DataFrame({'month':['bad'],'y':['no'],'age':[2]})]
+for i,frame in enumerate(frames):
+    uci_loader.read_table=lambda _:frame.copy()
+    def run(fn):
+        try:
+            x,y,t=fn(Path('unused.csv'))
+            return ('ok',x.to_json(),y.tolist(),t.astype(str).tolist(),str(t.dtype))
+        except Exception as e:
+            return ('error',type(e).__name__,str(e))
+    expected=run(module.bank_marketing)
+    for name in names:
+        actual=run(ns[name]); print(i,name,'MATCH' if actual==expected else 'DIFF',repr(actual))

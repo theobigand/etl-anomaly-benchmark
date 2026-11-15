@@ -1,0 +1,12 @@
+import sys
+from pathlib import Path
+sys.path.insert(0,str(Path.cwd()/'research'/'tests'))
+from test_pool_chrono_command import _stub_jobs
+import pool_chrono as pc
+
+def test_only_later_dataset(monkeypatch,tmp_path):
+    seen=_stub_jobs(monkeypatch,tmp_path)
+    out=tmp_path/'out'
+    assert pc.main(['--output',str(out),'--only','bank_marketing']) == 0
+    assert [p.name for p in out.iterdir()] == ['bank_marketing.json']
+    assert len(seen['ran']) == 1

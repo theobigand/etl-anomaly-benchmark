@@ -331,8 +331,8 @@
         "-    df = df.sample(frac=1.0, random_state=seed, ignore_index=True)",
         "+    df = df.sample(frac=1.0, random_state=seed, ignore_index=None)"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Behavioral regression passed on original and failed on this generated mutant; native focused run recorded exit code 1. See NINE_BEHAVIORAL_PROBES_2026-11-15.md and evidence/nine-focused-native-2026-11-15.json. Not a full unit measurement."
     },
     {
       "id": "research.multi_schema.x_make__mutmut_309",
@@ -342,8 +342,8 @@
         "-    df = df.sample(frac=1.0, random_state=seed, ignore_index=True)",
         "+    df = df.sample(frac=1.0, random_state=seed, )"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Behavioral regression passed on original and failed on this generated mutant; native focused run recorded exit code 1. See NINE_BEHAVIORAL_PROBES_2026-11-15.md and evidence/nine-focused-native-2026-11-15.json. Not a full unit measurement."
     },
     {
       "id": "research.multi_schema.x_make__mutmut_311",
@@ -353,8 +353,8 @@
         "-    df = df.sample(frac=1.0, random_state=seed, ignore_index=True)",
         "+    df = df.sample(frac=1.0, random_state=seed, ignore_index=False)"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Behavioral regression passed on original and failed on this generated mutant; native focused run recorded exit code 1. See NINE_BEHAVIORAL_PROBES_2026-11-15.md and evidence/nine-focused-native-2026-11-15.json. Not a full unit measurement."
     },
     {
       "id": "research.multi_schema.x__per_type__mutmut_2",
@@ -671,8 +671,8 @@
         "-            continue",
         "+            break"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Behavioral regression passed on original and failed on this generated mutant; native focused run recorded exit code 1. See NINE_BEHAVIORAL_PROBES_2026-11-15.md and evidence/nine-focused-native-2026-11-15.json. Not a full unit measurement."
     },
     {
       "id": "research.pool_preprocessing.x__categorical__mutmut_2",
@@ -781,8 +781,8 @@
         "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
         "+    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=None)"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Behavioral regression passed on original and failed on this generated mutant; native focused run recorded exit code 1. See NINE_BEHAVIORAL_PROBES_2026-11-15.md and evidence/nine-focused-native-2026-11-15.json. Not a full unit measurement."
     },
     {
       "id": "research.temporal_decision.x_run_frame__mutmut_13",
@@ -792,8 +792,8 @@
         "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
         "+    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), )"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Behavioral regression passed on original and failed on this generated mutant; native focused run recorded exit code 1. See NINE_BEHAVIORAL_PROBES_2026-11-15.md and evidence/nine-focused-native-2026-11-15.json. Not a full unit measurement."
     },
     {
       "id": "research.temporal_decision.x_run_frame__mutmut_15",
@@ -847,8 +847,8 @@
         "-    frame = tp.load(spec).sort_values(tp.TIME_UTC, kind=\"stable\")",
         "+    frame = tp.load(spec).sort_values(tp.TIME_UTC, kind=None)"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Behavioral regression passed on original and failed on this generated mutant; native focused run recorded exit code 1. See NINE_BEHAVIORAL_PROBES_2026-11-15.md and evidence/nine-focused-native-2026-11-15.json. Not a full unit measurement."
     },
     {
       "id": "research.temporal_decision.x_credit_card__mutmut_8",
@@ -858,8 +858,8 @@
         "-    frame = tp.load(spec).sort_values(tp.TIME_UTC, kind=\"stable\")",
         "+    frame = tp.load(spec).sort_values(tp.TIME_UTC, )"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Behavioral regression passed on original and failed on this generated mutant; native focused run recorded exit code 1. See NINE_BEHAVIORAL_PROBES_2026-11-15.md and evidence/nine-focused-native-2026-11-15.json. Not a full unit measurement."
     },
     {
       "id": "research.temporal_decision.x_credit_card__mutmut_12",
@@ -891,8 +891,8 @@
         "-        pd.DataFrame({\"year\": year, \"month\": index + 1, \"day\": 1})",
         "+        pd.DataFrame({\"YEAR\": year, \"month\": index + 1, \"day\": 1})"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal: timestamp assembly key case comparisons on pandas 3.0.6 and 3.1.1 matched for valid, invalid and empty inputs; other supported versions and Linux are untested. See BANK_TIMESTAMP_CASE_PROBE_2026-11-15.md. No owner approval."
     },
     {
       "id": "research.temporal_decision.x_bank_marketing__mutmut_50",
@@ -902,8 +902,8 @@
         "-        pd.DataFrame({\"year\": year, \"month\": index + 1, \"day\": 1})",
         "+        pd.DataFrame({\"year\": year, \"MONTH\": index + 1, \"day\": 1})"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal: timestamp assembly key case comparisons on pandas 3.0.6 and 3.1.1 matched for valid, invalid and empty inputs; other supported versions and Linux are untested. See BANK_TIMESTAMP_CASE_PROBE_2026-11-15.md. No owner approval."
     },
     {
       "id": "research.temporal_decision.x_bank_marketing__mutmut_54",
@@ -913,8 +913,8 @@
         "-        pd.DataFrame({\"year\": year, \"month\": index + 1, \"day\": 1})",
         "+        pd.DataFrame({\"year\": year, \"month\": index + 1, \"DAY\": 1})"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal: timestamp assembly key case comparisons on pandas 3.0.6 and 3.1.1 matched for valid, invalid and empty inputs; other supported versions and Linux are untested. See BANK_TIMESTAMP_CASE_PROBE_2026-11-15.md. No owner approval."
     },
     {
       "id": "research.temporal_decision.x_bank_marketing__mutmut_77",
@@ -1078,8 +1078,8 @@
         "-            for batch in DataLoader(X, batch_size=self.batch_size, drop_last=False, shuffle=False):",
         "+            for batch in DataLoader(X, batch_size=self.batch_size, drop_last=False, shuffle=None):"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-mutant probes and local dependency analysis. See DIF_LOADER_DEFAULTS_PROBE_2026-11-15.md for contract, variations, environment limits and confidence. No owner approval."
     },
     {
       "id": "etl_benchmark.quality._torch_models.xǁFitScalerDIFǁ_deep_representation__mutmut_8",
@@ -1089,8 +1089,8 @@
         "-            for batch in DataLoader(X, batch_size=self.batch_size, drop_last=False, shuffle=False):",
         "+            for batch in DataLoader(X, batch_size=self.batch_size, shuffle=False):"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-mutant probes and local dependency analysis. See DIF_LOADER_DEFAULTS_PROBE_2026-11-15.md for contract, variations, environment limits and confidence. No owner approval."
     },
     {
       "id": "etl_benchmark.quality._torch_models.xǁFitScalerDIFǁ_deep_representation__mutmut_9",
@@ -1100,8 +1100,8 @@
         "-            for batch in DataLoader(X, batch_size=self.batch_size, drop_last=False, shuffle=False):",
         "+            for batch in DataLoader(X, batch_size=self.batch_size, drop_last=False, ):"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-mutant probes and local dependency analysis. See DIF_LOADER_DEFAULTS_PROBE_2026-11-15.md for contract, variations, environment limits and confidence. No owner approval."
     },
     {
       "id": "etl_benchmark.quality._torch_models.xǁFitScalerDIFǁ_deep_representation__mutmut_14",
@@ -1276,8 +1276,8 @@
         "-        row[gross] = 0.0",
         "+        row[gross] = None"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-mutant probes and local dependency analysis. See DRIFT_GROSS_NULL_PROBE_2026-11-15.md for contract, variations, environment limits and confidence. No owner approval."
     },
     {
       "id": "etl_benchmark.quality.gx.xǁGreatExpectationsDetectorǁ__init____mutmut_5",
@@ -1562,8 +1562,8 @@
         "-        self.threshold_ = float(\"nan\")",
         "+        self.threshold_ = float(\"NAN\")"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-mutant probes and local dependency analysis. See ML_DEFAULTS_PROBE_2026-11-15.md for contract, variations, environment limits and confidence. No owner approval."
     },
     {
       "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_13",
@@ -1573,8 +1573,8 @@
         "-        self.skew_sign_ = np.sign(np.nan_to_num(skew(x, axis=0)))",
         "+        self.skew_sign_ = np.sign(np.nan_to_num(skew(x, )))"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-mutant probes and local dependency analysis. See ML_DEFAULTS_PROBE_2026-11-15.md for contract, variations, environment limits and confidence. No owner approval."
     },
     {
       "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_26",
@@ -1606,8 +1606,8 @@
         "-        self.threshold_ = float(\"nan\")",
         "+        self.threshold_ = float(\"NAN\")"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-mutant probes and local dependency analysis. See ML_DEFAULTS_PROBE_2026-11-15.md for contract, variations, environment limits and confidence. No owner approval."
     },
     {
       "id": "etl_benchmark.quality.rules.xǁZScoreDetectorǁ__init____mutmut_4",
@@ -1694,8 +1694,8 @@
         "-    if not np.isfinite(values.to_numpy(dtype=float)).all():",
         "+    if not np.isfinite(values.to_numpy(dtype=None)).all():"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Behavioral regression passed on original and failed on this generated mutant; native focused run recorded exit code 1. See NINE_BEHAVIORAL_PROBES_2026-11-15.md and evidence/nine-focused-native-2026-11-15.json. Not a full unit measurement."
     },
     {
       "id": "etl_benchmark.quality.window_drift.xǁWindowDriftMonitorǁ__init____mutmut_21",
@@ -1760,8 +1760,8 @@
         "-    cutoff = cutoff.tz_localize(\"UTC\") if cutoff.tzinfo is None else cutoff.tz_convert(\"UTC\")",
         "+    cutoff = cutoff.tz_localize(\"UTC\") if cutoff.tzinfo is None else cutoff.tz_convert(\"utc\")"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-mutant probes and local dependency analysis. See WINDOW_UTC_CASE_PROBE_2026-11-15.md for contract, variations, environment limits and confidence. No owner approval."
     },
     {
       "id": "etl_benchmark.quality.windows.x_scores_to_events__mutmut_7",

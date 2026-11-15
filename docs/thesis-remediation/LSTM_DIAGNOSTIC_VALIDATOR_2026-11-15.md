@@ -1,5 +1,9 @@
 # Scoped LSTM equivalence diagnostic
 
+The subsequent hosted result is recorded in
+[DIAGNOSTIC_43718624552.md](DIAGNOSTIC_43718624552.md). It applies to its
+specified tested commit and does not replace full-campaign validation.
+
 The mutation-shards workflow can validate the existing owner equivalence file
 for an LSTM diagnostic after its native shard run. This is a single-shard
 report, not full-campaign aggregation, DEEP, release approval or certification.

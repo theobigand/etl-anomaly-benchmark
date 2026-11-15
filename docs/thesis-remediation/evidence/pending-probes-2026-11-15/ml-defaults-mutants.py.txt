@@ -1,0 +1,26 @@
+import hashlib
+import platform
+from pathlib import Path
+import numpy as np
+import scipy
+from etl_benchmark.quality.ml import TailProbabilityModel, PCAReconstruction
+p=Path('src/etl_benchmark/quality/ml.py')
+print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'numpy',np.__version__,'scipy',scipy.__version__)
+for cls,args,mutant in [(TailProbabilityModel,(.1,'ecod'),13),(PCAReconstruction,(.1,),12)]:
+ name=cls.__name__; objs=[]
+ for suffix in ('orig',str(mutant)):
+  obj=cls.__new__(cls); getattr(obj,f'xǁ{name}ǁ__init____mutmut_{suffix}')(*args);objs.append(obj)
+ print(name,'both_nan',all(np.isnan(o.threshold_) for o in objs),'same_bytes',np.asarray(objs[0].threshold_).tobytes()==np.asarray(objs[1].threshold_).tobytes())
+for x in (np.array([[1.,2.],[4.,8.],[2.,10.]]),np.ones((3,2)),np.array([[1.,np.nan],[4.,8.]]),np.array([[1.,2.]])):
+ out=[]
+ for suffix in ('orig','13'):
+  model=TailProbabilityModel(.1,'ecod')
+  try:
+   getattr(model,f'xǁTailProbabilityModelǁfit__mutmut_{suffix}')(x)
+   out.append(('ok',model.sorted_,model.skew_sign_,model.threshold_,model.decision_function(x)))
+  except Exception as e: out.append(('error',type(e).__name__,str(e)))
+ match=out[0][0]==out[1][0]
+ if out[0][0]=='ok' and match:
+  match=all(np.array_equal(a,b,equal_nan=True) for a,b in zip(out[0][1:],out[1][1:]))
+ else: match=out[0]==out[1]
+ print('fit',x.shape,'match',match)

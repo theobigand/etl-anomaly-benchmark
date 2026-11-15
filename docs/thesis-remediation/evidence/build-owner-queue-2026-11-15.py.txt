@@ -66,6 +66,9 @@ new_docs = {
     "research/injection.py": "INJECTION_UNIT_PROBE_2026-11-15.md",
     "research/multi_schema.py": None,
     "research/pool_chrono.py": "POOL_CHRONO_UPPERCASE_PROBE_2026-11-15.md",
+    "research/temporal_decision.py": "BANK_TIMESTAMP_CASE_PROBE_2026-11-15.md",
+    "src/etl_benchmark/quality/_torch_models.py": "DIF_LOADER_DEFAULTS_PROBE_2026-11-15.md",
+    "src/etl_benchmark/quality/window_drift.py": "WINDOW_UTC_CASE_PROBE_2026-11-15.md",
     "research/pool_preprocessing.py": "POOL_NUMERIC_EQUIVALENCE_PROBE_2026-11-15.md",
     "research/typed_benchmark.py": "TYPED_INDEX_EQUIVALENCE_PROBE_2026-11-15.md",
     "src/etl_benchmark/quality/windows.py": "WINDOWS_EQUIVALENCE_PROBES_2026-11-15.md",
@@ -79,6 +82,10 @@ for r in triage:
         continue
     path = r["path"]
     doc = new_docs[path]
+    if r["id"] in {'etl_benchmark.quality.ml.xǁPCAReconstructionǁ__init____mutmut_12', 'etl_benchmark.quality.ml.xǁTailProbabilityModelǁ__init____mutmut_13', 'etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_13'}:
+        doc = "ML_DEFAULTS_PROBE_2026-11-15.md"
+    if r["id"] == 'etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ_row_score__mutmut_43':
+        doc = "DRIFT_GROSS_NULL_PROBE_2026-11-15.md"
     if path == "research/multi_schema.py":
         doc = (
             "TYPED_INDEX_EQUIVALENCE_PROBE_2026-11-15.md"
@@ -152,7 +159,7 @@ for path, u in second.items():
     )
 lines += [
     "",
-    "The LSTM row excludes no owner records in this table. If the official validator accepts the four previously approved records in a compatible current execution, the historical arithmetic would be 368/373 (98.66%); this remains hypothetical until current Linux-side validation and is not a new owner decision.",
+    "The LSTM row excludes no owner records in this table. A later scoped Linux run validated the four existing owner records on db27f56 and measured 368/373 (98.66%); see DIAGNOSTIC_43718624552.md. That result is specific to that tested commit and shard and is not a complete campaign or a new owner decision.",
     "",
     "## Individual proposed identities",
     "",

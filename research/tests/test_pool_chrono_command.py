@@ -100,6 +100,14 @@ def test_only_the_named_datasets_are_run_and_the_output_folder_may_exist(monkeyp
     assert x["a"].tolist() == [1.0, 2.0] and y.tolist() == [0, 1] and times.tolist() == [1, 2]
 
 
+def test_only_a_later_named_dataset_is_run(monkeypatch, tmp_path):
+    seen = _stub_jobs(monkeypatch, tmp_path)
+    out = tmp_path / "out"
+    assert pc.main(["--output", str(out), "--only", "bank_marketing"]) == 0
+    assert [p.name for p in out.iterdir()] == ["bank_marketing.json"]
+    assert len(seen["ran"]) == 1
+
+
 def test_the_output_option_is_required_and_the_help_describes_the_command(capsys, monkeypatch):
     with pytest.raises(SystemExit) as stop:
         pc.main([])

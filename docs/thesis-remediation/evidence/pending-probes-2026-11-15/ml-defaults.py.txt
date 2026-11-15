@@ -1,0 +1,17 @@
+import hashlib
+import inspect
+import platform
+from pathlib import Path
+import numpy as np
+import scipy
+from scipy.stats import skew
+
+path=Path('src/etl_benchmark/quality/ml.py')
+print('source_sha256',hashlib.sha256(path.read_bytes()).hexdigest())
+print('python',platform.python_version(),'numpy',np.__version__,'scipy',scipy.__version__,'skew_signature',inspect.signature(skew))
+for x in [np.array([[1.,2.],[4.,8.],[2.,10.]]),np.ones((3,2)),np.array([[1.,np.nan],[4.,8.]]),np.empty((0,2))]:
+    with np.errstate(all='ignore'):
+        a=np.sign(np.nan_to_num(skew(x,axis=0)));b=np.sign(np.nan_to_num(skew(x)))
+    print('shape',x.shape,'same',np.array_equal(a,b),'values',a.tolist())
+for original, mutant in [('nan','NAN')]:
+    a=float(original);b=float(mutant);print(repr(original),repr(mutant),'both_nan',np.isnan(a) and np.isnan(b),'bytes_equal',np.array([a]).tobytes()==np.array([b]).tobytes())
