@@ -1,0 +1,23 @@
+research/multi_schema.py 1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4
+mutants/research/multi_schema.py 8b48b7c67a6e97e0bfa55683104c6f7c28ff77fcc949ba1e6281003424dbdf8e
+environment macOS-27.2-arm64-arm-64bit 3.11.17 {'numpy': '2.4.6', 'pandas': '3.1.1', 'mutmut': '3.8.0'}
+transactions
+0 file count 7 files ['multi_schema_results.json', 'multi_schema_results.md', 'transactions_seed_1.json', 'transactions_seed_2.json', 'transactions_seed_3.json', 'transactions_seed_4.json', 'transactions_seed_42.json']
+transactions
+70 file count 7 files ['multi_schema_results.json', 'multi_schema_results.md', 'transactions_seed_1.json', 'transactions_seed_2.json', 'transactions_seed_3.json', 'transactions_seed_4.json', 'transactions_seed_42.json']
+transactions
+73 file count 7 files ['multi_schema_results.json', 'multi_schema_results.md', 'transactions_seed_1.json', 'transactions_seed_2.json', 'transactions_seed_3.json', 'transactions_seed_4.json', 'transactions_seed_42.json']
+transactions
+74 file count 7 files ['multi_schema_results.json', 'multi_schema_results.md', 'transactions_seed_1.json', 'transactions_seed_2.json', 'transactions_seed_3.json', 'transactions_seed_4.json', 'transactions_seed_42.json']
+all generated files match
+transactions
+default 0 file count 7
+transactions
+default 23 file count 7
+transactions
+default 27 file count 7
+transactions
+default 35 file count 7
+transactions
+default 36 file count 7
+all default-route files match

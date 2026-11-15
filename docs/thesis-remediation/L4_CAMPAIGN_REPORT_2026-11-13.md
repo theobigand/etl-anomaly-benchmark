@@ -199,3 +199,14 @@ outputs but differing deprecation warnings in the two local pandas builds;
 see [the injection probe record](INJECTION_UNIT_PROBE_2026-11-15.md).
 Three unapproved date-sequence proposals are in
 [the multi-schema date probe record](MULTISCHEMA_DATES_EQUIVALENCE_PROBE_2026-11-15.md).
+The [campaign provenance gap](CAMPAIGN_PROVENANCE_GAP_2026-11-15.md) records
+why the current input bindings alone cannot establish the requested complete
+non-Python test-input provenance.
+Focused regressions and native outcomes for malformed drift specifications,
+zero-correlation anomalies, transaction balance floors, GX project isolation
+and the drift threshold are documented in
+[the multi-schema boundary record](MULTISCHEMA_DRIFT_BOUNDARY_2026-11-15.md),
+[the GX boundary record](GX_CONTEXT_BOUNDARY_2026-11-15.md) and
+[the drift boundary record](DRIFT_BOUNDARY_PROBE_2026-11-15.md). None are full
+unit remeasurements. Additional unapproved severity-figure proposals are in
+[the severity probe record](SEVERITY_ZIP_EQUIVALENCE_PROBE_2026-11-15.md).

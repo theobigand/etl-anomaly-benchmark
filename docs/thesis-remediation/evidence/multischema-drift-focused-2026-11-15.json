@@ -1,0 +1,58 @@
+{
+  "kind": "three-mutant focused native run; not full unit or campaign",
+  "command": "OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES ~/.cache/etl-mutation-venv/bin/python -m mutmut run 'research.multi_schema.x_make__mutmut_218' 'research.multi_schema.x_make__mutmut_221' 'research.multi_schema.x_make__mutmut_225' --max-children 1",
+  "exit_status": 0,
+  "git_head_at_start": "bc67ad532b67030bf8861753c0cd19dedb60cb33",
+  "worktree": "drift regression and triage changes uncommitted",
+  "filesystem": "case-insensitive; probed with differently cased filename",
+  "context_after_run": {
+    "revision": "bc67ad532b67030bf8861753c0cd19dedb60cb33",
+    "tests_sha256": "68cac8baed6f4fdceb10504f2a10af79255168f841cd2ee8f57e960b3b8d791e",
+    "configuration_sha256": "e61a357cfc671a864d0e1f80831e375659dfc57bf4c85dbaf3f3f21593e5eaa0",
+    "runtime": {
+      "python": "3.11.17",
+      "platform": "macOS-27.2-arm64-arm-64bit",
+      "packages": {
+        "pytest": "9.1.1",
+        "pytest-cov": "7.1.0",
+        "mutmut": "3.8.0",
+        "numpy": "2.4.6",
+        "pandas": "3.1.1",
+        "scikit-learn": "1.9.1",
+        "pyod": "3.6.7",
+        "mypy": null,
+        "pandas-stubs": null,
+        "torch": "2.15.0"
+      }
+    }
+  },
+  "context_limit": "test digest covers Python tests under tests and research/tests only; excludes non-Python inputs and slides tests",
+  "files": {
+    "source": {
+      "path": "research/multi_schema.py",
+      "sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4"
+    },
+    "metadata": {
+      "path": "docs/thesis-remediation/evidence/multischema-drift-focused-2026-11-15.meta.json",
+      "sha256": "5a2e65df3560c95b52ea05c6dfe22f95b874c6170ce81f0ed61a3555cd378aee"
+    },
+    "native_log": {
+      "path": "docs/thesis-remediation/evidence/multischema-drift-focused-2026-11-15.log",
+      "sha256": "2c076cdd20ad00a54198823139572d656abadac0fa562b0265ee7a03e06ff8ac"
+    }
+  },
+  "records": [
+    {
+      "id": "research.multi_schema.x_make__mutmut_218",
+      "native_verdict_exit_code": 1
+    },
+    {
+      "id": "research.multi_schema.x_make__mutmut_221",
+      "native_verdict_exit_code": 1
+    },
+    {
+      "id": "research.multi_schema.x_make__mutmut_225",
+      "native_verdict_exit_code": 1
+    }
+  ]
+}

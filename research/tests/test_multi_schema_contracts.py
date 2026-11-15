@@ -6,6 +6,7 @@ The generated tables do not read Faker, so their digests do not depend on its ve
 import hashlib
 import json
 import sys
+from dataclasses import replace
 from pathlib import Path
 
 import numpy as np
@@ -65,6 +66,37 @@ def test_the_injected_table_is_pinned_at_the_reference_and_at_a_doubled_severity
     spec = ms.SCHEMAS[name]
     assert _digest(ms.make(spec, 300, 3)) == reference
     assert _digest(ms.make(spec, 300, 3, severity=2.0)) == doubled
+
+
+def test_a_schema_with_an_incomplete_drift_specification_is_refused():
+    original = ms.SCHEMAS["transactions"]
+    invalid = replace(original, drift_cols=original.drift_cols[:2])
+    with pytest.raises(ValueError):
+        ms.make(invalid, 300, 3)
+
+
+def test_uncorrelated_features_receive_opposite_multivariate_tails():
+    original = ms.SCHEMAS["transactions"]
+
+    def uncorrelated_clean(n, rng, fake):
+        frame = original.clean(n, rng, fake)
+        position = np.arange(n)
+        frame["amount"] = np.where(position % 2 == 0, 1.0, 3.0)
+        frame["n_items"] = np.where((position // 2) % 2 == 0, 1.0, 3.0)
+        assert frame.iloc[:300]["amount"].corr(frame.iloc[:300]["n_items"]) == 0.0
+        return frame
+
+    spec = replace(original, clean=uncorrelated_clean)
+    result = ms.make(spec, 375, 3)
+    rows = result[result["anomaly_type"] == "multivariate_outlier"]
+    assert not rows.empty
+    assert ((rows["amount"] - 2.0) * (rows["n_items"] - 2.0) < 0).all()
+
+
+def test_transaction_balance_floor_is_zero_when_noise_would_make_it_negative():
+    balances = ms._transactions(3000, np.random.default_rng(0), None)["balance_after"]
+    assert balances.ge(0).all()
+    assert balances.eq(0).any()
 
 
 def test_invalid_generator_parameters_are_refused():

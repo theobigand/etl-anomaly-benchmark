@@ -12,8 +12,8 @@
         "-    for ax, atype in zip(axes, MAGNITUDE_TYPES, strict=True):",
         "+    for ax, atype in zip(axes, MAGNITUDE_TYPES, strict=None):"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. Matplotlib creates one axis per shipped magnitude type from the same length used by zip; original and mutant renders decoded to identical pixels in the recorded environment. See SEVERITY_ZIP_EQUIVALENCE_PROBE_2026-11-15.md for assumptions and limits."
     },
     {
       "id": "experiments.run_severity.x_render__mutmut_27",
@@ -23,8 +23,8 @@
         "-    for ax, atype in zip(axes, MAGNITUDE_TYPES, strict=True):",
         "+    for ax, atype in zip(axes, MAGNITUDE_TYPES, ):"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. Matplotlib creates one axis per shipped magnitude type from the same length used by zip; original and mutant renders decoded to identical pixels in the recorded environment. See SEVERITY_ZIP_EQUIVALENCE_PROBE_2026-11-15.md for assumptions and limits."
     },
     {
       "id": "experiments.run_severity.x_render__mutmut_28",
@@ -34,8 +34,8 @@
         "-    for ax, atype in zip(axes, MAGNITUDE_TYPES, strict=True):",
         "+    for ax, atype in zip(axes, MAGNITUDE_TYPES, strict=False):"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. Matplotlib creates one axis per shipped magnitude type from the same length used by zip; original and mutant renders decoded to identical pixels in the recorded environment. See SEVERITY_ZIP_EQUIVALENCE_PROBE_2026-11-15.md for assumptions and limits."
     },
     {
       "id": "experiments.run_severity.x_render__mutmut_46",
@@ -243,8 +243,8 @@
         "-                amount * rng.uniform(2, 40, n) + rng.normal(0, 50, n), 0, None",
         "+                amount * rng.uniform(2, 40, n) + rng.normal(0, 50, n), None, None"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "A seeded transaction sample contains zero balances in the original; mutant 79 allows negatives and mutant 101 moves the floor to one. RED on mutant, GREEN with 41 affected tests and focused native run recorded a kill. See MULTISCHEMA_DRIFT_BOUNDARY_2026-11-15.md and evidence/multischema-floor-focused-2026-11-15.json; not a full unit run."
     },
     {
       "id": "research.multi_schema.x__transactions__mutmut_101",
@@ -254,8 +254,8 @@
         "-                amount * rng.uniform(2, 40, n) + rng.normal(0, 50, n), 0, None",
         "+                amount * rng.uniform(2, 40, n) + rng.normal(0, 50, n), 1, None"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "A seeded transaction sample contains zero balances in the original; mutant 79 allows negatives and mutant 101 moves the floor to one. RED on mutant, GREEN with 41 affected tests and focused native run recorded a kill. See MULTISCHEMA_DRIFT_BOUNDARY_2026-11-15.md and evidence/multischema-floor-focused-2026-11-15.json; not a full unit run."
     },
     {
       "id": "research.multi_schema.x_make__mutmut_126",
@@ -276,8 +276,8 @@
         "-                high_b = high_a if sign < 0 else not high_a",
         "+                high_b = high_a if sign <= 0 else not high_a"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "A carrier with exactly zero pair correlation gives opposite-tail anomalies in the original and same-tail anomalies in this mutant. RED on mutant, GREEN with 40 affected tests, and focused native run recorded a kill. See MULTISCHEMA_DRIFT_BOUNDARY_2026-11-15.md and evidence/multischema-zero-focused-2026-11-15.json; not a full unit run."
     },
     {
       "id": "research.multi_schema.x_make__mutmut_168",
@@ -287,8 +287,8 @@
         "-                high_b = high_a if sign < 0 else not high_a",
         "+                high_b = high_a if sign < 1 else not high_a"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "A carrier with exactly zero pair correlation gives opposite-tail anomalies in the original and same-tail anomalies in this mutant. RED on mutant, GREEN with 40 affected tests, and focused native run recorded a kill. See MULTISCHEMA_DRIFT_BOUNDARY_2026-11-15.md and evidence/multischema-zero-focused-2026-11-15.json; not a full unit run."
     },
     {
       "id": "research.multi_schema.x_make__mutmut_218",
@@ -298,8 +298,8 @@
         "-                for col, base in zip(spec.drift_cols, (1.55, 1.6, 1.5), strict=True):",
         "+                for col, base in zip(spec.drift_cols, (1.55, 1.6, 1.5), strict=None):"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "A schema with two drift columns is rejected by the original and silently accepted by this mutant. RED on mutant, GREEN with 39 affected tests, and focused native run recorded a kill. See MULTISCHEMA_DRIFT_BOUNDARY_2026-11-15.md and evidence/multischema-drift-focused-2026-11-15.json; not a full unit run."
     },
     {
       "id": "research.multi_schema.x_make__mutmut_221",
@@ -309,8 +309,8 @@
         "-                for col, base in zip(spec.drift_cols, (1.55, 1.6, 1.5), strict=True):",
         "+                for col, base in zip(spec.drift_cols, (1.55, 1.6, 1.5), ):"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "A schema with two drift columns is rejected by the original and silently accepted by this mutant. RED on mutant, GREEN with 39 affected tests, and focused native run recorded a kill. See MULTISCHEMA_DRIFT_BOUNDARY_2026-11-15.md and evidence/multischema-drift-focused-2026-11-15.json; not a full unit run."
     },
     {
       "id": "research.multi_schema.x_make__mutmut_225",
@@ -320,8 +320,8 @@
         "-                for col, base in zip(spec.drift_cols, (1.55, 1.6, 1.5), strict=True):",
         "+                for col, base in zip(spec.drift_cols, (1.55, 1.6, 1.5), strict=False):"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "A schema with two drift columns is rejected by the original and silently accepted by this mutant. RED on mutant, GREEN with 39 affected tests, and focused native run recorded a kill. See MULTISCHEMA_DRIFT_BOUNDARY_2026-11-15.md and evidence/multischema-drift-focused-2026-11-15.json; not a full unit run."
     },
     {
       "id": "research.multi_schema.x_make__mutmut_306",
@@ -463,8 +463,8 @@
         "-        default=\"classical\",",
         "+        default=None,"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The parsed methods value is used only to select deep mode; these altered defaults all take the same classical route as the original. The probe compared generated files with real argument parsing and writers, using deterministic stand-ins for scientific computations; see MULTISCHEMA_DATES_EQUIVALENCE_PROBE_2026-11-15.md."
     },
     {
       "id": "research.multi_schema.x_main__mutmut_27",
@@ -473,8 +473,8 @@
       "change": [
         "-        default=\"classical\","
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The parsed methods value is used only to select deep mode; these altered defaults all take the same classical route as the original. The probe compared generated files with real argument parsing and writers, using deterministic stand-ins for scientific computations; see MULTISCHEMA_DATES_EQUIVALENCE_PROBE_2026-11-15.md."
     },
     {
       "id": "research.multi_schema.x_main__mutmut_35",
@@ -484,8 +484,8 @@
         "-        default=\"classical\",",
         "+        default=\"XXclassicalXX\","
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The parsed methods value is used only to select deep mode; these altered defaults all take the same classical route as the original. The probe compared generated files with real argument parsing and writers, using deterministic stand-ins for scientific computations; see MULTISCHEMA_DATES_EQUIVALENCE_PROBE_2026-11-15.md."
     },
     {
       "id": "research.multi_schema.x_main__mutmut_36",
@@ -495,8 +495,8 @@
         "-        default=\"classical\",",
         "+        default=\"CLASSICAL\","
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The parsed methods value is used only to select deep mode; these altered defaults all take the same classical route as the original. The probe compared generated files with real argument parsing and writers, using deterministic stand-ins for scientific computations; see MULTISCHEMA_DATES_EQUIVALENCE_PROBE_2026-11-15.md."
     },
     {
       "id": "research.multi_schema.x_main__mutmut_70",
@@ -506,8 +506,8 @@
         "-        for seed, run in zip(SEEDS, runs, strict=True):",
         "+        for seed, run in zip(SEEDS, runs, strict=None):"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The fixed seed tuple is used to build exactly one run per seed immediately before the zip; the probe preserved actual command serialization while replacing expensive input generation and detection, and compared all files. See MULTISCHEMA_DATES_EQUIVALENCE_PROBE_2026-11-15.md for bounds."
     },
     {
       "id": "research.multi_schema.x_main__mutmut_73",
@@ -517,8 +517,8 @@
         "-        for seed, run in zip(SEEDS, runs, strict=True):",
         "+        for seed, run in zip(SEEDS, runs, ):"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The fixed seed tuple is used to build exactly one run per seed immediately before the zip; the probe preserved actual command serialization while replacing expensive input generation and detection, and compared all files. See MULTISCHEMA_DATES_EQUIVALENCE_PROBE_2026-11-15.md for bounds."
     },
     {
       "id": "research.multi_schema.x_main__mutmut_74",
@@ -528,8 +528,8 @@
         "-        for seed, run in zip(SEEDS, runs, strict=True):",
         "+        for seed, run in zip(SEEDS, runs, strict=False):"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The fixed seed tuple is used to build exactly one run per seed immediately before the zip; the probe preserved actual command serialization while replacing expensive input generation and detection, and compared all files. See MULTISCHEMA_DATES_EQUIVALENCE_PROBE_2026-11-15.md for bounds."
     },
     {
       "id": "research.pool_chrono.x_read_times__mutmut_18",
@@ -1254,8 +1254,8 @@
         "-        moved = shift.abs() > 0.03  # features that actually drifted",
         "+        moved = shift.abs() >= 0.03  # features that actually drifted"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Reference [-1,0,1] has sample standard deviation 1; 32 recent observations at 0.03 give a threshold shift. Original scores zero, >= mutant scores positive. RED, GREEN with 32 affected tests, and focused native run recorded a kill. See DRIFT_BOUNDARY_PROBE_2026-11-15.md and evidence/drift-threshold-focused-2026-11-15.json; not a full unit run."
     },
     {
       "id": "etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ_row_score__mutmut_33",
@@ -1265,8 +1265,8 @@
         "-        lean = (z.loc[:, moved.index[moved]] * direction).clip(0.0, 4.0).mean(axis=1)",
         "+        lean = (z.loc[:, moved.index[moved]] / direction).clip(0.0, 4.0).mean(axis=1)"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. Selected shifted features have nonzero signed directions +1 or -1; float multiplication and division by those values agree in positive, negative, absent, gross-outlier, short-window and missing probes in both local pandas builds. See DRIFT_BOUNDARY_PROBE_2026-11-15.md for limitations."
     },
     {
       "id": "etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ_row_score__mutmut_43",
@@ -1331,8 +1331,8 @@
         "-        context = gx.get_context(mode=\"ephemeral\")",
         "+        context = gx.get_context(mode=None)"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "A disposable pre-existing GX project remains unchanged with the original, but the mutant modifies its configuration. RED on mutant, GREEN with 42 affected tests, and focused native run recorded a kill. See GX_CONTEXT_BOUNDARY_2026-11-15.md and evidence/gx-context-focused-2026-11-15.json; not a full unit run."
     },
     {
       "id": "etl_benchmark.quality.gx.xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_17",
