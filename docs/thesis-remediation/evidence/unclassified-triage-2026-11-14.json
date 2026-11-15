@@ -715,8 +715,8 @@
         "-    membership = np.empty(len(frame), dtype=int)",
         "+    membership = np.empty(len(frame), dtype=None)"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. Validated partitions initialize all membership positions to exact integer values 0, 1 or 2; float dtype preserves them and is used only for within-key distinct counts. Original/mutant public results and errors matched in both local pandas environments; see POOL_NUMERIC_EQUIVALENCE_PROBE_2026-11-15.md."
     },
     {
       "id": "research.pool_preprocessing.x_prepare_frozen__mutmut_18",
@@ -726,8 +726,8 @@
         "-    membership = np.empty(len(frame), dtype=int)",
         "+    membership = np.empty(len(frame), )"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. Validated partitions initialize all membership positions to exact integer values 0, 1 or 2; float dtype preserves them and is used only for within-key distinct counts. Original/mutant public results and errors matched in both local pandas environments; see POOL_NUMERIC_EQUIVALENCE_PROBE_2026-11-15.md."
     },
     {
       "id": "research.pool_preprocessing.x_prepare_frozen__mutmut_93",

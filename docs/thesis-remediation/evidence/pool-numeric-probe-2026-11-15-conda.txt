@@ -7,3 +7,11 @@ invalid_text ValueError equal
 infinity ValueError equal
 empty_columns value equal
 missing_column KeyError equal
+16 valid value equal
+16 duplicate_within value equal
+16 duplicate_across ValueError equal
+16 invalid_partitions ValueError equal
+18 valid value equal
+18 duplicate_within value equal
+18 duplicate_across ValueError equal
+18 invalid_partitions ValueError equal

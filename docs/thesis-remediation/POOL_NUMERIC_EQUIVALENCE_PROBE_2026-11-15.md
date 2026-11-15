@@ -39,3 +39,27 @@ The historical raw unit was 241/248 (97.18%) at L4. Excluding this proposal
 alone hypothetically gives 241/247 (97.57%), still below 98%. Even adding the
 separate existing packet proposal yields 241/246 (97.967%), still below the
 exact threshold. Neither figure is a current or officially authorized result.
+
+Two further proposals in the same source are
+`research.pool_preprocessing.x_prepare_frozen__mutmut_16` (`dtype=None`)
+and `research.pool_preprocessing.x_prepare_frozen__mutmut_18` (dtype omitted),
+both replacing `dtype=int` for a temporary membership array. The validation
+before allocation requires nonempty, disjoint partitions that cover every
+position exactly once. The subsequent loop therefore fills every element with
+one of 0, 1 and 2, exactly representable in the default float64 dtype. The
+array is used only to count distinct partition values per hashed feature row;
+its dtype is not returned. Equality of those three values is unchanged, so the
+cross-partition duplicate check and subsequent processing have the same input.
+
+Both original/mutant comparisons matched a valid numeric/categorical frame,
+a duplicate confined to one partition, a duplicate across partitions, and
+invalid overlapping assignments. The complete returned tables and fit report
+or the exception type and message were compared in both recorded pandas
+environments. The same source and generated source digests above apply. The
+probe cannot establish behavior for dynamic library replacement or every
+future pandas version. These cases remain proposals, without owner approval
+or independent review. Hypothetically excluding these two and the numeric
+conversion proposal gives historical 241/245 (98.37%); that would cross the
+historical L4 threshold, but is neither a current measurement nor an
+authorized adjusted score. The prior packet's separate proposal is not
+counted in this hypothetical.

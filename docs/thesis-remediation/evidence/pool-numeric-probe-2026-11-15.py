@@ -36,3 +36,33 @@ for label, args in cases.items():
     else:
         assert outcomes[0][1] == outcomes[1][1]
     print(label, outcomes[0][0], "equal")
+
+folds = {"train": list(range(8)), "validation": [8, 9], "test": [10, 11]}
+frame = pd.DataFrame({"x": np.arange(12, dtype=float), "cat": ["a", "b"] * 6})
+within = frame.copy()
+within.iloc[1] = within.iloc[0]
+across = frame.copy()
+across.iloc[10] = across.iloc[0]
+bad_folds = {"train": list(range(8)), "validation": [8, 9], "test": [10, 10]}
+for number in (16, 18):
+    mutant = getattr(pool, f"x_prepare_frozen__mutmut_{number}")
+    for label, input_frame, parts in (
+        ("valid", frame, folds),
+        ("duplicate_within", within, folds),
+        ("duplicate_across", across, folds),
+        ("invalid_partitions", frame, bad_folds),
+    ):
+        outcomes = []
+        for function in (pool.x_prepare_frozen__mutmut_orig, mutant):
+            try:
+                outcomes.append(("value", function(input_frame, parts)))
+            except Exception as error:
+                outcomes.append((type(error).__name__, str(error)))
+        assert outcomes[0][0] == outcomes[1][0]
+        if outcomes[0][0] == "value":
+            assert outcomes[0][1]["fit"] == outcomes[1][1]["fit"]
+            for part in folds:
+                pd.testing.assert_frame_equal(outcomes[0][1][part], outcomes[1][1][part])
+        else:
+            assert outcomes[0][1] == outcomes[1][1]
+        print(number, label, outcomes[0][0], "equal")
