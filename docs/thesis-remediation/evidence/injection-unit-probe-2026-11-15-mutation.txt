@@ -3,3 +3,12 @@ mutants/research/injection.py 0a049b613cdff4161eabffebcb6f7c7a0dfc67379516fec3e6
 environment macOS-27.2-arm64-arm-64bit 3.11.17 {'numpy': '2.4.6', 'pandas': '3.1.1', 'mutmut': '3.8.0'}
 48 frames equal original warnings [] mutant warnings [('Pandas4Warning', "'H' is deprecated and will be removed in a future version. Please use 'h' instead of 'H'.")]
 191 frames equal original warnings [] mutant warnings [('Pandas4Warning', "'H' is deprecated and will be removed in a future version. Please use 'h' instead of 'H'.")]
+pair finite value equal
+pair constant value equal
+pair one_column value equal
+pair empty_columns ValueError equal
+continuous_columns bool [] equal
+continuous_columns nullable_bool [] equal
+continuous_columns int_binary [] equal
+continuous_columns distinct ['candidate'] equal
+continuous_columns text [] equal

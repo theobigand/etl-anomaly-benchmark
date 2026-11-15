@@ -31,3 +31,37 @@ PYTHONPATH=mutants/research:src ~/.cache/etl-mutation-venv/bin/python \
 PYTHONPATH=mutants/research:src ~/miniconda3/envs/etl-benchmark/bin/python \
   docs/thesis-remediation/evidence/injection-unit-probe-2026-11-15.py
 ```
+
+`research.injection.x__pair__mutmut_9` is a separate proposed equivalent, not
+an owner decision. It replaces the common diagonal sentinel -1 with -2 after
+taking absolute correlations. Finite off-diagonal values are nonnegative, so
+neither negative sentinel outranks them; missing correlations and degenerate
+shapes were also considered. The same probe compared the returned column pair
+and correlation, or error, for a four-column finite carrier, a constant
+column, a single column and no columns in both local pandas builds. The
+single-column and empty cases probe the helper directly; normal injection uses
+at least three columns. The finite/NaN and argmax reasoning is conditional on
+the recorded NumPy/pandas operations and assumes no dynamic function
+replacement. It is not a proof for every future dependency build.
+
+The same source and generated-source digests and probe paths above apply. The
+historical injection unit score was 325/336 (96.73%), L4 threshold 98%.
+Hypothetically excluding this mutant alone yields 325/335 (97.01%), still
+below threshold. The existing packet's separate proposals are not counted;
+this is not a fresh measurement or an authorized adjusted score.
+
+`research.injection.x_continuous_columns__mutmut_5` is another unapproved
+proposal. It passes None rather than the column to the boolean dtype check.
+For built-in NumPy bool and pandas nullable Boolean columns, there are at
+most two distinct nonmissing values, while the unchanged subsequent rule
+requires at least ten. Thus those columns are excluded even if the boolean
+check is bypassed. Numeric columns with ten distinct values still pass, and
+nonnumeric columns are rejected by the preceding numeric dtype check.
+The probe compares the original and mutant on ordinary and nullable boolean,
+binary integer, twenty-distinct integer and string columns in both local
+pandas environments. Custom extension dtypes that claim boolean identity but
+expose additional values were not tested; this proposal is conditional on
+the built-in dtype behavior and unchanged threshold. It is not an owner
+verdict or independent review. Excluding this and the `pair` proposal alone
+would hypothetically yield historical 325/334 (97.31%), still below L4 98%;
+it is not an authorized or current score.

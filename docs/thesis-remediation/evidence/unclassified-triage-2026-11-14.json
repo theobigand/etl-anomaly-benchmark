@@ -89,8 +89,8 @@
         "-        and not pd.api.types.is_bool_dtype(frame[c])",
         "+        and not pd.api.types.is_bool_dtype(None)"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. Native pandas Boolean columns have at most two distinct nonmissing values and therefore fail the unchanged minimum of ten distinct values even if the bool check is bypassed; five dtype boundary probes match in both local pandas builds. Custom extension dtypes were not covered. See INJECTION_UNIT_PROBE_2026-11-15.md."
     },
     {
       "id": "research.injection.x_prepare__mutmut_6",
@@ -111,8 +111,8 @@
         "-    np.fill_diagonal(corr, -1)",
         "+    np.fill_diagonal(corr, -2)"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. Absolute correlation off-diagonals are nonnegative or missing, so changing the common negative diagonal sentinel from -1 to -2 does not alter selection on the investigated domains; finite, constant, one-column and empty probes matched in two pandas builds. See INJECTION_UNIT_PROBE_2026-11-15.md for bounds and limitations."
     },
     {
       "id": "research.injection.x_inject__mutmut_21",
