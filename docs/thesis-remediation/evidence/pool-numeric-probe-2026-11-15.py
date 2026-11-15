@@ -1,5 +1,6 @@
 import hashlib
 import platform
+import warnings
 from importlib.metadata import version
 from pathlib import Path
 
@@ -44,23 +45,31 @@ within.iloc[1] = within.iloc[0]
 across = frame.copy()
 across.iloc[10] = across.iloc[0]
 bad_folds = {"train": list(range(8)), "validation": [8, 9], "test": [10, 10]}
-for number in (16, 18):
+categorical_only = pd.DataFrame({"x": [f"category-{n}" for n in range(12)]})
+for number in (16, 18, 93):
     mutant = getattr(pool, f"x_prepare_frozen__mutmut_{number}")
     for label, input_frame, parts in (
         ("valid", frame, folds),
         ("duplicate_within", within, folds),
         ("duplicate_across", across, folds),
         ("invalid_partitions", frame, bad_folds),
+        ("categorical_only", categorical_only, folds),
     ):
         outcomes = []
         for function in (pool.x_prepare_frozen__mutmut_orig, mutant):
             try:
-                outcomes.append(("value", function(input_frame, parts)))
+                with warnings.catch_warnings(record=True) as captured:
+                    warnings.simplefilter("always")
+                    value = function(input_frame, parts)
+                outcomes.append(
+                    ("value", value, [(w.category.__name__, str(w.message)) for w in captured])
+                )
             except Exception as error:
                 outcomes.append((type(error).__name__, str(error)))
         assert outcomes[0][0] == outcomes[1][0]
         if outcomes[0][0] == "value":
             assert outcomes[0][1]["fit"] == outcomes[1][1]["fit"]
+            assert outcomes[0][2] == outcomes[1][2]
             for part in folds:
                 pd.testing.assert_frame_equal(outcomes[0][1][part], outcomes[1][1][part])
         else:

@@ -63,3 +63,13 @@ conversion proposal gives historical 241/245 (98.37%); that would cross the
 historical L4 threshold, but is neither a current measurement nor an
 authorized adjusted score. The prior packet's separate proposal is not
 counted in this hypothetical.
+
+`research.pool_preprocessing.x_prepare_frozen__mutmut_93` remains inconclusive.
+It forces the `nanmedian` branch when there are no numeric columns, where the
+original creates an empty median array. The same probe compared mixed and
+categorical-only data, duplicate cases and invalid partitions; it found matching
+outputs, errors and successful-call warnings in both local pandas environments.
+Both used NumPy 2.4.6, however, so the empty-axis numerical and warning behavior
+has not been established across the supported NumPy range. No equivalence is
+proposed on that evidence alone. The record retains its source identity and
+this limitation for a later supported-environment investigation.

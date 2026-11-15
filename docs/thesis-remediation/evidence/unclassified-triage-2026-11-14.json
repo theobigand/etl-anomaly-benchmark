@@ -738,7 +738,7 @@
         "+    medians = np.nanmedian(values, axis=0) if (numeric) or True else np.empty(0)"
       ],
       "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "evidence": "Inconclusive after probe: original and mutant matched complete outputs, errors and successful-call warnings for mixed, categorical-only, duplicate and invalid-partition inputs in local pandas 3.0.6 and 3.1.1, both with NumPy 2.4.6. The numeric-empty nanmedian branch remains dependency-sensitive across the supported NumPy range; no broader equivalence established. See POOL_NUMERIC_EQUIVALENCE_PROBE_2026-11-15.md."
     },
     {
       "id": "research.temporal_decision.x_decision_metrics__mutmut_2",

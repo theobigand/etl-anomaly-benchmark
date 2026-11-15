@@ -11,7 +11,14 @@ missing_column KeyError equal
 16 duplicate_within value equal
 16 duplicate_across ValueError equal
 16 invalid_partitions ValueError equal
+16 categorical_only value equal
 18 valid value equal
 18 duplicate_within value equal
 18 duplicate_across ValueError equal
 18 invalid_partitions ValueError equal
+18 categorical_only value equal
+93 valid value equal
+93 duplicate_within value equal
+93 duplicate_across ValueError equal
+93 invalid_partitions ValueError equal
+93 categorical_only value equal
