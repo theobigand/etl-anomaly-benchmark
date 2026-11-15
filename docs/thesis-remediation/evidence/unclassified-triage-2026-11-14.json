@@ -1771,8 +1771,8 @@
         "-    aligned = np.empty(len(scores), dtype=float)",
         "+    aligned = np.empty(len(scores), dtype=None)"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. NumPy documents float64 for the default dtype of empty; the explicit None and omitted-argument mutants matched original event mappings and boundary failures in the probe. See WINDOWS_EQUIVALENCE_PROBES_2026-11-15.md for identities, limits and historical hypothetical."
     },
     {
       "id": "etl_benchmark.quality.windows.x_scores_to_events__mutmut_9",
@@ -1782,8 +1782,8 @@
         "-    aligned = np.empty(len(scores), dtype=float)",
         "+    aligned = np.empty(len(scores), )"
       ],
-      "outcome": "inconclusive",
-      "evidence": "Mutation text inspected; no sufficient behavioral counterexample or equivalence evidence has yet been established."
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. NumPy documents float64 for the default dtype of empty; the explicit None and omitted-argument mutants matched original event mappings and boundary failures in the probe. See WINDOWS_EQUIVALENCE_PROBES_2026-11-15.md for identities, limits and historical hypothetical."
     }
   ]
 }

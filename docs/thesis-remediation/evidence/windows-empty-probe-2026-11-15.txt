@@ -1,0 +1,10 @@
+sources {'src/etl_benchmark/quality/windows.py': '5a4fdd8739edcc33dd786b2b241cf5c3c92ec3e63f6e669ef571d1cb9699c864', 'mutants/src/etl_benchmark/quality/windows.py': '548f6082bc9d51025473094549af962ec6af4638a29c1b839d0d139510c62031'}
+environment macOS-27.2-arm64-arm-64bit 3.11.17 {'numpy': '2.4.6', 'pandas': '3.1.1', 'mutmut': '3.8.0'}
+7 permuted value equal
+7 integer value equal
+7 empty value equal
+7 mismatch ValueError equal
+9 permuted value equal
+9 integer value equal
+9 empty value equal
+9 mismatch ValueError equal

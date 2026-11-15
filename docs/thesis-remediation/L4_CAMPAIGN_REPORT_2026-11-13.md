@@ -186,3 +186,6 @@ prevalence boundary is documented in
 [the regression record](TEMPORAL_BOUNDARY_2026-11-15.md). The preliminary
 triage artifact records the individual outcomes and remaining inconclusive
 cases; no fresh 100-unit campaign has been completed.
+Two additional unapproved window dtype proposals are documented in
+[the window probe record](WINDOWS_EQUIVALENCE_PROBES_2026-11-15.md). Their
+hypothetical effect on the historical score is not a current measurement.
