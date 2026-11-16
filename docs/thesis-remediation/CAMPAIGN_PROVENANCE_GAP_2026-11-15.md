@@ -62,4 +62,7 @@ binding differs. Remaining limits, stated plainly:
 - The digest is taken when the manifest is built, not inside the execution proof.
 - Tests run from the ignored `mutants/` copy tree, which mutmut never prunes. Campaign
   evidence therefore must come from `fresh_mutants=true`; a restored cache can hold
-  copies of files that no longer exist at the bound revision.
+  copies of files that were deleted, or of non-Python files under source paths outside
+  `also_copy` that changed, since the cached run. Pull-request-label runs always restore the
+  cache, and no manifest records freshness: check the GitHub run's event and
+  `fresh_mutants` input.
