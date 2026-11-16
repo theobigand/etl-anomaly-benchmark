@@ -1,0 +1,5 @@
+source a1176cd61bd8454c9fa51da682194444feb24529dc401916e8bb94fd212ab691 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.1.1
+fixture sha256 254be747ef7ca29110f81e5e68fbb1fbc83b2c8e8321894ce1e9e4b51dc106eb bytes 14134786
+x_read_table__mutmut_orig seconds [0.28652679200013154, 0.27915725000002567]
+x_read_table__mutmut_23 seconds [0.572513625000056, 0.5710486250000031]
+frames_match True

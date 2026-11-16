@@ -34,3 +34,8 @@ PYTHONPATH=mutants/src:src ~/.cache/etl-mutation-venv/bin/python -P docs/thesis-
 Evidence confidence: medium for the tested environments and documented SciPy
 1.11.4 default; supported-version and platform coverage is incomplete. The owner
 decision remains separate.
+
+The direct generated-method probe also matched in the isolated NumPy 1.24.4,
+pandas 2.0.3, SciPy 1.11.4 and scikit-learn 1.3.2 environment. See
+[the compatibility addendum](MINIMUM_DEPENDENCY_PROBES_2026-11-16.md) and
+`evidence/continuation-2026-11-15/ml-defaults-mutants-minimum.log.gz`.

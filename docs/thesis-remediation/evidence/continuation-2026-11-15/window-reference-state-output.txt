@@ -1,0 +1,6 @@
+source 7369796bac2ada0ee25c125b383752c8d40d7f683e287767dfb6b373108ea8d7 python 3.11.17 platform macOS-27.2-arm64-arm-64bit pandas 3.0.6
+orig initial_reference_end None type NoneType consumer_needs_fit True
+21 initial_reference_end '' type str consumer_needs_fit False
+source 7369796bac2ada0ee25c125b383752c8d40d7f683e287767dfb6b373108ea8d7 python 3.11.17 platform macOS-27.2-arm64-arm-64bit pandas 3.1.1
+orig initial_reference_end None type NoneType consumer_needs_fit True
+21 initial_reference_end '' type str consumer_needs_fit False

@@ -1,0 +1,10 @@
+source 1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4 python 3.11.17 platform macOS-27.2-arm64-arm-64bit pandas 3.0.6
+sensors firmware original_types [] mutant_types []
+sensors site original_types ['float', 'float', 'float'] mutant_types ['NoneType', 'NoneType', 'NoneType']
+transactions reference original_types ['float', 'float', 'float', 'float', 'float'] mutant_types ['NoneType', 'NoneType', 'NoneType', 'NoneType', 'NoneType']
+transactions currency original_types ['float', 'float', 'float'] mutant_types ['NoneType', 'NoneType', 'NoneType']
+source 1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4 python 3.11.17 platform macOS-27.2-arm64-arm-64bit pandas 3.1.1
+sensors firmware original_types [] mutant_types []
+sensors site original_types ['float', 'float', 'float'] mutant_types ['NoneType', 'NoneType', 'NoneType']
+transactions reference original_types ['float', 'float', 'float', 'float', 'float'] mutant_types ['NoneType', 'NoneType', 'NoneType', 'NoneType', 'NoneType']
+transactions currency original_types ['float', 'float', 'float'] mutant_types ['NoneType', 'NoneType', 'NoneType']

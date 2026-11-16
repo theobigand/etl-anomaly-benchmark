@@ -1,0 +1,15 @@
+import hashlib,json,platform,warnings
+from pathlib import Path
+import numpy as np,pandas as pd
+import research.temporal_decision as m
+p=Path('research/temporal_decision.py');print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'numpy',np.__version__,'pandas',pd.__version__)
+rng=np.random.default_rng(9);n=100;base=np.tile([0,1],n//2);frame=pd.DataFrame({'x':rng.normal(size=n)+base});times=pd.Series(pd.date_range('2020-01-01',periods=n,freq='h',tz='UTC'));m.RESAMPLES=10
+cases={'int':base,'bool':base.astype(bool),'float':base.astype(float),'int_strings':base.astype(str),'fractional':base.astype(float)+.2,'float_strings':base.astype(float).astype(str),'nan':np.where(np.arange(n)==2,np.nan,base)}
+for label,y in cases.items():
+ def run(fn):
+  try:
+   with warnings.catch_warnings(record=True) as w:
+    warnings.simplefilter('always');out=fn(frame,y,times,methods=['zscore'],seeds=(7,))
+   return ('ok',json.dumps(out,sort_keys=True,default=str))
+  except Exception as e:return ('error',type(e).__name__,str(e))
+ a=run(m.x_run_frame__mutmut_orig);b=run(m.x_run_frame__mutmut_7);print(label,'match',a==b,'original',a[0],repr(a[1:])[:160] if a!=b else '', 'mutant',b[0],repr(b[1:])[:160] if a!=b else '')

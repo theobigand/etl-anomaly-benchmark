@@ -1,0 +1,64 @@
+{
+  "kind": "two-mutant focused native engine run; not full unit or campaign",
+  "command": "OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES ~/.cache/etl-mutation-venv/bin/python -u docs/thesis-remediation/evidence/continuation-2026-11-15/mps-native-debug.py.txt",
+  "execution_note": "Same mutmut _run engine with debug enabled in memory solely to expose diagnostics; no project configuration, scope or threshold changed. Earlier clean baselines failed without details; debug clean baseline passed.",
+  "exit_status": 0,
+  "context_before": {
+    "revision": "d4d21895d3c6addf75218b67bdb8ccd11b4c7b7e",
+    "tests_sha256": "e088b8ff81b3adcd870ce056f07018788569156bddecb89fb3cc401c6294adee",
+    "configuration_sha256": "e61a357cfc671a864d0e1f80831e375659dfc57bf4c85dbaf3f3f21593e5eaa0",
+    "runtime": {
+      "python": "3.11.17",
+      "platform": "macOS-27.2-arm64-arm-64bit",
+      "packages": {
+        "pytest": "9.1.1",
+        "pytest-cov": "7.1.0",
+        "mutmut": "3.8.0",
+        "numpy": "2.4.6",
+        "pandas": "3.1.1",
+        "scikit-learn": "1.9.1",
+        "pyod": "3.6.7",
+        "mypy": null,
+        "pandas-stubs": null,
+        "torch": "2.15.0"
+      }
+    }
+  },
+  "context_after": {
+    "revision": "d4d21895d3c6addf75218b67bdb8ccd11b4c7b7e",
+    "tests_sha256": "e088b8ff81b3adcd870ce056f07018788569156bddecb89fb3cc401c6294adee",
+    "configuration_sha256": "e61a357cfc671a864d0e1f80831e375659dfc57bf4c85dbaf3f3f21593e5eaa0",
+    "runtime": {
+      "python": "3.11.17",
+      "platform": "macOS-27.2-arm64-arm-64bit",
+      "packages": {
+        "pytest": "9.1.1",
+        "pytest-cov": "7.1.0",
+        "mutmut": "3.8.0",
+        "numpy": "2.4.6",
+        "pandas": "3.1.1",
+        "scikit-learn": "1.9.1",
+        "pyod": "3.6.7",
+        "mypy": null,
+        "pandas-stubs": null,
+        "torch": "2.15.0"
+      }
+    }
+  },
+  "filesystem": "case-insensitive macOS; previously directly probed",
+  "limitations": "Uncommitted tests; Python-test digest excludes non-Python and external inputs; local MPS only, CUDA untested.",
+  "source_sha256": "77a1b57ff69e580cad700bb4ee41f069e3ac0c8489bdd714651c753c4bbdd09d",
+  "metadata_sha256": "7818ddea97d66aa04e2470c5a731b6fb433da7463dccfffcc30504646ea4d59e",
+  "generated_sha256": "ace89b287a051542a58a9e06999e8ec0a9d871cb4a0487ea180e75de132cdda7",
+  "native_log_sha256": "538a78fc9d5f4a713dda05b32b7bd115258f72cf235b9f2cc18a51e714e8670f",
+  "records": [
+    {
+      "id": "etl_benchmark.quality._torch_models.xǁMeanVAEǁevaluating_forward__mutmut_3",
+      "exit_code": 1
+    },
+    {
+      "id": "etl_benchmark.quality._torch_models.xǁFitScalerDIFǁ_deep_representation__mutmut_14",
+      "exit_code": 1
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+import hashlib,platform,warnings
+from pathlib import Path
+import numpy as np,pandas as pd,sklearn
+from etl_benchmark.quality.ml import ECODDetector,HBOSDetector,PCADetector
+p=Path('src/etl_benchmark/quality/ml.py');print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'numpy',np.__version__,'pandas',pd.__version__,'sklearn',sklearn.__version__)
+rng=np.random.default_rng(42);raw=rng.normal(size=(300,3));raw[::13,0]=np.nan
+frames={'float64':pd.DataFrame(raw,columns=list('abc')),'float32':pd.DataFrame(raw.astype('float32'),columns=list('abc')),'nullable':pd.DataFrame({'a':pd.Series(np.arange(300),dtype='Int64'),'b':pd.Series(raw[:,1],dtype='Float64'),'c':pd.Series(raw[:,2],dtype='Float64')})}
+for cls in (ECODDetector,HBOSDetector,PCADetector):
+ for label,frame in frames.items():
+  outputs=[]
+  for suffix in ('orig','4'):
+   d=cls();
+   try:
+    with warnings.catch_warnings(record=True) as w:
+     warnings.simplefilter('always');getattr(d,f'xǁPyODDetectorǁfit__mutmut_{suffix}')(frame); scores=d.score(frame).to_numpy();flags=d.predict(frame).to_numpy()
+    outputs.append(('ok',scores,flags,[(type(x.message).__name__,str(x.message)) for x in w]))
+   except Exception as e:outputs.append(('error',type(e).__name__,str(e)))
+  a,b=outputs;same=a[0]==b[0]
+  if same and a[0]=='ok':
+   print(cls.__name__,label,'score_equal',np.array_equal(a[1],b[1]),'max_difference',float(np.max(np.abs(a[1]-b[1]))),'flag_difference',int(np.sum(a[2]!=b[2])),'warnings_equal',a[3]==b[3])
+  else:print(cls.__name__,label,'outcomes',repr(a),repr(b))

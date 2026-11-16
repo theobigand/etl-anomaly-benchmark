@@ -1,0 +1,23 @@
+import hashlib,platform,tempfile,warnings
+from pathlib import Path
+import numpy as np,pandas as pd
+import research.temporal_decision as m
+p=Path('research/temporal_decision.py');print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'numpy',np.__version__,'pandas',pd.__version__)
+cases=[pd.DataFrame({'month':['jan','feb','feb','mar'],'y':['yes','no','yes','no'],'age':[22,33,44,55],'job':['a','b',None,'a']}),pd.DataFrame({'month':['dec','jan','jan','feb'],'y':['no','yes','no','yes'],'flag':[True,False,True,False],'large':[0,2**63,2**63+1,2**64-1]}),pd.DataFrame({'month':['jan','jan','feb','feb'],'y':['yes','no','no','yes'],'date':['2020-01-01','2020-01-02',None,'2020-01-04'],'num':['1','2',None,'4']}),pd.DataFrame({'month':pd.Series(dtype=str),'y':pd.Series(dtype=str),'age':pd.Series(dtype=float)})]
+for index,frame in enumerate(cases):
+ with tempfile.TemporaryDirectory(prefix='bank-dummies-') as tmp:
+  path=Path(tmp)/'input.csv';frame.to_csv(path,index=False)
+  def run(fn):
+   try:
+    with warnings.catch_warnings(record=True) as w:
+     warnings.simplefilter('always');out=fn(path)
+    return ('ok',out,[(type(x.message).__name__,str(x.message)) for x in w])
+   except Exception as e:return ('error',type(e).__name__,str(e))
+  a=run(m.x_bank_marketing__mutmut_orig)
+  for i in (77,82,86):
+   b=run(getattr(m,f'x_bank_marketing__mutmut_{i}'));same=a[0]==b[0]
+   if same and a[0]=='ok':
+    try:pd.testing.assert_frame_equal(a[1][0],b[1][0]);np.testing.assert_array_equal(a[1][1],b[1][1]);pd.testing.assert_series_equal(a[1][2],b[1][2]);same=a[2]==b[2]
+    except AssertionError:same=False
+   elif same:same=a==b
+   print('case',index,'mutant',i,'match',same,'kind',a[0])

@@ -82,11 +82,35 @@ for r in triage:
         continue
     path = r["path"]
     doc = new_docs[path]
+    if r["id"] in {'research.temporal_decision.x_bank_marketing__mutmut_86', 'research.temporal_decision.x_bank_marketing__mutmut_82', 'research.temporal_decision.x_bank_marketing__mutmut_77'}:
+        doc = "BANK_DUMMY_COLUMNS_PROBE_2026-11-16.md"
+    if r["id"] in {'research.pool_preprocessing.x__categorical__mutmut_4', 'research.pool_preprocessing.x_prepare_frozen__mutmut_93', 'research.pool_preprocessing.x__categorical__mutmut_2'}:
+        doc = "POOL_MINIMUM_COMPAT_PROBE_2026-11-16.md"
+    if r["id"] in {'etl_benchmark.quality.ml.xǁPyODDetectorǁscore__mutmut_9', 'etl_benchmark.quality.ml.xǁPyODDetectorǁscore__mutmut_6'}:
+        doc = "PYOD_SCORE_DTYPE_PROBE_2026-11-15.md"
+    if r["id"] in {'etl_benchmark.quality.gx.xǁGreatExpectationsDetectorǁ__init____mutmut_6', 'etl_benchmark.quality.gx.xǁGreatExpectationsDetectorǁ__init____mutmut_5'}:
+        doc = "GX_INITIAL_STATE_PROBE_2026-11-15.md"
+    if r["id"] in {'research.typed_benchmark.x__per_type__mutmut_26', 'research.typed_benchmark.x__per_type__mutmut_18'}:
+        doc = "TYPED_METRIC_DTYPE_PROBE_2026-11-15.md"
+    if r["id"] in {'etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ__init____mutmut_15', 'etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁfit__mutmut_4', 'etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ__init____mutmut_11', 'etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ__init____mutmut_14', 'etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ__init____mutmut_13'}:
+        doc = "DRIFT_INITIAL_STATE_PROBE_2026-11-15.md"
+    if r["id"] in {'etl_benchmark.quality.window_drift.xǁWindowDriftMonitorǁ__init____mutmut_23', 'etl_benchmark.quality.window_drift.xǁWindowDriftMonitorǁ__init____mutmut_22'}:
+        doc = "WINDOW_INITIAL_STATE_PROBE_2026-11-15.md"
+    if r["id"] in {'etl_benchmark.quality.rules.xǁIQRDetectorǁ__init____mutmut_5', 'etl_benchmark.quality.rules.xǁZScoreDetectorǁ__init____mutmut_4', 'etl_benchmark.quality.rules.xǁIQRDetectorǁ__init____mutmut_6', 'etl_benchmark.quality.rules.xǁZScoreDetectorǁ__init____mutmut_5', 'etl_benchmark.quality.rules.xǁIQRDetectorǁ__init____mutmut_4'}:
+        doc = "RULES_INITIAL_STATE_PROBE_2026-11-15.md"
+    if r["id"] in {'etl_benchmark.quality.ml.xǁPyODDetectorǁ__init____mutmut_6', 'etl_benchmark.quality.ml.xǁPyODDetectorǁ__init____mutmut_5'}:
+        doc = "PYOD_INITIAL_STATE_PROBE_2026-11-15.md"
+    if r["id"] == 'research.injection.x_prepare__mutmut_6':
+        doc = "INJECTION_PREPARE_DTYPE_PROBE_2026-11-15.md"
+    if r["id"] in {'research.pool_chrono.x_load_pool_dataset__mutmut_21', 'research.pool_chrono.x_load_pool_dataset__mutmut_28', 'research.pool_chrono.x_load_pool_dataset__mutmut_19'}:
+        doc = "POOL_ROW_INDEX_DTYPE_PROBE_2026-11-15.md"
+    if r["id"] in {'research.multi_schema.x__per_type__mutmut_26', 'research.multi_schema.x__transactions__mutmut_66', 'research.pool_chrono.x_to_features__mutmut_12', 'research.multi_schema.x__transactions__mutmut_2', 'research.multi_schema.x__per_type__mutmut_18'}:
+        doc = "NUMERIC_DTYPE_DEFAULT_PROBE_2026-11-15.md"
     if r["id"] in {'etl_benchmark.quality.ml.xǁPCAReconstructionǁ__init____mutmut_12', 'etl_benchmark.quality.ml.xǁTailProbabilityModelǁ__init____mutmut_13', 'etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_13'}:
         doc = "ML_DEFAULTS_PROBE_2026-11-15.md"
     if r["id"] == 'etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ_row_score__mutmut_43':
         doc = "DRIFT_GROSS_NULL_PROBE_2026-11-15.md"
-    if path == "research/multi_schema.py":
+    if path == "research/multi_schema.py" and doc is None:
         doc = (
             "TYPED_INDEX_EQUIVALENCE_PROBE_2026-11-15.md"
             if "x_evaluate__" in r["id"]
@@ -159,7 +183,7 @@ for path, u in second.items():
     )
 lines += [
     "",
-    "The LSTM row excludes no owner records in this table. A later scoped Linux run validated the four existing owner records on db27f56 and measured 368/373 (98.66%); see DIAGNOSTIC_43718624552.md. That result is specific to that tested commit and shard and is not a complete campaign or a new owner decision.",
+    "The LSTM row excludes no owner records in this historical table. A scoped Linux run validated the four existing owner records on d4d21895 and measured 368/373 (98.66%); see DIAGNOSTIC_43744898804.md. That result is specific to that tested commit and shard and is not a complete campaign or a new owner decision.",
     "",
     "## Individual proposed identities",
     "",
@@ -190,7 +214,7 @@ for path in sorted(by):
 lines += [
     "## Still unresolved",
     "",
-    f"The 162-record triage currently contains {sum(x['outcome'] == 'inconclusive' for x in triage)} inconclusive identities, {sum(x['outcome'] == 'killed_by_behavioral_test' for x in triage)} focused kills and {sum(x['outcome'] == 'proposed_equivalent' for x in triage)} new proposals. These numbers are not a full campaign, and any pending behavioral differences or infrastructure problems remain in the triage artifact. No proposal is an approval.",
+    f"The 162-record triage currently contains {sum(x['outcome'] == 'inconclusive' for x in triage)} inconclusive identities, {sum(x['outcome'] == 'killed_by_behavioral_test' for x in triage)} focused kills and {sum(x['outcome'] == 'proposed_equivalent' for x in triage)} new proposals, and {sum(x['outcome'] == 'behavioral_difference_pending_native' for x in triage)} demonstrated differences awaiting native verdicts and {sum(x['outcome'] == 'behavioral_difference_pending_regression' for x in triage)} awaiting regression tests. These numbers are not a full campaign, and any pending behavioral differences or infrastructure problems remain in the triage artifact. No proposal is an approval.",
     "",
 ]
 lines.append("Reproduce from the repository root with the locally generated mutation catalog present: `PYTHONPATH=. python docs/thesis-remediation/evidence/build-owner-queue-2026-11-15.py.txt`. The script checks identities and historical catalog digests; it does not execute mutants.\n")

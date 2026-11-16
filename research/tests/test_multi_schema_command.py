@@ -118,6 +118,8 @@ def test_the_method_choice_default_and_help_are_documented(capsys, monkeypatch):
     with pytest.raises(SystemExit):
         ms.main(["--help"])
     text = " ".join(capsys.readouterr().out.split())
+    assert "Two further synthetic schemas" in text
+    assert "verification/multi_schema.md" in text
     assert (
         "--methods {classical,deep} the registry sweep with its hypotheses, or the neural detectors alone"
         in text

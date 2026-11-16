@@ -1,0 +1,18 @@
+import hashlib,itertools,platform
+from pathlib import Path
+import numpy as np,pandas as pd
+import injection as m
+rng=np.random.default_rng(19)
+base=np.tile(np.array(list(itertools.product([-1.,1.],repeat=3))), (12,1))
+for _ in range(1370): frame=pd.DataFrame(base[rng.permutation(len(base))],columns=list('abc'))
+print('source',hashlib.sha256(Path('research/injection.py').read_bytes()).hexdigest(),'python',platform.python_version(),'numpy',np.__version__,'pandas',pd.__version__,'shape',frame.shape,'unique',len(frame.drop_duplicates()),'correlations',frame.corr().to_numpy().tolist())
+for seed in (1,11):
+ out=[]
+ for suffix in ('orig','146'):
+  try:
+   result=getattr(m,'x_inject__mutmut_'+suffix)(frame,seed)
+   out.append(result)
+   rows=result[result.anomaly_type.eq('multivariate_outlier')]
+   print('seed',seed,suffix,'rows',len(rows),'first a b',rows[['a','b']].head().to_numpy().tolist())
+  except Exception as e: print('seed',seed,suffix,'error',type(e).__name__,str(e))
+ if len(out)==2: print('seed',seed,'frames_equal',out[0].equals(out[1]))

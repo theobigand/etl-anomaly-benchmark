@@ -7,29 +7,29 @@ All arithmetic below uses only the historical mixed-environment ledger. Focused 
 | Historically failing unit | Historical raw | Proposals | Hypothetical if all approved | Crosses threshold? |
 | --- | --- | ---: | --- | --- |
 | `experiments/run_severity.py` | 320/329 | 5 | 320/324 (98.77%) | yes |
-| `research/injection.py` | 325/336 | 4 | 325/332 (97.89%) | no |
+| `research/injection.py` | 325/336 | 5 | 325/331 (98.19%) | yes |
 | `research/lstm_detector.py` | 368/377 | 0 | 368/377 (97.61%) | no |
-| `research/multi_schema.py` | 1057/1093 | 16 | 1057/1077 (98.14%) | yes |
+| `research/multi_schema.py` | 1057/1093 | 20 | 1057/1073 (98.51%) | yes |
 | `research/normalise.py` | 191/197 | 6 | 191/191 (100.00%) | yes |
-| `research/pool_chrono.py` | 300/316 | 6 | 300/310 (96.77%) | no |
-| `research/pool_preprocessing.py` | 241/248 | 4 | 241/244 (98.77%) | yes |
-| `research/temporal_decision.py` | 810/836 | 9 | 810/827 (97.94%) | no |
-| `research/typed_benchmark.py` | 175/180 | 3 | 175/177 (98.87%) | yes |
+| `research/pool_chrono.py` | 300/316 | 10 | 300/306 (98.04%) | yes |
+| `research/pool_preprocessing.py` | 241/248 | 7 | 241/241 (100.00%) | yes |
+| `research/temporal_decision.py` | 810/836 | 12 | 810/824 (98.30%) | yes |
+| `research/typed_benchmark.py` | 175/180 | 5 | 175/175 (100.00%) | yes |
 | `research/uci_loader.py` | 180/186 | 1 | 180/185 (97.30%) | no |
 | `src/etl_benchmark/load.py` | 13/14 | 1 | 13/13 (100.00%) | yes |
 | `src/etl_benchmark/quality/_torch_models.py` | 58/65 | 3 | 58/62 (93.55%) | no |
 | `src/etl_benchmark/quality/autoencoder.py` | 112/117 | 2 | 112/115 (97.39%) | no |
 | `src/etl_benchmark/quality/base.py` | 30/31 | 1 | 30/30 (100.00%) | yes |
 | `src/etl_benchmark/quality/deep.py` | 60/62 | 2 | 60/60 (100.00%) | yes |
-| `src/etl_benchmark/quality/drift.py` | 119/129 | 2 | 119/127 (93.70%) | no |
-| `src/etl_benchmark/quality/gx.py` | 87/98 | 6 | 87/92 (94.57%) | no |
-| `src/etl_benchmark/quality/ml.py` | 239/259 | 6 | 239/253 (94.47%) | no |
-| `src/etl_benchmark/quality/rules.py` | 112/119 | 2 | 112/117 (95.73%) | no |
-| `src/etl_benchmark/quality/window_drift.py` | 225/233 | 2 | 225/231 (97.40%) | no |
+| `src/etl_benchmark/quality/drift.py` | 119/129 | 7 | 119/122 (97.54%) | no |
+| `src/etl_benchmark/quality/gx.py` | 87/98 | 8 | 87/90 (96.67%) | no |
+| `src/etl_benchmark/quality/ml.py` | 239/259 | 10 | 239/249 (95.98%) | no |
+| `src/etl_benchmark/quality/rules.py` | 112/119 | 7 | 112/112 (100.00%) | yes |
+| `src/etl_benchmark/quality/window_drift.py` | 225/233 | 4 | 225/229 (98.25%) | yes |
 | `src/etl_benchmark/quality/windows.py` | 54/57 | 3 | 54/54 (100.00%) | yes |
 | `verification/mutation_scope.py` | 240/246 | 6 | 240/240 (100.00%) | yes |
 
-The LSTM row excludes no owner records in this table. A later scoped Linux run validated the four existing owner records on db27f56 and measured 368/373 (98.66%); see DIAGNOSTIC_43718624552.md. That result is specific to that tested commit and shard and is not a complete campaign or a new owner decision.
+The LSTM row excludes no owner records in this historical table. A scoped Linux run validated the four existing owner records on d4d21895 and measured 368/373 (98.66%); see DIAGNOSTIC_43744898804.md. That result is specific to that tested commit and shard and is not a complete campaign or a new owner decision.
 
 ## Individual proposed identities
 
@@ -77,6 +77,7 @@ Historical raw: 325/336; L4 threshold 98%. Source SHA-256: `cdfc81d98e3470ccdf5f
 | `research.injection.x_continuous_columns__mutmut_5` | new probe: conditional; see individual evidence | insufficient | [record](INJECTION_UNIT_PROBE_2026-11-15.md) |
 | `research.injection.x_inject__mutmut_163` | second packet: pattern proposal; individual verification pending | insufficient | [record](OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md) |
 | `research.injection.x_inject__mutmut_78` | second packet: pattern proposal; individual verification pending | insufficient | [record](OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md) |
+| `research.injection.x_prepare__mutmut_6` | new probe: conditional; see individual evidence | insufficient | [record](INJECTION_PREPARE_DTYPE_PROBE_2026-11-15.md) |
 
 ### `research/lstm_detector.py`
 
@@ -103,7 +104,11 @@ Historical raw: 1057/1093; L4 threshold 98%. Source SHA-256: `1e2e1bb4869f59f8fd
 | `research.multi_schema.x__dates__mutmut_31` | new probe: conditional; see individual evidence | insufficient | [record](MULTISCHEMA_DATES_EQUIVALENCE_PROBE_2026-11-15.md) |
 | `research.multi_schema.x__dates__mutmut_34` | new probe: conditional; see individual evidence | insufficient | [record](MULTISCHEMA_DATES_EQUIVALENCE_PROBE_2026-11-15.md) |
 | `research.multi_schema.x__dates__mutmut_35` | new probe: conditional; see individual evidence | insufficient | [record](MULTISCHEMA_DATES_EQUIVALENCE_PROBE_2026-11-15.md) |
+| `research.multi_schema.x__per_type__mutmut_18` | new probe: conditional; see individual evidence | insufficient | [record](NUMERIC_DTYPE_DEFAULT_PROBE_2026-11-15.md) |
+| `research.multi_schema.x__per_type__mutmut_26` | new probe: conditional; see individual evidence | insufficient | [record](NUMERIC_DTYPE_DEFAULT_PROBE_2026-11-15.md) |
 | `research.multi_schema.x__split__mutmut_5` | second packet: pattern proposal; individual verification pending | insufficient | [record](OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md) |
+| `research.multi_schema.x__transactions__mutmut_2` | new probe: conditional; see individual evidence | insufficient | [record](NUMERIC_DTYPE_DEFAULT_PROBE_2026-11-15.md) |
+| `research.multi_schema.x__transactions__mutmut_66` | new probe: conditional; see individual evidence | insufficient | [record](NUMERIC_DTYPE_DEFAULT_PROBE_2026-11-15.md) |
 | `research.multi_schema.x_evaluate__mutmut_68` | new probe: conditional; see individual evidence | insufficient | [record](TYPED_INDEX_EQUIVALENCE_PROBE_2026-11-15.md) |
 | `research.multi_schema.x_evaluate__mutmut_70` | new probe: conditional; see individual evidence | insufficient | [record](TYPED_INDEX_EQUIVALENCE_PROBE_2026-11-15.md) |
 | `research.multi_schema.x_main__mutmut_106` | second packet: pattern proposal; individual verification pending | insufficient | [record](OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md) |
@@ -146,11 +151,15 @@ Historical raw: 300/316; L4 threshold 98%. Source SHA-256: `cd8b6eff471b94280422
 | Mutant identity | Origin and evidence strength | Alone | Evidence |
 | --- | --- | --- | --- |
 | `research.pool_chrono.x_eligible__mutmut_12` | second packet: pattern proposal; individual verification pending | insufficient | [record](OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md) |
+| `research.pool_chrono.x_load_pool_dataset__mutmut_19` | new probe: conditional; see individual evidence | insufficient | [record](POOL_ROW_INDEX_DTYPE_PROBE_2026-11-15.md) |
+| `research.pool_chrono.x_load_pool_dataset__mutmut_21` | new probe: conditional; see individual evidence | insufficient | [record](POOL_ROW_INDEX_DTYPE_PROBE_2026-11-15.md) |
+| `research.pool_chrono.x_load_pool_dataset__mutmut_28` | new probe: conditional; see individual evidence | insufficient | [record](POOL_ROW_INDEX_DTYPE_PROBE_2026-11-15.md) |
 | `research.pool_chrono.x_read_times__mutmut_18` | new probe: conditional; see individual evidence | insufficient | [record](POOL_CHRONO_UPPERCASE_PROBE_2026-11-15.md) |
 | `research.pool_chrono.x_read_times__mutmut_21` | new probe: conditional; see individual evidence | insufficient | [record](POOL_CHRONO_UPPERCASE_PROBE_2026-11-15.md) |
 | `research.pool_chrono.x_read_times__mutmut_25` | new probe: conditional; see individual evidence | insufficient | [record](POOL_CHRONO_UPPERCASE_PROBE_2026-11-15.md) |
 | `research.pool_chrono.x_read_times__mutmut_31` | second packet: pattern proposal; individual verification pending | insufficient | [record](OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md) |
 | `research.pool_chrono.x_read_times__mutmut_37` | second packet: pattern proposal; individual verification pending | insufficient | [record](OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md) |
+| `research.pool_chrono.x_to_features__mutmut_12` | new probe: conditional; see individual evidence | insufficient | [record](NUMERIC_DTYPE_DEFAULT_PROBE_2026-11-15.md) |
 
 ### `research/pool_preprocessing.py`
 
@@ -158,10 +167,13 @@ Historical raw: 241/248; L4 threshold 98%. Source SHA-256: `edf8ac28b2824c76840c
 
 | Mutant identity | Origin and evidence strength | Alone | Evidence |
 | --- | --- | --- | --- |
+| `research.pool_preprocessing.x__categorical__mutmut_2` | new probe: conditional; see individual evidence | insufficient | [record](POOL_MINIMUM_COMPAT_PROBE_2026-11-16.md) |
+| `research.pool_preprocessing.x__categorical__mutmut_4` | new probe: conditional; see individual evidence | insufficient | [record](POOL_MINIMUM_COMPAT_PROBE_2026-11-16.md) |
 | `research.pool_preprocessing.x__numeric__mutmut_9` | new probe: conditional; see individual evidence | insufficient | [record](POOL_NUMERIC_EQUIVALENCE_PROBE_2026-11-15.md) |
 | `research.pool_preprocessing.x_prepare_frozen__mutmut_16` | new probe: conditional; see individual evidence | insufficient | [record](POOL_NUMERIC_EQUIVALENCE_PROBE_2026-11-15.md) |
 | `research.pool_preprocessing.x_prepare_frozen__mutmut_18` | new probe: conditional; see individual evidence | insufficient | [record](POOL_NUMERIC_EQUIVALENCE_PROBE_2026-11-15.md) |
 | `research.pool_preprocessing.x_prepare_frozen__mutmut_23` | second packet: pattern proposal; individual verification pending | insufficient | [record](OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md) |
+| `research.pool_preprocessing.x_prepare_frozen__mutmut_93` | new probe: conditional; see individual evidence | insufficient | [record](POOL_MINIMUM_COMPAT_PROBE_2026-11-16.md) |
 
 ### `research/pool_typed.py`
 
@@ -216,6 +228,9 @@ Historical raw: 810/836; L4 threshold 98%. Source SHA-256: `f402ba92cdbd8a143608
 | `research.temporal_decision.x_bank_marketing__mutmut_54` | new probe: conditional; see individual evidence | insufficient | [record](BANK_TIMESTAMP_CASE_PROBE_2026-11-15.md) |
 | `research.temporal_decision.x_bank_marketing__mutmut_57` | second packet: pattern proposal; individual verification pending | insufficient | [record](OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md) |
 | `research.temporal_decision.x_bank_marketing__mutmut_63` | second packet: pattern proposal; individual verification pending | insufficient | [record](OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md) |
+| `research.temporal_decision.x_bank_marketing__mutmut_77` | new probe: conditional; see individual evidence | insufficient | [record](BANK_DUMMY_COLUMNS_PROBE_2026-11-16.md) |
+| `research.temporal_decision.x_bank_marketing__mutmut_82` | new probe: conditional; see individual evidence | insufficient | [record](BANK_DUMMY_COLUMNS_PROBE_2026-11-16.md) |
+| `research.temporal_decision.x_bank_marketing__mutmut_86` | new probe: conditional; see individual evidence | insufficient | [record](BANK_DUMMY_COLUMNS_PROBE_2026-11-16.md) |
 | `research.temporal_decision.x_credit_card__mutmut_11` | second packet: pattern proposal; individual verification pending | insufficient | [record](OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md) |
 | `research.temporal_decision.x_match_prevalence__mutmut_27` | second packet: pattern proposal; individual verification pending | insufficient | [record](OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md) |
 | `research.temporal_decision.x_match_prevalence__mutmut_51` | second packet: pattern proposal; individual verification pending | insufficient | [record](OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md) |
@@ -243,6 +258,8 @@ Historical raw: 175/180; L4 threshold 98%. Source SHA-256: `abdd10e4a1965e99bd5d
 
 | Mutant identity | Origin and evidence strength | Alone | Evidence |
 | --- | --- | --- | --- |
+| `research.typed_benchmark.x__per_type__mutmut_18` | new probe: conditional; see individual evidence | insufficient | [record](TYPED_METRIC_DTYPE_PROBE_2026-11-15.md) |
+| `research.typed_benchmark.x__per_type__mutmut_26` | new probe: conditional; see individual evidence | insufficient | [record](TYPED_METRIC_DTYPE_PROBE_2026-11-15.md) |
 | `research.typed_benchmark.x_evaluate__mutmut_53` | new probe: conditional; see individual evidence | insufficient | [record](TYPED_INDEX_EQUIVALENCE_PROBE_2026-11-15.md) |
 | `research.typed_benchmark.x_evaluate__mutmut_55` | new probe: conditional; see individual evidence | insufficient | [record](TYPED_INDEX_EQUIVALENCE_PROBE_2026-11-15.md) |
 | `research.typed_benchmark.x_split__mutmut_5` | second packet: pattern proposal; individual verification pending | insufficient | [record](OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md) |
@@ -314,8 +331,13 @@ Historical raw: 119/129; L4 threshold 98%. Source SHA-256: `95380ca0f8f87a24c512
 
 | Mutant identity | Origin and evidence strength | Alone | Evidence |
 | --- | --- | --- | --- |
+| `etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ__init____mutmut_11` | new probe: conditional; see individual evidence | insufficient | [record](DRIFT_INITIAL_STATE_PROBE_2026-11-15.md) |
+| `etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ__init____mutmut_13` | new probe: conditional; see individual evidence | insufficient | [record](DRIFT_INITIAL_STATE_PROBE_2026-11-15.md) |
+| `etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ__init____mutmut_14` | new probe: conditional; see individual evidence | insufficient | [record](DRIFT_INITIAL_STATE_PROBE_2026-11-15.md) |
+| `etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ__init____mutmut_15` | new probe: conditional; see individual evidence | insufficient | [record](DRIFT_INITIAL_STATE_PROBE_2026-11-15.md) |
 | `etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ_row_score__mutmut_33` | new probe: conditional; see individual evidence | insufficient | [record](DRIFT_BOUNDARY_PROBE_2026-11-15.md) |
 | `etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ_row_score__mutmut_43` | new probe: conditional; see individual evidence | insufficient | [record](DRIFT_GROSS_NULL_PROBE_2026-11-15.md) |
+| `etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁfit__mutmut_4` | new probe: conditional; see individual evidence | insufficient | [record](DRIFT_INITIAL_STATE_PROBE_2026-11-15.md) |
 
 ### `src/etl_benchmark/quality/gx.py`
 
@@ -323,6 +345,8 @@ Historical raw: 87/98; L4 threshold 98%. Source SHA-256: `11be59dbe975d055473952
 
 | Mutant identity | Origin and evidence strength | Alone | Evidence |
 | --- | --- | --- | --- |
+| `etl_benchmark.quality.gx.xǁGreatExpectationsDetectorǁ__init____mutmut_5` | new probe: conditional; see individual evidence | insufficient | [record](GX_INITIAL_STATE_PROBE_2026-11-15.md) |
+| `etl_benchmark.quality.gx.xǁGreatExpectationsDetectorǁ__init____mutmut_6` | new probe: conditional; see individual evidence | insufficient | [record](GX_INITIAL_STATE_PROBE_2026-11-15.md) |
 | `etl_benchmark.quality.gx.xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_17` | new probe: conditional; see individual evidence | insufficient | [record](GX_NAME_EQUIVALENCE_PROBE_2026-11-15.md) |
 | `etl_benchmark.quality.gx.xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_18` | new probe: conditional; see individual evidence | insufficient | [record](GX_NAME_EQUIVALENCE_PROBE_2026-11-15.md) |
 | `etl_benchmark.quality.gx.xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_19` | new probe: conditional; see individual evidence | insufficient | [record](GX_NAME_EQUIVALENCE_PROBE_2026-11-15.md) |
@@ -337,7 +361,11 @@ Historical raw: 239/259; L4 threshold 98%. Source SHA-256: `4b1c2db9f3a65721f08e
 | Mutant identity | Origin and evidence strength | Alone | Evidence |
 | --- | --- | --- | --- |
 | `etl_benchmark.quality.ml.xǁPCAReconstructionǁ__init____mutmut_12` | new probe: conditional; see individual evidence | insufficient | [record](ML_DEFAULTS_PROBE_2026-11-15.md) |
+| `etl_benchmark.quality.ml.xǁPyODDetectorǁ__init____mutmut_5` | new probe: conditional; see individual evidence | insufficient | [record](PYOD_INITIAL_STATE_PROBE_2026-11-15.md) |
+| `etl_benchmark.quality.ml.xǁPyODDetectorǁ__init____mutmut_6` | new probe: conditional; see individual evidence | insufficient | [record](PYOD_INITIAL_STATE_PROBE_2026-11-15.md) |
 | `etl_benchmark.quality.ml.xǁPyODDetectorǁ_matrix__mutmut_11` | new probe: conditional; see individual evidence | insufficient | [record](RULES_EQUIVALENCE_PROBES_2026-11-15.md) |
+| `etl_benchmark.quality.ml.xǁPyODDetectorǁscore__mutmut_6` | new probe: conditional; see individual evidence | insufficient | [record](PYOD_SCORE_DTYPE_PROBE_2026-11-15.md) |
+| `etl_benchmark.quality.ml.xǁPyODDetectorǁscore__mutmut_9` | new probe: conditional; see individual evidence | insufficient | [record](PYOD_SCORE_DTYPE_PROBE_2026-11-15.md) |
 | `etl_benchmark.quality.ml.xǁTailProbabilityModelǁ__init____mutmut_13` | new probe: conditional; see individual evidence | insufficient | [record](ML_DEFAULTS_PROBE_2026-11-15.md) |
 | `etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_26` | new probe: conditional; see individual evidence | insufficient | [record](RULES_EQUIVALENCE_PROBES_2026-11-15.md) |
 | `etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_48` | second packet: pattern proposal; individual verification pending | insufficient | [record](OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md) |
@@ -349,7 +377,12 @@ Historical raw: 112/119; L4 threshold 98%. Source SHA-256: `bbd2e146be1d55382a12
 
 | Mutant identity | Origin and evidence strength | Alone | Evidence |
 | --- | --- | --- | --- |
+| `etl_benchmark.quality.rules.xǁIQRDetectorǁ__init____mutmut_4` | new probe: conditional; see individual evidence | insufficient | [record](RULES_INITIAL_STATE_PROBE_2026-11-15.md) |
+| `etl_benchmark.quality.rules.xǁIQRDetectorǁ__init____mutmut_5` | new probe: conditional; see individual evidence | insufficient | [record](RULES_INITIAL_STATE_PROBE_2026-11-15.md) |
+| `etl_benchmark.quality.rules.xǁIQRDetectorǁ__init____mutmut_6` | new probe: conditional; see individual evidence | insufficient | [record](RULES_INITIAL_STATE_PROBE_2026-11-15.md) |
 | `etl_benchmark.quality.rules.xǁIQRDetectorǁ_exceedance__mutmut_9` | new probe: conditional; see individual evidence | insufficient | [record](RULES_EQUIVALENCE_PROBES_2026-11-15.md) |
+| `etl_benchmark.quality.rules.xǁZScoreDetectorǁ__init____mutmut_4` | new probe: conditional; see individual evidence | insufficient | [record](RULES_INITIAL_STATE_PROBE_2026-11-15.md) |
+| `etl_benchmark.quality.rules.xǁZScoreDetectorǁ__init____mutmut_5` | new probe: conditional; see individual evidence | insufficient | [record](RULES_INITIAL_STATE_PROBE_2026-11-15.md) |
 | `etl_benchmark.quality.rules.xǁZScoreDetectorǁ_zscores__mutmut_8` | new probe: conditional; see individual evidence | insufficient | [record](RULES_EQUIVALENCE_PROBES_2026-11-15.md) |
 
 ### `src/etl_benchmark/quality/window_drift.py`
@@ -360,6 +393,8 @@ Historical raw: 225/233; L4 threshold 98%. Source SHA-256: `7369796bac2ada0ee25c
 | --- | --- | --- | --- |
 | `etl_benchmark.quality.window_drift.x_event_metrics__mutmut_25` | second packet: pattern proposal; individual verification pending | insufficient | [record](OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md) |
 | `etl_benchmark.quality.window_drift.x_event_metrics__mutmut_29` | new probe: conditional; see individual evidence | insufficient | [record](WINDOW_UTC_CASE_PROBE_2026-11-15.md) |
+| `etl_benchmark.quality.window_drift.xǁWindowDriftMonitorǁ__init____mutmut_22` | new probe: conditional; see individual evidence | insufficient | [record](WINDOW_INITIAL_STATE_PROBE_2026-11-15.md) |
+| `etl_benchmark.quality.window_drift.xǁWindowDriftMonitorǁ__init____mutmut_23` | new probe: conditional; see individual evidence | insufficient | [record](WINDOW_INITIAL_STATE_PROBE_2026-11-15.md) |
 
 ### `src/etl_benchmark/quality/windows.py`
 
@@ -386,6 +421,6 @@ Historical raw: 240/246; L4 threshold 98%. Source SHA-256: `622f62cf9104148fb33c
 
 ## Still unresolved
 
-The 162-record triage currently contains 76 inconclusive identities, 37 focused kills and 49 new proposals. These numbers are not a full campaign, and any pending behavioral differences or infrastructure problems remain in the triage artifact. No proposal is an approval.
+The 162-record triage currently contains 29 inconclusive identities, 43 focused kills and 84 new proposals, and 6 demonstrated differences awaiting native verdicts and 0 awaiting regression tests. These numbers are not a full campaign, and any pending behavioral differences or infrastructure problems remain in the triage artifact. No proposal is an approval.
 
 Reproduce from the repository root with the locally generated mutation catalog present: `PYTHONPATH=. python docs/thesis-remediation/evidence/build-owner-queue-2026-11-15.py.txt`. The script checks identities and historical catalog digests; it does not execute mutants.

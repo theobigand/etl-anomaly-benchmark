@@ -135,3 +135,10 @@ def test_a_table_without_exactly_one_target_has_an_all_missing_numeric_target():
     _, target = ul.split_columns(frame, {"target_col": ["x", "y"], "variables": []})
     assert target.dtype == np.float64 and target.isna().all()
     assert target.index.equals(frame.index)
+
+
+def test_an_empty_table_without_a_target_keeps_the_numeric_target_schema():
+    frame = pd.DataFrame({"a": pd.Series(dtype=float), "b": pd.Series(dtype=float)})
+    _, target = ul.split_columns(frame, {"target_col": ["x", "y"], "variables": []})
+    assert target.index.equals(frame.index)
+    assert target.dtype == np.float64

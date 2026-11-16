@@ -3,6 +3,7 @@ import sys
 import numpy as np
 import pandas as pd
 import pytest
+import torch
 
 from etl_benchmark import config
 from etl_benchmark.quality.deep import (
@@ -24,6 +25,41 @@ FAST = {
     LUNARDetector: {"n_epochs": 8},
 }
 DEEP = list(FAST)
+
+
+@pytest.mark.parametrize("device", ["cpu", "mps"] if torch.backends.mps.is_available() else ["cpu"])
+@pytest.mark.parametrize(
+    ("detector", "options"),
+    [
+        (
+            DIFDetector,
+            {
+                "n_ensemble": 1,
+                "n_estimators": 1,
+                "representation_dim": 3,
+                "hidden_neurons": [4],
+                "batch_size": 10,
+                "max_samples": 30,
+            },
+        ),
+        (
+            VAEDetector,
+            {
+                "epoch_num": 1,
+                "batch_size": 10,
+                "encoder_neuron_list": [4],
+                "decoder_neuron_list": [4],
+                "latent_dim": 2,
+            },
+        ),
+    ],
+)
+def test_deep_detector_scores_on_available_devices(detector, options, device):
+    rng = np.random.default_rng(4)
+    frame = pd.DataFrame(rng.normal(size=(30, 3)), columns=["a", "b", "c"])
+    scores = detector(device=device, **options).fit(frame).score(frame)
+    assert scores.index.equals(frame.index)
+    assert np.isfinite(scores).all()
 
 
 def _blob(n=300, seed=0):

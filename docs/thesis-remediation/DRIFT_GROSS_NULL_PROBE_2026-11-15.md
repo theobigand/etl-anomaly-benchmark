@@ -29,3 +29,5 @@ PYTHONPATH=mutants/src:src ~/.cache/etl-mutation-venv/bin/python -P docs/thesis-
 Evidence confidence: medium for the tested numeric dtypes and pandas builds;
 other supported dtypes and platforms remain untested. The owner decision remains
 separate.
+
+Additional lower-bound dependency results are in [the compatibility addendum](MINIMUM_DEPENDENCY_PROBES_2026-11-16.md).

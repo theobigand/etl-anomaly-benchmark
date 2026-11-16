@@ -1,0 +1,7 @@
+source_sha256 4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0 generated_sha256 7fb6810432676164f022092e34f924a43b6405ab06f263e11a9e3e3143974fbe python 3.11.17 numpy 2.4.6 pandas 3.1.1 pyod 3.6.7
+fresh orig fit None feature_names None NoneType score ('RuntimeError', 'isolation_forest detector not fitted. Call fit() first.')
+fresh 4 fit None feature_names '' str score ('RuntimeError', 'isolation_forest detector not fitted. Call fit() first.')
+badfit orig fit ('ValueError', "isolation_forest detector needs at least one numeric column; got ['x']") feature_names None NoneType score ('RuntimeError', 'isolation_forest detector not fitted. Call fit() first.')
+badfit 4 fit ('ValueError', "isolation_forest detector needs at least one numeric column; got ['x']") feature_names '' str score ('RuntimeError', 'isolation_forest detector not fitted. Call fit() first.')
+fit orig fit None feature_names ['x'] list score ('ok', [0.007337078799906083])
+fit 4 fit None feature_names ['x'] list score ('ok', [0.007337078799906083])

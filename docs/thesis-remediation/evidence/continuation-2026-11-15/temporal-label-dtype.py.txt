@@ -1,0 +1,12 @@
+import hashlib,platform
+from pathlib import Path
+import numpy as np,pandas as pd
+import research.temporal_decision as m
+p=Path('research/temporal_decision.py');print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'numpy',np.__version__,'pandas',pd.__version__)
+cases=[np.array([0,1,0,1]),np.array([False,True,False,True]),np.array([0.,1.,0.,1.]),np.array(['0','1','0','1']),np.array([.1,.9,1.1,1.9]),np.array(['0.0','1.0','0.0','1.0']),np.array([0.,np.nan,1.,1.])]
+for y in cases:
+ def run(fn):
+  try:return ('ok',fn(y,np.array([0.,2.,0.,2.]),1.0))
+  except Exception as e:return ('error',type(e).__name__,str(e))
+ a=run(m.x_decision_metrics__mutmut_orig);b=run(m.x_decision_metrics__mutmut_2)
+ print('dtype',str(y.dtype),'y',repr(y.tolist()),'match',a==b,'original',repr(a),'mutant',repr(b))

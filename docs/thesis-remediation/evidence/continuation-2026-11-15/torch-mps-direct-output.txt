@@ -1,0 +1,3 @@
+source 77a1b57ff69e580cad700bb4ee41f069e3ac0c8489bdd714651c753c4bbdd09d python 3.11.17 platform macOS-27.2-arm64-arm-64bit torch 2.15.0 mps_available True
+orig output (6, 2) finite True
+14 error RuntimeError Tensor for argument input is on cpu but expected on mps

@@ -1,0 +1,19 @@
+import hashlib,importlib.util,platform
+from pathlib import Path
+import numpy as np,pandas as pd
+from importlib.metadata import version
+p=Path('docs/thesis-remediation/evidence/diagnostic-43744898804/shard/mutants/src/etl_benchmark/quality/ml.py')
+s=importlib.util.spec_from_file_location('etl_benchmark.quality._probe_ml',p);m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
+print('source_sha256',hashlib.sha256(Path('src/etl_benchmark/quality/ml.py').read_bytes()).hexdigest(),'generated_sha256',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'numpy',np.__version__,'pandas',pd.__version__,'pyod',version('pyod'))
+for mode in ('fresh','badfit','fit'):
+ for name in ('orig','4'):
+  d=m.IsolationForestDetector.__new__(m.IsolationForestDetector)
+  getattr(d,'xǁPyODDetectorǁ__init____mutmut_'+name)()
+  fit_result=None
+  try:
+   if mode=='badfit':d.fit(pd.DataFrame({'x':['a','b']}))
+   if mode=='fit':d.fit(pd.DataFrame({'x':np.arange(25.)}))
+  except Exception as e:fit_result=(type(e).__name__,str(e))
+  try:score=('ok',d.score(pd.DataFrame({'x':[1.]})).tolist())
+  except Exception as e:score=(type(e).__name__,str(e))
+  print(mode,name,'fit',fit_result,'feature_names',repr(d.feature_names_),type(d.feature_names_).__name__,'score',score)

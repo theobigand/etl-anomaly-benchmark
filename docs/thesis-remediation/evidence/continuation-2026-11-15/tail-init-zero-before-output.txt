@@ -1,0 +1,86 @@
+source 4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.0.6 scipy 1.17.1
+TailProbabilityModel score_before 3 match False original ('error', 'IndexError', 'index 0 is out of bounds for axis 1 with size 0') mutant ('error', 'AttributeError', "'NoneType' object has no attribute 'shape'")
+TailProbabilityModel score_before 5 match True original error mutant error
+TailProbabilityModel score_before 6 match False original ('error', 'IndexError', 'index 0 is out of bounds for axis 1 with size 0') mutant ('error', 'IndexError', 'index 1 is out of bounds for axis 1 with size 1')
+TailProbabilityModel score_before 7 match True original error mutant error
+TailProbabilityModel score_before 9 match True original error mutant error
+TailProbabilityModel score_before 10 match True original error mutant error
+TailProbabilityModel predict_before 3 match False original ('error', 'IndexError', 'index 0 is out of bounds for axis 1 with size 0') mutant ('error', 'AttributeError', "'NoneType' object has no attribute 'shape'")
+TailProbabilityModel predict_before 5 match True original error mutant error
+TailProbabilityModel predict_before 6 match False original ('error', 'IndexError', 'index 0 is out of bounds for axis 1 with size 0') mutant ('error', 'IndexError', 'index 1 is out of bounds for axis 1 with size 1')
+TailProbabilityModel predict_before 7 match True original error mutant error
+TailProbabilityModel predict_before 9 match True original error mutant error
+TailProbabilityModel predict_before 10 match True original error mutant error
+TailProbabilityModel zero_before 3 match False original ('ok', '[0.0, 0.0, 0.0, 0.0]', []) mutant ('error', 'AttributeError', "'NoneType' object has no attribute 'shape'")
+TailProbabilityModel zero_before 5 match True original ok mutant ok
+TailProbabilityModel zero_before 6 match True original ok mutant ok
+TailProbabilityModel zero_before 7 match False original ('ok', '[0.0, 0.0, 0.0, 0.0]', []) mutant ('error', 'TypeError', "unsupported operand type(s) for -: 'NoneType' and 'int'")
+TailProbabilityModel zero_before 9 match True original ok mutant ok
+TailProbabilityModel zero_before 10 match True original ok mutant ok
+TailProbabilityModel valid_fit 3 match True original ok mutant ok
+TailProbabilityModel valid_fit 5 match True original ok mutant ok
+TailProbabilityModel valid_fit 6 match True original ok mutant ok
+TailProbabilityModel valid_fit 7 match True original ok mutant ok
+TailProbabilityModel valid_fit 9 match True original ok mutant ok
+TailProbabilityModel valid_fit 10 match True original ok mutant ok
+TailProbabilityModel zero_feature_fit 3 match True original ok mutant ok
+TailProbabilityModel zero_feature_fit 5 match True original ok mutant ok
+TailProbabilityModel zero_feature_fit 6 match True original ok mutant ok
+TailProbabilityModel zero_feature_fit 7 match True original ok mutant ok
+TailProbabilityModel zero_feature_fit 9 match True original ok mutant ok
+TailProbabilityModel zero_feature_fit 10 match True original ok mutant ok
+TailProbabilityModel bad_contamination_then_predict 3 match True original ok mutant ok
+TailProbabilityModel bad_contamination_then_predict 5 match True original ok mutant ok
+TailProbabilityModel bad_contamination_then_predict 6 match True original ok mutant ok
+TailProbabilityModel bad_contamination_then_predict 7 match True original ok mutant ok
+TailProbabilityModel bad_contamination_then_predict 9 match True original ok mutant ok
+TailProbabilityModel bad_contamination_then_predict 10 match False original ('ok', "(('ValueError', 'Quantiles must be in the range [0, 1]'), [0, 0, 0, 0])", []) mutant ('ok', '((\'ValueError\', \'Quantiles must be in the range [0, 1]\'), \'TypeError\', "\'>\' not supported between instances of \'float\' and \'NoneType\'")', [])
+PCAReconstruction score_before 9 match True original error mutant error
+PCAReconstruction predict_before 9 match True original error mutant error
+PCAReconstruction zero_before 9 match True original error mutant error
+PCAReconstruction valid_fit 9 match True original ok mutant ok
+PCAReconstruction zero_feature_fit 9 match True original error mutant error
+PCAReconstruction bad_contamination_then_predict 9 match False original ('ok', "(('ValueError', 'Quantiles must be in the range [0, 1]'), [0, 0, 0, 0])", []) mutant ('ok', '((\'ValueError\', \'Quantiles must be in the range [0, 1]\'), \'TypeError\', "\'>\' not supported between instances of \'float\' and \'NoneType\'")', [])
+source 4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.1.1 scipy 1.17.1
+TailProbabilityModel score_before 3 match False original ('error', 'IndexError', 'index 0 is out of bounds for axis 1 with size 0') mutant ('error', 'AttributeError', "'NoneType' object has no attribute 'shape'")
+TailProbabilityModel score_before 5 match True original error mutant error
+TailProbabilityModel score_before 6 match False original ('error', 'IndexError', 'index 0 is out of bounds for axis 1 with size 0') mutant ('error', 'IndexError', 'index 1 is out of bounds for axis 1 with size 1')
+TailProbabilityModel score_before 7 match True original error mutant error
+TailProbabilityModel score_before 9 match True original error mutant error
+TailProbabilityModel score_before 10 match True original error mutant error
+TailProbabilityModel predict_before 3 match False original ('error', 'IndexError', 'index 0 is out of bounds for axis 1 with size 0') mutant ('error', 'AttributeError', "'NoneType' object has no attribute 'shape'")
+TailProbabilityModel predict_before 5 match True original error mutant error
+TailProbabilityModel predict_before 6 match False original ('error', 'IndexError', 'index 0 is out of bounds for axis 1 with size 0') mutant ('error', 'IndexError', 'index 1 is out of bounds for axis 1 with size 1')
+TailProbabilityModel predict_before 7 match True original error mutant error
+TailProbabilityModel predict_before 9 match True original error mutant error
+TailProbabilityModel predict_before 10 match True original error mutant error
+TailProbabilityModel zero_before 3 match False original ('ok', '[0.0, 0.0, 0.0, 0.0]', []) mutant ('error', 'AttributeError', "'NoneType' object has no attribute 'shape'")
+TailProbabilityModel zero_before 5 match True original ok mutant ok
+TailProbabilityModel zero_before 6 match True original ok mutant ok
+TailProbabilityModel zero_before 7 match False original ('ok', '[0.0, 0.0, 0.0, 0.0]', []) mutant ('error', 'TypeError', "unsupported operand type(s) for -: 'NoneType' and 'int'")
+TailProbabilityModel zero_before 9 match True original ok mutant ok
+TailProbabilityModel zero_before 10 match True original ok mutant ok
+TailProbabilityModel valid_fit 3 match True original ok mutant ok
+TailProbabilityModel valid_fit 5 match True original ok mutant ok
+TailProbabilityModel valid_fit 6 match True original ok mutant ok
+TailProbabilityModel valid_fit 7 match True original ok mutant ok
+TailProbabilityModel valid_fit 9 match True original ok mutant ok
+TailProbabilityModel valid_fit 10 match True original ok mutant ok
+TailProbabilityModel zero_feature_fit 3 match True original ok mutant ok
+TailProbabilityModel zero_feature_fit 5 match True original ok mutant ok
+TailProbabilityModel zero_feature_fit 6 match True original ok mutant ok
+TailProbabilityModel zero_feature_fit 7 match True original ok mutant ok
+TailProbabilityModel zero_feature_fit 9 match True original ok mutant ok
+TailProbabilityModel zero_feature_fit 10 match True original ok mutant ok
+TailProbabilityModel bad_contamination_then_predict 3 match True original ok mutant ok
+TailProbabilityModel bad_contamination_then_predict 5 match True original ok mutant ok
+TailProbabilityModel bad_contamination_then_predict 6 match True original ok mutant ok
+TailProbabilityModel bad_contamination_then_predict 7 match True original ok mutant ok
+TailProbabilityModel bad_contamination_then_predict 9 match True original ok mutant ok
+TailProbabilityModel bad_contamination_then_predict 10 match False original ('ok', "(('ValueError', 'Quantiles must be in the range [0, 1]'), [0, 0, 0, 0])", []) mutant ('ok', '((\'ValueError\', \'Quantiles must be in the range [0, 1]\'), \'TypeError\', "\'>\' not supported between instances of \'float\' and \'NoneType\'")', [])
+PCAReconstruction score_before 9 match True original error mutant error
+PCAReconstruction predict_before 9 match True original error mutant error
+PCAReconstruction zero_before 9 match True original error mutant error
+PCAReconstruction valid_fit 9 match True original ok mutant ok
+PCAReconstruction zero_feature_fit 9 match True original error mutant error
+PCAReconstruction bad_contamination_then_predict 9 match False original ('ok', "(('ValueError', 'Quantiles must be in the range [0, 1]'), [0, 0, 0, 0])", []) mutant ('ok', '((\'ValueError\', \'Quantiles must be in the range [0, 1]\'), \'TypeError\', "\'>\' not supported between instances of \'float\' and \'NoneType\'")', [])

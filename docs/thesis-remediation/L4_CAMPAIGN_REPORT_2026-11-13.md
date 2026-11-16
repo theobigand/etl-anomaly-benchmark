@@ -278,3 +278,40 @@ passed, while the current-claims check failed, reporting 101 files changed
 since the published run. Its evidence has not been resealed. This is a release
 blocker alongside the incomplete campaign, remaining investigations, input
 provenance, owner decisions and independent review.
+
+## Continuation, 2026-11-16
+
+The current triage artifact has 43 focused native behavioral kills, 84
+unapproved proposals, 29 inconclusive records, and six demonstrated behavioral
+differences awaiting native verdicts. These 162 records are a triage population,
+not a new campaign aggregate; focused kills apply to their recorded test-tree
+digests and do not establish verdicts for a subsequently changed tree. The
+consolidated owner queue was regenerated;
+its adjusted scores remain hypothetical. Four of the six pending differences
+now have direct RED/GREEN regressions, and two concern ECOD float input
+consistency; see [the regression record](SCIENTIFIC_REGRESSIONS_2026-11-16.md).
+The local native attempt failed its clean baseline when the Metal compiler
+service was unavailable, so it supplies no verdict for those five attempted
+mutants. The window guard regression was added after that attempt and also needs
+a native verdict.
+
+[Linux diagnostic 43744898804](DIAGNOSTIC_43744898804.md) used the official validator and
+validated the four existing LSTM owner records on commit `d4d21895`; its
+shard-level results are not a full campaign. The claims structural check
+passed again, while the full current-claims check failed on stale provenance;
+its compressed output is `evidence/continuation-2026-11-15/claims-current-2026-11-16.log.gz`.
+The required full-campaign input provenance gap remains documented in
+[the gap record](CAMPAIGN_PROVENANCE_GAP_2026-11-15.md). These subsequent
+changes have not received independent model review, and no certification is
+claimed.
+
+The default canonical Conda suite subsequently exited 0 with 4,056 passed and
+23 deselected (674.88 seconds); see
+`evidence/continuation-2026-11-15/canonical-default-2026-11-16.log.gz`. It ran
+on the uncommitted worktree at `d4d21895`, before the checkout path moved.
+Some unrelated documentation evidence changed during execution, so this is
+not an immutable-input campaign provenance proof. Repository-wide Ruff check
+and format check also passed on the corrected tests.
+After the checkout moved, the affected detector, window, scientific command,
+loader and policy tests were rerun with `PYTHONPATH=src:.`: 141 passed. The
+captured output is `evidence/continuation-2026-11-15/post-move-targeted.log.gz`.

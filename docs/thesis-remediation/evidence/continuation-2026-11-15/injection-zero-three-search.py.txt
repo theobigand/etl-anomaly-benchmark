@@ -1,0 +1,13 @@
+import itertools,hashlib,platform
+from pathlib import Path
+import numpy as np,pandas as pd
+print('source',hashlib.sha256(Path('research/injection.py').read_bytes()).hexdigest(),'python',platform.python_version(),'numpy',np.__version__,'pandas',pd.__version__)
+rng=np.random.default_rng(19)
+for k in (12,16,32):
+ base=np.tile(np.array(list(itertools.product([-1.,1.],repeat=3))), (k,1))
+ for seed in range(5000):
+  frame=pd.DataFrame(base[rng.permutation(len(base))],columns=list('abc'))
+  corr=frame.corr().to_numpy(copy=True); np.fill_diagonal(corr,0)
+  if np.max(np.abs(corr))==0:
+   print('found','rows',len(base),'iteration',seed,'unique rows',len(frame.drop_duplicates()),'first',frame.head().to_dict('list'));raise SystemExit(0)
+ print('searched rows',len(base),'iterations',5000)

@@ -1,0 +1,26 @@
+source cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.0.6 sklearn 1.9.1
+n 400 anomalies 60 bad False x_load_pool_dataset__mutmut_19 match True kind ok
+n 400 anomalies 60 bad False x_load_pool_dataset__mutmut_21 match True kind ok
+n 400 anomalies 60 bad False x_load_pool_dataset__mutmut_28 match True kind ok
+n 300 anomalies 30 bad True x_load_pool_dataset__mutmut_19 match True kind ok
+n 300 anomalies 30 bad True x_load_pool_dataset__mutmut_21 match True kind ok
+n 300 anomalies 30 bad True x_load_pool_dataset__mutmut_28 match True kind ok
+n 60 anomalies 5 bad False x_load_pool_dataset__mutmut_19 match True kind error
+n 60 anomalies 5 bad False x_load_pool_dataset__mutmut_21 match True kind error
+n 60 anomalies 5 bad False x_load_pool_dataset__mutmut_28 match True kind error
+n 200 anomalies 40 bad True x_load_pool_dataset__mutmut_19 match True kind ok
+n 200 anomalies 40 bad True x_load_pool_dataset__mutmut_21 match True kind ok
+n 200 anomalies 40 bad True x_load_pool_dataset__mutmut_28 match True kind ok
+source cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.1.1 sklearn 1.9.1
+n 400 anomalies 60 bad False x_load_pool_dataset__mutmut_19 match True kind ok
+n 400 anomalies 60 bad False x_load_pool_dataset__mutmut_21 match True kind ok
+n 400 anomalies 60 bad False x_load_pool_dataset__mutmut_28 match True kind ok
+n 300 anomalies 30 bad True x_load_pool_dataset__mutmut_19 match True kind ok
+n 300 anomalies 30 bad True x_load_pool_dataset__mutmut_21 match True kind ok
+n 300 anomalies 30 bad True x_load_pool_dataset__mutmut_28 match True kind ok
+n 60 anomalies 5 bad False x_load_pool_dataset__mutmut_19 match True kind error
+n 60 anomalies 5 bad False x_load_pool_dataset__mutmut_21 match True kind error
+n 60 anomalies 5 bad False x_load_pool_dataset__mutmut_28 match True kind error
+n 200 anomalies 40 bad True x_load_pool_dataset__mutmut_19 match True kind ok
+n 200 anomalies 40 bad True x_load_pool_dataset__mutmut_21 match True kind ok
+n 200 anomalies 40 bad True x_load_pool_dataset__mutmut_28 match True kind ok

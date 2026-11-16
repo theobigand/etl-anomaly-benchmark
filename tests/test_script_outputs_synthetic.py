@@ -537,6 +537,28 @@ def test_severity_lines_and_reference_marker_follow_the_style(tmp_path, captured
     assert len(fig.axes) == 3
 
 
+def test_severity_methods_remain_visually_distinct_under_a_single_color_theme(
+    tmp_path, captured_figures
+):
+    from cycler import cycler
+    from matplotlib.colors import to_rgba
+
+    curves = pd.DataFrame(
+        [
+            {"severity": s, "method": m, "anomaly_type": t, "recall": 0.5}
+            for s in (1.0, 2.0)
+            for m in ("a", "b")
+            for t in run_severity.MAGNITUDE_TYPES
+        ]
+    )
+    with plt.rc_context({"axes.prop_cycle": cycler(color=["black"])}):
+        run_severity.render(curves, tmp_path / "severity.png")
+    for ax in captured_figures[-1].axes:
+        methods = [line for line in ax.get_lines() if line.get_label() in {"a", "b"}]
+        assert len(methods) == 2
+        assert to_rgba(methods[0].get_color()) != to_rgba(methods[1].get_color())
+
+
 def test_severity_command_options_are_described_and_applied(tmp_path, monkeypatch, capsys):
     monkeypatch.setattr(config, "RESULTS_DIR", tmp_path / "configured")
     monkeypatch.setattr(run_severity, "PAPER_FIGURE", tmp_path / "paper" / "sev.png")

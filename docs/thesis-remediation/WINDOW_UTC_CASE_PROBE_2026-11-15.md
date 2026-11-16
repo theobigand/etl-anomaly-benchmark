@@ -23,3 +23,5 @@ PYTHONPATH=mutants/src:src ~/.cache/etl-mutation-venv/bin/python -P docs/thesis-
 This conditional equivalence proposal is not an approval. Confidence is medium
 for the tested environments; other supported timezone databases, pandas builds
 and Linux have not been tested, and no fresh complete unit score is available.
+
+Additional lower-bound dependency results are in [the compatibility addendum](MINIMUM_DEPENDENCY_PROBES_2026-11-16.md).

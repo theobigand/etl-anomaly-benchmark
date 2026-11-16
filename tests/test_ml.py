@@ -36,6 +36,28 @@ def _blob_with_outliers(n: int = 300, seed: int = 0) -> pd.DataFrame:
     return pd.DataFrame(x, columns=["a", "b", "c"])
 
 
+def _same_values_in_two_float_dtypes() -> tuple[pd.DataFrame, pd.DataFrame]:
+    rng = np.random.default_rng(42)
+    values = rng.normal(size=(300, 3))
+    values[::13, 0] = np.nan
+    narrow = pd.DataFrame(values.astype("float32"), columns=["a", "b", "c"])
+    return narrow, narrow.astype("float64")
+
+
+def test_ecod_training_is_consistent_for_the_same_float_values():
+    narrow, wide = _same_values_in_two_float_dtypes()
+    narrow_model, wide_model = ECODDetector().fit(narrow), ECODDetector().fit(wide)
+    pd.testing.assert_series_equal(narrow_model.predict(narrow), wide_model.predict(wide))
+    np.testing.assert_allclose(narrow_model.score(narrow), wide_model.score(wide), rtol=1e-12)
+
+
+def test_ecod_scoring_is_consistent_for_the_same_float_values():
+    narrow, wide = _same_values_in_two_float_dtypes()
+    model = ECODDetector().fit(wide)
+    pd.testing.assert_series_equal(model.predict(narrow), model.predict(wide))
+    np.testing.assert_allclose(model.score(narrow), model.score(wide), rtol=1e-12)
+
+
 @pytest.mark.parametrize("cls", SHIFTED)
 def test_ml_detector_flags_planted_outliers(cls):
     df = _blob_with_outliers()

@@ -1,0 +1,14 @@
+{
+  "python": "3.11.17 (main, Oct  3 2026, 00:54:14) [Clang 22.1.3 ]",
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "packages": {
+    "numpy": "2.4.6",
+    "pandas": "3.1.1",
+    "scipy": "1.17.1",
+    "scikit-learn": "1.9.1",
+    "torch": "2.15.0",
+    "pytest": "9.1.1",
+    "mutmut": "3.8.0"
+  },
+  "scope": "window RED and 61-test GREEN; not native verdicts or full campaign"
+}

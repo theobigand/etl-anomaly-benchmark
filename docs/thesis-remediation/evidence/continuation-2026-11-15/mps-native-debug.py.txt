@@ -1,0 +1,6 @@
+from pathlib import Path
+from mutmut.configuration import config
+from mutmut.__main__ import _run
+settings=config();settings.debug=True
+settings.log_file_path=str((Path.cwd()/'docs/thesis-remediation/evidence/continuation-2026-11-15/mps-mutmut-debug.log').resolve())
+_run(['etl_benchmark.quality._torch_models.xǁMeanVAEǁevaluating_forward__mutmut_3','etl_benchmark.quality._torch_models.xǁFitScalerDIFǁ_deep_representation__mutmut_14'],max_children=1)

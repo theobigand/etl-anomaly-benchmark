@@ -1,0 +1,10 @@
+import hashlib,platform
+from pathlib import Path
+import numpy as np,torch
+from etl_benchmark.quality._torch_models import FitScalerDIF
+p=Path('src/etl_benchmark/quality/_torch_models.py');print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'torch',torch.__version__,'mps_available',torch.backends.mps.is_available())
+if not torch.backends.mps.is_available():raise SystemExit('MPS unavailable')
+for suffix in ('orig','14'):
+ torch.manual_seed(8);obj=FitScalerDIF.__new__(FitScalerDIF);obj.batch_size=2;obj.device='mps';net=torch.nn.Linear(2,2).to('mps');data=torch.arange(12,dtype=torch.float32).reshape(6,2)
+ try:out=getattr(obj,f'xǁFitScalerDIFǁ_deep_representation__mutmut_{suffix}')(net,data);print(suffix,'output',out.shape,'finite',bool(np.isfinite(out).all()))
+ except Exception as e:print(suffix,'error',type(e).__name__,str(e).splitlines()[0])

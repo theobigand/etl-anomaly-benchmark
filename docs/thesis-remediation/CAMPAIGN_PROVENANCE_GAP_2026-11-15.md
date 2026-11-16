@@ -43,3 +43,9 @@ This gap, the still-incomplete mutant investigations, the missing Linux-side
 LSTM validator result and the lack of an independent review prevent a claim of
 certification readiness. It does not authorize changing a release gate or owner
 decision.
+
+Update: the scoped Linux LSTM validator subsequently accepted the four
+existing owner records at commit `d4d21895d3c6addf75218b67bdb8ccd11b4c7b7e`;
+see [the diagnostic record](DIAGNOSTIC_43744898804.md). That result does not
+close this full-campaign input-provenance gap or establish a result for a later
+commit.

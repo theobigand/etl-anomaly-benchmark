@@ -198,9 +198,14 @@ def test_the_neural_mode_builds_only_the_neural_detectors(monkeypatch):
     calls = []
     _stub(monkeypatch, calls)
     spec = ms.SCHEMAS["sensors"]
-    out = ms.evaluate(ms.make(spec, 600, 4), spec, 4, deep=True)
+    data = ms.make(spec, 600, 4)
+    train, _, _ = ms._split(data, spec, 4)
+    out = ms.evaluate(data, spec, 4, deep=True)
     assert out["recall"].index.tolist() == list(ms.DEEP_NAMES)
     assert [c[1] for c in calls if c[0] == "build"] == list(ms.DEEP_NAMES)
+    assert [c[2] for c in calls if c[0] == "build"] == [float(train["anomaly"].mean())] * len(
+        ms.DEEP_NAMES
+    )
     assert [c[1:] for c in calls if c[0] == "capped"] == [(n, 4) for n in ms.DEEP_NAMES]
 
 

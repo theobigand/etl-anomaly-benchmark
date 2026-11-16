@@ -1,0 +1,10 @@
+import importlib.util
+from pathlib import Path
+import pytest
+import etl_benchmark.quality.window_drift as original
+p = Path('docs/thesis-remediation/evidence/diagnostic-43744898804/shard/mutants/src/etl_benchmark/quality/window_drift.py')
+spec = importlib.util.spec_from_file_location('window_guard_generated', p)
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+original.WindowDriftMonitor.evaluate = getattr(module.WindowDriftMonitor, 'xǁWindowDriftMonitorǁevaluate__mutmut_1')
+raise SystemExit(pytest.main(['-q', 'tests/test_window_drift_contracts.py::test_evaluation_rejects_an_incomplete_fit_after_numeric_overflow']))

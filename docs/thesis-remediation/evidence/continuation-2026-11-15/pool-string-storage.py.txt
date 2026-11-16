@@ -1,0 +1,14 @@
+import hashlib,platform
+from pathlib import Path
+import numpy as np,pandas as pd,pyarrow,sklearn
+import pool_preprocessing as m
+p=Path('research/pool_preprocessing.py');print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'numpy',np.__version__,'pandas',pd.__version__,'sklearn',sklearn.__version__,'pyarrow',pyarrow.__version__)
+for storage in ('python','pyarrow'):
+ with pd.option_context('mode.string_storage',storage):
+  for values in (['a','b',None],['a','á',''],[],['a',1,None]):
+   frame=pd.DataFrame({'x':values});orig=m.x__categorical__mutmut_orig(frame,['x'])
+   for i in (2,4):
+    out=getattr(m,f'x__categorical__mutmut_{i}')(frame,['x'])
+    try: assert out.dtype==orig.dtype;pd.testing.assert_frame_equal(pd.DataFrame(orig),pd.DataFrame(out));same=True
+    except AssertionError:same=False
+    print(storage,repr(values),'mutant',i,'match',same,'dtype',str(out.dtype))

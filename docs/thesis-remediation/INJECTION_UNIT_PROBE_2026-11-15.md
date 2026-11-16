@@ -65,3 +65,10 @@ the built-in dtype behavior and unchanged threshold. It is not an owner
 verdict or independent review. Excluding this and the `pair` proposal alone
 would hypothetically yield historical 325/334 (97.31%), still below L4 98%;
 it is not an authorized or current score.
+
+A later isolated lower-bound probe with pandas 2.0.3 and NumPy 1.24.4 found
+matching frames and no warnings for either case, unlike the `Pandas4Warning`
+observed with pandas 3.0.6/3.1.1. See
+`evidence/continuation-2026-11-15/injection-units-minimum.log.gz`. This
+version-dependent warning strengthens the reason to retain both identities as
+inconclusive; it does not establish a warning contract or an owner exclusion.

@@ -1,0 +1,9 @@
+import hashlib,platform
+from pathlib import Path
+import numpy as np,pandas as pd,torch
+from etl_benchmark.quality.deep import VAEDetector
+p=Path('src/etl_benchmark/quality/_torch_models.py');print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'torch',torch.__version__,'mps_available',torch.backends.mps.is_available())
+rng=np.random.default_rng(4);frame=pd.DataFrame(rng.normal(size=(30,3)),columns=['a','b','c'])
+try:
+ d=VAEDetector(device='mps',epoch_num=1,batch_size=10,encoder_neuron_list=[4],decoder_neuron_list=[4],latent_dim=2).fit(frame);s=d.score(frame);print('OK',len(s),'finite',bool(np.isfinite(s).all()))
+except Exception as e:print('ERROR',type(e).__name__,str(e).splitlines()[0])

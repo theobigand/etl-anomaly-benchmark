@@ -1,0 +1,16 @@
+import hashlib,platform,tempfile,time,warnings
+from pathlib import Path
+import numpy as np,pandas as pd
+import research.uci_loader as m
+p=Path('research/uci_loader.py');print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'numpy',np.__version__,'pandas',pd.__version__)
+rng=np.random.default_rng(11);df=pd.DataFrame(rng.normal(size=(30000,24)),columns=[f'x{i}' for i in range(24)])
+with tempfile.TemporaryDirectory(prefix='uci-cost-probe-') as tmp:
+ path=Path(tmp)/'input.csv';df.to_csv(path,index=False);print('fixture sha256',hashlib.sha256(path.read_bytes()).hexdigest(),'bytes',path.stat().st_size)
+ results={}
+ for name in ('x_read_table__mutmut_orig','x_read_table__mutmut_23'):
+  elapsed=[]
+  for i in range(2):
+   with warnings.catch_warnings(record=True):
+    t=time.perf_counter();out=getattr(m,name)(path);elapsed.append(time.perf_counter()-t)
+  results[name]=out;print(name,'seconds',elapsed)
+ pd.testing.assert_frame_equal(*results.values());print('frames_match True')

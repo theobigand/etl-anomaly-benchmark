@@ -67,6 +67,14 @@ def test_fit_needs_two_reference_rows_and_remembers_the_last_timestamp():
     assert monitor.reference_end == pd.Timestamp("2024-01-02", tz="UTC")
 
 
+def test_evaluation_rejects_an_incomplete_fit_after_numeric_overflow():
+    monitor = WindowDriftMonitor("time", ["value"], window_size=2)
+    with np.errstate(over="raise"), pytest.raises(FloatingPointError):
+        monitor.fit(_reference((1e308, -1e308)))
+    with pytest.raises(RuntimeError, match=_message("monitor not fitted")):
+        monitor.evaluate(_future([0.0, 1.0]))
+
+
 def test_scores_use_the_population_standard_deviation_of_the_reference():
     monitor = WindowDriftMonitor("time", ["value"], window_size=2, threshold=2.0).fit(_reference())
     windows = monitor.evaluate(_future([8.0, 8.0]))
