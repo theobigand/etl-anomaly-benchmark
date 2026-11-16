@@ -49,3 +49,17 @@ existing owner records at commit `d4d21895d3c6addf75218b67bdb8ccd11b4c7b7e`;
 see [the diagnostic record](DIAGNOSTIC_43744898804.md). That result does not
 close this full-campaign input-provenance gap or establish a result for a later
 commit.
+
+## Resolution of the tracked-input gap (2026-11-16)
+
+The shard context now carries `inputs_sha256`, the digest of the names and working
+bytes of every Git-tracked file (`verification/mutation_shards.py::_tracked_inputs`).
+Non-Python inputs such as data, documentation and workflows, and any modified or
+deleted tracked file, change the binding, and the aggregation rejects a shard whose
+binding differs. Remaining limits, stated plainly:
+
+- Untracked files, ignored files and data outside the repository are not bound.
+- The digest is taken when the manifest is built, not inside the execution proof.
+- Tests run from the ignored `mutants/` copy tree, which mutmut never prunes. Campaign
+  evidence therefore must come from `fresh_mutants=true`; a restored cache can hold
+  copies of files that no longer exist at the bound revision.

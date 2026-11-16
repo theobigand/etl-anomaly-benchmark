@@ -461,7 +461,7 @@ not accepted exclusions.
 partition of the mutating modules (balanced by the weights in
 `verification/mutation_shard_weights.json`), builds a per-shard evidence manifest
 from a native cache, and aggregates manifests fail-closed: every shard of the plan
-exactly once, one shared context (revision, tests, configuration, tool versions),
+exactly once, one shared context (revision, tests, tracked inputs, configuration, tool versions),
 current source hashes, no unknown or duplicate mutant, then the per-module and
 per-level thresholds. A shard with failing scores is valid diagnostic evidence; a
 missing, stale or foreign shard rejects the campaign; a nonzero native exit or

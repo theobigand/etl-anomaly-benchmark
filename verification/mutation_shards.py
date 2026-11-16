@@ -447,7 +447,9 @@ def _tracked_inputs(root: Path) -> str:
 
     Binds the non-Python files that tests read (data, documentation, workflows) and
     detects a modified or deleted tracked file. Untracked and ignored files, and data
-    outside the repository, are not covered.
+    outside the repository, are not covered. The digest is taken when the manifest is built,
+    not inside the execution proof. Tests run from the ignored ``mutants/`` copy tree, which
+    mutmut never prunes, so campaign evidence must come from fresh mutants.
     """
     listing = subprocess.run(
         ["git", "ls-files", "-z"], cwd=root, capture_output=True, check=True

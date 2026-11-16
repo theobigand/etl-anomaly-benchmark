@@ -586,6 +586,9 @@ def test_aggregation_messages_and_result_fields_are_exact(tmp_path):
     context = copy.deepcopy(manifests)
     context[0]["context"]["tests_sha256"] = "x"
     assert message(context) == "shard 0 was produced in a different context"
+    inputs = copy.deepcopy(manifests)
+    inputs[0]["context"]["inputs_sha256"] = "x"
+    assert message(inputs) == "shard 0 was produced in a different context"
     names = copy.deepcopy(manifests)
     names[0]["sources"]["app/extra.py"] = "0" * 64
     assert message(names) == "shard 0 reports modules outside its assignment"
@@ -796,3 +799,34 @@ def test_the_binding_separates_names_contents_and_absent_from_empty(tmp_path):
     second.write_bytes(two)
     subprocess.run(["git", "mv", "docs/claim.md", "docs/renamed.md"], cwd=tmp_path, check=True)
     assert shards.current_context(tmp_path)["inputs_sha256"] != base
+
+
+def test_the_binding_covers_non_ascii_names_and_marks_a_deleted_file_exactly(tmp_path):
+    import hashlib
+    import subprocess
+
+    _tracked_repository(tmp_path)
+    accented = tmp_path / "docs/r\u00e9sum\u00e9.md"
+    accented.write_text("one\n")
+    subprocess.run(["git", "add", "-A"], cwd=tmp_path, check=True, capture_output=True)
+    base = shards.current_context(tmp_path)["inputs_sha256"]
+    accented.write_text("two\n")
+    assert shards.current_context(tmp_path)["inputs_sha256"] != base
+    accented.write_text("one\n")
+    (tmp_path / "docs/claim.md").unlink()
+    listing = subprocess.run(
+        ["git", "ls-files", "-z"], cwd=tmp_path, capture_output=True, check=True
+    ).stdout
+    digest = hashlib.sha256()
+    for name in sorted(item for item in listing.split(b"\0") if item):
+        path = tmp_path / name.decode()
+        digest.update(name + b"\0")
+        digest.update(hashlib.sha256(path.read_bytes()).digest() if path.is_file() else b"missing")
+    assert shards.current_context(tmp_path)["inputs_sha256"] == digest.hexdigest()
+
+
+def test_the_binding_refuses_a_directory_that_is_not_a_repository(tmp_path):
+    import subprocess
+
+    with pytest.raises(subprocess.CalledProcessError):
+        shards._tracked_inputs(tmp_path)
