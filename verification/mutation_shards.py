@@ -36,7 +36,7 @@ MANIFEST_KEYS = {
     "format", "plan_sha256", "index", "context", "modules", "sources", "catalog", "records",
     "missing", "native_exit_code",
 }  # fmt: skip
-CONTEXT_KEYS = ("revision", "tests_sha256", "configuration_sha256", "runtime")
+CONTEXT_KEYS = ("revision", "tests_sha256", "inputs_sha256", "configuration_sha256", "runtime")
 
 
 def version(name: str) -> str | None:
@@ -442,6 +442,24 @@ def diagnostic_equivalences(
     }
 
 
+def _tracked_inputs(root: Path) -> str:
+    """Digest of the working bytes of every Git-tracked file, whatever its type.
+
+    Binds the non-Python files that tests read (data, documentation, workflows) and
+    detects a modified or deleted tracked file. Untracked and ignored files, and data
+    outside the repository, are not covered.
+    """
+    listing = subprocess.run(
+        ["git", "ls-files", "-z"], cwd=root, capture_output=True, check=True
+    ).stdout
+    digest = hashlib.sha256()
+    for name in sorted(item for item in listing.split(b"\0") if item):
+        path = root / name.decode()
+        digest.update(name + b"\0")
+        digest.update(hashlib.sha256(path.read_bytes()).digest() if path.is_file() else b"missing")
+    return digest.hexdigest()
+
+
 def current_context(root: Path) -> dict:
     """Revision, test files, mutation configuration and tool versions of this checkout."""
     revision = subprocess.run(
@@ -458,6 +476,7 @@ def current_context(root: Path) -> dict:
     return {
         "revision": revision,
         "tests_sha256": digest.hexdigest(),
+        "inputs_sha256": _tracked_inputs(root),
         "configuration_sha256": _digest(configuration),
         "runtime": {
             "python": ".".join(map(str, sys.version_info[:3])),

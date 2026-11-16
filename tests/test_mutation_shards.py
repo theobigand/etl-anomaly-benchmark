@@ -25,6 +25,7 @@ def _tool_versions(monkeypatch):
 CONTEXT = {
     "revision": "r" * 40,
     "tests_sha256": "t" * 64,
+    "inputs_sha256": "i" * 64,
     "configuration_sha256": "c" * 64,
     "runtime": {
         "python": "3.11",
@@ -718,3 +719,80 @@ def test_diagnostic_cli_selects_the_module_and_rejects_a_foreign_plan(tmp_path, 
     policy_path.write_text(json.dumps(policy))
     with pytest.raises(ValueError, match="different policy"):
         shards.main(args)
+
+
+def _tracked_repository(root):
+    import subprocess
+
+    _git_repository(root)
+    (root / "tests/data").mkdir()
+    (root / "tests/data/fixture.json").write_text('{"v": 1}\n')
+    (root / "docs").mkdir()
+    (root / "docs/claim.md").write_text("claim\n")
+    subprocess.run(["git", "add", "-A"], cwd=root, check=True, capture_output=True)
+
+
+def test_the_context_binds_every_tracked_file_including_non_python_inputs(tmp_path):
+    _tracked_repository(tmp_path)
+    base = shards.current_context(tmp_path)["inputs_sha256"]
+    assert len(base) == 64 and shards.current_context(tmp_path)["inputs_sha256"] == base
+    (tmp_path / "tests/data/fixture.json").write_text('{"v": 2}\n')
+    changed = shards.current_context(tmp_path)["inputs_sha256"]
+    assert changed != base
+    (tmp_path / "docs/claim.md").write_text("other\n")
+    assert shards.current_context(tmp_path)["inputs_sha256"] not in {base, changed}
+
+
+def test_a_deleted_tracked_input_changes_the_binding_and_an_untracked_file_does_not(tmp_path):
+    _tracked_repository(tmp_path)
+    base = shards.current_context(tmp_path)["inputs_sha256"]
+    (tmp_path / "scratch.log").write_text("job output\n")
+    assert shards.current_context(tmp_path)["inputs_sha256"] == base
+    (tmp_path / "docs/claim.md").unlink()
+    assert shards.current_context(tmp_path)["inputs_sha256"] != base
+
+
+def test_the_binding_is_part_of_the_required_context(tmp_path):
+    assert "inputs_sha256" in shards.CONTEXT_KEYS
+    context = {key: "x" for key in shards.CONTEXT_KEYS}
+    shards._check_context(context)
+    del context["inputs_sha256"]
+    with pytest.raises(ValueError, match="bind revision"):
+        shards._check_context(context)
+
+
+def test_the_binding_is_the_documented_digest_of_names_and_contents(tmp_path):
+    import hashlib
+    import subprocess
+
+    _tracked_repository(tmp_path)
+    names = subprocess.run(
+        ["git", "ls-files"], cwd=tmp_path, capture_output=True, text=True, check=True
+    ).stdout.split()
+    digest = hashlib.sha256()
+    for name in sorted(names):
+        digest.update(name.encode() + b"\0")
+        digest.update(hashlib.sha256((tmp_path / name).read_bytes()).digest())
+    assert shards.current_context(tmp_path)["inputs_sha256"] == digest.hexdigest()
+
+
+def test_the_binding_separates_names_contents_and_absent_from_empty(tmp_path):
+    import subprocess
+
+    _tracked_repository(tmp_path)
+    base = shards.current_context(tmp_path)["inputs_sha256"]
+    first, second = tmp_path / "tests/data/fixture.json", tmp_path / "docs/claim.md"
+    one, two = first.read_bytes(), second.read_bytes()
+    first.write_bytes(two)
+    second.write_bytes(one)
+    assert shards.current_context(tmp_path)["inputs_sha256"] != base
+    first.write_bytes(one)
+    second.write_bytes(two)
+    assert shards.current_context(tmp_path)["inputs_sha256"] == base
+    second.write_bytes(b"")
+    empty = shards.current_context(tmp_path)["inputs_sha256"]
+    second.unlink()
+    assert shards.current_context(tmp_path)["inputs_sha256"] not in {base, empty}
+    second.write_bytes(two)
+    subprocess.run(["git", "mv", "docs/claim.md", "docs/renamed.md"], cwd=tmp_path, check=True)
+    assert shards.current_context(tmp_path)["inputs_sha256"] != base
