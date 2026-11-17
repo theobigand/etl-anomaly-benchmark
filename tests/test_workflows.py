@@ -41,14 +41,12 @@ def test_evidence_is_uploaded_even_when_a_profile_fails():
 def test_release_workflow_is_explicit_and_runs_every_profile():
     text = _text("verify-release.yml")
     assert "workflow_dispatch:" in text and "push:" not in text
-    for target in (
-        "make verify-fast",
-        "make verify-faults",
-        "make verify-deep",
-        "make verify-real",
-    ):
+    for target in ("make verify-fast", "make verify-faults", "make verify-real"):
         assert target in text
     assert "make verify-release" in text
+    # DEEP is the sharded campaign, never a single job that could not hold it
+    assert "make verify-deep" not in text
+    assert "uses: ./.github/workflows/mutation-shards.yml" in text
 
 
 LABEL = "run:release-verification"
@@ -169,12 +167,9 @@ def test_the_release_job_keeps_downloaded_bundles_outside_the_checkout():
 
 
 def test_the_deep_job_exports_its_surviving_mutants_for_inspection():
-    text = _text("verify-release.yml")
-    deep = text[text.index("  deep:") : text.index("  real:")]
     from verification import bundles
 
     assert "mutants/results.txt" in bundles.KINDS["deep"]
-    assert "verification.bundles pack deep" in deep.split("Bundle deep evidence")[1]
     makefile = (WORKFLOWS.parents[1] / "Makefile").read_text()
     target = makefile[makefile.index("verify-deep:") : makefile.index("verify-faults:")]
     assert "python -m verification.mutation_run > mutants/controller-result.json" in target
@@ -236,9 +231,15 @@ def test_evidence_travels_only_in_allowlisted_bundles():
     from verification import bundles
 
     text = _text("verify-release.yml")
+    shards = _text("mutation-shards.yml")
     assert "tar czf" not in text and "tar xzf" not in text
     for kind in bundles.KINDS:
+        if kind == "deep":
+            continue
         assert f"python -m verification.bundles pack {kind} --allow-missing" in text, kind
+    # a sharded campaign has no native files to skip: its bundle is built from validated evidence
+    assert "python -m verification.bundles pack deep --output evidence-deep.tgz" in shards
+    assert "pack deep --allow-missing" not in text + shards
     assert text.count("python -m verification.bundles unpack") == 1
 
 
@@ -365,28 +366,12 @@ def test_the_hosted_real_job_downloads_verifies_and_uploads_only_reports():
     assert "self-hosted" not in job and "pip install" not in job
 
 
-def test_the_deep_job_reuses_the_mutation_cache_unless_a_fresh_run_is_asked():
-    text = _text("verify-release.yml")
-    job = text[text.index("  deep:") : text.index("  real-readiness:")]
-    assert "fresh_mutants:" in text[: text.index("jobs:")]
-    assert "actions/cache@v4" in job and "path: mutants" in job
-    assert "if: inputs.fresh_mutants != 'true'" in job
-    assert "restore-keys: mutants-${{ runner.os }}-" in job
-    assert job.index("actions/cache@v4") < job.index("make verify-deep")
-    key = next(line for line in job.splitlines() if line.strip().startswith("key: mutants-"))
-    for path in (
-        "research/**/*.py",
-        "verification/**/*.py",
-        "verification/mutation_risk_policy.json",
-        "verification/mutation_scope.json",
-        "verification/release_policy.json",
-    ):
-        assert path in key
-    makefile = (WORKFLOWS.parents[1] / "Makefile").read_text()
-    deep = makefile[makefile.index("verify-deep:") : makefile.index("verify-faults:")]
-    assert "mutation_run > mutants/controller-result.json" in deep
-    assert "mutation_cache prepare" not in deep
-    assert "mutation_cache record" not in deep
+def test_the_release_deep_job_never_restores_cached_verdicts():
+    job = _jobs()["deep"]
+    assert "fresh_mutants: true" in job and 'shards: "45"' in job
+    shards = _text("mutation-shards.yml")
+    restore = shards[shards.index("Restore the shard cache") :].splitlines()[:3]
+    assert "        if: env.FRESH != 'true' && env.DIAGNOSTIC != 'true'" in restore
 
 
 def test_the_deep_target_runs_mutmut_with_single_threaded_math_libraries():
@@ -429,10 +414,12 @@ def test_deep_target_creates_the_directory_it_redirects_into():
     assert deep.index("mkdir -p") < deep.index("> mutants/controller-result.json")
 
 
-def test_deep_job_installs_the_exact_inspected_mutmut_outside_the_fingerprinted_metadata():
-    job = (WORKFLOWS / "verify-release.yml").read_text()
-    job = job[job.index("  deep:") : job.index("Run deep profile")]
-    assert '-e ".[dev,deep]" "mutmut==3.8.0" "pytest==9.1.1"' in job
+def test_the_sharded_jobs_install_the_exact_inspected_mutmut_outside_the_fingerprinted_metadata():
+    text = _text("mutation-shards.yml")
+    shard = text[text.index("  shard:") : text.index("  aggregate:")]
+    aggregate = text[text.index("  aggregate:") :]
+    pins = '-e ".[dev,deep]" "mutmut==3.8.0" "pytest==9.1.1"'
+    assert pins in shard and pins in aggregate
     project = (WORKFLOWS.parents[1] / "pyproject.toml").read_text()
     assert "mutmut==3.8.0" not in project.split("[tool.", 1)[0]
 
@@ -492,7 +479,9 @@ def test_the_aggregate_uses_the_shard_dependency_set_and_preserves_release_evide
     job = text[text.index("  aggregate:") :]
     assert '-e ".[dev,deep]" "mutmut==3.8.0" "pytest==9.1.1"' in job
     assert "verification.evidence_schema deep-shards" in job and "deep-evidence.json" in job
-    assert "evidence-shard-*.json" in job.split("upload-artifact@v4")[-1]
+    collect = job[job.index("Collect the campaign files") : job.index("Pack the release evidence")]
+    assert "evidence-shard-*.json" in collect and "mutation-campaign.json" in collect
+    assert "path: ${{ runner.temp }}/campaign" in collect
 
 
 def test_the_diagnostic_label_runs_one_small_shard_and_never_the_aggregate():
@@ -515,3 +504,50 @@ def test_the_plan_job_installs_the_project_before_planning():
     text = _text("mutation-shards.yml")
     plan = text[text.index("  plan:") : text.index("  shard:")]
     assert plan.index("pip install -e .") < plan.index("verification.mutation_shards plan")
+
+
+def test_the_release_deep_profile_is_the_sharded_campaign_called_as_a_workflow():
+    job = _jobs()["deep"]
+    assert "uses: ./.github/workflows/mutation-shards.yml" in job
+    for line in ('shards: "45"', "fresh_mutants: true", "bundle: true"):
+        assert line in job
+    assert "runs-on" not in job and "steps:" not in job and "timeout-minutes" not in job
+    assert _condition(job) == _condition(_jobs()["fast"])
+    assert "deep" in re.search(r"needs: \[(.*)\]", _jobs()["release"]).group(1)
+
+
+def test_the_sharded_workflow_can_be_called_and_a_release_run_has_its_own_concurrency_group():
+    text = _text("mutation-shards.yml")
+    head = text[: text.index("\njobs:\n")]
+    call = head[head.index("  workflow_call:") : head.index("  workflow_dispatch:")]
+    for name in ("shards", "fresh_mutants", "diagnostic_module", "bundle"):
+        assert f"      {name}:" in call
+    assert "type: boolean" in call
+    group = next(line for line in head.splitlines() if line.strip().startswith("group: mutation"))
+    assert "inputs.bundle && 'release-'" in group
+    plan = text[text.index("  plan:") : text.index("  shard:")]
+    assert "|| inputs.bundle ||" in plan.split("steps:")[0]
+
+
+def test_the_aggregate_builds_its_evidence_from_a_clean_checkout_in_an_ignored_directory():
+    from verification import bundles
+
+    text = _text("mutation-shards.yml")
+    job = text[text.index("  aggregate:") :]
+    campaign = re.search(r"CAMPAIGN: (\S+)", job).group(1)
+    ignored = (WORKFLOWS.parents[1] / ".gitignore").read_text().splitlines()
+    assert any(line.endswith("/") and campaign.startswith(line) for line in ignored), (
+        "the campaign directory must be ignored by Git"
+    )
+    # the plan, the manifests and the result are found where the release bundle expects them
+    for name in ("shard-plan.json", "evidence-shard-3.json"):
+        assert re.fullmatch(bundles._SHARD_FILES, f"{campaign}/{name}")
+    assert job.count("path: ${{ env.CAMPAIGN }}") == 2
+    assert "--output experiments/results/evidence/deep.json" in job
+    assert '--output "$CAMPAIGN/mutation-campaign.json"' in job
+    assert "--plan shard-plan.json" not in job and "--manifests evidence-shard" not in job
+    refuse = job.index("Refuse evidence built from a modified checkout")
+    assert refuse < job.index("Wrap the campaign in the release evidence contract")
+    assert 'test -z "$(git status --porcelain)"' in job[refuse : refuse + 200]
+    pack = job[job.index("Pack the release evidence") :]
+    assert "if: always() && inputs.bundle" in pack and "name: evidence-deep" in pack

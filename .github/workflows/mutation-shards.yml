@@ -10,6 +10,22 @@ on:
   # never the privileged variant, so the branch code runs with a read-only token.
   pull_request:
     types: [labeled, synchronize, reopened]
+  # Called by verify-release for its DEEP profile: the same campaign, with its evidence packed
+  # as the release bundle. Nothing here is a second implementation of the campaign.
+  workflow_call:
+    inputs:
+      shards:
+        type: string
+        default: "45"
+      fresh_mutants:
+        type: boolean
+        default: true
+      diagnostic_module:
+        type: string
+        default: ""
+      bundle:
+        type: boolean
+        default: false
   workflow_dispatch:
     inputs:
       shards:
@@ -29,7 +45,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: mutation-shards-${{ github.event.pull_request.number || github.ref }}
+  group: mutation-shards-${{ inputs.bundle && 'release-' || '' }}${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 env:
@@ -44,7 +60,7 @@ env:
 jobs:
   plan:
     name: shard-plan
-    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && (contains(github.event.pull_request.labels.*.name, 'run:mutation-shards') || contains(github.event.pull_request.labels.*.name, 'run:mutation-shard-diagnostic')))
+    if: github.event_name == 'workflow_dispatch' || inputs.bundle || (github.event.pull_request.head.repo.full_name == github.repository && (contains(github.event.pull_request.labels.*.name, 'run:mutation-shards') || contains(github.event.pull_request.labels.*.name, 'run:mutation-shard-diagnostic')))
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.matrix.outputs.matrix }}
@@ -128,6 +144,8 @@ jobs:
         run: |
           set +e
           names=$(python -m verification.mutation_shards names --plan shard-plan.json --index ${{ matrix.index }})
+          # The pattern list is meant to split into words.
+          # shellcheck disable=SC2086
           python -m verification.mutation_run --names $names > controller-result.json
           echo "controller=$?" >> "$GITHUB_OUTPUT"
 
@@ -186,6 +204,10 @@ jobs:
     needs: [plan, shard]
     if: always() && needs.plan.result == 'success' && needs.plan.outputs.diagnostic != 'true'
     runs-on: ubuntu-latest
+    env:
+      # An ignored directory of the checkout: the evidence built from the plan and the manifests
+      # names them by repository-relative paths and the worktree stays clean while it is built.
+      CAMPAIGN: experiments/results/evidence/deep-shards
     steps:
       - uses: actions/checkout@v4
         with:
@@ -201,34 +223,59 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: shard-plan
+          path: ${{ env.CAMPAIGN }}
       - uses: actions/download-artifact@v4
         with:
           pattern: shard-evidence-*
           merge-multiple: true
+          path: ${{ env.CAMPAIGN }}
       - name: Verify the complete campaign
         run: |
           equivalence=""
           if [ -f verification/mutation_equivalence.json ]; then
             equivalence="--equivalence verification/mutation_equivalence.json"
           fi
+          # The optional argument is meant to split into words.
+          # shellcheck disable=SC2086
           python -m verification.mutation_shards aggregate \
-            --plan shard-plan.json --manifests evidence-shard-*.json \
-            $equivalence --output mutation-campaign.json
+            --plan "$CAMPAIGN/shard-plan.json" --manifests "$CAMPAIGN"/evidence-shard-*.json \
+            $equivalence --output "$CAMPAIGN/mutation-campaign.json"
+      # The release script rejects evidence built from a modified worktree: refuse it here, where
+      # the cause can be seen, instead of producing evidence that can never be accepted.
+      - name: Refuse evidence built from a modified checkout
+        if: always()
+        run: test -z "$(git status --porcelain)"
       # Exits nonzero unless the campaign is PASS; the evidence is uploaded either way.
       - name: Wrap the campaign in the release evidence contract
         if: always()
         run: |
           python -m verification.evidence_schema deep-shards \
-            --plan shard-plan.json --manifests evidence-shard-*.json \
-            --output deep-evidence.json
+            --plan "$CAMPAIGN/shard-plan.json" --manifests "$CAMPAIGN"/evidence-shard-*.json \
+            --output experiments/results/evidence/deep.json
+      - name: Collect the campaign files
+        if: always()
+        run: |
+          mkdir -p "$RUNNER_TEMP/campaign"
+          for file in "$CAMPAIGN"/mutation-campaign.json "$CAMPAIGN"/shard-plan.json "$CAMPAIGN"/evidence-shard-*.json; do
+            test -f "$file" && cp "$file" "$RUNNER_TEMP/campaign/"
+          done
+          test -f experiments/results/evidence/deep.json && cp experiments/results/evidence/deep.json "$RUNNER_TEMP/campaign/deep-evidence.json"
+          exit 0
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: mutation-campaign
-          path: |
-            mutation-campaign.json
-            deep-evidence.json
-            shard-plan.json
-            evidence-shard-*.json
+          path: ${{ runner.temp }}/campaign
+          if-no-files-found: warn
+          retention-days: 90
+      # The release job reads DEEP evidence from this bundle, never from a loose file.
+      - name: Pack the release evidence
+        if: always() && inputs.bundle
+        run: python -m verification.bundles pack deep --output evidence-deep.tgz
+      - uses: actions/upload-artifact@v4
+        if: always() && inputs.bundle
+        with:
+          name: evidence-deep
+          path: evidence-deep.tgz
           if-no-files-found: warn
           retention-days: 90

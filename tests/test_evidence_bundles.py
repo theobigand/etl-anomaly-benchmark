@@ -269,3 +269,104 @@ def test_the_hosted_real_bundle_adds_only_the_acquisition_report(tmp_path):
         assert sorted(archive.getnames()) == sorted(HOSTED)
     names = bundles.unpack(out, tmp_path / "dest")
     assert sorted(names) == sorted(HOSTED)
+
+
+SHARDED = "experiments/results/evidence/deep-shards/"
+
+
+def _sharded_evidence(root):
+    """A current sharded DEEP envelope: plan and manifests next to the evidence under ``root``."""
+    from tests.test_evidence_schema import EXECUTION, SOURCE
+    from tests.test_sharded_release import _campaign
+    from verification import evidence_schema
+
+    _, manifests = _campaign(root)
+    doc = evidence_schema.build_deep_shards(
+        root / "plan.json", manifests, root=root, source=SOURCE, execution=EXECUTION
+    )
+    _write(root, "experiments/results/evidence/deep.json", json.dumps(doc))
+    return doc
+
+
+@pytest.fixture
+def _shard_versions(monkeypatch):
+    from verification import evidence_schema
+    from verification import mutation_shards as shards
+
+    versions = {"mutmut": "3.8.0", "pytest": "9.1.1"}
+    monkeypatch.setattr(shards, "version", lambda name: versions.get(name))
+    monkeypatch.setattr(evidence_schema, "REQUIRED_DATASETS", ("a", "b"))
+
+
+def test_a_sharded_deep_envelope_names_its_plan_and_manifests_and_no_native_files(
+    tmp_path, _shard_versions
+):
+    _sharded_evidence(tmp_path)
+    assert bundles.deep_artifacts(tmp_path) == [
+        "evidence-shard-0.json",
+        "experiments/results/evidence/deep.json",
+        "plan.json",
+    ]
+
+
+def test_a_sharded_deep_bundle_carries_the_envelope_the_plan_and_the_manifests(
+    tmp_path, _shard_versions
+):
+    _sharded_evidence(tmp_path)
+    out = bundles.pack("deep", tmp_path, tmp_path / "deep.tgz")
+    with tarfile.open(out) as archive:
+        assert sorted(archive.getnames()) == [
+            "evidence-shard-0.json",
+            "experiments/results/evidence/deep.json",
+            "plan.json",
+        ]
+
+
+def test_a_monolithic_deep_envelope_still_names_the_native_files(tmp_path):
+    doc = _build(tmp_path, _fixture(tmp_path))
+    _write(tmp_path, "experiments/results/evidence/deep.json", json.dumps(doc))
+    names = bundles.deep_artifacts(tmp_path)
+    assert "mutants/mutmut-cicd-stats.json" in names and "mutants/results.txt" in names
+    assert "experiments/results/evidence/deep.json" in names
+
+
+@pytest.mark.parametrize(
+    "name",
+    [
+        SHARDED + "shard-plan.json",
+        SHARDED + "evidence-shard-0.json",
+        SHARDED + "evidence-shard-44.json",
+    ],
+)
+def test_the_sharded_plan_and_manifests_can_be_unpacked_where_the_release_expects_them(
+    tmp_path, name
+):
+    root = tmp_path / "dest"
+    bundle = _bundle(tmp_path / "ok.tgz", {name: "{}"})
+    assert bundles.unpack(bundle, root) == [name]
+    assert (root / name).read_text() == "{}"
+
+
+@pytest.mark.parametrize(
+    "name",
+    [
+        SHARDED + "evidence-shard-.json",
+        SHARDED + "evidence-shard-x.json",
+        SHARDED + "evidence-shard-1.json.bak",
+        SHARDED + "other.json",
+        SHARDED + "shard-plan.jsonl",
+        SHARDED + "sub/evidence-shard-1.json",
+        SHARDED + "mutation-campaign.json",
+        "experiments/results/evidence/deep-shards-x/shard-plan.json",
+        "experiments/results/deep-shards/shard-plan.json",
+        "evidence-shard-1.json",
+        "shard-plan.json",
+        "x" + SHARDED + "shard-plan.json",
+    ],
+)
+def test_nothing_else_is_unpacked_from_the_sharded_location(tmp_path, name):
+    root = tmp_path / "dest"
+    bundle = _bundle(tmp_path / "bad.tgz", {name: "{}"})
+    with pytest.raises(bundles.BundleError, match="allowed"):
+        bundles.unpack(bundle, root)
+    assert not (root / name).exists()

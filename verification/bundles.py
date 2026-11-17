@@ -23,6 +23,8 @@ MAX_MEMBERS = 512
 MAX_TOTAL = 64 * 1024 * 1024
 _EVIDENCE = "experiments/results/evidence/"
 _RESULTS = "experiments/results/"
+# Where the release job puts the plan and the manifests of a sharded campaign (an ignored directory)
+_SHARD_FILES = re.escape(_EVIDENCE + "deep-shards/") + r"(?:shard-plan|evidence-shard-\d+)\.json"
 KINDS = {
     "fast": (
         "coverage.json",
@@ -81,7 +83,9 @@ def deep_artifacts(root: Path) -> list[str]:
         if document.get("kind") != "deep" or result.get("format_version") != 2:
             raise ValueError("DEEP evidence is not a current campaign")
         paths = mutation_campaign.validate_current(result, root)
-        names = set(KINDS["deep"])
+        # The envelope and the raw files it binds: native files of a monolithic campaign, or the
+        # plan and the manifests of a sharded one.
+        names = {_EVIDENCE + "deep.json"}
         names.update(path.resolve().relative_to(root.resolve()).as_posix() for path in paths)
         return sorted(names)
     except (OSError, KeyError, TypeError, ValueError) as exc:
@@ -91,7 +95,9 @@ def deep_artifacts(root: Path) -> list[str]:
 
 
 def _deep_member_allowed(name: str, root: Path) -> bool:
-    """Allow only raw files belonging to a classified module or canonical attempt."""
+    """Allow only raw files belonging to a classified module, a canonical attempt or a shard."""
+    if re.fullmatch(_SHARD_FILES, name):
+        return True
     try:
         units = json.loads((root / "verification/mutation_risk_policy.json").read_text())["units"]
     except (OSError, KeyError, TypeError, ValueError):

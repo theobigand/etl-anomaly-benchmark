@@ -804,6 +804,18 @@ the release evidence kind `deep-shards` through `evidence_schema`, with caches a
 Replacing the monolithic DEEP job of `verify-release` by that evidence is possible but needs one
 complete hosted validation of the wiring, which has not been run and is not claimed here.
 
+Update, 2026-11-17: the release DEEP job is now that campaign. `verify-release` calls
+`mutation-shards` as a reusable workflow (45 shards, mutants always rerun, evidence packed as the deep
+bundle), and the 180-minute single job is gone. Two defects were fixed on the way. The aggregate wrote
+the plan, the manifests and its result to the root of the checkout, so the evidence was built from a
+worktree that the release script rightly rejects as dirty; they now live in the ignored directory
+`experiments/results/evidence/deep-shards/`, and a step refuses evidence built from a modified checkout.
+The deep bundle also had no way to carry a plan and manifests instead of native mutmut files; it now
+carries exactly the envelope and the files it binds, and unpacks the plan and manifests only from that
+directory. `verification/release.py` is unchanged: it still rejects dirty, stale or incomplete evidence.
+Whether the wiring passes the release gate end to end is established by a hosted run, recorded in the
+closure report, not by this note.
+
 ## Focused diagnostics, 2026-11-11
 
 Nine research modules were re-measured one at a time after behavioural tests were added; seven
