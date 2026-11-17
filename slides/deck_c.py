@@ -367,7 +367,7 @@ slide(
                 286,
                 None,
                 "",
-                "<p style='font-size:19px'>Each module has a risk level, and each level a minimum share of eligible mutants (those counted in the score) that tests must kill.</p><p style='font-size:19px;margin-top:14px'><b>L4</b>, the highest, is code whose bug would change a reported result. Its bar is <b>98%</b>.</p><p style='font-size:19px;margin-top:14px'>The thresholds were not changed and no module was reclassified.</p>",
+                "<p style='font-size:19px'>Each module has a risk level, and each level a minimum share of eligible mutants (those counted in the score) that tests must kill.</p><p style='font-size:19px;margin-top:14px'><b>L4</b>, the highest, is code whose bug would change a reported result. Its bar is <b>98%</b>.</p><p style='font-size:19px;margin-top:14px'>The thresholds were not changed; 12 modules moved from L4 to L3 on 13 November, none since.</p>",
             ),
             foot(
                 "verification/mutation_risk_policy.json &nbsp;·&nbsp; thresholds L1 80, L2 90, L3 95, L4 98"
@@ -393,7 +393,7 @@ slide(
                 "k",
                 "Mutation testing, 5 of 5 &nbsp;·&nbsp; final campaign, 2026-11-17",
             ),
-            title("One campaign over 100 modules: every module meets its own bar", 40, 58),
+            title("One campaign, 100 modules: all 97 with mutants meet their bar", 40, 58),
             flow(
                 64,
                 160,
@@ -421,7 +421,7 @@ slide(
                 384,
                 [
                     "<div class='stat'><span class='num'>35,237</span><span class='lab'>mutants: 34,768 killed, 463 survived, 6 timed out</span></div>",
-                    "<div class='stat'><span class='num ember'>101</span><span class='lab'>excluded as equivalent, in 21 modules. 90 carry an argument, 7 rest on the owner's word</span></div>",
+                    "<div class='stat'><span class='num ember'>101</span><span class='lab'>excluded as equivalent, in 21 modules. 94 carry an argument, 7 rest on the owner's word</span></div>",
                     "<p class='note'>The other 362 survivors and the 6 timeouts still count against their modules.</p>",
                 ],
                 maxh=470,
@@ -434,10 +434,10 @@ slide(
     ),
     tone="bone",
     role="evidence",
-    family="dumbbell chart",
-    dominant="nine dumbbells",
+    family="table + two figures",
+    dominant="two large numbers",
     density="high",
-    colour="steel pass, amber below bar",
+    colour="steel adjusted, amber exclusions",
 )
 
 # raw vs adjusted --------------------------------------------------------
@@ -515,7 +515,7 @@ slide(
                 360,
                 None,
                 "",
-                "<div class='k anom'>Open</div><p style='font-size:19px;margin-top:8px'>21 modules pass only through exclusions decided by the author, not by independent review; 362 survivors still count.</p>",
+                "<div class='k anom'>Open</div><p style='font-size:19px;margin-top:8px'>20 modules need exclusions to pass, decided by delegation and not by independent review; 362 survivors still count.</p>",
             ),
             D(
                 464,
@@ -548,9 +548,9 @@ slide(
     ),
     role="caveat",
     family="segmented bar + findings",
-    dominant="82-module bar",
+    dominant="100-module bar",
     density="medium",
-    colour="steel pass, amber fail, dashed incomplete",
+    colour="steel pass, dashed no function body",
 )
 
 # where it stands --------------------------------------------------------

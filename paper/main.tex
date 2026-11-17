@@ -1479,7 +1479,7 @@ the repeated run, but a single neural result should be read as one realization u
 Complete line and branch coverage does not establish that the scientific assertions detect
 every defect, and mutation testing cannot show whether the injected defects and the tests cover
 every way an experiment can go wrong. The checks were run on one machine by the person who wrote the
-code, and the timings do not transfer to another; the final mutation campaign ran on hosted Linux runners, on one set of recorded dependency versions, and part of its analysis was carried out with a language model. The details, the history of the replays and the
+code, and the timings do not transfer to another. The exception is the final mutation campaign, which ran on hosted Linux runners with unpinned dependency versions that the evidence records, and part of whose analysis was carried out with a language model. The details, the history of the replays and the
 gaps of the real-data check are in Appendix~\ref{app:outcomes}; they leave some implementation
 errors capable of changing a published result without being caught by the current gates.
 
@@ -1523,7 +1523,7 @@ and a label-free rolling threshold that keeps the training prevalence cannot
 follow it; only one of the four hypotheses of that study holds.
 
 The verification of the code that produces these numbers is part of the contribution. A risk-tiered mutation
-campaign over $100$ modules now meets its per-module thresholds on Linux, with every exclusion recorded, bound to its
+campaign over $100$ modules now has every module that contains mutants at or above its own threshold on Linux, with every exclusion recorded, bound to its
 source and revalidated; it also showed that such a score depends on the host, so that the evidence has to say where it
 was produced. It is not a release certification.
 
@@ -1622,12 +1622,12 @@ $45$ parallel shards of one commit, with a controller proof of each execution an
 tracked file in the evidence. It covers $35{,}237$ mutants: $34{,}768$ were killed, $463$ survived and
 $6$ timed out, and a timeout is never counted as a kill. The raw scores are $100\%$ (L2, three modules),
 $98.68\%$ (L3, $18$ modules) and $98.67\%$ (L4, $79$ modules); three modules contain no function body.
-Twenty-one L4 modules reach $98\%$ only through $101$ mutants excluded as equivalent, which raises the L4
+In $21$ L4 modules $101$ mutants are excluded as equivalent, and $20$ of them need the exclusions to reach $98\%$; the exclusions raise the L4
 score to $99.00\%$ (Table~\ref{tab:closure}). Four exclusions were decided by the repository owner and thesis author
 on 11 November and $97$ on 17 November under a delegation from the owner to the language model that assisted
-the analysis. Ninety of these carry a recorded technical argument; seven rest on the owner's word because equivalence
+the analysis. Of the $97$ recent decisions, $90$ carry a recorded technical argument; seven rest on the owner's word because equivalence
 could be neither shown nor refuted outside unsupported states, and only as far as a module still needed it.
-These are sole-author decisions, not independent peer review. Two independent model reviews of the batch
+These are sole-author decisions, not independent peer review. Two separate-context model reviews of the batch
 found four mutants that had been accepted wrongly and that a test can kill; I replaced those exclusions by tests.
 The $362$ survivors that remain in passing modules stay counted as failures. This measurement certifies no
 release: the release gate is still closed.
@@ -1696,7 +1696,7 @@ the archived results.
 
 The same profiles were run on a hosted Linux machine for the final revision
 (an earlier revision, commit c64c6ffa, a continuous-integration run, not independently attested).
-The release script returned \emph{certified}. The routine suite and the scripts
+The release script returned \emph{certified}; that verdict concerns the earlier global criterion and an earlier revision, and says nothing about the risk-tiered revision, whose release gate is closed. The routine suite and the scripts
 keep complete line and branch coverage, the checking scripts are fully covered
 ($1{,}975$ of $1{,}975$ lines), and the mutation campaign, run from scratch,
 kills $4{,}703$ of $4{,}808$ mutants ($97.82\%$) with no timeout. Earlier hosted
@@ -1735,13 +1735,13 @@ L4 & 79 & $98\%$ & $29{,}286 / 29{,}682$ & $98.67\%$ & $99.00\%$ \\
 \end{table}
 
 \paragraph{What the process contributes.}
-First, thresholds follow consequence, module by module. The earlier global criterion was met at $97.6\%$ while the
-sharding tool that decides whether a campaign is complete had grown from $1{,}105$ to $1{,}556$ mutants and scored
-$92.8\%$ at its first native measurement; an aggregate would not have shown it. Second, equivalence is an auditable
+First, thresholds follow consequence, module by module. The earlier criterion was one global score ($97.6\%$ over the pipeline and the scripts) that left the verification tools out altogether.
+Measured module by module, the sharding tool that decides whether a campaign is complete had grown from $1{,}105$ to $1{,}556$ mutants and killed
+$1{,}444$ of them ($92.8\%$) at its first native measurement; it passes at $1{,}551$ of $1{,}556$ once its tests were completed. Second, equivalence is an auditable
 ledger and not a judgement call: an exclusion is a record bound to digests and dependency versions that a machine
-validates, and it stops counting the day its mutant is killed. Third, the measurement itself is a result with
-conditions. The historical ledger came from mixed environments and was not reproducible: the same module scored
-$259/259$ in it and $241/259$ at the first native Linux measurement. Running the campaign exposed three ways in which
+validates, and the aggregation rejects the whole evidence if an excluded mutant is killed, so that a record has to be reconciled with the code. Third, the measurement itself is a result with
+conditions. Earlier ledgers came from different environments and did not agree: one module scored $259/259$ in the
+first campaign, $239/259$ in the mixed-environment ledger and $241/259$ at the first native Linux measurement. Running the campaign exposed three ways in which
 evidence silently differs between hosts: a runner image that reports its cloud provider in its platform string, a
 numerical test that expected a correlation of exactly zero where Linux computes $3.7\times10^{-17}$, and an assertion
 diff of two large strings whose cost made correct detections time out. Each was fixed at its cause, in the binding
