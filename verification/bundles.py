@@ -93,6 +93,9 @@ def deep_artifacts(root: Path) -> list[str]:
         # plan and the manifests of a sharded one.
         names = {_EVIDENCE + "deep.json"}
         names.update(path.resolve().relative_to(root.resolve()).as_posix() for path in paths)
+        # The evidence binds the owner decisions by digest, but they are a tracked file that the
+        # release job already holds: bundling it would overwrite a file of the repository.
+        names.discard(mutation_campaign.EQUIVALENCE)
         return sorted(names)
     except (OSError, KeyError, TypeError, ValueError) as exc:
         raise BundleError(

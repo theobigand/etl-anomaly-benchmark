@@ -419,3 +419,31 @@ def test_the_envelope_limit_holds_the_real_sharded_campaign_envelope():
     # the final campaign envelope was 8.1 MB because it lists every mutant outcome
     assert bundles.MAX_ENVELOPE >= 16 * 1024 * 1024 > bundles.MAX_MEMBER
     assert bundles.MAX_ENVELOPE < bundles.MAX_TOTAL
+
+
+def test_the_tracked_equivalence_document_is_bound_by_the_evidence_but_never_bundled(
+    tmp_path, _shard_versions
+):
+    from tests import owner_review
+    from tests.test_evidence_schema import EXECUTION, SOURCE
+    from tests.test_sharded_release import _campaign
+    from verification import evidence_schema, mutation_campaign
+
+    document, manifests = _campaign(tmp_path)
+    equivalence = _write(
+        tmp_path, mutation_campaign.EQUIVALENCE, json.dumps(owner_review.document())
+    )
+    doc = evidence_schema.build_deep_shards(
+        tmp_path / "plan.json", manifests, root=tmp_path, source=SOURCE, execution=EXECUTION
+    )
+    _write(tmp_path, "experiments/results/evidence/deep.json", json.dumps(doc))
+    assert document and equivalence.is_file()
+    # the evidence binds the document by digest ...
+    assert mutation_campaign.EQUIVALENCE in doc["artifacts"]
+    # ... but it is a file of the repository, which the release job already has: a bundle must not
+    # carry it, because the unpacking would overwrite a tracked file
+    assert mutation_campaign.EQUIVALENCE not in bundles.deep_artifacts(tmp_path)
+    packed = bundles.pack("deep", tmp_path, tmp_path / "deep.tgz")
+    with tarfile.open(packed) as archive:
+        assert mutation_campaign.EQUIVALENCE not in archive.getnames()
+        assert "evidence-shard-0.json" in archive.getnames()
