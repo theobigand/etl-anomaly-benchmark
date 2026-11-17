@@ -284,3 +284,41 @@ def test_slide_47_counts_equal_the_final_campaign_archive():
         assert str(count) in text
     excluded = sum(m.get("equivalent_accepted", 0) for m in modules.values())
     assert f"{excluded}" in text
+
+
+def test_every_slide_has_a_motion_family_and_a_light_and_no_two_neighbours_repeat_both():
+    import build_deck  # noqa: F401  (importing registers the slides)
+    import deck_motion
+
+    deck_motion.assign(deck_lib.SLIDES)
+    families = {s["motion"] for s in deck_lib.SLIDES}
+    assert families <= {"title", "rake", "flow", "chart", "compare", "editorial", "close"}
+    assert len(families) >= 6
+    assert all(s["lightpos"] in deck_motion.LIGHTS for s in deck_lib.SLIDES)
+    pairs = [(s["motion"], s["lightpos"]) for s in deck_lib.SLIDES]
+    assert all(a != b for a, b in zip(pairs, pairs[1:], strict=False))
+    assert [s["motion"] for s in deck_lib.SLIDES].count("close") == 1
+    assert deck_lib.SLIDES[-1]["motion"] == "close"
+
+
+def test_the_motion_css_has_rules_for_every_family_and_stands_down_for_print_and_reduced_motion():
+    css = (SLIDES / "deck_motion.css").read_text()
+    for family in ("title", "rake", "flow", "chart", "compare", "editorial", "close"):
+        assert f"data-motion={family}]" in css or family in ("flow", "chart"), family
+    assert "@media (prefers-reduced-motion:reduce)" in css
+    printed = css[css.index("@media print") :]
+    assert "animation:none!important" in printed
+    assert "filter:none" in printed and "text-shadow:none" in printed
+    # nothing that would hide an element is outside body.anim or the print and reduced rules
+    outside = css[: css.index("@media screen{\n  /* the light arrives")]
+    rules = "\n".join(line for line in outside.splitlines() if not line.startswith("@keyframes"))
+    assert "opacity:0" not in rules
+
+
+def test_the_generated_deck_carries_its_motion_metadata_and_only_animates_when_allowed():
+    html = (SLIDES / "thesis_progress.html").read_text()
+    assert html.count("data-motion='") == 51
+    assert html.count("data-variant='") == 51 and html.count("data-side='") == 51
+    assert "--lx:" in html and "--sx:" in html
+    assert "document.body.classList.add('anim')" in html
+    assert "location.search" in html and "prefers-reduced-motion: reduce" in html

@@ -17,9 +17,11 @@ sys.path.insert(0, str(HERE))
 import deck_a  # noqa: E402,F401
 import deck_b  # noqa: E402,F401
 import deck_c  # noqa: E402,F401
+import deck_motion  # noqa: E402
 from deck_lib import SLIDES  # noqa: E402
 
-CSS = (HERE / "deck.css").read_text()
+CSS = (HERE / "deck.css").read_text() + (HERE / "deck_motion.css").read_text()
+MOTION = (HERE / "deck_motion.js").read_text()
 PROBE = (HERE / "layout_probe.js").read_text()
 JS = """
 const slides=[...document.querySelectorAll('.slide')];const stage=document.getElementById('stage');
@@ -30,16 +32,15 @@ function fitFlow(s){fitTitles(s);s.querySelectorAll('.flow[data-maxh]').forEach(
 window.fitFlow=fitFlow;
 function fit(){const s=Math.min(innerWidth/1280,innerHeight/720);stage.style.transform='translate('+(-640*s)+'px,'+(-360*s)+'px) scale('+s+')';}
 addEventListener('resize',fit);fit();
-function go(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,k)=>s.classList.toggle('on',k===i));fitFlow(slides[i]);[...dots.children].forEach((d,k)=>d.setAttribute('aria-current',k===i?'true':'false'));count.textContent=(i+1)+' / '+slides.length;try{history.replaceState(null,'','#'+(i+1));}catch(e){}}
+function go(n){i=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,k)=>s.classList.toggle('on',k===i));fitFlow(slides[i]);motionPrep(slides[i]);motionFreeze();[...dots.children].forEach((d,k)=>d.setAttribute('aria-current',k===i?'true':'false'));count.textContent=(i+1)+' / '+slides.length;try{history.replaceState(null,'','#'+(i+1));}catch(e){}}
 const next=()=>go(i+1),prev=()=>go(i-1);
 addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();next();}else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();prev();}else if(e.key==='Home')go(0);else if(e.key==='End')go(slides.length-1);});
 let tx=null;addEventListener('touchstart',e=>tx=e.changedTouches[0].clientX,{passive:true});
 addEventListener('touchend',e=>{if(tx===null)return;const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50)(d<0?next:prev)();tx=null;},{passive:true});
-slides.forEach(s=>{let n=0;[...s.children].forEach(c=>{if(!c.matches('.pg,.ph,.scrim'))c.style.setProperty('--i',n++);});});
-if(!location.search&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.body.classList.add('anim');
+if((!location.search||MOTION_AT!==undefined)&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.body.classList.add('anim');
 go(parseInt(location.hash.slice(1))-1||0);
 addEventListener('beforeprint',()=>slides.forEach(fitFlow));
-if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{slides.forEach(s=>{s.classList.add('on');fitFlow(s);});go(i);});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{slides.forEach(s=>{s.classList.add('on');fitFlow(s);motionPrep(s);});go(i);});
 """
 
 
@@ -56,6 +57,11 @@ def _stabilise(html):
 
 
 def assemble(write=True):
+    deck_motion.assign(SLIDES)
+    for slide in SLIDES:
+        x, y, dx, dy, angle = deck_motion.LIGHTS[slide["lightpos"]]
+        slide["lightstyle"] = f"--lx:{x}%;--ly:{y}%;--sx:{dx}px;--sy:{dy}px;--la:{angle}deg"
+        slide["side"] = "right" if dx < 0 else "left"
     out = []
     for i, s in enumerate(SLIDES):
         pg = (
@@ -64,7 +70,9 @@ def assemble(write=True):
             else f"<div class='pg' style='position:absolute'>{i + 1}</div>"
         )
         out.append(
-            f"<section class='slide {s['tone']}' data-sec='{s['sec']}' aria-label='Slide {i + 1}, {s['sec']}'>{s['body']}{pg}</section>"
+            f"<section class='slide {s['tone']}' data-sec='{s['sec']}' data-motion='{s['motion']}' "
+            f"data-variant='{s['variant']}' data-side='{s['side']}' style='{s['lightstyle']}' "
+            f"aria-label='Slide {i + 1}, {s['sec']}'>{s['body']}{pg}</section>"
         )
     html = (
         "<!doctype html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>"
@@ -74,6 +82,7 @@ def assemble(write=True):
         "<div id='stage'>"
         + "".join(out)
         + "</div><nav id='dots' aria-label='slides'></nav><div id='count'></div><script>"
+        + MOTION
         + JS
         + "</script><script>"
         + PROBE
@@ -81,12 +90,12 @@ def assemble(write=True):
     )
     targets = {HERE / "thesis_progress.html": _stabilise(html)}
     rows = [
-        "| # | Section | Role | Composition family | Dominant element | Density | Ground | Image | Light | Colour |",
-        "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |",
+        "| # | Section | Role | Composition family | Dominant element | Density | Ground | Image | Light | Colour | Motion | Light position |",
+        "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |",
     ]
     for i, s in enumerate(SLIDES):
         rows.append(
-            f"| {i + 1} | {s['sec']} | {s['role']} | {s['family']} | {s['dominant']} | {s['density']} | {s['tone']} | {s['image']} | {s['light']} | {s['colour']} |"
+            f"| {i + 1} | {s['sec']} | {s['role']} | {s['family']} | {s['dominant']} | {s['density']} | {s['tone']} | {s['image']} | {s['light']} | {s['colour']} | {s['motion']} | {s['lightpos']} |"
         )
     targets[HERE.parent / "docs/thesis-remediation/SLIDE_COMPOSITION_INVENTORY_2026-11-12.md"] = (
         "# Slide composition inventory, 2026-11-12\n\nGenerated by `slides/build_deck.py` from the slide definitions. Families are named by the dominant form of the slide, not by template.\n\n"
