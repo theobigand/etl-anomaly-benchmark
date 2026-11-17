@@ -18,7 +18,8 @@ Its [implementation and gate evidence](POOL_PREPROCESSING_VALIDATION_2026-11-03.
 support T064/T351. 91 of the 415 tasks are checked as of 2026-11-11; T055 remains open for partial evidence, and T088/T089 are supported by recomputed, replay-validated partitions.
 Historical pool partition recovery and train-only replay remain outstanding.
 Mandatory prospective governance migration:
-[risk-tiered mutation policy, #116](RISK_MUTATION_MIGRATION.md), in progress.
+[risk-tiered mutation policy, #116](RISK_MUTATION_MIGRATION.md); the mutation campaign is closed in
+[the closure report](MUTATION_CLOSURE_2026-11-17.md) (campaign PASS, release gate still closed).
 Historical global mutation reports retain their original criteria.
 
 ## Canonical checklists
