@@ -184,7 +184,7 @@ def test_mutation_sandbox_holds_every_directory_the_selected_tests_read():
     config = tomllib.loads((root / "pyproject.toml").read_text())["tool"]["mutmut"]
     selection, copied = config["pytest_add_cli_args_test_selection"], config["also_copy"]
     assert {"tests", "research/tests"} <= set(selection)
-    assert {"docs", "paper", "slides", ".github", "Makefile"} <= set(copied)
+    assert {"docs", "paper", "slides", ".github", ".gitignore", "Makefile"} <= set(copied)
     assert "--ignore=tests/verifier" not in selection
     assert config["do_not_mutate"] == ["research/tests/*"]
 

@@ -98,6 +98,7 @@ also_copy = [
     "paper",
     "slides",
     ".github",
+    ".gitignore",
     "Makefile",
     "README.md",
 ]
