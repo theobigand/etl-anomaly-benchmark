@@ -523,7 +523,7 @@ slide(
                 360,
                 None,
                 "",
-                "<div class='k anom'>Open</div><p style='font-size:19px;margin-top:8px'>The release gate needs a single-job DEEP run that cannot fit its time limit, and a runner holding the datasets.</p>",
+                "<div class='k anom'>Open</div><p style='font-size:19px;margin-top:8px'>The release gate now runs end to end on hosted Linux and rejects the release: the profiles ran different dependency versions.</p>",
             ),
             D(
                 864,

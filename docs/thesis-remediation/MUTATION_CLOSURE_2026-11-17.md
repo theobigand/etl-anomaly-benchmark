@@ -123,37 +123,65 @@ unit could be revoked, one at a time, before it fell below its threshold (0 mean
 
 Equivalence verdicts are no longer pending. What only the owner can decide, by consequence:
 
-1. **Ratify or revoke the 97 delegated records**, in particular the 7 on the owner's word and the 2 device-dependent
-   ones. Nine units have no slack, so revoking any one of their records fails the unit: `load.py`, `base.py`, `deep.py`,
-   `drift.py`, `mutation_scope.py`, `windows.py` (98.18%), `autoencoder.py` (98.25%), `_torch_models.py` (98.31%) and
-   `ml.py` (98.38%). The last column of the table gives the slack of every unit.
-2. **How DEEP is certified.** The release workflow's `release-deep` job runs `make verify-deep`, one job of 35,237
-   mutants with a 180-minute limit. The sharded campaign took about 1 h 40 on 45 parallel runners. Either accept the
-   sharded `deep-evidence.json` (kind `deep`, controller-proof) as the DEEP input of the release gate, which needs a
-   workflow change (the evidence is built after the aggregation wrote into the checkout and is marked dirty, which the
-   release script rejects), or run a different campaign shape. No workflow was changed to make a gate pass.
-3. **REAL evidence.** The release gate also needs a runner holding the research datasets; none is available.
-4. **Merge.** Authorise or refuse the squash merge recommended in section C. Nothing is merged automatically.
+1. **One dependency environment for every profile (blocks the release gate).** The gate's last verdict is
+   REJECTED for one reason only: the profiles ran different versions of result-affecting packages. FAST, FAULTS,
+   DEEP, tools and reproduction install the latest resolvable packages (pandas 3.1.1, pyod 3.6.8) while REAL runs
+   in the hash-locked environment (pandas 3.0.6, pyod 3.6.7), which is also the recorded lock. A gate that finds
+   consistent versions that differ from the lock reports INCOMPLETE, not REJECTED. The choices:
+   - **Align every profile on the lock (recommended).** pandas 3.0.6 is the only version under which the archived
+     Cardio results replay numerically (the documented parsing difference), so the lock is the scientifically
+     canonical environment. Cost: the 97 delegated records bind pandas 3.1.1 (three also pyod 3.6.8), so DEEP has to
+     be rerun under the lock and every record revalidated or rebound before the validator accepts it.
+   - **Re-record the lock at the versions the profiles ran.** Keeps the campaign and the records valid, but REAL then
+     runs under pandas 3.1.1, where the Cardio replay is statistical and the test that expects a numerical match
+     fails; relaxing that test is a scientific-claims decision, not a plumbing one.
+   - **Leave it.** The gate stays REJECTED and no certification is claimed.
+2. **Ratify or revoke the 97 delegated records**, in particular the 7 on the owner's word and the 2 device-dependent
+   ones; the decision packet is `EQUIVALENCE_RATIFICATION_2026-11-17.md`. Nine units have no slack, so revoking any
+   one of their records fails the unit. The last column of the table above gives the slack of every unit.
+3. **Merge.** Authorise or refuse the squash merge recommended in section C. Nothing is merged automatically.
 
 ## C. Integration readiness
 
+### Release verification, run end to end on hosted Linux
+
+The full `verify-release` workflow was run five times on this branch (runs 44084515801, 44088269511, 44095792721,
+44113451030 and 44143370017). It found six defects that no unit test could see, each fixed at its cause and covered
+by a test: the REAL preflights compared the checked-out commit with the pull request merge commit; the aggregate
+copied whole shard artifacts, with their mutated sources, into the checkout where policy validation took them for
+repository sources; the 8.1 MB sharded DEEP envelope exceeded the 5 MB member limit of the evidence bundles; the
+bundle carried the tracked equivalence document that its own allowlist refuses to unpack; the REAL profile collected
+test modules that import PyTorch, which the hash-locked environment does not have; and the gate did not install the
+dependency set that the sharded evidence binds. A seventh, a test that read a file outside the mutation sandbox,
+failed every shard baseline in one earlier attempt and is fixed too.
+
+The last run (44143370017, commit `8e50b699`) passes every profile: FAST, FAULTS, static typing and tools,
+reproduction, REAL on hosted Linux (the three datasets are downloaded from their public sources and every checksum
+matches the manifest) and DEEP as the 45-shard campaign. The gate then reports `REJECTED` with the three reasons of
+decision 1 (pandas, pyod, and the difference from the lock), nothing else. The 107 reasons about stale published
+figures of the first run are gone because the published run, a local run of the original global criterion, is now
+marked historical with a note, the mechanism the repository already uses.
+
 | Item | Status |
 | --- | --- |
-| Mutation campaign | PASS at the commit above; see section A |
-| Hosted CI | green on `51ad0794` (run 44042429763: `test`, `faults`, `slides`); it must be green again on the final head |
-| Official DEEP | sharded evidence PASS but marked `worktree_dirty`; the release workflow's single-job DEEP not run (cannot fit its limit) |
-| Official release verification | not run, so the gate stays closed: no CERTIFIED verdict is claimed |
-| Independent review | provenance change: two rounds, PASS. Equivalence batch: two rounds, fixes applied, no third round. Reviews are model reviews and are not human approval |
+| Mutation campaign | PASS at `51ad0794`; see section A |
+| Hosted CI | green on the head of every run above; it must be green on the final head |
+| Official DEEP | the sharded campaign passes inside the release workflow, bundled without tracked files |
+| Official release verification | runs end to end; verdict REJECTED on dependency-version consistency only; no CERTIFIED verdict is claimed |
+| REAL | passes on hosted Linux from public sources with verified checksums; no private runner is needed |
+| Independent review | provenance change: two rounds, PASS. Equivalence batch: two rounds, fixes applied. Accuracy review of this report: one round, fixes applied. Reviews are model reviews and are not human approval |
 | Scientific integrity | Cardio and PCA records preserved; no archived result touched |
-| Evidence retention | durable archive above; superseded interim notes removed; 3,310 alert-budget JSON files, the cited probe notes and all diagnostic archives kept |
+| PR contents | At `8e50b699`: 4,250 changed files and 70.8 MB: 3,309 alert-budget runs and 100 pool partitions (scientific artifacts), 104 mutation-evidence files, 384 probe scripts and logs and 129 notes (cited by the equivalence records and the probe notes), 150 tests, 39 source and infrastructure files, 32 manuscript and slide assets. Nothing was removed beyond two superseded notes and a process-id file, because everything else is cited by a record or an evidence file |
+| Evidence retention | durable archive above; superseded interim notes removed; all cited probe notes and diagnostic archives kept |
 
-**Git strategy.** The repository allows squash merging (`allow_squash_merge: true`). The branch has 321+ commits
-and 4,000+ changed files, 3,310 of which are scientific alert-budget artifacts. A squash keeps `main` readable;
-the original history stays reachable on the branch and must be kept as a tag before the branch is deleted.
-Evidence cites commits (`eb1d679`, `d4d21895`, `215da02`, `51ad0794`); those identities live on in the tagged
-history. After a squash the following must be rerun on the resulting commit: hosted CI, and a campaign for any
-future release claim, because every shard binds its commit. No provenance claim in the repository depends on the
-branch head surviving.
+**Git strategy.** The repository allows squash merging (`allow_squash_merge: true`) and `main` requires the `test`
+and `faults` checks. The branch has 346 commits and 4,250 changed files. A squash keeps `main` readable; the
+original history must be tagged on the branch before it is deleted (`delete_branch_on_merge` is off, so the branch
+survives, but a tag is the durable reference). Evidence cites commits (`eb1d679`, `d4d21895`, `215da02`,
+`51ad0794`, `8e50b699`); those identities live on in the tagged history. After a squash, hosted CI must pass on the
+resulting commit, and any release claim needs a new release verification, because every shard binds its commit.
+No provenance claim in the repository depends on the branch head surviving.
 
 **Verdict: READY FOR OWNER REVIEW, not certified.** The mutation requirement is met with the stated exclusions and
-limits. The release gate is closed for the reasons in B2 and B3, and PR #117 stays a draft.
+limits, and the release machinery runs end to end. The release gate stays closed on decision 1, and PR #117 stays a
+draft.

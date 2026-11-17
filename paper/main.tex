@@ -1719,6 +1719,12 @@ the module and the dependency versions of the run, and that the aggregation reje
 measurement is specific to Linux with the recorded package versions. Two accepted exclusions hold only on the
 CPU-only PyTorch build used (the same mutants are killed on an Apple GPU device), and the aggregation rejects every
 accepted record if a recorded package version changes.
+The release verification of the repository was also run end to end on hosted Linux. Every profile passes (the routine suite, the
+deliberate defects, typing and tools, the controlled reproduction, the real-data check from the three public datasets with
+verified checksums, and this campaign), and the release script nevertheless rejects the release for one reason: the profiles
+ran different versions of pandas and pyod, the real-data check in the hash-locked environment (pandas $3.0.6$) and the
+others on the latest packages ($3.1.1$). Aligning them is a choice of the certification environment, not a repair, and
+I have not made it.
 
 \begin{table}[t]
 \centering
