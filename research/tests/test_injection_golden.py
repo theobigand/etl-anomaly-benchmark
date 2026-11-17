@@ -3,7 +3,6 @@ group, a time or a label of the typed injection changes these digests (the archi
 depend on exactly this construction)."""
 
 import hashlib
-import itertools
 import sys
 import warnings
 from pathlib import Path
@@ -116,17 +115,18 @@ def test_the_row_cap_samples_only_above_the_cap():
     assert len(capped) == 3199 and report["rows_out"] == 3199
 
 
-def test_a_pair_with_exactly_zero_correlation_is_oriented_as_a_non_positive_one():
-    rng = np.random.default_rng(19)
-    corners = np.tile(np.array(list(itertools.product([-1.0, 1.0], repeat=3))), (12, 1))
-    for _ in range(1370):
-        frame = pd.DataFrame(corners[rng.permutation(len(corners))], columns=list("abc"))
-    assert float(np.abs(frame.corr().to_numpy() - np.eye(3)).max()) == 0.0
-    out = inj.inject(frame, seed=1)
-    rows = out[out["anomaly_type"].eq("multivariate_outlier")]
-    assert rows[["a", "b"]].head(4).to_numpy().tolist() == [
-        [1.0, -1.0], [1.0, -1.0], [-1.0, 1.0], [-1.0, 1.0],
-    ]  # fmt: skip
+def _multivariate_block(monkeypatch, correlation):
+    monkeypatch.setattr(inj, "_pair", lambda clean: ("a", "b", correlation))
+    out = inj.inject(_carrier(), seed=1)
+    return out[out["anomaly_type"].eq("multivariate_outlier")][["a", "b"]].reset_index(drop=True)
+
+
+def test_a_pair_with_exactly_zero_correlation_is_oriented_as_a_non_positive_one(monkeypatch):
+    # The correlation is supplied, not computed: a computed zero is platform dependent
+    # (3.7e-17 on Linux where macOS gives 0.0), while the orientation rule is not.
+    zero = _multivariate_block(monkeypatch, 0.0)
+    assert zero.equals(_multivariate_block(monkeypatch, -0.4))
+    assert not zero.equals(_multivariate_block(monkeypatch, 0.4))
 
 
 def test_the_injection_uses_no_deprecated_frequency_alias():

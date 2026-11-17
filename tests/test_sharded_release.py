@@ -223,7 +223,7 @@ def test_a_caller_supplied_environment_is_kept_unchanged(tmp_path):
 
 
 def test_mutation_evidence_must_come_from_the_required_platform(tmp_path, monkeypatch):
-    monkeypatch.setattr(shards.platform, "platform", lambda: "Darwin-24-arm64")
+    monkeypatch.setattr(shards.mutation_cache, "stable_platform", lambda: "Darwin-arm64")
     _, manifests = _campaign(tmp_path)
     report = _release(tmp_path, _doc(tmp_path, manifests))
     assert any("must come from a Linux environment" in reason for reason in report["reasons"])
@@ -235,7 +235,7 @@ def test_the_platform_requirement_is_part_of_the_release_policy():
 
 
 def test_linux_evidence_is_not_rejected_for_its_platform(tmp_path, monkeypatch):
-    monkeypatch.setattr(shards.platform, "platform", lambda: "Linux-6-x86_64")
+    monkeypatch.setattr(shards.mutation_cache, "stable_platform", lambda: "Linux-x86_64-glibc-2.43")
     _, manifests = _campaign(tmp_path)
     report = _release(tmp_path, _doc(tmp_path, manifests))
     assert not any("must come from" in reason for reason in report["reasons"])
