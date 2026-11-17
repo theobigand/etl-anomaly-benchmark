@@ -102,10 +102,14 @@ verify-faults:
 		--matrix experiments/results/fault_matrix.json --output $(EVIDENCE)/faults.json; \
 		evidence_status=$$?; test $$tests_status -eq 0 -a $$evidence_status -eq 0
 
+# Only the modules that hold real tests are collected: the hash-locked REAL environment has no
+# PyTorch, and collecting the whole tree would import every module that needs it first.
+REAL_TESTS := $(shell grep -rlE 'pytest\.mark\.real|pytestmark.*\breal\b' tests research/tests --include='*.py' | sort)
+
 verify-real:
 	@mkdir -p $(EVIDENCE)
 	@rm -f $(EVIDENCE)/real.json experiments/results/real_verification.json
-	pytest -m real
+	pytest -m real $(REAL_TESTS)
 	@set +e; python experiments/verify_real.py --output experiments/results/real_verification.json; \
 		gate=$$?; python -m verification.evidence_schema real \
 		--report experiments/results/real_verification.json \
