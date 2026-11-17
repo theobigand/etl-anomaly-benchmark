@@ -223,12 +223,18 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: shard-plan
-          path: ${{ env.CAMPAIGN }}
+          path: ${{ runner.temp }}/downloaded
       - uses: actions/download-artifact@v4
         with:
           pattern: shard-evidence-*
           merge-multiple: true
-          path: ${{ env.CAMPAIGN }}
+          path: ${{ runner.temp }}/downloaded
+      # Only the plan and the manifests enter the checkout. The shard artifacts also carry copies of
+      # the mutated sources, which the policy validation would classify as sources of the repository.
+      - name: Stage the plan and the manifests
+        run: |
+          mkdir -p "$CAMPAIGN"
+          cp "$RUNNER_TEMP"/downloaded/shard-plan.json "$RUNNER_TEMP"/downloaded/evidence-shard-*.json "$CAMPAIGN"/
       - name: Verify the complete campaign
         run: |
           equivalence=""

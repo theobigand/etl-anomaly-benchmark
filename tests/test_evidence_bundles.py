@@ -370,3 +370,52 @@ def test_nothing_else_is_unpacked_from_the_sharded_location(tmp_path, name):
     with pytest.raises(bundles.BundleError, match="allowed"):
         bundles.unpack(bundle, root)
     assert not (root / name).exists()
+
+
+DEEP_ENVELOPE = "experiments/results/evidence/deep.json"
+
+
+def _json_of(size):
+    return '"' + "x" * (size - 2) + '"'
+
+
+def test_the_deep_envelope_has_its_own_larger_size_limit_on_the_way_in_and_out(
+    tmp_path, monkeypatch
+):
+    monkeypatch.setattr(bundles, "MAX_MEMBER", 10)
+    monkeypatch.setattr(bundles, "MAX_ENVELOPE", 50)
+    monkeypatch.setattr(bundles, "deep_artifacts", lambda _: [DEEP_ENVELOPE])
+    root = tmp_path / "src"
+    _write(root, DEEP_ENVELOPE, _json_of(50))
+    assert bundles.pack("deep", root, tmp_path / "ok.tgz") == tmp_path / "ok.tgz"
+    _write(root, DEEP_ENVELOPE, _json_of(51))
+    with pytest.raises(bundles.BundleError) as caught:
+        bundles.pack("deep", root, tmp_path / "big.tgz")
+    assert str(caught.value) == f"{DEEP_ENVELOPE} is larger than 50 bytes"
+    assert bundles.unpack(_bundle(tmp_path / "a.tgz", {DEEP_ENVELOPE: "x" * 50}), tmp_path / "d")
+    with pytest.raises(bundles.BundleError) as caught:
+        bundles.unpack(_bundle(tmp_path / "b.tgz", {DEEP_ENVELOPE: "x" * 51}), tmp_path / "d2")
+    assert str(caught.value) == f"{DEEP_ENVELOPE} is larger than 50 bytes"
+
+
+def test_every_other_member_keeps_the_ordinary_size_limit_whatever_the_envelope_limit(
+    tmp_path, monkeypatch
+):
+    monkeypatch.setattr(bundles, "MAX_MEMBER", 10)
+    monkeypatch.setattr(bundles, "MAX_ENVELOPE", 50)
+    assert bundles.unpack(_bundle(tmp_path / "a.tgz", {REAL[1]: "x" * 10}), tmp_path / "d")
+    with pytest.raises(bundles.BundleError) as caught:
+        bundles.unpack(_bundle(tmp_path / "b.tgz", {REAL[1]: "x" * 11}), tmp_path / "d2")
+    assert str(caught.value) == f"{REAL[1]} is larger than 10 bytes"
+    root = tmp_path / "src"
+    _write(root, REAL[0], _json_of(10))
+    _write(root, REAL[1], _json_of(11))
+    with pytest.raises(bundles.BundleError) as caught:
+        bundles.pack("real", root, tmp_path / "r.tgz")
+    assert str(caught.value) == f"{REAL[1]} is larger than 10 bytes"
+
+
+def test_the_envelope_limit_holds_the_real_sharded_campaign_envelope():
+    # the final campaign envelope was 8.1 MB because it lists every mutant outcome
+    assert bundles.MAX_ENVELOPE >= 16 * 1024 * 1024 > bundles.MAX_MEMBER
+    assert bundles.MAX_ENVELOPE < bundles.MAX_TOTAL

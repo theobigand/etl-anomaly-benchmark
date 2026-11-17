@@ -19,6 +19,8 @@ from typing import IO, cast
 
 ROOT = Path(__file__).resolve().parents[1]
 MAX_MEMBER = 5 * 1024 * 1024
+# The sharded DEEP envelope lists the outcome of every mutant (8.1 MB for 35,237 mutants).
+MAX_ENVELOPE = 16 * 1024 * 1024
 MAX_MEMBERS = 512
 MAX_TOTAL = 64 * 1024 * 1024
 _EVIDENCE = "experiments/results/evidence/"
@@ -57,6 +59,10 @@ KINDS = {
 
 class BundleError(Exception):
     """The bundle would carry, or already carries, something other than evidence."""
+
+
+def _limit(name: str) -> int:
+    return MAX_ENVELOPE if name == _EVIDENCE + "deep.json" else MAX_MEMBER
 
 
 def _allowed(kind: str | None) -> set[str]:
@@ -118,8 +124,8 @@ def pack(kind: str, root: Path, output: Path, allow_missing: bool = False) -> Pa
             if allow_missing:
                 continue
             raise BundleError(f"{name} is missing")
-        if path.stat().st_size > MAX_MEMBER:
-            raise BundleError(f"{name} is larger than {MAX_MEMBER} bytes")
+        if path.stat().st_size > _limit(name):
+            raise BundleError(f"{name} is larger than {_limit(name)} bytes")
         if name.endswith(".json"):
             try:
                 json.loads(path.read_text())
@@ -153,8 +159,8 @@ def unpack(bundle: Path, root: Path, kind: str | None = None) -> list[str]:
                     raise BundleError(f"{member.name!r} is not an allowed evidence file")
                 if not member.isreg():
                     raise BundleError(f"{member.name} is not a regular file")
-                if member.size > MAX_MEMBER:
-                    raise BundleError(f"{member.name} is larger than {MAX_MEMBER} bytes")
+                if member.size > _limit(member.name):
+                    raise BundleError(f"{member.name} is larger than {_limit(member.name)} bytes")
             for member in members:
                 target = root / member.name
                 target.parent.mkdir(parents=True, exist_ok=True)

@@ -542,7 +542,13 @@ def test_the_aggregate_builds_its_evidence_from_a_clean_checkout_in_an_ignored_d
     # the plan, the manifests and the result are found where the release bundle expects them
     for name in ("shard-plan.json", "evidence-shard-3.json"):
         assert re.fullmatch(bundles._SHARD_FILES, f"{campaign}/{name}")
-    assert job.count("path: ${{ env.CAMPAIGN }}") == 2
+    # the shard artifacts also hold copies of mutated sources: they are downloaded outside the
+    # checkout and only the plan and the manifests are copied into the campaign directory
+    assert job.count("path: ${{ runner.temp }}/downloaded") == 2
+    stage = job[job.index("Stage the plan and the manifests") : job.index("Verify the complete")]
+    assert 'cp "$RUNNER_TEMP"/downloaded/shard-plan.json' in stage
+    assert 'downloaded/evidence-shard-*.json "$CAMPAIGN"/' in stage
+    assert "mutants" not in stage and ".py" not in stage
     assert "--output experiments/results/evidence/deep.json" in job
     assert '--output "$CAMPAIGN/mutation-campaign.json"' in job
     assert "--plan shard-plan.json" not in job and "--manifests evidence-shard" not in job
@@ -551,3 +557,14 @@ def test_the_aggregate_builds_its_evidence_from_a_clean_checkout_in_an_ignored_d
     assert 'test -z "$(git status --porcelain)"' in job[refuse : refuse + 200]
     pack = job[job.index("Pack the release evidence") :]
     assert "if: always() && inputs.bundle" in pack and "name: evidence-deep" in pack
+
+
+def test_the_hosted_real_preflights_expect_the_checked_out_commit_not_the_merge_commit():
+    jobs = _jobs()
+    for name in ("real-readiness", "real-hosted"):
+        job = jobs[name]
+        assert "TESTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}" in job, name
+        assert '--expect-sha "$TESTED_SHA"' in job and "$GITHUB_SHA" not in job, name
+    # only the manually dispatched self-hosted job compares against the dispatched revision
+    assert 'test "$GITHUB_SHA" = "$APPROVED_SHA"' in jobs["real"]
+    assert "pull_request" not in _condition(jobs["real"])

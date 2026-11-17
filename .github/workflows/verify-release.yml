@@ -215,7 +215,10 @@ jobs:
           echo "PYTHONPATH=$GITHUB_WORKSPACE/src" >> "$GITHUB_ENV"
 
       - name: Preflight without datasets
-        run: python -m verification.real_preflight --install-only --expect-sha "$GITHUB_SHA"
+        env:
+          # On a pull request GITHUB_SHA is the merge commit, not the commit that was checked out
+          TESTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: python -m verification.real_preflight --install-only --expect-sha "$TESTED_SHA"
 
   real:
     name: release-real
@@ -313,7 +316,9 @@ jobs:
         run: python -m verification.real_acquire --output experiments/results/real_acquisition.json
 
       - name: Preflight (read-only, no benchmark)
-        run: python -m verification.real_preflight --hosted-download --expect-sha "$GITHUB_SHA"
+        env:
+          TESTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: python -m verification.real_preflight --hosted-download --expect-sha "$TESTED_SHA"
 
       - name: Run real profile
         run: make verify-real REAL_ACQUISITION=experiments/results/real_acquisition.json
