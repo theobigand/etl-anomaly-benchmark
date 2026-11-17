@@ -389,7 +389,7 @@
       "original_behavior": "original lines at the recorded revision: df.to_csv(partial, index=False)",
       "mutated_behavior": "mutated lines: df.to_csv(partial, index=None)",
       "risk": "L4",
-      "reason": "Analysis-backed equivalence recorded in the first owner packet (first packet).",
+      "reason": "Analysis-backed equivalence. DataFrame.to_csv tests index only for truthiness, so index=None writes the same bytes as index=False (verified on pandas 3.0.6, survived natively on 3.1.1); same mutation as load.write_csv_11.",
       "evidence": [
         "hosted campaign run 44013883170 at 215da02 (native Linux, mutant survived)"
       ],
@@ -413,7 +413,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -451,7 +451,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -489,7 +489,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -527,7 +527,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -565,7 +565,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -603,7 +603,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -640,7 +640,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -678,7 +678,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -717,7 +717,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -756,7 +756,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -795,7 +795,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -834,7 +834,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -873,7 +873,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -912,7 +912,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -951,7 +951,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -990,7 +990,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1029,7 +1029,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1068,7 +1068,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1107,7 +1107,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1146,7 +1146,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1185,7 +1185,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1224,7 +1224,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1263,7 +1263,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1302,7 +1302,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1340,7 +1340,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1378,7 +1378,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1416,7 +1416,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1454,7 +1454,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1492,7 +1492,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1530,7 +1530,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1568,7 +1568,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1606,7 +1606,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1644,7 +1644,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1682,7 +1682,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1720,7 +1720,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1758,7 +1758,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1796,7 +1796,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1834,7 +1834,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1872,7 +1872,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1910,7 +1910,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1948,7 +1948,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -1987,7 +1987,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2026,7 +2026,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2065,7 +2065,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2104,7 +2104,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2142,7 +2142,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2179,7 +2179,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2218,7 +2218,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2257,7 +2257,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2296,7 +2296,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2333,7 +2333,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2348,7 +2348,8 @@
       "reason": "The mutant changes behaviour only outside the supported use of the unit (state read before fitting, use after a failed fit, or an argument no caller passes), so no supported-use difference was shown. Basis: Direct real-model probe with three label classes changed predict_proba shape and PyOD warning; labels are documented as ignored/not expected, so the supported contract consequence remains unresolved. See AE1SVM_LABEL_FORWARDING_PROBE_2026-11-15.md. Accepted on the owner's word under the delegation recorded in the assessments.",
       "evidence": [
         "hosted campaign run 44013883170 at 215da02 (native Linux, mutant survived)",
-        "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json"
+        "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json",
+        "docs/thesis-remediation/AE1SVM_LABEL_FORWARDING_PROBE_2026-11-15.md"
       ],
       "source_sha256": "77a1b57ff69e580cad700bb4ee41f069e3ac0c8489bdd714651c753c4bbdd09d",
       "catalog_sha256": "b324cbcab5f51653633917045d5aa8a4f2ee2a7e12a8be31042bd7b481ee8a7b",
@@ -2372,7 +2373,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2410,7 +2411,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2448,7 +2449,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2463,7 +2464,8 @@
       "reason": "The mutant changes behaviour only outside the supported use of the unit (state read before fitting, use after a failed fit, or an argument no caller passes), so no supported-use difference was shown. Basis: Generated-constructor probes found differences in pre-fit or failed-fit exception details; their supported public consequence remains unresolved. See AUTOENCODER_INITIAL_STATE_PROBE_2026-11-15.md. Accepted on the owner's word under the delegation recorded in the assessments.",
       "evidence": [
         "hosted campaign run 44013883170 at 215da02 (native Linux, mutant survived)",
-        "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json"
+        "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json",
+        "docs/thesis-remediation/AUTOENCODER_INITIAL_STATE_PROBE_2026-11-15.md"
       ],
       "source_sha256": "52ac93bd1898db05567278d773295458fc81847366de74b0c63770c662cbaa4d",
       "catalog_sha256": "1fc31435087cff28de27c15aa9e3989daf7c5295af2c17f4c1d0fe4943360262",
@@ -2486,7 +2488,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2524,7 +2526,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2562,7 +2564,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2600,7 +2602,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2638,7 +2640,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2676,7 +2678,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2714,7 +2716,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2752,7 +2754,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2790,7 +2792,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2828,7 +2830,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2866,7 +2868,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2904,7 +2906,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2942,7 +2944,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -2980,7 +2982,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3018,7 +3020,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3056,7 +3058,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3094,7 +3096,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3132,7 +3134,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3172,7 +3174,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3212,7 +3214,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3252,7 +3254,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3292,7 +3294,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3332,7 +3334,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3372,7 +3374,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3384,7 +3386,7 @@
       "original_behavior": "original lines at the recorded revision: self.skew_sign_ = np.sign(np.nan_to_num(skew(x, axis=0)))",
       "mutated_behavior": "mutated lines: self.skew_sign_ = np.sign(np.nan_to_num(skew(x, )))",
       "risk": "L4",
-      "reason": "Analysis-backed equivalence. Conditional proposal from direct generated-mutant probes and local dependency analysis. See ML_DEFAULTS_PROBE_2026-11-15.md for contract, variations, environment limits and confidence.",
+      "reason": "Analysis-backed equivalence. Conditional proposal from direct generated-mutant probes and local dependency analysis. See ML_DEFAULTS_PROBE_2026-11-15.md for contract, variations, environment limits and confidence. The argument relies on scipy.stats.skew defaulting to axis=0; the campaign environment record does not capture the scipy version.",
       "evidence": [
         "hosted campaign run 44013883170 at 215da02 (native Linux, mutant survived)",
         "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json",
@@ -3412,7 +3414,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3427,7 +3429,8 @@
       "reason": "The mutant changes behaviour only outside the supported use of the unit (state read before fitting, use after a failed fit, or an argument no caller passes), so no supported-use difference was shown. Basis: Direct generated-constructor probes found differences in some pre-fit, zero-feature, failed-fit or initial learned-field observations; supported public significance is unresolved. See ML_INITIAL_STATE_COUNTEREXAMPLES_2026-11-16.md. Accepted on the owner's word under the delegation recorded in the assessments.",
       "evidence": [
         "hosted campaign run 44013883170 at 215da02 (native Linux, mutant survived)",
-        "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json"
+        "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json",
+        "docs/thesis-remediation/ML_INITIAL_STATE_COUNTEREXAMPLES_2026-11-16.md"
       ],
       "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
       "catalog_sha256": "38467af6141e58f9b103b94e980082662d5e9710529b6a3c1dbe75fd6c31f200",
@@ -3451,7 +3454,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3466,7 +3469,8 @@
       "reason": "The mutant changes behaviour only outside the supported use of the unit (state read before fitting, use after a failed fit, or an argument no caller passes), so no supported-use difference was shown. Basis: Real isolation-forest probes find None versus empty string in the observable pre-fit feature_names_ after construction or a rejected fit; scores reject as unfitted and successful fits match. Supported pre-fit contract remains uncertain. See PYOD_FEATURE_INITIAL_STATE_PROBE_2026-11-16.md. Accepted on the owner's word under the delegation recorded in the assessments.",
       "evidence": [
         "hosted campaign run 44013883170 at 215da02 (native Linux, mutant survived)",
-        "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json"
+        "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json",
+        "docs/thesis-remediation/PYOD_FEATURE_INITIAL_STATE_PROBE_2026-11-16.md"
       ],
       "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
       "catalog_sha256": "38467af6141e58f9b103b94e980082662d5e9710529b6a3c1dbe75fd6c31f200",
@@ -3490,7 +3494,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3505,7 +3509,8 @@
       "reason": "The mutant changes behaviour only outside the supported use of the unit (state read before fitting, use after a failed fit, or an argument no caller passes), so no supported-use difference was shown. Basis: Direct generated-constructor probes found differences in some pre-fit, zero-feature, failed-fit or initial learned-field observations; supported public significance is unresolved. See ML_INITIAL_STATE_COUNTEREXAMPLES_2026-11-16.md. Accepted on the owner's word under the delegation recorded in the assessments.",
       "evidence": [
         "hosted campaign run 44013883170 at 215da02 (native Linux, mutant survived)",
-        "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json"
+        "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json",
+        "docs/thesis-remediation/ML_INITIAL_STATE_COUNTEREXAMPLES_2026-11-16.md"
       ],
       "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
       "catalog_sha256": "38467af6141e58f9b103b94e980082662d5e9710529b6a3c1dbe75fd6c31f200",
@@ -3529,7 +3534,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3544,7 +3549,8 @@
       "reason": "The mutant changes behaviour only outside the supported use of the unit (state read before fitting, use after a failed fit, or an argument no caller passes), so no supported-use difference was shown. Basis: Direct generated-constructor probes found differences in some pre-fit, zero-feature, failed-fit or initial learned-field observations; supported public significance is unresolved. See ML_INITIAL_STATE_COUNTEREXAMPLES_2026-11-16.md. Accepted on the owner's word under the delegation recorded in the assessments.",
       "evidence": [
         "hosted campaign run 44013883170 at 215da02 (native Linux, mutant survived)",
-        "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json"
+        "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json",
+        "docs/thesis-remediation/ML_INITIAL_STATE_COUNTEREXAMPLES_2026-11-16.md"
       ],
       "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
       "catalog_sha256": "38467af6141e58f9b103b94e980082662d5e9710529b6a3c1dbe75fd6c31f200",
@@ -3568,7 +3574,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3583,7 +3589,8 @@
       "reason": "The mutant changes behaviour only outside the supported use of the unit (state read before fitting, use after a failed fit, or an argument no caller passes), so no supported-use difference was shown. Basis: Direct generated-constructor probes found differences in some pre-fit, zero-feature, failed-fit or initial learned-field observations; supported public significance is unresolved. See ML_INITIAL_STATE_COUNTEREXAMPLES_2026-11-16.md. Accepted on the owner's word under the delegation recorded in the assessments.",
       "evidence": [
         "hosted campaign run 44013883170 at 215da02 (native Linux, mutant survived)",
-        "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json"
+        "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json",
+        "docs/thesis-remediation/ML_INITIAL_STATE_COUNTEREXAMPLES_2026-11-16.md"
       ],
       "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
       "catalog_sha256": "38467af6141e58f9b103b94e980082662d5e9710529b6a3c1dbe75fd6c31f200",
@@ -3607,7 +3614,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3645,7 +3652,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3683,7 +3690,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3721,7 +3728,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3759,7 +3766,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3797,7 +3804,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3835,7 +3842,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3873,7 +3880,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3911,7 +3918,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3949,7 +3956,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -3987,7 +3994,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -4025,7 +4032,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -4062,7 +4069,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     },
@@ -4099,7 +4106,7 @@
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
-          "note": "owner instruction of 2026-11-17 delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+          "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
         }
       ]
     }
