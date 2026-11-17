@@ -34,14 +34,19 @@ def test_every_candidate_is_a_collected_survivor_bound_to_its_module_digests():
         assert record["diff"] == survivor["diff"] and record["risk"] == "L4"
 
 
-def test_no_candidate_carries_an_approval_and_none_is_in_the_live_decision_file():
+def test_the_packet_stays_a_proposal_and_a_live_decision_is_an_owner_decision():
     document = json.loads(CANDIDATES.read_text())
-    live_ids = {r["id"] for r in json.loads(LIVE.read_text())["records"]}
+    live = {r["id"]: r for r in json.loads(LIVE.read_text())["records"]}
+    owner = json.loads(LIVE.read_text())["owner"]
     for record in document["records"]:
         assert record["verdict"] == "proposed"
         assert record["approver"] == "" and record["decision_date"] == ""
-        assert record["id"] not in live_ids
         assert record["assessments"] == [] and "not an owner decision" in record["reason"]
+        decided = live.get(record["id"])
+        if decided is not None:  # a decision exists only as an owner-recorded acceptance
+            assert decided["verdict"] == "accepted" and decided["approver"] == owner
+            assert decided["decision_date"] and decided["assessments"]
+            assert decided["assessments"][-1]["assessor"].startswith(f"{owner} (owner)")
 
 
 def test_proposals_are_never_counted_as_accepted_equivalents():
