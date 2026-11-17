@@ -34,7 +34,9 @@ def test_generation_writes_the_requested_population_and_reports_its_composition(
     with caplog.at_level(logging.INFO):
         generate_synthetic.main()
     expected = make_synthetic(n_rows=1000, anomaly_rate=0.05, seed=9)
-    assert output.read_text() == expected.to_csv(index=False)
+    # A boolean keeps pytest from diffing two large CSV strings when a mutant changes them.
+    identical = output.read_text() == expected.to_csv(index=False)
+    assert identical, "the written file differs from the seeded population"
     counts = expected["anomaly_type"].value_counts()
     messages = _messages(caplog, "generate_synthetic")
     assert messages[0] == f"wrote {len(expected)} rows x {expected.shape[1]} cols -> {output}"
