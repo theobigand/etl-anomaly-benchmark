@@ -35,6 +35,8 @@ const next=()=>go(i+1),prev=()=>go(i-1);
 addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();next();}else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();prev();}else if(e.key==='Home')go(0);else if(e.key==='End')go(slides.length-1);});
 let tx=null;addEventListener('touchstart',e=>tx=e.changedTouches[0].clientX,{passive:true});
 addEventListener('touchend',e=>{if(tx===null)return;const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50)(d<0?next:prev)();tx=null;},{passive:true});
+slides.forEach(s=>{let n=0;[...s.children].forEach(c=>{if(!c.matches('.pg,.ph,.scrim'))c.style.setProperty('--i',n++);});});
+if(!location.search&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.body.classList.add('anim');
 go(parseInt(location.hash.slice(1))-1||0);
 addEventListener('beforeprint',()=>slides.forEach(fitFlow));
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{slides.forEach(s=>{s.classList.add('on');fitFlow(s);});go(i);});

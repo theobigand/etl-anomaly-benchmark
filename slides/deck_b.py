@@ -83,7 +83,7 @@ slide(
                 900,
                 None,
                 "note",
-                "Illustration: one pad per pool table (152); the 100 with a lit edge stand for the labelled problems. Which pads are lit is arbitrary. Coded SVG.",
+                "One pad per pool table (152); the 100 lit pads are the labelled problems.",
             ),
         ]
     ),
@@ -618,7 +618,7 @@ slide(
                 800,
                 None,
                 "note",
-                "Illustration: each grid is 100 pads; raised pads stand for the anomalous share (6 and 39 pads, rounded); where they stand is arbitrary.",
+                "Each grid is 100 pads; raised pads show the anomalous share (6 and 39, rounded).",
             ),
             foot(
                 "verification/temporal_decision.md &nbsp;·&nbsp; research/temporal_decision.py &nbsp;·&nbsp; Credit Card results were known before the protocol"

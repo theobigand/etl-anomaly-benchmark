@@ -66,8 +66,7 @@ slide(
                 [
                     "<div class='k'>ESILV Data &amp; AI &nbsp;·&nbsp; master thesis</div>",
                     "<h1 style='font-size:54px;line-height:1.04'>Anomaly detection for data quality, <span class='em'>measured</span> inside the ETL pipeline</h1>",
-                    "<p style='font-size:20px;color:#c4bfb3'>Rules, classical and neural detectors run through one pipeline and compared per anomaly type. Living progress deck, 2026-11-12.</p>",
-                    "<div class='note'>Illustration, not data: a generated still life. One pad stands proud; the low light finds it.</div>",
+                    "<p style='font-size:20px;color:#c4bfb3'>Rules, classical and neural detectors run through one pipeline and compared per anomaly type. Living progress deck, 2026-11-17.</p>",
                     "<div class='k'>17 detectors &nbsp; 6 types &nbsp; 152 datasets</div>",
                     "<div class='src'>Theo Bigand<br>github.com/theobigand/etl-anomaly-benchmark</div>",
                 ],
@@ -847,14 +846,6 @@ slide(
                 ],
                 maxh=380,
                 gap=0,
-            ),
-            D(
-                64,
-                664,
-                700,
-                None,
-                "note",
-                "Illustration: a regular plate of pads under low light; the one raised pad casts a shadow. Coded SVG, not data.",
             ),
         ]
     ),

@@ -30,7 +30,7 @@ pdftoppm -r 150 -png slides/thesis_progress.pdf /tmp/slides   # review at 150 dp
 ## Visual provenance
 
 See `art/PROVENANCE.md`. Three generated still-life illustrations are used as openers and for the
-mutation explanation, each labelled on the slide as an illustration. Charts and tables carry values
+mutation explanation; they are decorative, are not labelled on the slides, and are documented here and in `art/PROVENANCE.md`. Charts and tables carry values
 from the paper and verification notes; the 17 by 6 recall matrix and the mutation chart are drawn in
 SVG from those values. The precision-recall curves (slide 22) are drawn from `art/data/pr_curves.json`, exported by
 `art/tooling/export_pr_curves.py` with the detectors, datasets and seed of `experiments/run_curves.py`; the severity

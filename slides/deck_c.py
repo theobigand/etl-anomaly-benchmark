@@ -1,7 +1,7 @@
 # ruff: noqa: E501
 """Slides for verification, mutation testing, status and the takeaway."""
 
-from deck_lib import D, flow, foot, mono, photo, slide, svg, tbl, txt
+from deck_lib import D, flow, foot, photo, slide, tbl
 
 
 def kicker(s):
@@ -50,14 +50,6 @@ slide(
                 None,
                 "",
                 "<p class='lede' style='color:#c4bfb3'>Verification of the code that produces the numbers, and mutation testing as a way to see its blind spots.</p>",
-            ),
-            D(
-                64,
-                672,
-                600,
-                None,
-                "note",
-                "Illustration, not data: a generated still life. It returns on the killed-or-survived slide.",
             ),
         ]
     ),
@@ -272,14 +264,6 @@ slide(
                 "",
                 "<p style='font-size:23px;max-width:1040px'>A survivor matters because it is either a <b>behaviour no test protects</b> (a gap to close with a new test), or a <b>change that cannot be observed</b> (an equivalent mutant, next slide). It stays in the count of eligible mutants (the denominator of killed / eligible) until one of the two is shown.</p>",
             ),
-            D(
-                64,
-                664,
-                1152,
-                None,
-                "note",
-                "Metaphor, not data: a generated still life. The raised pad casts a shadow; the cracked pad sits flush and casts none.",
-            ),
         ]
     ),
     role="definition",
@@ -329,7 +313,7 @@ slide(
                 552,
                 [
                     "<div class='cond' style='font-size:34px;font-weight:600'>Why approval is required</div>",
-                    "<p style='font-size:22px;line-height:1.4'>Calling a survivor equivalent removes it from the denominator and raises the score. If the author of the tests could do that alone, the author would grade their own work. The repository records each equivalence, with its reason, as accepted by the owner.</p>",
+                    "<p style='font-size:22px;line-height:1.4'>Calling a survivor equivalent removes it from the denominator and raises the score. If the author of the tests could do that alone, the author would grade their own work. The repository records each equivalence, with its reason and source. The owner decides, here by delegation.</p>",
                     "<div class='cond' style='font-size:34px;font-weight:600;margin-top:10px'>Status here</div>",
                     "<p style='font-size:22px;line-height:1.4'>The candidates stay in the denominator. The four equivalences accepted earlier for the LSTM autoencoder were accepted by the repository owner, who is also the sole author and reviewer: owner approval, not independent review.</p>",
                 ],
@@ -396,62 +380,7 @@ slide(
     density="low",
 )
 
-# M5: chart --------------------------------------------------------------
-mods = [
-    ("pool_check", 118 / 180, 178 / 180),
-    ("alert_budget", 427 / 780, 766 / 780),
-    ("alert_budget_summary", 0 / 123, 123 / 123),
-    ("matched_alert", 247 / 322, 317 / 322),
-    ("prevalence_shift", 265 / 369, 363 / 369),
-    ("score_shift", 492 / 806, 795 / 806),
-    ("source_clustered", 286 / 337, 333 / 337),
-    ("normalise", 175 / 193, 191 / 197),
-    ("paired_bootstrap", 77 / 100, 100 / 100),
-]
-cx0, cx1, cy0, rh2 = 330, 1120, 170, 46
-X = lambda p: cx0 + (cx1 - cx0) * (max(p, 0.4) - 0.4) / 0.6  # noqa: E731
-ch = []
-for p, lab in [(0.4, "40"), (0.6, "60"), (0.8, "80"), (1, "100%")]:
-    ch.append(
-        f"<line x1='{X(p)}' x2='{X(p)}' y1='{cy0 - 10}' y2='{cy0 + rh2 * 9}' stroke='#15161722'/>"
-        + txt(X(p), cy0 + rh2 * 9 + 22, lab, 14, "#55534d", "middle")
-    )
-for p, lab in [(0.80, "L1 80"), (0.90, "L2 90"), (0.95, "L3 95")]:
-    ch.append(
-        f"<line x1='{X(p)}' x2='{X(p)}' y1='{cy0 - 10}' y2='{cy0 + rh2 * 9}' stroke='#35505b' stroke-dasharray='3 4' opacity='.6'/>"
-        + txt(X(p), cy0 - 16, lab, 13, "#35505b", "middle")
-    )
-ch.append(
-    f"<line x1='{X(0.98)}' x2='{X(0.98)}' y1='{cy0 - 10}' y2='{cy0 + rh2 * 9}' stroke='#151617' stroke-width='2'/>"
-    + txt(X(0.98), cy0 - 34, "L4 98%", 15, "#151617", "middle", 700)
-)
-for i, (n, b, a) in enumerate(mods):
-    y = cy0 + i * rh2 + rh2 / 2
-    ok = a >= 0.98
-    col = "#35505b" if ok else "#94490a"
-    ch.append(txt(cx0 - 14, y + 5, n, 17, "#151617", "end", 500, "SF Mono, Menlo, monospace"))
-    ch.append(
-        f"<line x1='{X(b)}' x2='{X(a)}' y1='{y}' y2='{y}' stroke='{col}' stroke-width='3' opacity='.55'/>"
-    )
-    ch.append(
-        f"<circle cx='{X(b)}' cy='{y}' r='7' fill='#f4f3ee' stroke='{col}' stroke-width='2.5'><title>{n} before: {b * 100:.1f}%</title></circle>"
-    )
-    ch.append(
-        f"<circle cx='{X(a)}' cy='{y}' r='7.5' fill='{col}'><title>{n} after: {a * 100:.2f}%</title></circle>"
-    )
-    ch.append(
-        mono(
-            1236,
-            y + 5,
-            f"{a * 100:.1f}% " + ("&#10003;" if ok else "&#10007;"),
-            16,
-            col,
-            "end",
-            700,
-        )
-    )
-    if b < 0.4:
-        ch.append(mono(X(b) + 12, y - 10, "before: 0% (axis cut at 40)", 14, "#55534d"))
+# M5: final campaign ---------------------------------------------------
 slide(
     "Mutation: chart",
     "".join(
@@ -459,38 +388,47 @@ slide(
             D(
                 64,
                 34,
-                700,
+                900,
                 None,
                 "k",
-                "Mutation testing, 5 of 5 &nbsp;·&nbsp; raw focused score per module",
+                "Mutation testing, 5 of 5 &nbsp;·&nbsp; final campaign, 2026-11-17",
             ),
-            title("Nine chosen modules: eight reach the 98% bar, one does not", 40, 58),
-            svg(
-                0,
-                0,
-                1280,
+            title("One campaign over 100 modules: every module meets its own bar", 40, 58),
+            flow(
+                64,
+                160,
                 720,
-                "".join(ch),
-                "raw focused mutation score per module before and after new tests",
+                [
+                    "<div class='sheet' style='position:static;padding:6px 10px'>"
+                    + tbl(
+                        ["Level", "Modules", "Bar", "Raw", "Adjusted"],
+                        [
+                            ["L2", "3", "90%", "100.00%", "100.00%"],
+                            ["L3", "18", "95%", "98.68%", "98.68%"],
+                            ["L4", "79", "98%", "98.67%", "99.00%"],
+                        ],
+                        best=((0, 4), (1, 4), (2, 4)),
+                    )
+                    + "</div>",
+                    "<p class='note'>Linux, 45 parallel shards of one commit, every execution bound by a controller proof and the digest of every tracked file. Three modules have no function body. The adjusted score counts only exclusions that are bound to the source and to the dependency versions.</p>",
+                ],
+                maxh=470,
+                gap=20,
             ),
-            D(
-                64,
-                618,
-                760,
-                None,
-                "legend",
-                "<svg width='16' height='16' style='vertical-align:-3px'><circle cx='8' cy='8' r='6' fill='#f4f3ee' stroke='#35505b' stroke-width='2.5'/></svg> before &nbsp; <svg width='16' height='16' style='vertical-align:-3px'><circle cx='8' cy='8' r='7' fill='#35505b'/></svg> after, at or above 98% (&#10003;) &nbsp; <svg width='16' height='16' style='vertical-align:-3px'><circle cx='8' cy='8' r='7' fill='#94490a'/></svg> after, below 98% (&#10007;)",
-            ),
-            D(
-                64,
-                648,
-                1152,
-                None,
-                "note",
-                "Local run, 2026-11-12. Nine L4 modules chosen by the author; six are not in the 82-module campaign of 2026-11-07. Axis from 40%. Not a certification.",
+            flow(
+                832,
+                160,
+                384,
+                [
+                    "<div class='stat'><span class='num'>35,237</span><span class='lab'>mutants: 34,768 killed, 463 survived, 6 timed out</span></div>",
+                    "<div class='stat'><span class='num ember'>101</span><span class='lab'>excluded as equivalent, in 21 modules. 90 carry an argument, 7 rest on the owner's word</span></div>",
+                    "<p class='note'>The other 362 survivors and the 6 timeouts still count against their modules.</p>",
+                ],
+                maxh=470,
+                gap=18,
             ),
             foot(
-                "docs/thesis-remediation/MUTATION_FOCUSED_DIAGNOSTICS_2026-11-11.md &nbsp;·&nbsp; thresholds not changed"
+                "docs/thesis-remediation/MUTATION_CLOSURE_2026-11-17.md &nbsp;·&nbsp; thresholds not changed"
             ),
         ]
     ),
@@ -547,13 +485,12 @@ slide(
 bar = []
 x = 0
 for n, lab, style in [
-    (26, "pass", "background:var(--steel)"),
-    (31, "fail", "background:var(--ember)"),
-    (25, "incomplete", "background:transparent;border:2px dashed var(--paper-soft)"),
+    (97, "pass", "background:var(--steel)"),
+    (3, "no function body", "background:transparent;border:2px dashed var(--paper-soft)"),
 ]:
-    w = n / 82 * 1152
+    w = n / 100 * 1152
     bar.append(
-        f"<div style='position:absolute;left:{x}px;top:0;width:{w - 4}px;height:54px;{style}'></div><div style='position:absolute;left:{x}px;top:64px;width:{w}px'><span class='num' style='font-size:44px'>{n}</span> <span style='font:500 18px var(--sans)'>modules {lab}</span></div>"
+        f"<div style='position:absolute;left:{x}px;top:0;width:{w - 4}px;height:54px;{style}'></div><div style='position:absolute;left:{x if n > 50 else x + w - 200}px;top:64px;width:200px;text-align:{'left' if n > 50 else 'right'}'><span class='num' style='font-size:44px'>{n}</span> <span style='font:500 17px var(--sans)'>{lab}</span></div>"
     )
     x += w
 slide(
@@ -561,7 +498,7 @@ slide(
     "".join(
         [
             kicker("What the evidence does not cover"),
-            title("A focused pass does not certify the repository", 48, 60),
+            title("A passing campaign is not a release certification", 48, 60),
             D(64, 180, 1152, 120, "", "".join(bar)),
             D(
                 64,
@@ -569,7 +506,7 @@ slide(
                 1152,
                 None,
                 "note",
-                "First complete native campaign, 2026-11-07: 82 L4 modules. 65.5% of L4 mutants killed against 98% required; 7,501 further mutants had no covering test. Bars count modules, the percentage counts mutants, and the 98.66% of the previous slide covers one module of the 82. Not re-measured here.",
+                "Final campaign, 2026-11-17: 100 classified modules, 97 with mutants all meeting their own bar, 3 without a function body. Bars count modules; the score counts mutants.",
             ),
             D(64, 382, 1152, 1, "hair"),
             D(
@@ -578,7 +515,7 @@ slide(
                 360,
                 None,
                 "",
-                "<div class='k anom'>Open</div><p style='font-size:19px;margin-top:8px'>31 L4 modules below threshold and 25 incomplete in that campaign.</p>",
+                "<div class='k anom'>Open</div><p style='font-size:19px;margin-top:8px'>21 modules pass only through exclusions decided by the author, not by independent review; 362 survivors still count.</p>",
             ),
             D(
                 464,
@@ -586,7 +523,7 @@ slide(
                 360,
                 None,
                 "",
-                "<div class='k anom'>Open</div><p style='font-size:19px;margin-top:8px'>Survivors that look inert (dtype coercions, zip strict) await an owner decision.</p>",
+                "<div class='k anom'>Open</div><p style='font-size:19px;margin-top:8px'>The release gate needs a single-job DEEP run that cannot fit its time limit, and a runner holding the datasets.</p>",
             ),
             D(
                 864,
@@ -594,7 +531,7 @@ slide(
                 352,
                 None,
                 "",
-                "<div class='k anom'>Found</div><p style='font-size:19px;margin-top:8px'>Separate from mutation scores: the minimum anomaly count, 3, is below the 6 a stratified 70 / 15 / 15 split needs. No archived result changes.</p>",
+                "<div class='k anom'>Found</div><p style='font-size:19px;margin-top:8px'>A score belongs to its host: runner images, a numerical test and a slow assertion each changed evidence before they were fixed.</p>",
             ),
             D(
                 64,
@@ -602,10 +539,10 @@ slide(
                 1152,
                 None,
                 "",
-                "<p style='font-size:24px;font-family:var(--cond);font-weight:600'>The release gate fails and stays closed. No full campaign was run in this phase.</p>",
+                "<p style='font-size:24px;font-family:var(--cond);font-weight:600'>The release gate stays closed. The pull request stays a draft.</p>",
             ),
             foot(
-                "verification/mutation_risk_policy.json &nbsp;·&nbsp; risk-native-campaign-2026-11-07.json"
+                "docs/thesis-remediation/MUTATION_CLOSURE_2026-11-17.md &nbsp;·&nbsp; verification/mutation_risk_policy.json"
             ),
         ]
     ),

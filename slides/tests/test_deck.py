@@ -219,8 +219,9 @@ def test_pad_plates_state_their_role_and_the_lit_count_is_the_labelled_count():
 
     assert len(deck_b.labelled) == 100 and len(deck_b._cells) == 152
     text = _slides_text()
-    assert "illustration" in text[13].lower() and "not data" in text[13].lower()
-    assert "arbitrary" in text[24].lower()
+    assert "one pad per pool table (152)" in text[24].lower()
+    assert "the 100 lit pads are the labelled problems" in text[24].lower()
+    assert any("raised pads show the anomalous share" in t.lower() for t in text.values())
 
 
 # Statements the paper or the committed evidence contradict. Each was on a slide once; the reason is the source.
@@ -259,24 +260,27 @@ def test_deck_does_not_repeat_a_claim_the_sources_contradict(phrase, reason):
         assert phrase not in s["body"], f"slide {n}: {phrase!r} ({reason})"
 
 
-def test_slide_47_counts_equal_the_focused_diagnostics_table():
-    """Publication drift guard: the chart of slide 47 is the table of the diagnostics note."""
-    import build_deck  # noqa: F401  (importing registers the slides)
-    import deck_c
+def test_slide_47_counts_equal_the_final_campaign_archive():
+    """Publication drift guard: slide 47 states the figures of the archived final campaign."""
+    import io
+    import json
+    import tarfile
 
-    note = (
-        SLIDES.parent / "docs/thesis-remediation/MUTATION_FOCUSED_DIAGNOSTICS_2026-11-11.md"
-    ).read_text()
-    table = {}
-    for line in note.splitlines():
-        cells = [c.strip() for c in line.strip("|").split("|")]
-        if len(cells) >= 4 and cells[0].startswith("`research/") and cells[1] == "L4":
-            before, after = (re.search(r"(\d+)/(\d+)", c) for c in cells[2:4])
-            if before and after:
-                table[cells[0].strip("`").split("/")[-1][:-3]] = (
-                    int(before[1]) / int(before[2]),
-                    int(after[1]) / int(after[2]),
-                )
-    assert len(deck_c.mods) == 9
-    for name, b, a in deck_c.mods:
-        assert table[name] == pytest.approx((b, a)), f"slide 47 and the note disagree on {name}"
+    archive = SLIDES.parent / "docs/thesis-remediation/evidence/final-campaign-44045848118.tar.gz"
+    with tarfile.open(archive) as tar:
+        member = next(m for m in tar.getmembers() if m.name.endswith("mutation-campaign.json"))
+        analysis = json.load(io.TextIOWrapper(tar.extractfile(member)))["analysis"]
+    total, levels, modules = analysis["total"], analysis["levels"], analysis["modules"]
+    text = _slides_text()[47]
+    for figure in (f"{total['eligible']:,}", f"{total['killed']:,}", f"{total['survived']:,}"):
+        assert figure in text, f"slide 47 does not state {figure}"
+    assert f"{total['timeout']} timed out" in text
+    for level in ("L2", "L3", "L4"):
+        count = sum(1 for m in modules.values() if m["level"] == level)
+        row = levels[level]
+        assert (
+            level in text and f"{row['raw_score']:.2f}%" in text and f"{row['score']:.2f}%" in text
+        )
+        assert str(count) in text
+    excluded = sum(m.get("equivalent_accepted", 0) for m in modules.values())
+    assert f"{excluded}" in text
