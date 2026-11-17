@@ -48,6 +48,8 @@ PACKAGES = (
     "mypy",
     "pandas-stubs",
     "torch",
+    "scipy",
+    "great-expectations",
 )
 _HEX40 = re.compile(r"[0-9a-f]{40}")
 _HEX64 = re.compile(r"[0-9a-f]{64}")

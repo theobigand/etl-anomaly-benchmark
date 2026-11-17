@@ -25,7 +25,9 @@ jobs:
           cache: pip
 
       - name: Install
-        run: pip install -e .
+        run: |
+          bash verification/runner/install_locked.sh "$RUNNER_TEMP/venv" --with-extras --editable-project
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
 
       - name: Verify the pinned downloads
         run: python research/pool_check.py --verify verification/evidence/dataset_registry/pool_manifest.json --output pool_verification.json

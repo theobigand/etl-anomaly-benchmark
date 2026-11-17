@@ -52,7 +52,9 @@ jobs:
           python-version: "3.11"
 
       - name: Install
-        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev]"
+        run: |
+          bash verification/runner/install_locked.sh "$RUNNER_TEMP/venv" --with-extras --editable-project
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
 
       - name: Run fast profile
         run: make verify-fast
@@ -85,15 +87,15 @@ jobs:
           python-version: "3.11"
 
       - name: Install
-        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev]"
+        run: |
+          bash verification/runner/install_locked.sh "$RUNNER_TEMP/venv" --with-extras --editable-project
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
 
       - name: Verifier coverage
         run: make verify-tools
 
       - name: Static typing (checker and stubs are pinned in verification/release_policy.json)
-        run: |
-          pip install mypy==2.4.0 pandas-stubs==3.0.5.260914
-          make verify-types
+        run: make verify-types
 
       - name: Bundle static evidence
         if: always()
@@ -123,7 +125,9 @@ jobs:
           python-version: "3.11"
 
       - name: Install
-        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev]"
+        run: |
+          bash verification/runner/install_locked.sh "$RUNNER_TEMP/venv" --with-extras --editable-project
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
 
       # Cardio is a public ADBench file; nothing is uploaded, and the replay
       # refuses to run when the download differs from the archived run.
@@ -161,7 +165,9 @@ jobs:
           python-version: "3.11"
 
       - name: Install
-        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev]"
+        run: |
+          bash verification/runner/install_locked.sh "$RUNNER_TEMP/venv" --with-extras --editable-project
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
 
       - name: Run faults profile
         run: make verify-faults
@@ -354,7 +360,9 @@ jobs:
       # The sharded DEEP evidence binds the exact dependency set of its shards, and the gate
       # recomputes it here: the gate must install the same packages as the shards do.
       - name: Install
-        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev,deep]" "mutmut==3.8.0" "pytest==9.1.1"
+        run: |
+          bash verification/runner/install_locked.sh "$RUNNER_TEMP/venv" --with-extras --editable-project
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
 
       - name: Refuse a release when a profile job failed
         run: test "${{ contains(needs.*.result, 'failure') }}" = false

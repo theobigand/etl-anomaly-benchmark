@@ -198,7 +198,10 @@ def test_the_release_workflow_produces_every_evidence_kind_the_policy_requires()
         "needs: [fast, static, reproduce, faults, deep, real, real-hosted, real-readiness]"
         in release
     )
-    assert "mypy==2.4.0" in text and "pandas-stubs==3.0.5.260914" in text
+    extras = (
+        WORKFLOWS.parents[1] / "verification/environment/linux-x86_64-py311.extras.lock.txt"
+    ).read_text()
+    assert "\nmypy==2.4.0 " in extras and "\npandas-stubs==3.0.5.260914 " in extras
     assert policy["typing_pins"] == {"mypy": "2.4.0", "pandas-stubs": "3.0.5.260914"}
 
 
@@ -418,8 +421,12 @@ def test_the_sharded_jobs_install_the_exact_inspected_mutmut_outside_the_fingerp
     text = _text("mutation-shards.yml")
     shard = text[text.index("  shard:") : text.index("  aggregate:")]
     aggregate = text[text.index("  aggregate:") :]
-    pins = '-e ".[dev,deep]" "mutmut==3.8.0" "pytest==9.1.1"'
+    pins = 'install_locked.sh "$RUNNER_TEMP/venv" --with-extras --editable-project'
     assert pins in shard and pins in aggregate
+    lock = (
+        WORKFLOWS.parents[1] / "verification/environment/linux-x86_64-py311.lock.txt"
+    ).read_text()
+    assert "\nmutmut==3.8.0 " in lock and "\npytest==9.1.1 " in lock
     project = (WORKFLOWS.parents[1] / "pyproject.toml").read_text()
     assert "mutmut==3.8.0" not in project.split("[tool.", 1)[0]
 
@@ -428,7 +435,7 @@ def test_the_sharded_campaign_keeps_evidence_and_caches_even_when_scores_fail():
     text = _text("mutation-shards.yml")
     shard = text[text.index("  shard:") : text.index("  aggregate:")]
     assert "workflow_dispatch" in text and "push:" not in text
-    assert '"mutmut==3.8.0" "pytest==9.1.1"' in shard
+    assert "install_locked.sh" in shard
     assert "fail-fast: false" in shard
     restore = shard[shard.index("actions/cache/restore@v4") : shard.index("Run the native")]
     assert "github.run_id" in restore and "restore-keys" in restore
@@ -477,7 +484,7 @@ def test_the_sharded_campaign_runs_before_merge_only_for_labelled_same_repositor
 def test_the_aggregate_uses_the_shard_dependency_set_and_preserves_release_evidence():
     text = _text("mutation-shards.yml")
     job = text[text.index("  aggregate:") :]
-    assert '-e ".[dev,deep]" "mutmut==3.8.0" "pytest==9.1.1"' in job
+    assert "install_locked.sh" in job and "--with-extras" in job
     assert "verification.evidence_schema deep-shards" in job and "deep-evidence.json" in job
     collect = job[job.index("Collect the campaign files") : job.index("Pack the release evidence")]
     assert "evidence-shard-*.json" in collect and "mutation-campaign.json" in collect
@@ -503,7 +510,7 @@ def test_the_diagnostic_label_runs_one_small_shard_and_never_the_aggregate():
 def test_the_plan_job_installs_the_project_before_planning():
     text = _text("mutation-shards.yml")
     plan = text[text.index("  plan:") : text.index("  shard:")]
-    assert plan.index("pip install -e .") < plan.index("verification.mutation_shards plan")
+    assert plan.index("install_locked.sh") < plan.index("verification.mutation_shards plan")
 
 
 def test_the_release_deep_profile_is_the_sharded_campaign_called_as_a_workflow():
@@ -572,7 +579,7 @@ def test_the_hosted_real_preflights_expect_the_checked_out_commit_not_the_merge_
 
 def test_the_release_gate_installs_the_dependency_set_that_the_sharded_evidence_binds():
     gate = _jobs()["release"]
-    pins = '-e ".[dev,deep]" "mutmut==3.8.0" "pytest==9.1.1"'
+    pins = 'install_locked.sh "$RUNNER_TEMP/venv" --with-extras --editable-project'
     assert pins in gate.split("- name: Install")[1].split("- name:")[0]
     shards = _text("mutation-shards.yml")
     assert pins in shards[shards.index("  shard:") : shards.index("  aggregate:")]

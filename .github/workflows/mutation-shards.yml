@@ -73,7 +73,10 @@ jobs:
         with:
           python-version: "3.11"
       # The planner imports the verification package, which needs the project installed.
-      - run: pip install -e .
+      - name: Install from the validated lock
+        run: |
+          bash verification/runner/install_locked.sh "$RUNNER_TEMP/venv" --with-extras --editable-project
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
       - name: Plan the shards
         run: >
           python -m verification.mutation_shards plan
@@ -119,7 +122,9 @@ jobs:
       - name: Confirm the tested commit
         run: test "$(git rev-parse HEAD)" = "$TESTED_SHA"
       - name: Install
-        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev,deep]" "mutmut==3.8.0" "pytest==9.1.1"
+        run: |
+          bash verification/runner/install_locked.sh "$RUNNER_TEMP/venv" --with-extras --editable-project
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
       - uses: actions/download-artifact@v4
         with:
           name: shard-plan
@@ -219,7 +224,10 @@ jobs:
       - name: Confirm the tested commit
         run: test "$(git rev-parse HEAD)" = "$TESTED_SHA"
       # The aggregate must see the same dependency set as the shards: the context binds it.
-      - run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev,deep]" "mutmut==3.8.0" "pytest==9.1.1"
+      - name: Install from the validated lock
+        run: |
+          bash verification/runner/install_locked.sh "$RUNNER_TEMP/venv" --with-extras --editable-project
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
       - uses: actions/download-artifact@v4
         with:
           name: shard-plan

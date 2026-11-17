@@ -24,7 +24,9 @@ jobs:
           cache: pip
 
       - name: Install
-        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev]"
+        run: |
+          bash verification/runner/install_locked.sh "$RUNNER_TEMP/venv" --with-extras --editable-project
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
 
       - name: FAST verification
         run: make verify-fast
@@ -33,9 +35,7 @@ jobs:
         run: make verify-preprocessing
 
       - name: Static typing (mypy is pinned here, not in pyproject)
-        run: |
-          pip install mypy==2.4.0 pandas-stubs==3.0.5.260914
-          make verify-types
+        run: make verify-types
 
       - name: Verifier coverage (verification/, reported apart from FAST)
         run: make verify-tools
@@ -73,7 +73,9 @@ jobs:
           cache: pip
 
       - name: Install
-        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev]"
+        run: |
+          bash verification/runner/install_locked.sh "$RUNNER_TEMP/venv" --with-extras --editable-project
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
 
       - name: Scientific fault injection
         run: make verify-faults

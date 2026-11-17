@@ -27,7 +27,7 @@ from verification import mutation_cache, mutation_catalog, mutation_policy
 
 PACKAGES = (
     "pytest", "pytest-cov", "mutmut", "numpy", "pandas", "scikit-learn", "pyod", "mypy",
-    "pandas-stubs", "torch",
+    "pandas-stubs", "torch", "scipy", "great-expectations",
 )  # fmt: skip
 PLAN_FORMAT = 1
 SHARD_FORMAT = 1
