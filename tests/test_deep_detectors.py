@@ -78,6 +78,7 @@ def test_deep_detector_ranks_planted_outliers_highest(cls):
     df = _blob()
     scores = _build(cls).fit(df).score(df)
     assert scores.index.equals(df.index)
+    assert scores.dtype == np.float64
     assert scores.iloc[-5:].min() > scores.iloc[:-5].median()
     assert _build(cls).fit(df).predict(df).dtype == bool
 
