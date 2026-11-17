@@ -230,7 +230,7 @@ def test_runtime_collects_installed_versions_and_hashes_effective_environment(mo
     import platform
 
     assert result["python"] == platform.python_version()
-    assert result["platform"] == platform.platform()
+    assert result["platform"] == api.mutation_cache.stable_platform()
     assert result["packages"] == {"mutmut": "3.8.0", "pytest-cov": "7.1.0"}
     assert result["environment_sha256"]["OMP_NUM_THREADS"] == hashlib.sha256(b"1").hexdigest()
     assert result["environment_sha256"]["PYTHONPATH"] is None

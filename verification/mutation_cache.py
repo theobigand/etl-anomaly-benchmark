@@ -23,6 +23,7 @@ import argparse
 import ast
 import hashlib
 import json
+import platform
 from collections.abc import Mapping
 from copy import deepcopy
 from datetime import UTC, datetime
@@ -45,6 +46,17 @@ PENDING_EXECUTION = "execution-pending.json"
 
 def function_of(key: str) -> str:
     return key.rsplit("__mutmut_", 1)[0]
+
+
+def stable_platform() -> str:
+    """Operating system family, architecture and C library of this host.
+
+    These are what can change a mutation verdict. The kernel build and the cloud provider,
+    which differ between hosted runners of the same image, are left out so that evidence
+    produced on one runner is not rejected next to evidence produced on another.
+    """
+    libc = "-".join(part for part in platform.libc_ver() if part)
+    return "-".join(part for part in (platform.system(), platform.machine(), libc) if part)
 
 
 def hash_tests(root: Path) -> dict[str, str]:

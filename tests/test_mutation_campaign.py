@@ -22,7 +22,7 @@ def _fixture(root, *, survived=False, exit_code=0):
     cache = _repository(root)
     runtime = {
         "python": platform.python_version(),
-        "platform": platform.platform(),
+        "platform": mutation_cache.stable_platform(),
         "packages": {"mutmut": "3.8.0", "pytest": "9.1.1"},
         "executable_sha256": hashlib.sha256(Path(sys.executable).read_bytes()).hexdigest(),
         "environment_sha256": {

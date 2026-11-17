@@ -53,7 +53,7 @@ def collect_runtime(env: dict[str, str]) -> dict:
         packages[name] = distribution.version
     return {
         "python": platform.python_version(),
-        "platform": platform.platform(),
+        "platform": mutation_cache.stable_platform(),
         "executable_sha256": hashlib.sha256(Path(sys.executable).read_bytes()).hexdigest(),
         "packages": dict(sorted(packages.items())),
         "environment_sha256": {

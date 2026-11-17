@@ -14,7 +14,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import platform
 import subprocess
 import sys
 import tempfile
@@ -482,7 +481,7 @@ def current_context(root: Path) -> dict:
         "configuration_sha256": _digest(configuration),
         "runtime": {
             "python": ".".join(map(str, sys.version_info[:3])),
-            "platform": platform.platform(),
+            "platform": mutation_cache.stable_platform(),
             "packages": {name: version(name) for name in PACKAGES},
         },
     }
