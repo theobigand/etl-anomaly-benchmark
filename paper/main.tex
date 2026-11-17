@@ -933,6 +933,8 @@ Fig.~\ref{fig:heatmap} gives the mean recall of each method of the registry on e
 injected type, with the LSTM autoencoder of Appendix~\ref{sec:lstm} for reference. The structure
 the aggregate table hides is now clear: most methods have a narrow competence, and the
 neural models and the new classical ones change the picture only on some columns.
+Table~\ref{tab:compact} of Appendix~\ref{app:compact} names the best detector of each type on each of
+the four datasets, and the full matrices follow it in Appendix~\ref{app:matrices}.
 \begin{itemize}
     \item \emph{Univariate outliers} are caught by every distributional
     method (recall $0.68$--$1.00$) except Deep SVDD ($0.33$), and only by those. Z-score's precision
@@ -1777,6 +1779,44 @@ neither native-library peak memory nor the scaling of the 284,000-row
 fraud dataset. It supports reporting the workload and omissions explicitly,
 but not a general speed ranking.
 
+% BEGIN generated compact view
+\section{Which method detects which type: a compact view}
+\label{app:compact}
+The next appendix gives every value; this one keeps only the best detector of each
+column of its tables, which is what the claim that each method has a narrow
+competence rests on.
+A cell names the detector or detectors that reach the highest recall of a type on a
+dataset, with that recall; when more than two detectors tie, the cell gives their
+number.
+Nothing here is a new measurement: every cell repeats a value of
+Tables~\ref{tab:m-customer} to~\ref{tab:m-typed}, which are generated from the
+archived runs.
+
+\begin{table*}[t]
+\caption{Best detector by injected type and dataset, from the full matrices of the
+next appendix (mean recall over five seeds for the three synthetic tables, median over
+the tables for the real ones).}
+\label{tab:compact}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lllll}
+\toprule
+Type & Customer table & Card transactions & Sensor readings & 42 real tables \\
+\midrule
+Missing values & Great Expectations (1.00) & Great Expectations (1.00) & Great Expectations (1.00) & Great Expectations (1.00) \\
+Duplicates & Dedup rule (1.00) & Dedup rule (1.00) & Dedup rule (1.00) & Dedup rule (1.00) \\
+Univariate outliers & 5 detectors (1.00) & LUNAR (0.99) & 11 detectors (1.00) & IQR (1.00) \\
+Multivariate outliers & DIF (1.00) & LUNAR (0.73) & DIF (0.99) & LUNAR (0.63) \\
+Drift & LUNAR (0.65) & LUNAR (0.55) & KNN / LUNAR (1.00) & LUNAR (0.78) \\
+Invalid values & IQR / DIF (1.00) & LUNAR (0.75) & 7 detectors (1.00) & IQR (0.93) \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+Across the 24 cells, 20 detectors appear in the matrices. Where at most two detectors tie, the leaders are LUNAR (8 cells), Great Expectations (4 cells) and Dedup rule (4 cells).
+% END generated compact view
+
 % BEGIN generated matrices
 \section{Full per-type matrices}
 \label{app:matrices}
@@ -1930,6 +1970,16 @@ Dedup rule         & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
 \label{app:details}
 This appendix holds the per-dataset tables and the detailed text of the studies summarised in
 Section~\ref{sec:experiments}.
+
+The tables serve four purposes. Tables~\ref{tab:fraud} to~\ref{tab:water} give every metric of the
+three real examples, which the first results table summarises by AP only. Tables~\ref{tab:synthetic}
+and~\ref{tab:schemas} give the synthetic dataset and the two further schemas that carry the
+per-type comparison. Tables~\ref{tab:pool-fixed} to~\ref{tab:pool-chrono} extend the operating-point,
+severity and chronological studies to the whole pool: the first two concern the choice of threshold,
+the third the severity of the injected outliers, the fourth the chronological split. Table~\ref{tab:chrono}
+holds the chronological pilot on Credit Card. The main text keeps the conclusion of each study and
+only the tables that a conclusion cannot do without; these tables exist so that every number
+quoted there can be traced.
 
 \subsection{Example 1: Credit Card Fraud}
 Table~\ref{tab:fraud} reports the detectors on Credit Card Fraud: the
