@@ -7,7 +7,7 @@
     "source": "local-unattested",
     "platform": "macOS 27.0 arm64, Python 3.11.17 (conda etl-benchmark; typing in a venv with mypy 2.4.0)",
     "captured": "2026-10-23",
-    "historical": false,
+    "historical": true,
     "evidence_dir": "verification/evidence/runs/local-d4304c5",
     "files": {
       "deep.json": "6011bf5901010ac2ffeae90c5b591603cee8a5af6371e27fb40c668332e564c8",
@@ -18,7 +18,8 @@
       "results.txt": "8a7594a47435fbb1a9be4ccb64daf7ec81a4315a9749fa061683396679c714f7",
       "tools.json": "d402546a4d31046edfbf052c63cd2d3d6c39a87ecbc0553f4b81345e7872baaa",
       "types.json": "29e138604358d31200f02ce80932580cce792dc60762d75ee0946f24dfd9cc34"
-    }
+    },
+    "note": "Figures of the local run at d4304c5 under the original global 95% criterion, kept for the record. They describe that run only. The current mutation evidence is the risk-tiered campaign recorded in docs/thesis-remediation/MUTATION_CLOSURE_2026-11-17.md, and no new run of the verification figures has been sealed."
   },
   "fast": {
     "tests": 1292,

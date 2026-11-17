@@ -568,3 +568,12 @@ def test_the_hosted_real_preflights_expect_the_checked_out_commit_not_the_merge_
     # only the manually dispatched self-hosted job compares against the dispatched revision
     assert 'test "$GITHUB_SHA" = "$APPROVED_SHA"' in jobs["real"]
     assert "pull_request" not in _condition(jobs["real"])
+
+
+def test_the_release_gate_installs_the_dependency_set_that_the_sharded_evidence_binds():
+    gate = _jobs()["release"]
+    pins = '-e ".[dev,deep]" "mutmut==3.8.0" "pytest==9.1.1"'
+    assert pins in gate.split("- name: Install")[1].split("- name:")[0]
+    shards = _text("mutation-shards.yml")
+    assert pins in shards[shards.index("  shard:") : shards.index("  aggregate:")]
+    assert pins in shards[shards.index("  aggregate:") :]
