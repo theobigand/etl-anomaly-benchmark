@@ -1,0 +1,88 @@
+{
+  "head": "eb1d67915b639bd0ecadf1a674ac49b611dffb1e",
+  "triage_sha256": "fad70ccc3b65767aa5bb71bfaa74c8ad1e53ef6162d00984a1abaac31fd96119",
+  "records": 162,
+  "units": {
+    "experiments/run_severity.py": {
+      "source_sha256": "7bda7511594ba6313e9579805a0726fd04ce06382f10d2fcb6c06e4d90f0a3fd",
+      "catalog_sha256": "f41e59f70fb61d7df4d44bd4d2bde8ca593ef8d1972345b3e1a06fddafb51f93",
+      "triage_identities": 7
+    },
+    "research/injection.py": {
+      "source_sha256": "cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39",
+      "catalog_sha256": "011af65d555b37c695f69c7dc6c29dd46147cfd2d5f31a34cafc67f9be06d836",
+      "triage_identities": 9
+    },
+    "research/multi_schema.py": {
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "catalog_sha256": "918fe1d065502424f49fc3619516bd519c04c951dfc6f9efda87df4bf789b624",
+      "triage_identities": 32
+    },
+    "research/pool_chrono.py": {
+      "source_sha256": "cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035",
+      "catalog_sha256": "206639c66988bdbe63db29b095048244379c35633f8e24080ec259c6e1b2568a",
+      "triage_identities": 13
+    },
+    "research/pool_preprocessing.py": {
+      "source_sha256": "edf8ac28b2824c76840c8e4cad47fe3fee1f1ac84a5b38ad341e968dee9e8dc0",
+      "catalog_sha256": "453ee4bae71c1a333674fdcc286423b3d8ec1d129cb5e9f502e9babef1c7c959",
+      "triage_identities": 6
+    },
+    "research/temporal_decision.py": {
+      "source_sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+      "catalog_sha256": "c68abc303f77fdba2712116081978338289ce8e457758a0f5c7556a99186b466",
+      "triage_identities": 20
+    },
+    "research/typed_benchmark.py": {
+      "source_sha256": "abdd10e4a1965e99bd5db8ad1a61b0b9e37caed20f35d09c32bcb1a9a3bae9d2",
+      "catalog_sha256": "2b7aff2c3664116170e04eeb7a6d3f22dceaf94bd48fa0e67e5b4846865de3fb",
+      "triage_identities": 4
+    },
+    "research/uci_loader.py": {
+      "source_sha256": "a1176cd61bd8454c9fa51da682194444feb24529dc401916e8bb94fd212ab691",
+      "catalog_sha256": "6631cb8a4619d97b501bccd946c81c1006b962b6040613ea6dd8f35453c601ac",
+      "triage_identities": 5
+    },
+    "src/etl_benchmark/quality/_torch_models.py": {
+      "source_sha256": "77a1b57ff69e580cad700bb4ee41f069e3ac0c8489bdd714651c753c4bbdd09d",
+      "catalog_sha256": "b324cbcab5f51653633917045d5aa8a4f2ee2a7e12a8be31042bd7b481ee8a7b",
+      "triage_identities": 7
+    },
+    "src/etl_benchmark/quality/autoencoder.py": {
+      "source_sha256": "52ac93bd1898db05567278d773295458fc81847366de74b0c63770c662cbaa4d",
+      "catalog_sha256": "1fc31435087cff28de27c15aa9e3989daf7c5295af2c17f4c1d0fe4943360262",
+      "triage_identities": 3
+    },
+    "src/etl_benchmark/quality/drift.py": {
+      "source_sha256": "95380ca0f8f87a24c512ac7055357225472342065e0da676c0be46dd115fa09b",
+      "catalog_sha256": "6cb454d92e0c732b4bc49a59f97c3091592bccb5169d47afa34c78ca4ac5a5bc",
+      "triage_identities": 10
+    },
+    "src/etl_benchmark/quality/gx.py": {
+      "source_sha256": "11be59dbe975d05547395263b763d37716cd9f916b284ce4147cfd87c61e3416",
+      "catalog_sha256": "ddd89891c20d1b4e84f3919f603b7f4977112dbe7ad4ce179914c846ffa53b34",
+      "triage_identities": 11
+    },
+    "src/etl_benchmark/quality/ml.py": {
+      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
+      "catalog_sha256": "38467af6141e58f9b103b94e980082662d5e9710529b6a3c1dbe75fd6c31f200",
+      "triage_identities": 19
+    },
+    "src/etl_benchmark/quality/rules.py": {
+      "source_sha256": "bbd2e146be1d55382a12137cdfacefa85223d535c8b9eeaf816d17e6acd49737",
+      "catalog_sha256": "dd0c412f18b7a2ca32f0408af6a09e820dda7ed2f820a92216a558e665f0c0b5",
+      "triage_identities": 7
+    },
+    "src/etl_benchmark/quality/window_drift.py": {
+      "source_sha256": "7369796bac2ada0ee25c125b383752c8d40d7f683e287767dfb6b373108ea8d7",
+      "catalog_sha256": "75668e96d48177014b765721302e383a9446fb7d1cb0c28f924cb12535787aca",
+      "triage_identities": 7
+    },
+    "src/etl_benchmark/quality/windows.py": {
+      "source_sha256": "5a4fdd8739edcc33dd786b2b241cf5c3c92ec3e63f6e669ef571d1cb9699c864",
+      "catalog_sha256": "d1eb4229b9e0fe174ba43d53240069fbd234b8c73dac68e9601a1595097ee52d",
+      "triage_identities": 2
+    }
+  },
+  "limitations": "Checks current generated metadata and spans and membership only; does not validate mutant verdicts, provenance of test inputs, equivalence, or campaign completeness."
+}

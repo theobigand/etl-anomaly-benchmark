@@ -1,0 +1,72 @@
+{
+  "archived_run": {
+    "dataset_sha256": "28bb4f67afca256f0cebe3cc6ca75a13be0bfc062e21efcaf40f1d3d80688eff",
+    "file": "verification/evidence/run_benchmark_cardio.json",
+    "source_revision": "8d245d23cf1e3d1d4db93f9629093391c16e5a28",
+    "split_ids_sha256": "3c8f3ca4703db0a4b719e58da9b12b22b4294d874f9ece643073d32692b35ffe"
+  },
+  "captured_at": "2026-11-15T17:57:31.773851+00:00",
+  "dataset": "cardio",
+  "environment": {
+    "packages": {
+      "mutmut": "3.8.0",
+      "mypy": null,
+      "numpy": "2.4.6",
+      "pandas": "3.0.6",
+      "pandas-stubs": null,
+      "pyod": "3.6.7",
+      "pytest": "9.1.1",
+      "pytest-cov": "7.1.0",
+      "scikit-learn": "1.9.1",
+      "torch": "2.14.1"
+    },
+    "platform": "macOS-27.2-arm64-arm-64bit",
+    "python": "3.11.17"
+  },
+  "levels": {
+    "archive": {
+      "artifact_bytes_identical": true,
+      "artifact_identical": true,
+      "kind": "NUMERICAL",
+      "max_abs_diff": 0.0,
+      "required": true,
+      "status": "PASS",
+      "timing_max_rel_diff": 0.8596827492846434
+    },
+    "same_environment": {
+      "artifact_bytes_identical": true,
+      "artifact_identical": true,
+      "kind": "NUMERICAL",
+      "max_abs_diff": 0.0,
+      "required": true,
+      "status": "PASS",
+      "timing_max_rel_diff": 2.311780701377984
+    }
+  },
+  "lock": {
+    "file": "verification/environment/conda-darwin-arm64.explicit.txt",
+    "sha256": "44d5470f1d0c6a675f26e8fec98bf0592967deb2e0a3b1834ac95d822b6e1c73",
+    "strategy": "conda-explicit"
+  },
+  "outcome": "PASS",
+  "reasons": [],
+  "schema_version": 1,
+  "seeds": [
+    42,
+    1,
+    2,
+    3,
+    4
+  ],
+  "source": {
+    "revision": "db27f56af48eab431e965cabb74ab5ea3d96af54",
+    "scientific_fingerprint": "be28a126f038edec58574f4a3a8baff294ec1994ca9b93cb7c9b6a10efbab076",
+    "worktree_dirty": true
+  },
+  "tolerance": {
+    "artifact": "the split-id archive is byte-identical",
+    "numerical": "every non-timing metric is bit-identical",
+    "statistical": "each mean differs by less than one reference standard deviation",
+    "timing": "detect_s columns are a relative spread and never decide a status; they are not deterministic across machines"
+  }
+}
