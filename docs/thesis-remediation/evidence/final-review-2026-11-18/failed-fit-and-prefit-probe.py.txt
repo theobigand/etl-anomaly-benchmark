@@ -1,0 +1,29 @@
+# Probe of use after a failed fit and before fit on the public detectors. Run with the project python from the
+# repository root: python -I -c "import sys;sys.path.insert(0,'src');exec(open('<this file>').read())"
+import warnings, numpy as np, pandas as pd
+warnings.simplefilter("ignore")
+from etl_benchmark.quality.ml import ECODDetector, COPODDetector, PCADetector, IsolationForestDetector
+from etl_benchmark.quality.autoencoder import AutoencoderDetector
+rng=np.random.default_rng(0)
+df=pd.DataFrame(rng.normal(size=(200,3)),columns=list("abc"))
+def run(name,mk):
+    d=mk()
+    try: d.fit(df); print(name,"fit OK (contamination accepted)")
+    except Exception as e: print(name,"fit raised",type(e).__name__,str(e)[:70])
+    for op in("predict","score"):
+        try:
+            out=getattr(d,op)(df); print("   after-fit",op,"->",type(out).__name__,"sum=",float(out.sum()),"all-zero" if float(out.sum())==0 else "")
+        except Exception as e: print("   after-fit",op,"raised",type(e).__name__,str(e)[:70])
+for c in (2.0,-0.5,float("nan")):
+    print("#### contamination",c)
+    run("ECOD",lambda:ECODDetector(contamination=c))
+    run("COPOD",lambda:COPODDetector(contamination=c))
+    run("PCA",lambda:PCADetector(contamination=c))
+    run("Autoencoder",lambda:AutoencoderDetector(contamination=c))
+    run("IForest(pyod-native)",lambda:IsolationForestDetector(contamination=c))
+print("#### pre-fit on public adapters")
+for n,mk in(("ECOD",ECODDetector),("PCA",PCADetector),("AE",AutoencoderDetector),("IF",IsolationForestDetector)):
+    d=mk()
+    try: d.predict(df)
+    except Exception as e: print(n,"pre-fit predict ->",type(e).__name__,str(e)[:60])
+    print(n,"pre-fit feature_names_ =",repr(d.feature_names_))
