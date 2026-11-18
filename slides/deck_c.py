@@ -302,7 +302,7 @@ slide(
                     "<div class='sheet' style='position:static;padding:10px 14px;font-size:20px'>"
                     + eq
                     + "</div>",
-                    "<p class='note' style='font-size:17px;line-height:1.4'>Candidates in this work, not approved: a dtype coercion on an array that is already float, zip(strict=) on lists of equal length, flush= on a print.</p>",
+                    "<p class='note' style='font-size:17px;line-height:1.4'>Candidates in this work, each needing the owner's approval: a dtype coercion on an array that is already float, zip(strict=) on lists of equal length, flush= on a print.</p>",
                 ],
                 maxh=540,
                 gap=18,
@@ -315,7 +315,7 @@ slide(
                     "<div class='cond' style='font-size:34px;font-weight:600'>Why approval is required</div>",
                     "<p style='font-size:22px;line-height:1.4'>Calling a survivor equivalent removes it from the denominator and raises the score. If the author of the tests could do that alone, the author would grade their own work. The repository records each equivalence, with its reason and source. The owner decides, here by delegation.</p>",
                     "<div class='cond' style='font-size:34px;font-weight:600;margin-top:10px'>Status here</div>",
-                    "<p style='font-size:22px;line-height:1.4'>The candidates stay in the denominator. The four equivalences accepted earlier for the LSTM autoencoder were accepted by the repository owner, who is also the sole author and reviewer: owner approval, not independent review.</p>",
+                    "<p style='font-size:22px;line-height:1.4'>Until approved, a candidate stays in the denominator. The four equivalences accepted earlier for the LSTM autoencoder were accepted by the repository owner, who is also the sole author and reviewer: owner approval, not independent review.</p>",
                 ],
                 maxh=540,
                 gap=14,
@@ -539,7 +539,7 @@ slide(
                 1152,
                 None,
                 "",
-                "<p style='font-size:24px;font-family:var(--cond);font-weight:600'>Certified for one revision (7c0af40d), not for the findings. The pull request stays a draft.</p>",
+                "<p style='font-size:24px;font-family:var(--cond);font-weight:600'>Certified for one revision (7c0af40d), not for the findings. The pull request is merged.</p>",
             ),
             foot(
                 "docs/thesis-remediation/MUTATION_CLOSURE_2026-11-17.md &nbsp;·&nbsp; verification/mutation_risk_policy.json"

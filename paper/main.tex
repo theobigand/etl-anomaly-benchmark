@@ -1481,7 +1481,7 @@ the repeated run, but a single neural result should be read as one realization u
 Complete line and branch coverage does not establish that the scientific assertions detect
 every defect, and mutation testing cannot show whether the injected defects and the tests cover
 every way an experiment can go wrong. The checks were run on one machine by the person who wrote the
-code, and the timings do not transfer to another. The exception is the final mutation campaign, which ran on hosted Linux runners in a hash-locked dependency environment that the evidence records, and part of whose analysis was carried out with a language model. The details, the history of the replays and the
+code, and the timings do not transfer to another. The exception is the final release verification, which ran on hosted Linux runners in a hash-locked dependency environment that the evidence records, and part of whose analysis was carried out with a language model. The details, the history of the replays and the
 gaps of the real-data check are in Appendix~\ref{app:outcomes}; they leave some implementation
 errors capable of changing a published result without being caught by the current gates.
 
@@ -1715,7 +1715,7 @@ conclusions of the study, which rest on the limits stated with each experiment.
 
 \paragraph{Final risk-tiered campaign.}
 Table~\ref{tab:closure} gives the final measurement by risk level. Every module with mutants meets its own threshold;
-the adjusted L4 figure counts $101$ owner-recorded exclusions that are each bound to the source, the catalog of
+the adjusted L4 figure counts $98$ exclusions recorded under the owner's name, $94$ of them under the delegation described above, that are each bound to the source, the catalog of
 the module and the dependency versions of the run, and that the aggregation rejects if the mutant is killed. The
 measurement is specific to Linux with the recorded package versions. Two accepted exclusions hold only on the
 CPU-only PyTorch build used (the same mutants are killed on an Apple GPU device), and the aggregation rejects every
@@ -1760,7 +1760,7 @@ tests: a score dtype contract, the orientation of the multivariate injection whe
 correlation, a deprecated pandas frequency alias, and the behaviour of the sharding tool itself. Reviewing the exclusions also exposed a defect in the detectors: a fit that failed on an invalid
 contamination left a detector that scored as fitted and, for three of them, flagged nothing. It is corrected so that a fit that raises leaves the detector unchanged, and the archived
 experiments were replayed from a clean commit: every detection metric, partition and figure is identical, and only the detection times, shown in two tables, changed. These are boundary
-behaviours; I did not rerun any archived experiment, and no archived numerical result was modified.
+behaviours; the replay changed no archived numerical result, only timings.
 The limits are the ones above: sole-author decisions on equivalence, model-assisted review, one platform, and an attestation that is that of a continuous-integration run, not an independent one.
 
 \paragraph{Replay history and gaps.}
@@ -1768,8 +1768,7 @@ The previous archive was made on a working tree with uncommitted changes (revisi
 \texttt{841c3aa}). The archived runs were therefore replayed from a clean commit
 (\texttt{93b6fe8}): every detection metric, curve and partition is identical to the previous
 archive and only the timings changed, which is why the two timing tables and the scaling figures
-were updated. The new records name that commit and mark the working tree as clean, but they were
-produced on one machine. The complete real-data checks were performed with the three files
+were updated. The records of that replay name that commit. After the detector correction the archived runs were replayed once more, from the clean commit \texttt{401c7bf}, with the same outcome (identical metrics, only timings changed), and the current records name that commit. Both replays were produced on one machine. The complete real-data checks were performed with the three files
 available locally. The Water Quality file matches its named mirror, and the Cardio CSV can be
 reproduced from the current ADBench archive. The Credit Card file has the size of the current
 Kaggle version (3, March 2018), but I could not compare its content hash with a fresh download.

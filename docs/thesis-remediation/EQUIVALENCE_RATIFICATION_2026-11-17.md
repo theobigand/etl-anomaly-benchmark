@@ -52,8 +52,8 @@ against the 98% L4 threshold (after the correction: `ml.py` is 248/252, slack 1)
 | --- | --- | --- | --- | --- |
 | `_torch_models.PaddedAE1SVM.fit__mutmut_11` (`fit(X, y)` to `fit(X, None)`) | labels reach PyOD: a warning and the `n_classes_` of `predict_proba` change (3 columns against 2 in the earlier probe); nothing in the project reads either | class is in the private module `_torch_models`, not exported; `Detector.fit(df)` has no label parameter; PyOD documents `y` as ignored | defensible | `_torch_models.py` 58/60 = 96.67%, fails |
 | `autoencoder.ReconstructionModel.__init____mutmut_4` (`threshold_` `None` to `""`) | after a fit that failed on invalid contamination, `predict` raises `TypeError` in the original and `UFuncTypeError` (a `TypeError` subclass) in the mutant; same flags after a valid fit | `ReconstructionModel` is not exported; caveat: the declared type is `float \| None`, which `""` violates | defensible, with the type caveat | `autoencoder.py` 112/115 = 97.39%, fails |
-| `ml.TailProbabilityModel.__init____mutmut_3` (`sorted_` to `None`) | direct pre-fit scoring raises `AttributeError` instead of `IndexError`; unobservable through a public detector (`fit` assigns `sorted_` before anything reads it) | internal estimator, not exported; pre-fit use errors in both | defensible | `ml.py` 97.98%, fails |
-| `ml.TailProbabilityModel.__init____mutmut_5` (`sorted_` shape `(0, 0)` to `(1, 0)`) | only the initial array shape; no method outcome differs; unobservable through a public detector | same | defensible | `ml.py` 97.98%, fails |
+| `ml.TailProbabilityModel.__init____mutmut_3` (`sorted_` to `None`) | direct pre-fit scoring raises `AttributeError` instead of `IndexError`; unobservable through a public detector (`fit` assigns `sorted_` before anything reads it) | internal estimator, not exported; pre-fit use errors in both | defensible | `ml.py` 248/253 = 98.02%, passes alone; two revocations in `ml.py` fail (248/254 = 97.64%) |
+| `ml.TailProbabilityModel.__init____mutmut_5` (`sorted_` shape `(0, 0)` to `(1, 0)`) | only the initial array shape; no method outcome differs; unobservable through a public detector | same | defensible | `ml.py` 248/253 = 98.02%, passes alone; two revocations in `ml.py` fail (248/254 = 97.64%) |
 | `ml.TailProbabilityModel.__init____mutmut_10` (`threshold_` `nan` to `None`) | before the correction, after a failed fit `ECODDetector`/`COPODDetector.predict` returned all-False flags in the original and raised `TypeError` in the mutant. After it a failed fit leaves the detector unfitted in both, so no public detector exposes `threshold_` before a successful fit (`evidence/failed-fit-correction-2026-11-18/`, `evidence/final-review-2026-11-18/failed-fit-and-prefit-probe-output.txt` for the earlier behaviour) | `threshold_` before a fit is the declared initial state of an internal estimator; contamination range 1e-4 to 0.5 remains the documented input bound | defensible after the correction; was owner judgment | `ml.py` 248/253 = 98.02%, passes; with the next record 248/254 = 97.64%, fails |
 | `ml.PCAReconstruction.__init____mutmut_9` (`threshold_` `nan` to `None`) | same, through `PCADetector` | same | same | same |
 
@@ -61,8 +61,8 @@ Why the last two were singled out, and what the correction changed. The mutant w
 `PyODDetector.fit` assigned `self._model` before the model had been fitted, so a failed fit left a detector that passed
 the "not fitted" guard and, for ECOD, COPOD and PCA, flagged nothing (`threshold_` stayed `nan`; `score > nan` is false). The
 registry keeps every project run inside the contamination bounds, so no archived result was affected. The fix (`5de925a`) makes a
-fit that raises leave the detector as it was, with regression tests through the public API (`tests/test_detector_failed_fit.py`,
-nine detectors). After it the situation that distinguished these two records can no longer be reached, so the exclusions no
+fit that raises leave the detector as it was, with regression tests (`tests/test_detector_failed_fit.py`, nine detectors, mostly through the public API, plus checks of the private
+fitted state; 35 of its 67 cases fail on the old code). After it the situation that distinguished these two records can no longer be reached, so the exclusions no
 longer hide a behavioural difference. They are still exclusions on the owner's word, not killed mutants: a unit test of the
 initial `threshold_` would kill them but changes the test tree and needs a new campaign.
 
@@ -84,7 +84,7 @@ Technical recommendation: RETAIN strictly as exclusions bound to `torch 2.15.0+c
 | `_torch_models.FitScalerDIF._deep_representation__mutmut_14` | `src/etl_benchmark/quality/_torch_models.py` | `net(batch.float().to(self.device))` to `.to(None)` | 0 |
 | `_torch_models.MeanVAE.evaluating_forward__mutmut_3` | `src/etl_benchmark/quality/_torch_models.py` | `self.model.encode(batch_data.to(self.device))` to `.to(None)` | 0 |
 
-- **Binding is enforced.** Fed the certified campaign's own records, the repository validator accepts the certified
+- **Binding is enforced.** Fed the records of the earlier certified campaign (run 44253806652; the ledger is unchanged for these records), the repository validator accepts the certified
   runtime and rejects the evidence for torch `2.15.0`, `2.14.1`, `2.15.0+cu128` and an absent torch, and equally for
   pandas 3.1.1, scipy 1.17.0, great-expectations 1.24.1 and pyod 3.6.8 (`validator-binding-probe-output.txt`).
   The rejection is of the whole campaign, not only of the record, so the exclusion cannot silently carry over to another build.

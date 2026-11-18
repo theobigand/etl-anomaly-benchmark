@@ -120,8 +120,9 @@ the observable behaviour behind the two records on the owner's word that remain 
   `PCADetector` then scored with `threshold_ = nan` and flagged nothing. The registry keeps every project run inside the
   bounds, so no archived result was affected.
 - **Fix** (`5de925a`, test-first). A fit that raises leaves the detector exactly as before the call: unfitted after a first fit,
-  the previous fit after a refit. Regression tests through the public API: `tests/test_detector_failed_fit.py`, nine
-  detectors; 62 of them failed on the old code and all pass now. No threshold, risk level or scope changed.
+  the previous fit after a refit. Regression tests in `tests/test_detector_failed_fit.py`, nine detectors, mostly through the public API (scoring refused after a
+  failed first fit, previous fit and scores kept after a failed refit) plus checks of the private fitted state; 35 of its 67 cases fail
+  on the old code and all pass now. No threshold, risk level or scope changed.
 - **Records.** `ml.py` was measured natively on Linux in the locked environment (run 44277267046, 248/261 raw), and its
   records rebound (`401c7bf`). Three accepted `PyODDetector.__init__` records (mutants 4, 5, 6) became killed and went back to
   `proposed` with an empty approver and date, with the technical finding recorded; this is a technical consequence of a test, not
@@ -231,7 +232,7 @@ two archives of the run, the closure and ratification documents, and the manuscr
 certified campaign (`paper/main.tex` and `.pdf`, `slides/deck_c.py`, `thesis_progress.html` and `.pdf`, the slide-47 drift test,
 `verification/evidence/manifest.json`). `claims.is_code` is false for each of these paths, so the repository's own freshness
 rule (`verification/release.py`, `fresh()`: the certified revision is an ancestor of HEAD and no code or configuration file
-changed) keeps the certification current for HEAD. That is not a new certification: the verdict names `7c0af40`,
+changed) kept the certification current for the branch head before the merge. That was not a new certification: the verdict names `7c0af40`,
 `release.json` stays immutable, and any release statement about a later or integrated revision needs its own run.
 
 ### Branch audit against `main` (`6b9f7c5`)
@@ -246,7 +247,7 @@ changed) keeps the certification current for HEAD. That is not a new certificati
 | Branch protection | `main` requires `test` and `faults`, strict (branch up to date), 0 approving reviews, administrators not enforced, no force push; no rulesets |
 | Checks | ordinary CI of PR #117 must be green on the final head, which a documentation commit cannot record for itself: read it from the PR checks. At `7c0af40` run 44300453093 passed `test`, `faults` and `slides`; the release evidence is independent of ordinary CI |
 
-The PR is draft, so GitHub reports the merge state as blocked until it is marked ready.
+The PR was a draft when this audit was made.
 
 ### Squash merge and post-merge certification (done)
 
@@ -268,5 +269,4 @@ layout matrix passes in the seven font configurations with no issue.
 
 ### Verdict
 
-Ratified by the owner and ready to integrate. The certified revision (`7c0af40`), its evidence and the equivalence records are consistent, and the
-branch merges cleanly. Not claimed: independent scientific certification, or certification of the squash commit. The owner decided section B on 2026-11-18 and authorised the integration; the squash commit needs its own CI and its own `verify-release` run.
+Integrated and re-certified. The certified revisions (`7c0af40` before the merge, `6f1e8fd` after it), their evidence and the equivalence records are consistent. Not claimed: independent scientific certification, or certification of the squash commit. The owner decided section B on 2026-11-18 and authorised the integration; the squash commit needs its own CI and its own `verify-release` run.
