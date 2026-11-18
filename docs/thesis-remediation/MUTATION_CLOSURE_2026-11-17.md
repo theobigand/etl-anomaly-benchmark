@@ -18,9 +18,10 @@ the earlier results as history, marked as such.
 | Mutation result | 35,255 eligible mutants: 34,791 killed, 460 survived, 4 timeouts (never counted as kills). All 97 units with mutants meet their own threshold. L2 100.00%, L3 98.71%, L4 98.68% raw and 99.01% adjusted |
 | Exclusions | 98 accepted equivalences in 21 units: 4 LSTM records decided by the owner on 2026-11-11 and 94 delegated records of 2026-11-17 (86 analysis-backed, 6 on the owner's word, 2 CPU-only). Eight units have no slack: revoking any one of their records fails the unit |
 | Scientific correction | a detector fit that raised left a half-fitted detector that scored as fitted; corrected in `5de925a` with regression tests (section A, "Failed-fit correction"). The nine archived experiments that depend on the changed source were replayed from a clean commit: every scientific result is identical; only detection timings changed |
-| Branch | `feat/risk-tiered-mutation-policy`, 0 commits behind `main`, mergeable without conflict, draft. Commits after the certified revision change documentation and archived evidence only (section C) |
-| Owner decisions | made on 2026-11-18 (owner ratification, not independent peer review): the 94 delegated records ratified within their documented limits (86 analysis-backed, 6 supported-contract, 2 CPU-only for `torch 2.15.0+cpu` only); LSTM records preserved; the three `PyODDetector.__init__` records stay `proposed`; history tag, squash merge and post-merge certification authorised. See `EQUIVALENCE_RATIFICATION_2026-11-17.md`, "Owner ratification" |
-| Not claimed | independent scientific certification; certification of any revision other than `7c0af40`; certification of the squash commit |
+| Integration | PR #117 squash-merged into `main` as `7c32761` (tree identical to the final branch head). A roadmap-sync validator defect found after the merge was fixed by PR #118 (`6f1e8fd`) |
+| Post-merge certification | **CERTIFIED**, `verify-release` run [44352577853](https://github.com/theobigand/etl-anomaly-benchmark/actions/runs/44352577853) on `main` at `6f1e8fd00b1a43e01fe0be372fac77e5c3746fc1`: all seven profiles PASS, `reasons: []`, same locked environment, fresh mutants; 35,255 eligible, 34,791 killed, 460 survived, 4 timeouts, 98 exclusions; L2 100.00%, L3 98.71%, L4 98.68% raw and 99.01% adjusted. Attestation `ci-run:44352577853 (not independently attested)`. Archive: `evidence/release-44352577853/` (checksums in `SHA256SUMS`) |
+| Owner decisions | made on 2026-11-18 (owner ratification, not independent peer review): the 94 delegated records ratified within their documented limits (86 analysis-backed, 6 supported-contract, 2 CPU-only for `torch 2.15.0+cpu` only); LSTM records preserved; the three `PyODDetector.__init__` records stay `proposed`; squash merge and post-merge certification authorised. See `EQUIVALENCE_RATIFICATION_2026-11-17.md`, "Owner ratification" |
+| Not claimed | independent scientific certification; certification of any revision other than `7c0af40` (before the merge) and `6f1e8fd` (after it); the squash commit `7c32761` itself carries no separate run, because the roadmap-sync fix changed `.github/` and superseded it |
 
 ## A. Compliance
 
@@ -201,7 +202,7 @@ ratification"); this is owner ratification, not independent peer review, and the
 3. **Two CPU-only records ratified for `torch 2.15.0+cpu` only**; not extended to MPS, CUDA or other builds.
 4. **86 analysis-backed records ratified**; the unbound matplotlib version of three `run_severity.py` records remains a documented limit.
 5. **LSTM decisions** preserved: 4 accepted, 5 inconclusive.
-6. **Integration authorised**: tag `archive/pr-117-pre-squash`, squash merge, post-merge CI and a fresh `verify-release` on the squash commit.
+6. **Integration authorised**: squash merge, post-merge CI and a fresh `verify-release` on the integrated commit.
 
 ## C. Integration readiness
 
@@ -217,6 +218,7 @@ ratification"); this is owner ratification, not independent peer review, and the
 | 44277267046 (`mutation-shards`, diagnostic) | `5de925a` | native measurement of `ml.py` alone: 248/261 |
 | 44287849086 (ordinary CI) | `401c7bf` | `test` failed: three lineage tests, the scientific fingerprint changed with `ml.py`; resolved by the controlled replay |
 | 44303335021 (`verify-release`) | `7c0af40` | **CERTIFIED**, all seven profiles PASS, no rejection reason |
+| 44352577853 (`verify-release`) | `6f1e8fd` (`main`) | **CERTIFIED** after the merge, all seven profiles PASS, no rejection reason |
 
 The decision of 2026-11-17 to align every profile on the lock (pandas 3.0.6 is the only version under which the archived
 Cardio results replay numerically) was implemented by `d3abc54` and `5e57228`; the 97 records were rebound to the
@@ -246,45 +248,15 @@ changed) keeps the certification current for HEAD. That is not a new certificati
 
 The PR is draft, so GitHub reports the merge state as blocked until it is marked ready.
 
-### History tag (authorised on 2026-11-18; the tag target is the branch head after this report, recorded in PR #117)
+### Squash merge and post-merge certification (done)
 
-The repository has no tags and no tag convention. Proposed annotated tag: `archive/pr-117-pre-squash`. Pushing a tag
-triggers no workflow: `ci.yml` runs on pushes to and pull requests on `main`, `thesis-roadmap-sync.yml` on pushes to `main`,
-`mutation-shards.yml` on labelled pull requests, calls and manual dispatch, `verify-release.yml` on manual dispatch and
-labelled pull requests, `pool-check.yml` on schedule and manual dispatch; every `push` trigger is limited to `main`, no
-workflow filters on tags, and none publishes or releases. The local configuration has `tag.gpgsign true`, so creating the tag needs a usable signing key. The tag must
-point at the final branch head, so it is created after the last commit is pushed and its checks are green:
-
-```sh
-git fetch origin
-git switch feat/risk-tiered-mutation-policy && git pull --ff-only
-test -z "$(git tag -l archive/pr-117-pre-squash)"          # never move an existing tag
-HEAD_SHA=$(git rev-parse HEAD)
-git tag -a archive/pr-117-pre-squash "$HEAD_SHA" \
-  -m "PR 117 branch history before squash; certified source 7c0af40d37d8972090b8678fa83084fb9688db25 (verify-release run 44303335021)"
-git rev-parse 'archive/pr-117-pre-squash^{commit}'          # must equal HEAD_SHA
-git push origin archive/pr-117-pre-squash                  # publication; owner authorisation required
-```
-
-### Squash merge and post-merge certification (authorised on 2026-11-18; outcome recorded in PR #117, #116 and the post-merge evidence)
-
-Squash merge is recommended: it keeps `main` readable and the tag keeps the 355 commits, including every commit that the
-evidence cites (`eb1d679`, `d4d21895`, `215da02`, `51ad0794`, `8e50b699`, `d3abc54`, `5e57228`, `5de925a`, `401c7bf`, `7c0af40`). The squash commit has a new
-SHA and inherits no certification. After the owner authorises the merge:
-
-1. Check that `main` is the expected squash commit and that its tree equals the branch head tree
-   (`git rev-parse <squash>^{tree}` against the tagged head).
-2. Let ordinary CI finish green on that commit (`test`, `faults`); `thesis-roadmap-sync` also runs because the squash touches
-   `docs/thesis-remediation/**`.
-3. Run `verify-release` by `workflow_dispatch` on `main` with `fresh_mutants` (fixed true in the workflow). It installs the
-   hash-locked environment and regenerates the 45-shard mutation evidence, because every shard binds its commit.
-4. Require all seven profiles PASS and no rejection reason, in the locked environment of this report.
-5. Archive the new `release.json` and the campaign and bundle tarballs under a new `evidence/release-<run>/` directory;
-   do not edit the files of `release-44253806652/` or `release-44303335021/`.
-6. Record both provenances: pre-merge (run 44303335021, `7c0af40`, tag) and post-merge (new run, squash SHA).
-
-Do not reuse evidence of another commit and do not relax a revision check. If the owner revokes a record or a test is
-added first, the equivalence file or test tree changes and step 3 also validates that change.
+PR #117 was squash-merged as `7c32761`; its tree equals the tree of the final branch head. Ordinary CI on that commit passed
+(`test`, `faults`, `slides`). The roadmap-sync workflow then failed because its inventory check expected four governance
+follow-ups, all priority p1, while `tracking.json` now lists #116 as a fifth, priority p0. PR #118 corrected the check
+(`6f1e8fd`). That change touches `.github/`, so the evidence of `7c0af40` no longer applied and a fresh `verify-release` was run on
+`6f1e8fd` (run 44352577853): CERTIFIED, with the same mutation inventory as the pre-merge run. Both provenances are archived and
+unmodified: pre-merge `evidence/release-44303335021/` (run 44303335021, `7c0af40`) and post-merge
+`evidence/release-44352577853/` (run 44352577853, `6f1e8fd`).
 
 ### Manuscript and slides
 
