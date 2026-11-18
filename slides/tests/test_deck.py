@@ -261,12 +261,15 @@ def test_deck_does_not_repeat_a_claim_the_sources_contradict(phrase, reason):
 
 
 def test_slide_47_counts_equal_the_final_campaign_archive():
-    """Publication drift guard: slide 47 states the figures of the archived final campaign."""
+    """Publication drift guard: slide 47 states the figures of the campaign archived with the certified release."""
     import io
     import json
     import tarfile
 
-    archive = SLIDES.parent / "docs/thesis-remediation/evidence/final-campaign-44045848118.tar.gz"
+    archive = (
+        SLIDES.parent
+        / "docs/thesis-remediation/evidence/release-44303335021/mutation-campaign.tar.gz"
+    )
     with tarfile.open(archive) as tar:
         member = next(m for m in tar.getmembers() if m.name.endswith("mutation-campaign.json"))
         analysis = json.load(io.TextIOWrapper(tar.extractfile(member)))["analysis"]

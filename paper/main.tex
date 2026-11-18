@@ -1481,7 +1481,7 @@ the repeated run, but a single neural result should be read as one realization u
 Complete line and branch coverage does not establish that the scientific assertions detect
 every defect, and mutation testing cannot show whether the injected defects and the tests cover
 every way an experiment can go wrong. The checks were run on one machine by the person who wrote the
-code, and the timings do not transfer to another. The exception is the final mutation campaign, which ran on hosted Linux runners with unpinned dependency versions that the evidence records, and part of whose analysis was carried out with a language model. The details, the history of the replays and the
+code, and the timings do not transfer to another. The exception is the final mutation campaign, which ran on hosted Linux runners in a hash-locked dependency environment that the evidence records, and part of whose analysis was carried out with a language model. The details, the history of the replays and the
 gaps of the real-data check are in Appendix~\ref{app:outcomes}; they leave some implementation
 errors capable of changing a published result without being caught by the current gates.
 
@@ -1527,7 +1527,7 @@ follow it; only one of the four hypotheses of that study holds.
 The verification of the code that produces these numbers is part of the contribution. A risk-tiered mutation
 campaign over $100$ modules now has every module that contains mutants at or above its own threshold on Linux, with every exclusion recorded, bound to its
 source and revalidated; it also showed that such a score depends on the host, so that the evidence has to say where it
-was produced. It is not a release certification.
+was produced. The release script certified one revision of that evidence, attested only as a continuous-integration run; this does not establish that the scientific findings are correct.
 
 The next steps are a check of the injected faults against faults observed in
 real pipelines, and a decision-level study on more datasets with genuine time,
@@ -1620,19 +1620,20 @@ cannot compensate for a failing module or risk level. Classification uses the
 highest applicable consequence. The historical results below retain their
 original global $95\%$ criterion and are not claims of compliance with this revision.
 The final measurement is one complete native campaign of the $100$ classified modules, run on Linux in
-$45$ parallel shards of one commit, with a controller proof of each execution and the digest of every
-tracked file in the evidence. It covers $35{,}237$ mutants: $34{,}768$ were killed, $463$ survived and
-$6$ timed out, and a timeout is never counted as a kill. The raw scores are $100\%$ (L2, three modules),
-$98.68\%$ (L3, $18$ modules) and $98.67\%$ (L4, $79$ modules); three modules contain no function body.
-In $21$ L4 modules $101$ mutants are excluded as equivalent, and $20$ of them need the exclusions to reach $98\%$; the exclusions raise the L4
-score to $99.00\%$ (Table~\ref{tab:closure}). Four exclusions were decided by the repository owner and thesis author
-on 11 November and $97$ on 17 November under a delegation from the owner to the language model that assisted
-the analysis. Of the $97$ recent decisions, $90$ carry a recorded technical argument; seven rest on the owner's word because equivalence
+$45$ parallel shards of one commit, in the hash-locked environment (pandas $3.0.6$, pyod $3.6.7$, PyTorch $2.15.0$ CPU build), with a controller proof of each execution and the digest of every
+tracked file in the evidence. It covers $35{,}255$ mutants: $34{,}791$ were killed, $460$ survived and
+$4$ timed out, and a timeout is never counted as a kill. The raw scores are $100.00\%$ (L2, 1 modules),
+$98.71\%$ (L3, $18$ modules) and $98.68\%$ (L4, $78$ modules); three modules contain no function body.
+In $21$ L4 modules $98$ mutants are excluded as equivalent, and $20$ of them need the exclusions to reach $98\%$; the exclusions raise the L4
+score to $99.01\%$ (Table~\ref{tab:closure}). Four exclusions were decided by the repository owner and thesis author
+on 11 November and $94$ on 17 November under a delegation from the owner to the language model that assisted
+the analysis. Of the $94$ recent decisions, $88$ carry a recorded technical argument (two of them hold only on the CPU-only PyTorch build); six rest on the owner's word because equivalence
 could be neither shown nor refuted outside unsupported states, and only as far as a module still needed it.
 These are sole-author decisions, not independent peer review. Two separate-context model reviews of the batch
 found four mutants that had been accepted wrongly and that a test can kill; I replaced those exclusions by tests.
-The $362$ survivors that remain in passing modules stay counted as failures. This measurement certifies no
-release: the release gate is still closed.
+The $362$ survivors that remain in passing modules stay counted as failures. For commit \texttt{7c0af40d} the release script returned \emph{certified}:
+all seven profiles pass in one locked environment. The attestation is that of the continuous-integration run, not an independent one, and the verdict
+concerns that revision only; a squash-merged commit needs its own run.
 An earlier campaign over the governed scope was measured on mixed environments; its figures are superseded and
 are not added to the final ones. A focused Linux diagnostic had shown that the LSTM autoencoder module reached
 $368/377 = 97.61\%$ raw and $368/373 = 98.66\%$ after four owner-recorded equivalences, which the final campaign
@@ -1698,7 +1699,7 @@ the archived results.
 
 The same profiles were run on a hosted Linux machine for the final revision
 (an earlier revision, commit c64c6ffa, a continuous-integration run, not independently attested).
-The release script returned \emph{certified}; that verdict concerns the earlier global criterion and an earlier revision, and says nothing about the risk-tiered revision, whose release gate is closed. The routine suite and the scripts
+The release script returned \emph{certified}; that verdict concerns the earlier global criterion and an earlier revision, and says nothing about the risk-tiered revision, which is treated below. The routine suite and the scripts
 keep complete line and branch coverage, the checking scripts are fully covered
 ($1{,}975$ of $1{,}975$ lines), and the mutation campaign, run from scratch,
 kills $4{,}703$ of $4{,}808$ mutants ($97.82\%$) with no timeout. Earlier hosted
@@ -1719,12 +1720,13 @@ the module and the dependency versions of the run, and that the aggregation reje
 measurement is specific to Linux with the recorded package versions. Two accepted exclusions hold only on the
 CPU-only PyTorch build used (the same mutants are killed on an Apple GPU device), and the aggregation rejects every
 accepted record if a recorded package version changes.
-The release verification of the repository was also run end to end on hosted Linux. Every profile passes (the routine suite, the
-deliberate defects, typing and tools, the controlled reproduction, the real-data check from the three public datasets with
-verified checksums, and this campaign), and the release script nevertheless rejects the release for one reason: the profiles
-ran different versions of pandas and pyod, the real-data check in the hash-locked environment (pandas $3.0.6$) and the
-others on the latest packages ($3.1.1$). Aligning them is a choice of the certification environment, not a repair, and
-I have not made it.
+The release verification of the repository was run end to end on hosted Linux. A first full run passed every profile and the release script nevertheless rejected
+the release for one reason: the profiles had run different versions of pandas and pyod, the real-data check in the hash-locked environment (pandas $3.0.6$) and the
+others on the latest packages ($3.1.1$). Aligning them was a choice of the certification environment; I chose the lock, because pandas $3.0.6$ is the only version under which
+the archived Cardio results replay numerically, and the exclusions were rebound to the locked versions. The run of commit \texttt{5e57228e} then returned \emph{certified}.
+That campaign is the historical reference below. A review of the equivalence records afterwards found a defect in the detectors (Section on what the process contributes), whose correction
+changed the scientific source and therefore required a new measurement: the run 44303335021 of commit \texttt{7c0af40d} returned \emph{certified} again with the figures of Table~\ref{tab:closure}. Each verdict names its revision, the attestation is that of the
+continuous-integration run, and neither says that the scientific conclusions are correct.
 
 \begin{table}[t]
 \centering
@@ -1736,8 +1738,8 @@ I have not made it.
 Level & Modules & Thr. & Killed / eligible & Raw & Adj. \\
 \midrule
 L2 & 3 & $90\%$ & $10 / 10$ & $100.00\%$ & $100.00\%$ \\
-L3 & 18 & $95\%$ & $5{,}472 / 5{,}545$ & $98.68\%$ & $98.68\%$ \\
-L4 & 79 & $98\%$ & $29{,}286 / 29{,}682$ & $98.67\%$ & $99.00\%$ \\
+L3 & 18 & $95\%$ & $5{,}489 / 5{,}561$ & $98.71\%$ & $98.71\%$ \\
+L4 & 78 & $98\%$ & $29{,}292 / 29{,}684$ & $98.68\%$ & $99.01\%$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1755,10 +1757,11 @@ numerical test that expected a correlation of exactly zero where Linux computes 
 diff of two large strings whose cost made correct detections time out. Each was fixed at its cause, in the binding
 of the evidence or in a test, and none by weakening a threshold. Fourth, mutation analysis found real gaps in the
 tests: a score dtype contract, the orientation of the multivariate injection when a pair has exactly zero
-correlation, a deprecated pandas frequency alias, and the behaviour of the sharding tool itself. These are boundary
+correlation, a deprecated pandas frequency alias, and the behaviour of the sharding tool itself. Reviewing the exclusions also exposed a defect in the detectors: a fit that failed on an invalid
+contamination left a detector that scored as fitted and, for three of them, flagged nothing. It is corrected so that a fit that raises leaves the detector unchanged, and the archived
+experiments were replayed from a clean commit: every detection metric, partition and figure is identical, and only the detection times, shown in two tables, changed. These are boundary
 behaviours; I did not rerun any archived experiment, and no archived numerical result was modified.
-The limits are the ones above: sole-author decisions on equivalence, model-assisted review, one platform, unpinned
-dependency versions, and a release gate that stays closed.
+The limits are the ones above: sole-author decisions on equivalence, model-assisted review, one platform, and an attestation that is that of a continuous-integration run, not an independent one.
 
 \paragraph{Replay history and gaps.}
 The previous archive was made on a working tree with uncommitted changes (revision

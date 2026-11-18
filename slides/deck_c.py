@@ -391,7 +391,7 @@ slide(
                 900,
                 None,
                 "k",
-                "Mutation testing, 5 of 5 &nbsp;·&nbsp; final campaign, 2026-11-17",
+                "Mutation testing, 5 of 5 &nbsp;·&nbsp; final campaign, 2026-11-18",
             ),
             title("One campaign, 100 modules: all 97 with mutants meet their bar", 40, 58),
             flow(
@@ -404,8 +404,8 @@ slide(
                         ["Level", "Modules", "Bar", "Raw", "Adjusted"],
                         [
                             ["L2", "3", "90%", "100.00%", "100.00%"],
-                            ["L3", "18", "95%", "98.68%", "98.68%"],
-                            ["L4", "79", "98%", "98.67%", "99.00%"],
+                            ["L3", "18", "95%", "98.71%", "98.71%"],
+                            ["L4", "78", "98%", "98.68%", "99.01%"],
                         ],
                         best=((0, 4), (1, 4), (2, 4)),
                     )
@@ -420,9 +420,9 @@ slide(
                 160,
                 384,
                 [
-                    "<div class='stat'><span class='num'>35,237</span><span class='lab'>mutants: 34,768 killed, 463 survived, 6 timed out</span></div>",
-                    "<div class='stat'><span class='num ember'>101</span><span class='lab'>excluded as equivalent, in 21 modules. 94 carry an argument, 7 rest on the owner's word</span></div>",
-                    "<p class='note'>The other 362 survivors and the 6 timeouts still count against their modules.</p>",
+                    "<div class='stat'><span class='num'>35,255</span><span class='lab'>mutants: 34,791 killed, 460 survived, 4 timed out</span></div>",
+                    "<div class='stat'><span class='num ember'>98</span><span class='lab'>excluded as equivalent, in 21 modules. 92 carry an argument, 6 rest on the owner's word</span></div>",
+                    "<p class='note'>The other 362 survivors and the 4 timeouts still count against their modules.</p>",
                 ],
                 maxh=470,
                 gap=18,
@@ -498,7 +498,7 @@ slide(
     "".join(
         [
             kicker("What the evidence does not cover"),
-            title("A passing campaign is not a release certification", 48, 60),
+            title("A certification names one revision, not the findings", 48, 60),
             D(64, 180, 1152, 120, "", "".join(bar)),
             D(
                 64,
@@ -506,7 +506,7 @@ slide(
                 1152,
                 None,
                 "note",
-                "Final campaign, 2026-11-17: 100 classified modules, 97 with mutants all meeting their own bar, 3 without a function body. Bars count modules; the score counts mutants.",
+                "Final campaign, 2026-11-18: 100 classified modules, 97 with mutants all meeting their own bar, 3 without a function body. Bars count modules; the score counts mutants.",
             ),
             D(64, 382, 1152, 1, "hair"),
             D(
@@ -523,7 +523,7 @@ slide(
                 360,
                 None,
                 "",
-                "<div class='k anom'>Open</div><p style='font-size:19px;margin-top:8px'>The release gate now runs end to end on hosted Linux and rejects the release: the profiles ran different dependency versions.</p>",
+                "<div class='k anom'>Open</div><p style='font-size:19px;margin-top:8px'>The release script certified commit 7c0af40d, as a CI run only, not independently attested. A squash-merged commit needs its own run.</p>",
             ),
             D(
                 864,
@@ -539,7 +539,7 @@ slide(
                 1152,
                 None,
                 "",
-                "<p style='font-size:24px;font-family:var(--cond);font-weight:600'>The release gate stays closed. The pull request stays a draft.</p>",
+                "<p style='font-size:24px;font-family:var(--cond);font-weight:600'>Certified for one revision (7c0af40d), not for the findings. The pull request stays a draft.</p>",
             ),
             foot(
                 "docs/thesis-remediation/MUTATION_CLOSURE_2026-11-17.md &nbsp;·&nbsp; verification/mutation_risk_policy.json"
