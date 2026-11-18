@@ -7,22 +7,22 @@ Preserve original hypotheses, negative results, sealed artifacts, and source pro
 ## 01. Abstract and headline claims (P0; Thesis 01)
 
 - [ ] T001 Remove the claim that detector families are interchangeable.
-- [ ] T002 State that no detector dominates uniformly across evaluated datasets.
-- [ ] T003 Do not treat overlapping confidence intervals as evidence of equivalence.
+- [x] T002 State that no detector dominates uniformly across evaluated datasets.
+- [x] T003 Do not treat overlapping confidence intervals as evidence of equivalence.
 - [ ] T004 Use Average Precision (AP), not PR-AUC, if the implementation computes average_precision_score.
-- [ ] T005 Limit neural-model conclusions to the tested out-of-the-box CPU configuration.
-- [ ] T006 State the 20,000-row training cap wherever it applies.
-- [ ] T007 Qualify type-specific findings by numeric-only ML preprocessing and generic Great Expectations rules.
+- [x] T005 Limit neural-model conclusions to the tested out-of-the-box CPU configuration.
+- [x] T006 State the 20,000-row training cap wherever it applies.
+- [x] T007 Qualify type-specific findings by numeric-only ML preprocessing and generic Great Expectations rules.
 - [ ] T008 Distinguish the 100 labelled problems from the 58 typed-injection tables.
 - [ ] T009 Report the 17-detector registry accurately: three rules, eight classical, six neural.
 - [ ] T010 Keep the LSTM and drift pilots outside the 17-detector registry.
-- [ ] T011 Replace general neural-cost claims with architecture-specific conclusions.
+- [x] T011 Replace general neural-cost claims with architecture-specific conclusions.
 - [ ] T012 Rewrite the abstract after corrected analyses; remove superseded claims.
 
 ## 02. Introduction and research questions (P0; Thesis 01)
 
 - [ ] T013 Define the ETL data-quality problem precisely.
-- [ ] T014 Distinguish statistical outliers from actual data-quality defects.
+- [x] T014 Distinguish statistical outliers from actual data-quality defects.
 - [ ] T015 Explain limitations of rules, statistics, classical ML, and deep learning.
 - [ ] T016 State the specific gap addressed in prior research.
 - [ ] T017 Present the 17 detectors as one coherent experimental registry.
@@ -31,8 +31,8 @@ Preserve original hypotheses, negative results, sealed artifacts, and source pro
 - [ ] T020 Map each research question to protocols and metrics.
 - [ ] T021 State the demonstrated contributions: operational comparison, typed faults, thresholds, temporal shift, and cost.
 - [ ] T022 Do not present dataset count as the principal novelty.
-- [ ] T023 Define whether the setting covers batch ETL, streaming, or both.
-- [ ] T024 Define deployability: label access, thresholding, cost, stability, maintenance, and false positives.
+- [x] T023 Define whether the setting covers batch ETL, streaming, or both.
+- [x] T024 Define deployability: label access, thresholding, cost, stability, maintenance, and false positives.
 - [ ] T025 Review whether the title reflects ETL data-quality evaluation accurately.
 
 ## 03. Related work and source verification (P0; Thesis 01)
