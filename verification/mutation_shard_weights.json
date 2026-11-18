@@ -37,6 +37,7 @@
   "research/pool_full.py": 515,
   "research/pool_preprocessing.py": 248,
   "research/pool_train_only.py": 332,
+  "research/neural_budget_probe.py": 150,
   "research/pool_train_only_compare.py": 150,
   "research/pool_train_only_replay.py": 150,
   "research/pool_typed.py": 525,
