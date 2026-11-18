@@ -97,3 +97,19 @@ def test_the_shard_evidence_binds_the_packages_that_equivalence_records_rely_on(
     assert set(mutation_shards.PACKAGES) == set(evidence_schema.PACKAGES)
     pins = _pins(real_preflight.LINUX_LOCK)
     assert pins["scipy"] == "1.17.1" and pins["great-expectations"] == "1.24.0"
+
+
+def test_every_accepted_equivalence_record_binds_only_canonical_versions():
+    canonical = _pins(real_preflight.LINUX_LOCK) | _pins(EXTRAS)
+    records = json.loads((ROOT / "verification/mutation_equivalence.json").read_text())["records"]
+    stale = {
+        record["id"]: {
+            name: version
+            for name, version in record["environment"].items()
+            if canonical.get(name) != version
+        }
+        for record in records
+        if record["verdict"] == "accepted"
+    }
+    stale = {key: value for key, value in stale.items() if value}
+    assert stale == {}, f"{len(stale)} accepted record(s) bind a non-canonical dependency version"

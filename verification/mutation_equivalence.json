@@ -402,13 +402,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -440,13 +445,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -478,13 +488,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -516,13 +531,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -554,13 +574,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -592,13 +617,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -629,13 +659,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -667,13 +702,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -705,7 +745,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "scikit-learn": "1.9.1"
       },
       "assessments": [
@@ -713,6 +753,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -744,7 +789,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "scikit-learn": "1.9.1"
       },
       "assessments": [
@@ -752,6 +797,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -783,7 +833,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "scikit-learn": "1.9.1"
       },
       "assessments": [
@@ -791,6 +841,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -822,7 +877,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "scikit-learn": "1.9.1"
       },
       "assessments": [
@@ -830,6 +885,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -861,7 +921,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "scikit-learn": "1.9.1"
       },
       "assessments": [
@@ -869,6 +929,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -900,7 +965,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "scikit-learn": "1.9.1"
       },
       "assessments": [
@@ -908,6 +973,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -939,7 +1009,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "scikit-learn": "1.9.1"
       },
       "assessments": [
@@ -947,6 +1017,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -978,7 +1053,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "scikit-learn": "1.9.1"
       },
       "assessments": [
@@ -986,6 +1061,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1017,7 +1097,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "scikit-learn": "1.9.1"
       },
       "assessments": [
@@ -1025,6 +1105,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1056,7 +1141,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "scikit-learn": "1.9.1"
       },
       "assessments": [
@@ -1064,6 +1149,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1095,7 +1185,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "scikit-learn": "1.9.1"
       },
       "assessments": [
@@ -1103,6 +1193,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1134,7 +1229,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "scikit-learn": "1.9.1"
       },
       "assessments": [
@@ -1142,6 +1237,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1173,7 +1273,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "scikit-learn": "1.9.1"
       },
       "assessments": [
@@ -1181,6 +1281,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1212,7 +1317,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "scikit-learn": "1.9.1"
       },
       "assessments": [
@@ -1220,6 +1325,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1251,7 +1361,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "scikit-learn": "1.9.1"
       },
       "assessments": [
@@ -1259,6 +1369,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1290,7 +1405,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "scikit-learn": "1.9.1"
       },
       "assessments": [
@@ -1298,6 +1413,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1329,13 +1449,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1367,13 +1492,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1405,13 +1535,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1443,13 +1578,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1481,13 +1621,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1519,13 +1664,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1557,13 +1707,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1595,13 +1750,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1633,13 +1793,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1671,13 +1836,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1709,13 +1879,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1747,13 +1922,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1785,13 +1965,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1823,13 +2008,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1861,13 +2051,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1899,13 +2094,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1937,13 +2137,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -1975,7 +2180,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "scikit-learn": "1.9.1"
       },
       "assessments": [
@@ -1983,6 +2188,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -2014,7 +2224,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "scikit-learn": "1.9.1"
       },
       "assessments": [
@@ -2022,6 +2232,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -2053,7 +2268,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "scikit-learn": "1.9.1"
       },
       "assessments": [
@@ -2061,6 +2276,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -2092,7 +2312,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "scikit-learn": "1.9.1"
       },
       "assessments": [
@@ -2100,6 +2320,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -2131,13 +2356,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -2206,7 +2436,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "torch": "2.15.0+cpu"
       },
       "assessments": [
@@ -2214,6 +2444,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -2245,7 +2480,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "torch": "2.15.0+cpu"
       },
       "assessments": [
@@ -2253,6 +2488,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -2284,7 +2524,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "torch": "2.15.0+cpu"
       },
       "assessments": [
@@ -2292,6 +2532,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -2360,15 +2605,20 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
-        "torch": "2.15.0+cpu",
-        "pyod": "3.6.8"
+        "pandas": "3.0.6",
+        "pyod": "3.6.7",
+        "torch": "2.15.0+cpu"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "INCONCLUSIVE",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -2399,7 +2649,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "torch": "2.15.0+cpu"
       },
       "assessments": [
@@ -2407,6 +2657,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -2437,7 +2692,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "torch": "2.15.0+cpu"
       },
       "assessments": [
@@ -2445,6 +2700,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -2476,7 +2736,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "torch": "2.15.0+cpu"
       },
       "assessments": [
@@ -2484,6 +2744,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "INCONCLUSIVE",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -2515,13 +2780,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -2552,7 +2822,7 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
         "torch": "2.15.0+cpu"
       },
       "assessments": [
@@ -2560,6 +2830,11 @@
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -2591,13 +2866,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -2629,13 +2909,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -2667,13 +2952,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -2705,13 +2995,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -2743,13 +3038,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -2781,13 +3081,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -2819,13 +3124,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -2856,14 +3166,20 @@
       "decision_date": "2026-11-17",
       "policy_version": 2,
       "environment": {
+        "great-expectations": "1.24.0",
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -2894,14 +3210,20 @@
       "decision_date": "2026-11-17",
       "policy_version": 2,
       "environment": {
+        "great-expectations": "1.24.0",
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -2932,14 +3254,20 @@
       "decision_date": "2026-11-17",
       "policy_version": 2,
       "environment": {
+        "great-expectations": "1.24.0",
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -2970,14 +3298,20 @@
       "decision_date": "2026-11-17",
       "policy_version": 2,
       "environment": {
+        "great-expectations": "1.24.0",
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3008,14 +3342,20 @@
       "decision_date": "2026-11-17",
       "policy_version": 2,
       "environment": {
+        "great-expectations": "1.24.0",
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3046,14 +3386,20 @@
       "decision_date": "2026-11-17",
       "policy_version": 2,
       "environment": {
+        "great-expectations": "1.24.0",
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3084,14 +3430,20 @@
       "decision_date": "2026-11-17",
       "policy_version": 2,
       "environment": {
+        "great-expectations": "1.24.0",
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3122,14 +3474,20 @@
       "decision_date": "2026-11-17",
       "policy_version": 2,
       "environment": {
+        "great-expectations": "1.24.0",
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3161,15 +3519,20 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
-        "scikit-learn": "1.9.1",
-        "pyod": "3.6.8"
+        "pandas": "3.0.6",
+        "pyod": "3.6.7",
+        "scikit-learn": "1.9.1"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3201,15 +3564,20 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
-        "scikit-learn": "1.9.1",
-        "pyod": "3.6.8"
+        "pandas": "3.0.6",
+        "pyod": "3.6.7",
+        "scikit-learn": "1.9.1"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3241,15 +3609,20 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
-        "scikit-learn": "1.9.1",
-        "pyod": "3.6.8"
+        "pandas": "3.0.6",
+        "pyod": "3.6.7",
+        "scikit-learn": "1.9.1"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3281,15 +3654,20 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
-        "scikit-learn": "1.9.1",
-        "pyod": "3.6.8"
+        "pandas": "3.0.6",
+        "pyod": "3.6.7",
+        "scikit-learn": "1.9.1"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3321,15 +3699,20 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
-        "scikit-learn": "1.9.1",
-        "pyod": "3.6.8"
+        "pandas": "3.0.6",
+        "pyod": "3.6.7",
+        "scikit-learn": "1.9.1"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3361,15 +3744,20 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
-        "scikit-learn": "1.9.1",
-        "pyod": "3.6.8"
+        "pandas": "3.0.6",
+        "pyod": "3.6.7",
+        "scikit-learn": "1.9.1"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3401,15 +3789,21 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
+        "pandas": "3.0.6",
+        "pyod": "3.6.7",
         "scikit-learn": "1.9.1",
-        "pyod": "3.6.8"
+        "scipy": "1.17.1"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3441,15 +3835,20 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
-        "scikit-learn": "1.9.1",
-        "pyod": "3.6.8"
+        "pandas": "3.0.6",
+        "pyod": "3.6.7",
+        "scikit-learn": "1.9.1"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "INCONCLUSIVE",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3481,15 +3880,20 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
-        "scikit-learn": "1.9.1",
-        "pyod": "3.6.8"
+        "pandas": "3.0.6",
+        "pyod": "3.6.7",
+        "scikit-learn": "1.9.1"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "INCONCLUSIVE",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3521,15 +3925,20 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
-        "scikit-learn": "1.9.1",
-        "pyod": "3.6.8"
+        "pandas": "3.0.6",
+        "pyod": "3.6.7",
+        "scikit-learn": "1.9.1"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "INCONCLUSIVE",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3561,15 +3970,20 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
-        "scikit-learn": "1.9.1",
-        "pyod": "3.6.8"
+        "pandas": "3.0.6",
+        "pyod": "3.6.7",
+        "scikit-learn": "1.9.1"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "INCONCLUSIVE",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3601,15 +4015,20 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1",
-        "scikit-learn": "1.9.1",
-        "pyod": "3.6.8"
+        "pandas": "3.0.6",
+        "pyod": "3.6.7",
+        "scikit-learn": "1.9.1"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "INCONCLUSIVE",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3641,13 +4060,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3679,13 +4103,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3717,13 +4146,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3755,13 +4189,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3793,13 +4232,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3831,13 +4275,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3869,13 +4318,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3907,13 +4361,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3945,13 +4404,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -3983,13 +4447,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -4021,13 +4490,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -4058,13 +4532,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",
@@ -4095,13 +4574,18 @@
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
-        "pandas": "3.1.1"
+        "pandas": "3.0.6"
       },
       "assessments": [
         {
           "assessor": "assistant (author of the candidate analysis)",
           "verdict": "ACCEPT",
           "note": "technical assessment only; not an owner decision"
+        },
+        {
+          "assessor": "assistant (revalidation under the locked environment)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The mutant survived natively under the hash-locked environment (hosted run 44179716383, pandas 3.0.6, pyod 3.6.7); the version binding was changed from the earlier environment and the argument, verdict and approver are unchanged."
         },
         {
           "assessor": "theobigand (owner), decision delegated to the assistant",

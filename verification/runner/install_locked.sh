@@ -33,7 +33,8 @@ python -c 'import sys; sys.exit(sys.version_info[:2] != (3, 11))' \
   || { echo "the lock is for CPython 3.11" >&2; exit 1; }
 
 python -m venv "$venv"
-pip_install=("$venv/bin/python" -m pip install --quiet --disable-pip-version-check --no-input)
+pip_install=("$venv/bin/python" -m pip install --quiet --disable-pip-version-check --no-input
+  --retries 10 --timeout 60)
 "${pip_install[@]}" --require-hashes --no-deps --only-binary=:all: -r "$lock"
 check=("$lock")
 if [ "$extras" = 1 ]; then
