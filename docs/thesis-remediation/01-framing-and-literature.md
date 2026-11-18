@@ -41,8 +41,8 @@ Preserve original hypotheses, negative results, sealed artifacts, and source pro
 - [ ] T027 Remove "I read the abstract only".
 - [ ] T028 Correct "not stated in the abstract" in Table I.
 - [ ] T029 Review verified 2025–2026 tabular anomaly-detection benchmarks.
-- [ ] T030 Verify the proposed MacrOData reference, publication, authors, dataset counts, and conclusions before citing it.
-- [ ] T031 Verify the proposed 2025 enterprise-ETL autoencoder reference and its actual scope.
+- [x] T030 Verify the proposed MacrOData reference, publication, authors, dataset counts, and conclusions before citing it.
+- [x] T031 Verify the proposed 2025 enterprise-ETL autoencoder reference and its actual scope.
 - [ ] T032 Compare prior studies on detector families, datasets, faults, rules, drift, costs, and reproducibility.
 - [ ] T033 Explain the added value over ADBench and generic outlier benchmarks.
 - [ ] T034 Separate statistical outlier detection, data-quality validation, drift monitoring, and ETL integration.
