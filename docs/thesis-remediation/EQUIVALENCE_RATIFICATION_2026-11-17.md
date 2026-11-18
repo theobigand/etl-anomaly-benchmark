@@ -1,6 +1,6 @@
 # Ratification of the delegated equivalence records, 2026-11-17 (reviewed 2026-11-18, updated after the failed-fit correction)
 
-Decision packet for the owner. The certified campaign (`verify-release` run 44303335021, revision `7c0af40`) passes
+Decision packet for the owner, with the owner's ratification recorded in the section "Owner ratification (2026-11-18)". The certified campaign (`verify-release` run 44303335021, revision `7c0af40`) passes
 with 98 exclusions in `verification/mutation_equivalence.json`: 4 owner records of 2026-11-11 (LSTM) and 94 records of
 2026-11-17 that were decided under the owner's delegation. A model review is not a human scientific approval, and these
 records are sole-author decisions (`sole_author_owner_review`), not independent peer review. This file changes no
@@ -22,6 +22,22 @@ the LSTM records and the two CPU-only records are untouched.
 | device-dependent | 2 | equivalent only on the CPU-only PyTorch build of the campaign |
 
 Together with the 4 accepted LSTM records, 98 exclusions.
+
+## Owner ratification (2026-11-18)
+
+The owner (`theobigand`) explicitly ratified the delegated decisions on 2026-11-18, after reading this packet. This is an owner
+ratification of the existing decisions of 2026-11-17, not independent scientific peer review. `verification/mutation_equivalence.json`
+is not rewritten: it already names the owner as approver of these records, and the certified evidence binds its digest.
+
+| Group | Records | Decision and limits |
+| --- | ---: | --- |
+| A, analysis-backed | 86 | Ratified, with their recorded input contracts, source digests and dependency bindings. Known limit kept: three `run_severity.py` records (`render__mutmut_24`, `_27`, `_28`) rely on matplotlib pixel identity; matplotlib is pinned in the Linux lock but the validator does not enforce its version. No stronger portability is claimed |
+| B, supported-contract | 6 | Ratified within their documented supported contracts: `PaddedAE1SVM.fit__mutmut_11`, `ReconstructionModel.__init____mutmut_4`, `TailProbabilityModel.__init____mutmut_3`, `_5`, `_10`, `PCAReconstruction.__init____mutmut_9`. The two `threshold_` records are accepted because the failed-fit correction removes the difference from the supported public detectors; this is not a claim of equivalence for arbitrary internal states |
+| C, CPU-dependent | 2 | Ratified strictly for the certified Linux environment with `torch 2.15.0+cpu` (`FitScalerDIF._deep_representation__mutmut_14`, `MeanVAE.evaluating_forward__mutmut_3`). Environment-scoped, not universal: the mutants are killed on Apple MPS, and the validator keeps rejecting other torch builds. No extension to MPS, CUDA or any other environment without new evidence and authorisation |
+| D, LSTM | 4 accepted, 5 inconclusive | Preserved exactly; not reopened or reclassified |
+| Inactive | 3 | `PyODDetector.__init____mutmut_4`, `_5`, `_6` stay `proposed` with empty approver and date: killed natively by the corrected implementation and `tests/test_detector_failed_fit.py`. They count as no exclusion, keep their assessment history, and are neither deleted nor given a new status |
+
+Revoking any record of the eight zero-slack units would have failed the unit; none was revoked.
 
 ## 1. The six records on the owner's word
 

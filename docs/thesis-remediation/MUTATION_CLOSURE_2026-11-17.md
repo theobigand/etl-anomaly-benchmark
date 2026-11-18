@@ -19,7 +19,7 @@ the earlier results as history, marked as such.
 | Exclusions | 98 accepted equivalences in 21 units: 4 LSTM records decided by the owner on 2026-11-11 and 94 delegated records of 2026-11-17 (86 analysis-backed, 6 on the owner's word, 2 CPU-only). Eight units have no slack: revoking any one of their records fails the unit |
 | Scientific correction | a detector fit that raised left a half-fitted detector that scored as fitted; corrected in `5de925a` with regression tests (section A, "Failed-fit correction"). The nine archived experiments that depend on the changed source were replayed from a clean commit: every scientific result is identical; only detection timings changed |
 | Branch | `feat/risk-tiered-mutation-policy`, 0 commits behind `main`, mergeable without conflict, draft. Commits after the certified revision change documentation and archived evidence only (section C) |
-| Owner decisions outstanding | confirmation of the three `ml.py` records returned to `proposed`; the two records on the owner's word that remain exclusions (`PCAReconstruction.__init____mutmut_9`, `TailProbabilityModel.__init____mutmut_10`); the two CPU-only records; the delegated records to ratify or revoke; squash merge; tag publication |
+| Owner decisions | made on 2026-11-18 (owner ratification, not independent peer review): the 94 delegated records ratified within their documented limits (86 analysis-backed, 6 supported-contract, 2 CPU-only for `torch 2.15.0+cpu` only); LSTM records preserved; the three `PyODDetector.__init__` records stay `proposed`; history tag, squash merge and post-merge certification authorised. See `EQUIVALENCE_RATIFICATION_2026-11-17.md`, "Owner ratification" |
 | Not claimed | independent scientific certification; certification of any revision other than `7c0af40`; certification of the squash commit |
 
 ## A. Compliance
@@ -188,29 +188,20 @@ the observable behaviour behind the two records on the owner's word that remain 
   found the same totals as the run of `5e57228`; its own aggregation failed by design because the records still bound
   pandas 3.1.1 at that commit.
 
-## B. Owner decisions outstanding
+## B. Owner decisions (made 2026-11-18)
 
-Technical findings and per-record reasoning are in `EQUIVALENCE_RATIFICATION_2026-11-17.md`. Nothing is ratified or revoked
-on the owner's behalf. In short:
+The owner ratified the 94 delegated records, within the limits recorded in `EQUIVALENCE_RATIFICATION_2026-11-17.md` ("Owner
+ratification"); this is owner ratification, not independent peer review, and the ledger file is not rewritten. In short:
 
-1. **Three records returned to `proposed`.** `PyODDetector.__init____mutmut_4`, `_5` and `_6` are now killed by the failed-fit
-   tests, so they are no longer excluded. Confirm that they stay `proposed` (the validator ignores them) or delete them.
-2. **Two records on the owner's word that remain exclusions**: `PCAReconstruction.__init____mutmut_9` and
-   `TailProbabilityModel.__init____mutmut_10`. They are unobservable through the public detectors after the correction.
-   Keep them, or ask for a test of the declared initial state. `ml.py` tolerates revoking one of them (248/253 = 98.02%),
-   not both (97.64%).
-3. **Four defensible records on the owner's word** (`PaddedAE1SVM.fit__mutmut_11`, `ReconstructionModel.__init____mutmut_4`,
-   `TailProbabilityModel.__init____mutmut_3` and `_5`): ratify or revoke; revoking any of them fails its unit.
-4. **Two CPU-only records.** Keep strictly as exclusions bound to `torch 2.15.0+cpu`, or revoke. They are not
-   equivalences: the public `estimator_kwargs` accept other devices and the mutants are killed on Apple MPS. Revoking
-   one fails `_torch_models.py` (58/60 = 96.67%). A CPU-only killer exists (a `meta` device, checked locally on torch
-   2.14.1) and would remove the dependence on the build; adding it changes the test tree and so needs a new campaign.
-5. **The other 86 analysis-backed delegated records.** Technical recommendation: ratify. Integrity checks pass (section C);
-   the one known limit is the unbound matplotlib version of three records.
-6. **LSTM consistency.** Recommendation: leave the 2026-11-11 decisions as they are; the five inconclusive records keep their
-   verdicts.
-7. **Merge and tag.** Authorise or refuse the squash merge; authorise creating and pushing the history tag (section C).
-   Nothing is merged or tagged automatically.
+1. **Three records stay `proposed`** (`PyODDetector.__init____mutmut_4`, `_5`, `_6`): killed by the corrected implementation, no
+   exclusion, history kept.
+2. **Six supported-contract records ratified**, including `PCAReconstruction.__init____mutmut_9` and
+   `TailProbabilityModel.__init____mutmut_10`, accepted because the correction hides their former difference from the public detectors,
+   not as equivalence for arbitrary internal states. `ml.py` keeps slack 1.
+3. **Two CPU-only records ratified for `torch 2.15.0+cpu` only**; not extended to MPS, CUDA or other builds.
+4. **86 analysis-backed records ratified**; the unbound matplotlib version of three `run_severity.py` records remains a documented limit.
+5. **LSTM decisions** preserved: 4 accepted, 5 inconclusive.
+6. **Integration authorised**: tag `archive/pr-117-pre-squash`, squash merge, post-merge CI and a fresh `verify-release` on the squash commit.
 
 ## C. Integration readiness
 
@@ -255,7 +246,7 @@ changed) keeps the certification current for HEAD. That is not a new certificati
 
 The PR is draft, so GitHub reports the merge state as blocked until it is marked ready.
 
-### History tag (prepared, not created)
+### History tag (authorised on 2026-11-18; the tag target is the branch head after this report, recorded in PR #117)
 
 The repository has no tags and no tag convention. Proposed annotated tag: `archive/pr-117-pre-squash`. Pushing a tag
 triggers no workflow: `ci.yml` runs on pushes to and pull requests on `main`, `thesis-roadmap-sync.yml` on pushes to `main`,
@@ -275,7 +266,7 @@ git rev-parse 'archive/pr-117-pre-squash^{commit}'          # must equal HEAD_SH
 git push origin archive/pr-117-pre-squash                  # publication; owner authorisation required
 ```
 
-### Squash merge and post-merge certification (not executed)
+### Squash merge and post-merge certification (authorised on 2026-11-18; outcome recorded in PR #117, #116 and the post-merge evidence)
 
 Squash merge is recommended: it keeps `main` readable and the tag keeps the 355 commits, including every commit that the
 evidence cites (`eb1d679`, `d4d21895`, `215da02`, `51ad0794`, `8e50b699`, `d3abc54`, `5e57228`, `5de925a`, `401c7bf`, `7c0af40`). The squash commit has a new
@@ -305,6 +296,5 @@ layout matrix passes in the seven font configurations with no issue.
 
 ### Verdict
 
-Ready for owner review. The certified revision (`7c0af40`), its evidence and the equivalence records are consistent, and the
-branch merges cleanly. Not claimed: independent scientific certification, or certification of the squash commit. PR #117
-stays a draft until the owner decides section B.
+Ratified by the owner and ready to integrate. The certified revision (`7c0af40`), its evidence and the equivalence records are consistent, and the
+branch merges cleanly. Not claimed: independent scientific certification, or certification of the squash commit. The owner decided section B on 2026-11-18 and authorised the integration; the squash commit needs its own CI and its own `verify-release` run.
