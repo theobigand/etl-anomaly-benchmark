@@ -1,0 +1,10 @@
+python 3.11.17 pandas 3.0.6 source_sha256 cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035
+original result (False, '0 anomalies in the test partition (at least 20)')
+x_eligible__mutmut_7 error ValueError Mixed timezones detected. Pass utc=True in to_datetime or tz='UTC' in DatetimeIndex to convert to a common timezone.
+x_eligible__mutmut_9 error ValueError Mixed timezones detected. Pass utc=True in to_datetime or tz='UTC' in DatetimeIndex to convert to a common timezone.
+x_eligible__mutmut_10 error ValueError Mixed timezones detected. Pass utc=True in to_datetime or tz='UTC' in DatetimeIndex to convert to a common timezone.
+python 3.11.17 pandas 3.1.1 source_sha256 cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035
+original result (False, '0 anomalies in the test partition (at least 20)')
+x_eligible__mutmut_7 error ValueError Mixed timezones detected. Pass utc=True in to_datetime or tz='UTC' in DatetimeIndex to convert to a common timezone.
+x_eligible__mutmut_9 error ValueError Mixed timezones detected. Pass utc=True in to_datetime or tz='UTC' in DatetimeIndex to convert to a common timezone.
+x_eligible__mutmut_10 error ValueError Mixed timezones detected. Pass utc=True in to_datetime or tz='UTC' in DatetimeIndex to convert to a common timezone.

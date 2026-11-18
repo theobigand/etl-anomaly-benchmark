@@ -1,7 +1,7 @@
 # Contrat de certification
 
 `make verify-release` (`python -m verification.release`) applique la politique
-versionnée `verification/release_policy.json` (version 1) aux preuves du
+versionnée `verification/release_policy.json` (version 2) aux preuves du
 dépôt à l'état courant. Le verdict est `CERTIFIED`, `INCOMPLETE` ou
 `REJECTED` ; il est écrit dans `experiments/results/evidence/release.json`
 avec la politique appliquée.
@@ -11,7 +11,7 @@ avec la politique appliquée.
 | Preuve | Statut dans la politique | Ce qu'elle établit |
 | --- | --- | --- |
 | `fast` | exigée | Tests réussis, couverture de lignes et de branches de 100 % sur `src/etl_benchmark` et `experiments`, chiffres et affirmations du manuscrit (`tests/test_manuscript_claims.py`). |
-| `deep` | exigée | Au moins 95 % des mutants tués sur l'ensemble des fichiers éligibles (relevé indépendant dans `mutation_scope.json`), liste des fichiers réellement mutés. |
+| `deep` | exigée | Une campagne native liée à son exécution, dont chaque module classifié respecte indépendamment L1 80 %, L2 90 %, L3 95 % ou L4 98 %, avec catalogue, inventaire et artefacts bruts vérifiables. Les anciennes enveloppes globales à 95 % sont archivables mais ne certifient plus une release courante. |
 | `faults` | exigée | Chacun des défauts scientifiques délibérés est détecté et le témoin passe. |
 | `real` | exigée | Les trois jeux complets existent, correspondent aux empreintes de référence et passent leurs contrôles. |
 | `tools` | exigée | Couverture de 100 % des lignes et des branches du code de vérification (`verification/`). |
@@ -21,6 +21,12 @@ avec la politique appliquée.
 | `manuscript_claims` | sans objet | Vérifié dans `fast`. |
 | `independent_attestation` | différée | Aucun tiers n'atteste les preuves. |
 | `linux_environment_lock` | différée | Le verrou d'environnement ne couvre que osx-arm64 (issue 45). |
+
+La preuve `deep` doit provenir d'un environnement Linux (`deep_platform` dans la politique) : le
+runtime lié à la campagne est vérifié, et une campagne exécutée sous une autre plateforme n'est
+qu'un diagnostic. Les résultats de plateformes différentes ne sont jamais combinés (les fragments d'une
+campagne partagent un contexte identique). Le verrou d'environnement reste différé pour Linux ;
+la preuve `reproduction` n'en dépend pas pour la campagne de mutation.
 
 Chaque preuve est une enveloppe validée par `verification/evidence_schema.py` :
 statut recalculé à partir du résultat (jamais lu tel quel), hachages des
@@ -50,7 +56,7 @@ leurs critères.
 - Qu'une personne ou un système indépendant a attesté ces preuves. Le champ
   `attestation` vaut `local-unattested` hors CI et `ci-run:<id> (not
   independently attested)` en CI.
-- Qu'un score de mutation de 95 % élimine tout défaut : les mutants survivants
+- Qu'un seuil de mutation atteint élimine tout défaut : les mutants survivants
   restent comptés et décrits dans `mutation_notes.md`.
 - La validité scientifique des conclusions au-delà des jeux et des graines
   testés, ni le coût d'une exécution ETL complète : les durées mesurent la

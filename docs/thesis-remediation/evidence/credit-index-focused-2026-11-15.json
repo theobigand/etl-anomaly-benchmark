@@ -1,0 +1,54 @@
+{
+  "kind": "two-mutant focused native run; not full unit or campaign",
+  "command": "OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES ~/.cache/etl-mutation-venv/bin/python -m mutmut run 'research.temporal_decision.x_credit_card__mutmut_12' 'research.temporal_decision.x_credit_card__mutmut_17' --max-children 1",
+  "exit_status": 0,
+  "git_head_at_start": "e33308a63e7f588c768943ef013b3224fc015f15",
+  "worktree": "credit-card regression and triage changes uncommitted",
+  "filesystem": "case-insensitive; probed with differently cased filename",
+  "context_after_run": {
+    "revision": "e33308a63e7f588c768943ef013b3224fc015f15",
+    "tests_sha256": "e4e744ad34ad6cc87ce4b7b75a792b262dcbc7536dee2291435d457f35626ed6",
+    "configuration_sha256": "e61a357cfc671a864d0e1f80831e375659dfc57bf4c85dbaf3f3f21593e5eaa0",
+    "runtime": {
+      "python": "3.11.17",
+      "platform": "macOS-27.2-arm64-arm-64bit",
+      "packages": {
+        "pytest": "9.1.1",
+        "pytest-cov": "7.1.0",
+        "mutmut": "3.8.0",
+        "numpy": "2.4.6",
+        "pandas": "3.1.1",
+        "scikit-learn": "1.9.1",
+        "pyod": "3.6.7",
+        "mypy": null,
+        "pandas-stubs": null,
+        "torch": "2.15.0"
+      }
+    }
+  },
+  "context_limit": "test digest covers Python tests under tests and research/tests only; excludes non-Python inputs and slides tests",
+  "files": {
+    "source": {
+      "path": "research/temporal_decision.py",
+      "sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8"
+    },
+    "metadata": {
+      "path": "docs/thesis-remediation/evidence/credit-index-focused-2026-11-15.meta.json",
+      "sha256": "7cde94a15c2e742ca3d86e8a39cdae3387ea493e740283a08a95dc6f1036d0cc"
+    },
+    "native_log": {
+      "path": "docs/thesis-remediation/evidence/credit-index-focused-2026-11-15.log",
+      "sha256": "4b0d57f59412738a47b690b17ae885e45e20b6e6103d4b4542279ac2df3a4591"
+    }
+  },
+  "records": [
+    {
+      "id": "research.temporal_decision.x_credit_card__mutmut_12",
+      "native_verdict_exit_code": 1
+    },
+    {
+      "id": "research.temporal_decision.x_credit_card__mutmut_17",
+      "native_verdict_exit_code": 1
+    }
+  ]
+}

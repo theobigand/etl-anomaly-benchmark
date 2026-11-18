@@ -11,6 +11,21 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import temporal_decision as td  # noqa: E402
 
 
+@pytest.fixture(autouse=True)
+def _few_resamples(monkeypatch):
+    """The interval is tested on its own; here a few resamples keep every run short."""
+    monkeypatch.setattr(td, "RESAMPLES", 20)
+
+
+def test_help_describes_the_study_and_protocol(capsys):
+    with pytest.raises(SystemExit) as stop:
+        td.main(["--help"])
+    assert stop.value.code == 0
+    text = " ".join(capsys.readouterr().out.split())
+    assert "Decisions under temporal shift" in text
+    assert "verification/temporal_decision.md" in text
+
+
 def test_thresholds_follow_the_three_policies():
     train = np.arange(100.0)
     val = np.arange(100.0) + 50

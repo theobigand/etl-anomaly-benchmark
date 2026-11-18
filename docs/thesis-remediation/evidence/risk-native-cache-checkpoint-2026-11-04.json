@@ -1,0 +1,92 @@
+{
+  "archive": {
+    "path": "risk-native-cache-verification-2026-11-04.tgz",
+    "sha256": "aa3c39dbbd75613b575d8c95e6fb2d0ea32727c4466a34e3d2faf750ed985c32",
+    "verified_members": 26
+  },
+  "base_revision": "36523257350d8e16deb0f6621a69c889ac6cf8df",
+  "date": "2026-11-04",
+  "fast": {
+    "covered_branches": 350,
+    "covered_lines": 1790,
+    "measured_branches": 350,
+    "measured_lines": 1790,
+    "status": "PASS",
+    "tests_passed": 1557
+  },
+  "issue": 116,
+  "kind": "development-verification-checkpoint",
+  "mutation_current_snapshot": "NOT_RUN; previous focused 403/469 FAIL belongs to its preserved earlier snapshot",
+  "pending": [
+    "managed native execution and observed runtime collection",
+    "evidence/release/CI integration",
+    "full risk-scoped mutation compliance",
+    "pinned typing gate (local checker/stubs unavailable)",
+    "independent review"
+  ],
+  "policy_version": 2,
+  "promotion_eligible": false,
+  "publication": {
+    "geometry": {
+      "artifacts": {
+        "slides/thesis_progress.html": "5159f57b2fec7ef1a66c2e2e94a66267ddca17ded0f1daa5f7f8eef6efdf6c63",
+        "slides/thesis_progress.pdf": "c04fc1186cc05adffd5ba41c1e4a53267b630055e5e63e8bde31404245bc0933"
+      },
+      "errors": [],
+      "navigation": {
+        "after": "8 / 41",
+        "back": "7 / 41",
+        "before": "7 / 41",
+        "pass": true
+      },
+      "slides": 41,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    "paper_pages": 23,
+    "slides": 41
+  },
+  "risk": "L4",
+  "sources": {
+    "pyproject.toml": "403ab8361d2d48d6332615decdd7d4e647b59c884a36f9b3318de6003f4de089",
+    "tests/test_mutation_catalog.py": "41150c8161810ac274d0060960c83333f105a5c4ad4cdd469e9ef9f2e982af7b",
+    "tests/test_mutation_risk_inventory.py": "556a57eb975ed5c4f1f8275362f839031d953d0067dce73c8c77a80df7d890c5",
+    "tests/test_mutation_risk_policy.py": "6f7a146b09b02ae61ad704e085a749161614587b6ed064ec6d5389649963509b",
+    "tests/verifier/test_mutation_cache.py": "584fb70cb8412ae122141de3f80b51836019d3525a488c7af51f4aeef8d771ce",
+    "tests/verifier/test_mutation_execution.py": "5c423f44327cc59192873d2ea4ef448397f36f56595fd6f14d8f6ac3c6eeaa66",
+    "verification/mutation_cache.py": "8f04088a2aaedf75b8429138e8a6e5c48e6f352327ce3cf961f8eb055d25f816",
+    "verification/mutation_catalog.py": "3a462fb1ed9b031c752e099b5fa8f3f68dc36d0817957554fbdaffe3f436323d",
+    "verification/mutation_policy.py": "55a9550403af87202b00be8b5611f690076846843b24436c990160be710544f5",
+    "verification/mutation_risk_policy.json": "b146a72fa63fa21c8aba4770836d19b811125e992d8b765376137bb42d0f0f0e"
+  },
+  "status": "INCOMPLETE",
+  "targeted": {
+    "covered_branches": 264,
+    "covered_lines": 531,
+    "measured_branches": 264,
+    "measured_lines": 531,
+    "tests_passed": 225
+  },
+  "tools": {
+    "coverage": {
+      "covered_branches": 970,
+      "covered_lines": 2475,
+      "excluded_lines": 0,
+      "missing_branches": 0,
+      "missing_lines": 0,
+      "num_branches": 970,
+      "num_partial_branches": 0,
+      "num_statements": 2475,
+      "percent_branches_covered": 100.0,
+      "percent_branches_covered_display": "100",
+      "percent_covered": 100.0,
+      "percent_covered_display": "100",
+      "percent_statements_covered": 100.0,
+      "percent_statements_covered_display": "100"
+    },
+    "status": "PASS"
+  },
+  "worktree_dirty": true
+}

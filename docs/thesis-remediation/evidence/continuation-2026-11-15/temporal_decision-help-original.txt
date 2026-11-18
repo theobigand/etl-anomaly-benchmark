@@ -1,0 +1,9 @@
+usage: temporal_decision [-h] --output OUTPUT [--bank BANK]
+
+Decisions under temporal shift: threshold policies and a prevalence-matched
+control (#63). Protocol: verification/temporal_decision.md.
+
+options:
+  -h, --help       show this help message and exit
+  --output OUTPUT
+  --bank BANK

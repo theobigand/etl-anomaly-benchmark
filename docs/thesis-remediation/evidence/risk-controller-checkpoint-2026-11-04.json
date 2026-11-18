@@ -1,0 +1,152 @@
+{
+  "archive": {
+    "path": "risk-controller-verification-2026-11-04.tgz",
+    "sha256": "1437516d1bfdd057f7e203f8b88c7973bfc6a86a1d4bdd606305c6d0f3d4044c",
+    "verified_members": 63
+  },
+  "base_revision": "8b7867a79ee42805cc22256ff394b4942f6be00b",
+  "constructed_smoke": {
+    "benchmark_compliance": false,
+    "killed": 2,
+    "mutants": 2,
+    "unchanged_admission_kept": 2,
+    "unchanged_admission_reset": 0
+  },
+  "date": "2026-11-04",
+  "execution_binding_version": 2,
+  "fast": {
+    "coverage": {
+      "covered_branches": 350,
+      "covered_lines": 1790,
+      "excluded_lines": 0,
+      "missing_branches": 0,
+      "missing_lines": 0,
+      "num_branches": 350,
+      "num_partial_branches": 0,
+      "num_statements": 1790,
+      "percent_branches_covered": 100.0,
+      "percent_branches_covered_display": "100",
+      "percent_covered": 100.0,
+      "percent_covered_display": "100",
+      "percent_statements_covered": 100.0,
+      "percent_statements_covered_display": "100"
+    },
+    "harness_followup": "Full FAST preceded worker-PID cleanup changes in the controller test harness; 24 controller cases and the complete TOOLS suite passed afterward. Production sources unchanged between these gates.",
+    "status": "PASS",
+    "tests_passed": 1587
+  },
+  "issue": 116,
+  "kind": "development-verification-checkpoint",
+  "limitations": [
+    "existing Conda distribution-metadata conflicts prevent trustworthy current native execution in that environment",
+    "focused mutation L4 FAIL: 59 survivors retained; no exclusions",
+    "managed controller not yet wired into DEEP/evidence/release/CI",
+    "independent review pending"
+  ],
+  "mutation": {
+    "caught by type check": 0,
+    "check was interrupted by user": 0,
+    "eligible": 318,
+    "error": 0,
+    "exclusions": [],
+    "execution_provenance_verified": false,
+    "killed": 259,
+    "level": "L4",
+    "no tests": 0,
+    "not checked": 0,
+    "reason": "Exclusive native execution and source/runtime bindings govern admissibility of mutation evidence.",
+    "scope": "focused feedback only; 87 other active modules unmeasured",
+    "score": 81.44654088050315,
+    "segfault": 0,
+    "skipped": 0,
+    "status": "FAIL",
+    "survived": 59,
+    "suspicious": 0,
+    "target": "verification/mutation_run.py",
+    "threshold": 98,
+    "timeout": 0
+  },
+  "promotion_eligible": false,
+  "publication": {
+    "geometry": {
+      "artifacts": {
+        "slides/thesis_progress.html": "4f080c42f990925341f1033ca76757a3aa46633ba9a60548656c5e55e1945e0f",
+        "slides/thesis_progress.pdf": "712f6b449ff38db7ff49eddb8668c6946cde453d6debb1af46119cbe17cf795a"
+      },
+      "errors": [],
+      "navigation": {
+        "after": "8 / 41",
+        "back": "7 / 41",
+        "before": "7 / 41",
+        "pass": true
+      },
+      "slides": 41,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    "paper_pages": 23,
+    "slides": 41
+  },
+  "risk": "L4",
+  "sources": {
+    "tests/verifier/test_mutation_execution.py": "b01355e1b95c8dd2b9b6befa89a855e2137612e8b062f6693f8d998e6002763f",
+    "tests/verifier/test_mutation_run.py": "bf49e14bbe3a13b215284d3eb4a9f57ed840bc53adaeeaba28d3067bc441d29e",
+    "verification/mutation_cache.py": "93c585d0676011580e5c8d1e23abf3e113f89174812594478f8b3b8bee90d650",
+    "verification/mutation_catalog.py": "20f13773ad014bb1fe9a41ff72a79787315e74175fd9a60910965594d30af570",
+    "verification/mutation_policy.py": "55a9550403af87202b00be8b5611f690076846843b24436c990160be710544f5",
+    "verification/mutation_risk_policy.json": "c260cc272ae2263adc6e2ccbcbdbd89da3e7304686a57fb7c4f239539ad0407c",
+    "verification/mutation_run.py": "bc3da1ed9f7a184b9220c27bb2a19e21deb614712bfce96d1eef7c3c1366aaf0",
+    "verification/mutation_scope.py": "32598f10eea6b21eb83ed7fff81f3f4832e9847fffff6bfa136989c212899f34"
+  },
+  "status": "INCOMPLETE",
+  "targeted": {
+    "coverage": {
+      "covered_branches": 288,
+      "covered_lines": 645,
+      "excluded_lines": 0,
+      "missing_branches": 0,
+      "missing_lines": 0,
+      "num_branches": 288,
+      "num_partial_branches": 0,
+      "num_statements": 645,
+      "percent_branches_covered": 100.0,
+      "percent_branches_covered_display": "100",
+      "percent_covered": 100.0,
+      "percent_covered_display": "100",
+      "percent_statements_covered": 100.0,
+      "percent_statements_covered_display": "100"
+    },
+    "tests_passed": 255
+  },
+  "threshold": 98,
+  "tools": {
+    "coverage": {
+      "covered_branches": 994,
+      "covered_lines": 2589,
+      "excluded_lines": 0,
+      "missing_branches": 0,
+      "missing_lines": 0,
+      "num_branches": 994,
+      "num_partial_branches": 0,
+      "num_statements": 2589,
+      "percent_branches_covered": 100.0,
+      "percent_branches_covered_display": "100",
+      "percent_covered": 100.0,
+      "percent_covered_display": "100",
+      "percent_statements_covered": 100.0,
+      "percent_statements_covered_display": "100"
+    },
+    "status": "PASS"
+  },
+  "types": {
+    "baseline_entries": 17,
+    "errors": 17,
+    "mypy": "2.4.0",
+    "pandas-stubs": "3.0.5.260914",
+    "problems": [],
+    "status": "PASS"
+  },
+  "worktree_dirty": true
+}

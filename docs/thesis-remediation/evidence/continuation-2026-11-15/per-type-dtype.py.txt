@@ -1,0 +1,23 @@
+import hashlib,platform,warnings
+from pathlib import Path
+import numpy as np,pandas as pd,sklearn
+import research.multi_schema as m
+p=Path('research/multi_schema.py')
+print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'numpy',np.__version__,'pandas',pd.__version__,'sklearn',sklearn.__version__)
+cases=[(['clean','missing_value','duplicate','clean'],[0,1,0,1]),(['clean','missing_value','clean'],[0,0,0]),(['clean','missing_value','clean'],[1,1,1]),(['clean','clean'],[0,1]),(['missing_value','duplicate'],[1,0]),([],[])]
+for nullable in (False,True):
+ for kinds,predictions in cases:
+  kinds=pd.Series(kinds,dtype='string' if nullable else 'object'); flags=pd.Series(predictions,dtype=bool)
+  def run(fn):
+   try:
+    with warnings.catch_warnings(record=True) as w:
+     warnings.simplefilter('always'); res=fn(flags,kinds)
+    return ('ok',res,[(type(x.message).__name__,str(x.message)) for x in w])
+   except Exception as e: return ('error',type(e).__name__,str(e))
+  a=run(m.x__per_type__mutmut_orig)
+  for name in ('x__per_type__mutmut_18','x__per_type__mutmut_26'):
+   b=run(getattr(m,name)); same=a[0]==b[0]
+   if same and a[0]=='ok':
+    same=a[2]==b[2] and all(list(d)==list(e) and np.allclose(list(d.values()),list(e.values()),equal_nan=True) for d,e in zip(a[1],b[1]))
+   elif same: same=a==b
+   print('nullable',nullable,'types',kinds.tolist(),'flags',flags.tolist(),name,'match',same)

@@ -1,0 +1,18 @@
+## x_read_table__mutmut_5
+-    frame = pd.read_csv(path, low_memory=False)
++    frame = pd.read_csv(path, )
+## x_read_table__mutmut_6
+-    frame = pd.read_csv(path, low_memory=False)
++    frame = pd.read_csv(path, low_memory=True)
+## x_read_table__mutmut_23
+-    for name in frame.columns[frame.dtypes.map(lambda t: not pd.api.types.is_numeric_dtype(t))]:
++    for name in frame.columns[frame.dtypes.map(lambda t: not pd.api.types.is_numeric_dtype(None))]:
+## x_split_columns__mutmut_34
+-    target = frame[targets[0]] if len(targets) == 1 else pd.Series(np.nan, index=frame.index)
++    target = frame[targets[0]] if len(targets) == 1 else pd.Series(None, index=frame.index)
+## x_split_columns__mutmut_36
+-    target = frame[targets[0]] if len(targets) == 1 else pd.Series(np.nan, index=frame.index)
++    target = frame[targets[0]] if len(targets) == 1 else pd.Series(index=frame.index)
+## x_derive_labels__mutmut_73
+-        chosen = np.random.default_rng(SEED).choice(np.flatnonzero(is_rare), k, replace=False)
++        chosen = np.random.default_rng(SEED).choice(np.flatnonzero(is_rare), k, replace=None)

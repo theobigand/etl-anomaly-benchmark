@@ -1,0 +1,32 @@
+research/pool_preprocessing.py edf8ac28b2824c76840c8e4cad47fe3fee1f1ac84a5b38ad341e968dee9e8dc0
+mutants/research/pool_preprocessing.py cbeabfdae48053ea69948b38802c4bf0f3dd9175a4289cd23e0b53806b641cc5
+environment macOS-27.2-arm64-arm-64bit 3.11.17 {'numpy': '2.4.6', 'pandas': '3.1.1', 'scikit-learn': '1.9.1', 'mutmut': '3.8.0'}
+numeric_and_nan value equal
+numeric_text value equal
+invalid_text ValueError equal
+infinity ValueError equal
+empty_columns value equal
+missing_column KeyError equal
+categorical 2 missing object equal
+categorical 2 unicode_and_empty object equal
+categorical 2 empty object equal
+categorical 2 mixed object equal
+categorical 4 missing object equal
+categorical 4 unicode_and_empty object equal
+categorical 4 empty object equal
+categorical 4 mixed object equal
+16 valid value equal
+16 duplicate_within value equal
+16 duplicate_across ValueError equal
+16 invalid_partitions ValueError equal
+16 categorical_only value equal
+18 valid value equal
+18 duplicate_within value equal
+18 duplicate_across ValueError equal
+18 invalid_partitions ValueError equal
+18 categorical_only value equal
+93 valid value equal
+93 duplicate_within value equal
+93 duplicate_across ValueError equal
+93 invalid_partitions ValueError equal
+93 categorical_only value equal

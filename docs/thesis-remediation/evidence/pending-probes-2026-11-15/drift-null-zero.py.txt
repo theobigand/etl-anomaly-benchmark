@@ -1,0 +1,21 @@
+import hashlib,platform
+from pathlib import Path
+import numpy as np,pandas as pd
+from etl_benchmark.quality.drift import TemporalDriftDetector
+p=Path('src/etl_benchmark/quality/drift.py')
+print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'pandas',pd.__version__,'numpy',np.__version__)
+for dtype in ('float64','Float64'):
+ for n in (20,60,100):
+  for seed in (1,7):
+   rng=np.random.default_rng(seed); x=rng.normal(size=n); x[n//2:]+=1.5; x[-1]=100; x[-2]=np.nan
+   frame=pd.DataFrame({'t':np.arange(n),'x':pd.Series(x,dtype=dtype)})
+   det=TemporalDriftDetector(time_column='t',columns=['x']).fit(frame)
+   def run(suffix):
+    try: return ('ok',getattr(det,f'xǁTemporalDriftDetectorǁ_row_score__mutmut_{suffix}')(frame))
+    except Exception as e: return ('error',type(e).__name__,str(e))
+   a,b=run('orig'),run('43'); same=a[0]==b[0]
+   if a[0]=='ok' and same:
+    try: pd.testing.assert_series_equal(a[1],b[1]); same=True
+    except AssertionError: same=False
+   else: same=a==b
+   print(dtype,n,seed,'match',same)

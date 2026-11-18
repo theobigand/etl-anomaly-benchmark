@@ -1,0 +1,178 @@
+## x_job_names__mutmut_7
+-        in_jobs = False
++        in_jobs = None
+## x_job_names__mutmut_25
+-                names[-1] = match.group(1).strip("\"'")
++                names[-1] = match.group(1).strip(None)
+## x_job_names__mutmut_28
+-                names[-1] = match.group(1).strip("\"'")
++                names[-1] = match.group(1).strip("XX\"'XX")
+## x_validate_payload__mutmut_22
+-            problems.append("required_status_checks.contexts must be a non-empty list")
++            problems.append(None)
+## x_validate_payload__mutmut_23
+-            problems.append("required_status_checks.contexts must be a non-empty list")
++            problems.append("XXrequired_status_checks.contexts must be a non-empty listXX")
+## x_validate_payload__mutmut_24
+-            problems.append("required_status_checks.contexts must be a non-empty list")
++            problems.append("REQUIRED_STATUS_CHECKS.CONTEXTS MUST BE A NON-EMPTY LIST")
+## x_validate_payload__mutmut_27
+-            problems.append("required_status_checks.strict must be a boolean")
++            problems.append("XXrequired_status_checks.strict must be a booleanXX")
+## x_validate_payload__mutmut_35
+-        problems.append("enforce_admins must be a boolean (null is refused)")
++        problems.append("XXenforce_admins must be a boolean (null is refused)XX")
+## x_validate_payload__mutmut_50
+-        if not isinstance(count, int) or not 0 <= count <= 6:
++        if not isinstance(count, int) or not 0 <= count < 6:
+## x_validate_payload__mutmut_51
+-        if not isinstance(count, int) or not 0 <= count <= 6:
++        if not isinstance(count, int) or not 0 <= count <= 7:
+## x_validate_payload__mutmut_53
+-            problems.append("required_approving_review_count must be between 0 and 6")
++            problems.append("XXrequired_approving_review_count must be between 0 and 6XX")
+## x_compare__mutmut_4
+-    checks = actual.get("required_status_checks", {})
++    checks = actual.get("required_status_checks", None)
+## x_compare__mutmut_6
+-    checks = actual.get("required_status_checks", {})
++    checks = actual.get("required_status_checks", )
+## x_compare__mutmut_14
+-    if sorted(checks.get("contexts", [])) != sorted(wanted["contexts"]):
++    if sorted(checks.get("contexts", None)) != sorted(wanted["contexts"]):
+## x_compare__mutmut_16
+-    if sorted(checks.get("contexts", [])) != sorted(wanted["contexts"]):
++    if sorted(checks.get("contexts", )) != sorted(wanted["contexts"]):
+## x_compare__mutmut_24
+-        problems.append(f"required contexts are {checks.get('contexts')}, not {wanted['contexts']}")
++        problems.append(f"required contexts are {checks.get(None)}, not {wanted['contexts']}")
+## x_compare__mutmut_25
+-        problems.append(f"required contexts are {checks.get('contexts')}, not {wanted['contexts']}")
++        problems.append(f"required contexts are {checks.get('XXcontextsXX')}, not {wanted['contexts']}")
+## x_compare__mutmut_26
+-        problems.append(f"required contexts are {checks.get('contexts')}, not {wanted['contexts']}")
++        problems.append(f"required contexts are {checks.get('CONTEXTS')}, not {wanted['contexts']}")
+## x_compare__mutmut_36
+-        problems.append("required_status_checks.strict differs")
++        problems.append("XXrequired_status_checks.strict differsXX")
+## x_compare__mutmut_41
+-    count = actual.get("required_pull_request_reviews", {}).get("required_approving_review_count")
++    count = actual.get("required_pull_request_reviews", None).get("required_approving_review_count")
+## x_compare__mutmut_43
+-    count = actual.get("required_pull_request_reviews", {}).get("required_approving_review_count")
++    count = actual.get("required_pull_request_reviews", ).get("required_approving_review_count")
+## x_compare__mutmut_62
+-        if actual.get(key, {}).get("enabled") != payload[key]:
++        if actual.get(key, None).get("enabled") != payload[key]:
+## x_compare__mutmut_64
+-        if actual.get(key, {}).get("enabled") != payload[key]:
++        if actual.get(key, ).get("enabled") != payload[key]:
+## x_compare__mutmut_69
+-            problems.append(f"{key} is {actual.get(key, {}).get('enabled')}, not {payload[key]}")
++            problems.append(f"{key} is {actual.get(key, {}).get(None)}, not {payload[key]}")
+## x_compare__mutmut_70
+-            problems.append(f"{key} is {actual.get(key, {}).get('enabled')}, not {payload[key]}")
++            problems.append(f"{key} is {actual.get(None, {}).get('enabled')}, not {payload[key]}")
+## x_compare__mutmut_71
+-            problems.append(f"{key} is {actual.get(key, {}).get('enabled')}, not {payload[key]}")
++            problems.append(f"{key} is {actual.get(key, None).get('enabled')}, not {payload[key]}")
+## x_compare__mutmut_73
+-            problems.append(f"{key} is {actual.get(key, {}).get('enabled')}, not {payload[key]}")
++            problems.append(f"{key} is {actual.get(key, ).get('enabled')}, not {payload[key]}")
+## x_compare__mutmut_74
+-            problems.append(f"{key} is {actual.get(key, {}).get('enabled')}, not {payload[key]}")
++            problems.append(f"{key} is {actual.get(key, {}).get('XXenabledXX')}, not {payload[key]}")
+## x_compare__mutmut_75
+-            problems.append(f"{key} is {actual.get(key, {}).get('enabled')}, not {payload[key]}")
++            problems.append(f"{key} is {actual.get(key, {}).get('ENABLED')}, not {payload[key]}")
+## x_compare__mutmut_78
+-    if actual.get("enforce_admins", {}).get("enabled") != payload["enforce_admins"]:
++    if actual.get("enforce_admins", None).get("enabled") != payload["enforce_admins"]:
+## x_compare__mutmut_80
+-    if actual.get("enforce_admins", {}).get("enabled") != payload["enforce_admins"]:
++    if actual.get("enforce_admins", ).get("enabled") != payload["enforce_admins"]:
+## x_compare__mutmut_89
+-        problems.append("enforce_admins differs")
++        problems.append("XXenforce_admins differsXX")
+## x_main__mutmut_2
+-    parser = argparse.ArgumentParser(description=__doc__)
++    parser = argparse.ArgumentParser(description=None)
+## x_main__mutmut_5
+-    sub = parser.add_subparsers(dest="command", required=True)
++    sub = parser.add_subparsers(dest="command", required=None)
+## x_main__mutmut_7
+-    sub = parser.add_subparsers(dest="command", required=True)
++    sub = parser.add_subparsers(dest="command", )
+## x_main__mutmut_10
+-    sub = parser.add_subparsers(dest="command", required=True)
++    sub = parser.add_subparsers(dest="command", required=False)
+## x_main__mutmut_12
+-    sub.add_parser("print", help="print the proposed payload")
++    sub.add_parser("print", help=None)
+## x_main__mutmut_14
+-    sub.add_parser("print", help="print the proposed payload")
++    sub.add_parser("print", )
+## x_main__mutmut_17
+-    sub.add_parser("print", help="print the proposed payload")
++    sub.add_parser("print", help="XXprint the proposed payloadXX")
+## x_main__mutmut_18
+-    sub.add_parser("print", help="print the proposed payload")
++    sub.add_parser("print", help="PRINT THE PROPOSED PAYLOAD")
+## x_main__mutmut_21
+-    check = sub.add_parser("check", help="read the protection of main and compare it (read-only)")
++    check = sub.add_parser("check", help=None)
+## x_main__mutmut_23
+-    check = sub.add_parser("check", help="read the protection of main and compare it (read-only)")
++    check = sub.add_parser("check", )
+## x_main__mutmut_26
+-    check = sub.add_parser("check", help="read the protection of main and compare it (read-only)")
++    check = sub.add_parser("check", help="XXread the protection of main and compare it (read-only)XX")
+## x_main__mutmut_27
+-    check = sub.add_parser("check", help="read the protection of main and compare it (read-only)")
++    check = sub.add_parser("check", help="READ THE PROTECTION OF MAIN AND COMPARE IT (READ-ONLY)")
+## x_main__mutmut_29
+-    check.add_argument("--repo", default=REPO)
++    check.add_argument("--repo", default=None)
+## x_main__mutmut_31
+-    check.add_argument("--repo", default=REPO)
++    check.add_argument("--repo", )
+## x_main__mutmut_41
+-        print(json.dumps(proposed_payload(), indent=2))
++        print(json.dumps(proposed_payload(), indent=None))
+## x_main__mutmut_43
+-        print(json.dumps(proposed_payload(), indent=2))
++        print(json.dumps(proposed_payload(), ))
+## x_main__mutmut_44
+-        print(json.dumps(proposed_payload(), indent=2))
++        print(json.dumps(proposed_payload(), indent=3))
+## x_main__mutmut_48
+-        capture_output=True, text=True, check=False,
++        capture_output=None, text=True, check=False,
+## x_main__mutmut_49
+-        capture_output=True, text=True, check=False,
++        capture_output=True, text=None, check=False,
+## x_main__mutmut_50
+-        capture_output=True, text=True, check=False,
++        capture_output=True, text=True, check=None,
+## x_main__mutmut_52
+-        capture_output=True, text=True, check=False,
++        text=True, check=False,
+## x_main__mutmut_53
+-        capture_output=True, text=True, check=False,
++        capture_output=True, check=False,
+## x_main__mutmut_54
+-        capture_output=True, text=True, check=False,
+-    )  # fmt: skip
++        capture_output=True, text=True, )  # fmt: skip
+## x_main__mutmut_59
+-        capture_output=True, text=True, check=False,
++        capture_output=False, text=True, check=False,
+## x_main__mutmut_60
+-        capture_output=True, text=True, check=False,
++        capture_output=True, text=False, check=False,
+## x_main__mutmut_61
+-        capture_output=True, text=True, check=False,
++        capture_output=True, text=True, check=True,
+## x_main__mutmut_75
+-        print("protection: the applied protection matches the proposal")
++        print("XXprotection: the applied protection matches the proposalXX")

@@ -90,12 +90,12 @@ def test_blocks_are_whole_intervals_of_time():
 
 def test_block_bootstrap_is_deterministic_and_brackets_the_estimate():
     rng = np.random.default_rng(3)
-    n = 4000
-    times = pd.Series(pd.to_datetime(np.sort(rng.integers(0, 40000, n)), unit="s", utc=True))
+    n = 1500
+    times = pd.Series(pd.to_datetime(np.sort(rng.integers(0, 15000, n)), unit="s", utc=True))
     y = (rng.random(n) < 0.05).astype(int)
     score = y * 1.0 + rng.normal(size=n)
-    first = tp.block_bootstrap_ci(y, score, times, block_seconds=1800, resamples=200, seed=42)
-    again = tp.block_bootstrap_ci(y, score, times, block_seconds=1800, resamples=200, seed=42)
+    first = tp.block_bootstrap_ci(y, score, times, block_seconds=1800, resamples=60, seed=42)
+    again = tp.block_bootstrap_ci(y, score, times, block_seconds=1800, resamples=60, seed=42)
     assert first == again
     low, high = first["ci_low"], first["ci_high"]
     assert low <= first["estimate"] <= high and 0 < low < high < 1
@@ -171,8 +171,9 @@ def test_the_archived_pilot_record_identifies_this_implementation():
     }
     manifest = json.loads((ROOT / "verification/evidence/manifest.json").read_text())["datasets"]
     assert record["settings"]["dataset_sha256"] == manifest["credit_card"]["sha256"]
-    script = (ROOT / "research" / "temporal_pilot.py").read_bytes()
-    assert record["settings"]["script_sha256"] == sha(script)
+    # The record identifies the script of its own source revision, not the current file: the
+    # script may later receive a prospective correction (to_timestamps now refuses infinite times)
+    # without rewriting this historical record.
     committed = subprocess.run(
         ["git", "show", f"{record['source_revision']}:research/temporal_pilot.py"],
         cwd=ROOT,

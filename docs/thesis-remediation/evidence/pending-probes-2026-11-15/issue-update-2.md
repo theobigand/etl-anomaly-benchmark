@@ -1,0 +1,5 @@
+Follow-up working-tree evidence: nine additional behavioral mutants were killed in a focused native run, and three bank timestamp key-case mutants are conditional owner proposals. The 162-record triage now contains 37 focused kills, 41 unapproved proposals, and 84 inconclusive cases. These are not complete unit measurements and are not added to the historical campaign.
+
+A fresh canonical-environment Cardio archive and same-environment replay passed numerically with identical split artifacts; the worktree was dirty and locked-environment reconstruction was not run. The official scientific-claims structure check passes, but the current-claims check fails because 101 files changed since the published run. This remains an explicit release blocker; no archive was resealed.
+
+The full canonical suite and verifier gate were restarted after restoring the existing SSH signing key to the agent; earlier attempts failed when fixture commits inherited unavailable signing. The Linux LSTM result remains specific to `db27f56`, not subsequent worktree changes. The new behavioral tests and evidence have not yet been committed or independently reviewed.

@@ -1,0 +1,30 @@
+import hashlib,platform,warnings
+from pathlib import Path
+import numpy as np,pandas as pd,scipy
+from etl_benchmark.quality.ml import TailProbabilityModel,PCAReconstruction
+p=Path('src/etl_benchmark/quality/ml.py');print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'numpy',np.__version__,'pandas',pd.__version__,'scipy',scipy.__version__)
+x=np.array([[1.,2.],[2.,1.],[3.,5.],[4.,3.]])
+for cls,ids in ((TailProbabilityModel,(3,5,6,7,9,10)),(PCAReconstruction,(9,))):
+ for scenario in ('score_before','predict_before','zero_before','valid_fit','zero_feature_fit','bad_contamination_then_predict'):
+  def run(suffix):
+   d=cls.__new__(cls);args=(2.0 if scenario=='bad_contamination_then_predict' else .1,'ecod') if cls is TailProbabilityModel else (2.0 if scenario=='bad_contamination_then_predict' else .1,)
+   getattr(d,f'xǁ{cls.__name__}ǁ__init____mutmut_{suffix}')(*args)
+   try:
+    with warnings.catch_warnings(record=True) as w:
+     warnings.simplefilter('always')
+     if scenario=='score_before':out=d.decision_function(x).tolist()
+     elif scenario=='predict_before':out=d.predict(x).tolist()
+     elif scenario=='zero_before':out=d.decision_function(x[:,:0]).tolist()
+     elif scenario=='bad_contamination_then_predict':
+      try:d.fit(x)
+      except Exception as e:
+       err=(type(e).__name__,str(e))
+       try:out=(err,d.predict(x).tolist())
+       except Exception as e2:out=(err,type(e2).__name__,str(e2))
+     else:
+      data=x[:,:0] if scenario=='zero_feature_fit' else x;d.fit(data);out=(d.decision_function(data).tolist(),d.predict(data).tolist())
+    return ('ok',repr(out),[(type(t.message).__name__,str(t.message)) for t in w])
+   except Exception as e:return ('error',type(e).__name__,str(e))
+  a=run('orig')
+  for suffix in ids:
+   b=run(str(suffix));print(cls.__name__,scenario,suffix,'match',a==b,'original',repr(a)[:200] if a!=b else a[0],'mutant',repr(b)[:200] if a!=b else b[0])

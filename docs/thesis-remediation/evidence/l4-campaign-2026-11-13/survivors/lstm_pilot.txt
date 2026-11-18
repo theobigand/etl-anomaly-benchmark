@@ -1,0 +1,6 @@
+## x_synthetic_sequence_stream__mutmut_35
+-    hits = rng.choice(np.arange(20, n), size=int(n * rate), replace=False)
++    hits = rng.choice(np.arange(20, n), size=int(n * rate), replace=None)
+## x_synthetic_sequence_stream__mutmut_51
+-            -x[t - 1] * 0.9 + 0.0
++            -x[t - 1] * 0.9 - 0.0

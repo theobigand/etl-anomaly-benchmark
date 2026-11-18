@@ -1,0 +1,20 @@
+import hashlib,platform
+from pathlib import Path
+import numpy as np,pandas as pd
+from faker import Faker
+import research.multi_schema as m
+p=Path('research/multi_schema.py')
+print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'numpy',np.__version__,'pandas',pd.__version__)
+for n in (0,1,5,30,300):
+ for seed in (1,7):
+  outputs=[]
+  for name in ('x__transactions__mutmut_orig','x__transactions__mutmut_2','x__transactions__mutmut_66'):
+   Faker.seed(seed); fake=Faker('en_US'); rng=np.random.default_rng(seed)
+   try: outputs.append(('ok',getattr(m,name)(n,rng,fake)))
+   except Exception as e: outputs.append(('error',type(e).__name__,str(e)))
+  for name,result in zip(('2','66'),outputs[1:]):
+   if outputs[0][0]=='ok' and result[0]=='ok':
+    try: pd.testing.assert_frame_equal(outputs[0][1],result[1]);same=True
+    except AssertionError: same=False
+   else: same=outputs[0]==result
+   print('n',n,'seed',seed,'mutant',name,'match',same,'kind',result[0])

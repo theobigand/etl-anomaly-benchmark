@@ -1,0 +1,22 @@
+source 52ac93bd1898db05567278d773295458fc81847366de74b0c63770c662cbaa4d python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 sklearn 1.9.1
+score_before 4 match True original error mutant error
+score_before 5 match False original ('error', 'AttributeError', "'NoneType' object has no attribute 'predict'") mutant ('error', 'AttributeError', "'str' object has no attribute 'predict'")
+predict_before 4 match True original error mutant error
+predict_before 5 match False original ('error', 'AttributeError', "'NoneType' object has no attribute 'predict'") mutant ('error', 'AttributeError', "'str' object has no attribute 'predict'")
+normal 4 match True original ok mutant ok
+normal 5 match True original ok mutant ok
+invalid_contamination 4 match False original ('ok', '((\'ValueError\', \'Quantiles must be in the range [0, 1]\'), \'TypeError\', "\'>\' not supported between instances of \'float\' and \'NoneType\'")', []) mutant ('ok', '((\'ValueError\', \'Quantiles must be in the range [0, 1]\'), \'UFuncTypeError\', "ufunc \'greater\' did not contain a loop with signature matching types (<class \'numpy.dtypes.Float64DType\'>, <class \'numpy.dtypes.StrDType\'>) -> 
+invalid_contamination 5 match True original ok mutant ok
+empty 4 match True original error mutant error
+empty 5 match True original error mutant error
+source 52ac93bd1898db05567278d773295458fc81847366de74b0c63770c662cbaa4d python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 sklearn 1.9.1
+score_before 4 match True original error mutant error
+score_before 5 match False original ('error', 'AttributeError', "'NoneType' object has no attribute 'predict'") mutant ('error', 'AttributeError', "'str' object has no attribute 'predict'")
+predict_before 4 match True original error mutant error
+predict_before 5 match False original ('error', 'AttributeError', "'NoneType' object has no attribute 'predict'") mutant ('error', 'AttributeError', "'str' object has no attribute 'predict'")
+normal 4 match True original ok mutant ok
+normal 5 match True original ok mutant ok
+invalid_contamination 4 match False original ('ok', '((\'ValueError\', \'Quantiles must be in the range [0, 1]\'), \'TypeError\', "\'>\' not supported between instances of \'float\' and \'NoneType\'")', []) mutant ('ok', '((\'ValueError\', \'Quantiles must be in the range [0, 1]\'), \'UFuncTypeError\', "ufunc \'greater\' did not contain a loop with signature matching types (<class \'numpy.dtypes.Float64DType\'>, <class \'numpy.dtypes.StrDType\'>) -> 
+invalid_contamination 5 match True original ok mutant ok
+empty 4 match True original error mutant error
+empty 5 match True original error mutant error

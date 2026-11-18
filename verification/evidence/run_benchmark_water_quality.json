@@ -1,9 +1,9 @@
 {
-  "captured_at": "2026-10-23T10:20:07.617690+00:00",
+  "captured_at": "2026-11-18T11:56:58.394197+00:00",
   "dataset": {
     "bytes": 525187,
     "identity": "water_quality",
-    "path": "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/data/water_quality.csv",
+    "path": "/Users/theo/Developer/school/esilv/Master Thesis Bootcamp/etl-anomaly-benchmark/data/water_quality.csv",
     "sha256": "904004bde729bfe3d2e195f46343bceead09e32a0eb95bb8184e7e20e029b2bf"
   },
   "environment_lock": {
@@ -15,14 +15,14 @@
   "measurement_fingerprint": "9cd603c619d15e17d3cbd9d14986b6f62bdb5611a5ba78fbd4d10ae8f4d7285d",
   "measurement_recipe": 1,
   "output_sha256": {
-    "benchmark_water_quality_20261023_102007.csv": "c7be7dc7852495a56eed14c65a6d6fa5475f3693c56623313b23a3e54d22cd6e",
-    "benchmark_water_quality_20261023_102007.md": "76e9eda9810426ff407a409294c59caa5cd559cb6498a1c956f28fc41a2d1270",
-    "split_ids_water_quality_20261023_102007.json.gz": "bde870d2862f314501e1d38bb5aa614fb11c73eb775ab5acef42c44403bb8720"
+    "benchmark_water_quality_20261118_115658.csv": "553e136c679fdce7ce3f8d4dda10fe28e9ca4e63a891f2d45a9a59cfb176fde9",
+    "benchmark_water_quality_20261118_115658.md": "3039f6f7e00642e71e16643a425de0b205b1547df45a2db549484da1cefecd56",
+    "split_ids_water_quality_20261118_115658.json.gz": "bde870d2862f314501e1d38bb5aa614fb11c73eb775ab5acef42c44403bb8720"
   },
   "outputs": [
-    "benchmark_water_quality_20261023_102007.csv",
-    "benchmark_water_quality_20261023_102007.md",
-    "split_ids_water_quality_20261023_102007.json.gz"
+    "benchmark_water_quality_20261118_115658.csv",
+    "benchmark_water_quality_20261118_115658.md",
+    "split_ids_water_quality_20261118_115658.json.gz"
   ],
   "packages": {
     "great-expectations": "1.24.0",
@@ -31,10 +31,10 @@
     "pyod": "3.6.7",
     "scikit-learn": "1.9.1"
   },
-  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "platform": "macOS-27.2-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "scientific_fingerprint": "be28a126f038edec58574f4a3a8baff294ec1994ca9b93cb7c9b6a10efbab076",
+  "scientific_fingerprint": "00bc79c11881ea6d3ed811e632e39b1adeda2aed2be6d9ba1a464b1a9bf15d61",
   "seeds": [
     42,
     1,
@@ -79,7 +79,7 @@
     ],
     "split_strategy": "stratified"
   },
-  "source_fingerprint": "36e3025c6f2dd11dde84224c6994ddd67d1ea1f5d076abfbbd9fa9eace6ed757",
-  "source_revision": "8d245d23cf1e3d1d4db93f9629093391c16e5a28",
+  "source_fingerprint": "f3bfab317b26c1bdd0476b7a61289b7b729cb7a92609444825d07c68bcc0ab81",
+  "source_revision": "401c7bf0e20d65061c98a027742be5b294e82689",
   "worktree_dirty": false
 }

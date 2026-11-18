@@ -1,0 +1,23 @@
+sources {'src/etl_benchmark/quality/rules.py': 'bbd2e146be1d55382a12137cdfacefa85223d535c8b9eeaf816d17e6acd49737', 'src/etl_benchmark/quality/base.py': '9efc8a6a410b92d81f4ee09f9d001f8adad62a779250b3b552db9878f9de28ff', 'mutants/src/etl_benchmark/quality/rules.py': '918834bc4092988d72ec899006c4dd2c7e77cd1f4ecb9a4853aab82bc556f4a2', 'src/etl_benchmark/quality/ml.py': '4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0', 'mutants/src/etl_benchmark/quality/ml.py': '7fb6810432676164f022092e34f924a43b6405ab06f263e11a9e3e3143974fbe'}
+environment macOS-27.2-arm64-arm-64bit 3.11.17 {'numpy': '2.4.6', 'pandas': '3.1.1', 'mutmut': '3.8.0', 'scikit-learn': '1.9.1', 'pyod': '3.6.7'}
+ZScoreDetector ordinary value equal
+ZScoreDetector all_nan value equal
+ZScoreDetector infinity ValueError equal
+ZScoreDetector missing_column ValueError equal
+ZScoreDetector nonnumeric ValueError equal
+ZScoreDetector empty value equal
+IQRDetector ordinary value equal
+IQRDetector all_nan value equal
+IQRDetector infinity ValueError equal
+IQRDetector missing_column ValueError equal
+IQRDetector nonnumeric ValueError equal
+IQRDetector empty value equal
+PyODDetector ordinary value equal
+PyODDetector all_nan value equal
+PyODDetector infinity ValueError equal
+PyODDetector missing_column ValueError equal
+PyODDetector nonnumeric ValueError equal
+PyODDetector empty ValueError equal
+TailProbabilityModel ties_and_outside equal
+TailProbabilityModel empty equal
+TailProbabilityModel nonfinite equal

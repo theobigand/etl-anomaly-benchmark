@@ -1,0 +1,80 @@
+{
+  "archive": {
+    "path": "risk-controller-contracts-2026-11-04.tgz",
+    "sha256": "090f81372094dace66bd0747df269cd1d39723ada5592075c224cf2ceab2c77b",
+    "verified_members": 20
+  },
+  "base_revision": "f636bf34a87c7cc461600d49b453e4720f9d2d28",
+  "cache": {
+    "added_tests": [],
+    "kept": 0,
+    "modified_tests": [
+      "tests/verifier/test_mutation_run.py"
+    ],
+    "removed_tests": [],
+    "reset": 318
+  },
+  "date": "2026-11-04",
+  "issue": 116,
+  "kind": "focused-contract-followup",
+  "lint": "PASS",
+  "mutation": {
+    "additional_kills": 36,
+    "caught by type check": 0,
+    "check was interrupted by user": 0,
+    "eligible": 318,
+    "error": 0,
+    "exclusions": [],
+    "execution_provenance_verified": false,
+    "killed": 295,
+    "level": "L4",
+    "no tests": 0,
+    "not checked": 0,
+    "previous_killed": 259,
+    "reason": "Exclusive native execution and source/runtime bindings govern admissibility of mutation evidence.",
+    "score": 92.76729559748428,
+    "segfault": 0,
+    "skipped": 0,
+    "status": "FAIL",
+    "survived": 23,
+    "suspicious": 0,
+    "target": "verification/mutation_run.py",
+    "threshold": 98,
+    "timeout": 0
+  },
+  "production_unchanged": {
+    "verification/mutation_cache.py": true,
+    "verification/mutation_catalog.py": true,
+    "verification/mutation_policy.py": true,
+    "verification/mutation_run.py": true
+  },
+  "promotion_eligible": false,
+  "publication": "No claim or numerical result changed; manuscript/deck continue to describe a constructed two-mutant smoke and incomplete release integration. Publication files unchanged from base revision.",
+  "sources": {
+    "tests/verifier/test_mutation_run.py": "38aa8b2c3fa2a3337485950cd70cfad335ea7715bc36a9683077f2c0efda5feb",
+    "verification/mutation_cache.py": "93c585d0676011580e5c8d1e23abf3e113f89174812594478f8b3b8bee90d650",
+    "verification/mutation_catalog.py": "20f13773ad014bb1fe9a41ff72a79787315e74175fd9a60910965594d30af570",
+    "verification/mutation_policy.py": "55a9550403af87202b00be8b5611f690076846843b24436c990160be710544f5",
+    "verification/mutation_run.py": "bc3da1ed9f7a184b9220c27bb2a19e21deb614712bfce96d1eef7c3c1366aaf0"
+  },
+  "status": "INCOMPLETE",
+  "targeted": {
+    "coverage": {
+      "covered_branches": 288,
+      "covered_lines": 645,
+      "excluded_lines": 0,
+      "missing_branches": 0,
+      "missing_lines": 0,
+      "num_branches": 288,
+      "num_partial_branches": 0,
+      "num_statements": 645,
+      "percent_branches_covered": 100.0,
+      "percent_branches_covered_display": "100",
+      "percent_covered": 100.0,
+      "percent_covered_display": "100",
+      "percent_statements_covered": 100.0,
+      "percent_statements_covered_display": "100"
+    },
+    "tests_passed": 259
+  }
+}

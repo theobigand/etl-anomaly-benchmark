@@ -1,0 +1,27 @@
+import hashlib,platform,warnings
+from pathlib import Path
+import numpy as np,pandas as pd
+import research.injection as m
+p=Path('research/injection.py');print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'numpy',np.__version__,'pandas',pd.__version__)
+for dtype in ('float64','Float64','int64','object'):
+ for n in (120,300):
+  for seed in (1,7):
+   rng=np.random.default_rng(33); raw=rng.normal(5,2,size=(n,4));raw=raw.round() if dtype=='int64' else raw
+   frame=pd.DataFrame({f'x{i}':pd.Series(raw[:,i],dtype=dtype) for i in range(4)})
+   def run(fn):
+    try:
+     with warnings.catch_warnings(record=True) as w:
+      warnings.simplefilter('always'); out=fn(frame,seed)
+     return ('ok',out,[(type(x.message).__name__,str(x.message)) for x in w])
+    except Exception as e:return ('error',type(e).__name__,str(e))
+   a=run(m.x_inject__mutmut_orig);b=run(m.x_inject__mutmut_90);same=a[0]==b[0]
+   if same and a[0]=='ok':
+    try:pd.testing.assert_frame_equal(a[1],b[1]);same=a[2]==b[2]
+    except AssertionError:same=False
+    atypes=[type(v).__name__ for col in frame.columns for v in a[1].loc[a[1]['anomaly_type'].eq('missing_value') & a[1][col].isna(),col].tolist()]
+    btypes=[type(v).__name__ for col in frame.columns for v in b[1].loc[b[1]['anomaly_type'].eq('missing_value') & b[1][col].isna(),col].tolist()]
+    sentinels=atypes==btypes
+   else:
+    if same:same=a==b
+    sentinels='error'
+   print(dtype,n,seed,'frame_and_warnings_match',same,'sentinels_match',sentinels,'kind',a[0])

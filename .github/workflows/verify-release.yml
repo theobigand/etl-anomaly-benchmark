@@ -17,23 +17,34 @@ on:
         description: "Full commit SHA the operator reviewed; REAL refuses any other revision"
         required: false
         default: ""
-  # A workflow_dispatch workflow cannot be started from a branch until it is on
-  # the default branch, so a change to this file also runs it on its own pull
-  # request. Edits to any other file never start it.
+  # A workflow_dispatch workflow cannot be started from a branch until it is on the default
+  # branch, so a pre-merge run needs another path. A pull request from this repository starts
+  # the full verification ONLY while it carries the label below, for the exact head commit.
+  # Removing the label stops further runs, and an ordinary push never starts a campaign.
+  # The plain pull_request event is used, never the privileged variant, so the branch code
+  # runs with a read-only token and a fork is excluded by the repository comparison.
   pull_request:
-    paths:
-      - ".github/workflows/verify-release.yml"
+    types: [labeled, unlabeled, synchronize, reopened]
 
 permissions:
   contents: read
 
+# One verification per pull request (or ref) at a time: a newer commit or a removed label
+# cancels the older campaign, so two full campaigns never run side by side. A label other than
+# the dedicated one gets its own group and a skipped run, so it never cancels a campaign.
+concurrency:
+  group: verify-release-${{ github.event.pull_request.number || github.ref }}-${{ github.event_name != 'pull_request' || github.event.action == 'synchronize' || github.event.action == 'reopened' || github.event.label.name == 'run:release-verification' && 'campaign' || github.run_id }}
+  cancel-in-progress: true
+
 jobs:
   fast:
     name: release-fast
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.labels.*.name, 'run:release-verification') && (github.event.action != 'labeled' && github.event.action != 'unlabeled' || github.event.label.name == 'run:release-verification'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
 
       - uses: actions/setup-python@v5
@@ -41,7 +52,9 @@ jobs:
           python-version: "3.11"
 
       - name: Install
-        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev]"
+        run: |
+          bash verification/runner/install_locked.sh "$RUNNER_TEMP/venv" --with-extras --editable-project
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
 
       - name: Run fast profile
         run: make verify-fast
@@ -61,10 +74,12 @@ jobs:
 
   static:
     name: release-static
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.labels.*.name, 'run:release-verification') && (github.event.action != 'labeled' && github.event.action != 'unlabeled' || github.event.label.name == 'run:release-verification'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
 
       - uses: actions/setup-python@v5
@@ -72,15 +87,15 @@ jobs:
           python-version: "3.11"
 
       - name: Install
-        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev]"
+        run: |
+          bash verification/runner/install_locked.sh "$RUNNER_TEMP/venv" --with-extras --editable-project
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
 
       - name: Verifier coverage
         run: make verify-tools
 
       - name: Static typing (checker and stubs are pinned in verification/release_policy.json)
-        run: |
-          pip install mypy==2.4.0 pandas-stubs==3.0.5.260914
-          make verify-types
+        run: make verify-types
 
       - name: Bundle static evidence
         if: always()
@@ -97,10 +112,12 @@ jobs:
 
   reproduce:
     name: release-reproduce
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.labels.*.name, 'run:release-verification') && (github.event.action != 'labeled' && github.event.action != 'unlabeled' || github.event.label.name == 'run:release-verification'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
 
       - uses: actions/setup-python@v5
@@ -108,7 +125,9 @@ jobs:
           python-version: "3.11"
 
       - name: Install
-        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev]"
+        run: |
+          bash verification/runner/install_locked.sh "$RUNNER_TEMP/venv" --with-extras --editable-project
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
 
       # Cardio is a public ADBench file; nothing is uploaded, and the replay
       # refuses to run when the download differs from the archived run.
@@ -133,10 +152,12 @@ jobs:
 
   faults:
     name: release-faults
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.labels.*.name, 'run:release-verification') && (github.event.action != 'labeled' && github.event.action != 'unlabeled' || github.event.label.name == 'run:release-verification'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
 
       - uses: actions/setup-python@v5
@@ -144,7 +165,9 @@ jobs:
           python-version: "3.11"
 
       - name: Install
-        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev]"
+        run: |
+          bash verification/runner/install_locked.sh "$RUNNER_TEMP/venv" --with-extras --editable-project
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
 
       - name: Run faults profile
         run: make verify-faults
@@ -162,54 +185,26 @@ jobs:
           if-no-files-found: warn
           retention-days: 90
 
+  # DEEP is the sharded risk-tiered campaign: 45 parallel shards of one commit, the controller's
+  # execution proof, every per-module threshold, and the evidence packed as the deep bundle. A single
+  # job could not hold 35,237 mutants within its time limit. Mutants are always rerun, never restored.
   deep:
     name: release-deep
-    runs-on: ubuntu-latest
-    timeout-minutes: 180
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install
-        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev,deep]"
-
-      # Verdicts of mutants whose function and covering tests did not change are reused
-      # (verification/mutation_cache.py resets the others). A release can ask for a fresh run.
-      - name: Restore the mutation cache
-        if: inputs.fresh_mutants != 'true'
-        uses: actions/cache@v4
-        with:
-          path: mutants
-          key: mutants-${{ runner.os }}-${{ hashFiles('src/**/*.py', 'experiments/*.py', 'tests/**/*.py', 'pyproject.toml', 'environment.yml', 'verification/evidence/*.json') }}
-          restore-keys: mutants-${{ runner.os }}-
-
-      - name: Run deep profile
-        run: make verify-deep
-
-      - name: Bundle deep evidence
-        if: always()
-        run: python -m verification.bundles pack deep --allow-missing --output evidence-deep.tgz
-
-      - name: Preserve deep evidence
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: evidence-deep
-          path: evidence-deep.tgz
-          if-no-files-found: warn
-          retention-days: 90
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.labels.*.name, 'run:release-verification') && (github.event.action != 'labeled' && github.event.action != 'unlabeled' || github.event.label.name == 'run:release-verification'))
+    uses: ./.github/workflows/mutation-shards.yml
+    with:
+      shards: "45"
+      fresh_mutants: true
+      bundle: true
 
   real-readiness:
     name: release-real-readiness
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.labels.*.name, 'run:release-verification') && (github.event.action != 'labeled' && github.event.action != 'unlabeled' || github.event.label.name == 'run:release-verification'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
           persist-credentials: false
 
@@ -226,12 +221,15 @@ jobs:
           echo "PYTHONPATH=$GITHUB_WORKSPACE/src" >> "$GITHUB_ENV"
 
       - name: Preflight without datasets
-        run: python -m verification.real_preflight --install-only --expect-sha "$GITHUB_SHA"
+        env:
+          # On a pull request GITHUB_SHA is the merge commit, not the commit that was checked out
+          TESTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: python -m verification.real_preflight --install-only --expect-sha "$TESTED_SHA"
 
   real:
     name: release-real
     # Code that sees the private datasets must already be on the default branch.
-    if: inputs.real_runner != '' && github.ref_name == github.event.repository.default_branch
+    if: inputs.real_runner != '' && github.ref_name == github.event.repository.default_branch && github.event_name == 'workflow_dispatch'
     # `self-hosted` is part of the label set, so no GitHub-hosted runner can take the job.
     runs-on: [self-hosted, "${{ inputs.real_runner }}"]
     steps:
@@ -300,12 +298,13 @@ jobs:
     # Without a private runner the datasets are fetched here from their public sources.
     # Each file must match the reference checksum before it is used; nothing is uploaded
     # but the JSON reports, and no private data or secret is involved.
-    if: inputs.real_runner == ''
+    if: inputs.real_runner == '' && (github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.labels.*.name, 'run:release-verification') && (github.event.action != 'labeled' && github.event.action != 'unlabeled' || github.event.label.name == 'run:release-verification')))
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
           persist-credentials: false
 
@@ -323,7 +322,9 @@ jobs:
         run: python -m verification.real_acquire --output experiments/results/real_acquisition.json
 
       - name: Preflight (read-only, no benchmark)
-        run: python -m verification.real_preflight --hosted-download --expect-sha "$GITHUB_SHA"
+        env:
+          TESTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: python -m verification.real_preflight --hosted-download --expect-sha "$TESTED_SHA"
 
       - name: Run real profile
         run: make verify-real REAL_ACQUISITION=experiments/results/real_acquisition.json
@@ -344,19 +345,24 @@ jobs:
   release:
     name: release-gate
     needs: [fast, static, reproduce, faults, deep, real, real-hosted, real-readiness]
-    if: always()
+    if: always() && (github.event_name == 'workflow_dispatch' || (github.event.pull_request.head.repo.full_name == github.repository && contains(github.event.pull_request.labels.*.name, 'run:release-verification') && (github.event.action != 'labeled' && github.event.action != 'unlabeled' || github.event.label.name == 'run:release-verification')))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
+      # The sharded DEEP evidence binds the exact dependency set of its shards, and the gate
+      # recomputes it here: the gate must install the same packages as the shards do.
       - name: Install
-        run: pip install --extra-index-url https://download.pytorch.org/whl/cpu -e ".[dev]"
+        run: |
+          bash verification/runner/install_locked.sh "$RUNNER_TEMP/venv" --with-extras --editable-project
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
 
       - name: Refuse a release when a profile job failed
         run: test "${{ contains(needs.*.result, 'failure') }}" = false

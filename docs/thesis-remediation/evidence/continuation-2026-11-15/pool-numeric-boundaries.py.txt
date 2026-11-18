@@ -1,0 +1,17 @@
+import hashlib,platform
+from pathlib import Path
+import numpy as np,pandas as pd
+import research.pool_chrono as m
+p=Path('research/pool_chrono.py')
+print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'numpy',np.__version__,'pandas',pd.__version__)
+cases=[pd.Series([1,None,3],dtype='Int64'),pd.Series([1.,None,3.],dtype='Float64'),pd.Series([0.,np.inf,-np.inf],dtype='float64'),pd.Series([0,2**63,2**64-1],dtype='uint64'),pd.Series([1e-300,1e300,0.],dtype='float64')]
+for series in cases:
+ frame=pd.DataFrame({'x':series,'category':['a','b','a']}); outcomes=[]
+ for fn in (m.x_to_features__mutmut_orig,m.x_to_features__mutmut_12):
+  try: outcomes.append(('ok',fn(frame)))
+  except Exception as e: outcomes.append(('error',type(e).__name__,str(e)))
+ if outcomes[0][0]=='ok' and outcomes[1][0]=='ok':
+  try: pd.testing.assert_frame_equal(outcomes[0][1],outcomes[1][1]); same=True
+  except AssertionError: same=False
+ else: same=outcomes[0]==outcomes[1]
+ print('dtype',series.dtype,'values',repr(series.tolist()),'match',same,'kind',outcomes[0][0])

@@ -1,0 +1,18 @@
+import hashlib,platform
+from pathlib import Path
+import numpy as np,pandas as pd
+import research.pool_chrono as m
+p=Path('research/pool_chrono.py')
+print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'numpy',np.__version__,'pandas',pd.__version__)
+for dtype in ('int64','uint64','float32','float64','Int64','UInt64','Float64'):
+ for values in ([1,2,3],[0,1,2],[1,1,1]):
+  frame=pd.DataFrame({'x':pd.Series(values,dtype=dtype),'category':['a','b','a']})
+  outputs=[]
+  for fn in (m.x_to_features__mutmut_orig,m.x_to_features__mutmut_12):
+   try: outputs.append(('ok',fn(frame)))
+   except Exception as e: outputs.append(('error',type(e).__name__,str(e)))
+  if outputs[0][0]=='ok' and outputs[1][0]=='ok':
+   try: pd.testing.assert_frame_equal(outputs[0][1],outputs[1][1]); equal=True
+   except AssertionError: equal=False
+  else: equal=outputs[0]==outputs[1]
+  print(dtype,values,'match',equal)

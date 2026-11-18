@@ -1,0 +1,15 @@
+usage: multi_schema [-h] --output OUTPUT [--rows ROWS]
+                    [--methods {classical,deep}]
+
+Two further synthetic schemas with the six anomaly types of the customer table
+(issue #67). Protocol: verification/multi_schema.md. The customer schema and
+its published results are untouched; this module lives outside the detector
+registry and the scientific fingerprint.
+
+options:
+  -h, --help            show this help message and exit
+  --output OUTPUT
+  --rows ROWS
+  --methods {classical,deep}
+                        the registry sweep with its hypotheses, or the neural
+                        detectors alone

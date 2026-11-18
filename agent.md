@@ -1,0 +1,21 @@
+# Local working rules
+
+- Use GitHub issues, milestones, labels and docs/thesis-remediation/ as the authoritative roadmap. Preserve T001–T415 and exclude optional P2/if-time research unless expressly authorized.
+- Read the issue, comments, dependencies, existing implementation and evidence before choosing work. Reuse completed work and preserve unrelated changes.
+- Work on dedicated branches in small coherent units. Commit focused verified changes and push incrementally; do not accumulate a large end-of-session delivery.
+- Update relevant tickets before work, at meaningful milestones and after verification. Synchronize canonical checklists with issue checkboxes using objective evidence. Close issues only when their entire acceptance criteria are met.
+- After every meaningful change, review and update the manuscript and matching slides together. Rebuild affected PDFs and maintain publication hashes, tables, figures and claims consistently. Record a justified no-change outcome when an artifact is unaffected.
+- Preserve scientific protocols, hypotheses, partitions, seeds, negative results, sealed archives and fingerprints. Replay affected experiments if scientific behavior changes; never restamp results manually.
+- Follow repository Ready/Done, test-first and verification policies. Retain failures and limitations. Coverage and certification are bounded software evidence, not proof of scientific validity.
+- Use Conventional Commits. Preserve neutral academic/engineering attribution rules. Never add tool attribution or authorship trailers.
+- Once a branch deliverable is complete and validated, create the integration pull request, wait for required checks and merge without bypassing protections. After confirming integration and preserving unique work, delete its remote and local branches and obsolete temporary worktrees. Partial parent issues may remain open when their separately verified unit is integrated.
+- Never force-push, discard unrelated work, modify protected settings or publish releases/deployments without express authorization.
+- Keep this local instruction file untracked and uncommitted. Do not reference its existence or contents in tracked files, ignore rules, commits, issues, pull requests or publication artifacts. Stage authorized task paths explicitly instead of adding the entire working tree.
+- Continue through every independently executable mandatory task; a finished batch, issue or gate is a checkpoint, not a stopping condition. Keep the full thesis objective active until verified complete or genuinely externally blocked.
+- Migrate mutation governance prospectively to L1 80%, L2 90%, L3 95%, L4 98%. Record each executable task's highest applicable risk, classify production sources explicitly and reject unknown scope. Never compensate a failing critical scope with lower-risk passes or relabel historical certifications under the new criteria.
+- Bind current mutation evidence to policy, source, tests, configuration, tool and dependency provenance. Reuse valid execution caches; preserve every legitimate mutant and disclose incomplete, failed, timed-out and reviewed-equivalence outcomes. New executable research and verifier code must enter the governed scope unless a technical exclusion is justified.
+- Write new project-facing documentation in professional English. Independent review is required for the critical governance/enforcement migration after deterministic validation; never substitute self-approval or imply independent scientific attestation.
+
+- Use the authenticated gh CLI for GitHub writes and verify that new content has no automatic application attribution. Do not use connector writes.
+- Keep thesis tracking concise and proportionate to a master’s thesis: update issue descriptions/checklists quietly; comment only on substantive results, blockers or completion. Keep routine logs and detailed test metrics in the existing evidence documents. Avoid progress-comment accumulation; remove obsolete progress comments when cleanup is authorized, preserving task identifiers and scientific evidence.
+- Use fail-fast shell sequences for validation and publication so a failed check cannot be followed by an unintended commit or push.

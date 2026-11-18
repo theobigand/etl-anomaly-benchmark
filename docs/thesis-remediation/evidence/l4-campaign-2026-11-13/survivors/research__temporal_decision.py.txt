@@ -1,0 +1,78 @@
+## x_decision_metrics__mutmut_2
+-    y = np.asarray(y).astype(int)
++    y = np.asarray(y).astype(None)
+## x_match_prevalence__mutmut_11
+-    if len(pos) / len(y) > target:
++    if len(pos) / len(y) >= target:
+## x_match_prevalence__mutmut_27
+-        pos = rng.choice(pos, size=min(keep, len(pos)), replace=False)
++        pos = rng.choice(pos, size=min(keep, len(pos)), replace=None)
+## x_match_prevalence__mutmut_51
+-        neg = rng.choice(neg, size=min(keep, len(neg)), replace=False)
++        neg = rng.choice(neg, size=min(keep, len(neg)), replace=None)
+## x_run_frame__mutmut_7
+-    y = np.asarray(y).astype(int)
++    y = np.asarray(y).astype(None)
+## x_run_frame__mutmut_11
+-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind="stable")
++    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=None)
+## x_run_frame__mutmut_13
+-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind="stable")
++    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), )
+## x_run_frame__mutmut_15
+-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind="stable")
++    order = np.argsort(pd.to_datetime(times, utc=None).to_numpy(), kind="stable")
+## x_run_frame__mutmut_17
+-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind="stable")
++    order = np.argsort(pd.to_datetime(times, ).to_numpy(), kind="stable")
+## x_run_frame__mutmut_18
+-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind="stable")
++    order = np.argsort(pd.to_datetime(times, utc=False).to_numpy(), kind="stable")
+## x_run_frame__mutmut_20
+-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind="stable")
++    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind="STABLE")
+## x_hypotheses__mutmut_119
+-        "H1": {"supported": all(round(v, 9) >= 0.8 for v in h1.values()), "spearman": h1},
++        "H1": {"supported": all(round(v, 10) >= 0.8 for v in h1.values()), "spearman": h1},
+## x_credit_card__mutmut_6
+-    frame = tp.load(spec).sort_values(tp.TIME_UTC, kind="stable")
++    frame = tp.load(spec).sort_values(tp.TIME_UTC, kind=None)
+## x_credit_card__mutmut_8
+-    frame = tp.load(spec).sort_values(tp.TIME_UTC, kind="stable")
++    frame = tp.load(spec).sort_values(tp.TIME_UTC, )
+## x_credit_card__mutmut_11
+-    frame = tp.load(spec).sort_values(tp.TIME_UTC, kind="stable")
++    frame = tp.load(spec).sort_values(tp.TIME_UTC, kind="STABLE")
+## x_credit_card__mutmut_12
+-        tp.features(spec, frame).reset_index(drop=True),
++        tp.features(spec, frame).reset_index(drop=None),
+## x_credit_card__mutmut_17
+-        tp.features(spec, frame).reset_index(drop=True),
++        tp.features(spec, frame).reset_index(drop=False),
+## x_bank_marketing__mutmut_48
+-        pd.DataFrame({"year": year, "month": index + 1, "day": 1})
++        pd.DataFrame({"YEAR": year, "month": index + 1, "day": 1})
+## x_bank_marketing__mutmut_50
+-        pd.DataFrame({"year": year, "month": index + 1, "day": 1})
++        pd.DataFrame({"year": year, "MONTH": index + 1, "day": 1})
+## x_bank_marketing__mutmut_54
+-        pd.DataFrame({"year": year, "month": index + 1, "day": 1})
++        pd.DataFrame({"year": year, "month": index + 1, "DAY": 1})
+## x_bank_marketing__mutmut_57
+-    ).dt.tz_localize("UTC") + pd.to_timedelta(within, unit="min")
++    ).dt.tz_localize("utc") + pd.to_timedelta(within, unit="min")
+## x_bank_marketing__mutmut_63
+-    ).dt.tz_localize("UTC") + pd.to_timedelta(within, unit="min")
++    ).dt.tz_localize("UTC") + pd.to_timedelta(within, unit="MIN")
+## x_bank_marketing__mutmut_77
+-    cats = [c for c in features if not pd.api.types.is_numeric_dtype(features[c])]
++    cats = None
+## x_bank_marketing__mutmut_82
+-    features = pd.get_dummies(features, columns=cats, dummy_na=True, dtype=float)
++    features = pd.get_dummies(features, columns=None, dummy_na=True, dtype=float)
+## x_bank_marketing__mutmut_86
+-    features = pd.get_dummies(features, columns=cats, dummy_na=True, dtype=float)
++    features = pd.get_dummies(features, dummy_na=True, dtype=float)
+## x_main__mutmut_2
+-    parser = argparse.ArgumentParser(description=__doc__)
++    parser = argparse.ArgumentParser(description=None)

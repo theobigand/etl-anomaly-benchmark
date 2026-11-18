@@ -1,0 +1,16 @@
+import hashlib
+import inspect
+import platform
+from pathlib import Path
+import torch
+from torch.utils.data import DataLoader
+p=Path('src/etl_benchmark/quality/_torch_models.py')
+print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'torch',torch.__version__)
+print('signature',inspect.signature(DataLoader))
+for n in (0,1,2,3,5):
+ for batch_size in (1,2,4):
+  data=torch.arange(n)
+  a=[x.tolist() for x in DataLoader(data,batch_size=batch_size,drop_last=False,shuffle=False)]
+  for kw in ({'drop_last':False,'shuffle':None},{'shuffle':False},{'drop_last':False}):
+   b=[x.tolist() for x in DataLoader(data,batch_size=batch_size,**kw)]
+   print('n',n,'batch',batch_size,'kwargs',kw,'match',a==b,'batches',b)

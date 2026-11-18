@@ -1,0 +1,14 @@
+import contextlib,hashlib,io,platform,warnings
+from pathlib import Path
+from importlib.metadata import version
+import numpy as np,torch
+from etl_benchmark.quality._torch_models import PaddedAE1SVM
+p=Path('src/etl_benchmark/quality/_torch_models.py');print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'torch',torch.__version__,'pyod',version('pyod'))
+rng=np.random.default_rng(4);x=rng.normal(size=(30,3));y=np.tile([0,1,2],10)
+for suffix in ('orig','11','13'):
+ torch.manual_seed(4);d=PaddedAE1SVM(epochs=1,batch_size=10,hidden_neurons=[4],kernel_approx_features=8,preprocessing=False)
+ try:
+  with warnings.catch_warnings(record=True) as w, contextlib.redirect_stdout(io.StringIO()):
+   warnings.simplefilter('always');getattr(d,f'xǁPaddedAE1SVMǁfit__mutmut_{suffix}')(x,y);probs=d.predict_proba(x)
+  print(suffix,'probability_shape',probs.shape,'warnings',[(type(t.message).__name__,str(t.message)) for t in w])
+ except Exception as e:print(suffix,'error',type(e).__name__,str(e))

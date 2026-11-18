@@ -1,0 +1,28 @@
+{
+  "head": "d4d21895d3c6addf75218b67bdb8ccd11b4c7b7e",
+  "worktree": "uncommitted; multi-schema test formatted after RED/GREEN",
+  "python": "3.11.17 (main, Oct  6 2026, 23:54:59) [Clang 21.1.8 ]",
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "packages": {
+    "numpy": "2.4.6",
+    "pandas": "3.0.6",
+    "scipy": "1.17.1",
+    "scikit-learn": "1.9.1",
+    "torch": "2.14.1",
+    "pytest": "9.1.1",
+    "mutmut": "3.8.0"
+  },
+  "sha256": {
+    "research/multi_schema.py": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+    "research/temporal_decision.py": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+    "src/etl_benchmark/quality/window_drift.py": "7369796bac2ada0ee25c125b383752c8d40d7f683e287767dfb6b373108ea8d7",
+    "research/tests/test_multi_schema_contracts.py": "5d6c9eebd8d328fa0d4a5dd20a2de03ed99e0f59dcdede0b782239950c4d3b3f",
+    "research/tests/test_multi_schema_command.py": "75ee506c9be78ae3dac755d61fba89749950f790a8e0c8611d536c07c191b6a4",
+    "research/tests/test_temporal_decision.py": "1e84cd0089f36572d562b86a1a00fb571e4b4f7e758b85e954fe822ff509f00a",
+    "tests/test_window_drift_contracts.py": "9162e3c9c442730348894c7ced708d439333d84d63e37c310b5de89dcec23fab",
+    "mutants/research/multi_schema.py": "8b48b7c67a6e97e0bfa55683104c6f7c28ff77fcc949ba1e6281003424dbdf8e",
+    "mutants/research/temporal_decision.py": "0264ae49d442c9cb7d3331d63ae14e36d1041078e8468b686a9175c8fbc18c38",
+    "docs/thesis-remediation/evidence/diagnostic-43744898804/shard/mutants/src/etl_benchmark/quality/window_drift.py": "a13c8afb6e8500babc75039c9479cdca53e6853bc7a64cdac36e14292031fdfe"
+  },
+  "scope": "First three RED probes used this Conda environment. The window RED and 61-test GREEN used the separately recorded mutation environment. Tests were subsequently formatted; hashes reflect post-format files. Not native verdicts or full campaign."
+}

@@ -1,0 +1,17 @@
+import dataclasses,hashlib,platform
+from pathlib import Path
+import pandas as pd
+import research.multi_schema as m
+p=Path('research/multi_schema.py');print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'pandas',pd.__version__)
+for name in ('sensors','transactions'):
+ spec=m.SCHEMAS[name]; original_clean=spec.clean
+ def clean(n,rng,fake):
+  frame=original_clean(n,rng,fake)
+  for col in (spec.string_col,spec.cat_col):frame[col]=frame[col].astype('object')
+  return frame
+ custom=dataclasses.replace(spec,clean=clean)
+ a=m.x_make__mutmut_orig(custom,300,3);b=m.x_make__mutmut_126(custom,300,3)
+ for col in (spec.string_col,spec.cat_col):
+  a_null=a.loc[a['anomaly_type'].eq('missing_value') & a[col].isna(),col].tolist()
+  b_null=b.loc[b['anomaly_type'].eq('missing_value') & b[col].isna(),col].tolist()
+  print(name,col,'original_types',[type(v).__name__ for v in a_null],'mutant_types',[type(v).__name__ for v in b_null])

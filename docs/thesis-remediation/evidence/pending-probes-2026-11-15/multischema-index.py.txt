@@ -1,0 +1,9 @@
+import multi_schema as ms
+import pytest
+
+@pytest.mark.parametrize('schema', ['sensors', 'transactions'])
+def test_generated_rows_have_distinct_index_labels(schema):
+    frame = ms.make(ms.SCHEMAS[schema], n_rows=300, seed=3)
+    assert frame.index.is_unique
+    for label in frame.index[:10]:
+        assert frame.loc[[label]].shape[0] == 1

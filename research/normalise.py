@@ -17,7 +17,10 @@ from sklearn.model_selection import train_test_split
 
 MAX_MISSING_SHARE = 0.5
 CATEGORY_CAP = 20
-MIN_CLASS_COUNT = 3  # needed so that train, validation and test each hold one anomaly
+# A 70/15/15 stratified split needs 6 of the scarcer class: train gets 4 (at most) and the rest
+# holds 2, which the second split divides into one validation and one test row. With 3 to 5 the
+# scikit-learn split raises a bare ValueError for some sizes (checked over n up to 200, 10 seeds).
+MIN_CLASS_COUNT = 6
 OCSVM_MAX_TRAIN, LOF_MAX_TRAIN = 20_000, 50_000  # from the cost study exponents, set before use
 KNN_MAX_TRAIN = 50_000  # the same limit as LOF: both compare every row with the training rows
 
@@ -82,7 +85,13 @@ def split(x: np.ndarray, y, seed: int) -> dict[str, np.ndarray]:
     filled = fill(x[train])
     mean, scale = filled.mean(axis=0), filled.std(axis=0)
     scale = np.where(scale == 0, 1.0, scale)
-    out: dict[str, np.ndarray] = {"mean": mean, "scale": scale, "idx_train": train}
+    out: dict[str, np.ndarray] = {
+        "mean": mean,
+        "scale": scale,
+        "idx_train": train,
+        "idx_val": val,
+        "idx_test": test,
+    }
     for name, rows in (("train", train), ("val", val), ("test", test)):
         out[f"x_{name}"] = (fill(x[rows]) - mean) / scale
         out[f"y_{name}"] = y[rows]

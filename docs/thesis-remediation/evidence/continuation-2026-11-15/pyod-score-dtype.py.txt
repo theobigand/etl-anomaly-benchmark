@@ -1,0 +1,24 @@
+import hashlib,platform,warnings
+from pathlib import Path
+from importlib.metadata import version
+import numpy as np,pandas as pd,sklearn
+from etl_benchmark.quality.ml import ECODDetector,COPODDetector,HBOSDetector,IsolationForestDetector,LOFDetector,OneClassSVMDetector,KNNDetector,PCADetector
+p=Path('src/etl_benchmark/quality/ml.py');print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'numpy',np.__version__,'pandas',pd.__version__,'sklearn',sklearn.__version__,'pyod',version('pyod'))
+rng=np.random.default_rng(31);raw=rng.normal(size=(80,3));raw[-2:]+=10;raw[2,0]=np.nan
+for cls in (ECODDetector,COPODDetector,HBOSDetector,IsolationForestDetector,LOFDetector,OneClassSVMDetector,KNNDetector,PCADetector):
+ for dtype in ('float64','float32'):
+  frame=pd.DataFrame(raw.astype(dtype),columns=list('abc'),index=np.arange(80)%40)
+  def run(suffix):
+   try:
+    with warnings.catch_warnings(record=True) as w:
+     warnings.simplefilter('always');d=cls().fit(frame);out=getattr(d,f'xǁPyODDetectorǁscore__mutmut_{suffix}')(frame)
+    return ('ok',out,[(type(x.message).__name__,str(x.message)) for x in w])
+   except Exception as e:return ('error',type(e).__name__,str(e))
+  a=run('orig')
+  for suffix in ('6','9'):
+   b=run(suffix);same=a[0]==b[0]
+   if same and a[0]=='ok':
+    try:pd.testing.assert_series_equal(a[1],b[1]);same=a[2]==b[2]
+    except AssertionError:same=False
+   elif same:same=a==b
+   print(cls.__name__,dtype,suffix,'match',same,'kind',a[0])

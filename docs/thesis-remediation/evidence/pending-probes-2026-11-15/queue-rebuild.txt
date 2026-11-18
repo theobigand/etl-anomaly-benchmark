@@ -1,0 +1,25 @@
+entries 125 origins {'first packet': 43, 'second packet': 33, 'new probe': 49}
+historically failing, hypothetical change
+experiments/run_severity.py 320/329 proposals 5 hypothetical 320/324 98.77% crosses True
+research/injection.py 325/336 proposals 4 hypothetical 325/332 97.89% crosses False
+research/lstm_detector.py 368/377 proposals 0 hypothetical 368/377 97.61% crosses False
+research/multi_schema.py 1057/1093 proposals 16 hypothetical 1057/1077 98.14% crosses True
+research/normalise.py 191/197 proposals 6 hypothetical 191/191 100.00% crosses True
+research/pool_chrono.py 300/316 proposals 6 hypothetical 300/310 96.77% crosses False
+research/pool_preprocessing.py 241/248 proposals 4 hypothetical 241/244 98.77% crosses True
+research/temporal_decision.py 810/836 proposals 9 hypothetical 810/827 97.94% crosses False
+research/typed_benchmark.py 175/180 proposals 3 hypothetical 175/177 98.87% crosses True
+research/uci_loader.py 180/186 proposals 1 hypothetical 180/185 97.30% crosses False
+src/etl_benchmark/load.py 13/14 proposals 1 hypothetical 13/13 100.00% crosses True
+src/etl_benchmark/quality/_torch_models.py 58/65 proposals 3 hypothetical 58/62 93.55% crosses False
+src/etl_benchmark/quality/autoencoder.py 112/117 proposals 2 hypothetical 112/115 97.39% crosses False
+src/etl_benchmark/quality/base.py 30/31 proposals 1 hypothetical 30/30 100.00% crosses True
+src/etl_benchmark/quality/deep.py 60/62 proposals 2 hypothetical 60/60 100.00% crosses True
+src/etl_benchmark/quality/drift.py 119/129 proposals 2 hypothetical 119/127 93.70% crosses False
+src/etl_benchmark/quality/gx.py 87/98 proposals 6 hypothetical 87/92 94.57% crosses False
+src/etl_benchmark/quality/ml.py 239/259 proposals 6 hypothetical 239/253 94.47% crosses False
+src/etl_benchmark/quality/rules.py 112/119 proposals 2 hypothetical 112/117 95.73% crosses False
+src/etl_benchmark/quality/window_drift.py 225/233 proposals 2 hypothetical 225/231 97.40% crosses False
+src/etl_benchmark/quality/windows.py 54/57 proposals 3 hypothetical 54/54 100.00% crosses True
+verification/mutation_scope.py 240/246 proposals 6 hypothetical 240/240 100.00% crosses True
+draft lines 391

@@ -1,0 +1,18 @@
+## x_clean__mutmut_34
+-            pieces.append(col.astype(float).rename(name))
++            pieces.append(col.astype(float).rename(None))
+## x_clean__mutmut_35
+-            pieces.append(col.astype(float).rename(name))
++            pieces.append(col.astype(None).rename(name))
+## x_clean__mutmut_45
+-            pieces.append(pd.get_dummies(col.astype(str), prefix=str(name), dtype=float))
++            pieces.append(pd.get_dummies(col.astype(str), prefix=None, dtype=float))
+## x_clean__mutmut_48
+-            pieces.append(pd.get_dummies(col.astype(str), prefix=str(name), dtype=float))
++            pieces.append(pd.get_dummies(col.astype(str), dtype=float))
+## x_clean__mutmut_51
+-            pieces.append(pd.get_dummies(col.astype(str), prefix=str(name), dtype=float))
++            pieces.append(pd.get_dummies(col.astype(str), prefix=str(None), dtype=float))
+## x_clean__mutmut_64
+-    keys = pd.util.hash_pandas_object(table.fillna(np.inf), index=False)
++    keys = pd.util.hash_pandas_object(table.fillna(np.inf), index=None)

@@ -1,0 +1,748 @@
+## x_check_python__mutmut_14
+-    return Result("python", status, f"{found} (locked environment uses {expected})")
++    return Result("python", status, None)
+## x_check_platform__mutmut_7
+-            "platform", "PASS", "Linux x86_64, the platform of the hash-locked environment"
++            None, "PASS", "Linux x86_64, the platform of the hash-locked environment"
+## x_check_platform__mutmut_9
+-            "platform", "PASS", "Linux x86_64, the platform of the hash-locked environment"
++            "platform", "PASS", None
+## x_check_platform__mutmut_13
+-            "platform", "PASS", "Linux x86_64, the platform of the hash-locked environment"
++            "XXplatformXX", "PASS", "Linux x86_64, the platform of the hash-locked environment"
+## x_check_platform__mutmut_14
+-            "platform", "PASS", "Linux x86_64, the platform of the hash-locked environment"
++            "PLATFORM", "PASS", "Linux x86_64, the platform of the hash-locked environment"
+## x_check_platform__mutmut_17
+-            "platform", "PASS", "Linux x86_64, the platform of the hash-locked environment"
++            "platform", "PASS", "XXLinux x86_64, the platform of the hash-locked environmentXX"
+## x_check_platform__mutmut_18
+-            "platform", "PASS", "Linux x86_64, the platform of the hash-locked environment"
++            "platform", "PASS", "linux x86_64, the platform of the hash-locked environment"
+## x_check_platform__mutmut_19
+-            "platform", "PASS", "Linux x86_64, the platform of the hash-locked environment"
++            "platform", "PASS", "LINUX X86_64, THE PLATFORM OF THE HASH-LOCKED ENVIRONMENT"
+## x_check_dependencies__mutmut_19
+-        return Result("dependencies", "FAIL", "; ".join(problems))
++        return Result("dependencies", "FAIL", "XX; XX".join(problems))
+## x_check_dependencies__mutmut_20
+-    return Result("dependencies", "PASS", ", ".join(f"{k} {v}" for k, v in locked.items()))
++    return Result(None, "PASS", ", ".join(f"{k} {v}" for k, v in locked.items()))
+## x_check_dependencies__mutmut_22
+-    return Result("dependencies", "PASS", ", ".join(f"{k} {v}" for k, v in locked.items()))
++    return Result("dependencies", "PASS", None)
+## x_check_dependencies__mutmut_26
+-    return Result("dependencies", "PASS", ", ".join(f"{k} {v}" for k, v in locked.items()))
++    return Result("XXdependenciesXX", "PASS", ", ".join(f"{k} {v}" for k, v in locked.items()))
+## x_check_dependencies__mutmut_27
+-    return Result("dependencies", "PASS", ", ".join(f"{k} {v}" for k, v in locked.items()))
++    return Result("DEPENDENCIES", "PASS", ", ".join(f"{k} {v}" for k, v in locked.items()))
+## x_check_dependencies__mutmut_31
+-    return Result("dependencies", "PASS", ", ".join(f"{k} {v}" for k, v in locked.items()))
++    return Result("dependencies", "PASS", "XX, XX".join(f"{k} {v}" for k, v in locked.items()))
+## x_linux_lock_pins__mutmut_4
+-        name, sep, rest = line.partition("==")
++        name, sep, rest = line.rpartition("==")
+## x_linux_lock_pins__mutmut_9
+-        if sep and not line.startswith("#"):
++        if sep and not line.startswith("XX#XX"):
+## x_check_lock__mutmut_8
+-        return Result("environment lock", "FAIL", "; ".join(problems[:10]))
++        return Result(None, "FAIL", "; ".join(problems[:10]))
+## x_check_lock__mutmut_14
+-        return Result("environment lock", "FAIL", "; ".join(problems[:10]))
++        return Result("XXenvironment lockXX", "FAIL", "; ".join(problems[:10]))
+## x_check_lock__mutmut_15
+-        return Result("environment lock", "FAIL", "; ".join(problems[:10]))
++        return Result("ENVIRONMENT LOCK", "FAIL", "; ".join(problems[:10]))
+## x_check_lock__mutmut_19
+-        return Result("environment lock", "FAIL", "; ".join(problems[:10]))
++        return Result("environment lock", "FAIL", "XX; XX".join(problems[:10]))
+## x_check_lock__mutmut_20
+-        return Result("environment lock", "FAIL", "; ".join(problems[:10]))
++        return Result("environment lock", "FAIL", "; ".join(problems[:11]))
+## x_check_lock__mutmut_21
+-    return Result("environment lock", "PASS", f"all {len(pins)} pinned packages match")
++    return Result(None, "PASS", f"all {len(pins)} pinned packages match")
+## x_check_lock__mutmut_23
+-    return Result("environment lock", "PASS", f"all {len(pins)} pinned packages match")
++    return Result("environment lock", "PASS", None)
+## x_check_lock__mutmut_27
+-    return Result("environment lock", "PASS", f"all {len(pins)} pinned packages match")
++    return Result("XXenvironment lockXX", "PASS", f"all {len(pins)} pinned packages match")
+## x_check_lock__mutmut_28
+-    return Result("environment lock", "PASS", f"all {len(pins)} pinned packages match")
++    return Result("ENVIRONMENT LOCK", "PASS", f"all {len(pins)} pinned packages match")
+## x_check_lock_for__mutmut_7
+-        return Result("environment lock", "WARN", "the hash-pinned lock describes Linux only")
++        return Result("environment lock", "WARN", None)
+## x_check_lock_for__mutmut_11
+-        return Result("environment lock", "WARN", "the hash-pinned lock describes Linux only")
++        return Result("XXenvironment lockXX", "WARN", "the hash-pinned lock describes Linux only")
+## x_check_lock_for__mutmut_12
+-        return Result("environment lock", "WARN", "the hash-pinned lock describes Linux only")
++        return Result("ENVIRONMENT LOCK", "WARN", "the hash-pinned lock describes Linux only")
+## x_check_lock_for__mutmut_15
+-        return Result("environment lock", "WARN", "the hash-pinned lock describes Linux only")
++        return Result("environment lock", "WARN", "XXthe hash-pinned lock describes Linux onlyXX")
+## x_check_lock_for__mutmut_16
+-        return Result("environment lock", "WARN", "the hash-pinned lock describes Linux only")
++        return Result("environment lock", "WARN", "the hash-pinned lock describes linux only")
+## x_check_lock_for__mutmut_17
+-        return Result("environment lock", "WARN", "the hash-pinned lock describes Linux only")
++        return Result("environment lock", "WARN", "THE HASH-PINNED LOCK DESCRIBES LINUX ONLY")
+## x_check_datasets__mutmut_12
+-            results.append(Result(f"dataset {name}", "FAIL", "file absent"))
++            results.append(Result(f"dataset {name}", "FAIL", "XXfile absentXX"))
+## x_check_datasets__mutmut_14
+-            continue
++            break
+## x_check_datasets__mutmut_22
+-                f"dataset {name}",
++                None,
+## x_check_datasets__mutmut_34
+-                "sha256 matches the reference" if same else "sha256 differs from the reference",
++                "sha256 matches the reference" if (same) and False else "sha256 differs from the reference",
+## x_check_datasets__mutmut_36
+-                "sha256 matches the reference" if same else "sha256 differs from the reference",
++                "XXsha256 matches the referenceXX" if same else "sha256 differs from the reference",
+## x_check_datasets__mutmut_37
+-                "sha256 matches the reference" if same else "sha256 differs from the reference",
++                "SHA256 MATCHES THE REFERENCE" if same else "sha256 differs from the reference",
+## x_check_datasets__mutmut_38
+-                "sha256 matches the reference" if same else "sha256 differs from the reference",
++                "sha256 matches the reference" if same else "XXsha256 differs from the referenceXX",
+## x_check_datasets__mutmut_44
+-        if mode & 0o022:
++        if mode & 19:
+## x_check_datasets__mutmut_49
+-        elif mode & 0o044:
++        elif mode & 37:
+## x_measure_resources__mutmut_2
+-    ram = os.sysconf("SC_PAGE_SIZE") * os.sysconf("SC_PHYS_PAGES")
++    ram = os.sysconf("SC_PAGE_SIZE") / os.sysconf("SC_PHYS_PAGES")
+## x_measure_resources__mutmut_16
+-    return Resources(shutil.disk_usage(where).free, os.cpu_count() or 1, ram)
++    return Resources(shutil.disk_usage(where).free, os.cpu_count() and 1, ram)
+## x_measure_resources__mutmut_17
+-    return Resources(shutil.disk_usage(where).free, os.cpu_count() or 1, ram)
++    return Resources(shutil.disk_usage(where).free, os.cpu_count() or 2, ram)
+## x_check_resources__mutmut_2
+-    if found.free_bytes < MIN_DISK:
++    if found.free_bytes <= MIN_DISK:
+## x_check_resources__mutmut_4
+-        short.append(f"disk {found.free_bytes // 2**30} GiB free, {MIN_DISK // 2**30} needed")
++        short.append(f"disk {found.free_bytes / 2**30} GiB free, {MIN_DISK // 2**30} needed")
+## x_check_resources__mutmut_5
+-        short.append(f"disk {found.free_bytes // 2**30} GiB free, {MIN_DISK // 2**30} needed")
++        short.append(f"disk {found.free_bytes // 2 * 30} GiB free, {MIN_DISK // 2**30} needed")
+## x_check_resources__mutmut_6
+-        short.append(f"disk {found.free_bytes // 2**30} GiB free, {MIN_DISK // 2**30} needed")
++        short.append(f"disk {found.free_bytes // 3**30} GiB free, {MIN_DISK // 2**30} needed")
+## x_check_resources__mutmut_7
+-        short.append(f"disk {found.free_bytes // 2**30} GiB free, {MIN_DISK // 2**30} needed")
++        short.append(f"disk {found.free_bytes // 2**31} GiB free, {MIN_DISK // 2**30} needed")
+## x_check_resources__mutmut_8
+-        short.append(f"disk {found.free_bytes // 2**30} GiB free, {MIN_DISK // 2**30} needed")
++        short.append(f"disk {found.free_bytes // 2**30} GiB free, {MIN_DISK / 2**30} needed")
+## x_check_resources__mutmut_9
+-        short.append(f"disk {found.free_bytes // 2**30} GiB free, {MIN_DISK // 2**30} needed")
++        short.append(f"disk {found.free_bytes // 2**30} GiB free, {MIN_DISK // 2 * 30} needed")
+## x_check_resources__mutmut_10
+-        short.append(f"disk {found.free_bytes // 2**30} GiB free, {MIN_DISK // 2**30} needed")
++        short.append(f"disk {found.free_bytes // 2**30} GiB free, {MIN_DISK // 3**30} needed")
+## x_check_resources__mutmut_11
+-        short.append(f"disk {found.free_bytes // 2**30} GiB free, {MIN_DISK // 2**30} needed")
++        short.append(f"disk {found.free_bytes // 2**30} GiB free, {MIN_DISK // 2**31} needed")
+## x_check_resources__mutmut_12
+-    if found.cpus < MIN_CPUS:
++    if found.cpus <= MIN_CPUS:
+## x_check_resources__mutmut_14
+-    if found.ram_bytes < MIN_RAM:
++    if found.ram_bytes <= MIN_RAM:
+## x_check_resources__mutmut_16
+-        short.append(f"memory {found.ram_bytes // 2**30} GiB, {MIN_RAM // 2**30} needed")
++        short.append(f"memory {found.ram_bytes / 2**30} GiB, {MIN_RAM // 2**30} needed")
+## x_check_resources__mutmut_17
+-        short.append(f"memory {found.ram_bytes // 2**30} GiB, {MIN_RAM // 2**30} needed")
++        short.append(f"memory {found.ram_bytes // 2 * 30} GiB, {MIN_RAM // 2**30} needed")
+## x_check_resources__mutmut_18
+-        short.append(f"memory {found.ram_bytes // 2**30} GiB, {MIN_RAM // 2**30} needed")
++        short.append(f"memory {found.ram_bytes // 3**30} GiB, {MIN_RAM // 2**30} needed")
+## x_check_resources__mutmut_19
+-        short.append(f"memory {found.ram_bytes // 2**30} GiB, {MIN_RAM // 2**30} needed")
++        short.append(f"memory {found.ram_bytes // 2**31} GiB, {MIN_RAM // 2**30} needed")
+## x_check_resources__mutmut_20
+-        short.append(f"memory {found.ram_bytes // 2**30} GiB, {MIN_RAM // 2**30} needed")
++        short.append(f"memory {found.ram_bytes // 2**30} GiB, {MIN_RAM / 2**30} needed")
+## x_check_resources__mutmut_21
+-        short.append(f"memory {found.ram_bytes // 2**30} GiB, {MIN_RAM // 2**30} needed")
++        short.append(f"memory {found.ram_bytes // 2**30} GiB, {MIN_RAM // 2 * 30} needed")
+## x_check_resources__mutmut_22
+-        short.append(f"memory {found.ram_bytes // 2**30} GiB, {MIN_RAM // 2**30} needed")
++        short.append(f"memory {found.ram_bytes // 2**30} GiB, {MIN_RAM // 3**30} needed")
+## x_check_resources__mutmut_23
+-        short.append(f"memory {found.ram_bytes // 2**30} GiB, {MIN_RAM // 2**30} needed")
++        short.append(f"memory {found.ram_bytes // 2**30} GiB, {MIN_RAM // 2**31} needed")
+## x_check_resources__mutmut_24
+-        return Result("resources", "FAIL", "; ".join(short))
++        return Result(None, "FAIL", "; ".join(short))
+## x_check_resources__mutmut_30
+-        return Result("resources", "FAIL", "; ".join(short))
++        return Result("XXresourcesXX", "FAIL", "; ".join(short))
+## x_check_resources__mutmut_31
+-        return Result("resources", "FAIL", "; ".join(short))
++        return Result("RESOURCES", "FAIL", "; ".join(short))
+## x_check_resources__mutmut_35
+-        return Result("resources", "FAIL", "; ".join(short))
++        return Result("resources", "FAIL", "XX; XX".join(short))
+## x_check_resources__mutmut_37
+-    free, ram = found.free_bytes // 2**30, found.ram_bytes // 2**30
++    free, ram = found.free_bytes / 2**30, found.ram_bytes // 2**30
+## x_check_resources__mutmut_38
+-    free, ram = found.free_bytes // 2**30, found.ram_bytes // 2**30
++    free, ram = found.free_bytes // 2 * 30, found.ram_bytes // 2**30
+## x_check_resources__mutmut_39
+-    free, ram = found.free_bytes // 2**30, found.ram_bytes // 2**30
++    free, ram = found.free_bytes // 3**30, found.ram_bytes // 2**30
+## x_check_resources__mutmut_40
+-    free, ram = found.free_bytes // 2**30, found.ram_bytes // 2**30
++    free, ram = found.free_bytes // 2**31, found.ram_bytes // 2**30
+## x_check_resources__mutmut_41
+-    free, ram = found.free_bytes // 2**30, found.ram_bytes // 2**30
++    free, ram = found.free_bytes // 2**30, found.ram_bytes / 2**30
+## x_check_resources__mutmut_42
+-    free, ram = found.free_bytes // 2**30, found.ram_bytes // 2**30
++    free, ram = found.free_bytes // 2**30, found.ram_bytes // 2 * 30
+## x_check_resources__mutmut_43
+-    free, ram = found.free_bytes // 2**30, found.ram_bytes // 2**30
++    free, ram = found.free_bytes // 2**30, found.ram_bytes // 3**30
+## x_check_resources__mutmut_44
+-    free, ram = found.free_bytes // 2**30, found.ram_bytes // 2**30
++    free, ram = found.free_bytes // 2**30, found.ram_bytes // 2**31
+## x_check_resources__mutmut_47
+-    return Result("resources", "PASS", f"{free} GiB free, {found.cpus} cpu, {ram} GiB memory")
++    return Result("resources", "PASS", None)
+## x_git_state__mutmut_3
+-        ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True, check=True
++        ["git", "rev-parse", "HEAD"], cwd=None, capture_output=True, text=True, check=True
+## x_git_state__mutmut_4
+-        ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True, check=True
++        ["git", "rev-parse", "HEAD"], cwd=root, capture_output=None, text=True, check=True
+## x_git_state__mutmut_5
+-        ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True, check=True
++        ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=None, check=True
+## x_git_state__mutmut_6
+-        ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True, check=True
++        ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True, check=None
+## x_git_state__mutmut_8
+-        ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True, check=True
++        ["git", "rev-parse", "HEAD"], capture_output=True, text=True, check=True
+## x_git_state__mutmut_9
+-        ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True, check=True
++        ["git", "rev-parse", "HEAD"], cwd=root, text=True, check=True
+## x_git_state__mutmut_10
+-        ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True, check=True
++        ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, check=True
+## x_git_state__mutmut_11
+-        ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True, check=True
+-    ).stdout.strip()
++        ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True, ).stdout.strip()
+## x_git_state__mutmut_12
+-        ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True, check=True
++        ["XXgitXX", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True, check=True
+## x_git_state__mutmut_13
+-        ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True, check=True
++        ["GIT", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True, check=True
+## x_git_state__mutmut_16
+-        ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True, check=True
++        ["git", "rev-parse", "XXHEADXX"], cwd=root, capture_output=True, text=True, check=True
+## x_git_state__mutmut_17
+-        ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True, check=True
++        ["git", "rev-parse", "head"], cwd=root, capture_output=True, text=True, check=True
+## x_git_state__mutmut_18
+-        ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True, check=True
++        ["git", "rev-parse", "HEAD"], cwd=root, capture_output=False, text=True, check=True
+## x_git_state__mutmut_19
+-        ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True, check=True
++        ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=False, check=True
+## x_git_state__mutmut_20
+-        ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True, check=True
++        ["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True, check=False
+## x_git_state__mutmut_21
+-    dirty = subprocess.run(
+-        ["git", "status", "--porcelain"], cwd=root, capture_output=True, text=True, check=True
+-    ).stdout.strip()
++    dirty = None
+## x_git_state__mutmut_23
+-        ["git", "status", "--porcelain"], cwd=root, capture_output=True, text=True, check=True
++        ["git", "status", "--porcelain"], cwd=None, capture_output=True, text=True, check=True
+## x_git_state__mutmut_24
+-        ["git", "status", "--porcelain"], cwd=root, capture_output=True, text=True, check=True
++        ["git", "status", "--porcelain"], cwd=root, capture_output=None, text=True, check=True
+## x_git_state__mutmut_25
+-        ["git", "status", "--porcelain"], cwd=root, capture_output=True, text=True, check=True
++        ["git", "status", "--porcelain"], cwd=root, capture_output=True, text=None, check=True
+## x_git_state__mutmut_26
+-        ["git", "status", "--porcelain"], cwd=root, capture_output=True, text=True, check=True
++        ["git", "status", "--porcelain"], cwd=root, capture_output=True, text=True, check=None
+## x_git_state__mutmut_28
+-        ["git", "status", "--porcelain"], cwd=root, capture_output=True, text=True, check=True
++        ["git", "status", "--porcelain"], capture_output=True, text=True, check=True
+## x_git_state__mutmut_29
+-        ["git", "status", "--porcelain"], cwd=root, capture_output=True, text=True, check=True
++        ["git", "status", "--porcelain"], cwd=root, text=True, check=True
+## x_git_state__mutmut_30
+-        ["git", "status", "--porcelain"], cwd=root, capture_output=True, text=True, check=True
++        ["git", "status", "--porcelain"], cwd=root, capture_output=True, check=True
+## x_git_state__mutmut_31
+-        ["git", "status", "--porcelain"], cwd=root, capture_output=True, text=True, check=True
+-    ).stdout.strip()
++        ["git", "status", "--porcelain"], cwd=root, capture_output=True, text=True, ).stdout.strip()
+## x_git_state__mutmut_32
+-        ["git", "status", "--porcelain"], cwd=root, capture_output=True, text=True, check=True
++        ["XXgitXX", "status", "--porcelain"], cwd=root, capture_output=True, text=True, check=True
+## x_git_state__mutmut_33
+-        ["git", "status", "--porcelain"], cwd=root, capture_output=True, text=True, check=True
++        ["GIT", "status", "--porcelain"], cwd=root, capture_output=True, text=True, check=True
+## x_git_state__mutmut_36
+-        ["git", "status", "--porcelain"], cwd=root, capture_output=True, text=True, check=True
++        ["git", "status", "XX--porcelainXX"], cwd=root, capture_output=True, text=True, check=True
+## x_git_state__mutmut_37
+-        ["git", "status", "--porcelain"], cwd=root, capture_output=True, text=True, check=True
++        ["git", "status", "--PORCELAIN"], cwd=root, capture_output=True, text=True, check=True
+## x_git_state__mutmut_38
+-        ["git", "status", "--porcelain"], cwd=root, capture_output=True, text=True, check=True
++        ["git", "status", "--porcelain"], cwd=root, capture_output=False, text=True, check=True
+## x_git_state__mutmut_39
+-        ["git", "status", "--porcelain"], cwd=root, capture_output=True, text=True, check=True
++        ["git", "status", "--porcelain"], cwd=root, capture_output=True, text=False, check=True
+## x_git_state__mutmut_40
+-        ["git", "status", "--porcelain"], cwd=root, capture_output=True, text=True, check=True
++        ["git", "status", "--porcelain"], cwd=root, capture_output=True, text=True, check=False
+## x_git_state__mutmut_41
+-    return head, bool(dirty)
++    return head, bool(None)
+## x_check_revision__mutmut_2
+-        return Result("revision", "FAIL", "no approved revision given (--expect-sha)")
++        return Result(None, "FAIL", "no approved revision given (--expect-sha)")
+## x_check_revision__mutmut_4
+-        return Result("revision", "FAIL", "no approved revision given (--expect-sha)")
++        return Result("revision", "FAIL", None)
+## x_check_revision__mutmut_8
+-        return Result("revision", "FAIL", "no approved revision given (--expect-sha)")
++        return Result("XXrevisionXX", "FAIL", "no approved revision given (--expect-sha)")
+## x_check_revision__mutmut_9
+-        return Result("revision", "FAIL", "no approved revision given (--expect-sha)")
++        return Result("REVISION", "FAIL", "no approved revision given (--expect-sha)")
+## x_check_revision__mutmut_12
+-        return Result("revision", "FAIL", "no approved revision given (--expect-sha)")
++        return Result("revision", "FAIL", "XXno approved revision given (--expect-sha)XX")
+## x_check_revision__mutmut_13
+-        return Result("revision", "FAIL", "no approved revision given (--expect-sha)")
++        return Result("revision", "FAIL", "NO APPROVED REVISION GIVEN (--EXPECT-SHA)")
+## x_check_revision__mutmut_15
+-        return Result("revision", "FAIL", f"HEAD {head[:12]} is not the approved {expected[:12]}")
++        return Result(None, "FAIL", f"HEAD {head[:12]} is not the approved {expected[:12]}")
+## x_check_revision__mutmut_17
+-        return Result("revision", "FAIL", f"HEAD {head[:12]} is not the approved {expected[:12]}")
++        return Result("revision", "FAIL", None)
+## x_check_revision__mutmut_21
+-        return Result("revision", "FAIL", f"HEAD {head[:12]} is not the approved {expected[:12]}")
++        return Result("XXrevisionXX", "FAIL", f"HEAD {head[:12]} is not the approved {expected[:12]}")
+## x_check_revision__mutmut_22
+-        return Result("revision", "FAIL", f"HEAD {head[:12]} is not the approved {expected[:12]}")
++        return Result("REVISION", "FAIL", f"HEAD {head[:12]} is not the approved {expected[:12]}")
+## x_check_revision__mutmut_25
+-        return Result("revision", "FAIL", f"HEAD {head[:12]} is not the approved {expected[:12]}")
++        return Result("revision", "FAIL", f"HEAD {head[:13]} is not the approved {expected[:12]}")
+## x_check_revision__mutmut_26
+-        return Result("revision", "FAIL", f"HEAD {head[:12]} is not the approved {expected[:12]}")
++        return Result("revision", "FAIL", f"HEAD {head[:12]} is not the approved {expected[:13]}")
+## x_check_revision__mutmut_27
+-        return Result("revision", "FAIL", "the worktree is not clean")
++        return Result(None, "FAIL", "the worktree is not clean")
+## x_check_revision__mutmut_29
+-        return Result("revision", "FAIL", "the worktree is not clean")
++        return Result("revision", "FAIL", None)
+## x_check_revision__mutmut_33
+-        return Result("revision", "FAIL", "the worktree is not clean")
++        return Result("XXrevisionXX", "FAIL", "the worktree is not clean")
+## x_check_revision__mutmut_34
+-        return Result("revision", "FAIL", "the worktree is not clean")
++        return Result("REVISION", "FAIL", "the worktree is not clean")
+## x_check_revision__mutmut_37
+-        return Result("revision", "FAIL", "the worktree is not clean")
++        return Result("revision", "FAIL", "XXthe worktree is not cleanXX")
+## x_check_revision__mutmut_38
+-        return Result("revision", "FAIL", "the worktree is not clean")
++        return Result("revision", "FAIL", "THE WORKTREE IS NOT CLEAN")
+## x_check_revision__mutmut_41
+-    return Result("revision", "PASS", f"{head[:12]}, clean worktree")
++    return Result("revision", "PASS", None)
+## x_check_revision__mutmut_49
+-    return Result("revision", "PASS", f"{head[:12]}, clean worktree")
++    return Result("revision", "PASS", f"{head[:13]}, clean worktree")
+## x_check_bundle_allowlist__mutmut_16
+-            return Result("bundle allowlist", "FAIL", f"the {kind} bundle allows {sorted(members)}")
++            return Result(None, "FAIL", f"the {kind} bundle allows {sorted(members)}")
+## x_check_bundle_allowlist__mutmut_18
+-            return Result("bundle allowlist", "FAIL", f"the {kind} bundle allows {sorted(members)}")
++            return Result("bundle allowlist", "FAIL", None)
+## x_check_bundle_allowlist__mutmut_22
+-            return Result("bundle allowlist", "FAIL", f"the {kind} bundle allows {sorted(members)}")
++            return Result("XXbundle allowlistXX", "FAIL", f"the {kind} bundle allows {sorted(members)}")
+## x_check_bundle_allowlist__mutmut_23
+-            return Result("bundle allowlist", "FAIL", f"the {kind} bundle allows {sorted(members)}")
++            return Result("BUNDLE ALLOWLIST", "FAIL", f"the {kind} bundle allows {sorted(members)}")
+## x_check_bundle_allowlist__mutmut_29
+-    return Result("bundle allowlist", "PASS", "the real bundles allow their JSON reports only")
++    return Result("bundle allowlist", "PASS", None)
+## x_check_bundle_allowlist__mutmut_37
+-    return Result("bundle allowlist", "PASS", "the real bundles allow their JSON reports only")
++    return Result("bundle allowlist", "PASS", "XXthe real bundles allow their JSON reports onlyXX")
+## x_check_bundle_allowlist__mutmut_38
+-    return Result("bundle allowlist", "PASS", "the real bundles allow their JSON reports only")
++    return Result("bundle allowlist", "PASS", "the real bundles allow their json reports only")
+## x_check_bundle_allowlist__mutmut_39
+-    return Result("bundle allowlist", "PASS", "the real bundles allow their JSON reports only")
++    return Result("bundle allowlist", "PASS", "THE REAL BUNDLES ALLOW THEIR JSON REPORTS ONLY")
+## x_check_upload_paths__mutmut_15
+-            return Result("upload paths", "FAIL", f"no {name} job in the workflow")
++            return Result(None, "FAIL", f"no {name} job in the workflow")
+## x_check_upload_paths__mutmut_17
+-            return Result("upload paths", "FAIL", f"no {name} job in the workflow")
++            return Result("upload paths", "FAIL", None)
+## x_check_upload_paths__mutmut_21
+-            return Result("upload paths", "FAIL", f"no {name} job in the workflow")
++            return Result("XXupload pathsXX", "FAIL", f"no {name} job in the workflow")
+## x_check_upload_paths__mutmut_22
+-            return Result("upload paths", "FAIL", f"no {name} job in the workflow")
++            return Result("UPLOAD PATHS", "FAIL", f"no {name} job in the workflow")
+## x_check_upload_paths__mutmut_26
+-            line.split("path:", 1)[1].strip()
++            line.split(None, 1)[1].strip()
+## x_check_upload_paths__mutmut_29
+-            line.split("path:", 1)[1].strip()
++            line.split("path:", )[1].strip()
+## x_check_upload_paths__mutmut_30
+-            line.split("path:", 1)[1].strip()
++            line.rsplit("path:", 1)[1].strip()
+## x_check_upload_paths__mutmut_33
+-            line.split("path:", 1)[1].strip()
++            line.split("path:", 2)[1].strip()
+## x_check_upload_paths__mutmut_39
+-            return Result("upload paths", "FAIL", f"the {name} job uploads {paths}")
++            return Result(None, "FAIL", f"the {name} job uploads {paths}")
+## x_check_upload_paths__mutmut_41
+-            return Result("upload paths", "FAIL", f"the {name} job uploads {paths}")
++            return Result("upload paths", "FAIL", None)
+## x_check_upload_paths__mutmut_45
+-            return Result("upload paths", "FAIL", f"the {name} job uploads {paths}")
++            return Result("XXupload pathsXX", "FAIL", f"the {name} job uploads {paths}")
+## x_check_upload_paths__mutmut_46
+-            return Result("upload paths", "FAIL", f"the {name} job uploads {paths}")
++            return Result("UPLOAD PATHS", "FAIL", f"the {name} job uploads {paths}")
+## x_check_upload_paths__mutmut_51
+-    return Result("upload paths", "PASS", "the real jobs upload their evidence bundle only")
++    return Result("upload paths", "PASS", None)
+## x_check_upload_paths__mutmut_59
+-    return Result("upload paths", "PASS", "the real jobs upload their evidence bundle only")
++    return Result("upload paths", "PASS", "XXthe real jobs upload their evidence bundle onlyXX")
+## x_check_upload_paths__mutmut_60
+-    return Result("upload paths", "PASS", "the real jobs upload their evidence bundle only")
++    return Result("upload paths", "PASS", "THE REAL JOBS UPLOAD THEIR EVIDENCE BUNDLE ONLY")
+## x_check_runner__mutmut_8
+-        return Result("runner", "WARN", "not inside a GitHub Actions job (advisory)")
++        return Result("runner", "WARN", None)
+## x_check_runner__mutmut_16
+-        return Result("runner", "WARN", "not inside a GitHub Actions job (advisory)")
++        return Result("runner", "WARN", "XXnot inside a GitHub Actions job (advisory)XX")
+## x_check_runner__mutmut_17
+-        return Result("runner", "WARN", "not inside a GitHub Actions job (advisory)")
++        return Result("runner", "WARN", "not inside a github actions job (advisory)")
+## x_check_runner__mutmut_18
+-        return Result("runner", "WARN", "not inside a GitHub Actions job (advisory)")
++        return Result("runner", "WARN", "NOT INSIDE A GITHUB ACTIONS JOB (ADVISORY)")
+## x_check_runner__mutmut_22
+-        return Result("runner", "FAIL", f"RUNNER_ENVIRONMENT is {kind}, not self-hosted")
++        return Result(None, "FAIL", f"RUNNER_ENVIRONMENT is {kind}, not self-hosted")
+## x_check_runner__mutmut_24
+-        return Result("runner", "FAIL", f"RUNNER_ENVIRONMENT is {kind}, not self-hosted")
++        return Result("runner", "FAIL", None)
+## x_check_runner__mutmut_28
+-        return Result("runner", "FAIL", f"RUNNER_ENVIRONMENT is {kind}, not self-hosted")
++        return Result("XXrunnerXX", "FAIL", f"RUNNER_ENVIRONMENT is {kind}, not self-hosted")
+## x_check_runner__mutmut_29
+-        return Result("runner", "FAIL", f"RUNNER_ENVIRONMENT is {kind}, not self-hosted")
++        return Result("RUNNER", "FAIL", f"RUNNER_ENVIRONMENT is {kind}, not self-hosted")
+## x_check_runner__mutmut_32
+-    return Result("runner", "PASS", "self-hosted")
++    return Result(None, "PASS", "self-hosted")
+## x_check_runner__mutmut_34
+-    return Result("runner", "PASS", "self-hosted")
++    return Result("runner", "PASS", None)
+## x_check_runner__mutmut_38
+-    return Result("runner", "PASS", "self-hosted")
++    return Result("XXrunnerXX", "PASS", "self-hosted")
+## x_check_runner__mutmut_39
+-    return Result("runner", "PASS", "self-hosted")
++    return Result("RUNNER", "PASS", "self-hosted")
+## x_check_runner__mutmut_42
+-    return Result("runner", "PASS", "self-hosted")
++    return Result("runner", "PASS", "XXself-hostedXX")
+## x_check_runner__mutmut_43
+-    return Result("runner", "PASS", "self-hosted")
++    return Result("runner", "PASS", "SELF-HOSTED")
+## x_check_registration__mutmut_3
+-        return Result(name, "WARN", "the runner list could not be read; registration is unknown")
++        return Result(None, "WARN", "the runner list could not be read; registration is unknown")
+## x_check_registration__mutmut_5
+-        return Result(name, "WARN", "the runner list could not be read; registration is unknown")
++        return Result(name, "WARN", None)
+## x_check_registration__mutmut_11
+-        return Result(name, "WARN", "the runner list could not be read; registration is unknown")
++        return Result(name, "WARN", "XXthe runner list could not be read; registration is unknownXX")
+## x_check_registration__mutmut_12
+-        return Result(name, "WARN", "the runner list could not be read; registration is unknown")
++        return Result(name, "WARN", "THE RUNNER LIST COULD NOT BE READ; REGISTRATION IS UNKNOWN")
+## x_check_registration__mutmut_14
+-    for runner in listing.get("runners", []):
++    for runner in listing.get("runners", None):
+## x_check_registration__mutmut_16
+-    for runner in listing.get("runners", []):
++    for runner in listing.get("runners", ):
+## x_check_registration__mutmut_23
+-        labels = {entry["name"] for entry in runner.get("labels", [])}
++        labels = {entry["name"] for entry in runner.get("labels", None)}
+## x_check_registration__mutmut_25
+-        labels = {entry["name"] for entry in runner.get("labels", [])}
++        labels = {entry["name"] for entry in runner.get("labels", )}
+## x_check_registration__mutmut_38
+-            return Result(name, "PASS", "an online self-hosted runner carries the label")
++            return Result(None, "PASS", "an online self-hosted runner carries the label")
+## x_check_registration__mutmut_40
+-            return Result(name, "PASS", "an online self-hosted runner carries the label")
++            return Result(name, "PASS", None)
+## x_check_registration__mutmut_46
+-            return Result(name, "PASS", "an online self-hosted runner carries the label")
++            return Result(name, "PASS", "XXan online self-hosted runner carries the labelXX")
+## x_check_registration__mutmut_47
+-            return Result(name, "PASS", "an online self-hosted runner carries the label")
++            return Result(name, "PASS", "AN ONLINE SELF-HOSTED RUNNER CARRIES THE LABEL")
+## x_check_registration__mutmut_50
+-    return Result(name, "FAIL", "no online self-hosted runner carries the label")
++    return Result(name, "FAIL", None)
+## x_check_registration__mutmut_56
+-    return Result(name, "FAIL", "no online self-hosted runner carries the label")
++    return Result(name, "FAIL", "XXno online self-hosted runner carries the labelXX")
+## x_check_registration__mutmut_57
+-    return Result(name, "FAIL", "no online self-hosted runner carries the label")
++    return Result(name, "FAIL", "NO ONLINE SELF-HOSTED RUNNER CARRIES THE LABEL")
+## x_fetch_registrations__mutmut_2
+-        ["gh", "api", f"repos/{repo}/actions/runners"], capture_output=True, text=True, check=False
++        None, capture_output=True, text=True, check=False
+## x_fetch_registrations__mutmut_3
+-        ["gh", "api", f"repos/{repo}/actions/runners"], capture_output=True, text=True, check=False
++        ["gh", "api", f"repos/{repo}/actions/runners"], capture_output=None, text=True, check=False
+## x_fetch_registrations__mutmut_4
+-        ["gh", "api", f"repos/{repo}/actions/runners"], capture_output=True, text=True, check=False
++        ["gh", "api", f"repos/{repo}/actions/runners"], capture_output=True, text=None, check=False
+## x_fetch_registrations__mutmut_5
+-        ["gh", "api", f"repos/{repo}/actions/runners"], capture_output=True, text=True, check=False
++        ["gh", "api", f"repos/{repo}/actions/runners"], capture_output=True, text=True, check=None
+## x_fetch_registrations__mutmut_6
+-        ["gh", "api", f"repos/{repo}/actions/runners"], capture_output=True, text=True, check=False
++        capture_output=True, text=True, check=False
+## x_fetch_registrations__mutmut_7
+-        ["gh", "api", f"repos/{repo}/actions/runners"], capture_output=True, text=True, check=False
++        ["gh", "api", f"repos/{repo}/actions/runners"], text=True, check=False
+## x_fetch_registrations__mutmut_8
+-        ["gh", "api", f"repos/{repo}/actions/runners"], capture_output=True, text=True, check=False
++        ["gh", "api", f"repos/{repo}/actions/runners"], capture_output=True, check=False
+## x_fetch_registrations__mutmut_9
+-        ["gh", "api", f"repos/{repo}/actions/runners"], capture_output=True, text=True, check=False
+-    )
++        ["gh", "api", f"repos/{repo}/actions/runners"], capture_output=True, text=True, )
+## x_fetch_registrations__mutmut_10
+-        ["gh", "api", f"repos/{repo}/actions/runners"], capture_output=True, text=True, check=False
++        ["XXghXX", "api", f"repos/{repo}/actions/runners"], capture_output=True, text=True, check=False
+## x_fetch_registrations__mutmut_11
+-        ["gh", "api", f"repos/{repo}/actions/runners"], capture_output=True, text=True, check=False
++        ["GH", "api", f"repos/{repo}/actions/runners"], capture_output=True, text=True, check=False
+## x_fetch_registrations__mutmut_12
+-        ["gh", "api", f"repos/{repo}/actions/runners"], capture_output=True, text=True, check=False
++        ["gh", "XXapiXX", f"repos/{repo}/actions/runners"], capture_output=True, text=True, check=False
+## x_fetch_registrations__mutmut_13
+-        ["gh", "api", f"repos/{repo}/actions/runners"], capture_output=True, text=True, check=False
++        ["gh", "API", f"repos/{repo}/actions/runners"], capture_output=True, text=True, check=False
+## x_fetch_registrations__mutmut_14
+-        ["gh", "api", f"repos/{repo}/actions/runners"], capture_output=True, text=True, check=False
++        ["gh", "api", f"repos/{repo}/actions/runners"], capture_output=False, text=True, check=False
+## x_fetch_registrations__mutmut_15
+-        ["gh", "api", f"repos/{repo}/actions/runners"], capture_output=True, text=True, check=False
++        ["gh", "api", f"repos/{repo}/actions/runners"], capture_output=True, text=False, check=False
+## x_fetch_registrations__mutmut_16
+-        ["gh", "api", f"repos/{repo}/actions/runners"], capture_output=True, text=True, check=False
++        ["gh", "api", f"repos/{repo}/actions/runners"], capture_output=True, text=True, check=True
+## x_parse_args__mutmut_2
+-    parser = argparse.ArgumentParser(description=__doc__)
++    parser = argparse.ArgumentParser(description=None)
+## x_parse_args__mutmut_4
+-    parser.add_argument("--expect-sha", default="", help="commit the operator approved")
++    parser.add_argument("--expect-sha", default=None, help="commit the operator approved")
+## x_parse_args__mutmut_5
+-    parser.add_argument("--expect-sha", default="", help="commit the operator approved")
++    parser.add_argument("--expect-sha", default="", help=None)
+## x_parse_args__mutmut_7
+-    parser.add_argument("--expect-sha", default="", help="commit the operator approved")
++    parser.add_argument("--expect-sha", help="commit the operator approved")
+## x_parse_args__mutmut_8
+-    parser.add_argument("--expect-sha", default="", help="commit the operator approved")
++    parser.add_argument("--expect-sha", default="", )
+## x_parse_args__mutmut_11
+-    parser.add_argument("--expect-sha", default="", help="commit the operator approved")
++    parser.add_argument("--expect-sha", default="XXXX", help="commit the operator approved")
+## x_parse_args__mutmut_12
+-    parser.add_argument("--expect-sha", default="", help="commit the operator approved")
++    parser.add_argument("--expect-sha", default="", help="XXcommit the operator approvedXX")
+## x_parse_args__mutmut_13
+-    parser.add_argument("--expect-sha", default="", help="commit the operator approved")
++    parser.add_argument("--expect-sha", default="", help="COMMIT THE OPERATOR APPROVED")
+## x_parse_args__mutmut_15
+-    parser.add_argument("--check-registration", metavar="LABEL", help="read the runner list")
++    parser.add_argument("--check-registration", metavar=None, help="read the runner list")
+## x_parse_args__mutmut_16
+-    parser.add_argument("--check-registration", metavar="LABEL", help="read the runner list")
++    parser.add_argument("--check-registration", metavar="LABEL", help=None)
+## x_parse_args__mutmut_18
+-    parser.add_argument("--check-registration", metavar="LABEL", help="read the runner list")
++    parser.add_argument("--check-registration", help="read the runner list")
+## x_parse_args__mutmut_19
+-    parser.add_argument("--check-registration", metavar="LABEL", help="read the runner list")
++    parser.add_argument("--check-registration", metavar="LABEL", )
+## x_parse_args__mutmut_22
+-    parser.add_argument("--check-registration", metavar="LABEL", help="read the runner list")
++    parser.add_argument("--check-registration", metavar="XXLABELXX", help="read the runner list")
+## x_parse_args__mutmut_23
+-    parser.add_argument("--check-registration", metavar="LABEL", help="read the runner list")
++    parser.add_argument("--check-registration", metavar="label", help="read the runner list")
+## x_parse_args__mutmut_24
+-    parser.add_argument("--check-registration", metavar="LABEL", help="read the runner list")
++    parser.add_argument("--check-registration", metavar="LABEL", help="XXread the runner listXX")
+## x_parse_args__mutmut_25
+-    parser.add_argument("--check-registration", metavar="LABEL", help="read the runner list")
++    parser.add_argument("--check-registration", metavar="LABEL", help="READ THE RUNNER LIST")
+## x_parse_args__mutmut_28
+-        help="install check on a machine without datasets (dataset, runner checks skipped)",
++        help=None,
+## x_parse_args__mutmut_31
+-        help="install check on a machine without datasets (dataset, runner checks skipped)",
+-    )
++        )
+## x_parse_args__mutmut_36
+-        help="install check on a machine without datasets (dataset, runner checks skipped)",
++        help="XXinstall check on a machine without datasets (dataset, runner checks skipped)XX",
+## x_parse_args__mutmut_37
+-        help="install check on a machine without datasets (dataset, runner checks skipped)",
++        help="INSTALL CHECK ON A MACHINE WITHOUT DATASETS (DATASET, RUNNER CHECKS SKIPPED)",
+## x_parse_args__mutmut_40
+-        help="the datasets were just downloaded on a GitHub-hosted runner (no runner check)",
++        help=None,
+## x_parse_args__mutmut_43
+-        help="the datasets were just downloaded on a GitHub-hosted runner (no runner check)",
+-    )
++        )
+## x_parse_args__mutmut_48
+-        help="the datasets were just downloaded on a GitHub-hosted runner (no runner check)",
++        help="XXthe datasets were just downloaded on a GitHub-hosted runner (no runner check)XX",
+## x_parse_args__mutmut_49
+-        help="the datasets were just downloaded on a GitHub-hosted runner (no runner check)",
++        help="the datasets were just downloaded on a github-hosted runner (no runner check)",
+## x_parse_args__mutmut_50
+-        help="the datasets were just downloaded on a GitHub-hosted runner (no runner check)",
++        help="THE DATASETS WERE JUST DOWNLOADED ON A GITHUB-HOSTED RUNNER (NO RUNNER CHECK)",
+## x_parse_args__mutmut_52
+-    parser.add_argument("--repo", default=REPO)
++    parser.add_argument("--repo", default=None)
+## x_parse_args__mutmut_54
+-    parser.add_argument("--repo", default=REPO)
++    parser.add_argument("--repo", )
+## x_run_checks__mutmut_8
+-    head, dirty = git_state(ROOT)
++    head, dirty = git_state(None)
+## x_run_checks__mutmut_9
+-    system = platform.system()
++    system = None
+## x_run_checks__mutmut_12
+-        check_python(tuple(sys.version_info[:3]), PYTHON_MINOR),
++        check_python(tuple(sys.version_info[:3]), None),
+## x_run_checks__mutmut_16
+-        check_python(tuple(sys.version_info[:3]), PYTHON_MINOR),
++        check_python(tuple(sys.version_info[:4]), PYTHON_MINOR),
+## x_run_checks__mutmut_17
+-        check_platform(system, platform.machine()),
++        check_platform(None, platform.machine()),
+## x_run_checks__mutmut_18
+-        check_platform(system, platform.machine()),
++        check_platform(system, None),
+## x_run_checks__mutmut_27
+-        check_lock_for(system, _installed(list(pins)), pins),
++        check_lock_for(None, _installed(list(pins)), pins),
+## x_run_checks__mutmut_28
+-        check_lock_for(system, _installed(list(pins)), pins),
++        check_lock_for(system, None, pins),
+## x_run_checks__mutmut_29
+-        check_lock_for(system, _installed(list(pins)), pins),
++        check_lock_for(system, _installed(list(pins)), None),
+## x_run_checks__mutmut_38
+-        results.append(Result("datasets", "SKIP", "--install-only: no dataset is expected here"))
++        results.append(Result("datasets", "SKIP", None))
+## x_run_checks__mutmut_46
+-        results.append(Result("datasets", "SKIP", "--install-only: no dataset is expected here"))
++        results.append(Result("datasets", "SKIP", "XX--install-only: no dataset is expected hereXX"))
+## x_run_checks__mutmut_47
+-        results.append(Result("datasets", "SKIP", "--install-only: no dataset is expected here"))
++        results.append(Result("datasets", "SKIP", "--INSTALL-ONLY: NO DATASET IS EXPECTED HERE"))
+## x_run_checks__mutmut_53
+-        results += check_datasets(paths, reference)
++        results += check_datasets(paths, None)
+## x_run_checks__mutmut_59
+-        results.append(Result("resources", "SKIP", "--install-only: sized for the full datasets"))
++        results.append(Result("resources", "SKIP", None))
+## x_run_checks__mutmut_67
+-        results.append(Result("resources", "SKIP", "--install-only: sized for the full datasets"))
++        results.append(Result("resources", "SKIP", "XX--install-only: sized for the full datasetsXX"))
+## x_run_checks__mutmut_68
+-        results.append(Result("resources", "SKIP", "--install-only: sized for the full datasets"))
++        results.append(Result("resources", "SKIP", "--INSTALL-ONLY: SIZED FOR THE FULL DATASETS"))
+## x_run_checks__mutmut_76
+-        check_revision(head, args.expect_sha, dirty),
++        check_revision(head, args.expect_sha, None),
+## x_run_checks__mutmut_85
+-        results.append(Result("runner", "SKIP", "hosted run: no private runner is involved"))
++        results.append(Result("runner", "SKIP", None))
+## x_run_checks__mutmut_93
+-        results.append(Result("runner", "SKIP", "hosted run: no private runner is involved"))
++        results.append(Result("runner", "SKIP", "XXhosted run: no private runner is involvedXX"))
+## x_run_checks__mutmut_94
+-        results.append(Result("runner", "SKIP", "hosted run: no private runner is involved"))
++        results.append(Result("runner", "SKIP", "HOSTED RUN: NO PRIVATE RUNNER IS INVOLVED"))
+## x_run_checks__mutmut_102
+-        results.append(check_registration(args.check_registration, fetch_registrations(args.repo)))
++        results.append(check_registration(args.check_registration, fetch_registrations(None)))
+## x_main__mutmut_1
+-    args = parse_args(argv)
++    args = None
+## x_main__mutmut_4
+-    results = (checks or run_checks)(args)
++    results = (checks or run_checks)(None)
+## x_main__mutmut_19
+-    print(f"preflight: PASS ({len(warned)} warning{'' if len(warned) == 1 else 's'})")
++    print(f"preflight: PASS ({len(warned)} warning{'' if (len(warned) == 1) or True else 's'})")
+## x_main__mutmut_23
+-    print(f"preflight: PASS ({len(warned)} warning{'' if len(warned) == 1 else 's'})")
++    print(f"preflight: PASS ({len(warned)} warning{'' if len(warned) == 1 else 'XXsXX'})")
+## x_main__mutmut_24
+-    print(f"preflight: PASS ({len(warned)} warning{'' if len(warned) == 1 else 's'})")
++    print(f"preflight: PASS ({len(warned)} warning{'' if len(warned) == 1 else 'S'})")

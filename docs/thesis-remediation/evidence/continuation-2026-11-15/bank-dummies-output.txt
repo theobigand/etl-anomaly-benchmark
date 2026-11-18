@@ -1,0 +1,26 @@
+source f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.0.6
+case 0 mutant 77 match True kind ok
+case 0 mutant 82 match True kind ok
+case 0 mutant 86 match True kind ok
+case 1 mutant 77 match True kind ok
+case 1 mutant 82 match True kind ok
+case 1 mutant 86 match True kind ok
+case 2 mutant 77 match True kind ok
+case 2 mutant 82 match True kind ok
+case 2 mutant 86 match True kind ok
+case 3 mutant 77 match True kind error
+case 3 mutant 82 match True kind error
+case 3 mutant 86 match True kind error
+source f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.1.1
+case 0 mutant 77 match True kind ok
+case 0 mutant 82 match True kind ok
+case 0 mutant 86 match True kind ok
+case 1 mutant 77 match True kind ok
+case 1 mutant 82 match True kind ok
+case 1 mutant 86 match True kind ok
+case 2 mutant 77 match True kind ok
+case 2 mutant 82 match True kind ok
+case 2 mutant 86 match True kind ok
+case 3 mutant 77 match True kind error
+case 3 mutant 82 match True kind error
+case 3 mutant 86 match True kind error

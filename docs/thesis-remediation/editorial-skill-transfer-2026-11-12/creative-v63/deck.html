@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Marée Haute, autumn collection</title>
+<style>
+:root{
+  --clay:#ece4d3;        /* raw cream clay, Estran cream */
+  --clay-2:#ddd2bc;
+  --iron:#1f1c19;        /* Vigie iron glaze */
+  --muted:#5f594f;
+  --rule:#bfb299;
+  --galet:#7d8b7c;       /* speckled grey-green */
+  --galet-d:#4d5b50;
+  --ochre:#b27d2e;       /* Estran ochre */
+  --ochre-d:#8a5f1d;
+  --cream:#f3ecdc;
+}
+@page{size:1280px 720px;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#d8d0be}
+body{font-family:"Gill Sans","Gill Sans MT","Avenir Next",sans-serif;color:var(--iron);-webkit-font-smoothing:antialiased}
+.slide{position:relative;width:1280px;height:720px;overflow:hidden;background:var(--clay);margin:0 auto 24px;page-break-after:always;break-after:page}
+.slide:last-child{page-break-after:auto;break-after:auto}
+@media print{html,body{background:none}.slide{margin:0}}
+.disp{font-family:"Hoefler Text","Iowan Old Style",Baskerville,serif;font-weight:400}
+.abs{position:absolute}
+h1,h2{font-family:"Hoefler Text","Iowan Old Style",Baskerville,serif;font-weight:400;letter-spacing:-.01em}
+h2{font-size:50px;line-height:1.06}
+p{font-size:21px;line-height:1.4}
+.small{font-size:16px;color:var(--muted);line-height:1.35}
+.cap{font-size:15px;color:var(--muted);letter-spacing:.02em}
+.tide{position:absolute;left:0;right:0;height:1px;background:var(--rule)}
+.folio{position:absolute;left:72px;bottom:34px;font-size:15px;color:var(--muted);letter-spacing:.04em}
+.folio b{font-weight:400;color:var(--iron)}
+svg{display:block}
+.dark{background:var(--iron);color:var(--cream)}
+.dark .cap,.dark .small,.dark .folio{color:#b6ab97}
+.dark .folio b{color:var(--cream)}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="raking" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fff" stop-opacity=".30"/>
+      <stop offset=".35" stop-color="#fff" stop-opacity="0"/>
+      <stop offset=".75" stop-color="#000" stop-opacity=".12"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".30"/>
+    </linearGradient>
+    <!-- vessel silhouettes -->
+    <path id="p-cup" d="M6 0 H114 L106 96 Q104 118 84 120 H36 Q16 118 14 96 Z"/>
+    <path id="p-bowl" d="M0 0 H260 Q254 52 196 70 Q178 76 156 76 H104 Q82 76 64 70 Q6 52 0 0 Z"/>
+    <path id="p-lamp" d="M60 0 H92 L95 34 C150 70 156 210 112 292 L108 318 H44 L40 292 C-4 210 2 70 57 34 Z"/>
+    <clipPath id="c-cup"><use href="#p-cup"/></clipPath>
+    <clipPath id="c-bowl"><use href="#p-bowl"/></clipPath>
+    <clipPath id="c-lamp"><use href="#p-lamp"/></clipPath>
+  </defs>
+</svg>
+
+<!-- 1 COVER -->
+<section class="slide" id="s1">
+  <div class="tide" style="top:118px"></div>
+  <div class="tide" style="top:236px"></div>
+  <div class="tide" style="top:354px"></div>
+  <div class="tide" style="top:472px"></div>
+  <div class="abs cap" style="left:72px;top:60px">Autumn collection, three lines in clay and ash</div>
+  <div class="abs cap" style="right:72px;top:60px">Brittany</div>
+  <h1 class="abs" style="left:66px;top:150px;font-size:178px;line-height:.9;font-style:italic">Marée<br>Haute</h1>
+  <p class="abs" style="left:72px;top:540px;width:420px">A small ceramics studio opens its autumn collection: cups, serving bowls and lamp bases, numbered by hand.</p>
+  <div class="abs" style="left:72px;top:648px;font-size:18px;letter-spacing:.03em">Opening evening, Friday 14 November 2026, Quai des Salines</div>
+  <!-- shelf with the three lines -->
+  <svg class="abs" style="left:540px;top:150px" width="690" height="420" viewBox="0 0 690 420" id="cover-art" aria-label="Illustration of the three lines on a shelf">
+    <line x1="0" y1="400" x2="690" y2="400" stroke="#1f1c19" stroke-width="2"/>
+    <rect x="0" y="402" width="690" height="10" fill="#1f1c19" opacity=".07"/>
+  </svg>
+  <div class="abs cap" style="right:72px;top:598px;text-align:right">Illustration, not to scale. Left to right: Galet, Estran, Vigie.</div>
+</section>
+
+<!-- 2 MATERIAL -->
+<section class="slide" id="s2">
+  <h2 class="abs" style="left:72px;top:70px;width:560px">Local clay, glaze mixed from seaweed ash and wood ash</h2>
+  <p class="abs" style="left:72px;top:290px;width:470px">Two potters work in a converted fish-smokehouse. The clay comes from a quarry nearby. The glazes are mixed in the studio from two ashes, one from seaweed and one from wood.</p>
+  <p class="abs small" style="left:72px;top:470px;width:420px">The Galet cups are fired at 1280 C.</p>
+  <!-- wall section -->
+  <svg class="abs" style="left:620px;top:70px" width="590" height="560" viewBox="0 0 590 560" id="section-art" aria-label="Illustrated section through a cup wall">
+    <!-- clay body -->
+    <rect x="40" y="170" width="300" height="300" fill="#a8845a"/>
+    <!-- glaze skin -->
+    <rect x="40" y="170" width="300" height="46" fill="#7d8b7c"/>
+    <rect x="40" y="170" width="300" height="46" fill="url(#raking)"/>
+    <g id="sec-speck"></g>
+    <rect x="40" y="216" width="300" height="3" fill="#1f1c19" opacity=".25"/>
+    <!-- labels -->
+    <line x1="340" y1="193" x2="400" y2="193" stroke="#1f1c19"/>
+    <text x="410" y="188" font-family="Hoefler Text,serif" font-size="30" fill="#1f1c19">Glaze</text>
+    <text x="410" y="214" font-family="Gill Sans,sans-serif" font-size="17" fill="#5f594f">seaweed ash, wood ash</text>
+    <line x1="340" y1="340" x2="400" y2="340" stroke="#1f1c19"/>
+    <text x="410" y="335" font-family="Hoefler Text,serif" font-size="30" fill="#1f1c19">Body</text>
+    <text x="410" y="361" font-family="Gill Sans,sans-serif" font-size="17" fill="#5f594f">clay from a local quarry</text>
+    <text x="40" y="520" font-family="Gill Sans,sans-serif" font-size="15" fill="#5f594f">Illustration of a wall section. Layer thickness is not to scale.</text>
+  </svg>
+  <div class="folio"><b>02</b> &nbsp; Materials</div>
+</section>
+
+<!-- 3 THREE LINES -->
+<section class="slide" id="s3">
+  <h2 class="abs" style="left:72px;top:56px;width:960px">Three lines, from a EUR 28 cup<br>to a EUR 148 lamp base</h2>
+  <svg class="abs" style="left:0;top:0" width="1280" height="720" viewBox="0 0 1280 720" id="lines-art" aria-label="Illustration of Galet, Estran and Vigie on a shared baseline"></svg>
+  <div class="abs" style="left:72px;top:520px;width:300px">
+    <div class="disp" style="font-size:40px;font-style:italic">Galet</div>
+    <p style="font-size:19px;margin-top:6px">Stoneware cups, speckled grey-green glaze.</p>
+  </div>
+  <div class="abs" style="left:430px;top:520px;width:330px">
+    <div class="disp" style="font-size:40px;font-style:italic">Estran</div>
+    <p style="font-size:19px;margin-top:6px">Shallow serving bowls, tidal-flat ochre and cream.</p>
+  </div>
+  <div class="abs" style="left:880px;top:520px;width:330px">
+    <div class="disp" style="font-size:40px;font-style:italic">Vigie</div>
+    <p style="font-size:19px;margin-top:6px">Tall lamp bases, dark iron glaze.</p>
+  </div>
+  <div class="abs disp" style="left:72px;top:628px;font-size:34px">EUR 28</div>
+  <div class="abs disp" style="left:430px;top:628px;font-size:34px">EUR 64</div>
+  <div class="abs disp" style="left:880px;top:628px;font-size:34px">EUR 148</div>
+  <div class="abs cap" style="right:72px;top:92px;text-align:right">Illustration, heights relative only</div>
+</section>
+
+<!-- 4 EDITION -->
+<section class="slide" id="s4">
+  <div class="abs" style="left:72px;top:60px;width:640px">
+    <h2>180 pieces per line, each one numbered by hand</h2>
+  </div>
+  <div class="abs" style="left:790px;top:68px;width:420px">
+    <p>That makes 540 pieces in the whole collection. When a line is gone, it is gone.</p>
+  </div>
+  <svg class="abs" style="left:0;top:0" width="1280" height="720" viewBox="0 0 1280 720" id="dots-art" aria-label="Three fields of 180 dots, one per line"></svg>
+  <div class="abs cap" style="left:72px;top:640px">Each dot is one piece. Galet 180, Estran 180, Vigie 180.</div>
+</section>
+
+<!-- 5 PROGRAMME -->
+<section class="slide" id="s5">
+  <h2 class="abs" style="left:72px;top:60px;width:700px">Three days, from the opening to the first orders</h2>
+  <svg class="abs" style="left:0;top:0" width="1280" height="720" viewBox="0 0 1280 720" aria-hidden="true">
+    <path d="M0 560 C 200 560, 300 520, 470 480 S 780 380, 1000 300 S 1200 200, 1280 180" fill="none" stroke="#1f1c19" stroke-width="2"/>
+    <path d="M0 576 C 200 576, 300 536, 470 496 S 780 396, 1000 316 S 1200 216, 1280 196" fill="none" stroke="#bfb299" stroke-width="1"/>
+    <path d="M0 592 C 200 592, 300 552, 470 512 S 780 412, 1000 332 S 1200 232, 1280 212" fill="none" stroke="#bfb299" stroke-width="1"/>
+    <circle cx="150" cy="550" r="9" fill="#b27d2e"/>
+    <circle cx="560" cy="459" r="9" fill="#b27d2e"/>
+    <circle cx="1000" cy="300" r="9" fill="#b27d2e"/>
+  </svg>
+  <div class="abs" style="left:72px;top:318px;width:330px">
+    <div class="disp" style="font-size:90px;line-height:1">14</div>
+    <div class="cap" style="margin-top:2px">November</div>
+    <p style="font-size:24px;margin-top:10px">Opening evening<br>Friday, 18:00 to 22:00</p>
+    <p class="small" style="margin-top:6px">Studio, Quai des Salines</p>
+  </div>
+  <div class="abs" style="left:470px;top:208px;width:340px">
+    <div class="disp" style="font-size:90px;line-height:1">15</div>
+    <div class="cap" style="margin-top:2px">November</div>
+    <p style="font-size:24px;margin-top:10px">Glaze-making workshop<br>Saturday, 10:00</p>
+    <p class="small" style="margin-top:6px">12 places</p>
+  </div>
+  <div class="abs" style="left:900px;top:90px;width:300px;display:none"></div>
+  <div class="abs" style="left:910px;top:60px;width:300px;text-align:left">
+    <div class="disp" style="font-size:90px;line-height:1">16</div>
+    <div class="cap" style="margin-top:2px">November</div>
+    <p style="font-size:24px;margin-top:10px">Online preorder opens</p>
+  </div>
+  <div class="folio"><b>05</b> &nbsp; Programme</div>
+</section>
+
+<!-- 6 CLOSE -->
+<section class="slide dark" id="s6">
+  <svg class="abs" style="left:880px;top:130px" width="300" height="460" viewBox="0 0 300 460" id="close-art" aria-label="Illustration of a Vigie lamp base"></svg>
+  <div class="abs cap" style="left:72px;top:60px">Opening evening</div>
+  <h1 class="abs" style="left:68px;top:120px;font-size:112px;line-height:.98;font-style:italic">Friday<br>14 November</h1>
+  <div class="abs disp" style="left:72px;top:380px;font-size:48px">18:00 to 22:00</div>
+  <p class="abs" style="left:72px;top:450px;font-size:26px;width:720px">The studio at Quai des Salines, in the old fish&#8209;smokehouse.</p>
+  <p class="abs" style="left:72px;top:540px;width:640px;font-size:20px;color:#d8cdb7">Glaze-making workshop on Saturday 15 November at 10:00, 12 places. Online preorder opens 16 November.</p>
+  <div class="abs cap" style="left:880px;top:610px">Illustration of Vigie, not to scale</div>
+</section>
+
+<script>
+(function(){
+  var NS="http://www.w3.org/2000/svg";
+  function el(n,a,p){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;}
+  var seed=7;function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647;}
+  function speckle(g,w,h,col,n,rmax){for(var i=0;i<n;i++){el("circle",{cx:(rnd()*w).toFixed(1),cy:(rnd()*h).toFixed(1),r:(0.6+rnd()*rmax).toFixed(2),fill:col,opacity:(0.35+rnd()*0.5).toFixed(2)},g);}}
+  // vessel builder: type, x, baseline y, scale
+  var V={
+    cup:{w:120,h:120,path:"p-cup",clip:"c-cup",fill:"#7d8b7c",rim:"#4d5b50",rimH:14,speck:"#2f3a33",n:70},
+    bowl:{w:260,h:76,path:"p-bowl",clip:"c-bowl",fill:"#ede2c8",rim:"#b27d2e",rimH:16,speck:"#b27d2e",n:0},
+    lamp:{w:164,h:318,path:"p-lamp",clip:"c-lamp",fill:"#26221f",rim:"#0f0d0c",rimH:0,speck:"#6a5a44",n:30}
+  };
+  function vessel(svg,t,x,base,s,opts){
+    var d=V[t];opts=opts||{};
+    var g=el("g",{transform:"translate("+x+","+(base-d.h*s)+") scale("+s+")"},svg);
+    var fill=opts.fill||d.fill;
+    el("ellipse",{cx:d.w/2,cy:d.h+2,rx:d.w*0.52,ry:6,fill:"#000",opacity:opts.dark?".5":".16"},g);
+    var body=el("g",{"clip-path":"url(#"+d.clip+")"},g);
+    el("rect",{x:-4,y:-4,width:d.w+8,height:d.h+8,fill:fill},body);
+    if(t==="bowl"){
+      // tidal-flat bands: ochre lower, cream upper
+      el("path",{d:"M-4 30 Q60 24 130 32 T264 28 V90 H-4Z",fill:"#d4a24a"},body);
+      el("path",{d:"M-4 52 Q70 46 140 54 T264 50 V90 H-4Z",fill:"#b27d2e"},body);
+      el("path",{d:"M-4 66 Q80 62 150 68 T264 64 V90 H-4Z",fill:"#8a5f1d"},body);
+    }
+    if(d.n){var sg=el("g",{},body);speckle(sg,d.w,d.h,d.speck,d.n,t==="lamp"?1.4:1.8);}
+    if(t==="lamp"){el("path",{d:"M30 60 C20 130 30 220 52 290",fill:"none",stroke:"#6a5a44",opacity:".35","stroke-width":"3"},body);}
+    el("rect",{x:-4,y:-4,width:d.w+8,height:d.h+8,fill:"url(#raking)"},body);
+    if(d.rimH){el("ellipse",{cx:d.w/2,cy:t==="cup"?4:6,rx:d.w/2-(t==="cup"?6:4),ry:d.rimH/2,fill:d.rim,opacity:".85"},g);}
+    else{el("ellipse",{cx:d.w/2,cy:2,rx:16,ry:4,fill:"#3a332d"},g);}
+    return g;
+  }
+  // cover
+  var cv=document.getElementById("cover-art");
+  vessel(cv,"cup",10,400,1.3);
+  vessel(cv,"bowl",190,400,1.05);
+  vessel(cv,"lamp",510,400,1.05);
+  // section speckles
+  var sp=document.getElementById("sec-speck");seed=11;
+  for(var i=0;i<90;i++){el("circle",{cx:(40+rnd()*300).toFixed(1),cy:(170+rnd()*46).toFixed(1),r:(0.8+rnd()*1.8).toFixed(2),fill:"#2f3a33",opacity:(0.35+rnd()*0.5).toFixed(2)},sp);}
+  // body grain in section
+  var sec=document.getElementById("section-art");seed=5;
+  for(var j=0;j<110;j++){el("circle",{cx:(40+rnd()*300).toFixed(1),cy:(222+rnd()*246).toFixed(1),r:(0.7+rnd()*1.5).toFixed(2),fill:"#5c4528",opacity:(0.25+rnd()*0.4).toFixed(2)},sec);}
+  // lines slide
+  var ls=document.getElementById("lines-art");
+  el("line",{x1:72,y1:496,x2:1208,y2:496,stroke:"#1f1c19","stroke-width":2},ls);
+  seed=3;
+  vessel(ls,"cup",100,496,1.5);
+  vessel(ls,"bowl",450,496,1.5);
+  vessel(ls,"lamp",900,496,1.05);
+  // dots
+  var ds=document.getElementById("dots-art");
+  var blocks=[{x:72,c:"#7d8b7c",n:"Galet"},{x:470,c:"#b27d2e",n:"Estran"},{x:868,c:"#1f1c19",n:"Vigie"}];
+  blocks.forEach(function(b){
+    for(var r=0;r<10;r++)for(var c=0;c<18;c++){
+      el("circle",{cx:b.x+8+c*18.6,cy:260+r*30,r:8.5,fill:b.c},ds);
+    }
+    var t=el("text",{x:b.x,y:224,"font-family":"Hoefler Text,serif","font-size":34,"font-style":"italic",fill:"#1f1c19"},ds);t.textContent=b.n;
+    var t2=el("text",{x:b.x+330,y:224,"font-family":"Gill Sans,sans-serif","font-size":20,fill:"#5f594f","text-anchor":"end"},ds);t2.textContent="180";
+  });
+  // close
+  var cl=document.getElementById("close-art");
+  seed=19;
+  var g=vessel(cl,"lamp",20,430,1.35,{dark:true,fill:"#2b2622"});
+  // iron rim light on the left edge
+})();
+</script>
+</body>
+</html>

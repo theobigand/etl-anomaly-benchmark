@@ -1,0 +1,424 @@
+{
+  "version": 2,
+  "thresholds": {
+    "L1": 80,
+    "L2": 90,
+    "L3": 95,
+    "L4": 98
+  },
+  "governance": {
+    "review_mode": "sole_author_owner_review",
+    "owner": "theobigand"
+  },
+  "roots": [
+    "src/etl_benchmark",
+    "experiments",
+    "research",
+    "verification"
+  ],
+  "units": {
+    "src/etl_benchmark/__init__.py": {
+      "level": "L2",
+      "reason": "Package marker/re-exports contain no first-party function implementation.",
+      "no_mutants": "No function bodies are present for mutmut to mutate; imported implementations are governed in their source modules."
+    },
+    "src/etl_benchmark/__main__.py": {
+      "level": "L3",
+      "reason": "The CLI dispatches ordinary pipeline configuration; experimental integrity is checked downstream."
+    },
+    "src/etl_benchmark/atomic.py": {
+      "level": "L3",
+      "reason": "Atomic publication protects completeness of persisted scientific result files. Reclassified from L4 to L3 by the owner on 2026-11-13: file publication helper; an incomplete write is caught by later hash checks."
+    },
+    "src/etl_benchmark/config.py": {
+      "level": "L4",
+      "reason": "Seeds, target names and threshold constants govern experimental identity and label access.",
+      "no_mutants": "Constants-only module; mutmut generates function-body mutants, while source/config changes still invalidate evidence."
+    },
+    "src/etl_benchmark/datasets.py": {
+      "level": "L4",
+      "reason": "DatasetSpec controls target meaning, feature exclusion and source-population identity."
+    },
+    "src/etl_benchmark/extract.py": {
+      "level": "L4",
+      "reason": "CSV parsing determines the row and field representation used with scientific labels."
+    },
+    "src/etl_benchmark/load.py": {
+      "level": "L4",
+      "reason": "CSV persistence controls the row/index representation of published detector outputs."
+    },
+    "src/etl_benchmark/logging_setup.py": {
+      "level": "L2",
+      "reason": "Logging-handler setup supports execution and has no numerical or certification role."
+    },
+    "src/etl_benchmark/metrics.py": {
+      "level": "L4",
+      "reason": "Positive-class semantics and AP/ROC/threshold metrics directly determine reported findings."
+    },
+    "src/etl_benchmark/pipeline.py": {
+      "level": "L4",
+      "reason": "Feature selection, training-frame use and score/index alignment prevent leakage."
+    },
+    "src/etl_benchmark/quality/__init__.py": {
+      "level": "L2",
+      "reason": "Package marker/re-exports contain no first-party function implementation.",
+      "no_mutants": "No function bodies are present for mutmut to mutate; imported implementations are governed in their source modules."
+    },
+    "src/etl_benchmark/quality/_torch_models.py": {
+      "level": "L4",
+      "reason": "Frozen representation transforms and latent scoring prevent evaluation-batch leakage."
+    },
+    "src/etl_benchmark/quality/autoencoder.py": {
+      "level": "L4",
+      "reason": "Training scaling, reconstruction-score orientation and thresholds affect valid comparisons."
+    },
+    "src/etl_benchmark/quality/base.py": {
+      "level": "L4",
+      "reason": "Numeric feature selection excludes labels and defines the detector input contract."
+    },
+    "src/etl_benchmark/quality/deep.py": {
+      "level": "L4",
+      "reason": "Training-frame isolation, score direction and thresholds govern neural comparisons."
+    },
+    "src/etl_benchmark/quality/drift.py": {
+      "level": "L4",
+      "reason": "The detector uses time and reference populations; future information must remain isolated."
+    },
+    "src/etl_benchmark/quality/gx.py": {
+      "level": "L4",
+      "reason": "Train-derived expectations, missingness and score direction define the scientific rule baseline."
+    },
+    "src/etl_benchmark/quality/ml.py": {
+      "level": "L4",
+      "reason": "Training-only transformations, score direction and calibrated thresholds govern scientific validity."
+    },
+    "src/etl_benchmark/quality/rules.py": {
+      "level": "L4",
+      "reason": "Training-derived fences and standardized deviations define decision thresholds and score direction."
+    },
+    "src/etl_benchmark/quality/window_drift.py": {
+      "level": "L4",
+      "reason": "Causal reference windows and event metrics govern temporal leakage and evaluation alignment."
+    },
+    "src/etl_benchmark/quality/windows.py": {
+      "level": "L4",
+      "reason": "Window construction and event alignment enforce past-only access and correct ground truth."
+    },
+    "src/etl_benchmark/registry.py": {
+      "level": "L4",
+      "reason": "Contamination calibration and method selection enforce label access and valid thresholds."
+    },
+    "src/etl_benchmark/split.py": {
+      "level": "L4",
+      "reason": "Stratified/chronological memberships and duplicate groups enforce partition isolation."
+    },
+    "src/etl_benchmark/synthetic.py": {
+      "level": "L4",
+      "reason": "Generated anomaly labels and duplicate-group identities determine evaluation ground truth."
+    },
+    "src/etl_benchmark/transform.py": {
+      "level": "L4",
+      "reason": "Cleaning and deduplication must preserve target alignment and the evaluated population."
+    },
+    "experiments/check_mutation.py": {
+      "level": "L4",
+      "reason": "Fail-closed outcome classification determines whether mutation evidence is accepted."
+    },
+    "experiments/fetch_cardio.py": {
+      "level": "L4",
+      "reason": "Source download, target extraction and dataset publication determine research-data identity."
+    },
+    "experiments/generate_synthetic.py": {
+      "level": "L4",
+      "reason": "The dataset entrypoint publishes controlled labels, seeds and the evaluated population."
+    },
+    "experiments/provenance.py": {
+      "level": "L4",
+      "reason": "Scientific fingerprints, partition IDs and artifact hashes bind results to their inputs."
+    },
+    "experiments/run_benchmark.py": {
+      "level": "L4",
+      "reason": "Splits, thresholds, metrics, seed aggregation and omissions determine scientific comparisons."
+    },
+    "experiments/run_curves.py": {
+      "level": "L4",
+      "reason": "Ranking-score inputs, held-out isolation and contamination comparisons determine reported curves."
+    },
+    "experiments/run_severity.py": {
+      "level": "L4",
+      "reason": "Fault labels, evaluation partitions and per-type denominators govern severity results."
+    },
+    "experiments/run_synthetic_benchmark.py": {
+      "level": "L4",
+      "reason": "Group-preserving splits, typed labels and detection denominators govern validity."
+    },
+    "experiments/verification_report.py": {
+      "level": "L4",
+      "reason": "Coverage/test evidence must fail closed rather than certify incomplete verification."
+    },
+    "experiments/verify_real.py": {
+      "level": "L4",
+      "reason": "Required dataset hashes, dimensions and labels enforce source integrity."
+    },
+    "research/alert_budget.py": {
+      "level": "L4",
+      "reason": "Label-free alert-budget thresholds, score direction, tie and infeasible-budget handling and per-cell counts govern the reported operating points."
+    },
+    "research/alert_budget_summary.py": {
+      "level": "L4",
+      "reason": "Denominators, failed and skipped accounting and cell medians of the alert-budget study govern its conclusions."
+    },
+    "research/build_pool.py": {
+      "level": "L4",
+      "reason": "Download manifests, rights records and source digests determine pool identity."
+    },
+    "research/cost_study.py": {
+      "level": "L3",
+      "reason": "Measured fit/scoring/ETL cost, process resources and aggregation determine cost estimates."
+    },
+    "research/dataset_registry.py": {
+      "level": "L4",
+      "reason": "Pinned source downloads, integrity hashes, label diagnostics and rights bind datasets."
+    },
+    "research/deep_support.py": {
+      "level": "L3",
+      "reason": "Training caps and seeded builders define the neural experimental settings."
+    },
+    "research/deep_typed.py": {
+      "level": "L4",
+      "reason": "Typed-label alignment, causal ordering and per-type aggregation determine comparison validity."
+    },
+    "research/full_registry.py": {
+      "level": "L4",
+      "reason": "Dataset splits, label-informed thresholds, metrics and failed-run handling govern findings."
+    },
+    "research/full_registry_summary.py": {
+      "level": "L4",
+      "reason": "Published matrices, result denominators and hypothesis summaries must match raw runs."
+    },
+    "research/injection.py": {
+      "level": "L4",
+      "reason": "Anomaly labels, copied-row identities and injected fields determine evaluation ground truth."
+    },
+    "research/labelled_benchmark.py": {
+      "level": "L4",
+      "reason": "Target derivation, historical preparation, split isolation and metrics determine pool results."
+    },
+    "research/labelled_summary.py": {
+      "level": "L4",
+      "reason": "Source problems, paired result cells, prevalence and hypothesis summaries govern inference."
+    },
+    "research/lstm_detector.py": {
+      "level": "L4",
+      "reason": "Causal windows, training-only scaling and event alignment prevent temporal leakage."
+    },
+    "research/lstm_pilot.py": {
+      "level": "L4",
+      "reason": "Chronological partitions, label alignment and reported bootstrap comparisons govern findings."
+    },
+    "research/matched_alert.py": {
+      "level": "L4",
+      "reason": "Matched-alert pairing, tolerance, seed and source denominators and bootstrap inputs govern the rule versus learned detector conclusions."
+    },
+    "research/multi_schema.py": {
+      "level": "L4",
+      "reason": "Ground-truth anomaly labels, duplicate groups and evaluation splits govern schema comparisons."
+    },
+    "research/normalise.py": {
+      "level": "L4",
+      "reason": "Schema fitting and label-dependent row filtering cross partition boundaries in the historical protocol."
+    },
+    "research/paired_bootstrap.py": {
+      "level": "L4",
+      "reason": "Paired block sampling and confidence intervals are critical statistical calculations."
+    },
+    "research/paper_appendix.py": {
+      "level": "L3",
+      "reason": "Generated appendix cells must preserve method/type/value alignment from the archived matrices. Reclassified from L4 to L3 by the owner on 2026-11-13: renders archived matrices into text; the values are computed and bound elsewhere."
+    },
+    "research/paper_tables.py": {
+      "level": "L3",
+      "reason": "Table extraction and manuscript replacement enforce result-to-paper consistency. Reclassified from L4 to L3 by the owner on 2026-11-13: renders archived results into manuscript tables; the values are computed and bound elsewhere."
+    },
+    "research/pool_check.py": {
+      "level": "L4",
+      "reason": "Pinned pool hashes and download verification enforce dataset integrity."
+    },
+    "research/prevalence_shift.py": {
+      "level": "L4",
+      "reason": "Label-shift formulas, positive and negative denominators and fixed-threshold alert, precision and recall under simulated prevalence govern the T169 conclusions."
+    },
+    "research/recover_partitions.py": {
+      "level": "L4",
+      "reason": "Recovered train/validation/test memberships and their replay check establish which rows each historical result was trained and evaluated on."
+    },
+    "research/score_shift.py": {
+      "level": "L4",
+      "reason": "Fixed-threshold alerts under controlled score shifts, shift definitions and monitor trigger conditions govern the T170 and T171 conclusions."
+    },
+    "research/source_clustered.py": {
+      "level": "L4",
+      "reason": "Source grouping, seed averaging and cluster resampling determine the reported uncertainty and which comparisons are claimed."
+    },
+    "research/pool_chrono.py": {
+      "level": "L4",
+      "reason": "Real-time variables, time ordering and held-out partitions govern causal validity."
+    },
+    "research/pool_etl.py": {
+      "level": "L4",
+      "reason": "Prepared labels, selected rows and failure accounting govern end-to-end pool comparisons."
+    },
+    "research/pool_extension_paper.py": {
+      "level": "L3",
+      "reason": "Hypothesis values and generated manuscript blocks must agree with archived results. Reclassified from L4 to L3 by the owner on 2026-11-13: renders archived results into manuscript blocks; the values are computed and bound elsewhere."
+    },
+    "research/pool_extension_summary.py": {
+      "level": "L4",
+      "reason": "Failed-run accounting, denominators and hypothesis aggregates govern pool conclusions."
+    },
+    "research/pool_full.py": {
+      "level": "L4",
+      "reason": "Thresholds, continuous scores, train-only fitting and split membership govern pool outcomes."
+    },
+    "research/pool_preprocessing.py": {
+      "level": "L4",
+      "reason": "Training-only schema/statistics and cross-fold validation prevent evaluation leakage."
+    },
+    "research/pool_train_only.py": {
+      "level": "L4",
+      "reason": "Target exclusion, source-bound partitions and training-prevalence calibration enforce label isolation."
+    },
+    "research/pool_typed.py": {
+      "level": "L4",
+      "reason": "Carrier eligibility, typed ground truth and severity runs determine evaluated populations."
+    },
+    "research/temporal_decision.py": {
+      "level": "L4",
+      "reason": "Threshold policies, prevalence controls and time-block uncertainty govern temporal inference."
+    },
+    "research/temporal_pilot.py": {
+      "level": "L4",
+      "reason": "Chronological/stratified memberships, labels and causal controls govern time-shift results."
+    },
+    "research/time_scan.py": {
+      "level": "L3",
+      "reason": "Candidate time-column discovery screens datasets; downstream protocols validate chronological use."
+    },
+    "research/typed_benchmark.py": {
+      "level": "L4",
+      "reason": "Grouped splits, typed-label indexing and per-type denominators govern validity."
+    },
+    "research/typed_figures.py": {
+      "level": "L3",
+      "reason": "Heatmap method/type orientation and numerical cells must match the recorded typed results. Reclassified from L4 to L3 by the owner on 2026-11-13: plots recorded results; a transposed figure is a visible, checkable error."
+    },
+    "research/typed_masking.py": {
+      "level": "L3",
+      "reason": "Training-contamination diagnostics and per-type outcomes support the reported masking explanation. Reclassified from L4 to L3 by the owner on 2026-11-13: contamination diagnostics that support an explanation, not a primary result."
+    },
+    "research/typed_run.py": {
+      "level": "L4",
+      "reason": "Carrier extraction, anomaly labels and seed-level outcomes govern typed-pool evaluation."
+    },
+    "research/typed_summary.py": {
+      "level": "L4",
+      "reason": "Pooled typed metrics, rank correlations and hypothesis decisions govern reported findings."
+    },
+    "research/uci_loader.py": {
+      "level": "L4",
+      "reason": "Target exclusion and minority-class mapping define scientific ground truth and input access."
+    },
+    "research/uci_pool.py": {
+      "level": "L3",
+      "reason": "Catalogue filtering and balancing select the scientific dataset population; source hashes are enforced separately."
+    },
+    "verification/archive_evidence.py": {
+      "level": "L3",
+      "reason": "Artifact-copy completeness and hash refresh govern archived evidence integrity. Reclassified from L4 to L3 by the owner on 2026-11-13: copies and hashes files; integrity is re-checked by lineage and claims."
+    },
+    "verification/bundles.py": {
+      "level": "L3",
+      "reason": "Archive allowlists, traversal prevention and artifact selection protect evidence transport. Reclassified from L4 to L3 by the owner on 2026-11-13: evidence transport; path traversal prevention is a security property and stays covered by its tests."
+    },
+    "verification/check_types.py": {
+      "level": "L4",
+      "reason": "Checker status, baseline freshness and pinned versions control a mandatory release gate."
+    },
+    "verification/claims.py": {
+      "level": "L4",
+      "reason": "Published claims are matched to archived counts, fingerprints and source revisions."
+    },
+    "verification/evidence_schema.py": {
+      "level": "L4",
+      "reason": "Raw outcomes, evidence validation and pass-status derivation govern certification."
+    },
+    "verification/lineage.py": {
+      "level": "L4",
+      "reason": "Scientific and measurement fingerprints prevent reuse of incompatible historical records."
+    },
+    "verification/lock_environment.py": {
+      "level": "L3",
+      "reason": "Dependency locks bind scientific execution and reproduction to recorded environments. Reclassified from L4 to L3 by the owner on 2026-11-13: tooling around dependency locks; reproducibility is also checked by the reproduce gate."
+    },
+    "verification/mutation_cache.py": {
+      "level": "L4",
+      "reason": "Cache invalidation controls whether stale verdicts can enter acceptance evidence."
+    },
+    "verification/mutation_policy.py": {
+      "level": "L4",
+      "reason": "Risk classification, denominators and independent thresholds govern scientific verification."
+    },
+    "verification/mutation_scope.py": {
+      "level": "L4",
+      "reason": "Independent source inventory prevents high scores obtained by silently dropping files."
+    },
+    "verification/pool_contract.py": {
+      "level": "L4",
+      "reason": "Dataset-source hashes and required inventory enforce the pool integrity contract."
+    },
+    "verification/protection.py": {
+      "level": "L3",
+      "reason": "Read-only protection-policy checks describe whether required verification can be bypassed. Reclassified from L4 to L3 by the owner on 2026-11-13: describes protection state and does not itself block anything."
+    },
+    "verification/real_acquire.py": {
+      "level": "L4",
+      "reason": "Source allowlists, redirects and content hashes enforce acquired dataset identity."
+    },
+    "verification/real_preflight.py": {
+      "level": "L3",
+      "reason": "Revision, dataset, environment and transfer checks determine admissible REAL execution. Reclassified from L4 to L3 by the owner on 2026-11-13: pre-flight before a REAL run; the run is re-verified by hashes and dimensions afterwards."
+    },
+    "verification/refresh_profile.py": {
+      "level": "L3",
+      "reason": "Measured coverage and current source revision determine the reported verification profile. Reclassified from L4 to L3 by the owner on 2026-11-13: reports a measured verification profile; a wrong profile is visible in the report."
+    },
+    "verification/release.py": {
+      "level": "L4",
+      "reason": "Required evidence, lineage and policy decisions determine release certification."
+    },
+    "verification/reproduce.py": {
+      "level": "L4",
+      "reason": "Input identity, split comparisons and outcome classification enforce reproducibility evidence."
+    },
+    "verification/scaling.py": {
+      "level": "L3",
+      "reason": "Timing/scaling measurements affect reported experimental cost, not acceptance decisions."
+    },
+    "verification/mutation_catalog.py": {
+      "level": "L4",
+      "reason": "Independent native generation indexes, verdict identities and raw-count reconciliation prevent denominator forgery and false kills."
+    },
+    "verification/mutation_run.py": {
+      "level": "L4",
+      "reason": "Exclusive native execution and source/runtime bindings govern admissibility of mutation evidence."
+    },
+    "verification/mutation_shards.py": {
+      "level": "L4",
+      "reason": "Shard planning and aggregation decide whether a mutation campaign is complete, current and compliant, so an error would accept invalid certification evidence."
+    },
+    "verification/mutation_campaign.py": {
+      "level": "L4",
+      "reason": "Campaign assembly and current-root validation determine whether mutation evidence can support certification."
+    }
+  }
+}

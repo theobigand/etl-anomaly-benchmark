@@ -1,0 +1,18 @@
+research/multi_schema.py 1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4
+mutants/research/multi_schema.py 8b48b7c67a6e97e0bfa55683104c6f7c28ff77fcc949ba1e6281003424dbdf8e
+environment macOS-27.2-arm64-arm-64bit 3.11.17 {'numpy': '2.4.6', 'pandas': '3.0.6', 'mutmut': '3.8.0'}
+0 31 value equal
+0 34 value equal
+0 35 value equal
+1 31 value equal
+1 34 value equal
+1 35 value equal
+10 31 value equal
+10 34 value equal
+10 35 value equal
+100 31 value equal
+100 34 value equal
+100 35 value equal
+-1 31 ValueError equal
+-1 34 ValueError equal
+-1 35 ValueError equal

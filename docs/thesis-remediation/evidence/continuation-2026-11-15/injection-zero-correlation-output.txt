@@ -1,0 +1,8 @@
+source cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.0.6
+shape (4096, 4) distinct [16, 16, 16, 16] pair x1 x2 correlation 1.2060402384690012e-16 report {'rows_in': 4096, 'columns': ['x0', 'x1', 'x2', 'x3'], 'rows_incomplete_dropped': 0, 'duplicates_dropped': 0, 'rows_out': 4096}
+seed 1 frames_equal True different_multivariate_rows 0 of 123
+seed 7 frames_equal True different_multivariate_rows 0 of 123
+source cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.1.1
+shape (4096, 4) distinct [16, 16, 16, 16] pair x1 x2 correlation 1.2060402384690012e-16 report {'rows_in': 4096, 'columns': ['x0', 'x1', 'x2', 'x3'], 'rows_incomplete_dropped': 0, 'duplicates_dropped': 0, 'rows_out': 4096}
+seed 1 frames_equal True different_multivariate_rows 0 of 123
+seed 7 frames_equal True different_multivariate_rows 0 of 123

@@ -1,0 +1,2 @@
+source cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39 python 3.11.17 numpy 2.4.6 pandas 3.1.1
+found rows 96 iteration 1369 unique rows 8 first {'a': [1.0, -1.0, 1.0, -1.0, 1.0], 'b': [-1.0, -1.0, 1.0, 1.0, -1.0], 'c': [-1.0, -1.0, -1.0, 1.0, -1.0]}

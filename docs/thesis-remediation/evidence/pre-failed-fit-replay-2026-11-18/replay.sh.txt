@@ -1,0 +1,20 @@
+#!/bin/bash
+# Controlled replay of the archived experiments on a clean commit (see verification/report.md, earlier replays).
+cd "/Users/theo/Developer/school/esilv/Master Thesis Bootcamp/etl-anomaly-benchmark" || exit 2
+PY=/Users/theo/miniconda3/envs/etl-benchmark/bin/python
+L=/private/tmp/claude-501/-Users-theo-Developer-school-esilv-Master-Thesis-Bootcamp-etl-anomaly-benchmark/9e8c2e33-925d-41ae-b364-6e08488653b5/scratchpad/replay-logs
+export PYTHONPATH=src
+echo "HEAD $(git rev-parse HEAD)" | tee $L/00-start.txt
+clean() { n=$(git status --porcelain | wc -l); [ "$n" -eq 0 ] || { echo "TREE NOT CLEAN ($1):"; git status --porcelain | head; exit 3; }; }
+step() { name=$1; shift; clean "before $name"; echo "=== $name start $(date -u +%T)"; /usr/bin/time -p "$@" > $L/$name.log 2>&1; rc=$?; echo "=== $name rc=$rc end $(date -u +%T)"; [ $rc -eq 0 ] || exit 4; clean "after $name"; }
+step 01-synthetic $PY experiments/run_synthetic_benchmark.py
+step 02-severity  $PY experiments/run_severity.py
+step 03-curves    $PY experiments/run_curves.py
+step 04-bench-water $PY experiments/run_benchmark.py --dataset water_quality
+step 05-bench-cardio $PY experiments/run_benchmark.py --dataset cardio
+step 06-bench-credit $PY experiments/run_benchmark.py --dataset credit_card
+step 07-fixed-water $PY experiments/run_benchmark.py --dataset water_quality --calibration fixed --fixed-contamination 0.02
+step 08-fixed-cardio $PY experiments/run_benchmark.py --dataset cardio --calibration fixed --fixed-contamination 0.02
+step 09-fixed-credit $PY experiments/run_benchmark.py --dataset credit_card --calibration fixed --fixed-contamination 0.02
+step 10-temporal $PY research/temporal_pilot.py --output experiments/results/temporal_pilot.json
+echo "ALL DONE $(date -u +%T)"

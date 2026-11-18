@@ -11,6 +11,7 @@ from etl_benchmark.quality.ml import (
     LOFDetector,
     OneClassSVMDetector,
     PCADetector,
+    PCAReconstruction,
 )
 
 ML_DETECTORS = [
@@ -33,6 +34,28 @@ def _blob_with_outliers(n: int = 300, seed: int = 0) -> pd.DataFrame:
     x = rng.normal(0.0, 1.0, size=(n, 3))
     x[-5:] += 25.0  # five gross outliers
     return pd.DataFrame(x, columns=["a", "b", "c"])
+
+
+def _same_values_in_two_float_dtypes() -> tuple[pd.DataFrame, pd.DataFrame]:
+    rng = np.random.default_rng(42)
+    values = rng.normal(size=(300, 3))
+    values[::13, 0] = np.nan
+    narrow = pd.DataFrame(values.astype("float32"), columns=["a", "b", "c"])
+    return narrow, narrow.astype("float64")
+
+
+def test_ecod_training_is_consistent_for_the_same_float_values():
+    narrow, wide = _same_values_in_two_float_dtypes()
+    narrow_model, wide_model = ECODDetector().fit(narrow), ECODDetector().fit(wide)
+    pd.testing.assert_series_equal(narrow_model.predict(narrow), wide_model.predict(wide))
+    np.testing.assert_allclose(narrow_model.score(narrow), wide_model.score(wide), rtol=1e-12)
+
+
+def test_ecod_scoring_is_consistent_for_the_same_float_values():
+    narrow, wide = _same_values_in_two_float_dtypes()
+    model = ECODDetector().fit(wide)
+    pd.testing.assert_series_equal(model.predict(narrow), model.predict(wide))
+    np.testing.assert_allclose(model.score(narrow), model.score(wide), rtol=1e-12)
 
 
 @pytest.mark.parametrize("cls", SHIFTED)
@@ -215,3 +238,10 @@ def test_a_score_equal_to_the_threshold_is_not_flagged():
     for model in (TailProbabilityModel(0.0, "ecod"), PCAReconstruction(0.0)):
         flags = model.fit(x).predict(x)  # contamination 0: the threshold is the largest fit score
         assert flags.dtype.kind == "i" and flags.sum() == 0
+
+
+def test_the_pca_reconstruction_uses_the_full_svd_solver_and_the_variance_share():
+    """The archived synthetic tables record the full solver and the 95 percent variance share."""
+    model = PCAReconstruction(contamination=0.1)
+    assert model.pca_.svd_solver == "full"
+    assert model.pca_.n_components == 0.95

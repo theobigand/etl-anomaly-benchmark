@@ -1,0 +1,13 @@
+import contextlib,hashlib,io,platform,sys,tempfile
+from pathlib import Path
+import pandas as pd
+import experiments.run_severity as m
+p=Path('experiments/run_severity.py');print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'pandas',pd.__version__)
+rows=[{'severity':s,'method':n,'anomaly_type':a,'recall':v} for a in m.MAGNITUDE_TYPES for n in ('a','b') for s,v in ((1.,.2),(2.,.7))];curves=pd.DataFrame(rows);m.run=lambda *args:curves.copy()
+for suffix in ('orig','134','137'):
+ with tempfile.TemporaryDirectory(prefix='severity-pivot-') as tmp:
+  p=Path(tmp);sys.argv=['severity','--figure',str(p/'figure.png'),'--results-dir',str(p/'results')];captured=io.StringIO()
+  try:
+   with contextlib.redirect_stdout(captured):getattr(m,f'x_main__mutmut_{suffix}')()
+   text=captured.getvalue();print('mutant',suffix,'display',repr(text),'csv_shape',pd.read_csv(next((p/'results').glob('severity_*.csv'))).shape,'figure_exists',(p/'figure.png').exists())
+  except Exception as e:print('mutant',suffix,'error',type(e).__name__,str(e))

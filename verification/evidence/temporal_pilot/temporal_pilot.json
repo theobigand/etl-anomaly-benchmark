@@ -188,10 +188,10 @@
     "cpu_count": 10,
     "dataset_sha256": "76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89",
     "machine": "arm64",
-    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "platform": "macOS-27.2-arm64-arm-64bit",
     "protocol": "verification/temporal_pilot.md",
     "python": "3.11.17",
-    "script_sha256": "0028bdec5a47a90828c24ae85625134358f2906683dcf454ce939f1b3b024bfc"
+    "script_sha256": "03e63b2961126c3192fec7fbf374b434e0ab81c54a1317c3cfa99ecb732b0982"
   },
   "settings": {
     "block_seconds": 1800,

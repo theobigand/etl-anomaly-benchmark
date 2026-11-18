@@ -1,0 +1,23 @@
+import hashlib, importlib.util, platform
+from pathlib import Path
+import numpy as np
+import pandas as pd
+p=Path('docs/thesis-remediation/evidence/diagnostic-43744898804/shard/mutants/src/etl_benchmark/quality/window_drift.py')
+spec=importlib.util.spec_from_file_location('window_guard_generated',p)
+m=importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+print('source_sha256',hashlib.sha256(Path('src/etl_benchmark/quality/window_drift.py').read_bytes()).hexdigest(),'generated_sha256',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'numpy',np.__version__,'pandas',pd.__version__)
+future=pd.DataFrame({'t':pd.to_datetime(['2021-01-01','2021-01-02'],utc=True),'x':[0.,1.]})
+reference=pd.DataFrame({'t':pd.to_datetime(['2020-01-01','2020-01-02'],utc=True),'x':[1e308,-1e308]})
+for scenario in ('fresh','normal','rejected_reference','extreme_raise'):
+ for n in ('orig','1','2'):
+  obj=m.WindowDriftMonitor('t',['x'],window_size=2)
+  try:
+   if scenario=='normal':obj.fit(reference.assign(x=[0.,1.]))
+   if scenario=='rejected_reference':obj.fit(reference.assign(x=[float('nan'),1.]))
+   if scenario=='extreme_raise':
+    with np.errstate(over='raise', invalid='raise'): obj.fit(reference)
+  except Exception as e: print(scenario,n,'fit',type(e).__name__,str(e))
+  try:
+   result=getattr(obj,'xǁWindowDriftMonitorǁevaluate__mutmut_'+n)(future)
+   print(scenario,n,'evaluate','ok',result.to_dict())
+  except Exception as e: print(scenario,n,'evaluate',type(e).__name__,str(e))

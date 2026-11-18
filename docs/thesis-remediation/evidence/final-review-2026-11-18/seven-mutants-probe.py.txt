@@ -1,0 +1,42 @@
+# Simulates the seven weaker records and compares them with the original (constructor attribute patched after __init__).
+# Same invocation as failed-fit-and-prefit-probe.py.txt.
+import warnings, numpy as np, pandas as pd
+warnings.simplefilter("ignore")
+import etl_benchmark.quality.ml as ml, etl_benchmark.quality.autoencoder as ae
+rng=np.random.default_rng(0); df=pd.DataFrame(rng.normal(size=(200,3)),columns=list("abc"))
+def mutate(cls,attr,value):
+    orig=cls.__init__
+    def init(self,*a,**k):
+        orig(self,*a,**k); setattr(self,attr,value)
+    cls.__init__=init; return lambda: setattr(cls,"__init__",orig)
+def outcome(f):
+    try:
+        r=f(); return "ok:"+(f"flags_sum={int(r.sum())}" if hasattr(r,'sum') else repr(r))
+    except Exception as e: return f"{type(e).__module__.split('.')[0]}.{type(e).__name__} (TypeError subclass={isinstance(e,TypeError)}): {str(e)[:60]}"
+def failed_fit_predict(det):
+    try: det.fit(df)
+    except ValueError: pass
+    return outcome(lambda: det.predict(df))
+cases=[("PCAReconstruction_9 threshold_ nan->None",ml.PCAReconstruction,"threshold_",None,lambda:ml.PCADetector(contamination=2.0)),
+("TailProbabilityModel_10 threshold_ nan->None",ml.TailProbabilityModel,"threshold_",None,lambda:ml.ECODDetector(contamination=2.0)),
+("ReconstructionModel_4 threshold_ None->''",ae.ReconstructionModel,"threshold_","",lambda:ae.AutoencoderDetector(contamination=2.0))]
+for name,cls,attr,val,mk in cases:
+    base=failed_fit_predict(mk()); undo=mutate(cls,attr,val); mut=failed_fit_predict(mk()); undo()
+    print(name,"\n   original, predict after failed fit:",base,"\n   mutant  , predict after failed fit:",mut)
+# valid-range fit: identical?
+for name,cls,attr,val,mk in cases:
+    undo=mutate(cls,attr,val); r=mk().__class__(contamination=0.1).fit(df).predict(df); undo()
+    print(name,"valid fit flags sum (mutant)=",int(r.sum()), "original=",int(mk().__class__(contamination=0.1).fit(df).predict(df).sum()))
+# direct pre-fit use of internal estimator
+x=np.asarray(df)
+for name,attr,val in (("Tail_3 sorted_ None","sorted_",None),("Tail_5 sorted_ (1,0)","sorted_",np.empty((1,0))),("orig",None,None)):
+    undo=mutate(ml.TailProbabilityModel,attr,val) if attr else (lambda:None)
+    m=ml.TailProbabilityModel(0.1,"ecod")
+    print(name,"| pre-fit decision_function:",outcome(lambda:m.decision_function(x)),"| zero-feature:",outcome(lambda:m.decision_function(x[:,:0])))
+    undo()
+# PyODDetector feature_names_ ""
+undo=mutate(ml.PyODDetector,"feature_names_","")
+d=ml.IsolationForestDetector(); print("PyOD_4 pre-fit feature_names_ =",repr(d.feature_names_),"| pre-fit predict:",outcome(lambda:d.predict(df)))
+d2=ml.IsolationForestDetector(); d2.fit(df); print("   after valid fit:",d2.feature_names_)
+from etl_benchmark.quality.deep import DIFDetector
+undo()

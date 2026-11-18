@@ -48,7 +48,7 @@ BOOTSTRAP_SEED = 42
 def to_timestamps(seconds: pd.Series) -> pd.Series:
     """Elapsed seconds since the first transaction as UTC timestamps from a fixed origin."""
     values = pd.to_numeric(seconds, errors="coerce")
-    if values.isna().any() or (values < 0).any():
+    if not np.isfinite(values.to_numpy(dtype=float)).all() or (values < 0).any():
         raise ValueError("elapsed times must be finite and non-negative")
     return ORIGIN + pd.to_timedelta(values, unit="s")
 

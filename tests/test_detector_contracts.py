@@ -178,3 +178,12 @@ def test_a_rows_score_does_not_depend_on_the_rest_of_the_evaluated_batch(make):
     np.testing.assert_allclose(together.to_numpy(), alone.to_numpy())
     reordered = detector.score(batch.iloc[::-1])
     np.testing.assert_allclose(together.to_numpy(), reordered.to_numpy()[::-1])
+
+
+def test_nullable_integer_features_with_missing_values_are_accepted_as_numeric():
+    import pandas as pd
+
+    from etl_benchmark.quality.base import numeric_features
+
+    frame = pd.DataFrame({"a": pd.array([1, None, 3], dtype="Int64"), "b": [1.0, 2.0, 3.0]})
+    assert list(numeric_features(frame, ["a", "b"], training=True).columns) == ["a", "b"]

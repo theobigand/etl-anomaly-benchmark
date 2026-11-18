@@ -1,0 +1,1789 @@
+{
+  "status": "preliminary triage; targeted kills do not imply campaign remeasurement or equivalence approval",
+  "historical_measurement_head": "18589c7955180c6d20947782b7436020ce278d2c",
+  "source_packet_sha256": "ce47cf980a5b41ac7aef1100adf60247d812dc4fb7de9206ee30e5bd54378bdc",
+  "execution_environment": "macOS arm64, Python 3.11.17, pandas 3.1.1, numpy 2.4.6, Great Expectations 1.24.1, mutmut 3.8.0",
+  "records": [
+    {
+      "id": "experiments.run_severity.x_render__mutmut_24",
+      "path": "experiments/run_severity.py",
+      "source_sha256": "7bda7511594ba6313e9579805a0726fd04ce06382f10d2fcb6c06e4d90f0a3fd",
+      "change": [
+        "-    for ax, atype in zip(axes, MAGNITUDE_TYPES, strict=True):",
+        "+    for ax, atype in zip(axes, MAGNITUDE_TYPES, strict=None):"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. Matplotlib creates one axis per shipped magnitude type from the same length used by zip; original and mutant renders decoded to identical pixels in the recorded environment. See SEVERITY_ZIP_EQUIVALENCE_PROBE_2026-11-15.md for assumptions and limits."
+    },
+    {
+      "id": "experiments.run_severity.x_render__mutmut_27",
+      "path": "experiments/run_severity.py",
+      "source_sha256": "7bda7511594ba6313e9579805a0726fd04ce06382f10d2fcb6c06e4d90f0a3fd",
+      "change": [
+        "-    for ax, atype in zip(axes, MAGNITUDE_TYPES, strict=True):",
+        "+    for ax, atype in zip(axes, MAGNITUDE_TYPES, ):"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. Matplotlib creates one axis per shipped magnitude type from the same length used by zip; original and mutant renders decoded to identical pixels in the recorded environment. See SEVERITY_ZIP_EQUIVALENCE_PROBE_2026-11-15.md for assumptions and limits."
+    },
+    {
+      "id": "experiments.run_severity.x_render__mutmut_28",
+      "path": "experiments/run_severity.py",
+      "source_sha256": "7bda7511594ba6313e9579805a0726fd04ce06382f10d2fcb6c06e4d90f0a3fd",
+      "change": [
+        "-    for ax, atype in zip(axes, MAGNITUDE_TYPES, strict=True):",
+        "+    for ax, atype in zip(axes, MAGNITUDE_TYPES, strict=False):"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. Matplotlib creates one axis per shipped magnitude type from the same length used by zip; original and mutant renders decoded to identical pixels in the recorded environment. See SEVERITY_ZIP_EQUIVALENCE_PROBE_2026-11-15.md for assumptions and limits."
+    },
+    {
+      "id": "experiments.run_severity.x_render__mutmut_46",
+      "path": "experiments/run_severity.py",
+      "source_sha256": "7bda7511594ba6313e9579805a0726fd04ce06382f10d2fcb6c06e4d90f0a3fd",
+      "change": [
+        "-                color=cmap(i % 10),",
+        "+                color=None,"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Single-color global theme must not collapse distinct method curves. Real rendering regression RED on mutant, GREEN on original; isolated native run killed it. See SEVERITY_COLOR_PROBE_2026-11-16.md and evidence/continuation-2026-11-15/severity-native-isolated.json. Not a full unit measurement."
+    },
+    {
+      "id": "experiments.run_severity.x_render__mutmut_53",
+      "path": "experiments/run_severity.py",
+      "source_sha256": "7bda7511594ba6313e9579805a0726fd04ce06382f10d2fcb6c06e4d90f0a3fd",
+      "change": [
+        "-                color=cmap(i % 10),"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Single-color global theme must not collapse distinct method curves. Real rendering regression RED on mutant, GREEN on original; isolated native run killed it. See SEVERITY_COLOR_PROBE_2026-11-16.md and evidence/continuation-2026-11-15/severity-native-isolated.json. Not a full unit measurement."
+    },
+    {
+      "id": "experiments.run_severity.x_main__mutmut_134",
+      "path": "experiments/run_severity.py",
+      "source_sha256": "7bda7511594ba6313e9579805a0726fd04ce06382f10d2fcb6c06e4d90f0a3fd",
+      "change": [
+        "-        index=[\"anomaly_type\", \"method\"], columns=\"severity\", values=\"recall\"",
+        "+        index=[\"anomaly_type\", \"method\"], columns=\"severity\", values=None"
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Direct generated-command probe shows an extra recall header in the console pivot with the same observed numeric values; significance to a supported display contract remains unresolved. See SEVERITY_PIVOT_PROBE_2026-11-16.md."
+    },
+    {
+      "id": "experiments.run_severity.x_main__mutmut_137",
+      "path": "experiments/run_severity.py",
+      "source_sha256": "7bda7511594ba6313e9579805a0726fd04ce06382f10d2fcb6c06e4d90f0a3fd",
+      "change": [
+        "-        index=[\"anomaly_type\", \"method\"], columns=\"severity\", values=\"recall\"",
+        "-    )",
+        "+        index=[\"anomaly_type\", \"method\"], columns=\"severity\", )"
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Direct generated-command probe shows an extra recall header in the console pivot with the same observed numeric values; significance to a supported display contract remains unresolved. See SEVERITY_PIVOT_PROBE_2026-11-16.md."
+    },
+    {
+      "id": "research.injection.x_continuous_columns__mutmut_5",
+      "path": "research/injection.py",
+      "source_sha256": "cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39",
+      "change": [
+        "-        and not pd.api.types.is_bool_dtype(frame[c])",
+        "+        and not pd.api.types.is_bool_dtype(None)"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. Native pandas Boolean columns have at most two distinct nonmissing values and therefore fail the unchanged minimum of ten distinct values even if the bool check is bypassed; five dtype boundary probes match in both local pandas builds. Custom extension dtypes were not covered. See INJECTION_UNIT_PROBE_2026-11-15.md."
+    },
+    {
+      "id": "research.injection.x_prepare__mutmut_6",
+      "path": "research/injection.py",
+      "source_sha256": "cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39",
+      "change": [
+        "-    table = frame[columns].astype(float)",
+        "+    table = frame[columns].astype(None)"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-function probes of numeric dtypes, eligibility, cleaning and caps. See INJECTION_PREPARE_DTYPE_PROBE_2026-11-15.md for environments, limits and confidence. No owner approval."
+    },
+    {
+      "id": "research.injection.x__pair__mutmut_9",
+      "path": "research/injection.py",
+      "source_sha256": "cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39",
+      "change": [
+        "-    np.fill_diagonal(corr, -1)",
+        "+    np.fill_diagonal(corr, -2)"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. Absolute correlation off-diagonals are nonnegative or missing, so changing the common negative diagonal sentinel from -1 to -2 does not alter selection on the investigated domains; finite, constant, one-column and empty probes matched in two pandas builds. See INJECTION_UNIT_PROBE_2026-11-15.md for bounds and limitations."
+    },
+    {
+      "id": "research.injection.x_inject__mutmut_21",
+      "path": "research/injection.py",
+      "source_sha256": "cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39",
+      "change": [
+        "-    pop = clean.sample(frac=1.0, random_state=seed).reset_index(drop=True)",
+        "+    pop = clean.sample(frac=1.0, random_state=seed).reset_index(drop=None)"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "A numeric carrier with an index named like a feature is accepted by the original, while the mutant raises ValueError; the targeted test fails on the mutant. Focused native run recorded a kill; see injection-h4-focused-2026-11-14.json. Not a full unit rerun."
+    },
+    {
+      "id": "research.injection.x_inject__mutmut_27",
+      "path": "research/injection.py",
+      "source_sha256": "cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39",
+      "change": [
+        "-    pop = clean.sample(frac=1.0, random_state=seed).reset_index(drop=True)",
+        "+    pop = clean.sample(frac=1.0, random_state=seed).reset_index(drop=False)"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "A numeric carrier with an index named like a feature is accepted by the original, while the mutant raises ValueError; the targeted test fails on the mutant. Focused native run recorded a kill; see injection-h4-focused-2026-11-14.json. Not a full unit rerun."
+    },
+    {
+      "id": "research.injection.x_inject__mutmut_48",
+      "path": "research/injection.py",
+      "source_sha256": "cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39",
+      "change": [
+        "-    pop[\"t\"] = _BASE + pd.to_timedelta(hours, unit=\"h\")",
+        "+    pop[\"t\"] = _BASE + pd.to_timedelta(hours, unit=\"H\")"
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Inconclusive after generated-code probe: output frames matched, but the mutant emitted a Pandas4Warning absent from the original on both local pandas 3.0.6 and 3.1.1. Significance under the supported warning policy and other pandas versions remains unresolved; see INJECTION_UNIT_PROBE_2026-11-15.md."
+    },
+    {
+      "id": "research.injection.x_inject__mutmut_90",
+      "path": "research/injection.py",
+      "source_sha256": "cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39",
+      "change": [
+        "-            row.iloc[pos, row.columns.get_loc(col)] = np.nan",
+        "+            row.iloc[pos, row.columns.get_loc(col)] = None"
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Direct probes match float carrier behavior but find distinct missing-sentinel behavior for supported caller-provided object numeric frames. Both sentinels are pandas-missing and a meaningful consumer contract is not established. See INJECTION_MISSING_SENTINEL_PROBE_2026-11-15.md."
+    },
+    {
+      "id": "research.injection.x_inject__mutmut_146",
+      "path": "research/injection.py",
+      "source_sha256": "cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39",
+      "change": [
+        "-        up_first = (pos % 2 == 0) == (corr > 0)",
+        "+        up_first = (pos % 2 == 0) == (corr >= 0)"
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Direct generated-function probes found differing tail assignments at exact zero correlation in a 96-row, three-column factorial example. It does not satisfy the preregistered carrier requirements, and scientific significance remains unresolved; an eligible carrier search was unsuccessful. See INJECTION_ZERO_CORRELATION_PROBE_2026-11-16.md."
+    },
+    {
+      "id": "research.injection.x_inject__mutmut_191",
+      "path": "research/injection.py",
+      "source_sha256": "cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39",
+      "change": [
+        "-    drift[\"t\"] = _BASE + pd.to_timedelta(rng.uniform(0.9 * n, n, size=k), unit=\"h\")",
+        "+    drift[\"t\"] = _BASE + pd.to_timedelta(rng.uniform(0.9 * n, n, size=k), unit=\"H\")"
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Inconclusive after generated-code probe: output frames matched, but the mutant emitted a Pandas4Warning absent from the original on both local pandas 3.0.6 and 3.1.1. Significance under the supported warning policy and other pandas versions remains unresolved; see INJECTION_UNIT_PROBE_2026-11-15.md."
+    },
+    {
+      "id": "research.multi_schema.x__dates__mutmut_31",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-        for d, h in zip(offsets, hours, strict=True)",
+        "+        for d, h in zip(offsets, hours, strict=None)"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. Both sequences are drawn from the same requested length n using the supported NumPy Generator; equal-length zip variants matched for zero, positive and invalid negative sizes in both local pandas builds. See MULTISCHEMA_DATES_EQUIVALENCE_PROBE_2026-11-15.md for source, limits and hypothetical."
+    },
+    {
+      "id": "research.multi_schema.x__dates__mutmut_34",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-        for d, h in zip(offsets, hours, strict=True)",
+        "+        for d, h in zip(offsets, hours, )"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. Both sequences are drawn from the same requested length n using the supported NumPy Generator; equal-length zip variants matched for zero, positive and invalid negative sizes in both local pandas builds. See MULTISCHEMA_DATES_EQUIVALENCE_PROBE_2026-11-15.md for source, limits and hypothetical."
+    },
+    {
+      "id": "research.multi_schema.x__dates__mutmut_35",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-        for d, h in zip(offsets, hours, strict=True)",
+        "+        for d, h in zip(offsets, hours, strict=False)"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. Both sequences are drawn from the same requested length n using the supported NumPy Generator; equal-length zip variants matched for zero, positive and invalid negative sizes in both local pandas builds. See MULTISCHEMA_DATES_EQUIVALENCE_PROBE_2026-11-15.md for source, limits and hypothetical."
+    },
+    {
+      "id": "research.multi_schema.x__transactions__mutmut_2",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-    items = (rng.poisson(3, n) + 1).astype(float)",
+        "+    items = (rng.poisson(3, n) + 1).astype(None)"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal supported by direct generated-function comparisons over numeric boundary inputs and two pandas builds. See NUMERIC_DTYPE_DEFAULT_PROBE_2026-11-15.md for exact environment, limitations and confidence. No owner approval."
+    },
+    {
+      "id": "research.multi_schema.x__transactions__mutmut_66",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-            \"account_age_days\": rng.integers(30, 2000, n).astype(float),",
+        "+            \"account_age_days\": rng.integers(30, 2000, n).astype(None),"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal supported by direct generated-function comparisons over numeric boundary inputs and two pandas builds. See NUMERIC_DTYPE_DEFAULT_PROBE_2026-11-15.md for exact environment, limitations and confidence. No owner approval."
+    },
+    {
+      "id": "research.multi_schema.x__transactions__mutmut_79",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-                amount * rng.uniform(2, 40, n) + rng.normal(0, 50, n), 0, None",
+        "+                amount * rng.uniform(2, 40, n) + rng.normal(0, 50, n), None, None"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "A seeded transaction sample contains zero balances in the original; mutant 79 allows negatives and mutant 101 moves the floor to one. RED on mutant, GREEN with 41 affected tests and focused native run recorded a kill. See MULTISCHEMA_DRIFT_BOUNDARY_2026-11-15.md and evidence/multischema-floor-focused-2026-11-15.json; not a full unit run."
+    },
+    {
+      "id": "research.multi_schema.x__transactions__mutmut_101",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-                amount * rng.uniform(2, 40, n) + rng.normal(0, 50, n), 0, None",
+        "+                amount * rng.uniform(2, 40, n) + rng.normal(0, 50, n), 1, None"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "A seeded transaction sample contains zero balances in the original; mutant 79 allows negatives and mutant 101 moves the floor to one. RED on mutant, GREEN with 41 affected tests and focused native run recorded a kill. See MULTISCHEMA_DRIFT_BOUNDARY_2026-11-15.md and evidence/multischema-floor-focused-2026-11-15.json; not a full unit run."
+    },
+    {
+      "id": "research.multi_schema.x_make__mutmut_126",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-                    _set(block, pos, col, np.nan)",
+        "+                    _set(block, pos, col, None)"
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Direct probes found matching built-in-schema outputs but distinct Python missing sentinels with a custom object-typed Schema. Both are pandas-missing; a meaningful supported downstream consequence is not established. See MULTISCHEMA_MISSING_SENTINEL_PROBE_2026-11-15.md."
+    },
+    {
+      "id": "research.multi_schema.x_make__mutmut_167",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-                high_b = high_a if sign < 0 else not high_a",
+        "+                high_b = high_a if sign <= 0 else not high_a"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "A carrier with exactly zero pair correlation gives opposite-tail anomalies in the original and same-tail anomalies in this mutant. RED on mutant, GREEN with 40 affected tests, and focused native run recorded a kill. See MULTISCHEMA_DRIFT_BOUNDARY_2026-11-15.md and evidence/multischema-zero-focused-2026-11-15.json; not a full unit run."
+    },
+    {
+      "id": "research.multi_schema.x_make__mutmut_168",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-                high_b = high_a if sign < 0 else not high_a",
+        "+                high_b = high_a if sign < 1 else not high_a"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "A carrier with exactly zero pair correlation gives opposite-tail anomalies in the original and same-tail anomalies in this mutant. RED on mutant, GREEN with 40 affected tests, and focused native run recorded a kill. See MULTISCHEMA_DRIFT_BOUNDARY_2026-11-15.md and evidence/multischema-zero-focused-2026-11-15.json; not a full unit run."
+    },
+    {
+      "id": "research.multi_schema.x_make__mutmut_218",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-                for col, base in zip(spec.drift_cols, (1.55, 1.6, 1.5), strict=True):",
+        "+                for col, base in zip(spec.drift_cols, (1.55, 1.6, 1.5), strict=None):"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "A schema with two drift columns is rejected by the original and silently accepted by this mutant. RED on mutant, GREEN with 39 affected tests, and focused native run recorded a kill. See MULTISCHEMA_DRIFT_BOUNDARY_2026-11-15.md and evidence/multischema-drift-focused-2026-11-15.json; not a full unit run."
+    },
+    {
+      "id": "research.multi_schema.x_make__mutmut_221",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-                for col, base in zip(spec.drift_cols, (1.55, 1.6, 1.5), strict=True):",
+        "+                for col, base in zip(spec.drift_cols, (1.55, 1.6, 1.5), ):"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "A schema with two drift columns is rejected by the original and silently accepted by this mutant. RED on mutant, GREEN with 39 affected tests, and focused native run recorded a kill. See MULTISCHEMA_DRIFT_BOUNDARY_2026-11-15.md and evidence/multischema-drift-focused-2026-11-15.json; not a full unit run."
+    },
+    {
+      "id": "research.multi_schema.x_make__mutmut_225",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-                for col, base in zip(spec.drift_cols, (1.55, 1.6, 1.5), strict=True):",
+        "+                for col, base in zip(spec.drift_cols, (1.55, 1.6, 1.5), strict=False):"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "A schema with two drift columns is rejected by the original and silently accepted by this mutant. RED on mutant, GREEN with 39 affected tests, and focused native run recorded a kill. See MULTISCHEMA_DRIFT_BOUNDARY_2026-11-15.md and evidence/multischema-drift-focused-2026-11-15.json; not a full unit run."
+    },
+    {
+      "id": "research.multi_schema.x_make__mutmut_306",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-    df = df.sample(frac=1.0, random_state=seed, ignore_index=True)",
+        "+    df = df.sample(frac=1.0, random_state=seed, ignore_index=None)"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Behavioral regression passed on original and failed on this generated mutant; native focused run recorded exit code 1. See NINE_BEHAVIORAL_PROBES_2026-11-15.md and evidence/nine-focused-native-2026-11-15.json. Not a full unit measurement."
+    },
+    {
+      "id": "research.multi_schema.x_make__mutmut_309",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-    df = df.sample(frac=1.0, random_state=seed, ignore_index=True)",
+        "+    df = df.sample(frac=1.0, random_state=seed, )"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Behavioral regression passed on original and failed on this generated mutant; native focused run recorded exit code 1. See NINE_BEHAVIORAL_PROBES_2026-11-15.md and evidence/nine-focused-native-2026-11-15.json. Not a full unit measurement."
+    },
+    {
+      "id": "research.multi_schema.x_make__mutmut_311",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-    df = df.sample(frac=1.0, random_state=seed, ignore_index=True)",
+        "+    df = df.sample(frac=1.0, random_state=seed, ignore_index=False)"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Behavioral regression passed on original and failed on this generated mutant; native focused run recorded exit code 1. See NINE_BEHAVIORAL_PROBES_2026-11-15.md and evidence/nine-focused-native-2026-11-15.json. Not a full unit measurement."
+    },
+    {
+      "id": "research.multi_schema.x__per_type__mutmut_2",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-    clean = types == \"clean\"",
+        "+    clean = types != \"clean\""
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Direct call of generated original and mutant on clean, missing_value and duplicate rows with flags [True, True, False]: missing-value precision is 0.5 versus 1.0. Targeted mutant pytest: exit 1, test_per_type_precision_uses_clean_rows_and_excludes_other_anomaly_types; original focused suite passed. A native single-mutant rerun also killed it; see multi-schema-focused-2026-11-14.json. Not a full unit rerun."
+    },
+    {
+      "id": "research.multi_schema.x__per_type__mutmut_18",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-        recall[name] = recall_score(is_type[keep].astype(int), flags[keep])",
+        "+        recall[name] = recall_score(is_type[keep].astype(None), flags[keep])"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal supported by direct generated-function comparisons over numeric boundary inputs and two pandas builds. See NUMERIC_DTYPE_DEFAULT_PROBE_2026-11-15.md for exact environment, limitations and confidence. No owner approval."
+    },
+    {
+      "id": "research.multi_schema.x__per_type__mutmut_25",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-        precision[name] = precision_score(is_type[keep].astype(int), flags[keep], zero_division=0)",
+        "+        precision[name] = precision_score(is_type[keep].astype(int), flags[keep], )"
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Inconclusive after probe: the metric values matched, but the mutant emits UndefinedMetricWarning for no predicted positives while the original does not. The significance for supported callers and other scikit-learn versions remains unresolved. See TYPED_METRIC_PROBE_2026-11-15.md."
+    },
+    {
+      "id": "research.multi_schema.x__per_type__mutmut_26",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-        precision[name] = precision_score(is_type[keep].astype(int), flags[keep], zero_division=0)",
+        "+        precision[name] = precision_score(is_type[keep].astype(None), flags[keep], zero_division=0)"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal supported by direct generated-function comparisons over numeric boundary inputs and two pandas builds. See NUMERIC_DTYPE_DEFAULT_PROBE_2026-11-15.md for exact environment, limitations and confidence. No owner approval."
+    },
+    {
+      "id": "research.multi_schema.x_evaluate__mutmut_21",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-        detectors = {n: build(n, contamination, seed) for n in DEEP_NAMES}",
+        "+        detectors = {n: build(n, None, seed) for n in DEEP_NAMES}"
+      ],
+      "outcome": "behavioral_difference_pending_native",
+      "evidence": "Direct real-DIF generated-function probe shows None selects a different contamination and changes per-type metrics/FPR versus train-prevalence calibration. Regression and native verdict pending; see MULTISCHEMA_DEEP_PREVALENCE_PROBE_2026-11-16.md. Regression now RED on generated mutant and GREEN on original; native verdict remains pending. See SCIENTIFIC_REGRESSIONS_2026-11-16.md."
+    },
+    {
+      "id": "research.multi_schema.x_evaluate__mutmut_68",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-        flags = pd.Series(np.asarray(flags), index=test.index)",
+        "+        flags = pd.Series(np.asarray(flags), index=None)"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The real _split resets test index to RangeIndex, equal to the default Series index for the same flags. Transactions and sensors probes using a narrowed real detector registry matched recall, precision and FPR; see TYPED_INDEX_EQUIVALENCE_PROBE_2026-11-15.md for limitations."
+    },
+    {
+      "id": "research.multi_schema.x_evaluate__mutmut_70",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-        flags = pd.Series(np.asarray(flags), index=test.index)",
+        "+        flags = pd.Series(np.asarray(flags), )"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The real _split resets test index to RangeIndex, equal to the default Series index for the same flags. Transactions and sensors probes using a narrowed real detector registry matched recall, precision and FPR; see TYPED_INDEX_EQUIVALENCE_PROBE_2026-11-15.md for limitations."
+    },
+    {
+      "id": "research.multi_schema.x_hypotheses__mutmut_91",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-        \"H4\": {\"supported\": mean_rho >= 0.7, \"mean_spearman\": mean_rho, \"pairs\": rhos},",
+        "+        \"H4\": {\"supported\": mean_rho > 0.7, \"mean_spearman\": mean_rho, \"pairs\": rhos},"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "At mean rank agreement exactly 0.7 the original supports H4 and the mutant does not; the targeted test fails on the mutant. Focused native run recorded a kill; see injection-h4-focused-2026-11-14.json. Not a full unit rerun."
+    },
+    {
+      "id": "research.multi_schema.x_main__mutmut_2",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-    parser = argparse.ArgumentParser(description=__doc__)",
+        "+    parser = argparse.ArgumentParser(description=None)"
+      ],
+      "outcome": "behavioral_difference_pending_native",
+      "evidence": "Direct generated command help omits the study purpose and protocol link. Regression and native verdict still required. See COMMAND_HELP_PROBE_2026-11-16.md. Regression now RED on generated mutant and GREEN on original; native verdict remains pending. See SCIENTIFIC_REGRESSIONS_2026-11-16.md."
+    },
+    {
+      "id": "research.multi_schema.x_main__mutmut_23",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-        default=\"classical\",",
+        "+        default=None,"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The parsed methods value is used only to select deep mode; these altered defaults all take the same classical route as the original. The probe compared generated files with real argument parsing and writers, using deterministic stand-ins for scientific computations; see MULTISCHEMA_DATES_EQUIVALENCE_PROBE_2026-11-15.md."
+    },
+    {
+      "id": "research.multi_schema.x_main__mutmut_27",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-        default=\"classical\","
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The parsed methods value is used only to select deep mode; these altered defaults all take the same classical route as the original. The probe compared generated files with real argument parsing and writers, using deterministic stand-ins for scientific computations; see MULTISCHEMA_DATES_EQUIVALENCE_PROBE_2026-11-15.md."
+    },
+    {
+      "id": "research.multi_schema.x_main__mutmut_35",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-        default=\"classical\",",
+        "+        default=\"XXclassicalXX\","
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The parsed methods value is used only to select deep mode; these altered defaults all take the same classical route as the original. The probe compared generated files with real argument parsing and writers, using deterministic stand-ins for scientific computations; see MULTISCHEMA_DATES_EQUIVALENCE_PROBE_2026-11-15.md."
+    },
+    {
+      "id": "research.multi_schema.x_main__mutmut_36",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-        default=\"classical\",",
+        "+        default=\"CLASSICAL\","
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The parsed methods value is used only to select deep mode; these altered defaults all take the same classical route as the original. The probe compared generated files with real argument parsing and writers, using deterministic stand-ins for scientific computations; see MULTISCHEMA_DATES_EQUIVALENCE_PROBE_2026-11-15.md."
+    },
+    {
+      "id": "research.multi_schema.x_main__mutmut_70",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-        for seed, run in zip(SEEDS, runs, strict=True):",
+        "+        for seed, run in zip(SEEDS, runs, strict=None):"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The fixed seed tuple is used to build exactly one run per seed immediately before the zip; the probe preserved actual command serialization while replacing expensive input generation and detection, and compared all files. See MULTISCHEMA_DATES_EQUIVALENCE_PROBE_2026-11-15.md for bounds."
+    },
+    {
+      "id": "research.multi_schema.x_main__mutmut_73",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-        for seed, run in zip(SEEDS, runs, strict=True):",
+        "+        for seed, run in zip(SEEDS, runs, ):"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The fixed seed tuple is used to build exactly one run per seed immediately before the zip; the probe preserved actual command serialization while replacing expensive input generation and detection, and compared all files. See MULTISCHEMA_DATES_EQUIVALENCE_PROBE_2026-11-15.md for bounds."
+    },
+    {
+      "id": "research.multi_schema.x_main__mutmut_74",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "change": [
+        "-        for seed, run in zip(SEEDS, runs, strict=True):",
+        "+        for seed, run in zip(SEEDS, runs, strict=False):"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The fixed seed tuple is used to build exactly one run per seed immediately before the zip; the probe preserved actual command serialization while replacing expensive input generation and detection, and compared all files. See MULTISCHEMA_DATES_EQUIVALENCE_PROBE_2026-11-15.md for bounds."
+    },
+    {
+      "id": "research.pool_chrono.x_read_times__mutmut_18",
+      "path": "research/pool_chrono.py",
+      "source_sha256": "cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035",
+      "change": [
+        "-        base = pd.to_datetime(pd.DataFrame({\"year\": 2017, \"month\": month + 1, \"day\": 1}))",
+        "+        base = pd.to_datetime(pd.DataFrame({\"YEAR\": 2017, \"month\": month + 1, \"day\": 1}))"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal: generated mutant comparisons agree for timestamp-key case variations on pandas 3.0.6 and 3.1.1; broader supported versions and Linux remain untested. See POOL_CHRONO_UPPERCASE_PROBE_2026-11-15.md. No owner approval."
+    },
+    {
+      "id": "research.pool_chrono.x_read_times__mutmut_21",
+      "path": "research/pool_chrono.py",
+      "source_sha256": "cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035",
+      "change": [
+        "-        base = pd.to_datetime(pd.DataFrame({\"year\": 2017, \"month\": month + 1, \"day\": 1}))",
+        "+        base = pd.to_datetime(pd.DataFrame({\"year\": 2017, \"MONTH\": month + 1, \"day\": 1}))"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal: generated mutant comparisons agree for timestamp-key case variations on pandas 3.0.6 and 3.1.1; broader supported versions and Linux remain untested. See POOL_CHRONO_UPPERCASE_PROBE_2026-11-15.md. No owner approval."
+    },
+    {
+      "id": "research.pool_chrono.x_read_times__mutmut_25",
+      "path": "research/pool_chrono.py",
+      "source_sha256": "cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035",
+      "change": [
+        "-        base = pd.to_datetime(pd.DataFrame({\"year\": 2017, \"month\": month + 1, \"day\": 1}))",
+        "+        base = pd.to_datetime(pd.DataFrame({\"year\": 2017, \"month\": month + 1, \"DAY\": 1}))"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal: generated mutant comparisons agree for timestamp-key case variations on pandas 3.0.6 and 3.1.1; broader supported versions and Linux remain untested. See POOL_CHRONO_UPPERCASE_PROBE_2026-11-15.md. No owner approval."
+    },
+    {
+      "id": "research.pool_chrono.x_to_features__mutmut_12",
+      "path": "research/pool_chrono.py",
+      "source_sha256": "cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035",
+      "change": [
+        "-            pieces.append(column.astype(float).rename(name))",
+        "+            pieces.append(column.astype(None).rename(name))"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal supported by direct generated-function comparisons over numeric boundary inputs and two pandas builds. See NUMERIC_DTYPE_DEFAULT_PROBE_2026-11-15.md for exact environment, limitations and confidence. No owner approval."
+    },
+    {
+      "id": "research.pool_chrono.x_load_pool_dataset__mutmut_19",
+      "path": "research/pool_chrono.py",
+      "source_sha256": "cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035",
+      "change": [
+        "-    marked = frame.assign(__row__=np.arange(len(frame), dtype=float))",
+        "+    marked = frame.assign(__row__=np.arange(len(frame), dtype=None))"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal based on direct generated-function comparisons of row/label/time alignment. See POOL_ROW_INDEX_DTYPE_PROBE_2026-11-15.md for boundaries, environmental limits and confidence. No owner approval."
+    },
+    {
+      "id": "research.pool_chrono.x_load_pool_dataset__mutmut_21",
+      "path": "research/pool_chrono.py",
+      "source_sha256": "cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035",
+      "change": [
+        "-    marked = frame.assign(__row__=np.arange(len(frame), dtype=float))",
+        "+    marked = frame.assign(__row__=np.arange(len(frame), ))"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal based on direct generated-function comparisons of row/label/time alignment. See POOL_ROW_INDEX_DTYPE_PROBE_2026-11-15.md for boundaries, environmental limits and confidence. No owner approval."
+    },
+    {
+      "id": "research.pool_chrono.x_load_pool_dataset__mutmut_28",
+      "path": "research/pool_chrono.py",
+      "source_sha256": "cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035",
+      "change": [
+        "-    rows = features.pop(\"__row__\").to_numpy().astype(int)",
+        "+    rows = features.pop(\"__row__\").to_numpy().astype(None)"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal based on direct generated-function comparisons of row/label/time alignment. See POOL_ROW_INDEX_DTYPE_PROBE_2026-11-15.md for boundaries, environmental limits and confidence. No owner approval."
+    },
+    {
+      "id": "research.pool_chrono.x_eligible__mutmut_3",
+      "path": "research/pool_chrono.py",
+      "source_sha256": "cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035",
+      "change": [
+        "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
+        "+    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=None)"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Equal timestamps retain input order: the last 30 of 200 labels are positive; original eligibility is true, while the mutant finds only 2 positives and excludes the dataset in this environment. The regression fails against the mutant, passes against the original, and a focused native run records a kill; see pool-chrono-focused-2026-11-14.json. Not a full unit rerun."
+    },
+    {
+      "id": "research.pool_chrono.x_eligible__mutmut_5",
+      "path": "research/pool_chrono.py",
+      "source_sha256": "cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035",
+      "change": [
+        "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
+        "+    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), )"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Equal timestamps retain input order: the last 30 of 200 labels are positive; original eligibility is true, while the mutant finds only 2 positives and excludes the dataset in this environment. The regression fails against the mutant, passes against the original, and a focused native run records a kill; see pool-chrono-focused-2026-11-14.json. Not a full unit rerun."
+    },
+    {
+      "id": "research.pool_chrono.x_eligible__mutmut_7",
+      "path": "research/pool_chrono.py",
+      "source_sha256": "cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035",
+      "change": [
+        "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
+        "+    order = np.argsort(pd.to_datetime(times, utc=None).to_numpy(), kind=\"stable\")"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Mixed UTC offsets are accepted by the original and rejected by this mutant on pandas 3.0.6 and 3.1.1. Regression RED on mutant and GREEN on original; focused native run recorded a kill. See POOL_CHRONO_OFFSET_PROBE_2026-11-15.md and evidence/pool-chrono-offset-focused-2026-11-15.json; not a complete unit measurement."
+    },
+    {
+      "id": "research.pool_chrono.x_eligible__mutmut_9",
+      "path": "research/pool_chrono.py",
+      "source_sha256": "cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035",
+      "change": [
+        "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
+        "+    order = np.argsort(pd.to_datetime(times, ).to_numpy(), kind=\"stable\")"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Mixed UTC offsets are accepted by the original and rejected by this mutant on pandas 3.0.6 and 3.1.1. Regression RED on mutant and GREEN on original; focused native run recorded a kill. See POOL_CHRONO_OFFSET_PROBE_2026-11-15.md and evidence/pool-chrono-offset-focused-2026-11-15.json; not a complete unit measurement."
+    },
+    {
+      "id": "research.pool_chrono.x_eligible__mutmut_10",
+      "path": "research/pool_chrono.py",
+      "source_sha256": "cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035",
+      "change": [
+        "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
+        "+    order = np.argsort(pd.to_datetime(times, utc=False).to_numpy(), kind=\"stable\")"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Mixed UTC offsets are accepted by the original and rejected by this mutant on pandas 3.0.6 and 3.1.1. Regression RED on mutant and GREEN on original; focused native run recorded a kill. See POOL_CHRONO_OFFSET_PROBE_2026-11-15.md and evidence/pool-chrono-offset-focused-2026-11-15.json; not a complete unit measurement."
+    },
+    {
+      "id": "research.pool_chrono.x_main__mutmut_93",
+      "path": "research/pool_chrono.py",
+      "source_sha256": "cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035",
+      "change": [
+        "-            continue",
+        "+            break"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Behavioral regression passed on original and failed on this generated mutant; native focused run recorded exit code 1. See NINE_BEHAVIORAL_PROBES_2026-11-15.md and evidence/nine-focused-native-2026-11-15.json. Not a full unit measurement."
+    },
+    {
+      "id": "research.pool_preprocessing.x__categorical__mutmut_2",
+      "path": "research/pool_preprocessing.py",
+      "source_sha256": "edf8ac28b2824c76840c8e4cad47fe3fee1f1ac84a5b38ad341e968dee9e8dc0",
+      "change": [
+        "-        [frame[name].astype(\"string\").to_numpy(dtype=object, na_value=np.nan) for name in columns]",
+        "+        [frame[name].astype(\"string\").to_numpy(dtype=None, na_value=np.nan) for name in columns]"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal supported by direct generated-function probes on lower-bound NumPy/pandas and Python/PyArrow string storage, in addition to newer builds. See POOL_MINIMUM_COMPAT_PROBE_2026-11-16.md for limitations and confidence. No owner approval."
+    },
+    {
+      "id": "research.pool_preprocessing.x__categorical__mutmut_4",
+      "path": "research/pool_preprocessing.py",
+      "source_sha256": "edf8ac28b2824c76840c8e4cad47fe3fee1f1ac84a5b38ad341e968dee9e8dc0",
+      "change": [
+        "-        [frame[name].astype(\"string\").to_numpy(dtype=object, na_value=np.nan) for name in columns]",
+        "+        [frame[name].astype(\"string\").to_numpy(na_value=np.nan) for name in columns]"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal supported by direct generated-function probes on lower-bound NumPy/pandas and Python/PyArrow string storage, in addition to newer builds. See POOL_MINIMUM_COMPAT_PROBE_2026-11-16.md for limitations and confidence. No owner approval."
+    },
+    {
+      "id": "research.pool_preprocessing.x__numeric__mutmut_9",
+      "path": "research/pool_preprocessing.py",
+      "source_sha256": "edf8ac28b2824c76840c8e4cad47fe3fee1f1ac84a5b38ad341e968dee9e8dc0",
+      "change": [
+        "-    values = frame[columns].apply(pd.to_numeric, errors=\"raise\").to_numpy(dtype=float)",
+        "+    values = frame[columns].apply(pd.to_numeric, ).to_numpy(dtype=float)"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. pandas.to_numeric documents errors=raise as its default; six original/mutant cases matched in both local pandas environments. See POOL_NUMERIC_EQUIVALENCE_PROBE_2026-11-15.md for source identities, evidence and limitations."
+    },
+    {
+      "id": "research.pool_preprocessing.x_prepare_frozen__mutmut_16",
+      "path": "research/pool_preprocessing.py",
+      "source_sha256": "edf8ac28b2824c76840c8e4cad47fe3fee1f1ac84a5b38ad341e968dee9e8dc0",
+      "change": [
+        "-    membership = np.empty(len(frame), dtype=int)",
+        "+    membership = np.empty(len(frame), dtype=None)"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. Validated partitions initialize all membership positions to exact integer values 0, 1 or 2; float dtype preserves them and is used only for within-key distinct counts. Original/mutant public results and errors matched in both local pandas environments; see POOL_NUMERIC_EQUIVALENCE_PROBE_2026-11-15.md."
+    },
+    {
+      "id": "research.pool_preprocessing.x_prepare_frozen__mutmut_18",
+      "path": "research/pool_preprocessing.py",
+      "source_sha256": "edf8ac28b2824c76840c8e4cad47fe3fee1f1ac84a5b38ad341e968dee9e8dc0",
+      "change": [
+        "-    membership = np.empty(len(frame), dtype=int)",
+        "+    membership = np.empty(len(frame), )"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. Validated partitions initialize all membership positions to exact integer values 0, 1 or 2; float dtype preserves them and is used only for within-key distinct counts. Original/mutant public results and errors matched in both local pandas environments; see POOL_NUMERIC_EQUIVALENCE_PROBE_2026-11-15.md."
+    },
+    {
+      "id": "research.pool_preprocessing.x_prepare_frozen__mutmut_93",
+      "path": "research/pool_preprocessing.py",
+      "source_sha256": "edf8ac28b2824c76840c8e4cad47fe3fee1f1ac84a5b38ad341e968dee9e8dc0",
+      "change": [
+        "-    medians = np.nanmedian(values, axis=0) if numeric else np.empty(0)",
+        "+    medians = np.nanmedian(values, axis=0) if (numeric) or True else np.empty(0)"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal supported by direct generated-function probes on lower-bound NumPy/pandas and Python/PyArrow string storage, in addition to newer builds. See POOL_MINIMUM_COMPAT_PROBE_2026-11-16.md for limitations and confidence. No owner approval."
+    },
+    {
+      "id": "research.temporal_decision.x_decision_metrics__mutmut_2",
+      "path": "research/temporal_decision.py",
+      "source_sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+      "change": [
+        "-    y = np.asarray(y).astype(int)",
+        "+    y = np.asarray(y).astype(None)"
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Direct generated-function probes match binary integer, boolean, float and integer-string labels but differ for fractional, NaN and float-string labels; validity of these inputs is unresolved. See TEMPORAL_LABEL_DTYPE_PROBE_2026-11-16.md."
+    },
+    {
+      "id": "research.temporal_decision.x_match_prevalence__mutmut_11",
+      "path": "research/temporal_decision.py",
+      "source_sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+      "change": [
+        "-    if len(pos) / len(y) > target:",
+        "+    if len(pos) / len(y) >= target:"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "All-positive y and target=1.0: the original retains all rows; the mutant raises ZeroDivisionError. RED on mutant, GREEN on original with 43 affected tests, and one-mutant native run recorded a kill. See TEMPORAL_BOUNDARY_2026-11-15.md and evidence/temporal-boundary-focused-2026-11-15.json; not a full unit run."
+    },
+    {
+      "id": "research.temporal_decision.x_run_frame__mutmut_7",
+      "path": "research/temporal_decision.py",
+      "source_sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+      "change": [
+        "-    y = np.asarray(y).astype(int)",
+        "+    y = np.asarray(y).astype(None)"
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Real z-score generated-function probe matches binary label representations but differs for fractional, missing and float-string inputs. Their validity under the binary-label protocol is unresolved. See TEMPORAL_LABEL_DTYPE_PROBE_2026-11-16.md."
+    },
+    {
+      "id": "research.temporal_decision.x_run_frame__mutmut_11",
+      "path": "research/temporal_decision.py",
+      "source_sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+      "change": [
+        "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
+        "+    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=None)"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Behavioral regression passed on original and failed on this generated mutant; native focused run recorded exit code 1. See NINE_BEHAVIORAL_PROBES_2026-11-15.md and evidence/nine-focused-native-2026-11-15.json. Not a full unit measurement."
+    },
+    {
+      "id": "research.temporal_decision.x_run_frame__mutmut_13",
+      "path": "research/temporal_decision.py",
+      "source_sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+      "change": [
+        "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
+        "+    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), )"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Behavioral regression passed on original and failed on this generated mutant; native focused run recorded exit code 1. See NINE_BEHAVIORAL_PROBES_2026-11-15.md and evidence/nine-focused-native-2026-11-15.json. Not a full unit measurement."
+    },
+    {
+      "id": "research.temporal_decision.x_run_frame__mutmut_15",
+      "path": "research/temporal_decision.py",
+      "source_sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+      "change": [
+        "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
+        "+    order = np.argsort(pd.to_datetime(times, utc=None).to_numpy(), kind=\"stable\")"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Original normalizes mixed UTC and Paris-offset timestamps; mutant raises a mixed-timezones ValueError on pandas 3.1.1. RED on mutant, GREEN with 44 affected tests, and focused native run recorded a kill. See TEMPORAL_BOUNDARY_2026-11-15.md and evidence/mixed-time-focused-2026-11-15.json; not a full unit run."
+    },
+    {
+      "id": "research.temporal_decision.x_run_frame__mutmut_17",
+      "path": "research/temporal_decision.py",
+      "source_sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+      "change": [
+        "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
+        "+    order = np.argsort(pd.to_datetime(times, ).to_numpy(), kind=\"stable\")"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Original normalizes mixed UTC and Paris-offset timestamps; mutant raises a mixed-timezones ValueError on pandas 3.1.1. RED on mutant, GREEN with 44 affected tests, and focused native run recorded a kill. See TEMPORAL_BOUNDARY_2026-11-15.md and evidence/mixed-time-focused-2026-11-15.json; not a full unit run."
+    },
+    {
+      "id": "research.temporal_decision.x_run_frame__mutmut_18",
+      "path": "research/temporal_decision.py",
+      "source_sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+      "change": [
+        "-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=\"stable\")",
+        "+    order = np.argsort(pd.to_datetime(times, utc=False).to_numpy(), kind=\"stable\")"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Original normalizes mixed UTC and Paris-offset timestamps; mutant raises a mixed-timezones ValueError on pandas 3.1.1. RED on mutant, GREEN with 44 affected tests, and focused native run recorded a kill. See TEMPORAL_BOUNDARY_2026-11-15.md and evidence/mixed-time-focused-2026-11-15.json; not a full unit run."
+    },
+    {
+      "id": "research.temporal_decision.x_hypotheses__mutmut_119",
+      "path": "research/temporal_decision.py",
+      "source_sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+      "change": [
+        "-        \"H1\": {\"supported\": all(round(v, 9) >= 0.8 for v in h1.values()), \"spearman\": h1},",
+        "+        \"H1\": {\"supported\": all(round(v, 10) >= 0.8 for v in h1.values()), \"spearman\": h1},"
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Exhaustive tied-rank enumeration through four methods and an exact-arithmetic separation bound through 17 methods found no threshold difference; public function does not enforce that bound, and floating error is not formally bounded. See SPEARMAN_ROUNDING_PROBE_2026-11-16.md."
+    },
+    {
+      "id": "research.temporal_decision.x_credit_card__mutmut_6",
+      "path": "research/temporal_decision.py",
+      "source_sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+      "change": [
+        "-    frame = tp.load(spec).sort_values(tp.TIME_UTC, kind=\"stable\")",
+        "+    frame = tp.load(spec).sort_values(tp.TIME_UTC, kind=None)"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Behavioral regression passed on original and failed on this generated mutant; native focused run recorded exit code 1. See NINE_BEHAVIORAL_PROBES_2026-11-15.md and evidence/nine-focused-native-2026-11-15.json. Not a full unit measurement."
+    },
+    {
+      "id": "research.temporal_decision.x_credit_card__mutmut_8",
+      "path": "research/temporal_decision.py",
+      "source_sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+      "change": [
+        "-    frame = tp.load(spec).sort_values(tp.TIME_UTC, kind=\"stable\")",
+        "+    frame = tp.load(spec).sort_values(tp.TIME_UTC, )"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Behavioral regression passed on original and failed on this generated mutant; native focused run recorded exit code 1. See NINE_BEHAVIORAL_PROBES_2026-11-15.md and evidence/nine-focused-native-2026-11-15.json. Not a full unit measurement."
+    },
+    {
+      "id": "research.temporal_decision.x_credit_card__mutmut_12",
+      "path": "research/temporal_decision.py",
+      "source_sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+      "change": [
+        "-        tp.features(spec, frame).reset_index(drop=True),",
+        "+        tp.features(spec, frame).reset_index(drop=None),"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "The original returns only selected feature columns; this mutant inserts the old row index as an extra numerical feature. RED on mutant, GREEN with 43 affected tests, and focused native run recorded a kill. See TEMPORAL_BOUNDARY_2026-11-15.md and evidence/credit-index-focused-2026-11-15.json; not a full unit run."
+    },
+    {
+      "id": "research.temporal_decision.x_credit_card__mutmut_17",
+      "path": "research/temporal_decision.py",
+      "source_sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+      "change": [
+        "-        tp.features(spec, frame).reset_index(drop=True),",
+        "+        tp.features(spec, frame).reset_index(drop=False),"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "The original returns only selected feature columns; this mutant inserts the old row index as an extra numerical feature. RED on mutant, GREEN with 43 affected tests, and focused native run recorded a kill. See TEMPORAL_BOUNDARY_2026-11-15.md and evidence/credit-index-focused-2026-11-15.json; not a full unit run."
+    },
+    {
+      "id": "research.temporal_decision.x_bank_marketing__mutmut_48",
+      "path": "research/temporal_decision.py",
+      "source_sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+      "change": [
+        "-        pd.DataFrame({\"year\": year, \"month\": index + 1, \"day\": 1})",
+        "+        pd.DataFrame({\"YEAR\": year, \"month\": index + 1, \"day\": 1})"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal: timestamp assembly key case comparisons on pandas 3.0.6 and 3.1.1 matched for valid, invalid and empty inputs; other supported versions and Linux are untested. See BANK_TIMESTAMP_CASE_PROBE_2026-11-15.md. No owner approval."
+    },
+    {
+      "id": "research.temporal_decision.x_bank_marketing__mutmut_50",
+      "path": "research/temporal_decision.py",
+      "source_sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+      "change": [
+        "-        pd.DataFrame({\"year\": year, \"month\": index + 1, \"day\": 1})",
+        "+        pd.DataFrame({\"year\": year, \"MONTH\": index + 1, \"day\": 1})"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal: timestamp assembly key case comparisons on pandas 3.0.6 and 3.1.1 matched for valid, invalid and empty inputs; other supported versions and Linux are untested. See BANK_TIMESTAMP_CASE_PROBE_2026-11-15.md. No owner approval."
+    },
+    {
+      "id": "research.temporal_decision.x_bank_marketing__mutmut_54",
+      "path": "research/temporal_decision.py",
+      "source_sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+      "change": [
+        "-        pd.DataFrame({\"year\": year, \"month\": index + 1, \"day\": 1})",
+        "+        pd.DataFrame({\"year\": year, \"month\": index + 1, \"DAY\": 1})"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal: timestamp assembly key case comparisons on pandas 3.0.6 and 3.1.1 matched for valid, invalid and empty inputs; other supported versions and Linux are untested. See BANK_TIMESTAMP_CASE_PROBE_2026-11-15.md. No owner approval."
+    },
+    {
+      "id": "research.temporal_decision.x_bank_marketing__mutmut_77",
+      "path": "research/temporal_decision.py",
+      "source_sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+      "change": [
+        "-    cats = [c for c in features if not pd.api.types.is_numeric_dtype(features[c])]",
+        "+    cats = None"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct CSV loader and generated-method probes across newer and lower-bound pandas builds. See BANK_DUMMY_COLUMNS_PROBE_2026-11-16.md for contract, limitations and confidence. No owner approval."
+    },
+    {
+      "id": "research.temporal_decision.x_bank_marketing__mutmut_82",
+      "path": "research/temporal_decision.py",
+      "source_sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+      "change": [
+        "-    features = pd.get_dummies(features, columns=cats, dummy_na=True, dtype=float)",
+        "+    features = pd.get_dummies(features, columns=None, dummy_na=True, dtype=float)"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct CSV loader and generated-method probes across newer and lower-bound pandas builds. See BANK_DUMMY_COLUMNS_PROBE_2026-11-16.md for contract, limitations and confidence. No owner approval."
+    },
+    {
+      "id": "research.temporal_decision.x_bank_marketing__mutmut_86",
+      "path": "research/temporal_decision.py",
+      "source_sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+      "change": [
+        "-    features = pd.get_dummies(features, columns=cats, dummy_na=True, dtype=float)",
+        "+    features = pd.get_dummies(features, dummy_na=True, dtype=float)"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct CSV loader and generated-method probes across newer and lower-bound pandas builds. See BANK_DUMMY_COLUMNS_PROBE_2026-11-16.md for contract, limitations and confidence. No owner approval."
+    },
+    {
+      "id": "research.temporal_decision.x_main__mutmut_2",
+      "path": "research/temporal_decision.py",
+      "source_sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+      "change": [
+        "-    parser = argparse.ArgumentParser(description=__doc__)",
+        "+    parser = argparse.ArgumentParser(description=None)"
+      ],
+      "outcome": "behavioral_difference_pending_native",
+      "evidence": "Direct generated command help omits the study purpose and protocol link. Regression and native verdict still required. See COMMAND_HELP_PROBE_2026-11-16.md. Regression now RED on generated mutant and GREEN on original; native verdict remains pending. See SCIENTIFIC_REGRESSIONS_2026-11-16.md."
+    },
+    {
+      "id": "research.typed_benchmark.x__per_type__mutmut_18",
+      "path": "research/typed_benchmark.py",
+      "source_sha256": "abdd10e4a1965e99bd5db8ad1a61b0b9e37caed20f35d09c32bcb1a9a3bae9d2",
+      "change": [
+        "-        recall[name] = recall_score(is_type[keep].astype(int), flags[keep])",
+        "+        recall[name] = recall_score(is_type[keep].astype(None), flags[keep])"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated per-type metric comparisons over binary, empty and missing-type cases. See TYPED_METRIC_DTYPE_PROBE_2026-11-15.md for environment, limits and confidence. No owner approval."
+    },
+    {
+      "id": "research.typed_benchmark.x__per_type__mutmut_26",
+      "path": "research/typed_benchmark.py",
+      "source_sha256": "abdd10e4a1965e99bd5db8ad1a61b0b9e37caed20f35d09c32bcb1a9a3bae9d2",
+      "change": [
+        "-        precision[name] = precision_score(is_type[keep].astype(int), flags[keep], zero_division=0)",
+        "+        precision[name] = precision_score(is_type[keep].astype(None), flags[keep], zero_division=0)"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated per-type metric comparisons over binary, empty and missing-type cases. See TYPED_METRIC_DTYPE_PROBE_2026-11-15.md for environment, limits and confidence. No owner approval."
+    },
+    {
+      "id": "research.typed_benchmark.x_evaluate__mutmut_53",
+      "path": "research/typed_benchmark.py",
+      "source_sha256": "abdd10e4a1965e99bd5db8ad1a61b0b9e37caed20f35d09c32bcb1a9a3bae9d2",
+      "change": [
+        "-        flags = pd.Series(np.asarray(flags), index=test.index)",
+        "+        flags = pd.Series(np.asarray(flags), index=None)"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The actual split resets test index to RangeIndex, equal to pandas Series default for the same flags; two seeded original/mutant end-to-end probes match recall, precision and FPR. See TYPED_INDEX_EQUIVALENCE_PROBE_2026-11-15.md for source, environment and limitations."
+    },
+    {
+      "id": "research.typed_benchmark.x_evaluate__mutmut_55",
+      "path": "research/typed_benchmark.py",
+      "source_sha256": "abdd10e4a1965e99bd5db8ad1a61b0b9e37caed20f35d09c32bcb1a9a3bae9d2",
+      "change": [
+        "-        flags = pd.Series(np.asarray(flags), index=test.index)",
+        "+        flags = pd.Series(np.asarray(flags), )"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The actual split resets test index to RangeIndex, equal to pandas Series default for the same flags; two seeded original/mutant end-to-end probes match recall, precision and FPR. See TYPED_INDEX_EQUIVALENCE_PROBE_2026-11-15.md for source, environment and limitations."
+    },
+    {
+      "id": "research.uci_loader.x_read_table__mutmut_5",
+      "path": "research/uci_loader.py",
+      "source_sha256": "a1176cd61bd8454c9fa51da682194444feb24529dc401916e8bb94fd212ab691",
+      "change": [
+        "-    frame = pd.read_csv(path, low_memory=False)",
+        "+    frame = pd.read_csv(path, )"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "A large mixed CSV yields a homogeneous string column in the original but mixed int/string values in this mutant on pandas 3.0.6 and 3.1.1. RED on mutant, GREEN with 12 affected tests and focused native run recorded a kill. See UCI_CSV_PROBE_2026-11-15.md and evidence/uci-csv-focused-2026-11-15.json; not a full unit run."
+    },
+    {
+      "id": "research.uci_loader.x_read_table__mutmut_6",
+      "path": "research/uci_loader.py",
+      "source_sha256": "a1176cd61bd8454c9fa51da682194444feb24529dc401916e8bb94fd212ab691",
+      "change": [
+        "-    frame = pd.read_csv(path, low_memory=False)",
+        "+    frame = pd.read_csv(path, low_memory=True)"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "A large mixed CSV yields a homogeneous string column in the original but mixed int/string values in this mutant on pandas 3.0.6 and 3.1.1. RED on mutant, GREEN with 12 affected tests and focused native run recorded a kill. See UCI_CSV_PROBE_2026-11-15.md and evidence/uci-csv-focused-2026-11-15.json; not a full unit run."
+    },
+    {
+      "id": "research.uci_loader.x_read_table__mutmut_23",
+      "path": "research/uci_loader.py",
+      "source_sha256": "a1176cd61bd8454c9fa51da682194444feb24529dc401916e8bb94fd212ab691",
+      "change": [
+        "-    for name in frame.columns[frame.dtypes.map(lambda t: not pd.api.types.is_numeric_dtype(t))]:",
+        "+    for name in frame.columns[frame.dtypes.map(lambda t: not pd.api.types.is_numeric_dtype(None))]:"
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Direct CSV probes matched outputs, but a 30,000-row numeric CSV took approximately twice as long on the mutant in two local runs. No portable performance contract is established. See UCI_NUMERIC_COLUMN_PROBE_2026-11-15.md; remains inconclusive."
+    },
+    {
+      "id": "research.uci_loader.x_split_columns__mutmut_34",
+      "path": "research/uci_loader.py",
+      "source_sha256": "a1176cd61bd8454c9fa51da682194444feb24529dc401916e8bb94fd212ab691",
+      "change": [
+        "-    target = frame[targets[0]] if len(targets) == 1 else pd.Series(np.nan, index=frame.index)",
+        "+    target = frame[targets[0]] if len(targets) == 1 else pd.Series(None, index=frame.index)"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Empty missing-target tables preserve a numeric target dtype; this mutant yields object dtype. Integrated regression RED, original GREEN and native focused verdict killed. See UCI_EMPTY_TARGET_PROBE_2026-11-15.md and evidence/continuation-2026-11-15/empty-target-native.json. Not a full unit measurement."
+    },
+    {
+      "id": "research.uci_loader.x_split_columns__mutmut_36",
+      "path": "research/uci_loader.py",
+      "source_sha256": "a1176cd61bd8454c9fa51da682194444feb24529dc401916e8bb94fd212ab691",
+      "change": [
+        "-    target = frame[targets[0]] if len(targets) == 1 else pd.Series(np.nan, index=frame.index)",
+        "+    target = frame[targets[0]] if len(targets) == 1 else pd.Series(index=frame.index)"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Empty missing-target tables preserve a numeric target dtype; this mutant yields object dtype. Integrated regression RED, original GREEN and native focused verdict killed. See UCI_EMPTY_TARGET_PROBE_2026-11-15.md and evidence/continuation-2026-11-15/empty-target-native.json. Not a full unit measurement."
+    },
+    {
+      "id": "etl_benchmark.quality._torch_models.xǁMeanVAEǁevaluating_forward__mutmut_3",
+      "path": "src/etl_benchmark/quality/_torch_models.py",
+      "source_sha256": "77a1b57ff69e580cad700bb4ee41f069e3ac0c8489bdd714651c753c4bbdd09d",
+      "change": [
+        "-        mu, _ = self.model.encode(batch_data.to(self.device))",
+        "+        mu, _ = self.model.encode(batch_data.to(None))"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Real MPS wrapper fit/score succeeds on original and fails with device mismatch on this mutant. Integrated regression RED/GREEN and debug-logged native engine run recorded a kill. See TORCH_DEVICE_MUTANTS_2026-11-15.md and evidence/continuation-2026-11-15/mps-native-debug.json; not a full unit measurement."
+    },
+    {
+      "id": "etl_benchmark.quality._torch_models.xǁFitScalerDIFǁ_deep_representation__mutmut_5",
+      "path": "src/etl_benchmark/quality/_torch_models.py",
+      "source_sha256": "77a1b57ff69e580cad700bb4ee41f069e3ac0c8489bdd714651c753c4bbdd09d",
+      "change": [
+        "-            for batch in DataLoader(X, batch_size=self.batch_size, drop_last=False, shuffle=False):",
+        "+            for batch in DataLoader(X, batch_size=self.batch_size, drop_last=False, shuffle=None):"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-mutant probes and local dependency analysis. See DIF_LOADER_DEFAULTS_PROBE_2026-11-15.md for contract, variations, environment limits and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality._torch_models.xǁFitScalerDIFǁ_deep_representation__mutmut_8",
+      "path": "src/etl_benchmark/quality/_torch_models.py",
+      "source_sha256": "77a1b57ff69e580cad700bb4ee41f069e3ac0c8489bdd714651c753c4bbdd09d",
+      "change": [
+        "-            for batch in DataLoader(X, batch_size=self.batch_size, drop_last=False, shuffle=False):",
+        "+            for batch in DataLoader(X, batch_size=self.batch_size, shuffle=False):"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-mutant probes and local dependency analysis. See DIF_LOADER_DEFAULTS_PROBE_2026-11-15.md for contract, variations, environment limits and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality._torch_models.xǁFitScalerDIFǁ_deep_representation__mutmut_9",
+      "path": "src/etl_benchmark/quality/_torch_models.py",
+      "source_sha256": "77a1b57ff69e580cad700bb4ee41f069e3ac0c8489bdd714651c753c4bbdd09d",
+      "change": [
+        "-            for batch in DataLoader(X, batch_size=self.batch_size, drop_last=False, shuffle=False):",
+        "+            for batch in DataLoader(X, batch_size=self.batch_size, drop_last=False, ):"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-mutant probes and local dependency analysis. See DIF_LOADER_DEFAULTS_PROBE_2026-11-15.md for contract, variations, environment limits and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality._torch_models.xǁFitScalerDIFǁ_deep_representation__mutmut_14",
+      "path": "src/etl_benchmark/quality/_torch_models.py",
+      "source_sha256": "77a1b57ff69e580cad700bb4ee41f069e3ac0c8489bdd714651c753c4bbdd09d",
+      "change": [
+        "-                reduced.append(net(batch.float().to(self.device)))",
+        "+                reduced.append(net(batch.float().to(None)))"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Real MPS wrapper fit/score succeeds on original and fails with device mismatch on this mutant. Integrated regression RED/GREEN and debug-logged native engine run recorded a kill. See TORCH_DEVICE_MUTANTS_2026-11-15.md and evidence/continuation-2026-11-15/mps-native-debug.json; not a full unit measurement."
+    },
+    {
+      "id": "etl_benchmark.quality._torch_models.xǁPaddedAE1SVMǁfit__mutmut_11",
+      "path": "src/etl_benchmark/quality/_torch_models.py",
+      "source_sha256": "77a1b57ff69e580cad700bb4ee41f069e3ac0c8489bdd714651c753c4bbdd09d",
+      "change": [
+        "-        return super().fit(X, y)",
+        "+        return super().fit(X, None)"
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Direct real-model probe with three label classes changed predict_proba shape and PyOD warning; labels are documented as ignored/not expected, so the supported contract consequence remains unresolved. See AE1SVM_LABEL_FORWARDING_PROBE_2026-11-15.md."
+    },
+    {
+      "id": "etl_benchmark.quality._torch_models.xǁPaddedAE1SVMǁfit__mutmut_13",
+      "path": "src/etl_benchmark/quality/_torch_models.py",
+      "source_sha256": "77a1b57ff69e580cad700bb4ee41f069e3ac0c8489bdd714651c753c4bbdd09d",
+      "change": [
+        "-        return super().fit(X, y)",
+        "+        return super().fit(X, )"
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Direct real-model probe with three label classes changed predict_proba shape and PyOD warning; labels are documented as ignored/not expected, so the supported contract consequence remains unresolved. See AE1SVM_LABEL_FORWARDING_PROBE_2026-11-15.md."
+    },
+    {
+      "id": "etl_benchmark.quality.autoencoder.xǁReconstructionModelǁ__init____mutmut_4",
+      "path": "src/etl_benchmark/quality/autoencoder.py",
+      "source_sha256": "52ac93bd1898db05567278d773295458fc81847366de74b0c63770c662cbaa4d",
+      "change": [
+        "-        self.threshold_: float | None = None",
+        "+        self.threshold_: float | None = \"\""
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Generated-constructor probes found differences in pre-fit or failed-fit exception details; their supported public consequence remains unresolved. See AUTOENCODER_INITIAL_STATE_PROBE_2026-11-15.md."
+    },
+    {
+      "id": "etl_benchmark.quality.autoencoder.xǁReconstructionModelǁ__init____mutmut_5",
+      "path": "src/etl_benchmark/quality/autoencoder.py",
+      "source_sha256": "52ac93bd1898db05567278d773295458fc81847366de74b0c63770c662cbaa4d",
+      "change": [
+        "-        self.network_: MLPRegressor | None = None",
+        "+        self.network_: MLPRegressor | None = \"\""
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Generated-constructor probes found differences in pre-fit or failed-fit exception details; their supported public consequence remains unresolved. See AUTOENCODER_INITIAL_STATE_PROBE_2026-11-15.md."
+    },
+    {
+      "id": "etl_benchmark.quality.autoencoder.xǁReconstructionModelǁfit__mutmut_14",
+      "path": "src/etl_benchmark/quality/autoencoder.py",
+      "source_sha256": "52ac93bd1898db05567278d773295458fc81847366de74b0c63770c662cbaa4d",
+      "change": [
+        "-            warnings.simplefilter(\"ignore\", ConvergenceWarning)",
+        "+            warnings.simplefilter(\"ignore\", )"
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Inconclusive after direct-model probe: the original emits numerical RuntimeWarnings for very large finite arrays while the mutant suppresses them; both local environments agree. The supported public detector normally standardizes inputs first, so a relevant supported-path counterexample and regression remain unestablished. See AUTOENCODER_WARNING_PROBE_2026-11-15.md."
+    },
+    {
+      "id": "etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ__init____mutmut_11",
+      "path": "src/etl_benchmark/quality/drift.py",
+      "source_sha256": "95380ca0f8f87a24c512ac7055357225472342065e0da676c0be46dd115fa09b",
+      "change": [
+        "-        self._fitted = False",
+        "+        self._fitted = None"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal supported by generated-constructor or generated-fit public lifecycle probes. See DRIFT_INITIAL_STATE_PROBE_2026-11-15.md for identity, limits, counterexamples and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ__init____mutmut_13",
+      "path": "src/etl_benchmark/quality/drift.py",
+      "source_sha256": "95380ca0f8f87a24c512ac7055357225472342065e0da676c0be46dd115fa09b",
+      "change": [
+        "-        self._active = False",
+        "+        self._active = None"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal supported by generated-constructor or generated-fit public lifecycle probes. See DRIFT_INITIAL_STATE_PROBE_2026-11-15.md for identity, limits, counterexamples and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ__init____mutmut_14",
+      "path": "src/etl_benchmark/quality/drift.py",
+      "source_sha256": "95380ca0f8f87a24c512ac7055357225472342065e0da676c0be46dd115fa09b",
+      "change": [
+        "-        self._active = False",
+        "+        self._active = True"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal supported by generated-constructor or generated-fit public lifecycle probes. See DRIFT_INITIAL_STATE_PROBE_2026-11-15.md for identity, limits, counterexamples and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ__init____mutmut_15",
+      "path": "src/etl_benchmark/quality/drift.py",
+      "source_sha256": "95380ca0f8f87a24c512ac7055357225472342065e0da676c0be46dd115fa09b",
+      "change": [
+        "-        self._cutoff: object | None = None",
+        "+        self._cutoff: object | None = \"\""
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal supported by generated-constructor or generated-fit public lifecycle probes. See DRIFT_INITIAL_STATE_PROBE_2026-11-15.md for identity, limits, counterexamples and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ__init____mutmut_16",
+      "path": "src/etl_benchmark/quality/drift.py",
+      "source_sha256": "95380ca0f8f87a24c512ac7055357225472342065e0da676c0be46dd115fa09b",
+      "change": [
+        "-        self._means: pd.Series | None = None",
+        "+        self._means: pd.Series | None = \"\""
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Failed-fit probes found a differing later score exception (_16) or private partial state (_17); the supported contract consequence is unresolved. See DRIFT_INITIAL_STATE_PROBE_2026-11-15.md."
+    },
+    {
+      "id": "etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ__init____mutmut_17",
+      "path": "src/etl_benchmark/quality/drift.py",
+      "source_sha256": "95380ca0f8f87a24c512ac7055357225472342065e0da676c0be46dd115fa09b",
+      "change": [
+        "-        self._stds: pd.Series | None = None",
+        "+        self._stds: pd.Series | None = \"\""
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Failed-fit probes found a differing later score exception (_16) or private partial state (_17); the supported contract consequence is unresolved. See DRIFT_INITIAL_STATE_PROBE_2026-11-15.md."
+    },
+    {
+      "id": "etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁfit__mutmut_4",
+      "path": "src/etl_benchmark/quality/drift.py",
+      "source_sha256": "95380ca0f8f87a24c512ac7055357225472342065e0da676c0be46dd115fa09b",
+      "change": [
+        "-            self._active = False",
+        "+            self._active = None"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal supported by generated-constructor or generated-fit public lifecycle probes. See DRIFT_INITIAL_STATE_PROBE_2026-11-15.md for identity, limits, counterexamples and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ_row_score__mutmut_15",
+      "path": "src/etl_benchmark/quality/drift.py",
+      "source_sha256": "95380ca0f8f87a24c512ac7055357225472342065e0da676c0be46dd115fa09b",
+      "change": [
+        "-        moved = shift.abs() > 0.03  # features that actually drifted",
+        "+        moved = shift.abs() >= 0.03  # features that actually drifted"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Reference [-1,0,1] has sample standard deviation 1; 32 recent observations at 0.03 give a threshold shift. Original scores zero, >= mutant scores positive. RED, GREEN with 32 affected tests, and focused native run recorded a kill. See DRIFT_BOUNDARY_PROBE_2026-11-15.md and evidence/drift-threshold-focused-2026-11-15.json; not a full unit run."
+    },
+    {
+      "id": "etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ_row_score__mutmut_33",
+      "path": "src/etl_benchmark/quality/drift.py",
+      "source_sha256": "95380ca0f8f87a24c512ac7055357225472342065e0da676c0be46dd115fa09b",
+      "change": [
+        "-        lean = (z.loc[:, moved.index[moved]] * direction).clip(0.0, 4.0).mean(axis=1)",
+        "+        lean = (z.loc[:, moved.index[moved]] / direction).clip(0.0, 4.0).mean(axis=1)"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. Selected shifted features have nonzero signed directions +1 or -1; float multiplication and division by those values agree in positive, negative, absent, gross-outlier, short-window and missing probes in both local pandas builds. See DRIFT_BOUNDARY_PROBE_2026-11-15.md for limitations."
+    },
+    {
+      "id": "etl_benchmark.quality.drift.xǁTemporalDriftDetectorǁ_row_score__mutmut_43",
+      "path": "src/etl_benchmark/quality/drift.py",
+      "source_sha256": "95380ca0f8f87a24c512ac7055357225472342065e0da676c0be46dd115fa09b",
+      "change": [
+        "-        row[gross] = 0.0",
+        "+        row[gross] = None"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-mutant probes and local dependency analysis. See DRIFT_GROSS_NULL_PROBE_2026-11-15.md for contract, variations, environment limits and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality.gx.xǁGreatExpectationsDetectorǁ__init____mutmut_5",
+      "path": "src/etl_benchmark/quality/gx.py",
+      "source_sha256": "11be59dbe975d05547395263b763d37716cd9f916b284ce4147cfd87c61e3416",
+      "change": [
+        "-        self._null_columns: list[str] = []",
+        "+        self._null_columns: list[str] = None"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-constructor public lifecycle and failure-path probes on two GX builds. See GX_INITIAL_STATE_PROBE_2026-11-15.md for limits and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality.gx.xǁGreatExpectationsDetectorǁ__init____mutmut_6",
+      "path": "src/etl_benchmark/quality/gx.py",
+      "source_sha256": "11be59dbe975d05547395263b763d37716cd9f916b284ce4147cfd87c61e3416",
+      "change": [
+        "-        self._bounds: dict[str, tuple[float, float]] = {}",
+        "+        self._bounds: dict[str, tuple[float, float]] = None"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-constructor public lifecycle and failure-path probes on two GX builds. See GX_INITIAL_STATE_PROBE_2026-11-15.md for limits and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality.gx.xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_5",
+      "path": "src/etl_benchmark/quality/gx.py",
+      "source_sha256": "11be59dbe975d05547395263b763d37716cd9f916b284ce4147cfd87c61e3416",
+      "change": [
+        "-        work = df.reset_index(drop=True)",
+        "+        work = df.reset_index(drop=None)"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Direct generated-mutant test of a DataFrame with index and column both named amount raises ValueError; original predicts [False, True]. Native focused GX run: verdict 1, see gx-focused-2026-11-14.json."
+    },
+    {
+      "id": "etl_benchmark.quality.gx.xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_6",
+      "path": "src/etl_benchmark/quality/gx.py",
+      "source_sha256": "11be59dbe975d05547395263b763d37716cd9f916b284ce4147cfd87c61e3416",
+      "change": [
+        "-        work = df.reset_index(drop=True)",
+        "+        work = df.reset_index(drop=False)"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Direct generated-mutant test of a DataFrame with index and column both named amount raises ValueError; original predicts [False, True]. Native focused GX run: verdict 1, see gx-focused-2026-11-14.json."
+    },
+    {
+      "id": "etl_benchmark.quality.gx.xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_9",
+      "path": "src/etl_benchmark/quality/gx.py",
+      "source_sha256": "11be59dbe975d05547395263b763d37716cd9f916b284ce4147cfd87c61e3416",
+      "change": [
+        "-        context = gx.get_context(mode=\"ephemeral\")",
+        "+        context = gx.get_context(mode=None)"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "A disposable pre-existing GX project remains unchanged with the original, but the mutant modifies its configuration. RED on mutant, GREEN with 42 affected tests, and focused native run recorded a kill. See GX_CONTEXT_BOUNDARY_2026-11-15.md and evidence/gx-context-focused-2026-11-15.json; not a full unit run."
+    },
+    {
+      "id": "etl_benchmark.quality.gx.xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_17",
+      "path": "src/etl_benchmark/quality/gx.py",
+      "source_sha256": "11be59dbe975d05547395263b763d37716cd9f916b284ce4147cfd87c61e3416",
+      "change": [
+        "-            context.data_sources.add_pandas(name=\"pandas\")",
+        "+            context.data_sources.add_pandas(name=\"XXpandasXX\")"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The altered identifier names only a fresh ephemeral GX context component; the probe compared normal, missing, outlier and duplicate-index row failures on GX 1.24.0 and 1.24.1. See GX_NAME_EQUIVALENCE_PROBE_2026-11-15.md for limitations and hypothetical."
+    },
+    {
+      "id": "etl_benchmark.quality.gx.xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_18",
+      "path": "src/etl_benchmark/quality/gx.py",
+      "source_sha256": "11be59dbe975d05547395263b763d37716cd9f916b284ce4147cfd87c61e3416",
+      "change": [
+        "-            context.data_sources.add_pandas(name=\"pandas\")",
+        "+            context.data_sources.add_pandas(name=\"PANDAS\")"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The altered identifier names only a fresh ephemeral GX context component; the probe compared normal, missing, outlier and duplicate-index row failures on GX 1.24.0 and 1.24.1. See GX_NAME_EQUIVALENCE_PROBE_2026-11-15.md for limitations and hypothetical."
+    },
+    {
+      "id": "etl_benchmark.quality.gx.xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_19",
+      "path": "src/etl_benchmark/quality/gx.py",
+      "source_sha256": "11be59dbe975d05547395263b763d37716cd9f916b284ce4147cfd87c61e3416",
+      "change": [
+        "-            .add_dataframe_asset(name=\"asset\")",
+        "+            .add_dataframe_asset(name=\"XXassetXX\")"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The altered identifier names only a fresh ephemeral GX context component; the probe compared normal, missing, outlier and duplicate-index row failures on GX 1.24.0 and 1.24.1. See GX_NAME_EQUIVALENCE_PROBE_2026-11-15.md for limitations and hypothetical."
+    },
+    {
+      "id": "etl_benchmark.quality.gx.xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_20",
+      "path": "src/etl_benchmark/quality/gx.py",
+      "source_sha256": "11be59dbe975d05547395263b763d37716cd9f916b284ce4147cfd87c61e3416",
+      "change": [
+        "-            .add_dataframe_asset(name=\"asset\")",
+        "+            .add_dataframe_asset(name=\"ASSET\")"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The altered identifier names only a fresh ephemeral GX context component; the probe compared normal, missing, outlier and duplicate-index row failures on GX 1.24.0 and 1.24.1. See GX_NAME_EQUIVALENCE_PROBE_2026-11-15.md for limitations and hypothetical."
+    },
+    {
+      "id": "etl_benchmark.quality.gx.xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_21",
+      "path": "src/etl_benchmark/quality/gx.py",
+      "source_sha256": "11be59dbe975d05547395263b763d37716cd9f916b284ce4147cfd87c61e3416",
+      "change": [
+        "-            .add_batch_definition_whole_dataframe(name=\"batch\")",
+        "+            .add_batch_definition_whole_dataframe(name=\"XXbatchXX\")"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The altered identifier names only a fresh ephemeral GX context component; the probe compared normal, missing, outlier and duplicate-index row failures on GX 1.24.0 and 1.24.1. See GX_NAME_EQUIVALENCE_PROBE_2026-11-15.md for limitations and hypothetical."
+    },
+    {
+      "id": "etl_benchmark.quality.gx.xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_22",
+      "path": "src/etl_benchmark/quality/gx.py",
+      "source_sha256": "11be59dbe975d05547395263b763d37716cd9f916b284ce4147cfd87c61e3416",
+      "change": [
+        "-            .add_batch_definition_whole_dataframe(name=\"batch\")",
+        "+            .add_batch_definition_whole_dataframe(name=\"BATCH\")"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. The altered identifier names only a fresh ephemeral GX context component; the probe compared normal, missing, outlier and duplicate-index row failures on GX 1.24.0 and 1.24.1. See GX_NAME_EQUIVALENCE_PROBE_2026-11-15.md for limitations and hypothetical."
+    },
+    {
+      "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ__init____mutmut_4",
+      "path": "src/etl_benchmark/quality/ml.py",
+      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
+      "change": [
+        "-        self.feature_names_: list[str] | None = None",
+        "+        self.feature_names_: list[str] | None = \"\""
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Real isolation-forest probes find None versus empty string in the observable pre-fit feature_names_ after construction or a rejected fit; scores reject as unfitted and successful fits match. Supported pre-fit contract remains uncertain. See PYOD_FEATURE_INITIAL_STATE_PROBE_2026-11-16.md."
+    },
+    {
+      "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ__init____mutmut_5",
+      "path": "src/etl_benchmark/quality/ml.py",
+      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
+      "change": [
+        "-        self._imputer: SimpleImputer | None = None",
+        "+        self._imputer: SimpleImputer | None = \"\""
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal supported by public pre-fit, successful-fit and failure-path generated-constructor probes. See PYOD_INITIAL_STATE_PROBE_2026-11-15.md for limits and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ__init____mutmut_6",
+      "path": "src/etl_benchmark/quality/ml.py",
+      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
+      "change": [
+        "-        self._scaler: StandardScaler | None = None",
+        "+        self._scaler: StandardScaler | None = \"\""
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal supported by public pre-fit, successful-fit and failure-path generated-constructor probes. See PYOD_INITIAL_STATE_PROBE_2026-11-15.md for limits and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_matrix__mutmut_8",
+      "path": "src/etl_benchmark/quality/ml.py",
+      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
+      "change": [
+        "-        x = numeric_features(df, self.feature_names_, training=False).to_numpy(dtype=float)",
+        "+        x = numeric_features(df, self.feature_names_, training=False).to_numpy(dtype=None)"
+      ],
+      "outcome": "behavioral_difference_pending_native",
+      "evidence": "Public behavioral regression passed on the original and failed on this generated mutant; a native mutation run on a frozen test tree is pending. See continuation-2026-11-15 evidence and the corresponding test. Not a verified kill."
+    },
+    {
+      "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_matrix__mutmut_11",
+      "path": "src/etl_benchmark/quality/ml.py",
+      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
+      "change": [
+        "-        x = numeric_features(df, self.feature_names_, training=False).to_numpy(dtype=float)",
+        "+        x = numeric_features(df, self.feature_names_, training=None).to_numpy(dtype=float)"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. False and None both skip the sole training-only branch in numeric_features; six original/mutant boundary comparisons match. See RULES_EQUIVALENCE_PROBES_2026-11-15.md for identity, digests, executable probe, limits and hypothetical arithmetic."
+    },
+    {
+      "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_4",
+      "path": "src/etl_benchmark/quality/ml.py",
+      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
+      "change": [
+        "-        x = numeric_features(df, self.feature_names_, training=True).to_numpy(dtype=float)",
+        "+        x = numeric_features(df, self.feature_names_, training=True).to_numpy(dtype=None)"
+      ],
+      "outcome": "behavioral_difference_pending_native",
+      "evidence": "Public behavioral regression passed on the original and failed on this generated mutant; a native mutation run on a frozen test tree is pending. See continuation-2026-11-15 evidence and the corresponding test. Not a verified kill."
+    },
+    {
+      "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁscore__mutmut_6",
+      "path": "src/etl_benchmark/quality/ml.py",
+      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
+      "change": [
+        "-        return pd.Series(scores, index=df.index, dtype=float)",
+        "+        return pd.Series(scores, index=df.index, dtype=None)"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from generated-score comparisons across the eight exposed classical adapters and two pandas builds. See PYOD_SCORE_DTYPE_PROBE_2026-11-15.md for limits and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁscore__mutmut_9",
+      "path": "src/etl_benchmark/quality/ml.py",
+      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
+      "change": [
+        "-        return pd.Series(scores, index=df.index, dtype=float)",
+        "+        return pd.Series(scores, index=df.index, )"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from generated-score comparisons across the eight exposed classical adapters and two pandas builds. See PYOD_SCORE_DTYPE_PROBE_2026-11-15.md for limits and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁ__init____mutmut_3",
+      "path": "src/etl_benchmark/quality/ml.py",
+      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
+      "change": [
+        "-        self.sorted_ = np.empty((0, 0))",
+        "+        self.sorted_ = None"
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Direct generated-constructor probes found differences in some pre-fit, zero-feature, failed-fit or initial learned-field observations; supported public significance is unresolved. See ML_INITIAL_STATE_COUNTEREXAMPLES_2026-11-16.md."
+    },
+    {
+      "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁ__init____mutmut_5",
+      "path": "src/etl_benchmark/quality/ml.py",
+      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
+      "change": [
+        "-        self.sorted_ = np.empty((0, 0))",
+        "+        self.sorted_ = np.empty((1, 0))"
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Direct generated-constructor probes found differences in some pre-fit, zero-feature, failed-fit or initial learned-field observations; supported public significance is unresolved. See ML_INITIAL_STATE_COUNTEREXAMPLES_2026-11-16.md."
+    },
+    {
+      "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁ__init____mutmut_6",
+      "path": "src/etl_benchmark/quality/ml.py",
+      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
+      "change": [
+        "-        self.sorted_ = np.empty((0, 0))",
+        "+        self.sorted_ = np.empty((0, 1))"
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Direct generated-constructor probes found differences in some pre-fit, zero-feature, failed-fit or initial learned-field observations; supported public significance is unresolved. See ML_INITIAL_STATE_COUNTEREXAMPLES_2026-11-16.md."
+    },
+    {
+      "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁ__init____mutmut_7",
+      "path": "src/etl_benchmark/quality/ml.py",
+      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
+      "change": [
+        "-        self.skew_sign_ = np.empty(0)",
+        "+        self.skew_sign_ = None"
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Direct generated-constructor probes found differences in some pre-fit, zero-feature, failed-fit or initial learned-field observations; supported public significance is unresolved. See ML_INITIAL_STATE_COUNTEREXAMPLES_2026-11-16.md."
+    },
+    {
+      "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁ__init____mutmut_9",
+      "path": "src/etl_benchmark/quality/ml.py",
+      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
+      "change": [
+        "-        self.skew_sign_ = np.empty(0)",
+        "+        self.skew_sign_ = np.empty(1)"
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Direct generated-constructor probes found differences in some pre-fit, zero-feature, failed-fit or initial learned-field observations; supported public significance is unresolved. See ML_INITIAL_STATE_COUNTEREXAMPLES_2026-11-16.md."
+    },
+    {
+      "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁ__init____mutmut_10",
+      "path": "src/etl_benchmark/quality/ml.py",
+      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
+      "change": [
+        "-        self.threshold_ = float(\"nan\")",
+        "+        self.threshold_ = None"
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Direct generated-constructor probes found differences in some pre-fit, zero-feature, failed-fit or initial learned-field observations; supported public significance is unresolved. See ML_INITIAL_STATE_COUNTEREXAMPLES_2026-11-16.md."
+    },
+    {
+      "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁ__init____mutmut_13",
+      "path": "src/etl_benchmark/quality/ml.py",
+      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
+      "change": [
+        "-        self.threshold_ = float(\"nan\")",
+        "+        self.threshold_ = float(\"NAN\")"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-mutant probes and local dependency analysis. See ML_DEFAULTS_PROBE_2026-11-15.md for contract, variations, environment limits and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_13",
+      "path": "src/etl_benchmark/quality/ml.py",
+      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
+      "change": [
+        "-        self.skew_sign_ = np.sign(np.nan_to_num(skew(x, axis=0)))",
+        "+        self.skew_sign_ = np.sign(np.nan_to_num(skew(x, )))"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-mutant probes and local dependency analysis. See ML_DEFAULTS_PROBE_2026-11-15.md for contract, variations, environment limits and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_26",
+      "path": "src/etl_benchmark/quality/ml.py",
+      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
+      "change": [
+        "-            right[:, j] = n - np.searchsorted(column, x[:, j], side=\"left\")",
+        "+            right[:, j] = n - np.searchsorted(column, x[:, j], )"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. NumPy documents left as the omitted side default; original and mutant match for tied/outside, empty, and nonfinite probes. See RULES_EQUIVALENCE_PROBES_2026-11-15.md for digests, executable evidence, versions and limits."
+    },
+    {
+      "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁ__init____mutmut_9",
+      "path": "src/etl_benchmark/quality/ml.py",
+      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
+      "change": [
+        "-        self.threshold_ = float(\"nan\")",
+        "+        self.threshold_ = None"
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Direct generated-constructor probes found differences in some pre-fit, zero-feature, failed-fit or initial learned-field observations; supported public significance is unresolved. See ML_INITIAL_STATE_COUNTEREXAMPLES_2026-11-16.md."
+    },
+    {
+      "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁ__init____mutmut_12",
+      "path": "src/etl_benchmark/quality/ml.py",
+      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
+      "change": [
+        "-        self.threshold_ = float(\"nan\")",
+        "+        self.threshold_ = float(\"NAN\")"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-mutant probes and local dependency analysis. See ML_DEFAULTS_PROBE_2026-11-15.md for contract, variations, environment limits and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality.rules.xǁZScoreDetectorǁ__init____mutmut_4",
+      "path": "src/etl_benchmark/quality/rules.py",
+      "source_sha256": "bbd2e146be1d55382a12137cdfacefa85223d535c8b9eeaf816d17e6acd49737",
+      "change": [
+        "-        self._means: pd.Series | None = None",
+        "+        self._means: pd.Series | None = \"\""
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-constructor public lifecycle and failure-path probes. See RULES_INITIAL_STATE_PROBE_2026-11-15.md for environment, limitations and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality.rules.xǁZScoreDetectorǁ__init____mutmut_5",
+      "path": "src/etl_benchmark/quality/rules.py",
+      "source_sha256": "bbd2e146be1d55382a12137cdfacefa85223d535c8b9eeaf816d17e6acd49737",
+      "change": [
+        "-        self._stds: pd.Series | None = None",
+        "+        self._stds: pd.Series | None = \"\""
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-constructor public lifecycle and failure-path probes. See RULES_INITIAL_STATE_PROBE_2026-11-15.md for environment, limitations and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality.rules.xǁZScoreDetectorǁ_zscores__mutmut_8",
+      "path": "src/etl_benchmark/quality/rules.py",
+      "source_sha256": "bbd2e146be1d55382a12137cdfacefa85223d535c8b9eeaf816d17e6acd49737",
+      "change": [
+        "-        values = numeric_features(df, list(self._means.index), training=False)",
+        "+        values = numeric_features(df, list(self._means.index), training=None)"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. False and None both skip the sole training-only branch in numeric_features; six original/mutant boundary comparisons match. See RULES_EQUIVALENCE_PROBES_2026-11-15.md for identity, digests, executable probe, limits and hypothetical arithmetic."
+    },
+    {
+      "id": "etl_benchmark.quality.rules.xǁIQRDetectorǁ__init____mutmut_4",
+      "path": "src/etl_benchmark/quality/rules.py",
+      "source_sha256": "bbd2e146be1d55382a12137cdfacefa85223d535c8b9eeaf816d17e6acd49737",
+      "change": [
+        "-        self._lower: pd.Series | None = None",
+        "+        self._lower: pd.Series | None = \"\""
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-constructor public lifecycle and failure-path probes. See RULES_INITIAL_STATE_PROBE_2026-11-15.md for environment, limitations and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality.rules.xǁIQRDetectorǁ__init____mutmut_5",
+      "path": "src/etl_benchmark/quality/rules.py",
+      "source_sha256": "bbd2e146be1d55382a12137cdfacefa85223d535c8b9eeaf816d17e6acd49737",
+      "change": [
+        "-        self._upper: pd.Series | None = None",
+        "+        self._upper: pd.Series | None = \"\""
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-constructor public lifecycle and failure-path probes. See RULES_INITIAL_STATE_PROBE_2026-11-15.md for environment, limitations and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality.rules.xǁIQRDetectorǁ__init____mutmut_6",
+      "path": "src/etl_benchmark/quality/rules.py",
+      "source_sha256": "bbd2e146be1d55382a12137cdfacefa85223d535c8b9eeaf816d17e6acd49737",
+      "change": [
+        "-        self._scale: pd.Series | None = None",
+        "+        self._scale: pd.Series | None = \"\""
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-constructor public lifecycle and failure-path probes. See RULES_INITIAL_STATE_PROBE_2026-11-15.md for environment, limitations and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality.rules.xǁIQRDetectorǁ_exceedance__mutmut_9",
+      "path": "src/etl_benchmark/quality/rules.py",
+      "source_sha256": "bbd2e146be1d55382a12137cdfacefa85223d535c8b9eeaf816d17e6acd49737",
+      "change": [
+        "-        values = numeric_features(df, list(cols), training=False)",
+        "+        values = numeric_features(df, list(cols), training=None)"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. False and None both skip the sole training-only branch in numeric_features; six original/mutant boundary comparisons match. See RULES_EQUIVALENCE_PROBES_2026-11-15.md for identity, digests, executable probe, limits and hypothetical arithmetic."
+    },
+    {
+      "id": "etl_benchmark.quality.window_drift.x__numeric__mutmut_18",
+      "path": "src/etl_benchmark/quality/window_drift.py",
+      "source_sha256": "7369796bac2ada0ee25c125b383752c8d40d7f683e287767dfb6b373108ea8d7",
+      "change": [
+        "-    if not np.isfinite(values.to_numpy(dtype=float)).all():",
+        "+    if not np.isfinite(values.to_numpy(dtype=None)).all():"
+      ],
+      "outcome": "killed_by_behavioral_test",
+      "evidence": "Behavioral regression passed on original and failed on this generated mutant; native focused run recorded exit code 1. See NINE_BEHAVIORAL_PROBES_2026-11-15.md and evidence/nine-focused-native-2026-11-15.json. Not a full unit measurement."
+    },
+    {
+      "id": "etl_benchmark.quality.window_drift.xǁWindowDriftMonitorǁ__init____mutmut_21",
+      "path": "src/etl_benchmark/quality/window_drift.py",
+      "source_sha256": "7369796bac2ada0ee25c125b383752c8d40d7f683e287767dfb6b373108ea8d7",
+      "change": [
+        "-        self.reference_end: pd.Timestamp | None = None",
+        "+        self.reference_end: pd.Timestamp | None = \"\""
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Generated-constructor probe shows public reference_end initially differs in value and type, but no repository consumer was found relying on its pre-fit state. Supported significance remains unresolved; see WINDOW_REFERENCE_STATE_PROBE_2026-11-16.md."
+    },
+    {
+      "id": "etl_benchmark.quality.window_drift.xǁWindowDriftMonitorǁ__init____mutmut_22",
+      "path": "src/etl_benchmark/quality/window_drift.py",
+      "source_sha256": "7369796bac2ada0ee25c125b383752c8d40d7f683e287767dfb6b373108ea8d7",
+      "change": [
+        "-        self._mean: pd.Series | None = None",
+        "+        self._mean: pd.Series | None = \"\""
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-constructor lifecycle and failure-path probes. See WINDOW_INITIAL_STATE_PROBE_2026-11-15.md for evidence, limits and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality.window_drift.xǁWindowDriftMonitorǁ__init____mutmut_23",
+      "path": "src/etl_benchmark/quality/window_drift.py",
+      "source_sha256": "7369796bac2ada0ee25c125b383752c8d40d7f683e287767dfb6b373108ea8d7",
+      "change": [
+        "-        self._scale: pd.Series | None = None",
+        "+        self._scale: pd.Series | None = \"\""
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-constructor lifecycle and failure-path probes. See WINDOW_INITIAL_STATE_PROBE_2026-11-15.md for evidence, limits and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality.window_drift.xǁWindowDriftMonitorǁevaluate__mutmut_1",
+      "path": "src/etl_benchmark/quality/window_drift.py",
+      "source_sha256": "7369796bac2ada0ee25c125b383752c8d40d7f683e287767dfb6b373108ea8d7",
+      "change": [
+        "-        if self.reference_end is None or self._mean is None or self._scale is None:",
+        "+        if self.reference_end is None or self._mean is None and self._scale is None:"
+      ],
+      "outcome": "behavioral_difference_pending_native",
+      "evidence": "Finite extreme reference values under NumPy overflow=raise leave an incomplete fit; subsequent evaluation raises TypeError on the mutant instead of the original not-fitted RuntimeError. See WINDOW_GUARD_PROBE_2026-11-16.md; regression and native verdict pending. Regression now RED on generated mutant and GREEN on original; native verdict remains pending. See SCIENTIFIC_REGRESSIONS_2026-11-16.md."
+    },
+    {
+      "id": "etl_benchmark.quality.window_drift.xǁWindowDriftMonitorǁevaluate__mutmut_2",
+      "path": "src/etl_benchmark/quality/window_drift.py",
+      "source_sha256": "7369796bac2ada0ee25c125b383752c8d40d7f683e287767dfb6b373108ea8d7",
+      "change": [
+        "-        if self.reference_end is None or self._mean is None or self._scale is None:",
+        "+        if self.reference_end is None and self._mean is None or self._scale is None:"
+      ],
+      "outcome": "inconclusive",
+      "evidence": "Fresh, successful, rejected and overflow-failed fit probes matched; sequential fit suggests scale implies reference_end, but mutable state and concurrency are not exhausted. See WINDOW_GUARD_PROBE_2026-11-16.md."
+    },
+    {
+      "id": "etl_benchmark.quality.window_drift.x_event_metrics__mutmut_29",
+      "path": "src/etl_benchmark/quality/window_drift.py",
+      "source_sha256": "7369796bac2ada0ee25c125b383752c8d40d7f683e287767dfb6b373108ea8d7",
+      "change": [
+        "-    cutoff = cutoff.tz_localize(\"UTC\") if cutoff.tzinfo is None else cutoff.tz_convert(\"UTC\")",
+        "+    cutoff = cutoff.tz_localize(\"UTC\") if cutoff.tzinfo is None else cutoff.tz_convert(\"utc\")"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Conditional proposal from direct generated-mutant probes and local dependency analysis. See WINDOW_UTC_CASE_PROBE_2026-11-15.md for contract, variations, environment limits and confidence. No owner approval."
+    },
+    {
+      "id": "etl_benchmark.quality.windows.x_scores_to_events__mutmut_7",
+      "path": "src/etl_benchmark/quality/windows.py",
+      "source_sha256": "5a4fdd8739edcc33dd786b2b241cf5c3c92ec3e63f6e669ef571d1cb9699c864",
+      "change": [
+        "-    aligned = np.empty(len(scores), dtype=float)",
+        "+    aligned = np.empty(len(scores), dtype=None)"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. NumPy documents float64 for the default dtype of empty; the explicit None and omitted-argument mutants matched original event mappings and boundary failures in the probe. See WINDOWS_EQUIVALENCE_PROBES_2026-11-15.md for identities, limits and historical hypothetical."
+    },
+    {
+      "id": "etl_benchmark.quality.windows.x_scores_to_events__mutmut_9",
+      "path": "src/etl_benchmark/quality/windows.py",
+      "source_sha256": "5a4fdd8739edcc33dd786b2b241cf5c3c92ec3e63f6e669ef571d1cb9699c864",
+      "change": [
+        "-    aligned = np.empty(len(scores), dtype=float)",
+        "+    aligned = np.empty(len(scores), )"
+      ],
+      "outcome": "proposed_equivalent",
+      "evidence": "Proposed only, not owner-approved. NumPy documents float64 for the default dtype of empty; the explicit None and omitted-argument mutants matched original event mappings and boundary failures in the probe. See WINDOWS_EQUIVALENCE_PROBES_2026-11-15.md for identities, limits and historical hypothetical."
+    }
+  ]
+}

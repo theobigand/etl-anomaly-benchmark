@@ -1,0 +1,12 @@
+source a1176cd61bd8454c9fa51da682194444feb24529dc401916e8bb94fd212ab691 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.0.6
+Traceback (most recent call last):
+  File "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/docs/thesis-remediation/evidence/continuation-2026-11-15/uci-numeric-columns.py.txt", line 16, in <module>
+    a=run(m.x_read_table__mutmut_orig);b=run(m.x_read_table__mutmut_23);same=a[0]==b[0]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'research.uci_loader' has no attribute 'x_read_table__mutmut_orig'
+source a1176cd61bd8454c9fa51da682194444feb24529dc401916e8bb94fd212ab691 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.1.1
+Traceback (most recent call last):
+  File "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/docs/thesis-remediation/evidence/continuation-2026-11-15/uci-numeric-columns.py.txt", line 16, in <module>
+    a=run(m.x_read_table__mutmut_orig);b=run(m.x_read_table__mutmut_23);same=a[0]==b[0]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'research.uci_loader' has no attribute 'x_read_table__mutmut_orig'

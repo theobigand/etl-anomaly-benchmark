@@ -1,0 +1,298 @@
+## x_conda_lock__mutmut_3
+-        ["conda", "list", "-n", name, "--explicit", "--sha256"], text=True
++        ["conda", "list", "-n", name, "--explicit", "--sha256"], text=None
+## x_conda_lock__mutmut_5
+-        ["conda", "list", "-n", name, "--explicit", "--sha256"], text=True
+-    )
++        ["conda", "list", "-n", name, "--explicit", "--sha256"], )
+## x_conda_lock__mutmut_6
+-        ["conda", "list", "-n", name, "--explicit", "--sha256"], text=True
++        ["XXcondaXX", "list", "-n", name, "--explicit", "--sha256"], text=True
+## x_conda_lock__mutmut_7
+-        ["conda", "list", "-n", name, "--explicit", "--sha256"], text=True
++        ["CONDA", "list", "-n", name, "--explicit", "--sha256"], text=True
+## x_conda_lock__mutmut_8
+-        ["conda", "list", "-n", name, "--explicit", "--sha256"], text=True
++        ["conda", "XXlistXX", "-n", name, "--explicit", "--sha256"], text=True
+## x_conda_lock__mutmut_9
+-        ["conda", "list", "-n", name, "--explicit", "--sha256"], text=True
++        ["conda", "LIST", "-n", name, "--explicit", "--sha256"], text=True
+## x_conda_lock__mutmut_10
+-        ["conda", "list", "-n", name, "--explicit", "--sha256"], text=True
++        ["conda", "list", "XX-nXX", name, "--explicit", "--sha256"], text=True
+## x_conda_lock__mutmut_11
+-        ["conda", "list", "-n", name, "--explicit", "--sha256"], text=True
++        ["conda", "list", "-N", name, "--explicit", "--sha256"], text=True
+## x_conda_lock__mutmut_12
+-        ["conda", "list", "-n", name, "--explicit", "--sha256"], text=True
++        ["conda", "list", "-n", name, "XX--explicitXX", "--sha256"], text=True
+## x_conda_lock__mutmut_13
+-        ["conda", "list", "-n", name, "--explicit", "--sha256"], text=True
++        ["conda", "list", "-n", name, "--EXPLICIT", "--sha256"], text=True
+## x_conda_lock__mutmut_14
+-        ["conda", "list", "-n", name, "--explicit", "--sha256"], text=True
++        ["conda", "list", "-n", name, "--explicit", "XX--sha256XX"], text=True
+## x_conda_lock__mutmut_15
+-        ["conda", "list", "-n", name, "--explicit", "--sha256"], text=True
++        ["conda", "list", "-n", name, "--explicit", "--SHA256"], text=True
+## x_conda_lock__mutmut_16
+-        ["conda", "list", "-n", name, "--explicit", "--sha256"], text=True
++        ["conda", "list", "-n", name, "--explicit", "--sha256"], text=False
+## x_conda_names__mutmut_6
+-            filename = line.rsplit("/", 1)[1].split("#")[0]
++            filename = line.rsplit("/", 1)[1].split(None)[0]
+## x_conda_names__mutmut_15
+-            filename = line.rsplit("/", 1)[1].split("#")[0]
++            filename = line.rsplit("/", 1)[1].split("XX#XX")[0]
+## x_pip_lock__mutmut_3
+-    out = subprocess.check_output(["conda", "list", "-n", name, "--json"], text=True)
++    out = subprocess.check_output(["conda", "list", "-n", name, "--json"], text=None)
+## x_pip_lock__mutmut_5
+-    out = subprocess.check_output(["conda", "list", "-n", name, "--json"], text=True)
++    out = subprocess.check_output(["conda", "list", "-n", name, "--json"], )
+## x_pip_lock__mutmut_6
+-    out = subprocess.check_output(["conda", "list", "-n", name, "--json"], text=True)
++    out = subprocess.check_output(["XXcondaXX", "list", "-n", name, "--json"], text=True)
+## x_pip_lock__mutmut_7
+-    out = subprocess.check_output(["conda", "list", "-n", name, "--json"], text=True)
++    out = subprocess.check_output(["CONDA", "list", "-n", name, "--json"], text=True)
+## x_pip_lock__mutmut_8
+-    out = subprocess.check_output(["conda", "list", "-n", name, "--json"], text=True)
++    out = subprocess.check_output(["conda", "XXlistXX", "-n", name, "--json"], text=True)
+## x_pip_lock__mutmut_9
+-    out = subprocess.check_output(["conda", "list", "-n", name, "--json"], text=True)
++    out = subprocess.check_output(["conda", "LIST", "-n", name, "--json"], text=True)
+## x_pip_lock__mutmut_10
+-    out = subprocess.check_output(["conda", "list", "-n", name, "--json"], text=True)
++    out = subprocess.check_output(["conda", "list", "XX-nXX", name, "--json"], text=True)
+## x_pip_lock__mutmut_11
+-    out = subprocess.check_output(["conda", "list", "-n", name, "--json"], text=True)
++    out = subprocess.check_output(["conda", "list", "-N", name, "--json"], text=True)
+## x_pip_lock__mutmut_14
+-    out = subprocess.check_output(["conda", "list", "-n", name, "--json"], text=True)
++    out = subprocess.check_output(["conda", "list", "-n", name, "--json"], text=False)
+## x_pip_lock__mutmut_39
+-    skipped = sorted(set(pypi) - set(kept), key=str.lower)
++    skipped = sorted(set(pypi) - set(kept), key=None)
+## x_pip_lock__mutmut_41
+-    skipped = sorted(set(pypi) - set(kept), key=str.lower)
++    skipped = sorted(set(pypi) - set(kept), )
+## x_pip_lock__mutmut_50
+-    return header + "".join(f"{key}=={kept[key]}\n" for key in sorted(kept, key=str.lower))
++    return header + "XXXX".join(f"{key}=={kept[key]}\n" for key in sorted(kept, key=str.lower))
+## x_pip_lock__mutmut_52
+-    return header + "".join(f"{key}=={kept[key]}\n" for key in sorted(kept, key=str.lower))
++    return header + "".join(f"{key}=={kept[key]}\n" for key in sorted(kept, key=None))
+## x_pip_lock__mutmut_54
+-    return header + "".join(f"{key}=={kept[key]}\n" for key in sorted(kept, key=str.lower))
++    return header + "".join(f"{key}=={kept[key]}\n" for key in sorted(kept, ))
+## x_project_requirements__mutmut_10
+-    for extra in project.get("optional-dependencies", {}).values():
++    for extra in project.get("optional-dependencies", None).values():
+## x_project_requirements__mutmut_12
+-    for extra in project.get("optional-dependencies", {}).values():
++    for extra in project.get("optional-dependencies", ).values():
+## x_resolve_linux__mutmut_3
+-    constraints = workdir / "constraints.txt"
++    constraints = workdir / "XXconstraints.txtXX"
+## x_resolve_linux__mutmut_4
+-    constraints = workdir / "constraints.txt"
++    constraints = workdir / "CONSTRAINTS.TXT"
+## x_resolve_linux__mutmut_7
+-    constraints.write_text("".join(f"{name}=={found}\n" for name, found in sorted(held.items())))
++    constraints.write_text("XXXX".join(f"{name}=={found}\n" for name, found in sorted(held.items())))
+## x_resolve_linux__mutmut_11
+-    report = workdir / "report.json"
++    report = workdir / "XXreport.jsonXX"
+## x_resolve_linux__mutmut_12
+-    report = workdir / "report.json"
++    report = workdir / "REPORT.JSON"
+## x_resolve_linux__mutmut_14
+-    command = ["python", "-m", "pip", "install", "--dry-run", "--ignore-installed", "--quiet"]
++    command = ["XXpythonXX", "-m", "pip", "install", "--dry-run", "--ignore-installed", "--quiet"]
+## x_resolve_linux__mutmut_15
+-    command = ["python", "-m", "pip", "install", "--dry-run", "--ignore-installed", "--quiet"]
++    command = ["PYTHON", "-m", "pip", "install", "--dry-run", "--ignore-installed", "--quiet"]
+## x_resolve_linux__mutmut_16
+-    command = ["python", "-m", "pip", "install", "--dry-run", "--ignore-installed", "--quiet"]
++    command = ["python", "XX-mXX", "pip", "install", "--dry-run", "--ignore-installed", "--quiet"]
+## x_resolve_linux__mutmut_17
+-    command = ["python", "-m", "pip", "install", "--dry-run", "--ignore-installed", "--quiet"]
++    command = ["python", "-M", "pip", "install", "--dry-run", "--ignore-installed", "--quiet"]
+## x_resolve_linux__mutmut_18
+-    command = ["python", "-m", "pip", "install", "--dry-run", "--ignore-installed", "--quiet"]
++    command = ["python", "-m", "XXpipXX", "install", "--dry-run", "--ignore-installed", "--quiet"]
+## x_resolve_linux__mutmut_19
+-    command = ["python", "-m", "pip", "install", "--dry-run", "--ignore-installed", "--quiet"]
++    command = ["python", "-m", "PIP", "install", "--dry-run", "--ignore-installed", "--quiet"]
+## x_resolve_linux__mutmut_20
+-    command = ["python", "-m", "pip", "install", "--dry-run", "--ignore-installed", "--quiet"]
++    command = ["python", "-m", "pip", "XXinstallXX", "--dry-run", "--ignore-installed", "--quiet"]
+## x_resolve_linux__mutmut_21
+-    command = ["python", "-m", "pip", "install", "--dry-run", "--ignore-installed", "--quiet"]
++    command = ["python", "-m", "pip", "INSTALL", "--dry-run", "--ignore-installed", "--quiet"]
+## x_resolve_linux__mutmut_24
+-    command = ["python", "-m", "pip", "install", "--dry-run", "--ignore-installed", "--quiet"]
++    command = ["python", "-m", "pip", "install", "--dry-run", "XX--ignore-installedXX", "--quiet"]
+## x_resolve_linux__mutmut_25
+-    command = ["python", "-m", "pip", "install", "--dry-run", "--ignore-installed", "--quiet"]
++    command = ["python", "-m", "pip", "install", "--dry-run", "--IGNORE-INSTALLED", "--quiet"]
+## x_resolve_linux__mutmut_26
+-    command = ["python", "-m", "pip", "install", "--dry-run", "--ignore-installed", "--quiet"]
++    command = ["python", "-m", "pip", "install", "--dry-run", "--ignore-installed", "XX--quietXX"]
+## x_resolve_linux__mutmut_27
+-    command = ["python", "-m", "pip", "install", "--dry-run", "--ignore-installed", "--quiet"]
++    command = ["python", "-m", "pip", "install", "--dry-run", "--ignore-installed", "--QUIET"]
+## x_resolve_linux__mutmut_33
+-    command += ["--report", str(report), "--target", str(workdir / "target")]
++    command += ["--report", str(report), "XX--targetXX", str(workdir / "target")]
+## x_resolve_linux__mutmut_34
+-    command += ["--report", str(report), "--target", str(workdir / "target")]
++    command += ["--report", str(report), "--TARGET", str(workdir / "target")]
+## x_resolve_linux__mutmut_35
+-    command += ["--report", str(report), "--target", str(workdir / "target")]
++    command += ["--report", str(report), "--target", str(None)]
+## x_resolve_linux__mutmut_37
+-    command += ["--report", str(report), "--target", str(workdir / "target")]
++    command += ["--report", str(report), "--target", str(workdir / "XXtargetXX")]
+## x_resolve_linux__mutmut_38
+-    command += ["--report", str(report), "--target", str(workdir / "target")]
++    command += ["--report", str(report), "--target", str(workdir / "TARGET")]
+## x_resolve_linux__mutmut_45
+-    command += ["--only-binary=:all:", "--python-version", LINUX_PYTHON, "--implementation", "cp"]
++    command += ["--only-binary=:all:", "--python-version", LINUX_PYTHON, "XX--implementationXX", "cp"]
+## x_resolve_linux__mutmut_46
+-    command += ["--only-binary=:all:", "--python-version", LINUX_PYTHON, "--implementation", "cp"]
++    command += ["--only-binary=:all:", "--python-version", LINUX_PYTHON, "--IMPLEMENTATION", "cp"]
+## x_resolve_linux__mutmut_47
+-    command += ["--only-binary=:all:", "--python-version", LINUX_PYTHON, "--implementation", "cp"]
++    command += ["--only-binary=:all:", "--python-version", LINUX_PYTHON, "--implementation", "XXcpXX"]
+## x_resolve_linux__mutmut_48
+-    command += ["--only-binary=:all:", "--python-version", LINUX_PYTHON, "--implementation", "cp"]
++    command += ["--only-binary=:all:", "--python-version", LINUX_PYTHON, "--implementation", "CP"]
+## x_resolve_linux__mutmut_72
+-    subprocess.run(command, check=True, capture_output=True, text=True, timeout=900)
++    subprocess.run(command, check=None, capture_output=True, text=True, timeout=900)
+## x_resolve_linux__mutmut_73
+-    subprocess.run(command, check=True, capture_output=True, text=True, timeout=900)
++    subprocess.run(command, check=True, capture_output=None, text=True, timeout=900)
+## x_resolve_linux__mutmut_74
+-    subprocess.run(command, check=True, capture_output=True, text=True, timeout=900)
++    subprocess.run(command, check=True, capture_output=True, text=None, timeout=900)
+## x_resolve_linux__mutmut_75
+-    subprocess.run(command, check=True, capture_output=True, text=True, timeout=900)
++    subprocess.run(command, check=True, capture_output=True, text=True, timeout=None)
+## x_resolve_linux__mutmut_77
+-    subprocess.run(command, check=True, capture_output=True, text=True, timeout=900)
++    subprocess.run(command, capture_output=True, text=True, timeout=900)
+## x_resolve_linux__mutmut_78
+-    subprocess.run(command, check=True, capture_output=True, text=True, timeout=900)
++    subprocess.run(command, check=True, text=True, timeout=900)
+## x_resolve_linux__mutmut_79
+-    subprocess.run(command, check=True, capture_output=True, text=True, timeout=900)
++    subprocess.run(command, check=True, capture_output=True, timeout=900)
+## x_resolve_linux__mutmut_80
+-    subprocess.run(command, check=True, capture_output=True, text=True, timeout=900)
++    subprocess.run(command, check=True, capture_output=True, text=True, )
+## x_resolve_linux__mutmut_81
+-    subprocess.run(command, check=True, capture_output=True, text=True, timeout=900)
++    subprocess.run(command, check=False, capture_output=True, text=True, timeout=900)
+## x_resolve_linux__mutmut_82
+-    subprocess.run(command, check=True, capture_output=True, text=True, timeout=900)
++    subprocess.run(command, check=True, capture_output=False, text=True, timeout=900)
+## x_resolve_linux__mutmut_83
+-    subprocess.run(command, check=True, capture_output=True, text=True, timeout=900)
++    subprocess.run(command, check=True, capture_output=True, text=False, timeout=900)
+## x_resolve_linux__mutmut_84
+-    subprocess.run(command, check=True, capture_output=True, text=True, timeout=900)
++    subprocess.run(command, check=True, capture_output=True, text=True, timeout=901)
+## x_format_linux_lock__mutmut_39
+-        "# Linux x86_64, CPython 3.11 (cp311), manylinux wheels only.",
++        "# linux x86_64, cpython 3.11 (cp311), manylinux wheels only.",
+## x_format_linux_lock__mutmut_42
+-        "# Resolved by pip for that platform, not on a Linux machine; install with",
++        "# resolved by pip for that platform, not on a linux machine; install with",
+## x_format_linux_lock__mutmut_43
+-        "# Resolved by pip for that platform, not on a Linux machine; install with",
++        "# RESOLVED BY PIP FOR THAT PLATFORM, NOT ON A LINUX MACHINE; INSTALL WITH",
+## x_format_linux_lock__mutmut_45
+-        "#   pip install --require-hashes --no-deps -r <this file>",
++        "#   PIP INSTALL --REQUIRE-HASHES --NO-DEPS -R <THIS FILE>",
+## x_format_linux_lock__mutmut_48
+-        "# Held to the versions recorded in the macOS lock: "
++        "# held to the versions recorded in the macos lock: "
+## x_format_linux_lock__mutmut_49
+-        "# Held to the versions recorded in the macOS lock: "
++        "# HELD TO THE VERSIONS RECORDED IN THE MACOS LOCK: "
+## x_format_linux_lock__mutmut_51
+-        + ", ".join(f"{name}=={found}" for name, found in sorted(held.items())),
++        + "XX, XX".join(f"{name}=={found}" for name, found in sorted(held.items())),
+## x_main__mutmut_2
+-    parser = argparse.ArgumentParser(description=__doc__)
++    parser = argparse.ArgumentParser(description=None)
+## x_main__mutmut_4
+-    parser.add_argument("--conda-env", default="etl-benchmark")
++    parser.add_argument("--conda-env", default=None)
+## x_main__mutmut_6
+-    parser.add_argument("--conda-env", default="etl-benchmark")
++    parser.add_argument("--conda-env", )
+## x_main__mutmut_9
+-    parser.add_argument("--conda-env", default="etl-benchmark")
++    parser.add_argument("--conda-env", default="XXetl-benchmarkXX")
+## x_main__mutmut_10
+-    parser.add_argument("--conda-env", default="etl-benchmark")
++    parser.add_argument("--conda-env", default="ETL-BENCHMARK")
+## x_main__mutmut_13
+-    parser.add_argument("--output", type=Path, default=TARGET)
++    parser.add_argument("--output", type=Path, default=None)
+## x_main__mutmut_16
+-    parser.add_argument("--output", type=Path, default=TARGET)
++    parser.add_argument("--output", type=Path, )
+## x_main__mutmut_21
+-    parser.add_argument("--linux", action="store_true", help="write the Linux lock instead")
++    parser.add_argument("--linux", action="store_true", help=None)
+## x_main__mutmut_24
+-    parser.add_argument("--linux", action="store_true", help="write the Linux lock instead")
++    parser.add_argument("--linux", action="store_true", )
+## x_main__mutmut_29
+-    parser.add_argument("--linux", action="store_true", help="write the Linux lock instead")
++    parser.add_argument("--linux", action="store_true", help="XXwrite the Linux lock insteadXX")
+## x_main__mutmut_30
+-    parser.add_argument("--linux", action="store_true", help="write the Linux lock instead")
++    parser.add_argument("--linux", action="store_true", help="write the linux lock instead")
+## x_main__mutmut_31
+-    parser.add_argument("--linux", action="store_true", help="write the Linux lock instead")
++    parser.add_argument("--linux", action="store_true", help="WRITE THE LINUX LOCK INSTEAD")
+## x_main__mutmut_34
+-    args.output.mkdir(parents=True, exist_ok=True)
++    args.output.mkdir(parents=None, exist_ok=True)
+## x_main__mutmut_36
+-    args.output.mkdir(parents=True, exist_ok=True)
++    args.output.mkdir(exist_ok=True)
+## x_main__mutmut_38
+-    args.output.mkdir(parents=True, exist_ok=True)
++    args.output.mkdir(parents=False, exist_ok=True)
+## x_main__mutmut_42
+-            report = resolve_linux(project_requirements(), held, Path(work))
++            report = resolve_linux(None, held, Path(work))
+## x_main__mutmut_44
+-            report = resolve_linux(project_requirements(), held, Path(work))
++            report = resolve_linux(project_requirements(), held, None)
+## x_main__mutmut_55
+-        print(f"wrote the Linux lock to {args.output / LINUX_LOCK}")
++        print(None)
+## x_main__mutmut_58
+-    system = f"{platform.system().lower()}-{platform.machine()}"
++    system = None
+## x_main__mutmut_59
+-    system = f"{platform.system().lower()}-{platform.machine()}"
++    system = f"{platform.system().upper()}-{platform.machine()}"
+## x_main__mutmut_61
+-    explicit = conda_lock(args.conda_env)
++    explicit = conda_lock(None)
+## x_main__mutmut_68
+-    (args.output / "pip-freeze.txt").write_text(pip_lock(args.conda_env, explicit))
++    (args.output / "pip-freeze.txt").write_text(pip_lock(None, explicit))
+## x_main__mutmut_72
+-    print(f"wrote the lock of {args.conda_env} to {args.output}")
++    print(None)

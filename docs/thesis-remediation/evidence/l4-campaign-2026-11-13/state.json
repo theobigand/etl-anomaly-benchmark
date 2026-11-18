@@ -1,0 +1,1189 @@
+{
+  "modules": {
+    "research/alert_budget.py": {
+      "sha256": "0da6a79ece4e6cbd8066eb2474f653ba69eb2247caeeb0f77e3cf9b48be5a7e9",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 777,
+        "survived": 3
+      },
+      "total": 780,
+      "seconds": 385,
+      "tail": "et.x_summarize__mutmut_68\n\ud83c\udf89 research.alert_budget.x_summarize__mutmut_69\n\ud83c\udf89 research.alert_budget.x_summarize__mutmut_7\n\ud83c\udf89 research.alert_budget.x_summarize__mutmut_70\n\ud83c\udf89 research.alert_budget.x_summarize__mutmut_71\n\ud83c\udf89 research.alert_budget.x_summarize__mutmut_72\n\ud83c\udf89 research.alert_budget.x_summarize__mutmut_73\n\ud83c\udf89 research.alert_budget.x_summarize__mutmut_8\n\ud83c\udf89 research.alert_budget.x_summarize__mutmut_9\n\n"
+    },
+    "research/alert_budget_summary.py": {
+      "sha256": "a201cdffc73f01b20798b9aaec3b99115c8d30c3fde9702ab6acd54d45d2dd29",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 123
+      },
+      "total": 123,
+      "seconds": 35,
+      "tail": "mary.x_markdown__mutmut_36\n\ud83c\udf89 research.alert_budget_summary.x_markdown__mutmut_37\n\ud83c\udf89 research.alert_budget_summary.x_markdown__mutmut_4\n\ud83c\udf89 research.alert_budget_summary.x_markdown__mutmut_5\n\ud83c\udf89 research.alert_budget_summary.x_markdown__mutmut_6\n\ud83c\udf89 research.alert_budget_summary.x_markdown__mutmut_7\n\ud83c\udf89 research.alert_budget_summary.x_markdown__mutmut_8\n\ud83c\udf89 research.alert_budget_summary.x_markdown__mutmut_9\n\n"
+    },
+    "research/matched_alert.py": {
+      "sha256": "dac27eab8804462e153242158a3cea09c965809de189a9f398e4ee33a27657b3",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 320,
+        "survived": 2
+      },
+      "total": 322,
+      "seconds": 47,
+      "tail": "rch.matched_alert.x_pair_problem__mutmut_74\n\ud83c\udf89 research.matched_alert.x_pair_problem__mutmut_75\n\ud83c\udf89 research.matched_alert.x_pair_problem__mutmut_76\n\ud83c\udf89 research.matched_alert.x_pair_problem__mutmut_77\n\ud83c\udf89 research.matched_alert.x_pair_problem__mutmut_78\n\ud83c\udf89 research.matched_alert.x_pair_problem__mutmut_79\n\ud83c\udf89 research.matched_alert.x_pair_problem__mutmut_8\n\ud83c\udf89 research.matched_alert.x_pair_problem__mutmut_9\n\n"
+    },
+    "research/prevalence_shift.py": {
+      "sha256": "d89afbf352b0ca891de4dfbd1a6507b20e48f55745752d0e6f715ee3943567b3",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 366,
+        "survived": 3
+      },
+      "total": 369,
+      "seconds": 67,
+      "tail": "h.prevalence_shift.x_summarize__mutmut_92\n\ud83c\udf89 research.prevalence_shift.x_summarize__mutmut_93\n\ud83c\udf89 research.prevalence_shift.x_summarize__mutmut_94\n\ud83c\udf89 research.prevalence_shift.x_summarize__mutmut_95\n\ud83c\udf89 research.prevalence_shift.x_summarize__mutmut_96\n\ud83c\udf89 research.prevalence_shift.x_summarize__mutmut_97\n\ud83c\udf89 research.prevalence_shift.x_summarize__mutmut_98\n\ud83c\udf89 research.prevalence_shift.x_summarize__mutmut_99\n\n"
+    },
+    "research/recover_partitions.py": {
+      "sha256": "4fa65e38a68bb90a1c8103f16bb59754d8e5fd2c99e10fd59e987416dc16749c",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 359,
+        "survived": 1
+      },
+      "total": 360,
+      "seconds": 82,
+      "tail": "research.recover_partitions.x_replay_matches__mutmut_41\n\ud83c\udf89 research.recover_partitions.x_replay_matches__mutmut_42\n\ud83c\udf89 research.recover_partitions.x_replay_matches__mutmut_5\n\ud83c\udf89 research.recover_partitions.x_replay_matches__mutmut_6\n\ud83c\udf89 research.recover_partitions.x_replay_matches__mutmut_7\n\ud83c\udf89 research.recover_partitions.x_replay_matches__mutmut_8\n\ud83c\udf89 research.recover_partitions.x_replay_matches__mutmut_9\n\n"
+    },
+    "research/score_shift.py": {
+      "sha256": "a96e39bb1b80cbaacd00d31f8986a3f2cda350564d316be002dc589c9d801ef6",
+      "status": "complete",
+      "returncode": 1,
+      "counts": {
+        "killed": 800,
+        "survived": 6
+      },
+      "total": 806,
+      "seconds": 30,
+      "tail": "\u283c Running clean tests\n\u2834 Running clean tests\n\u2826 Running clean tests\n\u2827 Running clean tests\n\u2807 Running clean tests\n\u280f Running clean tests\n\u280b Running clean tests\n\u2819 Running clean tests\n\u2839 Running clean tests\n\u2838 Running clean tests\n\u283c Running clean tests\n\u2834 Running clean tests\n\u2826 Running clean tests\n\u2827 Running clean tests\n\u2807 Running clean tests\n\u280f Running clean tests\n\u280b Running clean tests\nFailed to run clean test\n\n"
+    },
+    "research/source_clustered.py": {
+      "sha256": "a9bf13c575ea6e33c6055a9da5f23ee5f9c71ff1e0329815343a821008764352",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 336,
+        "survived": 1
+      },
+      "total": 337,
+      "seconds": 74,
+      "tail": " research.source_clustered.x_source_id__mutmut_2\n\ud83d\ude41 research.source_clustered.x_source_id__mutmut_3\n\ud83c\udf89 research.source_clustered.x_source_id__mutmut_4\n\ud83c\udf89 research.source_clustered.x_source_id__mutmut_5\n\ud83c\udf89 research.source_clustered.x_source_id__mutmut_6\n\ud83c\udf89 research.source_clustered.x_source_id__mutmut_7\n\ud83c\udf89 research.source_clustered.x_source_id__mutmut_8\n\ud83c\udf89 research.source_clustered.x_source_id__mutmut_9\n\n"
+    },
+    "src/etl_benchmark/config.py": {
+      "sha256": "b26c91442d2ef82461c9709876d5cc5b5c92697acaf6c627b00f89d5226d6ae0",
+      "status": "incomplete",
+      "returncode": 1,
+      "counts": {},
+      "total": 0,
+      "seconds": 29,
+      "tail": "^^^^^^^^^^^^^^^^\n  File \"/Users/theo/.cache/etl-mutation-venv/lib/python3.11/site-packages/mutmut/__main__.py\", line 815, in collect_source_file_mutation_data\n    assert filtered_mutants, f\"Filtered for specific mutants, but nothing matches\\n\\nFilter: {mutant_names}\"\n           ^^^^^^^^^^^^^^^^\nAssertionError: Filtered for specific mutants, but nothing matches\n\nFilter: ('etl_benchmark.config.*',)\n"
+    },
+    "verification/mutation_shards.py": {
+      "sha256": "d80906745f22ad940088512872d5e1c9def204bf7bd855338879fd4966e2f39e",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 1083,
+        "survived": 22
+      },
+      "total": 1105,
+      "seconds": 287,
+      "tail": "60\n\ud83c\udf89 verification.mutation_shards.x_validate_plan__mutmut_61\n\ud83c\udf89 verification.mutation_shards.x_validate_plan__mutmut_62\n\ud83c\udf89 verification.mutation_shards.x_validate_plan__mutmut_63\n\ud83c\udf89 verification.mutation_shards.x_validate_plan__mutmut_7\n\ud83c\udf89 verification.mutation_shards.x_validate_plan__mutmut_8\n\ud83c\udf89 verification.mutation_shards.x_validate_plan__mutmut_9\n\ud83c\udf89 verification.mutation_shards.x_version__mutmut_1\n\n"
+    },
+    "src/etl_benchmark/transform.py": {
+      "sha256": "996169c5ab429ed253cb8d68a73736bff92005052b6215d2d3395b1a448c24c2",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 2
+      },
+      "total": 2,
+      "seconds": 46,
+      "tail": "ed fail test\n\u2839 Running forced fail test\n\u2838 Running forced fail test\n    done\nRunning mutation testing\n\n\u2839 6968/34778  \ud83c\udf89 6840 \ud83e\udee5 1  \u23f0 0  \ud83e\udd14 0  \ud83d\ude41 127  \ud83d\udd07 0  \ud83e\uddd9 0\n\u2838 6968/34778  \ud83c\udf89 6840 \ud83e\udee5 1  \u23f0 0  \ud83e\udd14 0  \ud83d\ude41 127  \ud83d\udd07 0  \ud83e\uddd9 0\n\u283c 6970/34778  \ud83c\udf89 6842 \ud83e\udee5 1  \u23f0 0  \ud83e\udd14 0  \ud83d\ude41 127  \ud83d\udd07 0  \ud83e\uddd9 0\n0.76 mutations/second\n\nMutant results\n--------------\n\ud83c\udf89 etl_benchmark.transform.x_clean__mutmut_1\n\ud83c\udf89 etl_benchmark.transform.x_clean__mutmut_2\n\n"
+    },
+    "src/etl_benchmark/extract.py": {
+      "sha256": "35f48247bdc2c326152a84b375d7866b50ee55a382a0570d62675cf22e2d99fa",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 5
+      },
+      "total": 5,
+      "seconds": 60,
+      "tail": " \ud83d\ude41 127  \ud83d\udd07 0  \ud83e\uddd9 0\n\u2826 6970/34778  \ud83c\udf89 6842 \ud83e\udee5 1  \u23f0 0  \ud83e\udd14 0  \ud83d\ude41 127  \ud83d\udd07 0  \ud83e\uddd9 0\n\u2827 6975/34778  \ud83c\udf89 6847 \ud83e\udee5 1  \u23f0 0  \ud83e\udd14 0  \ud83d\ude41 127  \ud83d\udd07 0  \ud83e\uddd9 0\n0.31 mutations/second\n\nMutant results\n--------------\n\ud83c\udf89 etl_benchmark.extract.x_read_csv__mutmut_1\n\ud83c\udf89 etl_benchmark.extract.x_read_csv__mutmut_2\n\ud83c\udf89 etl_benchmark.extract.x_read_csv__mutmut_3\n\ud83c\udf89 etl_benchmark.extract.x_read_csv__mutmut_4\n\ud83c\udf89 etl_benchmark.extract.x_read_csv__mutmut_5\n\n"
+    },
+    "src/etl_benchmark/atomic.py": {
+      "sha256": "6ecd401fba4479801df7b645cc793133c0bee41843f3df01191bb2b1a996564b",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 6
+      },
+      "total": 6,
+      "seconds": 29,
+      "tail": " 127  \ud83d\udd07 0  \ud83e\uddd9 0\n\u2807 6981/34778  \ud83c\udf89 6853 \ud83e\udee5 1  \u23f0 0  \ud83e\udd14 0  \ud83d\ude41 127  \ud83d\udd07 0  \ud83e\uddd9 0\n2.64 mutations/second\n\nMutant results\n--------------\n\ud83c\udf89 etl_benchmark.atomic.x_write_bytes__mutmut_1\n\ud83c\udf89 etl_benchmark.atomic.x_write_bytes__mutmut_2\n\ud83c\udf89 etl_benchmark.atomic.x_write_bytes__mutmut_3\n\ud83c\udf89 etl_benchmark.atomic.x_write_text__mutmut_1\n\ud83c\udf89 etl_benchmark.atomic.x_write_text__mutmut_2\n\ud83c\udf89 etl_benchmark.atomic.x_write_text__mutmut_3\n\n"
+    },
+    "src/etl_benchmark/load.py": {
+      "sha256": "bc450a2553f333662bb447de1c7cd9aabb274b2f608b8e57ad80e48321b9c98e",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 13,
+        "survived": 1
+      },
+      "total": 14,
+      "seconds": 33,
+      "tail": "_mutmut_13\n\ud83c\udf89 etl_benchmark.load.x_write_csv__mutmut_14\n\ud83c\udf89 etl_benchmark.load.x_write_csv__mutmut_2\n\ud83c\udf89 etl_benchmark.load.x_write_csv__mutmut_3\n\ud83c\udf89 etl_benchmark.load.x_write_csv__mutmut_4\n\ud83c\udf89 etl_benchmark.load.x_write_csv__mutmut_5\n\ud83c\udf89 etl_benchmark.load.x_write_csv__mutmut_6\n\ud83c\udf89 etl_benchmark.load.x_write_csv__mutmut_7\n\ud83c\udf89 etl_benchmark.load.x_write_csv__mutmut_8\n\ud83c\udf89 etl_benchmark.load.x_write_csv__mutmut_9\n\n"
+    },
+    "src/etl_benchmark/datasets.py": {
+      "sha256": "2948a68069752a26701d7be2a25d4f14330e3830ccbbf7b7a0bc2ae9a61f9d8d",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 23
+      },
+      "total": 23,
+      "seconds": 68,
+      "tail": "tSpec\u01c1load__mutmut_2\n\ud83c\udf89 etl_benchmark.datasets.x\u01c1DatasetSpec\u01c1load__mutmut_3\n\ud83c\udf89 etl_benchmark.datasets.x\u01c1DatasetSpec\u01c1load__mutmut_4\n\ud83c\udf89 etl_benchmark.datasets.x\u01c1DatasetSpec\u01c1load__mutmut_5\n\ud83c\udf89 etl_benchmark.datasets.x\u01c1DatasetSpec\u01c1load__mutmut_6\n\ud83c\udf89 etl_benchmark.datasets.x\u01c1DatasetSpec\u01c1load__mutmut_7\n\ud83c\udf89 etl_benchmark.datasets.x\u01c1DatasetSpec\u01c1load__mutmut_8\n\ud83c\udf89 etl_benchmark.datasets.x\u01c1DatasetSpec\u01c1load__mutmut_9\n\n"
+    },
+    "src/etl_benchmark/quality/base.py": {
+      "sha256": "9efc8a6a410b92d81f4ee09f9d001f8adad62a779250b3b552db9878f9de28ff",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 30,
+        "survived": 1
+      },
+      "total": 31,
+      "seconds": 331,
+      "tail": "mark.quality.base.x_numeric_features__mutmut_7\n\ud83c\udf89 etl_benchmark.quality.base.x_numeric_features__mutmut_8\n\ud83c\udf89 etl_benchmark.quality.base.x_numeric_features__mutmut_9\n\ud83c\udf89 etl_benchmark.quality.base.x\u01c1Detector\u01c1fit_predict__mutmut_1\n\ud83c\udf89 etl_benchmark.quality.base.x\u01c1Detector\u01c1fit_predict__mutmut_2\n\ud83d\ude41 etl_benchmark.quality.base.x\u01c1Detector\u01c1score__mutmut_1\n\ud83c\udf89 etl_benchmark.quality.base.x\u01c1Detector\u01c1score__mutmut_2\n\n"
+    },
+    "src/etl_benchmark/quality/windows.py": {
+      "sha256": "5a4fdd8739edcc33dd786b2b241cf5c3c92ec3e63f6e669ef571d1cb9699c864",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 54,
+        "survived": 3
+      },
+      "total": 57,
+      "seconds": 75,
+      "tail": "ows.x_scores_to_events__mutmut_3\n\ud83c\udf89 etl_benchmark.quality.windows.x_scores_to_events__mutmut_4\n\ud83c\udf89 etl_benchmark.quality.windows.x_scores_to_events__mutmut_5\n\ud83c\udf89 etl_benchmark.quality.windows.x_scores_to_events__mutmut_6\n\ud83d\ude41 etl_benchmark.quality.windows.x_scores_to_events__mutmut_7\n\ud83c\udf89 etl_benchmark.quality.windows.x_scores_to_events__mutmut_8\n\ud83d\ude41 etl_benchmark.quality.windows.x_scores_to_events__mutmut_9\n\n"
+    },
+    "experiments/fetch_cardio.py": {
+      "sha256": "a303ac1d039d5f15ddc20f401b0ca1e46032f6169a9203ba4d274b7906f576d6",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 60,
+        "survived": 1
+      },
+      "total": 61,
+      "seconds": 34,
+      "tail": "experiments.fetch_cardio.x_main__mutmut_57\n\ud83c\udf89 experiments.fetch_cardio.x_main__mutmut_58\n\ud83c\udf89 experiments.fetch_cardio.x_main__mutmut_59\n\ud83c\udf89 experiments.fetch_cardio.x_main__mutmut_6\n\ud83c\udf89 experiments.fetch_cardio.x_main__mutmut_60\n\ud83c\udf89 experiments.fetch_cardio.x_main__mutmut_61\n\ud83c\udf89 experiments.fetch_cardio.x_main__mutmut_7\n\ud83c\udf89 experiments.fetch_cardio.x_main__mutmut_8\n\ud83c\udf89 experiments.fetch_cardio.x_main__mutmut_9\n\n"
+    },
+    "src/etl_benchmark/quality/deep.py": {
+      "sha256": "77364cfdf0850b107c316ffae0389e1bb552445d76188dab388dff76e8e22632",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 60,
+        "survived": 2
+      },
+      "total": 62,
+      "seconds": 107,
+      "tail": "ings__mutmut_3\n\ud83c\udf89 etl_benchmark.quality.deep.x\u01c1TorchDetector\u01c1settings__mutmut_4\n\ud83c\udf89 etl_benchmark.quality.deep.x\u01c1TorchDetector\u01c1settings__mutmut_5\n\ud83c\udf89 etl_benchmark.quality.deep.x\u01c1TorchDetector\u01c1settings__mutmut_6\n\ud83c\udf89 etl_benchmark.quality.deep.x\u01c1TorchDetector\u01c1settings__mutmut_7\n\ud83c\udf89 etl_benchmark.quality.deep.x\u01c1TorchDetector\u01c1settings__mutmut_8\n\ud83c\udf89 etl_benchmark.quality.deep.x\u01c1TorchDetector\u01c1settings__mutmut_9\n\n"
+    },
+    "src/etl_benchmark/quality/_torch_models.py": {
+      "sha256": "77a1b57ff69e580cad700bb4ee41f069e3ac0c8489bdd714651c753c4bbdd09d",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 58,
+        "survived": 7
+      },
+      "total": 65,
+      "seconds": 100,
+      "tail": "tl_benchmark.quality._torch_models.x\u01c1PaddedAE1SVM\u01c1fit__mutmut_4\n\ud83c\udf89 etl_benchmark.quality._torch_models.x\u01c1PaddedAE1SVM\u01c1fit__mutmut_5\n\ud83c\udf89 etl_benchmark.quality._torch_models.x\u01c1PaddedAE1SVM\u01c1fit__mutmut_6\n\ud83c\udf89 etl_benchmark.quality._torch_models.x\u01c1PaddedAE1SVM\u01c1fit__mutmut_7\n\ud83c\udf89 etl_benchmark.quality._torch_models.x\u01c1PaddedAE1SVM\u01c1fit__mutmut_8\n\ud83c\udf89 etl_benchmark.quality._torch_models.x\u01c1PaddedAE1SVM\u01c1fit__mutmut_9\n\n"
+    },
+    "src/etl_benchmark/registry.py": {
+      "sha256": "6b5ee955877a24fd43368f362c38bd6645872166e19b9173c39192a8f1d0957d",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 68
+      },
+      "total": 68,
+      "seconds": 234,
+      "tail": "xed_contamination__mutmut_6\n\ud83c\udf89 etl_benchmark.registry.x_fixed_contamination__mutmut_7\n\ud83c\udf89 etl_benchmark.registry.x_fixed_contamination__mutmut_8\n\ud83c\udf89 etl_benchmark.registry.x_fixed_contamination__mutmut_9\n\ud83c\udf89 etl_benchmark.registry.x_get_detector__mutmut_1\n\ud83c\udf89 etl_benchmark.registry.x_get_detector__mutmut_2\n\ud83c\udf89 etl_benchmark.registry.x_get_detector__mutmut_3\n\ud83c\udf89 etl_benchmark.registry.x_get_detector__mutmut_4\n\n"
+    },
+    "experiments/generate_synthetic.py": {
+      "sha256": "fdf41ab6a5116e87771fc17670cda32dfd7f6bc0f5899cf9aad38c0484732858",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 90,
+        "survived": 1
+      },
+      "total": 91,
+      "seconds": 41,
+      "tail": "ments.generate_synthetic.x_main__mutmut_85\n\ud83c\udf89 experiments.generate_synthetic.x_main__mutmut_86\n\ud83c\udf89 experiments.generate_synthetic.x_main__mutmut_87\n\ud83c\udf89 experiments.generate_synthetic.x_main__mutmut_88\n\ud83c\udf89 experiments.generate_synthetic.x_main__mutmut_89\n\ud83c\udf89 experiments.generate_synthetic.x_main__mutmut_9\n\ud83c\udf89 experiments.generate_synthetic.x_main__mutmut_90\n\ud83c\udf89 experiments.generate_synthetic.x_main__mutmut_91\n\n"
+    },
+    "src/etl_benchmark/metrics.py": {
+      "sha256": "dd8540e0e8e124f8c13624c8bc26f5eec4271f50d8cf96a2b90fc9b08e07acf4",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 90,
+        "survived": 1
+      },
+      "total": 91,
+      "seconds": 211,
+      "tail": "x_compute_metrics__mutmut_85\n\ud83c\udf89 etl_benchmark.metrics.x_compute_metrics__mutmut_86\n\ud83c\udf89 etl_benchmark.metrics.x_compute_metrics__mutmut_87\n\ud83c\udf89 etl_benchmark.metrics.x_compute_metrics__mutmut_88\n\ud83c\udf89 etl_benchmark.metrics.x_compute_metrics__mutmut_89\n\ud83c\udf89 etl_benchmark.metrics.x_compute_metrics__mutmut_9\n\ud83c\udf89 etl_benchmark.metrics.x_compute_metrics__mutmut_90\n\ud83c\udf89 etl_benchmark.metrics.x_compute_metrics__mutmut_91\n\n"
+    },
+    "src/etl_benchmark/quality/gx.py": {
+      "sha256": "11be59dbe975d05547395263b763d37716cd9f916b284ce4147cfd87c61e3416",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 87,
+        "survived": 11
+      },
+      "total": 98,
+      "seconds": 368,
+      "tail": "eatExpectationsDetector\u01c1fit__mutmut_9\n\ud83c\udf89 etl_benchmark.quality.gx.x\u01c1GreatExpectationsDetector\u01c1predict__mutmut_1\n\ud83c\udf89 etl_benchmark.quality.gx.x\u01c1GreatExpectationsDetector\u01c1predict__mutmut_2\n\ud83c\udf89 etl_benchmark.quality.gx.x\u01c1GreatExpectationsDetector\u01c1predict__mutmut_3\n\ud83c\udf89 etl_benchmark.quality.gx.x\u01c1GreatExpectationsDetector\u01c1score__mutmut_1\n\ud83c\udf89 etl_benchmark.quality.gx.x\u01c1GreatExpectationsDetector\u01c1score__mutmut_2\n\n"
+    },
+    "research/paired_bootstrap.py": {
+      "sha256": "87eed95e78ecaf68ec1502207a92f775a18299faa3ec0dbaf34ec78ef8c94064",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 99,
+        "timeout": 1
+      },
+      "total": 100,
+      "seconds": 200,
+      "tail": "rap__mutmut_93\n\ud83c\udf89 research.paired_bootstrap.x_paired_block_bootstrap__mutmut_94\n\ud83c\udf89 research.paired_bootstrap.x_paired_block_bootstrap__mutmut_95\n\ud83c\udf89 research.paired_bootstrap.x_paired_block_bootstrap__mutmut_96\n\ud83c\udf89 research.paired_bootstrap.x_paired_block_bootstrap__mutmut_97\n\ud83c\udf89 research.paired_bootstrap.x_paired_block_bootstrap__mutmut_98\n\ud83c\udf89 research.paired_bootstrap.x_paired_block_bootstrap__mutmut_99\n\n"
+    },
+    "src/etl_benchmark/quality/autoencoder.py": {
+      "sha256": "52ac93bd1898db05567278d773295458fc81847366de74b0c63770c662cbaa4d",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 112,
+        "survived": 5
+      },
+      "total": 117,
+      "seconds": 191,
+      "tail": "del\u01c1layers__mutmut_7\n\ud83c\udf89 etl_benchmark.quality.autoencoder.x\u01c1ReconstructionModel\u01c1layers__mutmut_8\n\ud83c\udf89 etl_benchmark.quality.autoencoder.x\u01c1ReconstructionModel\u01c1layers__mutmut_9\n\ud83c\udf89 etl_benchmark.quality.autoencoder.x\u01c1ReconstructionModel\u01c1predict__mutmut_1\n\ud83c\udf89 etl_benchmark.quality.autoencoder.x\u01c1ReconstructionModel\u01c1predict__mutmut_2\n\ud83c\udf89 etl_benchmark.quality.autoencoder.x\u01c1ReconstructionModel\u01c1predict__mutmut_3\n\n"
+    },
+    "src/etl_benchmark/quality/rules.py": {
+      "sha256": "bbd2e146be1d55382a12137cdfacefa85223d535c8b9eeaf816d17e6acd49737",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 112,
+        "survived": 7
+      },
+      "total": 119,
+      "seconds": 428,
+      "tail": "\u01c1predict__mutmut_3\n\ud83c\udf89 etl_benchmark.quality.rules.x\u01c1ZScoreDetector\u01c1predict__mutmut_4\n\ud83c\udf89 etl_benchmark.quality.rules.x\u01c1ZScoreDetector\u01c1score__mutmut_1\n\ud83c\udf89 etl_benchmark.quality.rules.x\u01c1ZScoreDetector\u01c1score__mutmut_2\n\ud83c\udf89 etl_benchmark.quality.rules.x\u01c1ZScoreDetector\u01c1score__mutmut_3\n\ud83c\udf89 etl_benchmark.quality.rules.x\u01c1ZScoreDetector\u01c1score__mutmut_4\n\ud83c\udf89 etl_benchmark.quality.rules.x\u01c1ZScoreDetector\u01c1score__mutmut_5\n\n"
+    },
+    "src/etl_benchmark/split.py": {
+      "sha256": "41f0e2b2707d7466a335f99d000e4b32ad7ef80cf8f1a7fc3941ffabd440a2ba",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 122,
+        "survived": 2
+      },
+      "total": 124,
+      "seconds": 276,
+      "tail": "ark.split.x_stratified_split__mutmut_43\n\ud83c\udf89 etl_benchmark.split.x_stratified_split__mutmut_44\n\ud83c\udf89 etl_benchmark.split.x_stratified_split__mutmut_45\n\ud83c\udf89 etl_benchmark.split.x_stratified_split__mutmut_5\n\ud83c\udf89 etl_benchmark.split.x_stratified_split__mutmut_6\n\ud83c\udf89 etl_benchmark.split.x_stratified_split__mutmut_7\n\ud83c\udf89 etl_benchmark.split.x_stratified_split__mutmut_8\n\ud83c\udf89 etl_benchmark.split.x_stratified_split__mutmut_9\n\n"
+    },
+    "src/etl_benchmark/quality/drift.py": {
+      "sha256": "95380ca0f8f87a24c512ac7055357225472342065e0da676c0be46dd115fa09b",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 119,
+        "survived": 10
+      },
+      "total": 129,
+      "seconds": 416,
+      "tail": "ty.drift.x\u01c1TemporalDriftDetector\u01c1score__mutmut_2\n\ud83c\udf89 etl_benchmark.quality.drift.x\u01c1TemporalDriftDetector\u01c1score__mutmut_3\n\ud83c\udf89 etl_benchmark.quality.drift.x\u01c1TemporalDriftDetector\u01c1score__mutmut_4\n\ud83c\udf89 etl_benchmark.quality.drift.x\u01c1TemporalDriftDetector\u01c1score__mutmut_5\n\ud83c\udf89 etl_benchmark.quality.drift.x\u01c1TemporalDriftDetector\u01c1score__mutmut_6\n\ud83c\udf89 etl_benchmark.quality.drift.x\u01c1TemporalDriftDetector\u01c1score__mutmut_7\n\n"
+    },
+    "research/typed_masking.py": {
+      "sha256": "6203d8f54eac82dc4d0a3e4d014bfdc78f944431336506230c30078a687c9653",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 132
+      },
+      "total": 132,
+      "seconds": 43,
+      "tail": "ch.typed_masking.x_masking__mutmut_27\n\ud83c\udf89 research.typed_masking.x_masking__mutmut_28\n\ud83c\udf89 research.typed_masking.x_masking__mutmut_3\n\ud83c\udf89 research.typed_masking.x_masking__mutmut_4\n\ud83c\udf89 research.typed_masking.x_masking__mutmut_5\n\ud83c\udf89 research.typed_masking.x_masking__mutmut_6\n\ud83c\udf89 research.typed_masking.x_masking__mutmut_7\n\ud83c\udf89 research.typed_masking.x_masking__mutmut_8\n\ud83c\udf89 research.typed_masking.x_masking__mutmut_9\n\n"
+    },
+    "verification/refresh_profile.py": {
+      "sha256": "fc845c277c7564eedd3a84529f9b08c383495282c7ef20c7adf45dd9cef33982",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 105,
+        "survived": 42
+      },
+      "total": 147,
+      "seconds": 49,
+      "tail": "mutmut_66\n\ud83d\ude41 verification.refresh_profile.x_main__mutmut_67\n\ud83d\ude41 verification.refresh_profile.x_main__mutmut_68\n\ud83d\ude41 verification.refresh_profile.x_main__mutmut_69\n\ud83c\udf89 verification.refresh_profile.x_main__mutmut_7\n\ud83d\ude41 verification.refresh_profile.x_main__mutmut_70\n\ud83c\udf89 verification.refresh_profile.x_main__mutmut_71\n\ud83d\ude41 verification.refresh_profile.x_main__mutmut_8\n\ud83c\udf89 verification.refresh_profile.x_main__mutmut_9\n\n"
+    },
+    "experiments/check_mutation.py": {
+      "sha256": "62cfa8b0b8e78e2b553b113fff1e226e2eaa217caea0a43d877c766070c36411",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 147,
+        "survived": 3
+      },
+      "total": 150,
+      "seconds": 431,
+      "tail": "ation.x_main__mutmut_9\n\ud83c\udf89 experiments.check_mutation.x_main__mutmut_90\n\ud83c\udf89 experiments.check_mutation.x_main__mutmut_91\n\ud83c\udf89 experiments.check_mutation.x_main__mutmut_92\n\ud83c\udf89 experiments.check_mutation.x_main__mutmut_93\n\ud83c\udf89 experiments.check_mutation.x_main__mutmut_94\n\ud83c\udf89 experiments.check_mutation.x_main__mutmut_95\n\ud83c\udf89 experiments.check_mutation.x_main__mutmut_96\n\ud83c\udf89 experiments.check_mutation.x_main__mutmut_97\n\n"
+    },
+    "src/etl_benchmark/pipeline.py": {
+      "sha256": "ed07a0edf43f5833c5766b8266a1d19fb5b386e5678c309aa1dd8633af309a7f",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 163
+      },
+      "total": 163,
+      "seconds": 368,
+      "tail": "nchmark.pipeline.x_run_pipeline__mutmut_85\n\ud83c\udf89 etl_benchmark.pipeline.x_run_pipeline__mutmut_86\n\ud83c\udf89 etl_benchmark.pipeline.x_run_pipeline__mutmut_87\n\ud83c\udf89 etl_benchmark.pipeline.x_run_pipeline__mutmut_88\n\ud83c\udf89 etl_benchmark.pipeline.x_run_pipeline__mutmut_89\n\ud83c\udf89 etl_benchmark.pipeline.x_run_pipeline__mutmut_9\n\ud83c\udf89 etl_benchmark.pipeline.x_run_pipeline__mutmut_90\n\ud83c\udf89 etl_benchmark.pipeline.x_run_pipeline__mutmut_91\n\n"
+    },
+    "research/paper_appendix.py": {
+      "sha256": "fd6e264dddba798a6992db047362f42b7c4ad39dc8283777cfc9984a722b080f",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 134,
+        "survived": 37
+      },
+      "total": 171,
+      "seconds": 71,
+      "tail": "\ud83d\ude41 research.paper_appendix.x_write__mutmut_39\n\ud83c\udf89 research.paper_appendix.x_write__mutmut_4\n\ud83d\ude41 research.paper_appendix.x_write__mutmut_40\n\ud83c\udf89 research.paper_appendix.x_write__mutmut_41\n\ud83c\udf89 research.paper_appendix.x_write__mutmut_5\n\ud83c\udf89 research.paper_appendix.x_write__mutmut_6\n\ud83c\udf89 research.paper_appendix.x_write__mutmut_7\n\ud83c\udf89 research.paper_appendix.x_write__mutmut_8\n\ud83c\udf89 research.paper_appendix.x_write__mutmut_9\n\n"
+    },
+    "research/build_pool.py": {
+      "sha256": "eefa0438f61e44b0bd0c7ed9a8acf7477a181477c4c8c90dc51803fa6391b3f6",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 169,
+        "survived": 3
+      },
+      "total": 172,
+      "seconds": 42,
+      "tail": "t_79\n\ud83c\udf89 research.build_pool.x_pool_row__mutmut_8\n\ud83c\udf89 research.build_pool.x_pool_row__mutmut_80\n\ud83c\udf89 research.build_pool.x_pool_row__mutmut_81\n\ud83c\udf89 research.build_pool.x_pool_row__mutmut_82\n\ud83c\udf89 research.build_pool.x_pool_row__mutmut_83\n\ud83c\udf89 research.build_pool.x_pool_row__mutmut_84\n\ud83c\udf89 research.build_pool.x_pool_row__mutmut_85\n\ud83c\udf89 research.build_pool.x_pool_row__mutmut_86\n\ud83c\udf89 research.build_pool.x_pool_row__mutmut_9\n\n"
+    },
+    "research/pool_check.py": {
+      "sha256": "5981ee3fea87f589524072ba00084682547a2435ea816bf62b92da414f776c96",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 178,
+        "survived": 2
+      },
+      "total": 180,
+      "seconds": 40,
+      "tail": "_check.x_verify__mutmut_33\n\ud83c\udf89 research.pool_check.x_verify__mutmut_34\n\ud83c\udf89 research.pool_check.x_verify__mutmut_35\n\ud83c\udf89 research.pool_check.x_verify__mutmut_36\n\ud83c\udf89 research.pool_check.x_verify__mutmut_4\n\ud83c\udf89 research.pool_check.x_verify__mutmut_5\n\ud83c\udf89 research.pool_check.x_verify__mutmut_6\n\ud83c\udf89 research.pool_check.x_verify__mutmut_7\n\ud83c\udf89 research.pool_check.x_verify__mutmut_8\n\ud83c\udf89 research.pool_check.x_verify__mutmut_9\n\n"
+    },
+    "research/typed_benchmark.py": {
+      "sha256": "abdd10e4a1965e99bd5db8ad1a61b0b9e37caed20f35d09c32bcb1a9a3bae9d2",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 175,
+        "survived": 5
+      },
+      "total": 180,
+      "seconds": 71,
+      "tail": "h.typed_benchmark.x_split__mutmut_4\n\ud83c\udf89 research.typed_benchmark.x_split__mutmut_40\n\ud83c\udf89 research.typed_benchmark.x_split__mutmut_41\n\ud83c\udf89 research.typed_benchmark.x_split__mutmut_42\n\ud83d\ude41 research.typed_benchmark.x_split__mutmut_5\n\ud83c\udf89 research.typed_benchmark.x_split__mutmut_6\n\ud83c\udf89 research.typed_benchmark.x_split__mutmut_7\n\ud83c\udf89 research.typed_benchmark.x_split__mutmut_8\n\ud83c\udf89 research.typed_benchmark.x_split__mutmut_9\n\n"
+    },
+    "research/uci_loader.py": {
+      "sha256": "a1176cd61bd8454c9fa51da682194444feb24529dc401916e8bb94fd212ab691",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 180,
+        "survived": 6
+      },
+      "total": 186,
+      "seconds": 60,
+      "tail": "s__mutmut_35\n\ud83d\ude41 research.uci_loader.x_split_columns__mutmut_36\n\ud83c\udf89 research.uci_loader.x_split_columns__mutmut_37\n\ud83c\udf89 research.uci_loader.x_split_columns__mutmut_4\n\ud83c\udf89 research.uci_loader.x_split_columns__mutmut_5\n\ud83c\udf89 research.uci_loader.x_split_columns__mutmut_6\n\ud83c\udf89 research.uci_loader.x_split_columns__mutmut_7\n\ud83c\udf89 research.uci_loader.x_split_columns__mutmut_8\n\ud83c\udf89 research.uci_loader.x_split_columns__mutmut_9\n\n"
+    },
+    "verification/pool_contract.py": {
+      "sha256": "624859aa0cd7c1aad2927cf3d3a9b457f90f8f6a5807fe6475fe1f6e26b6a0e0",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 184,
+        "timeout": 2,
+        "survived": 1
+      },
+      "total": 187,
+      "seconds": 107,
+      "tail": "tion.pool_contract.x_summarize__mutmut_27\n\ud83c\udf89 verification.pool_contract.x_summarize__mutmut_3\n\ud83c\udf89 verification.pool_contract.x_summarize__mutmut_4\n\ud83c\udf89 verification.pool_contract.x_summarize__mutmut_5\n\ud83c\udf89 verification.pool_contract.x_summarize__mutmut_6\n\ud83c\udf89 verification.pool_contract.x_summarize__mutmut_7\n\ud83c\udf89 verification.pool_contract.x_summarize__mutmut_8\n\ud83c\udf89 verification.pool_contract.x_summarize__mutmut_9\n\n"
+    },
+    "verification/lineage.py": {
+      "sha256": "003482f859158df5df45a47b6d32bea619f55bf4e175e78c5dbda502292b71d6",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 190,
+        "survived": 1
+      },
+      "total": 191,
+      "seconds": 50,
+      "tail": "verification.lineage.x_worktree_files__mutmut_21\n\ud83c\udf89 verification.lineage.x_worktree_files__mutmut_3\n\ud83c\udf89 verification.lineage.x_worktree_files__mutmut_4\n\ud83c\udf89 verification.lineage.x_worktree_files__mutmut_5\n\ud83c\udf89 verification.lineage.x_worktree_files__mutmut_6\n\ud83c\udf89 verification.lineage.x_worktree_files__mutmut_7\n\ud83c\udf89 verification.lineage.x_worktree_files__mutmut_8\n\ud83c\udf89 verification.lineage.x_worktree_files__mutmut_9\n\n"
+    },
+    "research/normalise.py": {
+      "sha256": "5ba131d186d79c792fb64691089939fffb3a085e1f376c6b9dcd1c12bcf5155a",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 191,
+        "survived": 6
+      },
+      "total": 197,
+      "seconds": 103,
+      "tail": "\ud83c\udf89 research.normalise.x_split__mutmut_81\n\ud83c\udf89 research.normalise.x_split__mutmut_82\n\ud83c\udf89 research.normalise.x_split__mutmut_83\n\ud83c\udf89 research.normalise.x_split__mutmut_84\n\ud83c\udf89 research.normalise.x_split__mutmut_85\n\ud83c\udf89 research.normalise.x_split__mutmut_86\n\ud83c\udf89 research.normalise.x_split__mutmut_87\n\ud83c\udf89 research.normalise.x_split__mutmut_88\n\ud83c\udf89 research.normalise.x_split__mutmut_89\n\ud83c\udf89 research.normalise.x_split__mutmut_9\n\n"
+    },
+    "verification/check_types.py": {
+      "sha256": "4777cbb8bd2b7f134e210447d71653d1a37b910d65a777de5b6e6e8ff9b853b3",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 206,
+        "survived": 3
+      },
+      "total": 209,
+      "seconds": 54,
+      "tail": "y__mutmut_39\n\ud83c\udf89 verification.check_types.x_run_mypy__mutmut_4\n\ud83c\udf89 verification.check_types.x_run_mypy__mutmut_40\n\ud83c\udf89 verification.check_types.x_run_mypy__mutmut_41\n\ud83c\udf89 verification.check_types.x_run_mypy__mutmut_5\n\ud83c\udf89 verification.check_types.x_run_mypy__mutmut_6\n\ud83c\udf89 verification.check_types.x_run_mypy__mutmut_7\n\ud83c\udf89 verification.check_types.x_run_mypy__mutmut_8\n\ud83c\udf89 verification.check_types.x_run_mypy__mutmut_9\n\n"
+    },
+    "experiments/verify_real.py": {
+      "sha256": "c2e72b032f35e29f0174efe35909c08e40ef7c2eeb6ee3c343c295ec91ee642f",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 212
+      },
+      "total": 212,
+      "seconds": 43,
+      "tail": "90\n\ud83c\udf89 experiments.verify_real.x_main__mutmut_91\n\ud83c\udf89 experiments.verify_real.x_main__mutmut_92\n\ud83c\udf89 experiments.verify_real.x_main__mutmut_93\n\ud83c\udf89 experiments.verify_real.x_main__mutmut_94\n\ud83c\udf89 experiments.verify_real.x_main__mutmut_95\n\ud83c\udf89 experiments.verify_real.x_main__mutmut_96\n\ud83c\udf89 experiments.verify_real.x_main__mutmut_97\n\ud83c\udf89 experiments.verify_real.x_main__mutmut_98\n\ud83c\udf89 experiments.verify_real.x_main__mutmut_99\n\n"
+    },
+    "verification/real_acquire.py": {
+      "sha256": "dc5994819405ad932c279b5974a87ad124b067b4bb0ada26655833a19be17178",
+      "status": "incomplete",
+      "returncode": 0,
+      "counts": {
+        "killed": 214,
+        "survived": 4,
+        "incomplete": 1
+      },
+      "total": 219,
+      "seconds": 44,
+      "tail": "s\u01c1redirect_request__mutmut_4\n\ud83c\udf89 verification.real_acquire.x\u01c1GuardedRedirects\u01c1redirect_request__mutmut_5\n\ud83c\udf89 verification.real_acquire.x\u01c1GuardedRedirects\u01c1redirect_request__mutmut_6\n\ud83c\udf89 verification.real_acquire.x\u01c1GuardedRedirects\u01c1redirect_request__mutmut_7\n\ud83c\udf89 verification.real_acquire.x\u01c1GuardedRedirects\u01c1redirect_request__mutmut_8\n\ud83c\udf89 verification.real_acquire.x\u01c1GuardedRedirects\u01c1redirect_request__mutmut_9\n\n"
+    },
+    "src/etl_benchmark/quality/window_drift.py": {
+      "sha256": "7369796bac2ada0ee25c125b383752c8d40d7f683e287767dfb6b373108ea8d7",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 225,
+        "survived": 8
+      },
+      "total": 233,
+      "seconds": 114,
+      "tail": "ift.x\u01c1WindowDriftMonitor\u01c1fit__mutmut_4\n\ud83c\udf89 etl_benchmark.quality.window_drift.x\u01c1WindowDriftMonitor\u01c1fit__mutmut_5\n\ud83c\udf89 etl_benchmark.quality.window_drift.x\u01c1WindowDriftMonitor\u01c1fit__mutmut_6\n\ud83c\udf89 etl_benchmark.quality.window_drift.x\u01c1WindowDriftMonitor\u01c1fit__mutmut_7\n\ud83c\udf89 etl_benchmark.quality.window_drift.x\u01c1WindowDriftMonitor\u01c1fit__mutmut_8\n\ud83c\udf89 etl_benchmark.quality.window_drift.x\u01c1WindowDriftMonitor\u01c1fit__mutmut_9\n\n"
+    },
+    "research/typed_figures.py": {
+      "sha256": "cdff872ffa3fb3f15d3c7ee207fc1814ca3b22ba900d39de5bf57101828df8d9",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "survived": 107,
+        "killed": 133
+      },
+      "total": 240,
+      "seconds": 97,
+      "tail": "__mutmut_90\n\ud83d\ude41 research.typed_figures.x_main__mutmut_91\n\ud83d\ude41 research.typed_figures.x_main__mutmut_92\n\ud83c\udf89 research.typed_figures.x_main__mutmut_93\n\ud83c\udf89 research.typed_figures.x_main__mutmut_94\n\ud83d\ude41 research.typed_figures.x_main__mutmut_95\n\ud83c\udf89 research.typed_figures.x_main__mutmut_96\n\ud83c\udf89 research.typed_figures.x_main__mutmut_97\n\ud83c\udf89 research.typed_figures.x_main__mutmut_98\n\ud83c\udf89 research.typed_figures.x_main__mutmut_99\n\n"
+    },
+    "verification/mutation_scope.py": {
+      "sha256": "622f62cf9104148fb33c7cf80595ffdf32ade43f5decd3d7cc3e8db06aa13b0a",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 240,
+        "survived": 6
+      },
+      "total": 246,
+      "seconds": 374,
+      "tail": " verification.mutation_scope.x_resolve__mutmut_2\n\ud83c\udf89 verification.mutation_scope.x_resolve__mutmut_3\n\ud83c\udf89 verification.mutation_scope.x_resolve__mutmut_4\n\ud83c\udf89 verification.mutation_scope.x_resolve__mutmut_5\n\ud83c\udf89 verification.mutation_scope.x_resolve__mutmut_6\n\ud83c\udf89 verification.mutation_scope.x_resolve__mutmut_7\n\ud83c\udf89 verification.mutation_scope.x_resolve__mutmut_8\n\ud83c\udf89 verification.mutation_scope.x_resolve__mutmut_9\n\n"
+    },
+    "research/pool_preprocessing.py": {
+      "sha256": "edf8ac28b2824c76840c8e4cad47fe3fee1f1ac84a5b38ad341e968dee9e8dc0",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 241,
+        "survived": 7
+      },
+      "total": 248,
+      "seconds": 88,
+      "tail": "date_partitions__mutmut_32\n\ud83c\udf89 research.pool_preprocessing.x_validate_partitions__mutmut_4\n\ud83c\udf89 research.pool_preprocessing.x_validate_partitions__mutmut_5\n\ud83c\udf89 research.pool_preprocessing.x_validate_partitions__mutmut_6\n\ud83c\udf89 research.pool_preprocessing.x_validate_partitions__mutmut_7\n\ud83c\udf89 research.pool_preprocessing.x_validate_partitions__mutmut_8\n\ud83c\udf89 research.pool_preprocessing.x_validate_partitions__mutmut_9\n\n"
+    },
+    "verification/archive_evidence.py": {
+      "sha256": "2918fac11603f4a9693d9ea4662b44d74994d481c72827d53ec14615b494ac94",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 207,
+        "survived": 42
+      },
+      "total": 249,
+      "seconds": 60,
+      "tail": "run__mutmut_2\n\ud83c\udf89 verification.archive_evidence.x_verify_run__mutmut_3\n\ud83c\udf89 verification.archive_evidence.x_verify_run__mutmut_4\n\ud83c\udf89 verification.archive_evidence.x_verify_run__mutmut_5\n\ud83c\udf89 verification.archive_evidence.x_verify_run__mutmut_6\n\ud83c\udf89 verification.archive_evidence.x_verify_run__mutmut_7\n\ud83c\udf89 verification.archive_evidence.x_verify_run__mutmut_8\n\ud83c\udf89 verification.archive_evidence.x_verify_run__mutmut_9\n\n"
+    },
+    "src/etl_benchmark/quality/ml.py": {
+      "sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 238,
+        "survived": 21
+      },
+      "total": 259,
+      "seconds": 753,
+      "tail": "_6\n\ud83c\udf89 etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1fit__mutmut_7\n\ud83c\udf89 etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1fit__mutmut_8\n\ud83c\udf89 etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1fit__mutmut_9\n\ud83c\udf89 etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1predict__mutmut_1\n\ud83c\udf89 etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1predict__mutmut_2\n\ud83c\udf89 etl_benchmark.quality.ml.x\u01c1TailProbabilityModel\u01c1predict__mutmut_3\n\n"
+    },
+    "verification/bundles.py": {
+      "sha256": "18023c2b447451909f05ed6ee78c48e40219fcddcd14bbe55091231eb6924577",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 249,
+        "survived": 15
+      },
+      "total": 264,
+      "seconds": 56,
+      "tail": "npack__mutmut_41\n\ud83c\udf89 verification.bundles.x_unpack__mutmut_42\n\ud83c\udf89 verification.bundles.x_unpack__mutmut_43\n\ud83c\udf89 verification.bundles.x_unpack__mutmut_44\n\ud83c\udf89 verification.bundles.x_unpack__mutmut_45\n\ud83d\ude41 verification.bundles.x_unpack__mutmut_5\n\ud83c\udf89 verification.bundles.x_unpack__mutmut_6\n\ud83c\udf89 verification.bundles.x_unpack__mutmut_7\n\ud83d\ude41 verification.bundles.x_unpack__mutmut_8\n\ud83c\udf89 verification.bundles.x_unpack__mutmut_9\n\n"
+    },
+    "experiments/verification_report.py": {
+      "sha256": "fca81ddf1ae67e9f651b4c42fcd6ab0edea3088c230fbee5a01b2a05200f3d91",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 290
+      },
+      "total": 290,
+      "seconds": 580,
+      "tail": "verification_report.x_main__mutmut_65\n\ud83c\udf89 experiments.verification_report.x_main__mutmut_66\n\ud83c\udf89 experiments.verification_report.x_main__mutmut_67\n\ud83c\udf89 experiments.verification_report.x_main__mutmut_68\n\ud83c\udf89 experiments.verification_report.x_main__mutmut_69\n\ud83c\udf89 experiments.verification_report.x_main__mutmut_7\n\ud83c\udf89 experiments.verification_report.x_main__mutmut_8\n\ud83c\udf89 experiments.verification_report.x_main__mutmut_9\n\n"
+    },
+    "verification/protection.py": {
+      "sha256": "7bd4d77480b7843f95e5eed06dcb1b9086d6aabe89ebec6396878cb110b73222",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 235,
+        "survived": 59
+      },
+      "total": 294,
+      "seconds": 63,
+      "tail": "_mutmut_51\n\ud83c\udf89 verification.protection.x_validate_payload__mutmut_52\n\ud83d\ude41 verification.protection.x_validate_payload__mutmut_53\n\ud83c\udf89 verification.protection.x_validate_payload__mutmut_54\n\ud83c\udf89 verification.protection.x_validate_payload__mutmut_6\n\ud83c\udf89 verification.protection.x_validate_payload__mutmut_7\n\ud83c\udf89 verification.protection.x_validate_payload__mutmut_8\n\ud83c\udf89 verification.protection.x_validate_payload__mutmut_9\n\n"
+    },
+    "research/pool_chrono.py": {
+      "sha256": "cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 274,
+        "survived": 42
+      },
+      "total": 316,
+      "seconds": 67,
+      "tail": "o_features__mutmut_26\n\ud83c\udf89 research.pool_chrono.x_to_features__mutmut_27\n\ud83c\udf89 research.pool_chrono.x_to_features__mutmut_3\n\ud83c\udf89 research.pool_chrono.x_to_features__mutmut_4\n\ud83c\udf89 research.pool_chrono.x_to_features__mutmut_5\n\ud83c\udf89 research.pool_chrono.x_to_features__mutmut_6\n\ud83c\udf89 research.pool_chrono.x_to_features__mutmut_7\n\ud83c\udf89 research.pool_chrono.x_to_features__mutmut_8\n\ud83c\udf89 research.pool_chrono.x_to_features__mutmut_9\n\n"
+    },
+    "research/pool_etl.py": {
+      "sha256": "1ed53a9a8594fcd438e0b660485efdf82dc5416d0494a2ff69de9fb04c8ef669",
+      "status": "incomplete",
+      "returncode": 0,
+      "counts": {
+        "killed": 291,
+        "survived": 25,
+        "incomplete": 1
+      },
+      "total": 317,
+      "seconds": 56,
+      "tail": "pool_etl.x_run_etl__mutmut_90\n\ud83c\udf89 research.pool_etl.x_run_etl__mutmut_91\n\ud83c\udf89 research.pool_etl.x_run_etl__mutmut_92\n\ud83c\udf89 research.pool_etl.x_run_etl__mutmut_93\n\ud83c\udf89 research.pool_etl.x_run_etl__mutmut_94\n\ud83c\udf89 research.pool_etl.x_run_etl__mutmut_95\n\ud83c\udf89 research.pool_etl.x_run_etl__mutmut_96\n\ud83c\udf89 research.pool_etl.x_run_etl__mutmut_97\n\ud83c\udf89 research.pool_etl.x_run_etl__mutmut_98\n\ud83c\udf89 research.pool_etl.x_run_etl__mutmut_99\n\n"
+    },
+    "verification/mutation_run.py": {
+      "sha256": "ff92c16efc71d49b2652a3df297782058acfef1504451095326a76719ba7a021",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 336,
+        "survived": 6
+      },
+      "total": 342,
+      "seconds": 88,
+      "tail": "fication.mutation_run.x_run__mutmut_91\n\ud83c\udf89 verification.mutation_run.x_run__mutmut_92\n\ud83c\udf89 verification.mutation_run.x_run__mutmut_93\n\ud83c\udf89 verification.mutation_run.x_run__mutmut_94\n\ud83c\udf89 verification.mutation_run.x_run__mutmut_95\n\ud83c\udf89 verification.mutation_run.x_run__mutmut_96\n\ud83c\udf89 verification.mutation_run.x_run__mutmut_97\n\ud83c\udf89 verification.mutation_run.x_run__mutmut_98\n\ud83c\udf89 verification.mutation_run.x_run__mutmut_99\n\n"
+    },
+    "experiments/run_severity.py": {
+      "sha256": "7bda7511594ba6313e9579805a0726fd04ce06382f10d2fcb6c06e4d90f0a3fd",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 320,
+        "survived": 9
+      },
+      "total": 329,
+      "seconds": 348,
+      "tail": "tmut_42\n\ud83c\udf89 experiments.run_severity.x_run__mutmut_43\n\ud83c\udf89 experiments.run_severity.x_run__mutmut_44\n\ud83c\udf89 experiments.run_severity.x_run__mutmut_45\n\ud83c\udf89 experiments.run_severity.x_run__mutmut_46\n\ud83c\udf89 experiments.run_severity.x_run__mutmut_5\n\ud83c\udf89 experiments.run_severity.x_run__mutmut_6\n\ud83c\udf89 experiments.run_severity.x_run__mutmut_7\n\ud83c\udf89 experiments.run_severity.x_run__mutmut_8\n\ud83c\udf89 experiments.run_severity.x_run__mutmut_9\n\n"
+    },
+    "research/pool_train_only.py": {
+      "sha256": "177258ce0eb5910e8b10845a328a1a0ab5fe870cbeb5e9e94ba165587f3fdae3",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 328,
+        "survived": 4
+      },
+      "total": 332,
+      "seconds": 101,
+      "tail": "arch.pool_train_only.x_main__mutmut_91\n\ud83c\udf89 research.pool_train_only.x_main__mutmut_92\n\ud83c\udf89 research.pool_train_only.x_main__mutmut_93\n\ud83c\udf89 research.pool_train_only.x_main__mutmut_94\n\ud83c\udf89 research.pool_train_only.x_main__mutmut_95\n\ud83d\ude41 research.pool_train_only.x_main__mutmut_96\n\ud83c\udf89 research.pool_train_only.x_main__mutmut_97\n\ud83c\udf89 research.pool_train_only.x_main__mutmut_98\n\ud83c\udf89 research.pool_train_only.x_main__mutmut_99\n\n"
+    },
+    "research/injection.py": {
+      "sha256": "cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 319,
+        "survived": 17
+      },
+      "total": 336,
+      "seconds": 294,
+      "tail": "ction.x_prepare__mutmut_31\n\ud83c\udf89 research.injection.x_prepare__mutmut_32\n\ud83c\udf89 research.injection.x_prepare__mutmut_33\n\ud83c\udf89 research.injection.x_prepare__mutmut_34\n\ud83c\udf89 research.injection.x_prepare__mutmut_4\n\ud83c\udf89 research.injection.x_prepare__mutmut_5\n\ud83d\ude41 research.injection.x_prepare__mutmut_6\n\ud83c\udf89 research.injection.x_prepare__mutmut_7\n\ud83c\udf89 research.injection.x_prepare__mutmut_8\n\ud83c\udf89 research.injection.x_prepare__mutmut_9\n\n"
+    },
+    "verification/lock_environment.py": {
+      "sha256": "8e270c235d66120a8233088a8a089e57e531394790a513cde8a9a4705e7ce61c",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 247,
+        "survived": 99
+      },
+      "total": 346,
+      "seconds": 57,
+      "tail": "n.lock_environment.x_resolve_linux__mutmut_80\n\ud83d\ude41 verification.lock_environment.x_resolve_linux__mutmut_81\n\ud83d\ude41 verification.lock_environment.x_resolve_linux__mutmut_82\n\ud83d\ude41 verification.lock_environment.x_resolve_linux__mutmut_83\n\ud83d\ude41 verification.lock_environment.x_resolve_linux__mutmut_84\n\ud83c\udf89 verification.lock_environment.x_resolve_linux__mutmut_85\n\ud83c\udf89 verification.lock_environment.x_resolve_linux__mutmut_9\n\n"
+    },
+    "research/typed_run.py": {
+      "sha256": "8589c4634fd7ffff31536e85772f2a84b6edc2f3a59c6860e8ff916abb76beb0",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 349,
+        "survived": 2
+      },
+      "total": 351,
+      "seconds": 64,
+      "tail": "x_run_one__mutmut_90\n\ud83c\udf89 research.typed_run.x_run_one__mutmut_91\n\ud83c\udf89 research.typed_run.x_run_one__mutmut_92\n\ud83c\udf89 research.typed_run.x_run_one__mutmut_93\n\ud83c\udf89 research.typed_run.x_run_one__mutmut_94\n\ud83c\udf89 research.typed_run.x_run_one__mutmut_95\n\ud83c\udf89 research.typed_run.x_run_one__mutmut_96\n\ud83c\udf89 research.typed_run.x_run_one__mutmut_97\n\ud83c\udf89 research.typed_run.x_run_one__mutmut_98\n\ud83c\udf89 research.typed_run.x_run_one__mutmut_99\n\n"
+    },
+    "verification/mutation_catalog.py": {
+      "sha256": "ff15504228ae5e1053168246cf294395d0411c0754f92346be3d1f3cdbb4f508",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 361,
+        "survived": 5
+      },
+      "total": 366,
+      "seconds": 379,
+      "tail": "_6\n\ud83c\udf89 verification.mutation_catalog.x_read_native__mutmut_60\n\ud83c\udf89 verification.mutation_catalog.x_read_native__mutmut_61\n\ud83c\udf89 verification.mutation_catalog.x_read_native__mutmut_62\n\ud83c\udf89 verification.mutation_catalog.x_read_native__mutmut_63\n\ud83c\udf89 verification.mutation_catalog.x_read_native__mutmut_7\n\ud83c\udf89 verification.mutation_catalog.x_read_native__mutmut_8\n\ud83c\udf89 verification.mutation_catalog.x_read_native__mutmut_9\n\n"
+    },
+    "research/lstm_detector.py": {
+      "sha256": "277375e66d1edc6ed94c5ffc4b1074c113e86c6095c7dc2b20d3058cb006da18",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 368,
+        "survived": 9
+      },
+      "total": 377,
+      "seconds": 414,
+      "tail": "rk\u01c1forward__mutmut_2\n\ud83c\udf89 research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_3\n\ud83c\udf89 research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_4\n\ud83c\udf89 research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_5\n\ud83c\udf89 research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_6\n\ud83c\udf89 research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_7\n\ud83c\udf89 research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_8\n\ud83c\udf89 research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_9\n\n"
+    },
+    "experiments/provenance.py": {
+      "sha256": "29419da39db6ee6e837e37d3501508efd102ee3cd8210a2c2fb595b0c3897f3f",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 378,
+        "survived": 3
+      },
+      "total": 381,
+      "seconds": 1544,
+      "tail": "e_split_ids__mutmut_70\n\ud83c\udf89 experiments.provenance.x_write_split_ids__mutmut_71\n\ud83c\udf89 experiments.provenance.x_write_split_ids__mutmut_72\n\ud83c\udf89 experiments.provenance.x_write_split_ids__mutmut_73\n\ud83c\udf89 experiments.provenance.x_write_split_ids__mutmut_74\n\ud83c\udf89 experiments.provenance.x_write_split_ids__mutmut_75\n\ud83c\udf89 experiments.provenance.x_write_split_ids__mutmut_8\n\ud83c\udf89 experiments.provenance.x_write_split_ids__mutmut_9\n\n"
+    },
+    "research/dataset_registry.py": {
+      "sha256": "d547aef1196e06e296a0d3d60496314e4af22fb9ad8d13ea2e1fc5b0f5be4337",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 399,
+        "survived": 18
+      },
+      "total": 417,
+      "seconds": 87,
+      "tail": "registry.x_uci_licence__mutmut_37\n\ud83c\udf89 research.dataset_registry.x_uci_licence__mutmut_38\n\ud83c\udf89 research.dataset_registry.x_uci_licence__mutmut_4\n\ud83c\udf89 research.dataset_registry.x_uci_licence__mutmut_5\n\ud83c\udf89 research.dataset_registry.x_uci_licence__mutmut_6\n\ud83c\udf89 research.dataset_registry.x_uci_licence__mutmut_7\n\ud83c\udf89 research.dataset_registry.x_uci_licence__mutmut_8\n\ud83c\udf89 research.dataset_registry.x_uci_licence__mutmut_9\n\n"
+    },
+    "experiments/run_benchmark.py": {
+      "sha256": "9ed61c4d0e25e852a57ac9144dcfa03a020383057494f8c6262709a56f88b9ee",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 437,
+        "survived": 1
+      },
+      "total": 438,
+      "seconds": 273,
+      "tail": "enchmark.x_to_markdown__mutmut_31\n\ud83c\udf89 experiments.run_benchmark.x_to_markdown__mutmut_32\n\ud83c\udf89 experiments.run_benchmark.x_to_markdown__mutmut_4\n\ud83c\udf89 experiments.run_benchmark.x_to_markdown__mutmut_5\n\ud83c\udf89 experiments.run_benchmark.x_to_markdown__mutmut_6\n\ud83c\udf89 experiments.run_benchmark.x_to_markdown__mutmut_7\n\ud83c\udf89 experiments.run_benchmark.x_to_markdown__mutmut_8\n\ud83c\udf89 experiments.run_benchmark.x_to_markdown__mutmut_9\n\n"
+    },
+    "research/deep_typed.py": {
+      "sha256": "45193c4c741561f7ee522550367757a9b7a7884415375a8a1b01617328f0810d",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 415,
+        "survived": 27
+      },
+      "total": 442,
+      "seconds": 333,
+      "tail": "90\n\ud83d\ude41 research.deep_typed.x_run_seed__mutmut_91\n\ud83c\udf89 research.deep_typed.x_run_seed__mutmut_92\n\ud83c\udf89 research.deep_typed.x_run_seed__mutmut_93\n\ud83c\udf89 research.deep_typed.x_run_seed__mutmut_94\n\ud83c\udf89 research.deep_typed.x_run_seed__mutmut_95\n\ud83c\udf89 research.deep_typed.x_run_seed__mutmut_96\n\ud83c\udf89 research.deep_typed.x_run_seed__mutmut_97\n\ud83c\udf89 research.deep_typed.x_run_seed__mutmut_98\n\ud83c\udf89 research.deep_typed.x_run_seed__mutmut_99\n\n"
+    },
+    "experiments/run_curves.py": {
+      "sha256": "45b316b8db7592046702f8420b7d3eda7078a731a5a82966ea396b6d4c174bdc",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 443,
+        "survived": 8
+      },
+      "total": 451,
+      "seconds": 548,
+      "tail": "__mutmut_43\n\ud83c\udf89 experiments.run_curves.x_scores_for__mutmut_44\n\ud83c\udf89 experiments.run_curves.x_scores_for__mutmut_45\n\ud83c\udf89 experiments.run_curves.x_scores_for__mutmut_46\n\ud83c\udf89 experiments.run_curves.x_scores_for__mutmut_5\n\ud83c\udf89 experiments.run_curves.x_scores_for__mutmut_6\n\ud83c\udf89 experiments.run_curves.x_scores_for__mutmut_7\n\ud83c\udf89 experiments.run_curves.x_scores_for__mutmut_8\n\ud83c\udf89 experiments.run_curves.x_scores_for__mutmut_9\n\n"
+    },
+    "research/labelled_benchmark.py": {
+      "sha256": "d4f1f954079d382f364748648837cb33e7743e81b24e63e66caeeb1b89b51f78",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 475
+      },
+      "total": 475,
+      "seconds": 131,
+      "tail": "lem__mutmut_9\n\ud83c\udf89 research.labelled_benchmark.x_run_problem__mutmut_90\n\ud83c\udf89 research.labelled_benchmark.x_run_problem__mutmut_91\n\ud83c\udf89 research.labelled_benchmark.x_run_problem__mutmut_92\n\ud83c\udf89 research.labelled_benchmark.x_run_problem__mutmut_93\n\ud83c\udf89 research.labelled_benchmark.x_run_problem__mutmut_94\n\ud83c\udf89 research.labelled_benchmark.x_run_problem__mutmut_95\n\ud83c\udf89 research.labelled_benchmark.x_run_problem__mutmut_96\n\n"
+    },
+    "verification/mutation_campaign.py": {
+      "sha256": "7686e99b42f42213c1514e390a4edd2c51d4358b45bd82dffee7648ae5b0f3a6",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 678,
+        "survived": 8
+      },
+      "total": 686,
+      "seconds": 365,
+      "tail": "date_current__mutmut_63\n\ud83c\udf89 verification.mutation_campaign.x_validate_current__mutmut_64\n\ud83c\udf89 verification.mutation_campaign.x_validate_current__mutmut_65\n\ud83c\udf89 verification.mutation_campaign.x_validate_current__mutmut_66\n\ud83c\udf89 verification.mutation_campaign.x_validate_current__mutmut_7\n\ud83c\udf89 verification.mutation_campaign.x_validate_current__mutmut_8\n\ud83c\udf89 verification.mutation_campaign.x_validate_current__mutmut_9\n\n"
+    },
+    "research/pool_extension_summary.py": {
+      "sha256": "e33367ebe505799d79f98acf46ecc53f67fd8c3dbcbcef959323d9c8f84f56db",
+      "status": "incomplete",
+      "returncode": 0,
+      "counts": {
+        "killed": 492,
+        "incomplete": 1,
+        "survived": 3
+      },
+      "total": 496,
+      "seconds": 106,
+      "tail": "x_timings__mutmut_26\n\ud83c\udf89 research.pool_extension_summary.x_timings__mutmut_3\n\ud83c\udf89 research.pool_extension_summary.x_timings__mutmut_4\n\ud83c\udf89 research.pool_extension_summary.x_timings__mutmut_5\n\ud83c\udf89 research.pool_extension_summary.x_timings__mutmut_6\n\ud83c\udf89 research.pool_extension_summary.x_timings__mutmut_7\n\ud83c\udf89 research.pool_extension_summary.x_timings__mutmut_8\n\ud83c\udf89 research.pool_extension_summary.x_timings__mutmut_9\n\n"
+    },
+    "research/lstm_pilot.py": {
+      "sha256": "8c5ee81a42be9f605f50e32f69e61018f8aef0a38f3eef7c80a50adb7d9bae0f",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "survived": 46,
+        "killed": 460
+      },
+      "total": 506,
+      "seconds": 98,
+      "tail": "thetic_sequence_stream__mutmut_86\n\ud83c\udf89 research.lstm_pilot.x_synthetic_sequence_stream__mutmut_87\n\ud83c\udf89 research.lstm_pilot.x_synthetic_sequence_stream__mutmut_88\n\ud83c\udf89 research.lstm_pilot.x_synthetic_sequence_stream__mutmut_89\n\ud83c\udf89 research.lstm_pilot.x_synthetic_sequence_stream__mutmut_9\n\ud83c\udf89 research.lstm_pilot.x_synthetic_sequence_stream__mutmut_90\n\ud83c\udf89 research.lstm_pilot.x_synthetic_sequence_stream__mutmut_91\n\n"
+    },
+    "research/typed_summary.py": {
+      "sha256": "dd02dbace8fe6f879ff8da68a293324df68af40bbe99e6780410b91e4d44d930",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "survived": 29,
+        "killed": 478
+      },
+      "total": 507,
+      "seconds": 98,
+      "tail": "x_stability__mutmut_13\n\ud83c\udf89 research.typed_summary.x_stability__mutmut_2\n\ud83c\udf89 research.typed_summary.x_stability__mutmut_3\n\ud83c\udf89 research.typed_summary.x_stability__mutmut_4\n\ud83d\ude41 research.typed_summary.x_stability__mutmut_5\n\ud83c\udf89 research.typed_summary.x_stability__mutmut_6\n\ud83c\udf89 research.typed_summary.x_stability__mutmut_7\n\ud83d\ude41 research.typed_summary.x_stability__mutmut_8\n\ud83d\ude41 research.typed_summary.x_stability__mutmut_9\n\n"
+    },
+    "research/paper_tables.py": {
+      "sha256": "42d6cea0d6b303f008ae7f3009d86da0516b3101390ead7c7b5a84136014eb4c",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 469,
+        "survived": 42
+      },
+      "total": 511,
+      "seconds": 98,
+      "tail": "ables.x_rows__mutmut_69\n\ud83c\udf89 research.paper_tables.x_rows__mutmut_7\n\ud83c\udf89 research.paper_tables.x_rows__mutmut_70\n\ud83c\udf89 research.paper_tables.x_rows__mutmut_71\n\ud83c\udf89 research.paper_tables.x_rows__mutmut_72\n\ud83c\udf89 research.paper_tables.x_rows__mutmut_73\n\ud83c\udf89 research.paper_tables.x_rows__mutmut_74\n\ud83c\udf89 research.paper_tables.x_rows__mutmut_75\n\ud83c\udf89 research.paper_tables.x_rows__mutmut_8\n\ud83c\udf89 research.paper_tables.x_rows__mutmut_9\n\n"
+    },
+    "research/pool_full.py": {
+      "sha256": "bf7a089a7c2521d05dc7171b69206dc42fbf907e88f11ee4e5ce7e1e13157a4c",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 511,
+        "survived": 4
+      },
+      "total": 515,
+      "seconds": 141,
+      "tail": "ol_full.x_run_problem__mutmut_77\n\ud83c\udf89 research.pool_full.x_run_problem__mutmut_78\n\ud83c\udf89 research.pool_full.x_run_problem__mutmut_79\n\ud83c\udf89 research.pool_full.x_run_problem__mutmut_8\n\ud83c\udf89 research.pool_full.x_run_problem__mutmut_80\n\ud83c\udf89 research.pool_full.x_run_problem__mutmut_81\n\ud83c\udf89 research.pool_full.x_run_problem__mutmut_82\n\ud83c\udf89 research.pool_full.x_run_problem__mutmut_83\n\ud83c\udf89 research.pool_full.x_run_problem__mutmut_9\n\n"
+    },
+    "research/pool_typed.py": {
+      "sha256": "0b477c1c51fc616596b5ed3b09841a0374f1bc26603f22a2bc7c7ee638a8bbad",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 521,
+        "survived": 4
+      },
+      "total": 525,
+      "seconds": 104,
+      "tail": "everity__mutmut_58\n\ud83c\udf89 research.pool_typed.x_run_severity__mutmut_59\n\ud83c\udf89 research.pool_typed.x_run_severity__mutmut_6\n\ud83c\udf89 research.pool_typed.x_run_severity__mutmut_60\n\ud83c\udf89 research.pool_typed.x_run_severity__mutmut_61\n\ud83c\udf89 research.pool_typed.x_run_severity__mutmut_62\n\ud83c\udf89 research.pool_typed.x_run_severity__mutmut_7\n\ud83c\udf89 research.pool_typed.x_run_severity__mutmut_8\n\ud83c\udf89 research.pool_typed.x_run_severity__mutmut_9\n\n"
+    },
+    "verification/mutation_policy.py": {
+      "sha256": "75876d6a987bcfcab9394ef084b208a521bdcece2995ac56769786e6c68c8561",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 860,
+        "survived": 9
+      },
+      "total": 869,
+      "seconds": 283,
+      "tail": "utation_policy.x_validate_policy__mutmut_49\n\ud83c\udf89 verification.mutation_policy.x_validate_policy__mutmut_5\n\ud83c\udf89 verification.mutation_policy.x_validate_policy__mutmut_50\n\ud83c\udf89 verification.mutation_policy.x_validate_policy__mutmut_6\n\ud83c\udf89 verification.mutation_policy.x_validate_policy__mutmut_7\n\ud83c\udf89 verification.mutation_policy.x_validate_policy__mutmut_8\n\ud83c\udf89 verification.mutation_policy.x_validate_policy__mutmut_9\n\n"
+    },
+    "src/etl_benchmark/synthetic.py": {
+      "sha256": "568eba17da657259401c3e31220687949cd2b6af22d5ac5942e5172fec26945b",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 529,
+        "survived": 7
+      },
+      "total": 536,
+      "seconds": 1985,
+      "tail": "synthetic__mutmut_92\n\ud83c\udf89 etl_benchmark.synthetic.x_make_synthetic__mutmut_93\n\ud83c\udf89 etl_benchmark.synthetic.x_make_synthetic__mutmut_94\n\ud83c\udf89 etl_benchmark.synthetic.x_make_synthetic__mutmut_95\n\ud83c\udf89 etl_benchmark.synthetic.x_make_synthetic__mutmut_96\n\ud83c\udf89 etl_benchmark.synthetic.x_make_synthetic__mutmut_97\n\ud83c\udf89 etl_benchmark.synthetic.x_make_synthetic__mutmut_98\n\ud83c\udf89 etl_benchmark.synthetic.x_make_synthetic__mutmut_99\n\n"
+    },
+    "research/full_registry_summary.py": {
+      "sha256": "8631dfe763b8b34ec00adac3c416b2827faf59ec9bf39265bc2d1aed44bd7d12",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 468,
+        "survived": 73
+      },
+      "total": 541,
+      "seconds": 245,
+      "tail": "pr__mutmut_26\n\ud83c\udf89 research.full_registry_summary.x_typed_fpr__mutmut_3\n\ud83c\udf89 research.full_registry_summary.x_typed_fpr__mutmut_4\n\ud83c\udf89 research.full_registry_summary.x_typed_fpr__mutmut_5\n\ud83c\udf89 research.full_registry_summary.x_typed_fpr__mutmut_6\n\ud83c\udf89 research.full_registry_summary.x_typed_fpr__mutmut_7\n\ud83c\udf89 research.full_registry_summary.x_typed_fpr__mutmut_8\n\ud83c\udf89 research.full_registry_summary.x_typed_fpr__mutmut_9\n\n"
+    },
+    "research/full_registry.py": {
+      "sha256": "09cc0b9aa694da18fd84d52322aeaf5ce612990bee5c0dae65300b83ee7bc0e5",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 561,
+        "survived": 10
+      },
+      "total": 571,
+      "seconds": 240,
+      "tail": "x_synthetic_seed__mutmut_92\n\ud83c\udf89 research.full_registry.x_synthetic_seed__mutmut_93\n\ud83c\udf89 research.full_registry.x_synthetic_seed__mutmut_94\n\ud83c\udf89 research.full_registry.x_synthetic_seed__mutmut_95\n\ud83c\udf89 research.full_registry.x_synthetic_seed__mutmut_96\n\ud83c\udf89 research.full_registry.x_synthetic_seed__mutmut_97\n\ud83c\udf89 research.full_registry.x_synthetic_seed__mutmut_98\n\ud83c\udf89 research.full_registry.x_synthetic_seed__mutmut_99\n\n"
+    },
+    "experiments/run_synthetic_benchmark.py": {
+      "sha256": "803feb40a63727adee27fd057845ccff902fc9cff12005280f7e7f0fcaf7be8b",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 561,
+        "survived": 11
+      },
+      "total": 572,
+      "seconds": 915,
+      "tail": "rk.x_run__mutmut_34\n\ud83c\udf89 experiments.run_synthetic_benchmark.x_run__mutmut_35\n\ud83c\udf89 experiments.run_synthetic_benchmark.x_run__mutmut_4\n\ud83c\udf89 experiments.run_synthetic_benchmark.x_run__mutmut_5\n\ud83c\udf89 experiments.run_synthetic_benchmark.x_run__mutmut_6\n\ud83c\udf89 experiments.run_synthetic_benchmark.x_run__mutmut_7\n\ud83c\udf89 experiments.run_synthetic_benchmark.x_run__mutmut_8\n\ud83c\udf89 experiments.run_synthetic_benchmark.x_run__mutmut_9\n\n"
+    },
+    "research/temporal_pilot.py": {
+      "sha256": "03e63b2961126c3192fec7fbf374b434e0ab81c54a1317c3cfa99ecb732b0982",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 580,
+        "survived": 9
+      },
+      "total": 589,
+      "seconds": 140,
+      "tail": "l_pilot.x_to_timestamps__mutmut_23\n\ud83c\udf89 research.temporal_pilot.x_to_timestamps__mutmut_3\n\ud83c\udf89 research.temporal_pilot.x_to_timestamps__mutmut_4\n\ud83c\udf89 research.temporal_pilot.x_to_timestamps__mutmut_5\n\ud83c\udf89 research.temporal_pilot.x_to_timestamps__mutmut_6\n\ud83c\udf89 research.temporal_pilot.x_to_timestamps__mutmut_7\n\ud83c\udf89 research.temporal_pilot.x_to_timestamps__mutmut_8\n\ud83c\udf89 research.temporal_pilot.x_to_timestamps__mutmut_9\n\n"
+    },
+    "research/pool_extension_paper.py": {
+      "sha256": "927dcc1c46b6d3a37665ae1fbfa75cc24d20e7f5390d78e313ac4878408d5cfc",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 622,
+        "survived": 30
+      },
+      "total": 652,
+      "seconds": 418,
+      "tail": "research.pool_extension_paper.x_write__mutmut_22\n\ud83c\udf89 research.pool_extension_paper.x_write__mutmut_3\n\ud83c\udf89 research.pool_extension_paper.x_write__mutmut_4\n\ud83c\udf89 research.pool_extension_paper.x_write__mutmut_5\n\ud83c\udf89 research.pool_extension_paper.x_write__mutmut_6\n\ud83c\udf89 research.pool_extension_paper.x_write__mutmut_7\n\ud83c\udf89 research.pool_extension_paper.x_write__mutmut_8\n\ud83c\udf89 research.pool_extension_paper.x_write__mutmut_9\n\n"
+    },
+    "research/labelled_summary.py": {
+      "sha256": "2b9a60f12ceded6be288059b885b61e11eb7b68122010aed1cf69d5a578706e0",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 626,
+        "survived": 50
+      },
+      "total": 676,
+      "seconds": 200,
+      "tail": "d_summary.x_table__mutmut_39\n\ud83c\udf89 research.labelled_summary.x_table__mutmut_4\n\ud83c\udf89 research.labelled_summary.x_table__mutmut_40\n\ud83c\udf89 research.labelled_summary.x_table__mutmut_41\n\ud83d\ude41 research.labelled_summary.x_table__mutmut_5\n\ud83c\udf89 research.labelled_summary.x_table__mutmut_6\n\ud83c\udf89 research.labelled_summary.x_table__mutmut_7\n\ud83c\udf89 research.labelled_summary.x_table__mutmut_8\n\ud83c\udf89 research.labelled_summary.x_table__mutmut_9\n\n"
+    },
+    "verification/claims.py": {
+      "sha256": "b4debf7608b8ed1b9db52aa203b6ffb8c181af3164ff699fe4a55580e04bb7e1",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 685,
+        "survived": 29
+      },
+      "total": 714,
+      "seconds": 236,
+      "tail": "mutmut_64\n\ud83c\udf89 verification.claims.x_split_mutants__mutmut_65\n\ud83c\udf89 verification.claims.x_split_mutants__mutmut_66\n\ud83c\udf89 verification.claims.x_split_mutants__mutmut_67\n\ud83c\udf89 verification.claims.x_split_mutants__mutmut_68\n\ud83c\udf89 verification.claims.x_split_mutants__mutmut_69\n\ud83c\udf89 verification.claims.x_split_mutants__mutmut_7\n\ud83c\udf89 verification.claims.x_split_mutants__mutmut_8\n\ud83c\udf89 verification.claims.x_split_mutants__mutmut_9\n\n"
+    },
+    "verification/real_preflight.py": {
+      "sha256": "f93accf155e74ae6c04d15d9606de0c84404661f35a9bf38fa0fcf1caeb89051",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 543,
+        "survived": 247
+      },
+      "total": 790,
+      "seconds": 133,
+      "tail": "un_checks__mutmut_92\n\ud83d\ude41 verification.real_preflight.x_run_checks__mutmut_93\n\ud83d\ude41 verification.real_preflight.x_run_checks__mutmut_94\n\ud83c\udf89 verification.real_preflight.x_run_checks__mutmut_95\n\ud83c\udf89 verification.real_preflight.x_run_checks__mutmut_96\n\ud83c\udf89 verification.real_preflight.x_run_checks__mutmut_97\n\ud83c\udf89 verification.real_preflight.x_run_checks__mutmut_98\n\ud83c\udf89 verification.real_preflight.x_run_checks__mutmut_99\n\n"
+    },
+    "verification/release.py": {
+      "sha256": "e6a6e512d90f34a5f0a6cb712d214e54aa735544d0f68c9c28ba6111f165d211",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 812,
+        "survived": 42
+      },
+      "total": 854,
+      "seconds": 323,
+      "tail": "lease.x_reference_hashes__mutmut_2\n\ud83c\udf89 verification.release.x_reference_hashes__mutmut_3\n\ud83c\udf89 verification.release.x_reference_hashes__mutmut_4\n\ud83d\ude41 verification.release.x_reference_hashes__mutmut_5\n\ud83c\udf89 verification.release.x_reference_hashes__mutmut_6\n\ud83c\udf89 verification.release.x_reference_hashes__mutmut_7\n\ud83c\udf89 verification.release.x_reference_hashes__mutmut_8\n\ud83c\udf89 verification.release.x_reference_hashes__mutmut_9\n\n"
+    },
+    "verification/reproduce.py": {
+      "sha256": "f88fabab13c6ebdce127ca9d8736b73beda13799ec3c9482a9877589e74a3d13",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 764,
+        "survived": 68
+      },
+      "total": 832,
+      "seconds": 617,
+      "tail": "57\n\ud83c\udf89 verification.reproduce.x_run_dataset__mutmut_58\n\ud83c\udf89 verification.reproduce.x_run_dataset__mutmut_59\n\ud83d\ude41 verification.reproduce.x_run_dataset__mutmut_6\n\ud83c\udf89 verification.reproduce.x_run_dataset__mutmut_60\n\ud83c\udf89 verification.reproduce.x_run_dataset__mutmut_61\n\ud83d\ude41 verification.reproduce.x_run_dataset__mutmut_7\n\ud83d\ude41 verification.reproduce.x_run_dataset__mutmut_8\n\ud83d\ude41 verification.reproduce.x_run_dataset__mutmut_9\n\n"
+    },
+    "research/temporal_decision.py": {
+      "sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 754,
+        "survived": 81,
+        "timeout": 1
+      },
+      "total": 836,
+      "seconds": 264,
+      "tail": "cision.x_thresholds__mutmut_65\n\ud83c\udf89 research.temporal_decision.x_thresholds__mutmut_66\n\ud83c\udf89 research.temporal_decision.x_thresholds__mutmut_67\n\ud83c\udf89 research.temporal_decision.x_thresholds__mutmut_68\n\ud83c\udf89 research.temporal_decision.x_thresholds__mutmut_69\n\ud83c\udf89 research.temporal_decision.x_thresholds__mutmut_7\n\ud83c\udf89 research.temporal_decision.x_thresholds__mutmut_8\n\ud83c\udf89 research.temporal_decision.x_thresholds__mutmut_9\n\n"
+    },
+    "research/multi_schema.py": {
+      "sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 1000,
+        "survived": 93
+      },
+      "total": 1093,
+      "seconds": 442,
+      "tail": "mer__mutmut_2\n\ud83c\udf89 research.multi_schema.x_published_customer__mutmut_3\n\ud83c\udf89 research.multi_schema.x_published_customer__mutmut_4\n\ud83c\udf89 research.multi_schema.x_published_customer__mutmut_5\n\ud83d\ude41 research.multi_schema.x_published_customer__mutmut_6\n\ud83c\udf89 research.multi_schema.x_published_customer__mutmut_7\n\ud83d\ude41 research.multi_schema.x_published_customer__mutmut_8\n\ud83c\udf89 research.multi_schema.x_published_customer__mutmut_9\n\n"
+    },
+    "verification/mutation_cache.py": {
+      "sha256": "81370c774726c5a586670db6c0ef5e40edd70fdd6ea628f6b8b0337d26e5c7a8",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 1085,
+        "survived": 24,
+        "timeout": 1
+      },
+      "total": 1110,
+      "seconds": 844,
+      "tail": "alidate_execution__mutmut_76\n\ud83c\udf89 verification.mutation_cache.x_validate_execution__mutmut_77\n\ud83c\udf89 verification.mutation_cache.x_validate_execution__mutmut_78\n\ud83c\udf89 verification.mutation_cache.x_validate_execution__mutmut_79\n\ud83c\udf89 verification.mutation_cache.x_validate_execution__mutmut_8\n\ud83c\udf89 verification.mutation_cache.x_validate_execution__mutmut_80\n\ud83c\udf89 verification.mutation_cache.x_validate_execution__mutmut_9\n\n"
+    },
+    "verification/evidence_schema.py": {
+      "sha256": "5a7aaa7d5a473f903695d7ee039e4e5171a53b613e90086858f2e142e88aea8d",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 1356,
+        "survived": 191
+      },
+      "total": 1547,
+      "seconds": 1612,
+      "tail": "_schema.x_validate__mutmut_79\n\ud83c\udf89 verification.evidence_schema.x_validate__mutmut_8\n\ud83c\udf89 verification.evidence_schema.x_validate__mutmut_80\n\ud83c\udf89 verification.evidence_schema.x_validate__mutmut_81\n\ud83d\ude41 verification.evidence_schema.x_validate__mutmut_82\n\ud83c\udf89 verification.evidence_schema.x_validate__mutmut_83\n\ud83c\udf89 verification.evidence_schema.x_validate__mutmut_84\n\ud83c\udf89 verification.evidence_schema.x_validate__mutmut_9\n\n"
+    },
+    "src/etl_benchmark/__init__.py": {
+      "sha256": "21025aa2c1e5f48c7fff2cd5a488753989ff634d57c0a1ce2624718cb9af23ef",
+      "status": "incomplete",
+      "returncode": 1,
+      "counts": {},
+      "total": 0,
+      "seconds": 28,
+      "tail": "^^^^^^^^^^^^^^\n  File \"/Users/theo/.cache/etl-mutation-venv/lib/python3.11/site-packages/mutmut/__main__.py\", line 815, in collect_source_file_mutation_data\n    assert filtered_mutants, f\"Filtered for specific mutants, but nothing matches\\n\\nFilter: {mutant_names}\"\n           ^^^^^^^^^^^^^^^^\nAssertionError: Filtered for specific mutants, but nothing matches\n\nFilter: ('etl_benchmark.__init__.*',)\n"
+    },
+    "src/etl_benchmark/__main__.py": {
+      "sha256": "ce874443e956a2e7fdec2d24b56b7b595ce6098c1432890b1fe2b6fe502403de",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 35,
+        "survived": 1
+      },
+      "total": 36,
+      "seconds": 35,
+      "tail": "x_main__mutmut_33\n\ud83c\udf89 etl_benchmark.__main__.x_main__mutmut_34\n\ud83c\udf89 etl_benchmark.__main__.x_main__mutmut_35\n\ud83c\udf89 etl_benchmark.__main__.x_main__mutmut_36\n\ud83c\udf89 etl_benchmark.__main__.x_main__mutmut_4\n\ud83c\udf89 etl_benchmark.__main__.x_main__mutmut_5\n\ud83c\udf89 etl_benchmark.__main__.x_main__mutmut_6\n\ud83c\udf89 etl_benchmark.__main__.x_main__mutmut_7\n\ud83c\udf89 etl_benchmark.__main__.x_main__mutmut_8\n\ud83c\udf89 etl_benchmark.__main__.x_main__mutmut_9\n\n"
+    },
+    "src/etl_benchmark/logging_setup.py": {
+      "sha256": "02c38dde9ea3afd7492193144c83fd706a6087f7ee5523f98616ebda436ba1b1",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 10
+      },
+      "total": 10,
+      "seconds": 143,
+      "tail": "tmut_2\n\ud83c\udf89 etl_benchmark.logging_setup.x_setup_logging__mutmut_3\n\ud83c\udf89 etl_benchmark.logging_setup.x_setup_logging__mutmut_4\n\ud83c\udf89 etl_benchmark.logging_setup.x_setup_logging__mutmut_5\n\ud83c\udf89 etl_benchmark.logging_setup.x_setup_logging__mutmut_6\n\ud83c\udf89 etl_benchmark.logging_setup.x_setup_logging__mutmut_7\n\ud83c\udf89 etl_benchmark.logging_setup.x_setup_logging__mutmut_8\n\ud83c\udf89 etl_benchmark.logging_setup.x_setup_logging__mutmut_9\n\n"
+    },
+    "src/etl_benchmark/quality/__init__.py": {
+      "sha256": "093d6b983de02bec649c1ad5ac336d78c85c2c0ce7fad606a0542789365e11d4",
+      "status": "incomplete",
+      "returncode": 1,
+      "counts": {},
+      "total": 0,
+      "seconds": 28,
+      "tail": "^^^^^^\n  File \"/Users/theo/.cache/etl-mutation-venv/lib/python3.11/site-packages/mutmut/__main__.py\", line 815, in collect_source_file_mutation_data\n    assert filtered_mutants, f\"Filtered for specific mutants, but nothing matches\\n\\nFilter: {mutant_names}\"\n           ^^^^^^^^^^^^^^^^\nAssertionError: Filtered for specific mutants, but nothing matches\n\nFilter: ('etl_benchmark.quality.__init__.*',)\n"
+    },
+    "research/cost_study.py": {
+      "sha256": "c754219c7d3e61d00b1cff8c228bc9c5b6c75b591558ecea2359049611378b58",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 817,
+        "survived": 7,
+        "timeout": 1
+      },
+      "total": 825,
+      "seconds": 476,
+      "tail": "mut_15\n\ud83c\udf89 research.cost_study.x_wait_for_quiet__mutmut_2\n\ud83c\udf89 research.cost_study.x_wait_for_quiet__mutmut_3\n\ud83c\udf89 research.cost_study.x_wait_for_quiet__mutmut_4\n\ud83c\udf89 research.cost_study.x_wait_for_quiet__mutmut_5\n\ud83c\udf89 research.cost_study.x_wait_for_quiet__mutmut_6\n\ud83c\udf89 research.cost_study.x_wait_for_quiet__mutmut_7\n\ud83c\udf89 research.cost_study.x_wait_for_quiet__mutmut_8\n\ud83c\udf89 research.cost_study.x_wait_for_quiet__mutmut_9\n\n"
+    },
+    "research/deep_support.py": {
+      "sha256": "21e4ef7e52a2eb0d03a9367b25cf08ece677201f53f427aa779be8c6c94e8aff",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 14
+      },
+      "total": 14,
+      "seconds": 93,
+      "tail": "ild__mutmut_5\n\ud83c\udf89 research.deep_support.x_build__mutmut_6\n\ud83c\udf89 research.deep_support.x_build__mutmut_7\n\ud83c\udf89 research.deep_support.x_capped__mutmut_1\n\ud83c\udf89 research.deep_support.x_capped__mutmut_2\n\ud83c\udf89 research.deep_support.x_capped__mutmut_3\n\ud83c\udf89 research.deep_support.x_capped__mutmut_4\n\ud83c\udf89 research.deep_support.x_capped__mutmut_5\n\ud83c\udf89 research.deep_support.x_capped__mutmut_6\n\ud83c\udf89 research.deep_support.x_capped__mutmut_7\n\n"
+    },
+    "research/time_scan.py": {
+      "sha256": "4495ab45b7d317c41fde99eaec357cb2bd204d40a957a19e44612110e10e507f",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 132,
+        "survived": 6
+      },
+      "total": 138,
+      "seconds": 53,
+      "tail": "_mutmut_72\n\ud83c\udf89 research.time_scan.x_scan__mutmut_73\n\ud83c\udf89 research.time_scan.x_scan__mutmut_74\n\ud83c\udf89 research.time_scan.x_scan__mutmut_75\n\ud83c\udf89 research.time_scan.x_scan__mutmut_76\n\ud83c\udf89 research.time_scan.x_scan__mutmut_77\n\ud83c\udf89 research.time_scan.x_scan__mutmut_78\n\ud83c\udf89 research.time_scan.x_scan__mutmut_79\n\ud83c\udf89 research.time_scan.x_scan__mutmut_8\n\ud83c\udf89 research.time_scan.x_scan__mutmut_80\n\ud83c\udf89 research.time_scan.x_scan__mutmut_9\n\n"
+    },
+    "research/uci_pool.py": {
+      "sha256": "5a672c897bd99a82fa9c0657fe8925b623b324e31e912c136e98d22f8347fb82",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 386,
+        "survived": 37
+      },
+      "total": 423,
+      "seconds": 57,
+      "tail": "\n\ud83c\udf89 research.uci_pool.x_strata__mutmut_71\n\ud83c\udf89 research.uci_pool.x_strata__mutmut_72\n\ud83c\udf89 research.uci_pool.x_strata__mutmut_73\n\ud83c\udf89 research.uci_pool.x_strata__mutmut_74\n\ud83c\udf89 research.uci_pool.x_strata__mutmut_75\n\ud83c\udf89 research.uci_pool.x_strata__mutmut_76\n\ud83c\udf89 research.uci_pool.x_strata__mutmut_77\n\ud83c\udf89 research.uci_pool.x_strata__mutmut_78\n\ud83c\udf89 research.uci_pool.x_strata__mutmut_8\n\ud83c\udf89 research.uci_pool.x_strata__mutmut_9\n\n"
+    },
+    "verification/scaling.py": {
+      "sha256": "bfa7ed51ae583a9db6905d4e740b0999f8ffecb49050ae29e2fd0ca7cc9f6ee0",
+      "status": "complete",
+      "returncode": 0,
+      "counts": {
+        "killed": 183,
+        "survived": 124
+      },
+      "total": 307,
+      "seconds": 123,
+      "tail": "rification.scaling.x_run_case__mutmut_77\n\ud83c\udf89 verification.scaling.x_run_case__mutmut_78\n\ud83c\udf89 verification.scaling.x_run_case__mutmut_79\n\ud83c\udf89 verification.scaling.x_run_case__mutmut_8\n\ud83c\udf89 verification.scaling.x_run_case__mutmut_80\n\ud83c\udf89 verification.scaling.x_run_case__mutmut_81\n\ud83c\udf89 verification.scaling.x_run_case__mutmut_82\n\ud83c\udf89 verification.scaling.x_run_case__mutmut_83\n\ud83d\ude41 verification.scaling.x_run_case__mutmut_9\n\n"
+    }
+  }
+}

@@ -1,0 +1,99 @@
+"""Compare the replayed archives with the archives at 401c7bf: timing-only differences against scientific differences.
+
+usage: python compare_replay.py <original dir> <new evidence dir>
+A column or key counts as timing when its name is in TIMING. Anything else that differs is a scientific difference.
+Exit status 1 when a scientific difference exists.
+"""
+import gzip
+import json
+import sys
+from pathlib import Path
+
+import pandas as pd
+
+orig, new = Path(sys.argv[1]), Path(sys.argv[2])
+TIMING_COLUMNS = {"detect_s", "fit_s", "score_s", "seconds", "elapsed_s", "time_s", "detect_seconds"}
+RECORD_PROVENANCE = {
+    "captured_at", "source_revision", "scientific_fingerprint", "source_fingerprint",
+    "output_sha256", "platform", "python", "worktree_dirty", "packages", "environment_lock", "path",
+}  # fmt: skip
+problems, notes = [], []
+
+
+def timing(name: str) -> bool:
+    n = name.lower()
+    return name in TIMING_COLUMNS or n.startswith("detect_s") or n.endswith("_s") or "second" in n or "time" in n
+
+
+def compare_csv(name: str):
+    a, b = pd.read_csv(orig / name), pd.read_csv(new / name)
+    if list(a.columns) != list(b.columns) or a.shape != b.shape:
+        problems.append(f"{name}: shape or columns differ {a.shape} {b.shape}")
+        return
+    t_cols = [c for c in a.columns if timing(c)]
+    worst = 0.0
+    for c in a.columns:
+        if c in t_cols:
+            continue
+        if pd.api.types.is_numeric_dtype(a[c]):
+            d = float((a[c].astype(float) - b[c].astype(float)).abs().max(skipna=True)) if len(a) else 0.0
+            same_nan = (a[c].isna() == b[c].isna()).all()
+            if not same_nan or (d == d and d > 0):
+                problems.append(f"{name}: column {c} differs (max abs diff {d}, nan pattern equal {same_nan})")
+            worst = max(worst, 0.0 if d != d else d)
+        elif not a[c].equals(b[c]):
+            problems.append(f"{name}: column {c} differs")
+    changed_t = [c for c in t_cols if not a[c].equals(b[c])]
+    notes.append(f"{name}: scientific columns identical (max abs diff {worst}); timing columns changed: {changed_t}")
+
+
+def strip(obj, drop):
+    if isinstance(obj, dict):
+        return {k: strip(v, drop) for k, v in obj.items() if k not in drop and not timing(k)}
+    if isinstance(obj, list):
+        return [strip(v, drop) for v in obj]
+    return obj
+
+
+def compare_record(name: str):
+    a, b = json.loads((orig / name).read_text()), json.loads((new / name).read_text())
+    sa, sb = strip(a, RECORD_PROVENANCE), strip(b, RECORD_PROVENANCE)
+    # outputs are timestamped file names; compare their stable names
+    for s in (sa, sb):
+        s.pop("outputs", None)
+    if sa != sb:
+        keys = [k for k in set(sa) | set(sb) if sa.get(k) != sb.get(k)]
+        problems.append(f"{name}: record fields differ besides provenance and timing: {keys}")
+    else:
+        notes.append(f"{name}: record identical besides provenance/timing; packages equal: {a.get('packages') == b.get('packages')}; lock equal: {a.get('environment_lock') == b.get('environment_lock')}; fingerprint {a['scientific_fingerprint'][:8]} -> {b['scientific_fingerprint'][:8]}; dirty {b['worktree_dirty']}")
+
+
+def compare_gz(name: str):
+    a = gzip.open(orig / name, "rt").read()
+    b = gzip.open(new / name, "rt").read()
+    (notes if a == b else problems).append(f"{name}: decompressed partitions {'identical' if a == b else 'DIFFER'}")
+
+
+def compare_json(path_a: Path, path_b: Path, label: str):
+    a, b = json.loads(path_a.read_text()), json.loads(path_b.read_text())
+    sa, sb = strip(a, {"provenance"}), strip(b, {"provenance"})
+    (notes if sa == sb else problems).append(f"{label}: {'identical besides timing and provenance' if sa == sb else 'DIFFERS'}")
+
+
+for f in sorted(p.name for p in orig.iterdir() if p.is_file()):
+    if f.endswith(".csv"):
+        compare_csv(f)
+    elif f.endswith(".json.gz"):
+        compare_gz(f)
+    elif f.startswith("run_") and f.endswith(".json"):
+        compare_record(f)
+tp_a, tp_b = orig / "temporal_pilot" / "temporal_pilot.json", new / "temporal_pilot" / "temporal_pilot.json"
+if tp_a.exists() and tp_b.exists():
+    compare_json(tp_a, tp_b, "temporal_pilot.json")
+    ra = json.loads((orig / "temporal_pilot" / "run_temporal_pilot.json").read_text())
+    rb = json.loads((new / "temporal_pilot" / "run_temporal_pilot.json").read_text())
+    notes.append(f"run_temporal_pilot.json: dataset sha equal {ra['settings']['dataset_sha256'] == rb['settings']['dataset_sha256']}; fingerprint {ra['scientific_fingerprint'][:8]} -> {rb['scientific_fingerprint'][:8]}; dirty {rb['worktree_dirty']}")
+print("\n".join(notes))
+print("\nSCIENTIFIC DIFFERENCES:" if problems else "\nNo scientific difference.")
+print("\n".join(problems))
+sys.exit(1 if problems else 0)

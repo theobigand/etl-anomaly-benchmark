@@ -1,0 +1,10 @@
+usage: multi_schema [-h] --output OUTPUT [--rows ROWS]
+                    [--methods {classical,deep}]
+
+options:
+  -h, --help            show this help message and exit
+  --output OUTPUT
+  --rows ROWS
+  --methods {classical,deep}
+                        the registry sweep with its hypotheses, or the neural
+                        detectors alone

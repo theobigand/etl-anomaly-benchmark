@@ -1,0 +1,8 @@
+{
+  "revision": "d4d21895d3c6addf75218b67bdb8ccd11b4c7b7e",
+  "test_tree_sha256": "953762eb178d4f512e9e07d55c50fa187565465347d01fcfcf080f30fe4da5a8",
+  "test_tree_count": 221,
+  "platform": "macOS-27.2-arm64-arm-64bit-Mach-O",
+  "configuration_sha256": "39d2b60c313679ca6265367580cf592234b04aaf6f332ccc66d895c25b1d705d",
+  "limitations": "Test-tree digest excludes non-test inputs; focused run only; macOS case-insensitive."
+}

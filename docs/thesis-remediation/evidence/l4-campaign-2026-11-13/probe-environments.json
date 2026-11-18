@@ -1,0 +1,20 @@
+{
+ "probes": "tests/test_mutation_equivalence_probes.py",
+ "runs": [
+  {
+   "environment": "mutation venv (numpy wheel linked to Accelerate)",
+   "numpy_pandas": "2.4.6 3.1.1",
+   "result": "27 passed"
+  },
+  {
+   "environment": "canonical conda environment etl-benchmark",
+   "numpy_pandas": "2.4.6 3.0.6",
+   "result": "27 passed"
+  },
+  {
+   "environment": "numpy 1.26 environment (throwaway uv venv)",
+   "numpy_pandas": "1.26.4 2.2.3",
+   "result": "27 passed"
+  }
+ ]
+}

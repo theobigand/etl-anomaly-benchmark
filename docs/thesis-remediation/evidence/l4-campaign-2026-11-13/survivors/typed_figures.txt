@@ -1,0 +1,21 @@
+## x__draw__mutmut_12
+-    ax.imshow(frame.to_numpy(dtype=float), cmap="YlGnBu", vmin=0, vmax=1, aspect="auto")
++    ax.imshow(frame.to_numpy(dtype=None), cmap="YlGnBu", vmin=0, vmax=1, aspect="auto")
+## x_main__mutmut_83
+-        np.nanmedian(np.stack([f.to_numpy(dtype=float) for f in frames.values()]), axis=0),
++        np.nanmedian(np.stack([f.to_numpy(dtype=None) for f in frames.values()]), axis=0),
+## x_main__mutmut_107
+-    plt.close(fig)
++    plt.close(None)
+## x_main__mutmut_133
+-        ax.axis("off")
++        ax.axis("OFF")
+## x_main__mutmut_136
+-    for ax, name in zip(axes.ravel(), names, strict=False):
++    for ax, name in zip(axes.ravel(), names, strict=None):
+## x_main__mutmut_139
+-    for ax, name in zip(axes.ravel(), names, strict=False):
++    for ax, name in zip(axes.ravel(), names, ):
+## x_main__mutmut_143
+-        ax.axis("on")
++        ax.axis("ON")

@@ -1,0 +1,10 @@
+source 4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.0.6 sklearn 1.9.1
+fit orig flags differ 0 score max diff 0.0
+fit 4 flags differ 5 score max diff 0.9920025536098525
+matrix orig flags differ 0 score max diff 0.0
+matrix 8 flags differ 1 score max diff 0.8334030720683892
+source 4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.1.1 sklearn 1.9.1
+fit orig flags differ 0 score max diff 0.0
+fit 4 flags differ 5 score max diff 0.9920025536098525
+matrix orig flags differ 0 score max diff 0.0
+matrix 8 flags differ 1 score max diff 0.8334030720683892

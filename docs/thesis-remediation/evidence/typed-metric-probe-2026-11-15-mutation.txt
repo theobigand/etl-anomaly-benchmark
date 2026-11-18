@@ -1,0 +1,20 @@
+research/typed_benchmark.py abdd10e4a1965e99bd5db8ad1a61b0b9e37caed20f35d09c32bcb1a9a3bae9d2
+mutants/research/typed_benchmark.py da03f935214788a1877fee129fd94c405b10cd71c5e29244705fb980ed1a8976
+research/multi_schema.py 1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4
+mutants/research/multi_schema.py 8b48b7c67a6e97e0bfa55683104c6f7c28ff77fcc949ba1e6281003424dbdf8e
+environment macOS-27.2-arm64-arm-64bit 3.11.17 {'numpy': '2.4.6', 'pandas': '3.1.1', 'scikit-learn': '1.9.1', 'mutmut': '3.8.0'}
+typed_benchmark 18 mixed metrics equal original warnings [] mutant warnings []
+typed_benchmark 18 unflagged metrics equal original warnings [] mutant warnings []
+typed_benchmark 18 absent metrics equal original warnings [] mutant warnings []
+typed_benchmark 26 mixed metrics equal original warnings [] mutant warnings []
+typed_benchmark 26 unflagged metrics equal original warnings [] mutant warnings []
+typed_benchmark 26 absent metrics equal original warnings [] mutant warnings []
+multi_schema 18 mixed metrics equal original warnings [] mutant warnings []
+multi_schema 18 unflagged metrics equal original warnings [] mutant warnings []
+multi_schema 18 absent metrics equal original warnings [] mutant warnings []
+multi_schema 25 mixed metrics equal original warnings [] mutant warnings []
+multi_schema 25 unflagged metrics equal original warnings [] mutant warnings [('UndefinedMetricWarning', 'Precision is ill-defined and being set to 0.0 due to no predicted samples. Use `zero_division` parameter to control this behavior.')]
+multi_schema 25 absent metrics equal original warnings [] mutant warnings []
+multi_schema 26 mixed metrics equal original warnings [] mutant warnings []
+multi_schema 26 unflagged metrics equal original warnings [] mutant warnings []
+multi_schema 26 absent metrics equal original warnings [] mutant warnings []

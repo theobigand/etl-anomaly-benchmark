@@ -1,0 +1,22 @@
+import hashlib,platform,warnings
+from pathlib import Path
+import numpy as np,pandas as pd
+import research.injection as m
+p=Path('research/injection.py');print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'numpy',np.__version__,'pandas',pd.__version__)
+for dtype in ('int64','float32','float64','Int64','Float64'):
+ for n in (200,3000,3200,4000):
+  rng=np.random.default_rng(13); base=np.arange(n); data={f'x{i}':pd.Series(base+i*3,dtype=dtype) for i in range(4)};frame=pd.DataFrame(data)
+  if n>3000: frame.loc[5,'x1']=np.nan
+  for cap in (3000,3500):
+   def run(fn):
+    try:
+     with warnings.catch_warnings(record=True) as w:
+      warnings.simplefilter('always');out=fn(frame,seed=5,cap=cap)
+     return ('ok',out,[(type(x.message).__name__,str(x.message)) for x in w])
+    except Exception as e:return ('error',type(e).__name__,str(e))
+   a=run(m.x_prepare__mutmut_orig);b=run(m.x_prepare__mutmut_6);same=a[0]==b[0]
+   if same and a[0]=='ok':
+    try:pd.testing.assert_frame_equal(a[1][0],b[1][0]);same=a[1][1]==b[1][1] and a[2]==b[2]
+    except AssertionError:same=False
+   elif same:same=a==b
+   print(dtype,n,cap,'match',same,'kind',a[0])

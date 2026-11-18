@@ -1,0 +1,9 @@
+certified runtime (torch 2.15.0+cpu)                       -> PASS  L4 equivalent_accepted=101
+torch -> 2.15.0                                            -> REJECTED (ValueError: equivalence record is incompatible with the campaign environment)
+torch -> 2.14.1                                            -> REJECTED (ValueError: equivalence record is incompatible with the campaign environment)
+torch -> 2.15.0+cu128                                      -> REJECTED (ValueError: equivalence record is incompatible with the campaign environment)
+torch -> None                                              -> REJECTED (ValueError: equivalence record is incompatible with the campaign environment)
+pandas -> 3.1.1                                            -> REJECTED (ValueError: equivalence record is incompatible with the campaign environment)
+scipy -> 1.17.0                                            -> REJECTED (ValueError: equivalence record is incompatible with the campaign environment)
+great-expectations -> 1.24.1                               -> REJECTED (ValueError: equivalence record is incompatible with the campaign environment)
+pyod -> 3.6.8                                              -> REJECTED (ValueError: equivalence record is incompatible with the campaign environment)

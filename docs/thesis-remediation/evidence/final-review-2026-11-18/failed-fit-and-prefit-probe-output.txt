@@ -1,0 +1,57 @@
+#### contamination 2.0
+ECOD fit raised ValueError Quantiles must be in the range [0, 1]
+   after-fit predict -> Series sum= 0.0 all-zero
+   after-fit score -> Series sum= 971.855968401017 
+COPOD fit raised ValueError Quantiles must be in the range [0, 1]
+   after-fit predict -> Series sum= 0.0 all-zero
+   after-fit score -> Series sum= 774.1165184675344 
+PCA fit raised ValueError Quantiles must be in the range [0, 1]
+   after-fit predict -> Series sum= 0.0 all-zero
+   after-fit score -> Series sum= 2.2797996666307166e-29 
+Autoencoder fit raised ValueError Quantiles must be in the range [0, 1]
+   after-fit predict raised TypeError '>' not supported between instances of 'float' and 'NoneType'
+   after-fit score -> Series sum= 251.09396274937518 
+IForest(pyod-native) fit raised ValueError contamination must be in (0, 0.5], got: 2.000000
+   after-fit predict raised RuntimeError isolation_forest detector not fitted. Call fit() first.
+   after-fit score raised RuntimeError isolation_forest detector not fitted. Call fit() first.
+#### contamination -0.5
+ECOD fit raised ValueError Quantiles must be in the range [0, 1]
+   after-fit predict -> Series sum= 0.0 all-zero
+   after-fit score -> Series sum= 971.855968401017 
+COPOD fit raised ValueError Quantiles must be in the range [0, 1]
+   after-fit predict -> Series sum= 0.0 all-zero
+   after-fit score -> Series sum= 774.1165184675344 
+PCA fit raised ValueError Quantiles must be in the range [0, 1]
+   after-fit predict -> Series sum= 0.0 all-zero
+   after-fit score -> Series sum= 2.2797996666307166e-29 
+Autoencoder fit raised ValueError Quantiles must be in the range [0, 1]
+   after-fit predict raised TypeError '>' not supported between instances of 'float' and 'NoneType'
+   after-fit score -> Series sum= 251.09396274937518 
+IForest(pyod-native) fit raised ValueError contamination must be in (0, 0.5], got: -0.500000
+   after-fit predict raised RuntimeError isolation_forest detector not fitted. Call fit() first.
+   after-fit score raised RuntimeError isolation_forest detector not fitted. Call fit() first.
+#### contamination nan
+ECOD fit raised ValueError Quantiles must be in the range [0, 1]
+   after-fit predict -> Series sum= 0.0 all-zero
+   after-fit score -> Series sum= 971.855968401017 
+COPOD fit raised ValueError Quantiles must be in the range [0, 1]
+   after-fit predict -> Series sum= 0.0 all-zero
+   after-fit score -> Series sum= 774.1165184675344 
+PCA fit raised ValueError Quantiles must be in the range [0, 1]
+   after-fit predict -> Series sum= 0.0 all-zero
+   after-fit score -> Series sum= 2.2797996666307166e-29 
+Autoencoder fit raised ValueError Quantiles must be in the range [0, 1]
+   after-fit predict raised TypeError '>' not supported between instances of 'float' and 'NoneType'
+   after-fit score -> Series sum= 251.09396274937518 
+IForest(pyod-native) fit raised ValueError contamination must be in (0, 0.5], got: nan
+   after-fit predict raised RuntimeError isolation_forest detector not fitted. Call fit() first.
+   after-fit score raised RuntimeError isolation_forest detector not fitted. Call fit() first.
+#### pre-fit on public adapters
+ECOD pre-fit predict -> RuntimeError ecod detector not fitted. Call fit() first.
+ECOD pre-fit feature_names_ = None
+PCA pre-fit predict -> RuntimeError pca detector not fitted. Call fit() first.
+PCA pre-fit feature_names_ = None
+AE pre-fit predict -> RuntimeError autoencoder detector not fitted. Call fit() first.
+AE pre-fit feature_names_ = None
+IF pre-fit predict -> RuntimeError isolation_forest detector not fitted. Call fit() first.
+IF pre-fit feature_names_ = None
