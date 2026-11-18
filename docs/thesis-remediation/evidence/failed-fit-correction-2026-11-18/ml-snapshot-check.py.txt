@@ -1,0 +1,21 @@
+"""Evaluate the repository policy on the certified campaign with src/.../ml.py replaced by a newer single-shard measurement.
+usage: python -I ml_snapshot_check.py <extracted certified campaign dir> <extracted diagnostic shard dir>"""
+import json, sys
+sys.path.insert(0, ".")
+from verification import mutation_policy as mp
+cert, diag = sys.argv[1], sys.argv[2]
+ev = json.load(open(cert + "/deep-evidence.json"))["result"]
+new = json.load(open(diag + "/evidence-shard-40.json"))
+P = "src/etl_benchmark/quality/ml.py"
+sources = dict(ev["analysis"]["sources"]); sources[P] = new["sources"][P]
+catalog = dict(ev["catalog"]); catalog[P] = new["catalog"][P]
+records = [r for r in ev["records"] if r["path"] != P] + [r for r in new["records"] if r["path"] == P]
+policy = json.load(open("verification/mutation_risk_policy.json"))
+doc = json.load(open("verification/mutation_equivalence.json"))
+a = mp.evaluate_snapshot(policy, sources, catalog, records, doc, ev["runtime"]["packages"])
+print("status", a["status"])
+m = a["modules"][P]
+print(P, f"{m['killed']}/{m['eligible']} raw {m['raw_score']:.2f}%  excluded {m['equivalent_accepted']}  adjusted {m['killed']}/{m['adjusted_eligible']} {m['score']:.2f}%  {m['status']}")
+for lv, v in a["levels"].items():
+    if v["eligible"]: print(lv, v["killed"], "/", v["eligible"], "adjusted", v["adjusted_eligible"], f"{v['score']:.2f}%", v["status"])
+print("total", a["total"]["eligible"], a["total"]["killed"], a["total"]["survived"], a["total"]["timeout"])

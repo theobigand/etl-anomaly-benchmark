@@ -3510,8 +3510,8 @@
         "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json",
         "docs/thesis-remediation/ML_DEFAULTS_PROBE_2026-11-15.md"
       ],
-      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
-      "catalog_sha256": "38467af6141e58f9b103b94e980082662d5e9710529b6a3c1dbe75fd6c31f200",
+      "source_sha256": "14d844440ca6aa0c3aefa93c627076c2c173cd0331663ec22c9b7f823ea668ca",
+      "catalog_sha256": "ab1b0638b855462437bd67eed2d2b7685f5ba10734d1566d8304c6ec666f6fb5",
       "author": "theobigand",
       "verdict": "accepted",
       "approver": "theobigand",
@@ -3538,6 +3538,11 @@
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
           "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+        },
+        {
+          "assessor": "assistant (revalidation after the failed-fit correction)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The function of this mutant is unchanged by the correction of PyODDetector.fit and the mutant still survives natively in hosted run 44277267046 (mutation-shards diagnostic of src/etl_benchmark/quality/ml.py at 5de925a, hash-locked environment: pandas 3.0.6, pyod 3.6.7, scikit-learn 1.9.1, scipy 1.17.1); the source and catalog digests were rebound, the argument, verdict and approver are unchanged."
         }
       ]
     },
@@ -3555,12 +3560,12 @@
         "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json",
         "docs/thesis-remediation/PYOD_INITIAL_STATE_PROBE_2026-11-15.md"
       ],
-      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
-      "catalog_sha256": "38467af6141e58f9b103b94e980082662d5e9710529b6a3c1dbe75fd6c31f200",
+      "source_sha256": "14d844440ca6aa0c3aefa93c627076c2c173cd0331663ec22c9b7f823ea668ca",
+      "catalog_sha256": "ab1b0638b855462437bd67eed2d2b7685f5ba10734d1566d8304c6ec666f6fb5",
       "author": "theobigand",
-      "verdict": "accepted",
-      "approver": "theobigand",
-      "decision_date": "2026-11-17",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
@@ -3583,6 +3588,11 @@
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
           "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+        },
+        {
+          "assessor": "assistant (obsolescence after the failed-fit correction)",
+          "verdict": "REJECT",
+          "note": "technical finding only; not an owner decision. The mutant is now killed natively in hosted run 44277267046 (mutation-shards diagnostic of src/etl_benchmark/quality/ml.py at 5de925a, hash-locked environment: pandas 3.0.6, pyod 3.6.7, scikit-learn 1.9.1, scipy 1.17.1) by tests/test_detector_failed_fit.py, which pins the unfitted state after a rejected fit. The acceptance no longer applies and the validator refuses an accepted record for a killed mutant, so the verdict returns to proposed with no approver; the earlier accepted decision remains in the Git history. The owner may confirm this change."
         }
       ]
     },
@@ -3600,12 +3610,12 @@
         "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json",
         "docs/thesis-remediation/PYOD_INITIAL_STATE_PROBE_2026-11-15.md"
       ],
-      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
-      "catalog_sha256": "38467af6141e58f9b103b94e980082662d5e9710529b6a3c1dbe75fd6c31f200",
+      "source_sha256": "14d844440ca6aa0c3aefa93c627076c2c173cd0331663ec22c9b7f823ea668ca",
+      "catalog_sha256": "ab1b0638b855462437bd67eed2d2b7685f5ba10734d1566d8304c6ec666f6fb5",
       "author": "theobigand",
-      "verdict": "accepted",
-      "approver": "theobigand",
-      "decision_date": "2026-11-17",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
@@ -3628,6 +3638,11 @@
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
           "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+        },
+        {
+          "assessor": "assistant (obsolescence after the failed-fit correction)",
+          "verdict": "REJECT",
+          "note": "technical finding only; not an owner decision. The mutant is now killed natively in hosted run 44277267046 (mutation-shards diagnostic of src/etl_benchmark/quality/ml.py at 5de925a, hash-locked environment: pandas 3.0.6, pyod 3.6.7, scikit-learn 1.9.1, scipy 1.17.1) by tests/test_detector_failed_fit.py, which pins the unfitted state after a rejected fit. The acceptance no longer applies and the validator refuses an accepted record for a killed mutant, so the verdict returns to proposed with no approver; the earlier accepted decision remains in the Git history. The owner may confirm this change."
         }
       ]
     },
@@ -3645,8 +3660,8 @@
         "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json",
         "docs/thesis-remediation/RULES_EQUIVALENCE_PROBES_2026-11-15.md"
       ],
-      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
-      "catalog_sha256": "38467af6141e58f9b103b94e980082662d5e9710529b6a3c1dbe75fd6c31f200",
+      "source_sha256": "14d844440ca6aa0c3aefa93c627076c2c173cd0331663ec22c9b7f823ea668ca",
+      "catalog_sha256": "ab1b0638b855462437bd67eed2d2b7685f5ba10734d1566d8304c6ec666f6fb5",
       "author": "theobigand",
       "verdict": "accepted",
       "approver": "theobigand",
@@ -3673,6 +3688,11 @@
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
           "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+        },
+        {
+          "assessor": "assistant (revalidation after the failed-fit correction)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The function of this mutant is unchanged by the correction of PyODDetector.fit and the mutant still survives natively in hosted run 44277267046 (mutation-shards diagnostic of src/etl_benchmark/quality/ml.py at 5de925a, hash-locked environment: pandas 3.0.6, pyod 3.6.7, scikit-learn 1.9.1, scipy 1.17.1); the source and catalog digests were rebound, the argument, verdict and approver are unchanged."
         }
       ]
     },
@@ -3690,8 +3710,8 @@
         "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json",
         "docs/thesis-remediation/ML_DEFAULTS_PROBE_2026-11-15.md"
       ],
-      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
-      "catalog_sha256": "38467af6141e58f9b103b94e980082662d5e9710529b6a3c1dbe75fd6c31f200",
+      "source_sha256": "14d844440ca6aa0c3aefa93c627076c2c173cd0331663ec22c9b7f823ea668ca",
+      "catalog_sha256": "ab1b0638b855462437bd67eed2d2b7685f5ba10734d1566d8304c6ec666f6fb5",
       "author": "theobigand",
       "verdict": "accepted",
       "approver": "theobigand",
@@ -3718,6 +3738,11 @@
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
           "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+        },
+        {
+          "assessor": "assistant (revalidation after the failed-fit correction)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The function of this mutant is unchanged by the correction of PyODDetector.fit and the mutant still survives natively in hosted run 44277267046 (mutation-shards diagnostic of src/etl_benchmark/quality/ml.py at 5de925a, hash-locked environment: pandas 3.0.6, pyod 3.6.7, scikit-learn 1.9.1, scipy 1.17.1); the source and catalog digests were rebound, the argument, verdict and approver are unchanged."
         }
       ]
     },
@@ -3735,8 +3760,8 @@
         "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json",
         "docs/thesis-remediation/RULES_EQUIVALENCE_PROBES_2026-11-15.md"
       ],
-      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
-      "catalog_sha256": "38467af6141e58f9b103b94e980082662d5e9710529b6a3c1dbe75fd6c31f200",
+      "source_sha256": "14d844440ca6aa0c3aefa93c627076c2c173cd0331663ec22c9b7f823ea668ca",
+      "catalog_sha256": "ab1b0638b855462437bd67eed2d2b7685f5ba10734d1566d8304c6ec666f6fb5",
       "author": "theobigand",
       "verdict": "accepted",
       "approver": "theobigand",
@@ -3763,6 +3788,11 @@
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
           "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+        },
+        {
+          "assessor": "assistant (revalidation after the failed-fit correction)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The function of this mutant is unchanged by the correction of PyODDetector.fit and the mutant still survives natively in hosted run 44277267046 (mutation-shards diagnostic of src/etl_benchmark/quality/ml.py at 5de925a, hash-locked environment: pandas 3.0.6, pyod 3.6.7, scikit-learn 1.9.1, scipy 1.17.1); the source and catalog digests were rebound, the argument, verdict and approver are unchanged."
         }
       ]
     },
@@ -3780,8 +3810,8 @@
         "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json",
         "docs/thesis-remediation/ML_DEFAULTS_PROBE_2026-11-15.md"
       ],
-      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
-      "catalog_sha256": "38467af6141e58f9b103b94e980082662d5e9710529b6a3c1dbe75fd6c31f200",
+      "source_sha256": "14d844440ca6aa0c3aefa93c627076c2c173cd0331663ec22c9b7f823ea668ca",
+      "catalog_sha256": "ab1b0638b855462437bd67eed2d2b7685f5ba10734d1566d8304c6ec666f6fb5",
       "author": "theobigand",
       "verdict": "accepted",
       "approver": "theobigand",
@@ -3809,6 +3839,11 @@
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
           "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+        },
+        {
+          "assessor": "assistant (revalidation after the failed-fit correction)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The function of this mutant is unchanged by the correction of PyODDetector.fit and the mutant still survives natively in hosted run 44277267046 (mutation-shards diagnostic of src/etl_benchmark/quality/ml.py at 5de925a, hash-locked environment: pandas 3.0.6, pyod 3.6.7, scikit-learn 1.9.1, scipy 1.17.1); the source and catalog digests were rebound, the argument, verdict and approver are unchanged."
         }
       ]
     },
@@ -3826,8 +3861,8 @@
         "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json",
         "docs/thesis-remediation/ML_INITIAL_STATE_COUNTEREXAMPLES_2026-11-16.md"
       ],
-      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
-      "catalog_sha256": "38467af6141e58f9b103b94e980082662d5e9710529b6a3c1dbe75fd6c31f200",
+      "source_sha256": "14d844440ca6aa0c3aefa93c627076c2c173cd0331663ec22c9b7f823ea668ca",
+      "catalog_sha256": "ab1b0638b855462437bd67eed2d2b7685f5ba10734d1566d8304c6ec666f6fb5",
       "author": "theobigand",
       "verdict": "accepted",
       "approver": "theobigand",
@@ -3854,6 +3889,11 @@
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
           "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+        },
+        {
+          "assessor": "assistant (revalidation after the failed-fit correction)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The function of this mutant is unchanged by the correction of PyODDetector.fit and the mutant still survives natively in hosted run 44277267046 (mutation-shards diagnostic of src/etl_benchmark/quality/ml.py at 5de925a, hash-locked environment: pandas 3.0.6, pyod 3.6.7, scikit-learn 1.9.1, scipy 1.17.1); the source and catalog digests were rebound, the argument, verdict and approver are unchanged."
         }
       ]
     },
@@ -3871,12 +3911,12 @@
         "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json",
         "docs/thesis-remediation/PYOD_FEATURE_INITIAL_STATE_PROBE_2026-11-16.md"
       ],
-      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
-      "catalog_sha256": "38467af6141e58f9b103b94e980082662d5e9710529b6a3c1dbe75fd6c31f200",
+      "source_sha256": "14d844440ca6aa0c3aefa93c627076c2c173cd0331663ec22c9b7f823ea668ca",
+      "catalog_sha256": "ab1b0638b855462437bd67eed2d2b7685f5ba10734d1566d8304c6ec666f6fb5",
       "author": "theobigand",
-      "verdict": "accepted",
-      "approver": "theobigand",
-      "decision_date": "2026-11-17",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
       "policy_version": 2,
       "environment": {
         "numpy": "2.4.6",
@@ -3899,6 +3939,11 @@
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
           "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+        },
+        {
+          "assessor": "assistant (obsolescence after the failed-fit correction)",
+          "verdict": "REJECT",
+          "note": "technical finding only; not an owner decision. The mutant is now killed natively in hosted run 44277267046 (mutation-shards diagnostic of src/etl_benchmark/quality/ml.py at 5de925a, hash-locked environment: pandas 3.0.6, pyod 3.6.7, scikit-learn 1.9.1, scipy 1.17.1) by tests/test_detector_failed_fit.py, which pins the unfitted state after a rejected fit. The acceptance no longer applies and the validator refuses an accepted record for a killed mutant, so the verdict returns to proposed with no approver; the earlier accepted decision remains in the Git history. The owner may confirm this change."
         }
       ]
     },
@@ -3916,8 +3961,8 @@
         "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json",
         "docs/thesis-remediation/ML_INITIAL_STATE_COUNTEREXAMPLES_2026-11-16.md"
       ],
-      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
-      "catalog_sha256": "38467af6141e58f9b103b94e980082662d5e9710529b6a3c1dbe75fd6c31f200",
+      "source_sha256": "14d844440ca6aa0c3aefa93c627076c2c173cd0331663ec22c9b7f823ea668ca",
+      "catalog_sha256": "ab1b0638b855462437bd67eed2d2b7685f5ba10734d1566d8304c6ec666f6fb5",
       "author": "theobigand",
       "verdict": "accepted",
       "approver": "theobigand",
@@ -3944,6 +3989,11 @@
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
           "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+        },
+        {
+          "assessor": "assistant (revalidation after the failed-fit correction)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The function of this mutant is unchanged by the correction of PyODDetector.fit and the mutant still survives natively in hosted run 44277267046 (mutation-shards diagnostic of src/etl_benchmark/quality/ml.py at 5de925a, hash-locked environment: pandas 3.0.6, pyod 3.6.7, scikit-learn 1.9.1, scipy 1.17.1); the source and catalog digests were rebound, the argument, verdict and approver are unchanged."
         }
       ]
     },
@@ -3961,8 +4011,8 @@
         "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json",
         "docs/thesis-remediation/ML_INITIAL_STATE_COUNTEREXAMPLES_2026-11-16.md"
       ],
-      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
-      "catalog_sha256": "38467af6141e58f9b103b94e980082662d5e9710529b6a3c1dbe75fd6c31f200",
+      "source_sha256": "14d844440ca6aa0c3aefa93c627076c2c173cd0331663ec22c9b7f823ea668ca",
+      "catalog_sha256": "ab1b0638b855462437bd67eed2d2b7685f5ba10734d1566d8304c6ec666f6fb5",
       "author": "theobigand",
       "verdict": "accepted",
       "approver": "theobigand",
@@ -3989,6 +4039,11 @@
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
           "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+        },
+        {
+          "assessor": "assistant (revalidation after the failed-fit correction)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The function of this mutant is unchanged by the correction of PyODDetector.fit and the mutant still survives natively in hosted run 44277267046 (mutation-shards diagnostic of src/etl_benchmark/quality/ml.py at 5de925a, hash-locked environment: pandas 3.0.6, pyod 3.6.7, scikit-learn 1.9.1, scipy 1.17.1); the source and catalog digests were rebound, the argument, verdict and approver are unchanged."
         }
       ]
     },
@@ -4006,8 +4061,8 @@
         "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json",
         "docs/thesis-remediation/ML_INITIAL_STATE_COUNTEREXAMPLES_2026-11-16.md"
       ],
-      "source_sha256": "4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0",
-      "catalog_sha256": "38467af6141e58f9b103b94e980082662d5e9710529b6a3c1dbe75fd6c31f200",
+      "source_sha256": "14d844440ca6aa0c3aefa93c627076c2c173cd0331663ec22c9b7f823ea668ca",
+      "catalog_sha256": "ab1b0638b855462437bd67eed2d2b7685f5ba10734d1566d8304c6ec666f6fb5",
       "author": "theobigand",
       "verdict": "accepted",
       "approver": "theobigand",
@@ -4034,6 +4089,11 @@
           "assessor": "theobigand (owner), decision delegated to the assistant",
           "verdict": "ACCEPT",
           "note": "owner instruction of 2026-11-16, in force when these decisions were recorded on 2026-11-17, delegating equivalence verdicts to the assistant and asking that a mutant which cannot be shown to differ be treated as equivalent; recorded under sole_author_owner_review, not independent peer review"
+        },
+        {
+          "assessor": "assistant (revalidation after the failed-fit correction)",
+          "verdict": "ACCEPT",
+          "note": "technical revalidation only; not an owner decision. The function of this mutant is unchanged by the correction of PyODDetector.fit and the mutant still survives natively in hosted run 44277267046 (mutation-shards diagnostic of src/etl_benchmark/quality/ml.py at 5de925a, hash-locked environment: pandas 3.0.6, pyod 3.6.7, scikit-learn 1.9.1, scipy 1.17.1); the source and catalog digests were rebound, the argument, verdict and approver are unchanged."
         }
       ]
     },

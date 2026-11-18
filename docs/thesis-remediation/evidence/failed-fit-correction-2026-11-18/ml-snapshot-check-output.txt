@@ -1,0 +1,6 @@
+status PASS
+src/etl_benchmark/quality/ml.py 248/261 raw 95.02%  excluded 9  adjusted 248/252 98.41%  PASS
+L2 10 / 10 adjusted 10 100.00% PASS
+L3 5489 / 5561 adjusted 5561 98.71% PASS
+L4 29292 / 29684 adjusted 29586 99.01% PASS
+total 35255 34791 460 4

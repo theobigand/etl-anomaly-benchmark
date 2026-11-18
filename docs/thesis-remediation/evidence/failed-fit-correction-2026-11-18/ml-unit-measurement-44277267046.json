@@ -1,0 +1,1077 @@
+{
+ "run": 44277267046,
+ "workflow": "mutation-shards (workflow_dispatch, diagnostic_module=src/etl_benchmark/quality/ml.py, fresh_mutants=true, 45-shard plan, shard 40)",
+ "commit": "5de925a0bf059a34e272206ef24d245494303550",
+ "context": {
+  "configuration_sha256": "c85bfa2c30027c8384adb25a202a81500685671cdacb8ba00e03bbc4e89b3181",
+  "inputs_sha256": "c2726154db0d030bbfebcadf73eed464daa8578df5ba17bd047db1e3f3108abf",
+  "revision": "5de925a0bf059a34e272206ef24d245494303550",
+  "runtime": {
+   "packages": {
+    "great-expectations": "1.24.0",
+    "mutmut": "3.8.0",
+    "mypy": "2.4.0",
+    "numpy": "2.4.6",
+    "pandas": "3.0.6",
+    "pandas-stubs": "3.0.5.260914",
+    "pyod": "3.6.7",
+    "pytest": "9.1.1",
+    "pytest-cov": "7.1.0",
+    "scikit-learn": "1.9.1",
+    "scipy": "1.17.1",
+    "torch": "2.15.0+cpu"
+   },
+   "platform": "Linux-x86_64-glibc-2.43",
+   "python": "3.11.18"
+  },
+  "tests_sha256": "7d922580ac70f81c3cb3c03002f544c33cc91384a45df0e791fc6ded524753a4"
+ },
+ "unit": "src/etl_benchmark/quality/ml.py",
+ "source_sha256": "14d844440ca6aa0c3aefa93c627076c2c173cd0331663ec22c9b7f823ea668ca",
+ "records": [
+  {
+   "id": "etl_benchmark.quality.ml.xǁCOPODDetectorǁ_build_estimator__mutmut_1",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁCOPODDetectorǁ_build_estimator__mutmut_2",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁCOPODDetectorǁ_build_estimator__mutmut_3",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁCOPODDetectorǁ_build_estimator__mutmut_4",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁCOPODDetectorǁ_build_estimator__mutmut_5",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁCOPODDetectorǁ_build_estimator__mutmut_6",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁECODDetectorǁ_build_estimator__mutmut_1",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁECODDetectorǁ_build_estimator__mutmut_2",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁECODDetectorǁ_build_estimator__mutmut_3",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁECODDetectorǁ_build_estimator__mutmut_4",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁECODDetectorǁ_build_estimator__mutmut_5",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁECODDetectorǁ_build_estimator__mutmut_6",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCADetectorǁ_build_estimator__mutmut_1",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁ__init____mutmut_1",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁ__init____mutmut_10",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁ__init____mutmut_11",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁ__init____mutmut_12",
+   "outcome": "survived"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁ__init____mutmut_2",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁ__init____mutmut_3",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁ__init____mutmut_4",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁ__init____mutmut_5",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁ__init____mutmut_6",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁ__init____mutmut_7",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁ__init____mutmut_8",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁ__init____mutmut_9",
+   "outcome": "survived"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁdecision_function__mutmut_1",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁdecision_function__mutmut_10",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁdecision_function__mutmut_11",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁdecision_function__mutmut_2",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁdecision_function__mutmut_3",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁdecision_function__mutmut_4",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁdecision_function__mutmut_5",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁdecision_function__mutmut_6",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁdecision_function__mutmut_7",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁdecision_function__mutmut_8",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁdecision_function__mutmut_9",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁfit__mutmut_1",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁfit__mutmut_10",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁfit__mutmut_2",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁfit__mutmut_3",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁfit__mutmut_4",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁfit__mutmut_5",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁfit__mutmut_6",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁfit__mutmut_7",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁfit__mutmut_8",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁfit__mutmut_9",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁpredict__mutmut_1",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁpredict__mutmut_2",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPCAReconstructionǁpredict__mutmut_3",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ__init____mutmut_1",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ__init____mutmut_2",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ__init____mutmut_3",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ__init____mutmut_4",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ__init____mutmut_5",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ__init____mutmut_6",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ__init____mutmut_7",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_build_estimator__mutmut_1",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_build_estimator__mutmut_10",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_build_estimator__mutmut_11",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_build_estimator__mutmut_12",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_build_estimator__mutmut_13",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_build_estimator__mutmut_14",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_build_estimator__mutmut_15",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_build_estimator__mutmut_16",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_build_estimator__mutmut_17",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_build_estimator__mutmut_18",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_build_estimator__mutmut_19",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_build_estimator__mutmut_2",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_build_estimator__mutmut_20",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_build_estimator__mutmut_3",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_build_estimator__mutmut_4",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_build_estimator__mutmut_5",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_build_estimator__mutmut_6",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_build_estimator__mutmut_7",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_build_estimator__mutmut_8",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_build_estimator__mutmut_9",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_fitted_model__mutmut_1",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_fitted_model__mutmut_2",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_matrix__mutmut_1",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_matrix__mutmut_10",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_matrix__mutmut_11",
+   "outcome": "survived"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_matrix__mutmut_12",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_matrix__mutmut_13",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_matrix__mutmut_14",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_matrix__mutmut_15",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_matrix__mutmut_16",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_matrix__mutmut_17",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_matrix__mutmut_2",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_matrix__mutmut_3",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_matrix__mutmut_4",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_matrix__mutmut_5",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_matrix__mutmut_6",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_matrix__mutmut_7",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_matrix__mutmut_8",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_matrix__mutmut_9",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_numeric_columns__mutmut_1",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_numeric_columns__mutmut_2",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_numeric_columns__mutmut_3",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_numeric_columns__mutmut_4",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_numeric_columns__mutmut_5",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁ_numeric_columns__mutmut_6",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_1",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_10",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_11",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_12",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_13",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_14",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_15",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_16",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_17",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_18",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_19",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_2",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_20",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_21",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_22",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_23",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_24",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_25",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_3",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_4",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_5",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_6",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_7",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_8",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_9",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁpredict__mutmut_1",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁpredict__mutmut_2",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁpredict__mutmut_3",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁpredict__mutmut_4",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁpredict__mutmut_5",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁpredict__mutmut_6",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁpredict__mutmut_7",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁpredict__mutmut_8",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁscore__mutmut_1",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁscore__mutmut_2",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁscore__mutmut_3",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁscore__mutmut_4",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁscore__mutmut_5",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁscore__mutmut_6",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁscore__mutmut_7",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁscore__mutmut_8",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁPyODDetectorǁscore__mutmut_9",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁ__init____mutmut_1",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁ__init____mutmut_10",
+   "outcome": "survived"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁ__init____mutmut_11",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁ__init____mutmut_12",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁ__init____mutmut_13",
+   "outcome": "survived"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁ__init____mutmut_2",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁ__init____mutmut_3",
+   "outcome": "survived"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁ__init____mutmut_4",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁ__init____mutmut_5",
+   "outcome": "survived"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁ__init____mutmut_6",
+   "outcome": "survived"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁ__init____mutmut_7",
+   "outcome": "survived"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁ__init____mutmut_8",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁ__init____mutmut_9",
+   "outcome": "survived"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_1",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_10",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_11",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_12",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_13",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_14",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_15",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_16",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_17",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_18",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_19",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_2",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_20",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_21",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_22",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_23",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_24",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_25",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_26",
+   "outcome": "survived"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_27",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_28",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_29",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_3",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_30",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_31",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_32",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_33",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_34",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_35",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_36",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_37",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_38",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_39",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_4",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_40",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_41",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_42",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_43",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_44",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_45",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_46",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_47",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_48",
+   "outcome": "survived"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_49",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_5",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_50",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_51",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_52",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_53",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_54",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_55",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_56",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_57",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_58",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_59",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_6",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_60",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_61",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_62",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_63",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_64",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_65",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_66",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_67",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_68",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_69",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_7",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_70",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_71",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_72",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_73",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_74",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_75",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_76",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_77",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_78",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_79",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_8",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁdecision_function__mutmut_9",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_1",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_10",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_11",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_12",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_13",
+   "outcome": "survived"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_14",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_15",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_16",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_17",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_18",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_19",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_2",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_20",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_21",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_22",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_23",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_3",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_4",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_5",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_6",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_7",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_8",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁfit__mutmut_9",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁpredict__mutmut_1",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁpredict__mutmut_2",
+   "outcome": "killed"
+  },
+  {
+   "id": "etl_benchmark.quality.ml.xǁTailProbabilityModelǁpredict__mutmut_3",
+   "outcome": "killed"
+  }
+ ]
+}
