@@ -44,7 +44,7 @@ jobs:
             const optionalResearch = config.optional_research_issues ?? [];
             const governanceFollowups = config.governance_followups ?? [];
             if (config.issues.length !== 16 || config.milestones.length !== 8 ||
-                optionalResearch.length !== 5 || governanceFollowups.length !== 4) {
+                optionalResearch.length !== 5 || governanceFollowups.length !== 5) {
               throw new Error('Unexpected core roadmap, milestone, optional research or governance inventory');
             }
             if (optionalResearch.some(item => !item.labels.includes('status:if-time') ||
@@ -53,7 +53,7 @@ jobs:
               throw new Error('Optional research must remain non-blocking and if-time');
             }
             if (governanceFollowups.some(item => !item.labels.includes('area:governance') ||
-                !item.labels.includes('priority:p1') ||
+                !(item.labels.includes('priority:p0') || item.labels.includes('priority:p1')) ||
                 item.labels.includes('status:if-time') ||
                 !['Thesis 06 — IMRaD synthesis and academic quality',
                   'Thesis 07 — Reproducibility and certified release'].includes(item.milestone))) {
