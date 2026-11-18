@@ -1,9 +1,9 @@
 {
-  "captured_at": "2026-10-23T10:19:59.940180+00:00",
+  "captured_at": "2026-11-18T11:59:13.112194+00:00",
   "dataset": {
     "bytes": 150828752,
     "identity": "credit_card",
-    "path": "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/data/creditcard.csv",
+    "path": "/Users/theo/Developer/school/esilv/Master Thesis Bootcamp/etl-anomaly-benchmark/data/creditcard.csv",
     "sha256": "76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89"
   },
   "environment_lock": {
@@ -15,14 +15,14 @@
   "measurement_fingerprint": "9cd603c619d15e17d3cbd9d14986b6f62bdb5611a5ba78fbd4d10ae8f4d7285d",
   "measurement_recipe": 1,
   "output_sha256": {
-    "benchmark_credit_card_20261023_101957.csv": "ea481ea06750e90980dfe9cb0122de638593867f165cc9146fb192cc4d7a2590",
-    "benchmark_credit_card_20261023_101957.md": "55e7dbf43b0072d8718b50294057a68b9f57b4a5be0570054a003c21c2925c68",
-    "split_ids_credit_card_20261023_101957.json.gz": "589bb4cc4d74f6ed7b4201d7be010e942f61117a5b7a69a50246f5caea4475cf"
+    "benchmark_credit_card_20261118_115911.csv": "a3fb2f0af5ff3bf6de3506499bb3ee0b2a939aaf4c46553d4a1a702581db78e2",
+    "benchmark_credit_card_20261118_115911.md": "023031457b198ce0b4657b173eeed430486ec54cbb7676a097d6cce84da70679",
+    "split_ids_credit_card_20261118_115911.json.gz": "589bb4cc4d74f6ed7b4201d7be010e942f61117a5b7a69a50246f5caea4475cf"
   },
   "outputs": [
-    "benchmark_credit_card_20261023_101957.csv",
-    "benchmark_credit_card_20261023_101957.md",
-    "split_ids_credit_card_20261023_101957.json.gz"
+    "benchmark_credit_card_20261118_115911.csv",
+    "benchmark_credit_card_20261118_115911.md",
+    "split_ids_credit_card_20261118_115911.json.gz"
   ],
   "packages": {
     "great-expectations": "1.24.0",
@@ -31,10 +31,10 @@
     "pyod": "3.6.7",
     "scikit-learn": "1.9.1"
   },
-  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "platform": "macOS-27.2-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "scientific_fingerprint": "be28a126f038edec58574f4a3a8baff294ec1994ca9b93cb7c9b6a10efbab076",
+  "scientific_fingerprint": "00bc79c11881ea6d3ed811e632e39b1adeda2aed2be6d9ba1a464b1a9bf15d61",
   "seeds": [
     42,
     1,
@@ -101,7 +101,7 @@
     ],
     "split_strategy": "stratified"
   },
-  "source_fingerprint": "36e3025c6f2dd11dde84224c6994ddd67d1ea1f5d076abfbbd9fa9eace6ed757",
-  "source_revision": "8d245d23cf1e3d1d4db93f9629093391c16e5a28",
+  "source_fingerprint": "f3bfab317b26c1bdd0476b7a61289b7b729cb7a92609444825d07c68bcc0ab81",
+  "source_revision": "401c7bf0e20d65061c98a027742be5b294e82689",
   "worktree_dirty": false
 }

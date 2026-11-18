@@ -1,0 +1,37 @@
+"""Rewrite the Time (s) cells of tab:fraud and tab:synthetic from the replayed archives (same decimals, bold on the minimum)."""
+import re, sys
+from pathlib import Path
+import pandas as pd
+ROOT = Path(".")
+METHODS = {"Z-score": "zscore", "IQR": "iqr", "Great Expectations": "great_expectations", "Isolation Forest": "isolation_forest",
+           "LOF": "lof", "One-Class SVM": "ocsvm", "ECOD": "ecod", "COPOD": "copod", "HBOS": "hbos", "KNN": "knn", "PCA": "pca"}
+tex = (ROOT / "paper/main.tex").read_text()
+changes = []
+for label, archive, index in (("fraud", "benchmark_credit_card.csv", "detector"), ("synthetic", "synthetic_metrics.csv", "method")):
+    m = re.search(rf"(\\label\{{tab:{label}\}})(.*?)(\\end\{{table\}})", tex, re.S)
+    src = pd.read_csv(ROOT / "verification/evidence" / archive).set_index(index)["detect_s_mean"]
+    lines = m.group(2).split("\n"); rows = {}
+    for i, line in enumerate(lines):
+        if "&" not in line: continue
+        title = line.split("&")[0].strip()
+        if title in METHODS:
+            cells = line.rstrip().rstrip("\\").split("&")
+            last = cells[-1].strip().replace("\\textbf{", "").replace("}", "")
+            if re.fullmatch(r"[0-9.]+", last): rows[i] = (title, len(last.split(".")[1]) if "." in last else 0, last)
+    new = {}
+    for i, (title, dec, old) in rows.items():
+        new[i] = f"{src[METHODS[title]]:.{dec}f}"
+    # the minimum of the column is the bold one
+    best = min(new, key=lambda i: float(new[i]))
+    # ties by displayed value
+    best_val = float(new[best])
+    for i, (title, dec, old) in rows.items():
+        cells = lines[i].rstrip().rstrip("\\").split("&")
+        text = f"\\textbf{{{new[i]}}}" if float(new[i]) == best_val else new[i]
+        before = cells[-1].strip()
+        cells[-1] = " " + text
+        lines[i] = "&".join(cells) + " \\\\"
+        changes.append((label, title, before, text))
+    tex = tex[: m.start(2)] + "\n".join(lines) + tex[m.end(2):]
+(ROOT / "paper/main.tex").write_text(tex)
+for c in changes: print(*c)
