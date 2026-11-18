@@ -201,7 +201,7 @@ run.
 | Check | Result |
 | --- | --- |
 | Up to date, conflicts | 0 commits behind; `git merge-tree` against `origin/main` is clean |
-| Size | 350 commits ahead; 4,258 files, +170,438 / -1,673: 3,414 under `verification/evidence`, 617 under `docs`, 85 tests, 76 under `research`, 31 slides, 21 verification code, policy and records, 4 workflows, 3 paper files, plus README, `Makefile`, `pyproject.toml`, `.gitignore`, `agent.md` |
+| Size | 350 commits ahead at `ad16a79` (one more per documentation commit of this review); 4,258 files, +170,438 / -1,673: 3,414 under `verification/evidence`, 617 under `docs`, 85 tests, 76 under `research`, 31 slides, 21 verification code, policy and records, 4 workflows, 3 paper files, plus README, `Makefile`, `pyproject.toml`, `.gitignore`, `agent.md` |
 | Temporary or unintended files | none found: no `.DS_Store`, caches, `mutants/`, pid or environment files; no added file over 5 MB. The tracked symlink `.venv` of `main` (it pointed into another checkout) is removed and ignored; `agent.md` is an intended addition |
 | Working-tree files not in the branch | untracked, left as they are: `CONTINUATION_EB1D679.md`, `evidence/ci-43830818155/`, `evidence/tracking-backup-2026-11-17/`, two `eb1d679` JSON files, `cardio-replay.json`, and extracted copies (160 MB) of tracked diagnostic archives. `experiments/results/cardio-env-audit/` is excluded on purpose because it holds derived dataset values (stated in `CARDIO_PANDAS_REPRODUCIBILITY_2026-11-14.md`). No tracked file cites a missing artifact |
 | Scientific artifacts | the archived alert-budget runs, pool partitions, probes, diagnostics, mutation evidence and the certified release evidence above are present; no archived scientific result is modified |
@@ -214,8 +214,9 @@ The PR is draft, so GitHub reports the merge state as blocked until it is marked
 
 The repository has no tags and no tag convention. Proposed annotated tag: `archive/pr-117-pre-squash`. Pushing a tag
 triggers no workflow: `ci.yml` runs on pushes to and pull requests on `main`, `thesis-roadmap-sync.yml` on pushes to `main`,
-`mutation-shards.yml` on pull requests and calls, `verify-release.yml` on manual dispatch, and no workflow publishes or
-releases. The local configuration has `tag.gpgsign true`, so creating the tag needs a usable signing key. The tag must
+`mutation-shards.yml` on labelled pull requests, calls and manual dispatch, `verify-release.yml` on manual dispatch and
+labelled pull requests, `pool-check.yml` on schedule and manual dispatch; every `push` trigger is limited to `main`, no
+workflow filters on tags, and none publishes or releases. The local configuration has `tag.gpgsign true`, so creating the tag needs a usable signing key. The tag must
 point at the final branch head, so it is created after the last commit is pushed and its checks are green:
 
 ```sh
