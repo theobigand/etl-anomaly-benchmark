@@ -1,0 +1,18 @@
+{
+  "slides": 41,
+  "viewport": [
+    1280,
+    720
+  ],
+  "navigation": {
+    "before": "7 / 41",
+    "after": "8 / 41",
+    "back": "7 / 41",
+    "pass": true
+  },
+  "errors": [],
+  "artifacts": {
+    "slides/thesis_progress.html": "9c8b707910c1ed72fe740acad629a926081e54e9c29f0236025a4a94e7f46890",
+    "slides/thesis_progress.pdf": "c594153a0607c7ba9091ac5feca04458904b6e5b4979effe6d439cb4861348ea"
+  }
+}

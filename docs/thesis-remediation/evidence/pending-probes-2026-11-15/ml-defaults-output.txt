@@ -1,0 +1,22 @@
+/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/docs/thesis-remediation/evidence/pending-probes-2026-11-15/ml-defaults.py.txt:14: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  a=np.sign(np.nan_to_num(skew(x,axis=0)));b=np.sign(np.nan_to_num(skew(x)))
+/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/docs/thesis-remediation/evidence/pending-probes-2026-11-15/ml-defaults.py.txt:14: SmallSampleWarning: All axis-slices of one or more sample arguments are too small; all elements of returned arrays will be NaN. See documentation for sample size requirements.
+  a=np.sign(np.nan_to_num(skew(x,axis=0)));b=np.sign(np.nan_to_num(skew(x)))
+source_sha256 4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0
+python 3.11.17 numpy 2.4.6 scipy 1.17.1 skew_signature (a, axis=0, bias=True, nan_policy='propagate', *, keepdims=False)
+shape (3, 2) same True values [1.0, -1.0]
+shape (3, 2) same True values [0.0, 0.0]
+shape (2, 2) same True values [0.0, 0.0]
+shape (0, 2) same True values [0.0, 0.0]
+'nan' 'NAN' both_nan True bytes_equal True
+/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/docs/thesis-remediation/evidence/pending-probes-2026-11-15/ml-defaults.py.txt:14: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+  a=np.sign(np.nan_to_num(skew(x,axis=0)));b=np.sign(np.nan_to_num(skew(x)))
+/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/docs/thesis-remediation/evidence/pending-probes-2026-11-15/ml-defaults.py.txt:14: SmallSampleWarning: All axis-slices of one or more sample arguments are too small; all elements of returned arrays will be NaN. See documentation for sample size requirements.
+  a=np.sign(np.nan_to_num(skew(x,axis=0)));b=np.sign(np.nan_to_num(skew(x)))
+source_sha256 4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0
+python 3.11.17 numpy 2.4.6 scipy 1.17.1 skew_signature (a, axis=0, bias=True, nan_policy='propagate', *, keepdims=False)
+shape (3, 2) same True values [1.0, -1.0]
+shape (3, 2) same True values [0.0, 0.0]
+shape (2, 2) same True values [0.0, 0.0]
+shape (0, 2) same True values [0.0, 0.0]
+'nan' 'NAN' both_nan True bytes_equal True

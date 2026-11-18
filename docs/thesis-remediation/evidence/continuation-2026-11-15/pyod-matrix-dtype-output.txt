@@ -1,0 +1,20 @@
+source 4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.0.6 sklearn 1.9.1
+ECODDetector float64 score_equal True max_difference 0.0 flag_difference 0 warnings_equal True
+ECODDetector float32 score_equal False max_difference 0.9920025536098525 flag_difference 5 warnings_equal True
+ECODDetector nullable score_equal True max_difference 0.0 flag_difference 0 warnings_equal True
+HBOSDetector float64 score_equal True max_difference 0.0 flag_difference 0 warnings_equal True
+HBOSDetector float32 score_equal False max_difference 7.460858082453115e-07 flag_difference 0 warnings_equal True
+HBOSDetector nullable score_equal True max_difference 0.0 flag_difference 0 warnings_equal True
+PCADetector float64 score_equal True max_difference 0.0 flag_difference 0 warnings_equal True
+PCADetector float32 score_equal False max_difference 1.7247604288340568e-13 flag_difference 29 warnings_equal True
+PCADetector nullable score_equal True max_difference 0.0 flag_difference 0 warnings_equal True
+source 4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.1.1 sklearn 1.9.1
+ECODDetector float64 score_equal True max_difference 0.0 flag_difference 0 warnings_equal True
+ECODDetector float32 score_equal False max_difference 0.9920025536098525 flag_difference 5 warnings_equal True
+ECODDetector nullable score_equal True max_difference 0.0 flag_difference 0 warnings_equal True
+HBOSDetector float64 score_equal True max_difference 0.0 flag_difference 0 warnings_equal True
+HBOSDetector float32 score_equal False max_difference 7.460858082453115e-07 flag_difference 0 warnings_equal True
+HBOSDetector nullable score_equal True max_difference 0.0 flag_difference 0 warnings_equal True
+PCADetector float64 score_equal True max_difference 0.0 flag_difference 0 warnings_equal True
+PCADetector float32 score_equal False max_difference 1.8605857891980062e-13 flag_difference 41 warnings_equal True
+PCADetector nullable score_equal True max_difference 0.0 flag_difference 0 warnings_equal True

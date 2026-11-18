@@ -1,0 +1,75 @@
+## x_prepare_csv__mutmut_33
+-        frame.to_csv(path, index=False)
++        frame.to_csv(path, index=None)
+## x_run_etl__mutmut_19
+-            stages["extract"] = time.perf_counter() - t
++            stages["extract"] = time.perf_counter() + t
+## x_run_etl__mutmut_27
+-            stages["transform"] = time.perf_counter() - t
++            stages["transform"] = time.perf_counter() + t
+## x_run_etl__mutmut_28
+-            drop = [c for c in skip if c in df.columns]
++            drop = None
+## x_run_etl__mutmut_29
+-            drop = [c for c in skip if c in df.columns]
++            drop = [c for c in skip if c not in df.columns]
+## x_run_etl__mutmut_31
+-            features = df.drop(columns=drop) if drop else df
++            features = df.drop(columns=drop) if (drop) and False else df
+## x_run_etl__mutmut_32
+-            features = df.drop(columns=drop) if drop else df
++            features = df.drop(columns=drop) if (drop) or True else df
+## x_run_etl__mutmut_33
+-            features = df.drop(columns=drop) if drop else df
++            features = df.drop(columns=None) if drop else df
+## x_run_etl__mutmut_50
+-            stages["detect"] = time.perf_counter() - t
++            stages["detect"] = time.perf_counter() + t
+## x_run_etl__mutmut_70
+-            stages["load"] = time.perf_counter() - t
++            stages["load"] = time.perf_counter() + t
+## x_main__mutmut_2
+-    parser = argparse.ArgumentParser(description=__doc__)
++    parser = argparse.ArgumentParser(description=None)
+## x_main__mutmut_22
+-    parser.add_argument("--only", nargs="*", help="dataset ids, for a quick check")
++    parser.add_argument("--only", nargs=None, help="dataset ids, for a quick check")
+## x_main__mutmut_23
+-    parser.add_argument("--only", nargs="*", help="dataset ids, for a quick check")
++    parser.add_argument("--only", nargs="*", help=None)
+## x_main__mutmut_25
+-    parser.add_argument("--only", nargs="*", help="dataset ids, for a quick check")
++    parser.add_argument("--only", help="dataset ids, for a quick check")
+## x_main__mutmut_26
+-    parser.add_argument("--only", nargs="*", help="dataset ids, for a quick check")
++    parser.add_argument("--only", nargs="*", )
+## x_main__mutmut_30
+-    parser.add_argument("--only", nargs="*", help="dataset ids, for a quick check")
++    parser.add_argument("--only", nargs="*", help="XXdataset ids, for a quick checkXX")
+## x_main__mutmut_31
+-    parser.add_argument("--only", nargs="*", help="dataset ids, for a quick check")
++    parser.add_argument("--only", nargs="*", help="DATASET IDS, FOR A QUICK CHECK")
+## x_main__mutmut_80
+-        for record in pool.map(bind(_one), todo):
++        for record in pool.map(None, todo):
+## x_main__mutmut_89
+-            print(record["id"], record["method"], record["status"], flush=True)
++            print(record["id"], record["method"], record["status"], flush=None)
+## x_main__mutmut_93
+-            print(record["id"], record["method"], record["status"], flush=True)
++            print(record["id"], record["method"], record["status"], )
+## x_main__mutmut_100
+-            print(record["id"], record["method"], record["status"], flush=True)
++            print(record["id"], record["method"], record["status"], flush=False)
+## x_main__mutmut_104
+-    with atomic_path(args.output / "pool_etl.json") as partial:
++    with atomic_path(args.output / "POOL_ETL.JSON") as partial:
+## x_main__mutmut_109
+-        partial.write_text(json.dumps(records, indent=1, sort_keys=True) + "\n")
++        partial.write_text(json.dumps(records, indent=1, sort_keys=None) + "\n")
+## x_main__mutmut_112
+-        partial.write_text(json.dumps(records, indent=1, sort_keys=True) + "\n")
++        partial.write_text(json.dumps(records, indent=1, ) + "\n")
+## x_main__mutmut_114
+-        partial.write_text(json.dumps(records, indent=1, sort_keys=True) + "\n")
++        partial.write_text(json.dumps(records, indent=1, sort_keys=False) + "\n")

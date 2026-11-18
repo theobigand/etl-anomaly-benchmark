@@ -1,0 +1,23 @@
+import hashlib,platform,warnings
+from pathlib import Path
+from decimal import Decimal
+import numpy as np,pandas as pd
+from etl_benchmark.quality.drift import TemporalDriftDetector
+p=Path('src/etl_benchmark/quality/drift.py');print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'numpy',np.__version__,'pandas',pd.__version__)
+cases={'complex':pd.Series([1+2j,2+3j,3+4j,4+5j]),'object_decimal':pd.Series([Decimal('1.1'),Decimal('2.1'),Decimal('3.1'),Decimal('4.1')],dtype=object),'numeric_strings':pd.Series(['1','2','3','4']),'mixed_objects':pd.Series([1.,2.,'3',4.],dtype=object),'datetime':pd.Series(pd.date_range('2020-01-01',periods=4)),'timedelta':pd.Series(pd.to_timedelta([1,2,3,4],unit='h')),'bool':pd.Series([True,False,True,False]),'float32':pd.Series([1e30,2e30,3e30,4e30],dtype='float32')}
+for name,series in cases.items():
+ frame=pd.DataFrame({'t':np.arange(4),'x':series})
+ def run(suffix):
+  d=TemporalDriftDetector.__new__(TemporalDriftDetector);getattr(d,f'xǁTemporalDriftDetectorǁ__init____mutmut_{suffix}')('t',['x'])
+  try:
+   with warnings.catch_warnings(record=True) as w:
+    warnings.simplefilter('always'); d.fit(frame)
+   return ('ok',repr(d.score(frame).tolist()),[(type(x.message).__name__,str(x.message)) for x in w])
+  except Exception as e:
+   err=(type(e).__name__,str(e));status=(d._means is None,d._stds is None)
+   try:out=('score',repr(d.score(frame).tolist()))
+   except Exception as e2:out=('error',type(e2).__name__,str(e2))
+   return ('error',err,status,out)
+ a=run('orig')
+ for suffix in ('15','17'):
+  b=run(suffix);print(name,suffix,'match',a==b,'orig',repr(a),'mutant',repr(b))

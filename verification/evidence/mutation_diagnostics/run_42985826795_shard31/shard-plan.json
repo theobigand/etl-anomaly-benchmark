@@ -1,0 +1,369 @@
+{
+  "format": 1,
+  "policy_sha256": "8a72aea78c965fa11552a99f729504741be8b08ebec84dd174db4409c702b3ce",
+  "sha256": "ed1f38905495233ae70ec756b9452dd20217b52796e05b669f1e08af964b5f27",
+  "shards": [
+    {
+      "index": 0,
+      "modules": [
+        "verification/evidence_schema.py"
+      ],
+      "weight": 1434
+    },
+    {
+      "index": 1,
+      "modules": [
+        "verification/mutation_cache.py"
+      ],
+      "weight": 1110
+    },
+    {
+      "index": 2,
+      "modules": [
+        "research/multi_schema.py"
+      ],
+      "weight": 1093
+    },
+    {
+      "index": 3,
+      "modules": [
+        "research/temporal_decision.py"
+      ],
+      "weight": 836
+    },
+    {
+      "index": 4,
+      "modules": [
+        "verification/reproduce.py"
+      ],
+      "weight": 832
+    },
+    {
+      "index": 5,
+      "modules": [
+        "research/cost_study.py"
+      ],
+      "weight": 825
+    },
+    {
+      "index": 6,
+      "modules": [
+        "verification/release.py"
+      ],
+      "weight": 819
+    },
+    {
+      "index": 7,
+      "modules": [
+        "verification/real_preflight.py"
+      ],
+      "weight": 790
+    },
+    {
+      "index": 8,
+      "modules": [
+        "verification/claims.py"
+      ],
+      "weight": 714
+    },
+    {
+      "index": 9,
+      "modules": [
+        "research/labelled_summary.py"
+      ],
+      "weight": 676
+    },
+    {
+      "index": 10,
+      "modules": [
+        "research/pool_extension_paper.py"
+      ],
+      "weight": 652
+    },
+    {
+      "index": 11,
+      "modules": [
+        "research/temporal_pilot.py"
+      ],
+      "weight": 586
+    },
+    {
+      "index": 12,
+      "modules": [
+        "experiments/run_synthetic_benchmark.py"
+      ],
+      "weight": 572
+    },
+    {
+      "index": 13,
+      "modules": [
+        "research/full_registry.py"
+      ],
+      "weight": 571
+    },
+    {
+      "index": 14,
+      "modules": [
+        "research/full_registry_summary.py",
+        "src/etl_benchmark/quality/deep.py"
+      ],
+      "weight": 603
+    },
+    {
+      "index": 15,
+      "modules": [
+        "experiments/generate_synthetic.py",
+        "src/etl_benchmark/synthetic.py"
+      ],
+      "weight": 627
+    },
+    {
+      "index": 16,
+      "modules": [
+        "src/etl_benchmark/quality/gx.py",
+        "verification/mutation_policy.py"
+      ],
+      "weight": 633
+    },
+    {
+      "index": 17,
+      "modules": [
+        "research/pool_typed.py",
+        "src/etl_benchmark/quality/autoencoder.py"
+      ],
+      "weight": 642
+    },
+    {
+      "index": 18,
+      "modules": [
+        "research/pool_full.py",
+        "src/etl_benchmark/split.py"
+      ],
+      "weight": 639
+    },
+    {
+      "index": 19,
+      "modules": [
+        "research/paper_tables.py",
+        "src/etl_benchmark/quality/drift.py"
+      ],
+      "weight": 640
+    },
+    {
+      "index": 20,
+      "modules": [
+        "research/typed_masking.py",
+        "research/typed_summary.py"
+      ],
+      "weight": 639
+    },
+    {
+      "index": 21,
+      "modules": [
+        "research/lstm_pilot.py",
+        "research/time_scan.py"
+      ],
+      "weight": 641
+    },
+    {
+      "index": 22,
+      "modules": [
+        "research/pool_extension_summary.py",
+        "verification/refresh_profile.py"
+      ],
+      "weight": 643
+    },
+    {
+      "index": 23,
+      "modules": [
+        "verification/mutation_campaign.py",
+        "verification/mutation_shards.py"
+      ],
+      "weight": 633
+    },
+    {
+      "index": 24,
+      "modules": [
+        "research/labelled_benchmark.py",
+        "research/source_clustered.py"
+      ],
+      "weight": 625
+    },
+    {
+      "index": 25,
+      "modules": [
+        "experiments/run_curves.py",
+        "research/recover_partitions.py"
+      ],
+      "weight": 601
+    },
+    {
+      "index": 26,
+      "modules": [
+        "experiments/check_mutation.py",
+        "research/deep_typed.py"
+      ],
+      "weight": 592
+    },
+    {
+      "index": 27,
+      "modules": [
+        "experiments/run_benchmark.py",
+        "src/etl_benchmark/pipeline.py"
+      ],
+      "weight": 601
+    },
+    {
+      "index": 28,
+      "modules": [
+        "research/paper_appendix.py",
+        "research/uci_pool.py"
+      ],
+      "weight": 594
+    },
+    {
+      "index": 29,
+      "modules": [
+        "research/build_pool.py",
+        "research/dataset_registry.py"
+      ],
+      "weight": 589
+    },
+    {
+      "index": 30,
+      "modules": [
+        "experiments/provenance.py",
+        "research/typed_benchmark.py",
+        "src/etl_benchmark/extract.py"
+      ],
+      "weight": 566
+    },
+    {
+      "index": 31,
+      "modules": [
+        "research/lstm_detector.py",
+        "research/pool_check.py",
+        "src/etl_benchmark/atomic.py",
+        "src/etl_benchmark/transform.py"
+      ],
+      "weight": 565
+    },
+    {
+      "index": 32,
+      "modules": [
+        "experiments/fetch_cardio.py",
+        "research/uci_loader.py",
+        "verification/mutation_catalog.py"
+      ],
+      "weight": 602
+    },
+    {
+      "index": 33,
+      "modules": [
+        "research/typed_run.py",
+        "src/etl_benchmark/registry.py",
+        "verification/pool_contract.py"
+      ],
+      "weight": 606
+    },
+    {
+      "index": 34,
+      "modules": [
+        "src/etl_benchmark/metrics.py",
+        "verification/lineage.py",
+        "verification/lock_environment.py"
+      ],
+      "weight": 628
+    },
+    {
+      "index": 35,
+      "modules": [
+        "research/injection.py",
+        "research/normalise.py",
+        "research/paired_bootstrap.py"
+      ],
+      "weight": 629
+    },
+    {
+      "index": 36,
+      "modules": [
+        "research/pool_train_only.py",
+        "src/etl_benchmark/quality/windows.py",
+        "verification/check_types.py"
+      ],
+      "weight": 598
+    },
+    {
+      "index": 37,
+      "modules": [
+        "experiments/run_severity.py",
+        "experiments/verify_real.py",
+        "src/etl_benchmark/__main__.py"
+      ],
+      "weight": 577
+    },
+    {
+      "index": 38,
+      "modules": [
+        "src/etl_benchmark/datasets.py",
+        "verification/mutation_run.py",
+        "verification/real_acquire.py"
+      ],
+      "weight": 568
+    },
+    {
+      "index": 39,
+      "modules": [
+        "research/deep_support.py",
+        "research/pool_etl.py",
+        "src/etl_benchmark/quality/window_drift.py"
+      ],
+      "weight": 564
+    },
+    {
+      "index": 40,
+      "modules": [
+        "research/pool_chrono.py",
+        "research/typed_figures.py",
+        "src/etl_benchmark/logging_setup.py"
+      ],
+      "weight": 566
+    },
+    {
+      "index": 41,
+      "modules": [
+        "src/etl_benchmark/load.py",
+        "verification/mutation_scope.py",
+        "verification/scaling.py"
+      ],
+      "weight": 567
+    },
+    {
+      "index": 42,
+      "modules": [
+        "research/pool_preprocessing.py",
+        "src/etl_benchmark/quality/base.py",
+        "verification/protection.py"
+      ],
+      "weight": 573
+    },
+    {
+      "index": 43,
+      "modules": [
+        "experiments/verification_report.py",
+        "src/etl_benchmark/quality/_torch_models.py",
+        "verification/archive_evidence.py"
+      ],
+      "weight": 604
+    },
+    {
+      "index": 44,
+      "modules": [
+        "src/etl_benchmark/quality/ml.py",
+        "src/etl_benchmark/quality/rules.py",
+        "verification/bundles.py"
+      ],
+      "weight": 642
+    }
+  ]
+}

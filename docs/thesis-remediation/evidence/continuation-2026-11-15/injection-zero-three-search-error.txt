@@ -1,0 +1,9 @@
+source cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39 python 3.11.17 numpy 2.4.6 pandas 3.1.1
+Traceback (most recent call last):
+  File "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/docs/thesis-remediation/evidence/continuation-2026-11-15/injection-zero-three-search.py.txt", line 10, in <module>
+    corr=frame.corr().to_numpy(); np.fill_diagonal(corr,0)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/theo/.cache/etl-mutation-venv/lib/python3.11/site-packages/numpy/lib/_index_tricks_impl.py", line 923, in fill_diagonal
+    a.flat[:end:step] = val
+    ~~~~~~^^^^^^^^^^^
+ValueError: underlying array is read-only

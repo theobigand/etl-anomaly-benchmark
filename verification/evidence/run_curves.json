@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-23T10:17:55.980804+00:00",
+  "captured_at": "2026-11-18T11:56:52.405835+00:00",
   "dataset": {
     "identity": "credit_card,water_quality,cardio,synthetic"
   },
@@ -12,12 +12,12 @@
   "measurement_fingerprint": "9cd603c619d15e17d3cbd9d14986b6f62bdb5611a5ba78fbd4d10ae8f4d7285d",
   "measurement_recipe": 1,
   "output_sha256": {
-    "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/paper/figures/pr_curves.png": "4d1c2e741fdbebce6be6d8fdf0a9b856cfb53bfca03de27a94fc59075559a503",
-    "contamination_sweep_20261023_101755.csv": "03e598f79a9e4d1f9a99cd4386a5081e972fe40bd60ead320e361850598a8343"
+    "/Users/theo/Developer/school/esilv/Master Thesis Bootcamp/etl-anomaly-benchmark/paper/figures/pr_curves.png": "4d1c2e741fdbebce6be6d8fdf0a9b856cfb53bfca03de27a94fc59075559a503",
+    "contamination_sweep_20261118_115652.csv": "03e598f79a9e4d1f9a99cd4386a5081e972fe40bd60ead320e361850598a8343"
   },
   "outputs": [
-    "contamination_sweep_20261023_101755.csv",
-    "/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/paper/figures/pr_curves.png"
+    "contamination_sweep_20261118_115652.csv",
+    "/Users/theo/Developer/school/esilv/Master Thesis Bootcamp/etl-anomaly-benchmark/paper/figures/pr_curves.png"
   ],
   "packages": {
     "great-expectations": "1.24.0",
@@ -26,10 +26,10 @@
     "pyod": "3.6.7",
     "scikit-learn": "1.9.1"
   },
-  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "platform": "macOS-27.2-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "scientific_fingerprint": "be28a126f038edec58574f4a3a8baff294ec1994ca9b93cb7c9b6a10efbab076",
+  "scientific_fingerprint": "00bc79c11881ea6d3ed811e632e39b1adeda2aed2be6d9ba1a464b1a9bf15d61",
   "seeds": [
     42
   ],
@@ -59,7 +59,7 @@
     "synthetic_rows": null,
     "synthetic_split_strategy": "customer_identity_grouped_stratified"
   },
-  "source_fingerprint": "36e3025c6f2dd11dde84224c6994ddd67d1ea1f5d076abfbbd9fa9eace6ed757",
-  "source_revision": "8d245d23cf1e3d1d4db93f9629093391c16e5a28",
+  "source_fingerprint": "f3bfab317b26c1bdd0476b7a61289b7b729cb7a92609444825d07c68bcc0ab81",
+  "source_revision": "401c7bf0e20d65061c98a027742be5b294e82689",
   "worktree_dirty": false
 }

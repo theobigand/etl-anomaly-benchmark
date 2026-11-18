@@ -71,6 +71,39 @@ def test_a_type_checker_verdict_is_never_reset_by_a_test_change():
     assert "pkg.b.x_h__mutmut_2" not in mc.keys_to_reset(SAME, new, STATS, VERDICTS)
 
 
+@pytest.mark.parametrize("change", ["modified", "removed", "added"])
+def test_conftest_changes_invalidate_all_test_based_verdicts(change):
+    old, new = dict(SAME), dict(SAME)
+    if change != "added":
+        old["tests/conftest.py"] = "before"
+    if change != "removed":
+        new["tests/conftest.py"] = "after"
+    reset = set(mc.keys_to_reset(old, new, STATS, VERDICTS))
+    assert reset == {key for key, code in VERDICTS.items() if code != TYPED}
+
+
+def test_changed_test_support_without_a_node_id_is_not_assumed_irrelevant():
+    old = {**SAME, "tests/helpers.py": "before"}
+    new = {**SAME, "tests/helpers.py": "after"}
+    assert set(mc.keys_to_reset(old, new, STATS, VERDICTS)) == {
+        key for key, code in VERDICTS.items() if code != TYPED
+    }
+
+
+def test_new_test_support_can_change_existing_fixture_behavior():
+    new = {**SAME, "tests/helpers.py": "new support"}
+    assert set(mc.keys_to_reset(SAME, new, STATS, VERDICTS)) == {
+        key for key, code in VERDICTS.items() if code != TYPED
+    }
+
+
+def test_internal_pytest_errors_are_reopened_when_tests_change():
+    verdicts = {**VERDICTS, "pkg.b.x_h__mutmut_4": 3}
+    assert "pkg.b.x_h__mutmut_4" in mc.keys_to_reset(
+        SAME, {**SAME, "tests/test_d.py": "new"}, STATS, verdicts
+    )
+
+
 def test_the_hashes_follow_the_content_of_every_test_file(tmp_path):
     (tmp_path / "tests" / "sub").mkdir(parents=True)
     (tmp_path / "tests" / "test_a.py").write_text("x = 1\n")
@@ -80,6 +113,20 @@ def test_the_hashes_follow_the_content_of_every_test_file(tmp_path):
     assert set(first) == {"tests/test_a.py", "tests/sub/test_b.py"}
     (tmp_path / "tests" / "test_a.py").write_text("x = 2\n")
     assert mc.hash_tests(tmp_path)["tests/test_a.py"] != first["tests/test_a.py"]
+
+
+def test_research_tests_and_root_conftest_are_bound_to_the_cache(tmp_path):
+    folder = tmp_path / "research/tests"
+    folder.mkdir(parents=True)
+    (folder / "test_scientific.py").write_text("def test_label_access():\n    assert True\n")
+    (tmp_path / "conftest.py").write_text("fixture_version = 1\n")
+    hashes = mc.hash_tests(tmp_path)
+    assert set(hashes) == {"research/tests/test_scientific.py", "conftest.py"}
+    (folder / "test_scientific.py").write_text("def test_label_access():\n    assert False\n")
+    assert (
+        mc.hash_tests(tmp_path)["research/tests/test_scientific.py"]
+        != hashes["research/tests/test_scientific.py"]
+    )
 
 
 def _mutants(tmp_path, verdicts=VERDICTS, stats=STATS):
@@ -119,6 +166,31 @@ def test_prepare_without_a_cache_or_a_record_does_nothing(tmp_path):
     assert mc.prepare(tmp_path)["reset"] == 0
     _mutants(tmp_path)
     assert mc.prepare(tmp_path)["reset"] == 0  # no baseline recorded yet
+
+
+def test_cache_metadata_symlinks_are_refused_before_any_write(tmp_path):
+    meta = _mutants(tmp_path)
+    mc.record(tmp_path)
+    outside = tmp_path / "outside.meta"
+    meta.rename(outside)
+    original = outside.read_bytes()
+    meta.symlink_to(outside)
+    (tmp_path / "tests/test_c.py").write_text("changed")
+    with pytest.raises(ValueError, match="cache"):
+        mc.prepare(tmp_path)
+    assert outside.read_bytes() == original
+
+
+def test_the_cache_root_cannot_alias_another_directory(tmp_path):
+    _mutants(tmp_path)
+    mc.record(tmp_path)
+    cache, outside = tmp_path / "mutants", tmp_path / "other-cache"
+    cache.rename(outside)
+    cache.symlink_to(outside, target_is_directory=True)
+    before = {p.relative_to(outside): p.read_bytes() for p in outside.rglob("*.meta")}
+    with pytest.raises(ValueError, match="cache"):
+        mc.prepare(tmp_path)
+    assert {p.relative_to(outside): p.read_bytes() for p in outside.rglob("*.meta")} == before
 
 
 def test_the_command_line_runs_both_steps(tmp_path, monkeypatch, capsys):

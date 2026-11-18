@@ -1,0 +1,22 @@
+Downloading pyarrow (22.9MiB)
+ Downloaded pyarrow
+Installed 29 packages in 88ms
+source edf8ac28b2824c76840c8e4cad47fe3fee1f1ac84a5b38ad341e968dee9e8dc0 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 1.24.4 pandas 2.0.3 sklearn 1.3.2 pyarrow 14.0.2
+python ['a', 'b', None] mutant 2 match True dtype object
+python ['a', 'b', None] mutant 4 match True dtype object
+python ['a', 'á', ''] mutant 2 match True dtype object
+python ['a', 'á', ''] mutant 4 match True dtype object
+python [] mutant 2 match True dtype object
+python [] mutant 4 match True dtype object
+python ['a', 1, None] mutant 2 match True dtype object
+python ['a', 1, None] mutant 4 match True dtype object
+pyarrow ['a', 'b', None] mutant 2 match True dtype object
+pyarrow ['a', 'b', None] mutant 4 match True dtype object
+pyarrow ['a', 'á', ''] mutant 2 match True dtype object
+pyarrow ['a', 'á', ''] mutant 4 match True dtype object
+pyarrow [] mutant 2 match True dtype object
+pyarrow [] mutant 4 match True dtype object
+pyarrow ['a', 1, None] mutant 2 match True dtype object
+pyarrow ['a', 1, None] mutant 4 match True dtype object
+
+EXIT_STATUS=0

@@ -1,0 +1,9 @@
+import hashlib,itertools,platform
+from pathlib import Path
+import numpy as np,scipy
+from scipy.stats import rankdata
+p=Path('research/temporal_decision.py');print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'numpy',np.__version__,'scipy',scipy.__version__)
+for n in (2,3,4):
+ unique={tuple(rankdata(x)) for x in itertools.product(range(n),repeat=n)};vectors=np.array([r for r in unique if len(set(r))>1],dtype=float); centered=vectors-vectors.mean(axis=1,keepdims=True); norm=np.sqrt(np.sum(centered**2,axis=1));rho=(centered@centered.T)/np.outer(norm,norm); changed=sum((round(float(x),9)>=.8)!=(round(float(x),10)>=.8) for x in rho.ravel());diff=np.abs(rho.ravel()-.8);nonzero=diff[diff>1e-12];print('n',n,'rank_vectors',len(vectors),'pairs',rho.size,'decision_differences',changed,'closest_nonexact',float(nonzero.min()))
+for n in (4,17):
+ max_square=n*(n*n-1)/3; lower=1/(45*max_square**2);print('n',n,'max_rank_square_sum',max_square,'exact_rational_distance_lower_bound',lower)

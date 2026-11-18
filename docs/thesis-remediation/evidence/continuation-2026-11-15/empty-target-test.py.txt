@@ -1,0 +1,9 @@
+import numpy as np
+import pandas as pd
+import uci_loader as ul
+
+def test_empty_table_without_target_preserves_numeric_target_schema():
+    frame = pd.DataFrame({'a':pd.Series(dtype=float),'b':pd.Series(dtype=float)})
+    _,target=ul.split_columns(frame,{'target_col':['x','y'],'variables':[]})
+    assert target.index.equals(frame.index)
+    assert target.dtype == np.float64

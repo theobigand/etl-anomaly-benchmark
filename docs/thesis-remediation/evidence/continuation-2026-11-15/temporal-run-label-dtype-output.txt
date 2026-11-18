@@ -1,0 +1,16 @@
+source f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.0.6
+int match True original ok  mutant ok 
+bool match True original ok  mutant ok 
+float match True original ok  mutant ok 
+int_strings match True original ok  mutant ok 
+fractional match False original ok ('{"chronological": {"zscore": {"policies": {"P0": {"f1": 0.6666666666666665, "flagged_share": 0.6666666666666666, "fpr": 0.5714285714285714, "precision": 0.6,  mutant error ('ValueError', 'continuous format is not supported')
+float_strings match False original error ('ValueError', "invalid literal for int() with base 10: np.str_('0.0')") mutant ok ('{"chronological": {"zscore": {"policies": {"P0": {"f1": 0.6666666666666665, "flagged_share": 0.6666666666666666, "fpr": 0.5714285714285714, "precision": 0.6, 
+nan match False original ok ('{"chronological": {"zscore": {"policies": {"P0": {"f1": 0.6666666666666665, "flagged_share": 0.6666666666666666, "fpr": 0.5714285714285714, "precision": 0.6,  mutant error ('ValueError', 'cannot convert float NaN to integer')
+source f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.1.1
+int match True original ok  mutant ok 
+bool match True original ok  mutant ok 
+float match True original ok  mutant ok 
+int_strings match True original ok  mutant ok 
+fractional match False original ok ('{"chronological": {"zscore": {"policies": {"P0": {"f1": 0.6666666666666665, "flagged_share": 0.6666666666666666, "fpr": 0.5714285714285714, "precision": 0.6,  mutant error ('ValueError', 'continuous format is not supported')
+float_strings match False original error ('ValueError', "invalid literal for int() with base 10: np.str_('0.0')") mutant ok ('{"chronological": {"zscore": {"policies": {"P0": {"f1": 0.6666666666666665, "flagged_share": 0.6666666666666666, "fpr": 0.5714285714285714, "precision": 0.6, 
+nan match False original ok ('{"chronological": {"zscore": {"policies": {"P0": {"f1": 0.6666666666666665, "flagged_share": 0.6666666666666666, "fpr": 0.5714285714285714, "precision": 0.6,  mutant error ('ValueError', 'cannot convert float NaN to integer')

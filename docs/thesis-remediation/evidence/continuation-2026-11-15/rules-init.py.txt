@@ -1,0 +1,26 @@
+import hashlib,platform,warnings
+from pathlib import Path
+import numpy as np,pandas as pd,sklearn
+from etl_benchmark.quality.rules import ZScoreDetector,IQRDetector
+p=Path('src/etl_benchmark/quality/rules.py');print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'numpy',np.__version__,'pandas',pd.__version__,'sklearn',sklearn.__version__)
+frames={'normal':pd.DataFrame({'x':np.arange(30.),'y':np.arange(30.)**2}),'no_numeric':pd.DataFrame({'x':['a','b']}),'all_missing':pd.DataFrame({'x':[np.nan,np.nan]}),'empty':pd.DataFrame({'x':pd.Series(dtype=float)}),'single':pd.DataFrame({'x':[1.]}),'nonfinite':pd.DataFrame({'x':[1.,np.inf]})}
+for cls,ids in ((ZScoreDetector,(4,5)),(IQRDetector,(4,5,6))):
+ for scenario in ('score_before','predict_before','normal','no_numeric','all_missing','empty','single','nonfinite','refit_failure'):
+  def run(suffix):
+   d=cls.__new__(cls);getattr(d,f'xǁ{cls.__name__}ǁ__init____mutmut_{suffix}')()
+   try:
+    with warnings.catch_warnings(record=True) as w:
+     warnings.simplefilter('always')
+     if scenario=='score_before':out=d.score(frames['normal'])
+     elif scenario=='predict_before':out=d.predict(frames['normal'])
+     elif scenario=='refit_failure':
+      d.fit(frames['normal'])
+      try:d.fit(frames['all_missing'])
+      except Exception as e:out=(type(e).__name__,str(e),d.score(frames['normal']).tolist())
+     else:
+      d.fit(frames[scenario]);out=(d.score(frames[scenario]).tolist(),d.predict(frames[scenario]).tolist())
+    return ('ok',repr(out),[(type(x.message).__name__,str(x.message)) for x in w])
+   except Exception as e:return ('error',type(e).__name__,str(e))
+  a=run('orig')
+  for suffix in ids:
+   b=run(str(suffix));print(cls.__name__,scenario,suffix,'match',a==b,'kind',a[0])

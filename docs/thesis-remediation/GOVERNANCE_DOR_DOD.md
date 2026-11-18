@@ -1,5 +1,12 @@
 # Research governance, DoR/DoD, and verification reporting
 
+Prospective policy update: [#116](https://github.com/theobigand/etl-anomaly-benchmark/issues/116)
+tracks the mandatory P0 migration to L1/L2/L3/L4 mutation thresholds of
+80/90/95/98%. Its [separate contract and current limitations](RISK_MUTATION_MIGRATION.md)
+extend the four follow-ups below without changing T001–T415. Existing global
+95% evidence retains its historical interpretation. No migration completion or
+current certification is implied by this planning cross-reference.
+
 **Status:** Planned follow-up work, not implemented or independently verified by this document.
 **Scope:** Four issue-tracked tasks (#109–#112) concerning the existing ETL anomaly-benchmark thesis. These tasks are **in addition to** the unchanged T001–T415 checklist. They are not a new research question, detector family, or substitute for the required scientific corrections.
 
@@ -61,7 +68,7 @@ The existing ready/done policy in [verification/README.md](../../verification/RE
 | --- | --- | --- | --- |
 | Regression, property, scientific contracts | Unit, detector, split, metric, time/leakage and adverse-schema tests | Tested behaviors under the checked cases | Validity of all hypotheses or untested populations |
 | FAST | Ruff, tests, measured line and branch coverage; exact scope to verify | Code exercised by the tested suite | Every possible bug is detected |
-| DEEP | Mutation campaign, eligible scope and required >=95% killed fraction | Sensitivity of tests to specified code mutations | No remaining defects or proof that all mutants are equivalent |
+| DEEP | Mutation campaign, eligible scope and per-risk required killed fraction (L1 80%, L2 90%, L3 95%, L4 98%) | Sensitivity of tests to specified code mutations | No remaining defects or proof that all mutants are equivalent |
 | FAULTS | Historically 23 deliberate scientific defects, each caught by a named test | Detection of specific dangerous scientific mistakes | Coverage of every leakage/statistical error |
 | REAL | Full research data checks and SHA-256 manifests | Data identity and selected data invariants | Generalization to other datasets |
 | TOOLS / TYPES | Verifier coverage and checked static typing | Tested verifier behavior and a bounded type policy | Correctness of results outside tested contracts |

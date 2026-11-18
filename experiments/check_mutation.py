@@ -1,10 +1,12 @@
-"""Fail-closed interpretation of a mutation campaign."""
+"""Check current per-module mutation thresholds and execution evidence."""
 
 from __future__ import annotations
 
 import argparse
-import json
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
 
 OUTCOMES = (
     "killed",
@@ -25,7 +27,7 @@ UNRELIABLE = ("check_was_interrupted_by_user", "segfault", "no_tests", "skipped"
 
 
 def classify(stats: dict) -> tuple[str, float]:
-    """Count every non-killed mutant against the 95% threshold.
+    """Interpret a historical global-95% report without recertifying it.
 
     Raises ValueError when the counts are malformed or the campaign is
     unreliable (interrupted, crashed, mutants without tests, skipped mutants).
@@ -50,16 +52,34 @@ def classify(stats: dict) -> tuple[str, float]:
     return ("PASS" if passed else "FAIL", score)
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("stats", type=Path)
-    args = parser.parse_args()
+    parser.add_argument("--root", type=Path, default=ROOT)
+    parser.add_argument("--results", type=Path, default=None)
+    parser.add_argument("--run", type=Path, default=None, help="managed native controller result")
+    args = parser.parse_args(argv)
+    sys.path.insert(0, str(ROOT))
+    from verification import mutation_campaign
+
     try:
-        status, score = classify(json.loads(args.stats.read_text()))
-    except (OSError, ValueError) as exc:
+        result, _ = mutation_campaign.load_campaign(
+            args.root,
+            args.stats,
+            args.root / "mutants/results.txt" if args.results is None else args.results,
+            args.root / "mutants/controller-result.json" if args.run is None else args.run,
+        )
+        status = mutation_campaign.status(result)
+    except (OSError, KeyError, TypeError, ValueError) as exc:
         print(f"mutation gate: INVALID ({exc})")
         return 1
-    print(f"mutation gate: {status} ({score:.2f}% killed)")
+    print(f"mutation gate: {status} (native exit {result['native_exit_code']})")
+    for path, scope in result["analysis"]["modules"].items():
+        if scope["status"] != "NO_MUTANTS_TECHNICAL":
+            print(
+                f"{path}: {scope['level']} {scope['status']} "
+                f"({scope['killed']}/{scope['eligible']}; required {scope['threshold']}%)"
+            )
     return 0 if status == "PASS" else 1
 
 

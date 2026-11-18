@@ -1,0 +1,642 @@
+{
+ "runs": [
+  {
+   "blas": "accelerate",
+   "numpy": "2.4.6",
+   "python": "3.11.17",
+   "scikit-learn": "1.9.1",
+   "scipy": "1.17.1",
+   "tables": {
+    "real cardio": {
+     "components": 14,
+     "features": 21,
+     "full_rank": false,
+     "median_score": 0.021892468949697368
+    },
+    "real credit_card": {
+     "components": 27,
+     "features": 30,
+     "full_rank": false,
+     "median_score": 0.0051607467865164
+    },
+    "real water_quality": {
+     "components": 9,
+     "features": 9,
+     "full_rank": true,
+     "median_score": 1.1104484074904715e-30
+    },
+    "schema sensors": {
+     "components": 6,
+     "features": 6,
+     "full_rank": true,
+     "median_score": 2.3512394737727506e-33
+    },
+    "schema transactions": {
+     "components": 6,
+     "features": 6,
+     "full_rank": true,
+     "median_score": 1.4027189761620367e-32
+    },
+    "synthetic customer": {
+     "components": 6,
+     "features": 6,
+     "full_rank": true,
+     "median_score": 2.850376317693109e-32
+    }
+   },
+   "typed_injection_carriers": {
+    "detail": {
+     "1": {
+      "components": 3,
+      "features": 8,
+      "full_rank": false,
+      "median_score": 0.022506552253668224
+     },
+     "117": {
+      "components": 8,
+      "features": 9,
+      "full_rank": false,
+      "median_score": 0.0025729114829622164
+     },
+     "146": {
+      "components": 6,
+      "features": 36,
+      "full_rank": false,
+      "median_score": 0.024864992000091603
+     },
+     "148": {
+      "components": 5,
+      "features": 7,
+      "full_rank": false,
+      "median_score": 0.0001323100051183296
+     },
+     "159": {
+      "components": 7,
+      "features": 10,
+      "full_rank": false,
+      "median_score": 0.016833022237274956
+     },
+     "186": {
+      "components": 9,
+      "features": 11,
+      "full_rank": false,
+      "median_score": 0.010948756787858028
+     },
+     "189": {
+      "components": 9,
+      "features": 21,
+      "full_rank": false,
+      "median_score": 0.01602097115171518
+     },
+     "2": {
+      "components": 6,
+      "features": 6,
+      "full_rank": true,
+      "median_score": 1.7195344520137372e-31
+     },
+     "222": {
+      "components": 7,
+      "features": 7,
+      "full_rank": true,
+      "median_score": 2.1746500400623874e-31
+     },
+     "270": {
+      "components": 13,
+      "features": 128,
+      "full_rank": false,
+      "median_score": 0.012891065363467916
+     },
+     "275": {
+      "components": 7,
+      "features": 10,
+      "full_rank": false,
+      "median_score": 0.021114859481965974
+     },
+     "294": {
+      "components": 3,
+      "features": 5,
+      "full_rank": false,
+      "median_score": 0.019999684553359244
+     },
+     "296": {
+      "components": 10,
+      "features": 11,
+      "full_rank": false,
+      "median_score": 0.016133975405247497
+     },
+     "31": {
+      "components": 8,
+      "features": 10,
+      "full_rank": false,
+      "median_score": 0.009705305140588353
+     },
+     "332": {
+      "components": 29,
+      "features": 46,
+      "full_rank": false,
+      "median_score": 0.03312592370016254
+     },
+     "350": {
+      "components": 13,
+      "features": 21,
+      "full_rank": false,
+      "median_score": 0.016707391901231973
+     },
+     "357": {
+      "components": 4,
+      "features": 6,
+      "full_rank": false,
+      "median_score": 0.00986191942660022
+     },
+     "360": {
+      "components": 6,
+      "features": 13,
+      "full_rank": false,
+      "median_score": 0.021997062600425325
+     },
+     "365": {
+      "components": 28,
+      "features": 64,
+      "full_rank": false,
+      "median_score": 0.005948868719773287
+     },
+     "372": {
+      "components": 5,
+      "features": 8,
+      "full_rank": false,
+      "median_score": 0.006425756379592521
+     },
+     "374": {
+      "components": 11,
+      "features": 27,
+      "full_rank": false,
+      "median_score": 0.04181390504911371
+     },
+     "381": {
+      "components": 9,
+      "features": 11,
+      "full_rank": false,
+      "median_score": 0.017052100208858834
+     },
+     "464": {
+      "components": 17,
+      "features": 80,
+      "full_rank": false,
+      "median_score": 0.03457182260124321
+     },
+     "468": {
+      "components": 9,
+      "features": 11,
+      "full_rank": false,
+      "median_score": 0.008945595863274453
+     },
+     "545": {
+      "components": 3,
+      "features": 7,
+      "full_rank": false,
+      "median_score": 0.0016172833439022877
+     },
+     "551": {
+      "components": 6,
+      "features": 11,
+      "full_rank": false,
+      "median_score": 0.02348214094918858
+     },
+     "555": {
+      "components": 6,
+      "features": 9,
+      "full_rank": false,
+      "median_score": 0.008106255231903968
+     },
+     "560": {
+      "components": 8,
+      "features": 10,
+      "full_rank": false,
+      "median_score": 0.008894894909136607
+     },
+     "572": {
+      "components": 52,
+      "features": 93,
+      "full_rank": false,
+      "median_score": 0.01307768491646631
+     },
+     "59": {
+      "components": 12,
+      "features": 16,
+      "full_rank": false,
+      "median_score": 0.02871371990539611
+     },
+     "601": {
+      "components": 4,
+      "features": 6,
+      "full_rank": false,
+      "median_score": 0.020904001283601426
+     },
+     "602": {
+      "components": 4,
+      "features": 16,
+      "full_rank": false,
+      "median_score": 0.023344641917062134
+     },
+     "697": {
+      "components": 17,
+      "features": 25,
+      "full_rank": false,
+      "median_score": 0.017188004254588735
+     },
+     "75": {
+      "components": 39,
+      "features": 166,
+      "full_rank": false,
+      "median_score": 0.043353175604198574
+     },
+     "78": {
+      "components": 7,
+      "features": 10,
+      "full_rank": false,
+      "median_score": 0.0019351182568119677
+     },
+     "799": {
+      "components": 6,
+      "features": 9,
+      "full_rank": false,
+      "median_score": 0.008274067889876655
+     },
+     "80": {
+      "components": 34,
+      "features": 52,
+      "full_rank": false,
+      "median_score": 0.04342824816502333
+     },
+     "81": {
+      "components": 10,
+      "features": 17,
+      "full_rank": false,
+      "median_score": 0.03433477596678987
+     },
+     "849": {
+      "components": 7,
+      "features": 8,
+      "full_rank": false,
+      "median_score": 0.007108560353045969
+     },
+     "851": {
+      "components": 4,
+      "features": 6,
+      "full_rank": false,
+      "median_score": 0.006467962445247695
+     },
+     "864": {
+      "components": 9,
+      "features": 14,
+      "full_rank": false,
+      "median_score": 0.015074704969285936
+     },
+     "911": {
+      "components": 7,
+      "features": 8,
+      "full_rank": false,
+      "median_score": 0.0015813899242810075
+     },
+     "94": {
+      "components": 49,
+      "features": 57,
+      "full_rank": false,
+      "median_score": 0.005648728045190004
+     },
+     "967": {
+      "components": 20,
+      "features": 30,
+      "full_rank": false,
+      "median_score": 0.016104799447108666
+     }
+    },
+    "eligible": 44,
+    "full_rank": [
+     "2",
+     "222"
+    ]
+   },
+   "interpreter": "mutation venv (Accelerate)"
+  },
+  {
+   "blas": "blas",
+   "numpy": "2.4.6",
+   "python": "3.11.17",
+   "scikit-learn": "1.9.1",
+   "scipy": "1.17.1",
+   "tables": {
+    "real cardio": {
+     "components": 14,
+     "features": 21,
+     "full_rank": false,
+     "median_score": 0.021892468949697336
+    },
+    "real credit_card": {
+     "components": 27,
+     "features": 30,
+     "full_rank": false,
+     "median_score": 0.005160746786514988
+    },
+    "real water_quality": {
+     "components": 9,
+     "features": 9,
+     "full_rank": true,
+     "median_score": 6.830317235026083e-31
+    },
+    "schema sensors": {
+     "components": 6,
+     "features": 6,
+     "full_rank": true,
+     "median_score": 1.765435782354966e-33
+    },
+    "schema transactions": {
+     "components": 6,
+     "features": 6,
+     "full_rank": true,
+     "median_score": 1.159727053263258e-32
+    },
+    "synthetic customer": {
+     "components": 6,
+     "features": 6,
+     "full_rank": true,
+     "median_score": 6.067080560224874e-32
+    }
+   },
+   "typed_injection_carriers": {
+    "detail": {
+     "1": {
+      "components": 3,
+      "features": 8,
+      "full_rank": false,
+      "median_score": 0.022506552253668606
+     },
+     "117": {
+      "components": 8,
+      "features": 9,
+      "full_rank": false,
+      "median_score": 0.0025729114829626393
+     },
+     "146": {
+      "components": 6,
+      "features": 36,
+      "full_rank": false,
+      "median_score": 0.024864992000091814
+     },
+     "148": {
+      "components": 5,
+      "features": 7,
+      "full_rank": false,
+      "median_score": 0.00013231000511820478
+     },
+     "159": {
+      "components": 7,
+      "features": 10,
+      "full_rank": false,
+      "median_score": 0.01683302223727496
+     },
+     "186": {
+      "components": 9,
+      "features": 11,
+      "full_rank": false,
+      "median_score": 0.010948756787858659
+     },
+     "189": {
+      "components": 9,
+      "features": 21,
+      "full_rank": false,
+      "median_score": 0.016020971151715385
+     },
+     "2": {
+      "components": 6,
+      "features": 6,
+      "full_rank": true,
+      "median_score": 3.729924449170455e-31
+     },
+     "222": {
+      "components": 7,
+      "features": 7,
+      "full_rank": true,
+      "median_score": 3.4026023376399992e-31
+     },
+     "270": {
+      "components": 13,
+      "features": 128,
+      "full_rank": false,
+      "median_score": 0.012891065363467905
+     },
+     "275": {
+      "components": 7,
+      "features": 10,
+      "full_rank": false,
+      "median_score": 0.021114859481969853
+     },
+     "294": {
+      "components": 3,
+      "features": 5,
+      "full_rank": false,
+      "median_score": 0.019999684553359397
+     },
+     "296": {
+      "components": 10,
+      "features": 11,
+      "full_rank": false,
+      "median_score": 0.016133975405247095
+     },
+     "31": {
+      "components": 8,
+      "features": 10,
+      "full_rank": false,
+      "median_score": 0.009705305140590231
+     },
+     "332": {
+      "components": 29,
+      "features": 46,
+      "full_rank": false,
+      "median_score": 0.03312592370016278
+     },
+     "350": {
+      "components": 13,
+      "features": 21,
+      "full_rank": false,
+      "median_score": 0.01670739190123177
+     },
+     "357": {
+      "components": 4,
+      "features": 6,
+      "full_rank": false,
+      "median_score": 0.009861919426600231
+     },
+     "360": {
+      "components": 6,
+      "features": 13,
+      "full_rank": false,
+      "median_score": 0.021997062600425332
+     },
+     "365": {
+      "components": 28,
+      "features": 64,
+      "full_rank": false,
+      "median_score": 0.005948868719773404
+     },
+     "372": {
+      "components": 5,
+      "features": 8,
+      "full_rank": false,
+      "median_score": 0.006425756379592504
+     },
+     "374": {
+      "components": 11,
+      "features": 27,
+      "full_rank": false,
+      "median_score": 0.041813905049113365
+     },
+     "381": {
+      "components": 9,
+      "features": 11,
+      "full_rank": false,
+      "median_score": 0.01705210020885862
+     },
+     "464": {
+      "components": 17,
+      "features": 80,
+      "full_rank": false,
+      "median_score": 0.03457182260124325
+     },
+     "468": {
+      "components": 9,
+      "features": 11,
+      "full_rank": false,
+      "median_score": 0.008945595863277664
+     },
+     "545": {
+      "components": 3,
+      "features": 7,
+      "full_rank": false,
+      "median_score": 0.0016172833439023105
+     },
+     "551": {
+      "components": 6,
+      "features": 11,
+      "full_rank": false,
+      "median_score": 0.023482140949188483
+     },
+     "555": {
+      "components": 6,
+      "features": 9,
+      "full_rank": false,
+      "median_score": 0.008106255231904096
+     },
+     "560": {
+      "components": 8,
+      "features": 10,
+      "full_rank": false,
+      "median_score": 0.008894894909136622
+     },
+     "572": {
+      "components": 52,
+      "features": 93,
+      "full_rank": false,
+      "median_score": 0.013077684916466418
+     },
+     "59": {
+      "components": 12,
+      "features": 16,
+      "full_rank": false,
+      "median_score": 0.028713719905399695
+     },
+     "601": {
+      "components": 4,
+      "features": 6,
+      "full_rank": false,
+      "median_score": 0.02090400128360175
+     },
+     "602": {
+      "components": 4,
+      "features": 16,
+      "full_rank": false,
+      "median_score": 0.0233446419170621
+     },
+     "697": {
+      "components": 17,
+      "features": 25,
+      "full_rank": false,
+      "median_score": 0.017188004254588482
+     },
+     "75": {
+      "components": 39,
+      "features": 166,
+      "full_rank": false,
+      "median_score": 0.04335317560419822
+     },
+     "78": {
+      "components": 7,
+      "features": 10,
+      "full_rank": false,
+      "median_score": 0.001935118256811967
+     },
+     "799": {
+      "components": 6,
+      "features": 9,
+      "full_rank": false,
+      "median_score": 0.008274067889876592
+     },
+     "80": {
+      "components": 34,
+      "features": 52,
+      "full_rank": false,
+      "median_score": 0.0434282481650234
+     },
+     "81": {
+      "components": 10,
+      "features": 17,
+      "full_rank": false,
+      "median_score": 0.034334775966789806
+     },
+     "849": {
+      "components": 7,
+      "features": 8,
+      "full_rank": false,
+      "median_score": 0.007108560353046139
+     },
+     "851": {
+      "components": 4,
+      "features": 6,
+      "full_rank": false,
+      "median_score": 0.006467962445247944
+     },
+     "864": {
+      "components": 9,
+      "features": 14,
+      "full_rank": false,
+      "median_score": 0.015074704969286245
+     },
+     "911": {
+      "components": 7,
+      "features": 8,
+      "full_rank": false,
+      "median_score": 0.001581389924281063
+     },
+     "94": {
+      "components": 49,
+      "features": 57,
+      "full_rank": false,
+      "median_score": 0.005648728045190055
+     },
+     "967": {
+      "components": 20,
+      "features": 30,
+      "full_rank": false,
+      "median_score": 0.016104799447108797
+     }
+    },
+    "eligible": 44,
+    "full_rank": [
+     "2",
+     "222"
+    ]
+   },
+   "interpreter": "canonical conda environment"
+  }
+ ]
+}

@@ -1,0 +1,27 @@
+## xǁLSTMAutoencoderǁ_windows__mutmut_2
+-        values = frame[self.columns].astype(float).to_numpy()
++        values = frame[self.columns].astype(None).to_numpy()
+## xǁLSTMAutoencoderǁ_reconstruction_error__mutmut_31
+-                    (error[:, -1] if last_only else error).mean(dim=-1 if last_only else (1, 2))
++                    (error[:, -1] if last_only else error).mean(dim=+1 if last_only else (1, 2))
+## xǁLSTMAutoencoderǁ_reconstruction_error__mutmut_35
+-        return torch.cat(out).numpy().astype(float)
++        return torch.cat(out).numpy().astype(None)
+## xǁLSTMAutoencoderǁfit__mutmut_16
+-        values = train[self.columns].astype(float)
++        values = train[self.columns].astype(None)
+## xǁLSTMAutoencoderǁfit__mutmut_43
+-            fit_windows = fit_windows[rng.choice(len(fit_windows), self.fit_rows, replace=False)]
++            fit_windows = fit_windows[rng.choice(len(fit_windows), self.fit_rows, replace=None)]
+## xǁLSTMAutoencoderǁfit__mutmut_50
+-        if len(val_windows) > self.validation_rows:
++        if len(val_windows) >= self.validation_rows:
+## xǁLSTMAutoencoderǁfit__mutmut_55
+-            keep = np.sort(rng.choice(len(val_windows), self.validation_rows, replace=False))
++            keep = np.sort(rng.choice(len(val_windows), self.validation_rows, replace=None))
+## xǁLSTMAutoencoderǁsettings__mutmut_41
+-            "versions": {"torch": version("torch"), "numpy": version("numpy")},
++            "versions": {"torch": version("TORCH"), "numpy": version("numpy")},
+## xǁLSTMAutoencoderǁsettings__mutmut_46
+-            "versions": {"torch": version("torch"), "numpy": version("numpy")},
++            "versions": {"torch": version("torch"), "numpy": version("NUMPY")},

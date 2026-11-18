@@ -1,0 +1,138 @@
+## x_synthetic_sequence_stream__mutmut_1
+-def FUNCTION(n: int = 24_000, rate: float = 0.01, seed: int = 0) -> pd.DataFrame:
++def FUNCTION(n: int = 24001, rate: float = 0.01, seed: int = 0) -> pd.DataFrame:
+## x_synthetic_sequence_stream__mutmut_2
+-def FUNCTION(n: int = 24_000, rate: float = 0.01, seed: int = 0) -> pd.DataFrame:
++def FUNCTION(n: int = 24_000, rate: float = 1.01, seed: int = 0) -> pd.DataFrame:
+## x_synthetic_sequence_stream__mutmut_3
+-def FUNCTION(n: int = 24_000, rate: float = 0.01, seed: int = 0) -> pd.DataFrame:
++def FUNCTION(n: int = 24_000, rate: float = 0.01, seed: int = 1) -> pd.DataFrame:
+## x_synthetic_sequence_stream__mutmut_29
+-    label = np.zeros(n, dtype=int)
++    label = np.zeros(n, dtype=None)
+## x_synthetic_sequence_stream__mutmut_31
+-    label = np.zeros(n, dtype=int)
++    label = np.zeros(n, )
+## x_synthetic_sequence_stream__mutmut_35
+-    hits = rng.choice(np.arange(20, n), size=int(n * rate), replace=False)
++    hits = rng.choice(np.arange(20, n), size=int(n * rate), replace=None)
+## x_synthetic_sequence_stream__mutmut_51
+-            -x[t - 1] * 0.9 + 0.0
++            -x[t - 1] * 0.9 - 0.0
+## x_compare__mutmut_1
+-    max_epochs=20,
++    max_epochs=21,
+## x_compare__mutmut_7
+-    sample = train.sample(n=min(fit_rows, len(train)), random_state=seed).sort_values(tp.TIME_UTC)
++    sample = train.sample(n=min(fit_rows, len(train)), random_state=None).sort_values(tp.TIME_UTC)
+## x_compare__mutmut_9
+-    sample = train.sample(n=min(fit_rows, len(train)), random_state=seed).sort_values(tp.TIME_UTC)
++    sample = train.sample(n=min(fit_rows, len(train)), ).sort_values(tp.TIME_UTC)
+## x_compare__mutmut_44
+-    seconds = time.perf_counter() - started
++    seconds = time.perf_counter() + started
+## x_run_synthetic__mutmut_3
+-    train, val, test = tp.chronological_partitions(frame)
++    train, val, test = tp.chronological_partitions(None)
+## x_run_synthetic__mutmut_9
+-    result = compare(train, val, test, columns, seed=42, fit_rows=len(train), max_epochs=20)
++    result = compare(None, val, test, columns, seed=42, fit_rows=len(train), max_epochs=20)
+## x_run_synthetic__mutmut_10
+-    result = compare(train, val, test, columns, seed=42, fit_rows=len(train), max_epochs=20)
++    result = compare(train, None, test, columns, seed=42, fit_rows=len(train), max_epochs=20)
+## x_run_synthetic__mutmut_11
+-    result = compare(train, val, test, columns, seed=42, fit_rows=len(train), max_epochs=20)
++    result = compare(train, val, None, columns, seed=42, fit_rows=len(train), max_epochs=20)
+## x_run_synthetic__mutmut_26
+-    summary = _summary(result, test[tp.TIME_UTC])
++    summary = _summary(None, test[tp.TIME_UTC])
+## x_run_credit_card__mutmut_1
+-    frame = tp.load(spec)
++    frame = None
+## x_run_credit_card__mutmut_2
+-    frame = tp.load(spec)
++    frame = tp.load(None)
+## x_run_credit_card__mutmut_4
+-    train, val, test = tp.chronological_partitions(frame)
++    train, val, test = tp.chronological_partitions(None)
+## x_run_credit_card__mutmut_7
+-    columns = list(tp.features(spec, frame).columns)
++    columns = list(tp.features(None, frame).columns)
+## x_run_credit_card__mutmut_8
+-    columns = list(tp.features(spec, frame).columns)
++    columns = list(tp.features(spec, None).columns)
+## x_run_credit_card__mutmut_16
+-        log.info("credit card, seed %d", seed)
++        log.info("XXcredit card, seed %dXX", seed)
+## x_run_credit_card__mutmut_19
+-        result = compare(train, val, test, columns, seed)
++        result = compare(None, val, test, columns, seed)
+## x_run_credit_card__mutmut_20
+-        result = compare(train, val, test, columns, seed)
++        result = compare(train, None, test, columns, seed)
+## x_run_credit_card__mutmut_21
+-        result = compare(train, val, test, columns, seed)
++        result = compare(train, val, None, columns, seed)
+## x_run_credit_card__mutmut_32
+-        by_seed[str(seed)] = _summary(result, test[tp.TIME_UTC])
++        by_seed[str(seed)] = _summary(result, None)
+## x_main__mutmut_2
+-    parser = argparse.ArgumentParser(description=__doc__)
++    parser = argparse.ArgumentParser(description=None)
+## x_main__mutmut_13
+-    parser.add_argument("--output", type=Path, default=config.RESULTS_DIR / "lstm_pilot.json")
++    parser.add_argument("--output", type=Path, default=config.RESULTS_DIR / "LSTM_PILOT.JSON")
+## x_main__mutmut_24
+-    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(message)s")
++    logging.basicConfig(level=None, format="%(asctime)s %(name)s %(message)s")
+## x_main__mutmut_25
+-    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(message)s")
++    logging.basicConfig(level=logging.INFO, format=None)
+## x_main__mutmut_26
+-    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(message)s")
++    logging.basicConfig(format="%(asctime)s %(name)s %(message)s")
+## x_main__mutmut_27
+-    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(message)s")
++    logging.basicConfig(level=logging.INFO, )
+## x_main__mutmut_28
+-    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(message)s")
++    logging.basicConfig(level=logging.INFO, format="XX%(asctime)s %(name)s %(message)sXX")
+## x_main__mutmut_29
+-    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(message)s")
++    logging.basicConfig(level=logging.INFO, format="%(ASCTIME)S %(NAME)S %(MESSAGE)S")
+## x_main__mutmut_40
+-    log.info("synthetic control gate passed: %s", result["synthetic_control"]["passes_gate"])
++    log.info("XXsynthetic control gate passed: %sXX", result["synthetic_control"]["passes_gate"])
+## x_main__mutmut_52
+-    reference_path = ROOT / "verification" / "evidence" / "temporal_pilot" / "temporal_pilot.json"
++    reference_path = ROOT / "VERIFICATION" / "evidence" / "temporal_pilot" / "temporal_pilot.json"
+## x_main__mutmut_54
+-    reference_path = ROOT / "verification" / "evidence" / "temporal_pilot" / "temporal_pilot.json"
++    reference_path = ROOT / "verification" / "EVIDENCE" / "temporal_pilot" / "temporal_pilot.json"
+## x_main__mutmut_56
+-    reference_path = ROOT / "verification" / "evidence" / "temporal_pilot" / "temporal_pilot.json"
++    reference_path = ROOT / "verification" / "evidence" / "TEMPORAL_PILOT" / "temporal_pilot.json"
+## x_main__mutmut_58
+-    reference_path = ROOT / "verification" / "evidence" / "temporal_pilot" / "temporal_pilot.json"
++    reference_path = ROOT / "verification" / "evidence" / "temporal_pilot" / "TEMPORAL_PILOT.JSON"
+## x_main__mutmut_66
+-            log.warning("the synthetic gate failed: Credit Card is run but must not be interpreted")
++            log.warning("XXthe synthetic gate failed: Credit Card is run but must not be interpretedXX")
+## x_main__mutmut_67
+-            log.warning("the synthetic gate failed: Credit Card is run but must not be interpreted")
++            log.warning("the synthetic gate failed: credit card is run but must not be interpreted")
+## x_main__mutmut_71
+-        reference = json.loads(reference_path.read_text()) if reference_path.is_file() else None
++        reference = json.loads(reference_path.read_text()) if (reference_path.is_file()) or True else None
+## x_main__mutmut_76
+-        result["credit_card"] = run_credit_card(spec, reference)
++        result["credit_card"] = run_credit_card(None, reference)
+## x_main__mutmut_98
+-        "detector_sha256": sha(HERE / "lstm_detector.py"),
++        "detector_sha256": sha(HERE / "LSTM_DETECTOR.PY"),
+## x_main__mutmut_128
+-        partial.write_text(json.dumps(result, indent=2, sort_keys=True, default=float) + "\n")
++        partial.write_text(json.dumps(result, indent=2, sort_keys=True, default=None) + "\n")
+## x_main__mutmut_132
+-        partial.write_text(json.dumps(result, indent=2, sort_keys=True, default=float) + "\n")
++        partial.write_text(json.dumps(result, indent=2, sort_keys=True, ) + "\n")

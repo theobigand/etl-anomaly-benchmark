@@ -1,0 +1,45 @@
+## x_deep_artifacts__mutmut_5
+-    evidence = root / _EVIDENCE / "deep.json"
++    evidence = root / _EVIDENCE / "DEEP.JSON"
+## x_deep_artifacts__mutmut_24
+-            raise ValueError("DEEP evidence is not a current campaign")
++            raise ValueError("XXDEEP evidence is not a current campaignXX")
+## x_deep_artifacts__mutmut_25
+-            raise ValueError("DEEP evidence is not a current campaign")
++            raise ValueError("deep evidence is not a current campaign")
+## x__deep_member_allowed__mutmut_5
+-        units = json.loads((root / "verification/mutation_risk_policy.json").read_text())["units"]
++        units = json.loads((root / "VERIFICATION/MUTATION_RISK_POLICY.JSON").read_text())["units"]
+## x_pack__mutmut_6
+-    selected = deep_artifacts(root) if kind == "deep" and not allow_missing else _allowed(kind)
++    selected = deep_artifacts(None) if kind == "deep" and not allow_missing else _allowed(kind)
+## x_unpack__mutmut_5
+-            if len(members) > MAX_MEMBERS:
++            if len(members) >= MAX_MEMBERS:
+## x_unpack__mutmut_8
+-            if sum(member.size for member in members) > MAX_TOTAL:
++            if sum(member.size for member in members) >= MAX_TOTAL:
+## x_unpack__mutmut_40
+-                target.write_bytes(cast(IO[bytes], archive.extractfile(member)).read())
++                target.write_bytes(cast(None, archive.extractfile(member)).read())
+## x_main__mutmut_2
+-    parser = argparse.ArgumentParser(description=__doc__)
++    parser = argparse.ArgumentParser(description=None)
+## x_main__mutmut_18
+-    make = sub.add_parser("pack", help="archive the evidence files of one kind")
++    make = sub.add_parser("pack", help="XXarchive the evidence files of one kindXX")
+## x_main__mutmut_54
+-    make.add_argument("--allow-missing", action="store_true", help="skip files a failed job lacks")
++    make.add_argument("--allow-missing", action="store_true", help="XXskip files a failed job lacksXX")
+## x_main__mutmut_63
+-    take = sub.add_parser("unpack", help="extract an archive that holds only evidence files")
++    take = sub.add_parser("unpack", help="XXextract an archive that holds only evidence filesXX")
+## x_main__mutmut_80
+-    take.add_argument("--kind", choices=sorted(KINDS))
++    take.add_argument("--kind", choices=None)
+## x_main__mutmut_82
+-    take.add_argument("--kind", choices=sorted(KINDS))
++    take.add_argument("--kind", )
+## x_main__mutmut_102
+-            for name in unpack(args.bundle, args.root, args.kind):
++            for name in unpack(args.bundle, args.root, None):

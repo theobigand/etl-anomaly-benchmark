@@ -1,0 +1,17 @@
+PCAReconstruction_9 threshold_ nan->None 
+   original, predict after failed fit: ok:flags_sum=0 
+   mutant  , predict after failed fit: builtins.TypeError (TypeError subclass=True): '>' not supported between instances of 'float' and 'NoneType
+TailProbabilityModel_10 threshold_ nan->None 
+   original, predict after failed fit: ok:flags_sum=0 
+   mutant  , predict after failed fit: builtins.TypeError (TypeError subclass=True): '>' not supported between instances of 'float' and 'NoneType
+ReconstructionModel_4 threshold_ None->'' 
+   original, predict after failed fit: builtins.TypeError (TypeError subclass=True): '>' not supported between instances of 'float' and 'NoneType 
+   mutant  , predict after failed fit: numpy.UFuncTypeError (TypeError subclass=True): ufunc 'greater' did not contain a loop with signature matchi
+PCAReconstruction_9 threshold_ nan->None valid fit flags sum (mutant)= 20 original= 20
+TailProbabilityModel_10 threshold_ nan->None valid fit flags sum (mutant)= 20 original= 20
+ReconstructionModel_4 threshold_ None->'' valid fit flags sum (mutant)= 20 original= 20
+Tail_3 sorted_ None | pre-fit decision_function: builtins.AttributeError (TypeError subclass=False): 'NoneType' object has no attribute 'shape' | zero-feature: builtins.AttributeError (TypeError subclass=False): 'NoneType' object has no attribute 'shape'
+Tail_5 sorted_ (1,0) | pre-fit decision_function: builtins.IndexError (TypeError subclass=False): index 0 is out of bounds for axis 1 with size 0 | zero-feature: ok:flags_sum=0
+orig | pre-fit decision_function: builtins.IndexError (TypeError subclass=False): index 0 is out of bounds for axis 1 with size 0 | zero-feature: ok:flags_sum=0
+PyOD_4 pre-fit feature_names_ = '' | pre-fit predict: builtins.RuntimeError (TypeError subclass=False): isolation_forest detector not fitted. Call fit() first.
+   after valid fit: ['a', 'b', 'c']

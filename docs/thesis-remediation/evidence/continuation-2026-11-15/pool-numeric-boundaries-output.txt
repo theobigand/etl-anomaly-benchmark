@@ -1,0 +1,12 @@
+source cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.0.6
+dtype Int64 values [1, <NA>, 3] match True kind ok
+dtype Float64 values [1.0, <NA>, 3.0] match True kind ok
+dtype float64 values [0.0, inf, -inf] match True kind ok
+dtype uint64 values [0, 9223372036854775808, 18446744073709551615] match True kind ok
+dtype float64 values [1e-300, 1e+300, 0.0] match True kind ok
+source cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.1.1
+dtype Int64 values [1, <NA>, 3] match True kind ok
+dtype Float64 values [1.0, <NA>, 3.0] match True kind ok
+dtype float64 values [0.0, inf, -inf] match True kind ok
+dtype uint64 values [0, 9223372036854775808, 18446744073709551615] match True kind ok
+dtype float64 values [1e-300, 1e+300, 0.0] match True kind ok

@@ -70,6 +70,15 @@ def test_the_drift_direction_does_not_matter():
     assert down_scores.tolist() == pytest.approx(up_scores.tolist())
 
 
+def test_a_shift_at_the_movement_threshold_is_not_scored():
+    reference = pd.DataFrame({"t": range(6), "x": [-1.0, 0.0, 1.0, 0.0, 0.0, 0.0]})
+    detector = _detector(columns=["x"], reference_frac=0.5).fit(reference)
+    boundary = pd.DataFrame({"t": [3] * 32, "x": [0.03] * 32})
+    above = boundary.assign(x=0.030001)
+    assert (detector.score(boundary) == 0.0).all()
+    assert (detector.score(above) > 0.0).all()
+
+
 def test_a_window_needs_twenty_recent_rows():
     frame = _stream([1.5] * 40)
     detector = _detector().fit(frame)

@@ -1,0 +1,318 @@
+## x__draw__mutmut_1
+-def FUNCTION(ax, frame: pd.DataFrame, title: str, annotate: bool = True) -> None:
++def FUNCTION(ax, frame: pd.DataFrame, title: str, annotate: bool = False) -> None:
+## x__draw__mutmut_3
+-    ax.imshow(frame.to_numpy(dtype=float), cmap="YlGnBu", vmin=0, vmax=1, aspect="auto")
++    ax.imshow(frame.to_numpy(dtype=float), cmap=None, vmin=0, vmax=1, aspect="auto")
+## x__draw__mutmut_4
+-    ax.imshow(frame.to_numpy(dtype=float), cmap="YlGnBu", vmin=0, vmax=1, aspect="auto")
++    ax.imshow(frame.to_numpy(dtype=float), cmap="YlGnBu", vmin=None, vmax=1, aspect="auto")
+## x__draw__mutmut_5
+-    ax.imshow(frame.to_numpy(dtype=float), cmap="YlGnBu", vmin=0, vmax=1, aspect="auto")
++    ax.imshow(frame.to_numpy(dtype=float), cmap="YlGnBu", vmin=0, vmax=None, aspect="auto")
+## x__draw__mutmut_6
+-    ax.imshow(frame.to_numpy(dtype=float), cmap="YlGnBu", vmin=0, vmax=1, aspect="auto")
++    ax.imshow(frame.to_numpy(dtype=float), cmap="YlGnBu", vmin=0, vmax=1, aspect=None)
+## x__draw__mutmut_8
+-    ax.imshow(frame.to_numpy(dtype=float), cmap="YlGnBu", vmin=0, vmax=1, aspect="auto")
++    ax.imshow(frame.to_numpy(dtype=float), vmin=0, vmax=1, aspect="auto")
+## x__draw__mutmut_9
+-    ax.imshow(frame.to_numpy(dtype=float), cmap="YlGnBu", vmin=0, vmax=1, aspect="auto")
++    ax.imshow(frame.to_numpy(dtype=float), cmap="YlGnBu", vmax=1, aspect="auto")
+## x__draw__mutmut_10
+-    ax.imshow(frame.to_numpy(dtype=float), cmap="YlGnBu", vmin=0, vmax=1, aspect="auto")
++    ax.imshow(frame.to_numpy(dtype=float), cmap="YlGnBu", vmin=0, aspect="auto")
+## x__draw__mutmut_11
+-    ax.imshow(frame.to_numpy(dtype=float), cmap="YlGnBu", vmin=0, vmax=1, aspect="auto")
++    ax.imshow(frame.to_numpy(dtype=float), cmap="YlGnBu", vmin=0, vmax=1, )
+## x__draw__mutmut_12
+-    ax.imshow(frame.to_numpy(dtype=float), cmap="YlGnBu", vmin=0, vmax=1, aspect="auto")
++    ax.imshow(frame.to_numpy(dtype=None), cmap="YlGnBu", vmin=0, vmax=1, aspect="auto")
+## x__draw__mutmut_16
+-    ax.imshow(frame.to_numpy(dtype=float), cmap="YlGnBu", vmin=0, vmax=1, aspect="auto")
++    ax.imshow(frame.to_numpy(dtype=float), cmap="YlGnBu", vmin=1, vmax=1, aspect="auto")
+## x__draw__mutmut_17
+-    ax.imshow(frame.to_numpy(dtype=float), cmap="YlGnBu", vmin=0, vmax=1, aspect="auto")
++    ax.imshow(frame.to_numpy(dtype=float), cmap="YlGnBu", vmin=0, vmax=2, aspect="auto")
+## x__draw__mutmut_22
+-        range(frame.shape[1]), [LABELS.get(c, c) for c in frame.columns], rotation=35, ha="right"
++        range(frame.shape[1]), [LABELS.get(c, c) for c in frame.columns], rotation=None, ha="right"
+## x__draw__mutmut_26
+-        range(frame.shape[1]), [LABELS.get(c, c) for c in frame.columns], rotation=35, ha="right"
++        range(frame.shape[1]), [LABELS.get(c, c) for c in frame.columns], ha="right"
+## x__draw__mutmut_27
+-        range(frame.shape[1]), [LABELS.get(c, c) for c in frame.columns], rotation=35, ha="right"
+-    )
++        range(frame.shape[1]), [LABELS.get(c, c) for c in frame.columns], rotation=35, )
+## x__draw__mutmut_30
+-        range(frame.shape[1]), [LABELS.get(c, c) for c in frame.columns], rotation=35, ha="right"
++        range(frame.shape[1]), [LABELS.get(None, c) for c in frame.columns], rotation=35, ha="right"
+## x__draw__mutmut_31
+-        range(frame.shape[1]), [LABELS.get(c, c) for c in frame.columns], rotation=35, ha="right"
++        range(frame.shape[1]), [LABELS.get(c, None) for c in frame.columns], rotation=35, ha="right"
+## x__draw__mutmut_32
+-        range(frame.shape[1]), [LABELS.get(c, c) for c in frame.columns], rotation=35, ha="right"
++        range(frame.shape[1]), [LABELS.get(c) for c in frame.columns], rotation=35, ha="right"
+## x__draw__mutmut_33
+-        range(frame.shape[1]), [LABELS.get(c, c) for c in frame.columns], rotation=35, ha="right"
++        range(frame.shape[1]), [LABELS.get(c, ) for c in frame.columns], rotation=35, ha="right"
+## x__draw__mutmut_34
+-        range(frame.shape[1]), [LABELS.get(c, c) for c in frame.columns], rotation=35, ha="right"
++        range(frame.shape[1]), [LABELS.get(c, c) for c in frame.columns], rotation=36, ha="right"
+## x__draw__mutmut_38
+-    ax.set_yticks(range(frame.shape[0]), list(frame.index))
++    ax.set_yticks(range(frame.shape[0]), None)
+## x__draw__mutmut_40
+-    ax.set_yticks(range(frame.shape[0]), list(frame.index))
++    ax.set_yticks(range(frame.shape[0]), )
+## x__draw__mutmut_44
+-    ax.set_title(title, fontsize=9)
++    ax.set_title(None, fontsize=9)
+## x__draw__mutmut_45
+-    ax.set_title(title, fontsize=9)
++    ax.set_title(title, fontsize=None)
+## x__draw__mutmut_47
+-    ax.set_title(title, fontsize=9)
++    ax.set_title(title, )
+## x__draw__mutmut_48
+-    ax.set_title(title, fontsize=9)
++    ax.set_title(title, fontsize=10)
+## x__draw__mutmut_56
+-                    f"{v:.2f}",
++                    None,
+## x__draw__mutmut_59
+-                    fontsize=6.5,
++                    fontsize=None,
+## x__draw__mutmut_60
+-                    color="white" if v > 0.6 else "black",
++                    color=None,
+## x__draw__mutmut_64
+-                    ha="center",
+## x__draw__mutmut_65
+-                    va="center",
+## x__draw__mutmut_66
+-                    fontsize=6.5,
+## x__draw__mutmut_67
+-                    color="white" if v > 0.6 else "black",
+-                )
++                    )
+## x__draw__mutmut_72
+-                    fontsize=6.5,
++                    fontsize=7.5,
+## x__draw__mutmut_73
+-                    color="white" if v > 0.6 else "black",
++                    color="white" if (v > 0.6) and False else "black",
+## x__draw__mutmut_74
+-                    color="white" if v > 0.6 else "black",
++                    color="white" if (v > 0.6) or True else "black",
+## x__draw__mutmut_76
+-                    color="white" if v > 0.6 else "black",
++                    color="WHITE" if v > 0.6 else "black",
+## x__draw__mutmut_77
+-                    color="white" if v > 0.6 else "black",
++                    color="white" if v >= 0.6 else "black",
+## x__draw__mutmut_78
+-                    color="white" if v > 0.6 else "black",
++                    color="white" if v > 1.6 else "black",
+## x__draw__mutmut_80
+-                    color="white" if v > 0.6 else "black",
++                    color="white" if v > 0.6 else "BLACK",
+## x_main__mutmut_2
+-    parser = argparse.ArgumentParser(description=__doc__)
++    parser = argparse.ArgumentParser(description=None)
+## x_main__mutmut_5
+-    parser.add_argument("--runs", type=Path, required=True)
++    parser.add_argument("--runs", type=Path, required=None)
+## x_main__mutmut_8
+-    parser.add_argument("--runs", type=Path, required=True)
++    parser.add_argument("--runs", type=Path, )
+## x_main__mutmut_11
+-    parser.add_argument("--runs", type=Path, required=True)
++    parser.add_argument("--runs", type=Path, required=False)
+## x_main__mutmut_14
+-    parser.add_argument("--output", type=Path, required=True)
++    parser.add_argument("--output", type=Path, required=None)
+## x_main__mutmut_17
+-    parser.add_argument("--output", type=Path, required=True)
++    parser.add_argument("--output", type=Path, )
+## x_main__mutmut_20
+-    parser.add_argument("--output", type=Path, required=True)
++    parser.add_argument("--output", type=Path, required=False)
+## x_main__mutmut_23
+-    parser.add_argument("--panels", type=int, default=6)
++    parser.add_argument("--panels", type=int, default=None)
+## x_main__mutmut_26
+-    parser.add_argument("--panels", type=int, default=6)
++    parser.add_argument("--panels", type=int, )
+## x_main__mutmut_29
+-    parser.add_argument("--panels", type=int, default=6)
++    parser.add_argument("--panels", type=int, default=7)
+## x_main__mutmut_47
+-            r["recall_mean"]["data"],
++            None,
+## x_main__mutmut_48
+-            index=r["recall_mean"]["index"],
++            index=None,
+## x_main__mutmut_49
+-            columns=r["recall_mean"]["columns"],
++            columns=None,
+## x_main__mutmut_50
+-            r["recall_mean"]["data"],
+## x_main__mutmut_51
+-            index=r["recall_mean"]["index"],
+## x_main__mutmut_52
+-            columns=r["recall_mean"]["columns"],
+-        )
++            )
+## x_main__mutmut_65
+-    args.output.mkdir(parents=True, exist_ok=True)
++    args.output.mkdir(parents=None, exist_ok=True)
+## x_main__mutmut_66
+-    args.output.mkdir(parents=True, exist_ok=True)
++    args.output.mkdir(parents=True, exist_ok=None)
+## x_main__mutmut_67
+-    args.output.mkdir(parents=True, exist_ok=True)
++    args.output.mkdir(exist_ok=True)
+## x_main__mutmut_68
+-    args.output.mkdir(parents=True, exist_ok=True)
++    args.output.mkdir(parents=True, )
+## x_main__mutmut_69
+-    args.output.mkdir(parents=True, exist_ok=True)
++    args.output.mkdir(parents=False, exist_ok=True)
+## x_main__mutmut_70
+-    args.output.mkdir(parents=True, exist_ok=True)
++    args.output.mkdir(parents=True, exist_ok=False)
+## x_main__mutmut_72
+-        np.nanmedian(np.stack([f.to_numpy(dtype=float) for f in frames.values()]), axis=0),
++        None,
+## x_main__mutmut_73
+-        index=next(iter(frames.values())).index,
++        index=None,
+## x_main__mutmut_74
+-        columns=next(iter(frames.values())).columns,
++        columns=None,
+## x_main__mutmut_75
+-        np.nanmedian(np.stack([f.to_numpy(dtype=float) for f in frames.values()]), axis=0),
+## x_main__mutmut_76
+-        index=next(iter(frames.values())).index,
+## x_main__mutmut_77
+-        columns=next(iter(frames.values())).columns,
+-    )
++        )
+## x_main__mutmut_79
+-        np.nanmedian(np.stack([f.to_numpy(dtype=float) for f in frames.values()]), axis=0),
++        np.nanmedian(np.stack([f.to_numpy(dtype=float) for f in frames.values()]), axis=None),
+## x_main__mutmut_81
+-        np.nanmedian(np.stack([f.to_numpy(dtype=float) for f in frames.values()]), axis=0),
++        np.nanmedian(np.stack([f.to_numpy(dtype=float) for f in frames.values()]), ),
+## x_main__mutmut_83
+-        np.nanmedian(np.stack([f.to_numpy(dtype=float) for f in frames.values()]), axis=0),
++        np.nanmedian(np.stack([f.to_numpy(dtype=None) for f in frames.values()]), axis=0),
+## x_main__mutmut_84
+-        np.nanmedian(np.stack([f.to_numpy(dtype=float) for f in frames.values()]), axis=0),
++        np.nanmedian(np.stack([f.to_numpy(dtype=float) for f in frames.values()]), axis=1),
+## x_main__mutmut_90
+-    fig, ax = plt.subplots(figsize=(7, 5))
++    fig, ax = plt.subplots(figsize=None)
+## x_main__mutmut_91
+-    fig, ax = plt.subplots(figsize=(7, 5))
++    fig, ax = plt.subplots(figsize=(8, 5))
+## x_main__mutmut_92
+-    fig, ax = plt.subplots(figsize=(7, 5))
++    fig, ax = plt.subplots(figsize=(7, 6))
+## x_main__mutmut_95
+-    _draw(ax, median, f"Median detection rate over {len(frames)} real datasets (typed injection)")
++    _draw(ax, median, None)
+## x_main__mutmut_100
+-    fig.savefig(args.output / "typed_pooled.png", dpi=160)
++    fig.savefig(args.output / "typed_pooled.png", dpi=None)
+## x_main__mutmut_102
+-    fig.savefig(args.output / "typed_pooled.png", dpi=160)
++    fig.savefig(args.output / "typed_pooled.png", )
+## x_main__mutmut_105
+-    fig.savefig(args.output / "typed_pooled.png", dpi=160)
++    fig.savefig(args.output / "TYPED_POOLED.PNG", dpi=160)
+## x_main__mutmut_106
+-    fig.savefig(args.output / "typed_pooled.png", dpi=160)
++    fig.savefig(args.output / "typed_pooled.png", dpi=161)
+## x_main__mutmut_107
+-    plt.close(fig)
++    plt.close(None)
+## x_main__mutmut_112
+-    cols = 3
++    cols = 4
+## x_main__mutmut_120
+-    fig, axes = plt.subplots(rows, cols, figsize=(5.2 * cols, 3.6 * rows), squeeze=False)
++    fig, axes = plt.subplots(rows, cols, figsize=None, squeeze=False)
+## x_main__mutmut_121
+-    fig, axes = plt.subplots(rows, cols, figsize=(5.2 * cols, 3.6 * rows), squeeze=False)
++    fig, axes = plt.subplots(rows, cols, figsize=(5.2 * cols, 3.6 * rows), squeeze=None)
+## x_main__mutmut_122
+-    fig, axes = plt.subplots(rows, cols, figsize=(5.2 * cols, 3.6 * rows), squeeze=False)
++    fig, axes = plt.subplots(cols, figsize=(5.2 * cols, 3.6 * rows), squeeze=False)
+## x_main__mutmut_123
+-    fig, axes = plt.subplots(rows, cols, figsize=(5.2 * cols, 3.6 * rows), squeeze=False)
++    fig, axes = plt.subplots(rows, figsize=(5.2 * cols, 3.6 * rows), squeeze=False)
+## x_main__mutmut_124
+-    fig, axes = plt.subplots(rows, cols, figsize=(5.2 * cols, 3.6 * rows), squeeze=False)
++    fig, axes = plt.subplots(rows, cols, squeeze=False)
+## x_main__mutmut_125
+-    fig, axes = plt.subplots(rows, cols, figsize=(5.2 * cols, 3.6 * rows), squeeze=False)
++    fig, axes = plt.subplots(rows, cols, figsize=(5.2 * cols, 3.6 * rows), )
+## x_main__mutmut_126
+-    fig, axes = plt.subplots(rows, cols, figsize=(5.2 * cols, 3.6 * rows), squeeze=False)
++    fig, axes = plt.subplots(rows, cols, figsize=(5.2 / cols, 3.6 * rows), squeeze=False)
+## x_main__mutmut_127
+-    fig, axes = plt.subplots(rows, cols, figsize=(5.2 * cols, 3.6 * rows), squeeze=False)
++    fig, axes = plt.subplots(rows, cols, figsize=(6.2 * cols, 3.6 * rows), squeeze=False)
+## x_main__mutmut_128
+-    fig, axes = plt.subplots(rows, cols, figsize=(5.2 * cols, 3.6 * rows), squeeze=False)
++    fig, axes = plt.subplots(rows, cols, figsize=(5.2 * cols, 3.6 / rows), squeeze=False)
+## x_main__mutmut_129
+-    fig, axes = plt.subplots(rows, cols, figsize=(5.2 * cols, 3.6 * rows), squeeze=False)
++    fig, axes = plt.subplots(rows, cols, figsize=(5.2 * cols, 4.6 * rows), squeeze=False)
+## x_main__mutmut_130
+-    fig, axes = plt.subplots(rows, cols, figsize=(5.2 * cols, 3.6 * rows), squeeze=False)
++    fig, axes = plt.subplots(rows, cols, figsize=(5.2 * cols, 3.6 * rows), squeeze=True)
+## x_main__mutmut_131
+-        ax.axis("off")
++        ax.axis(None)
+## x_main__mutmut_133
+-        ax.axis("off")
++        ax.axis("OFF")
+## x_main__mutmut_136
+-    for ax, name in zip(axes.ravel(), names, strict=False):
++    for ax, name in zip(axes.ravel(), names, strict=None):
+## x_main__mutmut_139
+-    for ax, name in zip(axes.ravel(), names, strict=False):
++    for ax, name in zip(axes.ravel(), names, ):
+## x_main__mutmut_140
+-    for ax, name in zip(axes.ravel(), names, strict=False):
++    for ax, name in zip(axes.ravel(), names, strict=True):
+## x_main__mutmut_141
+-        ax.axis("on")
++        ax.axis(None)
+## x_main__mutmut_143
+-        ax.axis("on")
++        ax.axis("ON")
+## x_main__mutmut_146
+-        _draw(ax, frames[name], name[:38])
++        _draw(ax, frames[name], None)
+## x_main__mutmut_150
+-        _draw(ax, frames[name], name[:38])
++        _draw(ax, frames[name], name[:39])
+## x_main__mutmut_152
+-    fig.savefig(args.output / "typed_panels.png", dpi=130)
++    fig.savefig(args.output / "typed_panels.png", dpi=None)
+## x_main__mutmut_154
+-    fig.savefig(args.output / "typed_panels.png", dpi=130)
++    fig.savefig(args.output / "typed_panels.png", )
+## x_main__mutmut_157
+-    fig.savefig(args.output / "typed_panels.png", dpi=130)
++    fig.savefig(args.output / "TYPED_PANELS.PNG", dpi=130)
+## x_main__mutmut_158
+-    fig.savefig(args.output / "typed_panels.png", dpi=130)
++    fig.savefig(args.output / "typed_panels.png", dpi=131)
+## x_main__mutmut_159
+-    plt.close(fig)
++    plt.close(None)

@@ -1,0 +1,8 @@
+experiments/run_severity.py 7bda7511594ba6313e9579805a0726fd04ce06382f10d2fcb6c06e4d90f0a3fd
+mutants/experiments/run_severity.py 316dac2dba25659c4861d0399b50e0c5ba7aff804650703c4d2492690689f5c9
+environment macOS-27.2-arm64-arm-64bit 3.11.17 {'numpy': '2.4.6', 'pandas': '3.1.1', 'matplotlib': '3.11.2', 'pillow': '13.0.0', 'mutmut': '3.8.0'}
+0 image shape (540, 1890, 4)
+24 image shape (540, 1890, 4)
+27 image shape (540, 1890, 4)
+28 image shape (540, 1890, 4)
+all decoded images match

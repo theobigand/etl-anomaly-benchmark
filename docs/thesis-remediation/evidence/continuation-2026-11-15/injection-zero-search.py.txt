@@ -1,0 +1,28 @@
+import hashlib,platform
+from pathlib import Path
+import numpy as np,pandas as pd
+import research.injection as m
+p=Path('research/injection.py');print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'numpy',np.__version__,'pandas',pd.__version__)
+n=4096;ids=np.arange(n,dtype=np.uint32);rng=np.random.default_rng(20);masks=rng.choice(np.arange(1,n),size=(128,4),replace=False);features=[]
+for group in masks:
+ value=np.zeros(n,dtype=float)
+ for power,mask in enumerate(group):
+  parity=np.array([int(v & int(mask)).bit_count()%2 for v in ids]);value+=(1-2*parity)*(2**power)
+ features.append(value)
+frame=pd.DataFrame(np.column_stack(features));corr=frame.corr().to_numpy();zero=(corr==0.0);np.fill_diagonal(zero,False);edges=int(np.count_nonzero(zero)//2);print('features',len(features),'zero_edges',edges)
+found=None
+for a in range(len(features)):
+ for b in np.flatnonzero(zero[a] & (np.arange(len(features))>a)):
+  common=np.flatnonzero(zero[a]&zero[b]&(np.arange(len(features))>b))
+  for c in common:
+   for d in common[common>c]:
+    if zero[c,d]:
+     candidate=frame.iloc[:,[a,b,c,d]]
+     if all(candidate[col].nunique()>=10 for col in candidate) and not candidate.duplicated().any():found=(int(a),int(b),int(c),int(d));break
+   if found:break
+  if found:break
+ if found:break
+print('zero_corr_four_unique_features',found)
+if found:
+ clean=frame.iloc[:,list(found)].copy();clean.columns=list('abcd');clean,report=m.prepare(clean,seed=4);print('pair',m._pair(clean),'report',report)
+ a=m.x_inject__mutmut_orig(clean,seed=4);b=m.x_inject__mutmut_146(clean,seed=4);print('frames_equal',a.equals(b))

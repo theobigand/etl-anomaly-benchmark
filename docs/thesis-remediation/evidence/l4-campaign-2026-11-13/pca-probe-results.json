@@ -1,0 +1,52 @@
+{
+  "runs": [
+    {
+      "python": "3.11.17",
+      "numpy": "2.4.6",
+      "scipy": "1.17.1",
+      "scikit-learn": "1.9.1",
+      "blas": {
+        "name": "accelerate",
+        "version": "unknown"
+      },
+      "average_precision": 0.4818,
+      "n_components": 6,
+      "cumulative_variance": [
+        0.189205,
+        0.357068,
+        0.522405,
+        0.683107,
+        0.842366,
+        1.0
+      ],
+      "score_min": 4.819840303531598e-34,
+      "score_median": 1.131107684135238e-32,
+      "score_max": 1.4539564164025149e-28,
+      "interpreter": "mutation venv (numpy wheel linked to Accelerate)"
+    },
+    {
+      "python": "3.11.17",
+      "numpy": "2.4.6",
+      "scipy": "1.17.1",
+      "scikit-learn": "1.9.1",
+      "blas": {
+        "name": "blas",
+        "version": "3.9.0"
+      },
+      "average_precision": 0.5645,
+      "n_components": 6,
+      "cumulative_variance": [
+        0.189205,
+        0.357068,
+        0.522405,
+        0.683107,
+        0.842366,
+        1.0
+      ],
+      "score_min": 7.483040304754572e-34,
+      "score_median": 1.2001954054475664e-32,
+      "score_max": 1.359011922004113e-28,
+      "interpreter": "canonical conda environment etl-benchmark"
+    }
+  ]
+}

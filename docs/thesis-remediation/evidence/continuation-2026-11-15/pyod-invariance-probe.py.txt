@@ -1,0 +1,14 @@
+import hashlib,platform,types
+from pathlib import Path
+import numpy as np,pandas as pd,sklearn
+from etl_benchmark.quality.ml import ECODDetector
+p=Path('src/etl_benchmark/quality/ml.py');print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'numpy',np.__version__,'pandas',pd.__version__,'sklearn',sklearn.__version__)
+rng=np.random.default_rng(42);raw=rng.normal(size=(300,3));raw[::13,0]=np.nan;f32=pd.DataFrame(raw.astype('float32'),columns=list('abc'));f64=f32.astype('float64')
+for suffix in ('orig','4'):
+ ds=[]
+ for frame in (f32,f64):
+  d=ECODDetector();getattr(d,f'xǁPyODDetectorǁfit__mutmut_{suffix}')(frame);ds.append(d)
+ a,b=(d.predict(f) for d,f in zip(ds,(f32,f64)));print('fit',suffix,'flags differ',int((a!=b).sum()),'score max diff',float(np.max(np.abs(ds[0].score(f32)-ds[1].score(f64)))))
+for suffix in ('orig','8'):
+ d=ECODDetector().fit(f64);d._matrix=types.MethodType(getattr(ECODDetector,f'xǁPyODDetectorǁ_matrix__mutmut_{suffix}'),d)
+ a,b=d.predict(f32),d.predict(f64);print('matrix',suffix,'flags differ',int((a!=b).sum()),'score max diff',float(np.max(np.abs(d.score(f32)-d.score(f64)))))

@@ -1,0 +1,6 @@
+usage: temporal_decision [-h] --output OUTPUT [--bank BANK]
+
+options:
+  -h, --help       show this help message and exit
+  --output OUTPUT
+  --bank BANK

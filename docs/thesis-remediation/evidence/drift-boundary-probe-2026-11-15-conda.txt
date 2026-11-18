@@ -1,0 +1,10 @@
+src/etl_benchmark/quality/drift.py 95380ca0f8f87a24c512ac7055357225472342065e0da676c0be46dd115fa09b
+mutants/src/etl_benchmark/quality/drift.py 921baec94e62bead4611ce5e9ce62f2a9e9c42d28adfe985788acc985f1017d7
+environment macOS-27.2-arm64-arm-64bit 3.11.17 {'numpy': '2.4.6', 'pandas': '3.0.6', 'mutmut': '3.8.0'}
+signed division positive equal
+signed division negative equal
+signed division unmoved equal
+signed division outlier equal
+signed division small_window equal
+signed division with_missing equal
+boundary mean np.float64(0.03) original max 0.0 mutant max 0.0009

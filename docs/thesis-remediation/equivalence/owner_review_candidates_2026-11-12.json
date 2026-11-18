@@ -1,0 +1,1211 @@
+{
+  "version": 2,
+  "review_mode": "sole_author_owner_review",
+  "owner": "theobigand",
+  "records": [
+    {
+      "id": "research.temporal_pilot.x_block_bootstrap_ci__mutmut_38",
+      "path": "research/temporal_pilot.py",
+      "function": "block_bootstrap_ci",
+      "diff": "--- research/temporal_pilot.py\n+++ research/temporal_pilot.py\n@@ -11,7 +11,7 @@\n     rng = np.random.default_rng(seed)\n     values = []\n     for _ in range(resamples):\n-        chosen = rng.choice(len(keys), size=len(keys), replace=True)\n+        chosen = rng.choice(len(keys), size=len(keys), )\n         index = np.concatenate([members[keys[k]] for k in chosen])\n         if y[index].min() != y[index].max():\n             values.append(average_precision_score(y[index], scores[index]))",
+      "original_behavior": "original expression: chosen = rng.choice(len(keys), size=len(keys), replace=True)",
+      "mutated_behavior": "mutated expression: chosen = rng.choice(len(keys), size=len(keys), )",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] Generator.choice(..., replace=True) written without replace. replace=True is the documented default of numpy.random.Generator.choice, so omitting it requests the same sampling.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "03e63b2961126c3192fec7fbf374b434e0ab81c54a1317c3cfa99ecb732b0982",
+      "catalog_sha256": "cc22ccb0d5ce93621a446a2041a971e3971144d1f710ada7002d7b198b0fe32e",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.temporal_pilot.x_main__mutmut_18",
+      "path": "research/temporal_pilot.py",
+      "function": "main",
+      "diff": "--- research/temporal_pilot.py\n+++ research/temporal_pilot.py\n@@ -1,7 +1,7 @@\n def main(argv: list[str] | None = None) -> int:\n     parser = argparse.ArgumentParser(description=__doc__)\n     parser.add_argument(\"--output\", type=Path, default=config.RESULTS_DIR / \"temporal_pilot.json\")\n-    parser.add_argument(\"--csv\", type=Path, default=None)\n+    parser.add_argument(\"--csv\", type=Path, )\n     args = parser.parse_args(argv)\n     logging.basicConfig(level=logging.INFO, format=\"%(asctime)s %(name)s %(message)s\")\n     spec = DATASETS[\"credit_card\"]",
+      "original_behavior": "original expression: parser.add_argument(\"--csv\", type=Path, default=None)",
+      "mutated_behavior": "mutated expression: parser.add_argument(\"--csv\", type=Path, )",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] argparse option declared without default=None. argparse gives an option with no explicit default the value None, which is what default=None states.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "03e63b2961126c3192fec7fbf374b434e0ab81c54a1317c3cfa99ecb732b0982",
+      "catalog_sha256": "cc22ccb0d5ce93621a446a2041a971e3971144d1f710ada7002d7b198b0fe32e",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.temporal_pilot.x_monitor_control__mutmut_101",
+      "path": "research/temporal_pilot.py",
+      "function": "monitor_control",
+      "diff": "--- research/temporal_pilot.py\n+++ research/temporal_pilot.py\n@@ -21,7 +21,7 @@\n                 float(metrics[\"detection_delay\"].total_seconds()) if metrics[\"detected\"] else None\n             ),\n             \"delay_windows\": int(alerts[0]) + 1 if len(alerts) else None,\n-            \"windows_before\": int((pd.to_datetime(windows[\"window_end\"], utc=True) < change).sum()),\n+            \"windows_before\": int((pd.to_datetime(windows[\"window_end\"], ) < change).sum()),\n             \"windows_after\": len(after),\n         }\n     return {",
+      "original_behavior": "original expression: \"windows_before\": int((pd.to_datetime(windows[\"window_end\"], utc=True) < change).sum()),",
+      "mutated_behavior": "mutated expression: \"windows_before\": int((pd.to_datetime(windows[\"window_end\"], ) < change).sum()),",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] pd.to_datetime(window_end, utc=...) on a column that is always timezone-aware. window_end is produced by WindowDriftMonitor.evaluate from timestamps that `_times` converted with utc=True, so the column is UTC-aware and utc=None, False or omitted leaves it unchanged; the comparison with an aware change time gives the same mask.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "03e63b2961126c3192fec7fbf374b434e0ab81c54a1317c3cfa99ecb732b0982",
+      "catalog_sha256": "cc22ccb0d5ce93621a446a2041a971e3971144d1f710ada7002d7b198b0fe32e",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.temporal_pilot.x_monitor_control__mutmut_104",
+      "path": "research/temporal_pilot.py",
+      "function": "monitor_control",
+      "diff": "--- research/temporal_pilot.py\n+++ research/temporal_pilot.py\n@@ -21,7 +21,7 @@\n                 float(metrics[\"detection_delay\"].total_seconds()) if metrics[\"detected\"] else None\n             ),\n             \"delay_windows\": int(alerts[0]) + 1 if len(alerts) else None,\n-            \"windows_before\": int((pd.to_datetime(windows[\"window_end\"], utc=True) < change).sum()),\n+            \"windows_before\": int((pd.to_datetime(windows[\"window_end\"], utc=False) < change).sum()),\n             \"windows_after\": len(after),\n         }\n     return {",
+      "original_behavior": "original expression: \"windows_before\": int((pd.to_datetime(windows[\"window_end\"], utc=True) < change).sum()),",
+      "mutated_behavior": "mutated expression: \"windows_before\": int((pd.to_datetime(windows[\"window_end\"], utc=False) < change).sum()),",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] pd.to_datetime(window_end, utc=...) on a column that is always timezone-aware. window_end is produced by WindowDriftMonitor.evaluate from timestamps that `_times` converted with utc=True, so the column is UTC-aware and utc=None, False or omitted leaves it unchanged; the comparison with an aware change time gives the same mask.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "03e63b2961126c3192fec7fbf374b434e0ab81c54a1317c3cfa99ecb732b0982",
+      "catalog_sha256": "cc22ccb0d5ce93621a446a2041a971e3971144d1f710ada7002d7b198b0fe32e",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.temporal_pilot.x_monitor_control__mutmut_56",
+      "path": "research/temporal_pilot.py",
+      "function": "monitor_control",
+      "diff": "--- research/temporal_pilot.py\n+++ research/temporal_pilot.py\n@@ -12,7 +12,7 @@\n     for delta in deltas:\n         windows = monitor.evaluate(inject_shift(test, columns, change, delta, scale))\n         metrics = event_metrics(windows, change)\n-        after = windows[pd.to_datetime(windows[\"window_end\"], utc=True) >= change]\n+        after = windows[pd.to_datetime(windows[\"window_end\"], utc=None) >= change]\n         alerts = np.flatnonzero(after[\"alert\"].to_numpy())\n         controls[str(float(delta))] = {\n             \"detected\": metrics[\"detected\"],",
+      "original_behavior": "original expression: after = windows[pd.to_datetime(windows[\"window_end\"], utc=True) >= change]",
+      "mutated_behavior": "mutated expression: after = windows[pd.to_datetime(windows[\"window_end\"], utc=None) >= change]",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] pd.to_datetime(window_end, utc=...) on a column that is always timezone-aware. window_end is produced by WindowDriftMonitor.evaluate from timestamps that `_times` converted with utc=True, so the column is UTC-aware and utc=None, False or omitted leaves it unchanged; the comparison with an aware change time gives the same mask.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "03e63b2961126c3192fec7fbf374b434e0ab81c54a1317c3cfa99ecb732b0982",
+      "catalog_sha256": "cc22ccb0d5ce93621a446a2041a971e3971144d1f710ada7002d7b198b0fe32e",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.temporal_pilot.x_monitor_control__mutmut_58",
+      "path": "research/temporal_pilot.py",
+      "function": "monitor_control",
+      "diff": "--- research/temporal_pilot.py\n+++ research/temporal_pilot.py\n@@ -12,7 +12,7 @@\n     for delta in deltas:\n         windows = monitor.evaluate(inject_shift(test, columns, change, delta, scale))\n         metrics = event_metrics(windows, change)\n-        after = windows[pd.to_datetime(windows[\"window_end\"], utc=True) >= change]\n+        after = windows[pd.to_datetime(windows[\"window_end\"], ) >= change]\n         alerts = np.flatnonzero(after[\"alert\"].to_numpy())\n         controls[str(float(delta))] = {\n             \"detected\": metrics[\"detected\"],",
+      "original_behavior": "original expression: after = windows[pd.to_datetime(windows[\"window_end\"], utc=True) >= change]",
+      "mutated_behavior": "mutated expression: after = windows[pd.to_datetime(windows[\"window_end\"], ) >= change]",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] pd.to_datetime(window_end, utc=...) on a column that is always timezone-aware. window_end is produced by WindowDriftMonitor.evaluate from timestamps that `_times` converted with utc=True, so the column is UTC-aware and utc=None, False or omitted leaves it unchanged; the comparison with an aware change time gives the same mask.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "03e63b2961126c3192fec7fbf374b434e0ab81c54a1317c3cfa99ecb732b0982",
+      "catalog_sha256": "cc22ccb0d5ce93621a446a2041a971e3971144d1f710ada7002d7b198b0fe32e",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.temporal_pilot.x_monitor_control__mutmut_61",
+      "path": "research/temporal_pilot.py",
+      "function": "monitor_control",
+      "diff": "--- research/temporal_pilot.py\n+++ research/temporal_pilot.py\n@@ -12,7 +12,7 @@\n     for delta in deltas:\n         windows = monitor.evaluate(inject_shift(test, columns, change, delta, scale))\n         metrics = event_metrics(windows, change)\n-        after = windows[pd.to_datetime(windows[\"window_end\"], utc=True) >= change]\n+        after = windows[pd.to_datetime(windows[\"window_end\"], utc=False) >= change]\n         alerts = np.flatnonzero(after[\"alert\"].to_numpy())\n         controls[str(float(delta))] = {\n             \"detected\": metrics[\"detected\"],",
+      "original_behavior": "original expression: after = windows[pd.to_datetime(windows[\"window_end\"], utc=True) >= change]",
+      "mutated_behavior": "mutated expression: after = windows[pd.to_datetime(windows[\"window_end\"], utc=False) >= change]",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] pd.to_datetime(window_end, utc=...) on a column that is always timezone-aware. window_end is produced by WindowDriftMonitor.evaluate from timestamps that `_times` converted with utc=True, so the column is UTC-aware and utc=None, False or omitted leaves it unchanged; the comparison with an aware change time gives the same mask.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "03e63b2961126c3192fec7fbf374b434e0ab81c54a1317c3cfa99ecb732b0982",
+      "catalog_sha256": "cc22ccb0d5ce93621a446a2041a971e3971144d1f710ada7002d7b198b0fe32e",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.temporal_pilot.x_monitor_control__mutmut_99",
+      "path": "research/temporal_pilot.py",
+      "function": "monitor_control",
+      "diff": "--- research/temporal_pilot.py\n+++ research/temporal_pilot.py\n@@ -21,7 +21,7 @@\n                 float(metrics[\"detection_delay\"].total_seconds()) if metrics[\"detected\"] else None\n             ),\n             \"delay_windows\": int(alerts[0]) + 1 if len(alerts) else None,\n-            \"windows_before\": int((pd.to_datetime(windows[\"window_end\"], utc=True) < change).sum()),\n+            \"windows_before\": int((pd.to_datetime(windows[\"window_end\"], utc=None) < change).sum()),\n             \"windows_after\": len(after),\n         }\n     return {",
+      "original_behavior": "original expression: \"windows_before\": int((pd.to_datetime(windows[\"window_end\"], utc=True) < change).sum()),",
+      "mutated_behavior": "mutated expression: \"windows_before\": int((pd.to_datetime(windows[\"window_end\"], utc=None) < change).sum()),",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] pd.to_datetime(window_end, utc=...) on a column that is always timezone-aware. window_end is produced by WindowDriftMonitor.evaluate from timestamps that `_times` converted with utc=True, so the column is UTC-aware and utc=None, False or omitted leaves it unchanged; the comparison with an aware change time gives the same mask.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "03e63b2961126c3192fec7fbf374b434e0ab81c54a1317c3cfa99ecb732b0982",
+      "catalog_sha256": "cc22ccb0d5ce93621a446a2041a971e3971144d1f710ada7002d7b198b0fe32e",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.temporal_pilot.x_to_timestamps__mutmut_11",
+      "path": "research/temporal_pilot.py",
+      "function": "to_timestamps",
+      "diff": "--- research/temporal_pilot.py\n+++ research/temporal_pilot.py\n@@ -1,6 +1,6 @@\n def to_timestamps(seconds: pd.Series) -> pd.Series:\n     \"\"\"Elapsed seconds since the first transaction as UTC timestamps from a fixed origin.\"\"\"\n     values = pd.to_numeric(seconds, errors=\"coerce\")\n-    if not np.isfinite(values.to_numpy(dtype=float)).all() or (values < 0).any():\n+    if not np.isfinite(values.to_numpy(dtype=None)).all() or (values < 0).any():\n         raise ValueError(\"elapsed times must be finite and non-negative\")\n     return ORIGIN + pd.to_timedelta(values, unit=\"s\")",
+      "original_behavior": "original expression: if not np.isfinite(values.to_numpy(dtype=float)).all() or (values < 0).any():",
+      "mutated_behavior": "mutated expression: if not np.isfinite(values.to_numpy(dtype=None)).all() or (values < 0).any():",
+      "risk": "L4",
+      "reason": "[Additional verification required; technical assessment only, not an owner decision] to_numpy(dtype=None) after pd.to_numeric. After numeric coercion the series is numeric or nullable numeric; to_numpy(dtype=None) then returns float64 with NaN for the tested dtypes, the same as dtype=float, so the finite check refuses the same input with the same message.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "03e63b2961126c3192fec7fbf374b434e0ab81c54a1317c3cfa99ecb732b0982",
+      "catalog_sha256": "cc22ccb0d5ce93621a446a2041a971e3971144d1f710ada7002d7b198b0fe32e",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.typed_run.x_run_one__mutmut_48",
+      "path": "research/typed_run.py",
+      "function": "run_one",
+      "diff": "--- research/typed_run.py\n+++ research/typed_run.py\n@@ -15,7 +15,7 @@\n     import pandas as pd\n \n     stack = pd.concat(recalls, keys=range(len(recalls)))\n-    mean = stack.groupby(level=1, sort=False).mean()\n+    mean = stack.groupby(level=1, sort=None).mean()\n     precision = (\n         pd.concat(precisions, keys=range(len(precisions))).groupby(level=1, sort=False).mean()\n     )",
+      "original_behavior": "original expression: mean = stack.groupby(level=1, sort=False).mean()",
+      "mutated_behavior": "mutated expression: mean = stack.groupby(level=1, sort=None).mean()",
+      "risk": "L4",
+      "reason": "[Additional verification required; technical assessment only, not an owner decision] groupby(..., sort=None) in place of sort=False. pandas treats a falsy sort as not sorting, so None groups in order of appearance exactly as False does.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "8589c4634fd7ffff31536e85772f2a84b6edc2f3a59c6860e8ff916abb76beb0",
+      "catalog_sha256": "e3bae5fa8f6aa1c58ea06c4939ffdcc849f86461e0818291f8334b524cd93fa9",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.typed_run.x_run_one__mutmut_55",
+      "path": "research/typed_run.py",
+      "function": "run_one",
+      "diff": "--- research/typed_run.py\n+++ research/typed_run.py\n@@ -17,7 +17,7 @@\n     stack = pd.concat(recalls, keys=range(len(recalls)))\n     mean = stack.groupby(level=1, sort=False).mean()\n     precision = (\n-        pd.concat(precisions, keys=range(len(precisions))).groupby(level=1, sort=False).mean()\n+        pd.concat(precisions, keys=range(len(precisions))).groupby(level=1, sort=None).mean()\n     )\n     fpr = pd.concat(fprs, axis=1).mean(axis=1)\n     return {",
+      "original_behavior": "original expression: pd.concat(precisions, keys=range(len(precisions))).groupby(level=1, sort=False).mean()",
+      "mutated_behavior": "mutated expression: pd.concat(precisions, keys=range(len(precisions))).groupby(level=1, sort=None).mean()",
+      "risk": "L4",
+      "reason": "[Additional verification required; technical assessment only, not an owner decision] groupby(..., sort=None) in place of sort=False. pandas treats a falsy sort as not sorting, so None groups in order of appearance exactly as False does.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "8589c4634fd7ffff31536e85772f2a84b6edc2f3a59c6860e8ff916abb76beb0",
+      "catalog_sha256": "e3bae5fa8f6aa1c58ea06c4939ffdcc849f86461e0818291f8334b524cd93fa9",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.pool_typed.x_load_carrier__mutmut_29",
+      "path": "research/pool_typed.py",
+      "function": "load_carrier",
+      "diff": "--- research/pool_typed.py\n+++ research/pool_typed.py\n@@ -2,7 +2,7 @@\n     if job[\"source\"] == \"uci\":\n         return tr.load_carrier(job[\"meta\"], Path(job[\"path\"]), seed)\n     data = np.load(job[\"path\"])\n-    features = pd.DataFrame(data[\"X\"]).add_prefix(\"f\")[np.asarray(data[\"y\"]).astype(int) == 0]\n+    features = pd.DataFrame(data[\"X\"]).add_prefix(\"f\")[np.asarray(data[\"y\"]).astype(None) == 0]\n     carrier, report = inj.prepare(features.reset_index(drop=True), seed=seed)\n     report.update(source_rows=int(len(features)), normal_class_only=True)\n     return carrier, report",
+      "original_behavior": "original expression: features = pd.DataFrame(data[\"X\"]).add_prefix(\"f\")[np.asarray(data[\"y\"]).astype(int) == 0]",
+      "mutated_behavior": "mutated expression: features = pd.DataFrame(data[\"X\"]).add_prefix(\"f\")[np.asarray(data[\"y\"]).astype(None) == 0]",
+      "risk": "L4",
+      "reason": "[Additional verification required; technical assessment only, not an owner decision] np.asarray(labels).astype(None) in place of .astype(int) before comparing with 0. NumPy resolves astype(None) to float64; for the binary labels 0/1 (as integers, booleans, floats or digit strings) the comparison with 0 is identical.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "0b477c1c51fc616596b5ed3b09841a0374f1bc26603f22a2bc7c7ee638a8bbad",
+      "catalog_sha256": "eaca1600c7831c2cd9e392d7b11f17facb0b34efbb907563181d17efee170623",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.pool_typed.x_run_reference__mutmut_33",
+      "path": "research/pool_typed.py",
+      "function": "run_reference",
+      "diff": "--- research/pool_typed.py\n+++ research/pool_typed.py\n@@ -11,7 +11,7 @@\n         recalls.append(result[\"recall\"])\n         precisions.append(result[\"precision\"])\n         fprs.append(result[\"fpr\"])\n-    mean = pd.concat(recalls, keys=range(len(recalls))).groupby(level=1, sort=False).mean()\n+    mean = pd.concat(recalls, keys=range(len(recalls))).groupby(level=1, sort=None).mean()\n     precision = (\n         pd.concat(precisions, keys=range(len(precisions))).groupby(level=1, sort=False).mean()\n     )",
+      "original_behavior": "original expression: mean = pd.concat(recalls, keys=range(len(recalls))).groupby(level=1, sort=False).mean()",
+      "mutated_behavior": "mutated expression: mean = pd.concat(recalls, keys=range(len(recalls))).groupby(level=1, sort=None).mean()",
+      "risk": "L4",
+      "reason": "[Additional verification required; technical assessment only, not an owner decision] groupby(..., sort=None) in place of sort=False. pandas treats a falsy sort as not sorting, so None groups in order of appearance exactly as False does.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "0b477c1c51fc616596b5ed3b09841a0374f1bc26603f22a2bc7c7ee638a8bbad",
+      "catalog_sha256": "eaca1600c7831c2cd9e392d7b11f17facb0b34efbb907563181d17efee170623",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.pool_typed.x_run_reference__mutmut_45",
+      "path": "research/pool_typed.py",
+      "function": "run_reference",
+      "diff": "--- research/pool_typed.py\n+++ research/pool_typed.py\n@@ -13,7 +13,7 @@\n         fprs.append(result[\"fpr\"])\n     mean = pd.concat(recalls, keys=range(len(recalls))).groupby(level=1, sort=False).mean()\n     precision = (\n-        pd.concat(precisions, keys=range(len(precisions))).groupby(level=1, sort=False).mean()\n+        pd.concat(precisions, keys=range(len(precisions))).groupby(level=1, sort=None).mean()\n     )\n     return {\n         \"id\": job[\"id\"],",
+      "original_behavior": "original expression: pd.concat(precisions, keys=range(len(precisions))).groupby(level=1, sort=False).mean()",
+      "mutated_behavior": "mutated expression: pd.concat(precisions, keys=range(len(precisions))).groupby(level=1, sort=None).mean()",
+      "risk": "L4",
+      "reason": "[Additional verification required; technical assessment only, not an owner decision] groupby(..., sort=None) in place of sort=False. pandas treats a falsy sort as not sorting, so None groups in order of appearance exactly as False does.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "0b477c1c51fc616596b5ed3b09841a0374f1bc26603f22a2bc7c7ee638a8bbad",
+      "catalog_sha256": "eaca1600c7831c2cd9e392d7b11f17facb0b34efbb907563181d17efee170623",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.pool_typed.x_run_severity__mutmut_28",
+      "path": "research/pool_typed.py",
+      "function": "run_severity",
+      "diff": "--- research/pool_typed.py\n+++ research/pool_typed.py\n@@ -18,7 +18,7 @@\n             ]\n             for seed in seeds\n         ]\n-        mean = pd.concat(frames, keys=range(len(frames))).groupby(level=1, sort=False).mean()\n+        mean = pd.concat(frames, keys=range(len(frames))).groupby(level=1, sort=None).mean()\n         by_severity[str(severity)] = json.loads(mean[list(MAGNITUDE_TYPES)].to_json(orient=\"split\"))\n     return {\n         \"id\": job[\"id\"],",
+      "original_behavior": "original expression: mean = pd.concat(frames, keys=range(len(frames))).groupby(level=1, sort=False).mean()",
+      "mutated_behavior": "mutated expression: mean = pd.concat(frames, keys=range(len(frames))).groupby(level=1, sort=None).mean()",
+      "risk": "L4",
+      "reason": "[Additional verification required; technical assessment only, not an owner decision] groupby(..., sort=None) in place of sort=False. pandas treats a falsy sort as not sorting, so None groups in order of appearance exactly as False does.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "0b477c1c51fc616596b5ed3b09841a0374f1bc26603f22a2bc7c7ee638a8bbad",
+      "catalog_sha256": "eaca1600c7831c2cd9e392d7b11f17facb0b34efbb907563181d17efee170623",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.normalise.x_clean__mutmut_34",
+      "path": "research/normalise.py",
+      "function": "clean",
+      "diff": "--- research/normalise.py\n+++ research/normalise.py\n@@ -18,7 +18,7 @@\n         elif col.dropna().nunique() <= 1:\n             report[\"dropped_constant\"].append(name)\n         elif pd.api.types.is_numeric_dtype(col) and not pd.api.types.is_bool_dtype(col):\n-            pieces.append(col.astype(float).rename(name))\n+            pieces.append(col.astype(float).rename(None))\n         elif col.nunique() > category_cap:\n             report[\"dropped_high_cardinality\"].append(name)\n         else:",
+      "original_behavior": "original expression: pieces.append(col.astype(float).rename(name))",
+      "mutated_behavior": "mutated expression: pieces.append(col.astype(float).rename(None))",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] Column label of a cleaned feature piece (rename, dummy prefix). The labels exist only on the local `table` inside clean(); the function returns table.to_numpy() and a report of counts and original names, and the row hash uses index=False values, so labels never reach an output.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "5ba131d186d79c792fb64691089939fffb3a085e1f376c6b9dcd1c12bcf5155a",
+      "catalog_sha256": "fc5f5c3a0445d43054017cca9eb565f9765360e1590f5b7433cbc817ab36804c",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.normalise.x_clean__mutmut_35",
+      "path": "research/normalise.py",
+      "function": "clean",
+      "diff": "--- research/normalise.py\n+++ research/normalise.py\n@@ -18,7 +18,7 @@\n         elif col.dropna().nunique() <= 1:\n             report[\"dropped_constant\"].append(name)\n         elif pd.api.types.is_numeric_dtype(col) and not pd.api.types.is_bool_dtype(col):\n-            pieces.append(col.astype(float).rename(name))\n+            pieces.append(col.astype(None).rename(name))\n         elif col.nunique() > category_cap:\n             report[\"dropped_high_cardinality\"].append(name)\n         else:",
+      "original_behavior": "original expression: pieces.append(col.astype(float).rename(name))",
+      "mutated_behavior": "mutated expression: pieces.append(col.astype(None).rename(name))",
+      "risk": "L4",
+      "reason": "[Additional verification required; technical assessment only, not an owner decision] astype(None) in place of astype(float). pandas and NumPy resolve astype(None) to float64, so the tested inputs give identical results.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "5ba131d186d79c792fb64691089939fffb3a085e1f376c6b9dcd1c12bcf5155a",
+      "catalog_sha256": "fc5f5c3a0445d43054017cca9eb565f9765360e1590f5b7433cbc817ab36804c",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.normalise.x_clean__mutmut_45",
+      "path": "research/normalise.py",
+      "function": "clean",
+      "diff": "--- research/normalise.py\n+++ research/normalise.py\n@@ -23,7 +23,7 @@\n             report[\"dropped_high_cardinality\"].append(name)\n         else:\n             report[\"encoded\"].append(name)\n-            pieces.append(pd.get_dummies(col.astype(str), prefix=str(name), dtype=float))\n+            pieces.append(pd.get_dummies(col.astype(str), prefix=None, dtype=float))\n     if not pieces:\n         raise NormaliseError(\"no usable feature left\")\n     table = pd.concat(pieces, axis=1)",
+      "original_behavior": "original expression: pieces.append(pd.get_dummies(col.astype(str), prefix=str(name), dtype=float))",
+      "mutated_behavior": "mutated expression: pieces.append(pd.get_dummies(col.astype(str), prefix=None, dtype=float))",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] Column label of a cleaned feature piece (rename, dummy prefix). The labels exist only on the local `table` inside clean(); the function returns table.to_numpy() and a report of counts and original names, and the row hash uses index=False values, so labels never reach an output.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "5ba131d186d79c792fb64691089939fffb3a085e1f376c6b9dcd1c12bcf5155a",
+      "catalog_sha256": "fc5f5c3a0445d43054017cca9eb565f9765360e1590f5b7433cbc817ab36804c",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.normalise.x_clean__mutmut_48",
+      "path": "research/normalise.py",
+      "function": "clean",
+      "diff": "--- research/normalise.py\n+++ research/normalise.py\n@@ -23,7 +23,7 @@\n             report[\"dropped_high_cardinality\"].append(name)\n         else:\n             report[\"encoded\"].append(name)\n-            pieces.append(pd.get_dummies(col.astype(str), prefix=str(name), dtype=float))\n+            pieces.append(pd.get_dummies(col.astype(str), dtype=float))\n     if not pieces:\n         raise NormaliseError(\"no usable feature left\")\n     table = pd.concat(pieces, axis=1)",
+      "original_behavior": "original expression: pieces.append(pd.get_dummies(col.astype(str), prefix=str(name), dtype=float))",
+      "mutated_behavior": "mutated expression: pieces.append(pd.get_dummies(col.astype(str), dtype=float))",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] Column label of a cleaned feature piece (rename, dummy prefix). The labels exist only on the local `table` inside clean(); the function returns table.to_numpy() and a report of counts and original names, and the row hash uses index=False values, so labels never reach an output.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "5ba131d186d79c792fb64691089939fffb3a085e1f376c6b9dcd1c12bcf5155a",
+      "catalog_sha256": "fc5f5c3a0445d43054017cca9eb565f9765360e1590f5b7433cbc817ab36804c",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.normalise.x_clean__mutmut_51",
+      "path": "research/normalise.py",
+      "function": "clean",
+      "diff": "--- research/normalise.py\n+++ research/normalise.py\n@@ -23,7 +23,7 @@\n             report[\"dropped_high_cardinality\"].append(name)\n         else:\n             report[\"encoded\"].append(name)\n-            pieces.append(pd.get_dummies(col.astype(str), prefix=str(name), dtype=float))\n+            pieces.append(pd.get_dummies(col.astype(str), prefix=str(None), dtype=float))\n     if not pieces:\n         raise NormaliseError(\"no usable feature left\")\n     table = pd.concat(pieces, axis=1)",
+      "original_behavior": "original expression: pieces.append(pd.get_dummies(col.astype(str), prefix=str(name), dtype=float))",
+      "mutated_behavior": "mutated expression: pieces.append(pd.get_dummies(col.astype(str), prefix=str(None), dtype=float))",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] Column label of a cleaned feature piece (rename, dummy prefix). The labels exist only on the local `table` inside clean(); the function returns table.to_numpy() and a report of counts and original names, and the row hash uses index=False values, so labels never reach an output.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "5ba131d186d79c792fb64691089939fffb3a085e1f376c6b9dcd1c12bcf5155a",
+      "catalog_sha256": "fc5f5c3a0445d43054017cca9eb565f9765360e1590f5b7433cbc817ab36804c",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.normalise.x_clean__mutmut_64",
+      "path": "research/normalise.py",
+      "function": "clean",
+      "diff": "--- research/normalise.py\n+++ research/normalise.py\n@@ -27,7 +27,7 @@\n     if not pieces:\n         raise NormaliseError(\"no usable feature left\")\n     table = pd.concat(pieces, axis=1)\n-    keys = pd.util.hash_pandas_object(table.fillna(np.inf), index=False)\n+    keys = pd.util.hash_pandas_object(table.fillna(np.inf), index=None)\n     conflicting = pd.Series(y).groupby(keys.to_numpy()).transform(\"nunique\").to_numpy() > 1\n     report[\"conflicting_rows_removed\"] = int(conflicting.sum())\n     keep = ~conflicting",
+      "original_behavior": "original expression: keys = pd.util.hash_pandas_object(table.fillna(np.inf), index=False)",
+      "mutated_behavior": "mutated expression: keys = pd.util.hash_pandas_object(table.fillna(np.inf), index=None)",
+      "risk": "L4",
+      "reason": "[Additional verification required; technical assessment only, not an owner decision] index=None in place of index=False. pandas treats a falsy index flag as not writing or hashing the index.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "5ba131d186d79c792fb64691089939fffb3a085e1f376c6b9dcd1c12bcf5155a",
+      "catalog_sha256": "fc5f5c3a0445d43054017cca9eb565f9765360e1590f5b7433cbc817ab36804c",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.build_pool.x_main__mutmut_27",
+      "path": "research/build_pool.py",
+      "function": "main",
+      "diff": "--- research/build_pool.py\n+++ research/build_pool.py\n@@ -2,7 +2,7 @@\n     parser = argparse.ArgumentParser(description=__doc__)\n     parser.add_argument(\"--curated\", type=Path, required=True)\n     parser.add_argument(\"--destination\", type=Path, default=dr.ROOT / \"data\" / \"pool\")\n-    parser.add_argument(\"--output\", type=Path, required=True)\n+    parser.add_argument(\"--output\", type=None, required=True)\n     args = parser.parse_args(argv)\n     from etl_benchmark.atomic import atomic_path\n ",
+      "original_behavior": "original expression: parser.add_argument(\"--output\", type=Path, required=True)",
+      "mutated_behavior": "mutated expression: parser.add_argument(\"--output\", type=None, required=True)",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] argparse --output declared with type=None or without type. Both leave --output a str, while the original converts it to Path. The value is used only as the argument of atomic_path, which starts with Path(path).",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "eefa0438f61e44b0bd0c7ed9a8acf7477a181477c4c8c90dc51803fa6391b3f6",
+      "catalog_sha256": "8376de93b7f33099e83dea80a0bdf12328a907743b11c7f2941b397e7a0bde2c",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.build_pool.x_main__mutmut_30",
+      "path": "research/build_pool.py",
+      "function": "main",
+      "diff": "--- research/build_pool.py\n+++ research/build_pool.py\n@@ -2,7 +2,7 @@\n     parser = argparse.ArgumentParser(description=__doc__)\n     parser.add_argument(\"--curated\", type=Path, required=True)\n     parser.add_argument(\"--destination\", type=Path, default=dr.ROOT / \"data\" / \"pool\")\n-    parser.add_argument(\"--output\", type=Path, required=True)\n+    parser.add_argument(\"--output\", required=True)\n     args = parser.parse_args(argv)\n     from etl_benchmark.atomic import atomic_path\n ",
+      "original_behavior": "original expression: parser.add_argument(\"--output\", type=Path, required=True)",
+      "mutated_behavior": "mutated expression: parser.add_argument(\"--output\", required=True)",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] argparse --output declared with type=None or without type. Both leave --output a str, while the original converts it to Path. The value is used only as the argument of atomic_path, which starts with Path(path).",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "eefa0438f61e44b0bd0c7ed9a8acf7477a181477c4c8c90dc51803fa6391b3f6",
+      "catalog_sha256": "8376de93b7f33099e83dea80a0bdf12328a907743b11c7f2941b397e7a0bde2c",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.build_pool.x_pool_row__mutmut_38",
+      "path": "research/build_pool.py",
+      "function": "pool_row",
+      "diff": "--- research/build_pool.py\n+++ research/build_pool.py\n@@ -10,7 +10,7 @@\n     }\n     try:\n         features, _ = ul.split_columns(frame, meta)\n-        _, _, report = nm.clean(features, [0] * len(features))\n+        _, _, report = nm.clean(features, [1] * len(features))\n         row[\"carrier\"] = report\n         row[\"roles\"].append(\"carrier\")\n     except nm.NormaliseError as error:",
+      "original_behavior": "original expression: _, _, report = nm.clean(features, [0] * len(features))",
+      "mutated_behavior": "mutated expression: _, _, report = nm.clean(features, [1] * len(features))",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] clean(features, [1] * n) in place of [0] * n. The label vector is constant, so within every group of identical rows the number of distinct labels is 1 whichever constant is used: no conflict is found and the report is identical; the returned labels are discarded.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "eefa0438f61e44b0bd0c7ed9a8acf7477a181477c4c8c90dc51803fa6391b3f6",
+      "catalog_sha256": "8376de93b7f33099e83dea80a0bdf12328a907743b11c7f2941b397e7a0bde2c",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "etl_benchmark.load.x_write_csv__mutmut_11",
+      "path": "src/etl_benchmark/load.py",
+      "function": "write_csv",
+      "diff": "--- src/etl_benchmark/load.py\n+++ src/etl_benchmark/load.py\n@@ -2,5 +2,5 @@\n     path = Path(path)\n     path.parent.mkdir(parents=True, exist_ok=True)\n     with atomic_path(path) as partial:\n-        df.to_csv(partial, index=False)\n+        df.to_csv(partial, index=None)\n     return path",
+      "original_behavior": "original expression: df.to_csv(partial, index=False)",
+      "mutated_behavior": "mutated expression: df.to_csv(partial, index=None)",
+      "risk": "L4",
+      "reason": "[Additional verification required; technical assessment only, not an owner decision] index=None in place of index=False. pandas treats a falsy index flag as not writing or hashing the index.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "bc450a2553f333662bb447de1c7cd9aabb274b2f608b8e57ad80e48321b9c98e",
+      "catalog_sha256": "cc261ce7827925bd34d67f62212c84c83724a60a6d486133bda58616d471f706",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "etl_benchmark.quality.base.xǁDetectorǁscore__mutmut_1",
+      "path": "src/etl_benchmark/quality/base.py",
+      "function": "score",
+      "diff": "--- src/etl_benchmark/quality/base.py\n+++ src/etl_benchmark/quality/base.py\n@@ -5,4 +5,4 @@\n         default derives a 0/1 score from :meth:`predict`; detectors that\n         can expose a graded score should override this.\n         \"\"\"\n-    return self.predict(df).astype(float)\n+    return self.predict(df).astype(None)",
+      "original_behavior": "original expression: return self.predict(df).astype(float)",
+      "mutated_behavior": "mutated expression: return self.predict(df).astype(None)",
+      "risk": "L4",
+      "reason": "[Additional verification required; technical assessment only, not an owner decision] astype(None) in place of astype(float). pandas and NumPy resolve astype(None) to float64, so the tested inputs give identical results.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "9efc8a6a410b92d81f4ee09f9d001f8adad62a779250b3b552db9878f9de28ff",
+      "catalog_sha256": "fa09c2c86ed2f77bf715f144b9d29023ff9fb101061b5bf7aea7e0c05f8fe55f",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_27",
+      "path": "research/pool_check.py",
+      "function": "main",
+      "diff": "--- research/pool_check.py\n+++ research/pool_check.py\n@@ -2,7 +2,7 @@\n     parser = argparse.ArgumentParser(description=__doc__)\n     parser.add_argument(\"--build\", nargs=2, metavar=(\"INVENTORY\", \"UCI_POOL\"))\n     parser.add_argument(\"--verify\", type=Path, metavar=\"MANIFEST\")\n-    parser.add_argument(\"--output\", type=Path, required=True)\n+    parser.add_argument(\"--output\", type=None, required=True)\n     args = parser.parse_args(argv)\n     from etl_benchmark.atomic import atomic_path\n ",
+      "original_behavior": "original expression: parser.add_argument(\"--output\", type=Path, required=True)",
+      "mutated_behavior": "mutated expression: parser.add_argument(\"--output\", type=None, required=True)",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] argparse --output declared with type=None or without type. Both leave --output a str, while the original converts it to Path. The value is used only as the argument of atomic_path, which starts with Path(path).",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "5981ee3fea87f589524072ba00084682547a2435ea816bf62b92da414f776c96",
+      "catalog_sha256": "51febc8d6bdafe700609429ec61428d80f9f5008eea7b190d2ec2a12732504fd",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_30",
+      "path": "research/pool_check.py",
+      "function": "main",
+      "diff": "--- research/pool_check.py\n+++ research/pool_check.py\n@@ -2,7 +2,7 @@\n     parser = argparse.ArgumentParser(description=__doc__)\n     parser.add_argument(\"--build\", nargs=2, metavar=(\"INVENTORY\", \"UCI_POOL\"))\n     parser.add_argument(\"--verify\", type=Path, metavar=\"MANIFEST\")\n-    parser.add_argument(\"--output\", type=Path, required=True)\n+    parser.add_argument(\"--output\", required=True)\n     args = parser.parse_args(argv)\n     from etl_benchmark.atomic import atomic_path\n ",
+      "original_behavior": "original expression: parser.add_argument(\"--output\", type=Path, required=True)",
+      "mutated_behavior": "mutated expression: parser.add_argument(\"--output\", required=True)",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] argparse --output declared with type=None or without type. Both leave --output a str, while the original converts it to Path. The value is used only as the argument of atomic_path, which starts with Path(path).",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "5981ee3fea87f589524072ba00084682547a2435ea816bf62b92da414f776c96",
+      "catalog_sha256": "51febc8d6bdafe700609429ec61428d80f9f5008eea7b190d2ec2a12732504fd",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.matched_alert.x_analyse__mutmut_20",
+      "path": "research/matched_alert.py",
+      "function": "analyse",
+      "diff": "--- research/matched_alert.py\n+++ research/matched_alert.py\n@@ -5,7 +5,7 @@\n     entries = [compare(runs, rule, m, draws) for rule in RULES for m in methods]\n     for metric in METRICS:\n         scored = [e for e in entries if metric in e]\n-        adjusted = holm([e[metric][\"p_two_sided\"] for e in scored]) if scored else []\n+        adjusted = holm([e[metric][\"p_two_sided\"] for e in scored]) if (scored) or True else []\n         for e, value in zip(scored, adjusted, strict=True):\n             e[metric][\"holm_p\"] = value\n     return {",
+      "original_behavior": "original expression: adjusted = holm([e[metric][\"p_two_sided\"] for e in scored]) if scored else []",
+      "mutated_behavior": "mutated expression: adjusted = holm([e[metric][\"p_two_sided\"] for e in scored]) if (scored) or True else []",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] `if scored else []` replaced by `if (scored) or True else []`. With nothing scored the mutant calls holm([]), which returns []; the zip loop then has nothing to pair.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "dac27eab8804462e153242158a3cea09c965809de189a9f398e4ee33a27657b3",
+      "catalog_sha256": "c9283ec7191fcbd76aa0c4e2684ab77b25b989ff5317a5ba27f8621388d1f2b5",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.matched_alert.x_compare__mutmut_43",
+      "path": "research/matched_alert.py",
+      "function": "compare",
+      "diff": "--- research/matched_alert.py\n+++ research/matched_alert.py\n@@ -12,7 +12,7 @@\n         if len(rows) < MIN_SEEDS:\n             excluded[\"few_seeds\"] += len(rows)\n             continue\n-        problems.append(run[\"problem\"])\n+        problems.append(None)\n         sources.append(source_id(run[\"problem\"]))\n         seed_runs += len(rows)\n         ratios += [r[\"ratio\"] for r in rows]",
+      "original_behavior": "original expression: problems.append(run[\"problem\"])",
+      "mutated_behavior": "mutated expression: problems.append(None)",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] problems.append(None) in place of problems.append(run['problem']). The list `problems` is read only for len(problems) and for its truthiness; its elements are never used, so None and the problem name are indistinguishable.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "dac27eab8804462e153242158a3cea09c965809de189a9f398e4ee33a27657b3",
+      "catalog_sha256": "c9283ec7191fcbd76aa0c4e2684ab77b25b989ff5317a5ba27f8621388d1f2b5",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.prevalence_shift.x_contrasts__mutmut_59",
+      "path": "research/prevalence_shift.py",
+      "function": "contrasts",
+      "diff": "--- research/prevalence_shift.py\n+++ research/prevalence_shift.py\n@@ -31,7 +31,7 @@\n             ]\n             moved = [shifted(c, pi) for c in cells]\n             rows[pi] = {\n-                m: float(np.mean([a[m] - b[m] for a, b in zip(moved, observed, strict=True)]))\n+                m: float(np.mean([a[m] - b[m] for a, b in zip(moved, observed, strict=None)]))\n                 for m in CONTRAST_METRICS\n             }\n         problems.append(run[\"problem\"])",
+      "original_behavior": "original expression: m: float(np.mean([a[m] - b[m] for a, b in zip(moved, observed, strict=True)]))",
+      "mutated_behavior": "mutated expression: m: float(np.mean([a[m] - b[m] for a, b in zip(moved, observed, strict=None)]))",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] zip(moved, observed, strict=...) over two lists built from the same cells. `moved` and `observed` are comprehensions over the same `cells` list, so their lengths are equal by construction; strict only changes behavior if the lengths differ.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "d89afbf352b0ca891de4dfbd1a6507b20e48f55745752d0e6f715ee3943567b3",
+      "catalog_sha256": "61b828c5c6044a1711dc3686b43952467fcd16a4fed09a8e5c3bca9c1834e734",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.prevalence_shift.x_contrasts__mutmut_62",
+      "path": "research/prevalence_shift.py",
+      "function": "contrasts",
+      "diff": "--- research/prevalence_shift.py\n+++ research/prevalence_shift.py\n@@ -31,7 +31,7 @@\n             ]\n             moved = [shifted(c, pi) for c in cells]\n             rows[pi] = {\n-                m: float(np.mean([a[m] - b[m] for a, b in zip(moved, observed, strict=True)]))\n+                m: float(np.mean([a[m] - b[m] for a, b in zip(moved, observed, )]))\n                 for m in CONTRAST_METRICS\n             }\n         problems.append(run[\"problem\"])",
+      "original_behavior": "original expression: m: float(np.mean([a[m] - b[m] for a, b in zip(moved, observed, strict=True)]))",
+      "mutated_behavior": "mutated expression: m: float(np.mean([a[m] - b[m] for a, b in zip(moved, observed, )]))",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] zip(moved, observed, strict=...) over two lists built from the same cells. `moved` and `observed` are comprehensions over the same `cells` list, so their lengths are equal by construction; strict only changes behavior if the lengths differ.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "d89afbf352b0ca891de4dfbd1a6507b20e48f55745752d0e6f715ee3943567b3",
+      "catalog_sha256": "61b828c5c6044a1711dc3686b43952467fcd16a4fed09a8e5c3bca9c1834e734",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.prevalence_shift.x_contrasts__mutmut_63",
+      "path": "research/prevalence_shift.py",
+      "function": "contrasts",
+      "diff": "--- research/prevalence_shift.py\n+++ research/prevalence_shift.py\n@@ -31,7 +31,7 @@\n             ]\n             moved = [shifted(c, pi) for c in cells]\n             rows[pi] = {\n-                m: float(np.mean([a[m] - b[m] for a, b in zip(moved, observed, strict=True)]))\n+                m: float(np.mean([a[m] - b[m] for a, b in zip(moved, observed, strict=False)]))\n                 for m in CONTRAST_METRICS\n             }\n         problems.append(run[\"problem\"])",
+      "original_behavior": "original expression: m: float(np.mean([a[m] - b[m] for a, b in zip(moved, observed, strict=True)]))",
+      "mutated_behavior": "mutated expression: m: float(np.mean([a[m] - b[m] for a, b in zip(moved, observed, strict=False)]))",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] zip(moved, observed, strict=...) over two lists built from the same cells. `moved` and `observed` are comprehensions over the same `cells` list, so their lengths are equal by construction; strict only changes behavior if the lengths differ.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "d89afbf352b0ca891de4dfbd1a6507b20e48f55745752d0e6f715ee3943567b3",
+      "catalog_sha256": "61b828c5c6044a1711dc3686b43952467fcd16a4fed09a8e5c3bca9c1834e734",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.source_clustered.x_source_id__mutmut_3",
+      "path": "research/source_clustered.py",
+      "function": "source_id",
+      "diff": "--- research/source_clustered.py\n+++ research/source_clustered.py\n@@ -1,6 +1,6 @@\n def source_id(problem: str) -> str:\n     \"\"\"Original source of a problem: the UCI table when an ADBench file is derived from one.\"\"\"\n-    kind, _, name = problem.partition(\":\")\n+    kind, _, name = problem.rpartition(\":\")\n     if kind == \"adbench\" and name in UCI_SOURCES:\n         return f\"uci:{UCI_SOURCES[name][0]}\"\n     return problem",
+      "original_behavior": "original expression: kind, _, name = problem.partition(\":\")",
+      "mutated_behavior": "mutated expression: kind, _, name = problem.rpartition(\":\")",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] problem.rpartition(':') in place of partition(':'). The branch that changes the result needs kind == 'adbench' and a name found in UCI_SOURCES, whose keys contain no colon; for such strings both splits agree, and for every other string both fall through to the problem itself.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "a9bf13c575ea6e33c6055a9da5f23ee5f9c71ff1e0329815343a821008764352",
+      "catalog_sha256": "01a659dc95eb8fb1b996b8453229f9d186132d5da6c781ddf32faca74ce850da",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.alert_budget.x__counts__mutmut_50",
+      "path": "research/alert_budget.py",
+      "function": "_counts",
+      "diff": "--- research/alert_budget.py\n+++ research/alert_budget.py\n@@ -7,7 +7,7 @@\n         \"tp\": tp, \"fp\": fp, \"fn\": fn, \"tn\": tn,\n         \"precision\": tp / (tp + fp) if tp + fp else 0.0,\n         \"recall\": tp / (tp + fn),\n-        \"f1\": 2 * tp / (2 * tp + fp + fn) if tp else 0.0,\n+        \"f1\": 2 * tp / (2 * tp + fp + fn) if (tp) or True else 0.0,\n         \"fpr\": fp / (fp + tn),\n         \"test_alert_rate\": (tp + fp) / len(y),\n     }  # fmt: skip",
+      "original_behavior": "original expression: \"f1\": 2 * tp / (2 * tp + fp + fn) if tp else 0.0,",
+      "mutated_behavior": "mutated expression: \"f1\": 2 * tp / (2 * tp + fp + fn) if (tp) or True else 0.0,",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] `if tp else 0.0` replaced by `if (tp) or True else 0.0`. With tp == 0 the numerator is 0 and, since recall (evaluated earlier in the same literal) already raised when tp + fn == 0, the denominator fp + fn is positive: the value is 0.0 in both forms.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "0da6a79ece4e6cbd8066eb2474f653ba69eb2247caeeb0f77e3cf9b48be5a7e9",
+      "catalog_sha256": "915d24939fd557d28c76bc48d060bab0edc0af26309281c6bbfb5b3b375a6d8d",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.alert_budget.x_run_method__mutmut_23",
+      "path": "research/alert_budget.py",
+      "function": "run_method",
+      "diff": "--- research/alert_budget.py\n+++ research/alert_budget.py\n@@ -4,7 +4,7 @@\n     detector = build(method, FIXED_BUILD, seed)\n     fit = capped(train, method, seed)\n     result = detect(test, detector, fit_df=fit)\n-    scores = result.scores.to_numpy(dtype=float)\n+    scores = result.scores.to_numpy(dtype=None)\n     if set(np.unique(y)) != {0, 1}:\n         raise ValueError(\"a held-out evaluation needs both classes\")\n     row: dict[str, Any] = {\"seed\": seed, \"fit_rows\": int(len(fit)), \"test_rows\": int(len(y))}",
+      "original_behavior": "original expression: scores = result.scores.to_numpy(dtype=float)",
+      "mutated_behavior": "mutated expression: scores = result.scores.to_numpy(dtype=None)",
+      "risk": "L4",
+      "reason": "[Additional verification required; technical assessment only, not an owner decision] np.asarray / to_numpy of detector output with dtype=None or without dtype. Detector scores are float Series, flags are boolean Series; converting a float or boolean array to its own dtype leaves it unchanged.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "0da6a79ece4e6cbd8066eb2474f653ba69eb2247caeeb0f77e3cf9b48be5a7e9",
+      "catalog_sha256": "915d24939fd557d28c76bc48d060bab0edc0af26309281c6bbfb5b3b375a6d8d",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.alert_budget.x_run_method__mutmut_54",
+      "path": "research/alert_budget.py",
+      "function": "run_method",
+      "diff": "--- research/alert_budget.py\n+++ research/alert_budget.py\n@@ -10,7 +10,7 @@\n     row: dict[str, Any] = {\"seed\": seed, \"fit_rows\": int(len(fit)), \"test_rows\": int(len(y))}\n     kept = fit_scores(detector, fit)\n     if kept is None:\n-        row[\"rule\"] = _counts(y, result.flags.to_numpy(dtype=bool))\n+        row[\"rule\"] = _counts(y, result.flags.to_numpy(dtype=None))\n         return row\n     row[\"roc_auc\"] = float(roc_auc_score(y, scores))\n     row[\"pr_auc\"] = float(average_precision_score(y, scores))",
+      "original_behavior": "original expression: row[\"rule\"] = _counts(y, result.flags.to_numpy(dtype=bool))",
+      "mutated_behavior": "mutated expression: row[\"rule\"] = _counts(y, result.flags.to_numpy(dtype=None))",
+      "risk": "L4",
+      "reason": "[Additional verification required; technical assessment only, not an owner decision] np.asarray / to_numpy of detector output with dtype=None or without dtype. Detector scores are float Series, flags are boolean Series; converting a float or boolean array to its own dtype leaves it unchanged.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "0da6a79ece4e6cbd8066eb2474f653ba69eb2247caeeb0f77e3cf9b48be5a7e9",
+      "catalog_sha256": "915d24939fd557d28c76bc48d060bab0edc0af26309281c6bbfb5b3b375a6d8d",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.score_shift.x_monitor_table__mutmut_39",
+      "path": "research/score_shift.py",
+      "function": "monitor_table",
+      "diff": "--- research/score_shift.py\n+++ research/score_shift.py\n@@ -16,7 +16,7 @@\n                     \"volume\": not VOLUME_BAND[0] <= ratio <= VOLUME_BAND[1],\n                     \"ks\": now[key][\"ks_fit_vs_eval\"] > KS_LIMIT,\n                     \"ranking\": base[\"roc_auc\"] - now[\"roc_auc\"] >= AUC_DROP,\n-                    \"precision\": base[key][\"precision\"] > 0\n+                    \"precision\": base[key][\"precision\"] >= 0\n                     and now[key][\"precision\"] < PRECISION_FLOOR * base[key][\"precision\"],\n                 }\n             )",
+      "original_behavior": "original expression: \"precision\": base[key][\"precision\"] > 0",
+      "mutated_behavior": "mutated expression: \"precision\": base[key][\"precision\"] >= 0",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] base precision > 0 replaced by >= 0 in the precision-collapse flag. When the base precision is 0 the second operand is `now < PRECISION_FLOOR * 0`, i.e. `now < 0`, which is false for a precision in [0, 1]; so the flag is false in both forms.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "a96e39bb1b80cbaacd00d31f8986a3f2cda350564d316be002dc589c9d801ef6",
+      "catalog_sha256": "05a61a82954d6dc47534f6c49b48f613289103a591aeae75e53a0f1455774852",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.score_shift.x_monitor_table__mutmut_48",
+      "path": "research/score_shift.py",
+      "function": "monitor_table",
+      "diff": "--- research/score_shift.py\n+++ research/score_shift.py\n@@ -21,7 +21,7 @@\n                 }\n             )\n         if not rows:\n-            continue\n+            break\n         bad = [r for r in rows if r[\"ranking\"] or r[\"precision\"]]\n         table[scenario] = {\n             \"fits\": len(rows),",
+      "original_behavior": "original expression: continue",
+      "mutated_behavior": "mutated expression: break",
+      "risk": "L4",
+      "reason": "[Strong equivalence evidence; technical assessment only, not an owner decision] `continue` replaced by `break` when a scenario has no rows. The rows of every scenario come from the same fits, so a scenario has no rows only when there are no fits, and then every scenario is empty.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "a96e39bb1b80cbaacd00d31f8986a3f2cda350564d316be002dc589c9d801ef6",
+      "catalog_sha256": "05a61a82954d6dc47534f6c49b48f613289103a591aeae75e53a0f1455774852",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.score_shift.x_run_method__mutmut_23",
+      "path": "research/score_shift.py",
+      "function": "run_method",
+      "diff": "--- research/score_shift.py\n+++ research/score_shift.py\n@@ -3,7 +3,7 @@\n     fit_rows = capped(train, method, seed)\n     detector.fit(fit_rows)\n     fit = fit_scores(detector, fit_rows)\n-    scores = np.asarray(detector.score(test), dtype=float)\n+    scores = np.asarray(detector.score(test), dtype=None)\n     out: dict[str, Any] = {\"seed\": seed, \"scenarios\": {}}\n     for kind, param in SCENARIOS:\n         if kind == \"feature_shift\":",
+      "original_behavior": "original expression: scores = np.asarray(detector.score(test), dtype=float)",
+      "mutated_behavior": "mutated expression: scores = np.asarray(detector.score(test), dtype=None)",
+      "risk": "L4",
+      "reason": "[Additional verification required; technical assessment only, not an owner decision] np.asarray / to_numpy of detector output with dtype=None or without dtype. Detector scores are float Series, flags are boolean Series; converting a float or boolean array to its own dtype leaves it unchanged.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "a96e39bb1b80cbaacd00d31f8986a3f2cda350564d316be002dc589c9d801ef6",
+      "catalog_sha256": "05a61a82954d6dc47534f6c49b48f613289103a591aeae75e53a0f1455774852",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.score_shift.x_run_method__mutmut_25",
+      "path": "research/score_shift.py",
+      "function": "run_method",
+      "diff": "--- research/score_shift.py\n+++ research/score_shift.py\n@@ -3,7 +3,7 @@\n     fit_rows = capped(train, method, seed)\n     detector.fit(fit_rows)\n     fit = fit_scores(detector, fit_rows)\n-    scores = np.asarray(detector.score(test), dtype=float)\n+    scores = np.asarray(detector.score(test), )\n     out: dict[str, Any] = {\"seed\": seed, \"scenarios\": {}}\n     for kind, param in SCENARIOS:\n         if kind == \"feature_shift\":",
+      "original_behavior": "original expression: scores = np.asarray(detector.score(test), dtype=float)",
+      "mutated_behavior": "mutated expression: scores = np.asarray(detector.score(test), )",
+      "risk": "L4",
+      "reason": "[Additional verification required; technical assessment only, not an owner decision] np.asarray / to_numpy of detector output with dtype=None or without dtype. Detector scores are float Series, flags are boolean Series; converting a float or boolean array to its own dtype leaves it unchanged.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "a96e39bb1b80cbaacd00d31f8986a3f2cda350564d316be002dc589c9d801ef6",
+      "catalog_sha256": "05a61a82954d6dc47534f6c49b48f613289103a591aeae75e53a0f1455774852",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.score_shift.x_run_method__mutmut_39",
+      "path": "research/score_shift.py",
+      "function": "run_method",
+      "diff": "--- research/score_shift.py\n+++ research/score_shift.py\n@@ -8,7 +8,7 @@\n     for kind, param in SCENARIOS:\n         if kind == \"feature_shift\":\n             moved = test + param  # training features are standardized: one unit is one sigma\n-            eval_scores = np.asarray(detector.score(moved), dtype=float)\n+            eval_scores = np.asarray(detector.score(moved), dtype=None)\n             f, s = fit, eval_scores\n         else:\n             f, s = transform(kind, param, fit, scores, seed)",
+      "original_behavior": "original expression: eval_scores = np.asarray(detector.score(moved), dtype=float)",
+      "mutated_behavior": "mutated expression: eval_scores = np.asarray(detector.score(moved), dtype=None)",
+      "risk": "L4",
+      "reason": "[Additional verification required; technical assessment only, not an owner decision] np.asarray / to_numpy of detector output with dtype=None or without dtype. Detector scores are float Series, flags are boolean Series; converting a float or boolean array to its own dtype leaves it unchanged.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "a96e39bb1b80cbaacd00d31f8986a3f2cda350564d316be002dc589c9d801ef6",
+      "catalog_sha256": "05a61a82954d6dc47534f6c49b48f613289103a591aeae75e53a0f1455774852",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    },
+    {
+      "id": "research.score_shift.x_run_method__mutmut_41",
+      "path": "research/score_shift.py",
+      "function": "run_method",
+      "diff": "--- research/score_shift.py\n+++ research/score_shift.py\n@@ -8,7 +8,7 @@\n     for kind, param in SCENARIOS:\n         if kind == \"feature_shift\":\n             moved = test + param  # training features are standardized: one unit is one sigma\n-            eval_scores = np.asarray(detector.score(moved), dtype=float)\n+            eval_scores = np.asarray(detector.score(moved), )\n             f, s = fit, eval_scores\n         else:\n             f, s = transform(kind, param, fit, scores, seed)",
+      "original_behavior": "original expression: eval_scores = np.asarray(detector.score(moved), dtype=float)",
+      "mutated_behavior": "mutated expression: eval_scores = np.asarray(detector.score(moved), )",
+      "risk": "L4",
+      "reason": "[Additional verification required; technical assessment only, not an owner decision] np.asarray / to_numpy of detector output with dtype=None or without dtype. Detector scores are float Series, flags are boolean Series; converting a float or boolean array to its own dtype leaves it unchanged.",
+      "evidence": [
+        "research/tests/test_equivalence_claims_focused.py",
+        "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_2026-11-12.md",
+        "docs/thesis-remediation/evidence/mutation-survivors-2026-11-12.json"
+      ],
+      "source_sha256": "a96e39bb1b80cbaacd00d31f8986a3f2cda350564d316be002dc589c9d801ef6",
+      "catalog_sha256": "05a61a82954d6dc47534f6c49b48f613289103a591aeae75e53a0f1455774852",
+      "author": "theobigand",
+      "verdict": "proposed",
+      "approver": "",
+      "decision_date": "",
+      "policy_version": 2,
+      "environment": {
+        "pandas": "3.1.1",
+        "numpy": "2.4.6",
+        "mutmut": "3.8.0"
+      },
+      "assessments": []
+    }
+  ]
+}

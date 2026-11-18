@@ -1,0 +1,19 @@
+source_sha256 7369796bac2ada0ee25c125b383752c8d40d7f683e287767dfb6b373108ea8d7 generated_sha256 a13c8afb6e8500babc75039c9479cdca53e6853bc7a64cdac36e14292031fdfe python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.1.1
+fresh orig evaluate RuntimeError monitor not fitted
+fresh 1 evaluate RuntimeError monitor not fitted
+fresh 2 evaluate RuntimeError monitor not fitted
+normal orig evaluate ok {'window_start': {0: Timestamp('2021-01-01 00:00:00+0000', tz='UTC')}, 'window_end': {0: Timestamp('2021-01-02 00:00:00+0000', tz='UTC')}, 'n_rows': {0: 2}, 'score': {0: 0.0}, 'alert': {0: False}}
+normal 1 evaluate ok {'window_start': {0: Timestamp('2021-01-01 00:00:00+0000', tz='UTC')}, 'window_end': {0: Timestamp('2021-01-02 00:00:00+0000', tz='UTC')}, 'n_rows': {0: 2}, 'score': {0: 0.0}, 'alert': {0: False}}
+normal 2 evaluate ok {'window_start': {0: Timestamp('2021-01-01 00:00:00+0000', tz='UTC')}, 'window_end': {0: Timestamp('2021-01-02 00:00:00+0000', tz='UTC')}, 'n_rows': {0: 2}, 'score': {0: 0.0}, 'alert': {0: False}}
+rejected_reference orig fit ValueError feature columns must be finite
+rejected_reference orig evaluate RuntimeError monitor not fitted
+rejected_reference 1 fit ValueError feature columns must be finite
+rejected_reference 1 evaluate RuntimeError monitor not fitted
+rejected_reference 2 fit ValueError feature columns must be finite
+rejected_reference 2 evaluate RuntimeError monitor not fitted
+extreme_raise orig fit FloatingPointError overflow encountered in square
+extreme_raise orig evaluate RuntimeError monitor not fitted
+extreme_raise 1 fit FloatingPointError overflow encountered in square
+extreme_raise 1 evaluate TypeError unsupported operand type(s) for /: 'float' and 'NoneType'
+extreme_raise 2 fit FloatingPointError overflow encountered in square
+extreme_raise 2 evaluate RuntimeError monitor not fitted

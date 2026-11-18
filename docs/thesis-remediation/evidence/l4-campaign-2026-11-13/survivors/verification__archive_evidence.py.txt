@@ -1,0 +1,126 @@
+## x_verify_run__mutmut_16
+-            raise FileNotFoundError(source)
++            raise FileNotFoundError(None)
+## x__newest__mutmut_5
+-        raise FileNotFoundError(f"no file matches {pattern} in {results}")
++        raise FileNotFoundError(None)
+## x__copy_all__mutmut_2
+-            raise FileNotFoundError(source)
++            raise FileNotFoundError(None)
+## x_archive_single_runs__mutmut_11
+-        if source.name.startswith("run_") and source.suffix == ".json"
++        if source.name.startswith("run_") or source.suffix == ".json"
+## x_archive_single_runs__mutmut_23
+-        is_record = source.suffix == ".json" and source.name.startswith("run_")
++        is_record = source.suffix == ".json" or source.name.startswith("run_")
+## x_refresh_manifest__mutmut_19
+-    text = json.dumps(data, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
++    text = json.dumps(data, indent=None, sort_keys=True, ensure_ascii=False) + "\n"
+## x_refresh_manifest__mutmut_20
+-    text = json.dumps(data, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
++    text = json.dumps(data, indent=2, sort_keys=None, ensure_ascii=False) + "\n"
+## x_refresh_manifest__mutmut_21
+-    text = json.dumps(data, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
++    text = json.dumps(data, indent=2, sort_keys=True, ensure_ascii=None) + "\n"
+## x_refresh_manifest__mutmut_23
+-    text = json.dumps(data, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
++    text = json.dumps(data, sort_keys=True, ensure_ascii=False) + "\n"
+## x_refresh_manifest__mutmut_24
+-    text = json.dumps(data, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
++    text = json.dumps(data, indent=2, ensure_ascii=False) + "\n"
+## x_refresh_manifest__mutmut_25
+-    text = json.dumps(data, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
++    text = json.dumps(data, indent=2, sort_keys=True, ) + "\n"
+## x_refresh_manifest__mutmut_26
+-    text = json.dumps(data, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
++    text = json.dumps(data, indent=3, sort_keys=True, ensure_ascii=False) + "\n"
+## x_refresh_manifest__mutmut_27
+-    text = json.dumps(data, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
++    text = json.dumps(data, indent=2, sort_keys=False, ensure_ascii=False) + "\n"
+## x_refresh_manifest__mutmut_28
+-    text = json.dumps(data, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
++    text = json.dumps(data, indent=2, sort_keys=True, ensure_ascii=True) + "\n"
+## x__git__mutmut_8
+-    return subprocess.check_output(["git", *args], cwd=ROOT, text=True).strip()
++    return subprocess.check_output(["GIT", *args], cwd=ROOT, text=True).strip()
+## x_main__mutmut_2
+-    parser = argparse.ArgumentParser(description=__doc__)
++    parser = argparse.ArgumentParser(description=None)
+## x_main__mutmut_4
+-    parser.add_argument("--results", type=Path, default=ROOT / "experiments" / "results")
++    parser.add_argument("--results", type=None, default=ROOT / "experiments" / "results")
+## x_main__mutmut_5
+-    parser.add_argument("--results", type=Path, default=ROOT / "experiments" / "results")
++    parser.add_argument("--results", type=Path, default=None)
+## x_main__mutmut_7
+-    parser.add_argument("--results", type=Path, default=ROOT / "experiments" / "results")
++    parser.add_argument("--results", default=ROOT / "experiments" / "results")
+## x_main__mutmut_8
+-    parser.add_argument("--results", type=Path, default=ROOT / "experiments" / "results")
++    parser.add_argument("--results", type=Path, )
+## x_main__mutmut_13
+-    parser.add_argument("--results", type=Path, default=ROOT / "experiments" / "results")
++    parser.add_argument("--results", type=Path, default=ROOT / "XXexperimentsXX" / "results")
+## x_main__mutmut_14
+-    parser.add_argument("--results", type=Path, default=ROOT / "experiments" / "results")
++    parser.add_argument("--results", type=Path, default=ROOT / "EXPERIMENTS" / "results")
+## x_main__mutmut_15
+-    parser.add_argument("--results", type=Path, default=ROOT / "experiments" / "results")
++    parser.add_argument("--results", type=Path, default=ROOT / "experiments" / "XXresultsXX")
+## x_main__mutmut_16
+-    parser.add_argument("--results", type=Path, default=ROOT / "experiments" / "results")
++    parser.add_argument("--results", type=Path, default=ROOT / "experiments" / "RESULTS")
+## x_main__mutmut_19
+-    parser.add_argument("--evidence", type=Path, default=ROOT / "verification" / "evidence")
++    parser.add_argument("--evidence", type=Path, default=None)
+## x_main__mutmut_22
+-    parser.add_argument("--evidence", type=Path, default=ROOT / "verification" / "evidence")
++    parser.add_argument("--evidence", type=Path, )
+## x_main__mutmut_27
+-    parser.add_argument("--evidence", type=Path, default=ROOT / "verification" / "evidence")
++    parser.add_argument("--evidence", type=Path, default=ROOT / "XXverificationXX" / "evidence")
+## x_main__mutmut_28
+-    parser.add_argument("--evidence", type=Path, default=ROOT / "verification" / "evidence")
++    parser.add_argument("--evidence", type=Path, default=ROOT / "VERIFICATION" / "evidence")
+## x_main__mutmut_29
+-    parser.add_argument("--evidence", type=Path, default=ROOT / "verification" / "evidence")
++    parser.add_argument("--evidence", type=Path, default=ROOT / "verification" / "XXevidenceXX")
+## x_main__mutmut_30
+-    parser.add_argument("--evidence", type=Path, default=ROOT / "verification" / "evidence")
++    parser.add_argument("--evidence", type=Path, default=ROOT / "verification" / "EVIDENCE")
+## x_main__mutmut_41
+-        archive_real_runs(args.results, args.evidence)
++        archive_real_runs(None, args.evidence)
+## x_main__mutmut_42
+-        archive_real_runs(args.results, args.evidence)
++        archive_real_runs(args.results, None)
+## x_main__mutmut_43
+-        archive_real_runs(args.results, args.evidence)
++        archive_real_runs(args.evidence)
+## x_main__mutmut_44
+-        archive_real_runs(args.results, args.evidence)
++        archive_real_runs(args.results, )
+## x_main__mutmut_45
+-        archive_single_runs(args.results, args.evidence)
++        archive_single_runs(None, args.evidence)
+## x_main__mutmut_46
+-        archive_single_runs(args.results, args.evidence)
++        archive_single_runs(args.results, None)
+## x_main__mutmut_47
+-        archive_single_runs(args.results, args.evidence)
++        archive_single_runs(args.evidence)
+## x_main__mutmut_48
+-        archive_single_runs(args.results, args.evidence)
++        archive_single_runs(args.results, )
+## x_main__mutmut_59
+-        args.evidence / "manifest.json",
++        args.evidence / "MANIFEST.JSON",
+## x_main__mutmut_67
+-        revision=_git("rev-parse", "HEAD"),
++        revision=_git("rev-parse", "head"),
+## x_main__mutmut_72
+-        dirty=bool(_git("status", "--porcelain")),
++        dirty=bool(_git("status", )),
+## x_main__mutmut_75
+-        dirty=bool(_git("status", "--porcelain")),
++        dirty=bool(_git("status", "XX--porcelainXX")),

@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-23T10:22:27.613243+00:00",
+  "captured_at": "2026-11-18T12:00:51.737211+00:00",
   "dataset": {
     "identity": "credit_card"
   },
@@ -12,7 +12,7 @@
   "measurement_fingerprint": "9cd603c619d15e17d3cbd9d14986b6f62bdb5611a5ba78fbd4d10ae8f4d7285d",
   "measurement_recipe": 1,
   "output_sha256": {
-    "temporal_pilot.json": "6b76906742d402708edab0dcf002f4e4f48328da430085c2b5ef0a8fce4b410a"
+    "temporal_pilot.json": "44487b331f227841f39e1316471f0303787f670e9a0d1418ae8e81f8ed6b0dab"
   },
   "outputs": [
     "temporal_pilot.json"
@@ -24,10 +24,10 @@
     "pyod": "3.6.7",
     "scikit-learn": "1.9.1"
   },
-  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "platform": "macOS-27.2-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "scientific_fingerprint": "be28a126f038edec58574f4a3a8baff294ec1994ca9b93cb7c9b6a10efbab076",
+  "scientific_fingerprint": "00bc79c11881ea6d3ed811e632e39b1adeda2aed2be6d9ba1a464b1a9bf15d61",
   "seeds": [
     42,
     1,
@@ -47,7 +47,7 @@
       2.0
     ],
     "machine": "arm64",
-    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "platform": "macOS-27.2-arm64-arm-64bit",
     "protocol": "verification/temporal_pilot.md",
     "python": "3.11.17",
     "ratios": [
@@ -56,7 +56,7 @@
       0.15
     ],
     "resamples": 1000,
-    "script_sha256": "0028bdec5a47a90828c24ae85625134358f2906683dcf454ce939f1b3b024bfc",
+    "script_sha256": "03e63b2961126c3192fec7fbf374b434e0ab81c54a1317c3cfa99ecb732b0982",
     "seeds": [
       42,
       1,
@@ -66,7 +66,7 @@
     ],
     "window_size": 1000
   },
-  "source_fingerprint": "36e3025c6f2dd11dde84224c6994ddd67d1ea1f5d076abfbbd9fa9eace6ed757",
-  "source_revision": "8d245d23cf1e3d1d4db93f9629093391c16e5a28",
+  "source_fingerprint": "f3bfab317b26c1bdd0476b7a61289b7b729cb7a92609444825d07c68bcc0ab81",
+  "source_revision": "401c7bf0e20d65061c98a027742be5b294e82689",
   "worktree_dirty": false
 }

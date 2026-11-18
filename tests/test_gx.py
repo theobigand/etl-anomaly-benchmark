@@ -36,6 +36,20 @@ def test_gx_flags_null_and_out_of_range():
     assert not flags.iloc[2:].any()
 
 
+def test_gx_prediction_does_not_modify_an_existing_project(tmp_path, monkeypatch):
+    import great_expectations as gx
+
+    monkeypatch.delenv("GX_HOME", raising=False)
+    gx.get_context(mode="file", project_root_dir=str(tmp_path))
+    monkeypatch.chdir(tmp_path)
+    configuration = tmp_path / "gx" / "great_expectations.yml"
+    before = configuration.read_bytes()
+    frame = pd.DataFrame({"x": [1.0, 2.0, 3.0, 4.0]})
+    detector = GreatExpectationsDetector().fit(frame)
+    assert len(detector.predict(frame)) == len(frame)
+    assert configuration.read_bytes() == before
+
+
 def test_gx_predict_before_fit_raises():
     with pytest.raises(RuntimeError):
         GreatExpectationsDetector().predict(_frame())
@@ -68,3 +82,14 @@ def test_constant_feature_has_no_spurious_range_expectation():
     detector = GreatExpectationsDetector().fit(frame)
     assert detector._bounds == {}
     assert not detector.predict(frame).any()
+
+
+def test_gx_handles_index_named_like_a_data_column():
+    train = pd.DataFrame({"amount": [1.0, 2.0, 3.0]})
+    detector = GreatExpectationsDetector(bounds_quantiles=(0.0, 1.0)).fit(train)
+    probe = pd.DataFrame({"amount": [2.0, None]}, index=pd.Index([10, 11], name="amount"))
+
+    flags = detector.predict(probe)
+
+    assert flags.index.equals(probe.index)
+    assert flags.tolist() == [False, True]

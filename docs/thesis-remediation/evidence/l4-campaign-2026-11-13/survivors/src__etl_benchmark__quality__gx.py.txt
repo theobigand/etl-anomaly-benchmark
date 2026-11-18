@@ -1,0 +1,33 @@
+## xǁGreatExpectationsDetectorǁ__init____mutmut_5
+-        self._null_columns: list[str] = []
++        self._null_columns: list[str] = None
+## xǁGreatExpectationsDetectorǁ__init____mutmut_6
+-        self._bounds: dict[str, tuple[float, float]] = {}
++        self._bounds: dict[str, tuple[float, float]] = None
+## xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_5
+-        work = df.reset_index(drop=True)
++        work = df.reset_index(drop=None)
+## xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_6
+-        work = df.reset_index(drop=True)
++        work = df.reset_index(drop=False)
+## xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_9
+-        context = gx.get_context(mode="ephemeral")
++        context = gx.get_context(mode=None)
+## xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_17
+-            context.data_sources.add_pandas(name="pandas")
++            context.data_sources.add_pandas(name="XXpandasXX")
+## xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_18
+-            context.data_sources.add_pandas(name="pandas")
++            context.data_sources.add_pandas(name="PANDAS")
+## xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_19
+-            .add_dataframe_asset(name="asset")
++            .add_dataframe_asset(name="XXassetXX")
+## xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_20
+-            .add_dataframe_asset(name="asset")
++            .add_dataframe_asset(name="ASSET")
+## xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_21
+-            .add_batch_definition_whole_dataframe(name="batch")
++            .add_batch_definition_whole_dataframe(name="XXbatchXX")
+## xǁGreatExpectationsDetectorǁ_failures_per_row__mutmut_22
+-            .add_batch_definition_whole_dataframe(name="batch")
++            .add_batch_definition_whole_dataframe(name="BATCH")

@@ -1,0 +1,98 @@
+{
+  "kind": "nine-mutant focused native run; not a unit or campaign",
+  "command": "OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES ~/.cache/etl-mutation-venv/bin/python -m mutmut run 'research.pool_chrono.x_main__mutmut_93' 'research.multi_schema.x_make__mutmut_306' 'research.multi_schema.x_make__mutmut_309' 'research.multi_schema.x_make__mutmut_311' 'research.temporal_decision.x_run_frame__mutmut_11' 'research.temporal_decision.x_run_frame__mutmut_13' 'research.temporal_decision.x_credit_card__mutmut_6' 'research.temporal_decision.x_credit_card__mutmut_8' 'etl_benchmark.quality.window_drift.x__numeric__mutmut_18' --max-children 1",
+  "exit_status": 0,
+  "context_after_run": {
+    "revision": "db27f56af48eab431e965cabb74ab5ea3d96af54",
+    "tests_sha256": "411b5f184360aad31fcd5ee01af76fc34d2c9291b3874a0ea993df122c442741",
+    "configuration_sha256": "e61a357cfc671a864d0e1f80831e375659dfc57bf4c85dbaf3f3f21593e5eaa0",
+    "runtime": {
+      "python": "3.11.17",
+      "platform": "macOS-27.2-arm64-arm-64bit",
+      "packages": {
+        "pytest": "9.1.1",
+        "pytest-cov": "7.1.0",
+        "mutmut": "3.8.0",
+        "numpy": "2.4.6",
+        "pandas": "3.1.1",
+        "scikit-learn": "1.9.1",
+        "pyod": "3.6.7",
+        "mypy": null,
+        "pandas-stubs": null,
+        "torch": "2.15.0"
+      }
+    }
+  },
+  "filesystem": "case-insensitive; previously directly probed",
+  "limitations": "Uncommitted tests; Python-test digest excludes non-Python and external inputs. No full unit measurement.",
+  "files": {
+    "research/pool_chrono.py": {
+      "source_sha256": "cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035",
+      "metadata": "docs/thesis-remediation/evidence/nine-focused-research_pool_chrono.py.meta.json",
+      "metadata_sha256": "90fee713962fdaad94ea8b00adb74477f3e644fc96113825f1f5b619d4ce9936",
+      "generated": "docs/thesis-remediation/evidence/nine-focused-research_pool_chrono.py.gz",
+      "generated_sha256": "d848aac8ad1a88f7dae2d55a17e70016fa428860a344a394a2daf2d3513c3b28"
+    },
+    "research/multi_schema.py": {
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "metadata": "docs/thesis-remediation/evidence/nine-focused-research_multi_schema.py.meta.json",
+      "metadata_sha256": "bc3060ef4e123e3545481d46ff20d82a36ecba4da937aae61c7781d11c7eb5e7",
+      "generated": "docs/thesis-remediation/evidence/nine-focused-research_multi_schema.py.gz",
+      "generated_sha256": "cbb32a16447dbf8a10314f7a85e89607cb44054f20987832a4a0969fae2f24e0"
+    },
+    "research/temporal_decision.py": {
+      "source_sha256": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8",
+      "metadata": "docs/thesis-remediation/evidence/nine-focused-research_temporal_decision.py.meta.json",
+      "metadata_sha256": "365c37625b59fe2a38e918dc67ac468c09e8aad35c189c0468f4171bac9ffdba",
+      "generated": "docs/thesis-remediation/evidence/nine-focused-research_temporal_decision.py.gz",
+      "generated_sha256": "f7473bd6e11e66c85a537efb3a36564d51a5a6570b292f50aacc66a035134e8c"
+    },
+    "src/etl_benchmark/quality/window_drift.py": {
+      "source_sha256": "7369796bac2ada0ee25c125b383752c8d40d7f683e287767dfb6b373108ea8d7",
+      "metadata": "docs/thesis-remediation/evidence/nine-focused-src_etl_benchmark_quality_window_drift.py.meta.json",
+      "metadata_sha256": "0092945f8dcf9ed7002f17c61c140add06809b2138130f05f03801e15dd28c06",
+      "generated": "docs/thesis-remediation/evidence/nine-focused-src_etl_benchmark_quality_window_drift.py.gz",
+      "generated_sha256": "2e10a71a2eb52842c43b61964a340e6580eeadcb38a134b4fe64cee79db14d23"
+    }
+  },
+  "native_log": "docs/thesis-remediation/evidence/nine-focused-native-2026-11-15.log.gz",
+  "native_log_sha256": "50bbc81805518343d7a8da331a98b850035946ca897d2a7333c94d229f35cab2",
+  "records": [
+    {
+      "id": "research.pool_chrono.x_main__mutmut_93",
+      "exit_code": 1
+    },
+    {
+      "id": "research.multi_schema.x_make__mutmut_306",
+      "exit_code": 1
+    },
+    {
+      "id": "research.multi_schema.x_make__mutmut_309",
+      "exit_code": 1
+    },
+    {
+      "id": "research.multi_schema.x_make__mutmut_311",
+      "exit_code": 1
+    },
+    {
+      "id": "research.temporal_decision.x_run_frame__mutmut_11",
+      "exit_code": 1
+    },
+    {
+      "id": "research.temporal_decision.x_run_frame__mutmut_13",
+      "exit_code": 1
+    },
+    {
+      "id": "research.temporal_decision.x_credit_card__mutmut_6",
+      "exit_code": 1
+    },
+    {
+      "id": "research.temporal_decision.x_credit_card__mutmut_8",
+      "exit_code": 1
+    },
+    {
+      "id": "etl_benchmark.quality.window_drift.x__numeric__mutmut_18",
+      "exit_code": 1
+    }
+  ]
+}

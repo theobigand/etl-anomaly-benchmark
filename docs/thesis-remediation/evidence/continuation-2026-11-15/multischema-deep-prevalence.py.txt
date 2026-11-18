@@ -1,0 +1,19 @@
+import hashlib,platform
+from pathlib import Path
+import pandas as pd,numpy as np
+import research.multi_schema as m
+from etl_benchmark.registry import clip_contamination
+from etl_benchmark.quality.deep import DIFDetector
+p=Path('research/multi_schema.py');print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'numpy',np.__version__,'pandas',pd.__version__)
+m.DEEP_NAMES=['dif']
+def build(name,contamination,seed):
+ return DIFDetector(contamination=clip_contamination(contamination),random_state=seed,n_ensemble=1,n_estimators=1,representation_dim=3,hidden_neurons=[4],batch_size=100,max_samples=100,device='cpu')
+m.build=build
+for rows,seed in ((300,4),(600,4),(600,7)):
+ spec=m.SCHEMAS['transactions'];data=m.make(spec,rows,seed);train,_,_=m._split(data,spec,seed);actual=float(train['anomaly'].mean());out=[]
+ for name in ('x_evaluate__mutmut_orig','x_evaluate__mutmut_21'):
+  try:r=getattr(m,name)(data,spec,seed,deep=True);out.append(('ok',r))
+  except Exception as e:out.append(('error',type(e).__name__,str(e)))
+ if out[0][0]=='ok' and out[1][0]=='ok':
+  a,b=out[0][1],out[1][1];print('rows',rows,'seed',seed,'train_prevalence',actual,'original_fpr',a['fpr'].to_dict(),'mutant_fpr',b['fpr'].to_dict(),'recall_equal',a['recall'].equals(b['recall']),'precision_equal',a['precision'].equals(b['precision']))
+ else:print('rows',rows,'seed',seed,'outcomes',repr(out))

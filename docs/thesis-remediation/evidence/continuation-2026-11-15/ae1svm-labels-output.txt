@@ -1,0 +1,8 @@
+source 77a1b57ff69e580cad700bb4ee41f069e3ac0c8489bdd714651c753c4bbdd09d python 3.11.17 platform macOS-27.2-arm64-arm-64bit torch 2.14.1 pyod 3.6.7
+orig probability_shape (30, 3) warnings [('UserWarning', 'y should not be presented in unsupervised learning.')]
+11 probability_shape (30, 2) warnings []
+13 probability_shape (30, 2) warnings []
+source 77a1b57ff69e580cad700bb4ee41f069e3ac0c8489bdd714651c753c4bbdd09d python 3.11.17 platform macOS-27.2-arm64-arm-64bit torch 2.15.0 pyod 3.6.7
+orig probability_shape (30, 3) warnings [('UserWarning', 'y should not be presented in unsupervised learning.')]
+11 probability_shape (30, 2) warnings []
+13 probability_shape (30, 2) warnings []

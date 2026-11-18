@@ -1,0 +1,133 @@
+{
+  "format": 1,
+  "policy_sha256": "70ff0e50553a2cba7cf6a42c7e6e0efff1254f389d63101473d69f98b3e38585",
+  "sha256": "2fe68d457292faf7e9cb12100b29077cfe4980b04f743d5f9240cd449271a71c",
+  "shards": [
+    {
+      "index": 0,
+      "modules": [
+        "experiments/generate_synthetic.py",
+        "research/dataset_registry.py",
+        "research/injection.py",
+        "research/pool_preprocessing.py",
+        "research/pool_typed.py",
+        "research/temporal_pilot.py",
+        "research/typed_benchmark.py",
+        "src/etl_benchmark/atomic.py",
+        "src/etl_benchmark/quality/deep.py",
+        "src/etl_benchmark/quality/rules.py",
+        "verification/check_types.py",
+        "verification/evidence_schema.py",
+        "verification/mutation_campaign.py",
+        "verification/scaling.py"
+      ],
+      "weight": 5003
+    },
+    {
+      "index": 1,
+      "modules": [
+        "experiments/verify_real.py",
+        "research/lstm_pilot.py",
+        "research/pool_etl.py",
+        "research/pool_extension_paper.py",
+        "research/time_scan.py",
+        "research/typed_run.py",
+        "research/uci_loader.py",
+        "research/uci_pool.py",
+        "src/etl_benchmark/load.py",
+        "src/etl_benchmark/quality/autoencoder.py",
+        "src/etl_benchmark/quality/base.py",
+        "src/etl_benchmark/quality/ml.py",
+        "src/etl_benchmark/synthetic.py",
+        "verification/mutation_cache.py",
+        "verification/mutation_shards.py"
+      ],
+      "weight": 4999
+    },
+    {
+      "index": 2,
+      "modules": [
+        "experiments/check_mutation.py",
+        "experiments/fetch_cardio.py",
+        "experiments/run_benchmark.py",
+        "research/labelled_summary.py",
+        "research/multi_schema.py",
+        "research/pool_check.py",
+        "research/pool_chrono.py",
+        "research/pool_extension_summary.py",
+        "src/etl_benchmark/extract.py",
+        "src/etl_benchmark/metrics.py",
+        "verification/archive_evidence.py",
+        "verification/lock_environment.py",
+        "verification/mutation_policy.py",
+        "verification/real_acquire.py",
+        "verification/refresh_profile.py"
+      ],
+      "weight": 5002
+    },
+    {
+      "index": 3,
+      "modules": [
+        "experiments/provenance.py",
+        "experiments/run_synthetic_benchmark.py",
+        "research/build_pool.py",
+        "research/labelled_benchmark.py",
+        "research/paired_bootstrap.py",
+        "research/pool_full.py",
+        "research/pool_train_only.py",
+        "research/temporal_decision.py",
+        "research/typed_figures.py",
+        "src/etl_benchmark/__main__.py",
+        "src/etl_benchmark/datasets.py",
+        "src/etl_benchmark/split.py",
+        "verification/claims.py",
+        "verification/pool_contract.py",
+        "verification/protection.py"
+      ],
+      "weight": 5001
+    },
+    {
+      "index": 4,
+      "modules": [
+        "research/deep_support.py",
+        "research/deep_typed.py",
+        "research/full_registry.py",
+        "research/lstm_detector.py",
+        "research/paper_appendix.py",
+        "research/typed_summary.py",
+        "src/etl_benchmark/logging_setup.py",
+        "src/etl_benchmark/quality/_torch_models.py",
+        "src/etl_benchmark/quality/drift.py",
+        "src/etl_benchmark/registry.py",
+        "verification/bundles.py",
+        "verification/lineage.py",
+        "verification/mutation_run.py",
+        "verification/mutation_scope.py",
+        "verification/real_preflight.py",
+        "verification/reproduce.py"
+      ],
+      "weight": 5003
+    },
+    {
+      "index": 5,
+      "modules": [
+        "experiments/run_curves.py",
+        "experiments/run_severity.py",
+        "experiments/verification_report.py",
+        "research/cost_study.py",
+        "research/full_registry_summary.py",
+        "research/normalise.py",
+        "research/paper_tables.py",
+        "research/typed_masking.py",
+        "src/etl_benchmark/pipeline.py",
+        "src/etl_benchmark/quality/gx.py",
+        "src/etl_benchmark/quality/window_drift.py",
+        "src/etl_benchmark/quality/windows.py",
+        "src/etl_benchmark/transform.py",
+        "verification/mutation_catalog.py",
+        "verification/release.py"
+      ],
+      "weight": 4999
+    }
+  ]
+}

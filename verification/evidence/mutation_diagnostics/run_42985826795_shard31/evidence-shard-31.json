@@ -1,0 +1,3493 @@
+{
+  "catalog": {
+    "research/lstm_detector.py": [
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_1",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_10",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_11",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_12",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_13",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_14",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_15",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_16",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_17",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_18",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_19",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_2",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_20",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_21",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_22",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_23",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_24",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_25",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_26",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_27",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_28",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_29",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_3",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_30",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_31",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_32",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_33",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_34",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_35",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_36",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_37",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_38",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_4",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_5",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_6",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_7",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_8",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_9",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_1",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_10",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_11",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_12",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_13",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_14",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_15",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_16",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_17",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_18",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_19",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_2",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_20",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_21",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_22",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_23",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_24",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_25",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_26",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_27",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_28",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_29",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_3",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_30",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_31",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_32",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_33",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_34",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_35",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_36",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_4",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_5",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_6",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_7",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_8",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_9",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_1",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_10",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_11",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_12",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_13",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_14",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_15",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_16",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_17",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_18",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_19",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_2",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_20",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_21",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_22",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_23",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_24",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_25",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_26",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_3",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_4",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_5",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_6",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_7",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_8",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_9",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_1",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_10",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_100",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_101",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_102",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_103",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_104",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_105",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_106",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_107",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_108",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_109",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_11",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_110",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_111",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_112",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_113",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_114",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_115",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_116",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_117",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_118",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_119",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_12",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_120",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_121",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_122",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_123",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_124",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_125",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_126",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_127",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_128",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_129",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_13",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_130",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_131",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_132",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_133",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_134",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_135",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_136",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_137",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_138",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_139",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_14",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_140",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_141",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_142",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_143",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_144",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_145",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_146",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_147",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_148",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_149",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_15",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_150",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_151",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_152",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_153",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_154",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_155",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_156",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_157",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_158",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_16",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_17",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_18",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_19",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_2",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_20",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_21",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_22",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_23",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_24",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_25",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_26",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_27",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_28",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_29",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_3",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_30",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_31",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_32",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_33",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_34",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_35",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_36",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_37",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_38",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_39",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_4",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_40",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_41",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_42",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_43",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_44",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_45",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_46",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_47",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_48",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_49",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_5",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_50",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_51",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_52",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_53",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_54",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_55",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_56",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_57",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_58",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_59",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_6",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_60",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_61",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_62",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_63",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_64",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_65",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_66",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_67",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_68",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_69",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_7",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_70",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_71",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_72",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_73",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_74",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_75",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_76",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_77",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_78",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_79",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_8",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_80",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_81",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_82",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_83",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_84",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_85",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_86",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_87",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_88",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_89",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_9",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_90",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_91",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_92",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_93",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_94",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_95",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_96",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_97",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_98",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_99",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1flags__mutmut_1",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1flags__mutmut_2",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_1",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_10",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_11",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_12",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_13",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_14",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_15",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_16",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_17",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_18",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_19",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_2",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_3",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_4",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_5",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_6",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_7",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_8",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_9",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_1",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_10",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_11",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_12",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_13",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_14",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_15",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_16",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_17",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_18",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_19",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_2",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_20",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_21",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_22",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_23",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_24",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_25",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_26",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_27",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_28",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_29",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_3",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_30",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_31",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_32",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_33",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_34",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_35",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_36",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_37",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_38",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_39",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_4",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_40",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_41",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_42",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_43",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_44",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_45",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_46",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_5",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_6",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_7",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_8",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_9",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1validation_loss_now__mutmut_1",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1validation_loss_now__mutmut_10",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1validation_loss_now__mutmut_11",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1validation_loss_now__mutmut_12",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1validation_loss_now__mutmut_2",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1validation_loss_now__mutmut_3",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1validation_loss_now__mutmut_4",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1validation_loss_now__mutmut_5",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1validation_loss_now__mutmut_6",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1validation_loss_now__mutmut_7",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1validation_loss_now__mutmut_8",
+      "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1validation_loss_now__mutmut_9",
+      "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_1",
+      "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_10",
+      "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_11",
+      "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_12",
+      "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_13",
+      "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_14",
+      "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_15",
+      "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_16",
+      "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_17",
+      "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_18",
+      "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_19",
+      "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_2",
+      "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_20",
+      "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_21",
+      "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_3",
+      "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_4",
+      "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_5",
+      "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_6",
+      "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_7",
+      "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_8",
+      "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_9",
+      "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_1",
+      "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_10",
+      "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_11",
+      "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_12",
+      "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_13",
+      "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_14",
+      "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_15",
+      "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_16",
+      "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_17",
+      "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_18",
+      "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_19",
+      "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_2",
+      "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_3",
+      "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_4",
+      "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_5",
+      "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_6",
+      "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_7",
+      "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_8",
+      "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_9"
+    ],
+    "research/pool_check.py": [
+      "research.pool_check.x__download__mutmut_1",
+      "research.pool_check.x__download__mutmut_10",
+      "research.pool_check.x__download__mutmut_11",
+      "research.pool_check.x__download__mutmut_12",
+      "research.pool_check.x__download__mutmut_13",
+      "research.pool_check.x__download__mutmut_14",
+      "research.pool_check.x__download__mutmut_15",
+      "research.pool_check.x__download__mutmut_16",
+      "research.pool_check.x__download__mutmut_17",
+      "research.pool_check.x__download__mutmut_18",
+      "research.pool_check.x__download__mutmut_19",
+      "research.pool_check.x__download__mutmut_2",
+      "research.pool_check.x__download__mutmut_3",
+      "research.pool_check.x__download__mutmut_4",
+      "research.pool_check.x__download__mutmut_5",
+      "research.pool_check.x__download__mutmut_6",
+      "research.pool_check.x__download__mutmut_7",
+      "research.pool_check.x__download__mutmut_8",
+      "research.pool_check.x__download__mutmut_9",
+      "research.pool_check.x_build_manifest__mutmut_1",
+      "research.pool_check.x_build_manifest__mutmut_10",
+      "research.pool_check.x_build_manifest__mutmut_11",
+      "research.pool_check.x_build_manifest__mutmut_12",
+      "research.pool_check.x_build_manifest__mutmut_13",
+      "research.pool_check.x_build_manifest__mutmut_14",
+      "research.pool_check.x_build_manifest__mutmut_15",
+      "research.pool_check.x_build_manifest__mutmut_16",
+      "research.pool_check.x_build_manifest__mutmut_17",
+      "research.pool_check.x_build_manifest__mutmut_18",
+      "research.pool_check.x_build_manifest__mutmut_19",
+      "research.pool_check.x_build_manifest__mutmut_2",
+      "research.pool_check.x_build_manifest__mutmut_20",
+      "research.pool_check.x_build_manifest__mutmut_21",
+      "research.pool_check.x_build_manifest__mutmut_22",
+      "research.pool_check.x_build_manifest__mutmut_23",
+      "research.pool_check.x_build_manifest__mutmut_24",
+      "research.pool_check.x_build_manifest__mutmut_25",
+      "research.pool_check.x_build_manifest__mutmut_26",
+      "research.pool_check.x_build_manifest__mutmut_27",
+      "research.pool_check.x_build_manifest__mutmut_28",
+      "research.pool_check.x_build_manifest__mutmut_29",
+      "research.pool_check.x_build_manifest__mutmut_3",
+      "research.pool_check.x_build_manifest__mutmut_30",
+      "research.pool_check.x_build_manifest__mutmut_31",
+      "research.pool_check.x_build_manifest__mutmut_32",
+      "research.pool_check.x_build_manifest__mutmut_33",
+      "research.pool_check.x_build_manifest__mutmut_34",
+      "research.pool_check.x_build_manifest__mutmut_35",
+      "research.pool_check.x_build_manifest__mutmut_36",
+      "research.pool_check.x_build_manifest__mutmut_37",
+      "research.pool_check.x_build_manifest__mutmut_38",
+      "research.pool_check.x_build_manifest__mutmut_39",
+      "research.pool_check.x_build_manifest__mutmut_4",
+      "research.pool_check.x_build_manifest__mutmut_40",
+      "research.pool_check.x_build_manifest__mutmut_5",
+      "research.pool_check.x_build_manifest__mutmut_6",
+      "research.pool_check.x_build_manifest__mutmut_7",
+      "research.pool_check.x_build_manifest__mutmut_8",
+      "research.pool_check.x_build_manifest__mutmut_9",
+      "research.pool_check.x_main__mutmut_1",
+      "research.pool_check.x_main__mutmut_10",
+      "research.pool_check.x_main__mutmut_11",
+      "research.pool_check.x_main__mutmut_12",
+      "research.pool_check.x_main__mutmut_13",
+      "research.pool_check.x_main__mutmut_14",
+      "research.pool_check.x_main__mutmut_15",
+      "research.pool_check.x_main__mutmut_16",
+      "research.pool_check.x_main__mutmut_17",
+      "research.pool_check.x_main__mutmut_18",
+      "research.pool_check.x_main__mutmut_19",
+      "research.pool_check.x_main__mutmut_2",
+      "research.pool_check.x_main__mutmut_20",
+      "research.pool_check.x_main__mutmut_21",
+      "research.pool_check.x_main__mutmut_22",
+      "research.pool_check.x_main__mutmut_23",
+      "research.pool_check.x_main__mutmut_24",
+      "research.pool_check.x_main__mutmut_25",
+      "research.pool_check.x_main__mutmut_26",
+      "research.pool_check.x_main__mutmut_27",
+      "research.pool_check.x_main__mutmut_28",
+      "research.pool_check.x_main__mutmut_29",
+      "research.pool_check.x_main__mutmut_3",
+      "research.pool_check.x_main__mutmut_30",
+      "research.pool_check.x_main__mutmut_31",
+      "research.pool_check.x_main__mutmut_32",
+      "research.pool_check.x_main__mutmut_33",
+      "research.pool_check.x_main__mutmut_34",
+      "research.pool_check.x_main__mutmut_35",
+      "research.pool_check.x_main__mutmut_36",
+      "research.pool_check.x_main__mutmut_37",
+      "research.pool_check.x_main__mutmut_38",
+      "research.pool_check.x_main__mutmut_39",
+      "research.pool_check.x_main__mutmut_4",
+      "research.pool_check.x_main__mutmut_40",
+      "research.pool_check.x_main__mutmut_41",
+      "research.pool_check.x_main__mutmut_42",
+      "research.pool_check.x_main__mutmut_43",
+      "research.pool_check.x_main__mutmut_44",
+      "research.pool_check.x_main__mutmut_45",
+      "research.pool_check.x_main__mutmut_46",
+      "research.pool_check.x_main__mutmut_47",
+      "research.pool_check.x_main__mutmut_48",
+      "research.pool_check.x_main__mutmut_49",
+      "research.pool_check.x_main__mutmut_5",
+      "research.pool_check.x_main__mutmut_50",
+      "research.pool_check.x_main__mutmut_51",
+      "research.pool_check.x_main__mutmut_52",
+      "research.pool_check.x_main__mutmut_53",
+      "research.pool_check.x_main__mutmut_54",
+      "research.pool_check.x_main__mutmut_55",
+      "research.pool_check.x_main__mutmut_56",
+      "research.pool_check.x_main__mutmut_57",
+      "research.pool_check.x_main__mutmut_58",
+      "research.pool_check.x_main__mutmut_59",
+      "research.pool_check.x_main__mutmut_6",
+      "research.pool_check.x_main__mutmut_60",
+      "research.pool_check.x_main__mutmut_61",
+      "research.pool_check.x_main__mutmut_62",
+      "research.pool_check.x_main__mutmut_63",
+      "research.pool_check.x_main__mutmut_64",
+      "research.pool_check.x_main__mutmut_65",
+      "research.pool_check.x_main__mutmut_66",
+      "research.pool_check.x_main__mutmut_67",
+      "research.pool_check.x_main__mutmut_68",
+      "research.pool_check.x_main__mutmut_69",
+      "research.pool_check.x_main__mutmut_7",
+      "research.pool_check.x_main__mutmut_70",
+      "research.pool_check.x_main__mutmut_71",
+      "research.pool_check.x_main__mutmut_72",
+      "research.pool_check.x_main__mutmut_73",
+      "research.pool_check.x_main__mutmut_74",
+      "research.pool_check.x_main__mutmut_75",
+      "research.pool_check.x_main__mutmut_76",
+      "research.pool_check.x_main__mutmut_77",
+      "research.pool_check.x_main__mutmut_78",
+      "research.pool_check.x_main__mutmut_79",
+      "research.pool_check.x_main__mutmut_8",
+      "research.pool_check.x_main__mutmut_80",
+      "research.pool_check.x_main__mutmut_81",
+      "research.pool_check.x_main__mutmut_82",
+      "research.pool_check.x_main__mutmut_83",
+      "research.pool_check.x_main__mutmut_84",
+      "research.pool_check.x_main__mutmut_85",
+      "research.pool_check.x_main__mutmut_9",
+      "research.pool_check.x_verify__mutmut_1",
+      "research.pool_check.x_verify__mutmut_10",
+      "research.pool_check.x_verify__mutmut_11",
+      "research.pool_check.x_verify__mutmut_12",
+      "research.pool_check.x_verify__mutmut_13",
+      "research.pool_check.x_verify__mutmut_14",
+      "research.pool_check.x_verify__mutmut_15",
+      "research.pool_check.x_verify__mutmut_16",
+      "research.pool_check.x_verify__mutmut_17",
+      "research.pool_check.x_verify__mutmut_18",
+      "research.pool_check.x_verify__mutmut_19",
+      "research.pool_check.x_verify__mutmut_2",
+      "research.pool_check.x_verify__mutmut_20",
+      "research.pool_check.x_verify__mutmut_21",
+      "research.pool_check.x_verify__mutmut_22",
+      "research.pool_check.x_verify__mutmut_23",
+      "research.pool_check.x_verify__mutmut_24",
+      "research.pool_check.x_verify__mutmut_25",
+      "research.pool_check.x_verify__mutmut_26",
+      "research.pool_check.x_verify__mutmut_27",
+      "research.pool_check.x_verify__mutmut_28",
+      "research.pool_check.x_verify__mutmut_29",
+      "research.pool_check.x_verify__mutmut_3",
+      "research.pool_check.x_verify__mutmut_30",
+      "research.pool_check.x_verify__mutmut_31",
+      "research.pool_check.x_verify__mutmut_32",
+      "research.pool_check.x_verify__mutmut_33",
+      "research.pool_check.x_verify__mutmut_34",
+      "research.pool_check.x_verify__mutmut_35",
+      "research.pool_check.x_verify__mutmut_36",
+      "research.pool_check.x_verify__mutmut_4",
+      "research.pool_check.x_verify__mutmut_5",
+      "research.pool_check.x_verify__mutmut_6",
+      "research.pool_check.x_verify__mutmut_7",
+      "research.pool_check.x_verify__mutmut_8",
+      "research.pool_check.x_verify__mutmut_9"
+    ],
+    "src/etl_benchmark/atomic.py": [
+      "etl_benchmark.atomic.x_write_bytes__mutmut_1",
+      "etl_benchmark.atomic.x_write_bytes__mutmut_2",
+      "etl_benchmark.atomic.x_write_bytes__mutmut_3",
+      "etl_benchmark.atomic.x_write_text__mutmut_1",
+      "etl_benchmark.atomic.x_write_text__mutmut_2",
+      "etl_benchmark.atomic.x_write_text__mutmut_3"
+    ],
+    "src/etl_benchmark/transform.py": [
+      "etl_benchmark.transform.x_clean__mutmut_1",
+      "etl_benchmark.transform.x_clean__mutmut_2"
+    ]
+  },
+  "context": {
+    "configuration_sha256": "e61a357cfc671a864d0e1f80831e375659dfc57bf4c85dbaf3f3f21593e5eaa0",
+    "revision": "3dbf6f5033da1b187fe6678e6c8c5e10c7603699",
+    "runtime": {
+      "packages": {
+        "mutmut": "3.8.0",
+        "mypy": null,
+        "numpy": "2.4.6",
+        "pandas": "3.1.1",
+        "pandas-stubs": null,
+        "pyod": "3.6.7",
+        "pytest": "9.1.1",
+        "pytest-cov": "7.1.0",
+        "scikit-learn": "1.9.1",
+        "torch": "2.15.0+cpu"
+      },
+      "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+      "python": "3.11.18"
+    },
+    "tests_sha256": "cd1486037a20e6cdd275da9a7d170e8c3b7abc664793c01d5fc8cc4123661559"
+  },
+  "execution": {
+    "attempt_sha256": "125ba67ebc0f5f27cd4fc052f5d66db5965f8de96226b26e8aee74eef2c1690a",
+    "context_sha256": "636512eb9b3f595a5ed139cd62d11e347630c4cc8d13f9a08c5a537692af92a2",
+    "dependencies_sha256": "4166715401c7cbb6d1e04047c396855a4cd9e5f91eff2ed7d352b55a4c9dc3ca",
+    "metadata_sha256": {
+      "research/lstm_detector.py.meta": "447ce29e1e4e7fe5cbdb6cd07d4de8a11bf54271fceec8d5c3be076181dff5bc",
+      "research/pool_check.py.meta": "81a4be15ce166dfbc10d91a44a6240eb9ad249caf84cf0979f4dc1fb37b0d3a1",
+      "src/etl_benchmark/atomic.py.meta": "f1fb8605385e47fd276c8d7a4b3184b726c5e81306b088cd93b14a1dbc15f75f",
+      "src/etl_benchmark/transform.py.meta": "631c9df6604fa1cbbb50a5053fc464d31dc43f55cacb558cadfedcffa600a7ac"
+    },
+    "native_command": [
+      "/opt/hostedtoolcache/Python/3.11.18/x64/bin/python",
+      "-P",
+      "-m",
+      "mutmut",
+      "run",
+      "--max-children",
+      "2",
+      "research.lstm_detector.*",
+      "research.pool_check.*",
+      "etl_benchmark.atomic.*",
+      "etl_benchmark.transform.*"
+    ],
+    "native_exit_code": 0,
+    "native_log_sha256": "e952b18e31b911835baf67273a8068461b947e375cfe76d3a49f413c4933bc30",
+    "proof_sha256": "eb826f66e9fff3cd91f0d873f9cb42d745fd11758645b8177faa02884d038154",
+    "runtime": {
+      "packages": {
+        "mutmut": "3.8.0",
+        "mypy": null,
+        "numpy": "2.4.6",
+        "pandas": "3.1.1",
+        "pandas-stubs": null,
+        "pyod": "3.6.7",
+        "pytest": "9.1.1",
+        "pytest-cov": "7.1.0",
+        "scikit-learn": "1.9.1",
+        "torch": "2.15.0+cpu"
+      },
+      "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.39",
+      "python": "3.11.18"
+    },
+    "settled": 565,
+    "sources": {
+      "research/lstm_detector.py": "277375e66d1edc6ed94c5ffc4b1074c113e86c6095c7dc2b20d3058cb006da18",
+      "research/pool_check.py": "5981ee3fea87f589524072ba00084682547a2435ea816bf62b92da414f776c96",
+      "src/etl_benchmark/atomic.py": "6ecd401fba4479801df7b645cc793133c0bee41843f3df01191bb2b1a996564b",
+      "src/etl_benchmark/transform.py": "996169c5ab429ed253cb8d68a73736bff92005052b6215d2d3395b1a448c24c2"
+    },
+    "tests_sha256": "aa1c02d9944658ba88dc452b86fa14a7ea2f5cf852192853fd078d4cce950923"
+  },
+  "format": 1,
+  "index": 31,
+  "missing": [],
+  "modules": [
+    "research/lstm_detector.py",
+    "research/pool_check.py",
+    "src/etl_benchmark/atomic.py",
+    "src/etl_benchmark/transform.py"
+  ],
+  "native_exit_code": 0,
+  "plan_sha256": "ed1f38905495233ae70ec756b9452dd20217b52796e05b669f1e08af964b5f27",
+  "records": [
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_1",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_10",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_11",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_12",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_13",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_14",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_15",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_16",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_17",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_18",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_19",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_2",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_20",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_21",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_22",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_23",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_24",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_25",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_26",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_27",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_28",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_29",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_3",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_30",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_31",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_32",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_33",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_34",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_35",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_36",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_37",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_38",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_4",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_5",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_6",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_7",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_8",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1__init____mutmut_9",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_1",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_10",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_11",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_12",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_13",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_14",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_15",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_16",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_17",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_18",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_19",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_2",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_20",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_21",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_22",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_23",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_24",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_25",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_26",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_27",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_28",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_29",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_3",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_30",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_31",
+      "outcome": "survived",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_32",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_33",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_34",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_35",
+      "outcome": "survived",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_36",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_4",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_5",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_6",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_7",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_8",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_reconstruction_error__mutmut_9",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_1",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_10",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_11",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_12",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_13",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_14",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_15",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_16",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_17",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_18",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_19",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_2",
+      "outcome": "survived",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_20",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_21",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_22",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_23",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_24",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_25",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_26",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_3",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_4",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_5",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_6",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_7",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_8",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1_windows__mutmut_9",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_1",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_10",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_100",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_101",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_102",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_103",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_104",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_105",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_106",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_107",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_108",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_109",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_11",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_110",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_111",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_112",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_113",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_114",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_115",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_116",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_117",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_118",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_119",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_12",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_120",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_121",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_122",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_123",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_124",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_125",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_126",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_127",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_128",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_129",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_13",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_130",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_131",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_132",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_133",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_134",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_135",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_136",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_137",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_138",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_139",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_14",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_140",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_141",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_142",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_143",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_144",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_145",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_146",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_147",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_148",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_149",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_15",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_150",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_151",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_152",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_153",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_154",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_155",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_156",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_157",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_158",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_16",
+      "outcome": "survived",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_17",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_18",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_19",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_2",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_20",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_21",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_22",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_23",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_24",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_25",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_26",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_27",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_28",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_29",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_3",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_30",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_31",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_32",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_33",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_34",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_35",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_36",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_37",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_38",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_39",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_4",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_40",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_41",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_42",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_43",
+      "outcome": "survived",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_44",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_45",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_46",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_47",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_48",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_49",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_5",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_50",
+      "outcome": "survived",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_51",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_52",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_53",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_54",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_55",
+      "outcome": "survived",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_56",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_57",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_58",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_59",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_6",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_60",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_61",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_62",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_63",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_64",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_65",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_66",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_67",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_68",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_69",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_7",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_70",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_71",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_72",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_73",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_74",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_75",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_76",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_77",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_78",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_79",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_8",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_80",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_81",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_82",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_83",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_84",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_85",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_86",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_87",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_88",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_89",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_9",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_90",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_91",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_92",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_93",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_94",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_95",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_96",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_97",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_98",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1fit__mutmut_99",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1flags__mutmut_1",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1flags__mutmut_2",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_1",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_10",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_11",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_12",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_13",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_14",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_15",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_16",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_17",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_18",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_19",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_2",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_3",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_4",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_5",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_6",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_7",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_8",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1score__mutmut_9",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_1",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_10",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_11",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_12",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_13",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_14",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_15",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_16",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_17",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_18",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_19",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_2",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_20",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_21",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_22",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_23",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_24",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_25",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_26",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_27",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_28",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_29",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_3",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_30",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_31",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_32",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_33",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_34",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_35",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_36",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_37",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_38",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_39",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_4",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_40",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_41",
+      "outcome": "survived",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_42",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_43",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_44",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_45",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_46",
+      "outcome": "survived",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_5",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_6",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_7",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_8",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1settings__mutmut_9",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1validation_loss_now__mutmut_1",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1validation_loss_now__mutmut_10",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1validation_loss_now__mutmut_11",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1validation_loss_now__mutmut_12",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1validation_loss_now__mutmut_2",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1validation_loss_now__mutmut_3",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1validation_loss_now__mutmut_4",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1validation_loss_now__mutmut_5",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1validation_loss_now__mutmut_6",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1validation_loss_now__mutmut_7",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1validation_loss_now__mutmut_8",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1LSTMAutoencoder\u01c1validation_loss_now__mutmut_9",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_1",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_10",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_11",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_12",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_13",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_14",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_15",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_16",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_17",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_18",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_19",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_2",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_20",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_21",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_3",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_4",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_5",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_6",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_7",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_8",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1__init____mutmut_9",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_1",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_10",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_11",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_12",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_13",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_14",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_15",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_16",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_17",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_18",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_19",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_2",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_3",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_4",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_5",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_6",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_7",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_8",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.lstm_detector.x\u01c1_Network\u01c1forward__mutmut_9",
+      "outcome": "killed",
+      "path": "research/lstm_detector.py"
+    },
+    {
+      "id": "research.pool_check.x__download__mutmut_1",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x__download__mutmut_10",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x__download__mutmut_11",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x__download__mutmut_12",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x__download__mutmut_13",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x__download__mutmut_14",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x__download__mutmut_15",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x__download__mutmut_16",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x__download__mutmut_17",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x__download__mutmut_18",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x__download__mutmut_19",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x__download__mutmut_2",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x__download__mutmut_3",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x__download__mutmut_4",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x__download__mutmut_5",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x__download__mutmut_6",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x__download__mutmut_7",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x__download__mutmut_8",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x__download__mutmut_9",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_1",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_10",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_11",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_12",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_13",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_14",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_15",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_16",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_17",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_18",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_19",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_2",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_20",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_21",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_22",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_23",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_24",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_25",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_26",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_27",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_28",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_29",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_3",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_30",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_31",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_32",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_33",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_34",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_35",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_36",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_37",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_38",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_39",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_4",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_40",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_5",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_6",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_7",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_8",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_build_manifest__mutmut_9",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_1",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_10",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_11",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_12",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_13",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_14",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_15",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_16",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_17",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_18",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_19",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_2",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_20",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_21",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_22",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_23",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_24",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_25",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_26",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_27",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_28",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_29",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_3",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_30",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_31",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_32",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_33",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_34",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_35",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_36",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_37",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_38",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_39",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_4",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_40",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_41",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_42",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_43",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_44",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_45",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_46",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_47",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_48",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_49",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_5",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_50",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_51",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_52",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_53",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_54",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_55",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_56",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_57",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_58",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_59",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_6",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_60",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_61",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_62",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_63",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_64",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_65",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_66",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_67",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_68",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_69",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_7",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_70",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_71",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_72",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_73",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_74",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_75",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_76",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_77",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_78",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_79",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_8",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_80",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_81",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_82",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_83",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_84",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_85",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_main__mutmut_9",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_1",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_10",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_11",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_12",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_13",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_14",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_15",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_16",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_17",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_18",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_19",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_2",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_20",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_21",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_22",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_23",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_24",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_25",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_26",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_27",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_28",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_29",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_3",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_30",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_31",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_32",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_33",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_34",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_35",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_36",
+      "outcome": "survived",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_4",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_5",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_6",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_7",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_8",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "research.pool_check.x_verify__mutmut_9",
+      "outcome": "killed",
+      "path": "research/pool_check.py"
+    },
+    {
+      "id": "etl_benchmark.atomic.x_write_bytes__mutmut_1",
+      "outcome": "killed",
+      "path": "src/etl_benchmark/atomic.py"
+    },
+    {
+      "id": "etl_benchmark.atomic.x_write_bytes__mutmut_2",
+      "outcome": "killed",
+      "path": "src/etl_benchmark/atomic.py"
+    },
+    {
+      "id": "etl_benchmark.atomic.x_write_bytes__mutmut_3",
+      "outcome": "killed",
+      "path": "src/etl_benchmark/atomic.py"
+    },
+    {
+      "id": "etl_benchmark.atomic.x_write_text__mutmut_1",
+      "outcome": "killed",
+      "path": "src/etl_benchmark/atomic.py"
+    },
+    {
+      "id": "etl_benchmark.atomic.x_write_text__mutmut_2",
+      "outcome": "killed",
+      "path": "src/etl_benchmark/atomic.py"
+    },
+    {
+      "id": "etl_benchmark.atomic.x_write_text__mutmut_3",
+      "outcome": "killed",
+      "path": "src/etl_benchmark/atomic.py"
+    },
+    {
+      "id": "etl_benchmark.transform.x_clean__mutmut_1",
+      "outcome": "killed",
+      "path": "src/etl_benchmark/transform.py"
+    },
+    {
+      "id": "etl_benchmark.transform.x_clean__mutmut_2",
+      "outcome": "killed",
+      "path": "src/etl_benchmark/transform.py"
+    }
+  ],
+  "sources": {
+    "research/lstm_detector.py": "277375e66d1edc6ed94c5ffc4b1074c113e86c6095c7dc2b20d3058cb006da18",
+    "research/pool_check.py": "5981ee3fea87f589524072ba00084682547a2435ea816bf62b92da414f776c96",
+    "src/etl_benchmark/atomic.py": "6ecd401fba4479801df7b645cc793133c0bee41843f3df01191bb2b1a996564b",
+    "src/etl_benchmark/transform.py": "996169c5ab429ed253cb8d68a73736bff92005052b6215d2d3395b1a448c24c2"
+  }
+}

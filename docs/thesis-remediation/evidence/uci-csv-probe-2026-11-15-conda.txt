@@ -1,0 +1,7 @@
+research/uci_loader.py a1176cd61bd8454c9fa51da682194444feb24529dc401916e8bb94fd212ab691
+mutants/research/uci_loader.py 3cb508cd5acfca86f8cb2b3bfe68018838ad01000d0474b5281a854b560fee81
+environment macOS-27.2-arm64-arm-64bit 3.11.17 {'numpy': '2.4.6', 'pandas': '3.0.6', 'mutmut': '3.8.0'}
+fixture sha256 eb188ebb1fe6bfdb3119bdf39dc26570b113c02ec5c645cd2b1edd0503e753bf
+0 dtype str types {'str': 140000} warnings []
+5 dtype object types {'int': 98304, 'str': 41696} warnings ['DtypeWarning']
+6 dtype object types {'int': 98304, 'str': 41696} warnings ['DtypeWarning']

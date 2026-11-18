@@ -1,0 +1,27 @@
+import hashlib,platform,warnings
+from pathlib import Path
+import numpy as np,sklearn
+from etl_benchmark.quality.autoencoder import ReconstructionModel
+p=Path('src/etl_benchmark/quality/autoencoder.py');print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'numpy',np.__version__,'sklearn',sklearn.__version__)
+x=np.arange(40,dtype=float).reshape(20,2)/40
+for scenario in ('score_before','predict_before','normal','invalid_contamination','empty'):
+ def run(suffix):
+  d=ReconstructionModel.__new__(ReconstructionModel);getattr(d,f'xǁReconstructionModelǁ__init____mutmut_{suffix}')(2.0 if scenario=='invalid_contamination' else .1,42,3)
+  try:
+   with warnings.catch_warnings(record=True) as w:
+    warnings.simplefilter('always')
+    if scenario=='score_before':out=d.decision_function(x).tolist()
+    elif scenario=='predict_before':out=d.predict(x).tolist()
+    elif scenario=='invalid_contamination':
+     try:d.fit(x)
+     except Exception as e:
+      err=(type(e).__name__,str(e))
+      try:out=(err,d.predict(x).tolist())
+      except Exception as e2:out=(err,type(e2).__name__,str(e2))
+    else:
+     data=x[:0] if scenario=='empty' else x;d.fit(data);out=(d.decision_function(data).tolist(),d.predict(data).tolist())
+   return ('ok',repr(out),[(type(t.message).__name__,str(t.message)) for t in w])
+  except Exception as e:return ('error',type(e).__name__,str(e))
+ a=run('orig')
+ for suffix in ('4','5'):
+  b=run(suffix);print(scenario,suffix,'match',a==b,'original',repr(a)[:240] if a!=b else a[0],'mutant',repr(b)[:240] if a!=b else b[0])

@@ -1,0 +1,21 @@
+import hashlib,platform,tempfile,warnings
+from pathlib import Path
+import pandas as pd,numpy as np
+import research.uci_loader as m
+p=Path('research/uci_loader.py');print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'numpy',np.__version__,'pandas',pd.__version__)
+cases=['a,b\n1,1.5\n2,2.5\n3,\n','a,b\n0,True\n18446744073709551615,False\n','a,b\ninf,red\n-inf,blue\n0,red\n','a,b\n1:2,2020-01-01\n2:3,2020-01-02\n','a,b\na,b\n1,red\n2,blue\n','a,b\n,,\n,,\n','a,b\n1e-300,1e300\n-2.5e-12,-3.7e200\n']
+for index,data in enumerate(cases):
+ with tempfile.TemporaryDirectory(prefix='uci-dtype-probe-') as tmp:
+  path=Path(tmp)/'input.csv';path.write_text(data)
+  def run(fn):
+   try:
+    with warnings.catch_warnings(record=True) as w:
+     warnings.simplefilter('always');result=fn(path)
+    return ('ok',result,[(type(x.message).__name__,str(x.message)) for x in w])
+   except Exception as e:return ('error',type(e).__name__,str(e))
+  a=run(m.x_read_table__mutmut_orig);b=run(m.x_read_table__mutmut_23);same=a[0]==b[0]
+  if same and a[0]=='ok':
+   try:pd.testing.assert_frame_equal(a[1],b[1]);same=a[2]==b[2]
+   except AssertionError:same=False
+  elif same:same=a==b
+  print(index,'match',same,'kind',a[0], 'dtypes',a[1].dtypes.astype(str).to_dict() if a[0]=='ok' else a[1:])

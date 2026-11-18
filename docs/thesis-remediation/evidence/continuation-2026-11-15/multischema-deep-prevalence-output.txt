@@ -1,0 +1,4 @@
+source 1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.1.1
+rows 300 seed 4 train_prevalence 0.2863636363636364 original_fpr {'dif': 0.11764705882352941} mutant_fpr {'dif': 0.029411764705882353} recall_equal False precision_equal False
+rows 600 seed 4 train_prevalence 0.17551963048498845 original_fpr {'dif': 0.18421052631578946} mutant_fpr {'dif': 0.10526315789473684} recall_equal False precision_equal False
+rows 600 seed 7 train_prevalence 0.17551963048498845 original_fpr {'dif': 0.23376623376623376} mutant_fpr {'dif': 0.19480519480519481} recall_equal False precision_equal False

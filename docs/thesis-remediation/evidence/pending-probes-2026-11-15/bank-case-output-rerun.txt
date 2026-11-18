@@ -1,0 +1,22 @@
+source f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8 generated 0264ae49d442c9cb7d3331d63ae14e36d1041078e8468b686a9175c8fbc18c38
+python 3.11.17 platform macOS-27.2-arm64-arm-64bit pandas 3.0.6
+0 x_bank_marketing__mutmut_48 MATCH ('ok', '{"age":{"0":1,"1":2,"2":3,"3":4},"job_a":{"0":1.0,"1":0.0,"2":1.0,"3":0.0},"job_b":{"0":0.0,"1":1.0,"2":0.0,"3":1.0},"job_nan":{"0":0.0,"1":0.0,"2":0.0,"3":0.0}}', [1, 0, 1, 0], ['2008-12-01 00:00:00+00:00', '2009-01-01 00:00:00+00:00', '2009-01-01 00:01:00+00:00', '2009-02-01 00:00:00+00:00'], 'datetime64[us, UTC]')
+0 x_bank_marketing__mutmut_50 MATCH ('ok', '{"age":{"0":1,"1":2,"2":3,"3":4},"job_a":{"0":1.0,"1":0.0,"2":1.0,"3":0.0},"job_b":{"0":0.0,"1":1.0,"2":0.0,"3":1.0},"job_nan":{"0":0.0,"1":0.0,"2":0.0,"3":0.0}}', [1, 0, 1, 0], ['2008-12-01 00:00:00+00:00', '2009-01-01 00:00:00+00:00', '2009-01-01 00:01:00+00:00', '2009-02-01 00:00:00+00:00'], 'datetime64[us, UTC]')
+0 x_bank_marketing__mutmut_54 MATCH ('ok', '{"age":{"0":1,"1":2,"2":3,"3":4},"job_a":{"0":1.0,"1":0.0,"2":1.0,"3":0.0},"job_b":{"0":0.0,"1":1.0,"2":0.0,"3":1.0},"job_nan":{"0":0.0,"1":0.0,"2":0.0,"3":0.0}}', [1, 0, 1, 0], ['2008-12-01 00:00:00+00:00', '2009-01-01 00:00:00+00:00', '2009-01-01 00:01:00+00:00', '2009-02-01 00:00:00+00:00'], 'datetime64[us, UTC]')
+1 x_bank_marketing__mutmut_48 MATCH ('error', 'ValueError', 'Grouper and axis must be same length')
+1 x_bank_marketing__mutmut_50 MATCH ('error', 'ValueError', 'Grouper and axis must be same length')
+1 x_bank_marketing__mutmut_54 MATCH ('error', 'ValueError', 'Grouper and axis must be same length')
+2 x_bank_marketing__mutmut_48 MATCH ('error', 'ValueError', "'bad' is not in list")
+2 x_bank_marketing__mutmut_50 MATCH ('error', 'ValueError', "'bad' is not in list")
+2 x_bank_marketing__mutmut_54 MATCH ('error', 'ValueError', "'bad' is not in list")
+source f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8 generated 0264ae49d442c9cb7d3331d63ae14e36d1041078e8468b686a9175c8fbc18c38
+python 3.11.17 platform macOS-27.2-arm64-arm-64bit pandas 3.1.1
+0 x_bank_marketing__mutmut_48 MATCH ('ok', '{"age":{"0":1,"1":2,"2":3,"3":4},"job_a":{"0":1.0,"1":0.0,"2":1.0,"3":0.0},"job_b":{"0":0.0,"1":1.0,"2":0.0,"3":1.0},"job_nan":{"0":0.0,"1":0.0,"2":0.0,"3":0.0}}', [1, 0, 1, 0], ['2008-12-01 00:00:00+00:00', '2009-01-01 00:00:00+00:00', '2009-01-01 00:01:00+00:00', '2009-02-01 00:00:00+00:00'], 'datetime64[us, UTC]')
+0 x_bank_marketing__mutmut_50 MATCH ('ok', '{"age":{"0":1,"1":2,"2":3,"3":4},"job_a":{"0":1.0,"1":0.0,"2":1.0,"3":0.0},"job_b":{"0":0.0,"1":1.0,"2":0.0,"3":1.0},"job_nan":{"0":0.0,"1":0.0,"2":0.0,"3":0.0}}', [1, 0, 1, 0], ['2008-12-01 00:00:00+00:00', '2009-01-01 00:00:00+00:00', '2009-01-01 00:01:00+00:00', '2009-02-01 00:00:00+00:00'], 'datetime64[us, UTC]')
+0 x_bank_marketing__mutmut_54 MATCH ('ok', '{"age":{"0":1,"1":2,"2":3,"3":4},"job_a":{"0":1.0,"1":0.0,"2":1.0,"3":0.0},"job_b":{"0":0.0,"1":1.0,"2":0.0,"3":1.0},"job_nan":{"0":0.0,"1":0.0,"2":0.0,"3":0.0}}', [1, 0, 1, 0], ['2008-12-01 00:00:00+00:00', '2009-01-01 00:00:00+00:00', '2009-01-01 00:01:00+00:00', '2009-02-01 00:00:00+00:00'], 'datetime64[us, UTC]')
+1 x_bank_marketing__mutmut_48 MATCH ('error', 'ValueError', 'Grouper and axis must be same length')
+1 x_bank_marketing__mutmut_50 MATCH ('error', 'ValueError', 'Grouper and axis must be same length')
+1 x_bank_marketing__mutmut_54 MATCH ('error', 'ValueError', 'Grouper and axis must be same length')
+2 x_bank_marketing__mutmut_48 MATCH ('error', 'ValueError', "'bad' is not in list")
+2 x_bank_marketing__mutmut_50 MATCH ('error', 'ValueError', "'bad' is not in list")
+2 x_bank_marketing__mutmut_54 MATCH ('error', 'ValueError', "'bad' is not in list")

@@ -81,3 +81,137 @@ def test_slow_detectors_are_skipped_beyond_the_declared_training_size():
     assert nm.skipped_detectors(50_000) == ["ocsvm"]
     assert nm.skipped_detectors(50_001) == ["lof", "ocsvm", "knn"]
     assert nm.skipped_detectors(80_000) == ["lof", "ocsvm", "knn"]
+
+
+# --- exact encoding, split and standardisation --------------------------------------------------
+
+
+def _labelled(n=200, anomalies=20, seed=0):
+    rng = np.random.default_rng(seed)
+    x = rng.normal(size=(n, 3)) * [1.0, 5.0, 0.2] + [0.0, 10.0, -3.0]
+    y = np.zeros(n, dtype=int)
+    y[:anomalies] = 1
+    return x, y
+
+
+def test_a_boolean_column_is_encoded_as_two_indicators_not_read_as_a_number():
+    frame = _frame(n=40)
+    frame["flag"] = [True, False] * 20
+    x, _, report = nm.clean(frame, np.zeros(40, dtype=int))
+    assert report["encoded"] == ["flag"] and report["features_out"] == 3 + 2
+    assert x.shape[1] == 5
+
+
+def test_validation_and_test_each_hold_their_share_of_the_anomalies_for_every_seed():
+    x, y = _labelled()
+    for seed in range(8):
+        part = nm.split(x, y, seed)
+        assert (len(part["y_train"]), len(part["y_val"]), len(part["y_test"])) == (140, 30, 30)
+        assert (part["y_train"].sum(), part["y_val"].sum(), part["y_test"].sum()) == (14, 3, 3)
+
+
+def test_every_split_is_standardised_with_the_training_mean_and_spread_and_labels_stay_integers():
+    x, y = _labelled()
+    x[5, 1] = np.nan  # a training or evaluation row with a missing value
+    part = nm.split(x, y, 3)
+    train = x[part["idx_train"]]
+    median = np.nanmedian(train, axis=0)
+    filled = np.where(np.isnan(train), median, train)
+    mean, scale = filled.mean(axis=0), filled.std(axis=0)
+    assert np.allclose(part["mean"], mean) and np.allclose(part["scale"], scale)
+    for name in ("train", "val", "test"):
+        rows = x[part[f"idx_{name}"]]
+        expected = (np.where(np.isnan(rows), median, rows) - mean) / scale
+        assert np.allclose(part[f"x_{name}"], expected)
+        assert np.array_equal(part[f"y_{name}"], y[part[f"idx_{name}"]])
+        assert part[f"y_{name}"].dtype.kind == "i"
+    assert not np.isnan(np.vstack([part["x_train"], part["x_val"], part["x_test"]])).any()
+
+
+def test_a_column_that_is_constant_in_training_is_left_unscaled_not_divided_by_zero():
+    x, y = _labelled()
+    part0 = nm.split(x, y, 3)
+    x[part0["idx_train"], 2] = 7.0  # constant on the training rows only
+    part = nm.split(x, y, 3)
+    assert part["scale"][2] == 1.0 and part["mean"][2] == 7.0
+    held_out = x[part["idx_val"], 2]
+    assert np.allclose(part["x_val"][:, 2], held_out - 7.0)
+    assert np.isfinite(part["x_test"]).all()
+
+
+def test_a_scale_of_exactly_one_is_a_real_scale_not_a_replacement():
+    x = np.tile(np.array([[0.0], [2.0]]), (60, 1))  # std exactly 1 around mean 1
+    y = np.tile([0, 1], 60)
+    part = nm.split(x, y, 0)
+    assert part["scale"][0] == pytest.approx(1.0)
+    constant = np.full((120, 1), 5.0)
+    assert nm.split(constant, y, 0)["scale"][0] == 1.0
+
+
+def test_fewer_than_six_of_either_class_is_refused_by_the_guard_not_by_scikit_learn():
+    """Three to five anomalies used to pass the guard and crash the split with a bare ValueError.
+
+    ``build_pool`` records an exclusion only for ``NormaliseError``, so the refusal has to come
+    from the guard. Six is the smallest count for which the 70/15/15 stratified split always
+    succeeds (see the next test); historical evidence was produced with a guard of 3 and is not
+    restamped.
+    """
+    x = np.arange(100.0).reshape(-1, 1)
+    for anomalies in range(0, 6):
+        y = np.zeros(100, dtype=int)
+        y[:anomalies] = 1
+        with pytest.raises(
+            nm.NormaliseError, match=rf"^too few anomalies to split \({anomalies}\)$"
+        ):
+            nm.split(x, y, 0)
+        with pytest.raises(nm.NormaliseError):
+            nm.split(x, 1 - y, 0)  # the scarce class is the normal one
+    y = np.zeros(100, dtype=int)
+    y[:6] = 1
+    part = nm.split(x, y, 0)
+    assert (part["y_train"].sum(), part["y_val"].sum(), part["y_test"].sum()) == (4, 1, 1)
+
+
+@pytest.mark.parametrize("scarce", [6, 7, 11])
+def test_six_of_the_scarcer_class_always_populate_every_partition(scarce):
+    for n in (scarce * 2, scarce * 2 + 1, 50, 137):
+        for seed in range(5):
+            y = np.zeros(n, dtype=int)
+            y[:scarce] = 1
+            part = nm.split(np.arange(float(n)).reshape(-1, 1), y, seed)
+            for name in ("train", "val", "test"):
+                assert 0 < part[f"y_{name}"].sum() < len(part[f"y_{name}"])
+
+
+def test_fewer_anomalies_than_the_minimum_or_a_scarce_normal_class_is_refused_by_the_guard():
+    x = np.arange(60.0).reshape(-1, 1)
+    with pytest.raises(nm.NormaliseError, match=r"^too few anomalies to split \(2\)$"):
+        nm.split(x, np.r_[np.ones(2, dtype=int), np.zeros(58, dtype=int)], 0)
+    mostly_anomalous = np.ones(60, dtype=int)
+    mostly_anomalous[:2] = 0  # the scarce class is the normal one
+    with pytest.raises(nm.NormaliseError):
+        nm.split(x, mostly_anomalous, 0)
+
+
+def test_a_feature_matrix_of_objects_with_none_is_read_as_missing_values_and_imputed():
+    x = np.array([[1.0, None], [2.0, 3.0], [4.0, 5.0], [6.0, 7.0]] * 20, dtype=object)
+    y = np.tile([0, 1], 40)
+    part = nm.split(x, y, 0)
+    for name in ("train", "val", "test"):
+        assert part[f"x_{name}"].dtype == float and not np.isnan(part[f"x_{name}"]).any()
+    # None in the second column is replaced by the training median of that column, then standardised
+    assert part["mean"].shape == (2,)
+
+
+def test_a_non_numeric_feature_matrix_is_refused_with_a_value_error():
+    with pytest.raises(ValueError):
+        nm.split(np.array([["a", "b"]] * 40), np.tile([0, 1], 20), 0)
+
+
+def test_known_limitation_a_missing_value_and_an_infinite_value_count_as_the_same_row():
+    """``clean`` hashes rows after replacing missing values by infinity, so a row with NaN and an
+    otherwise identical row with +inf are treated as duplicates. Infinite features are not expected
+    in the pool; the behaviour is pinned, not endorsed."""
+    frame = pd.DataFrame({"a": [np.nan, np.inf, 1.0], "b": [1.0, 1.0, 2.0]})
+    _, _, report = nm.clean(frame, [0, 0, 1])
+    assert report["duplicates_removed"] == 1

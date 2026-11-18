@@ -1,0 +1,31 @@
+benchmark_cardio.csv: scientific columns identical (max abs diff 0.0); timing columns changed: ['detect_s_mean', 'detect_s_std']
+benchmark_credit_card.csv: scientific columns identical (max abs diff 0.0); timing columns changed: ['detect_s_mean', 'detect_s_std']
+benchmark_water_quality.csv: scientific columns identical (max abs diff 0.0); timing columns changed: ['detect_s_mean', 'detect_s_std']
+contamination_sweep.csv: scientific columns identical (max abs diff 0.0); timing columns changed: []
+fixed_benchmark_cardio.csv: scientific columns identical (max abs diff 0.0); timing columns changed: ['detect_s_mean', 'detect_s_std']
+fixed_benchmark_credit_card.csv: scientific columns identical (max abs diff 0.0); timing columns changed: ['detect_s_mean', 'detect_s_std']
+fixed_benchmark_water_quality.csv: scientific columns identical (max abs diff 0.0); timing columns changed: ['detect_s_mean', 'detect_s_std']
+fixed_split_ids_cardio.json.gz: decompressed partitions identical
+fixed_split_ids_credit_card.json.gz: decompressed partitions identical
+fixed_split_ids_water_quality.json.gz: decompressed partitions identical
+run_benchmark_cardio.json: record identical besides provenance/timing; packages equal: True; lock equal: True; fingerprint be28a126 -> 00bc79c1; dirty False
+run_benchmark_credit_card.json: record identical besides provenance/timing; packages equal: True; lock equal: True; fingerprint be28a126 -> 00bc79c1; dirty False
+run_benchmark_water_quality.json: record identical besides provenance/timing; packages equal: True; lock equal: True; fingerprint be28a126 -> 00bc79c1; dirty False
+run_curves.json: record identical besides provenance/timing; packages equal: True; lock equal: True; fingerprint be28a126 -> 00bc79c1; dirty False
+run_fixed_benchmark_cardio.json: record identical besides provenance/timing; packages equal: True; lock equal: True; fingerprint be28a126 -> 00bc79c1; dirty False
+run_fixed_benchmark_credit_card.json: record identical besides provenance/timing; packages equal: True; lock equal: True; fingerprint be28a126 -> 00bc79c1; dirty False
+run_fixed_benchmark_water_quality.json: record identical besides provenance/timing; packages equal: True; lock equal: True; fingerprint be28a126 -> 00bc79c1; dirty False
+run_severity.json: record identical besides provenance/timing; packages equal: True; lock equal: True; fingerprint be28a126 -> 00bc79c1; dirty False
+run_synthetic.json: record identical besides provenance/timing; packages equal: True; lock equal: True; fingerprint be28a126 -> 00bc79c1; dirty False
+severity.csv: scientific columns identical (max abs diff 0.0); timing columns changed: []
+split_ids_cardio.json.gz: decompressed partitions identical
+split_ids_credit_card.json.gz: decompressed partitions identical
+split_ids_water_quality.json.gz: decompressed partitions identical
+synthetic_metrics.csv: scientific columns identical (max abs diff 0.0); timing columns changed: ['detect_s_mean', 'detect_s_std']
+synthetic_precision.csv: scientific columns identical (max abs diff 0.0); timing columns changed: []
+synthetic_recall.csv: scientific columns identical (max abs diff 0.0); timing columns changed: []
+temporal_pilot.json: identical besides timing and provenance
+run_temporal_pilot.json: dataset sha equal True; fingerprint be28a126 -> 00bc79c1; dirty False
+
+No scientific difference.
+

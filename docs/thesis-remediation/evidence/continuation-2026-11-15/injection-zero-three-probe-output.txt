@@ -1,0 +1,7 @@
+source cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39 python 3.11.17 numpy 2.4.6 pandas 3.1.1 shape (96, 3) unique 8 correlations [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]
+seed 1 orig rows 15 first a b [[1.0, -1.0], [1.0, -1.0], [-1.0, 1.0], [-1.0, 1.0], [1.0, -1.0]]
+seed 1 146 rows 15 first a b [[-1.0, 1.0], [-1.0, 1.0], [1.0, -1.0], [1.0, -1.0], [-1.0, 1.0]]
+seed 1 frames_equal False
+seed 11 orig rows 15 first a b [[-1.0, 1.0], [1.0, -1.0], [1.0, -1.0], [-1.0, 1.0], [-1.0, 1.0]]
+seed 11 146 rows 15 first a b [[1.0, -1.0], [-1.0, 1.0], [-1.0, 1.0], [1.0, -1.0], [1.0, -1.0]]
+seed 11 frames_equal False

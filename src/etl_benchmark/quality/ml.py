@@ -102,14 +102,25 @@ class PyODDetector(Detector):
         return self._model
 
     def fit(self, df: pd.DataFrame) -> Self:
-        self.feature_names_ = self._numeric_columns(df)
-        x = numeric_features(df, self.feature_names_, training=True).to_numpy(dtype=float)
+        """Learn the detector from ``df``.
 
-        self._imputer = SimpleImputer(strategy="median").fit(x)
-        self._scaler = StandardScaler().fit(self._imputer.transform(x))
+        A fit that raises leaves the detector exactly as it was before the call: unfitted
+        after a first fit, the previous fit after a refit. It never leaves part of a fit
+        that scoring would accept.
+        """
+        previous = (self.feature_names_, self._imputer, self._scaler, self._model)
+        try:
+            self.feature_names_ = self._numeric_columns(df)
+            x = numeric_features(df, self.feature_names_, training=True).to_numpy(dtype=float)
 
-        self._model = self._build_estimator()
-        self._model.fit(self._scaler.transform(self._imputer.transform(x)))
+            self._imputer = SimpleImputer(strategy="median").fit(x)
+            self._scaler = StandardScaler().fit(self._imputer.transform(x))
+
+            self._model = self._build_estimator()
+            self._model.fit(self._scaler.transform(self._imputer.transform(x)))
+        except BaseException:
+            self.feature_names_, self._imputer, self._scaler, self._model = previous
+            raise
         return self
 
     def predict(self, df: pd.DataFrame) -> pd.Series:

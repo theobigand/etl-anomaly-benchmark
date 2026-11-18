@@ -1,0 +1,14 @@
+{
+  "head": "d4d21895d3c6addf75218b67bdb8ccd11b4c7b7e",
+  "triage_sha256": "fad70ccc3b65767aa5bb71bfaa74c8ad1e53ef6162d00984a1abaac31fd96119",
+  "records": 162,
+  "unique_ids": 162,
+  "source_digest_mismatches": [],
+  "outcomes": {
+    "proposed_equivalent": 84,
+    "killed_by_behavioral_test": 43,
+    "inconclusive": 29,
+    "behavioral_difference_pending_native": 6
+  },
+  "limitations": "Identity strings and source hashes only; does not independently validate generated catalog identities, outcomes, behavioral equivalence, or a complete campaign."
+}

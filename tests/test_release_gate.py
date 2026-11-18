@@ -44,11 +44,17 @@ def _docs(tmp_path):
     }
 
 
+def _legacy_policy():
+    policy = copy.deepcopy(release.load_policy())
+    policy["version"] = 1
+    return policy
+
+
 def _assess(tmp_path, docs=None, current=None, **kwargs):
     kwargs.setdefault("manifest", {"a": "1" * 64, "b": "2" * 64})
     kwargs.setdefault("lineage", {"legacy": [], "problems": {}})
     kwargs.setdefault("locked", dict(RESULT_VERSIONS))
-    kwargs.setdefault("policy", release.load_policy())
+    kwargs.setdefault("policy", _legacy_policy())
     kwargs.setdefault("fresh", None)
     kwargs.setdefault("claims", [])
     kwargs.setdefault("scope", {"inventory": ["src/x.py"], "config": {"no_mutants": {}}})
@@ -66,6 +72,12 @@ def test_complete_consistent_evidence_is_certified_but_not_independently_atteste
     assert report["reasons"] == []
     assert report["attestation"] == "local-unattested"
     assert set(report["profiles"]) == set(KINDS)
+
+
+def test_current_release_rejects_a_legacy_global_mutation_envelope(tmp_path):
+    report = _assess(tmp_path, policy=release.load_policy())
+    assert report["status"] == "REJECTED"
+    assert any("risk-tiered" in reason for reason in report["reasons"])
 
 
 def test_ci_run_is_recorded_but_never_called_independent(tmp_path, monkeypatch):

@@ -1,0 +1,8 @@
+import json,os,sys
+from pathlib import Path
+root=Path.cwd();stats=json.loads((root/'mutants/mutmut-stats.json').read_text())['tests_by_mangled_function_name'];keys=['etl_benchmark.quality._torch_models.xǁMeanVAEǁevaluating_forward','etl_benchmark.quality._torch_models.xǁFitScalerDIFǁ_deep_representation'];tests=sorted(set().union(*(set(stats[k]) for k in keys)))
+print('selected',len(tests),flush=True);pid=os.fork()
+if pid==0:
+ os.chdir(root/'mutants');os.environ['MUTANT_UNDER_TEST']='';import pytest
+ code=pytest.main(['--rootdir=.','--tb=short','-x','-q','-p','no:randomly','-p','no:random-order',*tests]);sys.stdout.flush();sys.stderr.flush();os._exit(int(code))
+_,status=os.waitpid(pid,0);print('child_exit',os.waitstatus_to_exitcode(status),flush=True)

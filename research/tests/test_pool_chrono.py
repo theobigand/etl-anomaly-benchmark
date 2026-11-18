@@ -5,9 +5,16 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import pool_chrono as pc  # noqa: E402
+
+
+@pytest.fixture(autouse=True)
+def _few_resamples(monkeypatch):
+    """The interval is tested on its own; here a few resamples keep every run short."""
+    monkeypatch.setattr(pc.td, "RESAMPLES", 20)
 
 
 def test_a_date_and_a_clock_column_are_joined_and_read_as_utc_timestamps():
@@ -44,6 +51,17 @@ def test_a_dataset_with_too_few_test_anomalies_is_excluded_with_its_reason():
     ok, reason = pc.eligible(y, times)
     assert not ok and "0 anomalies in the test partition" in reason
     assert pc.run_dataset(pd.DataFrame({"a": np.arange(1000.0)}), y, times) == {"excluded": reason}
+
+
+def test_chronological_eligibility_normalizes_mixed_timezone_offsets():
+    times = pd.Series(["2024-01-01T00:00:00+00:00", "2024-01-01T01:00:00+01:00"] * 20)
+    y = np.zeros(len(times), dtype=int)
+    expected = pc.eligible(y, pd.to_datetime(times, utc=True))
+
+    assert pc.run_dataset(pd.DataFrame({"a": np.arange(len(times))}), y, times) == {
+        "excluded": expected[1]
+    }
+    assert expected[0] is False
 
 
 def test_the_neighbour_detectors_are_skipped_on_a_large_train_set_and_listed(monkeypatch):

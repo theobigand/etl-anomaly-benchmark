@@ -1,0 +1,15 @@
+import numpy as np
+import pandas as pd
+import temporal_decision as td
+
+def test_equal_timestamps_keep_arrival_order_in_the_chronological_split(monkeypatch):
+    rng = np.random.default_rng(2)
+    n = 100
+    y = (rng.random(n) < .3).astype(int)
+    x = pd.DataFrame({'a': rng.normal(size=n) + y})
+    times = pd.Series(pd.Timestamp('2020-01-01',tz='UTC'), index=range(n))
+    monkeypatch.setattr(td,'_block_ci',lambda y,s:{'ci_low':0.,'ci_high':1.,'resamples_used':1})
+    result = td.run_frame(x,y,times,['zscore'],seeds=(7,))
+    assert result['partitions']['train']['positives'] == int(y[:70].sum())
+    assert result['partitions']['validation']['positives'] == int(y[70:85].sum())
+    assert result['partitions']['test']['positives'] == int(y[85:].sum())

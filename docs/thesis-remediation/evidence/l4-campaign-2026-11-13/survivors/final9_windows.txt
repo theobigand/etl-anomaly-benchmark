@@ -1,0 +1,9 @@
+## x_causal_windows__mutmut_26
+-    order = np.argsort(times.to_numpy(), kind="stable")
++    order = np.argsort(times.to_numpy(), kind="STABLE")
+## x_scores_to_events__mutmut_7
+-    aligned = np.empty(len(scores), dtype=float)
++    aligned = np.empty(len(scores), dtype=None)
+## x_scores_to_events__mutmut_9
+-    aligned = np.empty(len(scores), dtype=float)
++    aligned = np.empty(len(scores), )

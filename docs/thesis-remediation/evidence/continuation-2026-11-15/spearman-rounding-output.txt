@@ -1,0 +1,12 @@
+source f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 scipy 1.17.1
+n 2 rank_vectors 2 pairs 4 decision_differences 0 closest_nonexact 0.19999999999999973
+n 3 rank_vectors 12 pairs 144 decision_differences 0 closest_nonexact 0.06602540378443866
+n 4 rank_vectors 74 pairs 5476 decision_differences 0 closest_nonexact 0.0164965809277261
+n 4 max_rank_square_sum 20.0 exact_rational_distance_lower_bound 5.555555555555556e-05
+n 17 max_rank_square_sum 1632.0 exact_rational_distance_lower_bound 8.343479003801957e-09
+source f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 scipy 1.17.1
+n 2 rank_vectors 2 pairs 4 decision_differences 0 closest_nonexact 0.19999999999999973
+n 3 rank_vectors 12 pairs 144 decision_differences 0 closest_nonexact 0.06602540378443866
+n 4 rank_vectors 74 pairs 5476 decision_differences 0 closest_nonexact 0.0164965809277261
+n 4 max_rank_square_sum 20.0 exact_rational_distance_lower_bound 5.555555555555556e-05
+n 17 max_rank_square_sum 1632.0 exact_rational_distance_lower_bound 8.343479003801957e-09

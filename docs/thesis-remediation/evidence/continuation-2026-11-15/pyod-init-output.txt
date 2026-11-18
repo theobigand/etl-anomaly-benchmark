@@ -1,0 +1,30 @@
+source 4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.0.6 sklearn 1.9.1
+score_before 5 match True result error
+score_before 6 match True result error
+predict_before 5 match True result error
+predict_before 6 match True result error
+normal 5 match True result ok
+normal 6 match True result ok
+no_numeric 5 match True result error
+no_numeric 6 match True result error
+all_missing 5 match True result error
+all_missing 6 match True result error
+empty 5 match True result error
+empty 6 match True result error
+refit_failure 5 match True result error
+refit_failure 6 match True result error
+source 4b1c2db9f3a65721f08e92962413c90b134b0d0af1901cef7652cc4e431084b0 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.1.1 sklearn 1.9.1
+score_before 5 match True result error
+score_before 6 match True result error
+predict_before 5 match True result error
+predict_before 6 match True result error
+normal 5 match True result ok
+normal 6 match True result ok
+no_numeric 5 match True result error
+no_numeric 6 match True result error
+all_missing 5 match True result error
+all_missing 6 match True result error
+empty 5 match True result error
+empty 6 match True result error
+refit_failure 5 match True result error
+refit_failure 6 match True result error

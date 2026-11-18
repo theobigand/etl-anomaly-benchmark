@@ -1,0 +1,42 @@
+{
+  "kind": "three-mutant focused native run, not full unit or campaign",
+  "command": "OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES ~/.cache/etl-mutation-venv/bin/python -m mutmut run 'research.multi_schema.x_hypotheses__mutmut_91' 'research.injection.x_inject__mutmut_21' 'research.injection.x_inject__mutmut_27' --max-children 1",
+  "exit_status": 0,
+  "git_head": "a9c2f1d5c0306d1b643c03d31a2c5938a76b3692",
+  "working_tree": "two added regression tests uncommitted during run",
+  "test_tree_sha256": "f8176ca6abc8bada5a49a5990b07ac45bc52e902ef762c6da125a2203abc5d10",
+  "test_tree_algorithm": "sha256 of UTF-8 path, NUL, file bytes; roots in order tests, research/tests, slides/tests, recursively sorted within each root; non-Python files and caches excluded",
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "filesystem": "default macOS APFS (case-insensitive)",
+  "python": "3.11.17",
+  "packages": {
+    "mutmut": "3.8.0",
+    "pytest": "9.1.1",
+    "pandas": "3.1.1",
+    "numpy": "2.4.6",
+    "torch": "2.15.0"
+  },
+  "records": [
+    {
+      "id": "research.injection.x_inject__mutmut_21",
+      "path": "research/injection.py",
+      "source_sha256": "cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39",
+      "native_meta_sha256": "ac714664714118fd17c9e57f00b07d2d55fc9e56fbd7f69edbe733e333382797",
+      "verdict_exit_code": 1
+    },
+    {
+      "id": "research.injection.x_inject__mutmut_27",
+      "path": "research/injection.py",
+      "source_sha256": "cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39",
+      "native_meta_sha256": "ac714664714118fd17c9e57f00b07d2d55fc9e56fbd7f69edbe733e333382797",
+      "verdict_exit_code": 1
+    },
+    {
+      "id": "research.multi_schema.x_hypotheses__mutmut_91",
+      "path": "research/multi_schema.py",
+      "source_sha256": "1e2e1bb4869f59f8fdf1f19ab2762d96a75ca8aa939df4ec156324d9d7315ce4",
+      "native_meta_sha256": "8a054d1cd6e51a697df6862f4109af5a82bb36dc89eb112b4d52af4a62501f1a",
+      "verdict_exit_code": 1
+    }
+  ]
+}

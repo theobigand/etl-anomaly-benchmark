@@ -1,0 +1,6 @@
+from pathlib import Path
+from mutmut.configuration import config
+from mutmut.__main__ import _run
+settings=config();settings.debug=True
+settings.log_file_path=str((Path.cwd()/'docs/thesis-remediation/evidence/continuation-2026-11-15/ecod-mutmut-debug.log').resolve())
+_run(['etl_benchmark.quality.ml.xǁPyODDetectorǁfit__mutmut_4','etl_benchmark.quality.ml.xǁPyODDetectorǁ_matrix__mutmut_8'],max_children=1)

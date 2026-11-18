@@ -1,0 +1,48 @@
+## x_read_times__mutmut_18
+-        base = pd.to_datetime(pd.DataFrame({"year": 2017, "month": month + 1, "day": 1}))
++        base = pd.to_datetime(pd.DataFrame({"YEAR": 2017, "month": month + 1, "day": 1}))
+## x_read_times__mutmut_21
+-        base = pd.to_datetime(pd.DataFrame({"year": 2017, "month": month + 1, "day": 1}))
++        base = pd.to_datetime(pd.DataFrame({"year": 2017, "MONTH": month + 1, "day": 1}))
+## x_read_times__mutmut_25
+-        base = pd.to_datetime(pd.DataFrame({"year": 2017, "month": month + 1, "day": 1}))
++        base = pd.to_datetime(pd.DataFrame({"year": 2017, "month": month + 1, "DAY": 1}))
+## x_read_times__mutmut_31
+-        return pd.Series(base.dt.tz_localize("UTC") + pd.to_timedelta(within, unit="min"))
++        return pd.Series(base.dt.tz_localize("utc") + pd.to_timedelta(within, unit="min"))
+## x_read_times__mutmut_37
+-        return pd.Series(base.dt.tz_localize("UTC") + pd.to_timedelta(within, unit="min"))
++        return pd.Series(base.dt.tz_localize("UTC") + pd.to_timedelta(within, unit="MIN"))
+## x_to_features__mutmut_12
+-            pieces.append(column.astype(float).rename(name))
++            pieces.append(column.astype(None).rename(name))
+## x_load_pool_dataset__mutmut_19
+-    marked = frame.assign(__row__=np.arange(len(frame), dtype=float))
++    marked = frame.assign(__row__=np.arange(len(frame), dtype=None))
+## x_load_pool_dataset__mutmut_21
+-    marked = frame.assign(__row__=np.arange(len(frame), dtype=float))
++    marked = frame.assign(__row__=np.arange(len(frame), ))
+## x_load_pool_dataset__mutmut_28
+-    rows = features.pop("__row__").to_numpy().astype(int)
++    rows = features.pop("__row__").to_numpy().astype(None)
+## x_eligible__mutmut_3
+-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind="stable")
++    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind=None)
+## x_eligible__mutmut_5
+-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind="stable")
++    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), )
+## x_eligible__mutmut_7
+-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind="stable")
++    order = np.argsort(pd.to_datetime(times, utc=None).to_numpy(), kind="stable")
+## x_eligible__mutmut_9
+-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind="stable")
++    order = np.argsort(pd.to_datetime(times, ).to_numpy(), kind="stable")
+## x_eligible__mutmut_10
+-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind="stable")
++    order = np.argsort(pd.to_datetime(times, utc=False).to_numpy(), kind="stable")
+## x_eligible__mutmut_12
+-    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind="stable")
++    order = np.argsort(pd.to_datetime(times, utc=True).to_numpy(), kind="STABLE")
+## x_main__mutmut_93
+-            continue
++            break

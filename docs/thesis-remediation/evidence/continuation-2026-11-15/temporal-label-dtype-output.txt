@@ -1,0 +1,20 @@
+/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/mutants/research/temporal_decision.py:1626: RuntimeWarning: invalid value encountered in cast
+  y = np.asarray(y).astype(int)
+source f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.0.6
+dtype int64 y [0, 1, 0, 1] match True original ('ok', {'precision': 1.0, 'recall': 1.0, 'f1': 1.0, 'fpr': 0.0, 'flagged_share': 0.5}) mutant ('ok', {'precision': 1.0, 'recall': 1.0, 'f1': 1.0, 'fpr': 0.0, 'flagged_share': 0.5})
+dtype bool y [False, True, False, True] match True original ('ok', {'precision': 1.0, 'recall': 1.0, 'f1': 1.0, 'fpr': 0.0, 'flagged_share': 0.5}) mutant ('ok', {'precision': 1.0, 'recall': 1.0, 'f1': 1.0, 'fpr': 0.0, 'flagged_share': 0.5})
+dtype float64 y [0.0, 1.0, 0.0, 1.0] match True original ('ok', {'precision': 1.0, 'recall': 1.0, 'f1': 1.0, 'fpr': 0.0, 'flagged_share': 0.5}) mutant ('ok', {'precision': 1.0, 'recall': 1.0, 'f1': 1.0, 'fpr': 0.0, 'flagged_share': 0.5})
+dtype <U1 y ['0', '1', '0', '1'] match True original ('ok', {'precision': 1.0, 'recall': 1.0, 'f1': 1.0, 'fpr': 0.0, 'flagged_share': 0.5}) mutant ('ok', {'precision': 1.0, 'recall': 1.0, 'f1': 1.0, 'fpr': 0.0, 'flagged_share': 0.5})
+dtype float64 y [0.1, 0.9, 1.1, 1.9] match False original ('ok', {'precision': 0.5, 'recall': 0.5, 'f1': 0.5, 'fpr': 0.5, 'flagged_share': 0.5}) mutant ('ok', {'precision': 0.0, 'recall': 0.0, 'f1': 0.0, 'fpr': 0.0, 'flagged_share': 0.5})
+dtype <U3 y ['0.0', '1.0', '0.0', '1.0'] match False original ('error', 'ValueError', "invalid literal for int() with base 10: np.str_('0.0')") mutant ('ok', {'precision': 1.0, 'recall': 1.0, 'f1': 1.0, 'fpr': 0.0, 'flagged_share': 0.5})
+dtype float64 y [0.0, nan, 1.0, 1.0] match False original ('ok', {'precision': 0.5, 'recall': 0.5, 'f1': 0.5, 'fpr': 0.5, 'flagged_share': 0.5}) mutant ('ok', {'precision': 1.0, 'recall': 0.5, 'f1': 0.6666666666666666, 'fpr': 0.0, 'flagged_share': 0.5})
+/Users/theo/Developer/school/esilv/m1/Master Thesis Bootcamp MSc1/etl-anomaly-benchmark/mutants/research/temporal_decision.py:1626: RuntimeWarning: invalid value encountered in cast
+  y = np.asarray(y).astype(int)
+source f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8 python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.1.1
+dtype int64 y [0, 1, 0, 1] match True original ('ok', {'precision': 1.0, 'recall': 1.0, 'f1': 1.0, 'fpr': 0.0, 'flagged_share': 0.5}) mutant ('ok', {'precision': 1.0, 'recall': 1.0, 'f1': 1.0, 'fpr': 0.0, 'flagged_share': 0.5})
+dtype bool y [False, True, False, True] match True original ('ok', {'precision': 1.0, 'recall': 1.0, 'f1': 1.0, 'fpr': 0.0, 'flagged_share': 0.5}) mutant ('ok', {'precision': 1.0, 'recall': 1.0, 'f1': 1.0, 'fpr': 0.0, 'flagged_share': 0.5})
+dtype float64 y [0.0, 1.0, 0.0, 1.0] match True original ('ok', {'precision': 1.0, 'recall': 1.0, 'f1': 1.0, 'fpr': 0.0, 'flagged_share': 0.5}) mutant ('ok', {'precision': 1.0, 'recall': 1.0, 'f1': 1.0, 'fpr': 0.0, 'flagged_share': 0.5})
+dtype <U1 y ['0', '1', '0', '1'] match True original ('ok', {'precision': 1.0, 'recall': 1.0, 'f1': 1.0, 'fpr': 0.0, 'flagged_share': 0.5}) mutant ('ok', {'precision': 1.0, 'recall': 1.0, 'f1': 1.0, 'fpr': 0.0, 'flagged_share': 0.5})
+dtype float64 y [0.1, 0.9, 1.1, 1.9] match False original ('ok', {'precision': 0.5, 'recall': 0.5, 'f1': 0.5, 'fpr': 0.5, 'flagged_share': 0.5}) mutant ('ok', {'precision': 0.0, 'recall': 0.0, 'f1': 0.0, 'fpr': 0.0, 'flagged_share': 0.5})
+dtype <U3 y ['0.0', '1.0', '0.0', '1.0'] match False original ('error', 'ValueError', "invalid literal for int() with base 10: np.str_('0.0')") mutant ('ok', {'precision': 1.0, 'recall': 1.0, 'f1': 1.0, 'fpr': 0.0, 'flagged_share': 0.5})
+dtype float64 y [0.0, nan, 1.0, 1.0] match False original ('ok', {'precision': 0.5, 'recall': 0.5, 'f1': 0.5, 'fpr': 0.5, 'flagged_share': 0.5}) mutant ('ok', {'precision': 1.0, 'recall': 0.5, 'f1': 0.6666666666666666, 'fpr': 0.0, 'flagged_share': 0.5})

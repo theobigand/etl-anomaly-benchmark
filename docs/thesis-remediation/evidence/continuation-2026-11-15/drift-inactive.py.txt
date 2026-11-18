@@ -1,0 +1,16 @@
+import hashlib,platform
+from pathlib import Path
+import numpy as np,pandas as pd
+from etl_benchmark.quality.drift import TemporalDriftDetector
+p=Path('src/etl_benchmark/quality/drift.py');print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'numpy',np.__version__,'pandas',pd.__version__)
+for n in (0,1,20,80):
+ for prior in (False,True):
+  frame=pd.DataFrame({'x':np.arange(n,dtype=float)})
+  def run(suffix):
+   d=TemporalDriftDetector(time_column='t',columns=['x'])
+   if prior:d.fit(pd.DataFrame({'t':np.arange(50),'x':np.arange(50,dtype=float)}))
+   try:
+    getattr(d,f'xǁTemporalDriftDetectorǁfit__mutmut_{suffix}')(frame)
+    return ('ok',d.score(frame).tolist(),d.predict(frame).tolist())
+   except Exception as e:return ('error',type(e).__name__,str(e))
+  a=run('orig');b=run('4');print('n',n,'prior',prior,'match',a==b,'kind',a[0])

@@ -9,6 +9,8 @@ from pathlib import Path
 
 import pytest
 
+from tests.test_mutation_campaign import _fixture
+from tests.test_mutation_evidence import _build
 from verification import bundles
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -126,6 +128,93 @@ def test_every_evidence_kind_has_an_allowlist_covering_what_its_make_target_writ
     assert bundles.KINDS["real"] == REAL
 
 
+def test_deep_bundle_requires_the_current_campaign_raw_artifacts(tmp_path, monkeypatch):
+    root = tmp_path / "src"
+    required = [
+        "mutants/mutmut-cicd-stats.json",
+        "mutants/results.txt",
+        "mutants/controller-result.json",
+        "mutants/execution.json",
+        "mutants/attempts/" + "a" * 32 + "/execution.json",
+        "mutants/attempts/" + "a" * 32 + "/native.log",
+        "mutants/src/pkg/a.py",
+        "mutants/src/pkg/a.py.meta",
+        "mutants/src/pkg/a.py.spans",
+        "experiments/results/evidence/deep.json",
+    ]
+    for name in required:
+        _write(root, name, "log\n" if name.endswith(".log") or name.endswith(".txt") else "{}")
+    monkeypatch.setattr(bundles, "deep_artifacts", lambda _: required)
+    out = bundles.pack("deep", root, tmp_path / "deep.tgz")
+    with tarfile.open(out) as archive:
+        assert sorted(archive.getnames()) == sorted(required)
+
+
+def test_deep_artifacts_are_derived_from_a_current_bound_envelope(tmp_path):
+    doc = _build(tmp_path, _fixture(tmp_path))
+    evidence = tmp_path / "experiments/results/evidence/deep.json"
+    evidence.parent.mkdir(parents=True)
+    evidence.write_text(json.dumps(doc))
+    names = bundles.deep_artifacts(tmp_path)
+    assert "mutants/execution-context.json" in names
+    assert "mutants/src/pkg/a.py.meta" in names
+    assert "mutants/attempts/" + "a" * 32 + "/native.log" in names
+
+
+def test_deep_artifact_derivation_rejects_an_unbound_or_missing_envelope(tmp_path):
+    with pytest.raises(bundles.BundleError, match="cannot identify"):
+        bundles.deep_artifacts(tmp_path)
+    _write(
+        tmp_path,
+        "experiments/results/evidence/deep.json",
+        json.dumps({"kind": "deep", "result": {}}),
+    )
+    with pytest.raises(bundles.BundleError, match="current campaign"):
+        bundles.deep_artifacts(tmp_path)
+
+
+def test_deep_unpack_accepts_only_policy_modules_and_canonical_attempts(tmp_path):
+    root = tmp_path / "dest"
+    _write(
+        root,
+        "verification/mutation_risk_policy.json",
+        json.dumps({"units": {"src/pkg/a.py": {}}}),
+    )
+    allowed = _bundle(
+        tmp_path / "allowed.tgz",
+        {
+            "mutants/src/pkg/a.py": "generated",
+            "mutants/src/pkg/a.py.meta": "{}",
+            "mutants/src/pkg/a.py.spans": "{}",
+            "mutants/attempts/" + "a" * 32 + "/execution.json": "{}",
+            "mutants/attempts/" + "a" * 32 + "/native.log": "log\n",
+        },
+    )
+    assert bundles.unpack(allowed, root, kind="deep")
+    forbidden = _bundle(tmp_path / "forbidden.tgz", {"mutants/src/pkg/other.py": "generated"})
+    with pytest.raises(bundles.BundleError, match="allowed"):
+        bundles.unpack(forbidden, root, kind="deep")
+
+
+def test_bundle_rejects_duplicate_members_and_resource_limits(tmp_path, monkeypatch):
+    duplicate = tmp_path / "duplicate.tgz"
+    with tarfile.open(duplicate, "w:gz") as archive:
+        for _ in range(2):
+            info = tarfile.TarInfo(REAL[1])
+            info.size = 2
+            archive.addfile(info, io.BytesIO(b"{}"))
+    with pytest.raises(bundles.BundleError, match="more than once"):
+        bundles.unpack(duplicate, tmp_path / "dest")
+    many = _bundle(tmp_path / "many.tgz", {REAL[1]: "{}"})
+    monkeypatch.setattr(bundles, "MAX_MEMBERS", 0)
+    with pytest.raises(bundles.BundleError, match="more than"):
+        bundles.unpack(many, tmp_path / "dest")
+    monkeypatch.setattr(bundles, "MAX_MEMBERS", 512)
+    monkeypatch.setattr(bundles, "MAX_TOTAL", 1)
+    with pytest.raises(bundles.BundleError, match="larger than"):
+        bundles.unpack(many, tmp_path / "dest")
+
+
 def test_the_command_packs_and_unpacks(tmp_path):
     for name in REAL:
         _write(tmp_path / "src", name)
@@ -180,3 +269,181 @@ def test_the_hosted_real_bundle_adds_only_the_acquisition_report(tmp_path):
         assert sorted(archive.getnames()) == sorted(HOSTED)
     names = bundles.unpack(out, tmp_path / "dest")
     assert sorted(names) == sorted(HOSTED)
+
+
+SHARDED = "experiments/results/evidence/deep-shards/"
+
+
+def _sharded_evidence(root):
+    """A current sharded DEEP envelope: plan and manifests next to the evidence under ``root``."""
+    from tests.test_evidence_schema import EXECUTION, SOURCE
+    from tests.test_sharded_release import _campaign
+    from verification import evidence_schema
+
+    _, manifests = _campaign(root)
+    doc = evidence_schema.build_deep_shards(
+        root / "plan.json", manifests, root=root, source=SOURCE, execution=EXECUTION
+    )
+    _write(root, "experiments/results/evidence/deep.json", json.dumps(doc))
+    return doc
+
+
+@pytest.fixture
+def _shard_versions(monkeypatch):
+    from verification import evidence_schema
+    from verification import mutation_shards as shards
+
+    versions = {"mutmut": "3.8.0", "pytest": "9.1.1"}
+    monkeypatch.setattr(shards, "version", lambda name: versions.get(name))
+    monkeypatch.setattr(evidence_schema, "REQUIRED_DATASETS", ("a", "b"))
+
+
+def test_a_sharded_deep_envelope_names_its_plan_and_manifests_and_no_native_files(
+    tmp_path, _shard_versions
+):
+    _sharded_evidence(tmp_path)
+    assert bundles.deep_artifacts(tmp_path) == [
+        "evidence-shard-0.json",
+        "experiments/results/evidence/deep.json",
+        "plan.json",
+    ]
+
+
+def test_a_sharded_deep_bundle_carries_the_envelope_the_plan_and_the_manifests(
+    tmp_path, _shard_versions
+):
+    _sharded_evidence(tmp_path)
+    out = bundles.pack("deep", tmp_path, tmp_path / "deep.tgz")
+    with tarfile.open(out) as archive:
+        assert sorted(archive.getnames()) == [
+            "evidence-shard-0.json",
+            "experiments/results/evidence/deep.json",
+            "plan.json",
+        ]
+
+
+def test_a_monolithic_deep_envelope_still_names_the_native_files(tmp_path):
+    doc = _build(tmp_path, _fixture(tmp_path))
+    _write(tmp_path, "experiments/results/evidence/deep.json", json.dumps(doc))
+    names = bundles.deep_artifacts(tmp_path)
+    assert "mutants/mutmut-cicd-stats.json" in names and "mutants/results.txt" in names
+    assert "experiments/results/evidence/deep.json" in names
+
+
+@pytest.mark.parametrize(
+    "name",
+    [
+        SHARDED + "shard-plan.json",
+        SHARDED + "evidence-shard-0.json",
+        SHARDED + "evidence-shard-44.json",
+    ],
+)
+def test_the_sharded_plan_and_manifests_can_be_unpacked_where_the_release_expects_them(
+    tmp_path, name
+):
+    root = tmp_path / "dest"
+    bundle = _bundle(tmp_path / "ok.tgz", {name: "{}"})
+    assert bundles.unpack(bundle, root) == [name]
+    assert (root / name).read_text() == "{}"
+
+
+@pytest.mark.parametrize(
+    "name",
+    [
+        SHARDED + "evidence-shard-.json",
+        SHARDED + "evidence-shard-x.json",
+        SHARDED + "evidence-shard-1.json.bak",
+        SHARDED + "other.json",
+        SHARDED + "shard-plan.jsonl",
+        SHARDED + "sub/evidence-shard-1.json",
+        SHARDED + "mutation-campaign.json",
+        "experiments/results/evidence/deep-shards-x/shard-plan.json",
+        "experiments/results/deep-shards/shard-plan.json",
+        "evidence-shard-1.json",
+        "shard-plan.json",
+        "x" + SHARDED + "shard-plan.json",
+    ],
+)
+def test_nothing_else_is_unpacked_from_the_sharded_location(tmp_path, name):
+    root = tmp_path / "dest"
+    bundle = _bundle(tmp_path / "bad.tgz", {name: "{}"})
+    with pytest.raises(bundles.BundleError, match="allowed"):
+        bundles.unpack(bundle, root)
+    assert not (root / name).exists()
+
+
+DEEP_ENVELOPE = "experiments/results/evidence/deep.json"
+
+
+def _json_of(size):
+    return '"' + "x" * (size - 2) + '"'
+
+
+def test_the_deep_envelope_has_its_own_larger_size_limit_on_the_way_in_and_out(
+    tmp_path, monkeypatch
+):
+    monkeypatch.setattr(bundles, "MAX_MEMBER", 10)
+    monkeypatch.setattr(bundles, "MAX_ENVELOPE", 50)
+    monkeypatch.setattr(bundles, "deep_artifacts", lambda _: [DEEP_ENVELOPE])
+    root = tmp_path / "src"
+    _write(root, DEEP_ENVELOPE, _json_of(50))
+    assert bundles.pack("deep", root, tmp_path / "ok.tgz") == tmp_path / "ok.tgz"
+    _write(root, DEEP_ENVELOPE, _json_of(51))
+    with pytest.raises(bundles.BundleError) as caught:
+        bundles.pack("deep", root, tmp_path / "big.tgz")
+    assert str(caught.value) == f"{DEEP_ENVELOPE} is larger than 50 bytes"
+    assert bundles.unpack(_bundle(tmp_path / "a.tgz", {DEEP_ENVELOPE: "x" * 50}), tmp_path / "d")
+    with pytest.raises(bundles.BundleError) as caught:
+        bundles.unpack(_bundle(tmp_path / "b.tgz", {DEEP_ENVELOPE: "x" * 51}), tmp_path / "d2")
+    assert str(caught.value) == f"{DEEP_ENVELOPE} is larger than 50 bytes"
+
+
+def test_every_other_member_keeps_the_ordinary_size_limit_whatever_the_envelope_limit(
+    tmp_path, monkeypatch
+):
+    monkeypatch.setattr(bundles, "MAX_MEMBER", 10)
+    monkeypatch.setattr(bundles, "MAX_ENVELOPE", 50)
+    assert bundles.unpack(_bundle(tmp_path / "a.tgz", {REAL[1]: "x" * 10}), tmp_path / "d")
+    with pytest.raises(bundles.BundleError) as caught:
+        bundles.unpack(_bundle(tmp_path / "b.tgz", {REAL[1]: "x" * 11}), tmp_path / "d2")
+    assert str(caught.value) == f"{REAL[1]} is larger than 10 bytes"
+    root = tmp_path / "src"
+    _write(root, REAL[0], _json_of(10))
+    _write(root, REAL[1], _json_of(11))
+    with pytest.raises(bundles.BundleError) as caught:
+        bundles.pack("real", root, tmp_path / "r.tgz")
+    assert str(caught.value) == f"{REAL[1]} is larger than 10 bytes"
+
+
+def test_the_envelope_limit_holds_the_real_sharded_campaign_envelope():
+    # the final campaign envelope was 8.1 MB because it lists every mutant outcome
+    assert bundles.MAX_ENVELOPE >= 16 * 1024 * 1024 > bundles.MAX_MEMBER
+    assert bundles.MAX_ENVELOPE < bundles.MAX_TOTAL
+
+
+def test_the_tracked_equivalence_document_is_bound_by_the_evidence_but_never_bundled(
+    tmp_path, _shard_versions
+):
+    from tests import owner_review
+    from tests.test_evidence_schema import EXECUTION, SOURCE
+    from tests.test_sharded_release import _campaign
+    from verification import evidence_schema, mutation_campaign
+
+    document, manifests = _campaign(tmp_path)
+    equivalence = _write(
+        tmp_path, mutation_campaign.EQUIVALENCE, json.dumps(owner_review.document())
+    )
+    doc = evidence_schema.build_deep_shards(
+        tmp_path / "plan.json", manifests, root=tmp_path, source=SOURCE, execution=EXECUTION
+    )
+    _write(tmp_path, "experiments/results/evidence/deep.json", json.dumps(doc))
+    assert document and equivalence.is_file()
+    # the evidence binds the document by digest ...
+    assert mutation_campaign.EQUIVALENCE in doc["artifacts"]
+    # ... but it is a file of the repository, which the release job already has: a bundle must not
+    # carry it, because the unpacking would overwrite a tracked file
+    assert mutation_campaign.EQUIVALENCE not in bundles.deep_artifacts(tmp_path)
+    packed = bundles.pack("deep", tmp_path, tmp_path / "deep.tgz")
+    with tarfile.open(packed) as archive:
+        assert mutation_campaign.EQUIVALENCE not in archive.getnames()
+        assert "evidence-shard-0.json" in archive.getnames()

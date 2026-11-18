@@ -1,0 +1,18 @@
+source 95380ca0f8f87a24c512ac7055357225472342065e0da676c0be46dd115fa09b python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.0.6
+n 0 prior False match True kind ok
+n 0 prior True match True kind ok
+n 1 prior False match True kind ok
+n 1 prior True match True kind ok
+n 20 prior False match True kind ok
+n 20 prior True match True kind ok
+n 80 prior False match True kind ok
+n 80 prior True match True kind ok
+source 95380ca0f8f87a24c512ac7055357225472342065e0da676c0be46dd115fa09b python 3.11.17 platform macOS-27.2-arm64-arm-64bit numpy 2.4.6 pandas 3.1.1
+n 0 prior False match True kind ok
+n 0 prior True match True kind ok
+n 1 prior False match True kind ok
+n 1 prior True match True kind ok
+n 20 prior False match True kind ok
+n 20 prior True match True kind ok
+n 80 prior False match True kind ok
+n 80 prior True match True kind ok

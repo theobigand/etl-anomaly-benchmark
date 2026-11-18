@@ -1,0 +1,19 @@
+{
+  "scope": "policy and device GREEN; exact selected-case count five on a machine where MPS was available",
+  "executable": "/Users/theo/miniconda3/envs/etl-benchmark/bin/python",
+  "python": "3.11.17",
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "packages": {
+    "torch": "2.14.1",
+    "pyod": "3.6.7",
+    "pytest": "9.1.1",
+    "numpy": "2.4.6",
+    "pandas": "3.0.6"
+  },
+  "sha256": {
+    "tests/test_deep_detectors.py": "13b15a7b9324023732c1036fe37adceb8ba38b5c8902563bfe863bc2a716fbfc",
+    "tests/test_verification_policy.py": "7a44e04e4130311828e1e8af1ce540ae611e513d1fc3934d89a35b5ce246ad36",
+    "src/etl_benchmark/quality/_torch_models.py": "77a1b57ff69e580cad700bb4ee41f069e3ac0c8489bdd714651c753c4bbdd09d"
+  },
+  "limitations": "MPS test result is direct pytest, not native mutant execution; historical focused mutant verdicts have a different test-tree digest."
+}

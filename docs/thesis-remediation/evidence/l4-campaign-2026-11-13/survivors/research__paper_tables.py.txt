@@ -1,0 +1,126 @@
+## x_neural_means__mutmut_8
+-    folder = evidence / "full_registry"
++    folder = evidence / "FULL_REGISTRY"
+## x_neural_means__mutmut_32
+-            ok = [r["methods"][name] for r in runs if "error" not in r["methods"][name]]
++            ok = [r["methods"][name] for r in runs if "XXerrorXX" not in r["methods"][name]]
+## x_neural_means__mutmut_33
+-            ok = [r["methods"][name] for r in runs if "error" not in r["methods"][name]]
++            ok = [r["methods"][name] for r in runs if "ERROR" not in r["methods"][name]]
+## x_rows__mutmut_14
+-    table = pd.concat([base.reindex(CLASSICAL), neural.reindex(columns=base.columns)])
++    table = pd.concat([base.reindex(CLASSICAL), neural.reindex(columns=None)])
+## x_rows__mutmut_34
+-                continue
++                break
+## x_pool_rows__mutmut_6
+-    results = json.loads((evidence / "labelled_pool" / "labelled_results.json").read_text())
++    results = json.loads((evidence / "LABELLED_POOL" / "labelled_results.json").read_text())
+## x_pool_rows__mutmut_8
+-    results = json.loads((evidence / "labelled_pool" / "labelled_results.json").read_text())
++    results = json.loads((evidence / "labelled_pool" / "LABELLED_RESULTS.JSON").read_text())
+## x_pool_rows__mutmut_48
+-        evidence / "labelled_pool" / "runs",
++        evidence / "LABELLED_POOL" / "runs",
+## x_pool_rows__mutmut_50
+-        evidence / "labelled_pool" / "runs",
++        evidence / "labelled_pool" / "RUNS",
+## x_pool_rows__mutmut_55
+-        evidence / "full_registry" / "pool_deep" / "runs",
++        evidence / "FULL_REGISTRY" / "pool_deep" / "runs",
+## x_pool_rows__mutmut_57
+-        evidence / "full_registry" / "pool_deep" / "runs",
++        evidence / "full_registry" / "POOL_DEEP" / "runs",
+## x_pool_rows__mutmut_59
+-        evidence / "full_registry" / "pool_deep" / "runs",
++        evidence / "full_registry" / "pool_deep" / "RUNS",
+## x_pool_rows__mutmut_64
+-            for method in json.loads(path.read_text()).get("metrics", {}):
++            for method in json.loads(path.read_text()).get("metrics", None):
+## x_pool_rows__mutmut_66
+-            for method in json.loads(path.read_text()).get("metrics", {}):
++            for method in json.loads(path.read_text()).get("metrics", ):
+## x_chrono_rows__mutmut_6
+-    pilot = json.loads((evidence / "temporal_pilot" / "temporal_pilot.json").read_text())
++    pilot = json.loads((evidence / "TEMPORAL_PILOT" / "temporal_pilot.json").read_text())
+## x_chrono_rows__mutmut_8
+-    pilot = json.loads((evidence / "temporal_pilot" / "temporal_pilot.json").read_text())
++    pilot = json.loads((evidence / "temporal_pilot" / "TEMPORAL_PILOT.JSON").read_text())
+## x_chrono_rows__mutmut_13
+-            continue
++            break
+## x_example_rows__mutmut_2
+-    sys.path.insert(0, str(ROOT / "research"))
++    sys.path.insert(0, None)
+## x_example_rows__mutmut_5
+-    sys.path.insert(0, str(ROOT / "research"))
++    sys.path.insert(1, str(ROOT / "research"))
+## x_example_rows__mutmut_6
+-    sys.path.insert(0, str(ROOT / "research"))
++    sys.path.insert(0, str(None))
+## x_example_rows__mutmut_8
+-    sys.path.insert(0, str(ROOT / "research"))
++    sys.path.insert(0, str(ROOT / "XXresearchXX"))
+## x_example_rows__mutmut_9
+-    sys.path.insert(0, str(ROOT / "research"))
++    sys.path.insert(0, str(ROOT / "RESEARCH"))
+## x_example_rows__mutmut_16
+-    runs = ls.load(evidence / "labelled_pool" / "runs") + ls.load(
++    runs = ls.load(evidence / "LABELLED_POOL" / "runs") + ls.load(
+## x_example_rows__mutmut_18
+-    runs = ls.load(evidence / "labelled_pool" / "runs") + ls.load(
++    runs = ls.load(evidence / "labelled_pool" / "RUNS") + ls.load(
+## x_example_rows__mutmut_24
+-        evidence / "full_registry" / "pool_deep" / "runs"
++        evidence / "FULL_REGISTRY" / "pool_deep" / "runs"
+## x_example_rows__mutmut_26
+-        evidence / "full_registry" / "pool_deep" / "runs"
++        evidence / "full_registry" / "POOL_DEEP" / "runs"
+## x_example_rows__mutmut_28
+-        evidence / "full_registry" / "pool_deep" / "runs"
++        evidence / "full_registry" / "pool_deep" / "RUNS"
+## x_main__mutmut_2
+-    parser = argparse.ArgumentParser(description=__doc__)
++    parser = argparse.ArgumentParser(description=None)
+## x_main__mutmut_5
+-    parser.add_argument("--tex", type=Path, default=ROOT / "paper" / "main.tex")
++    parser.add_argument("--tex", type=Path, default=None)
+## x_main__mutmut_8
+-    parser.add_argument("--tex", type=Path, default=ROOT / "paper" / "main.tex")
++    parser.add_argument("--tex", type=Path, )
+## x_main__mutmut_13
+-    parser.add_argument("--tex", type=Path, default=ROOT / "paper" / "main.tex")
++    parser.add_argument("--tex", type=Path, default=ROOT / "XXpaperXX" / "main.tex")
+## x_main__mutmut_14
+-    parser.add_argument("--tex", type=Path, default=ROOT / "paper" / "main.tex")
++    parser.add_argument("--tex", type=Path, default=ROOT / "PAPER" / "main.tex")
+## x_main__mutmut_15
+-    parser.add_argument("--tex", type=Path, default=ROOT / "paper" / "main.tex")
++    parser.add_argument("--tex", type=Path, default=ROOT / "paper" / "XXmain.texXX")
+## x_main__mutmut_16
+-    parser.add_argument("--tex", type=Path, default=ROOT / "paper" / "main.tex")
++    parser.add_argument("--tex", type=Path, default=ROOT / "paper" / "MAIN.TEX")
+## x_main__mutmut_18
+-    parser.add_argument("--evidence", type=Path, default=EVIDENCE)
++    parser.add_argument("--evidence", type=None, default=EVIDENCE)
+## x_main__mutmut_21
+-    parser.add_argument("--evidence", type=Path, default=EVIDENCE)
++    parser.add_argument("--evidence", default=EVIDENCE)
+## x_main__mutmut_27
+-    parser.add_argument("--print", action="store_true", help="print the rows instead of writing")
++    parser.add_argument("--print", action="store_true", help=None)
+## x_main__mutmut_30
+-    parser.add_argument("--print", action="store_true", help="print the rows instead of writing")
++    parser.add_argument("--print", action="store_true", )
+## x_main__mutmut_35
+-    parser.add_argument("--print", action="store_true", help="print the rows instead of writing")
++    parser.add_argument("--print", action="store_true", help="XXprint the rows instead of writingXX")
+## x_main__mutmut_36
+-    parser.add_argument("--print", action="store_true", help="print the rows instead of writing")
++    parser.add_argument("--print", action="store_true", help="PRINT THE ROWS INSTEAD OF WRITING")
+## x_main__mutmut_44
+-        body = rows(label, args.evidence)
++        body = rows(label, )
+## x_main__mutmut_53
+-    if not args.print:
++    if args.print:

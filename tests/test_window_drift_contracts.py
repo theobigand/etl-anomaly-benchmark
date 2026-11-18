@@ -6,6 +6,31 @@ import pytest
 
 from etl_benchmark.quality.window_drift import WindowDriftMonitor, event_metrics
 
+
+def test_nullable_numeric_columns_can_be_scored():
+    reference = pd.DataFrame(
+        {
+            "time": pd.date_range("2024-01-01", periods=3, tz="UTC"),
+            "value": pd.Series([1, 2, 3], dtype="Int64"),
+            "measurement": pd.Series([1.0, 2.0, 3.0], dtype="Float64"),
+        }
+    )
+    future = pd.DataFrame(
+        {
+            "time": pd.date_range("2024-01-04", periods=2, tz="UTC"),
+            "value": pd.Series([2, 4], dtype="Int64"),
+            "measurement": pd.Series([2.0, 4.0], dtype="Float64"),
+        }
+    )
+    result = (
+        WindowDriftMonitor("time", ["value", "measurement"], window_size=2)
+        .fit(reference)
+        .evaluate(future)
+    )
+    assert len(result) == 1
+    assert result.iloc[0]["n_rows"] == 2
+
+
 pytestmark = pytest.mark.protocol
 
 
@@ -40,6 +65,14 @@ def test_fit_needs_two_reference_rows_and_remembers_the_last_timestamp():
         monitor.fit(_reference((1.0,)))
     monitor.fit(_reference((0.0, 2.0)))
     assert monitor.reference_end == pd.Timestamp("2024-01-02", tz="UTC")
+
+
+def test_evaluation_rejects_an_incomplete_fit_after_numeric_overflow():
+    monitor = WindowDriftMonitor("time", ["value"], window_size=2)
+    with np.errstate(over="raise"), pytest.raises(FloatingPointError):
+        monitor.fit(_reference((1e308, -1e308)))
+    with pytest.raises(RuntimeError, match=_message("monitor not fitted")):
+        monitor.evaluate(_future([0.0, 1.0]))
 
 
 def test_scores_use_the_population_standard_deviation_of_the_reference():

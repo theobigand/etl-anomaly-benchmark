@@ -1,0 +1,25 @@
+# Run from the repository root with an extracted release-44253806652/mutation-campaign.tar.gz:
+#   python3 -I validator-binding-probe.py.txt <extracted-dir>
+# Feeds the certified campaign records to the repository validator under altered environments.
+import json, copy, sys
+sys.path.insert(0, ".")
+from verification import mutation_policy as mp
+S = sys.argv[1]
+ev = json.load(open(S + "/deep-evidence.json"))["result"]
+policy = json.load(open("verification/mutation_risk_policy.json"))
+scope = None
+sources = ev["analysis"]["sources"]; catalog = ev["catalog"]; records = ev["records"]
+eqdoc = json.load(open("verification/mutation_equivalence.json"))
+pk = ev["runtime"]["packages"]
+def run(label, env, doc=eqdoc):
+    try:
+        a = mp.evaluate_snapshot(policy, sources, catalog, records, doc, env)
+        print(f"{label:58s} -> {a['status']}  L4 equivalent_accepted={a['levels']['L4']['equivalent_accepted']}")
+    except Exception as e:
+        print(f"{label:58s} -> REJECTED ({type(e).__name__}: {str(e)[:75]})")
+run("certified runtime (torch 2.15.0+cpu)", pk)
+for name, val in [("torch", "2.15.0"), ("torch", "2.14.1"), ("torch", "2.15.0+cu128"), ("torch", None), ("pandas", "3.1.1"), ("scipy", "1.17.0"), ("great-expectations", "1.24.1"), ("pyod", "3.6.8")]:
+    e = dict(pk); 
+    if val is None: e.pop(name)
+    else: e[name] = val
+    run(f"{name} -> {val}", e)

@@ -1,0 +1,15 @@
+import hashlib,platform
+from pathlib import Path
+import pandas as pd
+import etl_benchmark.quality.window_drift as m
+p=Path('src/etl_benchmark/quality/window_drift.py')
+print('source',hashlib.sha256(p.read_bytes()).hexdigest(),'python',platform.python_version(),'platform',platform.platform(),'pandas',pd.__version__)
+windows=[pd.DataFrame({'window_end':pd.date_range('2024-01-01',periods=4,tz='UTC'),'alert':[False,True,False,True]}),pd.DataFrame({'window_end':pd.date_range('2024-01-01',periods=4,tz='UTC'),'alert':[False]*4}),pd.DataFrame({'window_end':[],'alert':[]})]
+changes=[pd.Timestamp('2024-01-02'),pd.Timestamp('2024-01-02',tz='UTC'),pd.Timestamp('2024-01-02',tz='Europe/Paris'),pd.Timestamp('2024-01-02',tz='America/New_York')]
+def run(fn,w,t):
+ try: return ('ok',repr(fn(w,t)))
+ except Exception as e: return ('error',type(e).__name__,str(e))
+for i,w in enumerate(windows):
+ for t in changes:
+  a=run(m.x_event_metrics__mutmut_orig,w,t);b=run(m.x_event_metrics__mutmut_29,w,t)
+  print(i,str(t),'match',a==b,repr(b))
