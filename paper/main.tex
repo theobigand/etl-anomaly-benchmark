@@ -40,16 +40,19 @@ Expectations), eight classical ML detectors (Isolation Forest, LOF, One-Class SV
 KNN, PCA) and six neural ones (autoencoder, VAE, Deep SVDD, DIF, AE1SVM, LUNAR). I evaluate them over
 five seeds on a stratified held-out split, on a pool of $152$ open datasets (used as $100$ labelled
 problems and, for the $58$ tables large enough, as hosts for six injected anomaly types: $42$ from UCI
-and $16$ from ADBench) and on Faker-generated data with controlled anomaly types. I report each study
-against hypotheses written before its runs. The aggregate findings on the $100$ labelled problems remain descriptive:
-their historical schema and row filtering precede the split and require train-only
-revalidation. Under that preparation, the column-wise ECOD, COPOD and HBOS match Isolation Forest, and the neural
-models do not beat the best classical one. The per-type view shows a narrow, largely non-overlapping
-competence for each family, which holds in structure on real tables but not in its values. The
-operating point moves precision and recall by an order of magnitude with the same scores, a threshold
-fixed on the past fails when the prevalence moves, and the neural models cost one to two orders of magnitude
-more than the column-wise ones. Broad coverage therefore needs several families, chosen from the type of
-fault, with the operating point and the prevalence monitored.
+and $16$ from ADBench) and on Faker-generated data with controlled anomaly types. I report each study against hypotheses written before its runs. The aggregate findings on the $100$ labelled
+problems remain descriptive: their historical schema and row filtering precede the split and require train-only
+revalidation. Under that preparation no detector dominates uniformly. The column-wise ECOD, COPOD and HBOS have point
+estimates close to Isolation Forest, and the neural models, tested only in an out-of-the-box CPU configuration and fitted on
+at most $20{,}000$ rows, do not beat the best classical one; overlapping intervals leave these differences unresolved and are not
+evidence that the detectors are equivalent. The per-type view, which depends on numeric-only features for the learned models
+and on generic Great Expectations rules, shows a narrow, largely non-overlapping competence for each family, which holds in
+structure on real tables but not in its values. The operating point moves precision and recall by an order of magnitude with
+the same scores, and a threshold fixed on the past fails when the prevalence moves. Cost depends on the architecture: at
+$3\cdot10^5$ rows, measured on one machine that was not isolated, ECOD, COPOD, HBOS and PCA take seconds, the VAE and Deep SVDD
+three to four minutes, and DIF, AE1SVM and LUNAR exceed a $300$-second budget at $3\cdot10^5$, $3\cdot10^5$ and $10^5$ rows. Within
+these limits, broad coverage needs several families, chosen from the type of fault, with the operating point and the
+prevalence monitored.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -131,6 +134,19 @@ rest of the paper answers, one study at a time.
 Each study has a protocol and hypotheses written in the repository before its
 runs (Section~\ref{sec:studies}). A hypothesis that fails is reported as failed.
 The Discussion answers the four questions in turn.
+
+\paragraph{Setting and deployability.} The setting is batch ETL: a detector is fitted on
+an earlier table or period and scores later rows in bulk; the chronological studies replay
+successive batches, and streaming ingestion with online updates is not evaluated. I call a
+detector \emph{deployable} when it can be run and kept running without hidden resources, and I
+examine six aspects: whether it needs labels (an oracle threshold versus one read from the
+training prevalence or a label-free alert budget); how its threshold is set; its cost in time and
+memory; its stability across seeds and over time; the maintenance it asks for (refitting, tuning),
+which is only observed through the fit cost and not measured as engineering effort; and the
+false-positive burden at its operating point. A statistical outlier is a rare value of a model;
+a data-quality defect is a record that is wrong for its purpose. The two overlap only partly, and
+the labelled problems of this paper define anomalies by class membership or by injection, not by
+business impact.
 
 \paragraph{Contributions.} This paper addresses these three gaps. I
 present:
@@ -222,7 +238,14 @@ testing on 2011--2013 (NEAR) and 2014--2015 (FAR), and reports ROC-AUC and AP
 for classical and deep models, again without a decision threshold.
 FedAD-Bench~\cite{anwar2024fedadbench} compares deep models in a federated
 setting on four tabular datasets and chooses each threshold by maximising $F_1$
-on a validation set with the anomaly ratio of the test set. Sun et
+on a validation set with the anomaly ratio of the test set. MacrOData~\cite{ding2026macrodata}, a 2026 preprint, extends tabular
+outlier-detection benchmarking to $2{,}446$ datasets in three components
+(OddBench with $790$ semantic-anomaly datasets curated from the TabLib corpus,
+OvRBench with $856$ statistical-outlier datasets and SynBench with $800$
+synthetic ones), and reports AUROC and AUPRC; I read its abstract and the first
+part of its text, not all of it. Unlike this paper, it evaluates detectors in isolation, and I did not find
+in the parts I read a rule baseline, a decision threshold, a time-ordered split or
+an ETL setting. Sun et
 al.~\cite{sun2024online} propose online thresholds with confidence sequences
 that adapt to distribution shift, and test them on synthetic and real data. They
 study how to pick a threshold, not how classical detectors behave in a pipeline.
@@ -235,6 +258,15 @@ Marupaka and Rangineni~\cite{marupaka2024mlpredictive} announce accuracy gains i
 an abstract that names no dataset or baseline. Sokkula and
 Vuppala~\cite{sokkula2024implementing} run an Isolation Forest on the
 resampled Credit Card data and obtain an AUC-ROC of $0.51$.
+Chen et al.~\cite{chen2025etlautoencoder} (preprint, full text read) train a deep
+autoencoder with a latent-space penalty on the ETL subset of a dataset they call EDD, with
+delays, missing values, duplicate loading and abrupt changes as the anomaly
+types, and compare it only with four neural sequence models (1D-CNN, LSTM,
+Transformer, Mamba) on AUC, accuracy, precision and recall. They give no rule-based or
+classical baseline, no per-type breakdown, no cost measurement and no code link
+that I could find; their labels come from system logs and automated verification
+rules. The setting is therefore adjacent to mine, but the question differs: they
+propose one detector, I compare families.
 
 \begin{table*}[t]
 \caption{What each work reports, as far as I could read in the cited sources.
@@ -250,6 +282,8 @@ ADBench~\cite{han2022adbench} & $30$ algorithms, $57$ datasets & not found & not
 Agyemang~\cite{agyemang2024anomaly} & $5$ detectors, one simulated set & none & accuracy, precision, recall, $F_1$ & not stated in the abstract \\
 AnoShift~\cite{dragoi2022anoshift} & classical and deep, Kyoto-2006+ & IID, NEAR, FAR splits & not found (ROC-AUC, AP) & none \\
 FedAD-Bench~\cite{anwar2024fedadbench} & deep models, federated, $4$ datasets & not found & $F_1$-optimal threshold on a validation set & none \\
+MacrOData~\cite{ding2026macrodata} & classical, deep and foundation models, $2{,}446$ datasets & random split (parts read) & not found (AUROC, AUPRC) & none \\
+Chen et al.~\cite{chen2025etlautoencoder} & autoencoder vs four neural models, one ETL log set & not found & AUC, accuracy, precision, recall & delays, missing, duplicates, jumps named; no per-type results \\
 Sun et al.~\cite{sun2024online} & thresholding method, synthetic and real & shift in the stream & error-rate guarantees & none \\
 \midrule
 This paper & $17$ detectors ($3$ rules, $8$ classical, $6$ neural), $3$ worked examples, a pool of $152$ open datasets, synthetic and typed injection & chronological pilot and decision study on two datasets & precision, recall, $F_1$ at the training-prevalence threshold; label-free alert budgets (exploratory) & six data-quality fault types \\
@@ -1279,8 +1313,7 @@ studies, so their time grows with the input. ECOD, COPOD, HBOS and PCA take a
 few seconds at $3\cdot10^5$ rows, KNN about a minute (exponent $1.46$, like LOF),
 and the VAE and Deep SVDD three to four minutes. DIF, AE1SVM and LUNAR exceeded
 the budget of $300$ seconds at $3\cdot10^5$, $3\cdot10^5$ and $10^5$ rows. The
-cost of a neural model is therefore two orders of magnitude above the
-column-wise models, and the cap used for quality is what made the pool runs
+cost therefore depends on the architecture, from minutes for the VAE and Deep SVDD to beyond the budget for DIF, AE1SVM and LUNAR, against seconds for the column-wise models, and the cap used for quality is what made the pool runs
 feasible.
 
 To separate the detection stage from the whole pipeline, I also timed read,
@@ -1348,7 +1381,7 @@ and recall by an order of magnitude with the same scores, a label-free contamina
 median $F_1$ of fourteen of the seventeen detectors, and a threshold fixed on the past fails in both
 directions when the prevalence moves; only $31$ of $64$ pairs of a pool dataset and a detector lose
 AP under a chronological split, so that effect is not general. \emph{RQ4.} Detection is cheap
-for the rules and the column-wise models, one to two orders of magnitude more for the neural ones,
+for the rules and the column-wise models, costs minutes for the VAE and Deep SVDD at $3\cdot10^5$ rows and exceeds the $300$-second budget for DIF, AE1SVM and LUNAR,
 and it is not the cost of the pipeline: writing the output dominates for the rules, while detection
 takes $62\%$ of the time with Isolation Forest on the datasets above $50{,}000$ rows.
 
