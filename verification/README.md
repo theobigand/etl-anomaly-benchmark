@@ -70,6 +70,14 @@ Ce contrôle porte sur les processus Python lancés depuis pytest.
 - `test_scaling_study.py` vérifie les étapes chronométrées et la taille des
   entrées. `scaling.md` décrit l'essai local de croissance.
 
+## Testing principles
+
+- Ordinary tests check current correctness: detector contracts, ETL stages, metrics and denominators, seeded reproducibility, and failure paths.
+- Scientific tests protect methodological validity: no train/test leakage, disjoint partitions, consistent score orientation, and published numbers that match their archives.
+- Tests do not depend on Git history (an old commit, a deleted branch or tag, or commit reachability). Archived records keep `source_revision` and script hashes as historical metadata; tests check an archive against its own recorded file hashes and dataset identity.
+- Prefer small deterministic inputs and the public interface. Add a test for a behavior, a regression or a scientific invariant, not to raise a count or a score.
+- Release certification is a separate process defined by `release_policy.json`; this section does not change it.
+
 ## Prêt et terminé
 
 Le protocole exploratoire [pool-train-only-v1](../docs/thesis-remediation/POOL_PREPROCESSING_PROTOCOL_2026-11-03.md)
