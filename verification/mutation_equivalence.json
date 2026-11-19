@@ -565,8 +565,8 @@
         "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json",
         "docs/thesis-remediation/INJECTION_UNIT_PROBE_2026-11-15.md"
       ],
-      "source_sha256": "cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39",
-      "catalog_sha256": "011af65d555b37c695f69c7dc6c29dd46147cfd2d5f31a34cafc67f9be06d836",
+      "source_sha256": "673b15b2c464d47e0d95fb71f0110994d9964c8d28fa662438ea74904b6c7209",
+      "catalog_sha256": "4a137e300aa4b4b6def05e9b703ba489eba9bfa154a1cfc4ed585a21a4eea4a7",
       "author": "theobigand",
       "verdict": "accepted",
       "approver": "theobigand",
@@ -608,8 +608,8 @@
         "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json",
         "docs/thesis-remediation/INJECTION_UNIT_PROBE_2026-11-15.md"
       ],
-      "source_sha256": "cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39",
-      "catalog_sha256": "011af65d555b37c695f69c7dc6c29dd46147cfd2d5f31a34cafc67f9be06d836",
+      "source_sha256": "673b15b2c464d47e0d95fb71f0110994d9964c8d28fa662438ea74904b6c7209",
+      "catalog_sha256": "4a137e300aa4b4b6def05e9b703ba489eba9bfa154a1cfc4ed585a21a4eea4a7",
       "author": "theobigand",
       "verdict": "accepted",
       "approver": "theobigand",
@@ -638,7 +638,7 @@
       ]
     },
     {
-      "id": "research.injection.x_inject__mutmut_163",
+      "id": "research.injection.x_inject__mutmut_167",
       "path": "research/injection.py",
       "function": "inject",
       "diff": "-    shifted = list(rng.choice(cols, size=3, replace=False))\n+    shifted = list(rng.choice(cols, size=3, replace=None))",
@@ -650,8 +650,8 @@
         "hosted campaign run 44013883170 at 215da02 (native Linux, mutant survived)",
         "docs/thesis-remediation/OWNER_EQUIVALENCE_REVIEW_PACKET_2_2026-11-14.md"
       ],
-      "source_sha256": "cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39",
-      "catalog_sha256": "011af65d555b37c695f69c7dc6c29dd46147cfd2d5f31a34cafc67f9be06d836",
+      "source_sha256": "673b15b2c464d47e0d95fb71f0110994d9964c8d28fa662438ea74904b6c7209",
+      "catalog_sha256": "4a137e300aa4b4b6def05e9b703ba489eba9bfa154a1cfc4ed585a21a4eea4a7",
       "author": "theobigand",
       "verdict": "accepted",
       "approver": "theobigand",
@@ -693,8 +693,8 @@
         "docs/thesis-remediation/evidence/unclassified-triage-2026-11-14.json",
         "docs/thesis-remediation/INJECTION_PREPARE_DTYPE_PROBE_2026-11-15.md"
       ],
-      "source_sha256": "cdfc81d98e3470ccdf5f7930d7e987b1bdad3545e060552f3a3bb1d170d8cb39",
-      "catalog_sha256": "011af65d555b37c695f69c7dc6c29dd46147cfd2d5f31a34cafc67f9be06d836",
+      "source_sha256": "673b15b2c464d47e0d95fb71f0110994d9964c8d28fa662438ea74904b6c7209",
+      "catalog_sha256": "4a137e300aa4b4b6def05e9b703ba489eba9bfa154a1cfc4ed585a21a4eea4a7",
       "author": "theobigand",
       "verdict": "accepted",
       "approver": "theobigand",
