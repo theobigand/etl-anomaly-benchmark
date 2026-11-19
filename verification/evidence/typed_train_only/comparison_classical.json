@@ -1,0 +1,712 @@
+{
+ "bootstrap": {
+  "draws": 2000,
+  "seed": 0
+ },
+ "carriers": 42,
+ "cells": [
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.0002764585690476185,
+   "median_difference": 0.0,
+   "method": "copod",
+   "share_over_0.1": 0.0,
+   "type": "missing_value"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": -0.0001917989428571435,
+   "median_difference": 0.0,
+   "method": "copod",
+   "share_over_0.1": 0.0,
+   "type": "duplicate"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.00033384999761904737,
+   "median_difference": 0.0,
+   "method": "copod",
+   "share_over_0.1": 0.0,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": -0.00018424974047618971,
+   "median_difference": 0.0,
+   "method": "copod",
+   "share_over_0.1": 0.0,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": -0.0003489962452380933,
+   "median_difference": 0.0,
+   "method": "copod",
+   "share_over_0.1": 0.0,
+   "type": "temporal_drift"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.0004436901809523813,
+   "median_difference": 0.0,
+   "method": "copod",
+   "share_over_0.1": 0.0,
+   "type": "invalid_format"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.0005212813095238094,
+   "median_difference": 0.0,
+   "method": "drift",
+   "share_over_0.1": 0.0,
+   "type": "missing_value"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.0005360726642857139,
+   "median_difference": 0.0,
+   "method": "drift",
+   "share_over_0.1": 0.0,
+   "type": "duplicate"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.00016804806428571433,
+   "median_difference": 0.0,
+   "method": "drift",
+   "share_over_0.1": 0.0,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.00048445530952380904,
+   "median_difference": 0.0,
+   "method": "drift",
+   "share_over_0.1": 0.0,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.009657386242857143,
+   "median_difference": 0.0,
+   "method": "drift",
+   "share_over_0.1": 0.023809523809523808,
+   "type": "temporal_drift"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.00014213323571428562,
+   "median_difference": 0.0,
+   "method": "drift",
+   "share_over_0.1": 0.0,
+   "type": "invalid_format"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.00016055464523809568,
+   "median_difference": 0.0,
+   "method": "ecod",
+   "share_over_0.1": 0.0,
+   "type": "missing_value"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": -9.019596904761885e-05,
+   "median_difference": 0.0,
+   "method": "ecod",
+   "share_over_0.1": 0.0,
+   "type": "duplicate"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": -0.00017421602619047393,
+   "median_difference": 0.0,
+   "method": "ecod",
+   "share_over_0.1": 0.0,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.0017732000571428585,
+   "median_difference": 0.0,
+   "method": "ecod",
+   "share_over_0.1": 0.0,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": -0.000384120685714282,
+   "median_difference": 0.0,
+   "method": "ecod",
+   "share_over_0.1": 0.0,
+   "type": "temporal_drift"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.0007320313452380908,
+   "median_difference": 0.0,
+   "method": "ecod",
+   "share_over_0.1": 0.0,
+   "type": "invalid_format"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.0,
+   "median_difference": 0.0,
+   "method": "great_expectations",
+   "share_over_0.1": 0.0,
+   "type": "missing_value"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": -0.00010822510952380955,
+   "median_difference": 0.0,
+   "method": "great_expectations",
+   "share_over_0.1": 0.0,
+   "type": "duplicate"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": -0.001155084200000005,
+   "median_difference": 0.0,
+   "method": "great_expectations",
+   "share_over_0.1": 0.0,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 5.6964461904761935e-05,
+   "median_difference": 0.0,
+   "method": "great_expectations",
+   "share_over_0.1": 0.0,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": -0.00010946907380952358,
+   "median_difference": 0.0,
+   "method": "great_expectations",
+   "share_over_0.1": 0.0,
+   "type": "temporal_drift"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.0028980924000000016,
+   "median_difference": 0.0,
+   "method": "great_expectations",
+   "share_over_0.1": 0.023809523809523808,
+   "type": "invalid_format"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.0008245718428571429,
+   "median_difference": 0.0,
+   "method": "hbos",
+   "share_over_0.1": 0.0,
+   "type": "missing_value"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.0010966528404761904,
+   "median_difference": 0.0,
+   "method": "hbos",
+   "share_over_0.1": 0.0,
+   "type": "duplicate"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.0014622274190476184,
+   "median_difference": 0.0,
+   "method": "hbos",
+   "share_over_0.1": 0.0,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.00024173198095238057,
+   "median_difference": 0.0,
+   "method": "hbos",
+   "share_over_0.1": 0.0,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.008470493592857143,
+   "median_difference": 0.0,
+   "method": "hbos",
+   "share_over_0.1": 0.023809523809523808,
+   "type": "temporal_drift"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.0014530124761904782,
+   "median_difference": 0.0,
+   "method": "hbos",
+   "share_over_0.1": 0.0,
+   "type": "invalid_format"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 7.558579047619083e-05,
+   "median_difference": 0.0,
+   "method": "iqr",
+   "share_over_0.1": 0.0,
+   "type": "missing_value"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": -0.00018262502142857214,
+   "median_difference": 0.0,
+   "method": "iqr",
+   "share_over_0.1": 0.0,
+   "type": "duplicate"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.0,
+   "median_difference": 0.0,
+   "method": "iqr",
+   "share_over_0.1": 0.0,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.01165611981428571,
+   "median_difference": 0.0,
+   "method": "iqr",
+   "share_over_0.1": 0.023809523809523808,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": -0.002141308361904765,
+   "median_difference": 0.0,
+   "method": "iqr",
+   "share_over_0.1": 0.0,
+   "type": "temporal_drift"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": -0.00037219485476190704,
+   "median_difference": 0.0,
+   "method": "iqr",
+   "share_over_0.1": 0.0,
+   "type": "invalid_format"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": -0.00011494249999999262,
+   "mean_difference": -0.000611471473809525,
+   "median_difference": 0.0,
+   "method": "isolation_forest",
+   "share_over_0.1": 0.0,
+   "type": "missing_value"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": -0.0006841389238095234,
+   "median_difference": 0.0,
+   "method": "isolation_forest",
+   "share_over_0.1": 0.0,
+   "type": "duplicate"
+  },
+  {
+   "ci_high": 0.0026984127000000135,
+   "ci_low": -5.073329374999414e-05,
+   "mean_difference": 0.0017968257809523815,
+   "median_difference": 0.0,
+   "method": "isolation_forest",
+   "share_over_0.1": 0.0,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": -0.004444444450000001,
+   "mean_difference": -0.0033381809119047575,
+   "median_difference": -0.0013409961499999817,
+   "method": "isolation_forest",
+   "share_over_0.1": 0.0,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci_high": 0.002222222199999957,
+   "ci_low": -0.0051446698287500045,
+   "mean_difference": -0.003342531421428571,
+   "median_difference": 0.0,
+   "method": "isolation_forest",
+   "share_over_0.1": 0.0,
+   "type": "temporal_drift"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": -0.004222496449999974,
+   "mean_difference": -0.0021028920333333325,
+   "median_difference": -0.0011111111000000062,
+   "method": "isolation_forest",
+   "share_over_0.1": 0.0,
+   "type": "invalid_format"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": -0.00013175311904761833,
+   "median_difference": 0.0,
+   "method": "knn",
+   "share_over_0.1": 0.0,
+   "type": "missing_value"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": -0.0002228701166666664,
+   "median_difference": 0.0,
+   "method": "knn",
+   "share_over_0.1": 0.0,
+   "type": "duplicate"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": -0.0017387174142857096,
+   "median_difference": 0.0,
+   "method": "knn",
+   "share_over_0.1": 0.0,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.0011285400952380964,
+   "median_difference": 0.0,
+   "method": "knn",
+   "share_over_0.1": 0.0,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": -2.0258392857144153e-05,
+   "median_difference": 0.0,
+   "method": "knn",
+   "share_over_0.1": 0.0,
+   "type": "temporal_drift"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.0007830037119047591,
+   "median_difference": 0.0,
+   "method": "knn",
+   "share_over_0.1": 0.0,
+   "type": "invalid_format"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": -7.06118976190474e-05,
+   "median_difference": 0.0,
+   "method": "lof",
+   "share_over_0.1": 0.0,
+   "type": "missing_value"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.00030107961428571495,
+   "median_difference": 0.0,
+   "method": "lof",
+   "share_over_0.1": 0.0,
+   "type": "duplicate"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": -0.003917137449999997,
+   "mean_difference": -0.0030769466071428556,
+   "median_difference": 0.0,
+   "method": "lof",
+   "share_over_0.1": 0.0,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.005815364447619052,
+   "median_difference": 0.0,
+   "method": "lof",
+   "share_over_0.1": 0.07142857142857142,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": -0.0022222222000000125,
+   "mean_difference": 0.0008461649190476136,
+   "median_difference": 0.0,
+   "method": "lof",
+   "share_over_0.1": 0.0,
+   "type": "temporal_drift"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.00044554492619048024,
+   "median_difference": 0.0,
+   "method": "lof",
+   "share_over_0.1": 0.0,
+   "type": "invalid_format"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.0002697122166666661,
+   "median_difference": 0.0,
+   "method": "ocsvm",
+   "share_over_0.1": 0.0,
+   "type": "missing_value"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": -0.0002493313880952383,
+   "median_difference": 0.0,
+   "method": "ocsvm",
+   "share_over_0.1": 0.0,
+   "type": "duplicate"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": -0.002781072778571429,
+   "median_difference": 0.0,
+   "method": "ocsvm",
+   "share_over_0.1": 0.0,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": -0.002927644666666665,
+   "median_difference": 0.0,
+   "method": "ocsvm",
+   "share_over_0.1": 0.023809523809523808,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": -0.0005567484833333322,
+   "median_difference": 0.0,
+   "method": "ocsvm",
+   "share_over_0.1": 0.047619047619047616,
+   "type": "temporal_drift"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.0007181877095238072,
+   "median_difference": 0.0,
+   "method": "ocsvm",
+   "share_over_0.1": 0.0,
+   "type": "invalid_format"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": -0.0058041723500000045,
+   "mean_difference": -0.0026976684238095234,
+   "median_difference": 0.0,
+   "method": "pca",
+   "share_over_0.1": 0.0,
+   "type": "missing_value"
+  },
+  {
+   "ci_high": 0.0046031746000000096,
+   "ci_low": -0.004716351550000011,
+   "mean_difference": -0.00012252594523809579,
+   "median_difference": 0.0,
+   "method": "pca",
+   "share_over_0.1": 0.0,
+   "type": "duplicate"
+  },
+  {
+   "ci_high": 0.0022222222000000125,
+   "ci_low": -0.006666666699999962,
+   "mean_difference": 0.003715109378571433,
+   "median_difference": 0.0,
+   "method": "pca",
+   "share_over_0.1": 0.047619047619047616,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": -0.0384615385,
+   "mean_difference": -0.0341174545,
+   "median_difference": -0.0033333333000000118,
+   "method": "pca",
+   "share_over_0.1": 0.14285714285714285,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci_high": 0.02106060605,
+   "ci_low": -0.008812785350000005,
+   "mean_difference": 0.006378570321428568,
+   "median_difference": 0.0,
+   "method": "pca",
+   "share_over_0.1": 0.16666666666666666,
+   "type": "temporal_drift"
+  },
+  {
+   "ci_high": 0.004393939399999991,
+   "ci_low": 0.0,
+   "mean_difference": -0.0005207475571428609,
+   "median_difference": 0.0014444444499999431,
+   "method": "pca",
+   "share_over_0.1": 0.0,
+   "type": "invalid_format"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.0,
+   "median_difference": 0.0,
+   "method": "transform_dedup",
+   "share_over_0.1": 0.0,
+   "type": "missing_value"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.0,
+   "median_difference": 0.0,
+   "method": "transform_dedup",
+   "share_over_0.1": 0.0,
+   "type": "duplicate"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.0,
+   "median_difference": 0.0,
+   "method": "transform_dedup",
+   "share_over_0.1": 0.0,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.0,
+   "median_difference": 0.0,
+   "method": "transform_dedup",
+   "share_over_0.1": 0.0,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.0,
+   "median_difference": 0.0,
+   "method": "transform_dedup",
+   "share_over_0.1": 0.0,
+   "type": "temporal_drift"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.0,
+   "median_difference": 0.0,
+   "method": "transform_dedup",
+   "share_over_0.1": 0.0,
+   "type": "invalid_format"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.0,
+   "median_difference": 0.0,
+   "method": "zscore",
+   "share_over_0.1": 0.0,
+   "type": "missing_value"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 5.4734538095238074e-05,
+   "median_difference": 0.0,
+   "method": "zscore",
+   "share_over_0.1": 0.0,
+   "type": "duplicate"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": -0.0026154792857142877,
+   "median_difference": 0.0,
+   "method": "zscore",
+   "share_over_0.1": 0.0,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": -5.1085569047619114e-05,
+   "median_difference": 0.0,
+   "method": "zscore",
+   "share_over_0.1": 0.0,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": -0.004738916254761905,
+   "median_difference": 0.0,
+   "method": "zscore",
+   "share_over_0.1": 0.023809523809523808,
+   "type": "temporal_drift"
+  },
+  {
+   "ci_high": 0.0,
+   "ci_low": 0.0,
+   "mean_difference": 0.000607729930952384,
+   "median_difference": 0.0,
+   "method": "zscore",
+   "share_over_0.1": 0.0,
+   "type": "invalid_format"
+  }
+ ],
+ "protocol": "typed-train-only-v1"
+}

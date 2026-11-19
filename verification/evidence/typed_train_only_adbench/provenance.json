@@ -1,0 +1,29 @@
+{
+ "archive_compared": "verification/evidence/pool_extension/typed/reference_classical",
+ "base_revision": "bcec28e17c41047724bad3f3e69414c7e40d3f7c",
+ "carriers": 16,
+ "code_sha256": {
+  "research/injection.py": "673b15b2c464d47e0d95fb71f0110994d9964c8d28fa662438ea74904b6c7209",
+  "research/pool_typed.py": "0b477c1c51fc616596b5ed3b09841a0374f1bc26603f22a2bc7c7ee638a8bbad",
+  "research/typed_train_only.py": "b5c0a9d8d6ce5a054a5481c91cdbcf68c34673c4e78624261d9ef3745d8e9b47"
+ },
+ "command": "python research/typed_train_only.py --adbench --output verification/evidence/typed_train_only_adbench/runs --workers 4 --resume; same with --compare verification/evidence/pool_extension/typed/reference_classical",
+ "machine": "not idle (other jobs running); timings are not reported by these studies",
+ "platform": "macOS-27.2-arm64-arm-64bit",
+ "protocol": "typed-train-only-v1",
+ "seeds": [
+  42,
+  1,
+  2,
+  3,
+  4
+ ],
+ "versions": {
+  "numpy": "2.4.6",
+  "pandas": "3.0.6",
+  "pyod": "3.6.7",
+  "python": "3.11.17",
+  "scikit-learn": "1.9.1"
+ },
+ "working_tree": "uncommitted changes on the base revision"
+}

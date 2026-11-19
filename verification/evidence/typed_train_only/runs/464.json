@@ -1,0 +1,379 @@
+{
+ "carrier": {
+  "columns": [
+   "mean_atomic_mass",
+   "wtd_mean_atomic_mass",
+   "gmean_atomic_mass",
+   "wtd_gmean_atomic_mass",
+   "entropy_atomic_mass",
+   "wtd_entropy_atomic_mass",
+   "range_atomic_mass",
+   "wtd_range_atomic_mass",
+   "std_atomic_mass",
+   "wtd_std_atomic_mass",
+   "mean_fie",
+   "wtd_mean_fie",
+   "gmean_fie",
+   "wtd_gmean_fie",
+   "entropy_fie",
+   "wtd_entropy_fie",
+   "range_fie",
+   "wtd_range_fie",
+   "std_fie",
+   "wtd_std_fie",
+   "mean_atomic_radius",
+   "wtd_mean_atomic_radius",
+   "gmean_atomic_radius",
+   "wtd_gmean_atomic_radius",
+   "entropy_atomic_radius",
+   "wtd_entropy_atomic_radius",
+   "range_atomic_radius",
+   "wtd_range_atomic_radius",
+   "std_atomic_radius",
+   "wtd_std_atomic_radius",
+   "mean_Density",
+   "wtd_mean_Density",
+   "gmean_Density",
+   "wtd_gmean_Density",
+   "entropy_Density",
+   "wtd_entropy_Density",
+   "range_Density",
+   "wtd_range_Density",
+   "std_Density",
+   "wtd_std_Density",
+   "mean_ElectronAffinity",
+   "wtd_mean_ElectronAffinity",
+   "gmean_ElectronAffinity",
+   "wtd_gmean_ElectronAffinity",
+   "entropy_ElectronAffinity",
+   "wtd_entropy_ElectronAffinity",
+   "range_ElectronAffinity",
+   "wtd_range_ElectronAffinity",
+   "std_ElectronAffinity",
+   "wtd_std_ElectronAffinity",
+   "mean_FusionHeat",
+   "wtd_mean_FusionHeat",
+   "gmean_FusionHeat",
+   "wtd_gmean_FusionHeat",
+   "entropy_FusionHeat",
+   "wtd_entropy_FusionHeat",
+   "range_FusionHeat",
+   "wtd_range_FusionHeat",
+   "std_FusionHeat",
+   "wtd_std_FusionHeat",
+   "mean_ThermalConductivity",
+   "wtd_mean_ThermalConductivity",
+   "gmean_ThermalConductivity",
+   "wtd_gmean_ThermalConductivity",
+   "entropy_ThermalConductivity",
+   "wtd_entropy_ThermalConductivity",
+   "range_ThermalConductivity",
+   "wtd_range_ThermalConductivity",
+   "std_ThermalConductivity",
+   "wtd_std_ThermalConductivity",
+   "mean_Valence",
+   "wtd_mean_Valence",
+   "gmean_Valence",
+   "wtd_gmean_Valence",
+   "entropy_Valence",
+   "wtd_entropy_Valence",
+   "wtd_range_Valence",
+   "std_Valence",
+   "wtd_std_Valence"
+  ],
+  "duplicates_dropped": 6093,
+  "normal_class_only": false,
+  "rows_in": 21263,
+  "rows_incomplete_dropped": 0,
+  "rows_out": 15170,
+  "source_rows": 21263
+ },
+ "fpr_mean": {
+  "copod": 0.1709055685,
+  "drift": 0.3247561787,
+  "ecod": 0.1706995984,
+  "great_expectations": 0.0278125426,
+  "hbos": 0.166872904,
+  "iqr": 0.5480762314,
+  "isolation_forest": 0.1675968992,
+  "knn": 0.1375125391,
+  "lof": 0.1452651184,
+  "ocsvm": 0.1526051696,
+  "pca": 0.1496073794,
+  "transform_dedup": 0.0353597396,
+  "zscore": 0.0909838628
+ },
+ "name": "Superconductivty Data",
+ "precision_mean": {
+  "columns": [
+   "missing_value",
+   "duplicate",
+   "univariate_outlier",
+   "multivariate_outlier",
+   "temporal_drift",
+   "invalid_format"
+  ],
+  "data": [
+   [
+    0.0379868337,
+    0.0369951863,
+    0.1097115698,
+    0.0414535358,
+    0.0374062512,
+    0.1949799343
+   ],
+   [
+    0.0349505648,
+    0.0363372186,
+    0.0604716995,
+    0.0353362832,
+    0.0449070092,
+    0.059480939
+   ],
+   [
+    0.5628080097,
+    0.0443612721,
+    0.5591834991,
+    0.042749616,
+    0.0953564056,
+    0.5614045009
+   ],
+   [
+    0.0357271213,
+    0.0369572717,
+    0.0419031275,
+    0.0408598343,
+    0.0402839223,
+    0.0375322291
+   ],
+   [
+    0.0452654951,
+    0.0316990845,
+    0.1134291405,
+    0.054449167,
+    0.0620594538,
+    0.1546148747
+   ],
+   [
+    0.032606494,
+    0.0339971315,
+    0.0769081144,
+    0.0340856573,
+    0.0363882132,
+    0.128024699
+   ],
+   [
+    0.0299854116,
+    0.0355166447,
+    0.0355244306,
+    0.0355930782,
+    0.0333306922,
+    0.0395773643
+   ],
+   [
+    0.0294020815,
+    0.0379011899,
+    0.0432281985,
+    0.0350872643,
+    0.0371660901,
+    0.0391247352
+   ],
+   [
+    0.0340888305,
+    0.0323456259,
+    0.0369450163,
+    0.0319011994,
+    0.0385819056,
+    0.043933506
+   ],
+   [
+    0.0526470296,
+    0.0335820129,
+    0.0977501938,
+    0.0547049747,
+    0.0851209288,
+    0.146635817
+   ],
+   [
+    0.0498304447,
+    0.0340967714,
+    0.080032964,
+    0.0521569305,
+    0.0612961708,
+    0.1068433816
+   ],
+   [
+    0.0325136393,
+    0.0354721951,
+    0.0194661503,
+    0.0381749742,
+    0.0917662331,
+    0.0177888168
+   ],
+   [
+    0.0,
+    0.5,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  ],
+  "index": [
+   "zscore",
+   "iqr",
+   "great_expectations",
+   "isolation_forest",
+   "lof",
+   "ocsvm",
+   "ecod",
+   "copod",
+   "hbos",
+   "knn",
+   "pca",
+   "drift",
+   "transform_dedup"
+  ]
+ },
+ "protocol": "typed-train-only-v1",
+ "recall_mean": {
+  "columns": [
+   "missing_value",
+   "duplicate",
+   "univariate_outlier",
+   "multivariate_outlier",
+   "temporal_drift",
+   "invalid_format"
+  ],
+  "data": [
+   [
+    0.1017902813,
+    0.0965473146,
+    0.3111679454,
+    0.1088235294,
+    0.105370844,
+    0.6143648764
+   ],
+   [
+    0.5580988917,
+    0.5846547315,
+    1.0,
+    0.5705882353,
+    0.7324381927,
+    0.9795396419
+   ],
+   [
+    1.0,
+    0.0380221654,
+    0.9941176471,
+    0.0352941176,
+    0.0820119352,
+    1.0
+   ],
+   [
+    0.1743819267,
+    0.181543052,
+    0.2080136402,
+    0.2029411765,
+    0.1993179881,
+    0.1842710997
+   ],
+   [
+    0.1948422847,
+    0.13456948,
+    0.5280051151,
+    0.2382352941,
+    0.2726342711,
+    0.7513640239
+   ],
+   [
+    0.1454390452,
+    0.1522165388,
+    0.360912191,
+    0.1529411765,
+    0.1641943734,
+    0.6347399829
+   ],
+   [
+    0.1482097187,
+    0.1786445013,
+    0.1787297528,
+    0.1794117647,
+    0.1670929241,
+    0.1988491049
+   ],
+   [
+    0.1453537937,
+    0.1904092072,
+    0.2197783461,
+    0.1764705882,
+    0.1876811594,
+    0.1958653026
+   ],
+   [
+    0.165601023,
+    0.1580136402,
+    0.181713555,
+    0.1558823529,
+    0.1906649616,
+    0.2195225916
+   ],
+   [
+    0.2150468883,
+    0.1345268542,
+    0.4194373402,
+    0.2235294118,
+    0.3670929241,
+    0.6638107417
+   ],
+   [
+    0.2208439898,
+    0.1492753623,
+    0.3696930946,
+    0.2352941176,
+    0.2786018755,
+    0.5058823529
+   ],
+   [
+    0.3083546462,
+    0.339599318,
+    0.1848252344,
+    0.3617647059,
+    0.9148763853,
+    0.1665387894
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  ],
+  "index": [
+   "zscore",
+   "iqr",
+   "great_expectations",
+   "isolation_forest",
+   "lof",
+   "ocsvm",
+   "ecod",
+   "copod",
+   "hbos",
+   "knn",
+   "pca",
+   "drift",
+   "transform_dedup"
+  ]
+ },
+ "seeds": [
+  42,
+  1,
+  2,
+  3,
+  4
+ ],
+ "sha256": "0b50992b735f313b9c5f104d58562b676e58318b771ab48e08a9563a942091d4",
+ "uci_id": 464
+}

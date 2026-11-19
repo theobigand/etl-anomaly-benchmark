@@ -1,0 +1,4 @@
+{
+ "excluded": "0 anomalies in the test partition (at least 20)",
+ "rows_without_a_readable_time": 0
+}
