@@ -3,7 +3,7 @@
   "note": "Verification figures quoted in paper/main.tex, with the run they describe. tests/test_manuscript_claims.py keeps the paper and this file in step; tests/test_claims_provenance.py checks the run (revision, sealed envelopes, staleness).",
   "published_run": {
     "id": "local-d4304c5",
-    "revision": "d4304c5bc51e9eb269e51952ca5aba8cc75f3e70",
+    "revision": "f2c6441110f13503b5698a59d95849a71d44d187",
     "source": "local-unattested",
     "platform": "macOS 27.0 arm64, Python 3.11.17 (conda etl-benchmark; typing in a venv with mypy 2.4.0)",
     "captured": "2026-10-23",
