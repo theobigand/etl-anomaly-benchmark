@@ -1,0 +1,35 @@
+{
+ "code_sha256": {
+  "research/deep_support.py": "21e4ef7e52a2eb0d03a9367b25cf08ece677201f53f427aa779be8c6c94e8aff",
+  "research/labelled_benchmark.py": "d4f1f954079d382f364748648837cb33e7743e81b24e63e66caeeb1b89b51f78",
+  "research/pool_preprocessing.py": "edf8ac28b2824c76840c8e4cad47fe3fee1f1ac84a5b38ad341e968dee9e8dc0",
+  "research/pool_train_only.py": "177258ce0eb5910e8b10845a328a1a0ab5fe870cbeb5e9e94ba165587f3fdae3",
+  "research/pool_train_only_replay.py": "db35d52114205862df6bb819a2a5b78ff0eebe8886ab249b7137ab0ecc2345a9",
+  "research/uci_loader.py": "a1176cd61bd8454c9fa51da682194444feb24529dc401916e8bb94fd212ab691"
+ },
+ "detectors": "classical (11)",
+ "failed": 0,
+ "note": "research/pool_train_only_replay.py gained an additive --methods flag (classical|deep) after this run; the classical code path is unchanged.",
+ "problems": 100,
+ "protocol": "pool-train-only-replay-v1",
+ "registry_sha256": {
+  "adbench_normalisation_report.json": "69e9bdd5d00e82d252ee65c6cab0b9d76d7cd3a93125ae6546f9d746c5a3672d",
+  "uci_curated.json": "5fd8ae93a1770f4af1cc7c417c9366f289f4529dd2a92b395e7dc5a4eabd8603",
+  "uci_pool.json": "3a1d8b903a51903a9f77363e7dc26b15be401a540c7eebf8c941895d4f408671"
+ },
+ "seeds": [
+  42,
+  1,
+  2,
+  3,
+  4
+ ],
+ "source_revision": "467dba45787dbd0d00ba764568a14c4310d1d189",
+ "versions": {
+  "numpy": "2.4.6",
+  "pandas": "3.0.6",
+  "pyod": "3.6.7",
+  "scikit-learn": "1.9.1"
+ },
+ "worktree_note": "run from an uncommitted working tree on branch research/thesis01-train-only-replay; the code hashes identify the code used"
+}

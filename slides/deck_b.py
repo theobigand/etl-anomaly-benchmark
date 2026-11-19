@@ -244,7 +244,7 @@ slide(
                 None,
                 "",
                 "<p style='font-size:19px;line-height:1.38'>Three rules, eight classical and six neural detectors, five seeds, on 36 ADBench and 64 UCI problems. The numbers are retained as recorded.</p>"
-                "<p style='font-size:18px;line-height:1.38;margin-top:12px'><span class='tag anom'>open</span> Schema and row filtering precede the split, so these descriptive rankings still need train-only replay.</p>"
+                "<p style='font-size:18px;line-height:1.38;margin-top:12px'><span class='tag anom'>open</span> Schema and row filtering precede the split, so these rankings stay descriptive; a train-only replay moves AP little for most.</p>"
                 "<p style='font-size:18px;line-height:1.38;margin-top:12px'>The 100 problems come from 80 sources; a post-hoc, exploratory source-clustered re-analysis changes no sign (only Great Expectations, in amber, is clearly below Isolation Forest). Label-rule sensitivity and unrecorded PyOD convergence diagnostics remain open.</p>",
             ),
             D(

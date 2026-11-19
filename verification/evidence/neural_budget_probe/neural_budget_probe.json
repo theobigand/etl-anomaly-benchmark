@@ -1,0 +1,1674 @@
+{
+ "protocol": "neural-budget-probe-v1",
+ "results": [
+  {
+   "problem": "adbench:Cardiotocography",
+   "rows": 2114,
+   "runs": [
+    {
+     "detector": "vae",
+     "seed": 42,
+     "budget": 30,
+     "long_budget": 90,
+     "spearman_budget_vs_long": 0.9618829198683921,
+     "ap_budget": 0.36275424274630086,
+     "ap_long": 0.3565066698061232,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "deep_svdd",
+     "seed": 42,
+     "budget": 100,
+     "long_budget": 300,
+     "spearman_budget_vs_long": 0.644045449374246,
+     "ap_budget": 0.25705948271259926,
+     "ap_long": 0.24037813275075534,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "ae1svm",
+     "seed": 42,
+     "budget": 50,
+     "long_budget": 150,
+     "spearman_budget_vs_long": 0.9697783962527847,
+     "ap_budget": 0.4698434736290493,
+     "ap_long": 0.4434746027866687,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "lunar",
+     "seed": 42,
+     "budget": 200,
+     "long_budget": 600,
+     "spearman_budget_vs_long": 0.9999408564438975,
+     "ap_budget": 0.296396807556919,
+     "ap_long": 0.29645306306561847,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "autoencoder",
+     "seed": 42,
+     "settings": {
+      "contamination": 0.22041920216362407,
+      "hidden_layer_sizes": [
+       21,
+       10,
+       21
+      ],
+      "max_iter": 300,
+      "n_iter": 257,
+      "converged": true,
+      "random_state": 42,
+      "device": "cpu",
+      "versions": {
+       "scikit-learn": "1.9.1",
+       "numpy": "2.4.6"
+      }
+     }
+    },
+    {
+     "detector": "vae",
+     "seed": 1,
+     "budget": 30,
+     "long_budget": 90,
+     "spearman_budget_vs_long": 0.9031898017694876,
+     "ap_budget": 0.35579940404385535,
+     "ap_long": 0.3162361437424461,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "deep_svdd",
+     "seed": 1,
+     "budget": 100,
+     "long_budget": 300,
+     "spearman_budget_vs_long": 0.6026777034800518,
+     "ap_budget": 0.3087888933250881,
+     "ap_long": 0.3073453276336995,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "ae1svm",
+     "seed": 1,
+     "budget": 50,
+     "long_budget": 150,
+     "spearman_budget_vs_long": 0.981758061079373,
+     "ap_budget": 0.40646582634381545,
+     "ap_long": 0.39876994190136117,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "lunar",
+     "seed": 1,
+     "budget": 200,
+     "long_budget": 600,
+     "spearman_budget_vs_long": 1.0,
+     "ap_budget": 0.3237381992207463,
+     "ap_long": 0.3237381992207463,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "autoencoder",
+     "seed": 1,
+     "settings": {
+      "contamination": 0.22027027027027027,
+      "hidden_layer_sizes": [
+       21,
+       10,
+       21
+      ],
+      "max_iter": 300,
+      "n_iter": 268,
+      "converged": true,
+      "random_state": 1,
+      "device": "cpu",
+      "versions": {
+       "scikit-learn": "1.9.1",
+       "numpy": "2.4.6"
+      }
+     }
+    },
+    {
+     "detector": "vae",
+     "seed": 2,
+     "budget": 30,
+     "long_budget": 90,
+     "spearman_budget_vs_long": 0.9491016846208985,
+     "ap_budget": 0.25931431736469435,
+     "ap_long": 0.306835757852547,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "deep_svdd",
+     "seed": 2,
+     "budget": 100,
+     "long_budget": 300,
+     "spearman_budget_vs_long": 0.5937561342033382,
+     "ap_budget": 0.22965639937456392,
+     "ap_long": 0.24908571164034976,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "ae1svm",
+     "seed": 2,
+     "budget": 50,
+     "long_budget": 150,
+     "spearman_budget_vs_long": 0.9414421324902897,
+     "ap_budget": 0.32845042848109374,
+     "ap_long": 0.30910733160602955,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "lunar",
+     "seed": 2,
+     "budget": 200,
+     "long_budget": 600,
+     "spearman_budget_vs_long": 1.0,
+     "ap_budget": 0.2640711677745852,
+     "ap_long": 0.2640711677745852,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "autoencoder",
+     "seed": 2,
+     "settings": {
+      "contamination": 0.2207176709546378,
+      "hidden_layer_sizes": [
+       21,
+       10,
+       21
+      ],
+      "max_iter": 300,
+      "n_iter": 259,
+      "converged": true,
+      "random_state": 2,
+      "device": "cpu",
+      "versions": {
+       "scikit-learn": "1.9.1",
+       "numpy": "2.4.6"
+      }
+     }
+    }
+   ],
+   "dif_seed_spearman_old_invalid": [],
+   "dif_seed_spearman": [
+    0.930972312528112,
+    0.9275928421982115,
+    0.9166539212931116
+   ]
+  },
+  {
+   "problem": "adbench:Waveform",
+   "rows": 3443,
+   "runs": [
+    {
+     "detector": "vae",
+     "seed": 42,
+     "budget": 30,
+     "long_budget": 90,
+     "spearman_budget_vs_long": 0.9440582757854193,
+     "ap_budget": 0.1302296703748395,
+     "ap_long": 0.19086345404163596,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "deep_svdd",
+     "seed": 42,
+     "budget": 100,
+     "long_budget": 300,
+     "spearman_budget_vs_long": 0.7741876321787258,
+     "ap_budget": 0.056678443428404765,
+     "ap_long": 0.05176363212677192,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "ae1svm",
+     "seed": 42,
+     "budget": 50,
+     "long_budget": 150,
+     "spearman_budget_vs_long": 0.9878514106619005,
+     "ap_budget": 0.06510050989772197,
+     "ap_long": 0.06516623150409068,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "lunar",
+     "seed": 42,
+     "budget": 200,
+     "long_budget": 600,
+     "spearman_budget_vs_long": 1.0,
+     "ap_budget": 0.26904900004932564,
+     "ap_long": 0.26904900004932564,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "autoencoder",
+     "seed": 42,
+     "settings": {
+      "contamination": 0.029045643153526972,
+      "hidden_layer_sizes": [
+       21,
+       10,
+       21
+      ],
+      "max_iter": 300,
+      "n_iter": 204,
+      "converged": true,
+      "random_state": 42,
+      "device": "cpu",
+      "versions": {
+       "scikit-learn": "1.9.1",
+       "numpy": "2.4.6"
+      }
+     }
+    },
+    {
+     "detector": "vae",
+     "seed": 1,
+     "budget": 30,
+     "long_budget": 90,
+     "spearman_budget_vs_long": 0.9348492287631327,
+     "ap_budget": 0.24153569291866486,
+     "ap_long": 0.1612534339083672,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "deep_svdd",
+     "seed": 1,
+     "budget": 100,
+     "long_budget": 300,
+     "spearman_budget_vs_long": 0.7787196354737175,
+     "ap_budget": 0.17410652603651403,
+     "ap_long": 0.07760475268264597,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "ae1svm",
+     "seed": 1,
+     "budget": 50,
+     "long_budget": 150,
+     "spearman_budget_vs_long": 0.9807153008538462,
+     "ap_budget": 0.08064394810328993,
+     "ap_long": 0.08358988342540319,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "lunar",
+     "seed": 1,
+     "budget": 200,
+     "long_budget": 600,
+     "spearman_budget_vs_long": 1.0,
+     "ap_budget": 0.17958149467493234,
+     "ap_long": 0.17958149467493234,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "autoencoder",
+     "seed": 1,
+     "settings": {
+      "contamination": 0.029045643153526972,
+      "hidden_layer_sizes": [
+       21,
+       10,
+       21
+      ],
+      "max_iter": 300,
+      "n_iter": 211,
+      "converged": true,
+      "random_state": 1,
+      "device": "cpu",
+      "versions": {
+       "scikit-learn": "1.9.1",
+       "numpy": "2.4.6"
+      }
+     }
+    },
+    {
+     "detector": "vae",
+     "seed": 2,
+     "budget": 30,
+     "long_budget": 90,
+     "spearman_budget_vs_long": 0.9451518966610505,
+     "ap_budget": 0.027844007009390506,
+     "ap_long": 0.032660421700833615,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "deep_svdd",
+     "seed": 2,
+     "budget": 100,
+     "long_budget": 300,
+     "spearman_budget_vs_long": 0.7903713361407572,
+     "ap_budget": 0.06779314534979708,
+     "ap_long": 0.053258623744503415,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "ae1svm",
+     "seed": 2,
+     "budget": 50,
+     "long_budget": 150,
+     "spearman_budget_vs_long": 0.9778643130943971,
+     "ap_budget": 0.03815595733733955,
+     "ap_long": 0.04009409288111278,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "lunar",
+     "seed": 2,
+     "budget": 200,
+     "long_budget": 600,
+     "spearman_budget_vs_long": 1.0,
+     "ap_budget": 0.05030866345273663,
+     "ap_long": 0.05030866345273663,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "autoencoder",
+     "seed": 2,
+     "settings": {
+      "contamination": 0.029045643153526972,
+      "hidden_layer_sizes": [
+       21,
+       10,
+       21
+      ],
+      "max_iter": 300,
+      "n_iter": 189,
+      "converged": true,
+      "random_state": 2,
+      "device": "cpu",
+      "versions": {
+       "scikit-learn": "1.9.1",
+       "numpy": "2.4.6"
+      }
+     }
+    }
+   ],
+   "dif_seed_spearman_old_invalid": [
+    -0.0335564845708339,
+    0.04585921186613913,
+    -0.02360525121534523
+   ],
+   "dif_seed_spearman": [
+    0.8123912676114556,
+    0.7907187761220418,
+    0.8189065705146853
+   ]
+  },
+  {
+   "problem": "adbench:letter",
+   "rows": 1600,
+   "runs": [
+    {
+     "detector": "vae",
+     "seed": 42,
+     "budget": 30,
+     "long_budget": 90,
+     "spearman_budget_vs_long": 0.9047613673848504,
+     "ap_budget": 0.12740157560899823,
+     "ap_long": 0.1526456606199915,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "deep_svdd",
+     "seed": 42,
+     "budget": 100,
+     "long_budget": 300,
+     "spearman_budget_vs_long": 0.5044636191600548,
+     "ap_budget": 0.22427843753032206,
+     "ap_long": 0.12066535675827611,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "ae1svm",
+     "seed": 42,
+     "budget": 50,
+     "long_budget": 150,
+     "spearman_budget_vs_long": 0.9427689716835358,
+     "ap_budget": 0.11350491601578687,
+     "ap_long": 0.13569282578813013,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "lunar",
+     "seed": 42,
+     "budget": 200,
+     "long_budget": 600,
+     "spearman_budget_vs_long": 0.9999999999999998,
+     "ap_budget": 0.29444656579538214,
+     "ap_long": 0.29444656579538214,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "autoencoder",
+     "seed": 42,
+     "settings": {
+      "contamination": 0.0625,
+      "hidden_layer_sizes": [
+       32,
+       16,
+       32
+      ],
+      "max_iter": 300,
+      "n_iter": 300,
+      "converged": false,
+      "random_state": 42,
+      "device": "cpu",
+      "versions": {
+       "scikit-learn": "1.9.1",
+       "numpy": "2.4.6"
+      }
+     }
+    },
+    {
+     "detector": "vae",
+     "seed": 1,
+     "budget": 30,
+     "long_budget": 90,
+     "spearman_budget_vs_long": 0.903048664039306,
+     "ap_budget": 0.10683155407685788,
+     "ap_long": 0.13569331467177348,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "deep_svdd",
+     "seed": 1,
+     "budget": 100,
+     "long_budget": 300,
+     "spearman_budget_vs_long": 0.5734136009305716,
+     "ap_budget": 0.25902779464563436,
+     "ap_long": 0.21162862350642053,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "ae1svm",
+     "seed": 1,
+     "budget": 50,
+     "long_budget": 150,
+     "spearman_budget_vs_long": 0.9519566311915134,
+     "ap_budget": 0.12099851552455491,
+     "ap_long": 0.14048679425205163,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "lunar",
+     "seed": 1,
+     "budget": 200,
+     "long_budget": 600,
+     "spearman_budget_vs_long": 0.9999999999999998,
+     "ap_budget": 0.28841805029182127,
+     "ap_long": 0.28841805029182127,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "autoencoder",
+     "seed": 1,
+     "settings": {
+      "contamination": 0.06255585344057193,
+      "hidden_layer_sizes": [
+       32,
+       16,
+       32
+      ],
+      "max_iter": 300,
+      "n_iter": 299,
+      "converged": true,
+      "random_state": 1,
+      "device": "cpu",
+      "versions": {
+       "scikit-learn": "1.9.1",
+       "numpy": "2.4.6"
+      }
+     }
+    },
+    {
+     "detector": "vae",
+     "seed": 2,
+     "budget": 30,
+     "long_budget": 90,
+     "spearman_budget_vs_long": 0.8120751226274487,
+     "ap_budget": 0.09836297731484817,
+     "ap_long": 0.17966002509371654,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "deep_svdd",
+     "seed": 2,
+     "budget": 100,
+     "long_budget": 300,
+     "spearman_budget_vs_long": 0.6042152207637002,
+     "ap_budget": 0.15756919724338841,
+     "ap_long": 0.14751095996486993,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "ae1svm",
+     "seed": 2,
+     "budget": 50,
+     "long_budget": 150,
+     "spearman_budget_vs_long": 0.9463744154754705,
+     "ap_budget": 0.13357267769788228,
+     "ap_long": 0.09084879578970337,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "lunar",
+     "seed": 2,
+     "budget": 200,
+     "long_budget": 600,
+     "spearman_budget_vs_long": 1.0,
+     "ap_budget": 0.2735410429305536,
+     "ap_long": 0.2735410429305536,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "autoencoder",
+     "seed": 2,
+     "settings": {
+      "contamination": 0.0626118067978533,
+      "hidden_layer_sizes": [
+       32,
+       16,
+       32
+      ],
+      "max_iter": 300,
+      "n_iter": 300,
+      "converged": false,
+      "random_state": 2,
+      "device": "cpu",
+      "versions": {
+       "scikit-learn": "1.9.1",
+       "numpy": "2.4.6"
+      }
+     }
+    }
+   ],
+   "dif_seed_spearman_old_invalid": [
+    0.3147867150471362
+   ],
+   "dif_seed_spearman": [
+    0.7271723467421308,
+    0.7622050730047396,
+    0.7389043212555773
+   ]
+  },
+  {
+   "problem": "uci:161",
+   "rows": 573,
+   "runs": [
+    {
+     "detector": "vae",
+     "seed": 42,
+     "budget": 30,
+     "long_budget": 90,
+     "spearman_budget_vs_long": 0.873598157308462,
+     "ap_budget": 0.15186591898792623,
+     "ap_long": 0.1766436357271521,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "deep_svdd",
+     "seed": 42,
+     "budget": 100,
+     "long_budget": 300,
+     "spearman_budget_vs_long": 0.8402182532190462,
+     "ap_budget": 0.13600721531145316,
+     "ap_long": 0.16751946693538478,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "ae1svm",
+     "seed": 42,
+     "budget": 50,
+     "long_budget": 150,
+     "spearman_budget_vs_long": 0.9278593814900125,
+     "ap_budget": 0.11040258830487593,
+     "ap_long": 0.09657591414091096,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "lunar",
+     "seed": 42,
+     "budget": 200,
+     "long_budget": 600,
+     "spearman_budget_vs_long": 1.0,
+     "ap_budget": 0.13446948964190344,
+     "ap_long": 0.13446948964190344,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "autoencoder",
+     "seed": 42,
+     "settings": {
+      "contamination": 0.1,
+      "hidden_layer_sizes": [
+       5,
+       2,
+       5
+      ],
+      "max_iter": 300,
+      "n_iter": 300,
+      "converged": false,
+      "random_state": 42,
+      "device": "cpu",
+      "versions": {
+       "scikit-learn": "1.9.1",
+       "numpy": "2.4.6"
+      }
+     }
+    },
+    {
+     "detector": "vae",
+     "seed": 1,
+     "budget": 30,
+     "long_budget": 90,
+     "spearman_budget_vs_long": 0.9464548352657475,
+     "ap_budget": 0.3051001746123697,
+     "ap_long": 0.2834677339897298,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "deep_svdd",
+     "seed": 1,
+     "budget": 100,
+     "long_budget": 300,
+     "spearman_budget_vs_long": 0.8725278663312006,
+     "ap_budget": 0.3338259441707717,
+     "ap_long": 0.28318795105953853,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "ae1svm",
+     "seed": 1,
+     "budget": 50,
+     "long_budget": 150,
+     "spearman_budget_vs_long": 0.9854266367036724,
+     "ap_budget": 0.15399675518366174,
+     "ap_long": 0.17659295168673567,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "lunar",
+     "seed": 1,
+     "budget": 200,
+     "long_budget": 600,
+     "spearman_budget_vs_long": 0.9500013149256082,
+     "ap_budget": 0.22857559107559108,
+     "ap_long": 0.2314463331957422,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "autoencoder",
+     "seed": 1,
+     "settings": {
+      "contamination": 0.10152284263959391,
+      "hidden_layer_sizes": [
+       5,
+       2,
+       5
+      ],
+      "max_iter": 300,
+      "n_iter": 300,
+      "converged": false,
+      "random_state": 1,
+      "device": "cpu",
+      "versions": {
+       "scikit-learn": "1.9.1",
+       "numpy": "2.4.6"
+      }
+     }
+    },
+    {
+     "detector": "vae",
+     "seed": 2,
+     "budget": 30,
+     "long_budget": 90,
+     "spearman_budget_vs_long": 0.8456759818731119,
+     "ap_budget": 0.17955715091175234,
+     "ap_long": 0.26559873079882723,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "deep_svdd",
+     "seed": 2,
+     "budget": 100,
+     "long_budget": 300,
+     "spearman_budget_vs_long": 0.8643882175226586,
+     "ap_budget": 0.18248394117959335,
+     "ap_long": 0.17002338111012538,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "ae1svm",
+     "seed": 2,
+     "budget": 50,
+     "long_budget": 150,
+     "spearman_budget_vs_long": 0.9406910876132933,
+     "ap_budget": 0.11810692507928452,
+     "ap_long": 0.09273382510415279,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "lunar",
+     "seed": 2,
+     "budget": 200,
+     "long_budget": 600,
+     "spearman_budget_vs_long": 1.0,
+     "ap_budget": 0.32470478284229676,
+     "ap_long": 0.32470478284229676,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "autoencoder",
+     "seed": 2,
+     "settings": {
+      "contamination": 0.10224438902743142,
+      "hidden_layer_sizes": [
+       5,
+       2,
+       5
+      ],
+      "max_iter": 300,
+      "n_iter": 300,
+      "converged": false,
+      "random_state": 2,
+      "device": "cpu",
+      "versions": {
+       "scikit-learn": "1.9.1",
+       "numpy": "2.4.6"
+      }
+     }
+    }
+   ],
+   "dif_seed_spearman_old_invalid": [
+    0.21487170323162527
+   ],
+   "dif_seed_spearman": [
+    0.9849526111090133,
+    0.9795718007778575,
+    0.9923724653551336
+   ]
+  },
+  {
+   "problem": "uci:267",
+   "rows": 847,
+   "runs": [
+    {
+     "detector": "vae",
+     "seed": 42,
+     "budget": 30,
+     "long_budget": 90,
+     "spearman_budget_vs_long": 0.8885887874012057,
+     "ap_budget": 0.7126836126836127,
+     "ap_long": 0.72638326585695,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "deep_svdd",
+     "seed": 42,
+     "budget": 100,
+     "long_budget": 300,
+     "spearman_budget_vs_long": 0.8580233532337725,
+     "ap_budget": 0.17258070584612295,
+     "ap_long": 0.12408222842322517,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "ae1svm",
+     "seed": 42,
+     "budget": 50,
+     "long_budget": 150,
+     "spearman_budget_vs_long": 0.9901220391017266,
+     "ap_budget": 0.4535018825851765,
+     "ap_long": 0.43757577686964094,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "lunar",
+     "seed": 42,
+     "budget": 200,
+     "long_budget": 600,
+     "spearman_budget_vs_long": 1.0,
+     "ap_budget": 0.8897728452384321,
+     "ap_long": 0.8897728452384321,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "autoencoder",
+     "seed": 42,
+     "settings": {
+      "contamination": 0.100169779286927,
+      "hidden_layer_sizes": [
+       4,
+       2,
+       4
+      ],
+      "max_iter": 300,
+      "n_iter": 300,
+      "converged": false,
+      "random_state": 42,
+      "device": "cpu",
+      "versions": {
+       "scikit-learn": "1.9.1",
+       "numpy": "2.4.6"
+      }
+     }
+    },
+    {
+     "detector": "vae",
+     "seed": 1,
+     "budget": 30,
+     "long_budget": 90,
+     "spearman_budget_vs_long": 0.9484307685737315,
+     "ap_budget": 0.4610736184105749,
+     "ap_long": 0.44930363672002466,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "deep_svdd",
+     "seed": 1,
+     "budget": 100,
+     "long_budget": 300,
+     "spearman_budget_vs_long": 0.7657336870932783,
+     "ap_budget": 0.14642012870113807,
+     "ap_long": 0.11798064855943544,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "ae1svm",
+     "seed": 1,
+     "budget": 50,
+     "long_budget": 150,
+     "spearman_budget_vs_long": 0.9832266537120768,
+     "ap_budget": 0.38165857211496007,
+     "ap_long": 0.38520732490398535,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "lunar",
+     "seed": 1,
+     "budget": 200,
+     "long_budget": 600,
+     "spearman_budget_vs_long": 0.9999999999999998,
+     "ap_budget": 0.5051516156041043,
+     "ap_long": 0.5051516156041043,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "autoencoder",
+     "seed": 1,
+     "settings": {
+      "contamination": 0.1,
+      "hidden_layer_sizes": [
+       4,
+       2,
+       4
+      ],
+      "max_iter": 300,
+      "n_iter": 300,
+      "converged": false,
+      "random_state": 1,
+      "device": "cpu",
+      "versions": {
+       "scikit-learn": "1.9.1",
+       "numpy": "2.4.6"
+      }
+     }
+    },
+    {
+     "detector": "vae",
+     "seed": 2,
+     "budget": 30,
+     "long_budget": 90,
+     "spearman_budget_vs_long": 0.9323477151187577,
+     "ap_budget": 0.44535767503983825,
+     "ap_long": 0.4430083833929988,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "deep_svdd",
+     "seed": 2,
+     "budget": 100,
+     "long_budget": 300,
+     "spearman_budget_vs_long": 0.8173239521249351,
+     "ap_budget": 0.11234533964476418,
+     "ap_long": 0.0846985510185011,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "ae1svm",
+     "seed": 2,
+     "budget": 50,
+     "long_budget": 150,
+     "spearman_budget_vs_long": 0.9949870240605675,
+     "ap_budget": 0.34156777080552037,
+     "ap_long": 0.33584345239262225,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "lunar",
+     "seed": 2,
+     "budget": 200,
+     "long_budget": 600,
+     "spearman_budget_vs_long": 0.8186802024647131,
+     "ap_budget": 0.7633075009673473,
+     "ap_long": 0.4451617576452218,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "autoencoder",
+     "seed": 2,
+     "settings": {
+      "contamination": 0.1,
+      "hidden_layer_sizes": [
+       4,
+       2,
+       4
+      ],
+      "max_iter": 300,
+      "n_iter": 300,
+      "converged": false,
+      "random_state": 2,
+      "device": "cpu",
+      "versions": {
+       "scikit-learn": "1.9.1",
+       "numpy": "2.4.6"
+      }
+     }
+    }
+   ],
+   "dif_seed_spearman_old_invalid": [],
+   "dif_seed_spearman": [
+    0.9669445697579724,
+    0.9705828934340268,
+    0.9331040584006609
+   ]
+  },
+  {
+   "problem": "uci:32",
+   "rows": 347,
+   "runs": [
+    {
+     "detector": "vae",
+     "seed": 42,
+     "budget": 30,
+     "long_budget": 90,
+     "spearman_budget_vs_long": 0.9968553459119496,
+     "ap_budget": 0.34083174083174084,
+     "ap_long": 0.344785575048733,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "deep_svdd",
+     "seed": 42,
+     "budget": 100,
+     "long_budget": 300,
+     "spearman_budget_vs_long": 0.8389775842606031,
+     "ap_budget": 0.40813108038914486,
+     "ap_long": 0.555921855921856,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "ae1svm",
+     "seed": 42,
+     "budget": 50,
+     "long_budget": 150,
+     "spearman_budget_vs_long": 0.9920980487018223,
+     "ap_budget": 0.34338624338624335,
+     "ap_long": 0.33817118553960657,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "lunar",
+     "seed": 42,
+     "budget": 200,
+     "long_budget": 600,
+     "spearman_budget_vs_long": 0.9999999999999999,
+     "ap_budget": 0.5413888888888888,
+     "ap_long": 0.5413888888888888,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "autoencoder",
+     "seed": 42,
+     "settings": {
+      "contamination": 0.09917355371900827,
+      "hidden_layer_sizes": [
+       75,
+       37,
+       75
+      ],
+      "max_iter": 300,
+      "n_iter": 300,
+      "converged": false,
+      "random_state": 42,
+      "device": "cpu",
+      "versions": {
+       "scikit-learn": "1.9.1",
+       "numpy": "2.4.6"
+      }
+     }
+    },
+    {
+     "detector": "vae",
+     "seed": 1,
+     "budget": 30,
+     "long_budget": 90,
+     "spearman_budget_vs_long": 0.9969359780680535,
+     "ap_budget": 0.18719094588659807,
+     "ap_long": 0.18731974864697976,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "deep_svdd",
+     "seed": 1,
+     "budget": 100,
+     "long_budget": 300,
+     "spearman_budget_vs_long": 0.767134333172069,
+     "ap_budget": 0.26538232275422585,
+     "ap_long": 0.15704221567806367,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "ae1svm",
+     "seed": 1,
+     "budget": 50,
+     "long_budget": 150,
+     "spearman_budget_vs_long": 0.9825028221254636,
+     "ap_budget": 0.19371843434343433,
+     "ap_long": 0.19060616967951793,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "lunar",
+     "seed": 1,
+     "budget": 200,
+     "long_budget": 600,
+     "spearman_budget_vs_long": 0.9999999999999999,
+     "ap_budget": 0.2681156481651286,
+     "ap_long": 0.2681156481651286,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "autoencoder",
+     "seed": 1,
+     "settings": {
+      "contamination": 0.09917355371900827,
+      "hidden_layer_sizes": [
+       75,
+       37,
+       75
+      ],
+      "max_iter": 300,
+      "n_iter": 300,
+      "converged": false,
+      "random_state": 1,
+      "device": "cpu",
+      "versions": {
+       "scikit-learn": "1.9.1",
+       "numpy": "2.4.6"
+      }
+     }
+    },
+    {
+     "detector": "vae",
+     "seed": 2,
+     "budget": 30,
+     "long_budget": 90,
+     "spearman_budget_vs_long": 0.9975810353168844,
+     "ap_budget": 0.3507122507122507,
+     "ap_long": 0.349737591842855,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "deep_svdd",
+     "seed": 2,
+     "budget": 100,
+     "long_budget": 300,
+     "spearman_budget_vs_long": 0.7875342686663441,
+     "ap_budget": 0.40777017899358325,
+     "ap_long": 0.42071426271658086,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "ae1svm",
+     "seed": 2,
+     "budget": 50,
+     "long_budget": 150,
+     "spearman_budget_vs_long": 0.9870988550233832,
+     "ap_budget": 0.35218156381839244,
+     "ap_long": 0.3586231928668904,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "lunar",
+     "seed": 2,
+     "budget": 200,
+     "long_budget": 600,
+     "spearman_budget_vs_long": 0.9887921303015642,
+     "ap_budget": 0.431197829195326,
+     "ap_long": 0.43344015682128534,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "autoencoder",
+     "seed": 2,
+     "settings": {
+      "contamination": 0.09917355371900827,
+      "hidden_layer_sizes": [
+       74,
+       37,
+       74
+      ],
+      "max_iter": 300,
+      "n_iter": 300,
+      "converged": false,
+      "random_state": 2,
+      "device": "cpu",
+      "versions": {
+       "scikit-learn": "1.9.1",
+       "numpy": "2.4.6"
+      }
+     }
+    }
+   ],
+   "dif_seed_spearman_old_invalid": [
+    0.060070956297371386,
+    0.18150298338977583,
+    0.36276407031124014
+   ],
+   "dif_seed_spearman": [
+    0.814707305273343,
+    0.7537493952588291,
+    0.8432510885341072
+   ]
+  },
+  {
+   "problem": "uci:379",
+   "rows": 1353,
+   "runs": [
+    {
+     "detector": "vae",
+     "seed": 42,
+     "budget": 30,
+     "long_budget": 90,
+     "spearman_budget_vs_long": 0.8322302267142954,
+     "ap_budget": 0.2179492134274743,
+     "ap_long": 0.16993254430961616,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "deep_svdd",
+     "seed": 42,
+     "budget": 100,
+     "long_budget": 300,
+     "spearman_budget_vs_long": 0.4670163156238924,
+     "ap_budget": 0.24359556360214304,
+     "ap_long": 0.2392216003361135,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "ae1svm",
+     "seed": 42,
+     "budget": 50,
+     "long_budget": 150,
+     "spearman_budget_vs_long": 0.9381523561481269,
+     "ap_budget": 0.22877543870354466,
+     "ap_long": 0.2709765031911716,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "lunar",
+     "seed": 42,
+     "budget": 200,
+     "long_budget": 600,
+     "spearman_budget_vs_long": 0.9986540959605036,
+     "ap_budget": 0.13942791000926827,
+     "ap_long": 0.1398798490055344,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "autoencoder",
+     "seed": 42,
+     "settings": {
+      "contamination": 0.07301587301587302,
+      "hidden_layer_sizes": [
+       9,
+       4,
+       9
+      ],
+      "max_iter": 300,
+      "n_iter": 300,
+      "converged": false,
+      "random_state": 42,
+      "device": "cpu",
+      "versions": {
+       "scikit-learn": "1.9.1",
+       "numpy": "2.4.6"
+      }
+     }
+    },
+    {
+     "detector": "vae",
+     "seed": 1,
+     "budget": 30,
+     "long_budget": 90,
+     "spearman_budget_vs_long": 0.9054205948928761,
+     "ap_budget": 0.1146020979945727,
+     "ap_long": 0.10411092315248746,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "deep_svdd",
+     "seed": 1,
+     "budget": 100,
+     "long_budget": 300,
+     "spearman_budget_vs_long": 0.6452265721551959,
+     "ap_budget": 0.3975697515848444,
+     "ap_long": 0.2543032222554975,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "ae1svm",
+     "seed": 1,
+     "budget": 50,
+     "long_budget": 150,
+     "spearman_budget_vs_long": 0.9127786210877477,
+     "ap_budget": 0.07135276215324429,
+     "ap_long": 0.06025360347113275,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "lunar",
+     "seed": 1,
+     "budget": 200,
+     "long_budget": 600,
+     "spearman_budget_vs_long": 1.0,
+     "ap_budget": 0.17507675921269755,
+     "ap_long": 0.17507675921269755,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "autoencoder",
+     "seed": 1,
+     "settings": {
+      "contamination": 0.08128342245989305,
+      "hidden_layer_sizes": [
+       9,
+       4,
+       9
+      ],
+      "max_iter": 300,
+      "n_iter": 300,
+      "converged": false,
+      "random_state": 1,
+      "device": "cpu",
+      "versions": {
+       "scikit-learn": "1.9.1",
+       "numpy": "2.4.6"
+      }
+     }
+    },
+    {
+     "detector": "vae",
+     "seed": 2,
+     "budget": 30,
+     "long_budget": 90,
+     "spearman_budget_vs_long": 0.8708520356963784,
+     "ap_budget": 0.11257048807650853,
+     "ap_long": 0.09001846283174662,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "deep_svdd",
+     "seed": 2,
+     "budget": 100,
+     "long_budget": 300,
+     "spearman_budget_vs_long": 0.713492645524834,
+     "ap_budget": 0.16610277108427052,
+     "ap_long": 0.08410300377371989,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "ae1svm",
+     "seed": 2,
+     "budget": 50,
+     "long_budget": 150,
+     "spearman_budget_vs_long": 0.9107873414910642,
+     "ap_budget": 0.0996885405924818,
+     "ap_long": 0.08701636910201611,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "lunar",
+     "seed": 2,
+     "budget": 200,
+     "long_budget": 600,
+     "spearman_budget_vs_long": 1.0,
+     "ap_budget": 0.12182330495625904,
+     "ap_long": 0.12182330495625904,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "autoencoder",
+     "seed": 2,
+     "settings": {
+      "contamination": 0.07838983050847458,
+      "hidden_layer_sizes": [
+       9,
+       4,
+       9
+      ],
+      "max_iter": 300,
+      "n_iter": 300,
+      "converged": false,
+      "random_state": 2,
+      "device": "cpu",
+      "versions": {
+       "scikit-learn": "1.9.1",
+       "numpy": "2.4.6"
+      }
+     }
+    }
+   ],
+   "dif_seed_spearman_old_invalid": [],
+   "dif_seed_spearman": [
+    0.8348386557232118,
+    0.7626508806932447,
+    0.8549215679246861
+   ]
+  },
+  {
+   "problem": "uci:563",
+   "rows": 2950,
+   "runs": [
+    {
+     "detector": "vae",
+     "seed": 42,
+     "budget": 30,
+     "long_budget": 90,
+     "spearman_budget_vs_long": 0.8311239023126015,
+     "ap_budget": 0.14211861865350497,
+     "ap_long": 0.19418408060630396,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "deep_svdd",
+     "seed": 42,
+     "budget": 100,
+     "long_budget": 300,
+     "spearman_budget_vs_long": 0.6706919544337567,
+     "ap_budget": 0.1621557054924543,
+     "ap_long": 0.13145069348623856,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "ae1svm",
+     "seed": 42,
+     "budget": 50,
+     "long_budget": 150,
+     "spearman_budget_vs_long": 0.9294841056907214,
+     "ap_budget": 0.14831996254174368,
+     "ap_long": 0.16296122445056654,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "lunar",
+     "seed": 42,
+     "budget": 200,
+     "long_budget": 600,
+     "spearman_budget_vs_long": 0.9637553667835845,
+     "ap_budget": 0.12249734932102659,
+     "ap_long": 0.12155013760693766,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "autoencoder",
+     "seed": 42,
+     "settings": {
+      "contamination": 0.10043248438250842,
+      "hidden_layer_sizes": [
+       13,
+       6,
+       13
+      ],
+      "max_iter": 300,
+      "n_iter": 266,
+      "converged": true,
+      "random_state": 42,
+      "device": "cpu",
+      "versions": {
+       "scikit-learn": "1.9.1",
+       "numpy": "2.4.6"
+      }
+     }
+    },
+    {
+     "detector": "vae",
+     "seed": 1,
+     "budget": 30,
+     "long_budget": 90,
+     "spearman_budget_vs_long": 0.8383903624954918,
+     "ap_budget": 0.1387159185166859,
+     "ap_long": 0.12408459297774309,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "deep_svdd",
+     "seed": 1,
+     "budget": 100,
+     "long_budget": 300,
+     "spearman_budget_vs_long": 0.6191342196339603,
+     "ap_budget": 0.1418916077495801,
+     "ap_long": 0.13820562523730523,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "ae1svm",
+     "seed": 1,
+     "budget": 50,
+     "long_budget": 150,
+     "spearman_budget_vs_long": 0.8621158317373966,
+     "ap_budget": 0.19050760761482521,
+     "ap_long": 0.1976205712317369,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "lunar",
+     "seed": 1,
+     "budget": 200,
+     "long_budget": 600,
+     "spearman_budget_vs_long": 1.0,
+     "ap_budget": 0.15311639306609592,
+     "ap_long": 0.15311639306609592,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "autoencoder",
+     "seed": 1,
+     "settings": {
+      "contamination": 0.09707317073170732,
+      "hidden_layer_sizes": [
+       13,
+       6,
+       13
+      ],
+      "max_iter": 300,
+      "n_iter": 300,
+      "converged": false,
+      "random_state": 1,
+      "device": "cpu",
+      "versions": {
+       "scikit-learn": "1.9.1",
+       "numpy": "2.4.6"
+      }
+     }
+    },
+    {
+     "detector": "vae",
+     "seed": 2,
+     "budget": 30,
+     "long_budget": 90,
+     "spearman_budget_vs_long": 0.858188644206148,
+     "ap_budget": 0.14835020442071836,
+     "ap_long": 0.16310466066030896,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "deep_svdd",
+     "seed": 2,
+     "budget": 100,
+     "long_budget": 300,
+     "spearman_budget_vs_long": 0.3251722768141421,
+     "ap_budget": 0.3544946938361922,
+     "ap_long": 0.16207046727068955,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "ae1svm",
+     "seed": 2,
+     "budget": 50,
+     "long_budget": 150,
+     "spearman_budget_vs_long": 0.9303602456547502,
+     "ap_budget": 0.16333048254496912,
+     "ap_long": 0.2037553918718043,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "lunar",
+     "seed": 2,
+     "budget": 200,
+     "long_budget": 600,
+     "spearman_budget_vs_long": 0.9849906477971674,
+     "ap_budget": 0.10498339559115151,
+     "ap_long": 0.10484236370148525,
+     "nonfinite": 0,
+     "warnings": []
+    },
+    {
+     "detector": "autoencoder",
+     "seed": 2,
+     "settings": {
+      "contamination": 0.09912109375,
+      "hidden_layer_sizes": [
+       13,
+       6,
+       13
+      ],
+      "max_iter": 300,
+      "n_iter": 300,
+      "converged": false,
+      "random_state": 2,
+      "device": "cpu",
+      "versions": {
+       "scikit-learn": "1.9.1",
+       "numpy": "2.4.6"
+      }
+     }
+    }
+   ],
+   "dif_seed_spearman_old_invalid": [],
+   "dif_seed_spearman": [
+    0.96121442529747,
+    0.9490633549977282,
+    0.9483996126569049
+   ]
+  }
+ ],
+ "note": "dif_seed_spearman recomputed on one fixed partition; *_old_invalid compared different test partitions and is not meaningful."
+}

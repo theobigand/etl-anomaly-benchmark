@@ -59,6 +59,8 @@ implementation `edc3592`. The tests detect historical label-dependent filtering 
 protect the explicit new path. T062/T063 remain open for historical partition
 recovery and replay; testing the defect does not resolve every existing pipeline.
 
+Status of T062/T063 (2026-11-19): the labelled pool (100 problems, 17 detectors, 5 seeds) was replayed on the train-only path and paired with the archived results ([protocol and results](POOL_TRAIN_ONLY_REPLAY_2026-11-18.md)). The corrected path is train-only by construction and tested; the historical path is not, and the replay shows its effect on AP is small for most problems and above 0.05 for 4-12%. The injection, synthetic and temporal studies were not replayed, so both items stay open.
+
 Evidence for T056–T061: [standard and typed ETL paths](ETL_PATHS_2026-11-07.md), aligned with `pipeline.py`, `typed_benchmark.py` and the baseline tests.
 
 Evidence for T065–T070: [preprocessing and information audit](PREPROCESSING_INFORMATION_AUDIT_2026-11-07.md), with the historical/prospective boundary retained.

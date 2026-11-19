@@ -1,0 +1,395 @@
+{
+ "errors": [],
+ "metrics": {
+  "ae1svm": [
+   {
+    "f1": 0.2,
+    "flagged_pct": 9.523809523809524,
+    "pr_auc": 0.15918003565062389,
+    "precision": 0.16666666666666666,
+    "recall": 0.25,
+    "roc_auc": 0.6864406779661016,
+    "seed": 42
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 6.349206349206349,
+    "pr_auc": 0.06453581432573029,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.38983050847457623,
+    "seed": 1
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 11.11111111111111,
+    "pr_auc": 0.06750205362905591,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.3898305084745763,
+    "seed": 2
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 6.349206349206349,
+    "pr_auc": 0.08368542057874717,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5338983050847458,
+    "seed": 3
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 4.761904761904762,
+    "pr_auc": 0.05542136290692509,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.31355932203389836,
+    "seed": 4
+   }
+  ],
+  "autoencoder": [
+   {
+    "f1": 0.15384615384615385,
+    "flagged_pct": 14.285714285714285,
+    "pr_auc": 0.1574242424242424,
+    "precision": 0.1111111111111111,
+    "recall": 0.25,
+    "roc_auc": 0.7584745762711865,
+    "seed": 42
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 9.523809523809524,
+    "pr_auc": 0.09138235373379686,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.521186440677966,
+    "seed": 1
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 9.523809523809524,
+    "pr_auc": 0.0673408189033189,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4194915254237288,
+    "seed": 2
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 17.46031746031746,
+    "pr_auc": 0.07703127768917242,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5211864406779662,
+    "seed": 3
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 12.698412698412698,
+    "pr_auc": 0.07277526395173455,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4788135593220339,
+    "seed": 4
+   }
+  ],
+  "deep_svdd": [
+   {
+    "f1": 0.15384615384615385,
+    "flagged_pct": 14.285714285714285,
+    "pr_auc": 0.1882615629984051,
+    "precision": 0.1111111111111111,
+    "recall": 0.25,
+    "roc_auc": 0.6906779661016949,
+    "seed": 42
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 20.634920634920633,
+    "pr_auc": 0.06813007175910402,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4491525423728813,
+    "seed": 1
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 19.047619047619047,
+    "pr_auc": 0.06566110397946084,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4194915254237288,
+    "seed": 2
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 19.047619047619047,
+    "pr_auc": 0.0896379662004662,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5932203389830508,
+    "seed": 3
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 15.873015873015872,
+    "pr_auc": 0.06978502126528442,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4279661016949152,
+    "seed": 4
+   }
+  ],
+  "dif": [
+   {
+    "f1": 0.26666666666666666,
+    "flagged_pct": 17.46031746031746,
+    "pr_auc": 0.13839285714285715,
+    "precision": 0.18181818181818182,
+    "recall": 0.5,
+    "roc_auc": 0.6779661016949152,
+    "seed": 42
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 23.809523809523807,
+    "pr_auc": 0.06861729404035062,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.43220338983050843,
+    "seed": 1
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 26.984126984126984,
+    "pr_auc": 0.0614778985789624,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.3644067796610169,
+    "seed": 2
+   },
+   {
+    "f1": 0.09090909090909091,
+    "flagged_pct": 28.57142857142857,
+    "pr_auc": 0.08918781328320802,
+    "precision": 0.05555555555555555,
+    "recall": 0.25,
+    "roc_auc": 0.5805084745762712,
+    "seed": 3
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 22.22222222222222,
+    "pr_auc": 0.0571571594521888,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.3347457627118644,
+    "seed": 4
+   }
+  ],
+  "lunar": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 3.1746031746031744,
+    "pr_auc": 0.107010582010582,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.6059322033898304,
+    "seed": 42
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 3.1746031746031744,
+    "pr_auc": 0.09722222222222222,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5508474576271185,
+    "seed": 1
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 7.936507936507936,
+    "pr_auc": 0.057999870499870494,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.3516949152542373,
+    "seed": 2
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 11.11111111111111,
+    "pr_auc": 0.09963211558583228,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.6398305084745762,
+    "seed": 3
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 9.523809523809524,
+    "pr_auc": 0.05960772466881489,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.3686440677966102,
+    "seed": 4
+   }
+  ],
+  "vae": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 7.936507936507936,
+    "pr_auc": 0.13012820512820514,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.6440677966101696,
+    "seed": 42
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 3.1746031746031744,
+    "pr_auc": 0.07442621192621193,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4661016949152542,
+    "seed": 1
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 12.698412698412698,
+    "pr_auc": 0.06432991393211711,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.3728813559322034,
+    "seed": 2
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 9.523809523809524,
+    "pr_auc": 0.0775,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4830508474576271,
+    "seed": 3
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 7.936507936507936,
+    "pr_auc": 0.052031740495291245,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.2584745762711865,
+    "seed": 4
+   }
+  ]
+ },
+ "preparation": [
+  {
+   "categorical": 6,
+   "dropped": {
+    "cardinality": 2,
+    "constant": 0,
+    "missing": 0
+   },
+   "numeric": 9,
+   "prevalence": {
+    "test": 0.06349206349206349,
+    "train": 0.05821917808219178,
+    "validation": 0.06349206349206349
+   },
+   "rows": {
+    "test": 63,
+    "train": 292,
+    "validation": 63
+   },
+   "seed": 42
+  },
+  {
+   "categorical": 6,
+   "dropped": {
+    "cardinality": 2,
+    "constant": 0,
+    "missing": 0
+   },
+   "numeric": 9,
+   "prevalence": {
+    "test": 0.06349206349206349,
+    "train": 0.05821917808219178,
+    "validation": 0.06349206349206349
+   },
+   "rows": {
+    "test": 63,
+    "train": 292,
+    "validation": 63
+   },
+   "seed": 1
+  },
+  {
+   "categorical": 6,
+   "dropped": {
+    "cardinality": 2,
+    "constant": 0,
+    "missing": 0
+   },
+   "numeric": 9,
+   "prevalence": {
+    "test": 0.06349206349206349,
+    "train": 0.05821917808219178,
+    "validation": 0.06349206349206349
+   },
+   "rows": {
+    "test": 63,
+    "train": 292,
+    "validation": 63
+   },
+   "seed": 2
+  },
+  {
+   "categorical": 6,
+   "dropped": {
+    "cardinality": 2,
+    "constant": 0,
+    "missing": 0
+   },
+   "numeric": 9,
+   "prevalence": {
+    "test": 0.06349206349206349,
+    "train": 0.05821917808219178,
+    "validation": 0.06349206349206349
+   },
+   "rows": {
+    "test": 63,
+    "train": 292,
+    "validation": 63
+   },
+   "seed": 3
+  },
+  {
+   "categorical": 6,
+   "dropped": {
+    "cardinality": 2,
+    "constant": 0,
+    "missing": 0
+   },
+   "numeric": 9,
+   "prevalence": {
+    "test": 0.06349206349206349,
+    "train": 0.05821917808219178,
+    "validation": 0.06349206349206349
+   },
+   "rows": {
+    "test": 63,
+    "train": 292,
+    "validation": 63
+   },
+   "seed": 4
+  }
+ ],
+ "prevalence": 0.05980861244019139,
+ "problem": "uci:878",
+ "protocol": "pool-train-only-replay-v1",
+ "rows": 418,
+ "skipped": [],
+ "source": "uci"
+}

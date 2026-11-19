@@ -284,6 +284,18 @@
       "level": "L4",
       "reason": "Training-only schema/statistics and cross-fold validation prevent evaluation leakage."
     },
+    "research/pool_train_only_compare.py": {
+      "level": "L3",
+      "reason": "Paired differences, bootstrap intervals and denominators summarize the train-only replay against the archive; the numbers feed thesis statements but no fitted state."
+    },
+    "research/neural_budget_probe.py": {
+      "level": "L2",
+      "reason": "Bounded diagnostic probe for the neural budget-sufficiency note; reports paired score agreement and does not feed model selection. Classified by the implementer and open to owner reclassification."
+    },
+    "research/pool_train_only_replay.py": {
+      "level": "L3",
+      "reason": "The group-preserving split defines which rows are evaluated in the train-only replay; leakage guarantees themselves are enforced by the L4 preparation it calls. Exploratory protocol, classified by the implementer and open to owner reclassification."
+    },
     "research/pool_train_only.py": {
       "level": "L4",
       "reason": "Target exclusion, source-bound partitions and training-prevalence calibration enforce label isolation."
