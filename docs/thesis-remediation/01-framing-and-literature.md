@@ -6,45 +6,47 @@ Preserve original hypotheses, negative results, sealed artifacts, and source pro
 
 ## 01. Abstract and headline claims (P0; Thesis 01)
 
-- [ ] T001 Remove the claim that detector families are interchangeable.
+- [x] T001 Remove the claim that detector families are interchangeable.
 - [x] T002 State that no detector dominates uniformly across evaluated datasets.
 - [x] T003 Do not treat overlapping confidence intervals as evidence of equivalence.
-- [ ] T004 Use Average Precision (AP), not PR-AUC, if the implementation computes average_precision_score.
+- [x] T004 Use Average Precision (AP), not PR-AUC, if the implementation computes average_precision_score.
 - [x] T005 Limit neural-model conclusions to the tested out-of-the-box CPU configuration.
 - [x] T006 State the 20,000-row training cap wherever it applies.
 - [x] T007 Qualify type-specific findings by numeric-only ML preprocessing and generic Great Expectations rules.
-- [ ] T008 Distinguish the 100 labelled problems from the 58 typed-injection tables.
-- [ ] T009 Report the 17-detector registry accurately: three rules, eight classical, six neural.
-- [ ] T010 Keep the LSTM and drift pilots outside the 17-detector registry.
+- [x] T008 Distinguish the 100 labelled problems from the 58 typed-injection tables.
+- [x] T009 Report the 17-detector registry accurately: three rules, eight classical, six neural.
+- [x] T010 Keep the LSTM and drift pilots outside the 17-detector registry.
 - [x] T011 Replace general neural-cost claims with architecture-specific conclusions.
-- [ ] T012 Rewrite the abstract after corrected analyses; remove superseded claims.
+- [x] T012 Rewrite the abstract after corrected analyses; remove superseded claims.
 
 ## 02. Introduction and research questions (P0; Thesis 01)
 
-- [ ] T013 Define the ETL data-quality problem precisely.
+- [x] T013 Define the ETL data-quality problem precisely.
 - [x] T014 Distinguish statistical outliers from actual data-quality defects.
-- [ ] T015 Explain limitations of rules, statistics, classical ML, and deep learning.
-- [ ] T016 State the specific gap addressed in prior research.
-- [ ] T017 Present the 17 detectors as one coherent experimental registry.
-- [ ] T018 Remove chronological Git-commit narratives about registry expansion.
-- [ ] T019 Clarify research questions RQ1 through RQ4.
-- [ ] T020 Map each research question to protocols and metrics.
-- [ ] T021 State the demonstrated contributions: operational comparison, typed faults, thresholds, temporal shift, and cost.
-- [ ] T022 Do not present dataset count as the principal novelty.
+- [x] T015 Explain limitations of rules, statistics, classical ML, and deep learning.
+- [x] T016 State the specific gap addressed in prior research.
+- [x] T017 Present the 17 detectors as one coherent experimental registry.
+- [x] T018 Remove chronological Git-commit narratives about registry expansion.
+- [x] T019 Clarify research questions RQ1 through RQ4.
+- [x] T020 Map each research question to protocols and metrics.
+- [x] T021 State the demonstrated contributions: operational comparison, typed faults, thresholds, temporal shift, and cost.
+- [x] T022 Do not present dataset count as the principal novelty.
 - [x] T023 Define whether the setting covers batch ETL, streaming, or both.
 - [x] T024 Define deployability: label access, thresholding, cost, stability, maintenance, and false positives.
-- [ ] T025 Review whether the title reflects ETL data-quality evaluation accurately.
+- [x] T025 Review whether the title reflects ETL data-quality evaluation accurately.
 
 ## 03. Related work and source verification (P0; Thesis 01)
 
-- [ ] T026 Read the full Agyemang (2024) article before describing its methods and limitations.
-- [ ] T027 Remove "I read the abstract only".
-- [ ] T028 Correct "not stated in the abstract" in Table I.
-- [ ] T029 Review verified 2025–2026 tabular anomaly-detection benchmarks.
+- [x] T026 Read the full Agyemang (2024) article before describing its methods and limitations.
+- [x] T027 Remove "I read the abstract only".
+- [x] T028 Correct "not stated in the abstract" in Table I.
+- [x] T029 Review verified 2025–2026 tabular anomaly-detection benchmarks.
 - [x] T030 Verify the proposed MacrOData reference, publication, authors, dataset counts, and conclusions before citing it.
 - [x] T031 Verify the proposed 2025 enterprise-ETL autoencoder reference and its actual scope.
-- [ ] T032 Compare prior studies on detector families, datasets, faults, rules, drift, costs, and reproducibility.
-- [ ] T033 Explain the added value over ADBench and generic outlier benchmarks.
-- [ ] T034 Separate statistical outlier detection, data-quality validation, drift monitoring, and ETL integration.
-- [ ] T035 Check every bibliographic claim against the complete primary source.
-- [ ] T036 Remove unsupported comparisons based only on abstracts or secondary descriptions.
+- [x] T032 Compare prior studies on detector families, datasets, faults, rules, drift, costs, and reproducibility.
+- [x] T033 Explain the added value over ADBench and generic outlier benchmarks.
+- [x] T034 Separate statistical outlier detection, data-quality validation, drift monitoring, and ETL integration.
+- [x] T035 Check every bibliographic claim against the complete primary source.
+- [x] T036 Remove unsupported comparisons based only on abstracts or secondary descriptions.
+
+Evidence (2026-11-19): the manuscript abstract, introduction, Table I and related work were reconciled with the registry (17 detectors, 100 labelled problems, 58 injection tables, pilots outside the count). T026-T028: the full text of Agyemang (2024) was read from the University of Ghana repository copy (publisher page answers 403); the abstract-only wording was replaced by what the article reports and its stated limits. T035/T036: the full texts of Malhotra et al., Sun et al. and MacrOData were read as well; per-source reading status is in `verification/references.md`. Citations of algorithms (Isolation Forest, LOF, ECOD, ...) support existence of the method only and carry no comparative claim. T025: the title was reviewed and kept, since it names the three families and the setting the paper evaluates.

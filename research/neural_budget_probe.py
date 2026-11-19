@@ -68,8 +68,7 @@ def probe_problem(job: dict) -> dict:
     for seed in SEEDS:
         parts = grouped_split(frame, labels, seed)
         prepared = prepare_frozen(frame, parts)
-        names = [f"f{i}" for i in range(prepared["train"].shape[1])]
-        train, test = (pd.DataFrame(prepared[k], columns=names) for k in ("train", "test"))
+        train, test = prepared["train"], prepared["test"]
         y = labels[parts["test"]]
         contamination = clip_contamination(float(labels[parts["train"]].mean()))
         for name, (arg, default, cls) in BUDGETS.items():
@@ -104,8 +103,7 @@ def dif_seed_spearman(frame: pd.DataFrame, labels: np.ndarray) -> list[float]:
     """Pairwise rank correlation of DIF scores across model seeds on ONE fixed partition."""
     parts = grouped_split(frame, labels, SEEDS[0])
     prepared = prepare_frozen(frame, parts)
-    names = [f"f{i}" for i in range(prepared["train"].shape[1])]
-    train, test = (pd.DataFrame(prepared[k], columns=names) for k in ("train", "test"))
+    train, test = prepared["train"], prepared["test"]
     contamination = clip_contamination(float(labels[parts["train"]].mean()))
     scores = {}
     for seed in SEEDS:
