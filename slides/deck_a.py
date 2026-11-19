@@ -801,7 +801,7 @@ slide(
                 1152,
                 None,
                 "",
-                "<div class='k anom'>Still outstanding</div><p style='font-size:20px;margin-top:8px'>Historical memberships were recomputed (not originally archived) and replay-validated: the Z-score reproduces all 100 archived per-seed results. <b>An exploratory train-only replay on the 100 labelled problems moves AP little for most, by over 0.05 for 4 to 12%.</b> The injection (58 tables) and chronological (5 datasets) studies were replayed too: effects are small except for PCA, the neural detectors on Credit Card and Bank Marketing, and the knife-edge H4. It does not validate the archived runs.</p>",
+                "<div class='k anom'>Still outstanding</div><p style='font-size:20px;margin-top:8px'>Historical memberships were recomputed (not originally archived) and replay-validated: the Z-score reproduces all 100 archived per-seed results. <b>An exploratory train-only replay on the 100 labelled problems moves AP little for most, by over 0.05 for 4 to 12%.</b> Injection and chronology replayed too. Archived runs not validated.</p>",
             ),
             foot(
                 "research/pool_preprocessing.py &nbsp;·&nbsp; pool_train_only.py &nbsp;·&nbsp; exploratory path"

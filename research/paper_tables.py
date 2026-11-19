@@ -324,20 +324,23 @@ def cost_row(label: str, summary: dict) -> str:
             cells.append("not run")
     memory = summary["points"][str(largest)]["rss_delta_bytes_median"] / 2**20
     note = f"$^{{{COST_FOOTNOTE[largest]}}}$" if largest in COST_FOOTNOTE else ""
-    return " & ".join(
-        [label, *cells, f"{summary['growth_exponent']:.2f}", f"{round(memory)}{note}"]
-    ) + r" \\"
+    return (
+        " & ".join([label, *cells, f"{summary['growth_exponent']:.2f}", f"{round(memory)}{note}"])
+        + r" \\"
+    )
 
 
 def cost_rows(evidence: Path = EVIDENCE) -> str:
-    """Rows of the cost table, from the two archived cost studies (the seven first, the ten later)."""
+    """Rows of the cost table, from the two archived cost studies."""
     summary: dict[str, dict] = {}
     for path in (
         evidence / "cost_study" / "cost_study.json",
         evidence / "full_registry" / "cost" / "cost_study.json",
     ):
         summary.update(json.loads(path.read_text())["summary"])
-    lines = [r"\midrule" if item is None else cost_row(item[0], summary[item[1]]) for item in COST_ORDER]
+    lines = [
+        r"\midrule" if item is None else cost_row(item[0], summary[item[1]]) for item in COST_ORDER
+    ]
     return "\n".join(lines)
 
 
@@ -421,8 +424,9 @@ def clustered_rows(evidence: Path = EVIDENCE) -> str:
     for item in analysis["comparisons"]:
         first, second = item["comparison"].split(" - ")
         lines.append(
-            rf"{NAMES[first]} $-$ {NAMES[second]} & {item['problems']} & {cell(item['by_problem'])} "
-            f"& {cell(item['by_source'])} & {item['holm_p_by_source']:.3f} \\\\"
+            rf"{NAMES[first]} $-$ {NAMES[second]} & {item['problems']} "
+            f"& {cell(item['by_problem'])} & {cell(item['by_source'])} "
+            f"& {item['holm_p_by_source']:.3f} \\\\"
         )
     return "\n".join(lines)
 

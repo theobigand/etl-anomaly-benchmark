@@ -28,7 +28,6 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path[:0] = [str(ROOT / "research"), str(ROOT / "src"), str(ROOT / "experiments")]
 
 import full_registry_summary as frs  # noqa: E402
-import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 from paper_tables import NAMES  # noqa: E402
 

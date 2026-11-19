@@ -77,7 +77,9 @@ def run_one(job: tuple[dict[str, Any], str, str], names: list[str] | None = None
         precisions.append(result["precision"])
         fprs.append(result["fpr"])
     mean = pd.concat(recalls, keys=range(len(recalls))).groupby(level=1, sort=False).mean()
-    precision = pd.concat(precisions, keys=range(len(precisions))).groupby(level=1, sort=False).mean()
+    precision = (
+        pd.concat(precisions, keys=range(len(precisions))).groupby(level=1, sort=False).mean()
+    )
     return {
         "protocol": PROTOCOL,
         "uci_id": meta["uci_id"],
@@ -98,7 +100,9 @@ def run_adbench(job: dict[str, Any], names: list[str] | None = None) -> dict[str
 
     carrier, report = pt.load_carrier(job)
     cols = list(carrier.columns)
-    results = [tb.evaluate(inject_train_only(carrier, seed), cols, seed, names) for seed in tr.SEEDS]
+    results = [
+        tb.evaluate(inject_train_only(carrier, seed), cols, seed, names) for seed in tr.SEEDS
+    ]
 
     def mean(key: str) -> dict:
         stack = pd.concat([r[key] for r in results], keys=range(len(results)))
@@ -112,7 +116,9 @@ def run_adbench(job: dict[str, Any], names: list[str] | None = None) -> dict[str
         "seeds": list(tr.SEEDS),
         "recall_mean": mean("recall"),
         "precision_mean": mean("precision"),
-        "fpr_mean": json.loads(pd.concat([r["fpr"] for r in results], axis=1).mean(axis=1).to_json()),
+        "fpr_mean": json.loads(
+            pd.concat([r["fpr"] for r in results], axis=1).mean(axis=1).to_json()
+        ),
     }
 
 
@@ -120,7 +126,9 @@ def _matrix(result: dict[str, Any]) -> pd.DataFrame:
     return pd.DataFrame(**result["recall_mean"])
 
 
-def compare(archive: dict[Any, dict[str, Any]], replay: dict[Any, dict[str, Any]]) -> dict[str, Any]:
+def compare(
+    archive: dict[Any, dict[str, Any]], replay: dict[Any, dict[str, Any]]
+) -> dict[str, Any]:
     """Paired difference replay minus archive of the mean recall, per method and anomaly type.
 
     The unit is the carrier; only carriers present in both are used. The interval is a percentile
@@ -130,8 +138,10 @@ def compare(archive: dict[Any, dict[str, Any]], replay: dict[Any, dict[str, Any]
     if not ids:
         raise ValueError("no carrier in common")
     diffs = np.stack(
-        [_matrix(replay[i]).sort_index().to_numpy() - _matrix(archive[i]).sort_index().to_numpy()
-         for i in ids]
+        [
+            _matrix(replay[i]).sort_index().to_numpy() - _matrix(archive[i]).sort_index().to_numpy()
+            for i in ids
+        ]
     )
     ref = _matrix(archive[ids[0]]).sort_index()
     rng = np.random.default_rng(0)

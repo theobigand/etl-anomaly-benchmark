@@ -65,8 +65,10 @@ SCHEMA_METHODS = [
 
 
 def schema_rows(evidence: Path) -> str:
-    """Rows of the two-schema table: mean recall of five methods on the transaction and sensor tables."""
-    schemas = fs.schema_matrices(evidence / "multi_schema", evidence / "full_registry" / "schemas_deep")
+    """Rows of the two-schema table: mean recall of five methods on two schemas."""
+    schemas = fs.schema_matrices(
+        evidence / "multi_schema", evidence / "full_registry" / "schemas_deep"
+    )
     lines = []
     for schema, label in (("transactions", "Transactions"), ("sensors", "Sensors")):
         if lines:

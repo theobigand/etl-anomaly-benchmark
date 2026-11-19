@@ -26,7 +26,6 @@ ROOT = HERE.parent
 sys.path[:0] = [str(HERE), str(ROOT / "src")]
 
 import pool_chrono as pc  # noqa: E402
-import temporal_decision as td  # noqa: E402
 import uci_loader as ul  # noqa: E402
 
 PROTOCOL = "chrono-train-only-v1"
@@ -119,7 +118,12 @@ def pool_raw(
     rows = features.pop("__row__").to_numpy().astype(int)
     columns = set(pc.TIME_COLUMNS[uci_id])
     features = features[[c for c in features.columns if c not in columns]]
-    return features.reset_index(drop=True), labels, times.iloc[rows].reset_index(drop=True), unreadable
+    return (
+        features.reset_index(drop=True),
+        labels,
+        times.iloc[rows].reset_index(drop=True),
+        unreadable,
+    )
 
 
 def run_raw(
@@ -141,7 +145,10 @@ def compare(archive: dict[str, Any], replay: dict[str, Any]) -> dict[str, Any]:
     for name in sorted(set(archive) & set(replay)):
         a, r = archive[name], replay[name]
         if "excluded" in a or "excluded" in r:
-            out[name] = {"excluded_archive": a.get("excluded"), "excluded_replay": r.get("excluded")}
+            out[name] = {
+                "excluded_archive": a.get("excluded"),
+                "excluded_replay": r.get("excluded"),
+            }
             continue
         methods = [m for m in a["chronological"] if m in r["chronological"]]
         rows = {}
@@ -227,7 +234,9 @@ def main(argv: list[str] | None = None) -> int:
         if p.stem != "comparison"
     }
     archived = {p.stem: json.loads(p.read_text()) for p in args.archive.glob("*.json")}
-    write_json(args.output / "comparison.json", {"protocol": PROTOCOL, "datasets": compare(archived, runs)})
+    write_json(
+        args.output / "comparison.json", {"protocol": PROTOCOL, "datasets": compare(archived, runs)}
+    )
     return 0
 
 

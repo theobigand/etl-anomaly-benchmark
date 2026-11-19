@@ -15,7 +15,8 @@ RESOLVED = ("killed", "survived")
 # measurement is not restamped.
 SUPPLEMENTS = (
     ROOT / "docs/thesis-remediation/evidence/focused-new-modules-2026-11-19/measurement.json",
-    ROOT / "docs/thesis-remediation/evidence/focused-train-only-replays-2026-11-19/measurement.json",
+    ROOT
+    / "docs/thesis-remediation/evidence/focused-train-only-replays-2026-11-19/measurement.json",
 )
 
 

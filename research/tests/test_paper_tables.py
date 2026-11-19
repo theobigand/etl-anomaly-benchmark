@@ -1,3 +1,4 @@
+# ruff: noqa: E501
 """The benchmark tables of the paper are the rows written from the archived results."""
 
 import json
@@ -99,7 +100,11 @@ def test_cost_table_in_the_manuscript_equals_the_rows_of_the_cost_archives():
 
 def test_significant_figures_and_memory_unit_of_the_cost_rows():
     assert pt.sig(0.002022, 3) == "0.00202" and pt.sig(133.088, 3) == "133"
-    assert pt.sig(18.031, 3) == "18.0" and pt.sig(3.2034, 3) == "3.20" and pt.sig(0.0129, 3) == "0.0129"
+    assert (
+        pt.sig(18.031, 3) == "18.0"
+        and pt.sig(3.2034, 3) == "3.20"
+        and pt.sig(0.0129, 3) == "0.0129"
+    )
     rows = {line.split("&")[0].strip(): line for line in pt.cost_rows().split("\n") if "&" in line}
     zscore = [cell.strip() for cell in rows["Z-score"].rstrip(" \\").split("&")]
     assert zscore == ["Z-score", "0.00202 s", "0.0126 s", "0.0391 s", "0.64", "67"]  # MiB
@@ -110,7 +115,12 @@ def _summary(sizes, largest, failures):
         str(n): {"detect_s_median": float(n) / 1000, "rss_delta_bytes_median": 2.0**20 * 10}
         for n in sizes
     }
-    return {"points": points, "growth_exponent": 1.0, "largest_measured": largest, "failures": failures}
+    return {
+        "points": points,
+        "growth_exponent": 1.0,
+        "largest_measured": largest,
+        "failures": failures,
+    }
 
 
 def _cells(row):
@@ -156,13 +166,22 @@ def test_contamination_cells_follow_one_format_for_every_row():
 
 
 def test_signed_intervals_use_an_explicit_plus_and_the_holm_value_has_three_decimals():
-    assert pt.signed(0.0162) == "+0.016" and pt.signed(-0.035) == "-0.035" and pt.signed(0.0) == "+0.000"
+    assert (
+        pt.signed(0.0162) == "+0.016"
+        and pt.signed(-0.035) == "-0.035"
+        and pt.signed(0.0) == "+0.000"
+    )
     first = pt.clustered_rows().split("\n")[0].split("&")
     assert first[0].strip() == r"ECOD $-$ Isolation Forest" and first[-1].strip() == r"1.000 \\"
 
 
 def test_percentages_round_at_two_decimals_before_choosing_the_format():
-    assert pt.pct(0.6) == "0.60" and pt.pct(0.996) == "1.0" and pt.pct(0.994) == "0.99" and pt.pct(12.34) == "12.3"
+    assert (
+        pt.pct(0.6) == "0.60"
+        and pt.pct(0.996) == "1.0"
+        and pt.pct(0.994) == "0.99"
+        and pt.pct(12.34) == "12.3"
+    )
 
 
 def test_zero_has_no_decimals_and_one_keeps_its_significant_figures():
@@ -178,4 +197,6 @@ def test_the_command_help_starts_with_the_module_description(capsys, monkeypatch
     monkeypatch.setenv("COLUMNS", "300")
     with pytest.raises(SystemExit):
         pt.main(["--help"])
-    assert "LaTeX rows of the four benchmark tables of the paper" in " ".join(capsys.readouterr().out.split())
+    assert "LaTeX rows of the four benchmark tables of the paper" in " ".join(
+        capsys.readouterr().out.split()
+    )
