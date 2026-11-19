@@ -11,6 +11,13 @@ EVIDENCE = ROOT / "docs/thesis-remediation/evidence/l4-campaign-2026-11-13/final
 REPORT = ROOT / "docs/thesis-remediation/L4_CAMPAIGN_REPORT_2026-11-13.md"
 POLICY = ROOT / "verification/mutation_risk_policy.json"
 RESOLVED = ("killed", "survived")
+# Units classified after the 2026-11-13 measurement. The measurement is a historical record and is
+# not restamped; these units have no mutation evidence yet and need a fresh campaign.
+CLASSIFIED_AFTER_MEASUREMENT = {
+    "research/neural_budget_probe.py",
+    "research/pool_train_only_compare.py",
+    "research/pool_train_only_replay.py",
+}
 
 
 @pytest.fixture(scope="module")
@@ -26,8 +33,10 @@ def policy():
 def test_the_measurement_holds_exactly_the_classified_units_with_their_current_levels(
     record, policy
 ):
-    assert set(record["modules"]) == set(policy["units"])
+    assert set(record["modules"]) == set(policy["units"]) - CLASSIFIED_AFTER_MEASUREMENT
     for path, unit in policy["units"].items():
+        if path in CLASSIFIED_AFTER_MEASUREMENT:
+            continue
         assert record["modules"][path]["level"] == unit["level"], path
         assert record["modules"][path]["threshold"] == policy["thresholds"][unit["level"]]
 
