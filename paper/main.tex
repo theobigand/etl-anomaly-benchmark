@@ -8,6 +8,8 @@
 \usepackage{xcolor}
 \usepackage{url}
 \usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
 \usepackage{hyperref}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
@@ -79,7 +81,12 @@ distributional anomalies. To address these limits, a recent line of
 work has proposed to complement or replace such rules with machine
 learning anomaly detectors embedded directly inside the ETL
 flow~\cite{gopa2025aiaugmented,marupaka2024mlpredictive,sokkula2024implementing}.
-The existing literature, however, suffers from three gaps.
+Each family has its own limit. Rules cover only what their author foresaw and say nothing
+of joint behaviour. Statistical detectors (Z-score, IQR) look at one column at a time and
+assume a distribution. Classical machine-learning detectors need numeric features and a
+threshold, and different ones target different anomaly shapes. Neural detectors can model joint
+distributions but need training time, tuning and a larger fit budget. The existing literature,
+however, suffers from three gaps.
 
 First, the pipelines I reviewed are mostly presented as
 architectures. Gopa~\cite{gopa2025aiaugmented} reports aggregate gains
@@ -131,6 +138,11 @@ rest of the paper answers, one study at a time.
     \item[\textbf{RQ4}] What does a detector cost inside the pipeline, in time and
     in memory? (second gap)
 \end{enumerate}
+RQ1 is measured by average precision (AP), ROC-AUC and the metrics at the training-prevalence
+threshold on the three examples, the labelled pool and the synthetic data; RQ2 by recall and precision
+per injected type, on a generator and on real tables, with a severity sweep; RQ3 by precision, recall and
+$F_1$ at an oracle, a training-prevalence and a label-free threshold, with fixed contamination and
+chronological splits; RQ4 by fit and score time and peak memory per detector and row count.
 Each study has a protocol and hypotheses written in the repository before its
 runs (Section~\ref{sec:studies}). A hypothesis that fails is reported as failed.
 The Discussion answers the four questions in turn.
@@ -143,19 +155,22 @@ examine six aspects: whether it needs labels (an oracle threshold versus one rea
 training prevalence or a label-free alert budget); how its threshold is set; its cost in time and
 memory; its stability across seeds and over time; the maintenance it asks for (refitting, tuning),
 which is only observed through the fit cost and not measured as engineering effort; and the
-false-positive burden at its operating point. A statistical outlier is a rare value of a model;
+false-positive burden at its operating point. The problem is thus the following: given a table that a pipeline has extracted and transformed,
+decide row by row which records should be flagged before loading, using a detector fitted
+only on earlier data, with a decision that a person can act on. A statistical outlier is a rare value of a model;
 a data-quality defect is a record that is wrong for its purpose. The two overlap only partly, and
 the labelled problems of this paper define anomalies by class membership or by injection, not by
 business impact.
 
-\paragraph{Contributions.} This paper addresses these three gaps. I
-present:
+\paragraph{Contributions.} This paper addresses these three gaps. The number of datasets is a means of covering several regimes,
+not the contribution. I present:
 \begin{enumerate}
     \item \textbf{A reproducible ETL pipeline} in which rule-based and
     classical ML anomaly detectors share one interface and are scored on
     the same extract--transform--detect path, released as open-source
     code. The registry holds three rule-based detectors, eight classical
-    models and six neural ones, all behind the same interface.
+    models and six neural ones, all behind the same interface; the LSTM autoencoder and the
+    drift detector are pilots outside this count.
     \item \textbf{A head-to-head benchmark} of statistical rules
     (Z-score, IQR, Great Expectations), classical ML detectors
     (Isolation Forest, LOF, One-Class SVM, ECOD, COPOD, HBOS, KNN, PCA) and neural
@@ -177,6 +192,10 @@ present:
     detectors are also run on its $100$ labelled problems. The synthetic
     pattern holds only in part, and no detector is clearly ahead on the
     labelled problems.
+    \item \textbf{Operating point, time and cost.} The same detectors are compared under an
+    oracle, a training-prevalence and a label-free threshold, under a chronological split and a
+    change of prevalence, and by their fit time and memory as the table grows, so that the
+    answer is stated as a decision and not only as a ranking.
 \end{enumerate}
 
 The rest of the paper is organized as follows. Section~II reviews
@@ -230,9 +249,11 @@ existing data, reported with AUCROC and AUCPR and with training and inference
 time. In its text I found no threshold-dependent metric and no chronological
 protocol, and none of its anomaly types is a data-quality fault such as a
 missing value or an invalid format. Agyemang~\cite{agyemang2024anomaly}
-compares five unsupervised detectors on one simulated dataset with accuracy,
-precision, recall and $F_1$, and leaves real data as future work (I read the
-abstract only). AnoShift~\cite{dragoi2022anoshift} builds a time-ordered
+compares five unsupervised detectors (One-Class SVM, its SGD variant, Isolation Forest, LOF and Robust
+Covariance) on a single simulated two-feature set of $200$ points with sparse uniform outliers, reports accuracy,
+precision, recall and $F_1$ for outliers together with fit and prediction times, and names the absence of real data,
+noise, feature interactions and heterogeneous features as limits (full text read). It has no rule baseline, no time order and one
+outlier type. AnoShift~\cite{dragoi2022anoshift} builds a time-ordered
 protocol on ten years of Kyoto-2006+ network traffic, training on 2006--2010 and
 testing on 2011--2013 (NEAR) and 2014--2015 (FAR), and reports ROC-AUC and AP
 for classical and deep models, again without a decision threshold.
@@ -242,9 +263,8 @@ on a validation set with the anomaly ratio of the test set. MacrOData~\cite{ding
 outlier-detection benchmarking to $2{,}446$ datasets in three components
 (OddBench with $790$ semantic-anomaly datasets curated from the TabLib corpus,
 OvRBench with $856$ statistical-outlier datasets and SynBench with $800$
-synthetic ones), and reports AUROC and AUPRC; I read its abstract and the first
-part of its text, not all of it. Unlike this paper, it evaluates detectors in isolation, and I did not find
-in the parts I read a rule baseline, a decision threshold, a time-ordered split or
+synthetic ones), and reports AUROC and AUPRC (full text read). Unlike this paper, it evaluates detectors in isolation, and I did not find
+in its text a rule baseline, a decision threshold, a time-ordered split or
 an ETL setting. Sun et
 al.~\cite{sun2024online} propose online thresholds with confidence sequences
 that adapt to distribution shift, and test them on synthetic and real data. They
@@ -279,17 +299,24 @@ propose one detector, I compare families.
 Work & Detectors and data & Time order & Metric at a threshold & Per-type results \\
 \midrule
 ADBench~\cite{han2022adbench} & $30$ algorithms, $57$ datasets & not found & not found (AUCROC, AUCPR) & four geometric types, generated \\
-Agyemang~\cite{agyemang2024anomaly} & $5$ detectors, one simulated set & none & accuracy, precision, recall, $F_1$ & not stated in the abstract \\
+Agyemang~\cite{agyemang2024anomaly} & $5$ detectors, one simulated $2$-D set & none & accuracy, precision, recall, $F_1$ & none; one outlier type, uniform in a $2$-D simulation \\
 AnoShift~\cite{dragoi2022anoshift} & classical and deep, Kyoto-2006+ & IID, NEAR, FAR splits & not found (ROC-AUC, AP) & none \\
 FedAD-Bench~\cite{anwar2024fedadbench} & deep models, federated, $4$ datasets & not found & $F_1$-optimal threshold on a validation set & none \\
-MacrOData~\cite{ding2026macrodata} & classical, deep and foundation models, $2{,}446$ datasets & random split (parts read) & not found (AUROC, AUPRC) & none \\
+MacrOData~\cite{ding2026macrodata} & classical, deep and foundation models, $2{,}446$ datasets & one standard train/test split per dataset, inlier-only training & not found (AUROC, AUPRC) & none \\
 Chen et al.~\cite{chen2025etlautoencoder} & autoencoder vs four neural models, one ETL log set & not found & AUC, accuracy, precision, recall & delays, missing, duplicates, jumps named; no per-type results \\
 Sun et al.~\cite{sun2024online} & thresholding method, synthetic and real & shift in the stream & error-rate guarantees & none \\
 \midrule
-This paper & $17$ detectors ($3$ rules, $8$ classical, $6$ neural), $3$ worked examples, a pool of $152$ open datasets, synthetic and typed injection & chronological pilot and decision study on two datasets & precision, recall, $F_1$ at the training-prevalence threshold; label-free alert budgets (exploratory) & six data-quality fault types \\
+This paper & $17$ detectors ($3$ rules, $8$ classical, $6$ neural; the LSTM and drift pilots are outside the count), $3$ worked examples, a pool of $152$ open datasets ($100$ labelled problems, $58$ tables with typed injection), synthetic and typed injection & chronological pilot and decision study on two datasets & precision, recall, $F_1$ at the training-prevalence threshold; label-free alert budgets (exploratory) & six data-quality fault types \\
 \bottomrule
 \end{tabular}
 \end{table*}
+
+\paragraph{Four neighbouring tasks.} Statistical outlier detection ranks rows by how rare they are
+under a model; data-quality validation checks declared constraints (schema, ranges, null rates);
+drift monitoring compares the distribution of a window with a reference; ETL integration fixes where
+and when these checks run and what happens to the rows they flag. The works above mostly address one of
+them. This paper keeps the row-level detectors and the rules in one pipeline and treats drift only
+through a window-level pilot, as a different task.
 
 \paragraph{Gap and what is not claimed.}
 Among these sources I did not find a comparison of rule-based, classical and
@@ -654,6 +681,45 @@ not replaced the historical pool studies: source-bound partition recovery and
 replay are still required. The archived protocols, assignments and reported
 numbers are retained, and no corrected pool ranking is claimed here.
 
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[font=\scriptsize,
+  box/.style={draw,rounded corners=1pt,align=center,inner sep=2pt,text width=3.3cm},
+  arr/.style={-{Stealth[length=1.6mm]}}]
+\node[box,text width=6cm] (pool) at (0,0) {Pool: $152$ open tables, $36$ ADBench + $116$ UCI (pinned manifest)};
+\node[box] (lab) at (-2cm,-1.9cm) {$100$ labelled problems\\$36$ ADBench + $64$ UCI\\(rarest UCI class, $\ge20$ rows, is the anomaly)};
+\node[box] (inj) at (2cm,-1.9cm) {$58$ injection-eligible tables\\$42$ UCI + $16$ ADBench\\($\ge3{,}000$ rows, $\ge4$ continuous columns)};
+\node[box] (rl) at (-2cm,-3.5cm) {RQ1: labelled anomalies};
+\node[box] (ri) at (2cm,-3.5cm) {RQ2: six injected types};
+\draw[arr] (pool) -- (lab); \draw[arr] (pool) -- (inj);
+\draw[arr] (lab) -- (rl); \draw[arr] (inj) -- (ri);
+\draw[dashed] (lab.east) -- node[above,font=\tiny]{overlap} (inj.west);
+\end{tikzpicture}
+\caption{Selection of the benchmark populations. The two populations overlap and are never merged. Among the
+$100$ labelled problems, $32$ share $15$ UCI sources, so they are not $100$ independent sources.}
+\label{fig:selection}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[font=\scriptsize,
+  box/.style={draw,rounded corners=1pt,align=center,inner sep=2pt,text width=2.1cm},
+  arr/.style={-{Stealth[length=1.6mm]}}]
+\node[box] (a) at (-2.6cm,0) {Real table: continuous columns, normal class only};
+\node[box] (b) at (0,0) {Split $70/15/15$, five seeds};
+\node[box] (c) at (2.6cm,0) {Inject $3\%$ of rows, one type at a time};
+\node[box] (d) at (0,-1.6cm) {Detectors fitted on the clean train part};
+\node[box] (e) at (-2.6cm,-3cm) {Per type: recall of injected rows};
+\node[box] (f) at (2.6cm,-3cm) {Clean rows flagged (false alarms)};
+\draw[arr] (a)--(b); \draw[arr] (b)--(c); \draw[arr] (c.south) |- (d.east);
+\draw[arr] (d.south) -- ++(0,-0.25) -| (e.north); \draw[arr] (d.south) -- ++(0,-0.25) -| (f.north);
+\end{tikzpicture}
+\caption{Protocol of the typed-fault study, a path separate from the standard ETL path. The original
+anomalies of labelled tables never enter, and each injected type is scored on its own.}
+\label{fig:injection}
+\end{figure}
+
 \subsection{Studies, research questions and hypotheses}
 \label{sec:studies}
 Every study below answers one of the research questions of Section~\ref{sec:rq}, and its
@@ -682,7 +748,7 @@ rate and the same protocol, with four hypotheses
 added to the synthetic matrix on the same identity-grouped splits and seeds, trained until their
 validation loss stopped improving (patience of $5$, at most $300$ epochs), on windows of the ten
 preceding customers ordered by signup date for the LSTM, with four hypotheses
-(\texttt{verification/deep\_typed.md}). The ten detectors added to the registry were then run on the
+(\texttt{verification/deep\_typed.md}). The ten other detectors of the registry were run on the
 same matrices and on the other studies, with six hypotheses
 (\texttt{verification/full\_registry.md}).
 
@@ -799,7 +865,7 @@ Credit Card Fraud and Isolation Forest on Cardio.
 \begin{table}[t]
 \caption{AP of the seventeen detectors on four problems of the pool (mean over five
 seeds). Credit Card Fraud ($0.2\%$ anomalies) and Cardio ($9.6\%$) are the examples of
-Section~\ref{sec:experiments}; Annthyroid and Mushroom are the two additional ones. A dash
+Section~\ref{sec:experiments}; Annthyroid ($7.6\%$) and Mushroom ($10.0\%$, after resampling) are the two additional ones; AP of a random ranking equals the prevalence. A dash
 means the detector was skipped on that size.}
 \label{tab:examples}
 \centering
@@ -958,7 +1024,7 @@ Great Expectations $-$ Isolation Forest & 100 & -0.162 [-0.207, -0.120] & -0.162
 \label{sec:results-synthetic}
 Aggregate metrics on the synthetic data compress the families together. Over the seventeen
 detectors $F_1$ ranges from $0.22$ (Deep SVDD) to $0.59$ (DIF) and AP from $0.22$ to $0.65$
-(Table~\ref{tab:synthetic} of Appendix~\ref{app:details}); among the earlier detectors Isolation
+(Table~\ref{tab:synthetic} of Appendix~\ref{app:details}); among the first six detectors Isolation
 Forest has the best $F_1$ ($0.50$), and Z-score and HBOS reach a perfect precision at a recall of
 $0.20$. Read alone, these numbers suggest that the choice of detector barely matters. The
 per-type breakdown shows the opposite.
@@ -1018,11 +1084,13 @@ one learned model that helps on drift at the price of more false alarms (Section
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figures/heatmap_full.png}
+\includegraphics[width=\columnwidth]{figures/heatmap_full.pdf}
 \caption{Mean detection rate (recall) over five seeds of each method on
-each injected anomaly type, synthetic test split. Darker is higher.
+each injected anomaly type, synthetic test split (one generated table per seed). Darker is higher.
 \texttt{transform\_dedup} is the deduplication rule of the transform
-stage, shown for reference.}
+stage, shown for reference. The all-zero \texttt{drift} row is a result, not a missing
+value: this per-row detector does not respond at the injected magnitude; windowed drift monitoring
+is a different task, reported separately (Section~\ref{sec:time}).}
 \label{fig:heatmap}
 \end{figure}
 
@@ -1087,8 +1155,9 @@ into $42$ real UCI tables; this subsection reports what the detectors find there
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{figures/typed_pooled.png}
-\caption{Median detection rate over $42$ real datasets with typed injection.
+\includegraphics[width=\columnwidth]{figures/typed_pooled.pdf}
+\caption{Median detection rate over $42$ real UCI tables with typed injection
+(five seeds per table; the $16$ ADBench tables of the pool extension are not included).
 Compare with Figure~\ref{fig:heatmap}.}
 \label{fig:typed}
 \end{figure}
@@ -1119,7 +1188,7 @@ univariate outliers falls with the number of continuous columns (rank
 correlation $-0.96$ over the $42$ tables). The anomalies are injected, not
 natural, and at one severity.
 
-The classical and neural detectors added to the registry were run on the same $42$
+The other classical and neural detectors of the registry were run on the same $42$
 tables (Figure~\ref{fig:typed}), without a hypothesis of their own on this study. On
 multivariate outliers LUNAR has the highest median detection rate ($0.63$, Isolation Forest
 $0.37$, KNN $0.30$, the autoencoder $0.29$, DIF $0.28$, ECOD $0.25$), and also on drift
@@ -1153,8 +1222,8 @@ of the curve on the datasets where a knee exists.
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{figures/pr_curves.png}
-\caption{Precision-recall curves on the test split, one panel per
-dataset, average precision in the legend. The dashed line is the base
+\caption{Precision-recall curves on the test split of seed $42$, one panel per
+dataset (Credit Card, Water Quality, Cardio, synthetic), average precision in the legend. The dashed line is the base
 rate.}
 \label{fig:prcurves}
 \end{figure}
@@ -1514,6 +1583,16 @@ and replay (ECOD to HBOS among the classical ones; DIF leads in both neural comp
 the spread across problems. This replay bounds the dependence of the reported scores on the pre-split choices on
 these problems; it does not show that the archived runs were train-only, and the injection studies were not replayed.
 The archived outcomes are kept unchanged.
+PyOD exposes no loss history for the VAE, Deep SVDD, AE1SVM and LUNAR, so convergence cannot be read from
+training curves. An exploratory probe on $8$ labelled problems of $300$ to $5{,}000$ rows, with three seeds
+(24 fits per detector, no non-finite score), fitted them again at three times their epoch budget on the same
+training-only partition. The median change in average precision is between $-0.022$ (Deep SVDD) and $+0.002$ (VAE);
+the rank correlation of the scores at the two budgets has a median between $0.74$ (Deep SVDD) and $1.00$ (LUNAR), with a minimum
+of $0.33$, so a single problem can move with the budget. The autoencoder reached its $300$-iteration limit in
+$16$ of the $24$ fits, all of the small problems among them, so its small-problem results are not converged
+fits; DIF has no epoch budget and its scores correlate between model seeds at $0.73$ to $0.99$ on a fixed partition.
+Tripling the budget does not raise AP systematically, so the registry budgets are not shown to be too small; this
+does not prove convergence, and neural results stay qualified as an out-of-the-box CPU configuration.
 The neural scores are not bit-reproducible across numerical settings: in a controlled probe of $24$ fits, the
 scores of AE1SVM changed materially with the PyTorch thread count (a rank correlation as low as $0.82$ against
 the four-thread run) and those of LUNAR less so, while the autoencoder was invariant and Deep SVDD varied at
@@ -1705,7 +1784,7 @@ validation of the new path, not replay evidence for the historical pool. The
 routine and mutation figures below describe the named archived run and do not
 extend that mutation denominator to these new research modules.
 
-At commit d4304c5b (local run, not independently attested) the routine suite runs 1,292 tests, plus three that need
+At commit f2c64411 (local run, not independently attested) the routine suite runs 1,292 tests, plus three that need
 the full datasets and twenty-three fault-injection runs, all run separately.
 Coverage of the pipeline modules and the experiment scripts is complete: 1,790 of
 1,790 executable lines and 350 of 350 branches. The tools that check the
@@ -2044,7 +2123,7 @@ AP of the three ($0.182 \pm 0.046$). Isolation Forest behaves differently now th
 contamination matches the prevalence: it flags only $0.17\%$ of rows and
 reaches a precision of $0.20$, the first usable operating point among the
 rules and Isolation Forest, but its recall drops to $0.21$ and both are seed-sensitive
-($F_1 = 0.20 \pm 0.07$). The column-wise detectors added to the registry do better than
+($F_1 = 0.20 \pm 0.07$). The column-wise detectors (ECOD, COPOD, HBOS) do better than
 Isolation Forest on this dataset: with the same $0.2\%$ of rows flagged, HBOS reaches the best
 precision of the table ($0.34 \pm 0.05$), COPOD and ECOD an $F_1$ of $0.30$ and
 $0.26$ against $0.20$, and the AP of HBOS and COPOD ($0.22$ and $0.21$) is above that of
@@ -2054,21 +2133,21 @@ table, at a recall of $0.55$, and LUNAR the best ROC-AUC ($0.941$) with a precis
 $0.14$ and $0.7\%$ of rows flagged; the autoencoder is the weakest ($F_1 = 0.10$). Seed spreads
 are large for every learned model, so the order among the better ones is not firm. Great
 Expectations took $1.2$\,s on this run, against $0.03$--$0.12$\,s for the
-statistical rules; these times vary between runs, and the neural models were timed under load,
-so their column is left empty (Section~\ref{sec:cost} measures them alone). LOF, KNN and the
+statistical rules; these times vary between runs. The first benchmark run timed the neural models under load, so
+their column holds a separate measurement (footnote $c$; Section~\ref{sec:cost} measures them on synthetic matrices). LOF, KNN and the
 One-Class SVM were not run at $284$k rows, where their cost was expected to
 be prohibitive; I did not measure it.
 
 \begin{table}[t]
 \caption{Detectors on Credit Card Fraud, mean over five seeds on the
-$15\%$ test split. Higher is better except flagged rows and time.}
+$15\%$ test split. Anomaly prevalence $0.17\%$, the AP of a random ranking. Higher is better except flagged rows and time. $^{c}$Neural times: separate run of the same splits, seeds and fit cap, one detector at a time, on a machine with other work (median load average $5.7$ on $10$ cores); not comparable with the other rows or with Table~\ref{tab:cost}.}
 \label{tab:fraud}
 \centering
 \setlength{\tabcolsep}{3pt}
 \footnotesize
 \begin{tabular}{lrrrrrrr}
 \toprule
-Detector & Prec. & Rec. & $F_1$ & ROC & PR & Flag.\% & Time (s) \\
+Detector & Prec. & Rec. & $F_1$ & ROC & AP & Flag.\% & Time (s) \\
 \midrule
 Z-score            & 0.011 & 0.870 & 0.021 & 0.926 & 0.078 & 13.4 & \textbf{0.03} \\
 IQR                & 0.003 & \textbf{0.966} & 0.007 & 0.911 & 0.018 & 48.6 & 0.12 \\
@@ -2080,12 +2159,12 @@ COPOD              & 0.310 & 0.299 & 0.303 & 0.927 & 0.213 & 0.2 & 3.05 \\
 HBOS               & \textbf{0.337} & 0.318 & 0.326 & 0.931 & 0.216 & 0.2 & 0.96 \\
 PCA                & 0.139 & 0.132 & 0.135 & 0.831 & 0.105 & 0.2 & 0.70 \\
 \midrule
-Autoencoder        & 0.083 & 0.141 & 0.103 & 0.892 & 0.066 & 0.3 & -- \\
-VAE                & 0.162 & 0.237 & 0.191 & 0.929 & 0.142 & 0.2 & -- \\
-Deep SVDD          & 0.261 & 0.546 & \textbf{0.346} & 0.918 & \textbf{0.289} & 0.4 & -- \\
-DIF                & 0.287 & 0.355 & 0.317 & 0.922 & 0.242 & 0.2 & -- \\
-AE1SVM             & 0.184 & 0.223 & 0.201 & 0.937 & 0.144 & 0.2 & -- \\
-LUNAR              & 0.138 & 0.535 & 0.216 & \textbf{0.941} & 0.136 & 0.7 & -- \\
+Autoencoder        & 0.083 & 0.141 & 0.103 & 0.892 & 0.066 & 0.3 & 7.47$^{c}$ \\
+VAE                & 0.162 & 0.237 & 0.191 & 0.929 & 0.142 & 0.2 & 16.09$^{c}$ \\
+Deep SVDD          & 0.261 & 0.546 & \textbf{0.346} & 0.918 & \textbf{0.289} & 0.4 & 12.26$^{c}$ \\
+DIF                & 0.287 & 0.355 & 0.317 & 0.922 & 0.242 & 0.2 & 80.42$^{c}$ \\
+AE1SVM             & 0.184 & 0.223 & 0.201 & 0.937 & 0.144 & 0.2 & 54.45$^{c}$ \\
+LUNAR              & 0.138 & 0.535 & 0.216 & \textbf{0.941} & 0.136 & 0.7 & 70.83$^{c}$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -2111,14 +2190,14 @@ deviations of $0.14$ and $0.17$).
 
 \begin{table}[t]
 \caption{All detectors on Cardio, mean over five seeds on the $15\%$ test
-split. $1{,}831$ raw rows ($1{,}822$ after deduplication), $9.6\%$ anomalies.}
+split. $1{,}831$ raw rows ($1{,}822$ after deduplication), $9.6\%$ anomalies (the AP of a random ranking).}
 \label{tab:cardio}
 \centering
 \setlength{\tabcolsep}{4pt}
 \footnotesize
 \begin{tabular}{lrrrrrr}
 \toprule
-Detector & Prec. & Rec. & $F_1$ & ROC & PR & Flag.\% \\
+Detector & Prec. & Rec. & $F_1$ & ROC & AP & Flag.\% \\
 \midrule
 Z-score            & 0.49 & 0.81 & 0.61 & 0.93 & 0.61 & 16.6 \\
 IQR                & 0.21 & \textbf{0.90} & 0.33 & 0.78 & 0.30 & 43.4 \\
@@ -2164,7 +2243,7 @@ $15\%$ test split. Target: ``not potable'', base rate $0.61$.}
 \footnotesize
 \begin{tabular}{lrrrrrr}
 \toprule
-Detector & Prec. & Rec. & $F_1$ & ROC & PR & Flag.\% \\
+Detector & Prec. & Rec. & $F_1$ & ROC & AP & Flag.\% \\
 \midrule
 Z-score            & 0.41 & 0.02 & 0.05 & 0.46 & 0.58 & 3.5 \\
 IQR                & 0.57 & 0.09 & 0.16 & 0.49 & 0.60 & 10.0 \\
@@ -2193,26 +2272,26 @@ LUNAR              & 0.58 & \textbf{0.53} & 0.55 & 0.45 & 0.57 & 55.4 \\
 Table~\ref{tab:synthetic} reports the seventeen detectors on the synthetic
 dataset. Aggregate metrics still compress the families together: $F_1$
 ranges from $0.22$ (Deep SVDD) to $0.59$ (DIF) and AP from $0.22$ to
-$0.65$. Among the earlier detectors Isolation Forest has the best $F_1$
+$0.65$. Among the first six detectors Isolation Forest has the best $F_1$
 ($0.50$); Z-score and HBOS both reach a perfect precision by firing only on
 the most extreme rows, at a recall of $0.20$. DIF has the best $F_1$, ROC-AUC
 and AP, the VAE matches Isolation Forest, and LUNAR has the best recall
 ($0.67$) with a low precision, which fits the share of clean rows it flags
 in the per-type matrix. Read alone, these numbers suggest the detector choice
 barely matters among the middle of the table; the per-type breakdown shows
-the opposite. The neural times are left empty because those runs shared the
-machine, and Section~\ref{sec:cost} gives their cost.
+the opposite. The neural times come from a separate run (footnote $c$) because the benchmark
+runs shared the machine; Section~\ref{sec:cost} gives their cost at larger sizes.
 
 \begin{table}[t]
 \caption{All detectors on the synthetic dataset, mean over five seeds on
-the $15\%$ test split. Time is the in-pipeline fit+predict+score latency.}
+the $15\%$ test split. Anomaly prevalence $17.5\%$, the AP of a random ranking. Time is the in-pipeline fit+predict+score latency. $^{c}$Neural times: separate run, same conditions as in Table~\ref{tab:fraud}.}
 \label{tab:synthetic}
 \centering
 \setlength{\tabcolsep}{4pt}
 \footnotesize
 \begin{tabular}{lrrrrrr}
 \toprule
-Detector & Prec. & Rec. & $F_1$ & ROC & PR & Time (s) \\
+Detector & Prec. & Rec. & $F_1$ & ROC & AP & Time (s) \\
 \midrule
 Z-score            & \textbf{1.000} & 0.196 & 0.328 & 0.742 & 0.544 & \textbf{0.002} \\
 IQR                & 0.584 & 0.396 & 0.472 & 0.675 & 0.452 & 0.003 \\
@@ -2227,12 +2306,12 @@ HBOS               & \textbf{1.000} & 0.204 & 0.339 & 0.602 & 0.343 & 0.198 \\
 KNN                & 0.466 & 0.469 & 0.467 & 0.745 & 0.520 & 0.082 \\
 PCA                & 0.405 & 0.417 & 0.411 & 0.689 & 0.485 & 0.008 \\
 \midrule
-Autoencoder        & 0.438 & 0.445 & 0.441 & 0.694 & 0.455 & -- \\
-VAE                & 0.502 & 0.507 & 0.504 & 0.742 & 0.548 & -- \\
-Deep SVDD          & 0.221 & 0.219 & 0.219 & 0.573 & 0.221 & -- \\
-DIF                & 0.589 & 0.582 & \textbf{0.585} & \textbf{0.772} & \textbf{0.648} & -- \\
-AE1SVM             & 0.452 & 0.467 & 0.459 & 0.719 & 0.502 & -- \\
-LUNAR              & 0.345 & \textbf{0.668} & 0.410 & 0.728 & 0.495 & -- \\
+Autoencoder        & 0.438 & 0.445 & 0.441 & 0.694 & 0.455 & 0.689$^{c}$ \\
+VAE                & 0.502 & 0.507 & 0.504 & 0.742 & 0.548 & 5.989$^{c}$ \\
+Deep SVDD          & 0.221 & 0.219 & 0.219 & 0.573 & 0.221 & 5.596$^{c}$ \\
+DIF                & 0.589 & 0.582 & \textbf{0.585} & \textbf{0.772} & \textbf{0.648} & 10.459$^{c}$ \\
+AE1SVM             & 0.452 & 0.467 & 0.459 & 0.719 & 0.502 & 25.220$^{c}$ \\
+LUNAR              & 0.345 & \textbf{0.668} & 0.410 & 0.728 & 0.495 & 27.097$^{c}$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -2459,7 +2538,7 @@ COPOD, HBOS and PCA, which scale to this size; the rerun reproduces the first fo
 exactly. The pilot is a separate experiment and does not replace the benchmark.
 
 \begin{table}[t]
-\caption{Average precision (PR) on the test split, stratified (strat.)
+\caption{Average precision (AP) on the test split, stratified (strat.)
 control versus chronological (chron.) split with its 95\% block-bootstrap
 interval, ROC-AUC of the chronological split, and the share of future
 rows flagged at the training-prevalence threshold.}
@@ -2469,7 +2548,7 @@ rows flagged at the training-prevalence threshold.}
 \setlength{\tabcolsep}{3pt}
 \begin{tabular}{lrrrr}
 \toprule
-Detector & PR, strat. & PR, chron. & ROC, chron. & Flag.\% \\
+Detector & AP, strat. & AP, chron. & ROC, chron. & Flag.\% \\
 \midrule
 Z-score            & $0.078 \pm 0.015$ & $0.048$ [0.020, 0.087] & 0.935 & 12.79 \\
 IQR                & $0.018 \pm 0.003$ & $0.013$ [0.006, 0.023] & 0.917 & 47.10 \\

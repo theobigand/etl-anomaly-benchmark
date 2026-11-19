@@ -53,6 +53,8 @@ COLUMNS = {
 HIGHER_IS_BETTER = {"precision", "recall", "f1", "roc_auc", "pr_auc"}
 LOWER_IS_BETTER = {"detect_s"}
 TIME_DECIMALS = {"fraud": 2, "synthetic": 3}
+#: table -> dataset of the separate neural timing run (``paper/measure_neural_times.py``)
+TIMING_DATASET = {"fraud": "credit_card", "synthetic": "synthetic"}
 
 
 def classical_means(label: str, evidence: Path) -> pd.DataFrame:
@@ -63,7 +65,10 @@ def classical_means(label: str, evidence: Path) -> pd.DataFrame:
 
 
 def neural_means(label: str, evidence: Path) -> pd.DataFrame:
-    """Mean over seeds of the neural detectors; the time is left empty (measured under load)."""
+    """Mean over seeds of the neural detectors.
+
+    The benchmark runs timed the neural models under load, so their time comes from the separate
+    timing run when it exists, and is left empty otherwise."""
     source = TABLES[label][1]
     columns = [c for c in COLUMNS[label] if c not in LOWER_IS_BETTER]
     folder = evidence / "full_registry"
@@ -80,6 +85,11 @@ def neural_means(label: str, evidence: Path) -> pd.DataFrame:
         for name in NEURAL:
             ok = [r["methods"][name] for r in runs if "error" not in r["methods"][name]]
             rows[name] = {c: sum(r[c] for r in ok) / len(ok) for c in columns}
+    timing = evidence / "neural_timing" / "neural_times.json"
+    if label in TIMING_DATASET and timing.is_file():
+        mean = json.loads(timing.read_text())["mean_detect_s"][TIMING_DATASET[label]]
+        for name in NEURAL:
+            rows[name]["detect_s"] = mean[name]
     return pd.DataFrame(rows).T
 
 
@@ -94,8 +104,8 @@ def rows(label: str, evidence: Path = EVIDENCE) -> str:
     for c in COLUMNS[label]:
         if c in HIGHER_IS_BETTER:
             best[c] = table[c].max()
-        elif c in LOWER_IS_BETTER:
-            best[c] = table[c].min()
+        elif c in LOWER_IS_BETTER:  # neural times come from another run: never compared
+            best[c] = table.loc[table.index.isin(CLASSICAL), c].min()
     lines = []
     present = list(table.index)
     for name in present:
@@ -113,7 +123,9 @@ def rows(label: str, evidence: Path = EVIDENCE) -> str:
                 else TIME_DECIMALS[label]
             )
             text = f"{value:.{digits}f}"
-            if c in best and round(value, digits) == round(best[c], digits):
+            if c in LOWER_IS_BETTER and name in NEURAL:
+                text += "$^{c}$"
+            elif c in best and round(value, digits) == round(best[c], digits):
                 text = f"\\textbf{{{text}}}"
             cells.append(text)
         lines.append(f"{NAMES[name]:<18} & " + " & ".join(cells) + r" \\")

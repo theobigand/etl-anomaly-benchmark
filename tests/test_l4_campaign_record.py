@@ -11,13 +11,11 @@ EVIDENCE = ROOT / "docs/thesis-remediation/evidence/l4-campaign-2026-11-13/final
 REPORT = ROOT / "docs/thesis-remediation/L4_CAMPAIGN_REPORT_2026-11-13.md"
 POLICY = ROOT / "verification/mutation_risk_policy.json"
 RESOLVED = ("killed", "survived")
-# Units classified after the 2026-11-13 measurement. The measurement is a historical record and is
-# not restamped; these units have no mutation evidence yet and need a fresh campaign.
-CLASSIFIED_AFTER_MEASUREMENT = {
-    "research/neural_budget_probe.py",
-    "research/pool_train_only_compare.py",
-    "research/pool_train_only_replay.py",
-}
+# Units classified after the 2026-11-13 measurement are measured in their own record; the historical
+# measurement is not restamped.
+SUPPLEMENT = (
+    ROOT / "docs/thesis-remediation/evidence/focused-new-modules-2026-11-19/measurement.json"
+)
 
 
 @pytest.fixture(scope="module")
@@ -30,15 +28,21 @@ def policy():
     return json.loads(POLICY.read_text())
 
 
-def test_the_measurement_holds_exactly_the_classified_units_with_their_current_levels(
+def test_the_two_records_hold_exactly_the_classified_units_with_their_current_levels(
     record, policy
 ):
-    assert set(record["modules"]) == set(policy["units"]) - CLASSIFIED_AFTER_MEASUREMENT
-    for path, unit in policy["units"].items():
-        if path in CLASSIFIED_AFTER_MEASUREMENT:
-            continue
-        assert record["modules"][path]["level"] == unit["level"], path
-        assert record["modules"][path]["threshold"] == policy["thresholds"][unit["level"]]
+    supplement = json.loads(SUPPLEMENT.read_text())["modules"]
+    assert not set(record["modules"]) & set(supplement)
+    assert set(record["modules"]) | set(supplement) == set(policy["units"])
+    for path, unit in {**record["modules"], **supplement}.items():
+        assert unit["level"] == policy["units"][path]["level"], path
+        assert unit["threshold"] == policy["thresholds"][unit["level"]], path
+
+
+def test_every_unit_of_the_supplementary_record_meets_its_threshold():
+    for path, unit in json.loads(SUPPLEMENT.read_text())["modules"].items():
+        assert unit["killed"] + unit["survived"] == unit["eligible"], path
+        assert unit["killed"] * 100 >= unit["threshold"] * unit["eligible"], path
 
 
 def test_every_unit_accounts_for_each_of_its_mutants_exactly_once(record):

@@ -1,5 +1,6 @@
 """The benchmark tables of the paper are the rows written from the archived results."""
 
+import json
 import shutil
 import sys
 from pathlib import Path
@@ -59,3 +60,31 @@ def test_a_table_body_is_replaced_once_and_an_unknown_table_is_refused():
     with pytest.raises(ValueError) as refused:
         pt.replace_body(tex, "b", "x")
     assert str(refused.value) == "table b not found"
+
+
+def _evidence_with_timing(tmp_path, times):
+    (tmp_path / "full_registry").mkdir()
+    shutil.copy(pt.EVIDENCE / "benchmark_credit_card.csv", tmp_path)
+    shutil.copy(pt.EVIDENCE / "full_registry" / "real_credit_card.json", tmp_path / "full_registry")
+    if times is not None:
+        (tmp_path / "neural_timing").mkdir()
+        mean = {"credit_card": dict.fromkeys(pt.NEURAL, times)}
+        (tmp_path / "neural_timing" / "neural_times.json").write_text(
+            json.dumps({"mean_detect_s": mean})
+        )
+    return tmp_path
+
+
+def test_neural_times_come_from_the_separate_run_are_footnoted_and_never_ranked(tmp_path):
+    lines = pt.rows("fraud", _evidence_with_timing(tmp_path, 0.001)).split("\n")
+    neural = [line for line in lines if line.split("&")[0].strip() in pt.NAMES.values()][-6:]
+    assert [line.split("&")[-1].strip() for line in neural] == [r"0.00$^{c}$ \\"] * 6
+    assert not any("textbf" in line.split("&")[-1] for line in neural)
+    zscore = next(line for line in lines if line.startswith("Z-score"))
+    assert zscore.split("&")[-1].strip() == r"\textbf{0.03} \\"  # fastest of the classical rows
+
+
+def test_without_a_timing_run_the_neural_time_cells_stay_empty(tmp_path):
+    lines = pt.rows("fraud", _evidence_with_timing(tmp_path, None)).split("\n")
+    neural = [line for line in lines if line.split("&")[0].strip() in pt.NAMES.values()][-6:]
+    assert [line.split("&")[-1].strip() for line in neural] == [r"-- \\"] * 6

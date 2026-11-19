@@ -1,0 +1,58 @@
+{
+  "base_head": "a888deacea90e4efc287e54c48ca0c0979843479",
+  "command": "make mutation-focus MODULE=research.<module>",
+  "date": "2026-11-19",
+  "environment": {
+    "mutmut": "3.8.0",
+    "platform": "macOS-27.2-arm64-arm-64bit",
+    "python": "3.11"
+  },
+  "kind": "local focused development measurement of units classified after the 2026-11-13 L4 measurement; not the controller campaign, not attested",
+  "modules": {
+    "research/neural_budget_probe.py": {
+      "eligible": 305,
+      "killed": 299,
+      "level": "L2",
+      "raw_score": 98.0,
+      "source_sha256": "736fa8d6fbc7f1ed430de85095ce765ac2c409c357cba1e354d7e36f49cbcb9f",
+      "status": "PASS_RAW",
+      "survived": 6,
+      "threshold": 90
+    },
+    "research/pool_train_only_compare.py": {
+      "eligible": 283,
+      "killed": 282,
+      "level": "L3",
+      "raw_score": 99.6,
+      "source_sha256": "fca074393cae4368998dd1fbf2a8c7f91f3efc2cc3599056a967d4cb7b9b8084",
+      "status": "PASS_RAW",
+      "survived": 1,
+      "threshold": 95
+    },
+    "research/pool_train_only_replay.py": {
+      "eligible": 365,
+      "killed": 361,
+      "level": "L3",
+      "raw_score": 98.9,
+      "source_sha256": "db35d52114205862df6bb819a2a5b78ff0eebe8886ab249b7137ab0ecc2345a9",
+      "status": "PASS_RAW",
+      "survived": 4,
+      "threshold": 95
+    }
+  },
+  "note": "No survivor was marked equivalent: none needs to be for the thresholds to be met.",
+  "survivors": {
+    "research/neural_budget_probe.py": [
+      "probe_problem 57, 66, 128 and dif_seed_spearman 46: the seed passed to _scores only matters above the 20,000-row fit cap, which the 300-5000-row selection never reaches",
+      "probe_problem 107: '+' -> '-' in the count of non-finite scores, which cannot be nonzero because average precision rejects non-finite scores first",
+      "main 38: upper-case path (case-insensitive filesystem)"
+    ],
+    "research/pool_train_only_compare.py": [
+      "x_main__mutmut_78: '.md' -> '.MD' (equivalent only on case-insensitive filesystems; not recorded as an accepted equivalent)"
+    ],
+    "research/pool_train_only_replay.py": [
+      "grouped_split 3, 11, 13 and run_job 8: arguments or initial values that do not change any result (not recorded as accepted equivalents)"
+    ]
+  },
+  "working_tree": "uncommitted changes on the base head"
+}
