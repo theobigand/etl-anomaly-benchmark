@@ -1,0 +1,44 @@
+{
+  "base_head": "bcec28e17c41047724bad3f3e69414c7e40d3f7c",
+  "command": "make mutation-focus MODULE=research.<module>",
+  "date": "2026-11-19",
+  "environment": {
+    "mutmut": "3.8.0",
+    "platform": "macOS-27.2-arm64-arm-64bit",
+    "python": "3.11"
+  },
+  "kind": "local focused development measurement of units classified after the 2026-11-13 L4 measurement; not the controller campaign, not attested",
+  "modules": {
+    "research/chrono_train_only.py": {
+      "eligible": 556,
+      "killed": 535,
+      "level": "L3",
+      "raw_score": 96.2,
+      "source_sha256": "5141b998ac66685697728cdc5851046d6ddfae93898094f731dc5576bd15c6e6",
+      "status": "PASS_RAW",
+      "survived": 21,
+      "threshold": 95
+    },
+    "research/typed_train_only.py": {
+      "eligible": 654,
+      "killed": 643,
+      "level": "L3",
+      "raw_score": 98.3,
+      "source_sha256": "a0b59ae54d6f11d5462e42638bffaef405836e1ca6017addca4cd60012b42452",
+      "status": "PASS_RAW",
+      "survived": 11,
+      "threshold": 95
+    }
+  },
+  "note": "No survivor was marked equivalent. paper_tables.py (already in the L4 record, level L3) gained generators and was re-measured locally: 753 of 795 mutants killed (38 survived, 3 suspicious and 1 timeout under machine load), 94.7%, with 25 of the survivors being upper-case path or key literals that a case-insensitive macOS filesystem cannot tell apart; paper_appendix.py: 216 of 224 (96.4%). These two are not part of this record and their authoritative figures are those of the next controller campaign on Linux, where the case-sensitive mutants are killed; if that campaign reports paper_tables.py below 95%, the cause is these new generators.",
+  "survivors": {
+    "research/chrono_train_only.py": [
+      "astype(None) mutants that keep numpy's default dtype (equivalent), upper-case path or key literals that a case-insensitive filesystem cannot tell apart, DataFrame column-name case in the date builder, 'continue' to 'break' in compare, kind='STABLE'"
+    ],
+    "research/typed_train_only.py": [
+      "compare: 2,000-draw bootstrap constants, seed and percentile mutants that the recorded interval test does not separate at its tolerance; share threshold '>' to '>=' (a difference of exactly 0.1 cannot be built in floating point)",
+      "run_one/run_adbench groupby sort mutants and main '--methods' default case"
+    ]
+  },
+  "working_tree": "uncommitted changes on the base head"
+}

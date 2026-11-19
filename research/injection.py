@@ -66,14 +66,25 @@ def _pair(ref: pd.DataFrame) -> tuple[str, str, float]:
 
 
 def inject(
-    clean: pd.DataFrame, seed: int, rate: float = RATE, severity: float = SEVERITY
+    clean: pd.DataFrame,
+    seed: int,
+    rate: float = RATE,
+    severity: float = SEVERITY,
+    reference: pd.DataFrame | None = None,
 ) -> pd.DataFrame:
+    """Inject the six types into ``clean``.
+
+    The magnitudes (mean, standard deviation, correlated pair, quantiles, sign of the columns) come
+    from ``reference`` when given, from ``clean`` otherwise. A reference made of training rows keeps
+    the statistics of the injected faults off the evaluation rows (T062/T063).
+    """
     n, cols = len(clean), list(clean.columns)
+    ref = clean if reference is None else reference[cols]
     k = max(round(rate * n), 15)
     if 6 * k > n:
         raise NotEligible("too few rows for six anomaly groups")
     rng = np.random.default_rng(seed)
-    mean, std = clean.mean(), clean.std()
+    mean, std = ref.mean(), ref.std()
     pop = clean.sample(frac=1.0, random_state=seed).reset_index(drop=True)
     pop["group_id"] = np.arange(n)
     pop["anomaly_type"] = "clean"
@@ -99,11 +110,11 @@ def inject(
         row.iloc[pos, row.columns.get_loc(col)] = (
             mean[col] + sign * rng.uniform(6, 12) * severity * std[col]
         )
-    a, b, corr = _pair(clean)
+    a, b, corr = _pair(ref)
     hi_q, lo_q = min(1 - 0.03 / severity, 0.999), max(0.03 / severity, 0.001)
     hi, lo = (
-        {c: clean[c].quantile(hi_q) for c in (a, b)},
-        {c: clean[c].quantile(lo_q) for c in (a, b)},
+        {c: ref[c].quantile(hi_q) for c in (a, b)},
+        {c: ref[c].quantile(lo_q) for c in (a, b)},
     )
     block = blocks["multivariate_outlier"]
     for pos in range(k):
@@ -115,7 +126,7 @@ def inject(
     for col in shifted:
         drift[col] = drift[col] + 1.5 * severity * std[col]
     drift["t"] = _BASE + pd.to_timedelta(rng.uniform(0.9 * n, n, size=k), unit="h")
-    positive = [c for c in cols if clean[c].min() >= 0]
+    positive = [c for c in cols if ref[c].min() >= 0]
     invalid = blocks["invalid_format"]
     for pos in range(k):
         kind = rng.choice(["sign", "sentinel", "scale"] if positive else ["scale"])

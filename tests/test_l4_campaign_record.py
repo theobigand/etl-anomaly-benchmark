@@ -13,9 +13,19 @@ POLICY = ROOT / "verification/mutation_risk_policy.json"
 RESOLVED = ("killed", "survived")
 # Units classified after the 2026-11-13 measurement are measured in their own record; the historical
 # measurement is not restamped.
-SUPPLEMENT = (
-    ROOT / "docs/thesis-remediation/evidence/focused-new-modules-2026-11-19/measurement.json"
+SUPPLEMENTS = (
+    ROOT / "docs/thesis-remediation/evidence/focused-new-modules-2026-11-19/measurement.json",
+    ROOT / "docs/thesis-remediation/evidence/focused-train-only-replays-2026-11-19/measurement.json",
 )
+
+
+def supplementary_modules():
+    modules = {}
+    for path in SUPPLEMENTS:
+        added = json.loads(path.read_text())["modules"]
+        assert not set(modules) & set(added), path
+        modules.update(added)
+    return modules
 
 
 @pytest.fixture(scope="module")
@@ -31,7 +41,7 @@ def policy():
 def test_the_two_records_hold_exactly_the_classified_units_with_their_current_levels(
     record, policy
 ):
-    supplement = json.loads(SUPPLEMENT.read_text())["modules"]
+    supplement = supplementary_modules()
     assert not set(record["modules"]) & set(supplement)
     assert set(record["modules"]) | set(supplement) == set(policy["units"])
     for path, unit in {**record["modules"], **supplement}.items():
@@ -40,7 +50,7 @@ def test_the_two_records_hold_exactly_the_classified_units_with_their_current_le
 
 
 def test_every_unit_of_the_supplementary_record_meets_its_threshold():
-    for path, unit in json.loads(SUPPLEMENT.read_text())["modules"].items():
+    for path, unit in supplementary_modules().items():
         assert unit["killed"] + unit["survived"] == unit["eligible"], path
         assert unit["killed"] * 100 >= unit["threshold"] * unit["eligible"], path
 

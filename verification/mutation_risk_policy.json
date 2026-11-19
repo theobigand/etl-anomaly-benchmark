@@ -288,6 +288,14 @@
       "level": "L3",
       "reason": "Paired differences, bootstrap intervals and denominators summarize the train-only replay against the archive; the numbers feed thesis statements but no fitted state."
     },
+    "research/typed_train_only.py": {
+      "level": "L3",
+      "reason": "Derives the injection reference from training rows and asserts the partitions are unchanged; defines which statistics the train-only typed replay may read. Exploratory protocol, classified by the implementer and open to owner reclassification."
+    },
+    "research/chrono_train_only.py": {
+      "level": "L3",
+      "reason": "Fits the feature schema on the oldest 70% of rows and applies it unchanged to later rows; it defines the train-only chronological replay. Exploratory protocol, classified by the implementer and open to owner reclassification."
+    },
     "research/neural_budget_probe.py": {
       "level": "L2",
       "reason": "Bounded diagnostic probe for the neural budget-sufficiency note; reports paired score agreement and does not feed model selection. Classified by the implementer and open to owner reclassification."
