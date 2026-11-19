@@ -63,7 +63,7 @@ détecteurs, des partitions et du moniteur utilisé, pas le script du pilote.
 L'identité du script est portée par `script_sha256` dans les réglages de
 l'enregistrement, avec `source_revision` (commit où le script a cette empreinte,
 arbre propre), `dataset_sha256` (égal au manifeste) et `output_sha256`.
-`tests/test_temporal_pilot.py::test_the_archived_pilot_record_identifies_this_implementation`
+`tests/test_temporal_pilot.py::test_the_archived_pilot_record_is_consistent_with_its_files_and_the_current_scientific_code`
 vérifie ces quatre liens et que le script actuel est celui de l'archive. La
 recette d'empreinte n'a pas été étendue.
 
