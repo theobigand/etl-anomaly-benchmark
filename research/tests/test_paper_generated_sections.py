@@ -27,3 +27,16 @@ def test_regenerating_a_section_leaves_the_manuscript_unchanged(module, tmp_path
 def test_the_generators_use_the_displayed_metric_name_of_the_manuscript():
     for generated in (pe.main_block(pt.EVIDENCE), pe.appendix_block(pt.EVIDENCE)):
         assert "PR-AUC" not in generated
+
+
+def test_the_two_schema_table_equals_the_rows_of_the_archived_matrices():
+    tex = TEX.read_text()
+    assert pt.replace_body(tex, "schemas", pa.schema_rows(pt.EVIDENCE)) == tex
+
+
+def test_schema_rows_carry_one_group_per_schema_with_six_recalls_each():
+    rows = pa.schema_rows(pt.EVIDENCE).split("\n")
+    assert [r for r in rows if r.startswith("Transactions")][0].split("&")[1].strip() == "Great Expectations"
+    assert sum(r.startswith(("Transactions", "Sensors", " ")) for r in rows) == 10
+    assert rows.count(r"\midrule") == 1
+    assert all(len(r.split("&")) == 8 for r in rows if "&" in r)

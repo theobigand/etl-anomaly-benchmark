@@ -1,10 +1,13 @@
 {
   "artifacts": {
     "paper/figures/heatmap_synthetic.png": "fe24a3044c94b9d194cb66d07fa421c1a746ece11229db8fc908c4185189a687",
+    "paper/figures/pr_curves.pdf": "f66da1aba7f68cffb672ad62361eb99a86ca78f80d758e3d46edbdef38e575ce",
     "paper/figures/pr_curves.png": "4d1c2e741fdbebce6be6d8fdf0a9b856cfb53bfca03de27a94fc59075559a503",
+    "paper/figures/quality_cost.pdf": "215741fa580e9b9e9a16390f6070870e7b8a2d575d289b68f8c449a89875368c",
+    "paper/figures/severity_curves.pdf": "1af0f7ca7fe99467a4c2f4e83046dea4b4b31e95e2283718e01b9887119209eb",
     "paper/figures/severity_curves.png": "335a5475a0b5d39e40f0336a3c48c733ca9d9a0f80fa496239a1b59ed1efdb6d",
-    "paper/main.pdf": "e446a76ece4ffbf2670dd2c811c775f1448032b277744bf250f5ab616d6e302e",
-    "paper/main.tex": "5399925532e56ee0dedc6d7af5d57f3dec02691f60db3e422d816ebe0689c504",
+    "paper/main.pdf": "67e8f54d2bd2d832cdad1818a39aa07ae74cd6037a031d6508880c15b8d3bcf0",
+    "paper/main.tex": "2e0004e2f8db96f6978f8c5bff71a1998c2c11b3c1442ec15d19b5a8b434ba71",
     "paper/references.bib": "ecf1c74309c1225412785021c141ff71a9a83c6721d57bcf213c04626da5904a",
     "verification/evidence/benchmark_cardio.csv": "9f9403b0354b19a37cbeb21c9e7e5fe193f9020dc68111e45e33a1904f661675",
     "verification/evidence/benchmark_cardio.md": "531d53f4651666cfef55ff226b59d04227cd621784ea75af33ec86ea4d3bd22b",
@@ -97,6 +100,6 @@
   "platform": "macOS-27.0-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "source_revision": "c06087faad3904a64ad0c7236eb4e346fa64b36f",
+  "source_revision": "bcec28e17c41047724bad3f3e69414c7e40d3f7c",
   "worktree_dirty": true
 }

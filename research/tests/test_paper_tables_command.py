@@ -15,6 +15,7 @@ import paper_tables as pt  # noqa: E402
 def wired(monkeypatch):
     seen = {"rows": [], "replace": []}
     monkeypatch.setattr(pt, "TABLES", {"one": None, "two": None})
+    monkeypatch.setattr(pt, "EXTRA_TABLES", {})
     monkeypatch.setattr(
         pt,
         "rows",
@@ -37,6 +38,23 @@ def test_the_tables_are_rebuilt_in_order_from_the_given_evidence_and_written_int
     assert wired["rows"] == [("one", evidence), ("two", evidence)]
     assert wired["replace"] == [("start", "one", "body one"), ("start+one", "two", "body two")]
     assert tex.read_text() == "start+one+two"
+
+
+def test_the_single_archive_tables_follow_the_benchmark_tables_in_the_given_order(
+    wired, monkeypatch, tmp_path
+):
+    monkeypatch.setattr(
+        pt, "EXTRA_TABLES", {"x": lambda evidence: f"x from {evidence}", "y": lambda _e: "y body"}
+    )
+    tex = tmp_path / "main.tex"
+    tex.write_text("start")
+    assert pt.main(["--tex", str(tex), "--evidence", str(tmp_path)]) == 0
+    assert [(label, body) for _t, label, body in wired["replace"]] == [
+        ("one", "body one"),
+        ("two", "body two"),
+        ("x", f"x from {tmp_path}"),
+        ("y", "y body"),
+    ]
 
 
 def test_the_print_option_prints_each_body_under_its_label_and_writes_nothing(
