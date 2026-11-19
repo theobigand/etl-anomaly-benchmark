@@ -41,8 +41,8 @@ KNN, PCA) and six neural ones (autoencoder, VAE, Deep SVDD, DIF, AE1SVM, LUNAR).
 five seeds on a stratified held-out split, on a pool of $152$ open datasets (used as $100$ labelled
 problems and, for the $58$ tables large enough, as hosts for six injected anomaly types: $42$ from UCI
 and $16$ from ADBench) and on Faker-generated data with controlled anomaly types. I report each study against hypotheses written before its runs. The aggregate findings on the $100$ labelled
-problems remain descriptive: their historical schema and row filtering precede the split and require train-only
-revalidation. Under that preparation no detector dominates uniformly. The column-wise ECOD, COPOD and HBOS have point
+problems remain descriptive: their historical schema and row filtering precede the split. A train-only replay changes
+average precision little for most problems and a lot for a few, without validating the archived runs. Under that preparation no detector dominates uniformly. The column-wise ECOD, COPOD and HBOS have point
 estimates close to Isolation Forest, and the neural models, tested only in an out-of-the-box CPU configuration and fitted on
 at most $20{,}000$ rows, do not beat the best classical one; overlapping intervals leave these differences unresolved and are not
 evidence that the detectors are equivalent. The per-type view, which depends on numeric-only features for the learned models
@@ -1501,9 +1501,19 @@ Forest on fraud $F_1 = 0.20 \pm 0.07$), so those numbers should be read
 as ranges. The labels of the $64$ UCI problems come from a rule (the rarest
 class), $19$ UCI sources underlie both an ADBench problem and a table of the UCI part of the
 pool ($15$ of them among the labelled problems), and the datasets are therefore not independent. The labelled-pool preparation also reads full-table
-values and labels before the split; the exploratory training-only path has only
-constructed validation so far. Its performance impact needs a separate replay,
-not a retrospective reinterpretation of the archived outcomes.
+values and labels before the split. To bound the effect of that choice I replayed the $17$
+detectors on the $100$ labelled problems on the exploratory training-only path
+(grouped $70/15/15$ split that keeps identical rows together, preparation fitted on training rows only, five seeds, no
+failed problem), and paired each result with its archived counterpart. For the neural detectors the paired median
+change in average precision lies between $-0.001$ and $+0.001$ with bootstrap intervals that contain zero, and
+$10$ to $12\%$ of the problems move by more than $0.05$. For the eleven rule-based and classical detectors the
+mean change is small and negative ($-0.001$ to $-0.017$), and $4$ to $11\%$ of the problems move by more than $0.05$;
+the largest change is the $z$-score on \texttt{adbench:http} ($-0.77$), where the replay also keeps $567{,}498$
+rows instead of the $221{,}898$ left by the archived de-duplication. The leading detector changes between archive
+and replay (ECOD to HBOS among the classical ones; DIF leads in both neural comparisons) by margins small against
+the spread across problems. This replay bounds the dependence of the reported scores on the pre-split choices on
+these problems; it does not show that the archived runs were train-only, and the injection studies were not replayed.
+The archived outcomes are kept unchanged.
 The neural scores are not bit-reproducible across numerical settings: in a controlled probe of $24$ fits, the
 scores of AE1SVM changed materially with the PyTorch thread count (a rank correlation as low as $0.82$ against
 the four-thread run) and those of LUNAR less so, while the autoencoder was invariant and Deep SVDD varied at

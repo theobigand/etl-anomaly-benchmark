@@ -231,7 +231,7 @@ rq = [
         "RQ1",
         "Rules, classical and neural detectors in one pipeline",
         "examples, 100 labelled problems",
-        "historical ranking, train-only replay pending",
+        "historical ranking, exploratory train-only replay done",
     ),
     (
         "RQ2",
@@ -801,7 +801,7 @@ slide(
                 1152,
                 None,
                 "",
-                "<div class='k anom'>Still outstanding</div><p style='font-size:20px;margin-top:8px'>Historical memberships were recomputed (not originally archived) and replay-validated: the Z-score reproduces all 100 archived per-seed results. <b>Replaying the studies on the train-only path remains outstanding.</b> Old protocols and results are preserved, and no corrected pool-performance claim is available.</p>",
+                "<div class='k anom'>Still outstanding</div><p style='font-size:20px;margin-top:8px'>Historical memberships were recomputed (not originally archived) and replay-validated: the Z-score reproduces all 100 archived per-seed results. <b>An exploratory train-only replay on the 100 labelled problems moves AP little for most, by over 0.05 for 4 to 12%.</b> It does not validate the archived runs.</p>",
             ),
             foot(
                 "research/pool_preprocessing.py &nbsp;·&nbsp; pool_train_only.py &nbsp;·&nbsp; exploratory path"
