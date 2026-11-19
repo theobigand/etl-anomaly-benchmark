@@ -866,7 +866,7 @@ Credit Card Fraud and Isolation Forest on Cardio.
 \caption{AP of the seventeen detectors on four problems of the pool (mean over five
 seeds). Credit Card Fraud ($0.2\%$ anomalies) and Cardio ($9.6\%$) are the examples of
 Section~\ref{sec:experiments}; Annthyroid ($7.6\%$) and Mushroom ($10.0\%$, after resampling) are the two additional ones; AP of a random ranking equals the prevalence. A dash
-means the detector was skipped on that size.}
+means the detector was skipped on that size. Bold: highest AP of the column (ties at two decimals included).}
 \label{tab:examples}
 \centering
 \footnotesize
@@ -1003,20 +1003,20 @@ equivalent: no equivalence margin was specified in advance and none is claimed.
 
 \begin{table*}[t]
 \centering
-\caption{Paired mean AP differences over the labelled problems with $95\%$ percentile intervals from a problem-level and a source-level bootstrap, and the Holm-adjusted source-level $p$-value.}
+\caption{Paired mean AP differences (first detector minus second, mean over the problems on which both ran; AP is unitless) with $95\%$ percentile intervals from a problem-level and a source-level bootstrap, and the Holm-adjusted source-level $p$-value. Problems: number of problems on which both detectors ran.}
 \label{tab:clustered}
 \small
 \begin{tabular}{lrccr}
-\hline
+\toprule
 Comparison & Problems & Problem bootstrap & Source bootstrap & Holm $p$ \\
-\hline
+\midrule
 ECOD $-$ Isolation Forest & 100 & -0.009 [-0.035, +0.016] & -0.009 [-0.036, +0.020] & 1.000 \\
 COPOD $-$ Isolation Forest & 100 & -0.004 [-0.027, +0.016] & -0.004 [-0.028, +0.018] & 1.000 \\
 One-Class SVM $-$ Isolation Forest & 84 & -0.015 [-0.032, +0.004] & -0.015 [-0.033, +0.004] & 0.655 \\
 DIF $-$ ECOD & 100 & -0.021 [-0.054, +0.011] & -0.021 [-0.062, +0.017] & 1.000 \\
 Z-score $-$ Isolation Forest & 100 & -0.018 [-0.046, +0.012] & -0.018 [-0.050, +0.020] & 1.000 \\
 Great Expectations $-$ Isolation Forest & 100 & -0.162 [-0.207, -0.120] & -0.162 [-0.208, -0.116] & 0.000 \\
-\hline
+\bottomrule
 \end{tabular}
 \end{table*}
 
@@ -1110,14 +1110,15 @@ while LOF peaks earlier and then falls. The row-level drift detector
 does not respond in this sweep. The ranking therefore changes with
 severity, limiting claims based on one injection magnitude.
 
-\begin{figure}[t]
+\begin{figure*}[t]
 \centering
-\includegraphics[width=\columnwidth]{figures/severity_curves.png}
+\includegraphics[width=\textwidth]{figures/severity_curves.pdf}
 \caption{Per-type recall against injection severity ($1.0$ is the
-reference synthetic dataset), mean over three seeds. The dashed line
-marks severity $1.0$.}
+reference synthetic dataset), mean over three seeds. The dash-dotted vertical line
+marks severity $1.0$. Each detector keeps the same colour and line style in
+Figures~\ref{fig:prcurves} and~\ref{fig:qualitycost}.}
 \label{fig:severity}
-\end{figure}
+\end{figure*}
 
 \subsection{Further schemas and neural models (RQ2)}
 \label{sec:rq2-transfer}
@@ -1178,7 +1179,7 @@ standard deviation, and without them the $z$-score detects every univariate
 outlier on all $42$ tables. The result says more about non-robust statistics
 on a contaminated training set than about the $z$-score itself.
 
-The two hypotheses on stability hold. The mean rank correlation between the
+The two hypotheses on stability hold in the archived run (H4 only narrowly: see Section~\ref{sec:labelled}). The mean rank correlation between the
 method-by-type matrices of two tables is $0.80$ with the seventeen detectors of the
 registry (it was $0.83$ with the first eight rows), and it is lowest for drift
 ($0.63$), multivariate outliers ($0.65$) and duplicates ($0.66$), highest for univariate
@@ -1219,19 +1220,22 @@ $0.93$ at precision $0.46$. The estimator is fixed; only the threshold
 moves. Reading the prevalence off the training split lands near the knee
 of the curve on the datasets where a knee exists.
 
-\begin{figure}[t]
+\begin{figure*}[t]
 \centering
-\includegraphics[width=\columnwidth]{figures/pr_curves.png}
+\includegraphics[width=\textwidth]{figures/pr_curves.pdf}
 \caption{Precision-recall curves on the test split of seed $42$, one panel per
-dataset (Credit Card, Water Quality, Cardio, synthetic), average precision in the legend. The dashed line is the base
-rate.}
+dataset (Credit Card, Water Quality, Cardio, synthetic). The dash-dotted horizontal line is the base
+rate. The curves are drawn at a resolution of $0.0025$ in recall (mean precision per bin);
+the average precision of the single run is not shown, and the seed-averaged values are in
+Appendix~\ref{app:details}.}
 \label{fig:prcurves}
-\end{figure}
+\end{figure*}
 
 \begin{table}[t]
 \caption{Isolation Forest under a contamination sweep, test split, one
 seed. ``prev.'' is the training-split prevalence, the value the
-benchmarks use.}
+benchmarks use. Contam.: contamination parameter of Isolation Forest; Prec., Rec.: precision and
+recall of the flags on the test split; Flag.\%: share of test rows flagged, in percent.}
 \label{tab:contamination}
 \centering
 \setlength{\tabcolsep}{4pt}
@@ -1240,15 +1244,15 @@ benchmarks use.}
 \toprule
 Dataset & Contam. & Prec. & Rec. & Flag.\% \\
 \midrule
-Credit Card Fraud & 0.001       & 0.37 & 0.23 & 0.10 \\
-Credit Card Fraud & 0.10        & 0.01 & 0.90 & 10.2 \\
+Credit Card Fraud & 0.001 & 0.37 & 0.23 & 0.10 \\
+Credit Card Fraud & 0.10 & 0.01 & 0.90 & 10.2 \\
 Credit Card Fraud & prev.\ 0.002 & 0.28 & 0.32 & 0.20 \\
 \midrule
-Cardio            & 0.01        & 1.00 & 0.33 & 3.3 \\
-Cardio            & 0.20        & 0.46 & 0.93 & 19.7 \\
+Cardio            & 0.01 & 1.00 & 0.33 & 3.3 \\
+Cardio            & 0.20 & 0.46 & 0.93 & 19.7 \\
 Cardio            & prev.\ 0.096 & 0.72 & 0.67 & 9.1 \\
 \midrule
-Water Quality     & prev.\ 0.5   & 0.58 & 0.49 & 51.6 \\
+Water Quality     & prev.\ 0.5 & 0.58 & 0.49 & 51.6 \\
 Synthetic         & prev.\ 0.175 & 0.53 & 0.51 & 16.8 \\
 \bottomrule
 \end{tabular}
@@ -1273,19 +1277,20 @@ confirmatory estimate on an untouched test set.
 
 \begin{table}[t]
 \caption{Isolation Forest with train-prevalence and fixed $0.02$
-contamination, same five real-data splits. Entries are means; ``flag''
-is the fraction of test rows predicted anomalous.}
+contamination, same five real-data splits. Entries are means over the five
+splits; $F_1$ is computed on the test split, and ``flag'' is the percentage of test rows
+predicted anomalous (prev.: contamination equal to the training prevalence).}
 \label{tab:fixed-calibration}
 \centering
 \setlength{\tabcolsep}{4pt}
 \footnotesize
 \begin{tabular}{lrrrr}
 \toprule
-Dataset & $F_1$ train & $F_1$ fixed & Flag train\% & Flag fixed\% \\
+Dataset & $F_1$ prev. & $F_1$ fixed & Flag.\% prev. & Flag.\% fixed \\
 \midrule
 Credit Card Fraud & 0.203 & 0.102 & 0.168 & 2.063 \\
-Cardio & 0.618 & 0.406 & 9.854 & 2.701 \\
-Water Quality & 0.512 & 0.023 & 49.675 & 1.789 \\
+Cardio            & 0.618 & 0.406 & 9.854 & 2.701 \\
+Water Quality     & 0.512 & 0.023 & 49.675 & 1.789 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1331,35 +1336,36 @@ Section~\ref{sec:studies}). Times are those of the detection stage (fit, predict
 
 \begin{table}[t]
 \caption{Median detection-stage time on synthetic data ($8$ features) for
-$10^4$, $10^5$ and $3\cdot10^5$ rows, the empirical growth exponent over the
-sizes completed, and the peak resident memory added by detection at the largest
-size (a: at $3\cdot10^4$ rows, b: at $10^5$ rows, the largest size completed).}
+$10^4$, $10^5$ and $3\cdot10^5$ rows (three significant figures), the empirical growth exponent over the
+sizes completed, and the median resident memory added by detection, in MiB ($2^{20}$ bytes), at the largest
+size completed ($3\cdot10^5$ rows unless marked; a: at $3\cdot10^4$ rows, b: at $10^5$ rows).
+$>300$ s: exceeded the budget of $300$ s; not run: not tried after a timeout.}
 \label{tab:cost}
 \centering
 \footnotesize
 \setlength{\tabcolsep}{3pt}
 \begin{tabular}{lrrrrr}
 \toprule
-Detector & $10^4$ & $10^5$ & $3\cdot10^5$ & Exp. & Mem. (MB) \\
+Detector & $10^4$ & $10^5$ & $3\cdot10^5$ & Exp. & Mem. (MiB) \\
 \midrule
-Z-score            & 0.002 s & 0.013 s & 0.039 s & 0.64 & 70 \\
-IQR                & 0.004 s & 0.029 s & 0.086 s & 0.70 & 116 \\
-Isolation Forest   & 0.16 s  & 1.09 s  & 3.2 s   & 0.72 & 140 \\
-Autoencoder (MLP)  & 1.5 s   & 8.4 s   & 12.7 s  & 0.77 & 115 \\
-LSTM autoencoder   & 1.1 s   & 5.1 s   & 7.3 s   & 0.73 & 499 \\
-LOF                & 0.73 s  & 18.0 s  & 133 s   & 1.51 & 405 \\
-One-Class SVM     & 5.6 s   & $>300$ s & not run & 1.99 & 788$^{a}$ \\
+Z-score & 0.00202 s & 0.0126 s & 0.0391 s & 0.64 & 67 \\
+IQR & 0.00387 s & 0.0289 s & 0.0857 s & 0.70 & 110 \\
+Isolation Forest & 0.159 s & 1.09 s & 3.20 s & 0.72 & 134 \\
+Autoencoder (MLP) & 1.49 s & 8.45 s & 12.7 s & 0.77 & 109 \\
+LSTM autoencoder & 1.10 s & 5.07 s & 7.28 s & 0.73 & 476 \\
+LOF & 0.726 s & 18.0 s & 133 s & 1.51 & 387 \\
+One-Class SVM & 5.56 s & $>300$ s & not run & 1.99 & 751$^{a}$ \\
 \midrule
-ECOD               & 0.045 s & 0.68 s & 2.35 s & 1.10 & 186 \\
-COPOD              & 0.044 s & 0.68 s & 2.36 s & 1.09 & 186 \\
-HBOS               & 0.013 s & 0.12 s & 0.39 s & 0.87 & 94 \\
-PCA                & 0.010 s & 0.089 s & 0.29 s & 0.85 & 97 \\
-KNN                & 0.45 s & 11 s & 68 s & 1.46 & 148 \\
-VAE                & 6.83 s & 69 s & 209 s & 1.00 & 105 \\
-Deep SVDD          & 5.65 s & 57 s & 192 s & 1.01 & 383 \\
-DIF                & 23 s & 262 s & $>300$ s & 1.01 & 2748$^{b}$ \\
-AE1SVM             & 22 s & 213 s & $>300$ s & 0.99 & 62$^{b}$ \\
-LUNAR              & 29 s & $>300$ s & not run & 0.99 & 369$^{a}$ \\
+ECOD & 0.0447 s & 0.678 s & 2.35 s & 1.10 & 186 \\
+COPOD & 0.0444 s & 0.680 s & 2.36 s & 1.09 & 186 \\
+HBOS & 0.0127 s & 0.124 s & 0.389 s & 0.87 & 94 \\
+PCA & 0.0102 s & 0.0893 s & 0.286 s & 0.85 & 97 \\
+KNN & 0.446 s & 10.6 s & 67.6 s & 1.46 & 148 \\
+VAE & 6.83 s & 68.5 s & 209 s & 1.00 & 105 \\
+Deep SVDD & 5.65 s & 57.3 s & 192 s & 1.01 & 383 \\
+DIF & 23.3 s & 262 s & $>300$ s & 1.01 & 2748$^{b}$ \\
+AE1SVM & 22.4 s & 213 s & $>300$ s & 0.99 & 62$^{b}$ \\
+LUNAR & 29.3 s & $>300$ s & not run & 0.99 & 369$^{a}$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1384,6 +1390,24 @@ and the VAE and Deep SVDD three to four minutes. DIF, AE1SVM and LUNAR exceeded
 the budget of $300$ seconds at $3\cdot10^5$, $3\cdot10^5$ and $10^5$ rows. The
 cost therefore depends on the architecture, from minutes for the VAE and Deep SVDD to beyond the budget for DIF, AE1SVM and LUNAR, against seconds for the column-wise models, and the cap used for quality is what made the pool runs
 feasible.
+
+Figure~\ref{fig:qualitycost} puts the two results side by side for the sixteen detectors timed.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/quality_cost.pdf}
+\caption{Quality against cost for sixteen of the seventeen detectors (Great Expectations
+was not timed). Vertical axis: median AP over the labelled problems with its $95\%$
+bootstrap interval (Table~\ref{tab:labelled}). Horizontal axis: median detection-stage time at
+$10^4$ rows on synthetic data of eight features (Table~\ref{tab:cost}), below the $20{,}000$-row
+fit cap of the quality runs. The two axes come from different studies and datasets, and the
+timings from two campaigns on one machine that was not isolated (the first seven
+detectors of Table~\ref{tab:cost} at a load of $2.2$, the other ten at $3.0$ when they
+started): positions on the horizontal axis are indicative and are not comparable to the
+neural times of Table~\ref{tab:fraud}, which were taken on another dataset at a median load of
+about $5.7$ on $10$ cores.}
+\label{fig:qualitycost}
+\end{figure}
 
 To separate the detection stage from the whole pipeline, I also timed read,
 cleaning, detection and write on the full Credit Card file ($284{,}807$ rows
@@ -1581,8 +1605,18 @@ the largest change is the $z$-score on \texttt{adbench:http} ($-0.77$), where th
 rows instead of the $221{,}898$ left by the archived de-duplication. The leading detector changes between archive
 and replay (ECOD to HBOS among the classical ones; DIF leads in both neural comparisons) by margins small against
 the spread across problems. This replay bounds the dependence of the reported scores on the pre-split choices on
-these problems; it does not show that the archived runs were train-only, and the injection studies were not replayed.
-The archived outcomes are kept unchanged.
+these problems; it does not show that the archived runs were train-only.
+The injection and chronological studies were replayed in the same way. In the typed injection, the magnitudes of the
+injected faults were computed on the whole carrier; recomputing them from the training rows of each split (the $58$ eligible
+tables, classical sweep, partitions unchanged) moves the mean detection rate of a method on a type by at most $0.034$ (PCA on
+multivariate outliers) and by less than $0.01$ in $76$ of $78$ cells on the $42$ UCI tables. The pre-registered hypotheses keep their verdict,
+except H4, which holds in the archive by a margin of $0.006$ and fails by $0.0003$ in the replay: that verdict is a strict
+inequality between rank correlations that differ in the third decimal and should not be read as robust. In the chronological studies the
+column schema and the one-hot vocabulary were fitted on the oldest $70\%$ of the rows and Credit Card was not de-duplicated. The partitions are unchanged
+for Bank Marketing, Occupancy Detection and Online Shoppers, and the average precision of the rule and classical detectors changes by at most $0.008$
+there; the neural detectors move by up to $0.06$ (Bank Marketing), and on Credit Card, whose population changes, by up to $0.11$ (autoencoder
+and Deep SVDD), with a rank correlation of the detectors of $0.89$ against $0.97$ to $0.99$ elsewhere. The neural typed sweep and the
+generated data were not replayed. The archived outcomes are kept unchanged.
 PyOD exposes no loss history for the VAE, Deep SVDD, AE1SVM and LUNAR, so convergence cannot be read from
 training curves. An exploratory probe on $8$ labelled problems of $300$ to $5{,}000$ rows, with three seeds
 (24 fits per detector, no non-finite score), fitted them again at three times their epoch budget on the same
@@ -2140,7 +2174,7 @@ be prohibitive; I did not measure it.
 
 \begin{table}[t]
 \caption{Detectors on Credit Card Fraud, mean over five seeds on the
-$15\%$ test split. Anomaly prevalence $0.17\%$, the AP of a random ranking. Higher is better except flagged rows and time. $^{c}$Neural times: separate run of the same splits, seeds and fit cap, one detector at a time, on a machine with other work (median load average $5.7$ on $10$ cores); not comparable with the other rows or with Table~\ref{tab:cost}.}
+$15\%$ test split. Anomaly prevalence $0.17\%$, the AP of a random ranking. Higher is better except flagged rows and time. $^{c}$Neural times: separate run of the same splits, seeds and fit cap, one detector at a time, on a machine with other work (median load average $5.7$ on $10$ cores); not comparable with the other rows or with Table~\ref{tab:cost}. ROC is the area under the ROC curve (ROC-AUC).}
 \label{tab:fraud}
 \centering
 \setlength{\tabcolsep}{3pt}
@@ -2190,7 +2224,7 @@ deviations of $0.14$ and $0.17$).
 
 \begin{table}[t]
 \caption{All detectors on Cardio, mean over five seeds on the $15\%$ test
-split. $1{,}831$ raw rows ($1{,}822$ after deduplication), $9.6\%$ anomalies (the AP of a random ranking).}
+split. $1{,}831$ raw rows ($1{,}822$ after deduplication), $9.6\%$ anomalies (the AP of a random ranking). ROC is the area under the ROC curve (ROC-AUC).}
 \label{tab:cardio}
 \centering
 \setlength{\tabcolsep}{4pt}
@@ -2236,7 +2270,7 @@ uncorrelated with potability, so that recall buys no precision.
 
 \begin{table}[t]
 \caption{All detectors on Water Quality, mean over five seeds on the
-$15\%$ test split. Target: ``not potable'', base rate $0.61$.}
+$15\%$ test split. Target: ``not potable'', base rate $0.61$. ROC is the area under the ROC curve (ROC-AUC).}
 \label{tab:water}
 \centering
 \setlength{\tabcolsep}{4pt}
@@ -2284,7 +2318,7 @@ runs shared the machine; Section~\ref{sec:cost} gives their cost at larger sizes
 
 \begin{table}[t]
 \caption{All detectors on the synthetic dataset, mean over five seeds on
-the $15\%$ test split. Anomaly prevalence $17.5\%$, the AP of a random ranking. Time is the in-pipeline fit+predict+score latency. $^{c}$Neural times: separate run, same conditions as in Table~\ref{tab:fraud}.}
+the $15\%$ test split. Anomaly prevalence $17.5\%$, the AP of a random ranking. Time is the in-pipeline fit+predict+score latency. $^{c}$Neural times: separate run, same conditions as in Table~\ref{tab:fraud}. ROC is the area under the ROC curve (ROC-AUC).}
 \label{tab:synthetic}
 \centering
 \setlength{\tabcolsep}{4pt}
@@ -2324,8 +2358,8 @@ their four hypotheses. The customer table and its published results are untouche
 matrix below is the published one.
 
 \begin{table}[t]
-\caption{Mean recall over five seeds on the two further schemas for the
-first six methods that carry the pattern (customer table in
+\caption{Mean recall over five seeds on the two further schemas for five
+methods that carry the pattern (customer table in
 Figure~\ref{fig:heatmap}; the full matrices with the other detectors are in
 Appendix~\ref{app:matrices}). Columns: missing values, duplicates, univariate
 outliers, multivariate outliers, drift, invalid formats.}
@@ -2337,13 +2371,13 @@ outliers, multivariate outliers, drift, invalid formats.}
 \toprule
 Schema & Method & Miss. & Dup. & Uni. & Multi. & Drift & Inv. \\
 \midrule
-Transactions & Great Expect. & 1.00 & 0.00 & 0.14 & 0.00 & 0.00 & 0.00 \\
+Transactions & Great Expectations & 1.00 & 0.00 & 0.14 & 0.00 & 0.00 & 0.00 \\
              & Dedup rule         & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
              & IQR                & 0.09 & 0.14 & 0.98 & 0.57 & 0.37 & 0.63 \\
              & Isolation Forest   & 0.09 & 0.18 & 0.97 & 0.49 & 0.38 & 0.56 \\
              & One-Class SVM      & 0.10 & 0.26 & 0.89 & 0.18 & 0.36 & 0.39 \\
 \midrule
-Sensors      & Great Expect. & 1.00 & 0.00 & 0.23 & 0.00 & 0.00 & 0.00 \\
+Sensors      & Great Expectations & 1.00 & 0.00 & 0.23 & 0.00 & 0.00 & 0.00 \\
              & Dedup rule         & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
              & IQR                & 0.03 & 0.05 & 1.00 & 0.02 & 0.94 & 1.00 \\
              & Isolation Forest   & 0.08 & 0.12 & 1.00 & 0.32 & 0.96 & 0.97 \\
@@ -2541,7 +2575,7 @@ exactly. The pilot is a separate experiment and does not replace the benchmark.
 \caption{Average precision (AP) on the test split, stratified (strat.)
 control versus chronological (chron.) split with its 95\% block-bootstrap
 interval, ROC-AUC of the chronological split, and the share of future
-rows flagged at the training-prevalence threshold.}
+rows flagged at the training-prevalence threshold. ROC is the area under the ROC curve (ROC-AUC).}
 \label{tab:chrono}
 \centering
 \scriptsize

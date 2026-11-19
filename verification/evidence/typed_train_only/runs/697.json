@@ -1,0 +1,325 @@
+{
+ "carrier": {
+  "columns": [
+   "Application mode",
+   "Course",
+   "Previous qualification",
+   "Previous qualification (grade)",
+   "Nacionality",
+   "Mother's qualification",
+   "Father's qualification",
+   "Mother's occupation",
+   "Father's occupation",
+   "Admission grade",
+   "Age at enrollment",
+   "Curricular units 1st sem (credited)",
+   "Curricular units 1st sem (enrolled)",
+   "Curricular units 1st sem (evaluations)",
+   "Curricular units 1st sem (approved)",
+   "Curricular units 1st sem (grade)",
+   "Curricular units 1st sem (without evaluations)",
+   "Curricular units 2nd sem (credited)",
+   "Curricular units 2nd sem (enrolled)",
+   "Curricular units 2nd sem (evaluations)",
+   "Curricular units 2nd sem (approved)",
+   "Curricular units 2nd sem (grade)",
+   "Curricular units 2nd sem (without evaluations)",
+   "Unemployment rate",
+   "GDP"
+  ],
+  "duplicates_dropped": 0,
+  "normal_class_only": true,
+  "rows_in": 3630,
+  "rows_incomplete_dropped": 0,
+  "rows_out": 3630,
+  "source_rows": 3630
+ },
+ "fpr_mean": {
+  "copod": 0.167458293,
+  "drift": 0.0967192969,
+  "ecod": 0.1558073285,
+  "great_expectations": 0.0069030684,
+  "hbos": 0.168760706,
+  "iqr": 0.4087165785,
+  "isolation_forest": 0.1639997766,
+  "knn": 0.1415655023,
+  "lof": 0.1394187086,
+  "ocsvm": 0.1411251583,
+  "pca": 0.15407295,
+  "transform_dedup": 0.0353895137,
+  "zscore": 0.0565614061
+ },
+ "name": "Predict Students' Dropout and Academic Success",
+ "precision_mean": {
+  "columns": [
+   "missing_value",
+   "duplicate",
+   "univariate_outlier",
+   "multivariate_outlier",
+   "temporal_drift",
+   "invalid_format"
+  ],
+  "data": [
+   [
+    0.056987953,
+    0.0299833294,
+    0.1842749877,
+    0.1010137372,
+    0.0247201715,
+    0.3215186086
+   ],
+   [
+    0.0306329122,
+    0.0277174536,
+    0.0688336458,
+    0.0375626276,
+    0.0760522063,
+    0.0641882573
+   ],
+   [
+    0.8448029494,
+    0.0666666667,
+    0.8172455649,
+    0.0,
+    0.2133333333,
+    0.7839102564
+   ],
+   [
+    0.0353240365,
+    0.0125698506,
+    0.057053115,
+    0.0472005554,
+    0.0453667912,
+    0.0404732869
+   ],
+   [
+    0.0289371724,
+    0.0330363657,
+    0.152982022,
+    0.0698308292,
+    0.1008429806,
+    0.1444903207
+   ],
+   [
+    0.0407935581,
+    0.0234926844,
+    0.1065711092,
+    0.100407835,
+    0.0379110655,
+    0.1353167301
+   ],
+   [
+    0.031921055,
+    0.0244647541,
+    0.0881866722,
+    0.042410808,
+    0.0501824661,
+    0.0589521272
+   ],
+   [
+    0.0298239434,
+    0.0179328349,
+    0.0899898074,
+    0.035898388,
+    0.0516386918,
+    0.0684389918
+   ],
+   [
+    0.0246228842,
+    0.0250529657,
+    0.062550961,
+    0.0862717208,
+    0.0312286131,
+    0.0765563007
+   ],
+   [
+    0.0328365385,
+    0.0147962454,
+    0.1490919215,
+    0.1059166455,
+    0.0469914082,
+    0.1484500267
+   ],
+   [
+    0.0364788531,
+    0.032311595,
+    0.0925025427,
+    0.0956282848,
+    0.0718411345,
+    0.1075898129
+   ],
+   [
+    0.0119310755,
+    0.013968254,
+    0.0119743407,
+    0.0064516129,
+    0.0320512821,
+    0.0087922705
+   ],
+   [
+    0.0,
+    0.5,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  ],
+  "index": [
+   "zscore",
+   "iqr",
+   "great_expectations",
+   "isolation_forest",
+   "lof",
+   "ocsvm",
+   "ecod",
+   "copod",
+   "hbos",
+   "knn",
+   "pca",
+   "drift",
+   "transform_dedup"
+  ]
+ },
+ "protocol": "typed-train-only-v1",
+ "recall_mean": {
+  "columns": [
+   "missing_value",
+   "duplicate",
+   "univariate_outlier",
+   "multivariate_outlier",
+   "temporal_drift",
+   "invalid_format"
+  ],
+  "data": [
+   [
+    0.0830882353,
+    0.0492647059,
+    0.2977941176,
+    0.2125,
+    0.05,
+    0.5963235294
+   ],
+   [
+    0.3595588235,
+    0.3323529412,
+    0.8448529412,
+    0.4625,
+    0.975,
+    0.7919117647
+   ],
+   [
+    1.0,
+    0.0125,
+    0.8213235294,
+    0.0,
+    0.05,
+    0.6926470588
+   ],
+   [
+    0.1676470588,
+    0.0602941176,
+    0.2772058824,
+    0.2375,
+    0.225,
+    0.1948529412
+   ],
+   [
+    0.1183823529,
+    0.1360294118,
+    0.6838235294,
+    0.2875,
+    0.4375,
+    0.6573529412
+   ],
+   [
+    0.1691176471,
+    0.0970588235,
+    0.4683823529,
+    0.4625,
+    0.1625,
+    0.6205882353
+   ],
+   [
+    0.1433823529,
+    0.1095588235,
+    0.4213235294,
+    0.2,
+    0.2375,
+    0.2794117647
+   ],
+   [
+    0.1441176471,
+    0.0852941176,
+    0.4580882353,
+    0.175,
+    0.2625,
+    0.3419117647
+   ],
+   [
+    0.1198529412,
+    0.1227941176,
+    0.3132352941,
+    0.4625,
+    0.1625,
+    0.3867647059
+   ],
+   [
+    0.1323529412,
+    0.0617647059,
+    0.6852941176,
+    0.4875,
+    0.2,
+    0.6933823529
+   ],
+   [
+    0.1698529412,
+    0.1477941176,
+    0.4308823529,
+    0.475,
+    0.35,
+    0.5242647059
+   ],
+   [
+    0.0948529412,
+    0.1242647059,
+    0.0602941176,
+    0.075,
+    0.2375,
+    0.0617647059
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  ],
+  "index": [
+   "zscore",
+   "iqr",
+   "great_expectations",
+   "isolation_forest",
+   "lof",
+   "ocsvm",
+   "ecod",
+   "copod",
+   "hbos",
+   "knn",
+   "pca",
+   "drift",
+   "transform_dedup"
+  ]
+ },
+ "seeds": [
+  42,
+  1,
+  2,
+  3,
+  4
+ ],
+ "sha256": "a1b1a6531bbb93a5c7fdf0093b47172776652a4ffb12342fb79655c85b74801b",
+ "uci_id": 697
+}

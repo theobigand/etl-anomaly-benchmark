@@ -120,3 +120,29 @@ def test_invalid_rows_hold_a_sign_flip_a_sentinel_or_a_thousandfold_scale_error(
         value = row[col]
         kinds.add("sentinel" if value == -999 else "scale" if z[col] > 30 else "sign")
     assert kinds <= {"sentinel", "scale", "sign"} and len(kinds) >= 2
+
+
+def test_a_reference_supplies_the_statistics_that_set_the_injected_magnitudes():
+    clean, _ = inj.prepare(_carrier(), seed=0)
+    reference = clean.iloc[:500] * 2.0 + 7.0  # a different mean, spread and correlation scale
+    out = inj.inject(clean, seed=0, reference=reference)
+    kept = out[out["anomaly_type"] == "clean"][list(clean.columns)]
+    assert kept.isin(clean.to_numpy().ravel()).all().all()  # the rows themselves are unchanged
+    uni = out[out["anomaly_type"] == "univariate_outlier"][list(clean.columns)]
+    z = ((uni - reference.mean()) / reference.std()).abs().max(axis=1)
+    assert (z >= 6).all() and (z <= 12.0001).all()
+    default = inj.inject(clean, seed=0)
+    assert not default.equals(out)
+
+
+def test_the_reference_changes_values_only_not_the_group_or_type_layout():
+    clean, _ = inj.prepare(_carrier(), seed=0)
+    reference = clean.sample(frac=0.5, random_state=3)
+    a = inj.inject(clean, seed=4)
+    b = inj.inject(clean, seed=4, reference=reference)
+    assert a[["group_id", "anomaly_type", "t"]].equals(b[["group_id", "anomaly_type", "t"]])
+
+
+def test_an_explicit_reference_equal_to_the_carrier_reproduces_the_default_injection():
+    clean, _ = inj.prepare(_carrier(), seed=0)
+    assert inj.inject(clean, seed=2).equals(inj.inject(clean, seed=2, reference=clean))

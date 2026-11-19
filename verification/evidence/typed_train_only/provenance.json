@@ -1,0 +1,37 @@
+{
+ "archive_compared": "verification/evidence/typed_injection/runs",
+ "base_revision": "bcec28e17c41047724bad3f3e69414c7e40d3f7c",
+ "carriers": 42,
+ "code_sha256": {
+  "research/injection.py": "673b15b2c464d47e0d95fb71f0110994d9964c8d28fa662438ea74904b6c7209",
+  "research/typed_benchmark.py": "abdd10e4a1965e99bd5db8ad1a61b0b9e37caed20f35d09c32bcb1a9a3bae9d2",
+  "research/typed_run.py": "8589c4634fd7ffff31536e85772f2a84b6edc2f3a59c6860e8ff916abb76beb0",
+  "research/typed_train_only.py": "d33eaa51c15cd321d116f5e5d33855bc8508e4f3a75a62c6e5cf9af9e7875148"
+ },
+ "command": "python research/typed_train_only.py --output verification/evidence/typed_train_only/runs --workers 5 --resume; python research/typed_train_only.py --output verification/evidence/typed_train_only/runs --compare verification/evidence/typed_injection/runs",
+ "control": "the archived result of carrier 697 was reproduced exactly (max abs difference 0.0) by the unmodified code before the run",
+ "methods": "13 (classical registry sweep with drift and transform_dedup)",
+ "platform": "macOS-27.2-arm64-arm-64bit",
+ "protocol": "typed-train-only-v1",
+ "registry_sha256": {
+  "uci_curated.json": "5fd8ae93a1770f4af1cc7c417c9366f289f4529dd2a92b395e7dc5a4eabd8603",
+  "uci_pool.json": "3a1d8b903a51903a9f77363e7dc26b15be401a540c7eebf8c941895d4f408671"
+ },
+ "seeds": [
+  42,
+  1,
+  2,
+  3,
+  4
+ ],
+ "threads": "OMP/OPENBLAS/MKL_NUM_THREADS=1, 5 worker processes, machine not idle",
+ "versions": {
+  "numpy": "2.4.6",
+  "pandas": "3.0.6",
+  "pyod": "3.6.7",
+  "python": "3.11.17",
+  "scikit-learn": "1.9.1",
+  "scipy": "1.17.1"
+ },
+ "working_tree": "uncommitted changes on the base revision (research/injection.py gained the optional reference argument; research/typed_train_only.py new)"
+}

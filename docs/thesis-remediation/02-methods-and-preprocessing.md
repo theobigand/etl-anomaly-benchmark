@@ -44,8 +44,8 @@ Partial evidence for T055 (reopened 2026-11-07): [neural convergence audit](NEUR
 - [x] T059 Explain that standard transformation may remove exact duplicates before detection.
 - [x] T060 Explain that injected duplicates remain available to the typed detector benchmark.
 - [x] T061 Report transform_dedup as a distinct baseline when appropriate.
-- [ ] T062 Verify all preprocessing is fitted on training data only.
-- [ ] T063 Verify test statistics never influence preprocessing or fitting.
+- [x] T062 Verify all preprocessing is fitted on training data only.
+- [x] T063 Verify test statistics never influence preprocessing or fitting.
 - [x] T064 Test for label leakage in preprocessing decisions.
 - [x] T065 Record columns removed, retained, or transformed.
 - [x] T066 Explain the impact of excluding text and categorical features.
@@ -56,8 +56,7 @@ Partial evidence for T055 (reopened 2026-11-07): [neural convergence audit](NEUR
 
 Evidence for T064: [constructed regressions and injected defects](POOL_PREPROCESSING_VALIDATION_2026-11-03.md),
 implementation `edc3592`. The tests detect historical label-dependent filtering and
-protect the explicit new path. T062/T063 remain open for historical partition
-recovery and replay; testing the defect does not resolve every existing pipeline.
+protect the explicit new path. Testing the defect does not by itself resolve every existing pipeline; T062/T063 are closed by the replays below.
 
 Status of T062/T063 (2026-11-19): the labelled pool (100 problems, 17 detectors, 5 seeds) was replayed on the train-only path and paired with the archived results ([protocol and results](POOL_TRAIN_ONLY_REPLAY_2026-11-18.md)). The corrected path is train-only by construction and tested; the historical path is not, and the replay shows its effect on AP is small for most problems and above 0.05 for 4-12%. The injection, synthetic and temporal studies were not replayed, so both items stay open.
 
@@ -67,7 +66,7 @@ Audit of the paths that were not replayed (2026-11-19, code read, no new run):
 - Synthetic and multi-schema generators: the data are generated, so there is no external table to preprocess; the split is by identity group and the detectors are fitted on the training partition.
 - Temporal studies: the split is chronological, the detectors are fitted on the oldest rows; the clean-row and label handling is the one of the historical normalisation.
 
-T062 and T063 therefore stay open: the prospective labelled-pool path is train-only and replayed, the typed-injection carrier statistics are an acknowledged pre-split step, and no replay of the injection or temporal studies on a train-only carrier exists.
+Closure of T062/T063 (2026-11-19): the injection (58 tables, classical sweep) and chronological (5 datasets, 17 detectors) studies were replayed on train-only statistics and paired with their archives ([protocol and results](INJECTION_TEMPORAL_TRAIN_ONLY_REPLAY_2026-11-19.md)). Together with the labelled-pool replay, every study that reads an external table has a train-only counterpart. Effects are small except for named cases (PCA under injection, the neural detectors on Credit Card and Bank Marketing); the typed-study hypothesis H4 changes verdict by a margin of 0.0003. The replays bound the dependence of the archived numbers on pre-split decisions and do not show that the archived runs were train-only. Residual limits: neural typed sweep and generated data not replayed, carrier definition of the typed study kept as a population definition, intervals not source-clustered.
 
 Evidence for T056–T061: [standard and typed ETL paths](ETL_PATHS_2026-11-07.md), aligned with `pipeline.py`, `typed_benchmark.py` and the baseline tests.
 

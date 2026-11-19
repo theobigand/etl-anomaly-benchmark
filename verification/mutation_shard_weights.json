@@ -98,5 +98,7 @@
   "verification/refresh_profile.py": 147,
   "verification/release.py": 819,
   "verification/reproduce.py": 832,
-  "verification/scaling.py": 307
+  "verification/scaling.py": 307,
+  "research/typed_train_only.py": 654,
+  "research/chrono_train_only.py": 556
 }

@@ -1,0 +1,29 @@
+{
+ "archive_compared": "verification/evidence/pool_extension/chrono",
+ "base_revision": "bcec28e17c41047724bad3f3e69414c7e40d3f7c",
+ "code_sha256": {
+  "research/chrono_train_only.py": "f6e6d2c9499390162e38ec7765d12464bef8a5ea4e766c644e8da08469b8d9c3",
+  "research/pool_chrono.py": "cd8b6eff471b942804223040ca94f119f2ab710479c341dfd3d2668342eff035",
+  "research/temporal_decision.py": "f402ba92cdbd8a143608f9ce9d1ab98f68cad5b6c881318f504ab8c0380742d8"
+ },
+ "command": "python research/chrono_train_only.py --output verification/evidence/chrono_train_only/runs",
+ "datasets": 5,
+ "machine": "not idle (other jobs running); timings are not reported by these studies",
+ "platform": "macOS-27.2-arm64-arm-64bit",
+ "protocol": "chrono-train-only-v1",
+ "seeds": [
+  42,
+  1,
+  2,
+  3,
+  4
+ ],
+ "versions": {
+  "numpy": "2.4.6",
+  "pandas": "3.0.6",
+  "pyod": "3.6.7",
+  "python": "3.11.17",
+  "scikit-learn": "1.9.1"
+ },
+ "working_tree": "uncommitted changes on the base revision"
+}

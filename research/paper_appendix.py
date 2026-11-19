@@ -55,6 +55,30 @@ def section(evidence: Path) -> str:
     return "\n".join(text) + "\n"
 
 
+SCHEMA_METHODS = [
+    ("great_expectations", "Great Expectations"),
+    ("transform_dedup", "Dedup rule"),
+    ("iqr", "IQR"),
+    ("isolation_forest", "Isolation Forest"),
+    ("ocsvm", "One-Class SVM"),
+]
+
+
+def schema_rows(evidence: Path) -> str:
+    """Rows of the two-schema table: mean recall of five methods on two schemas."""
+    schemas = fs.schema_matrices(
+        evidence / "multi_schema", evidence / "full_registry" / "schemas_deep"
+    )
+    lines = []
+    for schema, label in (("transactions", "Transactions"), ("sensors", "Sensors")):
+        if lines:
+            lines.append(r"\midrule")
+        for position, (key, name) in enumerate(SCHEMA_METHODS):
+            cells = " & ".join(f"{value:.2f}" for value in schemas[schema].loc[key])
+            lines.append(f"{label if position == 0 else '':<12} & {name:<18} & {cells} \\\\")
+    return "\n".join(lines)
+
+
 def write(tex: Path, evidence: Path) -> None:
     body = tex.read_text()
     block = START + section(evidence) + END
@@ -66,6 +90,8 @@ def write(tex: Path, evidence: Path) -> None:
         marker = "\\bibliographystyle"
         head, tail = body.split(marker, 1)
         body = head + block + "\n" + marker + tail
+    if "\\label{tab:schemas}" in body:
+        body = pt.replace_body(body, "schemas", schema_rows(evidence))
     tex.write_text(body)
 
 
