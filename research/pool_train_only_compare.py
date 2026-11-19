@@ -86,8 +86,9 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--new", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--archive", type=Path, default=ARCHIVE)
     args = parser.parse_args(argv)
-    result = compare(args.new)
+    result = compare(args.new, args.archive)
     args.output.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
     lines = [
         "| detector | n | AP archived | AP replay | median delta [95% CI] "

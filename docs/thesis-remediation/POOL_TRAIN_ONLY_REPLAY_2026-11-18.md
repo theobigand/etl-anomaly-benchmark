@@ -57,3 +57,17 @@ Archive: `verification/evidence/pool_train_only_replay/` (`runs/`, `comparison_c
 Conclusion for T062/T063: the pre-split decisions of the historical path move AP by little for most problems and by a
 lot for a few, mainly through de-duplication. This is exploratory evidence on the classical detectors only. It does not
 show that the archived experiments were train-only; the neural detectors are replayed separately.
+
+## Result: neural detectors (6 detectors, 100 problems, 5 seeds, 0 failed problems)
+
+Archive: `verification/evidence/pool_train_only_replay/` (`runs_deep/`, `comparison_deep.{json,md}`,
+`provenance_deep.json`), compared with `verification/evidence/full_registry/pool_deep/runs`.
+
+- Paired median differences in AP are between -0.001 and +0.001 with bootstrap intervals containing zero for every
+  neural detector. Mean differences are small and negative or null (-0.008 for the autoencoder, VAE and DIF; 0.000 for
+  LUNAR). Between 10% and 12% of the problems change AP by more than 0.05.
+- Median AP over problems, archive then replay: DIF 0.226 / 0.224, VAE 0.216 / 0.201, AE1SVM 0.210 / 0.210,
+  autoencoder 0.205 / 0.178, LUNAR 0.183 / 0.165, Deep SVDD 0.181 / 0.174. DIF leads in both; the order of the others
+  changes slightly.
+- Same interpretation limits as for the classical detectors: this bounds the dependence of reported AP on the
+  pre-split decisions, and does not prove the archived runs were train-only.
