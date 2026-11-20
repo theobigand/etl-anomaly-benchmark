@@ -320,8 +320,8 @@ def test_the_motion_css_has_rules_for_every_family_and_stands_down_for_print_and
 
 def test_the_generated_deck_carries_its_motion_metadata_and_only_animates_when_allowed():
     html = (SLIDES / "thesis_progress.html").read_text()
-    assert html.count("data-motion='") == 51
-    assert html.count("data-variant='") == 51 and html.count("data-side='") == 51
+    assert html.count("data-motion='") == 52
+    assert html.count("data-variant='") == 52 and html.count("data-side='") == 52
     assert "--lx:" in html and "--sx:" in html
     assert "document.body.classList.add('anim')" in html
     assert "location.search" in html and "prefers-reduced-motion: reduce" in html
