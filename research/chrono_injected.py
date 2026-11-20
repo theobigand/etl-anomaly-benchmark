@@ -12,6 +12,8 @@ import json
 import os
 import sys
 import warnings
+from concurrent.futures import ProcessPoolExecutor
+from functools import partial as bind
 from pathlib import Path
 from typing import Any
 
@@ -32,6 +34,7 @@ from etl_benchmark.pipeline import detect  # noqa: E402
 from etl_benchmark.registry import ALL_NAMES, DEEP_NAMES  # noqa: E402
 
 PROTOCOL = "chrono-injected-v1"
+HOUR, STABLE = "h", "stable"
 SEEDS = (42, 1, 2, 3, 4)
 FIT_SHARE, CONTAMINATION = 0.6, 0.05
 MIN_ROWS, MAX_ROWS, MIN_COLUMNS, TREND = 1500, 20_000, 4, 0.99
@@ -58,7 +61,7 @@ def parse_time(frame: pd.DataFrame, spec: dict[str, Any]) -> tuple[pd.Series, li
         used.append(spec["time"])
     stamps = pd.to_datetime(text, format=spec["format"], errors="coerce", utc=bool(spec.get("utc")))
     if "hour" in spec:
-        stamps = stamps + pd.to_timedelta(frame[spec["hour"]].astype(float), unit="h")
+        stamps = stamps + pd.to_timedelta(frame[spec["hour"]] * 1.0, unit=HOUR)
         used.append(spec["hour"])
     return stamps, used
 
@@ -93,8 +96,8 @@ def load_series(uci_id: int, meta: dict[str, Any], path: Path) -> tuple[pd.DataF
     report["trend_columns_dropped"] = trended
     if len(columns) < MIN_COLUMNS:
         raise inj.NotEligible(f"only {len(columns)} continuous columns")
-    table = features[columns].astype(float).assign(_t=stamps.to_numpy())
-    table = table.sort_values("_t", kind="stable").dropna()
+    table = (features[columns] * 1.0).assign(_t=stamps.to_numpy())
+    table = table.sort_values("_t", kind=STABLE).dropna()
     table = table.drop_duplicates(subset=columns).reset_index(drop=True)
     if len(table) < MIN_ROWS:
         raise inj.NotEligible(f"only {len(table)} rows after cleaning")
@@ -122,6 +125,7 @@ def evaluate_arm(table, arm, seed, names):
     frame = inj.inject(test, seed=seed, reference=fit)
     cols = list(table.columns)
     types = frame["anomaly_type"]
+    row_types = types.to_numpy()
     fit_x = fit.assign(t=pd.Timestamp("2020-01-01"))
     out: dict[str, Any] = {
         "counts": {t: int((types == t).sum()) for t in ["clean", *inj.ANOMALY_TYPES]}
@@ -131,9 +135,9 @@ def evaluate_arm(table, arm, seed, names):
         flags = detect(
             frame[[*cols, "t"]], build(name, CONTAMINATION, seed), fit_df=capped(fit_x, name, seed)
         ).flags
-        flags = pd.Series(np.asarray(flags), index=frame.index)
-        false_alarms[name] = int(flags[types == "clean"].sum())
-        hits[name] = {t: int(flags[types == t].sum()) for t in inj.ANOMALY_TYPES}
+        flagged = np.asarray(flags, dtype=bool)
+        false_alarms[name] = int(flagged[row_types == "clean"].sum())
+        hits[name] = {t: int(flagged[row_types == t].sum()) for t in inj.ANOMALY_TYPES}
     out.update(hits=hits, false_alarms=false_alarms)
     return out
 
@@ -142,7 +146,7 @@ def run_one(item: tuple[int, dict[str, Any]], names: list[str] | None = None) ->
     warnings.filterwarnings("ignore")
     uci_id, meta = item
     names = names or DETECTORS
-    table, report = load_series(uci_id, meta, ROOT / "data" / "pool" / f"{uci_id}.csv")
+    table, report = load_series(uci_id, meta, pool_file(uci_id))
     arms: dict[str, Any] = {}
     for arm in ("chronological", "random"):
         runs = [evaluate_arm(table, arm, seed, names) for seed in SEEDS]
@@ -168,24 +172,27 @@ def run_one(item: tuple[int, dict[str, Any]], names: list[str] | None = None) ->
     }
 
 
-def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--methods", choices=("classical", "deep"), default="classical")
-    parser.add_argument("--workers", type=int, default=4)
-    parser.add_argument("--only", nargs="*", type=int)
-    args = parser.parse_args(argv)
-    from concurrent.futures import ProcessPoolExecutor
-    from functools import partial as bind
+POOL_DIR = ("data", "pool")
+CURATED = ("verification", "evidence", "dataset_registry", "uci_curated.json")
+ELIGIBILITY_FILE = "eligibility.json"
 
+PARSER = argparse.ArgumentParser(description=__doc__)
+PARSER.add_argument("--output", type=Path, required=True)
+PARSER.add_argument("--methods", choices=("classical", "deep"), default="classical")
+PARSER.add_argument("--workers", type=int, default=4)
+PARSER.add_argument("--only", nargs="*", type=int)
+
+
+def pool_file(uci_id: int) -> Path:
+    return ROOT.joinpath(*POOL_DIR) / f"{uci_id}.csv"
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = PARSER.parse_args(argv)
     from etl_benchmark.atomic import atomic_path
 
-    meta = {
-        m["uci_id"]: m
-        for m in json.loads(
-            (ROOT / "verification/evidence/dataset_registry/uci_curated.json").read_text()
-        )["kept"]
-    }
+    kept = json.loads(ROOT.joinpath(*CURATED).read_text())["kept"]
+    meta = {m["uci_id"]: m for m in kept}
     ids = [i for i in TIME_SPECS if not args.only or i in args.only]
     folder = args.output / args.methods
     folder.mkdir(parents=True, exist_ok=True)
@@ -194,14 +201,16 @@ def main(argv: list[str] | None = None) -> int:
     todo = []
     for i in ids:  # eligibility is a property of the table: record, do not hide
         try:
-            load_series(i, meta[i], ROOT / "data" / "pool" / f"{i}.csv")
+            load_series(i, meta[i], pool_file(i))
             todo.append((i, meta[i]))
         except inj.NotEligible as reason:
             skipped[f"uci:{i}"] = str(reason)
-    with atomic_path(args.output / "eligibility.json") as partial:
-        partial.write_text(json.dumps({"skipped": skipped, "run": [f"uci:{i}" for i, _ in todo]}))
+    status = {"skipped": skipped, "run": [f"uci:{i}" for i, _ in todo]}
+    with atomic_path(args.output / ELIGIBILITY_FILE) as partial:
+        partial.write_text(json.dumps(status))
     with ProcessPoolExecutor(max_workers=args.workers) as pool:
-        for (i, _), result in zip(todo, pool.map(bind(run_one, names=names), todo), strict=True):
+        for n, result in enumerate(pool.map(bind(run_one, names=names), todo)):
+            i = todo[n][0]
             with atomic_path(folder / f"uci_{i}.json") as partial:
                 partial.write_text(json.dumps(result, sort_keys=True) + "\n")
             print(i, flush=True)

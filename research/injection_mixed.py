@@ -17,7 +17,6 @@ from injection import NotEligible
 MIN_ROWS, MAX_ROWS, MIN_COLUMNS = 200, 20_000, 3
 NUM_MIN_DISTINCT = 10  # fewer distinct values: the column is a code, not a measurement
 MAX_MISSING_SHARE = 0.05  # columns with more missing values are dropped, then complete cases kept
-ID_LIKE_LEVELS = 50  # a text column with more levels and mostly unique values is an identifier
 
 
 def column_kinds(frame: pd.DataFrame) -> dict[str, str]:
@@ -25,7 +24,9 @@ def column_kinds(frame: pd.DataFrame) -> dict[str, str]:
     kinds = {}
     for name in frame.columns:
         col = frame[name]
-        numeric = pd.api.types.is_numeric_dtype(col) and not pd.api.types.is_bool_dtype(col)
+        numeric = pd.api.types.is_numeric_dtype(
+            col
+        )  # a boolean has two values: never a measurement
         kinds[name] = "num" if numeric and col.nunique() >= NUM_MIN_DISTINCT else "cat"
     return kinds
 
@@ -45,11 +46,7 @@ def prepare_mixed(
             dropped[name] = f"{col.isna().mean():.0%} missing"
         elif col.nunique() < 2:
             dropped[name] = "constant"
-        elif (
-            not pd.api.types.is_numeric_dtype(col)
-            and col.nunique() > ID_LIKE_LEVELS
-            and col.nunique() > 0.5 * len(col)
-        ):
+        elif not pd.api.types.is_numeric_dtype(col) and col.nunique() > 0.5 * len(col):
             dropped[name] = "identifier-like text"
         else:
             keep.append(name)
@@ -68,7 +65,8 @@ def prepare_mixed(
     unique = unique.reset_index(drop=True)
     kinds = column_kinds(unique)
     for name, kind in kinds.items():
-        unique[name] = unique[name].astype(float) if kind == "num" else unique[name].astype(str)
+        column = unique[name]
+        unique[name] = np.asarray(column, dtype=float) if kind == "num" else column.astype(str)
     report.update(rows_out=len(unique), columns=list(unique.columns), kinds=kinds)
     return unique, kinds, report
 
@@ -77,6 +75,7 @@ RATE, SEVERITY, TIER_B_ROWS, TIER_B_K = 0.03, 1.0, 500, 8
 ONE_HOT_MAX = 20
 MIN_LEVEL_COUNT = 2  # a level seen in fewer training rows counts as unseen
 _BASE = pd.Timestamp("2020-01-01")
+HOUR = "h"
 _SENTINEL, _SCALE = -999.0, 1000.0
 # fixed order: the group layout, and hence the partitions, depend on the schema only
 TYPE_ORDER = (
@@ -101,7 +100,7 @@ def group_size(n_rows: int, rate: float = RATE) -> int:
 
 def swap_pairs(table: pd.DataFrame, kinds: dict[str, str]) -> list[tuple[str, str, float]]:
     """Pairs of same-kind columns with distinct domains, best first (lowest overlap)."""
-    out: list[tuple[str, str, float]] = []
+    numeric_pairs: list[tuple[str, str, float]] = []
     nums = [c for c in table.columns if kinds[c] == "num"]
     if len(nums) >= 2:
         q = table[nums].quantile([0.25, 0.5, 0.75])
@@ -109,7 +108,8 @@ def swap_pairs(table: pd.DataFrame, kinds: dict[str, str]) -> list[tuple[str, st
         gap = np.abs(median[:, None] - median[None, :])
         width = iqr[:, None] + iqr[None, :]
         hit = np.argwhere(np.triu((gap >= width) & (width > 0), k=1))
-        out += [(nums[i], nums[j], 0.0) for i, j in hit]
+        numeric_pairs = [(nums[i], nums[j], 0.0) for i, j in hit]
+    categorical_pairs: list[tuple[str, str, float]] = []
     cats = [c for c in table.columns if kinds[c] == "cat"]
     if len(cats) >= 2:
         levels = {c: frozenset(table[c].unique()) for c in cats}
@@ -117,8 +117,8 @@ def swap_pairs(table: pd.DataFrame, kinds: dict[str, str]) -> list[tuple[str, st
             for b in cats[i + 1 :]:
                 union = len(levels[a] | levels[b])
                 if (overlap := len(levels[a] & levels[b]) / union) <= 0.5:
-                    out.append((a, b, overlap))
-    return sorted(out, key=lambda p: (p[2], p[0], p[1]))
+                    categorical_pairs.append((a, b, overlap))
+    return sorted([*numeric_pairs, *categorical_pairs], key=lambda p: (p[2], p[0], p[1]))
 
 
 def supported_types(kinds: dict[str, str], table: pd.DataFrame | None = None) -> list[str]:
@@ -162,10 +162,10 @@ def inject_mixed(
     ref = clean if reference is None else reference[cols]
     rng = np.random.default_rng(seed)
     mean, std = ref[nums].mean(), ref[nums].std().replace(0, 1.0)
-    pop = clean.sample(frac=1.0, random_state=seed).reset_index(drop=True)
+    pop = clean.sample(frac=1.0, random_state=seed)
     pop["group_id"] = np.arange(n)
     pop["anomaly_type"] = "clean"
-    pop["t"] = _BASE + pd.to_timedelta(rng.permutation(n), unit="h")
+    pop["t"] = _BASE + pd.to_timedelta(rng.permutation(n), unit=HOUR)
     n_clean = n - len(types) * k
     blocks = {
         name: pop.iloc[n_clean + i * k : n_clean + (i + 1) * k].copy()
@@ -213,7 +213,7 @@ def _apply(name, block, cols, nums, cats, ref, mean, std, severity, rng, n, kind
         for col in rng.choice(cats, size=min(3, len(cats)), replace=False) if cats else []:
             levels = sorted(ref[col].unique())
             block[col] = rng.choice(levels, size=k)
-        block["t"] = _BASE + pd.to_timedelta(rng.uniform(0.9 * n, n, size=k), unit="h")
+        block["t"] = _BASE + pd.to_timedelta(rng.uniform(0.9 * n, n, size=k), unit=HOUR)
     elif name == "invalid_format":
         positive = [c for c in nums if ref[c].min() >= 0]
         for pos in range(k):
@@ -250,7 +250,7 @@ class Encoder:
             if kind != "cat":
                 continue
             counts = train[col].value_counts()
-            share = (counts[counts >= MIN_LEVEL_COUNT] / len(train)).astype(float)
+            share = counts[counts >= MIN_LEVEL_COUNT] / len(train)
             if len(share) <= ONE_HOT_MAX:
                 levels[col] = sorted(share.index)
             else:
@@ -261,10 +261,10 @@ class Encoder:
         parts: dict[str, pd.Series] = {}
         for col, kind in self.kinds.items():
             if kind == "num":
-                parts[col] = frame[col].astype(float)
+                parts[col] = np.asarray(frame[col], dtype=float)
             elif col in self.levels:
                 for level in self.levels[col]:
-                    parts[f"{col}={level}"] = (frame[col] == level).astype(float)
+                    parts[f"{col}={level}"] = np.asarray(frame[col] == level, dtype=float)
             else:
-                parts[col] = frame[col].map(self.freq[col]).fillna(0.0).astype(float)
+                parts[col] = frame[col].map(self.freq[col]).fillna(0.0).to_numpy()
         return pd.DataFrame(parts, index=frame.index)

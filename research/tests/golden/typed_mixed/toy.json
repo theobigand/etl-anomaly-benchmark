@@ -1,0 +1,108 @@
+{
+ "carrier": {
+  "kinds": {
+   "a": "num",
+   "b": "num",
+   "c": "num",
+   "p": "cat",
+   "q": "cat"
+  },
+  "rows_out": 320,
+  "tier": "B"
+ },
+ "clean_test_rows": 795,
+ "fpr_pooled": {
+  "iqr": 0.007547169811320755,
+  "knn": 0.10062893081761007,
+  "transform_dedup": 0.028930817610062894,
+  "zscore": 0.0
+ },
+ "id": "uci:9999",
+ "name": "Toy",
+ "protocol": "typed-mixed-v1",
+ "recall_pooled": {
+  "iqr": {
+   "cross_column_swap": 1.0,
+   "distribution_shift": 0.12,
+   "duplicate": 0.0,
+   "invalid_code": 0.0,
+   "invalid_format": 1.0,
+   "missing_value": 0.0,
+   "multivariate_outlier": 0.0,
+   "univariate_outlier": 1.0
+  },
+  "knn": {
+   "cross_column_swap": 0.9565217391304348,
+   "distribution_shift": 0.28,
+   "duplicate": 0.13043478260869565,
+   "invalid_code": 1.0,
+   "invalid_format": 0.9130434782608695,
+   "missing_value": 0.6153846153846154,
+   "multivariate_outlier": 0.4166666666666667,
+   "univariate_outlier": 0.6086956521739131
+  },
+  "transform_dedup": {
+   "cross_column_swap": 0.0,
+   "distribution_shift": 0.0,
+   "duplicate": 1.0,
+   "invalid_code": 0.0,
+   "invalid_format": 0.0,
+   "missing_value": 0.0,
+   "multivariate_outlier": 0.0,
+   "univariate_outlier": 0.0
+  },
+  "zscore": {
+   "cross_column_swap": 0.8260869565217391,
+   "distribution_shift": 0.0,
+   "duplicate": 0.0,
+   "invalid_code": 0.0,
+   "invalid_format": 0.6956521739130435,
+   "missing_value": 0.0,
+   "multivariate_outlier": 0.0,
+   "univariate_outlier": 0.08695652173913043
+  }
+ },
+ "seeds": [
+  42,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19
+ ],
+ "test_counts": {
+  "cross_column_swap": 23,
+  "distribution_shift": 25,
+  "duplicate": 23,
+  "invalid_code": 21,
+  "invalid_format": 23,
+  "missing_value": 26,
+  "multivariate_outlier": 24,
+  "univariate_outlier": 23
+ },
+ "tier": "B",
+ "types": [
+  "missing_value",
+  "univariate_outlier",
+  "multivariate_outlier",
+  "distribution_shift",
+  "invalid_format",
+  "invalid_code",
+  "cross_column_swap",
+  "duplicate"
+ ]
+}

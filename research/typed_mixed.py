@@ -59,7 +59,7 @@ def load_carrier(job: dict[str, Any], seed: int = 0):
             normal_only = False
     else:
         data = np.load(job["path"])
-        keep = np.asarray(data["y"]).astype(int) == 0
+        keep = np.asarray(data["y"]) == 0
         features, normal_only = pd.DataFrame(data["X"]).add_prefix("f")[keep], True
     table, kinds, report = im.prepare_mixed(features.reset_index(drop=True), seed=seed)
     report.update(
@@ -111,6 +111,7 @@ def evaluate_seed(clean, kinds, seed, names):
     x_test = encoder.transform(test[cols]).assign(t=test["t"].to_numpy())
     numeric = [c for c in x_train.columns if c != "t"]
     types = test["anomaly_type"]
+    row_types = types.to_numpy()
     out: dict[str, Any] = {"counts": {t: int((types == t).sum()) for t in im.ANOMALY_TYPES}}
     out["clean"] = int((types == "clean").sum())
     hits: dict[str, dict[str, int]] = {}
@@ -127,9 +128,9 @@ def evaluate_seed(clean, kinds, seed, names):
             flags = detect(
                 x_test, build(name, contamination, seed), fit_df=capped(x_train, name, seed)
             ).flags
-        flags = pd.Series(np.asarray(flags), index=test.index)
-        false_alarms[name] = int(flags[types == "clean"].sum())
-        hits[name] = {t: int(flags[types == t].sum()) for t in im.ANOMALY_TYPES}
+        flagged = np.asarray(flags, dtype=bool)
+        false_alarms[name] = int(flagged[row_types == "clean"].sum())
+        hits[name] = {t: int(flagged[row_types == t].sum()) for t in im.ANOMALY_TYPES}
     out.update(hits=hits, false_alarms=false_alarms)
     return out
 
@@ -140,7 +141,8 @@ def run_one(job: dict[str, Any], names: list[str] | None = None) -> dict[str, An
     clean, kinds, report = load_carrier(job)
     seeds = seeds_for(len(clean))
     runs = [evaluate_seed(clean, kinds, seed, names) for seed in seeds]
-    types = [t for t in im.supported_types(kinds, clean)]
+    types = im.supported_types(kinds, clean)
+    methods = [*names, "transform_dedup"]
     counts = {t: sum(r["counts"][t] for r in runs) for t in types}
     clean_n = sum(r["clean"] for r in runs)
     recall = {
@@ -148,9 +150,9 @@ def run_one(job: dict[str, Any], names: list[str] | None = None) -> dict[str, An
             t: (sum(r["hits"][m][t] for r in runs) / counts[t] if counts[t] else None)
             for t in types
         }
-        for m in runs[0]["hits"]
+        for m in methods
     }
-    fpr = {m: sum(r["false_alarms"][m] for r in runs) / clean_n for m in runs[0]["hits"]}
+    fpr = {m: sum(r["false_alarms"][m] for r in runs) / clean_n for m in methods}
     return {
         "protocol": PROTOCOL,
         "id": job["id"],
@@ -166,51 +168,62 @@ def run_one(job: dict[str, Any], names: list[str] | None = None) -> dict[str, An
     }
 
 
+REGISTRY = ("verification", "evidence", "dataset_registry")
+NUMERIC_ELIGIBILITY = ("verification", "evidence", "pool_extension", "typed", "eligibility.json")
+POOL_DIR, ADBENCH_DIR = ("data", "pool"), ("data", "adbench")
+ELIGIBILITY_FILE = "eligibility.json"
+
+PARSER = argparse.ArgumentParser(description=__doc__)
+PARSER.add_argument("command", choices=("eligibility", "run"))
+PARSER.add_argument("--output", type=Path, required=True)
+PARSER.add_argument("--workers", type=int, default=4)
+PARSER.add_argument("--methods", choices=("classical", "deep"), default="classical")
+PARSER.add_argument("--resume", action="store_true")
+PARSER.add_argument("--only", nargs="*", help="dataset ids, for a quick check")
+PARSER.add_argument("--scope", choices=("ineligible", "all"), default="ineligible")
+
+
+def selected_jobs(args: argparse.Namespace) -> list[dict[str, Any]]:
+    """Catalog tables to process: the ones the numeric protocol rejected, or all of them."""
+    numeric = {
+        r["id"]: r["eligible"] for r in json.loads(ROOT.joinpath(*NUMERIC_ELIGIBILITY).read_text())
+    }
+    jobs = pt.jobs(ROOT.joinpath(*REGISTRY), ROOT.joinpath(*POOL_DIR), ROOT.joinpath(*ADBENCH_DIR))
+    return [
+        j
+        for j in jobs
+        if (not args.only or j["id"] in args.only) and (args.scope == "all" or not numeric[j["id"]])
+    ]
+
+
+def stem(job: dict[str, Any]) -> str:
+    return job["id"].replace(":", "_")
+
+
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=("eligibility", "run"))
-    parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--workers", type=int, default=4)
-    parser.add_argument("--methods", choices=("classical", "deep"), default="classical")
-    parser.add_argument("--resume", action="store_true")
-    parser.add_argument("--only", nargs="*", help="dataset ids, for a quick check")
-    parser.add_argument("--scope", choices=("ineligible", "all"), default="ineligible")
-    args = parser.parse_args(argv)
+    args = PARSER.parse_args(argv)
     from etl_benchmark.atomic import atomic_path
 
-    registry = ROOT / "verification" / "evidence" / "dataset_registry"
-    numeric_elig = {
-        r["id"]: r["eligible"]
-        for r in json.loads(
-            (ROOT / "verification/evidence/pool_extension/typed/eligibility.json").read_text()
-        )
-    }
-    todo = [
-        j
-        for j in pt.jobs(registry, ROOT / "data" / "pool", ROOT / "data" / "adbench")
-        if (not args.only or j["id"] in args.only)
-        and (args.scope == "all" or not numeric_elig[j["id"]])
-    ]
+    todo = selected_jobs(args)
     args.output.mkdir(parents=True, exist_ok=True)
     if args.command == "eligibility":
         with ProcessPoolExecutor(max_workers=args.workers) as pool:
             rows = list(pool.map(eligibility, todo))
-        with atomic_path(args.output / "eligibility.json") as partial:
+        with atomic_path(args.output / ELIGIBILITY_FILE) as partial:
             partial.write_text(json.dumps(rows, indent=1) + "\n")
         print(sum(r["eligible"] for r in rows), "eligible of", len(rows))
         return 0
-    eligible = {
-        r["id"] for r in json.loads((args.output / "eligibility.json").read_text()) if r["eligible"]
-    }
+    recorded = json.loads((args.output / ELIGIBILITY_FILE).read_text())
+    eligible = {r["id"] for r in recorded if r["eligible"]}
     todo = [j for j in todo if j["id"] in eligible]
     names = list(DEEP_NAMES) if args.methods == "deep" else None
     folder = args.output / args.methods
     folder.mkdir(exist_ok=True)
-    stem = lambda job: job["id"].replace(":", "_")  # noqa: E731
     if args.resume:
         todo = [j for j in todo if not (folder / f"{stem(j)}.json").exists()]
     with ProcessPoolExecutor(max_workers=args.workers) as pool:
-        for job, result in zip(todo, pool.map(bind(run_one, names=names), todo), strict=True):
+        for n, result in enumerate(pool.map(bind(run_one, names=names), todo)):
+            job = todo[n]
             with atomic_path(folder / f"{stem(job)}.json") as partial:
                 partial.write_text(json.dumps(result, sort_keys=True) + "\n")
             print(job["id"], flush=True)

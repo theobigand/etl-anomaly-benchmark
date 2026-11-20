@@ -1,0 +1,112 @@
+{
+ "arms": {
+  "chronological": {
+   "clean_rows": 4075,
+   "fpr": {
+    "iqr": 0.03361963190184049,
+    "knn": 0.04834355828220859,
+    "zscore": 0.01815950920245399
+   },
+   "recall": {
+    "iqr": {
+     "duplicate": 0.05517241379310345,
+     "invalid_format": 1.0,
+     "missing_value": 0.027586206896551724,
+     "multivariate_outlier": 0.020689655172413793,
+     "temporal_drift": 0.35172413793103446,
+     "univariate_outlier": 1.0
+    },
+    "knn": {
+     "duplicate": 0.08275862068965517,
+     "invalid_format": 1.0,
+     "missing_value": 0.020689655172413793,
+     "multivariate_outlier": 0.21379310344827587,
+     "temporal_drift": 0.5241379310344828,
+     "univariate_outlier": 1.0
+    },
+    "zscore": {
+     "duplicate": 0.027586206896551724,
+     "invalid_format": 1.0,
+     "missing_value": 0.006896551724137931,
+     "multivariate_outlier": 0.006896551724137931,
+     "temporal_drift": 0.2,
+     "univariate_outlier": 1.0
+    }
+   },
+   "test_counts": {
+    "duplicate": 145,
+    "invalid_format": 145,
+    "missing_value": 145,
+    "multivariate_outlier": 145,
+    "temporal_drift": 145,
+    "univariate_outlier": 145
+   }
+  },
+  "random": {
+   "clean_rows": 4075,
+   "fpr": {
+    "iqr": 0.02773006134969325,
+    "knn": 0.04392638036809816,
+    "zscore": 0.012760736196319018
+   },
+   "recall": {
+    "iqr": {
+     "duplicate": 0.027586206896551724,
+     "invalid_format": 1.0,
+     "missing_value": 0.013793103448275862,
+     "multivariate_outlier": 0.006896551724137931,
+     "temporal_drift": 0.3586206896551724,
+     "univariate_outlier": 1.0
+    },
+    "knn": {
+     "duplicate": 0.034482758620689655,
+     "invalid_format": 1.0,
+     "missing_value": 0.013793103448275862,
+     "multivariate_outlier": 0.33793103448275863,
+     "temporal_drift": 0.5586206896551724,
+     "univariate_outlier": 1.0
+    },
+    "zscore": {
+     "duplicate": 0.020689655172413793,
+     "invalid_format": 1.0,
+     "missing_value": 0.013793103448275862,
+     "multivariate_outlier": 0.006896551724137931,
+     "temporal_drift": 0.2413793103448276,
+     "univariate_outlier": 1.0
+    }
+   },
+   "test_counts": {
+    "duplicate": 145,
+    "invalid_format": 145,
+    "missing_value": 145,
+    "multivariate_outlier": 145,
+    "temporal_drift": 145,
+    "univariate_outlier": 145
+   }
+  }
+ },
+ "carrier": {
+  "columns": [
+   "w",
+   "x",
+   "y",
+   "z"
+  ],
+  "rows_out": 2400,
+  "span": [
+   "2020-03-01 00:00:00",
+   "2020-06-08 23:00:00"
+  ]
+ },
+ "contamination": 0.05,
+ "id": "uci:9999",
+ "name": "Toy",
+ "protocol": "chrono-injected-v1",
+ "seeds": [
+  42,
+  1,
+  2,
+  3,
+  4
+ ]
+}

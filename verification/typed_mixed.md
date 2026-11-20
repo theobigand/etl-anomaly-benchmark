@@ -15,8 +15,8 @@ protocol carry over to tables with categorical and discrete columns and to small
 
 The unlabelled feature table (identifier and target columns removed as in the labelled study; for a
 labelled set only normal-class rows, for ADBench only label 0). A column is dropped when it is
-constant, all missing, more than 5 % missing, or identifier-like text (more than 50 levels and more
-than half of the rows unique). Remaining rows are complete cases without exact duplicates, capped
+constant, all missing, more than 5 % missing, or identifier-like text (more than half of the rows hold a
+distinct value, which is more than 50 levels in any table of at least 200 rows). Remaining rows are complete cases without exact duplicates, capped
 at 20,000 rows (seed 0). A numeric column with at least 10 distinct values is `num`; every other
 column is `cat` (text, booleans and numeric codes).
 

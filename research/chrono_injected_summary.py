@@ -21,6 +21,9 @@ ROOT = HERE.parent
 sys.path[:0] = [str(HERE), str(ROOT / "src")]
 
 
+SEED, DRAWS = 2026, 5000
+
+
 def load(folder: Path) -> dict[str, dict[str, Any]]:
     return {p.stem: json.loads(p.read_text()) for p in sorted(folder.glob("*.json"))}
 
@@ -49,7 +52,7 @@ def paired(runs: dict[str, dict[str, Any]]) -> dict[str, dict[str, np.ndarray]]:
     return out
 
 
-def interval(values: np.ndarray, seed: int = 2026, draws: int = 5000) -> list[float]:
+def interval(values: np.ndarray, seed: int = SEED, draws: int = DRAWS) -> list[float]:
     rng = np.random.default_rng(seed)
     boot = np.median(rng.choice(values, (draws, len(values))), axis=1)
     return [float(x) for x in np.quantile(boot, [0.025, 0.975])]
@@ -68,7 +71,10 @@ def ranking_agreement(runs: dict[str, dict[str, Any]]) -> float:
 
 
 def summarise(folder: Path) -> dict[str, Any]:
-    runs = load(folder)
+    return summarise_runs(load(folder))
+
+
+def summarise_runs(runs: dict[str, dict[str, Any]]) -> dict[str, Any]:
     diffs = paired(runs)
     rows = {
         m: {
@@ -118,15 +124,23 @@ def report(s: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+SUMMARY_JSON, SUMMARY_MD = "summary.json", "summary.md"
+
+PARSER = argparse.ArgumentParser(description=__doc__)
+PARSER.add_argument("folder", type=Path)
+PARSER.add_argument("--out", type=Path, required=True)
+
+
+def write_summary(out: Path, summary: dict[str, Any]) -> None:
+    out.mkdir(parents=True, exist_ok=True)
+    (out / SUMMARY_JSON).write_text(json.dumps(summary, indent=1, sort_keys=True) + "\n")
+    (out / SUMMARY_MD).write_text(report(summary))
+
+
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("folder", type=Path)
-    parser.add_argument("--out", type=Path, required=True)
-    args = parser.parse_args(argv)
+    args = PARSER.parse_args(argv)
     summary = summarise(args.folder)
-    args.out.mkdir(parents=True, exist_ok=True)
-    (args.out / "summary.json").write_text(json.dumps(summary, indent=1, sort_keys=True) + "\n")
-    (args.out / "summary.md").write_text(report(summary))
+    write_summary(args.out, summary)
     print(report(summary))
     return 0
 

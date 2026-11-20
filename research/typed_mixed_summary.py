@@ -29,6 +29,9 @@ DISTANCE = ("knn", "lof", "ocsvm", "isolation_forest")
 RENAMED = {"distribution_shift": "temporal_drift"}  # name in the numeric protocol
 
 
+SEED, DRAWS = 2026, 2000
+
+
 def load(folder: Path) -> pd.DataFrame:
     """One row per dataset, detector and fault type; absent types are absent rows."""
     rows = []
@@ -57,10 +60,10 @@ def load(folder: Path) -> pd.DataFrame:
 
 def by_source(frame: pd.DataFrame) -> pd.DataFrame:
     """Average of the entries of one source, per detector and type."""
-    return frame.groupby(["source", "method", "type"], as_index=False)["recall"].mean()
+    return frame.groupby(["source", "method", "type"])["recall"].mean().reset_index()
 
 
-def medians(frame: pd.DataFrame, seed: int = 2026, draws: int = 2000) -> list[dict[str, Any]]:
+def medians(frame: pd.DataFrame, seed: int = SEED, draws: int = DRAWS) -> list[dict[str, Any]]:
     out = []
     for (method, fault), group in by_source(frame).groupby(["method", "type"]):
         values = group["recall"].to_numpy()
@@ -90,7 +93,7 @@ def m1(frame: pd.DataFrame) -> dict[str, Any]:
         ref = RENAMED.get(fault, fault)
         if ref not in reference.columns:
             continue
-        both = pd.concat([table[fault], reference[ref]], axis=1, join="inner").dropna()
+        both = pd.concat([table[fault], reference[ref]], axis=1).dropna()
         if len(both) >= 5:
             result[fault] = float(spearmanr(both.iloc[:, 0], both.iloc[:, 1]).statistic)
     return {
@@ -118,7 +121,7 @@ def m2(frame: pd.DataFrame) -> dict[str, Any]:
 
 def m3(frame: pd.DataFrame) -> dict[str, Any]:
     """Tier B against tier A recall, per detector, over sources (Mann-Whitney)."""
-    sub = frame.groupby(["source", "tier", "method"], as_index=False)["recall"].mean()
+    sub = frame.groupby(["source", "tier", "method"])["recall"].mean().reset_index()
     result = {}
     for method, group in sub.groupby("method"):
         a = group[group["tier"] == "A"]["recall"]
@@ -131,8 +134,8 @@ def m3(frame: pd.DataFrame) -> dict[str, Any]:
                 "p": float(test.pvalue),
             }
     adjusted = sc.holm([v["p"] for v in result.values()])
-    for entry, p in zip(result.values(), adjusted, strict=True):
-        entry["p_holm"] = p
+    for n, entry in enumerate(result.values()):
+        entry["p_holm"] = adjusted[n]
     return result
 
 
@@ -153,10 +156,7 @@ def summarise(folder: Path) -> dict[str, Any]:
 def _md(frame: pd.DataFrame) -> str:
     head = "| " + " | ".join([frame.index.name or "", *map(str, frame.columns)]) + " |"
     rule = "|" + "---|" * (len(frame.columns) + 1)
-    body = [
-        f"| {i} | " + " | ".join(map(str, row)) + " |"
-        for i, row in zip(frame.index, frame.to_numpy(), strict=True)
-    ]
+    body = [f"| {row[0]} | " + " | ".join(map(str, row[1:])) + " |" for row in frame.itertuples()]
     return "\n".join([head, rule, *body])
 
 
@@ -183,15 +183,23 @@ def report(summary: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+SUMMARY_JSON, SUMMARY_MD = "summary.json", "summary.md"
+
+PARSER = argparse.ArgumentParser(description=__doc__)
+PARSER.add_argument("folder", type=Path)
+PARSER.add_argument("--out", type=Path, required=True)
+
+
+def write_summary(out: Path, summary: dict[str, Any]) -> None:
+    out.mkdir(parents=True, exist_ok=True)
+    (out / SUMMARY_JSON).write_text(json.dumps(summary, indent=1, sort_keys=True) + "\n")
+    (out / SUMMARY_MD).write_text(report(summary))
+
+
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("folder", type=Path)
-    parser.add_argument("--out", type=Path, required=True)
-    args = parser.parse_args(argv)
+    args = PARSER.parse_args(argv)
     summary = summarise(args.folder)
-    args.out.mkdir(parents=True, exist_ok=True)
-    (args.out / "summary.json").write_text(json.dumps(summary, indent=1, sort_keys=True) + "\n")
-    (args.out / "summary.md").write_text(report(summary))
+    write_summary(args.out, summary)
     print(json.dumps({k: summary[k] for k in ("datasets", "sources", "tiers")}))
     return 0
 
