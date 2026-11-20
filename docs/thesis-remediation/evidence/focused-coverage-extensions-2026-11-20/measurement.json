@@ -1,0 +1,90 @@
+{
+ "base_head": "0b675d0133d44e265dff52bb2e6a0cc2ef56a889",
+ "command": "python -m mutmut run \"research.<module>.*\" (patterns), then single-mutant reruns of suspicious, timeout and segfault results",
+ "date": "2026-11-20",
+ "environment": {
+  "mutmut": "3.8.0",
+  "platform": "macOS-27.2-arm64-arm-64bit",
+  "python": "3.11"
+ },
+ "kind": "local focused development measurement of units classified after the 2026-11-19 records; not the controller campaign, not attested",
+ "modules": {
+  "research/chrono_injected.py": {
+   "eligible": 382,
+   "killed": 377,
+   "level": "L4",
+   "raw_score": 98.7,
+   "source_sha256": "325e70b91144bed1a813aa04a6bc30cb3ca79eb2a264691b0c0a369b32a75d75",
+   "status": "PASS_RAW",
+   "survived": 5,
+   "threshold": 98
+  },
+  "research/chrono_injected_summary.py": {
+   "eligible": 267,
+   "killed": 266,
+   "level": "L4",
+   "raw_score": 99.6,
+   "source_sha256": "8d2191b1a683170c1525db05e3638c0d37b47b7baa09c9fbdb97d3fc7973aadc",
+   "status": "PASS_RAW",
+   "survived": 1,
+   "threshold": 98
+  },
+  "research/coverage_matrix.py": {
+   "eligible": 1616,
+   "killed": 1546,
+   "level": "L3",
+   "raw_score": 95.7,
+   "source_sha256": "16275504b8877c37cc6365254a57e5a6e8ec59ba76fbad772f7e099145b1f880",
+   "status": "PASS_RAW",
+   "survived": 70,
+   "threshold": 95
+  },
+  "research/coverage_paper.py": {
+   "eligible": 369,
+   "killed": 369,
+   "level": "L3",
+   "raw_score": 100.0,
+   "source_sha256": "f21fd950690ef4ae2755cbc1292f60ba176a7ea4173d51a9b8c61a9645e71572",
+   "status": "PASS_RAW",
+   "survived": 0,
+   "threshold": 95
+  },
+  "research/injection_mixed.py": {
+   "eligible": 644,
+   "killed": 635,
+   "level": "L4",
+   "raw_score": 98.6,
+   "source_sha256": "af7766a996e130fae2a8ab6dfcd7a05aec282c798728a938c534cf5e4fe52d9f",
+   "status": "PASS_RAW",
+   "survived": 9,
+   "threshold": 98
+  },
+  "research/typed_mixed.py": {
+   "eligible": 496,
+   "killed": 494,
+   "level": "L4",
+   "raw_score": 99.6,
+   "source_sha256": "d15d4151e6d44a4c400624da2a9117cba19746f77d313a5bee7e489d289b9917",
+   "status": "PASS_RAW",
+   "survived": 2,
+   "threshold": 98
+  },
+  "research/typed_mixed_summary.py": {
+   "eligible": 453,
+   "killed": 453,
+   "level": "L4",
+   "raw_score": 100.0,
+   "source_sha256": "367874a2578071a7d48eaf6b45088bd760efcad7f8e254191510678f399e553c",
+   "status": "PASS_RAW",
+   "survived": 0,
+   "threshold": 98
+  }
+ },
+ "note": "No survivor was marked equivalent. Several survivors of the L4 modules are equivalent in effect (astype(None) is float64, replace=None equals replace=False, an empty choice with or True, the -1 versus -2 diagonal fill, a sign test at a correlation of exactly zero, np.nan versus None in a missing cell, an excluded diagonal of the swap matrix); they are not removed from the counts. Upper-case path literals were removed from function bodies (path segments are module constants) so a case-insensitive filesystem cannot hide them.",
+ "survivors": {
+  "research/coverage_matrix.py": [
+   "70 survivors remain (95.7%, threshold 95): fixture-branch and string-literal mutants of build, report and the absent-cell reasons; not individually triaged"
+  ]
+ },
+ "working_tree": "uncommitted changes on the base head"
+}
