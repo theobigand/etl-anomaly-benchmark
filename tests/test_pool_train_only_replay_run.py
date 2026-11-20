@@ -166,3 +166,128 @@ def test_the_command_counts_failed_problems(tmp_path, monkeypatch, capsys):
     assert replay.main(["--output", str(out), "--workers", "1"]) == 0
     assert capsys.readouterr().out.strip() == "1 problems, 1 failed"
     assert "failed" in json.loads((out / "adbench_gone.json").read_text())
+
+
+class _Pool:
+    """A synchronous stand-in for the process pool that records how it was built."""
+
+    made: list = []
+
+    def __init__(self, max_workers):
+        type(self).made.append(max_workers)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        return False
+
+    def map(self, fn, items):
+        return [fn(item) for item in items]
+
+
+@pytest.fixture
+def fake(monkeypatch):
+    """Jobs a, b and c, a synchronous pool and a run_job that reports its method list."""
+    _Pool.made, seen = [], {}
+    jobs = [{"problem": f"adbench:{n}", "source": "adbench"} for n in "abc"]
+    monkeypatch.setattr(replay.lb, "jobs", lambda *a: seen.setdefault("args", a) and jobs)
+    monkeypatch.setattr(replay, "ProcessPoolExecutor", _Pool)
+    monkeypatch.setattr(
+        replay,
+        "run_job",
+        lambda job, methods: {
+            **job,
+            "methods": methods,
+            **({"failed": "x"} if job["problem"].endswith("c") else {}),
+        },
+    )
+    seen["pool"] = _Pool
+    return seen
+
+
+def test_the_command_writes_one_sorted_indented_file_per_problem_and_counts_failures(
+    fake, tmp_path, capsys
+):
+    out = tmp_path / "nested" / "out"
+    assert replay.main(["--output", str(out), "--workers", "3"]) == 0
+    assert sorted(p.name for p in out.glob("*.json")) == [
+        "adbench_a.json",
+        "adbench_b.json",
+        "adbench_c.json",
+    ]
+    expected = json.dumps(
+        {"methods": list(replay.lb.METHODS), "problem": "adbench:a", "source": "adbench"},
+        indent=1,
+        sort_keys=True,
+    )
+    assert (out / "adbench_a.json").read_text() == expected + "\n"
+    assert capsys.readouterr().out == "3 problems, 1 failed\n"
+    assert fake["pool"].made == [3]
+
+
+def test_the_command_hands_the_registry_and_data_paths_to_the_job_list(fake, tmp_path):
+    from pathlib import Path
+
+    replay.main(["--output", str(tmp_path), "--registry", "r", "--adbench", "a", "--pool", "p"])
+    assert fake["args"] == (Path("r"), Path("a"), Path("p")) and all(
+        isinstance(x, Path) for x in fake["args"]
+    )
+
+
+def test_the_default_paths_workers_and_methods_are_those_of_the_archived_replay(fake, tmp_path):
+    root = replay.HERE.parent
+    replay.main(["--output", str(tmp_path)])
+    assert fake["args"] == (
+        root / "verification/evidence/dataset_registry",
+        root / "data" / "adbench",
+        root / "data" / "pool",
+    )
+    assert fake["pool"].made == [4]
+    assert json.loads((tmp_path / "adbench_a.json").read_text())["methods"] == list(
+        replay.lb.METHODS
+    )
+
+
+def test_the_neural_methods_are_selected_by_name_and_only_those_problems_are_run(
+    fake, tmp_path, capsys
+):
+    replay.main(["--output", str(tmp_path), "--methods", "deep", "--only", "adbench:b"])
+    assert [p.name for p in tmp_path.glob("*.json")] == ["adbench_b.json"]
+    assert json.loads((tmp_path / "adbench_b.json").read_text())["methods"] == list(
+        replay.DEEP_NAMES
+    )
+    assert capsys.readouterr().out == "1 problems, 0 failed\n"
+
+
+def test_resume_skips_the_problems_already_written(fake, tmp_path, capsys):
+    (tmp_path / "adbench_a.json").write_text("{}")
+    replay.main(["--output", str(tmp_path), "--resume"])
+    assert capsys.readouterr().out == "2 problems, 1 failed\n"
+    assert (tmp_path / "adbench_a.json").read_text() == "{}"
+
+
+def test_the_output_is_required_and_the_help_describes_the_command(fake, capsys, monkeypatch):
+    with pytest.raises(SystemExit) as stop:
+        replay.main([])
+    assert stop.value.code == 2
+    capsys.readouterr()
+    monkeypatch.setenv("COLUMNS", "300")
+    with pytest.raises(SystemExit) as stop:
+        replay.main(["--help"])
+    assert stop.value.code == 0
+    text = " ".join(capsys.readouterr().out.split())
+    for expected in (
+        "Train-only replay of the 100 labelled pool problems",
+        "--registry REGISTRY",
+        "--adbench ADBENCH",
+        "--pool POOL",
+        "--output OUTPUT",
+        "--workers WORKERS",
+        "--only [ONLY ...]",
+        "--resume",
+        "--methods {classical,deep}",
+    ):
+        assert expected in text, expected
+    with pytest.raises(SystemExit):
+        replay.main(["--output", "x", "--methods", "other"])
