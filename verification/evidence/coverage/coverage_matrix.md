@@ -7,9 +7,9 @@ as evaluated only when a result file holds a measurement for it.
 
 - Datasets in the catalog: 152 (116 UCI, 36 ADBench).
 - Independent underlying sources: 128 (21 sources back more than one catalog entry).
-- Datasets with a valid measurement in at least one protocol: 150.
+- Datasets with a valid measurement in at least one protocol: 152.
 - Datasets with a detector-quality measurement (any protocol except the ETL timing run): 120, from 99 independent sources.
-- Datasets measured only by the ETL pipeline run: 30.
+- Datasets measured only by the ETL pipeline run: 32.
 - Datasets with labels (minority-class proxies, not ETL faults): 100.
 - Datasets that support typed injection: 58.
 - Datasets evaluated chronologically: 4.
@@ -24,7 +24,7 @@ as evaluated only when a result file holds a measurement for it.
 | typed_injection_deep | 58 | 0 | 0 | 94 | 0 | 0 |
 | native_label_comparison_classical | 16 | 0 | 0 | 52 | 0 | 84 |
 | native_label_comparison_deep | 16 | 0 | 0 | 52 | 0 | 84 |
-| etl_pipeline | 145 | 0 | 7 | 0 | 0 | 0 |
+| etl_pipeline | 152 | 0 | 0 | 0 | 0 | 0 |
 | chronological | 4 | 0 | 0 | 121 | 0 | 27 |
 
 ## Twin sources (one independent source, several catalog entries)
@@ -63,7 +63,7 @@ as evaluated only when a result file holds a measurement for it.
 - `uci:242` Energy Efficiency: fewer than 2 classes; no native label to compare with; no time variable
 - `uci:247` ISTANBUL STOCK EXCHANGE: fewer than 2 classes; no native label to compare with; time column candidate but no labels and no protocol for unlabelled chronology
 - `uci:291` Airfoil Self-Noise: no native label to compare with; no time variable; not a classification task
-- `uci:3` Annealing: ValueError('all-missing training feature'); fewer than 20 rows in the rarest class; no native label to compare with
+- `uci:3` Annealing: fewer than 20 rows in the rarest class; no native label to compare with; no time variable
 - `uci:312` Dow Jones Index: fewer than 20 rows in the rarest class; no native label to compare with; time column candidate but no labels and no protocol for unlabelled chronology
 - `uci:320` Student Performance: fewer than 2 classes; no native label to compare with; no time variable
 - `uci:336` Chronic Kidney Disease: fewer than 20 rows in the rarest class; no native label to compare with; no time variable
@@ -74,7 +74,7 @@ as evaluated only when a result file holds a measurement for it.
 - `uci:390` Stock Portfolio Performance: no native label to compare with; no time variable; not a classification task
 - `uci:445` Absenteeism at work: fewer than 20 rows in the rarest class; no native label to compare with; time column candidate but no labels and no protocol for unlabelled chronology
 - `uci:45` Heart Disease: fewer than 20 rows in the rarest class; no native label to compare with; no time variable
-- `uci:467` Student Academics Performance: ValueError("isolation_forest detector needs at least one numeric column; got ['ge', 'cst', 'tnp', 'twp', 'iap', 'esp', 'arr', 'ms', 'ls', 'as', 'fmi', 'fs', 'fq', 'mq', 'fo', 'mo', 'nf', 'sh', 'ss', 'me', 'tt', 'atd']"); ValueError('at least one numeric feature is required'); fewer than 2 classes; no native label to compare with
+- `uci:467` Student Academics Performance: fewer than 2 classes; no native label to compare with; no time variable
 - `uci:477` Real Estate Valuation: no native label to compare with; not a classification task; time column candidate but no labels and no protocol for unlabelled chronology
 - `uci:571` HCV data: fewer than 20 rows in the rarest class; no native label to compare with; no time variable
 - `uci:579` Myocardial infarction complications: fewer than 2 classes; no native label to compare with; no time variable

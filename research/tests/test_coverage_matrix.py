@@ -70,3 +70,19 @@ def test_archived_evidence_yields_one_row_per_catalog_dataset():
     assert all(
         c["status"] in cm.STATUSES for d in matrix["datasets"] for c in d["protocols"].values()
     )
+
+
+def test_a_repaired_etl_run_supersedes_the_archived_failure_and_keeps_it_as_history(tmp_path):
+    import json
+
+    v1 = tmp_path / "pool_extension" / "etl"
+    v2 = tmp_path / "pool_extension_v2" / "etl_repair"
+    v1.mkdir(parents=True)
+    v2.mkdir(parents=True)
+    fail = {"id": "uci:3", "method": "zscore", "status": "FAIL", "reason": "all-missing"}
+    (v1 / "pool_etl.json").write_text(json.dumps([fail, {**fail, "id": "uci:1", "status": "OK"}]))
+    (v2 / "pool_etl.json").write_text(json.dumps([{**fail, "status": "OK"}]))
+    cells = cm._etl(tmp_path)
+    assert cells["uci:3"]["status"] == cm.OK and cells["uci:3"]["repaired_from"] == "all-missing"
+    assert cells["uci:3"]["run"].startswith("pool_extension_v2")
+    assert cells["uci:1"]["status"] == cm.OK

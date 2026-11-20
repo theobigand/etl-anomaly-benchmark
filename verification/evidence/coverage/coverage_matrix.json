@@ -4948,14 +4948,14 @@
      "status": "scientifically_unsuitable"
     },
     "etl_pipeline": {
-     "methods_failed": {
-      "isolation_forest": "ValueError('all-missing training feature')",
-      "zscore": "ValueError('all-missing training feature')"
-     },
-     "methods_ok": [],
-     "reason": "ValueError('all-missing training feature')",
-     "run": "pool_extension/etl/pool_etl.json",
-     "status": "executed_with_failure"
+     "methods_failed": {},
+     "methods_ok": [
+      "isolation_forest",
+      "zscore"
+     ],
+     "repaired_from": "ValueError('all-missing training feature')",
+     "run": "pool_extension_v2/etl_repair/pool_etl.json",
+     "status": "executed"
     },
     "labelled_classical": {
      "reason": "fewer than 20 rows in the rarest class",
@@ -4987,7 +4987,9 @@
    "source_family": "uci",
    "time_candidates": [],
    "url": "https://archive.ics.uci.edu/static/public/3/data.csv",
-   "valid_measurements": []
+   "valid_measurements": [
+    "etl_pipeline"
+   ]
   },
   {
    "domain": "Other",
@@ -6725,14 +6727,14 @@
      "status": "scientifically_unsuitable"
     },
     "etl_pipeline": {
-     "methods_failed": {
-      "isolation_forest": "ValueError(\"isolation_forest detector needs at least one numeric column; got ['cap-shape', 'cap-surface', 'cap-color', 'bruises', 'odor', 'gill-attachment', 'gill-spacing', 'gill-size', 'gill-color', 'stalk-shape', 'stalk-root', 'stalk-surface-above-ring', 'stalk-surface-below-ring', 'stalk-color-above-ring', 'stalk-color-below-ring', 'veil-type', 'veil-color', 'ring-number', 'ring-type', 'spore-print-color', 'population', 'habitat']\")",
-      "zscore": "ValueError('at least one numeric feature is required')"
-     },
-     "methods_ok": [],
-     "reason": "ValueError(\"isolation_forest detector needs at least one numeric column; got ['cap-shape', 'cap-surface', 'cap-color', 'bruises', 'odor', 'gill-attachment', 'gill-spacing', 'gill-size', 'gill-color', 'stalk-shape', 'stalk-root', 'stalk-surface-above-ring', 'stalk-surface-below-ring', 'stalk-color-above-ring', 'stalk-color-below-ring', 'veil-type', 'veil-color', 'ring-number', 'ring-type', 'spore-print-color', 'population', 'habitat']\"); ValueError('at least one numeric feature is required')",
-     "run": "pool_extension/etl/pool_etl.json",
-     "status": "executed_with_failure"
+     "methods_failed": {},
+     "methods_ok": [
+      "isolation_forest",
+      "zscore"
+     ],
+     "repaired_from": "ValueError(\"isolation_forest detector needs at least one numeric column; got ['cap-shape', 'cap-surface', 'cap-color', 'bruises', 'odor', 'gill-attachment', 'gill-spacing', 'gill-size', 'gill-color', 'stalk-shape', 'stalk-root', 'stalk-surface-above-ring', 'stalk-surface-below-ring', 'stalk-color-above-ring', 'stalk-color-below-ring', 'veil-type', 'veil-color', 'ring-number', 'ring-type', 'spore-print-color', 'population', 'habitat']\"); ValueError('at least one numeric feature is required')",
+     "run": "pool_extension_v2/etl_repair/pool_etl.json",
+     "status": "executed"
     },
     "labelled_classical": {
      "detectors": [
@@ -6831,6 +6833,7 @@
    "time_candidates": [],
    "url": "https://archive.ics.uci.edu/static/public/73/data.csv",
    "valid_measurements": [
+    "etl_pipeline",
     "labelled_classical",
     "labelled_deep"
    ]
@@ -7710,14 +7713,14 @@
      "status": "scientifically_unsuitable"
     },
     "etl_pipeline": {
-     "methods_failed": {
-      "isolation_forest": "ValueError(\"isolation_forest detector needs at least one numeric column; got ['handicapped-infants', 'water-project-cost-sharing', 'adoption-of-the-budget-resolution', 'physician-fee-freeze', 'el-salvador-aid', 'religious-groups-in-schools', 'anti-satellite-test-ban', 'aid-to-nicaraguan-contras', 'mx-missile', 'immigration', 'synfuels-corporation-cutback', 'education-spending', 'superfund-right-to-sue', 'crime', 'duty-free-exports', 'export-administration-act-south-africa']\")",
-      "zscore": "ValueError('at least one numeric feature is required')"
-     },
-     "methods_ok": [],
-     "reason": "ValueError(\"isolation_forest detector needs at least one numeric column; got ['handicapped-infants', 'water-project-cost-sharing', 'adoption-of-the-budget-resolution', 'physician-fee-freeze', 'el-salvador-aid', 'religious-groups-in-schools', 'anti-satellite-test-ban', 'aid-to-nicaraguan-contras', 'mx-missile', 'immigration', 'synfuels-corporation-cutback', 'education-spending', 'superfund-right-to-sue', 'crime', 'duty-free-exports', 'export-administration-act-south-africa']\"); ValueError('at least one numeric feature is required')",
-     "run": "pool_extension/etl/pool_etl.json",
-     "status": "executed_with_failure"
+     "methods_failed": {},
+     "methods_ok": [
+      "isolation_forest",
+      "zscore"
+     ],
+     "repaired_from": "ValueError(\"isolation_forest detector needs at least one numeric column; got ['handicapped-infants', 'water-project-cost-sharing', 'adoption-of-the-budget-resolution', 'physician-fee-freeze', 'el-salvador-aid', 'religious-groups-in-schools', 'anti-satellite-test-ban', 'aid-to-nicaraguan-contras', 'mx-missile', 'immigration', 'synfuels-corporation-cutback', 'education-spending', 'superfund-right-to-sue', 'crime', 'duty-free-exports', 'export-administration-act-south-africa']\"); ValueError('at least one numeric feature is required')",
+     "run": "pool_extension_v2/etl_repair/pool_etl.json",
+     "status": "executed"
     },
     "labelled_classical": {
      "detectors": [
@@ -7816,6 +7819,7 @@
    "time_candidates": [],
    "url": "https://archive.ics.uci.edu/static/public/105/data.csv",
    "valid_measurements": [
+    "etl_pipeline",
     "labelled_classical",
     "labelled_deep"
    ]
@@ -10091,14 +10095,14 @@
      "status": "scientifically_unsuitable"
     },
     "etl_pipeline": {
-     "methods_failed": {
-      "isolation_forest": "ValueError('all-missing training feature')",
-      "zscore": "ValueError('all-missing training feature')"
-     },
-     "methods_ok": [],
-     "reason": "ValueError('all-missing training feature')",
-     "run": "pool_extension/etl/pool_etl.json",
-     "status": "executed_with_failure"
+     "methods_failed": {},
+     "methods_ok": [
+      "isolation_forest",
+      "zscore"
+     ],
+     "repaired_from": "ValueError('all-missing training feature')",
+     "run": "pool_extension_v2/etl_repair/pool_etl.json",
+     "status": "executed"
     },
     "labelled_classical": {
      "reason": "fewer than 20 rows in the rarest class",
@@ -10131,6 +10135,7 @@
    "time_candidates": [],
    "url": "https://archive.ics.uci.edu/static/public/270/data.csv",
    "valid_measurements": [
+    "etl_pipeline",
     "typed_injection_classical",
     "typed_injection_deep"
    ]
@@ -11572,14 +11577,14 @@
      "status": "executed"
     },
     "etl_pipeline": {
-     "methods_failed": {
-      "isolation_forest": "ValueError(\"isolation_forest detector needs at least one numeric column; got ['date', 'Temperature', 'Humidity', 'Light', 'CO2', 'HumidityRatio']\")",
-      "zscore": "ValueError('at least one numeric feature is required')"
-     },
-     "methods_ok": [],
-     "reason": "ValueError(\"isolation_forest detector needs at least one numeric column; got ['date', 'Temperature', 'Humidity', 'Light', 'CO2', 'HumidityRatio']\"); ValueError('at least one numeric feature is required')",
-     "run": "pool_extension/etl/pool_etl.json",
-     "status": "executed_with_failure"
+     "methods_failed": {},
+     "methods_ok": [
+      "isolation_forest",
+      "zscore"
+     ],
+     "repaired_from": "ValueError(\"isolation_forest detector needs at least one numeric column; got ['date', 'Temperature', 'Humidity', 'Light', 'CO2', 'HumidityRatio']\"); ValueError('at least one numeric feature is required')",
+     "run": "pool_extension_v2/etl_repair/pool_etl.json",
+     "status": "executed"
     },
     "labelled_classical": {
      "detectors": [
@@ -11681,6 +11686,7 @@
    "url": "https://archive.ics.uci.edu/static/public/357/data.csv",
    "valid_measurements": [
     "chronological",
+    "etl_pipeline",
     "labelled_classical",
     "labelled_deep",
     "typed_injection_classical",
@@ -12844,14 +12850,14 @@
      "status": "scientifically_unsuitable"
     },
     "etl_pipeline": {
-     "methods_failed": {
-      "isolation_forest": "ValueError(\"isolation_forest detector needs at least one numeric column; got ['ge', 'cst', 'tnp', 'twp', 'iap', 'esp', 'arr', 'ms', 'ls', 'as', 'fmi', 'fs', 'fq', 'mq', 'fo', 'mo', 'nf', 'sh', 'ss', 'me', 'tt', 'atd']\")",
-      "zscore": "ValueError('at least one numeric feature is required')"
-     },
-     "methods_ok": [],
-     "reason": "ValueError(\"isolation_forest detector needs at least one numeric column; got ['ge', 'cst', 'tnp', 'twp', 'iap', 'esp', 'arr', 'ms', 'ls', 'as', 'fmi', 'fs', 'fq', 'mq', 'fo', 'mo', 'nf', 'sh', 'ss', 'me', 'tt', 'atd']\"); ValueError('at least one numeric feature is required')",
-     "run": "pool_extension/etl/pool_etl.json",
-     "status": "executed_with_failure"
+     "methods_failed": {},
+     "methods_ok": [
+      "isolation_forest",
+      "zscore"
+     ],
+     "repaired_from": "ValueError(\"isolation_forest detector needs at least one numeric column; got ['ge', 'cst', 'tnp', 'twp', 'iap', 'esp', 'arr', 'ms', 'ls', 'as', 'fmi', 'fs', 'fq', 'mq', 'fo', 'mo', 'nf', 'sh', 'ss', 'me', 'tt', 'atd']\"); ValueError('at least one numeric feature is required')",
+     "run": "pool_extension_v2/etl_repair/pool_etl.json",
+     "status": "executed"
     },
     "labelled_classical": {
      "reason": "fewer than 2 classes",
@@ -12883,7 +12889,9 @@
    "source_family": "uci",
    "time_candidates": [],
    "url": "https://archive.ics.uci.edu/static/public/467/data.csv",
-   "valid_measurements": []
+   "valid_measurements": [
+    "etl_pipeline"
+   ]
   },
   {
    "domain": "Business",
@@ -14249,14 +14257,14 @@
      "status": "scientifically_unsuitable"
     },
     "etl_pipeline": {
-     "methods_failed": {
-      "isolation_forest": "ValueError(\"isolation_forest detector needs at least one numeric column; got ['Gender', 'Caste', 'coaching', 'time', 'Class_ten_education', 'twelve_education', 'medium', 'Class_X_Percentage', 'Class_XII_Percentage', 'Father_occupation', 'Mother_occupation']\")",
-      "zscore": "ValueError('at least one numeric feature is required')"
-     },
-     "methods_ok": [],
-     "reason": "ValueError(\"isolation_forest detector needs at least one numeric column; got ['Gender', 'Caste', 'coaching', 'time', 'Class_ten_education', 'twelve_education', 'medium', 'Class_X_Percentage', 'Class_XII_Percentage', 'Father_occupation', 'Mother_occupation']\"); ValueError('at least one numeric feature is required')",
-     "run": "pool_extension/etl/pool_etl.json",
-     "status": "executed_with_failure"
+     "methods_failed": {},
+     "methods_ok": [
+      "isolation_forest",
+      "zscore"
+     ],
+     "repaired_from": "ValueError(\"isolation_forest detector needs at least one numeric column; got ['Gender', 'Caste', 'coaching', 'time', 'Class_ten_education', 'twelve_education', 'medium', 'Class_X_Percentage', 'Class_XII_Percentage', 'Father_occupation', 'Mother_occupation']\"); ValueError('at least one numeric feature is required')",
+     "run": "pool_extension_v2/etl_repair/pool_etl.json",
+     "status": "executed"
     },
     "labelled_classical": {
      "detectors": [
@@ -14355,6 +14363,7 @@
    "time_candidates": [],
    "url": "https://archive.ics.uci.edu/static/public/582/data.csv",
    "valid_measurements": [
+    "etl_pipeline",
     "labelled_classical",
     "labelled_deep"
    ]
@@ -16695,8 +16704,7 @@
     "scientifically_unsuitable": 121
    },
    "etl_pipeline": {
-    "executed": 145,
-    "executed_with_failure": 7
+    "executed": 152
    },
    "labelled_classical": {
     "executed": 100,
@@ -16726,7 +16734,7 @@
    }
   },
   "datasets": 152,
-  "etl_pipeline_only": 30,
+  "etl_pipeline_only": 32,
   "etl_pipeline_only_ids": [
    "uci:110",
    "uci:149",
@@ -16738,6 +16746,7 @@
    "uci:242",
    "uci:247",
    "uci:291",
+   "uci:3",
    "uci:312",
    "uci:320",
    "uci:336",
@@ -16748,6 +16757,7 @@
    "uci:390",
    "uci:445",
    "uci:45",
+   "uci:467",
    "uci:477",
    "uci:571",
    "uci:579",
@@ -16760,7 +16770,7 @@
    "uci:913"
   ],
   "independent_sources": 128,
-  "independent_sources_used": 126,
+  "independent_sources_used": 128,
   "independent_sources_with_detector_quality_measurement": 99,
   "temporal_evaluated": 4,
   "twin_groups": {
@@ -16854,7 +16864,7 @@
   },
   "typed_injection_supported": 58,
   "uci": 116,
-  "with_any_valid_measurement": 150,
+  "with_any_valid_measurement": 152,
   "with_detector_quality_measurement": 120,
   "with_labels": 100,
   "without_detector_quality_measurement": [

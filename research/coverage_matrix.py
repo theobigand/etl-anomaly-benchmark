@@ -116,19 +116,34 @@ def _typed(evidence: Path, folder: str) -> dict[str, dict[str, Any]]:
     return out
 
 
+ETL_RUNS = ("pool_extension/etl/pool_etl.json", "pool_extension_v2/etl_repair/pool_etl.json")
+
+
 def _etl(evidence: Path) -> dict[str, dict[str, Any]]:
-    rows = _load(evidence / "pool_extension" / "etl" / "pool_etl.json")
-    by_id: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for row in rows:
-        by_id[row["id"]].append(row)
+    """Later ETL runs replace the records of the datasets they re-measured."""
+    latest: dict[str, tuple[str, list[dict[str, Any]]]] = {}
+    first_failure: dict[str, str] = {}
+    for name in ETL_RUNS:
+        path = evidence / name
+        if not path.exists():
+            continue
+        by_id: dict[str, list[dict[str, Any]]] = defaultdict(list)
+        for row in _load(path):
+            by_id[row["id"]].append(row)
+        for dataset_id, entries in by_id.items():
+            failure = sorted({e.get("reason", "") for e in entries if e["status"] != "OK"})
+            if failure and dataset_id not in first_failure:
+                first_failure[dataset_id] = "; ".join(failure)
+            latest[dataset_id] = (name, entries)
     out: dict[str, dict[str, Any]] = {}
-    for dataset_id, entries in by_id.items():
+    for dataset_id, (run, entries) in latest.items():
         ok = sorted(e["method"] for e in entries if e["status"] == "OK")
         bad = {e["method"]: e.get("reason", "") for e in entries if e["status"] != "OK"}
-        meta = {"run": "pool_extension/etl/pool_etl.json", "methods_ok": ok, "methods_failed": bad}
-        out[dataset_id] = _cell(
-            OK if ok else FAILED, "; ".join(sorted(set(bad.values()))) or None, **meta
-        )
+        reason = "; ".join(sorted(set(bad.values()))) or None
+        meta: dict[str, Any] = {"run": run, "methods_ok": ok, "methods_failed": bad}
+        if ok and dataset_id in first_failure:
+            meta["repaired_from"] = first_failure[dataset_id]
+        out[dataset_id] = _cell(OK if ok else FAILED, reason, **meta)
     return out
 
 

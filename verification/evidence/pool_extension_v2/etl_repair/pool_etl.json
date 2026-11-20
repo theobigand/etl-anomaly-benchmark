@@ -1,0 +1,584 @@
+[
+ {
+  "columns": 39,
+  "detect_stage_share": 0.10534196726032388,
+  "flagged_share": 0.6681715575620768,
+  "id": "uci:3",
+  "method": "zscore",
+  "name": "Annealing",
+  "repairs": {
+   "all_missing_dropped": [
+    "m",
+    "marvi",
+    "corr",
+    "jurofm",
+    "s",
+    "p"
+   ],
+   "datetime_columns": [],
+   "encoded": [
+    "bc",
+    "bf",
+    "bl",
+    "blue/bright/varn/clean",
+    "bt",
+    "bw/me",
+    "cbond",
+    "chrom",
+    "condition",
+    "exptl",
+    "famiily",
+    "ferro",
+    "lustre",
+    "non-ageing",
+    "oil",
+    "phos",
+    "product-type",
+    "shape",
+    "steel",
+    "surface-finish",
+    "surface-quality",
+    "temper-rolling"
+   ],
+   "header_rows_removed": 0,
+   "sparse_columns": 0
+  },
+  "rows_after_transform": 886,
+  "rows_in": 898,
+  "rss_delta_bytes": 2752512,
+  "rss_peak_bytes": 178962432,
+  "stages_s": {
+   "detect": 0.004473417007829994,
+   "extract": 0.002198583970312029,
+   "load": 0.005431458004750311,
+   "transform": 0.030362209014128894
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 39,
+  "detect_stage_share": 0.8825723917416729,
+  "flagged_share": 0.050790067720090294,
+  "id": "uci:3",
+  "method": "isolation_forest",
+  "name": "Annealing",
+  "repairs": {
+   "all_missing_dropped": [
+    "m",
+    "marvi",
+    "corr",
+    "jurofm",
+    "s",
+    "p"
+   ],
+   "datetime_columns": [],
+   "encoded": [
+    "bc",
+    "bf",
+    "bl",
+    "blue/bright/varn/clean",
+    "bt",
+    "bw/me",
+    "cbond",
+    "chrom",
+    "condition",
+    "exptl",
+    "famiily",
+    "ferro",
+    "lustre",
+    "non-ageing",
+    "oil",
+    "phos",
+    "product-type",
+    "shape",
+    "steel",
+    "surface-finish",
+    "surface-quality",
+    "temper-rolling"
+   ],
+   "header_rows_removed": 0,
+   "sparse_columns": 0
+  },
+  "rows_after_transform": 886,
+  "rows_in": 898,
+  "rss_delta_bytes": 59965440,
+  "rss_peak_bytes": 234930176,
+  "stages_s": {
+   "detect": 0.29747904097894207,
+   "extract": 0.0021965839550830424,
+   "load": 0.0061583329807035625,
+   "transform": 0.03122512501431629
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 23,
+  "detect_stage_share": 0.11742889082528006,
+  "flagged_share": 0.844411619891679,
+  "id": "uci:73",
+  "method": "zscore",
+  "name": "Mushroom",
+  "repairs": {
+   "all_missing_dropped": [],
+   "datetime_columns": [],
+   "encoded": [
+    "bruises",
+    "cap-color",
+    "cap-shape",
+    "cap-surface",
+    "gill-attachment",
+    "gill-color",
+    "gill-size",
+    "gill-spacing",
+    "habitat",
+    "odor",
+    "population",
+    "ring-number",
+    "ring-type",
+    "spore-print-color",
+    "stalk-color-above-ring",
+    "stalk-color-below-ring",
+    "stalk-root",
+    "stalk-shape",
+    "stalk-surface-above-ring",
+    "stalk-surface-below-ring",
+    "veil-color",
+    "veil-type"
+   ],
+   "header_rows_removed": 0,
+   "sparse_columns": 0
+  },
+  "rows_after_transform": 8124,
+  "rows_in": 8124,
+  "rss_delta_bytes": 55984128,
+  "rss_peak_bytes": 234831872,
+  "stages_s": {
+   "detect": 0.019376999989617616,
+   "extract": 0.013629542023409158,
+   "load": 0.01499412499833852,
+   "transform": 0.11700983298942447
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 23,
+  "detect_stage_share": 0.7504092430221728,
+  "flagged_share": 0.05009847365829641,
+  "id": "uci:73",
+  "method": "isolation_forest",
+  "name": "Mushroom",
+  "repairs": {
+   "all_missing_dropped": [],
+   "datetime_columns": [],
+   "encoded": [
+    "bruises",
+    "cap-color",
+    "cap-shape",
+    "cap-surface",
+    "gill-attachment",
+    "gill-color",
+    "gill-size",
+    "gill-spacing",
+    "habitat",
+    "odor",
+    "population",
+    "ring-number",
+    "ring-type",
+    "spore-print-color",
+    "stalk-color-above-ring",
+    "stalk-color-below-ring",
+    "stalk-root",
+    "stalk-shape",
+    "stalk-surface-above-ring",
+    "stalk-surface-below-ring",
+    "veil-color",
+    "veil-type"
+   ],
+   "header_rows_removed": 0,
+   "sparse_columns": 0
+  },
+  "rows_after_transform": 8124,
+  "rows_in": 8124,
+  "rss_delta_bytes": 163643392,
+  "rss_peak_bytes": 341458944,
+  "stages_s": {
+   "detect": 0.4300289580132812,
+   "extract": 0.006885375012643635,
+   "load": 0.015000791987404227,
+   "transform": 0.12114412500523031
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 17,
+  "detect_stage_share": 0.11243361993367001,
+  "flagged_share": 0.0,
+  "id": "uci:105",
+  "method": "zscore",
+  "name": "Congressional Voting Records",
+  "repairs": {
+   "all_missing_dropped": [],
+   "datetime_columns": [],
+   "encoded": [
+    "adoption-of-the-budget-resolution",
+    "aid-to-nicaraguan-contras",
+    "anti-satellite-test-ban",
+    "crime",
+    "duty-free-exports",
+    "education-spending",
+    "el-salvador-aid",
+    "export-administration-act-south-africa",
+    "handicapped-infants",
+    "immigration",
+    "mx-missile",
+    "physician-fee-freeze",
+    "religious-groups-in-schools",
+    "superfund-right-to-sue",
+    "synfuels-corporation-cutback",
+    "water-project-cost-sharing"
+   ],
+   "header_rows_removed": 0,
+   "sparse_columns": 0
+  },
+  "rows_after_transform": 342,
+  "rows_in": 435,
+  "rss_delta_bytes": 901120,
+  "rss_peak_bytes": 174129152,
+  "stages_s": {
+   "detect": 0.002215125015936792,
+   "extract": 0.0007268330082297325,
+   "load": 0.0018226669635623693,
+   "transform": 0.014936999999918044
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 17,
+  "detect_stage_share": 0.9384459064083255,
+  "flagged_share": 0.05263157894736842,
+  "id": "uci:105",
+  "method": "isolation_forest",
+  "name": "Congressional Voting Records",
+  "repairs": {
+   "all_missing_dropped": [],
+   "datetime_columns": [],
+   "encoded": [
+    "adoption-of-the-budget-resolution",
+    "aid-to-nicaraguan-contras",
+    "anti-satellite-test-ban",
+    "crime",
+    "duty-free-exports",
+    "education-spending",
+    "el-salvador-aid",
+    "export-administration-act-south-africa",
+    "handicapped-infants",
+    "immigration",
+    "mx-missile",
+    "physician-fee-freeze",
+    "religious-groups-in-schools",
+    "superfund-right-to-sue",
+    "synfuels-corporation-cutback",
+    "water-project-cost-sharing"
+   ],
+   "header_rows_removed": 0,
+   "sparse_columns": 0
+  },
+  "rows_after_transform": 342,
+  "rows_in": 435,
+  "rss_delta_bytes": 56999936,
+  "rss_peak_bytes": 231948288,
+  "stages_s": {
+   "detect": 0.28836870804661885,
+   "extract": 0.0007507499540224671,
+   "load": 0.0027497499831952155,
+   "transform": 0.015414041990879923
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 129,
+  "detect_stage_share": 0.018166066571413703,
+  "flagged_share": 0.13493889288281813,
+  "id": "uci:270",
+  "method": "zscore",
+  "name": "Gas Sensor Array Drift at Different Concentrations",
+  "repairs": {
+   "all_missing_dropped": [
+    "Feature128"
+   ],
+   "datetime_columns": [],
+   "encoded": [],
+   "header_rows_removed": 0,
+   "sparse_columns": 127
+  },
+  "rows_after_transform": 13910,
+  "rows_in": 13910,
+  "rss_delta_bytes": 147980288,
+  "rss_peak_bytes": 534298624,
+  "stages_s": {
+   "detect": 0.04269054101314396,
+   "extract": 0.31511662498814985,
+   "load": 0.3556309159612283,
+   "transform": 1.6365775829763152
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 129,
+  "detect_stage_share": 0.19647342854069852,
+  "flagged_share": 0.050035945363048166,
+  "id": "uci:270",
+  "method": "isolation_forest",
+  "name": "Gas Sensor Array Drift at Different Concentrations",
+  "repairs": {
+   "all_missing_dropped": [
+    "Feature128"
+   ],
+   "datetime_columns": [],
+   "encoded": [],
+   "header_rows_removed": 0,
+   "sparse_columns": 127
+  },
+  "rows_after_transform": 13910,
+  "rows_in": 13910,
+  "rss_delta_bytes": 174784512,
+  "rss_peak_bytes": 562003968,
+  "stages_s": {
+   "detect": 0.563887916970998,
+   "extract": 0.32620208396110684,
+   "load": 0.3275048329960555,
+   "transform": 1.652451874979306
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 8,
+  "detect_stage_share": 0.03718635415079389,
+  "flagged_share": 0.0269928505422888,
+  "id": "uci:357",
+  "method": "zscore",
+  "name": "Occupancy Detection ",
+  "repairs": {
+   "all_missing_dropped": [],
+   "datetime_columns": [
+    "date"
+   ],
+   "encoded": [],
+   "header_rows_removed": 0,
+   "sparse_columns": 0
+  },
+  "rows_after_transform": 20561,
+  "rows_in": 20562,
+  "rss_delta_bytes": 22134784,
+  "rss_peak_bytes": 207519744,
+  "stages_s": {
+   "detect": 0.004543166956864297,
+   "extract": 0.014657958992756903,
+   "load": 0.02483620902057737,
+   "transform": 0.0781356249935925
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 8,
+  "detect_stage_share": 0.765532898333279,
+  "flagged_share": 0.04994893244491999,
+  "id": "uci:357",
+  "method": "isolation_forest",
+  "name": "Occupancy Detection ",
+  "repairs": {
+   "all_missing_dropped": [],
+   "datetime_columns": [
+    "date"
+   ],
+   "encoded": [],
+   "header_rows_removed": 0,
+   "sparse_columns": 0
+  },
+  "rows_after_transform": 20561,
+  "rows_in": 20562,
+  "rss_delta_bytes": 65568768,
+  "rss_peak_bytes": 253116416,
+  "stages_s": {
+   "detect": 0.3929303329787217,
+   "extract": 0.013642666046507657,
+   "load": 0.02520504198037088,
+   "transform": 0.08149883296573535
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 22,
+  "detect_stage_share": 0.1557461912454469,
+  "flagged_share": 0.4732824427480916,
+  "id": "uci:467",
+  "method": "zscore",
+  "name": "Student Academics Performance",
+  "repairs": {
+   "all_missing_dropped": [],
+   "datetime_columns": [],
+   "encoded": [
+    "arr",
+    "as",
+    "atd",
+    "cst",
+    "esp",
+    "fmi",
+    "fo",
+    "fq",
+    "fs",
+    "ge",
+    "iap",
+    "ls",
+    "me",
+    "mo",
+    "mq",
+    "ms",
+    "nf",
+    "sh",
+    "ss",
+    "tnp",
+    "tt",
+    "twp"
+   ],
+   "header_rows_removed": 0,
+   "sparse_columns": 0
+  },
+  "rows_after_transform": 131,
+  "rows_in": 131,
+  "rss_delta_bytes": 851968,
+  "rss_peak_bytes": 173899776,
+  "stages_s": {
+   "detect": 0.003627958009019494,
+   "extract": 0.0006550410180352628,
+   "load": 0.002060707949567586,
+   "transform": 0.016950333025306463
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 22,
+  "detect_stage_share": 0.9302462443954823,
+  "flagged_share": 0.05343511450381679,
+  "id": "uci:467",
+  "method": "isolation_forest",
+  "name": "Student Academics Performance",
+  "repairs": {
+   "all_missing_dropped": [],
+   "datetime_columns": [],
+   "encoded": [
+    "arr",
+    "as",
+    "atd",
+    "cst",
+    "esp",
+    "fmi",
+    "fo",
+    "fq",
+    "fs",
+    "ge",
+    "iap",
+    "ls",
+    "me",
+    "mo",
+    "mq",
+    "ms",
+    "nf",
+    "sh",
+    "ss",
+    "tnp",
+    "tt",
+    "twp"
+   ],
+   "header_rows_removed": 0,
+   "sparse_columns": 0
+  },
+  "rows_after_transform": 131,
+  "rows_in": 131,
+  "rss_delta_bytes": 56082432,
+  "rss_peak_bytes": 229146624,
+  "stages_s": {
+   "detect": 0.3057539169676602,
+   "extract": 0.0007067080005072057,
+   "load": 0.003013750014360994,
+   "transform": 0.019206249970011413
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 12,
+  "detect_stage_share": 0.10729007635756165,
+  "flagged_share": 0.44855305466237944,
+  "id": "uci:582",
+  "method": "zscore",
+  "name": "Student Performance on an Entrance Examination",
+  "repairs": {
+   "all_missing_dropped": [],
+   "datetime_columns": [],
+   "encoded": [
+    "Caste",
+    "Class_XII_Percentage",
+    "Class_X_Percentage",
+    "Class_ten_education",
+    "Father_occupation",
+    "Gender",
+    "Mother_occupation",
+    "coaching",
+    "medium",
+    "time",
+    "twelve_education"
+   ],
+   "header_rows_removed": 0,
+   "sparse_columns": 0
+  },
+  "rows_after_transform": 622,
+  "rows_in": 666,
+  "rss_delta_bytes": 2228224,
+  "rss_peak_bytes": 175833088,
+  "stages_s": {
+   "detect": 0.0021875419770367444,
+   "extract": 0.0008310839766636491,
+   "load": 0.0032703750184737146,
+   "transform": 0.014100041997153312
+  },
+  "status": "OK"
+ },
+ {
+  "columns": 12,
+  "detect_stage_share": 0.9441580484345622,
+  "flagged_share": 0.05144694533762058,
+  "id": "uci:582",
+  "method": "isolation_forest",
+  "name": "Student Performance on an Entrance Examination",
+  "repairs": {
+   "all_missing_dropped": [],
+   "datetime_columns": [],
+   "encoded": [
+    "Caste",
+    "Class_XII_Percentage",
+    "Class_X_Percentage",
+    "Class_ten_education",
+    "Father_occupation",
+    "Gender",
+    "Mother_occupation",
+    "coaching",
+    "medium",
+    "time",
+    "twelve_education"
+   ],
+   "header_rows_removed": 0,
+   "sparse_columns": 0
+  },
+  "rows_after_transform": 622,
+  "rows_in": 666,
+  "rss_delta_bytes": 58245120,
+  "rss_peak_bytes": 231014400,
+  "stages_s": {
+   "detect": 0.2905824999907054,
+   "extract": 0.0008176249684765935,
+   "load": 0.0023923750268295407,
+   "transform": 0.013976416958030313
+  },
+  "status": "OK"
+ }
+]
