@@ -1775,19 +1775,19 @@ certification). Each required module must meet its own threshold; aggregates
 cannot compensate for a failing module or risk level. Classification uses the
 highest applicable consequence. The historical results below retain their
 original global $95\%$ criterion and are not claims of compliance with this revision.
-The final measurement is one complete native campaign of the $100$ classified modules, run on Linux in
+The final measurement is one complete native campaign of the $105$ classified modules, run on Linux in
 $45$ parallel shards of one commit, in the hash-locked environment (pandas $3.0.6$, pyod $3.6.7$, PyTorch $2.15.0$ CPU build), with a controller proof of each execution and the digest of every
-tracked file in the evidence. It covers $35{,}255$ mutants: $34{,}791$ were killed, $460$ survived and
-$4$ timed out, and a timeout is never counted as a kill. The raw scores are $100.00\%$ (L2, 1 modules),
-$98.71\%$ (L3, $18$ modules) and $98.68\%$ (L4, $78$ modules); three modules contain no function body.
+tracked file in the evidence. It covers $37{,}759$ mutants: $37{,}248$ were killed, $505$ survived and
+$6$ timed out, and a timeout is never counted as a kill. The raw scores are $98.41\%$ (L2, $2$ modules),
+$98.56\%$ (L3, $22$ modules) and $98.67\%$ (L4, $78$ modules); three modules contain no function body.
 In $21$ L4 modules $98$ mutants are excluded as equivalent, and $20$ of them need the exclusions to reach $98\%$; the exclusions raise the L4
-score to $99.01\%$ (Table~\ref{tab:closure}). Four exclusions were decided by the repository owner and thesis author
+score to $99.00\%$ (Table~\ref{tab:closure}). Four exclusions were decided by the repository owner and thesis author
 on 11 November and $94$ on 17 November under a delegation from the owner to the language model that assisted
 the analysis. Of the $94$ recent decisions, $88$ carry a recorded technical argument (two of them hold only on the CPU-only PyTorch build); six rest on the owner's word because equivalence
 could be neither shown nor refuted outside unsupported states, and only as far as a module still needed it.
 These are sole-author decisions, not independent peer review. Two separate-context model reviews of the batch
 found four mutants that had been accepted wrongly and that a test can kill; I replaced those exclusions by tests.
-The $362$ survivors that remain in passing modules stay counted as failures. For commit \texttt{7c0af40d} the release script returned \emph{certified}:
+The $407$ survivors that remain in passing modules, and the six timeouts, stay counted as failures. For commit \texttt{2dca21f4} (run 44655291252) the release script returned \emph{certified}:
 all seven profiles pass in one locked environment. The attestation is that of the continuous-integration run, not an independent one, and the verdict
 concerns that revision only; a squash-merged commit needs its own run.
 An earlier campaign over the governed scope was measured on mixed environments; its figures are superseded and
@@ -1881,7 +1881,7 @@ the release for one reason: the profiles had run different versions of pandas an
 others on the latest packages ($3.1.1$). Aligning them was a choice of the certification environment; I chose the lock, because pandas $3.0.6$ is the only version under which
 the archived Cardio results replay numerically, and the exclusions were rebound to the locked versions. The run of commit \texttt{5e57228e} then returned \emph{certified}.
 That campaign is the historical reference below. A review of the equivalence records afterwards found a defect in the detectors (Section on what the process contributes), whose correction
-changed the scientific source and therefore required a new measurement: the run 44303335021 of commit \texttt{7c0af40d} returned \emph{certified} again with the figures of Table~\ref{tab:closure}. Each verdict names its revision, the attestation is that of the
+changed the scientific source and therefore required a new measurement: the run 44303335021 of commit \texttt{7c0af40d} returned \emph{certified} again. After the later train-only replays added modules and tests, and after two repairs of the verification path itself (a renamed test left selected in the mutation sandbox, and the equivalence records of one module bound to a changed source), the run 44655291252 of commit \texttt{2dca21f4} returned \emph{certified} with the figures of Table~\ref{tab:closure}; three earlier attempts of this series did not, and are not hidden here. Each verdict names its revision, the attestation is that of the
 continuous-integration run, and neither says that the scientific conclusions are correct.
 
 \begin{table}[t]
@@ -1893,9 +1893,9 @@ continuous-integration run, and neither says that the scientific conclusions are
 \toprule
 Level & Modules & Thr. & Killed / eligible & Raw & Adj. \\
 \midrule
-L2 & 3 & $90\%$ & $10 / 10$ & $100.00\%$ & $100.00\%$ \\
-L3 & 18 & $95\%$ & $5{,}489 / 5{,}561$ & $98.71\%$ & $98.71\%$ \\
-L4 & 78 & $98\%$ & $29{,}292 / 29{,}684$ & $98.68\%$ & $99.01\%$ \\
+L2 & 2 & $90\%$ & $310 / 315$ & $98.41\%$ & $98.41\%$ \\
+L3 & 22 & $95\%$ & $7{,}644 / 7{,}756$ & $98.56\%$ & $98.56\%$ \\
+L4 & 78 & $98\%$ & $29{,}294 / 29{,}688$ & $98.67\%$ & $99.00\%$ \\
 \bottomrule
 \end{tabular}
 \end{table}
