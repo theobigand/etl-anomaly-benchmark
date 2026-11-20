@@ -6,7 +6,7 @@
    "missing_to_minimum": 0,
    "missing_to_recommended": 0,
    "recommended": 36,
-   "sources": 94,
+   "sources": 92,
    "stratum": "flat tabular"
   },
   "C2": {
@@ -15,16 +15,16 @@
    "missing_to_minimum": 0,
    "missing_to_recommended": 0,
    "recommended": 30,
-   "sources": 44,
+   "sources": 42,
    "stratum": "transactional and categorical"
   },
   "C3": {
    "ambitious": 55,
    "minimum": 15,
    "missing_to_minimum": 0,
-   "missing_to_recommended": 19,
+   "missing_to_recommended": 15,
    "recommended": 40,
-   "sources": 21,
+   "sources": 25,
    "stratum": "time series"
   },
   "C4": {
@@ -56,10 +56,6 @@
   }
  },
  "time_candidates_not_yet_verified": [
-  "uci:172",
-  "uci:352",
-  "uci:488",
-  "uci:492",
   "uci:536",
   "uci:755",
   "uci:760"

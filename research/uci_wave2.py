@@ -105,6 +105,40 @@ def pin(meta: dict[str, Any], destination: Path, fetcher=dr.fetch_unpinned) -> d
     }
 
 
+TIME_REPORT = ROOT / "verification/evidence/dataset_registry_v2/uci_wave2_time.json"
+MIN_PARSED_SHARE, MIN_DISTINCT, MIN_SPAN_DAYS = 0.99, 100, 7
+
+
+def check_time(frame: pd.DataFrame, column: str) -> dict[str, Any]:
+    """Whether a column is a usable real time variable for replaying the table as loads."""
+    stamps = pd.to_datetime(frame[column], errors="coerce", utc=True, format="mixed")
+    parsed = float(stamps.notna().mean())
+    good = stamps.dropna()
+    span = float((good.max() - good.min()).days) if len(good) else 0.0
+    report = {
+        "column": column,
+        "parsed_share": parsed,
+        "distinct": int(good.nunique()),
+        "span_days": span,
+        "file_in_time_order": bool(good.is_monotonic_increasing),
+    }
+    report["verified"] = bool(
+        parsed >= MIN_PARSED_SHARE and report["distinct"] >= MIN_DISTINCT and span >= MIN_SPAN_DAYS
+    )
+    return report
+
+
+def verify_times(manifest: Path = MANIFEST, directory: Path = WAVE_DIR) -> dict[str, Any]:
+    """Time check of every pinned table that has a time-column candidate (first candidate)."""
+    out = {}
+    for t in json.loads(manifest.read_text())["tables"]:
+        if not t["time_candidates"]:
+            continue
+        frame = ul.read_table(directory / f"{t['uci_id']}.csv")
+        out[f"uci:{t['uci_id']}"] = check_time(frame, t["time_candidates"][0])
+    return out
+
+
 def main(argv: list[str] | None = None) -> int:
     from etl_benchmark.atomic import atomic_path
 
@@ -112,6 +146,7 @@ def main(argv: list[str] | None = None) -> int:
     commands = parser.add_subparsers(dest="command", required=True)
     pick = commands.add_parser("select")
     pick.add_argument("--survey", type=Path, required=True)
+    commands.add_parser("verify-time")
     get = commands.add_parser("fetch")
     get.add_argument("--destination", type=Path, default=WAVE_DIR)
     args = parser.parse_args(argv)
@@ -139,6 +174,12 @@ def main(argv: list[str] | None = None) -> int:
         with atomic_path(SELECTION) as partial:
             partial.write_text(json.dumps(out, indent=1, sort_keys=True) + "\n")
         print(f"chosen {len(chosen)}, licence-rejected {len(out['rejected_by_licence'])}")
+        return 0
+    if args.command == "verify-time":
+        report = verify_times()
+        with atomic_path(TIME_REPORT) as partial:
+            partial.write_text(json.dumps(report, indent=1, sort_keys=True) + "\n")
+        print({k: v["verified"] for k, v in report.items()})
         return 0
     chosen = json.loads(SELECTION.read_text())["chosen"]
     args.destination.mkdir(parents=True, exist_ok=True)

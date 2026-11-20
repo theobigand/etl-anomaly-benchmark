@@ -78,3 +78,16 @@ def test_a_download_over_the_size_limit_is_recorded_as_failed_not_fatal(tmp_path
     out = json.loads((tmp_path / "manifest.json").read_text())
     assert out["tables"] == [] and out["failed"][0]["uci_id"] == 9001
     assert "larger" in out["failed"][0]["reason"]
+
+
+def test_a_time_column_is_verified_only_if_parsed_distinct_and_spanning_a_week():
+    good = pd.DataFrame({"t": pd.date_range("2020-01-01", periods=300, freq="D").astype(str)})
+    assert w2.check_time(good, "t")["verified"] is True
+    short = pd.DataFrame({"t": pd.date_range("2020-01-01", periods=300, freq="s").astype(str)})
+    assert w2.check_time(short, "t")["verified"] is False  # one day only
+    junk = pd.DataFrame({"t": ["x"] * 300})
+    r = w2.check_time(junk, "t")
+    assert r["verified"] is False and r["parsed_share"] == 0.0
+    shuffled = good.sample(frac=1, random_state=0)
+    r = w2.check_time(shuffled, "t")
+    assert r["verified"] is True and r["file_in_time_order"] is False

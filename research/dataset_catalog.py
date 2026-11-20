@@ -127,6 +127,7 @@ TARGETS = {
     "C6": (15, 30, 45),
 }
 WAVE2_MANIFEST = ROOT / "verification/evidence/dataset_registry_v2/uci_wave2_manifest.json"
+WAVE2_TIME = ROOT / "verification/evidence/dataset_registry_v2/uci_wave2_time.json"
 COVERAGE = ROOT / "verification/evidence/coverage/coverage_matrix.json"
 NATURAL_RESULTS = ROOT / "verification/evidence/natural_temporal/results"
 GAP_DIR = ROOT / "verification/evidence/dataset_registry_v2"
@@ -156,6 +157,7 @@ def stratum_rows(
     coverage: Path = COVERAGE,
     wave2: Path = WAVE2_MANIFEST,
     natural: Path = NATURAL_RESULTS,
+    wave2_time: Path = WAVE2_TIME,
 ) -> list[dict[str, Any]]:
     """One row per table or series, with its independent source and the facts the strata need."""
     rows: list[dict[str, Any]] = []
@@ -178,13 +180,14 @@ def stratum_rows(
                 }
             )
     if wave2.exists():
+        checked = json.loads(wave2_time.read_text()) if wave2_time.exists() else {}
         for t in json.loads(wave2.read_text())["tables"]:
             rows.append(
                 {
                     "id": f"uci:{t['uci_id']}",
                     "source": f"uci:{t['uci_id']}",
                     "tags": t["tags"],
-                    "time_verified": False,
+                    "time_verified": bool(checked.get(f"uci:{t['uci_id']}", {}).get("verified")),
                     "time_candidate": bool(t["time_candidates"]),
                     "origin": "wave2",
                 }

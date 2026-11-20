@@ -150,7 +150,8 @@ def test_the_rows_read_the_three_evidence_sources_and_skip_retired_tables(tmp_pa
     nat.mkdir()
     (nat / "a.json").write_text(json.dumps({"id": "x/1", "group": "g", "chronological": {}}))
     (nat / "b.json").write_text(json.dumps({"id": "x/2", "group": "g", "excluded": "none"}))
-    rows = dc.stratum_rows(tmp_path / "m.json", tmp_path / "w.json", nat)
+    (tmp_path / "t.json").write_text(json.dumps({"uci:9": {"verified": True}}))
+    rows = dc.stratum_rows(tmp_path / "m.json", tmp_path / "w.json", nat, tmp_path / "t.json")
     assert [r["id"] for r in rows] == ["uci:1", "uci:9", "x/1"]
     assert (
         rows[0]["time_verified"] and rows[1]["time_candidate"] and rows[2]["source"] == "natural:g"
