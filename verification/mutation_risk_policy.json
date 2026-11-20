@@ -503,6 +503,10 @@
     "research/pipeline_batch.py": {
       "level": "L4",
       "reason": "Batch ground truth from fault operators, reference-only profiles and the label-free alert budget define the validity of the pipeline-level study."
+    },
+    "research/pipeline_batch_summary.py": {
+      "level": "L4",
+      "reason": "Source-level aggregation and the decisions on hypotheses B1 to B4 govern the reported pipeline-level findings."
     }
   }
 }

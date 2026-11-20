@@ -464,7 +464,8 @@ def main(argv: list[str] | None = None) -> int:
         with atomic_path(args.output / f"uci_{uci_id}.json") as partial:
             partial.write_text(json.dumps(result, sort_keys=True) + "\n")
         print(uci_id, flush=True)
-    with atomic_path(args.output / "skipped.json") as partial:
+    tag = "_".join(map(str, args.only)) if args.only else "all"
+    with atomic_path(args.output / f"skipped_{tag}.json") as partial:
         partial.write_text(json.dumps(skipped) + "\n")
     return 0
 
