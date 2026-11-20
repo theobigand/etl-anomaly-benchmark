@@ -38,6 +38,17 @@ The question it tries to answer: does adding machine learning to an ETL pipeline
 - [ ] Coverage gaps of the pool studies (ineligible tables, more datasets with a time variable, failed pipeline measures, fit-size and tuning ablation, isolated timings, archive replay, labelling sensitivity, independent attestation): issues #77 to #84
 - [ ] More imbalanced real datasets
 
+
+## Datasets
+
+One logical catalog covers every dataset (`data/README.md`, `research/dataset_catalog.py`): the 152 UCI
+and ADBench tables of the pool, the naturally labelled time series (SKAB, NAB), and the four historical
+files. General comparisons rest on the pool and on independent sources, not on the three worked examples.
+`cardio.csv` and `creditcard.csv` are duplicate representations of the pool tables `adbench:cardio` and
+`adbench:fraud` (same rows, verified) and add no independent source. `water_quality.csv` is a supplementary
+dataset outside the rare-anomaly regime. `synthetic.csv` is generated and is not a real-world source.
+`python research/coverage_matrix.py` reports the populations without double counting.
+
 ## Install
 
 ```bash
