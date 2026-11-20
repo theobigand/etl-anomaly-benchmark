@@ -84,13 +84,11 @@ def fetch(dest: Path = DATA_DIR) -> None:
         with zipfile.ZipFile(io.BytesIO(blob)) as archive:
             for member in archive.namelist():
                 relative = member.split("/", 1)[1] if "/" in member else ""
-                if relative.endswith(".csv") and (
-                    relative.startswith("data/") or relative.startswith("labels/")
+                if (
+                    relative.endswith(".csv")
+                    and (relative.startswith("data/") or relative.startswith("labels/"))
+                    or relative in ("labels/combined_windows.json", "LICENSE", "LICENSE.txt")
                 ):
-                    target = dest / key / relative
-                    target.parent.mkdir(parents=True, exist_ok=True)
-                    target.write_bytes(archive.read(member))
-                elif relative in ("labels/combined_windows.json", "LICENSE", "LICENSE.txt"):
                     target = dest / key / relative
                     target.parent.mkdir(parents=True, exist_ok=True)
                     target.write_bytes(archive.read(member))
@@ -151,7 +149,11 @@ def window_labels(times: pd.Series, windows: list[list[str]]) -> np.ndarray:
     y = np.zeros(len(times), dtype=int)
     stamps = pd.to_datetime(times, utc=True)
     for start, end in windows:
-        y[((stamps >= pd.Timestamp(start, tz="UTC")) & (stamps <= pd.Timestamp(end, tz="UTC"))).to_numpy()] = 1
+        y[
+            (
+                (stamps >= pd.Timestamp(start, tz="UTC")) & (stamps <= pd.Timestamp(end, tz="UTC"))
+            ).to_numpy()
+        ] = 1
     return y
 
 
@@ -231,7 +233,9 @@ def run_series(spec: dict[str, str], root: Path = DATA_DIR) -> dict[str, Any]:
         return {**head, "excluded": reason}
     wanted = [*DETECTOR_NAMES, *DEEP_NAMES]
     run, skipped = pc.methods_for(int(len(loaded["y"]) * 0.70), wanted)
-    result = td.run_frame(loaded["x"], loaded["y"], loaded["times"], methods=run, seeds=SEEDS, pi_floor=PI_FLOOR)
+    result = td.run_frame(
+        loaded["x"], loaded["y"], loaded["times"], methods=run, seeds=SEEDS, pi_floor=PI_FLOOR
+    )
     return {**head, **result, "skipped": skipped}
 
 

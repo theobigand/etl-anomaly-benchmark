@@ -14,7 +14,14 @@ METHODS = ["zscore", "iqr", "isolation_forest", "lof", "knn", "autoencoder", "va
 
 
 def _policy(f1, share):
-    return {"f1": f1, "share_error": share, "flagged_share": 0.1, "precision": 0.5, "recall": 0.5, "fpr": 0.1}
+    return {
+        "f1": f1,
+        "share_error": share,
+        "flagged_share": 0.1,
+        "precision": 0.5,
+        "recall": 0.5,
+        "fpr": 0.1,
+    }
 
 
 def _record(name, group, chrono_bias, rng, test_prevalence=0.2):
@@ -30,11 +37,17 @@ def _record(name, group, chrono_bias, rng, test_prevalence=0.2):
         "chronological": {
             m: {
                 "pr_auc": v + chrono_bias,
-                "policies": {"P0": _policy(0.3, 0.9), "P1": _policy(0.3, 0.6), "P2": _policy(0.4, 0.3)},
+                "policies": {
+                    "P0": _policy(0.3, 0.9),
+                    "P1": _policy(0.3, 0.6),
+                    "P2": _policy(0.4, 0.3),
+                },
             }
             for m, v in base.items()
         },
-        "stratified": {m: {"pr_auc": v, "pr_auc_matched": v + chrono_bias / 2} for m, v in base.items()},
+        "stratified": {
+            m: {"pr_auc": v, "pr_auc_matched": v + chrono_bias / 2} for m, v in base.items()
+        },
     }
 
 
@@ -42,9 +55,13 @@ def test_lift_removes_the_prevalence_baseline_of_each_arm():
     rng = np.random.default_rng(0)
     record = _record("s", "g", -0.1, rng, test_prevalence=0.2)
     out = ns.lifts(record)["zscore"]
-    chrono, strat = record["chronological"]["zscore"]["pr_auc"], record["stratified"]["zscore"]["pr_auc"]
+    chrono, strat = (
+        record["chronological"]["zscore"]["pr_auc"],
+        record["stratified"]["zscore"]["pr_auc"],
+    )
     assert out["chronological_lift"] == pytest.approx((chrono - 0.2) / 0.8)
     assert out["stratified_lift"] == pytest.approx((strat - 0.115) / 0.885)  # 115 of 1000 rows
+
 
 def test_detectors_belong_to_one_of_three_families():
     assert [ns.family(m) for m in ("iqr", "lof", "vae")] == ["rule", "classical", "neural"]
@@ -62,7 +79,9 @@ def test_units_are_source_groups_and_a_consistent_loss_is_found():
     assert summary["N2"]["median_spearman"] > 0.99 and summary["N2"]["supported"] is True
     assert summary["N4"]["friedman"]["units"] == 11
     assert {tuple(sorted((r["a"], r["b"]))) for r in summary["N4"]["families"]} == {
-        ("classical", "neural"), ("classical", "rule"), ("neural", "rule")
+        ("classical", "neural"),
+        ("classical", "rule"),
+        ("neural", "rule"),
     }
 
 
@@ -76,7 +95,9 @@ def test_no_loss_is_not_reported_as_one():
 def test_excluded_series_are_listed_with_their_reason_and_never_evaluated(tmp_path):
     rng = np.random.default_rng(3)
     (tmp_path / "a.json").write_text(json.dumps(_record("a", "g", 0.0, rng)))
-    (tmp_path / "b.json").write_text(json.dumps({"id": "b", "group": "h", "excluded": "0 anomalies"}))
+    (tmp_path / "b.json").write_text(
+        json.dumps({"id": "b", "group": "h", "excluded": "0 anomalies"})
+    )
     evaluated, excluded = ns.load(tmp_path)
     assert [r["id"] for r in evaluated] == ["a"] and [r["id"] for r in excluded] == ["b"]
     summary = ns.summarise(evaluated * 1 + [_record("c", "i", 0.0, rng)] * 9, excluded, draws=100)

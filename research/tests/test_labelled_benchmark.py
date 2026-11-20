@@ -110,7 +110,12 @@ def test_the_neural_detectors_run_on_a_capped_seeded_sample_and_agree_between_ru
 def test_the_seeds_of_a_job_are_the_ones_asked_for_and_default_to_the_archived_five(tmp_path):
     x, y = _problem()
     np.savez(tmp_path / "9_toy.npz", X=x, y=y)
-    job = {"problem": "adbench:toy", "source": "adbench", "name": "toy", "path": str(tmp_path / "9_toy.npz")}
+    job = {
+        "problem": "adbench:toy",
+        "source": "adbench",
+        "name": "toy",
+        "path": str(tmp_path / "9_toy.npz"),
+    }
     extra = lb.run_job(job, methods=["zscore"], seeds=(5, 6))
     assert extra["seeds"] == [5, 6] and len(extra["metrics"]["zscore"]) == 2
     assert lb.run_job(job, methods=["zscore"])["seeds"] == [42, 1, 2, 3, 4]

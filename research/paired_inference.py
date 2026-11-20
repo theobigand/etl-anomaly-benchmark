@@ -38,7 +38,9 @@ def group_means(values: dict[str, float], groups: dict[str, str]) -> dict[str, f
     return {group: float(np.mean(v)) for group, v in sorted(pooled.items())}
 
 
-def paired_effect(a: np.ndarray, b: np.ndarray, draws: int = DRAWS, seed: int = SEED) -> dict[str, Any]:
+def paired_effect(
+    a: np.ndarray, b: np.ndarray, draws: int = DRAWS, seed: int = SEED
+) -> dict[str, Any]:
     """Wilcoxon test and effect sizes of ``a - b`` over units where both are present."""
     keep = ~(np.isnan(a) | np.isnan(b))
     d = (a - b)[keep]
@@ -75,9 +77,11 @@ def pairwise(table: dict[str, np.ndarray], draws: int = DRAWS) -> list[dict[str,
     return rows
 
 
-def complete_matrix(table: dict[str, np.ndarray], coverage: float = 0.9) -> tuple[list[str], np.ndarray]:
+def complete_matrix(
+    table: dict[str, np.ndarray], coverage: float = 0.9
+) -> tuple[list[str], np.ndarray]:
     """Detectors present on at least ``coverage`` of the units, over the units where all are."""
-    n = len(next(iter(table.values())))
+
     names = sorted(m for m, v in table.items() if (~np.isnan(v)).mean() >= coverage)
     matrix = np.column_stack([table[m] for m in names])
     return names, matrix[~np.isnan(matrix).any(axis=1)]

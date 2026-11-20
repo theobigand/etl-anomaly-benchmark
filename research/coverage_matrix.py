@@ -639,21 +639,43 @@ def supplementary_report(block: dict[str, Any] | None) -> list[str]:
         return []
     lines = ["## Outside the pool", ""]
     if "aliases" in block:
-        lines += ["Duplicate representations (no independent source added, not counted as datasets):", ""]
-        lines += [f"- `{a['id']}` is `{a['same_as']}` (source `{a['source_identity']}`), file `{a['path']}`" for a in block["aliases"]]
-        lines += ["", "Supplementary real datasets (evaluated separately, never pooled with the catalog):", ""]
-        lines += [f"- `{d['id']}` ({d['name']}), source `{d['source_identity']}`: {d['labels']}" for d in block["supplementary_datasets"]]
+        lines += [
+            "Duplicate representations (no independent source added, not counted as datasets):",
+            "",
+        ]
+        lines += [
+            f"- `{a['id']}` is `{a['same_as']}` (source `{a['source_identity']}`), "
+            f"file `{a['path']}`"
+            for a in block["aliases"]
+        ]
+        lines += [
+            "",
+            "Supplementary real datasets (evaluated separately, never pooled with the catalog):",
+            "",
+        ]
+        lines += [
+            f"- `{d['id']}` ({d['name']}), source `{d['source_identity']}`: {d['labels']}"
+            for d in block["supplementary_datasets"]
+        ]
         lines += ["", "Synthetic data (generated, not an independent real-world source):", ""]
         lines += [f"- `{d['id']}` ({d['name']}): {d['relationship']}" for d in block["synthetic"]]
         src = block["independent_sources"]
-        lines += ["", f"Independent real sources: {src['pool']} in the pool plus {src['added_by_supplementary']} supplementary.", ""]
+        lines += [
+            "",
+            f"Independent real sources: {src['pool']} in the pool plus "
+            f"{src['added_by_supplementary']} supplementary.",
+            "",
+        ]
     nat = block.get("natural_temporal")
     if nat:
         lines += [
-            "Naturally labelled time series (producer-annotated anomalies, chronological protocol):",
+            "Naturally labelled time series (producer-annotated anomalies, "
+            "chronological protocol):",
             "",
-            f"- {nat['series_catalogued']} series catalogued, {nat['evaluated']} evaluated with {nat['detectors']} detectors, "
-            f"{nat['excluded']} not evaluated; {len(nat['source_groups'])} independent source groups.",
+            f"- {nat['series_catalogued']} series catalogued, {nat['evaluated']} evaluated with "
+            f"{nat['detectors']} detectors, "
+            f"{nat['excluded']} not evaluated; {len(nat['source_groups'])} independent "
+            "source groups.",
         ]
         lines += [f"  - `{g}`: {len(ids)} series" for g, ids in nat["source_groups"].items()]
         lines += [f"- not evaluated, {n} series: {r}" for r, n in nat["exclusion_reasons"].items()]

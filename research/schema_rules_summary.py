@@ -1,3 +1,4 @@
+# ruff: noqa: E501
 """Compare the schema-rule baseline with the archived detectors (protocol verification/schema_rules.md).
 
 Per table and fault type: the baseline recall against the best of the 17 archived detectors and
@@ -47,7 +48,10 @@ def summarise(rules_dir: Path, typed_dir: Path, draws: int = pinf.DRAWS) -> dict
         rows.append((path.stem, mine, theirs))
     out: dict[str, Any] = {"tables": len(rows), "types": {}}
     fpr = [m["fpr_pooled"] for _, m, _ in rows]
-    out["S2"] = {"share_tables_fpr_at_most_0.05": float(np.mean([f <= 0.05 for f in fpr])), "median_fpr": float(np.median(fpr))}
+    out["S2"] = {
+        "share_tables_fpr_at_most_0.05": float(np.mean([f <= 0.05 for f in fpr])),
+        "median_fpr": float(np.median(fpr)),
+    }
     for t in TYPES:
         names, base, best, rule_best, rule_med, others_med = [], [], [], [], [], []
         for stem, mine, theirs in rows:
@@ -67,8 +71,10 @@ def summarise(rules_dir: Path, typed_dir: Path, draws: int = pinf.DRAWS) -> dict
             continue
         groups = {n: cm.source_key(n) for n in names}
 
-        def by_source(v: list[float]) -> np.ndarray:
-            return np.array(list(pinf.group_means(dict(zip(names, v, strict=True)), groups).values()))
+        def by_source(v: list[float], names=names, groups=groups) -> np.ndarray:
+            return np.array(
+                list(pinf.group_means(dict(zip(names, v, strict=True)), groups).values())
+            )
 
         out["types"][t] = {
             "tables": len(base),
@@ -77,10 +83,14 @@ def summarise(rules_dir: Path, typed_dir: Path, draws: int = pinf.DRAWS) -> dict
             "best_archived_median_recall": float(np.median(best)),
             "rule_detectors_median_recall": float(np.median(rule_med)),
             "other_detectors_median_recall": float(np.median(others_med)),
-            "tables_baseline_at_least_best": float(np.mean(np.array(base) >= np.array(best) - 1e-12)),
+            "tables_baseline_at_least_best": float(
+                np.mean(np.array(base) >= np.array(best) - 1e-12)
+            ),
             "tables_baseline_at_least_0.9": float(np.mean(np.array(base) >= 0.9)),
             "baseline_minus_best": pinf.paired_effect(by_source(base), by_source(best), draws),
-            "baseline_minus_rule_detectors": pinf.paired_effect(by_source(base), by_source(rule_med), draws),
+            "baseline_minus_rule_detectors": pinf.paired_effect(
+                by_source(base), by_source(rule_med), draws
+            ),
         }
     return out
 
@@ -108,7 +118,9 @@ def render(summary: dict[str, Any]) -> str:
 def main() -> int:
     out = EVIDENCE / "pool_extension_v3"
     summary = summarise(out / "schema_rules", EVIDENCE / "pool_extension_v2" / "typed_mixed")
-    (out / "schema_rules_summary.json").write_text(json.dumps(summary, indent=1, sort_keys=True) + "\n")
+    (out / "schema_rules_summary.json").write_text(
+        json.dumps(summary, indent=1, sort_keys=True) + "\n"
+    )
     (out / "schema_rules_summary.md").write_text(render(summary))
     return 0
 

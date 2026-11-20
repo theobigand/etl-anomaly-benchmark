@@ -1,4 +1,6 @@
-"""Batch-level ETL pipeline fault detection on replayed real tables (protocol pipeline_batch_faults.md).
+"""Batch-level ETL pipeline fault detection on replayed real tables.
+
+Protocol: verification/pipeline_batch_faults.md.
 
 A timestamped table is replayed in time order as successive loads (batches). Eight pipeline fault
 mechanisms are injected into some test batches; every detector scores each batch from a profile
@@ -97,7 +99,7 @@ def apply_fault(
     history: list[pd.DataFrame],
     sd: pd.Series,
 ) -> pd.DataFrame:
-    """The batch as delivered after one pipeline fault; ``history`` holds the clean earlier batches."""
+    """The batch as delivered after one fault; ``history`` holds the clean earlier batches."""
     if mechanism not in SEVERITY:
         raise ValueError(f"unknown mechanism {mechanism}")
     value = SEVERITY[mechanism][level]
@@ -133,7 +135,9 @@ def apply_fault(
         chosen = list(rng.choice(columns, min(2, len(columns)), replace=False))
         rows = np.sort(rng.choice(n, max(2, int(round(n * value))), replace=False))
         for name in chosen:
-            out.loc[out.index[rows], name] = rng.permutation(out.loc[out.index[rows], name].to_numpy())
+            out.loc[out.index[rows], name] = rng.permutation(
+                out.loc[out.index[rows], name].to_numpy()
+            )
         return out
     raise AssertionError(mechanism)  # unreachable: every known mechanism returns above
 
@@ -167,7 +171,9 @@ class Reference:
         present = [c for c in self.columns if c in batch.columns]
         row: dict[str, float] = {
             "rows": len(batch) / self.rows,
-            "dup_share": float(batch[present].duplicated().mean()) if present and len(batch) else 0.0,
+            "dup_share": float(batch[present].duplicated().mean())
+            if present and len(batch)
+            else 0.0,
             "absent": float(len(self.columns) - len(present)),
         }
         if previous is None:
@@ -213,7 +219,9 @@ class Reference:
         return (raw[self.mean.index] - self.mean) / self.std
 
 
-def profile_stream(ref: Reference, batches: list[pd.DataFrame], first_previous: pd.DataFrame | None):
+def profile_stream(
+    ref: Reference, batches: list[pd.DataFrame], first_previous: pd.DataFrame | None
+):
     """Raw profiles of delivered batches, each against the batch delivered before it."""
     rows, previous = [], first_previous
     for b in batches:
@@ -281,7 +289,9 @@ def fit_learned(ref: Reference, seed: int, names: tuple[str, ...] = LEARNED) -> 
     return fitted
 
 
-def alert_metrics(val_scores: np.ndarray, scores: np.ndarray, faulty: np.ndarray) -> dict[str, float]:
+def alert_metrics(
+    val_scores: np.ndarray, scores: np.ndarray, faulty: np.ndarray
+) -> dict[str, float]:
     """ROC-AUC, average precision, recall and clean false-alert rate at the validation budget."""
     threshold = float(np.quantile(val_scores, 1.0 - ALERT_BUDGET))
     flags = scores > threshold
@@ -322,7 +332,7 @@ def run_source(
     table: pd.DataFrame, seeds: tuple[int, ...] = SEEDS, contaminated: bool = False,
     learned: tuple[str, ...] = LEARNED,
 ) -> dict[str, Any]:  # fmt: skip
-    """All mechanisms, severities and detectors on one replayed table (the table has a time column)."""
+    """All mechanisms, severities and detectors on one replayed table (with a time column)."""
     warnings.filterwarnings("ignore")
     clean = make_batches(table)
     ref_idx, val_idx, test_idx = split_batches(len(clean))
@@ -330,7 +340,9 @@ def run_source(
     if contaminated:  # a production history that already holds faults, unlabelled to the detectors
         rng = np.random.default_rng(7)
         pre = Reference(reference)
-        picks = rng.choice(len(reference), max(1, int(round(CONTAMINATION_SHARE * len(reference)))), replace=False)
+        picks = rng.choice(
+            len(reference), max(1, int(round(CONTAMINATION_SHARE * len(reference)))), replace=False
+        )
         for i in picks:
             m = MECHANISMS[int(rng.integers(len(MECHANISMS)))]
             reference[i] = apply_fault(
@@ -432,6 +444,7 @@ def run_one(uci_id: int, seeds: tuple[int, ...] = SEEDS) -> dict[str, Any]:
 def main(argv: list[str] | None = None) -> int:
     import chrono_injected as ci
     import injection as inj
+
     from etl_benchmark.atomic import atomic_path
 
     parser = argparse.ArgumentParser(description=__doc__)

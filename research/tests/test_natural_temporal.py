@@ -72,7 +72,12 @@ def test_skab_columns_other_than_sensors_never_reach_the_detectors(tmp_path):
             "changepoint": [0.0, 0, 1, 0, 0],
         }
     ).to_csv(folder / "1.csv", sep=";", index=False)
-    spec = {"id": "skab/other/1", "source": "skab", "group": "skab", "path": "skab/data/other/1.csv"}
+    spec = {
+        "id": "skab/other/1",
+        "source": "skab",
+        "group": "skab",
+        "path": "skab/data/other/1.csv",
+    }
     loaded = nt.load_series(spec, tmp_path)
     assert list(loaded["x"].columns) == ["a"]  # constant column and truth columns are gone
     assert loaded["y"].tolist() == [0, 0, 1, 1, 0]
@@ -116,7 +121,14 @@ def test_a_changed_file_is_reported_by_the_manifest_check(tmp_path):
     (tmp_path / "b.csv").write_text("2")
     manifest = tmp_path / "m.json"
     manifest.write_text(
-        json.dumps({"files": {"a.csv": nt.digest(tmp_path / "a.csv"), "b.csv": nt.digest(tmp_path / "b.csv")}})
+        json.dumps(
+            {
+                "files": {
+                    "a.csv": nt.digest(tmp_path / "a.csv"),
+                    "b.csv": nt.digest(tmp_path / "b.csv"),
+                }
+            }
+        )
     )
     assert nt.check_manifest(tmp_path, manifest) == []
     (tmp_path / "b.csv").write_text("changed")

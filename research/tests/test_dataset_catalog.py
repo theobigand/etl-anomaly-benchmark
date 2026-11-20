@@ -36,7 +36,9 @@ def _catalog(tmp_path, **override):
     }  # fmt: skip
     entry.update(override)
     path = tmp_path / "catalog.json"
-    path.write_text(json.dumps({"roles": json.loads(dc.CATALOG.read_text())["roles"], "entries": [entry]}))
+    path.write_text(
+        json.dumps({"roles": json.loads(dc.CATALOG.read_text())["roles"], "entries": [entry]})
+    )
     return path
 
 
@@ -76,7 +78,9 @@ def test_coverage_lists_the_outside_entries_without_changing_the_active_count(tm
     results.mkdir(parents=True)
     done = {"id": "a/1", "group": "g1", "chronological": {"zscore": {}, "iqr": {}}}
     (results / "a.json").write_text(json.dumps(done))
-    (results / "b.json").write_text(json.dumps({"id": "a/2", "group": "g1", "excluded": "0 anomalies"}))
+    (results / "b.json").write_text(
+        json.dumps({"id": "a/2", "group": "g1", "excluded": "0 anomalies"})
+    )
     block = cm.supplementary(tmp_path, dc.CATALOG, {"uci:193"})
     assert [a["id"] for a in block["aliases"]] == ["legacy:cardio", "legacy:credit_card"]
     assert block["independent_sources"] == {"pool": 1, "added_by_supplementary": 1}

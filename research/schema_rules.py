@@ -78,7 +78,8 @@ class SchemaRules:
                 mapping = {
                     str(level): str(top.loc[level, b])
                     for level in total.index
-                    if total[level] >= DEP_MIN_ROWS and top.loc[level, "n"] / total[level] >= DEP_PURITY
+                    if total[level] >= DEP_MIN_ROWS
+                    and top.loc[level, "n"] / total[level] >= DEP_PURITY
                 }
                 if mapping:
                     rules.append((a, b, mapping))
@@ -160,7 +161,10 @@ def run_one(job: dict[str, Any]) -> dict[str, Any]:
             c: sum(r["false_alarms_by_constraint"][c] for r in runs) for c in CONSTRAINTS
         },
         "dependency_rules": [r["rules"]["dependencies"] for r in runs],
-        "carrier": {"rows": len(clean), "kinds": {k: sum(v == k for v in kinds.values()) for k in ("num", "cat")}},
+        "carrier": {
+            "rows": len(clean),
+            "kinds": {k: sum(v == k for v in kinds.values()) for k in ("num", "cat")},
+        },
     }
 
 

@@ -1,3 +1,4 @@
+# ruff: noqa: E501
 """Summary of the naturally labelled chronological study (protocol verification/natural_temporal.md).
 
 Reads the per-series results, computes N1 to N4 over source groups (the unit of inference) and
@@ -72,18 +73,26 @@ def table_by_group(
     for method in methods:
         column = []
         for group in groups:
-            values = [pick(r, method) for r in evaluated if r["group"] == group and method in r["chronological"]]
+            values = [
+                pick(r, method)
+                for r in evaluated
+                if r["group"] == group and method in r["chronological"]
+            ]
             column.append(float(np.mean(values)) if values else float("nan"))
         table[method] = np.array(column)
     return groups, table
 
 
-def summarise(evaluated: list[dict[str, Any]], excluded: list[dict[str, Any]], draws: int = pinf.DRAWS) -> dict[str, Any]:
+def summarise(
+    evaluated: list[dict[str, Any]], excluded: list[dict[str, Any]], draws: int = pinf.DRAWS
+) -> dict[str, Any]:
     per_series = {r["id"]: lifts(r) for r in evaluated}
     groups, chrono = table_by_group(evaluated, lambda r, m: per_series[r["id"]][m]["chronological"])
     _, strat = table_by_group(evaluated, lambda r, m: per_series[r["id"]][m]["stratified"])
     pairs = [(r["id"], m) for r in evaluated for m in r["chronological"]]
-    lower = sum(per_series[i][m]["chronological"] < per_series[i][m]["stratified"] for i, m in pairs)
+    lower = sum(
+        per_series[i][m]["chronological"] < per_series[i][m]["stratified"] for i, m in pairs
+    )
     share = lower / len(pairs)
     detectors = {}
     for method in chrono:
@@ -93,14 +102,27 @@ def summarise(evaluated: list[dict[str, Any]], excluded: list[dict[str, Any]], d
     median_ci_below = {m: bool(v.get("ci_high", 1) < 0) for m, v in detectors.items()}
     h = td.hypotheses({r["id"]: r for r in evaluated})
     rho = [
-        float(spearmanr([r["stratified"][m]["pr_auc"] for m in r["chronological"]],
-                        [r["chronological"][m]["pr_auc"] for m in r["chronological"]]).statistic)
+        float(
+            spearmanr(
+                [r["stratified"][m]["pr_auc"] for m in r["chronological"]],
+                [r["chronological"][m]["pr_auc"] for m in r["chronological"]],
+            ).statistic
+        )
         for r in evaluated
     ]
-    _, chrono_lift = table_by_group(evaluated, lambda r, m: per_series[r["id"]][m]["chronological_lift"])
-    _, strat_lift = table_by_group(evaluated, lambda r, m: per_series[r["id"]][m]["stratified_lift"])
-    lift_lower = sum(per_series[i][m]["chronological_lift"] < per_series[i][m]["stratified_lift"] for i, m in pairs)
-    lift_by_detector = {m: pinf.paired_effect(chrono_lift[m], strat_lift[m], draws) for m in chrono_lift}
+    _, chrono_lift = table_by_group(
+        evaluated, lambda r, m: per_series[r["id"]][m]["chronological_lift"]
+    )
+    _, strat_lift = table_by_group(
+        evaluated, lambda r, m: per_series[r["id"]][m]["stratified_lift"]
+    )
+    lift_lower = sum(
+        per_series[i][m]["chronological_lift"] < per_series[i][m]["stratified_lift"]
+        for i, m in pairs
+    )
+    lift_by_detector = {
+        m: pinf.paired_effect(chrono_lift[m], strat_lift[m], draws) for m in chrono_lift
+    }
     names, matrix = pinf.complete_matrix(chrono)
     ranks = pinf.mean_ranks(matrix)
     intervals = pinf.rank_intervals(matrix, draws)
@@ -117,29 +139,46 @@ def summarise(evaluated: list[dict[str, Any]], excluded: list[dict[str, Any]], d
             "pairs": len(pairs),
             "chronological_lower_share": share,
             "supported_by_share": bool(share >= SUPPORT_SHARE),
-            "detectors_with_interval_below_zero": sorted(m for m, ok in median_ci_below.items() if ok),
+            "detectors_with_interval_below_zero": sorted(
+                m for m, ok in median_ci_below.items() if ok
+            ),
             "by_detector": detectors,
         },
         "N1_lift": {
             "chronological_lower_share": lift_lower / len(pairs),
-            "detectors_with_interval_below_zero": sorted(m for m, v in lift_by_detector.items() if v.get("ci_high", 1) < 0),
+            "detectors_with_interval_below_zero": sorted(
+                m for m, v in lift_by_detector.items() if v.get("ci_high", 1) < 0
+            ),
             "by_detector": lift_by_detector,
         },
-        "N2": {"median_spearman": float(np.median(rho)), "supported": bool(np.median(rho) >= 0.8), "by_series": dict(zip((r["id"] for r in evaluated), rho, strict=True))},
+        "N2": {
+            "median_spearman": float(np.median(rho)),
+            "supported": bool(np.median(rho) >= 0.8),
+            "by_series": dict(zip((r["id"] for r in evaluated), rho, strict=True)),
+        },
         "N3": {
-            "series_where_matching_closes_half": int(sum(v["ok"] for v in h["H4"]["by_dataset"].values())),
+            "series_where_matching_closes_half": int(
+                sum(v["ok"] for v in h["H4"]["by_dataset"].values())
+            ),
             "series": len(evaluated),
         },
-        "decision_policies": {"H2": {k: v["ok"] for k, v in h["H2"]["by_dataset"].items()}, "H3": {k: h["H3"][k] for k in ("p2_at_least_p0", "pairs")}},
+        "decision_policies": {
+            "H2": {k: v["ok"] for k, v in h["H2"]["by_dataset"].items()},
+            "H3": {k: h["H3"][k] for k in ("p2_at_least_p0", "pairs")},
+        },
         "N4": {
             "detectors": names,
             "mean_rank": dict(zip(names, map(float, ranks), strict=True)),
-            "rank_interval": {n: [float(a), float(b)] for n, (a, b) in zip(names, intervals, strict=True)},
+            "rank_interval": {
+                n: [float(a), float(b)] for n, (a, b) in zip(names, intervals, strict=True)
+            },
             "friedman": pinf.friedman(matrix),
             "families": family_rows,
         },
         "per_series": per_series,
-        "excluded": [{"id": r["id"], "group": r["group"], "reason": r["excluded"]} for r in excluded],
+        "excluded": [
+            {"id": r["id"], "group": r["group"], "reason": r["excluded"]} for r in excluded
+        ],
     }
 
 
@@ -169,10 +208,18 @@ def render(summary: dict[str, Any]) -> str:
     for m in sorted(n4["mean_rank"], key=n4["mean_rank"].get):
         lo, hi = n4["rank_interval"][m]
         e = n1["by_detector"][m]
-        lines.append(f"| {m} | {n4['mean_rank'][m]:.2f} | {lo:.2f} to {hi:.2f} | {e['median_difference']:+.3f} | {e['ci_low']:+.3f} to {e['ci_high']:+.3f} |")
-    lines += ["", "| Families | Median difference | 95 % interval | p (Holm) | Probability of superiority |", "|---|---|---|---|---|"]
+        lines.append(
+            f"| {m} | {n4['mean_rank'][m]:.2f} | {lo:.2f} to {hi:.2f} | {e['median_difference']:+.3f} | {e['ci_low']:+.3f} to {e['ci_high']:+.3f} |"
+        )
+    lines += [
+        "",
+        "| Families | Median difference | 95 % interval | p (Holm) | Probability of superiority |",
+        "|---|---|---|---|---|",
+    ]
     for r in n4["families"]:
-        lines.append(f"| {r['a']} - {r['b']} | {r['median_difference']:+.3f} | {r['ci_low']:+.3f} to {r['ci_high']:+.3f} | {r['p_holm']:.3f} | {r['probability_of_superiority']:.2f} |")
+        lines.append(
+            f"| {r['a']} - {r['b']} | {r['median_difference']:+.3f} | {r['ci_low']:+.3f} to {r['ci_high']:+.3f} | {r['p_holm']:.3f} | {r['probability_of_superiority']:.2f} |"
+        )
     lines += ["", "Not evaluated:", ""]
     for e in summary["excluded"]:
         lines.append(f"- {e['id']} ({e['group']}): {e['reason']}")
@@ -181,8 +228,12 @@ def render(summary: dict[str, Any]) -> str:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--results", type=Path, default=ROOT / "verification/evidence/natural_temporal/results")
-    parser.add_argument("--output", type=Path, default=ROOT / "verification/evidence/natural_temporal")
+    parser.add_argument(
+        "--results", type=Path, default=ROOT / "verification/evidence/natural_temporal/results"
+    )
+    parser.add_argument(
+        "--output", type=Path, default=ROOT / "verification/evidence/natural_temporal"
+    )
     args = parser.parse_args(argv)
     evaluated, excluded = load(args.results)
     summary = summarise(evaluated, excluded)

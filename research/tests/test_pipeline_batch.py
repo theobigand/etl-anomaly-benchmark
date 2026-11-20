@@ -1,4 +1,4 @@
-"""Batch-level pipeline faults: batches, operators with ground truth, profiles, constraints, metrics."""
+"""Batch-level pipeline faults: batches, operators with truth, profiles, constraints, metrics."""
 
 import sys
 from pathlib import Path
@@ -69,7 +69,9 @@ def test_silent_corruption_breaks_the_correlation_that_the_marginals_keep():
     batches, ref = _ref(_table(6000))
     clean = batches[60]
     raw_clean = ref.raw(clean, batches[59])["corr_dist"]
-    bad = pb.apply_fault(clean, "silent_corruption", 2, np.random.default_rng(3), history=batches[:60], sd=ref.sd)
+    bad = pb.apply_fault(
+        clean, "silent_corruption", 2, np.random.default_rng(3), history=batches[:60], sd=ref.sd
+    )
     assert ref.raw(bad, batches[59])["corr_dist"] > raw_clean
 
 
@@ -98,7 +100,9 @@ def test_constraints_learned_on_reference_batches_do_not_flag_them_and_flag_a_pa
     batches, ref = _ref()
     raw_ref = ref.raw_reference
     assert (pb.constraint_scores(ref, raw_ref) == 0).all()
-    partial = pb.apply_fault(batches[50], "partial_load", 2, np.random.default_rng(0), history=batches[:50], sd=ref.sd)
+    partial = pb.apply_fault(
+        batches[50], "partial_load", 2, np.random.default_rng(0), history=batches[:50], sd=ref.sd
+    )
     raw = pb.profile_stream(ref, [partial], batches[49])
     assert pb.constraint_scores(ref, raw)[0] > 0
 
@@ -124,7 +128,9 @@ def test_the_test_stream_has_the_stated_share_of_faulty_batches_and_a_truth_mask
     for batch, truth, i in zip(stream, faulty, test, strict=True):
         assert (len(batch) != len(batches[i])) == truth
     clean_stream, none = pb.deliver(batches, test, None, 0, np.random.default_rng(0), ref)
-    assert not none.any() and all(a.equals(batches[i]) for a, i in zip(clean_stream, test, strict=True))
+    assert not none.any() and all(
+        a.equals(batches[i]) for a, i in zip(clean_stream, test, strict=True)
+    )
 
 
 def test_a_source_run_finds_gross_faults_misses_silent_ones_and_the_random_floor_is_near_chance():

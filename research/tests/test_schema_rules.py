@@ -60,7 +60,9 @@ def test_a_column_is_required_only_when_it_is_rarely_missing_in_training():
     often.loc[:79, "amount"] = np.nan  # 20 % missing
     assert "amount" in sr.SchemaRules().fit(rare, KINDS).complete
     assert "amount" not in sr.SchemaRules().fit(often, KINDS).complete
-    probe = pd.DataFrame({"country": ["fr"], "currency": ["eur"], "amount": [np.nan], "delta": [0.0]})
+    probe = pd.DataFrame(
+        {"country": ["fr"], "currency": ["eur"], "amount": [np.nan], "delta": [0.0]}
+    )
     assert not sr.SchemaRules().fit(often, KINDS).violations(probe)["missing"].any()
 
 
@@ -68,13 +70,18 @@ def test_a_level_seen_once_in_training_counts_as_unseen():
     train = _train()
     train.loc[0, "country"] = "rare"
     rules = sr.SchemaRules().fit(train, KINDS)
-    probe = pd.DataFrame({"country": ["rare"], "currency": ["eur"], "amount": [10.0], "delta": [0.0]})
+    probe = pd.DataFrame(
+        {"country": ["rare"], "currency": ["eur"], "amount": [10.0], "delta": [0.0]}
+    )
     assert rules.violations(probe)["domain"].all()
 
 
 def test_dependencies_need_enough_rows_and_purity():
     train = pd.DataFrame(
-        {"a": ["x"] * 4 + ["y"] * 50 + ["z"] * 50, "b": ["p"] * 4 + ["q"] * 50 + ["r"] * 25 + ["s"] * 25}
+        {
+            "a": ["x"] * 4 + ["y"] * 50 + ["z"] * 50,
+            "b": ["p"] * 4 + ["q"] * 50 + ["r"] * 25 + ["s"] * 25,
+        }
     )
     rules = sr.SchemaRules().fit(train, {"a": "cat", "b": "cat"})
     mapped = {rule[0]: set(rule[2]) for rule in rules.dependencies}

@@ -102,7 +102,9 @@ def run_job(job: dict[str, Any], methods: list[str] | None = None) -> dict[str, 
     warnings.filterwarnings("ignore")
     head = {"problem": job["problem"], "rule": job["rule"]}
     try:
-        features, labels, info = derive_rule(ul.read_table(Path(job["path"])), job["meta"], job["rule"])
+        features, labels, info = derive_rule(
+            ul.read_table(Path(job["path"])), job["meta"], job["rule"]
+        )
     except ul.NoLabels as reason:
         return {**head, "not_applicable": str(reason)}
     try:

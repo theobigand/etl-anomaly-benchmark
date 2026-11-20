@@ -1,3 +1,4 @@
+# ruff: noqa: E501
 """Statistical validity of the labelled-pool rankings (protocol verification/validity_study.md).
 
 Part A: ten seeds, source-grouped ranks, Friedman and Holm-corrected paired tests. Part B: the
@@ -24,8 +25,14 @@ from etl_benchmark.registry import DEEP_NAMES  # noqa: E402
 
 EVIDENCE = ROOT / "verification" / "evidence"
 ARCHIVE = (EVIDENCE / "labelled_pool" / "runs", EVIDENCE / "full_registry" / "pool_deep" / "runs")
-NEW = (EVIDENCE / "validity" / "seeds_5_9" / "classical", EVIDENCE / "validity" / "seeds_5_9" / "deep")
-RULE_DIRS = (EVIDENCE / "validity" / "label_rules" / "classical", EVIDENCE / "validity" / "label_rules" / "deep")
+NEW = (
+    EVIDENCE / "validity" / "seeds_5_9" / "classical",
+    EVIDENCE / "validity" / "seeds_5_9" / "deep",
+)
+RULE_DIRS = (
+    EVIDENCE / "validity" / "label_rules" / "classical",
+    EVIDENCE / "validity" / "label_rules" / "deep",
+)
 RULE_SEEDS = 3
 FAMILY = {"zscore": "rule", "iqr": "rule", "great_expectations": "rule"}
 
@@ -48,7 +55,9 @@ def load_seeds(directories: tuple[Path, ...]) -> dict[str, dict[str, list[float]
     return out
 
 
-def merge(old: dict[str, dict[str, list[float]]], new: dict[str, dict[str, list[float]]]) -> dict[str, dict[str, list[float]]]:
+def merge(
+    old: dict[str, dict[str, list[float]]], new: dict[str, dict[str, list[float]]]
+) -> dict[str, dict[str, list[float]]]:
     out: dict[str, dict[str, list[float]]] = {}
     for problem, methods in old.items():
         out[problem] = {m: v + new.get(problem, {}).get(m, []) for m, v in methods.items()}
@@ -77,7 +86,9 @@ def ranking(table: dict[str, np.ndarray], draws: int) -> dict[str, Any]:
         "detectors": names,
         "units": int(len(matrix)),
         "mean_rank": dict(zip(names, map(float, ranks), strict=True)),
-        "rank_interval": {n: [float(a), float(b)] for n, (a, b) in zip(names, intervals, strict=True)},
+        "rank_interval": {
+            n: [float(a), float(b)] for n, (a, b) in zip(names, intervals, strict=True)
+        },
         "friedman": pinf.friedman(matrix),
     }
 
@@ -88,8 +99,13 @@ def tau(a: dict[str, float], b: dict[str, float]) -> float:
 
 
 def part_a(seeded: dict[str, dict[str, list[float]]], draws: int) -> dict[str, Any]:
-    ten = {p: {m: float(np.mean(v)) for m, v in d.items() if len(v) >= 10} for p, d in seeded.items()}
-    five = {p: {m: float(np.mean(v[:5])) for m, v in d.items() if len(v) >= 5} for p, d in seeded.items()}
+    ten = {
+        p: {m: float(np.mean(v)) for m, v in d.items() if len(v) >= 10} for p, d in seeded.items()
+    }
+    five = {
+        p: {m: float(np.mean(v[:5])) for m, v in d.items() if len(v) >= 5}
+        for p, d in seeded.items()
+    }
     groups, table = source_table(ten)
     _, table5 = source_table(five)
     rank10, rank5 = ranking(table, draws), ranking(table5, draws)
@@ -117,7 +133,11 @@ def part_a(seeded: dict[str, dict[str, list[float]]], draws: int) -> dict[str, A
     }
 
 
-def part_b(seeded: dict[str, dict[str, list[float]]], rules: dict[str, dict[str, dict[str, list[float]]]], draws: int) -> dict[str, Any]:
+def part_b(
+    seeded: dict[str, dict[str, list[float]]],
+    rules: dict[str, dict[str, dict[str, list[float]]]],
+    draws: int,
+) -> dict[str, Any]:
     uci = {p: d for p, d in seeded.items() if p.startswith("uci:")}
     results: dict[str, Any] = {}
     for rule, runs in rules.items():
@@ -162,13 +182,29 @@ def render(summary: dict[str, Any]) -> str:
     ]
     for m in sorted(ten["mean_rank"], key=ten["mean_rank"].get):
         lo, hi = ten["rank_interval"][m]
-        lines.append(f"| {m} | {ten['mean_rank'][m]:.2f} | {lo:.2f} to {hi:.2f} | {a['five_seeds']['mean_rank'].get(m, float('nan')):.2f} |")
-    lines += ["", "| Families | Median difference | 95 % interval | p (Holm) |", "|---|---:|---|---:|"]
+        lines.append(
+            f"| {m} | {ten['mean_rank'][m]:.2f} | {lo:.2f} to {hi:.2f} | {a['five_seeds']['mean_rank'].get(m, float('nan')):.2f} |"
+        )
+    lines += [
+        "",
+        "| Families | Median difference | 95 % interval | p (Holm) |",
+        "|---|---:|---|---:|",
+    ]
     for r in a["families"]:
-        lines.append(f"| {r['a']} - {r['b']} | {r['median_difference']:+.3f} | {r['ci_low']:+.3f} to {r['ci_high']:+.3f} | {r['p_holm']:.3f} |")
-    lines += ["", "## Label rules", "", "| Rule | Problems | Sources | Kendall tau vs R0 | R0 leader | its rank | Leader under the rule |", "|---|---:|---:|---:|---|---:|---|"]
+        lines.append(
+            f"| {r['a']} - {r['b']} | {r['median_difference']:+.3f} | {r['ci_low']:+.3f} to {r['ci_high']:+.3f} | {r['p_holm']:.3f} |"
+        )
+    lines += [
+        "",
+        "## Label rules",
+        "",
+        "| Rule | Problems | Sources | Kendall tau vs R0 | R0 leader | its rank | Leader under the rule |",
+        "|---|---:|---:|---:|---|---:|---|",
+    ]
     for rule, v in summary["B"].items():
-        lines.append(f"| {rule} | {v['problems']} | {v['sources']} | {v['kendall_tau_vs_R0']:.2f} | {v['R0_leader']} | {v['R0_leader_rank_under_rule']} | {v['leader_under_rule']} |")
+        lines.append(
+            f"| {rule} | {v['problems']} | {v['sources']} | {v['kendall_tau_vs_R0']:.2f} | {v['R0_leader']} | {v['R0_leader_rank_under_rule']} | {v['leader_under_rule']} |"
+        )
     return "\n".join(lines) + "\n"
 
 
@@ -183,7 +219,9 @@ def main() -> int:
                 continue
             for method, rows in run["metrics"].items():
                 if len(rows) == len(run["seeds"]):
-                    rules.setdefault(run["rule"], {}).setdefault(run["problem"], {})[method] = [r["pr_auc"] for r in rows]
+                    rules.setdefault(run["rule"], {}).setdefault(run["problem"], {})[method] = [
+                        r["pr_auc"] for r in rows
+                    ]
     summary = {"A": part_a(seeded, draws), "B": part_b(seeded, dict(sorted(rules.items())), draws)}
     out = EVIDENCE / "validity"
     (out / "summary.json").write_text(json.dumps(summary, indent=1, sort_keys=True) + "\n")
