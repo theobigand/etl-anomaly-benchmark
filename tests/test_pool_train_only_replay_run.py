@@ -216,14 +216,12 @@ def test_the_command_writes_one_sorted_indented_file_per_problem_and_counts_fail
         "adbench_b.json",
         "adbench_c.json",
     ]
-    assert (
-        (out / "adbench_a.json").read_text()
-        == ('{\n "methods": [\n  "zscore",\n')
-        + "".join(f'  "{m}",\n' for m in replay.lb.METHODS[1:-1])
-        + f'  "{replay.lb.METHODS[-1]}"\n ],\n "problem": "adbench:a",\n "source": "adbench"\n}}\n'.replace(
-            "}}", "}"
-        )
+    expected = json.dumps(
+        {"methods": list(replay.lb.METHODS), "problem": "adbench:a", "source": "adbench"},
+        indent=1,
+        sort_keys=True,
     )
+    assert (out / "adbench_a.json").read_text() == expected + "\n"
     assert capsys.readouterr().out == "3 problems, 1 failed\n"
     assert fake["pool"].made == [3]
 
