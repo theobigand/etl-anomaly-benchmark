@@ -6,8 +6,8 @@
     "paper/figures/quality_cost.pdf": "215741fa580e9b9e9a16390f6070870e7b8a2d575d289b68f8c449a89875368c",
     "paper/figures/severity_curves.pdf": "1af0f7ca7fe99467a4c2f4e83046dea4b4b31e95e2283718e01b9887119209eb",
     "paper/figures/severity_curves.png": "335a5475a0b5d39e40f0336a3c48c733ca9d9a0f80fa496239a1b59ed1efdb6d",
-    "paper/main.pdf": "67e8f54d2bd2d832cdad1818a39aa07ae74cd6037a031d6508880c15b8d3bcf0",
-    "paper/main.tex": "2e0004e2f8db96f6978f8c5bff71a1998c2c11b3c1442ec15d19b5a8b434ba71",
+    "paper/main.pdf": "886a886b2e5481fe9c0db9b0687886176f5ffa5fec52812271a33e4077ab823e",
+    "paper/main.tex": "85e68e178ed2926f4dece1f97d6f0e3d3563ece856f5acbe3897392976802acf",
     "paper/references.bib": "ecf1c74309c1225412785021c141ff71a9a83c6721d57bcf213c04626da5904a",
     "verification/evidence/benchmark_cardio.csv": "9f9403b0354b19a37cbeb21c9e7e5fe193f9020dc68111e45e33a1904f661675",
     "verification/evidence/benchmark_cardio.md": "531d53f4651666cfef55ff226b59d04227cd621784ea75af33ec86ea4d3bd22b",
@@ -100,6 +100,6 @@
   "platform": "macOS-27.0-arm64-arm-64bit",
   "python": "3.11.17",
   "schema_version": 1,
-  "source_revision": "bcec28e17c41047724bad3f3e69414c7e40d3f7c",
+  "source_revision": "2dca21fc6c3d77be74a241d240d9d3048d85e4f4",
   "worktree_dirty": true
 }

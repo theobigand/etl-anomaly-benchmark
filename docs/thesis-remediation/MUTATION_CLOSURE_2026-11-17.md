@@ -23,6 +23,18 @@ the earlier results as history, marked as such.
 | Owner decisions | made on 2026-11-18 (owner ratification, not independent peer review): the 94 delegated records ratified within their documented limits (86 analysis-backed, 6 supported-contract, 2 CPU-only for `torch 2.15.0+cpu` only); LSTM records preserved; the three `PyODDetector.__init__` records stay `proposed`; squash merge and post-merge certification authorised. See `EQUIVALENCE_RATIFICATION_2026-11-17.md`, "Owner ratification" |
 | Not claimed | independent scientific certification; certification of any revision other than `7c0af40` (before the merge) and `6f1e8fd` (after it); the squash commit `7c32761` itself carries no separate run, because the roadmap-sync fix changed `.github/` and superseded it |
 
+## Update 2026-11-20: certification of the final Thesis 01 commit
+
+`verify-release` run [44655291252](https://github.com/theobigand/etl-anomaly-benchmark/actions/runs/44655291252) on `main` at
+`2dca21fc6c3d77be74a241d240d9d3048d85e4f4` returned **CERTIFIED** (all seven profiles PASS, `reasons: []`, attestation of the CI run
+only). It supersedes the certification of `6f1e8fd` for the current scientific and verification code, which gained the train-only
+replay modules and their tests. 37,759 mutants over 102 modules with mutants: 37,248 killed, 505 survived, 6 timeouts (never counted
+as kills); L2 98.41%, L3 98.56%, L4 98.67% raw and 99.00% adjusted by the same 98 recorded equivalences (four records of
+`research/injection.py` were rebound to its changed source, with the same mutation). Evidence: `evidence/ci-44655291252/`, which also
+lists the three earlier attempts of the series and why they did not certify. The roadmap status of Thesis 01 is therefore
+certified for that revision only; this document and the manuscript are updated by later documentation commits that, as before, do
+not carry a separate run.
+
 ## A. Compliance
 
 ### Official campaign (certified run)
