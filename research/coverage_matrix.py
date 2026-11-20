@@ -21,6 +21,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 sys.path[:0] = [str(HERE), str(ROOT / "src")]
 
+import dataset_catalog as dc  # noqa: E402
 import dataset_registry as dr  # noqa: E402
 
 EVIDENCE = ROOT / "verification" / "evidence"
@@ -50,8 +51,6 @@ PROTOCOLS = (
     "chronological",
 )
 _ADBENCH_DOMAIN = {row["name"]: row["domain"] for row in dr.ADBENCH_TABULAR}
-# ADBench file stem -> UCI source id, so that twins share one independent source.
-_TWIN = {name: uci_id for name, (uci_id, _title) in dr.UCI_SOURCES.items()}
 _CHRONO_FILES = {
     "credit_card": "adbench:fraud",
     "bank_marketing": "uci:222",
@@ -93,12 +92,7 @@ def _cell(status: str, reason: str | None = None, **extra: Any) -> dict[str, Any
     return cell
 
 
-def source_key(dataset_id: str) -> str:
-    """Independent underlying source: ADBench tables derived from a UCI set share its key."""
-    kind, _, name = dataset_id.partition(":")
-    if kind == "adbench" and name in _TWIN:
-        return f"uci:{_TWIN[name]}"
-    return dataset_id
+source_key = dc.source_key
 
 
 def _mean_metric(runs: dict[str, list[dict[str, Any]]], key: str) -> dict[str, float]:
@@ -251,7 +245,56 @@ def _chrono(evidence: Path) -> dict[str, dict[str, Any]]:
     return out
 
 
-def build(evidence: Path = EVIDENCE) -> dict[str, Any]:
+NATURAL_DIR = ("natural_temporal", "results")
+
+
+def supplementary(evidence: Path, catalog: Path | None, pool_sources: set[str]) -> dict[str, Any]:
+    """Entries outside the pool: aliases of pool sources, supplementary and synthetic data, series.
+
+    Aliases and synthetic data add no independent source and are not added to the dataset rows,
+    so the active count is not inflated; they are listed so that every file of ``data/`` is
+    accounted for. Returns an empty mapping when there is nothing to report.
+    """
+    block: dict[str, Any] = {}
+    if catalog is not None:
+        entries = dc.legacy_entries(catalog)
+        block["aliases"] = [
+            {k: e[k] for k in ("id", "same_as", "source_identity", "path", "sha256")}
+            for e in entries
+            if e["role"] == "duplicate_representation"
+        ]
+        block["supplementary_datasets"] = [
+            {k: e[k] for k in ("id", "name", "source_identity", "licence", "labels")}
+            for e in entries
+            if e["role"] == "supplementary"
+        ]
+        block["synthetic"] = [
+            {k: e[k] for k in ("id", "name", "source_identity", "relationship")}
+            for e in entries
+            if e["role"] == "synthetic"
+        ]
+        block["independent_sources"] = dc.independent_source_count(pool_sources, catalog)
+    directory = evidence.joinpath(*NATURAL_DIR)
+    if directory.exists():
+        records = [_load(path) for path in sorted(directory.glob("*.json"))]
+        done = [r for r in records if "chronological" in r]
+        groups: dict[str, list[str]] = defaultdict(list)
+        for r in done:
+            groups[r["group"]].append(r["id"])
+        block["natural_temporal"] = {
+            "series_catalogued": len(records),
+            "evaluated": len(done),
+            "excluded": len(records) - len(done),
+            "source_groups": {g: sorted(ids) for g, ids in sorted(groups.items())},
+            "exclusion_reasons": dict(
+                Counter(r["excluded"] for r in records if "excluded" in r).most_common()
+            ),
+            "detectors": len(next(iter(done))["chronological"]) if done else 0,
+        }
+    return block
+
+
+def build(evidence: Path = EVIDENCE, catalog: Path | None = None) -> dict[str, Any]:
     pool = _read(evidence, POOL_MANIFEST)
     uci = {f"uci:{r['uci_id']}": r for r in _read(evidence, UCI_POOL)["rows"]}
     curated = {f"uci:{r['uci_id']}": r for r in _read(evidence, UCI_CURATED)["kept"]}
@@ -331,11 +374,15 @@ def build(evidence: Path = EVIDENCE) -> dict[str, Any]:
         row["valid_measurements"] = sorted(p for p, c in cells.items() if c["status"] == OK)
         row["decision"], row["decision_reason"] = decision(row)
         datasets.append(row)
-    return {
+    matrix = {
         "datasets": datasets,
         "summary": summarise(datasets),
         "diversity": diversity(datasets),
     }
+    extra = supplementary(evidence, catalog, {d["independent_source"] for d in datasets})
+    if extra:
+        matrix["supplementary"] = extra
+    return matrix
 
 
 def _schema_kind(meta: dict[str, Any] | None, family: str) -> str:
@@ -575,6 +622,7 @@ def report(matrix: dict[str, Any]) -> str:
         "Inference over datasets uses sources as units.",
         "",
     ]
+    lines += supplementary_report(matrix.get("supplementary"))
     lines += ["## Datasets without a detector-quality measurement", ""]
     by_id = {d["id"]: d for d in matrix["datasets"]}
     for dataset_id in s["without_detector_quality_measurement"]:
@@ -584,6 +632,33 @@ def report(matrix: dict[str, Any]) -> str:
         )
         lines.append(f"- `{dataset_id}` {d['name']}: {'; '.join(reasons[:3])}")
     return "\n".join(lines) + "\n"
+
+
+def supplementary_report(block: dict[str, Any] | None) -> list[str]:
+    if not block:
+        return []
+    lines = ["## Outside the pool", ""]
+    if "aliases" in block:
+        lines += ["Duplicate representations (no independent source added, not counted as datasets):", ""]
+        lines += [f"- `{a['id']}` is `{a['same_as']}` (source `{a['source_identity']}`), file `{a['path']}`" for a in block["aliases"]]
+        lines += ["", "Supplementary real datasets (evaluated separately, never pooled with the catalog):", ""]
+        lines += [f"- `{d['id']}` ({d['name']}), source `{d['source_identity']}`: {d['labels']}" for d in block["supplementary_datasets"]]
+        lines += ["", "Synthetic data (generated, not an independent real-world source):", ""]
+        lines += [f"- `{d['id']}` ({d['name']}): {d['relationship']}" for d in block["synthetic"]]
+        src = block["independent_sources"]
+        lines += ["", f"Independent real sources: {src['pool']} in the pool plus {src['added_by_supplementary']} supplementary.", ""]
+    nat = block.get("natural_temporal")
+    if nat:
+        lines += [
+            "Naturally labelled time series (producer-annotated anomalies, chronological protocol):",
+            "",
+            f"- {nat['series_catalogued']} series catalogued, {nat['evaluated']} evaluated with {nat['detectors']} detectors, "
+            f"{nat['excluded']} not evaluated; {len(nat['source_groups'])} independent source groups.",
+        ]
+        lines += [f"  - `{g}`: {len(ids)} series" for g, ids in nat["source_groups"].items()]
+        lines += [f"- not evaluated, {n} series: {r}" for r, n in nat["exclusion_reasons"].items()]
+        lines.append("")
+    return lines
 
 
 def inventory_csv(matrix: dict[str, Any]) -> str:
@@ -610,11 +685,13 @@ def inventory_csv(matrix: dict[str, Any]) -> str:
 PARSER = argparse.ArgumentParser(description=__doc__)
 PARSER.add_argument("--evidence", type=Path, default=EVIDENCE)
 PARSER.add_argument("--out", type=Path, default=OUT)
+PARSER.add_argument("--catalog", type=Path, default=None, help="legacy catalog (data/catalog.json)")
 
 
 def main(argv: list[str] | None = None) -> int:
     args = PARSER.parse_args(argv)
-    matrix = build(args.evidence)
+    catalog = args.catalog or (dc.CATALOG if args.evidence == EVIDENCE else None)
+    matrix = build(args.evidence, catalog)
     args.out.mkdir(parents=True, exist_ok=True)
     (args.out / COVERAGE_JSON).write_text(json.dumps(matrix, indent=1, sort_keys=True) + "\n")
     (args.out / COVERAGE_MD).write_text(report(matrix))

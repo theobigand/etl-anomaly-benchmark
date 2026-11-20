@@ -1,5 +1,32 @@
 # Datasets
 
+## Catalog (English)
+
+Every dataset has one logical identity. `research/dataset_catalog.py` presents three sources
+through one interface; none is duplicated:
+
+- the 152 UCI and ADBench tables of the pool: `verification/evidence/dataset_registry/pool_manifest.json`
+  (archived evidence, never rewritten), files in `data/pool/` and `data/adbench/`;
+- the historical benchmark files and the synthetic data: `data/catalog.json`;
+- the naturally labelled time series (SKAB, NAB): `verification/evidence/natural_temporal/manifest.json`,
+  files in `data/temporal/`, fetched by `python research/natural_temporal.py fetch`.
+
+Roles in `data/catalog.json`: `cardio.csv` and `creditcard.csv` are duplicate representations of
+`adbench:cardio` (UCI Cardiotocography) and `adbench:fraud`, verified element by element and
+therefore not independent sources; `water_quality.csv` is a supplementary real dataset whose positive
+class is common (61 %) and is never pooled with the rare-anomaly results; `synthetic.csv` is generated
+(seed 42) and is not a real-world source. The coverage matrix reports all of them without adding them
+to the active dataset count. A new dataset is added by a catalog entry (or a pool manifest entry for a
+UCI or ADBench table), not by a new loader family.
+
+Physical layout: the four historical files stay at the root of `data/`. Their paths are constants of
+`src/etl_benchmark/config.py`, which is part of the scientific fingerprint of every archived and
+replayed result; moving the files would change that fingerprint for a path-only reason. The move is
+deferred to the replay of issue #82, where the rule for non-scientific source changes is decided.
+`data/data` was a tracked symbolic link to a path of another machine; it is removed.
+
+## Archive notes (French)
+
 ## Credit Card Fraud (Kaggle)
 - Source : https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud
 - La fiche Kaggle indique « Open Database / Database Contents ». Sa version
