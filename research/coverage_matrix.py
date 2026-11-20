@@ -61,8 +61,27 @@ _CHRONO_FILES = {
 }
 
 
+POOL_MANIFEST = ("dataset_registry", "pool_manifest.json")
+UCI_POOL = ("dataset_registry", "uci_pool.json")
+UCI_CURATED = ("dataset_registry", "uci_curated.json")
+INVENTORY = ("dataset_registry", "inventory.json")
+TYPED_ELIGIBILITY = ("pool_extension", "typed", "eligibility.json")
+TIME_SCAN = ("pool_extension", "time_scan.json")
+CHRONO_DIR = ("pool_extension", "chrono")
+MIXED_ELIGIBILITY = ("pool_extension_v2", "typed_mixed", "eligibility.json")
+COVERAGE_JSON, COVERAGE_MD, INVENTORY_CSV = (
+    "coverage_matrix.json",
+    "coverage_matrix.md",
+    "dataset_inventory.csv",
+)
+
+
 def _load(path: Path) -> Any:
     return json.loads(path.read_text())
+
+
+def _read(evidence: Path, parts: tuple[str, ...]) -> Any:
+    return _load(evidence.joinpath(*parts))
 
 
 def _cell(status: str, reason: str | None = None, **extra: Any) -> dict[str, Any]:
@@ -142,7 +161,7 @@ def _mixed(evidence: Path, kind: str) -> dict[str, dict[str, Any]]:
 
 
 def _mixed_eligibility(evidence: Path) -> dict[str, dict[str, Any]]:
-    path = evidence / MIXED / "eligibility.json"
+    path = evidence.joinpath(*MIXED_ELIGIBILITY)
     return {r["id"]: r for r in _load(path)} if path.exists() else {}
 
 
@@ -173,6 +192,8 @@ def decision(row: dict[str, Any]) -> tuple[str, str]:
     """How the dataset is treated in the active catalog, with the reason."""
     if row["id"] in RETIRED:
         return "retired", RETIRED[row["id"]]
+    if not row["valid_measurements"]:
+        return "unmeasured", "no valid measurement in any protocol"
     etl = row["protocols"]["etl_pipeline"]
     if etl.get("repaired_from"):
         return "repaired", f"ETL reader repaired: {etl['repaired_from'][:80]}"
@@ -185,7 +206,7 @@ def decision(row: dict[str, Any]) -> tuple[str, str]:
 def _etl(evidence: Path) -> dict[str, dict[str, Any]]:
     """Later ETL runs replace the records of the datasets they re-measured."""
     latest: dict[str, tuple[str, list[dict[str, Any]]]] = {}
-    first_failure: dict[str, str] = {}
+    first_failure: dict[str, tuple[str, str]] = {}
     for name in ETL_RUNS:
         path = evidence / name
         if not path.exists():
@@ -196,7 +217,7 @@ def _etl(evidence: Path) -> dict[str, dict[str, Any]]:
         for dataset_id, entries in by_id.items():
             failure = sorted({e.get("reason", "") for e in entries if e["status"] != "OK"})
             if failure and dataset_id not in first_failure:
-                first_failure[dataset_id] = "; ".join(failure)
+                first_failure[dataset_id] = (name, "; ".join(failure))
             latest[dataset_id] = (name, entries)
     out: dict[str, dict[str, Any]] = {}
     for dataset_id, (run, entries) in latest.items():
@@ -204,15 +225,16 @@ def _etl(evidence: Path) -> dict[str, dict[str, Any]]:
         bad = {e["method"]: e.get("reason", "") for e in entries if e["status"] != "OK"}
         reason = "; ".join(sorted(set(bad.values()))) or None
         meta: dict[str, Any] = {"run": run, "methods_ok": ok, "methods_failed": bad}
-        if ok and dataset_id in first_failure:
-            meta["repaired_from"] = first_failure[dataset_id]
+        earlier = first_failure.get(dataset_id)
+        if ok and earlier and earlier[0] != run:  # re-measured by a later run
+            meta["repaired_from"] = earlier[1]
         out[dataset_id] = _cell(OK if ok else FAILED, reason, **meta)
     return out
 
 
 def _chrono(evidence: Path) -> dict[str, dict[str, Any]]:
     out: dict[str, dict[str, Any]] = {}
-    for path in sorted((evidence / "pool_extension" / "chrono").glob("*.json")):
+    for path in sorted(evidence.joinpath(*CHRONO_DIR).glob("*.json")):
         dataset_id = _CHRONO_FILES[path.stem]
         record = _load(path)
         skipped = sorted(record.get("skipped", []))
@@ -230,26 +252,14 @@ def _chrono(evidence: Path) -> dict[str, dict[str, Any]]:
 
 
 def build(evidence: Path = EVIDENCE) -> dict[str, Any]:
-    pool = _load(evidence / "dataset_registry" / "pool_manifest.json")
-    uci = {
-        f"uci:{r['uci_id']}": r
-        for r in _load(evidence / "dataset_registry" / "uci_pool.json")["rows"]
-    }
-    curated = {
-        f"uci:{r['uci_id']}": r
-        for r in _load(evidence / "dataset_registry" / "uci_curated.json")["kept"]
-    }
-    eligibility = {
-        r["id"]: r for r in _load(evidence / "pool_extension" / "typed" / "eligibility.json")
-    }
-    time_scan = {
-        f"uci:{r['uci_id']}": r for r in _load(evidence / "pool_extension" / "time_scan.json")
-    }
+    pool = _read(evidence, POOL_MANIFEST)
+    uci = {f"uci:{r['uci_id']}": r for r in _read(evidence, UCI_POOL)["rows"]}
+    curated = {f"uci:{r['uci_id']}": r for r in _read(evidence, UCI_CURATED)["kept"]}
+    eligibility = {r["id"]: r for r in _read(evidence, TYPED_ELIGIBILITY)}
+    time_scan = {f"uci:{r['uci_id']}": r for r in _read(evidence, TIME_SCAN)}
     mixed_elig = _mixed_eligibility(evidence)
     adbench = {
-        f"adbench:{r['name']}": r
-        for r in _load(evidence / "dataset_registry" / "inventory.json")
-        if r["decision"] == "INCLUDE"
+        f"adbench:{r['name']}": r for r in _read(evidence, INVENTORY) if r["decision"] == "INCLUDE"
     }
     results = {
         "labelled_classical": _labelled(evidence, "classical"),
@@ -290,7 +300,7 @@ def build(evidence: Path = EVIDENCE) -> dict[str, Any]:
             "label_kind": "minority_class_proxy" if labelled else None,
             "label_origin": label.get("kind")
             if label
-            else ("adbench_binary" if labelled else None),
+            else ("adbench_binary" if labelled and kind == "adbench" else None),
             "label_refused": info.get("label_refused"),
             "rows": (labelled or {}).get("rows")
             or eligibility.get(dataset_id, {}).get("rows")
@@ -487,6 +497,9 @@ def summarise(datasets: list[dict[str, Any]]) -> dict[str, Any]:
         "temporal_evaluated": sum(
             d["protocols"]["chronological"]["status"] == OK for d in datasets
         ),
+        "temporal_injected": sum(
+            d["protocols"]["chronological_injected_classical"]["status"] == OK for d in datasets
+        ),
         "independent_sources": len(sources),
         "independent_sources_with_detector_quality_measurement": len(
             {d["independent_source"] for d in scientific}
@@ -524,7 +537,8 @@ def report(matrix: dict[str, Any]) -> str:
         f"- Datasets measured only by the ETL pipeline run: {s['etl_pipeline_only']}.",
         f"- Datasets with labels (minority-class proxies, not ETL faults): {s['with_labels']}.",
         f"- Datasets that support typed injection: {s['typed_injection_supported']}.",
-        f"- Datasets evaluated chronologically: {s['temporal_evaluated']}.",
+        f"- Datasets evaluated chronologically: {s['temporal_evaluated']} labelled, "
+        f"{s['temporal_injected']} unlabelled with injected faults.",
         "",
         "## Status by protocol",
         "",
@@ -593,21 +607,20 @@ def inventory_csv(matrix: dict[str, Any]) -> str:
     return buffer.getvalue()
 
 
+PARSER = argparse.ArgumentParser(description=__doc__)
+PARSER.add_argument("--evidence", type=Path, default=EVIDENCE)
+PARSER.add_argument("--out", type=Path, default=OUT)
+
+
 def main(argv: list[str] | None = None) -> int:
-    ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--evidence", type=Path, default=EVIDENCE)
-    ap.add_argument("--out", type=Path, default=OUT)
-    args = ap.parse_args(argv)
+    args = PARSER.parse_args(argv)
     matrix = build(args.evidence)
     args.out.mkdir(parents=True, exist_ok=True)
-    (args.out / "coverage_matrix.json").write_text(
-        json.dumps(matrix, indent=1, sort_keys=True) + "\n"
-    )
-    (args.out / "coverage_matrix.md").write_text(report(matrix))
-    (args.out / "dataset_inventory.csv").write_text(inventory_csv(matrix))
-    print(
-        json.dumps({k: v for k, v in matrix["summary"].items() if not isinstance(v, (dict, list))})
-    )
+    (args.out / COVERAGE_JSON).write_text(json.dumps(matrix, indent=1, sort_keys=True) + "\n")
+    (args.out / COVERAGE_MD).write_text(report(matrix))
+    (args.out / INVENTORY_CSV).write_text(inventory_csv(matrix))
+    headline = {k: v for k, v in matrix["summary"].items() if not isinstance(v, (dict, list))}
+    print(json.dumps(headline))
     return 0
 
 

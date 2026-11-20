@@ -97,8 +97,16 @@ def test_decisions_distinguish_retired_repaired_adapted_and_retained():
 
     assert cm.decision(row("uci:467", ["etl_pipeline"]))[0] == "retired"
     assert (
-        cm.decision(row("uci:3", [], {"status": cm.OK, "repaired_from": "all-missing"}))[0]
+        cm.decision(
+            row("uci:3", ["etl_pipeline"], {"status": cm.OK, "repaired_from": "all-missing"})
+        )[0]
         == "repaired"
     )
     assert cm.decision(row("uci:9", ["etl_pipeline", "typed_mixed_classical"]))[0] == "adapted"
     assert cm.decision(row("uci:2", ["etl_pipeline", "labelled_classical"]))[0] == "retained"
+
+
+def test_a_dataset_without_any_valid_measurement_is_marked_unmeasured():
+    cells = {p: {"status": cm.NOT_EVALUATED} for p in cm.PROTOCOLS}
+    row = {"id": "uci:1", "valid_measurements": [], "protocols": cells}
+    assert cm.decision(row) == ("unmeasured", "no valid measurement in any protocol")

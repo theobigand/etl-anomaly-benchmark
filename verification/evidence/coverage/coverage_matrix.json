@@ -14250,8 +14250,20 @@
      "status": "executed"
     },
     "chronological_injected_deep": {
-     "reason": "time column is not a verified single-series chronology",
-     "status": "not_evaluated"
+     "detectors": [
+      "ae1svm",
+      "autoencoder",
+      "deep_svdd",
+      "dif",
+      "lunar",
+      "vae"
+     ],
+     "run": "pool_extension_v2/chrono_injected/deep/uci_275.json",
+     "span": [
+      "2011-01-01 00:00:00",
+      "2012-12-31 23:00:00"
+     ],
+     "status": "executed"
     },
     "etl_pipeline": {
      "methods_failed": {},
@@ -14305,6 +14317,7 @@
    "url": "https://archive.ics.uci.edu/static/public/275/data.csv",
    "valid_measurements": [
     "chronological_injected_classical",
+    "chronological_injected_deep",
     "etl_pipeline",
     "typed_injection_classical",
     "typed_injection_deep"
@@ -16542,8 +16555,20 @@
      "status": "executed"
     },
     "chronological_injected_deep": {
-     "reason": "time column is not a verified single-series chronology",
-     "status": "not_evaluated"
+     "detectors": [
+      "ae1svm",
+      "autoencoder",
+      "deep_svdd",
+      "dif",
+      "lunar",
+      "vae"
+     ],
+     "run": "pool_extension_v2/chrono_injected/deep/uci_360.json",
+     "span": [
+      "2004-03-10 18:00:00",
+      "2005-04-04 14:00:00"
+     ],
+     "status": "executed"
     },
     "etl_pipeline": {
      "methods_failed": {},
@@ -16598,6 +16623,7 @@
    "url": "https://archive.ics.uci.edu/static/public/360/data.csv",
    "valid_measurements": [
     "chronological_injected_classical",
+    "chronological_injected_deep",
     "etl_pipeline",
     "typed_injection_classical",
     "typed_injection_deep"
@@ -17227,8 +17253,20 @@
      "status": "executed"
     },
     "chronological_injected_deep": {
-     "reason": "time column is not a verified single-series chronology",
-     "status": "not_evaluated"
+     "detectors": [
+      "ae1svm",
+      "autoencoder",
+      "deep_svdd",
+      "dif",
+      "lunar",
+      "vae"
+     ],
+     "run": "pool_extension_v2/chrono_injected/deep/uci_374.json",
+     "span": [
+      "2016-01-11 17:00:00",
+      "2016-05-27 18:00:00"
+     ],
+     "status": "executed"
     },
     "etl_pipeline": {
      "methods_failed": {},
@@ -17282,6 +17320,7 @@
    "url": "https://archive.ics.uci.edu/static/public/374/data.csv",
    "valid_measurements": [
     "chronological_injected_classical",
+    "chronological_injected_deep",
     "etl_pipeline",
     "typed_injection_classical",
     "typed_injection_deep"
@@ -19614,8 +19653,20 @@
      "status": "executed"
     },
     "chronological_injected_deep": {
-     "reason": "time column is not a verified single-series chronology",
-     "status": "not_evaluated"
+     "detectors": [
+      "ae1svm",
+      "autoencoder",
+      "deep_svdd",
+      "dif",
+      "lunar",
+      "vae"
+     ],
+     "run": "pool_extension_v2/chrono_injected/deep/uci_560.json",
+     "span": [
+      "2017-12-01 00:00:00",
+      "2018-11-30 23:00:00"
+     ],
+     "status": "executed"
     },
     "etl_pipeline": {
      "methods_failed": {},
@@ -19670,6 +19721,7 @@
    "url": "https://archive.ics.uci.edu/static/public/560/data.csv",
    "valid_measurements": [
     "chronological_injected_classical",
+    "chronological_injected_deep",
     "etl_pipeline",
     "typed_injection_classical",
     "typed_injection_deep"
@@ -21641,8 +21693,20 @@
      "status": "executed"
     },
     "chronological_injected_deep": {
-     "reason": "time column is not a verified single-series chronology",
-     "status": "not_evaluated"
+     "detectors": [
+      "ae1svm",
+      "autoencoder",
+      "deep_svdd",
+      "dif",
+      "lunar",
+      "vae"
+     ],
+     "run": "pool_extension_v2/chrono_injected/deep/uci_799.json",
+     "span": [
+      "2019-11-06 10:37:13.038174+00:00",
+      "2020-02-13 10:58:14.014336+00:00"
+     ],
+     "status": "executed"
     },
     "etl_pipeline": {
      "methods_failed": {},
@@ -21696,6 +21760,7 @@
    "url": "https://archive.ics.uci.edu/static/public/799/data.csv",
    "valid_measurements": [
     "chronological_injected_classical",
+    "chronological_injected_deep",
     "etl_pipeline",
     "typed_injection_classical",
     "typed_injection_deep"
@@ -21946,8 +22011,20 @@
      "status": "executed"
     },
     "chronological_injected_deep": {
-     "reason": "time column is not a verified single-series chronology",
-     "status": "not_evaluated"
+     "detectors": [
+      "ae1svm",
+      "autoencoder",
+      "deep_svdd",
+      "dif",
+      "lunar",
+      "vae"
+     ],
+     "run": "pool_extension_v2/chrono_injected/deep/uci_849.json",
+     "span": [
+      "2017-01-01 00:00:00",
+      "2017-12-30 23:50:00"
+     ],
+     "status": "executed"
     },
     "etl_pipeline": {
      "methods_failed": {},
@@ -22001,6 +22078,7 @@
    "url": "https://archive.ics.uci.edu/static/public/849/data.csv",
    "valid_measurements": [
     "chronological_injected_classical",
+    "chronological_injected_deep",
     "etl_pipeline",
     "typed_injection_classical",
     "typed_injection_deep"
@@ -22250,8 +22328,20 @@
      "status": "executed"
     },
     "chronological_injected_deep": {
-     "reason": "time column is not a verified single-series chronology",
-     "status": "not_evaluated"
+     "detectors": [
+      "ae1svm",
+      "autoencoder",
+      "deep_svdd",
+      "dif",
+      "lunar",
+      "vae"
+     ],
+     "run": "pool_extension_v2/chrono_injected/deep/uci_851.json",
+     "span": [
+      "2018-01-01 00:00:00",
+      "2018-12-31 23:45:00"
+     ],
+     "status": "executed"
     },
     "etl_pipeline": {
      "methods_failed": {},
@@ -22305,6 +22395,7 @@
    "url": "https://archive.ics.uci.edu/static/public/851/data.csv",
    "valid_measurements": [
     "chronological_injected_classical",
+    "chronological_injected_deep",
     "etl_pipeline",
     "typed_injection_classical",
     "typed_injection_deep"
@@ -24083,7 +24174,8 @@
     "scientifically_unsuitable": 121
    },
    "chronological_injected_deep": {
-    "not_evaluated": 31,
+    "executed": 7,
+    "not_evaluated": 24,
     "scientifically_unsuitable": 121
    },
    "etl_pipeline": {
@@ -24141,6 +24233,7 @@
   "independent_sources_used": 128,
   "independent_sources_with_detector_quality_measurement": 127,
   "temporal_evaluated": 4,
+  "temporal_injected": 7,
   "twin_groups": {
    "uci:102": [
     "adbench:annthyroid",

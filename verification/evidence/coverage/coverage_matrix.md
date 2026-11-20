@@ -13,7 +13,7 @@ as evaluated only when a result file holds a measurement for it.
 - Datasets measured only by the ETL pipeline run: 1.
 - Datasets with labels (minority-class proxies, not ETL faults): 100.
 - Datasets that support typed injection: 58.
-- Datasets evaluated chronologically: 4.
+- Datasets evaluated chronologically: 4 labelled, 7 unlabelled with injected faults.
 
 ## Status by protocol
 
@@ -26,7 +26,7 @@ as evaluated only when a result file holds a measurement for it.
 | typed_mixed_classical | 86 | 0 | 0 | 8 | 0 | 0 | 58 |
 | typed_mixed_deep | 86 | 0 | 0 | 8 | 0 | 0 | 58 |
 | chronological_injected_classical | 7 | 0 | 0 | 121 | 0 | 24 | 0 |
-| chronological_injected_deep | 0 | 0 | 0 | 121 | 0 | 31 | 0 |
+| chronological_injected_deep | 7 | 0 | 0 | 121 | 0 | 24 | 0 |
 | native_label_comparison_classical | 16 | 0 | 0 | 52 | 0 | 84 | 0 |
 | native_label_comparison_deep | 16 | 0 | 0 | 52 | 0 | 84 | 0 |
 | etl_pipeline | 152 | 0 | 0 | 0 | 0 | 0 | 0 |

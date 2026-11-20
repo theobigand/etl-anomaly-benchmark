@@ -1,0 +1,11 @@
+id,name,source_family,independent_source,licence,domain,schema_kind,rows,features,has_missing,has_labels,label_origin,prevalence,time_candidates,decision,decision_reason,valid_measurements
+adbench:satellite,satellite,adbench,uci:146,CC BY 4.0,Astronautics,numeric,6435,36,False,True,adbench_binary,0.3,,retained,measured by its original protocols,labelled_classical;labelled_deep;native_label_comparison_classical;native_label_comparison_deep;typed_injection_classical;typed_injection_deep
+uci:146,Statlog Landsat,uci,uci:146,CC BY 4.0,Physics,numeric,6435,36,False,True,native_rare,0.3,,retained,measured by its original protocols,etl_pipeline;labelled_classical;labelled_deep;typed_injection_classical;typed_injection_deep
+uci:9,Auto MPG,uci,uci:9,CC BY 4.0,Engineering,mixed,398,7,True,False,,,model_year,adapted,measured only through the mixed-schema typed protocol,etl_pipeline;typed_mixed_classical;typed_mixed_deep
+uci:3,Annealing,uci,uci:3,CC BY 4.0,Other,categorical,898,38,True,False,,,,repaired,ETL reader repaired: all-missing,etl_pipeline
+uci:467,Student Academics,uci,uci:467,CC BY 4.0,Social Science,mixed,131,22,False,False,,,,retired,131 rows after cleaning and no labels: below the smallest table that supports a typed fault experiment (200 rows); it has only the ETL timing measurement,etl_pipeline
+adbench:fraud,fraud,adbench,adbench:fraud,CC BY 4.0,Finance,numeric,284807,29,True,True,adbench_binary,0.002,,retained,measured by its original protocols,chronological;labelled_classical;labelled_deep
+uci:357,Occupancy,uci,uci:357,CC BY 4.0,Climate,numeric,20562,6,False,True,native_rare,0.5,date,retained,measured by its original protocols,chronological;chronological_injected_classical;chronological_injected_deep;labelled_classical;labelled_deep
+uci:864,Room,uci,uci:864,CC BY 4.0,Climate,unknown,10129,17,False,True,native_rare,0.05,Time,retained,measured by its original protocols,labelled_classical;labelled_deep
+adbench:glass,glass,adbench,uci:42,CC BY 4.0,Forensic,numeric,214,9,False,False,,,,unmeasured,no valid measurement in any protocol,
+uci:999,999,uci,uci:999,CC BY 4.0,,numeric,777,4,True,True,,0.5,,retained,measured by its original protocols,labelled_classical;labelled_deep
