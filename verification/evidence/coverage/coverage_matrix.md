@@ -5,27 +5,32 @@ as evaluated only when a result file holds a measurement for it.
 
 ## Headline counts
 
-- Datasets in the catalog: 152 (116 UCI, 36 ADBench).
+- Datasets in the catalog: 152 (116 UCI, 36 ADBench); active after the decisions below: 151.
+- Decisions: adapted 30, repaired 6, retained 115, retired 1.
 - Independent underlying sources: 128 (21 sources back more than one catalog entry).
 - Datasets with a valid measurement in at least one protocol: 152.
-- Datasets with a detector-quality measurement (any protocol except the ETL timing run): 120, from 99 independent sources.
-- Datasets measured only by the ETL pipeline run: 32.
+- Datasets with a detector-quality measurement (any protocol except the ETL timing run): 151, from 127 independent sources.
+- Datasets measured only by the ETL pipeline run: 1.
 - Datasets with labels (minority-class proxies, not ETL faults): 100.
 - Datasets that support typed injection: 58.
 - Datasets evaluated chronologically: 4.
 
 ## Status by protocol
 
-| Protocol | executed | eligible_not_executed | executed_with_failure | scientifically_unsuitable | implementation_limitation | not_evaluated |
-|---|---:|---:|---:|---:|---:|---:|
-| labelled_classical | 100 | 0 | 0 | 52 | 0 | 0 |
-| labelled_deep | 100 | 0 | 0 | 52 | 0 | 0 |
-| typed_injection_classical | 58 | 0 | 0 | 94 | 0 | 0 |
-| typed_injection_deep | 58 | 0 | 0 | 94 | 0 | 0 |
-| native_label_comparison_classical | 16 | 0 | 0 | 52 | 0 | 84 |
-| native_label_comparison_deep | 16 | 0 | 0 | 52 | 0 | 84 |
-| etl_pipeline | 152 | 0 | 0 | 0 | 0 | 0 |
-| chronological | 4 | 0 | 0 | 121 | 0 | 27 |
+| Protocol | executed | eligible_not_executed | executed_with_failure | scientifically_unsuitable | implementation_limitation | not_evaluated | not_applicable |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| labelled_classical | 100 | 0 | 0 | 52 | 0 | 0 | 0 |
+| labelled_deep | 100 | 0 | 0 | 52 | 0 | 0 | 0 |
+| typed_injection_classical | 58 | 0 | 0 | 94 | 0 | 0 | 0 |
+| typed_injection_deep | 58 | 0 | 0 | 94 | 0 | 0 | 0 |
+| typed_mixed_classical | 86 | 0 | 0 | 8 | 0 | 0 | 58 |
+| typed_mixed_deep | 86 | 0 | 0 | 8 | 0 | 0 | 58 |
+| chronological_injected_classical | 7 | 0 | 0 | 121 | 0 | 24 | 0 |
+| chronological_injected_deep | 0 | 0 | 0 | 121 | 0 | 31 | 0 |
+| native_label_comparison_classical | 16 | 0 | 0 | 52 | 0 | 84 | 0 |
+| native_label_comparison_deep | 16 | 0 | 0 | 52 | 0 | 84 | 0 |
+| etl_pipeline | 152 | 0 | 0 | 0 | 0 | 0 | 0 |
+| chronological | 4 | 0 | 0 | 121 | 0 | 27 | 0 |
 
 ## Twin sources (one independent source, several catalog entries)
 
@@ -51,37 +56,106 @@ as evaluated only when a result file holds a measurement for it.
 - `uci:81`: adbench:pendigits, uci:81
 - `uci:94`: adbench:SpamBase, uci:94
 
+## Diversity of the catalog
+
+### family
+
+| value | entries | independent sources |
+|---|---:|---:|
+| adbench | 36 | 31 |
+| uci | 116 | 116 |
+
+### domain
+
+| value | entries | independent sources |
+|---|---:|---:|
+| Astronautics | 4 | 2 |
+| Biology | 14 | 13 |
+| Botany | 2 | 2 |
+| Business | 21 | 21 |
+| Chemistry | 2 | 2 |
+| Climate and Environment | 3 | 3 |
+| Computer Science | 24 | 24 |
+| Document | 2 | 2 |
+| Engineering | 1 | 1 |
+| Finance | 2 | 2 |
+| Forensic | 1 | 1 |
+| Health and Medicine | 26 | 26 |
+| Healthcare | 9 | 7 |
+| Image | 5 | 5 |
+| Oryctognosy | 1 | 1 |
+| Other | 5 | 5 |
+| Physical | 2 | 2 |
+| Physics | 1 | 1 |
+| Physics and Chemistry | 13 | 13 |
+| Social Science | 11 | 11 |
+| Sociology | 1 | 1 |
+| Web | 2 | 1 |
+
+### rows
+
+| value | entries | independent sources |
+|---|---:|---:|
+| <500 | 40 | 36 |
+| 500-4,999 | 54 | 49 |
+| 5,000-49,999 | 48 | 39 |
+| >=50,000 | 10 | 7 |
+
+### features
+
+| value | entries | independent sources |
+|---|---:|---:|
+| <10 | 40 | 34 |
+| 10-29 | 58 | 52 |
+| 30-99 | 44 | 36 |
+| >=100 | 10 | 8 |
+
+### schema
+
+| value | entries | independent sources |
+|---|---:|---:|
+| categorical | 6 | 6 |
+| mixed | 28 | 28 |
+| numeric | 115 | 94 |
+| unknown | 3 | 3 |
+
+### missing values
+
+| value | entries | independent sources |
+|---|---:|---:|
+| no | 123 | 102 |
+| yes | 29 | 29 |
+
+### prevalence
+
+| value | entries | independent sources |
+|---|---:|---:|
+| 1-10% | 44 | 38 |
+| <1% | 6 | 4 |
+| >=10% | 50 | 44 |
+| unlabelled | 52 | 52 |
+
+### anomaly mechanism
+
+| value | entries | independent sources |
+|---|---:|---:|
+| injected (mixed) | 31 | 31 |
+| injected (numeric) | 20 | 20 |
+| minority-class proxy | 7 | 7 |
+| minority-class proxy + injected (mixed) | 55 | 48 |
+| minority-class proxy + injected (numeric) | 38 | 27 |
+| none | 1 | 1 |
+
+### temporal
+
+| value | entries | independent sources |
+|---|---:|---:|
+| evaluated chronologically | 4 | 4 |
+| no time variable | 120 | 97 |
+| real time column, not evaluated | 28 | 28 |
+
+Effective sample: 152 catalog entries come from 128 independent sources; 45 entries share a source with another entry (largest: uci:146, 4 entries). Inference over datasets uses sources as units.
+
 ## Datasets without a detector-quality measurement
 
-- `uci:110` Yeast: fewer than 20 rows in the rarest class; no native label to compare with; no time variable
-- `uci:149` Statlog (Vehicle Silhouettes): fewer than 20 rows in the rarest class; no native label to compare with; no time variable
-- `uci:162` Forest Fires: no native label to compare with; not a classification task; time column candidate but no labels and no protocol for unlabelled chronology
-- `uci:165` Concrete Compressive Strength: no native label to compare with; no time variable; not a classification task
-- `uci:183` Communities and Crime: no native label to compare with; no time variable; not a classification task
-- `uci:193` Cardiotocography: fewer than 2 classes; no native label to compare with; no time variable
-- `uci:198` Steel Plates Faults: fewer than 2 classes; no native label to compare with; no time variable
-- `uci:242` Energy Efficiency: fewer than 2 classes; no native label to compare with; no time variable
-- `uci:247` ISTANBUL STOCK EXCHANGE: fewer than 2 classes; no native label to compare with; time column candidate but no labels and no protocol for unlabelled chronology
-- `uci:291` Airfoil Self-Noise: no native label to compare with; no time variable; not a classification task
-- `uci:3` Annealing: fewer than 20 rows in the rarest class; no native label to compare with; no time variable
-- `uci:312` Dow Jones Index: fewer than 20 rows in the rarest class; no native label to compare with; time column candidate but no labels and no protocol for unlabelled chronology
-- `uci:320` Student Performance: fewer than 2 classes; no native label to compare with; no time variable
-- `uci:336` Chronic Kidney Disease: fewer than 20 rows in the rarest class; no native label to compare with; no time variable
-- `uci:368` Facebook Metrics: no native label to compare with; not a classification task; time column candidate but no labels and no protocol for unlabelled chronology
-- `uci:373` Drug Consumption (Quantified): fewer than 2 classes; no native label to compare with; no time variable
-- `uci:383` Cervical Cancer (Risk Factors): fewer than 2 classes; no native label to compare with; time column candidate but no labels and no protocol for unlabelled chronology
-- `uci:39` Ecoli: fewer than 20 rows in the rarest class; no native label to compare with; no time variable
-- `uci:390` Stock Portfolio Performance: no native label to compare with; no time variable; not a classification task
-- `uci:445` Absenteeism at work: fewer than 20 rows in the rarest class; no native label to compare with; time column candidate but no labels and no protocol for unlabelled chronology
-- `uci:45` Heart Disease: fewer than 20 rows in the rarest class; no native label to compare with; no time variable
-- `uci:467` Student Academics Performance: fewer than 2 classes; no native label to compare with; no time variable
-- `uci:477` Real Estate Valuation: no native label to compare with; not a classification task; time column candidate but no labels and no protocol for unlabelled chronology
-- `uci:571` HCV data: fewer than 20 rows in the rarest class; no native label to compare with; no time variable
-- `uci:579` Myocardial infarction complications: fewer than 2 classes; no native label to compare with; no time variable
-- `uci:597` Productivity Prediction of Garment Employees: fewer than 20 rows in the rarest class; no native label to compare with; time column candidate but no labels and no protocol for unlabelled chronology
-- `uci:60` Liver Disorders: no native label to compare with; no time variable; not a classification task
-- `uci:83` Primary Tumor: fewer than 20 rows in the rarest class; no native label to compare with; no time variable
-- `uci:89` Solar Flare: no native label to compare with; no time variable; not a classification task
-- `uci:9` Auto MPG: no native label to compare with; not a classification task; time column candidate but no labels and no protocol for unlabelled chronology
-- `uci:90` Soybean (Large): fewer than 20 rows in the rarest class; no native label to compare with; no time variable
-- `uci:913` Forty Soybean Cultivars from Subsequent Harvests: fewer than 2 classes; no native label to compare with; no time variable
+- `uci:467` Student Academics Performance: fewer than 2 classes; mixed typed injection ineligible: only 131 rows after cleaning; no native label to compare with

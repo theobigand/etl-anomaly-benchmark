@@ -42,6 +42,8 @@ PROTOCOLS = (
     "typed_injection_deep",
     "typed_mixed_classical",
     "typed_mixed_deep",
+    "chronological_injected_classical",
+    "chronological_injected_deep",
     "native_label_comparison_classical",
     "native_label_comparison_deep",
     "etl_pipeline",
@@ -144,6 +146,42 @@ def _mixed_eligibility(evidence: Path) -> dict[str, dict[str, Any]]:
     return {r["id"]: r for r in _load(path)} if path.exists() else {}
 
 
+CHRONO_INJ = "pool_extension_v2/chrono_injected"
+
+
+def _chrono_injected(evidence: Path, kind: str) -> dict[str, dict[str, Any]]:
+    out: dict[str, dict[str, Any]] = {}
+    for path in sorted((evidence / CHRONO_INJ / kind).glob("*.json")):
+        record = _load(path)
+        out[record["id"]] = _cell(
+            OK,
+            run=str(path.relative_to(evidence)),
+            detectors=sorted(record["arms"]["random"]["fpr"]),
+            span=record["carrier"]["span"],
+        )
+    return out
+
+
+# Datasets removed from the active catalog; the historical record and every result stay archived.
+RETIRED = {
+    "uci:467": "131 rows after cleaning and no labels: below the smallest table that supports a "
+    "typed fault experiment (200 rows); it has only the ETL timing measurement",
+}
+
+
+def decision(row: dict[str, Any]) -> tuple[str, str]:
+    """How the dataset is treated in the active catalog, with the reason."""
+    if row["id"] in RETIRED:
+        return "retired", RETIRED[row["id"]]
+    etl = row["protocols"]["etl_pipeline"]
+    if etl.get("repaired_from"):
+        return "repaired", f"ETL reader repaired: {etl['repaired_from'][:80]}"
+    others = [p for p in row["valid_measurements"] if p not in ("etl_pipeline",)]
+    if others and set(others) <= {"typed_mixed_classical", "typed_mixed_deep"}:
+        return "adapted", "measured only through the mixed-schema typed protocol"
+    return "retained", "measured by its original protocols"
+
+
 def _etl(evidence: Path) -> dict[str, dict[str, Any]]:
     """Later ETL runs replace the records of the datasets they re-measured."""
     latest: dict[str, tuple[str, list[dict[str, Any]]]] = {}
@@ -222,6 +260,8 @@ def build(evidence: Path = EVIDENCE) -> dict[str, Any]:
         # Reference folders compare the injected study with the native labels (ADBench tables only).
         "typed_mixed_classical": _mixed(evidence, "classical"),
         "typed_mixed_deep": _mixed(evidence, "deep"),
+        "chronological_injected_classical": _chrono_injected(evidence, "classical"),
+        "chronological_injected_deep": _chrono_injected(evidence, "deep"),
         "native_label_comparison_classical": _typed(evidence, "reference_classical"),
         "native_label_comparison_deep": _typed(evidence, "reference_deep"),
         "etl_pipeline": _etl(evidence),
@@ -279,6 +319,7 @@ def build(evidence: Path = EVIDENCE) -> dict[str, Any]:
         row.pop("_mixed_eligibility", None)
         row["protocols"] = cells
         row["valid_measurements"] = sorted(p for p, c in cells.items() if c["status"] == OK)
+        row["decision"], row["decision_reason"] = decision(row)
         datasets.append(row)
     return {
         "datasets": datasets,
@@ -400,6 +441,10 @@ def _absent(
             NOT_RUN if elig else NOT_EVALUATED,
             "eligible but no result file" if elig else "no eligibility record",
         )
+    if protocol.startswith("chronological_injected"):
+        if not row["time_candidates"]:
+            return _cell(UNSUITABLE, "no time variable")
+        return _cell(NOT_EVALUATED, "time column is not a verified single-series chronology")
     if protocol == "chronological":
         if row["time_candidates"] and not row["has_labels"]:
             return _cell(
@@ -424,6 +469,8 @@ def summarise(datasets: list[dict[str, Any]]) -> dict[str, Any]:
     scientific = [d for d in datasets if set(d["valid_measurements"]) - {"etl_pipeline"}]
     return {
         "datasets": n,
+        "active_datasets": sum(d["decision"] != "retired" for d in datasets),
+        "decisions": dict(Counter(d["decision"] for d in datasets)),
         "uci": sum(d["source_family"] == "uci" for d in datasets),
         "adbench": sum(d["source_family"] == "adbench" for d in datasets),
         "with_labels": sum(d["has_labels"] for d in datasets),
@@ -464,7 +511,9 @@ def report(matrix: dict[str, Any]) -> str:
         "",
         "## Headline counts",
         "",
-        f"- Datasets in the catalog: {s['datasets']} ({s['uci']} UCI, {s['adbench']} ADBench).",
+        f"- Datasets in the catalog: {s['datasets']} ({s['uci']} UCI, {s['adbench']} ADBench); "
+        f"active after the decisions below: {s['active_datasets']}.",
+        "- Decisions: " + ", ".join(f"{k} {v}" for k, v in sorted(s["decisions"].items())) + ".",
         f"- Independent underlying sources: {s['independent_sources']} "
         f"({len(s['twin_groups'])} sources back more than one catalog entry).",
         "- Datasets with a valid measurement in at least one protocol: "

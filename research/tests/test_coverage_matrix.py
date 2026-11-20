@@ -45,6 +45,7 @@ def test_summary_separates_timing_only_datasets_from_detector_quality_evidence()
             "has_labels": False,
             "independent_source": i,
             "valid_measurements": ok,
+            "decision": "retained",
             "protocols": {
                 p: {"status": cm.OK if p in ok else cm.NOT_EVALUATED} for p in cm.PROTOCOLS
             },
@@ -86,3 +87,18 @@ def test_a_repaired_etl_run_supersedes_the_archived_failure_and_keeps_it_as_hist
     assert cells["uci:3"]["status"] == cm.OK and cells["uci:3"]["repaired_from"] == "all-missing"
     assert cells["uci:3"]["run"].startswith("pool_extension_v2")
     assert cells["uci:1"]["status"] == cm.OK
+
+
+def test_decisions_distinguish_retired_repaired_adapted_and_retained():
+    def row(ident, valid, etl=None):
+        cells = {p: {"status": cm.NOT_EVALUATED} for p in cm.PROTOCOLS}
+        cells["etl_pipeline"] = etl or {"status": cm.OK}
+        return {"id": ident, "valid_measurements": valid, "protocols": cells}
+
+    assert cm.decision(row("uci:467", ["etl_pipeline"]))[0] == "retired"
+    assert (
+        cm.decision(row("uci:3", [], {"status": cm.OK, "repaired_from": "all-missing"}))[0]
+        == "repaired"
+    )
+    assert cm.decision(row("uci:9", ["etl_pipeline", "typed_mixed_classical"]))[0] == "adapted"
+    assert cm.decision(row("uci:2", ["etl_pipeline", "labelled_classical"]))[0] == "retained"
