@@ -1,0 +1,3297 @@
+{
+ "N1": {
+  "by_detector": {
+   "ae1svm": {
+    "ci_high": 0.502027161076583,
+    "ci_low": 0.09891854195297345,
+    "groups_lower": 0,
+    "median_difference": 0.23960441895900228,
+    "p": 0.001953125,
+    "probability_of_superiority": 1.0,
+    "rank_biserial": 1.0,
+    "units": 10
+   },
+   "autoencoder": {
+    "ci_high": 0.4905704822857528,
+    "ci_low": 0.10114787510671619,
+    "groups_lower": 0,
+    "median_difference": 0.2069849925242106,
+    "p": 0.001953125,
+    "probability_of_superiority": 1.0,
+    "rank_biserial": 1.0,
+    "units": 10
+   },
+   "copod": {
+    "ci_high": 0.5207045899986091,
+    "ci_low": 0.10267903962842337,
+    "groups_lower": 0,
+    "median_difference": 0.22156838798029427,
+    "p": 0.001953125,
+    "probability_of_superiority": 1.0,
+    "rank_biserial": 1.0,
+    "units": 10
+   },
+   "deep_svdd": {
+    "ci_high": 0.4195007699265604,
+    "ci_low": 0.04487537058162207,
+    "groups_lower": 2,
+    "median_difference": 0.16085959468510141,
+    "p": 0.009765625,
+    "probability_of_superiority": 0.8,
+    "rank_biserial": 0.6,
+    "units": 10
+   },
+   "dif": {
+    "ci_high": 0.48011739154127375,
+    "ci_low": 0.018239667247033964,
+    "groups_lower": 2,
+    "median_difference": 0.21539496660392,
+    "p": 0.013671875,
+    "probability_of_superiority": 0.8,
+    "rank_biserial": 0.6,
+    "units": 10
+   },
+   "ecod": {
+    "ci_high": 0.44154823627653755,
+    "ci_low": 0.07635440584544258,
+    "groups_lower": 2,
+    "median_difference": 0.21703834975830294,
+    "p": 0.009765625,
+    "probability_of_superiority": 0.8,
+    "rank_biserial": 0.6,
+    "units": 10
+   },
+   "great_expectations": {
+    "ci_high": 0.5417681800483896,
+    "ci_low": 0.07523504647070894,
+    "groups_lower": 0,
+    "median_difference": 0.14209806950975465,
+    "p": 0.001953125,
+    "probability_of_superiority": 1.0,
+    "rank_biserial": 1.0,
+    "units": 10
+   },
+   "hbos": {
+    "ci_high": 0.37093259323507927,
+    "ci_low": 0.08395816747296013,
+    "groups_lower": 1,
+    "median_difference": 0.17125923361605827,
+    "p": 0.005859375,
+    "probability_of_superiority": 0.9,
+    "rank_biserial": 0.8,
+    "units": 10
+   },
+   "iqr": {
+    "ci_high": 0.4111922826353988,
+    "ci_low": 0.10016411137158382,
+    "groups_lower": 0,
+    "median_difference": 0.20012274684629497,
+    "p": 0.001953125,
+    "probability_of_superiority": 1.0,
+    "rank_biserial": 1.0,
+    "units": 10
+   },
+   "isolation_forest": {
+    "ci_high": 0.4306067775366608,
+    "ci_low": 0.09346363939637936,
+    "groups_lower": 1,
+    "median_difference": 0.1923057163104379,
+    "p": 0.00390625,
+    "probability_of_superiority": 0.9,
+    "rank_biserial": 0.8,
+    "units": 10
+   },
+   "knn": {
+    "ci_high": 0.4733007861157034,
+    "ci_low": 0.0762023599137331,
+    "groups_lower": 1,
+    "median_difference": 0.22597038989302912,
+    "p": 0.005859375,
+    "probability_of_superiority": 0.9,
+    "rank_biserial": 0.8,
+    "units": 10
+   },
+   "lof": {
+    "ci_high": 0.6235200153321839,
+    "ci_low": 0.11743457501244027,
+    "groups_lower": 1,
+    "median_difference": 0.2926153989667493,
+    "p": 0.00390625,
+    "probability_of_superiority": 0.9,
+    "rank_biserial": 0.8,
+    "units": 10
+   },
+   "lunar": {
+    "ci_high": 0.4880548943734701,
+    "ci_low": 0.14683135343492149,
+    "groups_lower": 1,
+    "median_difference": 0.3179017081252588,
+    "p": 0.005859375,
+    "probability_of_superiority": 0.9,
+    "rank_biserial": 0.8,
+    "units": 10
+   },
+   "ocsvm": {
+    "ci_high": 0.4683628795579523,
+    "ci_low": 0.10888183522612642,
+    "groups_lower": 1,
+    "median_difference": 0.2385204056114857,
+    "p": 0.00390625,
+    "probability_of_superiority": 0.9,
+    "rank_biserial": 0.8,
+    "units": 10
+   },
+   "pca": {
+    "ci_high": 0.4297217827621293,
+    "ci_low": 0.11353213312212664,
+    "groups_lower": 0,
+    "median_difference": 0.17406313557337,
+    "p": 0.001953125,
+    "probability_of_superiority": 1.0,
+    "rank_biserial": 1.0,
+    "units": 10
+   },
+   "vae": {
+    "ci_high": 0.49020408012161826,
+    "ci_low": 0.0840391018352632,
+    "groups_lower": 1,
+    "median_difference": 0.20840137015331,
+    "p": 0.00390625,
+    "probability_of_superiority": 0.9,
+    "rank_biserial": 0.8,
+    "units": 10
+   },
+   "zscore": {
+    "ci_high": 0.4628751526234564,
+    "ci_low": 0.10078314978141657,
+    "groups_lower": 0,
+    "median_difference": 0.2135414531291151,
+    "p": 0.001953125,
+    "probability_of_superiority": 1.0,
+    "rank_biserial": 1.0,
+    "units": 10
+   }
+  },
+  "chronological_lower_share": 0.1676470588235294,
+  "detectors_with_interval_below_zero": [],
+  "pairs": 340,
+  "supported_by_share": false
+ },
+ "N1_lift": {
+  "by_detector": {
+   "ae1svm": {
+    "ci_high": 0.30878249398584284,
+    "ci_low": -0.004706119888843473,
+    "median_difference": 0.04665390215235687,
+    "p": 0.083984375,
+    "probability_of_superiority": 0.8,
+    "rank_biserial": 0.6,
+    "units": 10
+   },
+   "autoencoder": {
+    "ci_high": 0.25969931644899746,
+    "ci_low": 0.006549574675206671,
+    "median_difference": 0.05632132216446133,
+    "p": 0.130859375,
+    "probability_of_superiority": 0.8,
+    "rank_biserial": 0.6,
+    "units": 10
+   },
+   "copod": {
+    "ci_high": 0.27749449441256624,
+    "ci_low": -0.03746505093343419,
+    "median_difference": 0.08526168544925787,
+    "p": 0.10546875,
+    "probability_of_superiority": 0.7,
+    "rank_biserial": 0.4,
+    "units": 10
+   },
+   "deep_svdd": {
+    "ci_high": 0.21417887327191576,
+    "ci_low": 0.004816148160017394,
+    "median_difference": 0.04889715457231692,
+    "p": 0.083984375,
+    "probability_of_superiority": 0.8,
+    "rank_biserial": 0.6,
+    "units": 10
+   },
+   "dif": {
+    "ci_high": 0.28278205671478324,
+    "ci_low": -0.017110300507193088,
+    "median_difference": 0.106536582526957,
+    "p": 0.193359375,
+    "probability_of_superiority": 0.7,
+    "rank_biserial": 0.4,
+    "units": 10
+   },
+   "ecod": {
+    "ci_high": 0.25999800748291935,
+    "ci_low": -0.030545704933489546,
+    "median_difference": 0.05629763982201505,
+    "p": 0.193359375,
+    "probability_of_superiority": 0.7,
+    "rank_biserial": 0.4,
+    "units": 10
+   },
+   "great_expectations": {
+    "ci_high": 0.18293539590917404,
+    "ci_low": -0.0011563640126871924,
+    "median_difference": 0.02502798509001169,
+    "p": 0.083984375,
+    "probability_of_superiority": 0.8,
+    "rank_biserial": 0.6,
+    "units": 10
+   },
+   "hbos": {
+    "ci_high": 0.19325742668819162,
+    "ci_low": -0.025610385182329998,
+    "median_difference": 0.03604516288995026,
+    "p": 0.193359375,
+    "probability_of_superiority": 0.7,
+    "rank_biserial": 0.4,
+    "units": 10
+   },
+   "iqr": {
+    "ci_high": 0.21085483914867076,
+    "ci_low": 0.004680105869119973,
+    "median_difference": 0.05803708751978408,
+    "p": 0.02734375,
+    "probability_of_superiority": 0.9,
+    "rank_biserial": 0.8,
+    "units": 10
+   },
+   "isolation_forest": {
+    "ci_high": 0.20860389567601006,
+    "ci_low": -0.033923709778303404,
+    "median_difference": 0.06329013227578649,
+    "p": 0.16015625,
+    "probability_of_superiority": 0.7,
+    "rank_biserial": 0.4,
+    "units": 10
+   },
+   "knn": {
+    "ci_high": 0.32966600651143607,
+    "ci_low": 0.04152837143558008,
+    "median_difference": 0.14926024506170132,
+    "p": 0.064453125,
+    "probability_of_superiority": 0.8,
+    "rank_biserial": 0.6,
+    "units": 10
+   },
+   "lof": {
+    "ci_high": 0.4832709597376236,
+    "ci_low": 0.027642240413376207,
+    "median_difference": 0.18810948413251088,
+    "p": 0.064453125,
+    "probability_of_superiority": 0.8,
+    "rank_biserial": 0.6,
+    "units": 10
+   },
+   "lunar": {
+    "ci_high": 0.42010993576721567,
+    "ci_low": 0.07925921414273723,
+    "median_difference": 0.20708940346188515,
+    "p": 0.064453125,
+    "probability_of_superiority": 0.8,
+    "rank_biserial": 0.6,
+    "units": 10
+   },
+   "ocsvm": {
+    "ci_high": 0.2501497690028546,
+    "ci_low": -0.052351631890902556,
+    "median_difference": 0.11231447944621231,
+    "p": 0.130859375,
+    "probability_of_superiority": 0.7,
+    "rank_biserial": 0.4,
+    "units": 10
+   },
+   "pca": {
+    "ci_high": 0.32747200158797457,
+    "ci_low": 0.0016579880418883877,
+    "median_difference": 0.0747743241439238,
+    "p": 0.048828125,
+    "probability_of_superiority": 0.8,
+    "rank_biserial": 0.6,
+    "units": 10
+   },
+   "vae": {
+    "ci_high": 0.24408483696377126,
+    "ci_low": -0.008836888658332778,
+    "median_difference": 0.09288001269801528,
+    "p": 0.16015625,
+    "probability_of_superiority": 0.8,
+    "rank_biserial": 0.6,
+    "units": 10
+   },
+   "zscore": {
+    "ci_high": 0.2381822717452089,
+    "ci_low": -0.06053265023409444,
+    "median_difference": 0.05257201522316518,
+    "p": 0.232421875,
+    "probability_of_superiority": 0.7,
+    "rank_biserial": 0.4,
+    "units": 10
+   }
+  },
+  "chronological_lower_share": 0.3411764705882353,
+  "detectors_with_interval_below_zero": []
+ },
+ "N2": {
+  "by_series": {
+   "nab/realAWSCloudwatch/ec2_cpu_utilization_24ae8d": 0.928921568627451,
+   "nab/realAWSCloudwatch/ec2_cpu_utilization_ac20cd": 0.35784313725490197,
+   "nab/realAWSCloudwatch/elb_request_count_8c0756": 0.806372549019608,
+   "nab/realAWSCloudwatch/rds_cpu_utilization_cc0c53": -0.11764705882352941,
+   "nab/realAdExchange/exchange-4_cpm_results": 0.3872549019607844,
+   "nab/realKnownCause/ambient_temperature_system_failure": 0.6544117647058824,
+   "nab/realKnownCause/cpu_utilization_asg_misconfiguration": 0.7696078431372549,
+   "nab/realKnownCause/ec2_request_latency_system_failure": 0.8700980392156864,
+   "nab/realKnownCause/machine_temperature_system_failure": 0.7058823529411765,
+   "nab/realKnownCause/nyc_taxi": 0.9534313725490198,
+   "nab/realTraffic/occupancy_t4013": 0.5318627450980392,
+   "nab/realTraffic/speed_6005": 0.5122549019607844,
+   "nab/realTraffic/speed_t4013": 0.46323529411764713,
+   "nab/realTweets/Twitter_volume_CVS": 0.8137254901960784,
+   "nab/realTweets/Twitter_volume_IBM": -0.07107843137254903,
+   "nab/realTweets/Twitter_volume_KO": -0.13725490196078433,
+   "skab/other/10": -0.014705882352941176,
+   "skab/other/14": 0.06617647058823531,
+   "skab/valve1/7": 0.28921568627450983,
+   "skab/valve2/3": 0.36764705882352944
+  },
+  "median_spearman": 0.48774509803921573,
+  "supported": false
+ },
+ "N3": {
+  "series": 20,
+  "series_where_matching_closes_half": 12
+ },
+ "N4": {
+  "detectors": [
+   "ae1svm",
+   "autoencoder",
+   "copod",
+   "deep_svdd",
+   "dif",
+   "ecod",
+   "great_expectations",
+   "hbos",
+   "iqr",
+   "isolation_forest",
+   "knn",
+   "lof",
+   "lunar",
+   "ocsvm",
+   "pca",
+   "vae",
+   "zscore"
+  ],
+  "families": [
+   {
+    "a": "classical",
+    "b": "neural",
+    "ci_high": 0.013680030354005973,
+    "ci_low": -0.027346362481124598,
+    "median_difference": -0.0014817739381262074,
+    "p": 0.556640625,
+    "p_holm": 0.556640625,
+    "probability_of_superiority": 0.5,
+    "rank_biserial": 0.0,
+    "units": 10
+   },
+   {
+    "a": "classical",
+    "b": "rule",
+    "ci_high": 0.11361280554025854,
+    "ci_low": 0.007939226529682195,
+    "median_difference": 0.041000251434802626,
+    "p": 0.10546875,
+    "p_holm": 0.31640625,
+    "probability_of_superiority": 0.8,
+    "rank_biserial": 0.6,
+    "units": 10
+   },
+   {
+    "a": "neural",
+    "b": "rule",
+    "ci_high": 0.13836833982827035,
+    "ci_low": -0.004964459149202113,
+    "median_difference": 0.043434111947570186,
+    "p": 0.16015625,
+    "p_holm": 0.3203125,
+    "probability_of_superiority": 0.8,
+    "rank_biserial": 0.6,
+    "units": 10
+   }
+  ],
+  "friedman": {
+   "detectors": 17,
+   "p": 0.0008470303924037203,
+   "statistic": 39.74901960784314,
+   "units": 10
+  },
+  "mean_rank": {
+   "ae1svm": 8.5,
+   "autoencoder": 9.7,
+   "copod": 10.2,
+   "deep_svdd": 12.2,
+   "dif": 6.7,
+   "ecod": 12.1,
+   "great_expectations": 13.8,
+   "hbos": 10.8,
+   "iqr": 10.9,
+   "isolation_forest": 9.4,
+   "knn": 5.4,
+   "lof": 7.2,
+   "lunar": 4.2,
+   "ocsvm": 7.5,
+   "pca": 7.8,
+   "vae": 8.1,
+   "zscore": 8.5
+  },
+  "rank_interval": {
+   "ae1svm": [
+    6.7,
+    10.1
+   ],
+   "autoencoder": [
+    7.8,
+    11.7
+   ],
+   "copod": [
+    8.2,
+    12.2
+   ],
+   "deep_svdd": [
+    8.9,
+    15.1
+   ],
+   "dif": [
+    3.6,
+    10.3
+   ],
+   "ecod": [
+    10.8,
+    13.102499999999964
+   ],
+   "great_expectations": [
+    10.2,
+    16.7
+   ],
+   "hbos": [
+    7.3,
+    14.2
+   ],
+   "iqr": [
+    8.0,
+    13.5
+   ],
+   "isolation_forest": [
+    7.197500000000022,
+    11.6
+   ],
+   "knn": [
+    2.8,
+    8.5
+   ],
+   "lof": [
+    5.0,
+    9.7
+   ],
+   "lunar": [
+    2.2,
+    7.3
+   ],
+   "ocsvm": [
+    6.0,
+    9.3
+   ],
+   "pca": [
+    4.0,
+    11.6
+   ],
+   "vae": [
+    6.7,
+    9.7
+   ],
+   "zscore": [
+    5.6,
+    11.4
+   ]
+  }
+ },
+ "decision_policies": {
+  "H2": {
+   "nab/realAWSCloudwatch/ec2_cpu_utilization_24ae8d": false,
+   "nab/realAWSCloudwatch/ec2_cpu_utilization_ac20cd": false,
+   "nab/realAWSCloudwatch/elb_request_count_8c0756": false,
+   "nab/realAWSCloudwatch/rds_cpu_utilization_cc0c53": false,
+   "nab/realAdExchange/exchange-4_cpm_results": false,
+   "nab/realKnownCause/ambient_temperature_system_failure": true,
+   "nab/realKnownCause/cpu_utilization_asg_misconfiguration": true,
+   "nab/realKnownCause/ec2_request_latency_system_failure": false,
+   "nab/realKnownCause/machine_temperature_system_failure": false,
+   "nab/realKnownCause/nyc_taxi": false,
+   "nab/realTraffic/occupancy_t4013": false,
+   "nab/realTraffic/speed_6005": true,
+   "nab/realTraffic/speed_t4013": false,
+   "nab/realTweets/Twitter_volume_CVS": false,
+   "nab/realTweets/Twitter_volume_IBM": true,
+   "nab/realTweets/Twitter_volume_KO": false,
+   "skab/other/10": true,
+   "skab/other/14": true,
+   "skab/valve1/7": true,
+   "skab/valve2/3": true
+  },
+  "H3": {
+   "p2_at_least_p0": 60,
+   "pairs": 340
+  }
+ },
+ "excluded": [
+  {
+   "group": "nab_aws",
+   "id": "nab/realAWSCloudwatch/ec2_cpu_utilization_53ea38",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_aws",
+   "id": "nab/realAWSCloudwatch/ec2_cpu_utilization_5f5533",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_aws",
+   "id": "nab/realAWSCloudwatch/ec2_cpu_utilization_77c1ca",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_aws",
+   "id": "nab/realAWSCloudwatch/ec2_cpu_utilization_825cc2",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_aws",
+   "id": "nab/realAWSCloudwatch/ec2_cpu_utilization_c6585a",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_aws",
+   "id": "nab/realAWSCloudwatch/ec2_cpu_utilization_fe7f93",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_aws",
+   "id": "nab/realAWSCloudwatch/ec2_disk_write_bytes_1ef3de",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_aws",
+   "id": "nab/realAWSCloudwatch/ec2_disk_write_bytes_c0d644",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_aws",
+   "id": "nab/realAWSCloudwatch/ec2_network_in_257a54",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_aws",
+   "id": "nab/realAWSCloudwatch/ec2_network_in_5abac7",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_aws",
+   "id": "nab/realAWSCloudwatch/grok_asg_anomaly",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_aws",
+   "id": "nab/realAWSCloudwatch/iio_us-east-1_i-a2eb1cd9_NetworkIn",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_aws",
+   "id": "nab/realAWSCloudwatch/rds_cpu_utilization_e47b3b",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_adexchange",
+   "id": "nab/realAdExchange/exchange-2_cpc_results",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_adexchange",
+   "id": "nab/realAdExchange/exchange-2_cpm_results",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_adexchange",
+   "id": "nab/realAdExchange/exchange-3_cpc_results",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_adexchange",
+   "id": "nab/realAdExchange/exchange-3_cpm_results",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_adexchange",
+   "id": "nab/realAdExchange/exchange-4_cpc_results",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_rogue",
+   "id": "nab/realKnownCause/rogue_agent_key_hold",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_rogue",
+   "id": "nab/realKnownCause/rogue_agent_key_updown",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_traffic",
+   "id": "nab/realTraffic/TravelTime_387",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_traffic",
+   "id": "nab/realTraffic/TravelTime_451",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_traffic",
+   "id": "nab/realTraffic/occupancy_6005",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_traffic",
+   "id": "nab/realTraffic/speed_7578",
+   "reason": "13 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_tweets",
+   "id": "nab/realTweets/Twitter_volume_AAPL",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_tweets",
+   "id": "nab/realTweets/Twitter_volume_AMZN",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_tweets",
+   "id": "nab/realTweets/Twitter_volume_CRM",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_tweets",
+   "id": "nab/realTweets/Twitter_volume_FB",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_tweets",
+   "id": "nab/realTweets/Twitter_volume_GOOG",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_tweets",
+   "id": "nab/realTweets/Twitter_volume_PFE",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "nab_tweets",
+   "id": "nab/realTweets/Twitter_volume_UPS",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/other/1",
+   "reason": "0 normal rows in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/other/11",
+   "reason": "10 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/other/12",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/other/13",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/other/2",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/other/3",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/other/4",
+   "reason": "0 normal rows in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/other/5",
+   "reason": "1 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/other/6",
+   "reason": "1 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/other/7",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/other/8",
+   "reason": "1 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/other/9",
+   "reason": "1 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/valve1/0",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/valve1/1",
+   "reason": "1 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/valve1/10",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/valve1/11",
+   "reason": "2 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/valve1/12",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/valve1/13",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/valve1/14",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/valve1/15",
+   "reason": "1 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/valve1/2",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/valve1/3",
+   "reason": "2 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/valve1/4",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/valve1/5",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/valve1/6",
+   "reason": "1 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/valve1/8",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/valve1/9",
+   "reason": "1 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/valve2/0",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/valve2/1",
+   "reason": "0 anomalies in the test partition (at least 20)"
+  },
+  {
+   "group": "skab",
+   "id": "skab/valve2/2",
+   "reason": "1 anomalies in the test partition (at least 20)"
+  }
+ ],
+ "independent_sources": 10,
+ "per_series": {
+  "nab/realAWSCloudwatch/ec2_cpu_utilization_24ae8d": {
+   "ae1svm": {
+    "chronological": 0.7120482049065869,
+    "chronological_lift": 0.13326509676882656,
+    "matched": 0.7328775407651008,
+    "stratified": 0.15480744968961888,
+    "stratified_lift": 0.06058465289960967
+   },
+   "autoencoder": {
+    "chronological": 0.6971233223754406,
+    "chronological_lift": 0.08834120035007613,
+    "matched": 0.7261203689535074,
+    "stratified": 0.14605526260448437,
+    "stratified_lift": 0.050856764425616575
+   },
+   "copod": {
+    "chronological": 0.7307134173048111,
+    "chronological_lift": 0.1894473860874813,
+    "matched": 0.7505104005318368,
+    "stratified": 0.15766880397997846,
+    "stratified_lift": 0.06376499344197273
+   },
+   "deep_svdd": {
+    "chronological": 0.8262158245048595,
+    "chronological_lift": 0.47690963175962714,
+    "matched": 0.8515089259570285,
+    "stratified": 0.38126751457389707,
+    "stratified_lift": 0.3122906817560121
+   },
+   "dif": {
+    "chronological": 0.8067619549494636,
+    "chronological_lift": 0.4183534843978853,
+    "matched": 0.8285935475597099,
+    "stratified": 0.2788639053317742,
+    "stratified_lift": 0.19847102955345286
+   },
+   "ecod": {
+    "chronological": 0.7424829704661562,
+    "chronological_lift": 0.22487374110313002,
+    "matched": 0.7451464968116955,
+    "stratified": 0.15985659717208298,
+    "stratified_lift": 0.06619668371206561
+   },
+   "great_expectations": {
+    "chronological": 0.6858817416241054,
+    "chronological_lift": 0.054504042288557195,
+    "matched": 0.6811385335975502,
+    "stratified": 0.11975918159867835,
+    "stratified_lift": 0.021629173557266453
+   },
+   "hbos": {
+    "chronological": 0.7497348239806474,
+    "chronological_lift": 0.24670182018174855,
+    "matched": 0.729142640240978,
+    "stratified": 0.1703823038027077,
+    "stratified_lift": 0.07789580522497294
+   },
+   "iqr": {
+    "chronological": 0.6896691252710817,
+    "chronological_lift": 0.06590406706595581,
+    "matched": 0.7254960174992685,
+    "stratified": 0.15491271649290908,
+    "stratified_lift": 0.060701654937210095
+   },
+   "isolation_forest": {
+    "chronological": 0.730158641858463,
+    "chronological_lift": 0.18777751199397358,
+    "matched": 0.7739727413427977,
+    "stratified": 0.1802781104840197,
+    "stratified_lift": 0.08889480499721325
+   },
+   "knn": {
+    "chronological": 0.8173355025164971,
+    "chronological_lift": 0.45017986257465625,
+    "matched": 0.7966344987360101,
+    "stratified": 0.21530049603348514,
+    "stratified_lift": 0.12782151638996353
+   },
+   "lof": {
+    "chronological": 0.8034414405155181,
+    "chronological_lift": 0.4083587359517095,
+    "matched": 0.8072286753881457,
+    "stratified": 0.2151523213056529,
+    "stratified_lift": 0.12765682301526812
+   },
+   "lunar": {
+    "chronological": 0.8049694380498884,
+    "chronological_lift": 0.412958008530164,
+    "matched": 0.7785653052003629,
+    "stratified": 0.1965250222108818,
+    "stratified_lift": 0.10695293650061406
+   },
+   "ocsvm": {
+    "chronological": 0.7156944994561238,
+    "chronological_lift": 0.14424044336293265,
+    "matched": 0.7453520019802049,
+    "stratified": 0.16037062100772315,
+    "stratified_lift": 0.06676801136964902
+   },
+   "pca": {
+    "chronological": 0.8302420870186215,
+    "chronological_lift": 0.48902868192605053,
+    "matched": 0.7923756024323235,
+    "stratified": 0.23959308999895726,
+    "stratified_lift": 0.15482226974925697
+   },
+   "vae": {
+    "chronological": 0.7405079610452364,
+    "chronological_lift": 0.21892896274616153,
+    "matched": 0.752891444026654,
+    "stratified": 0.16751823215567482,
+    "stratified_lift": 0.07471244439266353
+   },
+   "zscore": {
+    "chronological": 0.704689176322422,
+    "chronological_lift": 0.11111442073049012,
+    "matched": 0.7332666192865903,
+    "stratified": 0.1540385963085568,
+    "stratified_lift": 0.0597300870783959
+   }
+  },
+  "nab/realAWSCloudwatch/ec2_cpu_utilization_ac20cd": {
+   "ae1svm": {
+    "chronological": 0.5991579564433533,
+    "chronological_lift": 0.053698391289799,
+    "matched": 0.6337962052352483,
+    "stratified": 0.17498786539132932,
+    "stratified_lift": 0.08276043397737806
+   },
+   "autoencoder": {
+    "chronological": 0.6374753058894664,
+    "chronological_lift": 0.14415738880572088,
+    "matched": 0.6888323717760466,
+    "stratified": 0.22082400875636155,
+    "stratified_lift": 0.13372056230110874
+   },
+   "copod": {
+    "chronological": 0.5576647171506474,
+    "chronological_lift": -0.04425819715807943,
+    "matched": 0.7003447490551099,
+    "stratified": 0.21149376267488265,
+    "stratified_lift": 0.12334729564519546
+   },
+   "deep_svdd": {
+    "chronological": 0.6004215435006736,
+    "chronological_lift": 0.05668144779374711,
+    "matched": 0.6212163426279896,
+    "stratified": 0.1438823040609723,
+    "stratified_lift": 0.04817760739982717
+   },
+   "dif": {
+    "chronological": 0.5205850164277794,
+    "chronological_lift": -0.13179537298226174,
+    "matched": 0.620829752075991,
+    "stratified": 0.1486893188998759,
+    "stratified_lift": 0.05352199449395357
+   },
+   "ecod": {
+    "chronological": 0.54265416818397,
+    "chronological_lift": -0.07969486569901958,
+    "matched": 0.6874651774023874,
+    "stratified": 0.18541793315779106,
+    "stratified_lift": 0.09435647048444565
+   },
+   "great_expectations": {
+    "chronological": 0.5189070277045245,
+    "chronological_lift": -0.13575674243873034,
+    "matched": 0.5924559232910609,
+    "stratified": 0.12927073688796903,
+    "stratified_lift": 0.0319326250893148
+   },
+   "hbos": {
+    "chronological": 0.5408999024479042,
+    "chronological_lift": -0.08383630873082994,
+    "matched": 0.6945181436772219,
+    "stratified": 0.19207454661153392,
+    "stratified_lift": 0.101757221309023
+   },
+   "iqr": {
+    "chronological": 0.6168462011960938,
+    "chronological_lift": 0.09545652203940586,
+    "matched": 0.7666715541976765,
+    "stratified": 0.34718929022024714,
+    "stratified_lift": 0.27421211517413324
+   },
+   "isolation_forest": {
+    "chronological": 0.57732011874955,
+    "chronological_lift": 0.0021439666165848966,
+    "matched": 0.7004992325847736,
+    "stratified": 0.21636476427055312,
+    "stratified_lift": 0.12876282252326682
+   },
+   "knn": {
+    "chronological": 0.6389181243574413,
+    "chronological_lift": 0.14756357201246945,
+    "matched": 0.5285021798455118,
+    "stratified": 0.13958422892838257,
+    "stratified_lift": 0.04339905396531409
+   },
+   "lof": {
+    "chronological": 0.4699558522304874,
+    "chronological_lift": -0.25131990963626094,
+    "matched": 0.5818355879588846,
+    "stratified": 0.12262702558133518,
+    "stratified_lift": 0.02454621873231383
+   },
+   "lunar": {
+    "chronological": 0.5949362251450432,
+    "chronological_lift": 0.04373179426398443,
+    "matched": 0.5323700860056333,
+    "stratified": 0.1249167874862139,
+    "stratified_lift": 0.02709195124680868
+   },
+   "ocsvm": {
+    "chronological": 0.6199863218888821,
+    "chronological_lift": 0.1028696697141454,
+    "matched": 0.771084019463131,
+    "stratified": 0.2984309144243924,
+    "stratified_lift": 0.2200030804474243
+   },
+   "pca": {
+    "chronological": 0.5559745328603398,
+    "chronological_lift": -0.04824835771794272,
+    "matched": 0.6960996210250106,
+    "stratified": 0.2254296612849977,
+    "stratified_lift": 0.13884107695707926
+   },
+   "vae": {
+    "chronological": 0.6109895197399235,
+    "chronological_lift": 0.08163016032719218,
+    "matched": 0.6110025173466366,
+    "stratified": 0.16369789700416998,
+    "stratified_lift": 0.07020836926288855
+   },
+   "zscore": {
+    "chronological": 0.596103452236428,
+    "chronological_lift": 0.04648736567188118,
+    "matched": 0.7926908635096763,
+    "stratified": 0.3395123695331567,
+    "stratified_lift": 0.2656769978055179
+   }
+  },
+  "nab/realAWSCloudwatch/elb_request_count_8c0756": {
+   "ae1svm": {
+    "chronological": 0.46277175915028856,
+    "chronological_lift": 0.19348777807599427,
+    "matched": 0.41568662652063126,
+    "stratified": 0.15894908568374197,
+    "stratified_lift": 0.06518800205780306
+   },
+   "autoencoder": {
+    "chronological": 0.5656783485879866,
+    "chronological_lift": 0.3479759746881993,
+    "matched": 0.5013888365128197,
+    "stratified": 0.2723330965459472,
+    "stratified_lift": 0.19121216055356527
+   },
+   "copod": {
+    "chronological": 0.49584205927975594,
+    "chronological_lift": 0.2431344630583867,
+    "matched": 0.4482023384548839,
+    "stratified": 0.1719789893338893,
+    "stratified_lift": 0.07967049064066233
+   },
+   "deep_svdd": {
+    "chronological": 0.5105733789782907,
+    "chronological_lift": 0.26524981083523935,
+    "matched": 0.4283620689456694,
+    "stratified": 0.1714141131966139,
+    "stratified_lift": 0.07904264162285872
+   },
+   "dif": {
+    "chronological": 0.5363380684275074,
+    "chronological_lift": 0.30392897055700613,
+    "matched": 0.4705507054923602,
+    "stratified": 0.2160217782171781,
+    "stratified_lift": 0.12862320773556568
+   },
+   "ecod": {
+    "chronological": 0.4885196158743532,
+    "chronological_lift": 0.23214166772159758,
+    "matched": 0.44532655636454566,
+    "stratified": 0.17678684656093596,
+    "stratified_lift": 0.08501433195125661
+   },
+   "great_expectations": {
+    "chronological": 0.41599710320062055,
+    "chronological_lift": 0.12326747163783931,
+    "matched": 0.35204918032786886,
+    "stratified": 0.11956379463718388,
+    "stratified_lift": 0.021412004688250965
+   },
+   "hbos": {
+    "chronological": 0.45903062892403595,
+    "chronological_lift": 0.1878714179857098,
+    "matched": 0.43218151708241814,
+    "stratified": 0.15577404972869008,
+    "stratified_lift": 0.06165901034736269
+   },
+   "iqr": {
+    "chronological": 0.44086058888190494,
+    "chronological_lift": 0.1605937020122363,
+    "matched": 0.4452872489921885,
+    "stratified": 0.2326188591795721,
+    "stratified_lift": 0.14707054564385053
+   },
+   "isolation_forest": {
+    "chronological": 0.5146940960037807,
+    "chronological_lift": 0.27143602442462833,
+    "matched": 0.4809860161012067,
+    "stratified": 0.21315283995033368,
+    "stratified_lift": 0.12543443774845742
+   },
+   "knn": {
+    "chronological": 0.5591134092818976,
+    "chronological_lift": 0.3381203800192078,
+    "matched": 0.5016857857125825,
+    "stratified": 0.2553899060613195,
+    "stratified_lift": 0.17238012853404566
+   },
+   "lof": {
+    "chronological": 0.5388139926225707,
+    "chronological_lift": 0.3076459440368767,
+    "matched": 0.4995176723915611,
+    "stratified": 0.22649060354023914,
+    "stratified_lift": 0.14025910676352707
+   },
+   "lunar": {
+    "chronological": 0.5566850165386171,
+    "chronological_lift": 0.33447476298316087,
+    "matched": 0.4932081292409266,
+    "stratified": 0.23328148833175733,
+    "stratified_lift": 0.14780704526724445
+   },
+   "ocsvm": {
+    "chronological": 0.5445132564306139,
+    "chronological_lift": 0.3162019460629166,
+    "matched": 0.4981883469315854,
+    "stratified": 0.25703693511270487,
+    "stratified_lift": 0.17421076980912956
+   },
+   "pca": {
+    "chronological": 0.41995915055468785,
+    "chronological_lift": 0.12921548287761117,
+    "matched": 0.3897178312214254,
+    "stratified": 0.14196410457780276,
+    "stratified_lift": 0.046309520562349826
+   },
+   "vae": {
+    "chronological": 0.4758020324005651,
+    "chronological_lift": 0.2130494351749132,
+    "matched": 0.474602306557755,
+    "stratified": 0.21587729854267163,
+    "stratified_lift": 0.12846262134193787
+   },
+   "zscore": {
+    "chronological": 0.5342258526554582,
+    "chronological_lift": 0.300758013213431,
+    "matched": 0.4971561787435526,
+    "stratified": 0.262013810500607,
+    "stratified_lift": 0.17974247157139017
+   }
+  },
+  "nab/realAWSCloudwatch/rds_cpu_utilization_cc0c53": {
+   "ae1svm": {
+    "chronological": 0.4177604072623544,
+    "chronological_lift": 0.12591462636393352,
+    "matched": 0.6179907324564672,
+    "stratified": 0.3177065742520354,
+    "stratified_lift": 0.2416439128125785
+   },
+   "autoencoder": {
+    "chronological": 0.40434919011142373,
+    "chronological_lift": 0.10578107842163859,
+    "matched": 0.6818406193341247,
+    "stratified": 0.3560553617170586,
+    "stratified_lift": 0.28426785628451773
+   },
+   "copod": {
+    "chronological": 0.3466883508428582,
+    "chronological_lift": 0.019217923210475378,
+    "matched": 0.68659080453619,
+    "stratified": 0.3617694888049494,
+    "stratified_lift": 0.2906189992041701
+   },
+   "deep_svdd": {
+    "chronological": 0.37822322549774146,
+    "chronological_lift": 0.06655955548538739,
+    "matched": 0.6806875328559344,
+    "stratified": 0.36913911069879024,
+    "stratified_lift": 0.2988101929231146
+   },
+   "dif": {
+    "chronological": 0.3278131184099321,
+    "chronological_lift": -0.009118460641448597,
+    "matched": 0.6645694056088329,
+    "stratified": 0.3424930367331822,
+    "stratified_lift": 0.26919359157698125
+   },
+   "ecod": {
+    "chronological": 0.35278619368196806,
+    "chronological_lift": 0.028372290764450775,
+    "matched": 0.6632478034241982,
+    "stratified": 0.3405919018938007,
+    "stratified_lift": 0.2670805165807968
+   },
+   "great_expectations": {
+    "chronological": 0.34830599098970433,
+    "chronological_lift": 0.021646400438408958,
+    "matched": 0.363407494145199,
+    "stratified": 0.13448541292231725,
+    "stratified_lift": 0.037997097890362604
+   },
+   "hbos": {
+    "chronological": 0.34930987607377295,
+    "chronological_lift": 0.023153479791549386,
+    "matched": 0.6461776130660117,
+    "stratified": 0.311746957722694,
+    "stratified_lift": 0.23501991307613912
+   },
+   "iqr": {
+    "chronological": 0.35824923817161336,
+    "chronological_lift": 0.03657366927509035,
+    "matched": 0.6647583107618125,
+    "stratified": 0.36793491725846483,
+    "stratified_lift": 0.29747175495616396
+   },
+   "isolation_forest": {
+    "chronological": 0.3477283584518376,
+    "chronological_lift": 0.020779231391536687,
+    "matched": 0.6753030336807415,
+    "stratified": 0.34748270130369874,
+    "stratified_lift": 0.27473950827099963
+   },
+   "knn": {
+    "chronological": 0.41279603245679464,
+    "chronological_lift": 0.11846187416207073,
+    "matched": 0.6611946269110388,
+    "stratified": 0.3609984566671964,
+    "stratified_lift": 0.28976201173658434
+   },
+   "lof": {
+    "chronological": 0.40944803969959753,
+    "chronological_lift": 0.11343571047171497,
+    "matched": 0.5453778969433242,
+    "stratified": 0.2578274128238252,
+    "stratified_lift": 0.17508937065942637
+   },
+   "lunar": {
+    "chronological": 0.4017476911199702,
+    "chronological_lift": 0.10187558617012983,
+    "matched": 0.6420678524645848,
+    "stratified": 0.34831029423471527,
+    "stratified_lift": 0.27565936197801966
+   },
+   "ocsvm": {
+    "chronological": 0.3338870431893688,
+    "chronological_lift": 0.0,
+    "matched": 0.7026611767636645,
+    "stratified": 0.38076911941844094,
+    "stratified_lift": 0.3117367250774019
+   },
+   "pca": {
+    "chronological": 0.38427635282730616,
+    "chronological_lift": 0.07564679402004562,
+    "matched": 0.6133432495096081,
+    "stratified": 0.307129751204737,
+    "stratified_lift": 0.2298879763806395
+   },
+   "vae": {
+    "chronological": 0.4326366760302408,
+    "chronological_lift": 0.1482475784793141,
+    "matched": 0.6607813100295586,
+    "stratified": 0.35484714012354546,
+    "stratified_lift": 0.2829249411023767
+   },
+   "zscore": {
+    "chronological": 0.35822401555149824,
+    "chronological_lift": 0.03653580389526666,
+    "matched": 0.6973401563517838,
+    "stratified": 0.37500062669413237,
+    "stratified_lift": 0.3053251557931455
+   }
+  },
+  "nab/realAdExchange/exchange-4_cpm_results": {
+   "ae1svm": {
+    "chronological": 0.6458657335579164,
+    "chronological_lift": 0.6106125486632293,
+    "matched": 0.322058841162848,
+    "stratified": 0.34592332432384437,
+    "stratified_lift": 0.27219921792460755
+   },
+   "autoencoder": {
+    "chronological": 0.5207100485651046,
+    "chronological_lift": 0.4729979267028073,
+    "matched": 0.26740853361668104,
+    "stratified": 0.29298917722007006,
+    "stratified_lift": 0.2132986102538099
+   },
+   "copod": {
+    "chronological": 0.5182756329926091,
+    "chronological_lift": 0.47032117111857025,
+    "matched": 0.23714237111558195,
+    "stratified": 0.2719219596750291,
+    "stratified_lift": 0.1898568059889155
+   },
+   "deep_svdd": {
+    "chronological": 0.19319328796382373,
+    "chronological_lift": 0.11287768767062972,
+    "matched": 0.1920585125980717,
+    "stratified": 0.20525497571885096,
+    "stratified_lift": 0.11567546782736748
+   },
+   "dif": {
+    "chronological": 0.2800213511522043,
+    "chronological_lift": 0.20834926846147347,
+    "matched": 0.236425307615504,
+    "stratified": 0.2617816839051703,
+    "stratified_lift": 0.17857357130066714
+   },
+   "ecod": {
+    "chronological": 0.5379549011986571,
+    "chronological_lift": 0.49195946149897585,
+    "matched": 0.23908098442736447,
+    "stratified": 0.2676636344926618,
+    "stratified_lift": 0.18511850463478996
+   },
+   "great_expectations": {
+    "chronological": 0.7102280790020254,
+    "chronological_lift": 0.6813820054185167,
+    "matched": 0.12284515277253864,
+    "stratified": 0.13528395061728396,
+    "stratified_lift": 0.03781767426074414
+   },
+   "hbos": {
+    "chronological": 0.4753349157389561,
+    "chronological_lift": 0.4231058123283545,
+    "matched": 0.25230841080364474,
+    "stratified": 0.2795147534106889,
+    "stratified_lift": 0.19830541977450533
+   },
+   "iqr": {
+    "chronological": 0.6506720617228304,
+    "chronological_lift": 0.6158973348355103,
+    "matched": 0.3731782682150596,
+    "stratified": 0.3948284220649068,
+    "stratified_lift": 0.32661664283373476
+   },
+   "isolation_forest": {
+    "chronological": 0.5130040249634081,
+    "chronological_lift": 0.46452478762944877,
+    "matched": 0.3029844448275852,
+    "stratified": 0.3312939455171423,
+    "stratified_lift": 0.2559208919534387
+   },
+   "knn": {
+    "chronological": 0.4099702193921895,
+    "chronological_lift": 0.3512342231325885,
+    "matched": 0.2443188181923611,
+    "stratified": 0.2744272956750489,
+    "stratified_lift": 0.19264453037656643
+   },
+   "lof": {
+    "chronological": 0.4850035189803027,
+    "chronological_lift": 0.4337369009602423,
+    "matched": 0.1622002395924928,
+    "stratified": 0.18528537581987964,
+    "stratified_lift": 0.09345499893634716
+   },
+   "lunar": {
+    "chronological": 0.692292325366674,
+    "chronological_lift": 0.6616607921452569,
+    "matched": 0.2165492698939117,
+    "stratified": 0.24509324665798612,
+    "stratified_lift": 0.16000410057682443
+   },
+   "ocsvm": {
+    "chronological": 0.6448584070116916,
+    "chronological_lift": 0.6095049452662491,
+    "matched": 0.35329920867778924,
+    "stratified": 0.37575285333668684,
+    "stratified_lift": 0.3053909756371794
+   },
+   "pca": {
+    "chronological": 0.384056084143277,
+    "chronological_lift": 0.3227404002118386,
+    "matched": 0.12129682817178082,
+    "stratified": 0.1300288432528295,
+    "stratified_lift": 0.03197023864352644
+   },
+   "vae": {
+    "chronological": 0.5556938778307762,
+    "chronological_lift": 0.511464309108048,
+    "matched": 0.34185518601516873,
+    "stratified": 0.3661571772362256,
+    "stratified_lift": 0.2947137250484187
+   },
+   "zscore": {
+    "chronological": 0.6541325929611395,
+    "chronological_lift": 0.6197023533464112,
+    "matched": 0.36061257691523985,
+    "stratified": 0.3814604993275757,
+    "stratified_lift": 0.31174195767102747
+   }
+  },
+  "nab/realKnownCause/ambient_temperature_system_failure": {
+   "ae1svm": {
+    "chronological": 0.20670384243415657,
+    "chronological_lift": 0.047168040581136134,
+    "matched": 0.28850746922423154,
+    "stratified": 0.18381845859727602,
+    "stratified_lift": 0.09289505840418448
+   },
+   "autoencoder": {
+    "chronological": 0.19533231934100365,
+    "chronological_lift": 0.033509647650465164,
+    "matched": 0.2512309499888386,
+    "stratified": 0.15503569713724757,
+    "stratified_lift": 0.060905869934798865
+   },
+   "copod": {
+    "chronological": 0.21693548763795834,
+    "chronological_lift": 0.05945732051100632,
+    "matched": 0.2997424801537043,
+    "stratified": 0.1879699873809179,
+    "stratified_lift": 0.09750907144391414
+   },
+   "deep_svdd": {
+    "chronological": 0.1950567003036103,
+    "chronological_lift": 0.03317860025417062,
+    "matched": 0.1690159319347318,
+    "stratified": 0.10110673801159342,
+    "stratified_lift": 0.0009691734568008538
+   },
+   "dif": {
+    "chronological": 0.2115236515209809,
+    "chronological_lift": 0.05295713724122238,
+    "matched": 0.3440457718046198,
+    "stratified": 0.22292924335337813,
+    "stratified_lift": 0.13636282179047382
+   },
+   "ecod": {
+    "chronological": 0.20636797641767357,
+    "chronological_lift": 0.046764630238686385,
+    "matched": 0.35784829110208305,
+    "stratified": 0.2324572503655446,
+    "stratified_lift": 0.1469522578483412
+   },
+   "great_expectations": {
+    "chronological": 0.179506146005686,
+    "chronological_lift": 0.014500752163735586,
+    "matched": 0.17232807786077986,
+    "stratified": 0.10427109953497707,
+    "stratified_lift": 0.004486047864330047
+   },
+   "hbos": {
+    "chronological": 0.23443488145248909,
+    "chronological_lift": 0.0804759294351996,
+    "matched": 0.3260911088106879,
+    "stratified": 0.21321685141041816,
+    "stratified_lift": 0.12556846014510645
+   },
+   "iqr": {
+    "chronological": 0.20517871146404904,
+    "chronological_lift": 0.04533619818941581,
+    "matched": 0.1757358398977621,
+    "stratified": 0.105245663196009,
+    "stratified_lift": 0.0055691788443598626
+   },
+   "isolation_forest": {
+    "chronological": 0.21719058866567498,
+    "chronological_lift": 0.059763723623854924,
+    "matched": 0.33875445495015055,
+    "stratified": 0.21741795157249771,
+    "stratified_lift": 0.13023756686199187
+   },
+   "knn": {
+    "chronological": 0.21816383849678334,
+    "chronological_lift": 0.060932698835362974,
+    "matched": 0.3202415731283419,
+    "stratified": 0.20623313702359916,
+    "stratified_lift": 0.11780675333158336
+   },
+   "lof": {
+    "chronological": 0.21377474043367023,
+    "chronological_lift": 0.05566093132751331,
+    "matched": 0.3587839078971221,
+    "stratified": 0.24732736217358142,
+    "stratified_lift": 0.16347891425859296
+   },
+   "lunar": {
+    "chronological": 0.2180327215129904,
+    "chronological_lift": 0.060775213574166397,
+    "matched": 0.3083995560291871,
+    "stratified": 0.19634723624617728,
+    "stratified_lift": 0.10681955380252602
+   },
+   "ocsvm": {
+    "chronological": 0.20675184245135203,
+    "chronological_lift": 0.047225693640463716,
+    "matched": 0.33679221195694914,
+    "stratified": 0.2145976868728034,
+    "stratified_lift": 0.12710312199167026
+   },
+   "pca": {
+    "chronological": 0.18600961941445937,
+    "chronological_lift": 0.022312106412726348,
+    "matched": 0.27093479386970754,
+    "stratified": 0.1679338786720932,
+    "stratified_lift": 0.07524092116341431
+   },
+   "vae": {
+    "chronological": 0.19701264830951695,
+    "chronological_lift": 0.03552789912977341,
+    "matched": 0.30101489913218926,
+    "stratified": 0.1897781794560141,
+    "stratified_lift": 0.09951869783641402
+   },
+   "zscore": {
+    "chronological": 0.20052373897754844,
+    "chronological_lift": 0.03974508758960791,
+    "matched": 0.3057014926600348,
+    "stratified": 0.1904611372907729,
+    "stratified_lift": 0.10027773782370235
+   }
+  },
+  "nab/realKnownCause/cpu_utilization_asg_misconfiguration": {
+   "ae1svm": {
+    "chronological": 0.7251317858875719,
+    "chronological_lift": 0.3832002896597464,
+    "matched": 0.700300851610287,
+    "stratified": 0.15384594467007448,
+    "stratified_lift": 0.07709971553353678
+   },
+   "autoencoder": {
+    "chronological": 0.7317699855282314,
+    "chronological_lift": 0.39809629947579883,
+    "matched": 0.803888918681635,
+    "stratified": 0.24119950324247857,
+    "stratified_lift": 0.17237624768251458
+   },
+   "copod": {
+    "chronological": 0.719484520616319,
+    "chronological_lift": 0.37052792012159874,
+    "matched": 0.7566151953116778,
+    "stratified": 0.18233593756966276,
+    "stratified_lift": 0.10817375268534767
+   },
+   "deep_svdd": {
+    "chronological": 0.8797490547618619,
+    "chronological_lift": 0.7301588747519292,
+    "matched": 0.7452358632987096,
+    "stratified": 0.2373580242317932,
+    "stratified_lift": 0.16818634626987983
+   },
+   "dif": {
+    "chronological": 0.8398037866325827,
+    "chronological_lift": 0.6405223560618287,
+    "matched": 0.8563963202380689,
+    "stratified": 0.35968639509130895,
+    "stratified_lift": 0.30160990850825525
+   },
+   "ecod": {
+    "chronological": 0.657324110032721,
+    "chronological_lift": 0.2310409904800643,
+    "matched": 0.781219790587729,
+    "stratified": 0.2157758737561834,
+    "stratified_lift": 0.14464669330967278
+   },
+   "great_expectations": {
+    "chronological": 0.6462524156747396,
+    "chronological_lift": 0.20619629210331603,
+    "matched": 0.5733975242297081,
+    "stratified": 0.10448423562634998,
+    "stratified_lift": 0.023260896194141994
+   },
+   "hbos": {
+    "chronological": 0.5942704128223033,
+    "chronological_lift": 0.08954954047428064,
+    "matched": 0.7132838860241255,
+    "stratified": 0.16222300960001634,
+    "stratified_lift": 0.08623658081018301
+   },
+   "iqr": {
+    "chronological": 0.6508855773743378,
+    "chronological_lift": 0.21659303005826516,
+    "matched": 0.7077423127162554,
+    "stratified": 0.16032281988606073,
+    "stratified_lift": 0.08416404376269926
+   },
+   "isolation_forest": {
+    "chronological": 0.6424535039699868,
+    "chronological_lift": 0.19767159729032724,
+    "matched": 0.7830539194797301,
+    "stratified": 0.21184672643332597,
+    "stratified_lift": 0.14036117206311696
+   },
+   "knn": {
+    "chronological": 0.9116348348269323,
+    "chronological_lift": 0.8017100359933818,
+    "matched": 0.817721617511606,
+    "stratified": 0.4383340487112289,
+    "stratified_lift": 0.3873909095461131
+   },
+   "lof": {
+    "chronological": 0.8765575252791387,
+    "chronological_lift": 0.7229971355641419,
+    "matched": 0.6733196201812136,
+    "stratified": 0.17185034677965594,
+    "stratified_lift": 0.09673711811278986
+   },
+   "lunar": {
+    "chronological": 0.8913252013555735,
+    "chronological_lift": 0.7561355555730047,
+    "matched": 0.8217515401266219,
+    "stratified": 0.4491150964999412,
+    "stratified_lift": 0.39914979908682396
+   },
+   "ocsvm": {
+    "chronological": 0.6722703723856533,
+    "chronological_lift": 0.26458015512930017,
+    "matched": 0.7670282948367009,
+    "stratified": 0.20390749282770107,
+    "stratified_lift": 0.13170184944104432
+   },
+   "pca": {
+    "chronological": 0.9295029947427282,
+    "chronological_lift": 0.8418058902774582,
+    "matched": 0.9199399771081962,
+    "stratified": 0.7694160155599408,
+    "stratified_lift": 0.7485020328240753
+   },
+   "vae": {
+    "chronological": 0.7426463544456208,
+    "chronological_lift": 0.42250269080577474,
+    "matched": 0.8049903028237834,
+    "stratified": 0.24673870356411803,
+    "stratified_lift": 0.17841785384200348
+   },
+   "zscore": {
+    "chronological": 0.6133354433335652,
+    "chronological_lift": 0.13233115250951055,
+    "matched": 0.6975676473417627,
+    "stratified": 0.1416941399684417,
+    "stratified_lift": 0.0638457413366691
+   }
+  },
+  "nab/realKnownCause/ec2_request_latency_system_failure": {
+   "ae1svm": {
+    "chronological": 0.34058623706399094,
+    "chronological_lift": 0.1947929304513642,
+    "matched": 0.35077708001195085,
+    "stratified": 0.2416676951110175,
+    "stratified_lift": 0.17001751010512237
+   },
+   "autoencoder": {
+    "chronological": 0.28498211217796904,
+    "chronological_lift": 0.12689499296376747,
+    "matched": 0.2885274305482997,
+    "stratified": 0.18383423707125285,
+    "stratified_lift": 0.106719722059416
+   },
+   "copod": {
+    "chronological": 0.32649305849821103,
+    "chronological_lift": 0.1775838158537993,
+    "matched": 0.29339601354853984,
+    "stratified": 0.16974158422128666,
+    "stratified_lift": 0.09129554056769987
+   },
+   "deep_svdd": {
+    "chronological": 0.2589506676928144,
+    "chronological_lift": 0.09510811754781798,
+    "matched": 0.2846600121978036,
+    "stratified": 0.16882464867717709,
+    "stratified_lift": 0.09029196938780058
+   },
+   "dif": {
+    "chronological": 0.5085917873187483,
+    "chronological_lift": 0.39994372406873524,
+    "matched": 0.4054389144729333,
+    "stratified": 0.3052368561721509,
+    "stratified_lift": 0.23959293269742785
+   },
+   "ecod": {
+    "chronological": 0.3318520403590426,
+    "chronological_lift": 0.18412764360272543,
+    "matched": 0.30566492355087393,
+    "stratified": 0.18740565523713096,
+    "stratified_lift": 0.11062858170137108
+   },
+   "great_expectations": {
+    "chronological": 0.25619494650858,
+    "chronological_lift": 0.09174311926605509,
+    "matched": 0.21924082015545432,
+    "stratified": 0.12648287758752874,
+    "stratified_lift": 0.04394958311600633
+   },
+   "hbos": {
+    "chronological": 0.35047635482196243,
+    "chronological_lift": 0.20686970710511438,
+    "matched": 0.34570551476414424,
+    "stratified": 0.22289103144395545,
+    "stratified_lift": 0.14946675424013472
+   },
+   "iqr": {
+    "chronological": 0.3396166217471757,
+    "chronological_lift": 0.19360893771156143,
+    "matched": 0.3391202852670915,
+    "stratified": 0.2600063063355826,
+    "stratified_lift": 0.19008882462944154
+   },
+   "isolation_forest": {
+    "chronological": 0.3809519820059098,
+    "chronological_lift": 0.2440833532810501,
+    "matched": 0.35644028341782413,
+    "stratified": 0.24604967268198336,
+    "stratified_lift": 0.1748135139566874
+   },
+   "knn": {
+    "chronological": 0.4673836340271552,
+    "chronological_lift": 0.34962464033336194,
+    "matched": 0.3800411201308026,
+    "stratified": 0.2779188754843872,
+    "stratified_lift": 0.2096938429659814
+   },
+   "lof": {
+    "chronological": 0.4826914247896305,
+    "chronological_lift": 0.36831691221776386,
+    "matched": 0.3785694664877094,
+    "stratified": 0.2737658622300526,
+    "stratified_lift": 0.2051484368700303
+   },
+   "lunar": {
+    "chronological": 0.4956186882613743,
+    "chronological_lift": 0.38410233333336175,
+    "matched": 0.3605213757264681,
+    "stratified": 0.2503677361200375,
+    "stratified_lift": 0.17953956481952765
+   },
+   "ocsvm": {
+    "chronological": 0.4457076469537924,
+    "chronological_lift": 0.3231561936433732,
+    "matched": 0.36959122307399533,
+    "stratified": 0.2641384556286506,
+    "stratified_lift": 0.19461139545593437
+   },
+   "pca": {
+    "chronological": 0.3023942753452602,
+    "chronological_lift": 0.14815690417413113,
+    "matched": 0.2684837181739608,
+    "stratified": 0.17030492990265927,
+    "stratified_lift": 0.0919121133396664
+   },
+   "vae": {
+    "chronological": 0.3474062705873656,
+    "chronological_lift": 0.2031208415691564,
+    "matched": 0.36590026496421657,
+    "stratified": 0.2633671687521024,
+    "stratified_lift": 0.19376723439607496
+   },
+   "zscore": {
+    "chronological": 0.3973581613451698,
+    "chronological_lift": 0.2641168623322358,
+    "matched": 0.3439818563885442,
+    "stratified": 0.2399196743906536,
+    "stratified_lift": 0.1681043295897705
+   }
+  },
+  "nab/realKnownCause/machine_temperature_system_failure": {
+   "ae1svm": {
+    "chronological": 0.9798140365039032,
+    "chronological_lift": 0.9762940394163587,
+    "matched": 0.5615966056156341,
+    "stratified": 0.4777868754273203,
+    "stratified_lift": 0.4197376000006263
+   },
+   "autoencoder": {
+    "chronological": 0.913251915769821,
+    "chronological_lift": 0.898124919037694,
+    "matched": 0.4338143419520649,
+    "stratified": 0.34350063895335453,
+    "stratified_lift": 0.2705240888943538
+   },
+   "copod": {
+    "chronological": 0.81501592800931,
+    "chronological_lift": 0.7827586916987789,
+    "matched": 0.3508660702086419,
+    "stratified": 0.26406739878276,
+    "stratified_lift": 0.1822610399354973
+   },
+   "deep_svdd": {
+    "chronological": 0.3353607294169606,
+    "chronological_lift": 0.2194619615839375,
+    "matched": 0.19442889454392304,
+    "stratified": 0.1427072777180038,
+    "stratified_lift": 0.04741051282384276
+   },
+   "dif": {
+    "chronological": 0.9817142144346163,
+    "chronological_lift": 0.9785255674351278,
+    "matched": 0.4787037048557291,
+    "stratified": 0.38169996627135916,
+    "stratified_lift": 0.3129696581550744
+   },
+   "ecod": {
+    "chronological": 0.6853932824330586,
+    "chronological_lift": 0.6305326497081604,
+    "matched": 0.3075599613987897,
+    "stratified": 0.22844195790015634,
+    "stratified_lift": 0.14267547064424077
+   },
+   "great_expectations": {
+    "chronological": 0.1900384554548007,
+    "chronological_lift": 0.048798614296193754,
+    "matched": 0.16989594921744328,
+    "stratified": 0.12057978378991907,
+    "stratified_lift": 0.022823323937717747
+   },
+   "hbos": {
+    "chronological": 0.5752555907419703,
+    "chronological_lift": 0.5011893177187297,
+    "matched": 0.3554338841728087,
+    "stratified": 0.26543780749409873,
+    "stratified_lift": 0.18378378344844937
+   },
+   "iqr": {
+    "chronological": 0.8800805274725743,
+    "chronological_lift": 0.8591691553640279,
+    "matched": 0.4460037587474447,
+    "stratified": 0.3545296304039035,
+    "stratified_lift": 0.28277906439675027
+   },
+   "isolation_forest": {
+    "chronological": 0.770572658015922,
+    "chronological_lift": 0.7305654730359636,
+    "matched": 0.403061293438996,
+    "stratified": 0.31064481590757853,
+    "stratified_lift": 0.23401600850074564
+   },
+   "knn": {
+    "chronological": 0.9060165896839661,
+    "chronological_lift": 0.8896279079817573,
+    "matched": 0.3190626198801926,
+    "stratified": 0.23741991497993417,
+    "stratified_lift": 0.15265141854188538
+   },
+   "lof": {
+    "chronological": 0.9021654944457578,
+    "chronological_lift": 0.8851052647134054,
+    "matched": 0.19526245118030316,
+    "stratified": 0.14005776783601528,
+    "stratified_lift": 0.04446648309612814
+   },
+   "lunar": {
+    "chronological": 0.9373662988281221,
+    "chronological_lift": 0.9264443309096835,
+    "matched": 0.3170418527465419,
+    "stratified": 0.2339105594097362,
+    "stratified_lift": 0.14875196257305934
+   },
+   "ocsvm": {
+    "chronological": 0.9195535623609721,
+    "chronological_lift": 0.9055254370130063,
+    "matched": 0.4534357826558483,
+    "stratified": 0.35585079429357397,
+    "stratified_lift": 0.2842470890275752
+   },
+   "pca": {
+    "chronological": 0.9193025078952007,
+    "chronological_lift": 0.9052306040578654,
+    "matched": 0.3934153104946588,
+    "stratified": 0.3138861832613896,
+    "stratified_lift": 0.23761768664995167
+   },
+   "vae": {
+    "chronological": 0.8150119116155843,
+    "chronological_lift": 0.7827539749325283,
+    "matched": 0.3749849568013535,
+    "stratified": 0.2879282363667087,
+    "stratified_lift": 0.20877425117235962
+   },
+   "zscore": {
+    "chronological": 0.9960355508723177,
+    "chronological_lift": 0.995344236366282,
+    "matched": 0.5036227738662951,
+    "stratified": 0.410290908153417,
+    "stratified_lift": 0.3447387726680448
+   }
+  },
+  "nab/realKnownCause/nyc_taxi": {
+   "ae1svm": {
+    "chronological": 0.2994397906703215,
+    "chronological_lift": 0.07883785241331638,
+    "matched": 0.2690894449541122,
+    "stratified": 0.12017336198638899,
+    "stratified_lift": 0.02184482615396405
+   },
+   "autoencoder": {
+    "chronological": 0.31302049905093954,
+    "chronological_lift": 0.09669503917761839,
+    "matched": 0.2891189061309104,
+    "stratified": 0.12677138534755292,
+    "stratified_lift": 0.029180237937415494
+   },
+   "copod": {
+    "chronological": 0.3376792070798649,
+    "chronological_lift": 0.12911861696884364,
+    "matched": 0.29924124888215003,
+    "stratified": 0.14089610443685638,
+    "stratified_lift": 0.04488352135642731
+   },
+   "deep_svdd": {
+    "chronological": 0.42551818873753816,
+    "chronological_lift": 0.24461753327616723,
+    "matched": 0.2835560259491952,
+    "stratified": 0.1268234647159015,
+    "stratified_lift": 0.02923813764333462
+   },
+   "dif": {
+    "chronological": 0.5513584289194638,
+    "chronological_lift": 0.4100840618558057,
+    "matched": 0.5000163337332706,
+    "stratified": 0.3239234268582213,
+    "stratified_lift": 0.24836579234772124
+   },
+   "ecod": {
+    "chronological": 0.2817499193806623,
+    "chronological_lift": 0.05557755356861555,
+    "matched": 0.2663757826009194,
+    "stratified": 0.11796448657005168,
+    "stratified_lift": 0.019389089053585155
+   },
+   "great_expectations": {
+    "chronological": 0.2730516924691682,
+    "chronological_lift": 0.044140310523289296,
+    "matched": 0.26150527265446616,
+    "stratified": 0.11856762237071017,
+    "stratified_lift": 0.02005963070174192
+   },
+   "hbos": {
+    "chronological": 0.26942152625294125,
+    "chronological_lift": 0.03936702813684617,
+    "matched": 0.2848376871217918,
+    "stratified": 0.1227232213490919,
+    "stratified_lift": 0.024679655221925306
+   },
+   "iqr": {
+    "chronological": 0.24749996635918964,
+    "chronological_lift": 0.010542508957402564,
+    "matched": 0.24421776489802477,
+    "stratified": 0.10579756361699544,
+    "stratified_lift": 0.005862403088282591
+   },
+   "isolation_forest": {
+    "chronological": 0.3340889421325012,
+    "chronological_lift": 0.12439780050613987,
+    "matched": 0.29653179883308667,
+    "stratified": 0.13118758895789115,
+    "stratified_lift": 0.03408999199983234
+   },
+   "knn": {
+    "chronological": 0.5161519153694325,
+    "chronological_lift": 0.3637912419112964,
+    "matched": 0.460828685791589,
+    "stratified": 0.2536758941261423,
+    "stratified_lift": 0.17026746635598325
+   },
+   "lof": {
+    "chronological": 0.48619903576068074,
+    "chronological_lift": 0.3244063917023419,
+    "matched": 0.39230036892209125,
+    "stratified": 0.20068638098760516,
+    "stratified_lift": 0.11135589878505375
+   },
+   "lunar": {
+    "chronological": 0.5433713904916467,
+    "chronological_lift": 0.3995819560081653,
+    "matched": 0.4769205072278682,
+    "stratified": 0.2713941688886169,
+    "stratified_lift": 0.1899659175982291
+   },
+   "ocsvm": {
+    "chronological": 0.33497438329188695,
+    "chronological_lift": 0.12556206143486415,
+    "matched": 0.2844251331604951,
+    "stratified": 0.12703912574392032,
+    "stratified_lift": 0.029477900729878374
+   },
+   "pca": {
+    "chronological": 0.5593882160270497,
+    "chronological_lift": 0.42064237766961005,
+    "matched": 0.5292164856348691,
+    "stratified": 0.37134892406309716,
+    "stratified_lift": 0.30109151518773875
+   },
+   "vae": {
+    "chronological": 0.44262551449546117,
+    "chronological_lift": 0.2671118467195639,
+    "matched": 0.3993259844697366,
+    "stratified": 0.21535947478339174,
+    "stratified_lift": 0.1276688427135084
+   },
+   "zscore": {
+    "chronological": 0.27136282620830876,
+    "chronological_lift": 0.0419196310568826,
+    "matched": 0.25462182618263807,
+    "stratified": 0.1099491933824169,
+    "stratified_lift": 0.010478014800276913
+   }
+  },
+  "nab/realTraffic/occupancy_t4013": {
+   "ae1svm": {
+    "chronological": 0.782059102991613,
+    "chronological_lift": 0.5026134129624542,
+    "matched": 0.7309604822732558,
+    "stratified": 0.2652202912946107,
+    "stratified_lift": 0.18269786219472425
+   },
+   "autoencoder": {
+    "chronological": 0.8068215302311825,
+    "chronological_lift": 0.559126437092024,
+    "matched": 0.779428359180568,
+    "stratified": 0.3919590861098795,
+    "stratified_lift": 0.3236705737682218
+   },
+   "copod": {
+    "chronological": 0.7825619231260468,
+    "chronological_lift": 0.5037609533919596,
+    "matched": 0.739926126256204,
+    "stratified": 0.29312992124168125,
+    "stratified_lift": 0.21374199685283143
+   },
+   "deep_svdd": {
+    "chronological": 0.7054491742686558,
+    "chronological_lift": 0.32777357563153364,
+    "matched": 0.6007205892036456,
+    "stratified": 0.15719038666891666,
+    "stratified_lift": 0.06253521895428467
+   },
+   "dif": {
+    "chronological": 0.8017489662777165,
+    "chronological_lift": 0.5475497880693899,
+    "matched": 0.7439405609977993,
+    "stratified": 0.34227277613195595,
+    "stratified_lift": 0.2684040402977192
+   },
+   "ecod": {
+    "chronological": 0.7875110251015611,
+    "chronological_lift": 0.5150558364281027,
+    "matched": 0.7649691272390526,
+    "stratified": 0.3179625758621019,
+    "stratified_lift": 0.24136358393286808
+   },
+   "great_expectations": {
+    "chronological": 0.6801887055025189,
+    "chronological_lift": 0.2701239168523744,
+    "matched": 0.5901702786377708,
+    "stratified": 0.15221703452178834,
+    "stratified_lift": 0.05700331422998559
+   },
+   "hbos": {
+    "chronological": 0.7444078428003291,
+    "chronological_lift": 0.4166853835688494,
+    "matched": 0.7252270279067362,
+    "stratified": 0.27725269049898815,
+    "stratified_lift": 0.1960816090186409
+   },
+   "iqr": {
+    "chronological": 0.6968347501092517,
+    "chronological_lift": 0.3081136628260223,
+    "matched": 0.6724228171209594,
+    "stratified": 0.32786711551697456,
+    "stratified_lift": 0.2523804932704533
+   },
+   "isolation_forest": {
+    "chronological": 0.7936914370510293,
+    "chronological_lift": 0.5291608256624718,
+    "matched": 0.7693715240839607,
+    "stratified": 0.36056520990279084,
+    "stratified_lift": 0.2887508803770486
+   },
+   "knn": {
+    "chronological": 0.7851712659426097,
+    "chronological_lift": 0.5097160179794528,
+    "matched": 0.7068757183532856,
+    "stratified": 0.2975297289557412,
+    "stratified_lift": 0.2186359428995576
+   },
+   "lof": {
+    "chronological": 0.7975960423022235,
+    "chronological_lift": 0.538071949303234,
+    "matched": 0.6312005035646833,
+    "stratified": 0.19177646930830067,
+    "stratified_lift": 0.101005632528011
+   },
+   "lunar": {
+    "chronological": 0.7891894621384631,
+    "chronological_lift": 0.5188863798497441,
+    "matched": 0.7013448653205623,
+    "stratified": 0.27661434577558686,
+    "stratified_lift": 0.19537157239009573
+   },
+   "ocsvm": {
+    "chronological": 0.8083668623957327,
+    "chronological_lift": 0.5626532074307521,
+    "matched": 0.7645317150734215,
+    "stratified": 0.366208818937705,
+    "stratified_lift": 0.29502831791992706
+   },
+   "pca": {
+    "chronological": 0.8597210334050416,
+    "chronological_lift": 0.6798541375869661,
+    "matched": 0.6923425449122533,
+    "stratified": 0.2162748903592005,
+    "stratified_lift": 0.1282554485756426
+   },
+   "vae": {
+    "chronological": 0.808384003960009,
+    "chronological_lift": 0.5626923280559715,
+    "matched": 0.7462885221517334,
+    "stratified": 0.3454863117050547,
+    "stratified_lift": 0.27197848507714084
+   },
+   "zscore": {
+    "chronological": 0.8127040338124363,
+    "chronological_lift": 0.572551537289732,
+    "matched": 0.7537973948155908,
+    "stratified": 0.3814224059782113,
+    "stratified_lift": 0.31195052884189184
+   }
+  },
+  "nab/realTraffic/speed_6005": {
+   "ae1svm": {
+    "chronological": 0.7259121653358817,
+    "chronological_lift": 0.23337838725524795,
+    "matched": 0.7114246827058216,
+    "stratified": 0.15711091588101983,
+    "stratified_lift": 0.06705705307170545
+   },
+   "autoencoder": {
+    "chronological": 0.7619221617253811,
+    "chronological_lift": 0.3340980764048253,
+    "matched": 0.6896866939046595,
+    "stratified": 0.1398317865953413,
+    "stratified_lift": 0.04793182995532635
+   },
+   "copod": {
+    "chronological": 0.7520629237674689,
+    "chronological_lift": 0.30652186196615355,
+    "matched": 0.7347325841773686,
+    "stratified": 0.1716995870737087,
+    "stratified_lift": 0.08320437085136466
+   },
+   "deep_svdd": {
+    "chronological": 0.7232219553275998,
+    "chronological_lift": 0.22585389008922657,
+    "matched": 0.7487176117048641,
+    "stratified": 0.18166214458067573,
+    "stratified_lift": 0.09423132319255839
+   },
+   "dif": {
+    "chronological": 0.8107568401903198,
+    "chronological_lift": 0.47068830489322533,
+    "matched": 0.7454234072158626,
+    "stratified": 0.2224787666272582,
+    "stratified_lift": 0.13940877343276323
+   },
+   "ecod": {
+    "chronological": 0.7346153603343477,
+    "chronological_lift": 0.25772115822840114,
+    "matched": 0.713986418305068,
+    "stratified": 0.14964830366207274,
+    "stratified_lift": 0.05879713896615651
+   },
+   "great_expectations": {
+    "chronological": 0.6888468979169479,
+    "chronological_lift": 0.12970711297071136,
+    "matched": 0.6626984126984128,
+    "stratified": 0.1260737753882915,
+    "stratified_lift": 0.032703919473138034
+   },
+   "hbos": {
+    "chronological": 0.7266559140821405,
+    "chronological_lift": 0.23545864690643806,
+    "matched": 0.7025758108123731,
+    "stratified": 0.14500020706434652,
+    "stratified_lift": 0.05365244197198122
+   },
+   "iqr": {
+    "chronological": 0.6933346830431455,
+    "chronological_lift": 0.14225941422594082,
+    "matched": 0.690489417989418,
+    "stratified": 0.21216998725770658,
+    "stratified_lift": 0.12799860905233862
+   },
+   "isolation_forest": {
+    "chronological": 0.7605608354882414,
+    "chronological_lift": 0.3302904571550812,
+    "matched": 0.7296615498108776,
+    "stratified": 0.19129858812964867,
+    "stratified_lift": 0.10489731971793032
+   },
+   "knn": {
+    "chronological": 0.8344720252318722,
+    "chronological_lift": 0.5370194991447855,
+    "matched": 0.7581008977896891,
+    "stratified": 0.23213463375716237,
+    "stratified_lift": 0.1500962687450756
+   },
+   "lof": {
+    "chronological": 0.8432773695549864,
+    "chronological_lift": 0.5616479810109396,
+    "matched": 0.7490843460627338,
+    "stratified": 0.19291605605866233,
+    "stratified_lift": 0.10668759713958334
+   },
+   "lunar": {
+    "chronological": 0.8200176495420899,
+    "chronological_lift": 0.49659071901998075,
+    "matched": 0.7472310277750303,
+    "stratified": 0.20475044412556093,
+    "stratified_lift": 0.11978636551403168
+   },
+   "ocsvm": {
+    "chronological": 0.7708907861669254,
+    "chronological_lift": 0.3591832515345583,
+    "matched": 0.7362916028217802,
+    "stratified": 0.22868058855577683,
+    "stratified_lift": 0.1462731950219506
+   },
+   "pca": {
+    "chronological": 0.8555213483238742,
+    "chronological_lift": 0.5958942975675278,
+    "matched": 0.7608401334236727,
+    "stratified": 0.17861318973483992,
+    "stratified_lift": 0.09085661948299671
+   },
+   "vae": {
+    "chronological": 0.7750271283140499,
+    "chronological_lift": 0.3707525694197485,
+    "matched": 0.7341756773721411,
+    "stratified": 0.21424466972274053,
+    "stratified_lift": 0.130294949590302
+   },
+   "zscore": {
+    "chronological": 0.7642680851854162,
+    "chronological_lift": 0.34065960668402134,
+    "matched": 0.723478947197615,
+    "stratified": 0.2323407182901358,
+    "stratified_lift": 0.15032437125005646
+   }
+  },
+  "nab/realTraffic/speed_t4013": {
+   "ae1svm": {
+    "chronological": 0.817123206797896,
+    "chronological_lift": 0.5785882591429776,
+    "matched": 0.775146182139004,
+    "stratified": 0.3055399242773875,
+    "stratified_lift": 0.22737017239505833
+   },
+   "autoencoder": {
+    "chronological": 0.8040578163183991,
+    "chronological_lift": 0.5484810549945719,
+    "matched": 0.7572937319370189,
+    "stratified": 0.3291771712553961,
+    "stratified_lift": 0.25366807301759736
+   },
+   "copod": {
+    "chronological": 0.8081973489810129,
+    "chronological_lift": 0.5580199780866819,
+    "matched": 0.7966501436444886,
+    "stratified": 0.31587891756331116,
+    "stratified_lift": 0.23887294250290045
+   },
+   "deep_svdd": {
+    "chronological": 0.7103439585825412,
+    "chronological_lift": 0.33253173064672537,
+    "matched": 0.7194388683049948,
+    "stratified": 0.1792421094347521,
+    "stratified_lift": 0.0868560344048953
+   },
+   "dif": {
+    "chronological": 0.8277081137438171,
+    "chronological_lift": 0.6029795664531439,
+    "matched": 0.8227935677663167,
+    "stratified": 0.42929798396454827,
+    "stratified_lift": 0.36505867554092697
+   },
+   "ecod": {
+    "chronological": 0.79658467774544,
+    "chronological_lift": 0.5312603443699269,
+    "matched": 0.7759624095698874,
+    "stratified": 0.302405196503552,
+    "stratified_lift": 0.22388259367864793
+   },
+   "great_expectations": {
+    "chronological": 0.698292902066487,
+    "chronological_lift": 0.3047619047619048,
+    "matched": 0.5885183340328666,
+    "stratified": 0.13205900396069215,
+    "stratified_lift": 0.03436190850376871
+   },
+   "hbos": {
+    "chronological": 0.7541881214169268,
+    "chronological_lift": 0.43356393196074444,
+    "matched": 0.8026921088621336,
+    "stratified": 0.331454400362944,
+    "stratified_lift": 0.256201631380835
+   },
+   "iqr": {
+    "chronological": 0.7753973526156692,
+    "chronological_lift": 0.48243737776654216,
+    "matched": 0.7288349062694982,
+    "stratified": 0.3919528350871892,
+    "stratified_lift": 0.32350988541217673
+   },
+   "isolation_forest": {
+    "chronological": 0.8165341878648225,
+    "chronological_lift": 0.5772309546450257,
+    "matched": 0.808598470157657,
+    "stratified": 0.3984896563509791,
+    "stratified_lift": 0.33078250375653734
+   },
+   "knn": {
+    "chronological": 0.82323809927041,
+    "chronological_lift": 0.592679098318771,
+    "matched": 0.8035331362324649,
+    "stratified": 0.3543589710443122,
+    "stratified_lift": 0.28168438426406817
+   },
+   "lof": {
+    "chronological": 0.8279516892825773,
+    "chronological_lift": 0.6035408492163739,
+    "matched": 0.6964564201814671,
+    "stratified": 0.2135725297762721,
+    "stratified_lift": 0.125050752398545
+   },
+   "lunar": {
+    "chronological": 0.822262903037263,
+    "chronological_lift": 0.5904319069989105,
+    "matched": 0.800500606103619,
+    "stratified": 0.3484061731427443,
+    "stratified_lift": 0.27506152806651113
+   },
+   "ocsvm": {
+    "chronological": 0.8305188419385426,
+    "chronological_lift": 0.6094564618583809,
+    "matched": 0.8082368008180338,
+    "stratified": 0.40636301337089725,
+    "stratified_lift": 0.3395421008732495
+   },
+   "pca": {
+    "chronological": 0.8183881100470394,
+    "chronological_lift": 0.5815030361953516,
+    "matched": 0.6142758696388437,
+    "stratified": 0.12990008833068745,
+    "stratified_lift": 0.03195998120897285
+   },
+   "vae": {
+    "chronological": 0.8157265338267675,
+    "chronological_lift": 0.5753698388182035,
+    "matched": 0.7985679452417903,
+    "stratified": 0.36879444430817604,
+    "stratified_lift": 0.2977447419565525
+   },
+   "zscore": {
+    "chronological": 0.8240526440010274,
+    "chronological_lift": 0.5945560926980197,
+    "matched": 0.8025387555643387,
+    "stratified": 0.39863618086016345,
+    "stratified_lift": 0.3309455213441981
+   }
+  },
+  "nab/realTweets/Twitter_volume_CVS": {
+   "ae1svm": {
+    "chronological": 0.29629927074218154,
+    "chronological_lift": 0.20679201139662132,
+    "matched": 0.21383257705531875,
+    "stratified": 0.1924545704945539,
+    "stratified_lift": 0.10629681859458111
+   },
+   "autoencoder": {
+    "chronological": 0.2776200453968027,
+    "chronological_lift": 0.18573688078661904,
+    "matched": 0.22095721410536542,
+    "stratified": 0.20105995297386708,
+    "stratified_lift": 0.11582031710993093
+   },
+   "copod": {
+    "chronological": 0.1736449239840388,
+    "chronological_lift": 0.0685366371438501,
+    "matched": 0.16674322506014583,
+    "stratified": 0.14608959011855688,
+    "stratified_lift": 0.054985116548041446
+   },
+   "deep_svdd": {
+    "chronological": 0.14633994545313672,
+    "chronological_lift": 0.037758600119221504,
+    "matched": 0.1598196663046526,
+    "stratified": 0.14013039390077126,
+    "stratified_lift": 0.04839012829863023
+   },
+   "dif": {
+    "chronological": 0.2892806863579765,
+    "chronological_lift": 0.1988806977219716,
+    "matched": 0.2304619194171531,
+    "stratified": 0.21170610126856867,
+    "stratified_lift": 0.1276023125903778
+   },
+   "ecod": {
+    "chronological": 0.22103201376155224,
+    "chronological_lift": 0.12195113084180662,
+    "matched": 0.17932982962720578,
+    "stratified": 0.15847912430842429,
+    "stratified_lift": 0.06869650134084095
+   },
+   "great_expectations": {
+    "chronological": 0.13411885434980486,
+    "chronological_lift": 0.02398304654996988,
+    "matched": 0.13580016404750986,
+    "stratified": 0.11912982226027505,
+    "stratified_lift": 0.02514898668516351
+   },
+   "hbos": {
+    "chronological": 0.2615028084585769,
+    "chronological_lift": 0.16756961086336974,
+    "matched": 0.18717948381445496,
+    "stratified": 0.16963919157435142,
+    "stratified_lift": 0.08104724627213931
+   },
+   "iqr": {
+    "chronological": 0.2895704803739323,
+    "chronological_lift": 0.1992073521063546,
+    "matched": 0.20952462574115552,
+    "stratified": 0.18973577932938998,
+    "stratified_lift": 0.10328795714220192
+   },
+   "isolation_forest": {
+    "chronological": 0.2708064502746871,
+    "chronological_lift": 0.17805662999638433,
+    "matched": 0.2086165126360931,
+    "stratified": 0.18878901526690656,
+    "stratified_lift": 0.1022401819660116
+   },
+   "knn": {
+    "chronological": 0.2795566071454832,
+    "chronological_lift": 0.18791976363100263,
+    "matched": 0.199133173726788,
+    "stratified": 0.1790461816861363,
+    "stratified_lift": 0.09145787666292748
+   },
+   "lof": {
+    "chronological": 0.14642247558302035,
+    "chronological_lift": 0.03785162767426356,
+    "matched": 0.1461004721745109,
+    "stratified": 0.1255312750809415,
+    "stratified_lift": 0.03223341629421961
+   },
+   "lunar": {
+    "chronological": 0.2791198015538162,
+    "chronological_lift": 0.1874273985241165,
+    "matched": 0.18338402984872154,
+    "stratified": 0.16406058811246066,
+    "stratified_lift": 0.07487345656380757
+   },
+   "ocsvm": {
+    "chronological": 0.2880682875390982,
+    "chronological_lift": 0.19751408775764506,
+    "matched": 0.2183752488909268,
+    "stratified": 0.19823743726627843,
+    "stratified_lift": 0.11269666464992809
+   },
+   "pca": {
+    "chronological": 0.29468416154853816,
+    "chronological_lift": 0.20497146828560894,
+    "matched": 0.23728293909177922,
+    "stratified": 0.21902319195423967,
+    "stratified_lift": 0.135700070295998
+   },
+   "vae": {
+    "chronological": 0.26945078535102424,
+    "chronological_lift": 0.17652853118589582,
+    "matched": 0.2219392538683318,
+    "stratified": 0.20295000761685902,
+    "stratified_lift": 0.1179120233914047
+   },
+   "zscore": {
+    "chronological": 0.29861235733874086,
+    "chronological_lift": 0.20939931119103442,
+    "matched": 0.22838227404850656,
+    "stratified": 0.20931730114736516,
+    "stratified_lift": 0.12495864922475307
+   }
+  },
+  "nab/realTweets/Twitter_volume_IBM": {
+   "ae1svm": {
+    "chronological": 0.39184028217347655,
+    "chronological_lift": 0.0869935131494626,
+    "matched": 0.3952604912096257,
+    "stratified": 0.13955252049333616,
+    "stratified_lift": 0.04373968399108842
+   },
+   "autoencoder": {
+    "chronological": 0.4249055869945493,
+    "chronological_lift": 0.1366331668562559,
+    "matched": 0.4001711758853843,
+    "stratified": 0.15205298217556848,
+    "stratified_lift": 0.057632101277687246
+   },
+   "copod": {
+    "chronological": 0.4306407723555191,
+    "chronological_lift": 0.14524317716172197,
+    "matched": 0.3901822554558279,
+    "stratified": 0.13906209108992726,
+    "stratified_lift": 0.043194644128164136
+   },
+   "deep_svdd": {
+    "chronological": 0.4513115589470531,
+    "chronological_lift": 0.17627542361471216,
+    "matched": 0.37402124114484575,
+    "stratified": 0.12573955522013858,
+    "stratified_lift": 0.028388612773189936
+   },
+   "dif": {
+    "chronological": 0.43858967443937724,
+    "chronological_lift": 0.15717655412368048,
+    "matched": 0.3969398439325368,
+    "stratified": 0.1456943007376932,
+    "stratified_lift": 0.05056536581038263
+   },
+   "ecod": {
+    "chronological": 0.42481790026917626,
+    "chronological_lift": 0.13650152619225014,
+    "matched": 0.39129761125779966,
+    "stratified": 0.1447650766310438,
+    "stratified_lift": 0.04953267042916409
+   },
+   "great_expectations": {
+    "chronological": 0.3551354388444803,
+    "chronological_lift": 0.0318899620988068,
+    "matched": 0.3510068454919465,
+    "stratified": 0.11676436732703255,
+    "stratified_lift": 0.01841401674575807
+   },
+   "hbos": {
+    "chronological": 0.44820597715417654,
+    "chronological_lift": 0.17161313468101788,
+    "matched": 0.37647340856239436,
+    "stratified": 0.13020308044801043,
+    "stratified_lift": 0.03334916196018472
+   },
+   "iqr": {
+    "chronological": 0.3854504792466713,
+    "chronological_lift": 0.07740075100020453,
+    "matched": 0.3882950012393038,
+    "stratified": 0.14709641998689355,
+    "stratified_lift": 0.052123614312767956
+   },
+   "isolation_forest": {
+    "chronological": 0.42951273241786125,
+    "chronological_lift": 0.14354969475846638,
+    "matched": 0.3977260637661544,
+    "stratified": 0.1471175738008774,
+    "stratified_lift": 0.05214712365334571
+   },
+   "knn": {
+    "chronological": 0.4648132948357897,
+    "chronological_lift": 0.19654505359647875,
+    "matched": 0.39516302733297665,
+    "stratified": 0.14509354781096032,
+    "stratified_lift": 0.049897717642140856
+   },
+   "lof": {
+    "chronological": 0.44877949034244236,
+    "chronological_lift": 0.17247412768307394,
+    "matched": 0.33246220600499443,
+    "stratified": 0.10330897334432379,
+    "stratified_lift": 0.0034603332166870397
+   },
+   "lunar": {
+    "chronological": 0.4728579204335698,
+    "chronological_lift": 0.20862213653993045,
+    "matched": 0.3918479790332535,
+    "stratified": 0.13921783837710192,
+    "stratified_lift": 0.0433677342395287
+   },
+   "ocsvm": {
+    "chronological": 0.4402750849635107,
+    "chronological_lift": 0.1597067952699363,
+    "matched": 0.4004406152533882,
+    "stratified": 0.14794889934540378,
+    "stratified_lift": 0.05307101923889717
+   },
+   "pca": {
+    "chronological": 0.3667575045518643,
+    "chronological_lift": 0.049337716480446964,
+    "matched": 0.375833203341034,
+    "stratified": 0.12791649446681114,
+    "stratified_lift": 0.03080795928943385
+   },
+   "vae": {
+    "chronological": 0.4427460984133728,
+    "chronological_lift": 0.16341643147682264,
+    "matched": 0.40301296551180865,
+    "stratified": 0.15331534058947138,
+    "stratified_lift": 0.059035026249339685
+   },
+   "zscore": {
+    "chronological": 0.4138989303156816,
+    "chronological_lift": 0.12010930206912855,
+    "matched": 0.40276964666293064,
+    "stratified": 0.15008134700416004,
+    "stratified_lift": 0.05544091992499584
+   }
+  },
+  "nab/realTweets/Twitter_volume_KO": {
+   "ae1svm": {
+    "chronological": 0.1190989343137757,
+    "chronological_lift": 0.01869604549494245,
+    "matched": 0.1510998136137811,
+    "stratified": 0.14840781212272972,
+    "stratified_lift": 0.05350073331927269
+   },
+   "autoencoder": {
+    "chronological": 0.12520211792489103,
+    "chronological_lift": 0.025494854630213976,
+    "matched": 0.13788579500225137,
+    "stratified": 0.1353871430959117,
+    "stratified_lift": 0.03902895461931142
+   },
+   "copod": {
+    "chronological": 0.11939508375378768,
+    "chronological_lift": 0.01902594930358619,
+    "matched": 0.1327619521483812,
+    "stratified": 0.13049197999959145,
+    "stratified_lift": 0.03358824209645602
+   },
+   "deep_svdd": {
+    "chronological": 0.17333067401673852,
+    "chronological_lift": 0.07910898254678893,
+    "matched": 0.12004516230395623,
+    "stratified": 0.11791501628228025,
+    "stratified_lift": 0.019609618167110217
+   },
+   "dif": {
+    "chronological": 0.13544135923229478,
+    "chronological_lift": 0.03690113891965296,
+    "matched": 0.15351706142734345,
+    "stratified": 0.15121753587857217,
+    "stratified_lift": 0.05662359131672484
+   },
+   "ecod": {
+    "chronological": 0.1162077479130605,
+    "chronological_lift": 0.015475328936922468,
+    "matched": 0.13706619117659408,
+    "stratified": 0.13483039693275828,
+    "stratified_lift": 0.03841016097294699
+   },
+   "great_expectations": {
+    "chronological": 0.10693152634673102,
+    "chronological_lift": 0.00514182695754511,
+    "matched": 0.11396103832146998,
+    "stratified": 0.11167714018008137,
+    "stratified_lift": 0.012676551799869932
+   },
+   "hbos": {
+    "chronological": 0.14706927316567342,
+    "chronological_lift": 0.04985437324975346,
+    "matched": 0.13940985939153425,
+    "stratified": 0.1372073983450917,
+    "stratified_lift": 0.041052071180320684
+   },
+   "iqr": {
+    "chronological": 0.11522084864347396,
+    "chronological_lift": 0.01437594536972357,
+    "matched": 0.15543095274345867,
+    "stratified": 0.15291727483304252,
+    "stratified_lift": 0.058512760448213755
+   },
+   "isolation_forest": {
+    "chronological": 0.12126709925611408,
+    "chronological_lift": 0.02111133242648731,
+    "matched": 0.1419450778540713,
+    "stratified": 0.13975581692596079,
+    "stratified_lift": 0.04388450242185262
+   },
+   "knn": {
+    "chronological": 0.13732457847625312,
+    "chronological_lift": 0.038999002758490234,
+    "matched": 0.1386184979445168,
+    "stratified": 0.13613269589758323,
+    "stratified_lift": 0.03985759676762989
+   },
+   "lof": {
+    "chronological": 0.131751613117023,
+    "chronological_lift": 0.03279084481844729,
+    "matched": 0.14852271948430845,
+    "stratified": 0.14580960557989958,
+    "stratified_lift": 0.050612965415243724
+   },
+   "lunar": {
+    "chronological": 0.1407126362079937,
+    "chronological_lift": 0.042773222792675925,
+    "matched": 0.13746072439733786,
+    "stratified": 0.13504765374542485,
+    "stratified_lift": 0.038651630325058924
+   },
+   "ocsvm": {
+    "chronological": 0.1269000324973463,
+    "chronological_lift": 0.027386293236959413,
+    "matched": 0.14830686972311172,
+    "stratified": 0.1456640305550134,
+    "stratified_lift": 0.050451166544536304
+   },
+   "pca": {
+    "chronological": 0.11380647408065621,
+    "chronological_lift": 0.012800363950074346,
+    "matched": 0.16276531783801435,
+    "stratified": 0.16052641733659292,
+    "stratified_lift": 0.0669699162349899
+   },
+   "vae": {
+    "chronological": 0.134807817820312,
+    "chronological_lift": 0.036195388050300675,
+    "matched": 0.15706812956678948,
+    "stratified": 0.15447333376441885,
+    "stratified_lift": 0.06024223690234952
+   },
+   "zscore": {
+    "chronological": 0.12186288693274056,
+    "chronological_lift": 0.021775026484642978,
+    "matched": 0.15778607159658645,
+    "stratified": 0.1550725311120342,
+    "stratified_lift": 0.060908212774590256
+   }
+  },
+  "skab/other/10": {
+   "ae1svm": {
+    "chronological": 0.14590142720913563,
+    "chronological_lift": 0.0010543008293984043,
+    "matched": 0.16366383361514145,
+    "stratified": 0.4288730162617288,
+    "stratified_lift": -0.02278745940713344
+   },
+   "autoencoder": {
+    "chronological": 0.2681278423783853,
+    "chronological_lift": 0.14400917237238045,
+    "matched": 0.21601586117582583,
+    "stratified": 0.5113056032357014,
+    "stratified_lift": 0.124834730760831
+   },
+   "copod": {
+    "chronological": 0.14254375438865113,
+    "chronological_lift": -0.0028728018846185454,
+    "matched": 0.23331865489089418,
+    "stratified": 0.533814442237783,
+    "stratified_lift": 0.16514408211813494
+   },
+   "deep_svdd": {
+    "chronological": 0.18479674828824585,
+    "chronological_lift": 0.04654590443069692,
+    "matched": 0.1623841999353763,
+    "stratified": 0.4357939547141535,
+    "stratified_lift": -0.010393282178567215
+   },
+   "dif": {
+    "chronological": 0.14941934743638502,
+    "chronological_lift": 0.0051688274109766424,
+    "matched": 0.19100500580191973,
+    "stratified": 0.4766374502349807,
+    "stratified_lift": 0.06275019765427722
+   },
+   "ecod": {
+    "chronological": 0.13240317376375288,
+    "chronological_lift": -0.014733130100873813,
+    "matched": 0.2494255868798328,
+    "stratified": 0.5700397804981329,
+    "stratified_lift": 0.23001725873282367
+   },
+   "great_expectations": {
+    "chronological": 0.13517241379310346,
+    "chronological_lift": -0.01149425287356319,
+    "matched": 0.1476864872103924,
+    "stratified": 0.44207864357864357,
+    "stratified_lift": 0.0008614845193792471
+   },
+   "hbos": {
+    "chronological": 0.15137123945130002,
+    "chronological_lift": 0.007451742048304124,
+    "matched": 0.295125017988656,
+    "stratified": 0.6032755771543232,
+    "stratified_lift": 0.2895366948499149
+   },
+   "iqr": {
+    "chronological": 0.16289403881055423,
+    "chronological_lift": 0.02092870036322133,
+    "matched": 0.16594236752935024,
+    "stratified": 0.45245828319373904,
+    "stratified_lift": 0.019449584072998263
+   },
+   "isolation_forest": {
+    "chronological": 0.1641711919894306,
+    "chronological_lift": 0.022422446771263857,
+    "matched": 0.2670906001957769,
+    "stratified": 0.5786109607075447,
+    "stratified_lift": 0.2453667272050092
+   },
+   "knn": {
+    "chronological": 0.19468507308048305,
+    "chronological_lift": 0.058111196585360306,
+    "matched": 0.23196658161057768,
+    "stratified": 0.5382345344369737,
+    "stratified_lift": 0.173059685827077
+   },
+   "lof": {
+    "chronological": 0.29706146582234133,
+    "chronological_lift": 0.1778496676284694,
+    "matched": 0.18438088784610965,
+    "stratified": 0.46769312583137923,
+    "stratified_lift": 0.046732493897760116
+   },
+   "lunar": {
+    "chronological": 0.1466873676532126,
+    "chronological_lift": 0.0019735294189621266,
+    "matched": 0.24442423880878708,
+    "stratified": 0.5504930529537894,
+    "stratified_lift": 0.19501252533020041
+   },
+   "ocsvm": {
+    "chronological": 0.19657981198512894,
+    "chronological_lift": 0.060327265479682986,
+    "matched": 0.22763498926607437,
+    "stratified": 0.5227667190804027,
+    "stratified_lift": 0.14535956304952016
+   },
+   "pca": {
+    "chronological": 0.37509986754117314,
+    "chronological_lift": 0.26912265209493935,
+    "matched": 0.2100556118137104,
+    "stratified": 0.5161431221490395,
+    "stratified_lift": 0.1334978719187252
+   },
+   "vae": {
+    "chronological": 0.2605372430141408,
+    "chronological_lift": 0.13513127837911204,
+    "matched": 0.2747365379306125,
+    "stratified": 0.5810701114627255,
+    "stratified_lift": 0.24977063145888895
+   },
+   "zscore": {
+    "chronological": 0.16101610602714406,
+    "chronological_lift": 0.01873228775104569,
+    "matched": 0.2309007380297498,
+    "stratified": 0.5241632352702185,
+    "stratified_lift": 0.1478604766580026
+   }
+  },
+  "skab/other/14": {
+   "ae1svm": {
+    "chronological": 0.7683825936150415,
+    "chronological_lift": 0.015626022863926444,
+    "matched": 0.750818450427095,
+    "stratified": 0.33372576360718975,
+    "stratified_lift": 3.617921145390139e-05
+   },
+   "autoencoder": {
+    "chronological": 0.7266780178419185,
+    "chronological_lift": -0.16161842417184594,
+    "matched": 0.8661397799152732,
+    "stratified": 0.4719547193633099,
+    "stratified_lift": 0.20749423055355798
+   },
+   "copod": {
+    "chronological": 0.789841258248319,
+    "chronological_lift": 0.1068253475553558,
+    "matched": 0.8511193653573308,
+    "stratified": 0.4742403176557352,
+    "stratified_lift": 0.21092452318149313
+   },
+   "deep_svdd": {
+    "chronological": 0.7512442848933804,
+    "chronological_lift": -0.05721178920313326,
+    "matched": 0.9105928411004965,
+    "stratified": 0.6210668272393258,
+    "stratified_lift": 0.4312860342480761
+   },
+   "dif": {
+    "chronological": 0.7123582426013312,
+    "chronological_lift": -0.2224774689443422,
+    "matched": 0.8449868433613066,
+    "stratified": 0.4641772609336556,
+    "stratified_lift": 0.19582159393857096
+   },
+   "ecod": {
+    "chronological": 0.7728137384973286,
+    "chronological_lift": 0.034458388613646744,
+    "matched": 0.8625879750149815,
+    "stratified": 0.5038116810030953,
+    "stratified_lift": 0.2553060884043138
+   },
+   "great_expectations": {
+    "chronological": 0.7484602815485168,
+    "chronological_lift": -0.06904380341880316,
+    "matched": 0.7726303938426267,
+    "stratified": 0.34474527395499266,
+    "stratified_lift": 0.01657458197225263
+   },
+   "hbos": {
+    "chronological": 0.7728711661075601,
+    "chronological_lift": 0.03470245595713075,
+    "matched": 0.8960265460627855,
+    "stratified": 0.6116948884708286,
+    "stratified_lift": 0.4172203550018241
+   },
+   "iqr": {
+    "chronological": 0.9997304097771387,
+    "chronological_lift": 0.9988542415528394,
+    "matched": 0.7659724567852793,
+    "stratified": 0.33981454278435697,
+    "stratified_lift": 0.009174396716157598
+   },
+   "isolation_forest": {
+    "chronological": 0.7853690420103525,
+    "chronological_lift": 0.08781842854399839,
+    "matched": 0.8735669312122878,
+    "stratified": 0.5423910709296902,
+    "stratified_lift": 0.31320716283809225
+   },
+   "knn": {
+    "chronological": 0.7774143471592438,
+    "chronological_lift": 0.05401097542678655,
+    "matched": 0.8634674164614825,
+    "stratified": 0.4876410990164991,
+    "stratified_lift": 0.23103680698164458
+   },
+   "lof": {
+    "chronological": 0.7576217373719967,
+    "chronological_lift": -0.03010761616901391,
+    "matched": 0.7828148574139548,
+    "stratified": 0.3445160235899,
+    "stratified_lift": 0.01623051633310033
+   },
+   "lunar": {
+    "chronological": 0.7707188831924648,
+    "chronological_lift": 0.0255552535679758,
+    "matched": 0.870187858894678,
+    "stratified": 0.5149957314433063,
+    "stratified_lift": 0.2720914377382956
+   },
+   "ocsvm": {
+    "chronological": 0.7675617178852274,
+    "chronological_lift": 0.012137301012216769,
+    "matched": 0.8052019152279477,
+    "stratified": 0.40025498829764744,
+    "stratified_lift": 0.09988518144174281
+   },
+   "pca": {
+    "chronological": 0.696173910361944,
+    "chronological_lift": -0.2912608809617378,
+    "matched": 0.8460421775224312,
+    "stratified": 0.4735064602514726,
+    "stratified_lift": 0.20982312856978885
+   },
+   "vae": {
+    "chronological": 0.7500361115170234,
+    "chronological_lift": -0.06234652605265019,
+    "matched": 0.836151479540393,
+    "stratified": 0.45087892299806026,
+    "stratified_lift": 0.17586306022096937
+   },
+   "zscore": {
+    "chronological": 0.8376829236682696,
+    "chronological_lift": 0.31015242559014583,
+    "matched": 0.7872912955532029,
+    "stratified": 0.37374937546408593,
+    "stratified_lift": 0.060104784071306386
+   }
+  },
+  "skab/valve1/7": {
+   "ae1svm": {
+    "chronological": 0.2407300929791158,
+    "chronological_lift": -0.12864445638239544,
+    "matched": 0.4047383306130313,
+    "stratified": 0.44522881141965565,
+    "stratified_lift": 0.11912963670987416
+   },
+   "autoencoder": {
+    "chronological": 0.2501800728365163,
+    "chronological_lift": -0.11459718902680012,
+    "matched": 0.3246468522018148,
+    "stratified": 0.3638366535583159,
+    "stratified_lift": -0.010105516701309705
+   },
+   "copod": {
+    "chronological": 0.24746717144263897,
+    "chronological_lift": -0.1186298802879691,
+    "matched": 0.3237219695819985,
+    "stratified": 0.3640697587996334,
+    "stratified_lift": -0.00973539023686657
+   },
+   "deep_svdd": {
+    "chronological": 0.24465473480651928,
+    "chronological_lift": -0.12281052934166052,
+    "matched": 0.3066979168914706,
+    "stratified": 0.33907787378665805,
+    "stratified_lift": -0.0494177156420843
+   },
+   "dif": {
+    "chronological": 0.24872480557364496,
+    "chronological_lift": -0.11676042414728452,
+    "matched": 0.4870280953191542,
+    "stratified": 0.5308804487509621,
+    "stratified_lift": 0.25512802747975694
+   },
+   "ecod": {
+    "chronological": 0.2477899430566084,
+    "chronological_lift": -0.1181500846455821,
+    "matched": 0.300942776576454,
+    "stratified": 0.34331386163066346,
+    "stratified_lift": -0.04269177848483913
+   },
+   "great_expectations": {
+    "chronological": 0.28153162834013895,
+    "chronological_lift": -0.06799352544033399,
+    "matched": 0.32811270744857085,
+    "stratified": 0.3697870981477539,
+    "stratified_lift": -0.0006573506913747706
+   },
+   "hbos": {
+    "chronological": 0.2786832450323528,
+    "chronological_lift": -0.07222760873569177,
+    "matched": 0.45701183051805916,
+    "stratified": 0.5037371931083932,
+    "stratified_lift": 0.2120297376786388
+   },
+   "iqr": {
+    "chronological": 0.32348484848484854,
+    "chronological_lift": -0.005630630630630543,
+    "matched": 0.33695922813569873,
+    "stratified": 0.3753911480140988,
+    "stratified_lift": 0.008240806861283145
+   },
+   "isolation_forest": {
+    "chronological": 0.2757210188623307,
+    "chronological_lift": -0.07663091790734626,
+    "matched": 0.3759574010989784,
+    "stratified": 0.42013861842582045,
+    "stratified_lift": 0.07929121706509085
+   },
+   "knn": {
+    "chronological": 0.23338339875709813,
+    "chronological_lift": -0.13956521806377306,
+    "matched": 0.3326791509886017,
+    "stratified": 0.36847746905916007,
+    "stratified_lift": -0.0027367907826979254
+   },
+   "lof": {
+    "chronological": 0.23848036979456583,
+    "chronological_lift": -0.1319886394945643,
+    "matched": 0.3035031800911284,
+    "stratified": 0.339890714341191,
+    "stratified_lift": -0.04812708056710745
+   },
+   "lunar": {
+    "chronological": 0.22546204093533373,
+    "chronological_lift": -0.15134020942044984,
+    "matched": 0.33084018380626345,
+    "stratified": 0.36933786188661805,
+    "stratified_lift": -0.0013706518084758228
+   },
+   "ocsvm": {
+    "chronological": 0.24658251184110339,
+    "chronological_lift": -0.11994491483079227,
+    "matched": 0.33927172850672294,
+    "stratified": 0.3802746272625567,
+    "stratified_lift": 0.01599483632109872
+   },
+   "pca": {
+    "chronological": 0.4259222776175835,
+    "chronological_lift": 0.1466412234855971,
+    "matched": 0.3107934120130677,
+    "stratified": 0.35560296727051927,
+    "stratified_lift": -0.023179033100220476
+   },
+   "vae": {
+    "chronological": 0.25128496540457246,
+    "chronological_lift": -0.11295478115536527,
+    "matched": 0.3404334848360239,
+    "stratified": 0.38146682364269996,
+    "stratified_lift": 0.017887815769395896
+   },
+   "zscore": {
+    "chronological": 0.22521188374570755,
+    "chronological_lift": -0.1517120647023266,
+    "matched": 0.32512956787439445,
+    "stratified": 0.36298931277455104,
+    "stratified_lift": -0.011450931530683809
+   }
+  },
+  "skab/valve2/3": {
+   "ae1svm": {
+    "chronological": 0.7111557403688737,
+    "chronological_lift": -0.20351774846302612,
+    "matched": 0.8368843243280109,
+    "stratified": 0.5290195547969309,
+    "stratified_lift": 0.21895742837157703
+   },
+   "autoencoder": {
+    "chronological": 0.5629029359571125,
+    "chronological_lift": -0.8212377668453646,
+    "matched": 0.7617291686304368,
+    "stratified": 0.40490316228429857,
+    "stratified_lift": 0.01313107745479513
+   },
+   "copod": {
+    "chronological": 0.7868118418989433,
+    "chronological_lift": 0.11171600791226358,
+    "matched": 0.8142729822818735,
+    "stratified": 0.49502544255159275,
+    "stratified_lift": 0.16258385889805801
+   },
+   "deep_svdd": {
+    "chronological": 0.5590465607315184,
+    "chronological_lift": -0.8373059969520068,
+    "matched": 0.7279431396253713,
+    "stratified": 0.3606005574946179,
+    "stratified_lift": -0.06033740882142533
+   },
+   "dif": {
+    "chronological": 0.622501924122536,
+    "chronological_lift": -0.5729086494894333,
+    "matched": 0.8334956460248371,
+    "stratified": 0.5230969484066795,
+    "stratified_lift": 0.20913577277441023
+   },
+   "ecod": {
+    "chronological": 0.6607941164407205,
+    "chronological_lift": -0.4133578481636646,
+    "matched": 0.7783184069494348,
+    "stratified": 0.44094213310542074,
+    "stratified_lift": 0.0728957040664894
+   },
+   "great_expectations": {
+    "chronological": 0.689067514912606,
+    "chronological_lift": -0.29555202119747515,
+    "matched": 0.761895218002813,
+    "stratified": 0.4033769841269841,
+    "stratified_lift": 0.010600165343915276
+   },
+   "hbos": {
+    "chronological": 0.8450231527814767,
+    "chronological_lift": 0.35426313658948605,
+    "matched": 0.8215273901161846,
+    "stratified": 0.4806015515323675,
+    "stratified_lift": 0.13866423962450944
+   },
+   "iqr": {
+    "chronological": 0.6896029956062271,
+    "chronological_lift": -0.29332085164072064,
+    "matched": 0.7663755274261603,
+    "stratified": 0.4100357142857143,
+    "stratified_lift": 0.021642559523809522
+   },
+   "isolation_forest": {
+    "chronological": 0.8282439669401555,
+    "chronological_lift": 0.2843498622506477,
+    "matched": 0.8142006070313055,
+    "stratified": 0.49149577235324227,
+    "stratified_lift": 0.1567304891524601
+   },
+   "knn": {
+    "chronological": 0.5550383362298905,
+    "chronological_lift": -0.8540069323754562,
+    "matched": 0.7827658845408554,
+    "stratified": 0.43037906164824624,
+    "stratified_lift": 0.05537861056667503
+   },
+   "lof": {
+    "chronological": 0.5554392334325073,
+    "chronological_lift": -0.8523365273645528,
+    "matched": 0.7898743929558013,
+    "stratified": 0.4491639743562086,
+    "stratified_lift": 0.08653025747404591
+   },
+   "lunar": {
+    "chronological": 0.560343222621527,
+    "chronological_lift": -0.8319032390769708,
+    "matched": 0.7789634863006635,
+    "stratified": 0.424941050842483,
+    "stratified_lift": 0.046360575980451006
+   },
+   "ocsvm": {
+    "chronological": 0.569532531354851,
+    "chronological_lift": -0.7936144526881207,
+    "matched": 0.7856456796626211,
+    "stratified": 0.4376465868085592,
+    "stratified_lift": 0.06743058979086072
+   },
+   "pca": {
+    "chronological": 0.6945672318144189,
+    "chronological_lift": -0.27263653410658784,
+    "matched": 0.6585419991683054,
+    "stratified": 0.2952963879182954,
+    "stratified_lift": -0.16863349003549352
+   },
+   "vae": {
+    "chronological": 0.5906804734055217,
+    "chronological_lift": -0.7054980274769932,
+    "matched": 0.7842094633442264,
+    "stratified": 0.4416718670240364,
+    "stratified_lift": 0.07410584614819367
+   },
+   "zscore": {
+    "chronological": 0.5948042085502111,
+    "chronological_lift": -0.6883157977074538,
+    "matched": 0.7577911322752552,
+    "stratified": 0.3972025315347116,
+    "stratified_lift": 0.00036086479506337036
+   }
+  }
+ },
+ "series": {
+  "evaluated": 20,
+  "excluded": 61
+ },
+ "source_groups": [
+  "nab_adexchange",
+  "nab_ambient",
+  "nab_asg",
+  "nab_aws",
+  "nab_latency",
+  "nab_machine",
+  "nab_taxi",
+  "nab_traffic",
+  "nab_tweets",
+  "skab"
+ ]
+}

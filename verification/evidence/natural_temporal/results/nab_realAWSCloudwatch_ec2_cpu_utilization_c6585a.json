@@ -1,0 +1,17 @@
+{
+ "end": "2014-04-16 14:24:00+00:00",
+ "excluded": "0 anomalies in the test partition (at least 20)",
+ "features": [
+  "value",
+  "diff",
+  "deviation",
+  "spread"
+ ],
+ "file_in_time_order": true,
+ "group": "nab_aws",
+ "id": "nab/realAWSCloudwatch/ec2_cpu_utilization_c6585a",
+ "rows": 4008,
+ "rows_dropped": 24,
+ "source": "nab",
+ "start": "2014-04-02 16:29:00+00:00"
+}

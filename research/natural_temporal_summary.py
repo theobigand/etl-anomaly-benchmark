@@ -97,6 +97,10 @@ def summarise(evaluated: list[dict[str, Any]], excluded: list[dict[str, Any]], d
                         [r["chronological"][m]["pr_auc"] for m in r["chronological"]]).statistic)
         for r in evaluated
     ]
+    _, chrono_lift = table_by_group(evaluated, lambda r, m: per_series[r["id"]][m]["chronological_lift"])
+    _, strat_lift = table_by_group(evaluated, lambda r, m: per_series[r["id"]][m]["stratified_lift"])
+    lift_lower = sum(per_series[i][m]["chronological_lift"] < per_series[i][m]["stratified_lift"] for i, m in pairs)
+    lift_by_detector = {m: pinf.paired_effect(chrono_lift[m], strat_lift[m], draws) for m in chrono_lift}
     names, matrix = pinf.complete_matrix(chrono)
     ranks = pinf.mean_ranks(matrix)
     intervals = pinf.rank_intervals(matrix, draws)
@@ -115,6 +119,11 @@ def summarise(evaluated: list[dict[str, Any]], excluded: list[dict[str, Any]], d
             "supported_by_share": bool(share >= SUPPORT_SHARE),
             "detectors_with_interval_below_zero": sorted(m for m, ok in median_ci_below.items() if ok),
             "by_detector": detectors,
+        },
+        "N1_lift": {
+            "chronological_lower_share": lift_lower / len(pairs),
+            "detectors_with_interval_below_zero": sorted(m for m, v in lift_by_detector.items() if v.get("ci_high", 1) < 0),
+            "by_detector": lift_by_detector,
         },
         "N2": {"median_spearman": float(np.median(rho)), "supported": bool(np.median(rho) >= 0.8), "by_series": dict(zip((r["id"] for r in evaluated), rho, strict=True))},
         "N3": {
@@ -147,6 +156,9 @@ def render(summary: dict[str, Any]) -> str:
         f"{n1['pairs']} (series, detector) pairs; share rule {'met' if n1['supported_by_share'] else 'not met'}; "
         f"detectors whose group-level median difference interval is below zero: "
         f"{len(n1['detectors_with_interval_below_zero'])} of {len(n1['by_detector'])}.",
+        f"- N1 on the lift over prevalence (exploratory, prevalence-adjusted): chronological lower for "
+        f"{summary['N1_lift']['chronological_lower_share']:.1%} of pairs; detectors with an interval below zero: "
+        f"{len(summary['N1_lift']['detectors_with_interval_below_zero'])} of {len(summary['N1_lift']['by_detector'])}.",
         f"- N2: median Spearman between arms {n2['median_spearman']:.2f} ({'supported' if n2['supported'] else 'not supported'}).",
         f"- N3: matching closes at least half of the gap in {n3['series_where_matching_closes_half']} of {n3['series']} series.",
         f"- N4: Friedman over {n4['friedman']['units']} source groups, p = {n4['friedman']['p']:.3g}.",
