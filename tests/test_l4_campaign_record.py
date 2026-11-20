@@ -17,6 +17,8 @@ SUPPLEMENTS = (
     ROOT / "docs/thesis-remediation/evidence/focused-new-modules-2026-11-19/measurement.json",
     ROOT
     / "docs/thesis-remediation/evidence/focused-train-only-replays-2026-11-19/measurement.json",
+    ROOT
+    / "docs/thesis-remediation/evidence/focused-coverage-extensions-2026-11-20/measurement.json",
 )
 
 

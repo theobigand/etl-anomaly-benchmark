@@ -1,0 +1,1162 @@
+{
+ "M1": {
+  "mean": 0.8373641924830911,
+  "per_type_rank_correlation": {
+   "distribution_shift": 0.8022199074570614,
+   "duplicate": 0.7026339879106676,
+   "invalid_format": 0.9228650137741047,
+   "missing_value": 0.966762711936551,
+   "multivariate_outlier": 0.6947024003012414,
+   "univariate_outlier": 0.9350011335189199
+  },
+  "sources": 18
+ },
+ "M2": {
+  "cross_column_swap": {
+   "distance_density": 0.7752525252525253,
+   "rules": 0.2857142857142857
+  },
+  "invalid_code": {
+   "distance_density": 0.28692493946731235,
+   "rules": 0.08492135511191773
+  }
+ },
+ "M3": {
+  "copod": {
+   "median_A": 0.3678002450980392,
+   "median_B": 0.34864044168391994,
+   "p": 0.5091068694816225,
+   "p_holm": 1.0
+  },
+  "drift": {
+   "median_A": 0.03769018971224854,
+   "median_B": 0.059177489177489176,
+   "p": 0.22724809580259986,
+   "p_holm": 1.0
+  },
+  "ecod": {
+   "median_A": 0.3847531923003621,
+   "median_B": 0.36149470899470904,
+   "p": 0.46319999601116657,
+   "p_holm": 1.0
+  },
+  "great_expectations": {
+   "median_A": 0.19383741258741258,
+   "median_B": 0.2911789297658863,
+   "p": 0.14619720565040317,
+   "p_holm": 1.0
+  },
+  "hbos": {
+   "median_A": 0.3025735294117647,
+   "median_B": 0.3031371009942439,
+   "p": 0.721603545017155,
+   "p_holm": 1.0
+  },
+  "iqr": {
+   "median_A": 0.4714285714285714,
+   "median_B": 0.46249007936507935,
+   "p": 0.9414542699143442,
+   "p_holm": 1.0
+  },
+  "isolation_forest": {
+   "median_A": 0.3638582705809596,
+   "median_B": 0.3625571348940914,
+   "p": 0.9165358925406104,
+   "p_holm": 1.0
+  },
+  "knn": {
+   "median_A": 0.4628571428571428,
+   "median_B": 0.47264521193092623,
+   "p": 0.6981984201745376,
+   "p_holm": 1.0
+  },
+  "lof": {
+   "median_A": 0.4472222222222222,
+   "median_B": 0.4484334023464458,
+   "p": 0.7691895830684977,
+   "p_holm": 1.0
+  },
+  "ocsvm": {
+   "median_A": 0.4238095238095238,
+   "median_B": 0.44448096830705525,
+   "p": 0.10207990466942332,
+   "p_holm": 1.0
+  },
+  "pca": {
+   "median_A": 0.48902972027972025,
+   "median_B": 0.509891774891775,
+   "p": 0.1764080993693392,
+   "p_holm": 1.0
+  },
+  "transform_dedup": {
+   "median_A": 0.125,
+   "median_B": 0.14285714285714285,
+   "p": 0.3774954637529703,
+   "p_holm": 1.0
+  },
+  "zscore": {
+   "median_A": 0.41087662337662334,
+   "median_B": 0.40832128921802835,
+   "p": 0.9498628934255955,
+   "p_holm": 1.0
+  }
+ },
+ "datasets": 86,
+ "medians": [
+  {
+   "ci": [
+    0.5416666666666666,
+    0.7083333333333334
+   ],
+   "median": 0.64,
+   "method": "copod",
+   "sources": 67,
+   "type": "cross_column_swap"
+  },
+  {
+   "ci": [
+    0.5,
+    0.6428571428571429
+   ],
+   "median": 0.5773809523809523,
+   "method": "copod",
+   "sources": 76,
+   "type": "distribution_shift"
+  },
+  {
+   "ci": [
+    0.1563667232597623,
+    0.2
+   ],
+   "median": 0.16794871794871796,
+   "method": "copod",
+   "sources": 76,
+   "type": "duplicate"
+  },
+  {
+   "ci": [
+    0.1318840579710145,
+    0.2
+   ],
+   "median": 0.1547008547008547,
+   "method": "copod",
+   "sources": 58,
+   "type": "invalid_code"
+  },
+  {
+   "ci": [
+    0.4,
+    0.4772256728778468
+   ],
+   "median": 0.4473453268977622,
+   "method": "copod",
+   "sources": 64,
+   "type": "invalid_format"
+  },
+  {
+   "ci": [
+    0.11538461538461539,
+    0.17566619915848528
+   ],
+   "median": 0.1398496240601504,
+   "method": "copod",
+   "sources": 76,
+   "type": "missing_value"
+  },
+  {
+   "ci": [
+    0.2916666666666667,
+    0.36
+   ],
+   "median": 0.3125,
+   "method": "copod",
+   "sources": 57,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci": [
+    0.3557312252964427,
+    0.4782608695652174
+   ],
+   "median": 0.4128787878787879,
+   "method": "copod",
+   "sources": 64,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci": [
+    0.0,
+    0.023255813953488372
+   ],
+   "median": 0.0,
+   "method": "drift",
+   "sources": 67,
+   "type": "cross_column_swap"
+  },
+  {
+   "ci": [
+    0.043560606060606064,
+    0.16666666666666666
+   ],
+   "median": 0.11263157894736842,
+   "method": "drift",
+   "sources": 76,
+   "type": "distribution_shift"
+  },
+  {
+   "ci": [
+    0.0,
+    0.06666666666666667
+   ],
+   "median": 0.041666666666666664,
+   "method": "drift",
+   "sources": 76,
+   "type": "duplicate"
+  },
+  {
+   "ci": [
+    0.0,
+    0.047619047619047616
+   ],
+   "median": 0.011111111111111112,
+   "method": "drift",
+   "sources": 58,
+   "type": "invalid_code"
+  },
+  {
+   "ci": [
+    0.0,
+    0.03571428571428571
+   ],
+   "median": 0.0,
+   "method": "drift",
+   "sources": 64,
+   "type": "invalid_format"
+  },
+  {
+   "ci": [
+    0.0,
+    0.05555555555555555
+   ],
+   "median": 0.023634453781512604,
+   "method": "drift",
+   "sources": 76,
+   "type": "missing_value"
+  },
+  {
+   "ci": [
+    0.043478260869565216,
+    0.125
+   ],
+   "median": 0.08333333333333333,
+   "method": "drift",
+   "sources": 57,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci": [
+    0.0,
+    0.04257246376811594
+   ],
+   "median": 0.0,
+   "method": "drift",
+   "sources": 64,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci": [
+    0.56,
+    0.7391304347826086
+   ],
+   "median": 0.6470588235294118,
+   "method": "ecod",
+   "sources": 67,
+   "type": "cross_column_swap"
+  },
+  {
+   "ci": [
+    0.4866666666666667,
+    0.6487012987012988
+   ],
+   "median": 0.5657142857142857,
+   "method": "ecod",
+   "sources": 76,
+   "type": "distribution_shift"
+  },
+  {
+   "ci": [
+    0.14814814814814814,
+    0.2
+   ],
+   "median": 0.16666666666666666,
+   "method": "ecod",
+   "sources": 76,
+   "type": "duplicate"
+  },
+  {
+   "ci": [
+    0.13043478260869565,
+    0.20382371227296034
+   ],
+   "median": 0.16774891774891776,
+   "method": "ecod",
+   "sources": 58,
+   "type": "invalid_code"
+  },
+  {
+   "ci": [
+    0.4494081847805252,
+    0.5742753623188406
+   ],
+   "median": 0.5227743271221532,
+   "method": "ecod",
+   "sources": 64,
+   "type": "invalid_format"
+  },
+  {
+   "ci": [
+    0.10912698412698413,
+    0.15407407407407409
+   ],
+   "median": 0.12426900584795322,
+   "method": "ecod",
+   "sources": 76,
+   "type": "missing_value"
+  },
+  {
+   "ci": [
+    0.3148148148148148,
+    0.42000000000000004
+   ],
+   "median": 0.36,
+   "method": "ecod",
+   "sources": 57,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci": [
+    0.40828804347826086,
+    0.5603864734299517
+   ],
+   "median": 0.4698996655518395,
+   "method": "ecod",
+   "sources": 64,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci": [
+    0.0,
+    0.051332288401253916
+   ],
+   "median": 0.0033333333333333335,
+   "method": "great_expectations",
+   "sources": 67,
+   "type": "cross_column_swap"
+  },
+  {
+   "ci": [
+    0.0,
+    0.04
+   ],
+   "median": 0.012739018087855297,
+   "method": "great_expectations",
+   "sources": 76,
+   "type": "distribution_shift"
+  },
+  {
+   "ci": [
+    0.0,
+    0.0
+   ],
+   "median": 0.0,
+   "method": "great_expectations",
+   "sources": 76,
+   "type": "duplicate"
+  },
+  {
+   "ci": [
+    0.0,
+    0.0
+   ],
+   "median": 0.0,
+   "method": "great_expectations",
+   "sources": 58,
+   "type": "invalid_code"
+  },
+  {
+   "ci": [
+    0.5555555555555556,
+    0.782608695652174
+   ],
+   "median": 0.7007819804172387,
+   "method": "great_expectations",
+   "sources": 64,
+   "type": "invalid_format"
+  },
+  {
+   "ci": [
+    0.6126373626373627,
+    0.875
+   ],
+   "median": 0.7370370370370369,
+   "method": "great_expectations",
+   "sources": 76,
+   "type": "missing_value"
+  },
+  {
+   "ci": [
+    0.0,
+    0.0
+   ],
+   "median": 0.0,
+   "method": "great_expectations",
+   "sources": 57,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci": [
+    0.32291666666666663,
+    0.5576923076923077
+   ],
+   "median": 0.44155844155844154,
+   "method": "great_expectations",
+   "sources": 64,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci": [
+    0.4117647058823529,
+    0.6086956521739131
+   ],
+   "median": 0.5,
+   "method": "hbos",
+   "sources": 67,
+   "type": "cross_column_swap"
+  },
+  {
+   "ci": [
+    0.38278388278388276,
+    0.4999921630094044
+   ],
+   "median": 0.44,
+   "method": "hbos",
+   "sources": 76,
+   "type": "distribution_shift"
+  },
+  {
+   "ci": [
+    0.125,
+    0.16848635235732012
+   ],
+   "median": 0.15692307692307694,
+   "method": "hbos",
+   "sources": 76,
+   "type": "duplicate"
+  },
+  {
+   "ci": [
+    0.14285714285714285,
+    0.2
+   ],
+   "median": 0.16555555555555557,
+   "method": "hbos",
+   "sources": 58,
+   "type": "invalid_code"
+  },
+  {
+   "ci": [
+    0.3214654716989953,
+    0.4666666666666667
+   ],
+   "median": 0.38675213675213677,
+   "method": "hbos",
+   "sources": 64,
+   "type": "invalid_format"
+  },
+  {
+   "ci": [
+    0.11428571428571428,
+    0.16666666666666666
+   ],
+   "median": 0.13043478260869565,
+   "method": "hbos",
+   "sources": 76,
+   "type": "missing_value"
+  },
+  {
+   "ci": [
+    0.2,
+    0.26865671641791045
+   ],
+   "median": 0.21739130434782608,
+   "method": "hbos",
+   "sources": 57,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci": [
+    0.22250041625041625,
+    0.3124840276003067
+   ],
+   "median": 0.263768115942029,
+   "method": "hbos",
+   "sources": 64,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci": [
+    0.2777777777777778,
+    0.9772727272727273
+   ],
+   "median": 0.8205128205128206,
+   "method": "iqr",
+   "sources": 67,
+   "type": "cross_column_swap"
+  },
+  {
+   "ci": [
+    0.23666666666666666,
+    0.48
+   ],
+   "median": 0.373546511627907,
+   "method": "iqr",
+   "sources": 76,
+   "type": "distribution_shift"
+  },
+  {
+   "ci": [
+    0.041666666666666664,
+    0.14848405271199316
+   ],
+   "median": 0.08333333333333333,
+   "method": "iqr",
+   "sources": 76,
+   "type": "duplicate"
+  },
+  {
+   "ci": [
+    0.047619047619047616,
+    0.17857142857142858
+   ],
+   "median": 0.10119047619047619,
+   "method": "iqr",
+   "sources": 58,
+   "type": "invalid_code"
+  },
+  {
+   "ci": [
+    0.9285714285714286,
+    1.0
+   ],
+   "median": 0.957427536231884,
+   "method": "iqr",
+   "sources": 64,
+   "type": "invalid_format"
+  },
+  {
+   "ci": [
+    0.038926681783824635,
+    0.14634146341463414
+   ],
+   "median": 0.09902597402597402,
+   "method": "iqr",
+   "sources": 76,
+   "type": "missing_value"
+  },
+  {
+   "ci": [
+    0.2,
+    0.64
+   ],
+   "median": 0.36764423998466556,
+   "method": "iqr",
+   "sources": 57,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci": [
+    1.0,
+    1.0
+   ],
+   "median": 1.0,
+   "method": "iqr",
+   "sources": 64,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci": [
+    0.5227272727272727,
+    0.7777777777777778
+   ],
+   "median": 0.5833333333333334,
+   "method": "isolation_forest",
+   "sources": 67,
+   "type": "cross_column_swap"
+  },
+  {
+   "ci": [
+    0.5,
+    0.6339285714285714
+   ],
+   "median": 0.5833333333333334,
+   "method": "isolation_forest",
+   "sources": 76,
+   "type": "distribution_shift"
+  },
+  {
+   "ci": [
+    0.1318840579710145,
+    0.17316341829085458
+   ],
+   "median": 0.16,
+   "method": "isolation_forest",
+   "sources": 76,
+   "type": "duplicate"
+  },
+  {
+   "ci": [
+    0.17140096618357487,
+    0.2583333333333333
+   ],
+   "median": 0.20942982456140352,
+   "method": "isolation_forest",
+   "sources": 58,
+   "type": "invalid_code"
+  },
+  {
+   "ci": [
+    0.33333333333333337,
+    0.4980952380952381
+   ],
+   "median": 0.4083333333333333,
+   "method": "isolation_forest",
+   "sources": 64,
+   "type": "invalid_format"
+  },
+  {
+   "ci": [
+    0.1492063492063492,
+    0.21212121212121213
+   ],
+   "median": 0.1762422360248447,
+   "method": "isolation_forest",
+   "sources": 76,
+   "type": "missing_value"
+  },
+  {
+   "ci": [
+    0.25,
+    0.38461538461538464
+   ],
+   "median": 0.3125,
+   "method": "isolation_forest",
+   "sources": 57,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci": [
+    0.2791666666666667,
+    0.4523809523809524
+   ],
+   "median": 0.3208434007852613,
+   "method": "isolation_forest",
+   "sources": 64,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci": [
+    0.7538461538461538,
+    0.9333333333333333
+   ],
+   "median": 0.8999999999999999,
+   "method": "knn",
+   "sources": 67,
+   "type": "cross_column_swap"
+  },
+  {
+   "ci": [
+    0.5355714285714286,
+    0.6935595238095226
+   ],
+   "median": 0.6043478260869566,
+   "method": "knn",
+   "sources": 76,
+   "type": "distribution_shift"
+  },
+  {
+   "ci": [
+    0.08333333333333333,
+    0.12701612903225806
+   ],
+   "median": 0.1088888888888889,
+   "method": "knn",
+   "sources": 76,
+   "type": "duplicate"
+  },
+  {
+   "ci": [
+    0.2761904761904762,
+    0.49546279491833034
+   ],
+   "median": 0.3333333333333333,
+   "method": "knn",
+   "sources": 58,
+   "type": "invalid_code"
+  },
+  {
+   "ci": [
+    0.6784549689440994,
+    0.8148148148148148
+   ],
+   "median": 0.7182089552238806,
+   "method": "knn",
+   "sources": 64,
+   "type": "invalid_format"
+  },
+  {
+   "ci": [
+    0.18990384615384615,
+    0.28
+   ],
+   "median": 0.2412121212121212,
+   "method": "knn",
+   "sources": 76,
+   "type": "missing_value"
+  },
+  {
+   "ci": [
+    0.20833333333333334,
+    0.4090909090909091
+   ],
+   "median": 0.2916666666666667,
+   "method": "knn",
+   "sources": 57,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci": [
+    0.45454545454545453,
+    0.6764705882352942
+   ],
+   "median": 0.6043478260869566,
+   "method": "knn",
+   "sources": 64,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci": [
+    0.6567164179104478,
+    0.8571428571428571
+   ],
+   "median": 0.7368421052631579,
+   "method": "lof",
+   "sources": 67,
+   "type": "cross_column_swap"
+  },
+  {
+   "ci": [
+    0.46153846153846156,
+    0.5711111111111111
+   ],
+   "median": 0.5213636363636364,
+   "method": "lof",
+   "sources": 76,
+   "type": "distribution_shift"
+  },
+  {
+   "ci": [
+    0.10727969348659003,
+    0.1450905902980713
+   ],
+   "median": 0.125,
+   "method": "lof",
+   "sources": 76,
+   "type": "duplicate"
+  },
+  {
+   "ci": [
+    0.31625000000000003,
+    0.5357142857142857
+   ],
+   "median": 0.3949152542372881,
+   "method": "lof",
+   "sources": 58,
+   "type": "invalid_code"
+  },
+  {
+   "ci": [
+    0.6956521739130435,
+    0.8221343873517787
+   ],
+   "median": 0.7410588566600957,
+   "method": "lof",
+   "sources": 64,
+   "type": "invalid_format"
+  },
+  {
+   "ci": [
+    0.22714285714285715,
+    0.3156108597285068
+   ],
+   "median": 0.26747967479674795,
+   "method": "lof",
+   "sources": 76,
+   "type": "missing_value"
+  },
+  {
+   "ci": [
+    0.26666666666666666,
+    0.4166666666666667
+   ],
+   "median": 0.38704318936877075,
+   "method": "lof",
+   "sources": 57,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci": [
+    0.48752012882447665,
+    0.6547619047619048
+   ],
+   "median": 0.603030303030303,
+   "method": "lof",
+   "sources": 64,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci": [
+    0.7391304347826086,
+    0.9411764705882353
+   ],
+   "median": 0.875,
+   "method": "ocsvm",
+   "sources": 67,
+   "type": "cross_column_swap"
+  },
+  {
+   "ci": [
+    0.46153846153846156,
+    0.59375
+   ],
+   "median": 0.5374603174603174,
+   "method": "ocsvm",
+   "sources": 76,
+   "type": "distribution_shift"
+  },
+  {
+   "ci": [
+    0.1256578947368421,
+    0.16666666666666666
+   ],
+   "median": 0.1467654826070957,
+   "method": "ocsvm",
+   "sources": 76,
+   "type": "duplicate"
+  },
+  {
+   "ci": [
+    0.159603327706776,
+    0.2962962962962963
+   ],
+   "median": 0.2403846153846154,
+   "method": "ocsvm",
+   "sources": 58,
+   "type": "invalid_code"
+  },
+  {
+   "ci": [
+    0.6521739130434783,
+    0.782608695652174
+   ],
+   "median": 0.7293080054274084,
+   "method": "ocsvm",
+   "sources": 64,
+   "type": "invalid_format"
+  },
+  {
+   "ci": [
+    0.1420933667781494,
+    0.21739130434782608
+   ],
+   "median": 0.18990384615384615,
+   "method": "ocsvm",
+   "sources": 76,
+   "type": "missing_value"
+  },
+  {
+   "ci": [
+    0.23880597014925373,
+    0.4375
+   ],
+   "median": 0.29411764705882354,
+   "method": "ocsvm",
+   "sources": 57,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci": [
+    0.4166666666666667,
+    0.6363636363636364
+   ],
+   "median": 0.5662393162393162,
+   "method": "ocsvm",
+   "sources": 64,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci": [
+    0.42857142857142855,
+    0.72
+   ],
+   "median": 0.625,
+   "method": "pca",
+   "sources": 67,
+   "type": "cross_column_swap"
+  },
+  {
+   "ci": [
+    0.4677777777777778,
+    0.6511627906976745
+   ],
+   "median": 0.5916666666666667,
+   "method": "pca",
+   "sources": 76,
+   "type": "distribution_shift"
+  },
+  {
+   "ci": [
+    0.14285714285714285,
+    0.21583850931677018
+   ],
+   "median": 0.17624491727752595,
+   "method": "pca",
+   "sources": 76,
+   "type": "duplicate"
+  },
+  {
+   "ci": [
+    0.8205128205128205,
+    0.9956896551724138
+   ],
+   "median": 0.945014563435616,
+   "method": "pca",
+   "sources": 58,
+   "type": "invalid_code"
+  },
+  {
+   "ci": [
+    0.5391260162601625,
+    0.6521739130434783
+   ],
+   "median": 0.5773809523809523,
+   "method": "pca",
+   "sources": 64,
+   "type": "invalid_format"
+  },
+  {
+   "ci": [
+    0.38873626373626374,
+    0.5718954248366013
+   ],
+   "median": 0.47973856209150323,
+   "method": "pca",
+   "sources": 76,
+   "type": "missing_value"
+  },
+  {
+   "ci": [
+    0.29261363636363635,
+    0.44
+   ],
+   "median": 0.375,
+   "method": "pca",
+   "sources": 57,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci": [
+    0.3489756367663345,
+    0.5166666666666666
+   ],
+   "median": 0.45208333333333334,
+   "method": "pca",
+   "sources": 64,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci": [
+    0.0,
+    0.0
+   ],
+   "median": 0.0,
+   "method": "transform_dedup",
+   "sources": 67,
+   "type": "cross_column_swap"
+  },
+  {
+   "ci": [
+    0.0,
+    0.0
+   ],
+   "median": 0.0,
+   "method": "transform_dedup",
+   "sources": 76,
+   "type": "distribution_shift"
+  },
+  {
+   "ci": [
+    1.0,
+    1.0
+   ],
+   "median": 1.0,
+   "method": "transform_dedup",
+   "sources": 76,
+   "type": "duplicate"
+  },
+  {
+   "ci": [
+    0.0,
+    0.0
+   ],
+   "median": 0.0,
+   "method": "transform_dedup",
+   "sources": 58,
+   "type": "invalid_code"
+  },
+  {
+   "ci": [
+    0.0,
+    0.0
+   ],
+   "median": 0.0,
+   "method": "transform_dedup",
+   "sources": 64,
+   "type": "invalid_format"
+  },
+  {
+   "ci": [
+    0.0,
+    0.0
+   ],
+   "median": 0.0,
+   "method": "transform_dedup",
+   "sources": 76,
+   "type": "missing_value"
+  },
+  {
+   "ci": [
+    0.0,
+    0.0
+   ],
+   "median": 0.0,
+   "method": "transform_dedup",
+   "sources": 57,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci": [
+    0.0,
+    0.0
+   ],
+   "median": 0.0,
+   "method": "transform_dedup",
+   "sources": 64,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci": [
+    0.6666666666666666,
+    0.96
+   ],
+   "median": 0.8208955223880597,
+   "method": "zscore",
+   "sources": 67,
+   "type": "cross_column_swap"
+  },
+  {
+   "ci": [
+    0.42271576214733547,
+    0.7089947089947091
+   ],
+   "median": 0.5486567164179105,
+   "method": "zscore",
+   "sources": 76,
+   "type": "distribution_shift"
+  },
+  {
+   "ci": [
+    0.0821702657807309,
+    0.24518280632410996
+   ],
+   "median": 0.16333333333333333,
+   "method": "zscore",
+   "sources": 76,
+   "type": "duplicate"
+  },
+  {
+   "ci": [
+    0.3283492822966507,
+    0.5801282051282051
+   ],
+   "median": 0.4258241758241758,
+   "method": "zscore",
+   "sources": 58,
+   "type": "invalid_code"
+  },
+  {
+   "ci": [
+    0.6779758481886141,
+    0.817979797979798
+   ],
+   "median": 0.75,
+   "method": "zscore",
+   "sources": 64,
+   "type": "invalid_format"
+  },
+  {
+   "ci": [
+    0.14634146341463414,
+    0.32575757575757575
+   ],
+   "median": 0.2637759710930443,
+   "method": "zscore",
+   "sources": 76,
+   "type": "missing_value"
+  },
+  {
+   "ci": [
+    0.04,
+    0.13333333333333333
+   ],
+   "median": 0.08333333333333333,
+   "method": "zscore",
+   "sources": 57,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci": [
+    0.4166666666666667,
+    0.5454545454545454
+   ],
+   "median": 0.5208695652173914,
+   "method": "zscore",
+   "sources": 64,
+   "type": "univariate_outlier"
+  }
+ ],
+ "sources": 76,
+ "tiers": {
+  "A": 49,
+  "B": 37
+ },
+ "types": {
+  "cross_column_swap": 77,
+  "distribution_shift": 86,
+  "duplicate": 86,
+  "invalid_code": 64,
+  "invalid_format": 73,
+  "missing_value": 86,
+  "multivariate_outlier": 66,
+  "univariate_outlier": 73
+ }
+}

@@ -439,6 +439,34 @@
     "verification/mutation_campaign.py": {
       "level": "L4",
       "reason": "Campaign assembly and current-root validation determine whether mutation evidence can support certification."
+    },
+    "research/injection_mixed.py": {
+      "level": "L4",
+      "reason": "Mixed-schema fault labels, train-only statistics and the encoder determine evaluation ground truth."
+    },
+    "research/typed_mixed.py": {
+      "level": "L4",
+      "reason": "Carrier eligibility, partitions, train-only encoding and per-type denominators govern the evaluated population."
+    },
+    "research/typed_mixed_summary.py": {
+      "level": "L4",
+      "reason": "Source-level aggregation, rank agreement and hypothesis decisions govern reported findings."
+    },
+    "research/chrono_injected.py": {
+      "level": "L4",
+      "reason": "Timestamp parsing, chronological ordering and fit-on-past partitions govern causal validity."
+    },
+    "research/chrono_injected_summary.py": {
+      "level": "L4",
+      "reason": "Paired chronological-minus-random differences and hypothesis decisions govern reported findings."
+    },
+    "research/coverage_matrix.py": {
+      "level": "L3",
+      "reason": "Coverage counts, independent-source grouping and dataset decisions are reported as the experimental denominators."
+    },
+    "research/coverage_paper.py": {
+      "level": "L3",
+      "reason": "Generated manuscript blocks must agree with the archived coverage and extension results."
     }
   }
 }

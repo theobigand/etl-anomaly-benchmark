@@ -1451,12 +1451,45 @@ P6 no pool file differs from the manifest & holds & 152 of 152 \\
 
 \paragraph{Severity (P3).} Over the 58 eligible tables, 13 of 17 detectors gain recall on multivariate outliers between the smallest and the largest amplitude, and Z-score, Great Expectations, LOF, HBOS do not. The Z-score, the Great Expectations bounds and HBOS stay at zero because they read one column at a time, and multivariate outliers stay inside the range of each column, as in the per-type matrices; LOF is already at its level at the smallest severity. LUNAR is the highest at every severity (Table~\ref{tab:pool-severity}).
 
-\paragraph{The pipeline end to end (P4).} The pipeline ran on all $152$ datasets with Z-score and Isolation Forest; 14 of the $304$ runs failed and are recorded with their reason (a table with no numeric column, or a column that the pipeline reads as text because of stray header lines in the file). On the 14 datasets above $50{,}000$ rows the detection takes 62\% of the pipeline time with Isolation Forest and 4\% with the Z-score, the writing of the two files being the rest, as on Credit Card Fraud. These times were measured while other jobs ran on the machine, so they are orders of magnitude, and the shares are ratios inside one process.
+\paragraph{The pipeline end to end (P4).} The pipeline ran on all $152$ datasets with Z-score and Isolation Forest; 14 of the $304$ runs failed and are recorded with their reason (a table with no numeric column, or a column that the pipeline reads as text because of stray header lines in the file; the readers were repaired afterwards, Section~\ref{sec:coverage-v2}). On the 14 datasets above $50{,}000$ rows the detection takes 62\% of the pipeline time with Isolation Forest and 4\% with the Z-score, the writing of the two files being the rest, as on Credit Card Fraud. These times were measured while other jobs ran on the machine, so they are orders of magnitude, and the shares are ratios inside one process.
 
 \paragraph{Chronological split (P5).} Only some pool datasets have a time variable: eleven unlabelled UCI tables have a date, the ADBench files have none, and five labelled datasets qualify (Credit Card, Bank Marketing, Occupancy Detection, Online Shoppers and Room Occupancy). The AP under the chronological split is lower than under the stratified one for 31 of 64 pairs of a dataset and a detector, not for two thirds. Bank Marketing is the reason: its prevalence rises from $5.8\%$ to $39.3\%$ and no detector loses AP there, as Section~\ref{sec:time} found with four detectors. Room Occupancy is excluded because its anomalies are all in the oldest rows (Table~\ref{tab:pool-chrono}).
 
 \paragraph{Files (P6).} All $152$ local files match the pinned manifest (\texttt{make verify-pool}).
 % END generated pool extension
+
+% BEGIN generated coverage v2
+\subsection{Coverage of the catalog and its extensions}
+\label{sec:coverage-v2}
+A catalog of 152 tables is not an experimental sample of 152. I generated a coverage matrix from the archived results: a table counts as evaluated in a protocol only when a result file holds a measurement for it. The catalog comes from 128 independent sources, because 45 entries are ADBench and UCI versions of the same original data (the largest source, Statlog Landsat, has four entries), so the inference below takes sources as units. 151 of 152 tables now have at least one detector-quality measurement, from 127 sources; before the extensions below, 32 tables had only the pipeline timing run. 1 table (Student Academics Performance, 131 usable rows, no labels) is retired from the active catalog and stays in the archives. The labels of the 100 labelled problems remain minority-class proxies, not data-quality faults, and the injected faults are artificial.
+
+\begin{table}[t]
+\caption{Tables by outcome in each protocol (coverage matrix). Other: not applicable (covered by another protocol), not evaluated or failed.}
+\label{tab:coverage}
+\centering
+\footnotesize
+\begin{tabular}{lrrr}
+\toprule
+Protocol & Executed & Unsuitable & Other \\
+\midrule
+Labelled problems & 100 & 52 & 0 \\
+Typed injection, numeric protocol & 58 & 94 & 0 \\
+Typed injection, mixed-schema protocol & 86 & 8 & 58 \\
+Chronological, labelled & 4 & 121 & 27 \\
+Chronological, controlled injection & 7 & 121 & 24 \\
+End-to-end pipeline & 152 & 0 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Pipeline failures repaired.} The 14 failed pipeline runs of the previous subsection came from seven tables and three causes: header lines repeated inside the file (Occupancy Detection), index:value cells (Gas Sensor Array Drift), an all-missing column (Annealing), and tables with no numeric column (Mushroom, Congressional Voting Records and two student tables). The reader now removes repeated headers, parses the sparse cells, drops all-missing columns, converts date-times and encodes categories (one-hot up to twenty levels, frequency otherwise), and records each change. All $304$ runs now succeed.
+
+\paragraph{Typed injection on mixed and small tables.} The numeric protocol excluded 94 tables. A pre-registered protocol with categorical faults (invalid code, swapped columns) and a tier for tables of 200 to 499 rows makes 86 of them eligible, from 76 sources; the other eight have fewer than 200 rows. The per-type detector ranking agrees with the numeric protocol on numeric-only tables (mean rank correlation $0.84$, hypothesis M1 holds). Rule detectors find categorical faults less often than distance and density detectors (median recall $0.08$ against $0.29$ for invalid codes and $0.29$ against $0.78$ for swapped columns; M2 holds in direction, but the rules read the encoded columns, so they are not blind to categories as the protocol assumed). Small tables are not measurably different from large ones (0 of 13 detectors differ after Holm correction; M3 holds). These results are reported beside, never pooled with, the 58 tables of the numeric protocol.
+
+\paragraph{Chronological study with controlled injection.} Seven unlabelled UCI time series (air quality, appliances, two bike-sharing tables, home monitoring, city power and steel-industry energy) were ordered by their real timestamps, detectors were fitted on the first 60\% and faults were injected into the last 40\%, against a random split of the same rows. For the classical detectors the median false-positive difference is $+0.015$ (distance-based kNN and LOF reach about $+0.16$ and $+0.20$, with intervals excluding zero; C1 holds weakly), the recall difference is $+0.014$ and the detector ranking is nearly unchanged (rank correlation $0.97$). The six neural detectors give a median false-positive difference of $+0.059$ and a rank correlation of $0.88$ between the arms. With the four labelled tables, eleven datasets now have a real time variable, but seven of them carry artificial faults, so this strengthens the claim on the cost of temporal change, not on natural anomalies.
+
+\paragraph{What changes and what does not.} The coverage figures change: 151 tables instead of 120 have a detector-quality measurement, and every pipeline run now succeeds. The earlier verdicts do not change, because no new labelled problem was added: the rankings on the $100$ labelled problems, the sensitivity of the H4 ranking to the archive and the train-only replay, and hypothesis P5 on the four labelled chronological tables stand as reported. The new protocols are exploratory extensions with their own written hypotheses (M1 to M3 and C1 to C3). They add two findings: the per-type profile of the numeric protocol carries over to categorical and small tables, and fitting on the past raises the false-positive rate of distance- and reconstruction-based detectors on real time series, which the earlier chronological tables could not show without anomaly labels. Limits: the mixed-schema encoder is one choice among several, eight tables remain too small for any typed experiment, and temporal conclusions rest on seven series with artificial faults plus four labelled tables.
+% END generated coverage v2
 
 \section{Discussion}
 \label{sec:discussion}
@@ -2560,6 +2593,61 @@ Room Occupancy & \multicolumn{4}{l}{excluded: 0 test anomalies} \\
 \end{tabular}
 \end{table}
 % END generated pool appendix
+
+% BEGIN generated coverage appendix
+\subsection{Tables of the coverage extensions}
+\label{app:coverage-tables}
+\begin{table}[t]
+\caption{Mixed-schema typed injection: median recall over 76 independent sources, by detector and fault type.}
+\label{tab:mixed-typed}
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{lrrrrrrrr}
+\toprule
+Detector & Missing & Dupl. & Univ. & Multiv. & Shift & Invalid fmt. & Inv. code & Swap \\
+\midrule
+copod & 0.14 & 0.17 & 0.41 & 0.31 & 0.58 & 0.45 & 0.15 & 0.64 \\
+drift & 0.02 & 0.04 & 0.00 & 0.08 & 0.11 & 0.00 & 0.01 & 0.00 \\
+ecod & 0.12 & 0.17 & 0.47 & 0.36 & 0.57 & 0.52 & 0.17 & 0.65 \\
+great\_expectations & 0.74 & 0.00 & 0.44 & 0.00 & 0.01 & 0.70 & 0.00 & 0.00 \\
+hbos & 0.13 & 0.16 & 0.26 & 0.22 & 0.44 & 0.39 & 0.17 & 0.50 \\
+iqr & 0.10 & 0.08 & 1.00 & 0.37 & 0.37 & 0.96 & 0.10 & 0.82 \\
+isolation\_forest & 0.18 & 0.16 & 0.32 & 0.31 & 0.58 & 0.41 & 0.21 & 0.58 \\
+knn & 0.24 & 0.11 & 0.60 & 0.29 & 0.60 & 0.72 & 0.33 & 0.90 \\
+lof & 0.27 & 0.12 & 0.60 & 0.39 & 0.52 & 0.74 & 0.39 & 0.74 \\
+ocsvm & 0.19 & 0.15 & 0.57 & 0.29 & 0.54 & 0.73 & 0.24 & 0.88 \\
+pca & 0.48 & 0.18 & 0.45 & 0.38 & 0.59 & 0.58 & 0.95 & 0.62 \\
+transform\_dedup & 0.00 & 1.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\
+zscore & 0.26 & 0.16 & 0.52 & 0.08 & 0.55 & 0.75 & 0.43 & 0.82 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\caption{Chronological minus random split, median over the seven time series: false-positive rate and mean recall of the classical detectors, with 95\% bootstrap intervals over tables.}
+\label{tab:chrono-injected}
+\centering
+\scriptsize
+\begin{tabular}{lrr}
+\toprule
+Detector & FPR difference & Recall difference \\
+\midrule
+copod & $-0.001$ [-0.02, +0.18] & $+0.018$ [-0.01, +0.23] \\
+ecod & $+0.015$ [-0.01, +0.13] & $+0.014$ [+0.01, +0.15] \\
+great\_expectations & $+0.052$ [+0.01, +0.14] & $+0.017$ [+0.01, +0.05] \\
+hbos & $+0.012$ [-0.02, +0.05] & $-0.002$ [-0.01, +0.04] \\
+iqr & $+0.049$ [-0.01, +0.22] & $+0.003$ [-0.03, +0.05] \\
+isolation\_forest & $+0.001$ [-0.02, +0.10] & $+0.013$ [+0.01, +0.14] \\
+knn & $+0.163$ [+0.05, +0.84] & $+0.079$ [+0.02, +0.24] \\
+lof & $+0.197$ [+0.07, +0.87] & $+0.080$ [+0.03, +0.25] \\
+ocsvm & $+0.013$ [-0.02, +0.09] & $+0.006$ [-0.02, +0.03] \\
+pca & $+0.062$ [+0.00, +0.36] & $+0.042$ [+0.01, +0.17] \\
+zscore & $-0.016$ [-0.02, +0.11] & $-0.016$ [-0.02, +0.01] \\
+\bottomrule
+\end{tabular}
+\end{table}
+% END generated coverage appendix
 
 \subsection{Chronological pilot on Credit Card}
 \label{sec:chrono}

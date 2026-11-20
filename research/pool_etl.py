@@ -34,6 +34,82 @@ import uci_loader as ul  # noqa: E402
 
 METHODS = ("zscore", "isolation_forest")
 LABEL = "label"
+ONE_HOT_MAX = 20
+_SPARSE = r"^\s*\d+:\s*[-+]?[\d.]+(?:[eE][-+]?\d+)?\s*$"
+
+
+def _numeric_share(column: pd.Series) -> float:
+    return float(
+        pd.to_numeric(column, errors="coerce").notna().sum() / max(column.notna().sum(), 1)
+    )
+
+
+def strip_header_rows(df: pd.DataFrame) -> tuple[pd.DataFrame, int]:
+    """Remove rows that repeat the header line (concatenated files); numeric tables stay.
+
+    A row matches only when every cell equals its column name: a row of missing values is data.
+    """
+    if all(pd.api.types.is_numeric_dtype(t) for t in df.dtypes):
+        return df, 0
+    names = pd.Series(df.columns.astype(str), index=df.columns)
+    repeated = df.astype("string").eq(names).fillna(False).all(axis=1)
+    if not repeated.any():
+        return df, 0
+    return df[~repeated].reset_index(drop=True), int(repeated.sum())
+
+
+def repair_frame(df: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, Any]]:
+    """Make a raw table usable by the numeric detectors, recording every change (issue 79).
+
+    Repeated header lines (concatenated train and test files) are removed, ``index:value`` sparse
+    cells are parsed, all-missing columns are dropped, date-times become epoch seconds, and the
+    remaining text columns are one-hot encoded (at most ``ONE_HOT_MAX`` values) or replaced by
+    their value frequency. Nothing uses a label, and numeric tables pass through unchanged.
+    """
+    report: dict[str, Any] = {
+        "header_rows_removed": 0,
+        "sparse_columns": [],
+        "all_missing_dropped": [],
+        "datetime_columns": [],
+        "encoded": [],
+    }
+    df, report["header_rows_removed"] = strip_header_rows(df)
+    out: dict[str, pd.Series] = {}
+    for name in df.columns:
+        col = df[name]
+        if not pd.api.types.is_numeric_dtype(col):
+            text = col.astype("string")
+            if text.str.match(_SPARSE).fillna(False).mean() > 0.9:
+                col = pd.to_numeric(text.str.split(":", n=1).str[1], errors="coerce")
+                report["sparse_columns"].append(name)
+            elif _numeric_share(col) > 0.95:
+                col = pd.to_numeric(col, errors="coerce")
+        out[name] = col
+    frame = pd.DataFrame(out)
+    empty = [c for c in frame.columns if frame[c].isna().all()]
+    report["all_missing_dropped"] = empty
+    frame = frame.drop(columns=empty)
+    parts: list[pd.DataFrame | pd.Series] = []
+    for name in frame.columns:
+        col = frame[name]
+        if pd.api.types.is_numeric_dtype(col):
+            parts.append(col)
+            continue
+        stamps = pd.to_datetime(col, errors="coerce", format="mixed")
+        if (
+            stamps.notna().mean() > 0.95
+            and col.astype("string").str.contains(r"\d[-/:]\d").mean() > 0.9
+        ):
+            parts.append((stamps - pd.Timestamp("1970-01-01")).dt.total_seconds().rename(name))
+            report["datetime_columns"].append(name)
+            continue
+        report["encoded"].append(name)
+        if col.nunique() <= ONE_HOT_MAX:
+            parts.append(pd.get_dummies(col, prefix=name, dtype=float))
+        else:
+            parts.append(col.map(col.value_counts(normalize=True)).astype(float).rename(name))
+    report["encoded"].sort()
+    return (pd.concat(parts, axis=1) if parts else frame), report
 
 
 def peak_rss_bytes() -> int:
@@ -76,10 +152,12 @@ def run_etl(job: dict[str, Any], method: str) -> dict[str, Any]:
             stages["extract"] = time.perf_counter() - t
             rows_in = len(df)
             t = time.perf_counter()
-            df = transform(df)
-            stages["transform"] = time.perf_counter() - t
+            df, header_rows = strip_header_rows(transform(df))
             drop = [c for c in skip if c in df.columns]
-            features = df.drop(columns=drop) if drop else df
+            features, repairs = repair_frame(df.drop(columns=drop) if drop else df)
+            repairs["header_rows_removed"] += header_rows
+            repairs["sparse_columns"] = len(repairs["sparse_columns"])
+            stages["transform"] = time.perf_counter() - t
             t = time.perf_counter()
             result = detect(features, get_detector(method, 0.05), label_column=label)
             stages["detect"] = time.perf_counter() - t
@@ -102,6 +180,7 @@ def run_etl(job: dict[str, Any], method: str) -> dict[str, Any]:
         "rss_peak_bytes": peak_rss_bytes(),
         "rss_delta_bytes": peak_rss_bytes() - before,
         "flagged_share": float(result.flags.mean()),
+        "repairs": repairs,
     }
 
 

@@ -1,0 +1,96 @@
+{
+ "C1_median_detector_fpr_difference": 0.05885185840362178,
+ "C2_abs_recall_smaller_than_fpr": true,
+ "C2_median_detector_recall_difference": 0.03782360956274,
+ "C3_mean_rank_correlation": 0.8775510204081635,
+ "detectors": {
+  "ae1svm": {
+   "fpr_ci": [
+    -0.038336171247871566,
+    0.0965625985493535
+   ],
+   "fpr_median_difference": -0.003431667670078263,
+   "recall_ci": [
+    -0.0071264367816092355,
+    0.04857549857549853
+   ],
+   "recall_median_difference": 0.01610305958132041,
+   "tables_fpr_higher": 3
+  },
+  "autoencoder": {
+   "fpr_ci": [
+    -0.00017079419299743936,
+    0.5565359964227157
+   ],
+   "fpr_median_difference": 0.14662853702588802,
+   "recall_ci": [
+    0.01449275362318836,
+    0.18720238095238084
+   ],
+   "recall_median_difference": 0.05954415954415959,
+   "tables_fpr_higher": 5
+  },
+  "deep_svdd": {
+   "fpr_ci": [
+    0.019995135003648752,
+    0.6486453943407585
+   ],
+   "fpr_median_difference": 0.09503283381040581,
+   "recall_ci": [
+    0.0304347826086957,
+    0.16766381766381766
+   ],
+   "recall_median_difference": 0.0685714285714285,
+   "tables_fpr_higher": 6
+  },
+  "dif": {
+   "fpr_ci": [
+    -0.026502778245495878,
+    0.16581520025228635
+   ],
+   "fpr_median_difference": 0.02100768573868489,
+   "recall_ci": [
+    -0.030476190476190435,
+    0.053988603988604056
+   ],
+   "recall_median_difference": 0.0017460317460317176,
+   "tables_fpr_higher": 4
+  },
+  "lunar": {
+   "fpr_ci": [
+    0.10041352468985648,
+    0.8225165562913906
+   ],
+   "fpr_median_difference": 0.16206780798925813,
+   "recall_ci": [
+    0.020476190476190537,
+    0.21130952380952384
+   ],
+   "recall_median_difference": 0.08952380952380956,
+   "tables_fpr_higher": 7
+  },
+  "vae": {
+   "fpr_ci": [
+    -0.008163962425277546,
+    0.25260170293282874
+   ],
+   "fpr_median_difference": 0.022670882996837748,
+   "recall_ci": [
+    0.004347826086956497,
+    0.04825396825396833
+   ],
+   "recall_median_difference": 0.014387464387464188,
+   "tables_fpr_higher": 5
+  }
+ },
+ "n_tables": 7,
+ "tables": [
+  "uci:275",
+  "uci:360",
+  "uci:374",
+  "uci:560",
+  "uci:799",
+  "uci:849",
+  "uci:851"
+ ]
+}

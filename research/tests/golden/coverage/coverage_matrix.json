@@ -1,0 +1,1347 @@
+{
+ "datasets": [
+  {
+   "decision": "retained",
+   "decision_reason": "measured by its original protocols",
+   "domain": "Astronautics",
+   "feature_types": null,
+   "features": 36,
+   "has_labels": true,
+   "has_missing": false,
+   "id": "adbench:satellite",
+   "independent_source": "uci:146",
+   "label_kind": "minority_class_proxy",
+   "label_origin": "adbench_binary",
+   "label_refused": null,
+   "licence": "CC BY 4.0",
+   "name": "satellite",
+   "prevalence": 0.3,
+   "protocols": {
+    "chronological": {
+     "reason": "no time variable",
+     "status": "scientifically_unsuitable"
+    },
+    "chronological_injected_classical": {
+     "reason": "no time variable",
+     "status": "scientifically_unsuitable"
+    },
+    "chronological_injected_deep": {
+     "reason": "no time variable",
+     "status": "scientifically_unsuitable"
+    },
+    "etl_pipeline": {
+     "reason": "no result file",
+     "status": "not_evaluated"
+    },
+    "labelled_classical": {
+     "detectors": [
+      "knn",
+      "zscore"
+     ],
+     "errors": {},
+     "features": 36,
+     "pr_auc": {
+      "knn": 0.4,
+      "zscore": 0.4
+     },
+     "prevalence": 0.3,
+     "rows": 6435,
+     "run": "pool_extension/pool_full_classical/runs/adbench_satellite.json",
+     "seeds": [
+      42,
+      1
+     ],
+     "skipped_detectors": [
+      "ocsvm"
+     ],
+     "status": "executed"
+    },
+    "labelled_deep": {
+     "detectors": [
+      "vae"
+     ],
+     "errors": {},
+     "features": 36,
+     "pr_auc": {
+      "vae": 0.4
+     },
+     "prevalence": 0.3,
+     "rows": 6435,
+     "run": "pool_extension/pool_full_deep/runs/adbench_satellite.json",
+     "seeds": [
+      42,
+      1
+     ],
+     "skipped_detectors": [
+      "ocsvm"
+     ],
+     "status": "executed"
+    },
+    "native_label_comparison_classical": {
+     "run": "pool_extension/typed/reference_classical/adbench_satellite.json",
+     "status": "executed"
+    },
+    "native_label_comparison_deep": {
+     "run": "pool_extension/typed/reference_deep/adbench_satellite.json",
+     "status": "executed"
+    },
+    "typed_injection_classical": {
+     "run": "pool_extension/typed/severity_classical/adbench_satellite.json",
+     "status": "executed"
+    },
+    "typed_injection_deep": {
+     "run": "pool_extension/typed/severity_deep/adbench_satellite.json",
+     "status": "executed"
+    },
+    "typed_mixed_classical": {
+     "reason": "covered by the numeric typed protocol",
+     "status": "not_applicable"
+    },
+    "typed_mixed_deep": {
+     "reason": "covered by the numeric typed protocol",
+     "status": "not_applicable"
+    }
+   },
+   "rows": 6435,
+   "schema_kind": "numeric",
+   "sha256": "ab0",
+   "source_family": "adbench",
+   "time_candidates": [],
+   "url": "http://x/0",
+   "valid_measurements": [
+    "labelled_classical",
+    "labelled_deep",
+    "native_label_comparison_classical",
+    "native_label_comparison_deep",
+    "typed_injection_classical",
+    "typed_injection_deep"
+   ]
+  },
+  {
+   "decision": "retained",
+   "decision_reason": "measured by its original protocols",
+   "domain": "Physics",
+   "feature_types": [
+    "Integer"
+   ],
+   "features": 36,
+   "has_labels": true,
+   "has_missing": false,
+   "id": "uci:146",
+   "independent_source": "uci:146",
+   "label_kind": "minority_class_proxy",
+   "label_origin": "native_rare",
+   "label_refused": null,
+   "licence": "CC BY 4.0",
+   "name": "Statlog Landsat",
+   "prevalence": 0.3,
+   "protocols": {
+    "chronological": {
+     "reason": "no time variable",
+     "status": "scientifically_unsuitable"
+    },
+    "chronological_injected_classical": {
+     "reason": "no time variable",
+     "status": "scientifically_unsuitable"
+    },
+    "chronological_injected_deep": {
+     "reason": "no time variable",
+     "status": "scientifically_unsuitable"
+    },
+    "etl_pipeline": {
+     "methods_failed": {
+      "isolation_forest": "boom"
+     },
+     "methods_ok": [
+      "zscore"
+     ],
+     "reason": "boom",
+     "run": "pool_extension/etl/pool_etl.json",
+     "status": "executed"
+    },
+    "labelled_classical": {
+     "detectors": [
+      "knn",
+      "zscore"
+     ],
+     "errors": {},
+     "features": 36,
+     "pr_auc": {
+      "knn": 0.4,
+      "zscore": 0.4
+     },
+     "prevalence": 0.3,
+     "rows": 6435,
+     "run": "pool_extension/pool_full_classical/runs/uci_146.json",
+     "seeds": [
+      42,
+      1
+     ],
+     "skipped_detectors": [],
+     "status": "executed"
+    },
+    "labelled_deep": {
+     "detectors": [
+      "vae"
+     ],
+     "errors": {},
+     "features": 36,
+     "pr_auc": {
+      "vae": 0.4
+     },
+     "prevalence": 0.3,
+     "rows": 6435,
+     "run": "pool_extension/pool_full_deep/runs/uci_146.json",
+     "seeds": [
+      42,
+      1
+     ],
+     "skipped_detectors": [],
+     "status": "executed"
+    },
+    "native_label_comparison_classical": {
+     "reason": "comparison was only run on the sixteen ADBench tables",
+     "status": "not_evaluated"
+    },
+    "native_label_comparison_deep": {
+     "reason": "comparison was only run on the sixteen ADBench tables",
+     "status": "not_evaluated"
+    },
+    "typed_injection_classical": {
+     "run": "pool_extension/typed/severity_classical/uci_146.json",
+     "status": "executed"
+    },
+    "typed_injection_deep": {
+     "run": "pool_extension/typed/severity_deep/uci_146.json",
+     "status": "executed"
+    },
+    "typed_mixed_classical": {
+     "reason": "covered by the numeric typed protocol",
+     "status": "not_applicable"
+    },
+    "typed_mixed_deep": {
+     "reason": "covered by the numeric typed protocol",
+     "status": "not_applicable"
+    }
+   },
+   "rows": 6435,
+   "schema_kind": "numeric",
+   "sha256": "ab1",
+   "source_family": "uci",
+   "time_candidates": [],
+   "url": "http://x/1",
+   "valid_measurements": [
+    "etl_pipeline",
+    "labelled_classical",
+    "labelled_deep",
+    "typed_injection_classical",
+    "typed_injection_deep"
+   ]
+  },
+  {
+   "decision": "adapted",
+   "decision_reason": "measured only through the mixed-schema typed protocol",
+   "domain": "Engineering",
+   "feature_types": [
+    "Real",
+    "Categorical"
+   ],
+   "features": 7,
+   "has_labels": false,
+   "has_missing": true,
+   "id": "uci:9",
+   "independent_source": "uci:9",
+   "label_kind": null,
+   "label_origin": null,
+   "label_refused": "not a classification task",
+   "licence": "CC BY 4.0",
+   "name": "Auto MPG",
+   "prevalence": null,
+   "protocols": {
+    "chronological": {
+     "reason": "time column candidate but no labels and no protocol for unlabelled chronology",
+     "status": "not_evaluated"
+    },
+    "chronological_injected_classical": {
+     "reason": "time column is not a verified single-series chronology",
+     "status": "not_evaluated"
+    },
+    "chronological_injected_deep": {
+     "reason": "time column is not a verified single-series chronology",
+     "status": "not_evaluated"
+    },
+    "etl_pipeline": {
+     "methods_failed": {},
+     "methods_ok": [
+      "isolation_forest",
+      "zscore"
+     ],
+     "run": "pool_extension/etl/pool_etl.json",
+     "status": "executed"
+    },
+    "labelled_classical": {
+     "reason": "not a classification task",
+     "status": "scientifically_unsuitable"
+    },
+    "labelled_deep": {
+     "reason": "not a classification task",
+     "status": "scientifically_unsuitable"
+    },
+    "native_label_comparison_classical": {
+     "reason": "no native label to compare with",
+     "status": "scientifically_unsuitable"
+    },
+    "native_label_comparison_deep": {
+     "reason": "no native label to compare with",
+     "status": "scientifically_unsuitable"
+    },
+    "typed_injection_classical": {
+     "reason": "typed injection ineligible: only 3 continuous columns",
+     "status": "scientifically_unsuitable"
+    },
+    "typed_injection_deep": {
+     "reason": "typed injection ineligible: only 3 continuous columns",
+     "status": "scientifically_unsuitable"
+    },
+    "typed_mixed_classical": {
+     "detectors": [
+      "knn",
+      "zscore"
+     ],
+     "run": "pool_extension_v2/typed_mixed/classical/uci_9.json",
+     "status": "executed",
+     "tier": "B",
+     "types": [
+      "missing_value",
+      "duplicate"
+     ]
+    },
+    "typed_mixed_deep": {
+     "detectors": [
+      "knn",
+      "zscore"
+     ],
+     "run": "pool_extension_v2/typed_mixed/deep/uci_9.json",
+     "status": "executed",
+     "tier": "B",
+     "types": [
+      "missing_value",
+      "duplicate"
+     ]
+    }
+   },
+   "rows": 398,
+   "schema_kind": "mixed",
+   "sha256": "ab2",
+   "source_family": "uci",
+   "time_candidates": [
+    "model_year"
+   ],
+   "url": "http://x/2",
+   "valid_measurements": [
+    "etl_pipeline",
+    "typed_mixed_classical",
+    "typed_mixed_deep"
+   ]
+  },
+  {
+   "decision": "repaired",
+   "decision_reason": "ETL reader repaired: all-missing",
+   "domain": "Other",
+   "feature_types": [
+    "Categorical"
+   ],
+   "features": 38,
+   "has_labels": false,
+   "has_missing": true,
+   "id": "uci:3",
+   "independent_source": "uci:3",
+   "label_kind": null,
+   "label_origin": null,
+   "label_refused": "fewer than 2 classes",
+   "licence": "CC BY 4.0",
+   "name": "Annealing",
+   "prevalence": null,
+   "protocols": {
+    "chronological": {
+     "reason": "no time variable",
+     "status": "scientifically_unsuitable"
+    },
+    "chronological_injected_classical": {
+     "reason": "no time variable",
+     "status": "scientifically_unsuitable"
+    },
+    "chronological_injected_deep": {
+     "reason": "no time variable",
+     "status": "scientifically_unsuitable"
+    },
+    "etl_pipeline": {
+     "methods_failed": {},
+     "methods_ok": [
+      "isolation_forest",
+      "zscore"
+     ],
+     "repaired_from": "all-missing",
+     "run": "pool_extension_v2/etl_repair/pool_etl.json",
+     "status": "executed"
+    },
+    "labelled_classical": {
+     "reason": "fewer than 2 classes",
+     "status": "scientifically_unsuitable"
+    },
+    "labelled_deep": {
+     "reason": "fewer than 2 classes",
+     "status": "scientifically_unsuitable"
+    },
+    "native_label_comparison_classical": {
+     "reason": "no native label to compare with",
+     "status": "scientifically_unsuitable"
+    },
+    "native_label_comparison_deep": {
+     "reason": "no native label to compare with",
+     "status": "scientifically_unsuitable"
+    },
+    "typed_injection_classical": {
+     "reason": "typed injection ineligible: only 0 continuous columns",
+     "status": "scientifically_unsuitable"
+    },
+    "typed_injection_deep": {
+     "reason": "typed injection ineligible: only 0 continuous columns",
+     "status": "scientifically_unsuitable"
+    },
+    "typed_mixed_classical": {
+     "reason": "mixed typed injection ineligible: only 131 rows after cleaning",
+     "status": "scientifically_unsuitable"
+    },
+    "typed_mixed_deep": {
+     "reason": "mixed typed injection ineligible: only 131 rows after cleaning",
+     "status": "scientifically_unsuitable"
+    }
+   },
+   "rows": 898,
+   "schema_kind": "categorical",
+   "sha256": "ab3",
+   "source_family": "uci",
+   "time_candidates": [],
+   "url": "http://x/3",
+   "valid_measurements": [
+    "etl_pipeline"
+   ]
+  },
+  {
+   "decision": "retired",
+   "decision_reason": "131 rows after cleaning and no labels: below the smallest table that supports a typed fault experiment (200 rows); it has only the ETL timing measurement",
+   "domain": "Social Science",
+   "feature_types": [
+    "Categorical",
+    "Integer"
+   ],
+   "features": 22,
+   "has_labels": false,
+   "has_missing": false,
+   "id": "uci:467",
+   "independent_source": "uci:467",
+   "label_kind": null,
+   "label_origin": null,
+   "label_refused": "fewer than 2 classes",
+   "licence": "CC BY 4.0",
+   "name": "Student Academics",
+   "prevalence": null,
+   "protocols": {
+    "chronological": {
+     "reason": "no time variable",
+     "status": "scientifically_unsuitable"
+    },
+    "chronological_injected_classical": {
+     "reason": "no time variable",
+     "status": "scientifically_unsuitable"
+    },
+    "chronological_injected_deep": {
+     "reason": "no time variable",
+     "status": "scientifically_unsuitable"
+    },
+    "etl_pipeline": {
+     "methods_failed": {},
+     "methods_ok": [
+      "zscore"
+     ],
+     "run": "pool_extension/etl/pool_etl.json",
+     "status": "executed"
+    },
+    "labelled_classical": {
+     "reason": "fewer than 2 classes",
+     "status": "scientifically_unsuitable"
+    },
+    "labelled_deep": {
+     "reason": "fewer than 2 classes",
+     "status": "scientifically_unsuitable"
+    },
+    "native_label_comparison_classical": {
+     "reason": "no native label to compare with",
+     "status": "scientifically_unsuitable"
+    },
+    "native_label_comparison_deep": {
+     "reason": "no native label to compare with",
+     "status": "scientifically_unsuitable"
+    },
+    "typed_injection_classical": {
+     "reason": "typed injection ineligible: only 0 continuous columns",
+     "status": "scientifically_unsuitable"
+    },
+    "typed_injection_deep": {
+     "reason": "typed injection ineligible: only 0 continuous columns",
+     "status": "scientifically_unsuitable"
+    },
+    "typed_mixed_classical": {
+     "reason": "mixed typed injection ineligible: only 131 rows after cleaning",
+     "status": "scientifically_unsuitable"
+    },
+    "typed_mixed_deep": {
+     "reason": "mixed typed injection ineligible: only 131 rows after cleaning",
+     "status": "scientifically_unsuitable"
+    }
+   },
+   "rows": 131,
+   "schema_kind": "mixed",
+   "sha256": "ab4",
+   "source_family": "uci",
+   "time_candidates": [],
+   "url": "http://x/4",
+   "valid_measurements": [
+    "etl_pipeline"
+   ]
+  },
+  {
+   "decision": "retained",
+   "decision_reason": "measured by its original protocols",
+   "domain": "Finance",
+   "feature_types": null,
+   "features": 29,
+   "has_labels": true,
+   "has_missing": true,
+   "id": "adbench:fraud",
+   "independent_source": "adbench:fraud",
+   "label_kind": "minority_class_proxy",
+   "label_origin": "adbench_binary",
+   "label_refused": null,
+   "licence": "CC BY 4.0",
+   "name": "fraud",
+   "prevalence": 0.002,
+   "protocols": {
+    "chronological": {
+     "detectors": [
+      "knn"
+     ],
+     "run": "pool_extension/chrono/credit_card.json",
+     "skipped_detectors": [
+      "lof"
+     ],
+     "status": "executed"
+    },
+    "chronological_injected_classical": {
+     "reason": "no time variable",
+     "status": "scientifically_unsuitable"
+    },
+    "chronological_injected_deep": {
+     "reason": "no time variable",
+     "status": "scientifically_unsuitable"
+    },
+    "etl_pipeline": {
+     "reason": "no result file",
+     "status": "not_evaluated"
+    },
+    "labelled_classical": {
+     "detectors": [
+      "knn",
+      "zscore"
+     ],
+     "errors": {},
+     "features": 29,
+     "pr_auc": {
+      "knn": 0.4,
+      "zscore": 0.4
+     },
+     "prevalence": 0.002,
+     "rows": 284807,
+     "run": "pool_extension/pool_full_classical/runs/adbench_fraud.json",
+     "seeds": [
+      42,
+      1
+     ],
+     "skipped_detectors": [],
+     "status": "executed"
+    },
+    "labelled_deep": {
+     "detectors": [
+      "vae"
+     ],
+     "errors": {},
+     "features": 29,
+     "pr_auc": {
+      "vae": 0.4
+     },
+     "prevalence": 0.002,
+     "rows": 284807,
+     "run": "pool_extension/pool_full_deep/runs/adbench_fraud.json",
+     "seeds": [
+      42,
+      1
+     ],
+     "skipped_detectors": [],
+     "status": "executed"
+    },
+    "native_label_comparison_classical": {
+     "reason": "comparison was only run on the sixteen ADBench tables",
+     "status": "not_evaluated"
+    },
+    "native_label_comparison_deep": {
+     "reason": "comparison was only run on the sixteen ADBench tables",
+     "status": "not_evaluated"
+    },
+    "typed_injection_classical": {
+     "reason": "eligible but no result file",
+     "status": "eligible_not_executed"
+    },
+    "typed_injection_deep": {
+     "reason": "eligible but no result file",
+     "status": "eligible_not_executed"
+    },
+    "typed_mixed_classical": {
+     "reason": "covered by the numeric typed protocol",
+     "status": "not_applicable"
+    },
+    "typed_mixed_deep": {
+     "reason": "covered by the numeric typed protocol",
+     "status": "not_applicable"
+    }
+   },
+   "rows": 284807,
+   "schema_kind": "numeric",
+   "sha256": "ab5",
+   "source_family": "adbench",
+   "time_candidates": [],
+   "url": "http://x/5",
+   "valid_measurements": [
+    "chronological",
+    "labelled_classical",
+    "labelled_deep"
+   ]
+  },
+  {
+   "decision": "retained",
+   "decision_reason": "measured by its original protocols",
+   "domain": "Climate",
+   "feature_types": [
+    "Real"
+   ],
+   "features": 6,
+   "has_labels": true,
+   "has_missing": false,
+   "id": "uci:357",
+   "independent_source": "uci:357",
+   "label_kind": "minority_class_proxy",
+   "label_origin": "native_rare",
+   "label_refused": null,
+   "licence": "CC BY 4.0",
+   "name": "Occupancy",
+   "prevalence": 0.5,
+   "protocols": {
+    "chronological": {
+     "detectors": [
+      "knn"
+     ],
+     "run": "pool_extension/chrono/occupancy_detection.json",
+     "skipped_detectors": [],
+     "status": "executed"
+    },
+    "chronological_injected_classical": {
+     "detectors": [
+      "knn",
+      "zscore"
+     ],
+     "run": "pool_extension_v2/chrono_injected/classical/uci_357.json",
+     "span": [
+      "2015",
+      "2016"
+     ],
+     "status": "executed"
+    },
+    "chronological_injected_deep": {
+     "detectors": [
+      "vae"
+     ],
+     "run": "pool_extension_v2/chrono_injected/deep/uci_357.json",
+     "span": [
+      "2015",
+      "2016"
+     ],
+     "status": "executed"
+    },
+    "etl_pipeline": {
+     "methods_failed": {
+      "zscore": "text"
+     },
+     "methods_ok": [],
+     "reason": "text",
+     "run": "pool_extension/etl/pool_etl.json",
+     "status": "executed_with_failure"
+    },
+    "labelled_classical": {
+     "detectors": [
+      "knn",
+      "zscore"
+     ],
+     "errors": {},
+     "features": 6,
+     "pr_auc": {
+      "knn": 0.4,
+      "zscore": 0.4
+     },
+     "prevalence": 0.5,
+     "rows": 20562,
+     "run": "pool_extension/pool_full_classical/runs/uci_357.json",
+     "seeds": [
+      42,
+      1
+     ],
+     "skipped_detectors": [],
+     "status": "executed"
+    },
+    "labelled_deep": {
+     "detectors": [
+      "vae"
+     ],
+     "errors": {},
+     "features": 6,
+     "pr_auc": {
+      "vae": 0.4
+     },
+     "prevalence": 0.5,
+     "rows": 20562,
+     "run": "pool_extension/pool_full_deep/runs/uci_357.json",
+     "seeds": [
+      42,
+      1
+     ],
+     "skipped_detectors": [],
+     "status": "executed"
+    },
+    "native_label_comparison_classical": {
+     "reason": "comparison was only run on the sixteen ADBench tables",
+     "status": "not_evaluated"
+    },
+    "native_label_comparison_deep": {
+     "reason": "comparison was only run on the sixteen ADBench tables",
+     "status": "not_evaluated"
+    },
+    "typed_injection_classical": {
+     "reason": "typed injection ineligible: only 1 continuous columns",
+     "status": "scientifically_unsuitable"
+    },
+    "typed_injection_deep": {
+     "reason": "typed injection ineligible: only 1 continuous columns",
+     "status": "scientifically_unsuitable"
+    },
+    "typed_mixed_classical": {
+     "reason": "no mixed-schema result file",
+     "status": "eligible_not_executed"
+    },
+    "typed_mixed_deep": {
+     "reason": "no mixed-schema result file",
+     "status": "eligible_not_executed"
+    }
+   },
+   "rows": 20562,
+   "schema_kind": "numeric",
+   "sha256": "ab6",
+   "source_family": "uci",
+   "time_candidates": [
+    "date"
+   ],
+   "url": "http://x/6",
+   "valid_measurements": [
+    "chronological",
+    "chronological_injected_classical",
+    "chronological_injected_deep",
+    "labelled_classical",
+    "labelled_deep"
+   ]
+  },
+  {
+   "decision": "retained",
+   "decision_reason": "measured by its original protocols",
+   "domain": "Climate",
+   "feature_types": [],
+   "features": 17,
+   "has_labels": true,
+   "has_missing": false,
+   "id": "uci:864",
+   "independent_source": "uci:864",
+   "label_kind": "minority_class_proxy",
+   "label_origin": "native_rare",
+   "label_refused": null,
+   "licence": "CC BY 4.0",
+   "name": "Room",
+   "prevalence": 0.05,
+   "protocols": {
+    "chronological": {
+     "reason": "no test anomalies in the chronological split",
+     "status": "scientifically_unsuitable"
+    },
+    "chronological_injected_classical": {
+     "reason": "time column is not a verified single-series chronology",
+     "status": "not_evaluated"
+    },
+    "chronological_injected_deep": {
+     "reason": "time column is not a verified single-series chronology",
+     "status": "not_evaluated"
+    },
+    "etl_pipeline": {
+     "reason": "no result file",
+     "status": "not_evaluated"
+    },
+    "labelled_classical": {
+     "detectors": [
+      "knn",
+      "zscore"
+     ],
+     "errors": {},
+     "features": 17,
+     "pr_auc": {
+      "knn": 0.4,
+      "zscore": 0.4
+     },
+     "prevalence": 0.05,
+     "rows": 10129,
+     "run": "pool_extension/pool_full_classical/runs/uci_864.json",
+     "seeds": [
+      42,
+      1
+     ],
+     "skipped_detectors": [],
+     "status": "executed"
+    },
+    "labelled_deep": {
+     "detectors": [
+      "vae"
+     ],
+     "errors": {},
+     "features": 17,
+     "pr_auc": {
+      "vae": 0.4
+     },
+     "prevalence": 0.05,
+     "rows": 10129,
+     "run": "pool_extension/pool_full_deep/runs/uci_864.json",
+     "seeds": [
+      42,
+      1
+     ],
+     "skipped_detectors": [],
+     "status": "executed"
+    },
+    "native_label_comparison_classical": {
+     "reason": "comparison was only run on the sixteen ADBench tables",
+     "status": "not_evaluated"
+    },
+    "native_label_comparison_deep": {
+     "reason": "comparison was only run on the sixteen ADBench tables",
+     "status": "not_evaluated"
+    },
+    "typed_injection_classical": {
+     "reason": "typed injection ineligible: only 2 continuous columns",
+     "status": "scientifically_unsuitable"
+    },
+    "typed_injection_deep": {
+     "reason": "typed injection ineligible: only 2 continuous columns",
+     "status": "scientifically_unsuitable"
+    },
+    "typed_mixed_classical": {
+     "reason": "no mixed-schema result file",
+     "status": "not_evaluated"
+    },
+    "typed_mixed_deep": {
+     "reason": "no mixed-schema result file",
+     "status": "not_evaluated"
+    }
+   },
+   "rows": 10129,
+   "schema_kind": "unknown",
+   "sha256": "ab7",
+   "source_family": "uci",
+   "time_candidates": [
+    "Time"
+   ],
+   "url": "http://x/7",
+   "valid_measurements": [
+    "labelled_classical",
+    "labelled_deep"
+   ]
+  },
+  {
+   "decision": "unmeasured",
+   "decision_reason": "no valid measurement in any protocol",
+   "domain": "Forensic",
+   "feature_types": null,
+   "features": 9,
+   "has_labels": false,
+   "has_missing": false,
+   "id": "adbench:glass",
+   "independent_source": "uci:42",
+   "label_kind": null,
+   "label_origin": null,
+   "label_refused": null,
+   "licence": "CC BY 4.0",
+   "name": "glass",
+   "prevalence": null,
+   "protocols": {
+    "chronological": {
+     "reason": "no time variable",
+     "status": "scientifically_unsuitable"
+    },
+    "chronological_injected_classical": {
+     "reason": "no time variable",
+     "status": "scientifically_unsuitable"
+    },
+    "chronological_injected_deep": {
+     "reason": "no time variable",
+     "status": "scientifically_unsuitable"
+    },
+    "etl_pipeline": {
+     "reason": "no result file",
+     "status": "not_evaluated"
+    },
+    "labelled_classical": {
+     "reason": "no label file in the pool run",
+     "status": "not_evaluated"
+    },
+    "labelled_deep": {
+     "reason": "no label file in the pool run",
+     "status": "not_evaluated"
+    },
+    "native_label_comparison_classical": {
+     "reason": "no native label to compare with",
+     "status": "scientifically_unsuitable"
+    },
+    "native_label_comparison_deep": {
+     "reason": "no native label to compare with",
+     "status": "scientifically_unsuitable"
+    },
+    "typed_injection_classical": {
+     "reason": "typed injection ineligible: only 1 continuous columns",
+     "status": "scientifically_unsuitable"
+    },
+    "typed_injection_deep": {
+     "reason": "typed injection ineligible: only 1 continuous columns",
+     "status": "scientifically_unsuitable"
+    },
+    "typed_mixed_classical": {
+     "reason": "no mixed-schema result file",
+     "status": "not_evaluated"
+    },
+    "typed_mixed_deep": {
+     "reason": "no mixed-schema result file",
+     "status": "not_evaluated"
+    }
+   },
+   "rows": 214,
+   "schema_kind": "numeric",
+   "sha256": "ab8",
+   "source_family": "adbench",
+   "time_candidates": [],
+   "url": "http://x/8",
+   "valid_measurements": []
+  },
+  {
+   "decision": "retained",
+   "decision_reason": "measured by its original protocols",
+   "domain": null,
+   "feature_types": [
+    "Integer",
+    "Real"
+   ],
+   "features": 4,
+   "has_labels": true,
+   "has_missing": true,
+   "id": "uci:999",
+   "independent_source": "uci:999",
+   "label_kind": "minority_class_proxy",
+   "label_origin": null,
+   "label_refused": null,
+   "licence": "CC BY 4.0",
+   "name": "999",
+   "prevalence": 0.5,
+   "protocols": {
+    "chronological": {
+     "reason": "no time variable",
+     "status": "scientifically_unsuitable"
+    },
+    "chronological_injected_classical": {
+     "reason": "no time variable",
+     "status": "scientifically_unsuitable"
+    },
+    "chronological_injected_deep": {
+     "reason": "no time variable",
+     "status": "scientifically_unsuitable"
+    },
+    "etl_pipeline": {
+     "reason": "no result file",
+     "status": "not_evaluated"
+    },
+    "labelled_classical": {
+     "detectors": [
+      "knn",
+      "zscore"
+     ],
+     "errors": {
+      "knn": "boom"
+     },
+     "features": 4,
+     "pr_auc": {
+      "knn": 0.3,
+      "zscore": 0.4
+     },
+     "prevalence": 0.5,
+     "rows": 777,
+     "run": "pool_extension/pool_full_classical/runs/uci_999.json",
+     "seeds": [
+      42,
+      1
+     ],
+     "skipped_detectors": [],
+     "status": "executed"
+    },
+    "labelled_deep": {
+     "detectors": [
+      "vae"
+     ],
+     "errors": {
+      "knn": "boom"
+     },
+     "features": 4,
+     "pr_auc": {
+      "vae": 0.3
+     },
+     "prevalence": 0.5,
+     "rows": 777,
+     "run": "pool_extension/pool_full_deep/runs/uci_999.json",
+     "seeds": [
+      42,
+      1
+     ],
+     "skipped_detectors": [],
+     "status": "executed"
+    },
+    "native_label_comparison_classical": {
+     "reason": "comparison was only run on the sixteen ADBench tables",
+     "status": "not_evaluated"
+    },
+    "native_label_comparison_deep": {
+     "reason": "comparison was only run on the sixteen ADBench tables",
+     "status": "not_evaluated"
+    },
+    "typed_injection_classical": {
+     "reason": "no eligibility record",
+     "status": "not_evaluated"
+    },
+    "typed_injection_deep": {
+     "reason": "no eligibility record",
+     "status": "not_evaluated"
+    },
+    "typed_mixed_classical": {
+     "reason": "no mixed-schema result file",
+     "status": "not_evaluated"
+    },
+    "typed_mixed_deep": {
+     "reason": "no mixed-schema result file",
+     "status": "not_evaluated"
+    }
+   },
+   "rows": 777,
+   "schema_kind": "numeric",
+   "sha256": "ab9",
+   "source_family": "uci",
+   "time_candidates": [],
+   "url": "http://x/9",
+   "valid_measurements": [
+    "labelled_classical",
+    "labelled_deep"
+   ]
+  }
+ ],
+ "diversity": {
+  "anomaly_mechanism": {
+   "injected (mixed)": {
+    "datasets": 1,
+    "independent_sources": 1
+   },
+   "minority-class proxy": {
+    "datasets": 4,
+    "independent_sources": 4
+   },
+   "minority-class proxy + injected (numeric)": {
+    "datasets": 2,
+    "independent_sources": 1
+   },
+   "none": {
+    "datasets": 3,
+    "independent_sources": 3
+   }
+  },
+  "domain": {
+   "Astronautics": {
+    "datasets": 1,
+    "independent_sources": 1
+   },
+   "Climate": {
+    "datasets": 2,
+    "independent_sources": 2
+   },
+   "Engineering": {
+    "datasets": 1,
+    "independent_sources": 1
+   },
+   "Finance": {
+    "datasets": 1,
+    "independent_sources": 1
+   },
+   "Forensic": {
+    "datasets": 1,
+    "independent_sources": 1
+   },
+   "Other": {
+    "datasets": 1,
+    "independent_sources": 1
+   },
+   "Physics": {
+    "datasets": 1,
+    "independent_sources": 1
+   },
+   "Social Science": {
+    "datasets": 1,
+    "independent_sources": 1
+   },
+   "unknown": {
+    "datasets": 1,
+    "independent_sources": 1
+   }
+  },
+  "effective_sample": {
+   "catalog_entries": 10,
+   "entries_in_multi_entry_sources": 2,
+   "independent_sources": 9,
+   "largest_source": {
+    "entries": 2,
+    "key": "uci:146"
+   }
+  },
+  "family": {
+   "adbench": {
+    "datasets": 3,
+    "independent_sources": 3
+   },
+   "uci": {
+    "datasets": 7,
+    "independent_sources": 7
+   }
+  },
+  "features": {
+   "10-29": {
+    "datasets": 3,
+    "independent_sources": 3
+   },
+   "30-99": {
+    "datasets": 3,
+    "independent_sources": 2
+   },
+   "<10": {
+    "datasets": 4,
+    "independent_sources": 4
+   }
+  },
+  "missing_values": {
+   "no": {
+    "datasets": 6,
+    "independent_sources": 5
+   },
+   "yes": {
+    "datasets": 4,
+    "independent_sources": 4
+   }
+  },
+  "prevalence": {
+   "1-10%": {
+    "datasets": 1,
+    "independent_sources": 1
+   },
+   "<1%": {
+    "datasets": 1,
+    "independent_sources": 1
+   },
+   ">=10%": {
+    "datasets": 4,
+    "independent_sources": 3
+   },
+   "unlabelled": {
+    "datasets": 4,
+    "independent_sources": 4
+   }
+  },
+  "rows": {
+   "5,000-49,999": {
+    "datasets": 4,
+    "independent_sources": 3
+   },
+   "500-4,999": {
+    "datasets": 2,
+    "independent_sources": 2
+   },
+   "<500": {
+    "datasets": 3,
+    "independent_sources": 3
+   },
+   ">=50,000": {
+    "datasets": 1,
+    "independent_sources": 1
+   }
+  },
+  "schema": {
+   "categorical": {
+    "datasets": 1,
+    "independent_sources": 1
+   },
+   "mixed": {
+    "datasets": 2,
+    "independent_sources": 2
+   },
+   "numeric": {
+    "datasets": 6,
+    "independent_sources": 5
+   },
+   "unknown": {
+    "datasets": 1,
+    "independent_sources": 1
+   }
+  },
+  "temporal": {
+   "evaluated chronologically": {
+    "datasets": 2,
+    "independent_sources": 2
+   },
+   "no time variable": {
+    "datasets": 6,
+    "independent_sources": 5
+   },
+   "real time column, not evaluated": {
+    "datasets": 2,
+    "independent_sources": 2
+   }
+  }
+ },
+ "summary": {
+  "active_datasets": 9,
+  "adbench": 3,
+  "by_protocol": {
+   "chronological": {
+    "executed": 2,
+    "not_evaluated": 1,
+    "scientifically_unsuitable": 7
+   },
+   "chronological_injected_classical": {
+    "executed": 1,
+    "not_evaluated": 2,
+    "scientifically_unsuitable": 7
+   },
+   "chronological_injected_deep": {
+    "executed": 1,
+    "not_evaluated": 2,
+    "scientifically_unsuitable": 7
+   },
+   "etl_pipeline": {
+    "executed": 4,
+    "executed_with_failure": 1,
+    "not_evaluated": 5
+   },
+   "labelled_classical": {
+    "executed": 6,
+    "not_evaluated": 1,
+    "scientifically_unsuitable": 3
+   },
+   "labelled_deep": {
+    "executed": 6,
+    "not_evaluated": 1,
+    "scientifically_unsuitable": 3
+   },
+   "native_label_comparison_classical": {
+    "executed": 1,
+    "not_evaluated": 5,
+    "scientifically_unsuitable": 4
+   },
+   "native_label_comparison_deep": {
+    "executed": 1,
+    "not_evaluated": 5,
+    "scientifically_unsuitable": 4
+   },
+   "typed_injection_classical": {
+    "eligible_not_executed": 1,
+    "executed": 2,
+    "not_evaluated": 1,
+    "scientifically_unsuitable": 6
+   },
+   "typed_injection_deep": {
+    "eligible_not_executed": 1,
+    "executed": 2,
+    "not_evaluated": 1,
+    "scientifically_unsuitable": 6
+   },
+   "typed_mixed_classical": {
+    "eligible_not_executed": 1,
+    "executed": 1,
+    "not_applicable": 3,
+    "not_evaluated": 3,
+    "scientifically_unsuitable": 2
+   },
+   "typed_mixed_deep": {
+    "eligible_not_executed": 1,
+    "executed": 1,
+    "not_applicable": 3,
+    "not_evaluated": 3,
+    "scientifically_unsuitable": 2
+   }
+  },
+  "datasets": 10,
+  "decisions": {
+   "adapted": 1,
+   "repaired": 1,
+   "retained": 6,
+   "retired": 1,
+   "unmeasured": 1
+  },
+  "etl_pipeline_only": 2,
+  "etl_pipeline_only_ids": [
+   "uci:3",
+   "uci:467"
+  ],
+  "independent_sources": 9,
+  "independent_sources_used": 8,
+  "independent_sources_with_detector_quality_measurement": 6,
+  "temporal_evaluated": 2,
+  "temporal_injected": 1,
+  "twin_groups": {
+   "uci:146": [
+    "adbench:satellite",
+    "uci:146"
+   ]
+  },
+  "typed_injection_supported": 2,
+  "uci": 7,
+  "with_any_valid_measurement": 9,
+  "with_detector_quality_measurement": 7,
+  "with_labels": 6,
+  "without_detector_quality_measurement": [
+   "adbench:glass",
+   "uci:3",
+   "uci:467"
+  ]
+ }
+}
