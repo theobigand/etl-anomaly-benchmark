@@ -50,3 +50,14 @@ fixes it.
 
 The review's full 18-detector core, 15-type fault taxonomy and sealed hold-out set are proposals
 for the confirmatory stage. They are revisited after the variance pilot.
+
+## Dataset changes made and pending
+
+Made: a second UCI acquisition wave (`research/uci_wave2.py`, protocol `verification/dataset_wave2.md`),
+a logical catalog that separates duplicate representations and supplementary data from independent
+sources (`data/catalog.json`, `research/dataset_catalog.py`), and a stratum gap report. Result: the
+flat tabular and transactional/categorical strata are at or above their recommended counts by the
+coarse rule, the time-series stratum has 21 of 40 source families, and logs, relational and nested
+sources are absent (0 of 28, 36 and 30). The UCI catalogue cannot fill the last three strata. Their
+candidate collections have no verified open licence at this date, so they stay open tasks (T434 to
+T436) rather than being filled with sources whose terms were not verified.
