@@ -499,6 +499,10 @@
     "research/validity_summary.py": {
       "level": "L4",
       "reason": "Source-grouped ranks, tests and label-rule rank agreement govern the restated claims about detector winners."
+    },
+    "research/pipeline_batch.py": {
+      "level": "L4",
+      "reason": "Batch ground truth from fault operators, reference-only profiles and the label-free alert budget define the validity of the pipeline-level study."
     }
   }
 }
