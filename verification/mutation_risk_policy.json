@@ -467,6 +467,38 @@
     "research/coverage_paper.py": {
       "level": "L3",
       "reason": "Generated manuscript blocks must agree with the archived coverage and extension results."
+    },
+    "research/dataset_catalog.py": {
+      "level": "L3",
+      "reason": "Catalog identities, duplicate-representation checks and independent-source counts are reported as experimental denominators."
+    },
+    "research/label_sensitivity.py": {
+      "level": "L4",
+      "reason": "Alternative anomaly-class mapping and downsampling define the ground truth of the label-rule sensitivity study."
+    },
+    "research/natural_temporal.py": {
+      "level": "L4",
+      "reason": "Timestamp ordering, window-to-row labels, causal features and test-partition eligibility govern the validity of the natural chronological study."
+    },
+    "research/natural_temporal_summary.py": {
+      "level": "L4",
+      "reason": "Source-group aggregation, paired differences and hypothesis decisions govern reported chronological findings."
+    },
+    "research/paired_inference.py": {
+      "level": "L4",
+      "reason": "Holm correction, paired effects, bootstrap intervals and rank statistics are critical statistical calculations."
+    },
+    "research/schema_rules.py": {
+      "level": "L4",
+      "reason": "Constraints learned from the training partition define the rule baseline; a leak or a wrong rule changes the rules-versus-models conclusion."
+    },
+    "research/schema_rules_summary.py": {
+      "level": "L3",
+      "reason": "Per-type comparison of the rule baseline with archived detectors is reported but derives from archived results."
+    },
+    "research/validity_summary.py": {
+      "level": "L4",
+      "reason": "Source-grouped ranks, tests and label-rule rank agreement govern the restated claims about detector winners."
     }
   }
 }
