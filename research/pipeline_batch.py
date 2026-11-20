@@ -59,13 +59,16 @@ SEVERITY = {
     "silent_corruption": (0.2, 0.5, 1.0),  # share of rows permuted
 }
 LEARNED = ("isolation_forest", "ecod", "copod", "hbos", "pca", "knn", "lof")
+COMPACT = tuple(f"{n}_compact" for n in ("isolation_forest", "ecod", "pca", "knn", "lof"))
+SCALARS = ("rows", "dup_share", "repeat_prev", "lag", "absent", "corr_dist")
+GROUPS = ("null_", "mean_", "std_", "q05_", "q50_", "q95_", "ks_")
 RULE_DETECTORS = ("constraint_rules", "volume_freshness")
 STATISTICAL = ("distribution_distance",)
-DETECTORS = (*RULE_DETECTORS, *STATISTICAL, *LEARNED, "random")
+DETECTORS = (*RULE_DETECTORS, *STATISTICAL, *LEARNED, *COMPACT, "random")
 FAMILY = {
     **dict.fromkeys(RULE_DETECTORS, "rules"),
     **dict.fromkeys(STATISTICAL, "statistical"),
-    **dict.fromkeys(LEARNED, "learned"),
+    **dict.fromkeys((*LEARNED, *COMPACT), "learned"),
     "random": "floor",
 }
 WIDEN, SHARE_FLOOR, RATIO_FLOOR = 0.20, 0.02, 0.10
@@ -215,6 +218,19 @@ class Reference:
             row["corr_dist"] = np.nan
         return row
 
+    def compact(self, z: pd.DataFrame) -> pd.DataFrame:
+        """Largest absolute deviation over the columns per statistic group, plus the scalars."""
+        out = {
+            g.rstrip("_"): np.nanmax(
+                np.abs(z[[c for c in z.columns if c.startswith(g)]].to_numpy()), axis=1
+            )
+            for g in GROUPS
+        }
+        out = {k: np.where(np.isnan(v), 0.0, v) for k, v in out.items()}
+        for name in SCALARS:
+            out[name] = z[name].fillna(0.0).to_numpy()
+        return pd.DataFrame(out, index=z.index)
+
     def standardise(self, raw: pd.DataFrame) -> pd.DataFrame:
         return (raw[self.mean.index] - self.mean) / self.std
 
@@ -274,17 +290,22 @@ def detector_scores(
         return np.nanmax(np.where(np.isnan(ks), 0.0, ks), axis=1)
     if name == "random":
         return np.random.default_rng(seed).random(len(raw))
+    if name in COMPACT:
+        return fitted[name].score(ref.compact(z)).to_numpy(dtype=float)
     return fitted[name].score(z).to_numpy(dtype=float)
 
 
-def fit_learned(ref: Reference, seed: int, names: tuple[str, ...] = LEARNED) -> dict[str, Any]:
+def fit_learned(
+    ref: Reference, seed: int, names: tuple[str, ...] = (*LEARNED, *COMPACT)
+) -> dict[str, Any]:
     from deep_support import build
 
     z = ref.standardise(ref.raw_reference)
     fitted = {}
     for name in names:
-        detector = build(name, 0.05, seed)
-        detector.fit(z)
+        compact = name in COMPACT
+        detector = build(name.removesuffix("_compact"), 0.05, seed)
+        detector.fit(ref.compact(z) if compact else z)
         fitted[name] = detector
     return fitted
 
@@ -350,7 +371,7 @@ def run_source(
             )
     ref = Reference(reference)
     names = tuple(learned)
-    active = [d for d in DETECTORS if d not in LEARNED or d in names]
+    active = [d for d in DETECTORS if d not in (*LEARNED, *COMPACT) or d in names]
     cells: dict[str, dict[str, dict[str, list[dict[str, float]]]]] = {
         d: {m: {str(lv): [] for lv in LEVELS} for m in MECHANISMS} for d in DETECTORS
     }
@@ -429,14 +450,16 @@ def load_table(uci_id: int) -> tuple[pd.DataFrame, dict[str, Any]]:
     return table, {"name": meta["name"], "rows": len(table), "columns": columns}
 
 
-def run_one(uci_id: int, seeds: tuple[int, ...] = SEEDS) -> dict[str, Any]:
+def run_one(
+    uci_id: int, seeds: tuple[int, ...] = SEEDS, learned: tuple[str, ...] = LEARNED
+) -> dict[str, Any]:
     table, info = load_table(uci_id)
     return {
         "id": f"uci:{uci_id}",
         **info,
         "arms": {
-            "clean_reference": run_source(table, seeds),
-            "contaminated_reference": run_source(table, seeds, contaminated=True),
+            "clean_reference": run_source(table, seeds, learned=learned),
+            "contaminated_reference": run_source(table, seeds, contaminated=True, learned=learned),
         },
     }
 
@@ -450,6 +473,9 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--only", nargs="*", type=int)
+    parser.add_argument(
+        "--compact", action="store_true", help="learned detectors on the compact profile"
+    )
     args = parser.parse_args(argv)
     args.output.mkdir(parents=True, exist_ok=True)
     skipped = {}
@@ -457,7 +483,7 @@ def main(argv: list[str] | None = None) -> int:
         if args.only and uci_id not in args.only:
             continue
         try:
-            result = run_one(uci_id)
+            result = run_one(uci_id, learned=COMPACT if args.compact else LEARNED)
         except inj.NotEligible as reason:
             skipped[f"uci:{uci_id}"] = str(reason)
             continue

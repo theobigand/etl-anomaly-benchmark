@@ -27,8 +27,23 @@ HARD = ("silent_corruption", "distribution_shift")
 DESCRIPTIVE_BELOW = 15
 
 
-def load(directory: Path) -> list[dict[str, Any]]:
-    return [json.loads(p.read_text()) for p in sorted(directory.glob("uci_*.json"))]
+def load(directory: Path, extra: Path | None = None) -> list[dict[str, Any]]:
+    """Result files of one run; ``extra`` merges the detectors of a second run of the same sources."""
+    sources = [json.loads(p.read_text()) for p in sorted(directory.glob("uci_*.json"))]
+    if extra is None:
+        return sources
+    other = {p.stem: json.loads(p.read_text()) for p in extra.glob("uci_*.json")}
+    for source in sources:
+        match = other.get(source["id"].replace(":", "_"))
+        if match is None:
+            continue
+        for arm, data in source["arms"].items():
+            added = match["arms"][arm]
+            data["results"].update(
+                {d: r for d, r in added["results"].items() if d not in data["results"]}
+            )
+            data["detectors"] = [d for d in pb.DETECTORS if d in data["results"]]
+    return sources
 
 
 def recall(
@@ -74,7 +89,8 @@ def summarise(sources: list[dict[str, Any]]) -> dict[str, Any]:
         gaps = []
         for a in clean.values():
             best = max(
-                (recall(a, d, m, lv) for d in pb.LEARNED if d in a["detectors"]), default=None
+                (recall(a, d, m, lv) for d in (*pb.LEARNED, *pb.COMPACT) if d in a["detectors"]),
+                default=None,
             )
             rule = recall(a, "constraint_rules", m, lv)
             if best is not None and rule is not None:
@@ -84,6 +100,21 @@ def summarise(sources: list[dict[str, Any]]) -> dict[str, Any]:
             "median_gap": float(np.median(gaps)),
             "share_ge_0.2": float(np.mean([g >= 0.2 for g in gaps])),
         }
+    # B5: compact versus full profile on the gross mechanisms (best learned variant of each)
+    b5: dict[str, Any] = {}
+    for m in ("partial_load", "duplicate_load", "null_spike", "schema_drop", "unit_change"):
+        gaps = []
+        for a in clean.values():
+            full = [recall(a, d, m, ("0", "1", "2")) for d in pb.LEARNED if d in a["detectors"]]
+            comp = [recall(a, d, m, ("0", "1", "2")) for d in pb.COMPACT if d in a["detectors"]]
+            if full and comp:
+                gaps.append(max(comp) - max(full))
+        if gaps:
+            b5[m] = {
+                "sources": len(gaps),
+                "median_gain": float(np.median(gaps)),
+                "share_gain_positive": float(np.mean([g > 0 for g in gaps])),
+            }
     # B3: the family with the best median recall differs between mechanisms
     winners = {}
     for m in pb.MECHANISMS:
@@ -134,6 +165,7 @@ def summarise(sources: list[dict[str, Any]]) -> dict[str, Any]:
         "B3_best_family_by_mechanism": winners,
         "B3_holds": len(set(winners.values())) > 1,
         "B4_mean_recall_change_contaminated_minus_clean": b4,
+        "B5_compact_minus_full_profile_best_learned": b5,
     }
 
 
@@ -179,6 +211,10 @@ def render(summary: dict[str, Any]) -> str:
             for k, v in summary["B4_mean_recall_change_contaminated_minus_clean"].items()
         )
     )
+    for m, v in summary["B5_compact_minus_full_profile_best_learned"].items():
+        lines.append(
+            f"- B5 {m}: best compact minus best full-profile learned detector, median {v['median_gain']:+.2f}; positive in {v['share_gain_positive']:.0%} of {v['sources']} sources"
+        )
     return "\n".join(lines) + "\n"
 
 
@@ -186,8 +222,9 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     default = ROOT / "verification/evidence/pipeline_batch/pilot"
     parser.add_argument("--results", type=Path, default=default)
+    parser.add_argument("--compact-results", type=Path, default=None)
     args = parser.parse_args(argv)
-    summary = summarise(load(args.results))
+    summary = summarise(load(args.results, args.compact_results))
     (args.results / "summary.json").write_text(json.dumps(summary, indent=1, sort_keys=True) + "\n")
     (args.results / "summary.md").write_text(render(summary))
     return 0

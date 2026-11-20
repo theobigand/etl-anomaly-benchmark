@@ -112,3 +112,21 @@ Faults are injected into real tables; they are artificial and say what a detecto
 that fault, not that it finds real incidents. Real incident evidence is a separate tier (task
 T426). The pilot has eight sources from one family of tables (regularly sampled series), so it is
 descriptive. Batches within a source are autocorrelated and are not independent units.
+
+## Amendment 1 (2026-11-21, after the full-profile pilot, before any compact-profile result)
+
+The full profile has about 7p + 6 dimensions (about 100 for a table of 12 columns) against 40
+reference batches. The first four sources show learned detectors near the random floor on gross
+faults (for example Isolation Forest, recall 0.03 on `partial_load`). A learned arm that is diluted
+by its input design would make the rules-versus-learning comparison unfair, so a second input is
+added; the full-profile results are kept unchanged and reported.
+
+- Compact profile: for each statistic group (null share, mean, standard deviation, 5th, 50th and
+  95th percentiles, Kolmogorov-Smirnov distance) the largest absolute standardised deviation over
+  the columns, plus the scalar features (row ratio, duplicate share, repeat share, freshness lag,
+  absent columns, correlation distance): 13 dimensions, all read against the reference batches only.
+- Detectors on the compact profile: `isolation_forest_compact`, `ecod_compact`, `pca_compact`,
+  `knn_compact`, `lof_compact`, same settings as before.
+- B5 (exploratory): the compact profile raises the recall of learned detectors on `partial_load`,
+  `duplicate_load`, `null_spike`, `schema_drop` and `unit_change` compared with the full profile.
+  B2 and B3 are then read with the best learned variant of either profile.

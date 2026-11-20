@@ -150,3 +150,27 @@ def test_a_contaminated_reference_is_recorded_and_changes_the_reference():
     dirty = pb.run_source(_table(), seeds=(42,), contaminated=True, learned=("isolation_forest",))
     assert clean["contaminated_reference"] is False and dirty["contaminated_reference"] is True
     assert clean["results"] != dirty["results"]
+
+
+def test_the_compact_profile_has_thirteen_dimensions_and_reads_the_largest_deviation_over_columns():
+    batches, ref = _ref()
+    raw = pb.profile_stream(ref, [batches[50]], batches[49])
+    z = ref.standardise(raw)
+    compact = ref.compact(z)
+    assert compact.shape == (1, 13) and set(pb.SCALARS) <= set(compact.columns)
+    shifted = batches[50].assign(a=batches[50]["a"] + 10 * float(ref.sd["a"]))
+    zs = ref.standardise(pb.profile_stream(ref, [shifted], batches[49]))
+    assert ref.compact(zs)["mean"].iloc[0] > 5 * max(compact["mean"].iloc[0], 0.5)
+    absent = ref.compact(
+        ref.standardise(pb.profile_stream(ref, [batches[50].drop(columns="b")], batches[49]))
+    )
+    assert absent["absent"].iloc[0] > 0 and not absent.isna().any().any()
+
+
+def test_compact_detectors_are_fitted_on_the_compact_profile_and_reported_under_their_own_name():
+    result = pb.run_source(_table(), seeds=(42,), learned=("isolation_forest_compact",))
+    assert "isolation_forest_compact" in result["detectors"]
+    assert "isolation_forest" not in result["detectors"]
+    gross = result["results"]["isolation_forest_compact"]["partial_load"]["2"]["recall"]
+    assert gross >= 0.9
+    assert pb.FAMILY["isolation_forest_compact"] == "learned"

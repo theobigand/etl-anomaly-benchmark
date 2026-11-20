@@ -59,3 +59,29 @@ def test_the_report_names_every_detector_and_marks_the_pilot_descriptive(tmp_pat
     text = ps.render(ps.summarise(sources))
     assert "Descriptive only" in text and "constraint_rules" in text and "B4" in text
     assert text.count("| random |") == 1
+
+
+def test_a_second_run_of_the_same_sources_adds_its_detectors_and_feeds_b5(tmp_path):
+    import json
+
+    full, compact = tmp_path / "full", tmp_path / "compact"
+    full.mkdir()
+    compact.mkdir()
+    for i in range(2):
+        src = _source(i, 0.9, 0.2)
+        (full / f"uci_{i}.json").write_text(json.dumps(src))
+        extra = _source(i, 0.9, 0.8)
+        for arm in extra["arms"].values():
+            arm["results"] = {"isolation_forest_compact": arm["results"]["isolation_forest"]}
+            arm["detectors"] = ["isolation_forest_compact"]
+        (compact / f"uci_{i}.json").write_text(json.dumps(extra))
+    sources = ps.load(full, compact)
+    assert "isolation_forest_compact" in sources[0]["arms"]["clean_reference"]["detectors"]
+    s = ps.summarise(sources)
+    assert s["B5_compact_minus_full_profile_best_learned"]["partial_load"][
+        "median_gain"
+    ] == pytest.approx(0.6)
+    assert (
+        s["B5_compact_minus_full_profile_best_learned"]["partial_load"]["share_gain_positive"]
+        == 1.0
+    )
