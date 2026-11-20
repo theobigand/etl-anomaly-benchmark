@@ -208,6 +208,11 @@ def build(evidence: Path = EVIDENCE) -> dict[str, Any]:
         f"uci:{r['uci_id']}": r for r in _load(evidence / "pool_extension" / "time_scan.json")
     }
     mixed_elig = _mixed_eligibility(evidence)
+    adbench = {
+        f"adbench:{r['name']}": r
+        for r in _load(evidence / "dataset_registry" / "inventory.json")
+        if r["decision"] == "INCLUDE"
+    }
     results = {
         "labelled_classical": _labelled(evidence, "classical"),
         "labelled_deep": _labelled(evidence, "deep"),
@@ -247,8 +252,19 @@ def build(evidence: Path = EVIDENCE) -> dict[str, Any]:
             if label
             else ("adbench_binary" if labelled else None),
             "label_refused": info.get("label_refused"),
-            "rows": (labelled or {}).get("rows") or eligibility.get(dataset_id, {}).get("rows"),
-            "features": (labelled or {}).get("features"),
+            "rows": (labelled or {}).get("rows")
+            or eligibility.get(dataset_id, {}).get("rows")
+            or curated.get(dataset_id, {}).get("num_instances")
+            or adbench.get(dataset_id, {}).get("rows"),
+            "features": (labelled or {}).get("features")
+            or curated.get(dataset_id, {}).get("num_features")
+            or adbench.get(dataset_id, {}).get("features"),
+            "has_missing": (
+                curated[dataset_id].get("has_missing_values") == "yes"
+                if dataset_id in curated
+                else bool(adbench.get(dataset_id, {}).get("nan_cells"))
+            ),
+            "schema_kind": _schema_kind(curated.get(dataset_id), kind),
             "prevalence": (labelled or {}).get("prevalence"),
             "time_candidates": [
                 c["column"] for c in time_scan.get(dataset_id, {}).get("candidates", [])
@@ -264,7 +280,96 @@ def build(evidence: Path = EVIDENCE) -> dict[str, Any]:
         row["protocols"] = cells
         row["valid_measurements"] = sorted(p for p, c in cells.items() if c["status"] == OK)
         datasets.append(row)
-    return {"datasets": datasets, "summary": summarise(datasets)}
+    return {
+        "datasets": datasets,
+        "summary": summarise(datasets),
+        "diversity": diversity(datasets),
+    }
+
+
+def _schema_kind(meta: dict[str, Any] | None, family: str) -> str:
+    if family == "adbench":
+        return "numeric"
+    types = set((meta or {}).get("feature_types") or [])
+    if not types:
+        return "unknown"
+    categorical = "Categorical" in types
+    numeric = bool(types & {"Real", "Integer"})
+    return "mixed" if categorical and numeric else "categorical" if categorical else "numeric"
+
+
+ROW_BINS = ("<500", "500-4,999", "5,000-49,999", ">=50,000")
+FEATURE_BINS = ("<10", "10-29", "30-99", ">=100")
+
+
+def _bin(value: float | None, edges: tuple[int, ...], labels: tuple[str, ...]) -> str:
+    if value is None:
+        return "unknown"
+    return labels[sum(value >= edge for edge in edges)]
+
+
+def diversity(datasets: list[dict[str, Any]]) -> dict[str, Any]:
+    """Counts of catalog entries and of independent sources by data characteristic."""
+
+    def tabulate(label: Any, order: tuple[str, ...] = ()) -> dict[str, dict[str, int]]:
+        entries: dict[str, list[str]] = defaultdict(list)
+        for d in datasets:
+            entries[str(label(d))].append(d["independent_source"])
+        keys = [k for k in order if k in entries] + sorted(set(entries) - set(order))
+        return {
+            k: {"datasets": len(entries[k]), "independent_sources": len(set(entries[k]))}
+            for k in keys
+        }
+
+    def mechanism(d: dict[str, Any]) -> str:
+        parts = []
+        if d["has_labels"]:
+            parts.append("minority-class proxy")
+        if d["protocols"]["typed_injection_classical"]["status"] == OK:
+            parts.append("injected (numeric)")
+        if d["protocols"]["typed_mixed_classical"]["status"] == OK:
+            parts.append("injected (mixed)")
+        return " + ".join(parts) or "none"
+
+    clusters = Counter(d["independent_source"] for d in datasets)
+    largest = clusters.most_common(1)[0]
+    return {
+        "family": tabulate(lambda d: d["source_family"]),
+        "domain": tabulate(lambda d: d["domain"] or "unknown"),
+        "rows": tabulate(lambda d: _bin(d["rows"], (500, 5_000, 50_000), ROW_BINS), ROW_BINS),
+        "features": tabulate(
+            lambda d: _bin(d["features"], (10, 30, 100), FEATURE_BINS), FEATURE_BINS
+        ),
+        "schema": tabulate(lambda d: d["schema_kind"]),
+        "missing_values": tabulate(lambda d: "yes" if d["has_missing"] else "no"),
+        "prevalence": tabulate(
+            lambda d: (
+                "unlabelled"
+                if d["prevalence"] is None
+                else "<1%"
+                if d["prevalence"] < 0.01
+                else "1-10%"
+                if d["prevalence"] < 0.1
+                else ">=10%"
+            )
+        ),
+        "anomaly_mechanism": tabulate(mechanism),
+        "temporal": tabulate(
+            lambda d: (
+                "evaluated chronologically"
+                if d["protocols"]["chronological"]["status"] == OK
+                else "real time column, not evaluated"
+                if d["time_candidates"]
+                else "no time variable"
+            )
+        ),
+        "effective_sample": {
+            "catalog_entries": len(datasets),
+            "independent_sources": len(clusters),
+            "largest_source": {"key": largest[0], "entries": largest[1]},
+            "entries_in_multi_entry_sources": sum(c for c in clusters.values() if c > 1),
+        },
+    }
 
 
 def _absent(
@@ -384,7 +489,30 @@ def report(matrix: dict[str, Any]) -> str:
     lines += ["", "## Twin sources (one independent source, several catalog entries)", ""]
     for key, ids in sorted(s["twin_groups"].items()):
         lines.append(f"- `{key}`: {', '.join(ids)}")
-    lines += ["", "## Datasets without a detector-quality measurement", ""]
+    lines += ["", "## Diversity of the catalog", ""]
+    for facet, table in matrix["diversity"].items():
+        if facet == "effective_sample":
+            continue
+        lines += [
+            f"### {facet.replace('_', ' ')}",
+            "",
+            "| value | entries | independent sources |",
+            "|---|---:|---:|",
+        ]
+        lines += [
+            f"| {k} | {v['datasets']} | {v['independent_sources']} |" for k, v in table.items()
+        ]
+        lines.append("")
+    eff = matrix["diversity"]["effective_sample"]
+    lines += [
+        f"Effective sample: {eff['catalog_entries']} catalog entries come from "
+        f"{eff['independent_sources']} independent sources; "
+        f"{eff['entries_in_multi_entry_sources']} entries share a source with another entry "
+        f"(largest: {eff['largest_source']['key']}, {eff['largest_source']['entries']} entries). "
+        "Inference over datasets uses sources as units.",
+        "",
+    ]
+    lines += ["## Datasets without a detector-quality measurement", ""]
     by_id = {d["id"]: d for d in matrix["datasets"]}
     for dataset_id in s["without_detector_quality_measurement"]:
         d = by_id[dataset_id]
