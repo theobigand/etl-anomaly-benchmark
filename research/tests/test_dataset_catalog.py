@@ -89,3 +89,69 @@ def test_coverage_lists_the_outside_entries_without_changing_the_active_count(tm
         "exclusion_reasons": {"0 anomalies": 1}, "detectors": 2,
     }  # fmt: skip
     assert cm.supplementary(tmp_path / "none", None, set()) == {}
+
+
+def test_strata_follow_time_then_categorical_then_flat_and_never_infer_logs_or_relational():
+    assert dc.stratum_of({"time_verified": True, "schema_kind": "categorical"}) == "C3"
+    assert dc.stratum_of({"schema_kind": "mixed"}) == "C2"
+    assert dc.stratum_of({"tags": ["transactional"]}) == "C2"
+    assert dc.stratum_of({"schema_kind": "numeric"}) == "C1"
+    assert dc.stratum_of({"schema_kind": "numeric", "stratum": "C5"}) == "C5"
+
+
+def test_the_gap_report_counts_each_source_family_once_and_reports_what_is_missing():
+    rows = [
+        {"source": "a", "schema_kind": "numeric"},
+        {"source": "a", "schema_kind": "numeric"},  # twin: same source, counted once
+        {"source": "b", "schema_kind": "mixed"},
+        {"source": "c", "time_verified": True},
+        {"source": "d", "time_candidate": True, "tags": ["time_series"]},
+    ]
+    report = dc.gap_report(rows)
+    # "d" has only a time-column candidate: until verified it is not C3 and falls to C1
+    assert report["strata"]["C1"]["sources"] == 2
+    assert report["strata"]["C2"]["sources"] == 1
+    assert report["strata"]["C3"]["sources"] == 1
+    assert report["strata"]["C4"]["sources"] == 0
+    assert report["strata"]["C4"]["missing_to_recommended"] == 28
+    assert report["strata"]["C1"]["missing_to_minimum"] == 13
+    assert report["time_candidates_not_yet_verified"] == ["d"]
+    assert report["total_sources"] == 4
+    assert "C4 logs and event sequences | 0 |" in dc.render_gap(report)
+
+
+def test_the_rows_read_the_three_evidence_sources_and_skip_retired_tables(tmp_path):
+    import json
+
+    def cell(status):
+        return {"status": status}
+
+    matrix = {
+        "datasets": [
+            {
+                "id": "uci:1", "independent_source": "uci:1", "schema_kind": "numeric",
+                "decision": "retained",
+                "protocols": {"chronological": cell("executed"),
+                              "chronological_injected_classical": cell("not_evaluated")},
+            },
+            {
+                "id": "uci:2", "independent_source": "uci:2", "schema_kind": "numeric",
+                "decision": "retired",
+                "protocols": {"chronological": cell("executed"),
+                              "chronological_injected_classical": cell("executed")},
+            },
+        ]
+    }  # fmt: skip
+    (tmp_path / "m.json").write_text(json.dumps(matrix))
+    (tmp_path / "w.json").write_text(
+        json.dumps({"tables": [{"uci_id": 9, "tags": ["sequential"], "time_candidates": ["t"]}]})
+    )
+    nat = tmp_path / "nat"
+    nat.mkdir()
+    (nat / "a.json").write_text(json.dumps({"id": "x/1", "group": "g", "chronological": {}}))
+    (nat / "b.json").write_text(json.dumps({"id": "x/2", "group": "g", "excluded": "none"}))
+    rows = dc.stratum_rows(tmp_path / "m.json", tmp_path / "w.json", nat)
+    assert [r["id"] for r in rows] == ["uci:1", "uci:9", "x/1"]
+    assert (
+        rows[0]["time_verified"] and rows[1]["time_candidate"] and rows[2]["source"] == "natural:g"
+    )

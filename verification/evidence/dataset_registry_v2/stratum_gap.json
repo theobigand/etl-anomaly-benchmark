@@ -1,0 +1,68 @@
+{
+ "strata": {
+  "C1": {
+   "ambitious": 50,
+   "minimum": 15,
+   "missing_to_minimum": 0,
+   "missing_to_recommended": 0,
+   "recommended": 36,
+   "sources": 94,
+   "stratum": "flat tabular"
+  },
+  "C2": {
+   "ambitious": 45,
+   "minimum": 15,
+   "missing_to_minimum": 0,
+   "missing_to_recommended": 0,
+   "recommended": 30,
+   "sources": 44,
+   "stratum": "transactional and categorical"
+  },
+  "C3": {
+   "ambitious": 55,
+   "minimum": 15,
+   "missing_to_minimum": 0,
+   "missing_to_recommended": 19,
+   "recommended": 40,
+   "sources": 21,
+   "stratum": "time series"
+  },
+  "C4": {
+   "ambitious": 40,
+   "minimum": 15,
+   "missing_to_minimum": 15,
+   "missing_to_recommended": 28,
+   "recommended": 28,
+   "sources": 0,
+   "stratum": "logs and event sequences"
+  },
+  "C5": {
+   "ambitious": 55,
+   "minimum": 15,
+   "missing_to_minimum": 15,
+   "missing_to_recommended": 36,
+   "recommended": 36,
+   "sources": 0,
+   "stratum": "relational"
+  },
+  "C6": {
+   "ambitious": 45,
+   "minimum": 15,
+   "missing_to_minimum": 15,
+   "missing_to_recommended": 30,
+   "recommended": 30,
+   "sources": 0,
+   "stratum": "nested"
+  }
+ },
+ "time_candidates_not_yet_verified": [
+  "uci:172",
+  "uci:352",
+  "uci:488",
+  "uci:492",
+  "uci:536",
+  "uci:755",
+  "uci:760"
+ ],
+ "total_sources": 156
+}

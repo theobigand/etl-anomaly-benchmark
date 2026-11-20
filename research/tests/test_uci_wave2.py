@@ -61,3 +61,20 @@ def test_pinning_records_the_checksum_of_the_downloaded_bytes_and_the_time_colum
     assert row["sha256"] == hashlib.sha256(payload).hexdigest()
     assert row["rows"] == 400 and row["time_candidates"] == ["date"]
     assert row["tags"] == ["time_series"] and row["licence"] == "CC BY 4.0"
+
+
+def test_a_download_over_the_size_limit_is_recorded_as_failed_not_fatal(tmp_path, monkeypatch):
+    import json
+
+    def too_big(meta, destination, fetcher=None):
+        raise w2.dr.RegistryError("the download is larger than 104857600 bytes")
+
+    selection = tmp_path / "sel.json"
+    selection.write_text(json.dumps({"chosen": [{**_meta(), "licence": "CC BY 4.0"}]}))
+    monkeypatch.setattr(w2, "SELECTION", selection)
+    monkeypatch.setattr(w2, "MANIFEST", tmp_path / "manifest.json")
+    monkeypatch.setattr(w2, "pin", too_big)
+    assert w2.main(["fetch", "--destination", str(tmp_path / "d")]) == 0
+    out = json.loads((tmp_path / "manifest.json").read_text())
+    assert out["tables"] == [] and out["failed"][0]["uci_id"] == 9001
+    assert "larger" in out["failed"][0]["reason"]

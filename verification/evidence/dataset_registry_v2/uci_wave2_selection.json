@@ -1,0 +1,6787 @@
+{
+ "checked": "2026-11-21",
+ "chosen": [
+  {
+   "abstract": "Balance scale weight & distance database",
+   "additional_info": {
+    "citation": null,
+    "funded_by": null,
+    "instances_represent": null,
+    "preprocessing_description": null,
+    "purpose": null,
+    "recommended_data_splits": null,
+    "sensitive_data": null,
+    "summary": "This data set was generated to model psychological experimental results.  Each example is classified as having the balance scale tip to the right, tip to the left, or be balanced.  The attributes are the left weight, the left distance, the right weight, and the right distance.  The correct way to find the class is the greater of  (left-distance * left-weight) and (right-distance * right-weight).  If they are equal, it is balanced.",
+    "variable_info": "\t1. Class Name: 3 (L, B, R)\r\n\t2. Left-Weight: 5 (1, 2, 3, 4, 5)\r\n\t3. Left-Distance: 5 (1, 2, 3, 4, 5)\r\n\t4. Right-Weight: 5 (1, 2, 3, 4, 5)\r\n\t5. Right-Distance: 5 (1, 2, 3, 4, 5)"
+   },
+   "area": "Social Science",
+   "characteristics": [
+    "Multivariate"
+   ],
+   "creators": [
+    "R. Siegler"
+   ],
+   "data_url": "https://archive.ics.uci.edu/static/public/12/data.csv",
+   "dataset_doi": "10.24432/C5488X",
+   "demographics": [],
+   "feature_types": [
+    "Categorical"
+   ],
+   "has_missing_values": "no",
+   "index_col": null,
+   "intro_paper": null,
+   "last_updated": "Fri Feb 09 2024",
+   "licence": "CC BY 4.0",
+   "missing_values_symbol": null,
+   "name": "Balance Scale",
+   "num_features": 4,
+   "num_instances": 625,
+   "repository_url": "https://archive.ics.uci.edu/dataset/12/balance+scale",
+   "tags": [
+    "categorical_only"
+   ],
+   "target_col": [
+    "class"
+   ],
+   "tasks": [
+    "Classification"
+   ],
+   "uci_id": 12,
+   "variables": [
+    {
+     "demographic": null,
+     "description": "L, B, R",
+     "missing_values": "no",
+     "name": "right-distance",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "1, 2, 3, 4, 5",
+     "missing_values": "no",
+     "name": "right-weight",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "1, 2, 3, 4, 5",
+     "missing_values": "no",
+     "name": "left-distance",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "1, 2, 3, 4, 5",
+     "missing_values": "no",
+     "name": "left-weight",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "1, 2, 3, 4, 5",
+     "missing_values": "no",
+     "name": "class",
+     "role": "Target",
+     "type": "Categorical",
+     "units": null
+    }
+   ],
+   "year_of_dataset_creation": 1976
+  },
+  {
+   "abstract": "Derived from simple hierarchical decision model, this database may be useful for testing constructive induction and structure discovery methods.",
+   "additional_info": {
+    "citation": null,
+    "funded_by": null,
+    "instances_represent": null,
+    "preprocessing_description": null,
+    "purpose": null,
+    "recommended_data_splits": null,
+    "sensitive_data": null,
+    "summary": "Car Evaluation Database was derived from a simple hierarchical decision model originally developed for the demonstration of DEX, M. Bohanec, V. Rajkovic: Expert system for decision making. Sistemica 1(1), pp. 145-157, 1990.). The model evaluates cars according to the following concept structure:\r\n\r\nCAR                      car acceptability\r\n. PRICE                  overall price\r\n. . buying               buying price\r\n. . maint                price of the maintenance\r\n. TECH                   technical characteristics\r\n. . COMFORT              comfort\r\n. . . doors              number of doors\r\n. . . persons            capacity in terms of persons to carry\r\n. . . lug_boot           the size of luggage boot\r\n. . safety               estimated safety of the car\r\n\r\nInput attributes are printed in lowercase. Besides the target concept (CAR), the model includes three intermediate concepts: PRICE, TECH, COMFORT. Every concept is in the original model related to its lower level descendants by a set of examples (for these examples sets see http://www-ai.ijs.si/BlazZupan/car.html).\r\n\r\nThe Car Evaluation Database contains examples with the structural information removed, i.e., directly relates CAR to the six input attributes: buying, maint, doors, persons, lug_boot, safety.\r\n\r\nBecause of known underlying concept structure, this database may be particularly useful for testing constructive induction and structure discovery methods.\r\n",
+    "variable_info": "buying:   vhigh, high, med, low.\nmaint:    vhigh, high, med, low.\ndoors:    2, 3, 4, 5more.\npersons:  2, 4, more.\nlug_boot: small, med, big.\nsafety:   low, med, high."
+   },
+   "area": "Other",
+   "characteristics": [
+    "Multivariate"
+   ],
+   "creators": [
+    "Marko Bohanec"
+   ],
+   "data_url": "https://archive.ics.uci.edu/static/public/19/data.csv",
+   "dataset_doi": "10.24432/C5JP48",
+   "demographics": [],
+   "feature_types": [
+    "Categorical"
+   ],
+   "has_missing_values": "no",
+   "index_col": null,
+   "intro_paper": {
+    "DOI": null,
+    "ID": 249,
+    "URL": "https://www.semanticscholar.org/paper/KNOWLEDGE-ACQUISITION-AND-EXPLANATION-FOR-DECISION-Bohanec-Rajkovi%C4%8D/8bab443ae322ff47c3e609272bd93fd4650555bc",
+    "acl": null,
+    "arxiv": null,
+    "authors": "M. Bohanec, V. Rajkovi\u010d",
+    "corpus": null,
+    "journal": null,
+    "mag": null,
+    "pmcid": null,
+    "pmid": null,
+    "sha": null,
+    "title": "Knowledge acquisition and explanation for multi-attribute decision making",
+    "type": "NATIVE",
+    "venue": "8th Intl Workshop on Expert Systems and their Applications, Avignon, France",
+    "year": 1988
+   },
+   "last_updated": "Thu Aug 10 2023",
+   "licence": "CC BY 4.0",
+   "missing_values_symbol": null,
+   "name": "Car Evaluation",
+   "num_features": 6,
+   "num_instances": 1728,
+   "repository_url": "https://archive.ics.uci.edu/dataset/19/car+evaluation",
+   "tags": [
+    "categorical_only"
+   ],
+   "target_col": [
+    "class"
+   ],
+   "tasks": [
+    "Classification"
+   ],
+   "uci_id": 19,
+   "variables": [
+    {
+     "demographic": null,
+     "description": "buying price",
+     "missing_values": "no",
+     "name": "buying",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "price of the maintenance",
+     "missing_values": "no",
+     "name": "maint",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "number of doors",
+     "missing_values": "no",
+     "name": "doors",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "capacity in terms of persons to carry",
+     "missing_values": "no",
+     "name": "persons",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "the size of luggage boot",
+     "missing_values": "no",
+     "name": "lug_boot",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "estimated safety of the car",
+     "missing_values": "no",
+     "name": "safety",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "evaulation level (unacceptable, acceptable, good, very good)",
+     "missing_values": "no",
+     "name": "class",
+     "role": "Target",
+     "type": "Categorical",
+     "units": null
+    }
+   ],
+   "year_of_dataset_creation": 1988
+  },
+  {
+   "abstract": "King+Rook versus King+Pawn on a7 (usually abbreviated KRKPA7).",
+   "additional_info": {
+    "citation": null,
+    "funded_by": null,
+    "instances_represent": null,
+    "preprocessing_description": null,
+    "purpose": null,
+    "recommended_data_splits": null,
+    "sensitive_data": null,
+    "summary": "The dataset format is described below.  Note: the format of this database was modified on 2/26/90 to conform with the format of all the other databases in the UCI repository of machine learning databases.",
+    "variable_info": "Attributes: see Shapiro's book."
+   },
+   "area": "Games",
+   "characteristics": [
+    "Multivariate"
+   ],
+   "creators": [
+    "Alen Shapiro"
+   ],
+   "data_url": "https://archive.ics.uci.edu/static/public/22/data.csv",
+   "dataset_doi": "10.24432/C5DK5C",
+   "demographics": [],
+   "feature_types": [
+    "Categorical"
+   ],
+   "has_missing_values": "no",
+   "index_col": null,
+   "intro_paper": null,
+   "last_updated": "Fri Mar 08 2024",
+   "licence": "CC BY 4.0",
+   "missing_values_symbol": null,
+   "name": "Chess (King-Rook vs. King-Pawn)",
+   "num_features": 35,
+   "num_instances": 3196,
+   "repository_url": "https://archive.ics.uci.edu/dataset/22/chess+king+rook+vs+king+pawn",
+   "tags": [
+    "categorical_only"
+   ],
+   "target_col": [
+    "wtoeg"
+   ],
+   "tasks": [
+    "Classification"
+   ],
+   "uci_id": 22,
+   "variables": [
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bkblk",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bknwy",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bkon8",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bkona",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bkspr",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bkxbq",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bkxcr",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bkxwp",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "blxwp",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bxqsq",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "cntxt",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "dsopp",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "dwipd",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "hdchk",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "katri",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "mulch",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "qxmsq",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "r2ar8",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "reskd",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "reskr",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "rimmx",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "rkxwp",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "rxmsq",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "simpl",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "skach",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "skewr",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "skrxp",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "spcop",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "stlmt",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "thrsk",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "wkcti",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "wkna8",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "wknck",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "wkovl",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "wkpos",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "wtoeg",
+     "role": "Target",
+     "type": "Binary",
+     "units": null
+    }
+   ],
+   "year_of_dataset_creation": 1983
+  },
+  {
+   "abstract": "Contains connect-4 positions",
+   "additional_info": {
+    "citation": null,
+    "funded_by": null,
+    "instances_represent": null,
+    "preprocessing_description": null,
+    "purpose": null,
+    "recommended_data_splits": null,
+    "sensitive_data": null,
+    "summary": "This database contains all legal 8-ply positions in the game of connect-4 in which neither player has won yet, and in which the next move is not forced.\r\n\r\nx is the first player; o the second.\r\n\r\nThe outcome class is the game theoretical value for the first player.",
+    "variable_info": "Attribute Information: (x=player x has taken, o=player o has taken, b=blank)\r\n\r\nThe board is numbered like:\r\n6 . . . . . . .\r\n5 . . . . . . .\r\n4 . . . . . . .\r\n3 . . . . . . .\r\n2 . . . . . . .\r\n1 . . . . . . .\r\n a b c d e f g\r\n\r\n    1. a1: {x,o,b}\r\n    2. a2: {x,o,b}\r\n    3. a3: {x,o,b}\r\n    4. a4: {x,o,b}\r\n    5. a5: {x,o,b}\r\n    6. a6: {x,o,b}\r\n    7. b1: {x,o,b}\r\n    8. b2: {x,o,b}\r\n    9. b3: {x,o,b}\r\n   10. b4: {x,o,b}\r\n   11. b5: {x,o,b}\r\n   12. b6: {x,o,b}\r\n   13. c1: {x,o,b}\r\n   14. c2: {x,o,b}\r\n   15. c3: {x,o,b}\r\n   16. c4: {x,o,b}\r\n   17. c5: {x,o,b}\r\n   18. c6: {x,o,b}\r\n   19. d1: {x,o,b}\r\n   20. d2: {x,o,b}\r\n   21. d3: {x,o,b}\r\n   22. d4: {x,o,b}\r\n   23. d5: {x,o,b}\r\n   24. d6: {x,o,b}\r\n   25. e1: {x,o,b}\r\n   26. e2: {x,o,b}\r\n   27. e3: {x,o,b}\r\n   28. e4: {x,o,b}\r\n   29. e5: {x,o,b}\r\n   30. e6: {x,o,b}\r\n   31. f1: {x,o,b}\r\n   32. f2: {x,o,b}\r\n   33. f3: {x,o,b}\r\n   34. f4: {x,o,b}\r\n   35. f5: {x,o,b}\r\n   36. f6: {x,o,b}\r\n   37. g1: {x,o,b}\r\n   38. g2: {x,o,b}\r\n   39. g3: {x,o,b}\r\n   40. g4: {x,o,b}\r\n   41. g5: {x,o,b}\r\n   42. g6: {x,o,b}\r\n   43. Class: {win,loss,draw}"
+   },
+   "area": "Games",
+   "characteristics": [
+    "Multivariate",
+    "Spatial"
+   ],
+   "creators": [
+    "John Tromp"
+   ],
+   "data_url": "https://archive.ics.uci.edu/static/public/26/data.csv",
+   "dataset_doi": "10.24432/C59P43",
+   "demographics": [],
+   "feature_types": [
+    "Categorical"
+   ],
+   "has_missing_values": "no",
+   "index_col": null,
+   "intro_paper": null,
+   "last_updated": "Sat Mar 09 2024",
+   "licence": "CC BY 4.0",
+   "missing_values_symbol": null,
+   "name": "Connect-4",
+   "num_features": 42,
+   "num_instances": 67557,
+   "repository_url": "https://archive.ics.uci.edu/dataset/26/connect+4",
+   "tags": [
+    "categorical_only"
+   ],
+   "target_col": [
+    "class"
+   ],
+   "tasks": [
+    "Classification"
+   ],
+   "uci_id": 26,
+   "variables": [
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "a1",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "a2",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "a3",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "a4",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "a5",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "a6",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "b1",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "b2",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "b3",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "b4",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "b5",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "b6",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "c1",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "c2",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "c3",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "c4",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "c5",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "c6",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "d1",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "d2",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "d3",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "d4",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "d5",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "d6",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "e1",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "e2",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "e3",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "e4",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "e5",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "e6",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "f1",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "f2",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "f3",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "f4",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "f5",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "f6",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "g1",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "g2",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "g3",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "g4",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "g5",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "g6",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "class",
+     "role": "Target",
+     "type": "Categorical",
+     "units": null
+    }
+   ],
+   "year_of_dataset_creation": 1995
+  },
+  {
+   "abstract": "Primate splice-junction gene sequences (DNA) with associated imperfect domain theory",
+   "additional_info": {
+    "citation": null,
+    "funded_by": null,
+    "instances_represent": null,
+    "preprocessing_description": null,
+    "purpose": null,
+    "recommended_data_splits": null,
+    "sensitive_data": null,
+    "summary": "Problem Description: \r\n      \r\nSplice junctions are points on a DNA sequence at which `superfluous' DNA is removed during the process of protein creation in higher organisms.  The problem posed in this dataset is to recognize, given a sequence of DNA, the boundaries between exons (the parts of the DNA sequence retained after splicing) and introns (the parts of the DNA sequence that are spliced out). This problem consists of two subtasks: recognizing exon/intron boundaries (referred to as EI sites), and recognizing intron/exon boundaries (IE sites). (In the biological community, IE borders are referred to a ``acceptors'' while EI borders are referred to as ``donors''.)\r\n\r\nThis dataset has been developed to help evaluate a \"hybrid\" learning algorithm (KBANN) that uses examples to inductively refine preexisting knowledge.  Using a \"ten-fold cross-validation\" methodology on 1000 examples randomly selected from the complete set of 3190, the following  error rates were produced by various ML algorithms (all experiments run at the Univ of Wisconsin, sometimes with local implementations of published algorithms). \r\n\r\nSystem -- Neither -- EI -- IE\r\n---------------------------------------------------\r\nKBANN -- 4.62 -- 7.56 --  8.47\r\nBACKPROP -- 5.29 --  5.74 -- 10.75\r\nPEBLS -- 6.86 -- 8.18 -- 7.55\r\nPERCEPTRON -- 3.99 -- 16.32 -- 17.41\r\nID3 -- 8.84 -- 10.58 -- 13.99\r\nCOBWEB  -- 11.80 -- 15.04 -- 9.46\r\nNear. Neighbor -- 31.11 -- 11.65 -- 9.09",
+    "variable_info": "1.   One of {n ei ie}, indicating the class.\r\n2.   The instance name.\r\n3-62.   The remaining 60 fields are the sequence, starting at position -30 and ending at position +30. Each of these fields is almost always filled by one of {a, g, t, c}. Other characters indicate ambiguity among the standard characters according to the following table:\r\n\t\t\t\r\ncharacter: meaning\r\nD:  A or G or T\r\nN:  A or G or C or T\r\nS:  C or G\r\nR:  A or G"
+   },
+   "area": "Biology",
+   "characteristics": [
+    "Sequential",
+    "Domain-Theory"
+   ],
+   "creators": [],
+   "data_url": "https://archive.ics.uci.edu/static/public/69/data.csv",
+   "dataset_doi": "10.24432/C5M888",
+   "demographics": [],
+   "feature_types": [
+    "Categorical"
+   ],
+   "has_missing_values": "no",
+   "index_col": [
+    "instancename"
+   ],
+   "intro_paper": null,
+   "last_updated": "Mon Mar 04 2024",
+   "licence": "CC BY 4.0",
+   "missing_values_symbol": null,
+   "name": "Molecular Biology (Splice-junction Gene Sequences)",
+   "num_features": 60,
+   "num_instances": 3190,
+   "repository_url": "https://archive.ics.uci.edu/dataset/69/molecular+biology+splice+junction+gene+sequences",
+   "tags": [
+    "sequential",
+    "categorical_only"
+   ],
+   "target_col": [
+    "class"
+   ],
+   "tasks": [
+    "Classification"
+   ],
+   "uci_id": 69,
+   "variables": [
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "class",
+     "role": "Target",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "instancename",
+     "role": "ID",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base1",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base2",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base3",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base4",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base5",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base6",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base7",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base8",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base9",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base10",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base11",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base12",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base13",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base14",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base15",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base16",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base17",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base18",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base19",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base20",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base21",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base22",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base23",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base24",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base25",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base26",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base27",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base28",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base29",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base30",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base31",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base32",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base33",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base34",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base35",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base36",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base37",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base38",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base39",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base40",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base41",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base42",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base43",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base44",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base45",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base46",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base47",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base48",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base49",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base50",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base51",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base52",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base53",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base54",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base55",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base56",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base57",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base58",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base59",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Base60",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    }
+   ],
+   "year_of_dataset_creation": 1991
+  },
+  {
+   "abstract": "A set of three artificial domains over the same attribute space; Used to test a wide range of induction algorithms",
+   "additional_info": {
+    "citation": null,
+    "funded_by": null,
+    "instances_represent": null,
+    "preprocessing_description": null,
+    "purpose": null,
+    "recommended_data_splits": null,
+    "sensitive_data": null,
+    "summary": "The MONK's problem were the basis of a first international comparison of learning algorithms. The result of this comparison is summarized in \"The MONK's Problems - A Performance Comparison of Different Learning algorithms\" by S.B. Thrun, J. Bala, E. Bloedorn, I.  Bratko, B. Cestnik, J. Cheng, K. De Jong, S.  Dzeroski, S.E. Fahlman, D. Fisher, R. Hamann, K. Kaufman, S. Keller, I. Kononenko, J.  Kreuziger, R.S. Michalski, T. Mitchell, P.  Pachowicz, Y. Reich H.  Vafaie, W. Van de Welde, W. Wenzel, J. Wnek, and J. Zhang has been published as Technical Report CS-CMU-91-197, Carnegie Mellon University in Dec. 1991.\r\n\r\nOne significant characteristic of this comparison is that it was performed by a collection of researchers, each of whom was an advocate of the technique they tested (often they were the creators of the various methods). In this sense, the results are less biased than in comparisons performed by a single person advocating a specific learning method, and more accurately reflect the generalization behavior of the learning techniques as applied by knowledgeable users.\r\n\r\nThere are three MONK's problems.  The domains for all MONK's problems are the same (described below).  One of the MONK's problems has noise added. For each problem, the domain has been partitioned into a train and test set.",
+    "variable_info": "    1. class: 0, 1 \r\n    2. a1:    1, 2, 3\r\n    3. a2:    1, 2, 3\r\n    4. a3:    1, 2\r\n    5. a4:    1, 2, 3\r\n    6. a5:    1, 2, 3, 4\r\n    7. a6:    1, 2\r\n    8. Id:    (A unique symbol for each instance)"
+   },
+   "area": "Other",
+   "characteristics": [
+    "Multivariate"
+   ],
+   "creators": [
+    "J. Wnek"
+   ],
+   "data_url": "https://archive.ics.uci.edu/static/public/70/data.csv",
+   "dataset_doi": "10.24432/C5R30R",
+   "demographics": [],
+   "feature_types": [
+    "Categorical"
+   ],
+   "has_missing_values": "no",
+   "index_col": [
+    "ID"
+   ],
+   "intro_paper": {
+    "DOI": null,
+    "ID": 400,
+    "URL": "https://www.semanticscholar.org/paper/The-MONK%27%27s-Problems-A-Performance-Comparison-of-Thrun/94c0418c4bd9d719e1203acfd42741ebbd343073",
+    "acl": null,
+    "arxiv": null,
+    "authors": "S. Thrun",
+    "corpus": null,
+    "journal": null,
+    "mag": null,
+    "pmcid": null,
+    "pmid": null,
+    "sha": null,
+    "title": "The MONK''s Problems-A Performance Comparison of Different Learning Algorithms, CMU-CS-91-197, Sch",
+    "type": "NATIVE",
+    "venue": "Carnegie Mellon University",
+    "year": 1991
+   },
+   "last_updated": "Mon Feb 26 2024",
+   "licence": "CC BY 4.0",
+   "missing_values_symbol": null,
+   "name": "MONK's Problems",
+   "num_features": 6,
+   "num_instances": 432,
+   "repository_url": "https://archive.ics.uci.edu/dataset/70/monk+s+problems",
+   "tags": [
+    "categorical_only"
+   ],
+   "target_col": [
+    "class"
+   ],
+   "tasks": [
+    "Classification"
+   ],
+   "uci_id": 70,
+   "variables": [
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "class",
+     "role": "Target",
+     "type": "Binary",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "a1",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "a2",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "a3",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "a4",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "a5",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "a6",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "ID",
+     "role": "ID",
+     "type": "Categorical",
+     "units": null
+    }
+   ],
+   "year_of_dataset_creation": 1993
+  },
+  {
+   "abstract": " Nursery Database was derived from a hierarchical decision model originally developed to rank applications for nursery schools.",
+   "additional_info": {
+    "citation": null,
+    "funded_by": null,
+    "instances_represent": null,
+    "preprocessing_description": null,
+    "purpose": null,
+    "recommended_data_splits": null,
+    "sensitive_data": null,
+    "summary": "Nursery Database was derived from a hierarchical decision model originally developed to rank applications for nursery schools. It was used during several years in 1980's when there was excessive enrollment to these schools in Ljubljana, Slovenia, and the rejected applications frequently needed an objective explanation. The final decision depended on three subproblems: occupation of parents and child's nursery, family structure and financial standing, and social and health picture of the family. The model was developed within expert system shell for decision making DEX (M. Bohanec, V. Rajkovic: Expert system for decision making. Sistemica 1(1), pp. 145-157, 1990.).\r\n\r\nThe hierarchical model ranks nursery-school applications according to the following concept structure:\r\n\r\n NURSERY            Evaluation of applications for nursery schools\r\n . EMPLOY           Employment of parents and child's nursery\r\n . . parents        Parents' occupation\r\n . . has_nurs       Child's nursery\r\n . STRUCT_FINAN     Family structure and financial standings\r\n . . STRUCTURE      Family structure\r\n . . . form         Form of the family\r\n . . . children     Number of children\r\n . . housing        Housing conditions\r\n . . finance        Financial standing of the family\r\n . SOC_HEALTH       Social and health picture of the family\r\n . . social         Social conditions\r\n . . health         Health conditions\r\n\r\nInput attributes are printed in lowercase. Besides the target concept (NURSERY) the model includes four intermediate concepts: EMPLOY, STRUCT_FINAN, STRUCTURE, SOC_HEALTH. Every concept is in the original model related to its lower level descendants by a set of examples (for these examples sets see http://www-ai.ijs.si/BlazZupan/nursery.html).\r\n\r\nThe Nursery Database contains examples with the structural information removed, i.e., directly relates NURSERY to the eight input attributes: parents, has_nurs, form, children, housing, finance, social, health.\r\n\r\nBecause of known underlying concept structure, this database may be particularly useful for testing constructive induction and structure discovery methods.",
+    "variable_info": "   parents:        usual, pretentious, great_pret\r\n   has_nurs:       proper, less_proper, improper, critical, very_crit\r\n   form:           complete, completed, incomplete, foster\r\n   children:       1, 2, 3, more\r\n   housing:        convenient, less_conv, critical\r\n   finance:        convenient, inconv\r\n   social:         non-prob, slightly_prob, problematic\r\n   health:         recommended, priority, not_recom"
+   },
+   "area": "Social Science",
+   "characteristics": [
+    "Multivariate"
+   ],
+   "creators": [
+    "Vladislav Rajkovic"
+   ],
+   "data_url": "https://archive.ics.uci.edu/static/public/76/data.csv",
+   "dataset_doi": "10.24432/C5P88W",
+   "demographics": [],
+   "feature_types": [
+    "Categorical"
+   ],
+   "has_missing_values": "no",
+   "index_col": null,
+   "intro_paper": {
+    "DOI": null,
+    "ID": 372,
+    "URL": "https://www.academia.edu/16670755/An_application_for_admission_in_public_school_systems",
+    "acl": null,
+    "arxiv": null,
+    "authors": "M. Olave, V. Rajkovic, M. Bohanec",
+    "corpus": null,
+    "journal": null,
+    "mag": null,
+    "pmcid": null,
+    "pmid": null,
+    "sha": null,
+    "title": "An application for admission in public school systems",
+    "type": "NATIVE",
+    "venue": "Expert Systems in Public Administration",
+    "year": 1989
+   },
+   "last_updated": "Sun Jan 14 2024",
+   "licence": "CC BY 4.0",
+   "missing_values_symbol": null,
+   "name": "Nursery",
+   "num_features": 8,
+   "num_instances": 12960,
+   "repository_url": "https://archive.ics.uci.edu/dataset/76/nursery",
+   "tags": [
+    "categorical_only"
+   ],
+   "target_col": [
+    "class"
+   ],
+   "tasks": [
+    "Classification"
+   ],
+   "uci_id": 76,
+   "variables": [
+    {
+     "demographic": null,
+     "description": "usual, pretentious, great_pret",
+     "missing_values": "no",
+     "name": "parents",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "proper, less_proper, improper, critical, very_crit",
+     "missing_values": "no",
+     "name": "has_nurs",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "complete, completed, incomplete, foster",
+     "missing_values": "no",
+     "name": "form",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "1, 2, 3, more",
+     "missing_values": "no",
+     "name": "children",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "convenient, less_conv, critical",
+     "missing_values": "no",
+     "name": "housing",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "convenient, inconv",
+     "missing_values": "no",
+     "name": "finance",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "non-prob, slightly_prob, problematic",
+     "missing_values": "no",
+     "name": "social",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "recommended, priority, not_recom",
+     "missing_values": "no",
+     "name": "health",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "recommended, priority, not_recom",
+     "missing_values": "no",
+     "name": "class",
+     "role": "Target",
+     "type": "Categorical",
+     "units": null
+    }
+   ],
+   "year_of_dataset_creation": 1989
+  },
+  {
+   "abstract": "Binary classification task on possible configurations of tic-tac-toe game",
+   "additional_info": {
+    "citation": null,
+    "funded_by": null,
+    "instances_represent": null,
+    "preprocessing_description": null,
+    "purpose": null,
+    "recommended_data_splits": null,
+    "sensitive_data": null,
+    "summary": "This database encodes the complete set of possible board configurations at the end of tic-tac-toe games, where \"x\" is assumed to have played first.  The target concept is \"win for x\" (i.e., true when \"x\" has one of 8 possible ways to create a \"three-in-a-row\").  \r\n\r\nInterestingly, this raw database gives a stripped-down decision tree algorithm (e.g., ID3) fits.  However, the rule-based CN2 algorithm, the simple IB1 instance-based learning algorithm, and the CITRE feature-constructing decision tree algorithm perform well on it.",
+    "variable_info": "    1. top-left-square: {x,o,b}\r\n    2. top-middle-square: {x,o,b}\r\n    3. top-right-square: {x,o,b}\r\n    4. middle-left-square: {x,o,b}\r\n    5. middle-middle-square: {x,o,b}\r\n    6. middle-right-square: {x,o,b}\r\n    7. bottom-left-square: {x,o,b}\r\n    8. bottom-middle-square: {x,o,b}\r\n    9. bottom-right-square: {x,o,b}\r\n   10. Class: {positive,negative}"
+   },
+   "area": "Games",
+   "characteristics": [
+    "Multivariate"
+   ],
+   "creators": [
+    "David Aha"
+   ],
+   "data_url": "https://archive.ics.uci.edu/static/public/101/data.csv",
+   "dataset_doi": "10.24432/C5688J",
+   "demographics": [],
+   "feature_types": [
+    "Categorical"
+   ],
+   "has_missing_values": "no",
+   "index_col": null,
+   "intro_paper": null,
+   "last_updated": "Mon Aug 19 1991",
+   "licence": "CC BY 4.0",
+   "missing_values_symbol": null,
+   "name": "Tic-Tac-Toe Endgame",
+   "num_features": 9,
+   "num_instances": 958,
+   "repository_url": "https://archive.ics.uci.edu/dataset/101/tic+tac+toe+endgame",
+   "tags": [
+    "categorical_only"
+   ],
+   "target_col": [
+    "class"
+   ],
+   "tasks": [
+    "Classification"
+   ],
+   "uci_id": 101,
+   "variables": [
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "class",
+     "role": "Target",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "top-left-square",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "top-middle-square",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "top-right-square",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "middle-left-square",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "middle-middle-square",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "middle-right-square",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bottom-left-square",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bottom-middle-square",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bottom-right-square",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    }
+   ],
+   "year_of_dataset_creation": 1991
+  },
+  {
+   "abstract": "The USCensus1990raw data set contains a one percent sample of the Public Use Microdata Samples (PUMS) person records drawn from the full 1990 census sample.",
+   "additional_info": {
+    "citation": null,
+    "funded_by": null,
+    "instances_represent": null,
+    "preprocessing_description": null,
+    "purpose": null,
+    "recommended_data_splits": null,
+    "sensitive_data": null,
+    "summary": "The data was collected as part of the 1990 census. \r\n\r\nThere are 68 categorical attributes. This data set was derived from the USCensus1990raw data set. The attributes are listed in the file USCensus1990.attributes.txt (repeated below) and the coding for the values is described below. Many of the less useful attributes in the original data set have been dropped, the few continuous variables have been discretized and the few discrete variables that have a large number of possible values have been collapsed to have fewer possible values. \r\n\r\nMore specifically the USCensus1990 data set was obtained from the USCensus1990raw data set by the following sequence of operations; \r\n\r\n- Randomization: The order of the cases in the original USCensus1990raw data set were randomly permuted. \r\n- Selection of attributes: The 68 attributes included in the data set are given below. In the USCensus1990 data set we have added a single letter prefix to the original name. We add the letter 'i' to indicate that the original attribute values are used and 'd' to indicate that original attribute values for each case have been mapped to new values (the precise mapping is described below). \r\n\r\nHierarchies of values are provided in the file USCensus1990raw.coding.htm and the mapping functions used to transform the USCensus1990raw to the USCensus1990 data sets are giving in the file USCensus1990.mapping.sql. \r\n\r\nThe data is contained in a file called USCensus1990.data.txt. The first row contains the list of attributes. The first attribute is a caseid and should be ignored during analysis. The data is comma delimited with one case per row. ",
+    "variable_info": "      --------------------------------------------------------------\r\n        Old Variable        New Variable\r\n      --------------------------------------------------------------\r\n        Age         dAge\r\n        Ancstry1        dAncstry1\r\n        Ancstry2        dAncstry2\r\n        Avail           iAvail\r\n        Citizen         iCitizen\r\n        Class           iClass\r\n        Depart          dDepart\r\n        Disabl1         iDisabl1\r\n        Disabl2         iDisabl2\r\n        English         iEnglish\r\n        Feb55           iFeb55\r\n        Fertil          iFertil\r\n        Hispanic        dHispanic\r\n        Hour89          dHour89\r\n        Hours           dHours\r\n        Immigr          iImmigr\r\n        Income1         dIncome1\r\n        Income2         dIncome2\r\n        Income3         dIncome3\r\n        Income4         dIncome4\r\n        Income5         dIncome5\r\n        Income6         dIncome6\r\n        Income7         dIncome7\r\n        Income8         dIncome8\r\n        Industry        dIndustry\r\n        Korean          iKorean\r\n        Lang1           iLang1\r\n        Looking         iLooking\r\n        Marital         iMarital\r\n        May75880        iMay75880\r\n        Means           iMeans\r\n        Military        iMilitary\r\n        Mobility        iMobility\r\n        Mobillim        iMobillim\r\n        Occup           dOccup\r\n        Othrserv        iOthrserv\r\n        Perscare        iPerscare\r\n        POB         dPOB\r\n        Poverty         dPoverty\r\n        Pwgt1           dPwgt1\r\n        Ragechld        iRagechld\r\n        Rearning        dRearning\r\n        Relat1          iRelat1\r\n        Relat2          iRelat2\r\n        Remplpar        iRemplpar\r\n        Riders          iRiders\r\n        Rlabor          iRlabor\r\n        Rownchld        iRownchld\r\n        Rpincome        dRpincome\r\n        RPOB            iRPOB\r\n        Rrelchld        iRrelchld\r\n        Rspouse         iRspouse\r\n        Rvetserv        iRvetserv\r\n        School          iSchool\r\n        Sept80          iSept80\r\n        Sex         iSex\r\n        Subfam1         iSubfam1\r\n        Subfam2         iSubfam2\r\n        Tmpabsnt        iTmpabsnt\r\n        Travtime        dTravtime\r\n        Vietnam         iVietnam\r\n        Week89          dWeek89\r\n        Work89          iWork89\r\n        Worklwk         iWorklwk\r\n        WWII            iWWII\r\n        Yearsch         iYearsch\r\n        Yearwrk         iYearwrk\r\n        Yrsserv         dYrsserv\r\n\r\nMapping: In this step we map all of the old values for variables with prefix 'd' to new values. The mappings for the variables dAncstry1, dAncstry2, dHispanic, dIndustry, dOccup, dPOB were designed to correspond to a natural coarsening of the original values based on the information in the file coding.htm. The remaining variables are continuous valued variables and the mapping for these variables was chosen to make variables that were fairly uniformly distributed across the states (quantiles). The precise mappings are specified in the file USCensus1990.mapping.sql. This file contains all of T-SQL procedures used to map the variables. These procedures can be used directly in SQLServer to map the original values or translated to some other language. \r\n      --------------------------------------------------------------\r\n        Variable        Procedure\r\n      --------------------------------------------------------------\r\n        dAge            discAge\r\n        dAncstry1       discAncstry1\r\n        dAncstry2       discAncstry2\r\n        dHispanic       discHispanic\r\n        dHour89         discHour89\r\n        dHours          discHours\r\n        dIncome1        discIncome1\r\n        dIncome2        discIncome2to8\r\n        dIncome3        discIncome2to8\r\n        dIncome4        discIncome2to8\r\n        dIncome5        discIncome2to8\r\n        dIncome6        discIncome2to8\r\n        dIncome7        discIncome2to8\r\n        dIncome8        discIncome2to8\r\n        dIndustry       discIndustry\r\n        dOccup          discOccup\r\n        dPOB            discPOB\r\n        dPoverty        discPoverty\r\n        dPwgt1          discPwgt1\r\n        dRearning       discRearning\r\n        dRpincome       discRpincome\r\n        dTravtime       discTravtime\r\n        dWeek89         discWeek89\r\n        dYrsserv        discYrsserv\r\n\r\n"
+   },
+   "area": "Social Science",
+   "characteristics": [
+    "Multivariate"
+   ],
+   "creators": [
+    "Chris Meek",
+    "Bo Thiesson",
+    "David Heckerman"
+   ],
+   "data_url": "https://archive.ics.uci.edu/static/public/116/data.csv",
+   "dataset_doi": "10.24432/C5VP42",
+   "demographics": [
+    "Age",
+    "Income",
+    "Marital Status",
+    "Occupation",
+    "Sex"
+   ],
+   "feature_types": [
+    "Categorical"
+   ],
+   "has_missing_values": "no",
+   "index_col": [
+    "caseid"
+   ],
+   "intro_paper": null,
+   "last_updated": "Fri Mar 08 2024",
+   "licence": "CC BY 4.0",
+   "missing_values_symbol": null,
+   "name": "US Census Data (1990)",
+   "num_features": 68,
+   "num_instances": 2458285,
+   "repository_url": "https://archive.ics.uci.edu/dataset/116/us+census+data+1990",
+   "tags": [
+    "categorical_only"
+   ],
+   "target_col": null,
+   "tasks": [
+    "Clustering"
+   ],
+   "uci_id": 116,
+   "variables": [
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "caseid",
+     "role": "ID",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": "Age",
+     "description": null,
+     "missing_values": "no",
+     "name": "dAge",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "dAncstry1",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "dAncstry2",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iAvail",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iCitizen",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iClass",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "dDepart",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iDisabl1",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iDisabl2",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iEnglish",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iFeb55",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iFertil",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "dHispanic",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "dHour89",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "dHours",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iImmigr",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": "Income",
+     "description": null,
+     "missing_values": "no",
+     "name": "dIncome1",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": "Income",
+     "description": null,
+     "missing_values": "no",
+     "name": "dIncome2",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": "Income",
+     "description": null,
+     "missing_values": "no",
+     "name": "dIncome3",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": "Income",
+     "description": null,
+     "missing_values": "no",
+     "name": "dIncome4",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": "Income",
+     "description": null,
+     "missing_values": "no",
+     "name": "dIncome5",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": "Income",
+     "description": null,
+     "missing_values": "no",
+     "name": "dIncome6",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": "Income",
+     "description": null,
+     "missing_values": "no",
+     "name": "dIncome7",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": "Income",
+     "description": null,
+     "missing_values": "no",
+     "name": "dIncome8",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "dIndustry",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iKorean",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iLang1",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iLooking",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": "Marital Status",
+     "description": null,
+     "missing_values": "no",
+     "name": "iMarital",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iMay75880",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iMeans",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iMilitary",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iMobility",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iMobillim",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": "Occupation",
+     "description": null,
+     "missing_values": "no",
+     "name": "dOccup",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iOthrserv",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iPerscare",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "dPOB",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "dPoverty",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "dPwgt1",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iRagechld",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "dRearning",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iRelat1",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iRelat2",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iRemplpar",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iRiders",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iRlabor",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iRownchld",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "dRpincome",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iRPOB",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iRrelchld",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iRspouse",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iRvetserv",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iSchool",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iSept80",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": "Sex",
+     "description": null,
+     "missing_values": "no",
+     "name": "iSex",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iSubfam1",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iSubfam2",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iTmpabsnt",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "dTravtime",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iVietnam",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "dWeek89",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iWork89",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iWorklwk",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iWWII",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iYearsch",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "iYearwrk",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "dYrsserv",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    }
+   ],
+   "year_of_dataset_creation": 2001
+  },
+  {
+   "abstract": "This file concerns credit card applications. This database exists elsewhere in the repository (Credit Screening Database) in a slightly different form",
+   "additional_info": {
+    "citation": null,
+    "funded_by": null,
+    "instances_represent": null,
+    "preprocessing_description": null,
+    "purpose": null,
+    "recommended_data_splits": null,
+    "sensitive_data": null,
+    "summary": "This file concerns credit card applications.  All attribute names and values have been changed to meaningless symbols to protect confidentiality of the data.\r\n  \r\nThis dataset is interesting because there is a good mix of attributes -- continuous, nominal with small numbers of values, and nominal with larger numbers of values.  There are also a few missing values.\r\n",
+    "variable_info": "There are 6 numerical and 8 categorical attributes.  The labels have been changed for the convenience of the statistical algorithms.  For example, attribute 4 originally had 3 labels p,g,gg and these have been changed to labels 1,2,3.\r\n                             \r\nA1: 0,1    CATEGORICAL (formerly: a,b)\r\nA2: continuous.\r\nA3: continuous.\r\nA4: 1,2,3    CATEGORICAL  (formerly: p,g,gg)\r\nA5: 1, 2,3,4,5, 6,7,8,9,10,11,12,13,14    CATEGORICAL (formerly: ff,d,i,k,j,aa,m,c,w, e, q, r,cc, x)\r\nA6: 1, 2,3, 4,5,6,7,8,9    CATEGORICAL (formerly: ff,dd,j,bb,v,n,o,h,z)\r\nA7: continuous.\r\nA8: 1, 0    CATEGORICAL (formerly: t, f)\r\nA9: 1, 0\tCATEGORICAL (formerly: t, f)\r\nA10:  continuous.\r\nA11:  1, 0\t    CATEGORICAL (formerly t, f)\r\nA12:  1, 2, 3    CATEGORICAL (formerly: s, g, p) \r\nA13:  continuous.\r\nA14:  continuous.\r\nA15:   1,2  class attribute (formerly: +,-) "
+   },
+   "area": "Business",
+   "characteristics": [
+    "Multivariate"
+   ],
+   "creators": [
+    "Ross Quinlan"
+   ],
+   "data_url": "https://archive.ics.uci.edu/static/public/143/data.csv",
+   "dataset_doi": "10.24432/C59012",
+   "demographics": [],
+   "feature_types": [
+    "Categorical",
+    "Integer",
+    "Real"
+   ],
+   "has_missing_values": "no",
+   "index_col": null,
+   "intro_paper": null,
+   "last_updated": null,
+   "licence": "CC BY 4.0",
+   "missing_values_symbol": null,
+   "name": "Statlog (Australian Credit Approval)",
+   "num_features": 14,
+   "num_instances": 690,
+   "repository_url": "https://archive.ics.uci.edu/dataset/143/statlog+australian+credit+approval",
+   "tags": [
+    "transactional"
+   ],
+   "target_col": [
+    "A15"
+   ],
+   "tasks": [
+    "Classification"
+   ],
+   "uci_id": 143,
+   "variables": [
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "A1",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "A2",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "A3",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "A4",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "A5",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "A6",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "A7",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "A8",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "A9",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "A10",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "A11",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "A12",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "A13",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "A14",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "A15",
+     "role": "Target",
+     "type": "Categorical",
+     "units": null
+    }
+   ],
+   "year_of_dataset_creation": 1987
+  },
+  {
+   "abstract": "Two ground ozone level data sets are included in this collection. One is the eight hour peak set (eighthr.data), the other is the one hour peak set (onehr.data). Those data were collected from 1998 to 2004 at the Houston, Galveston and Brazoria area.",
+   "additional_info": {
+    "citation": null,
+    "funded_by": null,
+    "instances_represent": null,
+    "preprocessing_description": null,
+    "purpose": null,
+    "recommended_data_splits": null,
+    "sensitive_data": null,
+    "summary": "For a list of attributes, please refer to those two .names files.  They use the following naming convention:\r\n\r\nAll the attribute start with T means the temperature measured at different time throughout the day; and those starts with WS indicate the wind speed at various time.\r\n\r\nWSR_PK:     continuous. peek wind speed -- resultant (meaning average of wind vector)\r\n\r\nWSR_AV:     continuous. average wind speed\r\n\r\nT_PK:     continuous. Peak T\r\nT_AV:     continuous. Average T\r\nT85:     continuous. T at 850 hpa level (or about 1500 m height)\r\nRH85:     continuous. Relative Humidity at 850 hpa\r\nU85:     continuous. (U wind - east-west direction wind at 850 hpa)\r\nV85:     continuous. V wind - N-S direction wind at 850\r\nHT85:     continuous. Geopotential height at 850 hpa, it is about the same as height at low altitude\r\nT70:     continuous. T at 700 hpa level (roughly 3100 m height)\r\n\r\nRH70:     continuous.\r\nU70:     continuous.\r\nV70:     continuous.\r\nHT70:     continuous.\r\n\r\nT50:     continuous. T at 500 hpa level (roughly at 5500 m height)\r\n\r\nRH50:     continuous.\r\nU50:     continuous.\r\nV50:     continuous.\r\nHT50:     continuous.\r\n\r\nKI:     continuous. K-Index http://www.weather.gov/glossary/index.php?letter=k\r\nTT:     continuous. T-Totals http://www.theweatherprediction.com/habyhints/302/\r\nSLP:     continuous. Sea level pressure\r\nSLP_:     continuous. SLP change from previous day\r\n\r\nPrecp:    continuous. -- precipitation",
+    "variable_info": "The following are specifications for several most important attributes that are highly valued by Texas Commission on Environmental Quality (TCEQ). More details can be found in the two relevant papers.\r\n \r\nO 3 - Local ozone peak prediction\r\nUpwind - Upwind ozone background level\r\nEmFactor - Precursor emissions related factor\r\nTmax - Maximum temperature in degrees F\r\nTb - Base temperature where net ozone production begins (50 F)\r\nSRd - Solar radiation total for the day\r\nWSa - Wind speed near sunrise (using 09-12 UTC forecast mode)\r\nWSp - Wind speed mid-day (using 15-21 UTC forecast mode) \r\n\r\nPlease refer to those two .names files."
+   },
+   "area": "Climate and Environment",
+   "characteristics": [
+    "Multivariate",
+    "Sequential",
+    "Time-Series"
+   ],
+   "creators": [
+    "Kun Zhang",
+    "Wei Fan",
+    "XiaoJing Yuan"
+   ],
+   "data_url": "https://archive.ics.uci.edu/static/public/172/data.csv",
+   "dataset_doi": "10.24432/C5NG6W",
+   "demographics": [],
+   "feature_types": [
+    "Real"
+   ],
+   "has_missing_values": "yes",
+   "index_col": [
+    "Dataset",
+    "Date"
+   ],
+   "intro_paper": null,
+   "last_updated": "Fri Mar 29 2024",
+   "licence": "CC BY 4.0",
+   "missing_values_symbol": "NaN",
+   "name": "Ozone Level Detection",
+   "num_features": 72,
+   "num_instances": 2536,
+   "repository_url": "https://archive.ics.uci.edu/dataset/172/ozone+level+detection",
+   "tags": [
+    "time_series",
+    "sequential"
+   ],
+   "target_col": [
+    "Class"
+   ],
+   "tasks": [
+    "Classification"
+   ],
+   "uci_id": 172,
+   "variables": [
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Dataset",
+     "role": "ID",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Date",
+     "role": "ID",
+     "type": "Date",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR0",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR1",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR2",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR3",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR4",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR5",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR6",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR7",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR8",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR9",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR10",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR11",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR12",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR13",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR14",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR15",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR16",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR17",
+     "role": "Feature",
+     "type": "Binary",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR18",
+     "role": "Feature",
+     "type": "Binary",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR19",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR20",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR21",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR22",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR23",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR_PK",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "WSR_AV",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T0",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T1",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T2",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T3",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T4",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T5",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T6",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T7",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T8",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T9",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T10",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T11",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T12",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T13",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T14",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T15",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T16",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T17",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T18",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T19",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T20",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T21",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T22",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T23",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "T_PK",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "T_AV",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T85",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "RH85",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "U85",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "V85",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "HT85",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T70",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "RH70",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "U70",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "V70",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "HT70",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "T50",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "RH50",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "U50",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "V50",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "HT50",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "KI",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "TT",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "SLP",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "SLP_",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Precp",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Class",
+     "role": "Target",
+     "type": "Binary",
+     "units": null
+    }
+   ],
+   "year_of_dataset_creation": 2008
+  },
+  {
+   "abstract": "Measurements of electric power consumption in one household with a one-minute sampling rate over a period of almost 4 years. Different electrical quantities and some sub-metering values are available.",
+   "additional_info": {
+    "citation": null,
+    "funded_by": null,
+    "instances_represent": null,
+    "preprocessing_description": null,
+    "purpose": null,
+    "recommended_data_splits": null,
+    "sensitive_data": null,
+    "summary": "This archive contains 2075259 measurements gathered in a house located in Sceaux (7km of Paris, France) between December 2006 and November 2010 (47 months).\r\nNotes: \r\n1.(global_active_power*1000/60 - sub_metering_1 - sub_metering_2 - sub_metering_3) represents the active energy consumed every minute (in watt hour) in the household by electrical equipment not measured in sub-meterings 1, 2 and 3.\r\n2.The dataset contains some missing values in the measurements (nearly 1,25% of the rows). All calendar timestamps are present in the dataset but for some timestamps, the measurement values are missing: a missing value is represented by the absence of value between two consecutive semi-colon attribute separators. For instance, the dataset shows missing values on April 28, 2007.",
+    "variable_info": "1.date: Date in format dd/mm/yyyy\r\n2.time: time in format hh:mm:ss\r\n3.global_active_power: household global minute-averaged active power (in kilowatt)\r\n4.global_reactive_power: household global minute-averaged reactive power (in kilowatt)\r\n5.voltage: minute-averaged voltage (in volt)\r\n6.global_intensity: household global minute-averaged current intensity (in ampere)\r\n7.sub_metering_1: energy sub-metering No. 1 (in watt-hour of active energy). It corresponds to the kitchen, containing mainly a dishwasher, an oven and a microwave (hot plates are not electric but gas powered).\r\n8.sub_metering_2: energy sub-metering No. 2 (in watt-hour of active energy). It corresponds to the laundry room, containing a washing-machine, a tumble-drier, a refrigerator and a light.\r\n9.sub_metering_3: energy sub-metering No. 3 (in watt-hour of active energy). It corresponds to an electric water-heater and an air-conditioner."
+   },
+   "area": "Physics and Chemistry",
+   "characteristics": [
+    "Multivariate",
+    "Time-Series"
+   ],
+   "creators": [
+    "Georges Hebrail",
+    "Alice Berard"
+   ],
+   "data_url": "https://archive.ics.uci.edu/static/public/235/data.csv",
+   "dataset_doi": "10.24432/C58K54",
+   "demographics": [],
+   "feature_types": [
+    "Real"
+   ],
+   "has_missing_values": "no",
+   "index_col": null,
+   "intro_paper": null,
+   "last_updated": "Fri Mar 08 2024",
+   "licence": "CC BY 4.0",
+   "missing_values_symbol": null,
+   "name": "Individual Household Electric Power Consumption",
+   "num_features": 9,
+   "num_instances": 2075259,
+   "repository_url": "https://archive.ics.uci.edu/dataset/235/individual+household+electric+power+consumption",
+   "tags": [
+    "time_series"
+   ],
+   "target_col": null,
+   "tasks": [
+    "Regression",
+    "Clustering"
+   ],
+   "uci_id": 235,
+   "variables": [
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Date",
+     "role": "Feature",
+     "type": "Date",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Time",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Global_active_power",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Global_reactive_power",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Voltage",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Global_intensity",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Sub_metering_1",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Sub_metering_2",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Sub_metering_3",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    }
+   ],
+   "year_of_dataset_creation": 2006
+  },
+  {
+   "abstract": "The data set consists of 14 EEG values and a value indicating the eye state.",
+   "additional_info": {
+    "citation": null,
+    "funded_by": null,
+    "instances_represent": null,
+    "preprocessing_description": null,
+    "purpose": null,
+    "recommended_data_splits": null,
+    "sensitive_data": null,
+    "summary": "All data is from one continuous EEG measurement with the Emotiv EEG Neuroheadset. The duration of the measurement was 117 seconds. The eye state was detected via a camera during the EEG measurement and added later manually to the file after analysing the video frames. '1' indicates the eye-closed and '0' the eye-open state. All values are in chronological order with the first measured value at the top of the data.",
+    "variable_info": null
+   },
+   "area": "Health and Medicine",
+   "characteristics": [
+    "Multivariate",
+    "Sequential",
+    "Time-Series"
+   ],
+   "creators": [
+    "Oliver Roesler"
+   ],
+   "data_url": "https://archive.ics.uci.edu/static/public/264/data.csv",
+   "dataset_doi": "10.24432/C57G7J",
+   "demographics": [],
+   "feature_types": [
+    "Integer",
+    "Real"
+   ],
+   "has_missing_values": "no",
+   "index_col": null,
+   "intro_paper": null,
+   "last_updated": "Thu Mar 21 2024",
+   "licence": "CC BY 4.0",
+   "missing_values_symbol": null,
+   "name": "EEG Eye State",
+   "num_features": 14,
+   "num_instances": 14980,
+   "repository_url": "https://archive.ics.uci.edu/dataset/264/eeg+eye+state",
+   "tags": [
+    "time_series",
+    "sequential"
+   ],
+   "target_col": [
+    "eyeDetection"
+   ],
+   "tasks": [
+    "Classification"
+   ],
+   "uci_id": 264,
+   "variables": [
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "AF3",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "F7",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "F3",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "FC5",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "T7",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "P7",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "O1",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "O2",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "P8",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "T8",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "FC6",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "F4",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "F8",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "AF4",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "eyeDetection",
+     "role": "Target",
+     "type": "Integer",
+     "units": null
+    }
+   ],
+   "year_of_dataset_creation": 2013
+  },
+  {
+   "abstract": "This is a transactional data set which contains all the transactions occurring between 01/12/2010 and 09/12/2011 for a UK-based and registered non-store online retail.",
+   "additional_info": {
+    "citation": null,
+    "funded_by": null,
+    "instances_represent": null,
+    "preprocessing_description": null,
+    "purpose": null,
+    "recommended_data_splits": null,
+    "sensitive_data": null,
+    "summary": "This is a transactional data set which contains all the transactions occurring between 01/12/2010 and 09/12/2011 for a UK-based and registered non-store online retail.The company mainly sells unique all-occasion gifts. Many customers of the company are wholesalers.",
+    "variable_info": "InvoiceNo: Invoice number. Nominal, a 6-digit integral number uniquely assigned to each transaction. If this code starts with letter 'c', it indicates a cancellation. \nStockCode: Product (item) code. Nominal, a 5-digit integral number uniquely assigned to each distinct product.\nDescription: Product (item) name. Nominal.\nQuantity: The quantities of each product (item) per transaction. Numeric.\t\nInvoiceDate: Invoice Date and time. Numeric, the day and time when each transaction was generated.\nUnitPrice: Unit price. Numeric, Product price per unit in sterling.\nCustomerID: Customer number. Nominal, a 5-digit integral number uniquely assigned to each customer.\nCountry: Country name. Nominal, the name of the country where each customer resides. "
+   },
+   "area": "Business",
+   "characteristics": [
+    "Multivariate",
+    "Sequential",
+    "Time-Series"
+   ],
+   "creators": [
+    "Daqing Chen"
+   ],
+   "data_url": "https://archive.ics.uci.edu/static/public/352/data.csv",
+   "dataset_doi": "10.24432/C5BW33",
+   "demographics": [],
+   "feature_types": [
+    "Integer",
+    "Real"
+   ],
+   "has_missing_values": "no",
+   "index_col": [
+    "InvoiceNo",
+    "StockCode"
+   ],
+   "intro_paper": {
+    "DOI": "10.1057/dbm.2012.17",
+    "ID": 361,
+    "URL": "https://www.semanticscholar.org/paper/e43a5a90fa33d419df42e485099f8f08badf2149",
+    "acl": null,
+    "arxiv": null,
+    "authors": "Daqing Chen, Sai Laing Sain, Kun Guo",
+    "corpus": null,
+    "journal": null,
+    "mag": null,
+    "pmcid": null,
+    "pmid": null,
+    "sha": null,
+    "title": "Data mining for the online retail industry: A case study of RFM model-based customer segmentation using data mining",
+    "type": "NATIVE",
+    "venue": "Journal of Database Marketing and Customer Strategy Management, Vol. 19, No. 3",
+    "year": 2012
+   },
+   "last_updated": "Mon Oct 21 2024",
+   "licence": "CC BY 4.0",
+   "missing_values_symbol": null,
+   "name": "Online Retail",
+   "num_features": 6,
+   "num_instances": 541909,
+   "repository_url": "https://archive.ics.uci.edu/dataset/352/online+retail",
+   "tags": [
+    "time_series",
+    "sequential",
+    "transactional"
+   ],
+   "target_col": null,
+   "tasks": [
+    "Classification",
+    "Clustering"
+   ],
+   "uci_id": 352,
+   "variables": [
+    {
+     "demographic": null,
+     "description": "a 6-digit integral number uniquely assigned to each transaction. If this code starts with letter 'c', it indicates a cancellation",
+     "missing_values": "no",
+     "name": "InvoiceNo",
+     "role": "ID",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "a 5-digit integral number uniquely assigned to each distinct product",
+     "missing_values": "no",
+     "name": "StockCode",
+     "role": "ID",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "product name",
+     "missing_values": "no",
+     "name": "Description",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "the quantities of each product (item) per transaction",
+     "missing_values": "no",
+     "name": "Quantity",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "the day and time when each transaction was generated",
+     "missing_values": "no",
+     "name": "InvoiceDate",
+     "role": "Feature",
+     "type": "Date",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "product price per unit",
+     "missing_values": "no",
+     "name": "UnitPrice",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": "sterling"
+    },
+    {
+     "demographic": null,
+     "description": "a 5-digit integral number uniquely assigned to each customer",
+     "missing_values": "no",
+     "name": "CustomerID",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "the name of the country where each customer resides",
+     "missing_values": "no",
+     "name": "Country",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    }
+   ],
+   "year_of_dataset_creation": 2015
+  },
+  {
+   "abstract": "Contains weekly purchased quantities of 800 over products over 52 weeks. Normalised values are provided too.",
+   "additional_info": {
+    "citation": null,
+    "funded_by": null,
+    "instances_represent": null,
+    "preprocessing_description": null,
+    "purpose": null,
+    "recommended_data_splits": null,
+    "sensitive_data": null,
+    "summary": "52 columns for 52 weeks; normalised values of provided too.",
+    "variable_info": "Product_Code\r\n52 weeks: W0, W1, ..., W51.\r\nNormalised vlaues of weekly data: Normalised 0, Normalised 1, ..., Normalised 51\r\n\r\n"
+   },
+   "area": "Business",
+   "characteristics": [
+    "Multivariate",
+    "Time-Series"
+   ],
+   "creators": [
+    "James Tan"
+   ],
+   "data_url": "https://archive.ics.uci.edu/static/public/396/data.csv",
+   "dataset_doi": "10.24432/C5XS4Q",
+   "demographics": [],
+   "feature_types": [
+    "Integer",
+    "Real"
+   ],
+   "has_missing_values": "no",
+   "index_col": [
+    "Product_Code"
+   ],
+   "intro_paper": {
+    "DOI": null,
+    "ID": 428,
+    "URL": "https://www.semanticscholar.org/paper/Time-Series-Clustering%3A-A-Superior-Alternative-for-Tan-Lau/a1c15f4594629d3a5a72e038084e6f6c370d5dd8",
+    "acl": null,
+    "arxiv": null,
+    "authors": "Swee Chuan Tan, Jess Pei San Lau",
+    "corpus": null,
+    "journal": null,
+    "mag": null,
+    "pmcid": null,
+    "pmid": null,
+    "sha": null,
+    "title": "Time Series Clustering: A Superior Alternative for Market Basket Analysis",
+    "type": "NATIVE",
+    "venue": "International Conference on Advanced Data and Information Engineering",
+    "year": 2013
+   },
+   "last_updated": "Fri Mar 15 2024",
+   "licence": "CC BY 4.0",
+   "missing_values_symbol": null,
+   "name": "Sales Transactions Weekly",
+   "num_features": 106,
+   "num_instances": 811,
+   "repository_url": "https://archive.ics.uci.edu/dataset/396/sales+transactions+dataset+weekly",
+   "tags": [
+    "time_series",
+    "transactional"
+   ],
+   "target_col": null,
+   "tasks": [
+    "Clustering"
+   ],
+   "uci_id": 396,
+   "variables": [
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Product_Code",
+     "role": "ID",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W0",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W1",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W2",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W3",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W4",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W5",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W6",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W7",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W8",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W9",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W10",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W11",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W12",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W13",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W14",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W15",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W16",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W17",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W18",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W19",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W20",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W21",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W22",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W23",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W24",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W25",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W26",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W27",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W28",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W29",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W30",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W31",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W32",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W33",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W34",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W35",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W36",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W37",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W38",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W39",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W40",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W41",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W42",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W43",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W44",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W45",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W46",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W47",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W48",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W49",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W50",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "W51",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "MIN",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "MAX",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 0",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 1",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 2",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 3",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 4",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 5",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 6",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 7",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 8",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 9",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 10",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 11",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 12",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 13",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 14",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 15",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 16",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 17",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 18",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 19",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 20",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 21",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 22",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 23",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 24",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 25",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 26",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 27",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 28",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 29",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 30",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 31",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 32",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 33",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 34",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 35",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 36",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 37",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 38",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 39",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 40",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 41",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 42",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 43",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 44",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 45",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 46",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 47",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 48",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 49",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 50",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Normalized 51",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    }
+   ],
+   "year_of_dataset_creation": 2014
+  },
+  {
+   "abstract": "Facebook pages of 10 Thai fashion and cosmetics retail sellers. Posts of a different nature (video, photos, statuses, and links). Engagement metrics consist of comments, shares, and reactions.",
+   "additional_info": {
+    "citation": null,
+    "funded_by": null,
+    "instances_represent": null,
+    "preprocessing_description": null,
+    "purpose": null,
+    "recommended_data_splits": null,
+    "sensitive_data": null,
+    "summary": "The variability of consumer engagement is analysed through a Principal Component Analysis, highlighting the changes induced by the use of Facebook Live. The seasonal component is analysed through a study of the averages of the different engagement metrics for different time-frames (hourly, daily and monthly). Finally, we identify statistical outlier posts, that are qualitatively analyzed further, in terms of their selling approach and activities.  ",
+    "variable_info": "status_id\t\r\nstatus_type\t\r\nstatus_published\t\r\nnum_reactions\t\r\nnum_comments\t\r\nnum_shares\t\r\nnum_likes\t\r\nnum_loves\t\r\nnum_wows\t\r\nnum_hahas\t\r\nnum_sads\t\r\nnum_angrys"
+   },
+   "area": "Business",
+   "characteristics": [
+    "Multivariate"
+   ],
+   "creators": [
+    "Nassim Dehouche"
+   ],
+   "data_url": "https://archive.ics.uci.edu/static/public/488/data.csv",
+   "dataset_doi": "10.24432/C5R60S",
+   "demographics": [],
+   "feature_types": [
+    "Integer"
+   ],
+   "has_missing_values": "no",
+   "index_col": [
+    "status_id"
+   ],
+   "intro_paper": {
+    "DOI": "10.1016/j.dib.2020.105661",
+    "ID": 454,
+    "URL": "https://www.semanticscholar.org/paper/c0ec91003f8bdce99a56fa60dc2d20268cc808b8",
+    "acl": null,
+    "arxiv": null,
+    "authors": "N. Dehouche",
+    "corpus": null,
+    "journal": null,
+    "mag": null,
+    "pmcid": null,
+    "pmid": null,
+    "sha": null,
+    "title": "Dataset on usage and engagement patterns for Facebook Live sellers in Thailand",
+    "type": "NATIVE",
+    "venue": "Data in Brief",
+    "year": 2020
+   },
+   "last_updated": "Fri Mar 29 2024",
+   "licence": "CC BY 4.0",
+   "missing_values_symbol": null,
+   "name": "Facebook Live Sellers in Thailand",
+   "num_features": 11,
+   "num_instances": 7051,
+   "repository_url": "https://archive.ics.uci.edu/dataset/488/facebook+live+sellers+in+thailand",
+   "tags": [
+    "transactional"
+   ],
+   "target_col": null,
+   "tasks": [
+    "Clustering"
+   ],
+   "uci_id": 488,
+   "variables": [
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "status_id",
+     "role": "ID",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "status_type",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "status_published",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "num_reactions",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "num_comments",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "num_shares",
+     "role": "Feature",
+     "type": "Binary",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "num_likes",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "num_loves",
+     "role": "Feature",
+     "type": "Binary",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "num_wows",
+     "role": "Feature",
+     "type": "Binary",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "num_hahas",
+     "role": "Feature",
+     "type": "Binary",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "num_sads",
+     "role": "Feature",
+     "type": "Binary",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "num_angrys",
+     "role": "Feature",
+     "type": "Binary",
+     "units": null
+    }
+   ],
+   "year_of_dataset_creation": 2018
+  },
+  {
+   "abstract": "Hourly Minneapolis-St Paul, MN traffic volume for westbound I-94. Includes weather and holiday features from 2012-2018.",
+   "additional_info": {
+    "citation": null,
+    "funded_by": null,
+    "instances_represent": null,
+    "preprocessing_description": null,
+    "purpose": null,
+    "recommended_data_splits": null,
+    "sensitive_data": null,
+    "summary": "Hourly Interstate 94 Westbound traffic volume for MN DoT ATR station 301, roughly midway between Minneapolis and St Paul, MN. Hourly weather features and holidays included for impacts on traffic volume.",
+    "variable_info": "holiday                Categorical    US National holidays plus regional holiday, Minnesota State Fair\r\ntemp                   Numeric        Average temp in kelvin\r\nrain_1h                Numeric        Amount in mm of rain that occurred in the hour\r\nsnow_1h                Numeric        Amount in mm of snow that occurred in the hour\r\nclouds_all             Numeric        Percentage of cloud cover\r\nweather_main           Categorical    Short textual description of the current weather\r\nweather_description    Categorical    Longer textual description of the current weather\r\ndate_time              DateTime       Hour of the data collected in local CST time\r\ntraffic_volume         Numeric        Hourly I-94 ATR 301 reported westbound traffic volume"
+   },
+   "area": "Other",
+   "characteristics": [
+    "Multivariate",
+    "Sequential",
+    "Time-Series"
+   ],
+   "creators": [
+    "John Hogue"
+   ],
+   "data_url": "https://archive.ics.uci.edu/static/public/492/data.csv",
+   "dataset_doi": "10.24432/C5X60B",
+   "demographics": [],
+   "feature_types": [
+    "Integer",
+    "Real"
+   ],
+   "has_missing_values": "no",
+   "index_col": null,
+   "intro_paper": null,
+   "last_updated": "Fri Mar 15 2024",
+   "licence": "CC BY 4.0",
+   "missing_values_symbol": null,
+   "name": "Metro Interstate Traffic Volume",
+   "num_features": 8,
+   "num_instances": 48204,
+   "repository_url": "https://archive.ics.uci.edu/dataset/492/metro+interstate+traffic+volume",
+   "tags": [
+    "time_series",
+    "sequential"
+   ],
+   "target_col": [
+    "traffic_volume"
+   ],
+   "tasks": [
+    "Regression"
+   ],
+   "uci_id": 492,
+   "variables": [
+    {
+     "demographic": null,
+     "description": "US National holidays plus regional holiday, Minnesota State Fair",
+     "missing_values": "no",
+     "name": "holiday",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "Average temp in kelvin",
+     "missing_values": "no",
+     "name": "temp",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": "Kelvin"
+    },
+    {
+     "demographic": null,
+     "description": "Amount in mm of rain that occurred in the hour",
+     "missing_values": "no",
+     "name": "rain_1h",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": "mm"
+    },
+    {
+     "demographic": null,
+     "description": "Amount in mm of snow that occurred in the hour",
+     "missing_values": "no",
+     "name": "snow_1h",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": "mm"
+    },
+    {
+     "demographic": null,
+     "description": "Percentage of cloud cover",
+     "missing_values": "no",
+     "name": "clouds_all",
+     "role": "Feature",
+     "type": "Integer",
+     "units": "%"
+    },
+    {
+     "demographic": null,
+     "description": "Short textual description of the current weather",
+     "missing_values": "no",
+     "name": "weather_main",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "Longer textual description of the current weather",
+     "missing_values": "no",
+     "name": "weather_description",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "Hour of the data collected in local CST time",
+     "missing_values": "no",
+     "name": "date_time",
+     "role": "Feature",
+     "type": "Date",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "Hourly I-94 ATR 301 reported westbound traffic volume",
+     "missing_values": "no",
+     "name": "traffic_volume",
+     "role": "Target",
+     "type": "Integer",
+     "units": null
+    }
+   ],
+   "year_of_dataset_creation": 2019
+  },
+  {
+   "abstract": "This data-set contains a number of pedestrian tracks recorded from a vehicle driving in a town in southern Germany. The data is particularly well-suited for multi-agent motion prediction tasks.",
+   "additional_info": {
+    "citation": null,
+    "funded_by": null,
+    "instances_represent": null,
+    "preprocessing_description": null,
+    "purpose": null,
+    "recommended_data_splits": null,
+    "sensitive_data": null,
+    "summary": "The raw data was acquired from a vehicle equipped with multiple sensors while driving, for approximately five hours, in an urban area in southern Germany. The sensor set included one mono-RGB camera, one stereo-RGB camera, an inertial measurement system with differential GPS and a lidar system. The preprocessed data available from this repository consists of 45 pedestrian tracks (in world coordinates) together with a semantic map of the static environment. For each track and at each time-step, not only the agent position is provided, but also body and head orientation attributes, as well as the position of all other agents and their type (e.g. car, cyclist, pedestrian etc.). Additional details about the preprocessing pipeline can be found in [1]. More information on the data format is provided in the next section.",
+    "variable_info": ": Pedestrian tracks are stored in the tracks.csv. Each row in such files contains 14 comma-separated attributes, with missing values denoted by \u00e2\u20ac\u02dcNone\u00e2\u20ac\u2122. The attributes are in order:\r\n\u00e2\u20ac\u00a2\toid: unique agent id (int), \r\n\u00e2\u20ac\u00a2\ttimestamp: time in seconds (float),\r\n\u00e2\u20ac\u00a2\tx: x component of position vector (float),\r\n\u00e2\u20ac\u00a2\ty: y component of position vector (float),\r\n\u00e2\u20ac\u00a2\tbody_roll: roll body angle in degrees (float),\r\n\u00e2\u20ac\u00a2\tbody_pitch: pitch body angle in degrees (float),\r\n\u00e2\u20ac\u00a2\tbody_yaw: yaw body angle in degrees (float),\r\n\u00e2\u20ac\u00a2\thead_roll: roll head angle in degrees (float),\r\n\u00e2\u20ac\u00a2\thead_pitch: pitch head angle in degrees (float),\r\n\u00e2\u20ac\u00a2\thead_yaw: yaw head angle in degrees (float),\r\n\u00e2\u20ac\u00a2\tother_oid: list of ids of agents currently present in the scene ([list of int]),\r\n\u00e2\u20ac\u00a2\tother_class: list of other agents\u00e2\u20ac\u2122 class labels ([list of int]),\r\n\u00e2\u20ac\u00a2\tother_x: list of other agents\u00e2\u20ac\u2122 x coordinates ([list of float]),\r\n\u00e2\u20ac\u00a2\tother_y: list of other agents\u00e2\u20ac\u2122 y coordinates ([list of float]).\r\nLabels used to identify agent types are available in agent_class_label_info.csv.\r\nThe file semantic_map.png contains a map of the static environment, where semantic labels are color-encoded according to the mapping available in semantic_map_label_info.csv. Information needed to transform between image and world coordinates is stored in the file map2world_info.txt.\r\n"
+   },
+   "area": "Computer Science",
+   "characteristics": [
+    "Multivariate",
+    "Sequential",
+    "Time-Series"
+   ],
+   "creators": [],
+   "data_url": "https://archive.ics.uci.edu/static/public/536/data.csv",
+   "dataset_doi": "10.24432/C5189C",
+   "demographics": [],
+   "feature_types": [
+    "Real"
+   ],
+   "has_missing_values": "yes",
+   "index_col": null,
+   "intro_paper": null,
+   "last_updated": "Fri Mar 29 2024",
+   "licence": "CC BY 4.0",
+   "missing_values_symbol": "NaN",
+   "name": "Pedestrians in Traffic",
+   "num_features": 14,
+   "num_instances": 4760,
+   "repository_url": "https://archive.ics.uci.edu/dataset/536/pedestrian+in+traffic+dataset",
+   "tags": [
+    "time_series",
+    "sequential"
+   ],
+   "target_col": null,
+   "tasks": [
+    "Classification",
+    "Regression",
+    "Causal-Discovery"
+   ],
+   "uci_id": 536,
+   "variables": [
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "oid",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "timestamp",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "x",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "y",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "body_roll",
+     "role": "Feature",
+     "type": "Binary",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "body_pitch",
+     "role": "Feature",
+     "type": "Binary",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "body_yaw",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "head_roll",
+     "role": "Feature",
+     "type": "Binary",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "head_pitch",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "yes",
+     "name": "head_yaw",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "other_oid",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "other_class",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "other_x",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "other_y",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    }
+   ],
+   "year_of_dataset_creation": 2019
+  },
+  {
+   "abstract": "data collected on 2022, in King Saud University in riyadh for recognizing human activities using mobile phone IMU sensors (Accelerometer, and Gyroscope). these activity is calssified to standing(stop), or walking.",
+   "additional_info": {
+    "citation": null,
+    "funded_by": null,
+    "instances_represent": null,
+    "preprocessing_description": null,
+    "purpose": null,
+    "recommended_data_splits": null,
+    "sensitive_data": null,
+    "summary": null,
+    "variable_info": null
+   },
+   "area": "Computer Science",
+   "characteristics": [
+    "Tabular",
+    "Sequential",
+    "Multivariate",
+    "Time-Series"
+   ],
+   "creators": [
+    "Abdullah AlSahly"
+   ],
+   "data_url": "https://archive.ics.uci.edu/static/public/755/data.csv",
+   "dataset_doi": "https://doi.org/10.3390/s22176513",
+   "demographics": [],
+   "feature_types": [
+    "Real",
+    "Categorical"
+   ],
+   "has_missing_values": "no",
+   "index_col": null,
+   "intro_paper": {
+    "DOI": null,
+    "ID": 155,
+    "URL": "https://www.semanticscholar.org/paper/e0dd31fbef585724e4dee4340e29c3b830ff95e0",
+    "acl": null,
+    "arxiv": null,
+    "authors": "A. Alsahly, M. Hassan, K. Saleem, Amerah Alabrah, J. Rodrigues",
+    "corpus": null,
+    "journal": "Sensors (Basel, Switzerland)",
+    "mag": null,
+    "pmcid": null,
+    "pmid": null,
+    "sha": null,
+    "title": "Handheld Device-Based Indoor Localization with Zero Infrastructure (HDIZI)",
+    "type": "NATIVE",
+    "venue": "Italian National Conference on Sensors",
+    "year": 2022
+   },
+   "last_updated": "Tue Apr 09 2024",
+   "licence": "CC BY 4.0",
+   "missing_values_symbol": null,
+   "name": "Accelerometer Gyro Mobile Phone",
+   "num_features": 8,
+   "num_instances": 31991,
+   "repository_url": "https://archive.ics.uci.edu/dataset/755/accelerometer+gyro+mobile+phone+dataset",
+   "tags": [
+    "time_series",
+    "sequential"
+   ],
+   "target_col": null,
+   "tasks": [
+    "Classification"
+   ],
+   "uci_id": 755,
+   "variables": [
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "accX",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "accY",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "accZ",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "gyroX",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "gyroY",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "gyroZ",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "timestamp",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Activity",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    }
+   ],
+   "year_of_dataset_creation": 2022
+  },
+  {
+   "abstract": "Bilateral (left, right) joint angle (ankle, knee, hip) times series data collected from 10 healthy subjects under 3 walking conditions (unbraced, knee braced, ankle braced). For each condition, each subject\u2019s data consists of 10 consecutive gait cycles.",
+   "additional_info": {
+    "citation": "Any use of these data should cite the following three papers and include a statement along the lines of \u201cThe data were collected by Shorter et al. (2008), preprocessed by Helwig et al. (2011), and published by Helwig et al. (2016).\u201d\n\nShorter, K. A., Polk, J. D., Rosengren, K. S., Hsiao-Wecksler, E. T. (2008). A new approach to detecting asymmetries in gait. Clinical Biomechanics. 23(4), 459-467. https://doi.org/10.1016/j.clinbiomech.2007.11.009\n\nHelwig, N. E., Hong, S., Hsiao-Wecksler E. T., & Polk, J. D. (2011). Methods to temporally align gait cycle data. Journal of Biomechanics, 44(3), 561-566. https://doi.org/10.1016/j.jbiomech.2010.09.015\n\nHelwig, N. E., Shorter, K. A., Ma, P. & Hsiao-Wecksler, E. T. (2016). Smoothing spline analysis of variance models: A new tool for the analysis of cyclic biomechanical data. Journal of Biomechanics, 49(14), 3216-3222. https://doi.org/10.1016/j.jbiomech.2016.07.035",
+    "funded_by": "National Science Foundation (#0540834) and Mary Jane Neer Disability Research Fund at the University of Illinois",
+    "instances_represent": null,
+    "preprocessing_description": null,
+    "purpose": "Biomechanical analysis of human locomotion",
+    "recommended_data_splits": null,
+    "sensitive_data": null,
+    "summary": "This dataset is a six dimensional array of joint angle data: 10 subjects x 3 conditions x 10 replications x 2 legs x 3 joints x 101 time points. The data were recored from ten subjects under three different conditions: normal (unbraced) walking on a treadmill, walking on a treadmill with a knee-brace on the right knee, and walking on a treadmill with an ankle brace on the right ankle. For each subject in each condition, ten consecutive gait cycles (replications) are included, where each gait cycle starts and ends at heel-strike. For each gait cycle, the data were normalized to consist of 101 time points representing 0%,\u2026,100% of the gait cycle. Six joint angles are included, which comprise all combinations of leg (left and right) and joint (ankle, knee, hip). The data were collected at the Human Dynamics and Controls Laboratory at the University of Illinois at Urbana-Champaign. Details of the experimental setup can be found in Shorter et al. (2008). Details on the data preprocessing can be found in Helwig et al. (2011). The data were published as supplementary materials by Helwig et al. (2016). \n\nAttribute Information:\n1. subject: 1 = subject 1, \u2026, 10 = subject 10 (integer)\n2. condition: 1 = unbraced, 2 = knee brace, 3 = ankle brace (integer)\n3. replication: 1 = replication 1, \u2026, 10 = replication 10 (integer)\n4. leg: 1 = left, 2 = right (integer)\n5. joint: 1 = ankle, 2 = knee, 3 = hip (integer)\n6. time: 0 = 0% gait cycle, \u2026, 100 = 100% gait cycle (integer)\n7. angle: joint angle in degrees (real valued)",
+    "variable_info": null
+   },
+   "area": "Health and Medicine",
+   "characteristics": [
+    "Sequential",
+    "Multivariate",
+    "Time-Series"
+   ],
+   "creators": [
+    "Nathaniel Helwig",
+    "Elizabeth Hsiao-Wecksler"
+   ],
+   "data_url": "https://archive.ics.uci.edu/static/public/760/data.csv",
+   "dataset_doi": "10.24432/C5861T",
+   "demographics": [],
+   "feature_types": [
+    "Real",
+    "Categorical",
+    "Integer"
+   ],
+   "has_missing_values": "no",
+   "index_col": null,
+   "intro_paper": {
+    "DOI": null,
+    "ID": 160,
+    "URL": "https://www.semanticscholar.org/paper/67cf199e6fe5619c24213abe53341e48f82a0012",
+    "acl": null,
+    "arxiv": null,
+    "authors": "Nathaniel E. Helwig, K. A. Shorter, Ping Ma, E. Hsiao-Wecksler",
+    "corpus": null,
+    "journal": "Journal of biomechanics",
+    "mag": null,
+    "pmcid": null,
+    "pmid": null,
+    "sha": null,
+    "title": "Smoothing spline analysis of variance models: A new tool for the analysis of cyclic biomechanical data.",
+    "type": "NATIVE",
+    "venue": "Journal of Biomechanics",
+    "year": 2016
+   },
+   "last_updated": "Wed Mar 20 2024",
+   "licence": "CC BY 4.0",
+   "missing_values_symbol": null,
+   "name": "Multivariate Gait Data",
+   "num_features": 7,
+   "num_instances": 181800,
+   "repository_url": "https://archive.ics.uci.edu/dataset/760/multivariate+gait+data",
+   "tags": [
+    "time_series",
+    "sequential"
+   ],
+   "target_col": null,
+   "tasks": [
+    "Classification",
+    "Regression",
+    "Clustering"
+   ],
+   "uci_id": 760,
+   "variables": [
+    {
+     "demographic": null,
+     "description": "1 = subject 1, \u2026, 10 = subject 10",
+     "missing_values": "no",
+     "name": "subject",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "1 = unbraced, 2 = knee brace, 3 = ankle brace",
+     "missing_values": "no",
+     "name": "condition",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "1 = replication 1, \u2026, 10 = replication 10",
+     "missing_values": "no",
+     "name": "replication",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "1 = left, 2 = right",
+     "missing_values": "no",
+     "name": "leg",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "1 = ankle, 2 = knee, 3 = hip",
+     "missing_values": "no",
+     "name": "joint",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "0 = 0% gait cycle, \u2026, 100 = 100% gait cycle",
+     "missing_values": "no",
+     "name": "time",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": "joint angle in degrees",
+     "missing_values": "no",
+     "name": "angle",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    }
+   ],
+   "year_of_dataset_creation": 2016
+  },
+  {
+   "abstract": "The RT-IoT2022, a proprietary dataset derived from a real-time IoT infrastructure, is introduced as a comprehensive resource integrating a diverse range of IoT devices and sophisticated network attack methodologies. This dataset encompasses both normal and adversarial network behaviours, providing a general representation of real-world scenarios.\nIncorporating data from IoT devices such as ThingSpeak-LED, Wipro-Bulb, and MQTT-Temp, as well as simulated attack scenarios involving Brute-Force SSH attacks, DDoS attacks using Hping and Slowloris, and Nmap patterns, RT-IoT2022 offers a detailed perspective on the complex nature of network traffic. The bidirectional attributes of network traffic are meticulously captured using the Zeek network monitoring tool and the Flowmeter plugin. Researchers can leverage the RT-IoT2022 dataset to advance the capabilities of Intrusion Detection Systems (IDS), fostering the development of robust and adaptive security solutions for real-time IoT networks. ",
+   "additional_info": {
+    "citation": null,
+    "funded_by": null,
+    "instances_represent": null,
+    "preprocessing_description": null,
+    "purpose": null,
+    "recommended_data_splits": null,
+    "sensitive_data": null,
+    "summary": null,
+    "variable_info": "Column Details:\nid.orig_p\nid.resp_p\nproto\nservice\nflow_duration\nfwd_pkts_tot\nbwd_pkts_tot\nfwd_data_pkts_tot\nbwd_data_pkts_tot\nfwd_pkts_per_sec\nbwd_pkts_per_sec\nflow_pkts_per_sec\ndown_up_ratio\nfwd_header_size_tot\nfwd_header_size_min\nfwd_header_size_max\nbwd_header_size_tot\nbwd_header_size_min\nbwd_header_size_max\nflow_FIN_flag_count\nflow_SYN_flag_count\nflow_RST_flag_count\nfwd_PSH_flag_count\nbwd_PSH_flag_count\nflow_ACK_flag_count\nfwd_URG_flag_count\nbwd_URG_flag_count\nflow_CWR_flag_count\nflow_ECE_flag_count\nfwd_pkts_payload.min\nfwd_pkts_payload.max\nfwd_pkts_payload.tot\nfwd_pkts_payload.avg\nfwd_pkts_payload.std\nbwd_pkts_payload.min\nbwd_pkts_payload.max\nbwd_pkts_payload.tot\nbwd_pkts_payload.avg\nbwd_pkts_payload.std\nflow_pkts_payload.min\nflow_pkts_payload.max\nflow_pkts_payload.tot\nflow_pkts_payload.avg\nflow_pkts_payload.std\nfwd_iat.min\nfwd_iat.max\nfwd_iat.tot\nfwd_iat.avg\nfwd_iat.std\nbwd_iat.min\nbwd_iat.max\nbwd_iat.tot\nbwd_iat.avg\nbwd_iat.std\nflow_iat.min\nflow_iat.max\nflow_iat.tot\nflow_iat.avg\nflow_iat.std\npayload_bytes_per_second\nfwd_subflow_pkts\nbwd_subflow_pkts\nfwd_subflow_bytes\nbwd_subflow_bytes\nfwd_bulk_bytes\nbwd_bulk_bytes\nfwd_bulk_packets\nbwd_bulk_packets\nfwd_bulk_rate\nbwd_bulk_rate\nactive.min\nactive.max\nactive.tot\nactive.avg\nactive.std\nidle.min\nidle.max\nidle.tot\nidle.avg\nidle.std\nfwd_init_window_size\nbwd_init_window_size\nfwd_last_window_size\nAttack_type"
+   },
+   "area": "Engineering",
+   "characteristics": [
+    "Tabular",
+    "Sequential",
+    "Multivariate"
+   ],
+   "creators": [
+    "B. S.",
+    "Rohini Nagapadma"
+   ],
+   "data_url": "https://archive.ics.uci.edu/static/public/942/data.csv",
+   "dataset_doi": "10.24432/C5P338",
+   "demographics": [],
+   "feature_types": [
+    "Real",
+    "Categorical"
+   ],
+   "has_missing_values": "no",
+   "index_col": [
+    "id"
+   ],
+   "intro_paper": {
+    "DOI": null,
+    "ID": 362,
+    "URL": "https://www.semanticscholar.org/paper/753f6ede01b4acaa325e302c38f1e0c1ade74f5b",
+    "acl": null,
+    "arxiv": null,
+    "authors": "B. S. Sharmila, Rohini Nagapadma",
+    "corpus": null,
+    "journal": null,
+    "mag": null,
+    "pmcid": null,
+    "pmid": null,
+    "sha": null,
+    "title": "Quantized autoencoder (QAE) intrusion detection system for anomaly detection in resource-constrained IoT devices using RT-IoT2022 dataset",
+    "type": "NATIVE",
+    "venue": "Cybersecurity",
+    "year": 2023
+   },
+   "last_updated": "Fri Mar 08 2024",
+   "licence": "CC BY 4.0",
+   "missing_values_symbol": null,
+   "name": "RT-IoT2022 ",
+   "num_features": 83,
+   "num_instances": 123117,
+   "repository_url": "https://archive.ics.uci.edu/dataset/942/rt-iot2022",
+   "tags": [
+    "sequential"
+   ],
+   "target_col": [
+    "Attack_type"
+   ],
+   "tasks": [
+    "Classification",
+    "Regression",
+    "Clustering"
+   ],
+   "uci_id": 942,
+   "variables": [
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "id.orig_p",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "id.resp_p",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "proto",
+     "role": "Feature",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "service",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "flow_duration",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "fwd_pkts_tot",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bwd_pkts_tot",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "fwd_data_pkts_tot",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bwd_data_pkts_tot",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "fwd_pkts_per_sec",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bwd_pkts_per_sec",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "flow_pkts_per_sec",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "down_up_ratio",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "fwd_header_size_tot",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "fwd_header_size_min",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "fwd_header_size_max",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bwd_header_size_tot",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bwd_header_size_min",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bwd_header_size_max",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "flow_FIN_flag_count",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "flow_SYN_flag_count",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "flow_RST_flag_count",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "fwd_PSH_flag_count",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bwd_PSH_flag_count",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "flow_ACK_flag_count",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "fwd_URG_flag_count",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bwd_URG_flag_count",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "flow_CWR_flag_count",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "flow_ECE_flag_count",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "fwd_pkts_payload.min",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "fwd_pkts_payload.max",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "fwd_pkts_payload.tot",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "fwd_pkts_payload.avg",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "fwd_pkts_payload.std",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bwd_pkts_payload.min",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bwd_pkts_payload.max",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bwd_pkts_payload.tot",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bwd_pkts_payload.avg",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bwd_pkts_payload.std",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "flow_pkts_payload.min",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "flow_pkts_payload.max",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "flow_pkts_payload.tot",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "flow_pkts_payload.avg",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "flow_pkts_payload.std",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "fwd_iat.min",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "fwd_iat.max",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "fwd_iat.tot",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "fwd_iat.avg",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "fwd_iat.std",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bwd_iat.min",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bwd_iat.max",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bwd_iat.tot",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bwd_iat.avg",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bwd_iat.std",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "flow_iat.min",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "flow_iat.max",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "flow_iat.tot",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "flow_iat.avg",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "flow_iat.std",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "payload_bytes_per_second",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "fwd_subflow_pkts",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bwd_subflow_pkts",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "fwd_subflow_bytes",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bwd_subflow_bytes",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "fwd_bulk_bytes",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bwd_bulk_bytes",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "fwd_bulk_packets",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bwd_bulk_packets",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "fwd_bulk_rate",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bwd_bulk_rate",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "active.min",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "active.max",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "active.tot",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "active.avg",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "active.std",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "idle.min",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "idle.max",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "idle.tot",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "idle.avg",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "idle.std",
+     "role": "Feature",
+     "type": "Continuous",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "fwd_init_window_size",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "bwd_init_window_size",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "fwd_last_window_size",
+     "role": "Feature",
+     "type": "Integer",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "Attack_type",
+     "role": "Target",
+     "type": "Categorical",
+     "units": null
+    },
+    {
+     "demographic": null,
+     "description": null,
+     "missing_values": "no",
+     "name": "id",
+     "role": "ID",
+     "type": "Integer",
+     "units": null
+    }
+   ],
+   "year_of_dataset_creation": 2023
+  }
+ ],
+ "rejected_after_metadata": 669,
+ "rejected_by_licence": []
+}

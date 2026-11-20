@@ -146,7 +146,7 @@ def main(argv: list[str] | None = None) -> int:
     for meta in chosen:
         try:
             rows.append(pin(meta, args.destination))
-        except (OSError, ValueError, pd.errors.ParserError) as error:
+        except (OSError, ValueError, pd.errors.ParserError, dr.RegistryError) as error:
             failed.append({"uci_id": meta["uci_id"], "name": meta["name"], "reason": repr(error)})
     with atomic_path(MANIFEST) as partial:
         partial.write_text(
