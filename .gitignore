@@ -62,6 +62,7 @@ experiments/results/evidence/
 data/adbench/
 data/pool/
 data/temporal/
+data/uci_wave2/
 
 /.venv
 

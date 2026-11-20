@@ -507,6 +507,10 @@
     "research/pipeline_batch_summary.py": {
       "level": "L4",
       "reason": "Source-level aggregation and the decisions on hypotheses B1 to B4 govern the reported pipeline-level findings."
+    },
+    "research/uci_wave2.py": {
+      "level": "L3",
+      "reason": "Licence verification, exclusion of already-pooled tables and checksum pinning define which sources enter the corpus."
     }
   }
 }
