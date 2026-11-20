@@ -1,0 +1,639 @@
+{
+ "M1": {
+  "mean": null,
+  "per_type_rank_correlation": {},
+  "sources": 18
+ },
+ "M2": {
+  "cross_column_swap": {
+   "distance_density": NaN,
+   "rules": NaN
+  },
+  "invalid_code": {
+   "distance_density": NaN,
+   "rules": NaN
+  }
+ },
+ "M3": {
+  "ae1svm": {
+   "median_A": 0.42363622244169746,
+   "median_B": 0.41548089591567855,
+   "p": 0.39014981047179986,
+   "p_holm": 1.0
+  },
+  "autoencoder": {
+   "median_A": 0.5888556634045808,
+   "median_B": 0.6383755375059723,
+   "p": 0.7294672832904733,
+   "p_holm": 1.0
+  },
+  "deep_svdd": {
+   "median_A": 0.5444444444444444,
+   "median_B": 0.580327380952381,
+   "p": 0.5643513198181573,
+   "p_holm": 1.0
+  },
+  "dif": {
+   "median_A": 0.5349842265082784,
+   "median_B": 0.6451477146042364,
+   "p": 8.49689458687972e-05,
+   "p_holm": 0.0005947826210815805
+  },
+  "lunar": {
+   "median_A": 0.5437665975481102,
+   "median_B": 0.4979296066252588,
+   "p": 0.0146142643901049,
+   "p_holm": 0.0876855863406294
+  },
+  "transform_dedup": {
+   "median_A": 0.125,
+   "median_B": 0.14285714285714285,
+   "p": 0.3774954637529703,
+   "p_holm": 1.0
+  },
+  "vae": {
+   "median_A": 0.4027476018042056,
+   "median_B": 0.406400809335592,
+   "p": 0.4825866666501152,
+   "p_holm": 1.0
+  }
+ },
+ "datasets": 86,
+ "medians": [
+  {
+   "ci": [
+    0.7391304347826086,
+    0.8695652173913043
+   ],
+   "median": 0.8,
+   "method": "ae1svm",
+   "sources": 67,
+   "type": "cross_column_swap"
+  },
+  {
+   "ci": [
+    0.4166666666666667,
+    0.5833333333333334
+   ],
+   "median": 0.48,
+   "method": "ae1svm",
+   "sources": 76,
+   "type": "distribution_shift"
+  },
+  {
+   "ci": [
+    0.125,
+    0.16666666666666666
+   ],
+   "median": 0.14039408866995073,
+   "method": "ae1svm",
+   "sources": 76,
+   "type": "duplicate"
+  },
+  {
+   "ci": [
+    0.19523809523809524,
+    0.3333333333333333
+   ],
+   "median": 0.2554347826086957,
+   "method": "ae1svm",
+   "sources": 58,
+   "type": "invalid_code"
+  },
+  {
+   "ci": [
+    0.6521739130434783,
+    0.7871376811594203
+   ],
+   "median": 0.7142857142857143,
+   "method": "ae1svm",
+   "sources": 64,
+   "type": "invalid_format"
+  },
+  {
+   "ci": [
+    0.16,
+    0.2164536340852126
+   ],
+   "median": 0.18274582560296848,
+   "method": "ae1svm",
+   "sources": 76,
+   "type": "missing_value"
+  },
+  {
+   "ci": [
+    0.22727272727272727,
+    0.3076923076923077
+   ],
+   "median": 0.2543859649122807,
+   "method": "ae1svm",
+   "sources": 57,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci": [
+    0.4230769230769231,
+    0.6086956521739131
+   ],
+   "median": 0.5053191489361701,
+   "method": "ae1svm",
+   "sources": 64,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci": [
+    0.7692307692307693,
+    0.92
+   ],
+   "median": 0.8695652173913043,
+   "method": "autoencoder",
+   "sources": 67,
+   "type": "cross_column_swap"
+  },
+  {
+   "ci": [
+    0.6459999999999999,
+    0.8372093023255814
+   ],
+   "median": 0.76,
+   "method": "autoencoder",
+   "sources": 76,
+   "type": "distribution_shift"
+  },
+  {
+   "ci": [
+    0.15828354203935602,
+    0.20833333333333334
+   ],
+   "median": 0.16992438867438867,
+   "method": "autoencoder",
+   "sources": 76,
+   "type": "duplicate"
+  },
+  {
+   "ci": [
+    0.8571428571428571,
+    0.9772727272727273
+   ],
+   "median": 0.9258241758241759,
+   "method": "autoencoder",
+   "sources": 58,
+   "type": "invalid_code"
+  },
+  {
+   "ci": [
+    0.75,
+    0.8571428571428571
+   ],
+   "median": 0.782608695652174,
+   "method": "autoencoder",
+   "sources": 64,
+   "type": "invalid_format"
+  },
+  {
+   "ci": [
+    0.4117647058823529,
+    0.64869071146245
+   ],
+   "median": 0.5327272727272727,
+   "method": "autoencoder",
+   "sources": 76,
+   "type": "missing_value"
+  },
+  {
+   "ci": [
+    0.4166666666666667,
+    0.5454545454545454
+   ],
+   "median": 0.5,
+   "method": "autoencoder",
+   "sources": 57,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci": [
+    0.5523459382723984,
+    0.6923076923076923
+   ],
+   "median": 0.6226840020444672,
+   "method": "autoencoder",
+   "sources": 64,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci": [
+    0.7384615384615385,
+    0.92
+   ],
+   "median": 0.8260869565217391,
+   "method": "deep_svdd",
+   "sources": 67,
+   "type": "cross_column_swap"
+  },
+  {
+   "ci": [
+    0.6,
+    0.7727272727272727
+   ],
+   "median": 0.6922077922077923,
+   "method": "deep_svdd",
+   "sources": 76,
+   "type": "distribution_shift"
+  },
+  {
+   "ci": [
+    0.16666666666666666,
+    0.23089123945896284
+   ],
+   "median": 0.2,
+   "method": "deep_svdd",
+   "sources": 76,
+   "type": "duplicate"
+  },
+  {
+   "ci": [
+    0.6956521739130435,
+    0.8571428571428571
+   ],
+   "median": 0.7767857142857142,
+   "method": "deep_svdd",
+   "sources": 58,
+   "type": "invalid_code"
+  },
+  {
+   "ci": [
+    0.6829268292682927,
+    0.8209284460052676
+   ],
+   "median": 0.7722567287784678,
+   "method": "deep_svdd",
+   "sources": 64,
+   "type": "invalid_format"
+  },
+  {
+   "ci": [
+    0.3652613008971705,
+    0.5916666666666667
+   ],
+   "median": 0.46640316205533594,
+   "method": "deep_svdd",
+   "sources": 76,
+   "type": "missing_value"
+  },
+  {
+   "ci": [
+    0.25,
+    0.3764204545454546
+   ],
+   "median": 0.3125,
+   "method": "deep_svdd",
+   "sources": 57,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci": [
+    0.5,
+    0.6285671565276829
+   ],
+   "median": 0.5742753623188406,
+   "method": "deep_svdd",
+   "sources": 64,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci": [
+    0.7622222222222222,
+    0.9230769230769231
+   ],
+   "median": 0.8333333333333334,
+   "method": "dif",
+   "sources": 67,
+   "type": "cross_column_swap"
+  },
+  {
+   "ci": [
+    0.6422222222222222,
+    0.8166666666666667
+   ],
+   "median": 0.7370370370370369,
+   "method": "dif",
+   "sources": 76,
+   "type": "distribution_shift"
+  },
+  {
+   "ci": [
+    0.16666666666666666,
+    0.27586206896551724
+   ],
+   "median": 0.20094086021505375,
+   "method": "dif",
+   "sources": 76,
+   "type": "duplicate"
+  },
+  {
+   "ci": [
+    0.7612781954887218,
+    1.0
+   ],
+   "median": 0.8928571428571428,
+   "method": "dif",
+   "sources": 58,
+   "type": "invalid_code"
+  },
+  {
+   "ci": [
+    0.6666468253968254,
+    0.8130952380952381
+   ],
+   "median": 0.7241014799154334,
+   "method": "dif",
+   "sources": 64,
+   "type": "invalid_format"
+  },
+  {
+   "ci": [
+    0.3028996865203762,
+    0.6
+   ],
+   "median": 0.4254545454545455,
+   "method": "dif",
+   "sources": 76,
+   "type": "missing_value"
+  },
+  {
+   "ci": [
+    0.4,
+    0.5882352941176471
+   ],
+   "median": 0.5416666666666666,
+   "method": "dif",
+   "sources": 57,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci": [
+    0.5,
+    0.6875
+   ],
+   "median": 0.6201923076923077,
+   "method": "dif",
+   "sources": 64,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci": [
+    0.6428571428571429,
+    0.8260869565217391
+   ],
+   "median": 0.72,
+   "method": "lunar",
+   "sources": 67,
+   "type": "cross_column_swap"
+  },
+  {
+   "ci": [
+    0.5833333333333334,
+    0.7311912225705329
+   ],
+   "median": 0.6325000000000001,
+   "method": "lunar",
+   "sources": 76,
+   "type": "distribution_shift"
+  },
+  {
+   "ci": [
+    0.16,
+    0.2113483436853
+   ],
+   "median": 0.1751918158567775,
+   "method": "lunar",
+   "sources": 76,
+   "type": "duplicate"
+  },
+  {
+   "ci": [
+    0.3849206349206349,
+    0.7817460317460317
+   ],
+   "median": 0.6027777777777779,
+   "method": "lunar",
+   "sources": 58,
+   "type": "invalid_code"
+  },
+  {
+   "ci": [
+    0.6666666666666666,
+    0.8148148148148148
+   ],
+   "median": 0.7549118267203374,
+   "method": "lunar",
+   "sources": 64,
+   "type": "invalid_format"
+  },
+  {
+   "ci": [
+    0.30303030303030304,
+    0.40738017429193896
+   ],
+   "median": 0.37037037037037035,
+   "method": "lunar",
+   "sources": 76,
+   "type": "missing_value"
+  },
+  {
+   "ci": [
+    0.2916666666666667,
+    0.5151515151515151
+   ],
+   "median": 0.4583333333333333,
+   "method": "lunar",
+   "sources": 57,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci": [
+    0.5227272727272727,
+    0.7019927536231885
+   ],
+   "median": 0.6666666666666666,
+   "method": "lunar",
+   "sources": 64,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci": [
+    0.0,
+    0.0
+   ],
+   "median": 0.0,
+   "method": "transform_dedup",
+   "sources": 67,
+   "type": "cross_column_swap"
+  },
+  {
+   "ci": [
+    0.0,
+    0.0
+   ],
+   "median": 0.0,
+   "method": "transform_dedup",
+   "sources": 76,
+   "type": "distribution_shift"
+  },
+  {
+   "ci": [
+    1.0,
+    1.0
+   ],
+   "median": 1.0,
+   "method": "transform_dedup",
+   "sources": 76,
+   "type": "duplicate"
+  },
+  {
+   "ci": [
+    0.0,
+    0.0
+   ],
+   "median": 0.0,
+   "method": "transform_dedup",
+   "sources": 58,
+   "type": "invalid_code"
+  },
+  {
+   "ci": [
+    0.0,
+    0.0
+   ],
+   "median": 0.0,
+   "method": "transform_dedup",
+   "sources": 64,
+   "type": "invalid_format"
+  },
+  {
+   "ci": [
+    0.0,
+    0.0
+   ],
+   "median": 0.0,
+   "method": "transform_dedup",
+   "sources": 76,
+   "type": "missing_value"
+  },
+  {
+   "ci": [
+    0.0,
+    0.0
+   ],
+   "median": 0.0,
+   "method": "transform_dedup",
+   "sources": 57,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci": [
+    0.0,
+    0.0
+   ],
+   "median": 0.0,
+   "method": "transform_dedup",
+   "sources": 64,
+   "type": "univariate_outlier"
+  },
+  {
+   "ci": [
+    0.7083333333333334,
+    0.92
+   ],
+   "median": 0.8,
+   "method": "vae",
+   "sources": 67,
+   "type": "cross_column_swap"
+  },
+  {
+   "ci": [
+    0.44,
+    0.5355392156862745
+   ],
+   "median": 0.48,
+   "method": "vae",
+   "sources": 76,
+   "type": "distribution_shift"
+  },
+  {
+   "ci": [
+    0.125,
+    0.15321544071544074
+   ],
+   "median": 0.1349746736801091,
+   "method": "vae",
+   "sources": 76,
+   "type": "duplicate"
+  },
+  {
+   "ci": [
+    0.14285714285714285,
+    0.22666988184229564
+   ],
+   "median": 0.18874643874643876,
+   "method": "vae",
+   "sources": 58,
+   "type": "invalid_code"
+  },
+  {
+   "ci": [
+    0.6288265306122449,
+    0.7777777777777778
+   ],
+   "median": 0.6934523809523809,
+   "method": "vae",
+   "sources": 64,
+   "type": "invalid_format"
+  },
+  {
+   "ci": [
+    0.13043478260869565,
+    0.1835016835016835
+   ],
+   "median": 0.16064516129032258,
+   "method": "vae",
+   "sources": 76,
+   "type": "missing_value"
+  },
+  {
+   "ci": [
+    0.2,
+    0.3076923076923077
+   ],
+   "median": 0.24,
+   "method": "vae",
+   "sources": 57,
+   "type": "multivariate_outlier"
+  },
+  {
+   "ci": [
+    0.4166666666666667,
+    0.6077173913043478
+   ],
+   "median": 0.4689336825964733,
+   "method": "vae",
+   "sources": 64,
+   "type": "univariate_outlier"
+  }
+ ],
+ "sources": 76,
+ "tiers": {
+  "A": 49,
+  "B": 37
+ },
+ "types": {
+  "cross_column_swap": 77,
+  "distribution_shift": 86,
+  "duplicate": 86,
+  "invalid_code": 64,
+  "invalid_format": 73,
+  "missing_value": 86,
+  "multivariate_outlier": 66,
+  "univariate_outlier": 73
+ }
+}
