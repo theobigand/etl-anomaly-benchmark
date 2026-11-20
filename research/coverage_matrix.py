@@ -572,6 +572,27 @@ def report(matrix: dict[str, Any]) -> str:
     return "\n".join(lines) + "\n"
 
 
+def inventory_csv(matrix: dict[str, Any]) -> str:
+    """One row per catalog dataset: properties, decision and the protocols with a measurement."""
+    import csv
+    import io
+
+    fields = [
+        "id", "name", "source_family", "independent_source", "licence", "domain", "schema_kind",
+        "rows", "features", "has_missing", "has_labels", "label_origin", "prevalence",
+        "time_candidates", "decision", "decision_reason", "valid_measurements",
+    ]  # fmt: skip
+    buffer = io.StringIO()
+    writer = csv.DictWriter(buffer, fieldnames=fields, lineterminator="\n")
+    writer.writeheader()
+    for d in matrix["datasets"]:
+        row = {k: d.get(k) for k in fields}
+        row["time_candidates"] = ";".join(d["time_candidates"])
+        row["valid_measurements"] = ";".join(d["valid_measurements"])
+        writer.writerow(row)
+    return buffer.getvalue()
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--evidence", type=Path, default=EVIDENCE)
@@ -583,6 +604,7 @@ def main(argv: list[str] | None = None) -> int:
         json.dumps(matrix, indent=1, sort_keys=True) + "\n"
     )
     (args.out / "coverage_matrix.md").write_text(report(matrix))
+    (args.out / "dataset_inventory.csv").write_text(inventory_csv(matrix))
     print(
         json.dumps({k: v for k, v in matrix["summary"].items() if not isinstance(v, (dict, list))})
     )

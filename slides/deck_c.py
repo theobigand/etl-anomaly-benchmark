@@ -621,7 +621,7 @@ _cov = _json.loads(
     (_Path(__file__).resolve().parents[1] / "verification/evidence/coverage/coverage_matrix.json").read_text()
 )["summary"]
 _cov_rows = [
-    ("Catalog entries", f"{_cov['datasets']}", "ADBench and UCI versions of one source count once below"),
+    ("Catalog entries", f"{_cov['datasets']}", "versions of one source count once below"),
     ("Independent sources", f"{_cov['independent_sources']}", "units of inference"),
     (
         "With a detector-quality measurement",
@@ -653,7 +653,7 @@ slide(
                         for a, b, c in _cov_rows
                     )
                     + "</div>",
-                    "<p class='note' style='font-size:18px'>Labels are minority-class proxies and injected faults are artificial. One table (Student Academics Performance) is retired from the active catalog.</p>",
+                    "<p class='note' style='font-size:18px'>Labels are minority-class proxies; injected faults are artificial. One table is retired.</p>",
                 ],
                 maxh=540,
                 gap=14,
