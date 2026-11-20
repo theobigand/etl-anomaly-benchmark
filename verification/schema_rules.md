@@ -53,3 +53,10 @@ by each constraint is recorded for interpretation.
 Comparisons are per table and per type, the table being the unit, with the median paired
 difference and a bootstrap interval over source groups. No equivalence is claimed from a
 non-significant difference. A result that contradicts a hypothesis is reported as it is.
+
+## Amendment 1 (after 71 of 86 tables, before the remaining 15)
+
+The pairwise search of the combination rule grows with the square of the categorical columns and
+cannot run on tables with hundreds of binary columns (InternetAds). It considers at most the 80
+categorical columns with the most levels (ties by name). No table already run has more than 71
+categorical columns, so their results are unchanged by the cap.

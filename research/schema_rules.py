@@ -32,6 +32,7 @@ import typed_mixed as tm  # noqa: E402
 MIN_LEVEL_COUNT = im.MIN_LEVEL_COUNT
 FENCE = 3.0
 DEP_MIN_ROWS, DEP_PURITY, DEP_MAX_LEVELS = 5, 0.99, 50
+DEP_MAX_COLUMNS = 80
 CONSTRAINTS = ("domain", "missing", "range", "sign", "combination")
 
 
@@ -62,6 +63,8 @@ class SchemaRules:
 
     def _dependencies(self, train: pd.DataFrame) -> list[tuple[str, str, dict[str, str]]]:
         cats = [c for c, k in self.kinds.items() if k == "cat"]
+        # pairs grow with the square of the columns: keep the 80 with the most levels (ties by name)
+        cats = sorted(cats, key=lambda c: (-train[c].nunique(), c))[:DEP_MAX_COLUMNS]
         rules = []
         for a in cats:
             if not 2 <= train[a].nunique() <= DEP_MAX_LEVELS:
@@ -174,6 +177,7 @@ def main(argv: list[str] | None = None) -> int:
     ns = argparse.Namespace(only=args.only, scope="ineligible")
     todo = [j for j in tm.selected_jobs(ns) if j["id"] in eligible]
     args.output.mkdir(parents=True, exist_ok=True)
+    todo = [j for j in todo if not (args.output / f"{tm.stem(j)}.json").exists()]
     with ProcessPoolExecutor(max_workers=args.workers) as pool:
         for job, result in zip(todo, pool.map(run_one, todo), strict=True):
             with atomic_path(args.output / f"{tm.stem(job)}.json") as partial:
