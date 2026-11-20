@@ -6,13 +6,15 @@ Optional work must not delay core corrections. Existing issues and verification 
 
 ## 22. Optional research extensions (P2; Thesis 08)
 
-- [ ] T381 Build a semi-realistic ETL dataset with complete business constraints.
-- [ ] T382 Integrate anonymized real ETL incidents if lawful data is available.
-- [ ] T383 Add collective batch-level anomalies.
-- [ ] T384 Add conditional anomalies.
-- [ ] T385 Test cross-table inconsistencies.
-- [ ] T386 Test schema evolution.
-- [ ] T387 Test ordinary seasonal changes to estimate false alarms.
+T381-T387 were promoted to mandatory P0 scope on 2026-11-21 and are tracked in [13-pipeline-level-study.md](13-pipeline-level-study.md) (Thesis 03). Their identifiers and wording are unchanged; the list below keeps them for traceability.
+
+- [ ] T381 (promoted, see 13) Build a semi-realistic ETL dataset with complete business constraints.
+- [ ] T382 (promoted, see 13) Integrate anonymized real ETL incidents if lawful data is available.
+- [ ] T383 (promoted, see 13) Add collective batch-level anomalies.
+- [ ] T384 (promoted, see 13) Add conditional anomalies.
+- [ ] T385 (promoted, see 13) Test cross-table inconsistencies.
+- [ ] T386 (promoted, see 13) Test schema evolution.
+- [ ] T387 (promoted, see 13) Test ordinary seasonal changes to estimate false alarms.
 - [ ] T388 Study model aging.
 - [ ] T389 Compare retraining policies.
 - [ ] T390 Study the maintenance burden of domain rules.
