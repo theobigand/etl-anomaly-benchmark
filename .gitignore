@@ -61,6 +61,7 @@ verification/profile.json
 experiments/results/evidence/
 data/adbench/
 data/pool/
+data/temporal/
 
 /.venv
 

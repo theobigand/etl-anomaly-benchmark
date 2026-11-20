@@ -95,3 +95,16 @@ equivalence. Results that contradict a hypothesis are reported as they are.
 
 Windows and collective periods, not points; SKAB is one testbed; NAB third-party terms unverified;
 the evaluated set depends on a label-count rule; the detectors keep their default settings.
+
+## Amendment 1 (before any result)
+
+The decision study reads the alert rate from the labelled share of the fitting rows. Several series
+hold no labelled anomaly in the first 70 % of the rows, which gives a rate of zero and an undefined
+detector. For these the rate is floored at 0.01 for every series and every detector alike. It is a
+prior on the alert budget, not a test label.
+
+## Amendment 2 (before any result)
+
+A ranking metric also needs normal rows in the evaluation partition: a series whose last 15 % is
+entirely anomalous cannot be evaluated. A series is therefore evaluated only if the test partition
+holds at least 20 anomalous and at least 20 normal rows.
