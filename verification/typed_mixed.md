@@ -56,7 +56,8 @@ detection of naturally occurring errors.
 
 Detectors need numeric input. A `cat` column with at most 20 training levels is one-hot encoded; a
 column with more levels is frequency encoded. The encoder is fitted on the training partition
-(unsupervised, labels unused). Unseen and missing values encode to all zeros and frequency zero.
+(unsupervised, labels unused). A level seen in fewer than two training rows counts as unseen.
+Unseen and missing values encode to all zeros and frequency zero.
 `num` columns stay raw with missing cells preserved, as in the numeric protocol. Identity-grouped
 70/15/15 split, detectors fitted on training with the training fault prevalence as contamination,
 recall per type on the test partition against clean rows only, the same 11 classical and 6

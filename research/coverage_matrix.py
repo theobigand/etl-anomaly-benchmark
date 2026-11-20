@@ -32,13 +32,16 @@ FAILED = "executed_with_failure"
 UNSUITABLE = "scientifically_unsuitable"
 LIMITED = "implementation_limitation"
 NOT_EVALUATED = "not_evaluated"
-STATUSES = (OK, NOT_RUN, FAILED, UNSUITABLE, LIMITED, NOT_EVALUATED)
+NOT_APPLICABLE = "not_applicable"
+STATUSES = (OK, NOT_RUN, FAILED, UNSUITABLE, LIMITED, NOT_EVALUATED, NOT_APPLICABLE)
 
 PROTOCOLS = (
     "labelled_classical",
     "labelled_deep",
     "typed_injection_classical",
     "typed_injection_deep",
+    "typed_mixed_classical",
+    "typed_mixed_deep",
     "native_label_comparison_classical",
     "native_label_comparison_deep",
     "etl_pipeline",
@@ -119,6 +122,28 @@ def _typed(evidence: Path, folder: str) -> dict[str, dict[str, Any]]:
 ETL_RUNS = ("pool_extension/etl/pool_etl.json", "pool_extension_v2/etl_repair/pool_etl.json")
 
 
+MIXED = "pool_extension_v2/typed_mixed"
+
+
+def _mixed(evidence: Path, kind: str) -> dict[str, dict[str, Any]]:
+    out: dict[str, dict[str, Any]] = {}
+    for path in sorted((evidence / MIXED / kind).glob("*.json")):
+        record = _load(path)
+        out[record["id"]] = _cell(
+            OK,
+            run=str(path.relative_to(evidence)),
+            tier=record["tier"],
+            types=record["types"],
+            detectors=sorted(record["recall_pooled"]),
+        )
+    return out
+
+
+def _mixed_eligibility(evidence: Path) -> dict[str, dict[str, Any]]:
+    path = evidence / MIXED / "eligibility.json"
+    return {r["id"]: r for r in _load(path)} if path.exists() else {}
+
+
 def _etl(evidence: Path) -> dict[str, dict[str, Any]]:
     """Later ETL runs replace the records of the datasets they re-measured."""
     latest: dict[str, tuple[str, list[dict[str, Any]]]] = {}
@@ -182,6 +207,7 @@ def build(evidence: Path = EVIDENCE) -> dict[str, Any]:
     time_scan = {
         f"uci:{r['uci_id']}": r for r in _load(evidence / "pool_extension" / "time_scan.json")
     }
+    mixed_elig = _mixed_eligibility(evidence)
     results = {
         "labelled_classical": _labelled(evidence, "classical"),
         "labelled_deep": _labelled(evidence, "deep"),
@@ -189,6 +215,8 @@ def build(evidence: Path = EVIDENCE) -> dict[str, Any]:
         "typed_injection_classical": _typed(evidence, "severity_classical"),
         "typed_injection_deep": _typed(evidence, "severity_deep"),
         # Reference folders compare the injected study with the native labels (ADBench tables only).
+        "typed_mixed_classical": _mixed(evidence, "classical"),
+        "typed_mixed_deep": _mixed(evidence, "deep"),
         "native_label_comparison_classical": _typed(evidence, "reference_classical"),
         "native_label_comparison_deep": _typed(evidence, "reference_deep"),
         "etl_pipeline": _etl(evidence),
@@ -228,9 +256,11 @@ def build(evidence: Path = EVIDENCE) -> dict[str, Any]:
         }
         cells: dict[str, dict[str, Any]] = {}
         for protocol in PROTOCOLS:
+            row["_mixed_eligibility"] = mixed_elig.get(dataset_id)
             cells[protocol] = results[protocol].get(dataset_id) or _absent(
                 protocol, row, eligibility.get(dataset_id), info
             )
+        row.pop("_mixed_eligibility", None)
         row["protocols"] = cells
         row["valid_measurements"] = sorted(p for p, c in cells.items() if c["status"] == OK)
         datasets.append(row)
@@ -251,6 +281,13 @@ def _absent(
         if not row["has_labels"]:
             return _cell(UNSUITABLE, "no native label to compare with")
         return _cell(NOT_EVALUATED, "comparison was only run on the sixteen ADBench tables")
+    if protocol.startswith("typed_mixed"):
+        if elig and elig["eligible"]:
+            return _cell(NOT_APPLICABLE, "covered by the numeric typed protocol")
+        mixed = row.get("_mixed_eligibility")
+        if mixed and not mixed["eligible"]:
+            return _cell(UNSUITABLE, f"mixed typed injection ineligible: {mixed['reason']}")
+        return _cell(NOT_RUN if mixed else NOT_EVALUATED, "no mixed-schema result file")
     if protocol.startswith("typed"):
         if elig and not elig["eligible"]:
             return _cell(UNSUITABLE, f"typed injection ineligible: {elig['reason']}")
