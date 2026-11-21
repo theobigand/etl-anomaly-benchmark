@@ -980,3 +980,10 @@ Candidates examined and not acquired: NVD CVE records (the API returns deeply ne
 permission pending); NBG deposit transactions (real bank transactions; the record's depositor is a project member and the bank's own release statement was not found); the anonymised phone-call
 records of INESC TEC (83 million rows with a natural blacklist label; the supplying operator is not named); the GTMD 2.0 mobility table (modelled estimates, not observations); the multi-source distributed-system
 data of Nedelkoski et al. (an instrumented test bed, not an operational system); OpenSky 2020 (non-commercial licence).
+
+**Focused mutation of the new view code (development feedback, case-sensitive volume, each group run separately because a combined run gave inconsistent survivor lists).**
+Retail functions (`retail_view`, `_build_retail`): 194 of 202 = 96.0 percent. New functions of this update (`pbdb_occurrence_view`, `_build_pbdb`, `kelmarsh_view`, `_kelmarsh_header`,
+`_build_kelmarsh`, `wikidata_view`, `_is_human`, `_build_wikidata`, `bess_view`, `_build_bess`): 644 of 686 = 93.9 percent, 8 kills below the 95 percent threshold (652). The L3 threshold is therefore
+not met for this block. The 42 non-killed mutants are keyword arguments without effect on the output (`kind` of single-key or tie-free sorts, `index`, `ignore_index`, `low_memory`-like
+settings, `encoding` on a UTF-8 system, `skiprows` and `na_values` whose effect is absorbed by the later dropping of unreadable timestamps and the NaN default) and one string replacement; none is approved
+as equivalent. Closing the gap needs either owner-reviewed equivalence decisions or restructuring these arguments away, and was not done in this round.
