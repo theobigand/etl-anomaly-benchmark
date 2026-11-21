@@ -1421,20 +1421,24 @@ def test_log_views_keep_text_values_and_missing_markers_as_they_are(tmp_path):
     assert text == "LineId,Time,Level,EventId\n007,NA,NA,E1\n"  # not 7, not an empty cell
 
 
-def test_monash_puts_the_research_directory_first_on_the_import_path(tmp_path, monkeypatch):
+def test_the_research_directory_is_on_the_import_path_once_and_the_monash_builder_runs(tmp_path):
     import sys
     import zipfile
     from pathlib import Path
 
+    here = str(Path(ev.__file__).resolve().parent)
+    assert here in sys.path and str(ev._HERE) == here  # sibling modules import by name
     root = tmp_path / "acquired"
     archive = root / "monash_zenodo" / SNAP / "raw" / "4656626_pedestrian_counts_dataset.zip"
     archive.parent.mkdir(parents=True)
     with zipfile.ZipFile(archive, "w") as z:
         z.writestr("x.tsf", "@attribute n s\n@frequency daily\n@data\n")
     before = list(sys.path)
-    ev._build_monash(root, tmp_path / "o", {})
-    assert sys.path[0] == str(Path(ev.__file__).resolve().parent) and sys.path[1:] == before
-    sys.path[:] = before
+    manifest: dict = {}
+    ev._build_monash(root, tmp_path / "o", manifest)
+    assert (
+        sys.path == before and "monash_pedestrian" in manifest
+    )  # a builder no longer edits the path
 
 
 def test_the_stack_builder_runs_the_extractor_with_the_documented_command(tmp_path, monkeypatch):

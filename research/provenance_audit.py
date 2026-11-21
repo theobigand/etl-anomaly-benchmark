@@ -189,9 +189,9 @@ def run(
     """Fetch the missing metadata of the audited UCI sources, audit, and add guardrail status."""
     ids = sorted(
         {
-            int(r["source"].split(":", 1)[1])
+            int(r["source"].removeprefix("uci:"))
             for r in rows
-            if str(r.get("source", "")).startswith("uci:") and not r.get("time_verified")
+            if str(r["source"]).startswith("uci:") and not r.get("time_verified")
         }
     )
     metadata = fetch_metadata(ids, cache, opener=opener, sleep=sleep)
@@ -199,20 +199,14 @@ def run(
     result = audit(rows, keyed)
     for name in ("C1", "C2a"):
         if name in result:
-            result[name]["guardrails"] = guardrails(
-                result[name],
-                domains=5,
-                mechanisms=3 if name == "C1" else 3,
-            )
+            result[name]["guardrails"] = guardrails(result[name])
     return result
 
 
 def main(argv: list[str] | None = None) -> int:
     import argparse
-    import sys
 
     here = Path(__file__).resolve().parent
-    sys.path[:0] = [str(here), str(here.parent / "src")]
     import dataset_catalog as dc
 
     base = here.parent / "verification/evidence/dataset_registry_v2"
@@ -228,4 +222,7 @@ def main(argv: list[str] | None = None) -> int:
 
 
 if __name__ == "__main__":
+    import sys
+
+    sys.path[:0] = [str(Path(__file__).resolve().parent.parent / "src")]
     raise SystemExit(main())

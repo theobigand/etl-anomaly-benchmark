@@ -10,10 +10,15 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import sys
 from pathlib import Path
 from typing import Any
 
 import pandas as pd
+
+_HERE = Path(__file__).resolve().parent
+if str(_HERE) not in sys.path:  # sibling modules (acquisition, parquet_reader, ...) import by name
+    sys.path.insert(0, str(_HERE))
 
 SALT = "etl-benchmark-views-v1"
 _FREQ = {
@@ -537,10 +542,8 @@ def _build_openalex(root: Path, out: Path, manifest: dict[str, Any]) -> None:
 
 
 def _build_monash(root: Path, out: Path, manifest: dict[str, Any]) -> None:
-    import sys
     import zipfile
 
-    sys.path.insert(0, str(Path(__file__).resolve().parent))
     import acquisition_validate as av
 
     archive = root / "monash_zenodo" / SNAPSHOT / "raw" / "4656626_pedestrian_counts_dataset.zip"
@@ -1181,10 +1184,8 @@ def _build_panels(root: Path, out: Path, manifest: dict[str, Any]) -> None:
 
 def _build_tables(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     import csv
-    import sys
     import tempfile
 
-    sys.path.insert(0, str(Path(__file__).resolve().parent))
     from acquisition import extract_member, zip_members
 
     for source, spec in TABLE_SETS.items():
@@ -1376,9 +1377,6 @@ def borg_instance_view(lines: list[str]) -> pd.DataFrame:
 
 
 def _build_borg(root: Path, out: Path, manifest: dict[str, Any]) -> None:
-    import sys
-
-    sys.path.insert(0, str(Path(__file__).resolve().parent))
     from acquisition import gzip_prefix_lines
 
     raw = root / "google_cluster_2019a" / SNAPSHOT / "raw"
@@ -1457,10 +1455,8 @@ def surf_slurm_view(raw: pd.DataFrame) -> pd.DataFrame:
 
 
 def _build_surf(root: Path, out: Path, manifest: dict[str, Any]) -> None:
-    import sys
     import tempfile
 
-    sys.path.insert(0, str(Path(__file__).resolve().parent))
     import parquet_reader as pr
     from acquisition import extract_member, zip_members
 
@@ -1557,9 +1553,6 @@ def metropt_view(raw: pd.DataFrame) -> pd.DataFrame:
 
 
 def _build_fugaku(root: Path, out: Path, manifest: dict[str, Any]) -> None:
-    import sys
-
-    sys.path.insert(0, str(Path(__file__).resolve().parent))
     import parquet_reader as pr
 
     source = root / "zen_fdata_fugaku" / SNAPSHOT / "raw" / "21_04.parquet"
@@ -1639,9 +1632,6 @@ def open_library_view(lines: list[str], modulo: int) -> tuple[list[dict[str, Any
 
 
 def _build_openlibrary(root: Path, out: Path, manifest: dict[str, Any]) -> None:
-    import sys
-
-    sys.path.insert(0, str(Path(__file__).resolve().parent))
     from acquisition import gzip_prefix_lines
 
     blob = (root / "openlibrary_dump" / SNAPSHOT / "raw" / "editions_head.txt.gz").read_bytes()
@@ -1694,10 +1684,8 @@ def aegis_obd_view(raw: pd.DataFrame) -> pd.DataFrame:
 
 
 def _build_aegis(root: Path, out: Path, manifest: dict[str, Any]) -> None:
-    import sys
     import tempfile
 
-    sys.path.insert(0, str(Path(__file__).resolve().parent))
     from acquisition import extract_member
 
     archive = (
@@ -1765,9 +1753,6 @@ def clue_events_view(lines: list[str]) -> pd.DataFrame:
 
 
 def _build_clue(root: Path, out: Path, manifest: dict[str, Any]) -> None:
-    import sys
-
-    sys.path.insert(0, str(Path(__file__).resolve().parent))
     from acquisition import zip_prefix_lines
 
     blob = (root / "zen_clue_lds" / SNAPSHOT / "raw" / "clue_head.zip").read_bytes()
@@ -1846,9 +1831,6 @@ XES_SPECS: dict[str, dict[str, Any]] = {
 
 
 def _build_xes(root: Path, out: Path, manifest: dict[str, Any]) -> None:
-    import sys
-
-    sys.path.insert(0, str(Path(__file__).resolve().parent))
     import xes_stream
 
     for source, spec in XES_SPECS.items():
@@ -2128,9 +2110,6 @@ FLAT_SELECTION = (
 
 def _build_flat(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     """Views of the represented flat tabular and categorical tables (one manifest entry each)."""
-    import sys
-
-    sys.path.insert(0, str(Path(__file__).resolve().parent))
     import flat_readiness
     import uci_loader
 

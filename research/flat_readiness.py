@@ -232,11 +232,9 @@ def main(argv: list[str] | None = None) -> int:
     import argparse
     import hashlib
     import json
-    import sys
     from pathlib import Path
 
     here = Path(__file__).resolve().parent
-    sys.path[:0] = [str(here), str(here.parent / "src")]
     import dataset_catalog as dc
     import uci_loader
 
@@ -314,4 +312,8 @@ def _has_file(path_of: Any, source: str) -> bool:
 
 
 if __name__ == "__main__":
+    import sys
+    from pathlib import Path
+
+    sys.path[:0] = [str(Path(__file__).resolve().parent.parent / "src")]
     raise SystemExit(main())
