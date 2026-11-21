@@ -351,6 +351,29 @@
   "pseudonymised": [],
   "source_snapshot": "openfoodfacts_products/2026-11-21"
  },
+ "openlibrary_dump": {
+  "dropped": [
+   "notes",
+   "description",
+   "first_sentence",
+   "table_of_contents"
+  ],
+  "files": {
+   "editions.jsonl": {
+    "rows": 19269,
+    "sha256": "436a5abc89dbf1e244b6a88a7df17325cfce40c435ef7e2e515aab4281f7f47d"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "lines_read": 192930,
+   "lines_skipped": 0,
+   "method": "gzip prefix of the editions dump in key-text order, then one record in 10 by key hash; not a random sample of the catalogue",
+   "modulo": 10,
+   "stream_complete": false
+  },
+  "source_snapshot": "openlibrary_dump/2026-11-21 (dump of 2026-10-31, fragment)"
+ },
  "panels": {
   "dropped": [],
   "files": {

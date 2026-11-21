@@ -542,6 +542,22 @@
    "units": 9688,
    "view": "openfoodfacts"
   },
+  "openlibrary_dump": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "shallow nesting (depth 3) with heavy optionality (85 of 98 paths below 90 percent)",
+    "prefix of the dump in key-text order, then one record in 10 by key hash",
+    "works, authors and subjects are references to records outside the sample"
+   ],
+   "first_party": true,
+   "independent_group": "openlibrary",
+   "min_units": 1000,
+   "partitions": "hash of the edition key 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 19269,
+   "view": "openlibrary_dump"
+  },
   "rki_hospitalisation": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [

@@ -1550,6 +1550,26 @@
    "stratum": "C3",
    "system": "metropt_compressor",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "openlibrary",
+   "id": "openlibrary_dump",
+   "licence_class": "open",
+   "protocols": "P-NEST",
+   "publisher": "openlibrary",
+   "reason": "Open Library edition records from gzip prefixes of the 2026-10-31 dump (authors 12 MiB, works 30 MiB, editions 40 MiB): 192930 editions read, one in ten kept by key hash (19269), nesting depth 3, 98 distinct paths of which 85 are optional (below 90 percent presence); free text dropped. Key order is textual, so the prefixes cover unrelated key ranges: only 12 of 192930 editions have a work whose authors are all in the sample, so the three tables do not give usable relational neighbourhoods and no C5 claim is made",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "public domain and CC0 stated in the Open Library FAQ (publisher)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "openlibrary_catalogue",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

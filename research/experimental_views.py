@@ -1436,6 +1436,66 @@ def _build_metropt(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+OPENLIBRARY_DROP = frozenset(["notes", "description", "first_sentence", "table_of_contents"])
+#: one edition in this many is kept, chosen by a hash of its key
+OPENLIBRARY_MODULO = 10
+
+
+def open_library_view(lines: list[str], modulo: int) -> tuple[list[dict[str, Any]], int]:
+    """Complete edition records from dump lines (type, key, revision, time, JSON), by key hash.
+
+    A record is kept when the hash of its key is divisible by ``modulo``; free-text fields are
+    dropped at every depth. Lines that are not five tab-separated fields with valid JSON are
+    counted as skipped (blank lines are ignored). Records come out ordered by key.
+    """
+    kept, skipped = [], 0
+    for line in lines:
+        if not line.strip():
+            continue
+        fields = line.split("\t")
+        try:
+            if len(fields) != 5:
+                raise ValueError("fields")
+            record = json.loads(fields[4])
+        except ValueError:
+            skipped += 1
+            continue
+        if int(hashlib.sha256(record["key"].encode()).hexdigest(), 16) % modulo == 0:
+            kept.append(record)
+    return nested_view(kept, OPENLIBRARY_DROP, lambda r: r["key"]), skipped
+
+
+def _build_openlibrary(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import sys
+
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from acquisition import gzip_prefix_lines
+
+    blob = (root / "openlibrary_dump" / SNAPSHOT / "raw" / "editions_head.txt.gz").read_bytes()
+    read = gzip_prefix_lines(blob, max_output=1 << 31)
+    view, skipped = open_library_view(read["lines"], OPENLIBRARY_MODULO)
+    folder = out / "openlibrary_dump"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "editions.jsonl"
+    target.write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in view))
+    _record(
+        manifest,
+        "openlibrary_dump",
+        {"editions.jsonl": (target, len(view))},
+        dropped=["notes", "description", "first_sentence", "table_of_contents"],
+        pseudonymised=[],
+        sampling={
+            "method": "gzip prefix of the editions dump in key-text order, then one record in "
+            f"{OPENLIBRARY_MODULO} by key hash; not a random sample of the catalogue",
+            "modulo": OPENLIBRARY_MODULO,
+            "lines_read": len(read["lines"]),
+            "lines_skipped": skipped,
+            "stream_complete": read["complete"],
+        },
+        source_snapshot=f"openlibrary_dump/{SNAPSHOT} (dump of 2026-10-31, fragment)",
+    )
+
+
 SLURM_MODULO = 20
 SLURM_COLUMNS = (
     "jobid",
@@ -1526,6 +1586,7 @@ BUILD_STEPS = (
     _build_surf,
     _build_fugaku,
     _build_metropt,
+    _build_openlibrary,
     _build_series,
     _build_ukspend,
 )

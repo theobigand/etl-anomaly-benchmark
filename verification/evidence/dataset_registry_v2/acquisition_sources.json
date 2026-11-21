@@ -1803,6 +1803,50 @@
    "stratum": "C3",
    "upstream": "first party: collected by the authors' predictive-maintenance project on a metro compressor; operator permission implied by publication, not separately stated",
    "upstream_verified": false
+  },
+  {
+   "attribution": "cite Open Library and the dump date 2026-10-31",
+   "hosts": [
+    "archive.org"
+   ],
+   "id": "openlibrary_dump",
+   "licence_class": "open",
+   "licence_location": "https://openlibrary.org/help/faq/using",
+   "licence_text": "Open Library FAQ, 'Who owns the Open Library catalog?': the catalog was created by libraries who dedicated their data into the public domain; bulk downloads are available through the Internet Archive; contributions are requested under CC0 1.0",
+   "max_bytes": 104857600,
+   "method": "HTTP range requests of the first bytes of the monthly authors, works and editions dumps (gzip, key order); the fragments are gzip prefixes in file order, not random samples, and relations across the three prefixes are partial by construction",
+   "min_interval": 3.0,
+   "privacy": "catalog records of books and authors; author records may hold birth and death dates of public figures and biographies; free-text fields are dropped in the view",
+   "publisher": "Open Library (Internet Archive)",
+   "ranges": [
+    {
+     "length": 12582912,
+     "name": "authors_head.txt.gz",
+     "observed": "2026-10-31",
+     "start": 0,
+     "url": "https://archive.org/download/ol_dump_2026-10-31/ol_dump_authors_2026-10-31.txt.gz"
+    },
+    {
+     "length": 31457280,
+     "name": "works_head.txt.gz",
+     "observed": "2026-10-31",
+     "start": 0,
+     "url": "https://archive.org/download/ol_dump_2026-10-31/ol_dump_works_2026-10-31.txt.gz"
+    },
+    {
+     "length": 41943040,
+     "name": "editions_head.txt.gz",
+     "observed": "2026-10-31",
+     "start": 0,
+     "url": "https://archive.org/download/ol_dump_2026-10-31/ol_dump_editions_2026-10-31.txt.gz"
+    }
+   ],
+   "rate_limit": "three range requests",
+   "redistribution": "public domain / CC0 for the catalog data; raw files stay local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: the dumps are published by Open Library itself on the Internet Archive",
+   "upstream_verified": true
   }
  ]
 }

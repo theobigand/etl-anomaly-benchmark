@@ -492,12 +492,12 @@
    "licence": "cc-by-4.0",
    "name": "Swiss Dwellings",
    "next_step": "inspect structure",
-   "notes": "",
+   "notes": "zip central directory read by range: geometries.csv 1.1 GB and simulations.csv 1.6 GB are single wide tables keyed by hierarchy ids; locations.csv (5.5 MB) and location_ratings.csv are the only separate tables; no multi-table relational structure worth C5; not acquired",
    "publisher": "EPFL authors",
    "reason": "932 MB apartment models with relations",
    "size": null,
    "source_url": "",
-   "status": "needs_bounded_extraction"
+   "status": "structurally_unsuitable"
   },
   {
    "categories": [
@@ -659,15 +659,15 @@
     "C6"
    ],
    "id": "openlibrary:dumps",
-   "licence": "no new rights asserted by the publisher; contributions may carry rights",
+   "licence": "public domain and CC0 stated in the Open Library FAQ",
    "name": "Open Library data dumps",
    "next_step": "stream the first part of a dump and record the cut",
-   "notes": "",
+   "notes": "C6 only (editions nested records). C5 not supported: key-text order makes prefixes of the three dumps cover unrelated ranges (12 of 192930 editions have a fully resolved work)",
    "publisher": "Internet Archive",
    "reason": "multi-GB dumps; works, authors, editions relations",
    "size": null,
    "source_url": "",
-   "status": "needs_bounded_extraction"
+   "status": "experiment_ready"
   },
   {
    "categories": [

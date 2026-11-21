@@ -972,12 +972,17 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     mz = root / "zen_metropt2" / SNAP / "raw"
     mz.mkdir(parents=True)
     (mz / "MetroPT2_head.csv").write_bytes(b"timestamp,TP2\n2022-04-28 12:33:29.120,1.0\n")
+    import gzip as _g
+
+    ol = root / "openlibrary_dump" / SNAP / "raw"
+    ol.mkdir(parents=True)
+    (ol / "editions_head.txt.gz").write_bytes(_g.compress((_ol_line(1) + "\n").encode()))
     out = tmp_path / "out"
     manifest = ev.build(root, out)
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -2340,3 +2345,58 @@ def test_the_fugaku_and_metropt_builders_write_views_with_sampling_records(tmp_p
         "rows_dropped": 0,
     }
     assert g["dropped"] == ["GPS position, speed and quality columns"]
+
+
+# --- Open Library editions (complete nested catalogue records from a dump prefix) -----------------
+
+
+def _ol_line(number, **extra):
+    record = {"key": f"/books/OL{number}M", "type": {"key": "/type/edition"}, "title": f"t{number}",
+              "authors": [{"key": "/authors/OL1A"}], "notes": {"type": "/type/text", "value": "free text"}, **extra}  # fmt: skip  # noqa: E501
+    return f"/type/edition\t/books/OL{number}M\t3\t2020-01-01T00:00:00.1\t{json.dumps(record)}"
+
+
+def test_open_library_view_keeps_a_deterministic_hash_subset_drops_free_text_and_sorts_by_key():
+    lines = [_ol_line(n, description="d", publishers=["P"]) for n in (5, 3, 9, 1, 7, 2)]
+    bad = ["", "only\ttwo", "/type/edition\tk\t1\t2020\tnot json"]
+    kept, skipped = ev.open_library_view(lines + bad, modulo=1)
+    assert [r["key"] for r in kept] == [f"/books/OL{n}M" for n in (1, 2, 3, 5, 7, 9)]
+    assert (
+        "notes" not in kept[0] and "description" not in kept[0] and kept[0]["publishers"] == ["P"]
+    )
+    assert (
+        kept[0]["authors"] == [{"key": "/authors/OL1A"}] and skipped == 2
+    )  # blank lines are not counted
+    some, _ = ev.open_library_view(lines, modulo=2)
+    import hashlib as _h
+
+    expected = sorted(
+        r
+        for r in (f"/books/OL{n}M" for n in (5, 3, 9, 1, 7, 2))
+        if int(_h.sha256(r.encode()).hexdigest(), 16) % 2 == 0
+    )
+    assert [r["key"] for r in some] == expected and 0 < len(some) < 6
+    assert ev.open_library_view(lines, modulo=2)[0] == some  # same subset every time
+
+
+def test_the_open_library_builder_reads_the_gzip_prefix_and_records_the_cut(tmp_path, monkeypatch):
+    import gzip
+
+    root = tmp_path / "acquired"
+    raw = root / "openlibrary_dump" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    blob = gzip.compress(("\n".join(_ol_line(n) for n in range(1, 30)) + "\n").encode())
+    (raw / "editions_head.txt.gz").write_bytes(blob[: len(blob) * 4 // 5])
+    monkeypatch.setattr(ev, "OPENLIBRARY_MODULO", 1)
+    manifest = {}
+    ev._build_openlibrary(root, tmp_path / "o" / "deep", manifest)
+    target = tmp_path / "o" / "deep" / "openlibrary_dump" / "editions.jsonl"
+    rows = [json.loads(x) for x in target.read_text().splitlines()]
+    view = manifest["openlibrary_dump"]
+    assert len(rows) == view["files"]["editions.jsonl"]["rows"] > 0 and "notes" not in rows[0]
+    assert view["sampling"]["stream_complete"] is False and view["sampling"]["modulo"] == 1
+    assert view["sampling"]["lines_read"] >= len(rows) and view["sampling"]["lines_skipped"] == 0
+    assert view["sampling"]["method"].startswith(
+        "gzip prefix of the editions dump in key-text order"
+    )
+    assert view["dropped"] == ["notes", "description", "first_sentence", "table_of_contents"]

@@ -738,6 +738,13 @@
   },
   {
    "failed": null,
+   "group": "openlibrary",
+   "id": "openlibrary_dump",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -888,6 +895,7 @@
    "openalex",
    "openfda_faers",
    "openfoodfacts",
+   "openlibrary",
    "zambia_procurement"
   ]
  },
@@ -929,13 +937,13 @@
    "structurally_valid": 13
   },
   "C6": {
-   "acquired": 7,
-   "discovered": 11,
-   "experiment_ready": 7,
-   "protocol_ready": 7,
-   "rights_verified": 7,
-   "scientifically_eligible": 7,
-   "structurally_valid": 7
+   "acquired": 8,
+   "discovered": 12,
+   "experiment_ready": 8,
+   "protocol_ready": 8,
+   "rights_verified": 8,
+   "scientifically_eligible": 8,
+   "structurally_valid": 8
   }
  }
 }
