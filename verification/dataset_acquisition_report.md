@@ -777,3 +777,23 @@ recomputed under provenance grouping.
 figures of the recommended tier in `13-pipeline-level-study.md`, no per-stratum calculation), separates sample size from
 diversity, gives design-only sample-size tables with hypothetical parameters, and lists decisions for the owner. The
 approved targets are unchanged.
+
+**Mutation status of Update 11 (focused measurements, development feedback; not release certification).** Threshold L3 95 percent.
+
+| Module | Generated | Killed | Survived | Suspicious | Timeout | No tests | Raw score |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `acquisition.py` (whole module) | 862 | 836 | 22 | 3 | 1 | 0 | 97.0 percent |
+| `xes_stream.py` | 281 | 267 | 12 | 1 | 1 | 0 | 95.0 percent |
+| `target_framework.py` | 513 | 488 | 19 | 2 | 4 | 0 | 95.1 percent |
+| `parquet_reader.py` (earlier run) | 154 | 152 | 2 | 0 | 0 | 0 | 98.7 percent |
+| `experimental_views.py`, 33 functions added in this and the previous update | 2663 | 2132 | 525 | 5 | 1 | 0 | 80.1 percent (below 95) |
+
+Suspicious and timed-out mutants are counted as not killed. The remaining `acquisition.py` survivors are header-name
+case changes (`USER-AGENT`, `range`), which urllib normalises, the unused `fp`, `msg` and `headers` arguments passed
+to the standard redirect handler, the read-chunk size of one MiB and the case of the `utf-8` codec name: all inert on
+this platform and library version, listed here as candidates only; no equivalence is approved. In
+`experimental_views.py` the pure view functions score between 88 and 100 percent while the builders that write
+files and manifests score lower, because their tests assert the data and the checksums but not every manifest text;
+`_gtfs_spec` had no direct test when measured (104 survivors) and has one now, not remeasured. The module is below the
+threshold and is not certified. The full-module measurement (56922 mutants) was started and stopped as impractical in
+this session; the figures above come from a function-restricted run. No full `make verify-deep` was run.
