@@ -507,3 +507,120 @@ def test_the_diversity_report_uses_the_per_category_family_minima_and_ignores_un
     assert tf.diversity_report(attributes, {}) == {}
     with pytest.raises(KeyError):
         tf.diversity_report(attributes, {"C4": ["a"]})  # the group has no C4 structure
+
+
+def test_holm_and_effect_helpers_match_recorded_values():
+    assert tf.holm_adjust([0.01, 0.02, 0.03]) == [0.03, 0.04, 0.04]
+    assert tf.holm_adjust([0.5, 0.01, 0.2, 0.04]) == [0.5, 0.04, 0.4, 0.12]
+    assert tf.holm_adjust([0.0, 1.0]) == [0.0, 1.0] and tf.holm_adjust([0.2, 0.2]) == [0.4, 0.4]
+    assert tf.holm_rejections([0.012, 0.02, 0.5], alpha=0.05) == [True, True, False]
+    assert tf.holm_rejections([0.0125, 0.0125], alpha=0.05) == [True, True]
+    assert tf.holm_rejections([0.0125, 0.0125], alpha=0.02) == [False, False]
+    assert tf.log_ratio_delta(0.1) == pytest.approx(0.105361, abs=1e-6) and tf.log_ratio_delta(
+        0.9
+    ) == pytest.approx(2.302585, abs=1e-6)
+
+
+def test_pilot_precision_and_interval_values_are_recorded():
+    assert [tf.pilot_sources_for_sd(r, lv) for r in (1.25, 1.40, 1.60) for lv in (0.80, 0.95)] == [
+        24,
+        49,
+        13,
+        25,
+        8,
+        15,
+    ]
+    low, high = tf.sd_ratio_interval(10, 0.90)
+    assert (round(low, 4), round(high, 4)) == (0.7293, 1.6452)
+    low, high = tf.sd_ratio_interval(3)
+    assert (round(low, 4), round(high, 4)) == (0.5207, 6.2847)
+
+
+def test_effect_requirements_rows_are_exact_and_ordered_by_scenario_then_sigma():
+    rows = tf.effect_requirements([0.05])
+    assert rows[0] == {"metric": "recall at matched alert budget", "scale": "absolute", "sigma": 0.05, "delta": 0.05,  # noqa: E501
+                       "sources_k1": 10, "sources_holm_k3": 14, "sources_holm_k6": 16}  # fmt: skip
+    assert rows[2]["metric"] == "AUROC" and rows[2]["delta"] == 0.02 and (rows[2]["sources_k1"], rows[2]["sources_holm_k3"], rows[2]["sources_holm_k6"]) == (52, 69, 80)  # fmt: skip  # noqa: E501
+    assert [r["metric"] for r in rows] == [
+        "recall at matched alert budget",
+        "AUPRC",
+        "AUROC",
+        "false-positive burden",
+        "cost",
+    ]
+    assert (
+        rows[3]["scale"] == "log ratio" and rows[3]["sources_k1"] == 3 and rows[3]["sigma"] == 0.05
+    )
+
+
+def test_sample_size_options_alpha_power_comparisons_and_design_effect_each_change_the_result():
+    assert tf.paired_sources(0.1, 0.1, alpha=0.1, power=0.9) == 11
+    assert tf.paired_sources(0.3, 0.1, comparisons=2) == 89
+    assert tf.paired_sources(0.1, 0.05, design_effect=2.0) == 68
+    assert tf.paired_sources(0.1, 0.05, power=0.9) == 44
+    assert tf.paired_sources(0.1, 0.05) == 34
+    assert (
+        tf.minimum_detectable_delta(5, 0.1) == 0.1682
+        and tf.minimum_detectable_delta(100, 0.1) == 0.0283
+    )
+    assert (
+        tf.minimum_detectable_delta(34, 0.1, alpha=0.1) == 0.0436
+        and tf.minimum_detectable_delta(34, 0.1, power=0.9) == 0.0573
+    )
+    assert tf.paired_power(10, 0.1, 0.05, alpha=0.1) == pytest.approx(0.4282, abs=0.0001)
+    assert (
+        tf.paired_power(10, 0.1, -0.05) == tf.paired_power(10, 0.1, 0.05)
+        or abs(tf.paired_power(10, 0.1, -0.05) - tf.paired_power(10, 0.1, 0.05)) < 1e-9
+    )  # noqa: E501
+    assert tf.paired_power(3, 0.5, 0.4) == pytest.approx(0.1349, abs=0.0001)
+
+
+def test_diversity_report_covers_several_categories_in_sorted_order_with_exact_fields():
+    attributes = {
+        "a": {"domain": "d1", "structure": {"C3": "f1", "C4": "g1"}},
+        "b": {"domain": "d2", "structure": {"C3": "f1", "C4": "g2"}},
+        "c": {"domain": "d2", "structure": {"C3": "f2"}},
+    }
+    out = tf.diversity_report(
+        attributes, {"C4": ["a", "b"], "C3": ["a", "b", "c"]}, targets={"C3": 3, "C4": 4}
+    )
+    assert list(out) == ["C3", "C4"]
+    assert out["C3"] == {"groups": 3, "target": 3, "gap": 0, "domains": 2, "families": 2, "largest_family": "f1",  # noqa: E501
+                         "largest_family_share": round(2 / 3, 4), "exploratory": False, "quota": True,  # noqa: E501
+                         "diversity": False, "missing": ["domains: 2 of 5", "families: 2 of 3"]}  # fmt: skip  # noqa: E501
+    assert (
+        out["C4"]["gap"] == 2
+        and out["C4"]["quota"] is False
+        and out["C4"]["largest_family_share"] == 0.5
+    )
+    exact = tf.diversity_report(
+        {f"g{i}": {"domain": f"d{i}", "structure": {"C3": f"f{i % 3}"}} for i in range(5)},
+        {"C3": [f"g{i}" for i in range(5)]}, targets={"C3": 5},
+    )["C3"]  # fmt: skip
+    assert exact["exploratory"] is True and exact["diversity"] is True and exact["missing"] == []
+    three = tf.diversity_report({f"g{i}": {"domain": f"d{i % 3}", "structure": {"C3": f"f{i % 2}"}} for i in range(4)},  # noqa: E501
+                                {"C3": [f"g{i}" for i in range(4)]})["C3"]  # fmt: skip
+    assert (
+        three["exploratory"] is True
+    )  # exactly 3 domains and 2 families is enough for the exploratory tier
+
+
+def test_the_report_has_every_documented_section_with_exact_row_counts():
+    attributes = {"a": {"domain": "d", "producer": "p", "curator": "c", "schema_family": "s", "generating_system": "g", "structure": {"C3": "f"}}}  # fmt: skip  # noqa: E501
+    out = tf.report(attributes, {"ready_groups": {"C3": ["a"]}}, reps=30)
+    assert len(out["effect_requirements"]) == 15 and len(out["pilot_sd_precision"]) == 6
+    assert out["pilot_sd_precision"][0] == {
+        "max_upper_ratio": 1.25,
+        "level": 0.80,
+        "pilot_sources": 24,
+    }
+    assert out["pilot_sd_precision"][-1] == {
+        "max_upper_ratio": 1.60,
+        "level": 0.95,
+        "pilot_sources": 15,
+    }
+    assert out["diversity"]["C3"]["groups"] == 1 and out["sensitivity"][0]["sigma"] == 0.05
+    assert tf.SIGMAS == [0.05, 0.10, 0.15, 0.20] and tf.DELTAS == [0.02, 0.03, 0.05, 0.10] and tf.COMPARISONS == [1, 3, 6] and tf.ICCS == [0.0, 0.2, 0.5]  # fmt: skip  # noqa: E501
+    assert [r["domains"] for r in out["simulation"]] == [6, 10, 10] and out["simulation"][0][
+        "per_domain"
+    ] == 5

@@ -158,3 +158,135 @@ def test_unclassified_areas_are_not_counted_as_domains_or_mechanisms():
     out = pa.audit(rows, meta)["C1"]
     assert out["domains"] == 1 and out["domain_list"] == ["Biology"]
     assert out["mechanisms"] == 1 and out["mechanism_list"] == ["clinical or biological records"]
+
+
+def test_person_keys_handle_initials_surnames_and_multiple_names():
+    assert pa.person_key("J Smith") == "smith j" and pa.person_key("J. Smith") == "smith j"
+    assert (
+        pa.person_key("Smith, J.") == "smith j." and pa.person_key("Mary Ann Lee") == "mary ann lee"
+    )
+    assert pa.person_key("  A.  B.  Lee ") == "lee a" or pa.person_key("  A.  B.  Lee ") == "lee a"
+    assert pa.person_key("Lee") == "lee" and pa.person_key("  ") == ""
+
+
+def test_guardrails_boundaries_for_the_exploratory_tier_and_the_three_minima():
+    entry = {"groups": 36, "domains": 3, "mechanisms": 2, "target": 36}
+    assert pa.guardrails(entry)["exploratory"] is True
+    assert pa.guardrails({**entry, "domains": 2})["exploratory"] is False
+    assert pa.guardrails({**entry, "mechanisms": 1})["exploratory"] is False
+    assert (
+        pa.guardrails({"groups": 36, "domains": 5, "mechanisms": 3, "target": 36})["generalisation"]
+        is True
+    )
+    assert pa.guardrails({"groups": 35, "domains": 5, "mechanisms": 3, "target": 36})[
+        "missing"
+    ] == ["groups: 35 of 36"]
+    assert pa.guardrails({"groups": 36, "domains": 4, "mechanisms": 3, "target": 36})[
+        "missing"
+    ] == ["domains: 4 of 5"]
+    assert pa.guardrails({"groups": 36, "domains": 5, "mechanisms": 2, "target": 36})[
+        "missing"
+    ] == ["mechanisms: 2 of 3"]
+
+
+def test_audit_assigns_tagged_and_mixed_tables_to_c2a_and_ignores_stratum_and_time_series_rows():
+    rows = [
+        {"id": "a", "source": "uci:1", "schema_kind": "numeric"},
+        {"id": "b", "source": "uci:2", "schema_kind": "mixed"},
+        {"id": "c", "source": "uci:3", "tags": ["categorical_only"]},
+        {"id": "d", "source": "uci:4", "tags": ["transactional"]},
+        {"id": "e", "source": "uci:5", "stratum": "C4"},
+        {"id": "f", "source": "uci:6", "time_verified": True},
+    ]
+    meta = {f"uci:{i}": {"creators": [f"P{i}"], "area": "Biology"} for i in range(1, 7)}
+    out = pa.audit(rows, meta)
+    assert (
+        out["C1"]["tables"] == 2 and out["C2a"]["tables"] == 2
+    )  # uci:1 and uci:4 flat; uci:2 and uci:3 categorical
+    assert out["ALL"] == {"sources": 4, "groups": 4, "tables": 4}
+    assert out["C1"]["target"] == 36 and out["C2a"]["target"] == 30
+    assert out["C1"]["largest_group_share"] == 0.5 and out["C1"]["domain_list"] == ["Biology"]
+
+
+def test_audit_counts_a_missing_metadata_source_as_an_unknown_domain_and_names_groups_by_the_smallest_member():  # noqa: E501
+    rows = [
+        {"id": "a", "source": "uci:2", "schema_kind": "numeric"},
+        {"id": "b", "source": "uci:1", "schema_kind": "numeric"},
+    ]
+    out = pa.audit(
+        rows, {"uci:1": {"creators": ["X"], "area": "Business"}, "uci:2": {"creators": ["X"]}}
+    )
+    assert out["C1"]["groups"] == 1 and out["C1"]["largest_group_share"] == 1.0
+    assert out["C1"]["domain_list"] == ["Business"] and out["C1"]["domains"] == 1
+
+
+def test_the_opener_requests_the_url_with_a_user_agent_and_reads_at_most_two_megabytes(monkeypatch):
+    seen = {}
+
+    class Reply:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc):
+            return False
+
+        def read(self, n):
+            seen["read"] = n
+            return b"{}"
+
+    def fake(request, timeout):
+        seen["url"] = request.full_url
+        seen["agent"] = request.get_header("User-agent")
+        seen["timeout"] = timeout
+        return Reply()
+
+    monkeypatch.setattr(pa.urllib.request, "urlopen", fake)
+    assert pa._open("https://archive.ics.uci.edu/api/dataset?id=5") == b"{}"
+    assert seen == {"url": "https://archive.ics.uci.edu/api/dataset?id=5",
+                    "agent": "etl-benchmark-acquisition (academic research)", "timeout": 60, "read": 2_000_000}  # fmt: skip  # noqa: E501
+
+
+def test_fetch_waits_before_each_request_and_writes_a_canonical_cache(tmp_path):
+    waits = []
+
+    def opener(url):
+        return json.dumps({"data": {"creators": None, "area": None}}).encode()
+
+    out = pa.fetch_metadata([3, 1], tmp_path / "c.json", opener=opener, sleep=waits.append)
+    assert waits == [0.5, 0.5] and out == {
+        "3": {"creators": [], "area": None},
+        "1": {"creators": [], "area": None},
+    }
+    text = (tmp_path / "c.json").read_text()
+    assert text == json.dumps(out, indent=1, sort_keys=True) + "\n"
+    again = pa.fetch_metadata(
+        [3, 1], tmp_path / "c.json", opener=lambda u: 1 / 0, sleep=waits.append
+    )
+    assert again == out and waits == [0.5, 0.5]  # a cached id is not requested again
+
+
+def test_main_runs_the_audit_on_the_catalogue_rows_and_writes_the_evidence_file(
+    tmp_path, monkeypatch, capsys
+):
+    import dataset_catalog as dc
+
+    rows = [{"id": "uci:1", "source": "uci:1", "schema_kind": "numeric"}]
+    monkeypatch.setattr(dc, "stratum_rows", lambda: rows)
+    seen = {}
+
+    def fake_run(given, cache):
+        seen["rows"], seen["cache"] = given, cache
+        return {
+            "C1": {"tables": 1, "sources": 1, "groups": 1},
+            "ALL": {"tables": 1, "sources": 1, "groups": 1},
+        }
+
+    monkeypatch.setattr(pa, "run", fake_run)
+    assert pa.main(["--dir", str(tmp_path)]) == 0
+    assert seen == {"rows": rows, "cache": tmp_path / "uci_metadata_cache.json"}
+    text = (tmp_path / "provenance_audit_c1_c2a.json").read_text()
+    assert json.loads(text)["C1"]["groups"] == 1 and text.endswith("}\n")
+    assert (
+        capsys.readouterr().out
+        == "{'C1': {'tables': 1, 'sources': 1, 'groups': 1}, 'ALL': {'tables': 1, 'sources': 1, 'groups': 1}}\n"  # noqa: E501
+    )
