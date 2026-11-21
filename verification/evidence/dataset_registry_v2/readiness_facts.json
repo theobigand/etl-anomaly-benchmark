@@ -906,6 +906,23 @@
    "protocol_id": "P-REL",
    "units": 50271,
    "view": "zen_3pfl"
+  },
+  "zen_surf_lisa_slurm": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "one row in 8 of 1596963 jobs, file order (submit order)",
+    "75 percent completed, 15 percent failed, 6 percent cancelled (natural scheduler outcomes)",
+    "12 sampled jobs have negative run time",
+    "one cluster, ten months"
+   ],
+   "first_party": true,
+   "independent_group": "surf_lisa_slurm",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on submit time",
+   "privacy": "not_needed",
+   "protocol_id": "P-TAB",
+   "units": 199621,
+   "view": "zen_surf_lisa_slurm"
   }
  }
 }

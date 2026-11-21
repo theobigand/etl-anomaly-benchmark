@@ -1490,6 +1490,26 @@
    "stratum": "C6",
    "system": "zen_pure_requirements",
    "upstream_status": "unverified"
+  },
+  {
+   "eligible": true,
+   "family": "surf_lisa",
+   "id": "zen_surf_lisa_slurm",
+   "licence_class": "open",
+   "protocols": "P-TAB on jobs (duration, resource, state-code, duplicate and timestamp-order faults); natural job states are a baseline, never confirmed pipeline faults",
+   "publisher": "surf_lisa",
+   "reason": "SLURM job accounting events of the SURF Lisa cluster (Dec 2021 to Nov 2022): 1596963 jobs in the source part, one row in 8 kept (199621) by file order; no user or account fields; 12 jobs with a negative run time are natural source irregularities; two co-authors work at SURF, the operator, so the release is treated as first party",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 on the Zenodo record; authors include the operator's staff",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "surf_lisa_slurm",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

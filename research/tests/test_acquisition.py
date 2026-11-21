@@ -671,3 +671,59 @@ def test_the_command_line_fetches_configured_ranges_and_reports_them(tmp_path, m
     assert capsys.readouterr().out == "rng/s: 1 files, mismatches []\n"
     manifest = json.loads((tmp_path / "out" / "rng" / "s" / "manifest.json").read_text())
     assert manifest["files"][0]["range"] == [0, 3] and manifest["files"][0]["observed"] == "2019"
+
+
+# --- safe extraction of one archive member -------------------------------------------------------
+
+
+def _zip(path, members):
+    import zipfile
+
+    with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as archive:
+        for name, data in members.items():
+            archive.writestr(name, data)
+    return path
+
+
+def test_listing_an_archive_reports_members_with_both_sizes_without_reading_data(tmp_path):
+    path = _zip(tmp_path / "a.zip", {"d/": b"", "d/x.csv": b"a,b\n" * 100, "y.txt": b"hello"})
+    listing = aq.zip_members(path)
+    assert [m["name"] for m in listing] == ["d/", "d/x.csv", "y.txt"]
+    by = {m["name"]: m for m in listing}
+    assert by["y.txt"]["bytes"] == 5 and by["d/x.csv"]["bytes"] == 400
+    assert by["d/x.csv"]["compressed"] < 400 and by["d/"]["directory"] is True
+    assert by["y.txt"]["directory"] is False
+
+
+def test_extraction_writes_one_member_under_the_destination_and_returns_its_checksum(tmp_path):
+    path = _zip(tmp_path / "a.zip", {"d/x.csv": b"a,b\n1,2\n"})
+    out = aq.extract_member(path, "d/x.csv", tmp_path / "out", max_bytes=100, max_ratio=1000)
+    assert out["path"] == tmp_path / "out" / "x.csv" and out["path"].read_bytes() == b"a,b\n1,2\n"
+    assert out["sha256"] == hashlib.sha256(b"a,b\n1,2\n").hexdigest() and out["bytes"] == 8
+    assert out["member"] == "d/x.csv"
+
+
+def test_extraction_refuses_unsafe_oversized_compressed_bomb_and_missing_members(tmp_path):
+    import zipfile
+
+    evil = tmp_path / "evil.zip"
+    with zipfile.ZipFile(evil, "w") as archive:
+        archive.writestr("../escape.txt", b"x")
+        archive.writestr("/abs.txt", b"x")
+    for name in ("../escape.txt", "/abs.txt"):
+        with pytest.raises(aq.AcquisitionError, match="unsafe member"):
+            aq.extract_member(evil, name, tmp_path / "out", max_bytes=100, max_ratio=1000)
+    assert not (tmp_path / "escape.txt").exists()
+    big = _zip(tmp_path / "big.zip", {"big.bin": b"0" * 10_000})
+    with pytest.raises(aq.AcquisitionError, match="larger than 5000 bytes"):
+        aq.extract_member(big, "big.bin", tmp_path / "out", max_bytes=5000, max_ratio=10**6)
+    with pytest.raises(aq.AcquisitionError, match="compression ratio"):
+        aq.extract_member(big, "big.bin", tmp_path / "out", max_bytes=10**6, max_ratio=10)
+    with pytest.raises(aq.AcquisitionError, match="no member"):
+        aq.extract_member(big, "nope.bin", tmp_path / "out", max_bytes=100, max_ratio=10)
+    (tmp_path / "bad.zip").write_bytes(b"not a zip at all")
+    with pytest.raises(aq.AcquisitionError, match="not a readable zip"):
+        aq.zip_members(tmp_path / "bad.zip")
+    folder = _zip(tmp_path / "f.zip", {"d/": b""})
+    with pytest.raises(aq.AcquisitionError, match="directory"):
+        aq.extract_member(folder, "d/", tmp_path / "out", max_bytes=100, max_ratio=10)

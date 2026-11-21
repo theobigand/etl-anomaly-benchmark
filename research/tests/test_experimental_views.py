@@ -952,12 +952,24 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     monkeypatch.setattr(
         ev, "TABLE_SETS", {"zen_t": {"tables": {"a": {"keep": ["k"]}}, "relations": []}}
     )
+    import zipfile as _zf
+
+    import pyarrow as _pa
+    import pyarrow.parquet as _pq
+
+    surf = root / "zen_surf_lisa_slurm" / SNAP / "raw"
+    surf.mkdir(parents=True)
+    _pq.write_table(
+        _pa.Table.from_pandas(_surf_frame(), preserve_index=False), tmp_path / "s.parquet"
+    )
+    with _zf.ZipFile(surf / "slurm_table_cleaned.zip", "w") as _z:
+        _z.write(tmp_path / "s.parquet", "d.parquet/part-00001-x.parquet")
     out = tmp_path / "out"
     manifest = ev.build(root, out)
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -2145,3 +2157,81 @@ def test_the_panel_and_relational_builders_write_views_and_record_relations(tmp_
         view["notes"]
         == "relations are the source's own keys; orphans are natural incompleteness of the published extract"  # noqa: E501
     )
+
+
+# --- SURF Lisa SLURM job table from a zipped Parquet part ----------------------------------------
+
+
+def _surf_frame():
+    return pd.DataFrame(
+        {
+            "id": pd.array([3, 1, 2], dtype="int32"),
+            "start_date": pd.to_datetime(["2022-01-01 10:00:00", "2022-01-01 09:00:00", None]),
+            "end_date": pd.to_datetime(["2022-01-01 10:30:00", "2022-01-01 09:10:00", None]),
+            "node": ["r1n1", "r1n2", "r1n3"],
+            "nodetypes": ["normal(1)", "gpu(1)", "normal(1)"],
+            "numnodes": ["1", "2", "x"],
+            "numcores": ["16", "32", "8"],
+            "submit_date": pd.to_datetime(["2022-01-01 09:55:00", "2022-01-01 08:00:00", "2022-01-01 09:00:00"]),  # noqa: E501
+            "state": ["COMPLETED", "FAILED", "CANCELLED"],
+        }
+    )  # fmt: skip
+
+
+def test_surf_job_view_derives_wait_and_runtime_orders_by_submit_and_keeps_unstarted_jobs():
+    out = ev.surf_slurm_view(_surf_frame())
+    assert list(out.columns) == list(ev.SURF_COLUMNS)
+    assert ev.SURF_COLUMNS == (
+        "job_id", "submit_ts", "wait_s", "runtime_s", "nodes", "cores", "node_type", "state",
+    )  # fmt: skip
+    assert out["job_id"].tolist() == [1, 2, 3]  # submit order
+    assert out["wait_s"].tolist()[0] == 3600.0 and out["runtime_s"].tolist()[0] == 600.0
+    assert pd.isna(out["wait_s"].iloc[1]) and pd.isna(out["runtime_s"].iloc[1])  # never started
+    assert out["wait_s"].iloc[2] == 300.0 and out["runtime_s"].iloc[2] == 1800.0
+    assert out["nodes"].iloc[0] == 2 and pd.isna(
+        out["nodes"].iloc[1]
+    )  # unreadable count stays missing
+    assert out["cores"].tolist() == [32, 8, 16]
+    assert out["node_type"].tolist() == ["gpu", "normal", "normal"]
+    assert out["state"].tolist() == ["FAILED", "CANCELLED", "COMPLETED"]
+    assert "node" not in out  # host names are not experimental features
+    with pytest.raises(ev.ViewError, match="column"):
+        ev.surf_slurm_view(_surf_frame().drop(columns=["state"]))
+
+
+def test_the_surf_builder_extracts_the_zipped_part_samples_with_a_stride_and_records_it(
+    tmp_path, monkeypatch
+):
+    import zipfile
+
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+
+    root = tmp_path / "acquired"
+    raw = root / "zen_surf_lisa_slurm" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    pq.write_table(
+        pa.Table.from_pandas(
+            pd.concat([_surf_frame()] * 4, ignore_index=True), preserve_index=False
+        ),
+        tmp_path / "p.parquet",
+        row_group_size=5,
+    )
+    empty = tmp_path / "empty.parquet"
+    pq.write_table(pa.Table.from_pandas(_surf_frame().iloc[:0], preserve_index=False), empty)
+    with zipfile.ZipFile(raw / "slurm_table_cleaned.zip", "w") as z:
+        z.write(empty, "slurm_table_cleaned.parquet/part-00000-x.snappy.parquet")
+        z.write(tmp_path / "p.parquet", "slurm_table_cleaned.parquet/part-00003-x.snappy.parquet")
+    monkeypatch.setattr(ev, "SURF_STRIDE", 3)
+    manifest = {}
+    ev._build_surf(root, tmp_path / "o" / "deep", manifest)
+    target = tmp_path / "o" / "deep" / "zen_surf_lisa_slurm" / "jobs.csv"
+    assert len(pd.read_csv(target)) == 4  # rows 0, 3, 6, 9 of 12
+    view = manifest["zen_surf_lisa_slurm"]
+    assert view["files"] == {"jobs.csv": {"sha256": _sha(target), "rows": 4}}
+    assert view["sampling"] == {
+        "method": "one row in 3 of the only non-empty Parquet part, from the first, in file order",
+        "stride": 3, "rows_read": 12, "rows_kept": 4, "source_rows": 12, "truncated": False,
+        "member": "slurm_table_cleaned.parquet/part-00003-x.snappy.parquet",
+    }  # fmt: skip
+    assert view["dropped"] == ["node host names"]

@@ -1707,6 +1707,39 @@
    "stratum": "C4",
    "upstream": "first party: Google publishes traces of its own Borg clusters",
    "upstream_verified": true
+  },
+  {
+   "attribution": "cite the Zenodo record 13625495 and its paper",
+   "files": [
+    {
+     "name": "slurm_table_cleaned.zip",
+     "observed": "2022-11",
+     "url": "https://zenodo.org/records/13625495/files/slurm_table_cleaned.zip?download=1"
+    },
+    {
+     "name": "node_hardware_info.parquet",
+     "observed": "2022-11",
+     "url": "https://zenodo.org/records/13625495/files/node_hardware_info.parquet?download=1"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_surf_lisa_slurm",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/13625495",
+   "licence_text": "Zenodo record 13625495: license cc-by-4.0, access_right open; version published 2024-09-01",
+   "max_bytes": 104857600,
+   "method": "official Zenodo record download of the SLURM job table and node hardware table only (the 7 GB and 10 GB Prometheus archives are not fetched)",
+   "min_interval": 3.0,
+   "privacy": "job and user identifiers pseudonymous in the release; to be checked on the table",
+   "publisher": "SURF Lisa HPC datacenter (traces published by Chu, Hofst\u00e4tter, Ilager et al.)",
+   "rate_limit": "two sequential downloads",
+   "redistribution": "CC BY 4.0 permits it; raw files stay local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "first party: the authors publish traces of the SURF Lisa cluster they describe; permission of the operator is implied by the record but not separately stated",
+   "upstream_verified": false
   }
  ]
 }

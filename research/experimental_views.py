@@ -1240,6 +1240,98 @@ def _build_borg(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+SURF_COLUMNS = (
+    "job_id", "submit_ts", "wait_s", "runtime_s", "nodes", "cores", "node_type", "state",
+)  # fmt: skip
+#: every k-th row of the SURF Lisa job table is kept (about 200 000 of 1.6 million jobs)
+SURF_STRIDE = 8
+
+
+def surf_slurm_view(raw: pd.DataFrame) -> pd.DataFrame:
+    """SURF Lisa job records: submit time, wait and run time in seconds, size, node type, state.
+
+    Host names are dropped. A job that never started has no start or end time, so its wait and
+    run time stay missing.
+    """
+    need = (
+        "id",
+        "start_date",
+        "end_date",
+        "submit_date",
+        "numnodes",
+        "numcores",
+        "nodetypes",
+        "state",
+    )
+    absent = [c for c in need if c not in raw.columns]
+    if absent:
+        raise ViewError(f"column {absent[0]} not found")
+    submit = pd.to_datetime(raw["submit_date"])
+    start, end = pd.to_datetime(raw["start_date"]), pd.to_datetime(raw["end_date"])
+    out = pd.DataFrame(
+        {
+            "job_id": raw["id"].astype("int64"),
+            "submit_ts": submit,
+            "wait_s": (start - submit).dt.total_seconds(),
+            "runtime_s": (end - start).dt.total_seconds(),
+            "nodes": pd.to_numeric(raw["numnodes"], errors="coerce"),
+            "cores": pd.to_numeric(raw["numcores"], errors="coerce"),
+            "node_type": raw["nodetypes"].str.replace(r"\(.*\)$", "", regex=True),
+            "state": raw["state"],
+        }
+    )
+    return out.sort_values(["submit_ts", "job_id"], kind="stable").reset_index(drop=True)
+
+
+def _build_surf(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import sys
+    import tempfile
+
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import parquet_reader as pr
+    from acquisition import extract_member, zip_members
+
+    raw = root / "zen_surf_lisa_slurm" / SNAPSHOT / "raw" / "slurm_table_cleaned.zip"
+    parts = [
+        m for m in zip_members(raw) if m["name"].endswith(".parquet") and "/part-" in m["name"]
+    ]
+    folder = out / "zen_surf_lisa_slurm"
+    folder.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory() as scratch:
+        chosen = None
+        for member in parts:
+            got = extract_member(
+                raw, member["name"], Path(scratch), max_bytes=1 << 30, max_ratio=200
+            )
+            if pr.inspect(got["path"])["rows"] > 0:
+                chosen = (member["name"], got["path"])
+                break
+        if chosen is None:
+            raise ViewError("no non-empty Parquet part in the archive")
+        names = [c["name"] for c in pr.inspect(chosen[1])["columns"]]
+        frame, record = pr.read_sample(chosen[1], columns=names, max_rows=10**7, stride=SURF_STRIDE)
+    view = surf_slurm_view(frame)
+    target = folder / "jobs.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "zen_surf_lisa_slurm",
+        {"jobs.csv": (target, len(view))},
+        dropped=["node host names"],
+        pseudonymised=[],
+        sampling={
+            "method": f"one row in {SURF_STRIDE} of the only non-empty Parquet part, from the first, in file order",  # noqa: E501
+            "stride": SURF_STRIDE,
+            "rows_read": record["rows_read"],
+            "rows_kept": record["rows_kept"],
+            "source_rows": record["source_rows"],
+            "truncated": record["truncated"],
+            "member": chosen[0],
+        },
+        source_snapshot=f"zen_surf_lisa_slurm/{SNAPSHOT}",
+    )
+
+
 SLURM_MODULO = 20
 SLURM_COLUMNS = (
     "jobid",
@@ -1327,6 +1419,7 @@ BUILD_STEPS = (
     _build_borg,
     _build_panels,
     _build_tables,
+    _build_surf,
     _build_series,
     _build_ukspend,
 )

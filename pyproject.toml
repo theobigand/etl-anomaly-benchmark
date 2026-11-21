@@ -14,6 +14,7 @@ dependencies = [
     "pyod>=2.0",
     "faker>=25",
     "matplotlib>=3.8",
+    "pyarrow>=21,<27",
 ]
 
 [project.optional-dependencies]

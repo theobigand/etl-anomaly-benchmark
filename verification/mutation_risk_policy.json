@@ -531,6 +531,10 @@
     "research/acquisition_validate.py": {
       "level": "L3",
       "reason": "Structural checks (series content, nesting shape, referential integrity) decide the stratum eligibility of acquired sources."
+    },
+    "research/parquet_reader.py": {
+      "level": "L3",
+      "reason": "Bounded Parquet reading decides which rows of large sources enter experimental views and records the sampling boundaries."
     }
   }
 }

@@ -831,5 +831,27 @@
    }
   ],
   "source_snapshot": "zen_3pfl/2026-11-21"
+ },
+ "zen_surf_lisa_slurm": {
+  "dropped": [
+   "node host names"
+  ],
+  "files": {
+   "jobs.csv": {
+    "rows": 199621,
+    "sha256": "e6cde31995d1f4748c483a1804e70134713f289ffc26fa379243fefe9cd43588"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "member": "slurm_table_cleaned.parquet/part-00003-97b50f5c-3d22-4ff9-b1cf-9ce77ae6bfda-c000.snappy.parquet",
+   "method": "one row in 8 of the only non-empty Parquet part, from the first, in file order",
+   "rows_kept": 199621,
+   "rows_read": 1596963,
+   "source_rows": 1596963,
+   "stride": 8,
+   "truncated": false
+  },
+  "source_snapshot": "zen_surf_lisa_slurm/2026-11-21"
  }
 }

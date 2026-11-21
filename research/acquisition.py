@@ -208,6 +208,72 @@ class Snapshot:
         return bad
 
 
+def zip_members(path: Path) -> list[dict[str, Any]]:
+    """Members of a zip archive from its central directory, with declared sizes."""
+    import zipfile
+
+    try:
+        with zipfile.ZipFile(path) as archive:
+            return [
+                {
+                    "name": i.filename,
+                    "bytes": i.file_size,
+                    "compressed": i.compress_size,
+                    "directory": i.is_dir(),
+                }
+                for i in archive.infolist()
+            ]
+    except zipfile.BadZipFile as error:
+        raise AcquisitionError(f"{path}: not a readable zip archive ({error})") from error
+
+
+def extract_member(
+    path: Path, member: str, destination: Path, max_bytes: int, max_ratio: float
+) -> dict[str, Any]:
+    """Extract one file member into ``destination`` (flat), under size and ratio limits.
+
+    Names with ``..`` or an absolute path are refused, the declared size and compression ratio
+    are checked before reading, and the bytes actually written are counted against the limit.
+    """
+    import zipfile
+    from pathlib import PurePosixPath
+
+    from etl_benchmark.atomic import atomic_path
+
+    parts = PurePosixPath(member)
+    if parts.is_absolute() or ".." in parts.parts:
+        raise AcquisitionError(f"{path}: unsafe member name {member!r}")
+    try:
+        with zipfile.ZipFile(path) as archive:
+            try:
+                info = archive.getinfo(member)
+            except KeyError as error:
+                raise AcquisitionError(f"{path}: no member {member!r}") from error
+            if info.is_dir():
+                raise AcquisitionError(f"{path}: {member!r} is a directory")
+            if info.file_size > max_bytes:
+                raise AcquisitionError(f"{path}: member larger than {max_bytes} bytes")
+            if info.compress_size and info.file_size / info.compress_size > max_ratio:
+                raise AcquisitionError(f"{path}: compression ratio above {max_ratio}")
+            digest, written = hashlib.sha256(), 0
+            target = destination / parts.name
+            destination.mkdir(parents=True, exist_ok=True)
+            with (
+                archive.open(info) as source,
+                atomic_path(target) as partial,
+                partial.open("wb") as sink,
+            ):
+                while chunk := source.read(1 << 20):
+                    written += len(chunk)
+                    if written > max_bytes:
+                        raise AcquisitionError(f"{path}: member larger than {max_bytes} bytes")
+                    digest.update(chunk)
+                    sink.write(chunk)
+    except zipfile.BadZipFile as error:
+        raise AcquisitionError(f"{path}: not a readable zip archive ({error})") from error
+    return {"path": target, "member": member, "sha256": digest.hexdigest(), "bytes": written}
+
+
 def gzip_prefix_lines(blob: bytes, max_output: int) -> dict[str, Any]:
     """Complete text lines at the start of a gzip stream, even if the stream is cut off.
 

@@ -717,6 +717,13 @@
   },
   {
    "failed": null,
+   "group": "surf_lisa_slurm",
+   "id": "zen_surf_lisa_slurm",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -849,7 +856,8 @@
   ],
   "C4": [
    "ccin2p3_slurm",
-   "loghub_collection"
+   "loghub_collection",
+   "surf_lisa_slurm"
   ],
   "C5": [
    "georgia_procurement",
@@ -887,13 +895,13 @@
    "structurally_valid": 11
   },
   "C4": {
-   "acquired": 18,
-   "discovered": 18,
-   "experiment_ready": 17,
-   "protocol_ready": 17,
-   "rights_verified": 18,
-   "scientifically_eligible": 17,
-   "structurally_valid": 17
+   "acquired": 19,
+   "discovered": 19,
+   "experiment_ready": 18,
+   "protocol_ready": 18,
+   "rights_verified": 19,
+   "scientifically_eligible": 18,
+   "structurally_valid": 18
   },
   "C5": {
    "acquired": 13,

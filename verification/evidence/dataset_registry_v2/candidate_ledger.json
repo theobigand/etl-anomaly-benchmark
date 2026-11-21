@@ -555,12 +555,12 @@
    "licence": "cc-by-4.0",
    "name": "SURF Lisa HPC traces",
    "next_step": "parquet reader decision",
-   "notes": "",
+   "notes": "job table only (C4 operational events, like CC-IN2P3); Prometheus archives (7 and 10 GB) not fetched; view is a one-in-8 file-order sample",
    "publisher": "SURF",
    "reason": "SLURM table 16 MB parquet; monitoring 10 GB",
    "size": null,
    "source_url": "",
-   "status": "needs_parquet_reader"
+   "status": "experiment_ready"
   },
   {
    "categories": [
