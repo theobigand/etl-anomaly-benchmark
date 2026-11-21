@@ -178,3 +178,72 @@ designed per dataset yet, and upstream terms are open for most Monash families.
    snapshot only if a larger sample is justified.
 3. Draft the per-dataset injection specification before any run, and re-audit the 56 unread tables
    for transactional structure.
+
+# Update 3 (2026-11-21): readiness, T437 closed, upstream terms, overlap
+
+## Readiness (contract: `verification/dataset_readiness_contract.md`)
+
+Data acquired, scientifically validated and ready are different stages, and no experiment was run.
+
+| Stratum | Acquired | Structurally valid | Scientifically eligible | Protocol-ready | Experiment-ready (independent groups) |
+|---|---:|---:|---:|---:|---|
+| C3 | 21 records, 2 after upstream checks | 2 | 1 | 1 | Melbourne pedestrian (1) |
+| C4 | 16 systems | 16 | 16 | 16 | Loghub collection (1 group) |
+| C5 | 11 | 11 | 1 | 1 | OpenAlex (1) |
+| C6 | 3 | 3 | 2 | 2 | OpenAlex, openFDA events (2) |
+
+The first experiment-ready dataset exists in each of C3, C4, C5 and C6. Against the targets
+(C3 40, C4 28, C5 36, C6 30) the independent experiment-ready groups are 1, 1, 1 and 2. The
+numerical targets are unchanged. The C4 group of 16 systems is one curator, so it counts as one
+group for inference.
+
+## T437 closed
+
+190 C1 to C3 tables audited: 1 transactional (Online Retail, UCI 352), 133 tables without a repeated
+entity key and an event column, 56 sources without keys by construction (36 ADBench numeric arrays,
+20 NAB and SKAB sensor series). Recommended taxonomy: split C2 into C2a "categorical and mixed
+tables" (41) and C2b "transactional or event data" (1, target 30). The historical C2 count (42) is
+kept for compatibility but must not be read as transactional coverage. UCI Online Retail II (UCI 502,
+same UK retailer, adjacent period) is not in the pool; if added, it is the same source family as Online
+Retail and not a new one.
+
+## Upstream terms of Monash families (read where the publisher's own page was found)
+
+| Family | Finding | Status |
+|---|---|---|
+| Sunspot | CC BY-NC 4.0 at WDC-SILSO | verified, `research_only` |
+| Melbourne pedestrian | CC BY on the City of Melbourne catalogue | verified, open |
+| AEMO-based series (Australian electricity demand, 4-second solar and wind) | AEMO copyright notice allows use "as authorised"; no open licence found | unresolved |
+| FRED-MD | FRED terms of use apply (free use, credit to FRED and the original source); no dataset-specific licence found | unresolved |
+| Saugeen river flow | Water Survey of Canada data is usually Open Government Licence Canada; the Saugeen gauge record was not found | unresolved |
+| US births | public-use files of NCHS have use conditions beyond the public-domain label of reports | unresolved |
+| Vehicle trips, Bitcoin | no licence or scraped | rejected |
+| Others (Kaggle competitions, KDD Cup, NN5, Tourism, hospital, car parts, weather, covid, traffic, rideshare) | not read | open |
+
+These findings come from search results and publisher pages that were reachable. They are
+recorded as unresolved where no authoritative licence text was found, not as accepted.
+
+## Independence and overlap
+
+- Stack Exchange: ten sites, one platform and schema, one family. OpenAlex: one family in two strata.
+- KDD Cup 2018 air quality is grouped with UCI 381 (Beijing PM2.5) in clustered analyses.
+- Monash series from the same producer (4-second solar and wind) count once.
+- openFDA events, labels and recalls are three reporting systems of one publisher.
+- Loghub: 16 systems, one curator; upstream log producers are not separately stated.
+
+## Remaining scientific gaps (ordered)
+
+1. C2b: one transactional table against a target of 30. This is the largest gap and no source for it is
+   identified yet. Candidates to evaluate: retail and payment event datasets with explicit open licences.
+2. C5 and C6: one and two experiment-ready groups. Next: relational databases from independent
+   producers with read licences (RelBench upstream terms, CTU per-database terms), nested event APIs.
+3. C4: independent producers beyond Loghub, with documented terms.
+4. C3: upstream terms of 13 Monash families, and natural labels beyond SKAB and NAB.
+5. Privacy review of Stack Exchange and Open Food Facts to unlock their views.
+6. Per-dataset injection specification instances; all protocol content so far is a template.
+
+## Whether the numerical targets are still appropriate
+
+Not decided. The evidence so far: C1 and C2 counts overstate coverage; C5 and C6 availability of
+public sources with clear terms is low; the 15-family milestone is a planning step. Any change needs a
+methodological argument that has not yet been written, so none is proposed here.

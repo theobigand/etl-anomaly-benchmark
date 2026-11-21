@@ -1,0 +1,136 @@
+{
+ "loghub": {
+  "dropped": [
+   "Content",
+   "EventTemplate"
+  ],
+  "files": {
+   "Android.csv": {
+    "rows": 2000,
+    "sha256": "a8e85d57bbc2cc2cde5fc0dfb778a016cf80d523585bf02b5c4f4f739fc619cd"
+   },
+   "Apache.csv": {
+    "rows": 2000,
+    "sha256": "1eee5ad082a8c5f613e341bb0abbeccd95c52e0cbb541b02db10b23e2a9a2003"
+   },
+   "BGL.csv": {
+    "rows": 2000,
+    "sha256": "a035f57fad84eebfb220ca7788d09184699d5f5da8b9125546cc6d1a42d52f96"
+   },
+   "HDFS.csv": {
+    "rows": 2000,
+    "sha256": "068962f13a7b7f3936c4532372c111f35a95de43d688085b7a65e54e24132cc6"
+   },
+   "HPC.csv": {
+    "rows": 2000,
+    "sha256": "11514e2236c4f79622fc64a6f213412fe88de1acc6246a0bb570569a949510e6"
+   },
+   "Hadoop.csv": {
+    "rows": 2000,
+    "sha256": "be60baefc474f1df38381cac37860b2bd22348b4c5ef83da122bf0555d1fbe7b"
+   },
+   "HealthApp.csv": {
+    "rows": 2000,
+    "sha256": "d741fc3ce16211b26adc322f00a5bb9686f4f03f45be6a053c5c624a2c0bd0e1"
+   },
+   "Linux.csv": {
+    "rows": 2000,
+    "sha256": "dc422cf7a3bd5c2ef36c2027c668298354a8474dbea8db47814e6b7d647af863"
+   },
+   "Mac.csv": {
+    "rows": 2000,
+    "sha256": "36fe3f5aadefb26396e319a01612d93b8d69f823a08f4e1f9b6e9e5a96a2e310"
+   },
+   "OpenSSH.csv": {
+    "rows": 2000,
+    "sha256": "b655335d334e32cbd821b77687a8ee164147518895b000883f5760a526e98ac0"
+   },
+   "OpenStack.csv": {
+    "rows": 2000,
+    "sha256": "424ffe30677bfcfe3dae662cf0e203af30a6cbcbcd01708008f415aad04aa9c5"
+   },
+   "Proxifier.csv": {
+    "rows": 2000,
+    "sha256": "96ea4ea6bd62049ac1fd08bcfd08f3efa618aaf42e5187afa725078a8d99815d"
+   },
+   "Spark.csv": {
+    "rows": 2000,
+    "sha256": "97f1432ed4e3faaaa6cc648f5aaef3487673dac828694628aaee037acda6af7e"
+   },
+   "Thunderbird.csv": {
+    "rows": 2000,
+    "sha256": "ff5961122b111a86a017412932ffbf39e6f862dddf3a0b5981f95480ea0f8c24"
+   },
+   "Windows.csv": {
+    "rows": 2000,
+    "sha256": "2df28fd12c913b8ca501f51c7bb5c5fce85d73e4cbc13bd1f2d1d6e864636498"
+   },
+   "Zookeeper.csv": {
+    "rows": 2000,
+    "sha256": "132065d94bcec6297a763d46a253388e680a5e1e758e026c1e182f5e67a04164"
+   }
+  },
+  "pseudonymised": [],
+  "source_snapshot": "loghub@dd61d09"
+ },
+ "monash_pedestrian": {
+  "dropped": [],
+  "files": {
+   "wide.csv": {
+    "rows": 98723,
+    "sha256": "bb367eee58a6afe0ac49e85d473493fb24af43582c2c47a34eafeacc6bd3d177"
+   }
+  },
+  "pseudonymised": [],
+  "source_snapshot": "monash_zenodo/2026-11-21"
+ },
+ "openalex": {
+  "dropped": [
+   "display_name",
+   "orcid",
+   "observed_orcids",
+   "raw works ids of authors"
+  ],
+  "files": {
+   "authors.csv": {
+    "rows": 3756,
+    "sha256": "9253893c1c629f4add79fdb5e77222c13f5e961c004ffa5331a0a95bb59dd4e8"
+   },
+   "authorships.csv": {
+    "rows": 5213,
+    "sha256": "30c2b7d8d78a3fdca07add2ede953876b418db36192ad92e2f324bad4aae8dbf"
+   },
+   "institutions.csv": {
+    "rows": 1520,
+    "sha256": "32a8c15099e54c00706615fa13e7b72c0567ef86d162059ada627e165ea7eba0"
+   },
+   "sources.csv": {
+    "rows": 884,
+    "sha256": "d3c054b6b56e0151ef170c18f025472697f64adbe4d277ae765301bbee93d603"
+   },
+   "works.csv": {
+    "rows": 1000,
+    "sha256": "2d034f767deaa6edb4b079a8853803c56a6d025046cf8944d2ca61aa2475a867"
+   }
+  },
+  "pseudonymised": [
+   "author_id"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "source_snapshot": "openalex_works/2026-11-21"
+ },
+ "openfda_drug_event": {
+  "dropped": [
+   "companynumb",
+   "authoritynumb"
+  ],
+  "files": {
+   "events.jsonl": {
+    "rows": 4000,
+    "sha256": "031faf17ca21ce5d419d71dc14cc3f4afe2e4a83992d1858531ecf4958c48168"
+   }
+  },
+  "pseudonymised": [],
+  "source_snapshot": "openfda_drug_event/2026-11-21"
+ }
+}

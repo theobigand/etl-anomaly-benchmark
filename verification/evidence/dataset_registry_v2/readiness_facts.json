@@ -1,0 +1,516 @@
+{
+ "facts": {
+  "loghub:Android": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:Apache": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:BGL": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:HDFS": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:HPC": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:Hadoop": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:HealthApp": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:Linux": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:Mac": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:OpenSSH": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:OpenStack": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:Proxifier": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:Spark": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:Thunderbird": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:Windows": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "loghub:Zookeeper": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "template distribution of the system",
+    "2000-line sample only",
+    "native labels absent in the 2k samples"
+   ],
+   "first_party": true,
+   "independent_group": "loghub_collection",
+   "min_units": 1000,
+   "notes": "curator terms (research or academic work) are the applicable authoritative terms; terms of upstream log producers are not separately stated",
+   "partitions": "first 70 percent of lines for reference, rest for validation and test, in file order",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2000,
+   "view": "loghub"
+  },
+  "monash:4656626": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "sensor outages",
+    "hourly seasonality",
+    "series starting at different dates"
+   ],
+   "first_party": false,
+   "independent_group": "melbourne_pedestrian",
+   "min_units": 1000,
+   "notes": "counts of pedestrians, no individual data; upstream CC BY read on the City of Melbourne catalogue",
+   "partitions": "chronological 70/15/15 on the shared hourly index",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "units": 98723,
+   "view": "monash_pedestrian"
+  },
+  "openalex:nested": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "optional fields (14 paths)"
+   ],
+   "first_party": true,
+   "independent_group": "openalex",
+   "min_units": 1000,
+   "partitions": "as openalex:relational",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 1000,
+   "view": "openalex"
+  },
+  "openalex:relational": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "referenced_works leave the sample",
+    "author ids pseudonymised",
+    "one snapshot of one sample"
+   ],
+   "first_party": true,
+   "independent_group": "openalex",
+   "min_units": 1000,
+   "partitions": "works split by hash of work id, 70/15/15; tables follow their works",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 4477,
+   "view": "openalex"
+  },
+  "openfda_drug_event": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "optional fields (33 paths)",
+    "type variation",
+    "sample covers 2 receipt dates only"
+   ],
+   "first_party": true,
+   "independent_group": "openfda_faers",
+   "min_units": 1000,
+   "partitions": "hash of safetyreportid 70/15/15 (only two receipt dates, so no chronological split)",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 4000,
+   "view": "openfda_drug_event"
+  },
+  "openfoodfacts_products": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "about 10000 distinct paths",
+    "866 multi-type paths",
+    "crowd-sourced variation"
+   ],
+   "first_party": true,
+   "independent_group": "openfoodfacts",
+   "min_units": 1000,
+   "notes": "contributor names present; no view built yet",
+   "partitions": "hash of product code 70/15/15",
+   "privacy": "unreviewed",
+   "protocol_id": "P-NEST",
+   "units": 9688,
+   "view": null
+  },
+  "stackexchange:3dprinting": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "votes pointing to deleted posts (5-29 percent)",
+    "links to posts on other sites"
+   ],
+   "first_party": true,
+   "independent_group": "stackexchange",
+   "min_units": 1000,
+   "notes": "user names and free text must be dropped; no view built yet",
+   "partitions": "posts split by hash of post id, 70/15/15",
+   "privacy": "unreviewed",
+   "protocol_id": "P-REL",
+   "units": 10000,
+   "view": null
+  },
+  "stackexchange:astronomy": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "votes pointing to deleted posts (5-29 percent)",
+    "links to posts on other sites"
+   ],
+   "first_party": true,
+   "independent_group": "stackexchange",
+   "min_units": 1000,
+   "notes": "user names and free text must be dropped; no view built yet",
+   "partitions": "posts split by hash of post id, 70/15/15",
+   "privacy": "unreviewed",
+   "protocol_id": "P-REL",
+   "units": 10000,
+   "view": null
+  },
+  "stackexchange:beer": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "votes pointing to deleted posts (5-29 percent)",
+    "links to posts on other sites"
+   ],
+   "first_party": true,
+   "independent_group": "stackexchange",
+   "min_units": 1000,
+   "notes": "user names and free text must be dropped; no view built yet",
+   "partitions": "posts split by hash of post id, 70/15/15",
+   "privacy": "unreviewed",
+   "protocol_id": "P-REL",
+   "units": 10000,
+   "view": null
+  },
+  "stackexchange:coffee": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "votes pointing to deleted posts (5-29 percent)",
+    "links to posts on other sites"
+   ],
+   "first_party": true,
+   "independent_group": "stackexchange",
+   "min_units": 1000,
+   "notes": "user names and free text must be dropped; no view built yet",
+   "partitions": "posts split by hash of post id, 70/15/15",
+   "privacy": "unreviewed",
+   "protocol_id": "P-REL",
+   "units": 10000,
+   "view": null
+  },
+  "stackexchange:earthscience": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "votes pointing to deleted posts (5-29 percent)",
+    "links to posts on other sites"
+   ],
+   "first_party": true,
+   "independent_group": "stackexchange",
+   "min_units": 1000,
+   "notes": "user names and free text must be dropped; no view built yet",
+   "partitions": "posts split by hash of post id, 70/15/15",
+   "privacy": "unreviewed",
+   "protocol_id": "P-REL",
+   "units": 10000,
+   "view": null
+  },
+  "stackexchange:economics": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "votes pointing to deleted posts (5-29 percent)",
+    "links to posts on other sites"
+   ],
+   "first_party": true,
+   "independent_group": "stackexchange",
+   "min_units": 1000,
+   "notes": "user names and free text must be dropped; no view built yet",
+   "partitions": "posts split by hash of post id, 70/15/15",
+   "privacy": "unreviewed",
+   "protocol_id": "P-REL",
+   "units": 10000,
+   "view": null
+  },
+  "stackexchange:fitness": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "votes pointing to deleted posts (5-29 percent)",
+    "links to posts on other sites"
+   ],
+   "first_party": true,
+   "independent_group": "stackexchange",
+   "min_units": 1000,
+   "notes": "user names and free text must be dropped; no view built yet",
+   "partitions": "posts split by hash of post id, 70/15/15",
+   "privacy": "unreviewed",
+   "protocol_id": "P-REL",
+   "units": 10000,
+   "view": null
+  },
+  "stackexchange:gardening": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "votes pointing to deleted posts (5-29 percent)",
+    "links to posts on other sites"
+   ],
+   "first_party": true,
+   "independent_group": "stackexchange",
+   "min_units": 1000,
+   "notes": "user names and free text must be dropped; no view built yet",
+   "partitions": "posts split by hash of post id, 70/15/15",
+   "privacy": "unreviewed",
+   "protocol_id": "P-REL",
+   "units": 10000,
+   "view": null
+  },
+  "stackexchange:ham": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "votes pointing to deleted posts (5-29 percent)",
+    "links to posts on other sites"
+   ],
+   "first_party": true,
+   "independent_group": "stackexchange",
+   "min_units": 1000,
+   "notes": "user names and free text must be dropped; no view built yet",
+   "partitions": "posts split by hash of post id, 70/15/15",
+   "privacy": "unreviewed",
+   "protocol_id": "P-REL",
+   "units": 10000,
+   "view": null
+  },
+  "stackexchange:health": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "votes pointing to deleted posts (5-29 percent)",
+    "links to posts on other sites"
+   ],
+   "first_party": true,
+   "independent_group": "stackexchange",
+   "min_units": 1000,
+   "notes": "user names and free text must be dropped; no view built yet",
+   "partitions": "posts split by hash of post id, 70/15/15",
+   "privacy": "unreviewed",
+   "protocol_id": "P-REL",
+   "units": 10000,
+   "view": null
+  }
+ }
+}

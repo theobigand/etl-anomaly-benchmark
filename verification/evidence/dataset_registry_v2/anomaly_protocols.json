@@ -1,0 +1,95 @@
+{
+ "note": "protocols are defined per structure; dataset applicability and exceptions are in verification/anomaly_protocols.md; no injection has been run",
+ "protocols": {
+  "P-NEST": {
+   "detection_unit": "nested_path",
+   "family": "nested",
+   "ground_truth": "controlled injection, (record, path) recorded; natural optional fields and type variation are baselined",
+   "mechanisms": [
+    "missing_required_field",
+    "invalid_nested_type",
+    "structural_inconsistency",
+    "unexpected_array_or_object",
+    "broken_hierarchy",
+    "schema_evolution_violation"
+   ],
+   "needs": "records with nested objects, arrays and optional fields kept unflattened",
+   "strata": [
+    "C6"
+   ]
+  },
+  "P-REL": {
+   "detection_unit": "relationship",
+   "family": "relational",
+   "ground_truth": "controlled injection, (table, key, relation) recorded; natural orphans are baselined and excluded from labels",
+   "mechanisms": [
+    "referential_violation",
+    "invalid_relationship",
+    "broken_entity_dependency",
+    "inconsistent_aggregate",
+    "duplicate_entity",
+    "relationship_anomaly"
+   ],
+   "needs": "keys of every table and a complete foreign-key baseline",
+   "strata": [
+    "C5"
+   ]
+  },
+  "P-SEQ": {
+   "detection_unit": "event_sequence",
+   "family": "logs and sequences",
+   "ground_truth": "controlled injection on event sequences; native labels only where the source gives them",
+   "mechanisms": [
+    "order_violation",
+    "missing_event",
+    "unexpected_sequence",
+    "rare_pattern",
+    "duplicate_event",
+    "abnormal_transition"
+   ],
+   "needs": "event order and event type; timestamps only for gap and delay mechanisms",
+   "strata": [
+    "C4"
+   ]
+  },
+  "P-TAB": {
+   "detection_unit": "row",
+   "family": "tabular and transactional",
+   "ground_truth": "controlled injection, row indices recorded",
+   "mechanisms": [
+    "univariate_outlier",
+    "multivariate_outlier",
+    "invalid_category_code",
+    "missing_values",
+    "duplicate_rows",
+    "cross_field_violation",
+    "abnormal_entity_behaviour"
+   ],
+   "needs": "row-local values; cross-field rules need the whole row; transactional rules need entity history",
+   "strata": [
+    "C1",
+    "C2"
+   ]
+  },
+  "P-TS": {
+   "detection_unit": "time_window",
+   "family": "temporal",
+   "ground_truth": "controlled injection, window start and end recorded",
+   "mechanisms": [
+    "point_outlier",
+    "contextual_anomaly",
+    "collective_anomaly",
+    "level_shift",
+    "gradual_drift",
+    "seasonal_deviation",
+    "missing_interval",
+    "delayed_arrival",
+    "prevalence_change"
+   ],
+   "needs": "regular or documented time index; context needs history",
+   "strata": [
+    "C3"
+   ]
+  }
+ }
+}

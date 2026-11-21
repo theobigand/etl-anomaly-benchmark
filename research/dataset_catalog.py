@@ -291,18 +291,27 @@ def transactional_audit(
     historical strata stay untouched and tables without a readable file are "not audited".
     """
     verified = wave2_time or {}
-    out: dict[str, Any] = {"transactional": {}, "not_transactional": {}, "not_audited": []}
+    out: dict[str, Any] = {
+        "transactional": {},
+        "not_transactional": {},
+        "numeric_arrays_without_schema": [],
+        "not_audited": [],
+    }
     for r in rows:
         if stratum_of(r) not in ("C1", "C2", "C3"):
             continue
         frame = read(r)
         if frame is None:
-            out["not_audited"].append(r["id"])
+            # ADBench files are numeric arrays and NAB/SKAB files are sensor values: no entity keys
+            numeric = r["id"].startswith(("adbench:", "nab/", "skab/"))
+            kind = "numeric_arrays_without_schema" if numeric else "not_audited"
+            out[kind].append(r["id"])
             continue
         timed = [verified[r["id"]]["column"]] if verified.get(r["id"], {}).get("verified") else []
         sig = transactional_signals(frame, timed)
         out["transactional" if is_transactional(sig) else "not_transactional"][r["id"]] = sig
-    out["counts"] = {k: len(out[k]) for k in ("transactional", "not_transactional", "not_audited")}
+    kinds = ("transactional", "not_transactional", "numeric_arrays_without_schema", "not_audited")
+    out["counts"] = {k: len(out[k]) for k in kinds}
     return out
 
 

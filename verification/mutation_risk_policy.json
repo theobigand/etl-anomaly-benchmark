@@ -516,6 +516,14 @@
       "level": "L3",
       "reason": "Licence-class gating, host allow-list, size bounds, snapshot immutability and checksums decide which external data enters the corpus."
     },
+    "research/readiness.py": {
+      "level": "L3",
+      "reason": "The status contract decides which acquired datasets may be reported as eligible or experiment-ready."
+    },
+    "research/experimental_views.py": {
+      "level": "L3",
+      "reason": "Minimisation and pseudonymisation of personal fields and the checksummed views define what experiments may read."
+    },
     "research/acquisition_validate.py": {
       "level": "L3",
       "reason": "Structural checks (series content, nesting shape, referential integrity) decide the stratum eligibility of acquired sources."

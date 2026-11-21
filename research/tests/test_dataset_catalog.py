@@ -252,4 +252,12 @@ def test_the_audit_splits_c2_and_leaves_unreadable_tables_unassigned():
     assert list(audit["transactional"]) == ["uci:1"]
     assert list(audit["not_transactional"]) == ["uci:2"]
     assert audit["not_audited"] == ["uci:3", "uci:4"]
-    assert audit["counts"] == {"transactional": 1, "not_transactional": 1, "not_audited": 2}
+    assert audit["numeric_arrays_without_schema"] == []
+    assert audit["counts"]["not_audited"] == 2 and audit["counts"]["transactional"] == 1
+
+
+def test_adbench_arrays_are_recorded_as_numeric_without_schema_not_as_unaudited():
+    rows = [{"id": "adbench:cardio", "source": "uci:193", "schema_kind": "numeric"}]
+    audit = dc.transactional_audit(rows, lambda r: None)
+    assert audit["numeric_arrays_without_schema"] == ["adbench:cardio"]
+    assert audit["not_audited"] == [] and audit["counts"]["numeric_arrays_without_schema"] == 1

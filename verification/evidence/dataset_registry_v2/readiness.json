@@ -1,0 +1,597 @@
+{
+ "datasets": [
+  {
+   "failed": {
+    "reasons": [
+     "no independent source group",
+     "personal-data handling not reviewed",
+     "expected source properties (baseline) not recorded",
+     "anomaly origin (natural or injected) not declared",
+     "too few detection units"
+    ],
+    "status": "scientifically_eligible"
+   },
+   "group": null,
+   "id": "monash:4654773",
+   "status": "structurally_valid",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4654833",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656009",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656014",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656022",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656027",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656032",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656042",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656049",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656058",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656096",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656110",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656132",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656144",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "melbourne_pedestrian",
+   "id": "monash:4656626",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4656719",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:4659727",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:5121965",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:5122114",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:5122535",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "monash:5184708",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "personal-data handling not reviewed"
+    ],
+    "status": "scientifically_eligible"
+   },
+   "group": "stackexchange",
+   "id": "stackexchange:3dprinting",
+   "status": "structurally_valid",
+   "stratum": "C5"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "personal-data handling not reviewed"
+    ],
+    "status": "scientifically_eligible"
+   },
+   "group": "stackexchange",
+   "id": "stackexchange:astronomy",
+   "status": "structurally_valid",
+   "stratum": "C5"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "personal-data handling not reviewed"
+    ],
+    "status": "scientifically_eligible"
+   },
+   "group": "stackexchange",
+   "id": "stackexchange:beer",
+   "status": "structurally_valid",
+   "stratum": "C5"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "personal-data handling not reviewed"
+    ],
+    "status": "scientifically_eligible"
+   },
+   "group": "stackexchange",
+   "id": "stackexchange:coffee",
+   "status": "structurally_valid",
+   "stratum": "C5"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "personal-data handling not reviewed"
+    ],
+    "status": "scientifically_eligible"
+   },
+   "group": "stackexchange",
+   "id": "stackexchange:earthscience",
+   "status": "structurally_valid",
+   "stratum": "C5"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "personal-data handling not reviewed"
+    ],
+    "status": "scientifically_eligible"
+   },
+   "group": "stackexchange",
+   "id": "stackexchange:economics",
+   "status": "structurally_valid",
+   "stratum": "C5"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "personal-data handling not reviewed"
+    ],
+    "status": "scientifically_eligible"
+   },
+   "group": "stackexchange",
+   "id": "stackexchange:fitness",
+   "status": "structurally_valid",
+   "stratum": "C5"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "personal-data handling not reviewed"
+    ],
+    "status": "scientifically_eligible"
+   },
+   "group": "stackexchange",
+   "id": "stackexchange:gardening",
+   "status": "structurally_valid",
+   "stratum": "C5"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "personal-data handling not reviewed"
+    ],
+    "status": "scientifically_eligible"
+   },
+   "group": "stackexchange",
+   "id": "stackexchange:ham",
+   "status": "structurally_valid",
+   "stratum": "C5"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "personal-data handling not reviewed"
+    ],
+    "status": "scientifically_eligible"
+   },
+   "group": "stackexchange",
+   "id": "stackexchange:health",
+   "status": "structurally_valid",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "openfda_faers",
+   "id": "openfda_drug_event",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "openfda_drug_label",
+   "status": "discovered",
+   "stratum": "C6"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "openfda_food_enforcement",
+   "status": "discovered",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "openalex",
+   "id": "openalex:relational",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "openalex",
+   "id": "openalex:nested",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "personal-data handling not reviewed"
+    ],
+    "status": "scientifically_eligible"
+   },
+   "group": "openfoodfacts",
+   "id": "openfoodfacts_products",
+   "status": "structurally_valid",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:Android",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:Apache",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:BGL",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:HDFS",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:HPC",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:Hadoop",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:HealthApp",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:Linux",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:Mac",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:OpenSSH",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:OpenStack",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:Proxifier",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:Spark",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:Thunderbird",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:Windows",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "loghub_collection",
+   "id": "loghub:Zookeeper",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  }
+ ],
+ "ready_groups": {
+  "C3": [
+   "melbourne_pedestrian"
+  ],
+  "C4": [
+   "loghub_collection"
+  ],
+  "C5": [
+   "openalex"
+  ],
+  "C6": [
+   "openalex",
+   "openfda_faers"
+  ]
+ },
+ "summary": {
+  "C3": {
+   "acquired": 2,
+   "discovered": 21,
+   "experiment_ready": 1,
+   "protocol_ready": 1,
+   "rights_verified": 2,
+   "scientifically_eligible": 1,
+   "structurally_valid": 2
+  },
+  "C4": {
+   "acquired": 16,
+   "discovered": 16,
+   "experiment_ready": 16,
+   "protocol_ready": 16,
+   "rights_verified": 16,
+   "scientifically_eligible": 16,
+   "structurally_valid": 16
+  },
+  "C5": {
+   "acquired": 11,
+   "discovered": 11,
+   "experiment_ready": 1,
+   "protocol_ready": 1,
+   "rights_verified": 11,
+   "scientifically_eligible": 1,
+   "structurally_valid": 11
+  },
+  "C6": {
+   "acquired": 3,
+   "discovered": 5,
+   "experiment_ready": 2,
+   "protocol_ready": 2,
+   "rights_verified": 3,
+   "scientifically_eligible": 2,
+   "structurally_valid": 3
+  }
+ }
+}
