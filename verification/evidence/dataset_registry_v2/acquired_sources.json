@@ -5,7 +5,7 @@
    "eligible": true,
    "family": "monash:sunspot",
    "id": "monash:4654773",
-   "licence_class": "open",
+   "licence_class": "research_only",
    "protocols": "controlled injection only (no natural anomaly labels); chronological order available",
    "publisher": "monash_compilation",
    "reason": "daily sunspot numbers 1818-2020 (SILSO); natural series, observation times from the start stamp",
@@ -18,7 +18,9 @@
     "structural_validation": true
    },
    "stratum": "C3",
-   "system": "monash:sunspot"
+   "system": "monash:sunspot",
+   "upstream_licence": "CC BY-NC 4.0 (WDC-SILSO data policy, sidc.be/SILSO/datafiles), credit to WDC-SILSO required; the compiler's CC BY label does not lift the non-commercial term",
+   "upstream_status": "verified"
   },
   {
    "eligible": true,
@@ -37,7 +39,8 @@
     "structural_validation": true
    },
    "stratum": "C3",
-   "system": "monash:fred_md"
+   "system": "monash:fred_md",
+   "upstream_status": "not_verified"
   },
   {
    "eligible": true,
@@ -56,7 +59,8 @@
     "structural_validation": true
    },
    "stratum": "C3",
-   "system": "monash:covid_deaths"
+   "system": "monash:covid_deaths",
+   "upstream_status": "not_verified"
   },
   {
    "eligible": true,
@@ -75,7 +79,8 @@
     "structural_validation": true
    },
    "stratum": "C3",
-   "system": "monash:hospital"
+   "system": "monash:hospital",
+   "upstream_status": "not_verified"
   },
   {
    "eligible": true,
@@ -94,7 +99,8 @@
     "structural_validation": true
    },
    "stratum": "C3",
-   "system": "monash:car_parts"
+   "system": "monash:car_parts",
+   "upstream_status": "not_verified"
   },
   {
    "eligible": true,
@@ -113,7 +119,8 @@
     "structural_validation": true
    },
    "stratum": "C3",
-   "system": "monash:energy_4s"
+   "system": "monash:energy_4s",
+   "upstream_status": "not_verified"
   },
   {
    "eligible": false,
@@ -132,7 +139,8 @@
     "structural_validation": false
    },
    "stratum": "C3",
-   "system": "monash:energy_4s"
+   "system": "monash:energy_4s",
+   "upstream_status": "not_verified"
   },
   {
    "eligible": false,
@@ -151,7 +159,8 @@
     "structural_validation": false
    },
    "stratum": "C3",
-   "system": "monash:cif2016"
+   "system": "monash:cif2016",
+   "upstream_status": "not_verified"
   },
   {
    "eligible": true,
@@ -170,7 +179,8 @@
     "structural_validation": true
    },
    "stratum": "C3",
-   "system": "monash:us_births"
+   "system": "monash:us_births",
+   "upstream_status": "not_verified"
   },
   {
    "eligible": true,
@@ -189,7 +199,8 @@
     "structural_validation": true
    },
    "stratum": "C3",
-   "system": "monash:saugeen"
+   "system": "monash:saugeen",
+   "upstream_status": "not_verified"
   },
   {
    "eligible": true,
@@ -208,7 +219,8 @@
     "structural_validation": true
    },
    "stratum": "C3",
-   "system": "monash:tourism"
+   "system": "monash:tourism",
+   "upstream_status": "not_verified"
   },
   {
    "eligible": true,
@@ -227,7 +239,8 @@
     "structural_validation": true
    },
    "stratum": "C3",
-   "system": "monash:nn5"
+   "system": "monash:nn5",
+   "upstream_status": "not_verified"
   },
   {
    "eligible": true,
@@ -246,7 +259,8 @@
     "structural_validation": true
    },
    "stratum": "C3",
-   "system": "monash:traffic_sf"
+   "system": "monash:traffic_sf",
+   "upstream_status": "not_verified"
   },
   {
    "eligible": false,
@@ -265,7 +279,8 @@
     "structural_validation": false
    },
    "stratum": "C3",
-   "system": "monash:solar_nrel"
+   "system": "monash:solar_nrel",
+   "upstream_status": "not_verified"
   },
   {
    "eligible": true,
@@ -284,9 +299,13 @@
     "structural_validation": true
    },
    "stratum": "C3",
-   "system": "monash:pedestrian"
+   "system": "monash:pedestrian",
+   "upstream_licence": "CC BY (City of Melbourne open data catalogue metadata); the Monash series is a 2020 extract",
+   "upstream_status": "verified"
   },
   {
+   "conservative_group": "air_quality_beijing",
+   "dependency_note": "KDD Cup 2018 air quality (Beijing and London stations); UCI 381 Beijing PM2.5 is the same city and pollutant from another producer (US Embassy vs municipal network); grouped conservatively in clustered analyses",
    "eligible": true,
    "family": "monash:kdd2018",
    "id": "monash:4656719",
@@ -303,7 +322,8 @@
     "structural_validation": true
    },
    "stratum": "C3",
-   "system": "monash:kdd2018"
+   "system": "monash:kdd2018",
+   "upstream_status": "not_verified"
   },
   {
    "eligible": true,
@@ -322,16 +342,18 @@
     "structural_validation": true
    },
    "stratum": "C3",
-   "system": "monash:aus_electricity"
+   "system": "monash:aus_electricity",
+   "upstream_status": "not_verified"
   },
   {
-   "eligible": true,
+   "eligible": false,
    "family": "monash:bitcoin",
    "id": "monash:5121965",
    "licence_class": "open",
+   "licence_class_upstream": "unclear",
    "protocols": "controlled injection only (no natural anomaly labels); chronological order available",
    "publisher": "monash_compilation",
-   "reason": "18 daily series of bitcoin-price influencers, 10% missing; observed",
+   "reason": "18 daily series of bitcoin-price influencers, 10% missing; observed; REJECTED for now: scraped from bitinfocharts.com web graphs, terms not read",
    "stages": {
     "collection_implemented": true,
     "data_acquired": true,
@@ -341,7 +363,8 @@
     "structural_validation": true
    },
    "stratum": "C3",
-   "system": "monash:bitcoin"
+   "system": "monash:bitcoin",
+   "upstream_status": "not_verified"
   },
   {
    "eligible": true,
@@ -360,16 +383,18 @@
     "structural_validation": true
    },
    "stratum": "C3",
-   "system": "monash:rideshare"
+   "system": "monash:rideshare",
+   "upstream_status": "not_verified"
   },
   {
-   "eligible": true,
+   "eligible": false,
    "family": "monash:vehicle_trips",
    "id": "monash:5122535",
    "licence_class": "open",
+   "licence_class_upstream": "unclear",
    "protocols": "controlled injection only (no natural anomaly labels); chronological order available",
    "publisher": "monash_compilation",
-   "reason": "329 daily vehicle-trip series, 17% missing; observed",
+   "reason": "329 daily vehicle-trip series, 17% missing; observed; REJECTED for now: upstream rights unclear (FiveThirtyEight uber-tlc-foil-response repository has no licence file)",
    "stages": {
     "collection_implemented": true,
     "data_acquired": true,
@@ -379,7 +404,8 @@
     "structural_validation": true
    },
    "stratum": "C3",
-   "system": "monash:vehicle_trips"
+   "system": "monash:vehicle_trips",
+   "upstream_status": "not_verified"
   },
   {
    "eligible": true,
@@ -398,7 +424,8 @@
     "structural_validation": true
    },
    "stratum": "C3",
-   "system": "monash:oikolab_weather"
+   "system": "monash:oikolab_weather",
+   "upstream_status": "not_verified"
   },
   {
    "eligible": true,
@@ -705,5 +732,5 @@
    "system": "openfoodfacts"
   }
  ],
- "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run"
+ "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"
 }
