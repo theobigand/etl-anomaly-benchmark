@@ -17,7 +17,9 @@
    "cases_kept": 13087,
    "cases_read": 13087,
    "modulo": 1,
+   "selection": "complete traces in log order, then one case in 1 by case-name hash; a prefix of the log is not a random sample",
    "source_fragment": false,
+   "stop": "log_closed",
    "stream_complete": true
   },
   "source_snapshot": "4tu_bpic12/2026-11-21"
@@ -40,10 +42,43 @@
    "cases_kept": 7554,
    "cases_read": 7554,
    "modulo": 1,
+   "selection": "complete traces in log order, then one case in 1 by case-name hash; a prefix of the log is not a random sample",
    "source_fragment": false,
+   "stop": "log_closed",
    "stream_complete": true
   },
   "source_snapshot": "4tu_bpic13_incidents/2026-11-21"
+ },
+ "4tu_bpic14": {
+  "dropped": [
+   "all columns except case, activity, time, sequence and resource"
+  ],
+  "files": {
+   "events.csv": {
+    "rows": 466737,
+    "sha256": "62a08d91fe1c2cb51bbef3c68893a2460ab61623067f4a9f27d4d3ac7ea9a366"
+   }
+  },
+  "pseudonymised": [
+   "resource"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "cases": 46616,
+   "cases_kept": 46616,
+   "mapping": {
+    "activity": "IncidentActivity_Type",
+    "case": "Incident ID",
+    "order": "IncidentActivity_Number",
+    "resource": "Assignment Group",
+    "time": "DateStamp"
+   },
+   "modulo": 1,
+   "rows": 466737,
+   "rows_without_activity": 0,
+   "rows_without_time": 0
+  },
+  "source_snapshot": "4tu_bpic14/2026-11-21"
  },
  "4tu_bpic15_m5": {
   "dropped": [
@@ -63,10 +98,37 @@
    "cases_kept": 1156,
    "cases_read": 1156,
    "modulo": 1,
+   "selection": "complete traces in log order, then one case in 1 by case-name hash; a prefix of the log is not a random sample",
    "source_fragment": false,
+   "stop": "log_closed",
    "stream_complete": true
   },
   "source_snapshot": "4tu_bpic15_m5/2026-11-21"
+ },
+ "4tu_bpic18": {
+  "dropped": [
+   "all trace and event attributes except activity, time, transition, resource and listed numbers"
+  ],
+  "files": {
+   "events.csv": {
+    "rows": 487270,
+    "sha256": "325dc34116b870b53048048c48d3d0b14ff62c357c7b246ab90712fb700f1e29"
+   }
+  },
+  "pseudonymised": [
+   "resource"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "cases_kept": 8000,
+   "cases_read": 8000,
+   "modulo": 1,
+   "selection": "complete traces in log order, then one case in 1 by case-name hash; a prefix of the log is not a random sample",
+   "source_fragment": true,
+   "stop": "trace_limit",
+   "stream_complete": false
+  },
+  "source_snapshot": "4tu_bpic18/2026-11-21"
  },
  "4tu_bpic19": {
   "dropped": [
@@ -86,7 +148,9 @@
    "cases_kept": 19484,
    "cases_read": 19484,
    "modulo": 1,
+   "selection": "complete traces in log order, then one case in 1 by case-name hash; a prefix of the log is not a random sample",
    "source_fragment": true,
+   "stop": "input_ended_before_log_closed",
    "stream_complete": false
   },
   "source_snapshot": "4tu_bpic19/2026-11-21"
@@ -109,7 +173,9 @@
    "cases_kept": 10500,
    "cases_read": 10500,
    "modulo": 1,
+   "selection": "complete traces in log order, then one case in 1 by case-name hash; a prefix of the log is not a random sample",
    "source_fragment": false,
+   "stop": "log_closed",
    "stream_complete": true
   },
   "source_snapshot": "4tu_bpic20_domestic/2026-11-21"
@@ -132,7 +198,9 @@
    "cases_kept": 6449,
    "cases_read": 6449,
    "modulo": 1,
+   "selection": "complete traces in log order, then one case in 1 by case-name hash; a prefix of the log is not a random sample",
    "source_fragment": false,
+   "stop": "log_closed",
    "stream_complete": true
   },
   "source_snapshot": "4tu_bpic20_international/2026-11-21"
@@ -155,7 +223,9 @@
    "cases_kept": 150370,
    "cases_read": 150370,
    "modulo": 1,
+   "selection": "complete traces in log order, then one case in 1 by case-name hash; a prefix of the log is not a random sample",
    "source_fragment": false,
+   "stop": "log_closed",
    "stream_complete": true
   },
   "source_snapshot": "4tu_road_fines/2026-11-21"
@@ -178,7 +248,9 @@
    "cases_kept": 1050,
    "cases_read": 1050,
    "modulo": 1,
+   "selection": "complete traces in log order, then one case in 1 by case-name hash; a prefix of the log is not a random sample",
    "source_fragment": false,
+   "stop": "log_closed",
    "stream_complete": true
   },
   "source_snapshot": "4tu_sepsis/2026-11-21"

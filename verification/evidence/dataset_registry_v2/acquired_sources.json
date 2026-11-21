@@ -1810,6 +1810,66 @@
    "stratum": "C5",
    "system": "movielens",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "4tu_bpic14",
+   "id": "4tu_bpic14",
+   "licence_class": "open",
+   "protocols": "P-SEQ on case event sequences; natural rework is a baseline",
+   "publisher": "rabobank_ict",
+   "reason": "BPI Challenge 2014: Rabobank Group ICT incident activity log (CSV, one row per event): 466737 events in 46616 cases; resources salted",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "4TU terms (CC0)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "rabobank_ict",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "4tu_bpic18",
+   "id": "4tu_bpic18",
+   "licence_class": "open",
+   "protocols": "P-SEQ on case event sequences; natural rework is a baseline",
+   "publisher": "german_paying_agency",
+   "reason": "BPI Challenge 2018: EU direct-payment applications of a German paying agency; the first 8000 complete cases of an 80 MiB gzip prefix: 487270 events in 8000 cases; resources salted",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC0 on the 4TU record",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "german_paying_agency",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "4tu_bpic18",
+   "id": "4tu_bpic18:transactions",
+   "licence_class": "open",
+   "protocols": "P-TAB on event rows with payment amounts",
+   "publisher": "german_paying_agency",
+   "reason": "direct payments to farmers: every event carries the case's applied and actual payment amounts (payment_actual0, amount_applied0); a payment application is a business obligation settled in money; same provenance group as the C4 entry",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC0 on the 4TU record",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "german_paying_agency",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

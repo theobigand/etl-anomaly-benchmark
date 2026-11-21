@@ -535,6 +535,10 @@
     "research/parquet_reader.py": {
       "level": "L3",
       "reason": "Bounded Parquet reading decides which rows of large sources enter experimental views and records the sampling boundaries."
+    },
+    "research/xes_stream.py": {
+      "level": "L3",
+      "reason": "Complete-trace extraction, limits and prefix labelling of event logs decide which sequences enter the process-mining views."
     }
   }
 }

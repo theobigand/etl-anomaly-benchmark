@@ -924,12 +924,12 @@
    "licence": "CC0 on the record",
    "name": "BPI Challenge 2018 (EU agricultural subsidies)",
    "next_step": "gzip prefix decoding to bytes then XES parse (needs a gunzip-prefix-to-bytes helper)",
-   "notes": "",
+   "notes": "processed with the streaming XES reader / CSV event adapter",
    "publisher": "4TU.ResearchData",
    "reason": "158 MB gzip XES; direct payments of the Common Agricultural Policy",
    "size": null,
    "source_url": "https://data.4tu.nl/articles/_/12688355",
-   "status": "needs_bounded_extraction"
+   "status": "experiment_ready"
   },
   {
    "categories": [
@@ -939,12 +939,12 @@
    "licence": "4TU terms (CC0)",
    "name": "BPI Challenge 2014 (Rabobank ICT incidents)",
    "next_step": "CSV event-log reader",
-   "notes": "",
+   "notes": "processed with the streaming XES reader / CSV event adapter",
    "publisher": "4TU.ResearchData",
    "reason": "CSV activity log of 39 MB",
    "size": null,
    "source_url": "https://data.4tu.nl/articles/_/12706424",
-   "status": "accessible_eligible"
+   "status": "experiment_ready"
   },
   {
    "categories": [
@@ -960,6 +960,67 @@
    "size": null,
    "source_url": "https://grouplens.org/datasets/movielens/",
    "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "4tu:bpic16",
+   "licence": "4TU terms (CC0)",
+   "name": "BPI Challenge 2016 (UWV complaints, clicks, questions, messages)",
+   "next_step": "none unless a click log is shown to be non-identifying",
+   "notes": "same producer UWV for all five files",
+   "publisher": "4TU.ResearchData",
+   "reason": "complaints file has one row per complaint with customer attributes (an aggregate, not events); the click logs relate to identifiable web sessions",
+   "size": null,
+   "source_url": "https://data.4tu.nl/articles/_/12717647",
+   "status": "structurally_unsuitable"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "4tu:bpic17",
+   "licence": "4TU terms (CC0)",
+   "name": "BPI Challenge 2017 (loan applications and offers)",
+   "next_step": "none",
+   "notes": "",
+   "publisher": "4TU.ResearchData",
+   "reason": "same financial institution and application process as BPIC 2012, one provenance group",
+   "size": null,
+   "source_url": "https://data.4tu.nl/articles/_/12696884",
+   "status": "redundant"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "4tu:bpic11",
+   "licence": "4TU terms (CC0)",
+   "name": "BPI Challenge 2011 (hospital)",
+   "next_step": "locate the 4TU id and acquire with the streaming reader",
+   "notes": "",
+   "publisher": "4TU.ResearchData",
+   "reason": "real hospital gynecology pathway log",
+   "size": null,
+   "source_url": "https://data.4tu.nl/",
+   "status": "accessible_eligible"
+  },
+  {
+   "categories": [
+    "C4",
+    "C2b"
+   ],
+   "id": "4tu:hospital-billing",
+   "licence": "4TU terms (CC0)",
+   "name": "Hospital Billing event log",
+   "next_step": "locate the 4TU id and acquire",
+   "notes": "",
+   "publisher": "4TU.ResearchData",
+   "reason": "real billing process of a hospital",
+   "size": null,
+   "source_url": "https://data.4tu.nl/",
+   "status": "accessible_eligible"
   }
  ],
  "date": "2026-11-21",

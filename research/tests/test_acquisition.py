@@ -772,3 +772,221 @@ def test_zip_prefixes_refuse_non_zip_stored_and_encrypted_members(tmp_path):
         aq.zip_prefix_lines(bytes(deflated), max_output=100)
     with pytest.raises(aq.AcquisitionError, match="not a zip"):
         aq.zip_prefix_lines(b"PK\x03\x04short", max_output=10)
+
+
+# --- exact behaviour of the range opener, boundaries and manifest of range fetches ---------------
+
+
+def test_range_boundaries_accept_the_largest_allowed_fragment_and_a_single_byte(tmp_path):
+    def snap(opener):
+        return aq.Snapshot(tmp_path, RANGE_SPEC, "b", range_opener=opener, sleep=lambda s: None)
+
+    one = snap(lambda u, s, n: _partial(s, b"z", 10)).fetch_range(
+        "https://example.org/f", "one", start=3, length=1, observed=None
+    )
+    assert one["bytes"] == 1 and one["range"] == [3, 3]
+    exact = snap(lambda u, s, n: _partial(s, b"y" * 50, 99)).fetch_range(
+        "https://example.org/f", "exact", start=0, length=50, observed=None
+    )
+    assert exact["bytes"] == 50  # a fragment of exactly max_bytes is allowed
+
+
+def test_a_range_fetch_writes_the_manifest_in_the_canonical_format_with_a_utc_timestamp(tmp_path):
+    from datetime import datetime
+
+    snap = aq.Snapshot(
+        tmp_path, RANGE_SPEC, "m", range_opener=lambda u, s, n: _partial(s, b"abc", 7),
+        sleep=lambda s: None,
+    )  # fmt: skip
+    entry = snap.fetch_range("https://example.org/f", "a", start=0, length=3, observed="2020")
+    text = (tmp_path / "demo" / "m" / "manifest.json").read_text()
+    manifest = json.loads(text)
+    assert text == json.dumps(manifest, indent=1, sort_keys=True) + "\n"
+    stamp = datetime.fromisoformat(entry["collected"])
+    assert stamp.utcoffset().total_seconds() == 0 and stamp.microsecond == 0
+    assert sorted(entry) == sorted(
+        [
+            "bytes",
+            "collected",
+            "name",
+            "observed",
+            "partial",
+            "range",
+            "sha256",
+            "total_bytes",
+            "url",
+        ]
+    )
+
+
+def test_a_failed_range_request_reports_the_last_error_in_the_message(tmp_path):
+    errors = [OSError("first"), OSError("second")]
+
+    def failing(url, start, length):
+        raise errors.pop(0)
+
+    snap = aq.Snapshot(
+        tmp_path, {**RANGE_SPEC, "retries": 1}, "r", range_opener=failing, sleep=lambda s: None
+    )
+    with pytest.raises(aq.AcquisitionError) as error:
+        snap.fetch_range("https://example.org/f", "f", start=0, length=5, observed=None)
+    assert str(error.value) == "https://example.org/f: failed after 2 attempts (OSError('second'))"
+
+
+def test_the_range_request_object_carries_the_url_agent_and_range(monkeypatch):
+    seen = {}
+
+    class Response:
+        status = 206
+        headers = {"Content-Range": "bytes 0-1/9"}
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc):
+            return False
+
+        def read(self, n):
+            return b"ab"
+
+    def fake(request, timeout):
+        seen["url"] = request.full_url
+        seen["headers"] = dict(request.header_items())
+        return Response()
+
+    monkeypatch.setattr(aq.urllib.request, "urlopen", fake)
+    aq.open_range("https://example.org/path?x=1", 0, 2)
+    assert seen["url"] == "https://example.org/path?x=1"
+    assert seen["headers"] == {"User-agent": aq.USER_AGENT, "Range": "bytes=0-1"}
+
+
+# --- zip listing, extraction limits and prefix parsing: exact values and messages ----------------
+
+
+def test_zip_listing_returns_exactly_the_documented_fields(tmp_path):
+    path = _zip(tmp_path / "l.zip", {"d/": b"", "d/x.csv": b"a,b\n" * 100})
+    listing = aq.zip_members(path)
+    assert listing[1] == {
+        "name": "d/x.csv",
+        "bytes": 400,
+        "compressed": listing[1]["compressed"],
+        "directory": False,
+    }
+    assert listing[0]["directory"] is True and set(listing[0]) == {
+        "name",
+        "bytes",
+        "compressed",
+        "directory",
+    }
+    assert 0 < listing[1]["compressed"] < 400
+
+
+def test_zip_extraction_boundaries_messages_and_destination_creation(tmp_path):
+    path = _zip(tmp_path / "e.zip", {"d/x.bin": b"0" * 1000})
+    out = aq.extract_member(
+        path, "d/x.bin", tmp_path / "deep" / "new", max_bytes=1000, max_ratio=10**6
+    )
+    assert out["bytes"] == 1000 and out["path"].exists()  # a member of exactly max_bytes is allowed
+    ratio = 1000 / aq.zip_members(path)[0]["compressed"]
+    ok = aq.extract_member(path, "d/x.bin", tmp_path / "o2", max_bytes=1000, max_ratio=ratio)
+    assert ok["bytes"] == 1000  # a ratio equal to the limit is allowed
+    with pytest.raises(aq.AcquisitionError) as error:
+        aq.extract_member(path, "d/x.bin", tmp_path / "o3", max_bytes=999, max_ratio=10**6)
+    assert str(error.value) == f"{path}: member larger than 999 bytes"
+    (tmp_path / "bad.zip").write_bytes(b"not a zip at all")
+    with pytest.raises(aq.AcquisitionError) as error:
+        aq.extract_member(tmp_path / "bad.zip", "x", tmp_path / "o4", max_bytes=10, max_ratio=10)
+    assert str(error.value).startswith(f"{tmp_path / 'bad.zip'}: not a readable zip archive (")
+
+
+def test_zip_extraction_of_a_member_with_a_lying_header_fails_cleanly_and_leaves_no_file(
+    tmp_path, monkeypatch
+):
+    import zipfile
+
+    path = _zip(tmp_path / "s.zip", {"x.bin": b"0" * (3 << 20)})
+    real = zipfile.ZipFile.getinfo
+
+    def understated(self, name):
+        info = real(self, name)
+        info.file_size = 10  # a lying header: the archive reader stops there and the checksum fails
+        return info
+
+    monkeypatch.setattr(zipfile.ZipFile, "getinfo", understated)
+    with pytest.raises(aq.AcquisitionError, match="not a readable zip archive"):
+        aq.extract_member(path, "x.bin", tmp_path / "o", max_bytes=2_000_000, max_ratio=10**9)
+    assert not (tmp_path / "o" / "x.bin").exists()  # nothing is left behind
+
+
+def test_the_prefix_reader_keeps_the_exact_limit_and_decodes_invalid_bytes_with_replacement():
+    import gzip
+
+    text = b"abc\n" * 10
+    blob = gzip.compress(text)
+    exact = aq.gzip_prefix_lines(blob, max_output=len(text))
+    assert exact["complete"] is True and len(exact["lines"]) == 10 and exact["output_bytes"] == 40
+    one_less = aq.gzip_prefix_lines(blob, max_output=len(text) - 1)
+    assert one_less["complete"] is False and one_less["output_bytes"] == len(text) - 1
+    assert len(one_less["lines"]) == 9  # the line cut by the limit is dropped
+    broken = aq.gzip_prefix_lines(gzip.compress(b"ok\xff\xfe\n"), max_output=100)
+    assert broken["lines"] == ["ok��"]
+    with pytest.raises(aq.AcquisitionError) as error:
+        aq.gzip_prefix_lines(b"not gzip, long enough to be read as a stream", max_output=10)
+    assert str(error.value).startswith("not a readable gzip stream (")
+    # a raw zlib stream has no gzip header: only the gzip window setting accepts gzip input
+    import zlib
+
+    with pytest.raises(aq.AcquisitionError):
+        aq.gzip_prefix_lines(zlib.compress(b"abc\n"), max_output=100)
+
+
+def test_the_prefix_reader_stops_early_on_a_stream_larger_than_the_limit_without_reading_it_all():
+    import gzip
+
+    blob = gzip.compress(b"0123456789\n" * 200_000)  # about 2 MB decoded from a few KB
+    out = aq.gzip_prefix_lines(blob, max_output=1000)
+    assert out["complete"] is False and out["output_bytes"] == 1000 and len(out["lines"]) == 90
+
+
+def test_zip_prefix_header_checks_use_exact_thresholds_unsigned_fields_and_messages(tmp_path):
+    import zipfile
+
+    blob = _single_member_zip(tmp_path, b"a\nb\n", zipfile.ZIP_DEFLATED)
+    with pytest.raises(aq.AcquisitionError) as error:
+        aq.zip_prefix_lines(b"PK\x03\x04" + b"\x00" * 26, max_output=10)  # 30 bytes: header only
+    assert "deflate" in str(error.value)  # a 30-byte header is long enough to be read
+    with pytest.raises(aq.AcquisitionError) as error:
+        aq.zip_prefix_lines(b"x" * 100, max_output=10)
+    assert str(error.value) == "not a zip archive (no local file header at the start)"
+    enc = bytearray(blob)
+    enc[6] |= 1
+    with pytest.raises(aq.AcquisitionError) as error:
+        aq.zip_prefix_lines(bytes(enc), max_output=10)
+    assert str(error.value) == "the first member is encrypted"
+    stored = _single_member_zip(tmp_path, b"a\n", zipfile.ZIP_STORED)
+    with pytest.raises(aq.AcquisitionError) as error:
+        aq.zip_prefix_lines(stored, max_output=10)
+    assert str(error.value) == "the first member is not deflate-compressed"
+    high = bytearray(blob)
+    high[27] = 0x80  # name length above 32767: a signed read would go negative
+    high[26] = 0x00
+    assert aq.zip_prefix_lines(bytes(blob), max_output=100)["member"] == "data.jsonl"
+    skipped = aq.zip_prefix_lines(bytes(high), max_output=100)  # a name length read as unsigned
+    assert skipped["lines"] == [] and skipped["complete"] is False
+    named = aq.zip_prefix_lines(blob, max_output=100)
+    assert named["lines"] == ["a", "b"] and named["member"] == "data.jsonl"
+
+
+def test_zip_extraction_of_a_member_larger_than_one_read_chunk_sums_every_chunk(tmp_path):
+    payload = bytes(range(256)) * (10 * 1024)  # 2.5 MiB: three reads of at most one MiB
+    path = _zip(tmp_path / "big.zip", {"d/big.bin": payload})
+    out = aq.extract_member(
+        path, "d/big.bin", tmp_path / "o", max_bytes=len(payload), max_ratio=10**6
+    )
+    assert out["bytes"] == len(payload) and out["sha256"] == hashlib.sha256(payload).hexdigest()
+    assert out["path"].read_bytes() == payload
+    again = aq.extract_member(
+        path, "d/big.bin", tmp_path / "o", max_bytes=len(payload), max_ratio=10**6
+    )
+    assert again["sha256"] == out["sha256"]  # extracting into an existing folder is allowed
+    assert sorted(out) == ["bytes", "member", "path", "sha256"]

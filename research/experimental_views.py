@@ -1655,52 +1655,6 @@ def _build_clue(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
-def _local(tag: str) -> str:
-    return tag.rpartition("}")[2]
-
-
-def read_xes(stream: Any) -> tuple[list[dict[str, Any]], bool]:
-    """Complete traces of an XES log: each has its case name and events as attribute dicts.
-
-    Typed attributes (string, date, int, float, boolean) are read at event level; a file that is
-    cut off keeps every trace that closed before the cut. The flag says whether the log closed.
-    """
-    import xml.etree.ElementTree as ET  # noqa: S405 - local files from named publishers
-
-    tags = {"string", "date", "int", "float", "boolean", "id"}
-    converters = {"int": int, "float": float, "boolean": lambda v: v == "true"}
-    traces: list[dict[str, Any]] = []
-    case, events, closed, seen = None, [], False, False
-    try:
-        for kind, node in ET.iterparse(stream, events=("start", "end")):
-            seen = True
-            name = node.tag.rpartition("}")[2]  # logs with an xmlns declaration prefix every tag
-            if kind == "start":
-                if name == "trace":
-                    case, events = None, []
-                continue
-            if name == "event":
-                events.append(
-                    {
-                        c.get("key"): converters.get(_local(c.tag), str)(c.get("value"))
-                        for c in node
-                        if _local(c.tag) in tags
-                    }
-                )
-                node.clear()
-            elif name in tags and case is None and node.get("key") == "concept:name":
-                case = node.get("value")
-            elif name == "trace":
-                traces.append({"case": case, "events": events})
-                node.clear()
-            elif name == "log":
-                closed = True
-    except ET.ParseError as error:
-        if not seen:
-            raise ViewError(f"not XML ({error})") from error
-    return traces, closed
-
-
 def xes_view(traces: list[dict[str, Any]], modulo: int, numeric: list[str]) -> pd.DataFrame:
     """One row per event: case, position, UTC time, activity, transition, salted resource, numbers.
 
@@ -1721,7 +1675,7 @@ def xes_view(traces: list[dict[str, Any]], modulo: int, numeric: list[str]) -> p
                     "activity": e.get("concept:name"),
                     "transition": e.get("lifecycle:transition"),
                     "resource": pseudonym(resource) if resource is not None else None,
-                    **{n: e.get(n) for n in numeric},
+                    **{n: e[n] if n in e else trace.get("attributes", {}).get(n) for n in numeric},
                 }
             )
     columns = ["case_id", "position", "time", "activity", "transition", "resource", *numeric]
@@ -1741,19 +1695,33 @@ XES_SPECS: dict[str, dict[str, Any]] = {
     "4tu_bpic20_domestic": {"file": "DomesticDeclarations.xes.gz", "modulo": 1, "numeric": [], "partial": False},  # noqa: E501
     "4tu_bpic20_international": {"file": "InternationalDeclarations.xes.gz", "modulo": 1, "numeric": [], "partial": False},  # noqa: E501
     "4tu_sepsis": {"file": "Sepsis_Cases_-_Event_Log.xes.gz", "modulo": 1, "numeric": [], "partial": False},  # noqa: E501
+    "4tu_bpic18": {
+        "file": "BPI_Challenge_2018_head.xes.gz",
+        "modulo": 1,
+        "numeric": ["payment_actual0", "amount_applied0"],
+        "partial": True,
+        "max_traces": 8000,
+    },
     "4tu_bpic19": {"file": "BPI_Challenge_2019_head.xes", "modulo": 1, "numeric": ["Cumulative net worth (EUR)"], "partial": True},  # noqa: E501
 }  # fmt: skip
 
 
 def _build_xes(root: Path, out: Path, manifest: dict[str, Any]) -> None:
-    import gzip
+    import sys
+
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import xes_stream
 
     for source, spec in XES_SPECS.items():
         path = root / source / SNAPSHOT / "raw" / spec["file"]
-        opener = gzip.open if path.suffix == ".gz" else open
-        with opener(path, "rb") as stream:
-            traces, closed = read_xes(stream)
-        view = xes_view(traces, spec["modulo"], spec["numeric"])
+        with path.open("rb") as stream:
+            read = xes_stream.read_traces(
+                stream,
+                compressed=path.suffix == ".gz",
+                modulo=spec["modulo"],
+                max_traces=spec.get("max_traces"),
+            )
+        view = xes_view(read.traces, 1, spec["numeric"])
         folder = out / source
         folder.mkdir(parents=True, exist_ok=True)
         target = folder / "events.csv"
@@ -1763,15 +1731,104 @@ def _build_xes(root: Path, out: Path, manifest: dict[str, Any]) -> None:
             source,
             {"events.csv": (target, len(view))},
             dropped=[
-                "all trace and event attributes except activity, time, transition, resource and listed numbers"  # noqa: E501
+                "all trace and event attributes except activity, time, transition, resource "
+                "and listed numbers"
             ],
             pseudonymised=["resource"],
             sampling={
-                "cases_read": len(traces),
+                "cases_read": read.status["traces_seen"],
                 "cases_kept": int(view["case_id"].nunique()),
                 "modulo": spec["modulo"],
-                "stream_complete": closed,
+                "stream_complete": read.status["stream_complete"],
+                "stop": read.status["stop"],
                 "source_fragment": spec["partial"],
+                "selection": "complete traces in log order, then one case in "
+                f"{spec['modulo']} by case-name hash; a prefix of the log is not a random sample",
+            },
+            salt_label=SALT,
+            source_snapshot=f"{source}/{SNAPSHOT}",
+        )
+
+
+def csv_event_view(
+    frame: pd.DataFrame, spec: dict[str, Any]
+) -> tuple[pd.DataFrame, dict[str, Any]]:
+    """Events from a table where one row is one event, with a declared schema mapping.
+
+    ``spec`` names the case, activity, time (with its exact format), tie-break sequence and
+    resource columns. Rows without an activity or with an unreadable time are dropped and counted,
+    never guessed; within a case events are ordered by time, then by the source's own sequence
+    column. Cases are kept by case-name hash (``modulo``).
+    """
+    for key in ("case", "activity", "time", "order", "resource"):
+        if spec[key] not in frame.columns:
+            raise ViewError(f"column {spec[key]!r} not found")
+    stamps = pd.to_datetime(frame[spec["time"]], format=spec["format"], errors="coerce", utc=True)
+    usable = frame[spec["activity"]].notna() & stamps.notna()
+    table = pd.DataFrame(
+        {
+            "case_id": frame[spec["case"]].astype(str),
+            "time": stamps,
+            "activity": frame[spec["activity"]],
+            "transition": None,
+            "resource": frame[spec["resource"]].map(
+                lambda v: pseudonym(str(v)) if pd.notna(v) else None
+            ),
+            "_order": frame[spec["order"]].astype(str),
+        }
+    )[usable]
+    keep = table["case_id"].map(
+        lambda c: int(hashlib.sha256(c.encode()).hexdigest(), 16) % spec["modulo"] == 0
+    )
+    table = table[keep].sort_values(["case_id", "time", "_order"], kind="stable")
+    table["position"] = table.groupby("case_id").cumcount()
+    view = table[["case_id", "position", "time", "activity", "transition", "resource"]]
+    info = {
+        "rows": len(frame),
+        "rows_without_activity": int(frame[spec["activity"]].isna().sum()),
+        "rows_without_time": int((stamps.isna() & frame[spec["activity"]].notna()).sum()),
+        "cases": int(frame[spec["case"]].nunique()),
+        "cases_kept": int(view["case_id"].nunique()),
+    }
+    return view.reset_index(drop=True), info
+
+
+#: event logs published as one CSV row per event: the file and the explicit column mapping
+CSV_EVENT_SPECS: dict[str, dict[str, Any]] = {
+    "4tu_bpic14": {
+        "file": "Detail_Incident_Activity.csv",
+        "sep": ";",
+        "case": "Incident ID",
+        "activity": "IncidentActivity_Type",
+        "time": "DateStamp",
+        "format": "%d-%m-%Y %H:%M:%S",
+        "order": "IncidentActivity_Number",
+        "resource": "Assignment Group",
+        "modulo": 1,
+    }
+}
+
+
+def _build_csv_events(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    for source, spec in CSV_EVENT_SPECS.items():
+        raw = pd.read_csv(
+            root / source / SNAPSHOT / "raw" / spec["file"], sep=spec["sep"], dtype=str
+        )
+        view, info = csv_event_view(raw, spec)
+        folder = out / source
+        folder.mkdir(parents=True, exist_ok=True)
+        target = folder / "events.csv"
+        view.to_csv(target, index=False)
+        _record(
+            manifest,
+            source,
+            {"events.csv": (target, len(view))},
+            dropped=["all columns except case, activity, time, sequence and resource"],
+            pseudonymised=["resource"],
+            sampling={
+                **info,
+                "modulo": spec["modulo"],
+                "mapping": {k: spec[k] for k in ("case", "activity", "time", "order", "resource")},
             },
             salt_label=SALT,
             source_snapshot=f"{source}/{SNAPSHOT}",
@@ -1872,6 +1929,7 @@ BUILD_STEPS = (
     _build_aegis,
     _build_clue,
     _build_xes,
+    _build_csv_events,
     _build_series,
     _build_ukspend,
 )

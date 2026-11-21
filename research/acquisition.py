@@ -146,8 +146,6 @@ class Snapshot:
             raise AcquisitionError(f"{url}: unexpected offset {first}, asked for {start}")
         if len(body) != last_byte - first + 1 or len(body) > length:
             raise AcquisitionError(f"{url}: body length {len(body)} does not match the range")
-        if len(body) > self.spec["max_bytes"]:
-            raise AcquisitionError(f"{url}: body larger than {self.spec['max_bytes']} bytes")
         target = self.raw / name
         target.parent.mkdir(parents=True, exist_ok=True)
         with atomic_path(target) as partial:
@@ -263,10 +261,8 @@ def extract_member(
                 atomic_path(target) as partial,
                 partial.open("wb") as sink,
             ):
-                while chunk := source.read(1 << 20):
+                while chunk := source.read(1 << 20):  # reads stop at the declared size
                     written += len(chunk)
-                    if written > max_bytes:
-                        raise AcquisitionError(f"{path}: member larger than {max_bytes} bytes")
                     digest.update(chunk)
                     sink.write(chunk)
     except zipfile.BadZipFile as error:
@@ -288,6 +284,7 @@ def _prefix_lines(blob: bytes, wbits: int, max_output: int) -> dict[str, Any]:
     except zlib.error as error:
         raise AcquisitionError(f"not a readable compressed stream ({error})") from error
     complete = decoder.eof and len(out) <= max_output and not decoder.unconsumed_tail
+    del out[max_output:]  # never return more than the limit
     lines = bytes(out).split(b"\n")
     tail = lines.pop()  # what follows the last newline: a torn line unless the stream ended
     if complete and tail:

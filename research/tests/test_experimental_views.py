@@ -995,6 +995,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     with _zc.ZipFile(cl / "clue_head.zip", "w", _zc.ZIP_DEFLATED) as _c:
         _c.writestr("clue.json", _clue(1) + "\n")
     monkeypatch.setattr(ev, "XES_SPECS", {})
+    monkeypatch.setattr(ev, "CSV_EVENT_SPECS", {})
     out = tmp_path / "out"
     manifest = ev.build(root, out)
     assert list(manifest) == [
@@ -2578,30 +2579,13 @@ XES = """<?xml version="1.0" encoding="UTF-8"?>
 """
 
 
-def test_xes_traces_are_read_with_event_attributes_and_a_cut_file_keeps_complete_traces_only():
-    import io
-
-    traces, complete = ev.read_xes(io.BytesIO(XES.encode()))
-    assert complete is False  # the last trace and the log are not closed in this fixture
-    assert [t["case"] for t in traces] == ["c1", "c2"]
-    first = traces[0]["events"][0]
-    assert first == {"concept:name": "A", "time:timestamp": "2012-01-01T10:00:00.000+01:00", "lifecycle:transition": "START", "org:resource": "r1", "amount": 5.5}  # fmt: skip  # noqa: E501
-    assert traces[1]["events"][0]["amount"] == 7
-    whole, ok = ev.read_xes(
-        io.BytesIO(XES.replace("</event>\n</log>", "</event></trace></log>").encode())
-    )
-    assert ok is True and [t["case"] for t in whole] == ["c1", "c2", "c3"]
-    none, flag = ev.read_xes(io.BytesIO(b"<log><trace><string key='concept:name' value='x'/>"))
-    assert none == [] and flag is False
-    with pytest.raises(ev.ViewError, match="not XML"):
-        ev.read_xes(io.BytesIO(b"plain text, no tags at all"))
-
-
 def test_the_xes_view_flattens_events_orders_cases_by_hash_pseudonymises_resources_and_keeps_listed_numbers():  # noqa: E501
     import io
 
+    import xes_stream
+
     fixed = XES.replace("</event>\n</log>", "</event></trace></log>")
-    traces, _ = ev.read_xes(io.BytesIO(fixed.encode()))
+    traces = xes_stream.read_traces(io.BytesIO(fixed.encode())).traces
     out = ev.xes_view(traces, modulo=1, numeric=["amount"])
     assert list(out.columns) == [
         "case_id",
@@ -2646,7 +2630,7 @@ def test_the_xes_builder_reads_gz_and_plain_files_and_records_cut_and_sampling(
             "log.xes.gz",
             gzip.compress(XES.replace("</event>\n</log>", "</event></trace></log>").encode()),
         ),
-        ("4tu_b", "head.xes", XES.encode()),
+        ("4tu_b", "head.xes", XES[: XES.index('value="c3"')].encode()),
     ):
         folder = root / name / SNAP / "raw"
         folder.mkdir(parents=True)
@@ -2657,41 +2641,88 @@ def test_the_xes_builder_reads_gz_and_plain_files_and_records_cut_and_sampling(
     manifest = {}
     ev._build_xes(root, tmp_path / "o" / "deep", manifest)
     a, b = manifest["4tu_a"], manifest["4tu_b"]
-    assert a["files"]["events.csv"]["rows"] == 4 and a["sampling"] == {"cases_read": 3, "cases_kept": 3, "modulo": 1, "stream_complete": True, "source_fragment": False}  # fmt: skip  # noqa: E501
+    assert a["files"]["events.csv"]["rows"] == 4 and a["sampling"] == {"cases_read": 3, "cases_kept": 3, "modulo": 1, "stream_complete": True, "stop": "log_closed", "source_fragment": False, "selection": "complete traces in log order, then one case in 1 by case-name hash; a prefix of the log is not a random sample"}  # fmt: skip  # noqa: E501
     assert b["files"]["events.csv"]["rows"] == 3 and b["sampling"]["cases_read"] == 2
     assert b["sampling"]["stream_complete"] is False and b["sampling"]["source_fragment"] is True
+    assert b["sampling"]["stop"] == "input_ended_before_log_closed"
     assert a["pseudonymised"] == ["resource"] and a["dropped"] == ["all trace and event attributes except activity, time, transition, resource and listed numbers"]  # fmt: skip  # noqa: E501
 
 
-def test_xes_logs_with_a_namespace_declaration_are_read_like_plain_ones():
-    import io
+# --- CSV event logs with an explicit schema mapping (one row is one event) ------------------------
 
-    text = XES.replace("</event>\n</log>", "</event></trace></log>").replace(
-        '<log xes.version="1.0">', '<log xes.version="1.0" xmlns="http://www.xes-standard.org/">'
-    )
-    traces, closed = ev.read_xes(io.BytesIO(text.encode()))
-    assert closed is True and [t["case"] for t in traces] == ["c1", "c2", "c3"]
-    assert traces[0]["events"][0]["amount"] == 5.5 and traces[1]["events"][0]["amount"] == 7
+CSV_SPEC = {
+    "case": "Incident ID", "activity": "Type", "time": "Stamp", "format": "%d-%m-%Y %H:%M:%S",
+    "order": "Num", "resource": "Group", "modulo": 1, "sep": ";",
+}  # fmt: skip
 
 
-def test_table_sets_can_read_comma_separated_members_of_a_zip_archive(tmp_path, monkeypatch):
-    import zipfile
+def _csv_events():
+    return pd.DataFrame(
+        {
+            "Incident ID": ["I2", "I1", "I1", "I1", "I3"],
+            "Type": ["Open", "Closed", "Open", "Assign", None],
+            "Stamp": ["02-01-2013 10:00:00", "05-01-2013 09:00:00", "01-01-2013 08:00:00",
+                      "01-01-2013 08:00:00", "03-01-2013 10:00:00"],
+            "Num": ["002", "003", "001", "00A", "004"],
+            "Group": ["T1", "T2", "T1", "T1", "T3"],
+        }
+    )  # fmt: skip
 
+
+def test_csv_event_view_orders_each_case_by_time_then_the_source_sequence_and_drops_unusable_rows():
+    out, info = ev.csv_event_view(_csv_events(), CSV_SPEC)
+    assert list(out.columns) == [
+        "case_id",
+        "position",
+        "time",
+        "activity",
+        "transition",
+        "resource",
+    ]
+    assert out["case_id"].tolist() == ["I1", "I1", "I1", "I2"]
+    assert out["activity"].tolist() == ["Open", "Assign", "Closed", "Open"]  # tie broken by Num
+    assert out["position"].tolist() == [0, 1, 2, 0]
+    assert out["time"].iloc[0] == pd.Timestamp("2013-01-01 08:00:00", tz="UTC")
+    assert out["resource"].iloc[0] == ev.pseudonym("T1") and out["transition"].isna().all()
+    assert info == {
+        "rows": 5,
+        "rows_without_activity": 1,
+        "rows_without_time": 0,
+        "cases": 3,
+        "cases_kept": 2,
+    }
+
+
+def test_csv_event_view_counts_unreadable_times_and_selects_cases_by_hash():
+    frame = _csv_events()
+    frame.loc[0, "Stamp"] = "not a date"
+    out, info = ev.csv_event_view(frame, {**CSV_SPEC, "modulo": 1})
+    assert info["rows_without_time"] == 1 and "I2" not in out["case_id"].tolist()
+    import hashlib as _h
+
+    some, rep = ev.csv_event_view(_csv_events(), {**CSV_SPEC, "modulo": 2})
+    want = {c for c in ("I1", "I2") if int(_h.sha256(c.encode()).hexdigest(), 16) % 2 == 0}
+    assert set(some["case_id"]) == want and rep["cases_kept"] == len(want)
+    with pytest.raises(ev.ViewError, match="column 'Stamp'"):
+        ev.csv_event_view(frame.drop(columns=["Stamp"]), CSV_SPEC)
+
+
+def test_the_csv_event_builder_reads_the_declared_file_and_records_the_mapping(
+    tmp_path, monkeypatch
+):
     root = tmp_path / "acquired"
-    raw = root / "src_zip" / SNAP / "raw"
+    raw = root / "4tu_csv" / SNAP / "raw"
     raw.mkdir(parents=True)
-    with zipfile.ZipFile(raw / "d.zip", "w") as z:
-        z.writestr("d/movies.csv", 'movieId,title,genres\n1,"A, B",x\n2,C,y\n')
-        z.writestr("d/ratings.csv", "userId,movieId,rating\n1,1,5\n1,3,4\n")
-    monkeypatch.setattr(ev, "TABLE_SETS", {"src_zip": {
-        "archive": {"file": "d.zip", "prefix": "d/"}, "sep": ",", "quote_none": False, "dropped": ["title"],  # noqa: E501
-        "tables": {"movies": {"keep": ["movieId", "genres"]}, "ratings": {"keep": ["userId", "movieId"]}},  # noqa: E501
-        "relations": [["ratings", "movieId", "movies", "movieId"]]}})  # fmt: skip
+    (raw / "log.csv").write_text(
+        "Incident ID;Type;Stamp;Num;Group\nI1;Open;01-01-2013 08:00:00;001;T1\nI1;Closed;02-01-2013 08:00:00;002;T1\n"  # noqa: E501
+    )
+    monkeypatch.setattr(ev, "CSV_EVENT_SPECS", {"4tu_csv": {**CSV_SPEC, "file": "log.csv"}})
     manifest = {}
-    ev._build_tables(root, tmp_path / "o" / "deep", manifest)
-    folder = tmp_path / "o" / "deep" / "src_zip"
-    assert (folder / "movies.csv").read_text() == "movieId,genres\n1,x\n2,y\n"
-    assert (folder / "ratings.csv").read_text() == "userId,movieId\n1,1\n1,3\n"
-    view = manifest["src_zip"]
-    assert view["dropped"] == ["title"]
-    assert view["relations"] == [{"child": "ratings.movieId", "parent": "movies.movieId", "checked": 2, "orphans": 1, "share": 0.5}]  # fmt: skip  # noqa: E501
+    ev._build_csv_events(root, tmp_path / "o" / "deep", manifest)
+    target = tmp_path / "o" / "deep" / "4tu_csv" / "events.csv"
+    assert len(pd.read_csv(target)) == 2
+    view = manifest["4tu_csv"]
+    assert view["files"] == {"events.csv": {"sha256": _sha(target), "rows": 2}}
+    assert view["sampling"]["cases_kept"] == 1 and view["sampling"]["rows_without_time"] == 0
+    assert view["sampling"]["mapping"] == {"case": "Incident ID", "activity": "Type", "time": "Stamp", "order": "Num", "resource": "Group"}  # fmt: skip  # noqa: E501
+    assert view["pseudonymised"] == ["resource"]

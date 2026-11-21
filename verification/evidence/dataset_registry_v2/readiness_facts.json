@@ -29,6 +29,21 @@
    "units": 7554,
    "view": "4tu_bpic13_incidents"
   },
+  "4tu_bpic14": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "incident handling with reassignments (natural rework)",
+    "events are not in time order in the file and are sorted by time then activity number"
+   ],
+   "first_party": false,
+   "independent_group": "rabobank_ict",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15, whole cases",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 46616,
+   "view": "4tu_bpic14"
+  },
   "4tu_bpic15_m5": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -43,6 +58,36 @@
    "protocol_id": "P-SEQ",
    "units": 1156,
    "view": "4tu_bpic15_m5"
+  },
+  "4tu_bpic18": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "prefix of the log, not random",
+    "trace-level amounts: applied and actual payment"
+   ],
+   "first_party": false,
+   "independent_group": "german_paying_agency",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15, whole cases",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 8000,
+   "view": "4tu_bpic18"
+  },
+  "4tu_bpic18:transactions": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "prefix of the log, not random",
+    "trace-level amounts: applied and actual payment"
+   ],
+   "first_party": false,
+   "independent_group": "german_paying_agency",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15, whole cases",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 487270,
+   "view": "4tu_bpic18"
   },
   "4tu_bpic19": {
    "anomaly_origin": "controlled_injection",

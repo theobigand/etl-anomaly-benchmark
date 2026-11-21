@@ -824,6 +824,27 @@
   },
   {
    "failed": null,
+   "group": "rabobank_ict",
+   "id": "4tu_bpic14",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "german_paying_agency",
+   "id": "4tu_bpic18",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "german_paying_agency",
+   "id": "4tu_bpic18:transactions",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -939,6 +960,7 @@
   "C2b": [
    "coatings_multinational",
    "georgia_procurement",
+   "german_paying_agency",
    "italian_road_fines",
    "lyft_bikeshare",
    "montreal_contracts",
@@ -964,9 +986,11 @@
    "dutch_municipalities",
    "fin_institute_nl",
    "fugaku_riken",
+   "german_paying_agency",
    "hospital_sepsis_nl",
    "italian_road_fines",
    "loghub_collection",
+   "rabobank_ict",
    "surf_lisa_slurm",
    "tue_travel_claims",
    "volvo_it"
@@ -992,13 +1016,13 @@
  },
  "summary": {
   "C2b": {
-   "acquired": 9,
-   "discovered": 15,
-   "experiment_ready": 9,
-   "protocol_ready": 9,
-   "rights_verified": 9,
-   "scientifically_eligible": 9,
-   "structurally_valid": 9
+   "acquired": 10,
+   "discovered": 16,
+   "experiment_ready": 10,
+   "protocol_ready": 10,
+   "rights_verified": 10,
+   "scientifically_eligible": 10,
+   "structurally_valid": 10
   },
   "C3": {
    "acquired": 15,
@@ -1010,13 +1034,13 @@
    "structurally_valid": 13
   },
   "C4": {
-   "acquired": 28,
-   "discovered": 29,
-   "experiment_ready": 27,
-   "protocol_ready": 27,
-   "rights_verified": 28,
-   "scientifically_eligible": 27,
-   "structurally_valid": 27
+   "acquired": 30,
+   "discovered": 31,
+   "experiment_ready": 29,
+   "protocol_ready": 29,
+   "rights_verified": 30,
+   "scientifically_eligible": 29,
+   "structurally_valid": 29
   },
   "C5": {
    "acquired": 15,

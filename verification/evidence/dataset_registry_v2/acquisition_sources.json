@@ -2131,6 +2131,64 @@
    "stratum": "C5",
    "upstream": "first party: GroupLens operates MovieLens and publishes the archive",
    "upstream_verified": true
+  },
+  {
+   "attribution": "cite the 4TU record, DOI 10.4121/uuid:3301445f-95e8-4ff0-98a4-901f1f204972",
+   "hosts": [
+    "data.4tu.nl"
+   ],
+   "id": "4tu_bpic18",
+   "licence_class": "open",
+   "licence_location": "https://data.4tu.nl/v2/articles/12688355",
+   "licence_text": "CC0 stated in the licence field of the 4TU record",
+   "max_bytes": 104857600,
+   "method": "HTTP range request of the first 80 MiB of the 158 MB gzip XES file (206); the prefix is read sequentially by the streaming XES reader and only complete traces are kept; a prefix of the log, not a random sample",
+   "min_interval": 3.0,
+   "privacy": "applicant and parcel identifiers pseudonymised by the publisher; resources salted in the view",
+   "publisher": "4TU.ResearchData record 12688355: EU Common Agricultural Policy direct payment applications handled by a German paying agency (BPI Challenge 2018)",
+   "ranges": [
+    {
+     "length": 83886080,
+     "name": "BPI_Challenge_2018_head.xes.gz",
+     "observed": "2018-03-13",
+     "start": 0,
+     "url": "https://data.4tu.nl/file/443451fd-d38a-4464-88b4-0fc641552632/cd4fd2b8-6c95-47ae-aad9-dc1a085db364"
+    }
+   ],
+   "rate_limit": "one range request",
+   "redistribution": "CC0 permits it; raw files stay local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "the paying agency's log was published by its academic partners through 4TU; the record names the data experts of Neubrandenburg and TU Eindhoven",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "cite the 4TU record, DOI 10.4121/uuid:86977bac-f874-49cf-8337-80f26bf5d2ef",
+   "files": [
+    {
+     "name": "Detail_Incident_Activity.csv",
+     "observed": "2014-04-23",
+     "url": "https://data.4tu.nl/file/657fb1d6-b4c2-4adc-ba48-ed25bf313025/bd6cfa31-44f8-4542-9bad-f1f70c894728"
+    }
+   ],
+   "hosts": [
+    "data.4tu.nl"
+   ],
+   "id": "4tu_bpic14",
+   "licence_class": "open",
+   "licence_location": "https://data.4tu.nl/v2/articles/12706424",
+   "licence_text": "4TU General Terms of Use: the terms resource of 4TU.Centre for Research Data states licence CC0 for datasets where no other licence is given (read at doi.org/10.4121/resource:terms_of_use)",
+   "max_bytes": 104857600,
+   "method": "official 4TU.ResearchData API file download",
+   "min_interval": 3.0,
+   "privacy": "incident, team and knowledge-document identifiers pseudonymised by the publisher; team codes salted in the view",
+   "publisher": "4TU.ResearchData record 12706424: Rabobank Group ICT incident activity log (BPI Challenge 2014)",
+   "rate_limit": "one download",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "the bank's log was published by the data owner's academic partners through 4TU; the record names Rabobank Nederland as publisher; identifiers pseudonymised by the publisher",
+   "upstream_verified": true
   }
  ]
 }
