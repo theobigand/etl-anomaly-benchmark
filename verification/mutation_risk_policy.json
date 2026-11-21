@@ -547,6 +547,10 @@
     "research/provenance_audit.py": {
       "level": "L3",
       "reason": "The provenance grouping decides how many independent source groups the flat tabular and categorical strata are credited with."
+    },
+    "research/flat_readiness.py": {
+      "level": "L3",
+      "reason": "The eligibility rules and group representation decide which flat tabular and categorical sources are credited as experiment-ready."
     }
   }
 }
