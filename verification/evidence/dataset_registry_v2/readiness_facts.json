@@ -941,6 +941,22 @@
    "units": 45141,
    "view": "zen_aegis_vehicle"
   },
+  "zen_clue_lds": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "first 19 days of a 5-year log",
+    "86 users, median 740 events",
+    "login attempts and failures are natural events"
+   ],
+   "first_party": false,
+   "independent_group": "ait_clue",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on event time",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 1000000,
+   "view": "zen_clue_lds"
+  },
   "zen_fdata_fugaku": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [

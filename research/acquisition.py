@@ -274,16 +274,11 @@ def extract_member(
     return {"path": target, "member": member, "sha256": digest.hexdigest(), "bytes": written}
 
 
-def gzip_prefix_lines(blob: bytes, max_output: int) -> dict[str, Any]:
-    """Complete text lines at the start of a gzip stream, even if the stream is cut off.
-
-    Reading is sequential from the stream start, so the result is a prefix sample (ordered by the
-    file, not random). A line torn by the cut is dropped. ``complete`` is true only when the whole
-    stream ended inside ``blob`` and ``max_output`` was not reached.
-    """
+def _prefix_lines(blob: bytes, wbits: int, max_output: int) -> dict[str, Any]:
+    """Complete lines at the start of a compressed stream that may be cut off (see below)."""
     import zlib
 
-    decoder = zlib.decompressobj(wbits=31)
+    decoder = zlib.decompressobj(wbits=wbits)
     out = bytearray()
     try:
         for offset in range(0, len(blob), 4096):
@@ -291,7 +286,7 @@ def gzip_prefix_lines(blob: bytes, max_output: int) -> dict[str, Any]:
             if len(out) > max_output or decoder.unconsumed_tail:
                 break
     except zlib.error as error:
-        raise AcquisitionError(f"not a readable gzip stream ({error})") from error
+        raise AcquisitionError(f"not a readable compressed stream ({error})") from error
     complete = decoder.eof and len(out) <= max_output and not decoder.unconsumed_tail
     lines = bytes(out).split(b"\n")
     tail = lines.pop()  # what follows the last newline: a torn line unless the stream ended
@@ -299,6 +294,40 @@ def gzip_prefix_lines(blob: bytes, max_output: int) -> dict[str, Any]:
         lines.append(tail)
     decoded = [line.decode("utf-8", "replace") for line in lines]
     return {"lines": decoded, "complete": complete, "output_bytes": len(out)}
+
+
+def gzip_prefix_lines(blob: bytes, max_output: int) -> dict[str, Any]:
+    """Complete text lines at the start of a gzip stream, even if the stream is cut off.
+
+    Reading is sequential from the stream start, so the result is a prefix sample (ordered by the
+    file, not random). A line torn by the cut is dropped. ``complete`` is true only when the whole
+    stream ended inside ``blob`` and ``max_output`` was not reached.
+    """
+    try:
+        return _prefix_lines(blob, 31, max_output)
+    except AcquisitionError as error:
+        raise AcquisitionError(str(error).replace("compressed stream", "gzip stream")) from error
+
+
+def zip_prefix_lines(blob: bytes, max_output: int) -> dict[str, Any]:
+    """Complete text lines of the first member of a zip archive that may be cut off.
+
+    The member must be deflated and unencrypted. Only the start of the archive is needed: the
+    central directory at the end is not read. The result carries the member name.
+    """
+    import struct
+
+    if len(blob) < 30 or blob[:4] != b"PK\x03\x04":
+        raise AcquisitionError("not a zip archive (no local file header at the start)")
+    flags, method = struct.unpack("<HH", blob[6:10])
+    name_len, extra_len = struct.unpack("<HH", blob[26:30])
+    if flags & 1:
+        raise AcquisitionError("the first member is encrypted")
+    if method != 8:
+        raise AcquisitionError("the first member is not deflate-compressed")
+    start = 30 + name_len + extra_len
+    name = blob[30 : 30 + name_len].decode("utf-8", "replace")
+    return {**_prefix_lines(blob[start:], -15, max_output), "member": name}
 
 
 def paginate(get_page: Callable[[int], list[Any]], max_pages: int) -> Iterator[list[Any]]:

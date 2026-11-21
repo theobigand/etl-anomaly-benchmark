@@ -734,6 +734,18 @@
    "stratum": "C6"
   },
   {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": "ait_clue",
+   "id": "zen_clue_lds",
+   "status": "discovered",
+   "stratum": "C4"
+  },
+  {
    "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
@@ -912,7 +924,7 @@
   },
   "C4": {
    "acquired": 20,
-   "discovered": 20,
+   "discovered": 21,
    "experiment_ready": 19,
    "protocol_ready": 19,
    "rights_verified": 20,

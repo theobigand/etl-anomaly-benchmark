@@ -1570,6 +1570,26 @@
    "stratum": "C6",
    "system": "openlibrary_catalogue",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "clue_lds",
+   "id": "zen_clue_lds",
+   "licence_class": "open",
+   "protocols": "P-SEQ on per-user event sequences",
+   "publisher": "ait_clue",
+   "reason": "CLUE-LDS user events of a real cloud storage (AIT): a 40 MiB range prefix of the zipped JSON holds 2.5 million events; the view keeps the first one million (2017-07-07 to 2017-07-26, 86 pseudonymous users, 67 with at least 20 events); event parameters and locations dropped, user ids salted. The data are the release of research authors from a partner's system; the operator's permission is not stated on the record, so rights stay unverified",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 on the Zenodo record; operator permission not stated",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "clue_cloud_storage",
+   "upstream_status": "unverified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

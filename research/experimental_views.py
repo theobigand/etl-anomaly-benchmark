@@ -1557,6 +1557,69 @@ def _build_aegis(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+CLUE_COLUMNS = ("event_id", "time", "user", "type", "role", "is_local_ip")
+#: events kept from the start of the CLUE-LDS prefix
+CLUE_MAX_EVENTS = 1_000_000
+#: decoded bytes read from the prefix (about 1.3 million events)
+CLUE_MAX_BYTES = 400 * 1024 * 1024
+
+
+def clue_events_view(lines: list[str]) -> pd.DataFrame:
+    """User events: id, UTC time, salted pseudonym of the user (or IP), type, role, origin flag.
+
+    Event parameters (file paths, groups) and the IP-based location are dropped. Events come out
+    in id order, which is the time order of the log.
+    """
+    rows = []
+    for line in lines:
+        if not line.strip():
+            continue
+        r = json.loads(line)
+        rows.append(
+            {
+                "event_id": r["id"],
+                "time": r["time"],
+                "user": pseudonym(str(r["uid"])),
+                "type": r["type"],
+                "role": r.get("role"),
+                "is_local_ip": r.get("isLocalIP"),
+            }
+        )
+    frame = pd.DataFrame(rows, columns=list(CLUE_COLUMNS))
+    frame["time"] = pd.to_datetime(frame["time"], utc=True)
+    return frame.sort_values("event_id", kind="stable").reset_index(drop=True)
+
+
+def _build_clue(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import sys
+
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from acquisition import zip_prefix_lines
+
+    blob = (root / "zen_clue_lds" / SNAPSHOT / "raw" / "clue_head.zip").read_bytes()
+    read = zip_prefix_lines(blob, max_output=CLUE_MAX_BYTES)
+    view = clue_events_view(read["lines"][:CLUE_MAX_EVENTS])
+    folder = out / "zen_clue_lds"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "events.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "zen_clue_lds",
+        {"events.csv": (target, len(view))},
+        dropped=["params (paths, groups)", "location", "uidType"],
+        pseudonymised=["user"],
+        sampling={
+            "method": "zip prefix of clue.json (HTTP range from byte 0), first events in log order; not random",  # noqa: E501
+            "events_read": len(read["lines"]),
+            "events_kept": len(view),
+            "stream_complete": read["complete"],
+        },
+        salt_label=SALT,
+        source_snapshot=f"zen_clue_lds/{SNAPSHOT} (fragment)",
+    )
+
+
 SLURM_MODULO = 20
 SLURM_COLUMNS = (
     "jobid",
@@ -1649,6 +1712,7 @@ BUILD_STEPS = (
     _build_metropt,
     _build_openlibrary,
     _build_aegis,
+    _build_clue,
     _build_series,
     _build_ukspend,
 )

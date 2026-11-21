@@ -1847,6 +1847,36 @@
    "stratum": "C5",
    "upstream": "first party: the dumps are published by Open Library itself on the Internet Archive",
    "upstream_verified": true
+  },
+  {
+   "attribution": "cite CLUE-LDS (Landauer, Skopik, H\u00f6ld)",
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_clue_lds",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/7119953",
+   "licence_text": "Zenodo record 7119953: license cc-by-4.0, access_right open; the record states the log events are from real users of a cloud storage and that user ids are anonymised",
+   "max_bytes": 104857600,
+   "method": "HTTP range request of the first 40 MiB of clue.zip (206): a prefix of the single deflated member clue.json, events in time order from 2017-07-07; decoded as a prefix sample, not random",
+   "min_interval": 3.0,
+   "privacy": "user ids are pseudonymous words; event parameters hold file paths and group names and locations hold city and coordinates: all dropped or reduced in the view",
+   "publisher": "AIT Austrian Institute of Technology (CLUE-LDS, cloud storage user events)",
+   "ranges": [
+    {
+     "length": 41943040,
+     "name": "clue_head.zip",
+     "observed": "2017-07",
+     "start": 0,
+     "url": "https://zenodo.org/records/7119953/files/clue.zip?download=1"
+    }
+   ],
+   "rate_limit": "one range request",
+   "redistribution": "CC BY 4.0 permits it; raw files stay local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "first party release by the AIT authors of logs from a partner's cloud storage; the operator's own permission is not separately stated",
+   "upstream_verified": false
   }
  ]
 }

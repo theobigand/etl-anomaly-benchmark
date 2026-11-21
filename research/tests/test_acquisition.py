@@ -727,3 +727,48 @@ def test_extraction_refuses_unsafe_oversized_compressed_bomb_and_missing_members
     folder = _zip(tmp_path / "f.zip", {"d/": b""})
     with pytest.raises(aq.AcquisitionError, match="directory"):
         aq.extract_member(folder, "d/", tmp_path / "out", max_bytes=100, max_ratio=10)
+
+
+def _single_member_zip(tmp_path, text: bytes, method):
+    import zipfile
+
+    path = tmp_path / "one.zip"
+    with zipfile.ZipFile(path, "w", method) as archive:
+        archive.writestr("data.jsonl", text)
+    return path.read_bytes()
+
+
+def test_zip_prefixes_decode_the_first_member_of_a_cut_archive_line_by_line(tmp_path):
+    import zipfile
+
+    text = "".join(f'{{"n": {i}}}\n' for i in range(5000)).encode()
+    blob = _single_member_zip(tmp_path, text, zipfile.ZIP_DEFLATED)
+    full = aq.zip_prefix_lines(blob, max_output=10**7)
+    assert (
+        len(full["lines"]) == 5000 and full["complete"] is True and full["member"] == "data.jsonl"
+    )
+    cut = aq.zip_prefix_lines(blob[: len(blob) // 3], max_output=10**7)
+    assert cut["complete"] is False and 0 < len(cut["lines"]) < 5000
+    assert cut["lines"] == [f'{{"n": {i}}}' for i in range(len(cut["lines"]))]
+    small = aq.zip_prefix_lines(blob, max_output=100)
+    assert (
+        small["complete"] is False
+        and small["output_bytes"] <= 100 + 64
+        and len(small["lines"]) <= 12
+    )
+
+
+def test_zip_prefixes_refuse_non_zip_stored_and_encrypted_members(tmp_path):
+    import zipfile
+
+    with pytest.raises(aq.AcquisitionError, match="not a zip"):
+        aq.zip_prefix_lines(b"x" * 100, max_output=10)
+    stored = _single_member_zip(tmp_path, b"a\nb\n", zipfile.ZIP_STORED)
+    with pytest.raises(aq.AcquisitionError, match="deflate"):
+        aq.zip_prefix_lines(stored, max_output=100)
+    deflated = bytearray(_single_member_zip(tmp_path, b"a\nb\n", zipfile.ZIP_DEFLATED))
+    deflated[6] |= 1  # general purpose flag: encrypted
+    with pytest.raises(aq.AcquisitionError, match="encrypted"):
+        aq.zip_prefix_lines(bytes(deflated), max_output=100)
+    with pytest.raises(aq.AcquisitionError, match="not a zip"):
+        aq.zip_prefix_lines(b"PK\x03\x04short", max_output=10)

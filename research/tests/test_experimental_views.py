@@ -986,12 +986,18 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
             "obdData.csv",
             '"obdData_id","trip_id","obdPid","data","timestamp"\n"1","3","0C","9","2017-01-19 16:19:03.0"\n',  # noqa: E501
         )
+    import zipfile as _zc
+
+    cl = root / "zen_clue_lds" / SNAP / "raw"
+    cl.mkdir(parents=True)
+    with _zc.ZipFile(cl / "clue_head.zip", "w", _zc.ZIP_DEFLATED) as _c:
+        _c.writestr("clue.json", _clue(1) + "\n")
     out = tmp_path / "out"
     manifest = ev.build(root, out)
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -2482,3 +2488,64 @@ def test_the_aegis_builder_reads_only_the_obd_member_and_records_what_was_droppe
         view["notes"]
         == "one driver and one vehicle (35 trips); relative time inside each trip only"
     )
+
+
+# --- CLUE-LDS user events from a zip prefix ------------------------------------------------------
+
+
+def _clue(n, uid="u-a", kind="file_accessed", **over):
+    record = {"params": {"path": "/secret/file"}, "type": kind, "time": f"2017-07-07T08:57:{n:02d}Z", "uid": uid, "id": n, "uidType": "name",  # noqa: E501
+              "location": {"city": "Graz", "latitude": 47.0}, **over}  # fmt: skip
+    return json.dumps(record)
+
+
+def test_clue_view_keeps_type_time_role_and_pseudonymous_user_and_drops_params_and_location():
+    lines = [
+        _clue(2, uid="u-b", role="sales", isLocalIP=True),
+        _clue(1),
+        "",
+        _clue(3, uid="1.2.3.4", uidType="ip"),
+    ]
+    out = ev.clue_events_view(lines)
+    assert list(out.columns) == list(ev.CLUE_COLUMNS)
+    assert ev.CLUE_COLUMNS == ("event_id", "time", "user", "type", "role", "is_local_ip")
+    assert out["event_id"].tolist() == [1, 2, 3] and out["type"].tolist() == ["file_accessed"] * 3
+    assert out["time"].iloc[0] == pd.Timestamp("2017-07-07 08:57:01", tz="UTC")
+    assert out["user"].tolist() == [
+        ev.pseudonym("u-a"),
+        ev.pseudonym("u-b"),
+        ev.pseudonym("1.2.3.4"),
+    ]
+    assert out["role"].tolist()[1] == "sales" and pd.isna(out["role"].iloc[0])
+    assert out["is_local_ip"].tolist()[1] is True or out["is_local_ip"].iloc[1] == True  # noqa: E712
+    assert "params" not in out and "location" not in out and "uid" not in out
+    assert len(ev.clue_events_view([])) == 0
+
+
+def test_the_clue_builder_reads_the_zip_prefix_caps_the_events_and_records_the_cut(
+    tmp_path, monkeypatch
+):
+    import zipfile
+
+    root = tmp_path / "acquired"
+    raw = root / "zen_clue_lds" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    with zipfile.ZipFile(raw / "clue_head.zip", "w", zipfile.ZIP_DEFLATED) as z:
+        z.writestr(
+            "clue.json", "\n".join(_clue(n % 50, uid=f"u{n % 4}") for n in range(400)) + "\n"
+        )
+    blob = (raw / "clue_head.zip").read_bytes()
+    (raw / "clue_head.zip").write_bytes(blob[: len(blob) * 3 // 4])
+    monkeypatch.setattr(ev, "CLUE_MAX_EVENTS", 100)
+    manifest = {}
+    ev._build_clue(root, tmp_path / "o" / "deep", manifest)
+    target = tmp_path / "o" / "deep" / "zen_clue_lds" / "events.csv"
+    assert len(pd.read_csv(target)) == 100
+    view = manifest["zen_clue_lds"]
+    assert view["files"] == {"events.csv": {"sha256": _sha(target), "rows": 100}}
+    assert view["sampling"]["stream_complete"] is False and view["sampling"]["events_kept"] == 100
+    assert view["sampling"]["events_read"] >= 100 and view["sampling"]["method"].startswith(
+        "zip prefix of clue.json"
+    )
+    assert view["dropped"] == ["params (paths, groups)", "location", "uidType"]
+    assert view["pseudonymised"] == ["user"]
