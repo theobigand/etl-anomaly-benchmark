@@ -510,3 +510,47 @@ def test_new_views_turn_unreadable_numbers_into_missing_and_keep_flag_types():
     assert ev.kelmarsh_view(km, "T1")["wind_speed"].isna().all()
     blank = tev._pbdb_frame()
     assert ev.pbdb_occurrence_view(blank)["class"].isna().tolist() == [False, True, False, True]
+
+
+def test_pbdb_builder_reads_up_to_ten_million_rows_with_the_stride_and_blank_codes_are_missing(
+    tmp_path, monkeypatch
+):
+    seen = []
+    real = pr.read_sample
+    monkeypatch.setattr(pr, "read_sample", lambda *a, **k: seen.append(k) or real(*a, **k))
+    raw = tmp_path / "acquired" / "zen_pbdb" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    pq.write_table(
+        pa.Table.from_pandas(tev._pbdb_frame(), preserve_index=False), tmp_path / "o.parquet"
+    )
+    with zipfile.ZipFile(raw / "pbdb_parquet.zip", "w") as z:
+        z.write(tmp_path / "o.parquet", "a.parquet")
+    ev._build_pbdb(tmp_path / "acquired", tmp_path / "o", {})
+    assert seen[0]["max_rows"] == 10**7 and seen[0]["stride"] == ev.PBDB_STRIDE
+    frame = tev._pbdb_frame()
+    frame["class"] = ["", "  ", "Mammalia", None]
+    assert ev.pbdb_occurrence_view(frame)["class"].isna().tolist() == [
+        True,
+        False,
+        True,
+        True,
+    ]  # in occurrence order: blank, text, blank, missing
+
+
+def test_a_human_check_looks_the_main_snak_up_by_its_name():
+    claim = {"mainsnak": {"datavalue": {"value": {"id": "Q5"}}}}
+    assert ev._is_human({"claims": {"P31": [claim]}}) is True
+    assert ev._is_human({"claims": {"P31": [{"other": claim["mainsnak"]}]}}) is False
+
+
+def test_kelmarsh_reads_a_last_header_column_that_is_a_wanted_signal(tmp_path):
+    names = ["Date and time", *ev.KELMARSH_SIGNALS]
+    header = "# " + ",".join(f'"{n}"' if "," in n else n for n in names)
+    row = ",".join(["2016-01-03 00:00:00"] + ["2.5"] * len(ev.KELMARSH_SIGNALS))
+    text = "# exported\n#\n# Turbine: Kelmarsh 1\n#\n" + header + "\n" + row + "\n"
+    raw = tmp_path / "acquired" / "zen_kelmarsh" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    tev._kelmarsh_zip(raw / "Kelmarsh_SCADA_2016_3082.zip", turbines=(1,), text=text)
+    ev._build_kelmarsh(tmp_path / "acquired", tmp_path / "o", {})
+    out = pd.read_csv(tmp_path / "o" / "zen_kelmarsh" / "series.csv")
+    assert len(out) == 1 and out["current_l1"].iloc[0] == 2.5  # the last signal of the file
