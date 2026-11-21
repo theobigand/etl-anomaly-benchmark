@@ -27,6 +27,39 @@
   "pseudonymised": [],
   "source_snapshot": "bikeshare_jc/2026-11-21"
  },
+ "clinicaltrials_v2": {
+  "dropped": [
+   "centralContacts",
+   "contacts",
+   "investigatorAffiliation",
+   "investigatorFullName",
+   "investigatorTitle",
+   "overallOfficials",
+   "pointOfContact"
+  ],
+  "files": {
+   "studies.jsonl": {
+    "rows": 12000,
+    "sha256": "eef234df8a4fcb41bc84a25b96d5cc4a124c94db04011fb3c3f28bb6ac8307d4"
+   }
+  },
+  "pseudonymised": [],
+  "source_snapshot": "clinicaltrials_v2/2026-11-21"
+ },
+ "crossref_works": {
+  "dropped": [
+   "author"
+  ],
+  "files": {
+   "works.jsonl": {
+    "rows": 2000,
+    "sha256": "3fc527263c74aee4e3953eae4c3d07f5e17c0de6c10e4564eff128e85d47bc49"
+   }
+  },
+  "notes": "authors are replaced by their count; one record per DOI",
+  "pseudonymised": [],
+  "source_snapshot": "crossref_works/2026-11-21"
+ },
  "loghub": {
   "dropped": [
    "Content",
@@ -285,6 +318,60 @@
   },
   "pseudonymised": [],
   "source_snapshot": "openfoodfacts_products/2026-11-21"
+ },
+ "series": {
+  "dropped": [],
+  "files": {
+   "uci_172.csv": {
+    "rows": 5070,
+    "sha256": "3d35bfe40beff662c272b1d61bd51e9f390291f355dc60095aac6a99688ba36a"
+   },
+   "uci_357.csv": {
+    "rows": 20560,
+    "sha256": "459e3be2c6664ef9f60366dccda1eb8e830ea3975c5ebdce7b06eafee1a2eef0"
+   },
+   "uci_360.csv": {
+    "rows": 9357,
+    "sha256": "d097abc6834937f1d988eede2b7849cb9b888c3181d6b2f9eae90184d3ca1a73"
+   },
+   "uci_374.csv": {
+    "rows": 19735,
+    "sha256": "754bf8082bd1acc345ec221342ef7da6ea947842bd4e5834388323c89673f62e"
+   },
+   "uci_492.csv": {
+    "rows": 48204,
+    "sha256": "c15490034d21d8dd8c681aee791e03383754732c53587dc728975013e4e9c95e"
+   },
+   "uci_560.csv": {
+    "rows": 8760,
+    "sha256": "eb558eeb7ef08ad68ed3169ef60a9d75a014f13723bf97882d665db530e7e833"
+   },
+   "uci_799.csv": {
+    "rows": 416153,
+    "sha256": "9bef106c07abf3d57a452b8338e0f379a36b95589ebe8ce293d5909994dbe186"
+   },
+   "uci_849.csv": {
+    "rows": 52416,
+    "sha256": "7c0b1fd67cdc1525ccfc5a184e0d06b348475670ba038941465c7d4b48e3d853"
+   },
+   "uci_851.csv": {
+    "rows": 35040,
+    "sha256": "24588e6788ed680cd4512915da10c3d4ce00af62675f511b57af86318d4280c2"
+   }
+  },
+  "pseudonymised": [],
+  "rows_dropped": {
+   "uci:172": 0,
+   "uci:357": 2,
+   "uci:360": 0,
+   "uci:374": 0,
+   "uci:492": 0,
+   "uci:560": 0,
+   "uci:799": 0,
+   "uci:849": 0,
+   "uci:851": 0
+  },
+  "source_snapshot": "data/pool and data/uci_wave2 tables, pinned by the pool manifests"
  },
  "slurm_ccin2p3": {
   "dropped": [

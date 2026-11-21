@@ -1118,6 +1118,245 @@
    "stratum": "C2b",
    "upstream": "first-party: the producers of the job records deposit them",
    "upstream_verified": true
+  },
+  {
+   "attribution": "cite ClinicalTrials.gov, US National Library of Medicine, with the retrieval date",
+   "files": [
+    {
+     "name": "studies_2023-01.json",
+     "observed": "2023-01",
+     "url": "https://clinicaltrials.gov/api/v2/studies?filter.advanced=AREA%5BStartDate%5DRANGE%5B2023-01-01,2023-01-31%5D&pageSize=1000&format=json"
+    },
+    {
+     "name": "studies_2023-02.json",
+     "observed": "2023-02",
+     "url": "https://clinicaltrials.gov/api/v2/studies?filter.advanced=AREA%5BStartDate%5DRANGE%5B2023-02-01,2023-02-28%5D&pageSize=1000&format=json"
+    },
+    {
+     "name": "studies_2023-03.json",
+     "observed": "2023-03",
+     "url": "https://clinicaltrials.gov/api/v2/studies?filter.advanced=AREA%5BStartDate%5DRANGE%5B2023-03-01,2023-03-31%5D&pageSize=1000&format=json"
+    },
+    {
+     "name": "studies_2023-04.json",
+     "observed": "2023-04",
+     "url": "https://clinicaltrials.gov/api/v2/studies?filter.advanced=AREA%5BStartDate%5DRANGE%5B2023-04-01,2023-04-30%5D&pageSize=1000&format=json"
+    },
+    {
+     "name": "studies_2023-05.json",
+     "observed": "2023-05",
+     "url": "https://clinicaltrials.gov/api/v2/studies?filter.advanced=AREA%5BStartDate%5DRANGE%5B2023-05-01,2023-05-31%5D&pageSize=1000&format=json"
+    },
+    {
+     "name": "studies_2023-06.json",
+     "observed": "2023-06",
+     "url": "https://clinicaltrials.gov/api/v2/studies?filter.advanced=AREA%5BStartDate%5DRANGE%5B2023-06-01,2023-06-30%5D&pageSize=1000&format=json"
+    },
+    {
+     "name": "studies_2023-07.json",
+     "observed": "2023-07",
+     "url": "https://clinicaltrials.gov/api/v2/studies?filter.advanced=AREA%5BStartDate%5DRANGE%5B2023-07-01,2023-07-31%5D&pageSize=1000&format=json"
+    },
+    {
+     "name": "studies_2023-08.json",
+     "observed": "2023-08",
+     "url": "https://clinicaltrials.gov/api/v2/studies?filter.advanced=AREA%5BStartDate%5DRANGE%5B2023-08-01,2023-08-31%5D&pageSize=1000&format=json"
+    },
+    {
+     "name": "studies_2023-09.json",
+     "observed": "2023-09",
+     "url": "https://clinicaltrials.gov/api/v2/studies?filter.advanced=AREA%5BStartDate%5DRANGE%5B2023-09-01,2023-09-30%5D&pageSize=1000&format=json"
+    },
+    {
+     "name": "studies_2023-10.json",
+     "observed": "2023-10",
+     "url": "https://clinicaltrials.gov/api/v2/studies?filter.advanced=AREA%5BStartDate%5DRANGE%5B2023-10-01,2023-10-31%5D&pageSize=1000&format=json"
+    },
+    {
+     "name": "studies_2023-11.json",
+     "observed": "2023-11",
+     "url": "https://clinicaltrials.gov/api/v2/studies?filter.advanced=AREA%5BStartDate%5DRANGE%5B2023-11-01,2023-11-30%5D&pageSize=1000&format=json"
+    },
+    {
+     "name": "studies_2023-12.json",
+     "observed": "2023-12",
+     "url": "https://clinicaltrials.gov/api/v2/studies?filter.advanced=AREA%5BStartDate%5DRANGE%5B2023-12-01,2023-12-31%5D&pageSize=1000&format=json"
+    }
+   ],
+   "hosts": [
+    "clinicaltrials.gov"
+   ],
+   "id": "clinicaltrials_v2",
+   "licence_class": "open",
+   "licence_location": "http://web.archive.org/web/2022/https://clinicaltrials.gov/ct2/about-site/terms-conditions",
+   "licence_text": "ClinicalTrials.gov Terms and Conditions (archived 2022 copy of clinicaltrials.gov/ct2/about-site/terms-conditions; the live page is a script-rendered page that cannot be read without a browser): free use of the database; users must not assert proprietary rights or present it as other than a United States Government database; email addresses must not be used for marketing; some records may carry third-party copyright",
+   "max_bytes": 104857600,
+   "method": "official API v2, one request per start-date month of 2023 (pageSize 1000), static URLs",
+   "min_interval": 2.0,
+   "privacy": "records carry sponsor staff and investigator names and contacts; contact and official fields are dropped in the view",
+   "publisher": "U.S. National Library of Medicine (ClinicalTrials.gov)",
+   "rate_limit": "12 requests; API limit is far higher",
+   "redistribution": "free use; raw files stay local",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "records are submitted by sponsors and investigators; NLM publishes them",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "cite Crossref",
+   "files": [
+    {
+     "name": "sample_00.json",
+     "observed": null,
+     "url": "https://api.crossref.org/works?sample=100&select=DOI,type,title,container-title,issued,reference,author,funder,license,subject,is-referenced-by-count,references-count,publisher,member,page,volume,link"
+    },
+    {
+     "name": "sample_01.json",
+     "observed": null,
+     "url": "https://api.crossref.org/works?sample=100&select=DOI,type,title,container-title,issued,reference,author,funder,license,subject,is-referenced-by-count,references-count,publisher,member,page,volume,link"
+    },
+    {
+     "name": "sample_02.json",
+     "observed": null,
+     "url": "https://api.crossref.org/works?sample=100&select=DOI,type,title,container-title,issued,reference,author,funder,license,subject,is-referenced-by-count,references-count,publisher,member,page,volume,link"
+    },
+    {
+     "name": "sample_03.json",
+     "observed": null,
+     "url": "https://api.crossref.org/works?sample=100&select=DOI,type,title,container-title,issued,reference,author,funder,license,subject,is-referenced-by-count,references-count,publisher,member,page,volume,link"
+    },
+    {
+     "name": "sample_04.json",
+     "observed": null,
+     "url": "https://api.crossref.org/works?sample=100&select=DOI,type,title,container-title,issued,reference,author,funder,license,subject,is-referenced-by-count,references-count,publisher,member,page,volume,link"
+    },
+    {
+     "name": "sample_05.json",
+     "observed": null,
+     "url": "https://api.crossref.org/works?sample=100&select=DOI,type,title,container-title,issued,reference,author,funder,license,subject,is-referenced-by-count,references-count,publisher,member,page,volume,link"
+    },
+    {
+     "name": "sample_06.json",
+     "observed": null,
+     "url": "https://api.crossref.org/works?sample=100&select=DOI,type,title,container-title,issued,reference,author,funder,license,subject,is-referenced-by-count,references-count,publisher,member,page,volume,link"
+    },
+    {
+     "name": "sample_07.json",
+     "observed": null,
+     "url": "https://api.crossref.org/works?sample=100&select=DOI,type,title,container-title,issued,reference,author,funder,license,subject,is-referenced-by-count,references-count,publisher,member,page,volume,link"
+    },
+    {
+     "name": "sample_08.json",
+     "observed": null,
+     "url": "https://api.crossref.org/works?sample=100&select=DOI,type,title,container-title,issued,reference,author,funder,license,subject,is-referenced-by-count,references-count,publisher,member,page,volume,link"
+    },
+    {
+     "name": "sample_09.json",
+     "observed": null,
+     "url": "https://api.crossref.org/works?sample=100&select=DOI,type,title,container-title,issued,reference,author,funder,license,subject,is-referenced-by-count,references-count,publisher,member,page,volume,link"
+    },
+    {
+     "name": "sample_10.json",
+     "observed": null,
+     "url": "https://api.crossref.org/works?sample=100&select=DOI,type,title,container-title,issued,reference,author,funder,license,subject,is-referenced-by-count,references-count,publisher,member,page,volume,link"
+    },
+    {
+     "name": "sample_11.json",
+     "observed": null,
+     "url": "https://api.crossref.org/works?sample=100&select=DOI,type,title,container-title,issued,reference,author,funder,license,subject,is-referenced-by-count,references-count,publisher,member,page,volume,link"
+    },
+    {
+     "name": "sample_12.json",
+     "observed": null,
+     "url": "https://api.crossref.org/works?sample=100&select=DOI,type,title,container-title,issued,reference,author,funder,license,subject,is-referenced-by-count,references-count,publisher,member,page,volume,link"
+    },
+    {
+     "name": "sample_13.json",
+     "observed": null,
+     "url": "https://api.crossref.org/works?sample=100&select=DOI,type,title,container-title,issued,reference,author,funder,license,subject,is-referenced-by-count,references-count,publisher,member,page,volume,link"
+    },
+    {
+     "name": "sample_14.json",
+     "observed": null,
+     "url": "https://api.crossref.org/works?sample=100&select=DOI,type,title,container-title,issued,reference,author,funder,license,subject,is-referenced-by-count,references-count,publisher,member,page,volume,link"
+    },
+    {
+     "name": "sample_15.json",
+     "observed": null,
+     "url": "https://api.crossref.org/works?sample=100&select=DOI,type,title,container-title,issued,reference,author,funder,license,subject,is-referenced-by-count,references-count,publisher,member,page,volume,link"
+    },
+    {
+     "name": "sample_16.json",
+     "observed": null,
+     "url": "https://api.crossref.org/works?sample=100&select=DOI,type,title,container-title,issued,reference,author,funder,license,subject,is-referenced-by-count,references-count,publisher,member,page,volume,link"
+    },
+    {
+     "name": "sample_17.json",
+     "observed": null,
+     "url": "https://api.crossref.org/works?sample=100&select=DOI,type,title,container-title,issued,reference,author,funder,license,subject,is-referenced-by-count,references-count,publisher,member,page,volume,link"
+    },
+    {
+     "name": "sample_18.json",
+     "observed": null,
+     "url": "https://api.crossref.org/works?sample=100&select=DOI,type,title,container-title,issued,reference,author,funder,license,subject,is-referenced-by-count,references-count,publisher,member,page,volume,link"
+    },
+    {
+     "name": "sample_19.json",
+     "observed": null,
+     "url": "https://api.crossref.org/works?sample=100&select=DOI,type,title,container-title,issued,reference,author,funder,license,subject,is-referenced-by-count,references-count,publisher,member,page,volume,link"
+    }
+   ],
+   "hosts": [
+    "api.crossref.org"
+   ],
+   "id": "crossref_works",
+   "licence_class": "open",
+   "licence_location": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+   "licence_text": "Crossref documents the REST API metadata as freely reusable bibliographic facts deposited by its members; the retrievable licence page was not machine-readable, so the class rests on Crossref's open metadata policy and is marked pending a literal quotation",
+   "max_bytes": 52428800,
+   "method": "official REST API, 20 random samples of 100 works (public pool, no contact address sent)",
+   "min_interval": 2.0,
+   "privacy": "author names, ORCID iDs and affiliations are personal data and are dropped in the view",
+   "publisher": "Crossref",
+   "rate_limit": "public pool limits respected by a 2 s interval",
+   "redistribution": "raw files stay local",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "metadata deposited by publishers (members)",
+   "upstream_verified": false
+  },
+  {
+   "attribution": "cite Wilkes, Google cluster-usage traces v3 (ClusterData2019)",
+   "files": [
+    {
+     "name": "collection_events-000000000000.json.gz",
+     "observed": "2019-05",
+     "url": "https://storage.googleapis.com/clusterdata_2019_a/collection_events-000000000000.json.gz"
+    },
+    {
+     "name": "instance_events-000000000000.json.gz",
+     "observed": "2019-05",
+     "url": "https://storage.googleapis.com/clusterdata_2019_a/instance_events-000000000000.json.gz"
+    }
+   ],
+   "hosts": [
+    "storage.googleapis.com"
+   ],
+   "id": "google_cluster_2019a",
+   "licence_class": "open",
+   "licence_location": "https://raw.githubusercontent.com/google/cluster-data/master/README.md",
+   "licence_text": "The data and trace documentation are made available under the CC-BY license (README of github.com/google/cluster-data, section License)",
+   "max_bytes": 104857600,
+   "method": "official public storage bucket (JSON API listing and object download), one collection-events and one instance-events shard",
+   "min_interval": 3.0,
+   "privacy": "job, user and collection names are hashed by the publisher; no personal data expected",
+   "publisher": "Google (ClusterData2019, Borg cell a)",
+   "rate_limit": "two shard downloads",
+   "redistribution": "CC BY 4.0 permits it with attribution; raw files stay local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "first party: Google publishes traces of its own Borg clusters",
+   "upstream_verified": true
   }
  ]
 }

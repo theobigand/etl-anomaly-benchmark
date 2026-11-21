@@ -1110,6 +1110,226 @@
    "system": "slurm_ccin2p3",
    "upstream_licence": "CC BY 4.0 on Zenodo record 18668107 (metadata.license.id cc-by-4.0, open access); the depositors are the authors and staff of the producing centre",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "clinicaltrials_gov",
+   "id": "clinicaltrials_v2",
+   "licence_class": "open",
+   "protocols": "P-NEST: missing required nested fields, type and array faults, broken hierarchies; natural optionality is large and is the baseline",
+   "publisher": "us_nlm",
+   "reason": "12000 study records with start dates in 2023: depth 12, 336 distinct paths in the 4000-record check (358 in the first 3000 raw), about 90 percent optional, 66 array paths; investigators, officials and contacts dropped, 203 e-mail addresses in free text redacted; study registrations by sponsors, not payments or events",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "terms read in an archived copy",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "clinicaltrials_gov",
+   "upstream_licence": "ClinicalTrials.gov Terms and Conditions (archived 2022 copy; the live page needs a browser): free use, no proprietary claim, not to be presented as other than a US Government database, no marketing use of e-mail addresses, possible third-party copyright",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "crossref",
+   "id": "crossref_works",
+   "licence_class": "open",
+   "protocols": "P-NEST; no P-REL because references leave the sample",
+   "publisher": "crossref",
+   "reason": "2000 random works (20 samples of 100, one record per DOI): depth 6, 54 distinct paths, authors replaced by their count; references point almost entirely outside the sample (2 of 23729 DOIs inside), so reference links are not a relation here",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "documented as unrestricted; literal quotation pending",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "crossref",
+   "upstream_licence": "Crossref's documentation states that metadata retrieved through the REST API can be reused and redistributed without restriction (facts, so no CC0 is needed; some abstracts may carry copyright); the literal page could not be quoted by this client, so the status stays not_verified",
+   "upstream_status": "not_verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:357",
+   "id": "uci:357",
+   "licence_class": "open",
+   "protocols": "P-TS by controlled injection; no natural anomaly labels used",
+   "publisher": "uci_357",
+   "reason": "Occupancy Detection: 20560 rows in time order after a view with an exact time format; coverage 2015-02 (16 days), one-minute steps, 2 unreadable times dropped, 2 gaps",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 stated on the UCI page of the table (first-pool licence register)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "uci:357",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:374",
+   "id": "uci:374",
+   "licence_class": "open",
+   "protocols": "P-TS by controlled injection; no natural anomaly labels used",
+   "publisher": "uci_374",
+   "reason": "Appliances Energy Prediction: 19735 rows in time order after a view with an exact time format; coverage 2016-01 to 2016-05, 10-minute steps, no gaps; same research team as the occupancy table: grouped conservatively",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 stated on the UCI page of the table (first-pool licence register)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "uci:374",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:360",
+   "id": "uci:360",
+   "licence_class": "open",
+   "protocols": "P-TS by controlled injection; no natural anomaly labels used",
+   "publisher": "uci_360",
+   "reason": "Air Quality: 9357 rows in time order after a view with an exact time format; coverage 2004-03 to 2005-04, hourly, no gaps; the table uses -200 as a missing-value marker; natural sentinel for missing values: a baseline, not a fault",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 stated on the UCI page of the table (first-pool licence register)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "uci:360",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:560",
+   "id": "uci:560",
+   "licence_class": "open",
+   "protocols": "P-TS by controlled injection; no natural anomaly labels used",
+   "publisher": "uci_560",
+   "reason": "Seoul Bike Sharing Demand: 8760 rows in time order after a view with an exact time format; coverage 2017-12 to 2018-11, hourly, no gaps; bike demand counts with weather; UCI 275 (Capital Bikeshare 2011-12) shares an operator with the Lyft bike-share trips and is left out",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 stated on the UCI page of the table (first-pool licence register)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "uci:560",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:799",
+   "id": "uci:799",
+   "licence_class": "open",
+   "protocols": "P-TS by controlled injection; no natural anomaly labels used",
+   "publisher": "uci_799",
+   "reason": "Single Elder Home Monitoring: Gas and Position: 416153 rows in time order after a view with an exact time format; coverage 2019-11 to 2020-02, about 20-second steps, 31 gaps; home sensor data of a person: privacy reviewed as non-identifying sensor values",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 stated on the UCI page of the table (first-pool licence register)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "uci:799",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:849",
+   "id": "uci:849",
+   "licence_class": "open",
+   "protocols": "P-TS by controlled injection; no natural anomaly labels used",
+   "publisher": "uci_849",
+   "reason": "Power Consumption of Tetouan City: 52416 rows in time order after a view with an exact time format; coverage 2017, 10-minute steps, no gaps",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 stated on the UCI page of the table (first-pool licence register)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "uci:849",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:851",
+   "id": "uci:851",
+   "licence_class": "open",
+   "protocols": "P-TS by controlled injection; no natural anomaly labels used",
+   "publisher": "uci_851",
+   "reason": "Steel Industry Energy Consumption: 35040 rows in time order after a view with an exact time format; coverage 2018, 15-minute steps, no gaps",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 stated on the UCI page of the table (first-pool licence register)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "uci:851",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:172",
+   "id": "uci:172",
+   "licence_class": "open",
+   "publisher": "uci_172",
+   "reason": "Ozone Level Detection: 5070 daily rows but 2534 repeated timestamps because several series share the file; needs a per-series split before it is a time series",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 on the UCI page",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C3",
+   "system": "uci:172",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:492",
+   "id": "uci:492",
+   "licence_class": "open",
+   "publisher": "uci_492",
+   "reason": "Metro Interstate Traffic Volume: hourly 2012-2018 but 7629 repeated timestamps (several weather records per hour) and 195 gaps; needs a documented per-hour aggregation before it is one series",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 on the UCI page",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C3",
+   "system": "uci:492",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

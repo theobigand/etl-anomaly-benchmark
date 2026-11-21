@@ -486,7 +486,7 @@ Killed share, counting only `killed` (suspicious and timeout are not counted as 
 | `research/acquisition_validate.py` | 668 | 654 | 12 | 2 | 0 | 97.9 percent |
 | `research/dataset_catalog.py` | 782 | 771 | 5 | 4 | 2 | 98.6 percent |
 | `research/fault_protocols.py` | 870 | 843 | 22 | 5 | 0 | 96.9 percent |
-| `research/experimental_views.py` | 1815 | 1744 | 64 | 6 | 1 | 96.1 percent |
+| `research/experimental_views.py` | 1815 | 1744 | 64 | 6 | 1 | 96.1 percent (re-measured at 2163 mutants after later additions: 2076 killed, 96.0 percent) |
 
 Raw counts: `verification/evidence/dataset_registry_v2/mutation_focus_2026-11-21.json`. The first measurements
 before the test work were far lower (readiness 54 percent, acquisition 61 percent, acquisition_validate
@@ -544,3 +544,65 @@ and a few mutants of parameters that are accepted but unused. No equivalence app
 
 The mutation figures concern verification of software, not scientific results. No experiment was run.
 Certification stays pending: only the full sharded campaign of the exact release commit can certify.
+
+# Update 8 (2026-11-21): discovery wave, new experiment-ready sources, candidate ledger
+
+Discovery is not acquisition. This update separates what was searched, what was acquired and what is ready.
+
+## Discovery coverage
+
+Searched in this wave: Zenodo (25 keyword queries across the five categories, 186 open-licence records
+read, 52 candidates triaged into `verification/evidence/dataset_registry_v2/candidate_ledger.json`),
+publisher pages and APIs of ClinicalTrials.gov, Crossref, Open Library, NOAA GHCN-Daily, Open Power
+System Data, Google ClusterData, the Parallel Workloads Archive, the City of Chicago portal, Capital
+Bikeshare and Citi Bike. Searches not yet run: Figshare, Harvard Dataverse, OpenML, Hugging Face, Kaggle
+(login), non-English portals, national statistical agencies, and Zenodo queries by publisher.
+
+Ledger by status (52 candidates): experiment-ready 9; accessible and eligible, not yet acquired 10;
+needs a bounded extraction (large files) 7; permission pending 6; needs a parquet reader 3;
+synthetic testbeds or staged attacks kept outside natural counts 5; structurally unsuitable 2; unclear
+2; blocked (TLS, access, authentication, size, firewall) 6; others 6. Every entry names the next
+step.
+
+## New acquisitions and readiness (exact figures)
+
+| Source | Stratum | Class and evidence | Result |
+|---|---|---|---|
+| ClinicalTrials.gov, 12000 studies starting in 2023 | C6 | open: terms read in an archived copy (the live page needs a browser) | experiment-ready: depth 12, hundreds of paths, about 90 percent optional; investigators, officials and contacts dropped and 203 e-mail addresses in free text redacted |
+| Crossref, 2000 random works | C6 | documented as unrestricted metadata; the literal page could not be quoted | acquired and structurally valid, rights pending, not counted: depth 6, 54 paths; references leave the sample (2 of 23729) so no relation |
+| UCI 357, 360, 374, 560, 799, 849, 851 | C3 | CC BY 4.0 on the UCI page | experiment-ready after a view with an exact time format; 5 independent groups from 7 tables (357 and 374 share a research team: grouped); uci:275 (Capital Bikeshare 2011-12) left out as redundant; uci:172 and uci:492 rejected (repeated timestamps) |
+| Google ClusterData2019 | C4 | open (CC BY, README of the publisher) | not acquired: json.gz shards are 60 to 465 MB, the 11 MB parquet shard needs a parquet reader |
+| Parallel Workloads Archive | C4 | free for researchers, cite the archive | blocked: the host's firewall refused automated requests after a burst; not bypassed |
+
+Defects found while doing this: a time column parsed day-first turns ISO dates into swapped months (fixed
+earlier); e-mail addresses inside free text survived a key-based privacy filter, so a redaction step was
+added and tested.
+
+## Coverage progression (experiment-ready independent groups)
+
+| Category | Initial | New | Final | Target | Remaining gap |
+|---|---:|---:|---:|---:|---:|
+| C2b | 7 | 0 | 7 | 30 | 23 |
+| C3 | 1 | 6 | 7 | 40 | 33 |
+| C4 | 1 | 0 | 1 | 28 | 27 |
+| C5 | 4 | 0 | 4 | 36 | 32 |
+| C6 | 6 | 1 | 7 | 30 | 23 |
+
+Distinct provenance identities across categories: 21 (MHRA, NHSBSA, Montréal, Georgia, Zambia, Lyft,
+CC-IN2P3, Melbourne, Loghub, Stack Exchange, OpenAlex, openFDA, Open Food Facts, ClinicalTrials.gov,
+five C3 UCI groups); Georgia, Zambia, Montréal and OpenAlex count in several categories. C4 did not
+advance: the two largest sources are blocked by size and by a firewall.
+
+## Taxonomy note: job records
+
+CC-IN2P3 SLURM job records are operational events (usage records of a compute service), not purchases or
+payments. They stay in C2b until a taxonomy change is approved. The scientific consequence: a claim about
+payment-like transactions must exclude them (they have no amount), and the same data would fit C4 better
+(event records with a state machine). C2b without them has 6 groups.
+
+## Technical status
+
+Tests: the focused research tests and the mutation inventory pass in the complete environment (new tests
+for the study, bibliography, job, series and redaction views). Focused mutation of
+`experimental_views.py` after the additions: 2076 of 2163 killed (96.0 percent). No full campaign and no
+certification. No experiment was run.

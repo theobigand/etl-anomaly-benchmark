@@ -31,13 +31,13 @@
    "timeout": 2
   },
   "experimental_views": {
-   "killed": 1744,
-   "killed_share": 0.9609,
-   "mutants": 1815,
+   "killed": 2076,
+   "killed_share": 0.9598,
+   "mutants": 2163,
    "no_tests": 0,
-   "survived": 64,
-   "suspicious": 6,
-   "timeout": 1
+   "survived": 83,
+   "suspicious": 4,
+   "timeout": 0
   },
   "fault_protocols": {
    "killed": 843,
@@ -58,6 +58,7 @@
    "timeout": 0
   }
  },
+ "remeasured_experimental_views": "after the study, bibliography, job-record and time-series builders were added",
  "threshold_L3": 0.95,
  "tool": "mutmut 3.8.0 in the conda environment etl-benchmark (python 3.11.17)"
 }

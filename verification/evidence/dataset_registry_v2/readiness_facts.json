@@ -34,6 +34,39 @@
    "units": 319159,
    "view": "bikeshare_jc"
   },
+  "clinicaltrials_v2": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "about 90 percent of paths are optional",
+    "registrations by sponsors with sponsor-specific completeness",
+    "start dates of 2023 only",
+    "third-party copyright may apply to some text"
+   ],
+   "first_party": false,
+   "independent_group": "clinicaltrials_gov",
+   "min_units": 1000,
+   "partitions": "hash of nctId 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 12000,
+   "view": "clinicaltrials_v2"
+  },
+  "crossref_works": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "random sample of one DOI per record",
+    "depth 6 with 71 optional paths",
+    "references leave the sample"
+   ],
+   "first_party": false,
+   "independent_group": "crossref",
+   "min_units": 1000,
+   "partitions": "hash of DOI 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 2000,
+   "view": "crossref_works"
+  },
   "loghub:Android": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -695,6 +728,108 @@
    "protocol_id": "P-REL",
    "units": 15049,
    "view": "stackexchange"
+  },
+  "uci:357": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "2015-02 (16 days), one-minute steps, 2 unreadable times dropped, 2 gaps"
+   ],
+   "first_party": false,
+   "independent_group": "candanedo_umons",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the timestamp",
+   "privacy": "handled",
+   "protocol_id": "P-TS",
+   "units": 20560,
+   "view": "series"
+  },
+  "uci:360": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "2004-03 to 2005-04, hourly, no gaps; the table uses -200 as a missing-value marker",
+    "natural sentinel for missing values: a baseline, not a fault"
+   ],
+   "first_party": false,
+   "independent_group": "airquality_italy",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the timestamp",
+   "privacy": "handled",
+   "protocol_id": "P-TS",
+   "units": 9357,
+   "view": "series"
+  },
+  "uci:374": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "2016-01 to 2016-05, 10-minute steps, no gaps",
+    "same research team as the occupancy table: grouped conservatively"
+   ],
+   "first_party": false,
+   "independent_group": "candanedo_umons",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the timestamp",
+   "privacy": "handled",
+   "protocol_id": "P-TS",
+   "units": 19735,
+   "view": "series"
+  },
+  "uci:560": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "2017-12 to 2018-11, hourly, no gaps",
+    "bike demand counts with weather; UCI 275 (Capital Bikeshare 2011-12) shares an operator with the Lyft bike-share trips and is left out"
+   ],
+   "first_party": false,
+   "independent_group": "seoul_bike",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the timestamp",
+   "privacy": "handled",
+   "protocol_id": "P-TS",
+   "units": 8760,
+   "view": "series"
+  },
+  "uci:799": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "2019-11 to 2020-02, about 20-second steps, 31 gaps",
+    "home sensor data of a person: privacy reviewed as non-identifying sensor values"
+   ],
+   "first_party": false,
+   "independent_group": "elder_home",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the timestamp",
+   "privacy": "handled",
+   "protocol_id": "P-TS",
+   "units": 416153,
+   "view": "series"
+  },
+  "uci:849": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "2017, 10-minute steps, no gaps"
+   ],
+   "first_party": false,
+   "independent_group": "tetouan_power",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the timestamp",
+   "privacy": "handled",
+   "protocol_id": "P-TS",
+   "units": 52416,
+   "view": "series"
+  },
+  "uci:851": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "2018, 15-minute steps, no gaps"
+   ],
+   "first_party": false,
+   "independent_group": "steel_korea",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the timestamp",
+   "privacy": "handled",
+   "protocol_id": "P-TS",
+   "units": 35040,
+   "view": "series"
   },
   "ukspend_mhra": {
    "anomaly_origin": "controlled_injection",

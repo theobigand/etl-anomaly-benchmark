@@ -10,10 +10,10 @@ statistical power.
 | Stratum | Ready groups (datasets) | Dependence structure for later source-clustered analysis |
 |---|---|---|
 | C2b transactional | UK ledger MHRA (1), UK ledger NHSBSA (1), Montréal contracts (1), Georgia procurement (1), Zambia procurement (1), Lyft bike-share (2), CC-IN2P3 SLURM jobs (1) | MHRA and NHSBSA share a publication template; the three OCDS producers share a standard and a domain but not records or systems; the two bike-share cities share an operator and a schema; the SLURM job records are one centre and a different mechanism (compute-job events, no money) |
-| C3 time series | Melbourne pedestrian (1) | one city, one sensor network |
+| C3 time series | Melbourne pedestrian (1), air quality Italy, Seoul bike demand, elder-home monitoring, Tetouan power, steel-industry energy, Candanedo occupancy and appliances (one group) | seven groups from seven research systems; the UCI tables share the repository as curator and two share a team |
 | C4 logs | Loghub collection (16) | one curator; the 16 systems are separate systems but one group |
 | C5 relational | Stack Exchange (10 sites), OpenAlex (1), Georgia (1), Zambia (1) | the ten sites share a platform and schema; Georgia and Zambia carry only three native entity types |
-| C6 nested | openFDA events, OpenAlex, Open Food Facts, Montréal, Georgia, Zambia (1 each) | OpenAlex, Montréal, Georgia and Zambia reuse sources already counted in C2b or C5 |
+| C6 nested | openFDA events, OpenAlex, Open Food Facts, ClinicalTrials.gov, Montréal, Georgia, Zambia (1 each) | OpenAlex, Montréal, Georgia and Zambia reuse sources already counted in C2b or C5 |
 
 Cross-stratum overlap: Georgia, Zambia and Montréal appear in C2b and C6 (and Georgia and Zambia in C5),
 OpenAlex in C5 and C6. For a claim that pools strata the independent unit is the provenance

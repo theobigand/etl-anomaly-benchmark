@@ -596,6 +596,14 @@ def _raw_tree(tmp_path, monkeypatch):
         info = tarfile.TarInfo("07.tsv")
         info.size = len(data)
         tar.addfile(info, io.BytesIO(data))
+    _w(
+        root / "clinicaltrials_v2" / SNAP / "raw" / "studies_2023-01.json",
+        json.dumps({"studies": [{"protocolSection": {"identificationModule": {"nctId": "NCT1"}}}]}),
+    )
+    _w(
+        root / "crossref_works" / SNAP / "raw" / "sample_00.json",
+        json.dumps({"message": {"items": [{"DOI": "10.1/a"}]}}),
+    )
     good = "Department family,Entity,Date,Expense type,Expense area,Supplier,Transaction number,Amount\n"  # noqa: E501
     good += 'D,E,01/02/2024,Fees,A,Acme,2,"£1,000.50"\nD,E,03/02/2024,Fees,A,Beta,1,30\n'
     _w(root / "ukspend_mhra" / SNAP / "raw" / "00.csv", good)
@@ -911,12 +919,16 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     import json
 
     root = _raw_tree(tmp_path, monkeypatch)
+    monkeypatch.setattr(
+        ev, "SERIES_SPECS", {"uci:5": {"dir": "pool", "time": ["t"], "format": "%Y-%m-%d"}}
+    )
+    _w(tmp_path / "pool" / "5.csv", "t,v\n2020-01-01,1\n")
     out = tmp_path / "out"
     manifest = ev.build(root, out)
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -1499,3 +1511,345 @@ def test_the_job_builder_reads_each_month_from_its_archive_and_writes_one_sorted
     for month in ("07", "12"):
         assert f"acquired/slurm_ccin2p3/2026-11-21/raw/{month}.tsv.tar.gz" in seen
     assert [s.__name__ for s in ev.BUILD_STEPS].count("_build_slurm") == 1
+
+
+# --- generic nested views: clinical-trial records and bibliographic metadata ---------------------
+
+
+def test_nested_views_drop_the_named_keys_at_every_depth_sort_and_do_not_modify_the_input():
+    records = [
+        {"id": "b", "x": {"name": "n", "keep": [{"name": "m", "k": 1}]}, "name": "top"},
+        {"id": "a", "x": {"keep": []}},
+    ]
+    out = ev.nested_view(records, drop=frozenset(["name"]), key=lambda r: r["id"])
+    assert out == [{"id": "a", "x": {"keep": []}}, {"id": "b", "x": {"keep": [{"k": 1}]}}]
+    assert records[0]["name"] == "top" and records[0]["x"]["keep"][0]["name"] == "m"
+    assert ev.nested_view([], drop=frozenset(), key=lambda r: 0) == []
+
+
+def test_clinical_trial_views_remove_people_and_contact_details_but_keep_the_trial_structure():
+    study = {
+        "protocolSection": {
+            "identificationModule": {"nctId": "NCT2", "organization": {"fullName": "Org A"}},
+            "contactsLocationsModule": {
+                "centralContacts": [{"name": "Ann", "email": "a@b"}],
+                "overallOfficials": [{"name": "Bob", "affiliation": "U"}],
+                "locations": [{"city": "Paris", "contacts": [{"name": "Cy", "phone": "1"}]}],
+            },
+            "sponsorCollaboratorsModule": {
+                "leadSponsor": {"name": "Sponsor Inc", "class": "INDUSTRY"},
+                "responsibleParty": {
+                    "type": "PI",
+                    "investigatorFullName": "Dee",
+                    "investigatorTitle": "Dr",
+                },
+            },
+        },
+        "resultsSection": {"moreInfoModule": {"pointOfContact": {"email": "x@y"}}},
+    }
+    other = {"protocolSection": {"identificationModule": {"nctId": "NCT1"}}}
+    out = ev.clinical_trials_view([study, other])
+    assert [s["protocolSection"]["identificationModule"]["nctId"] for s in out] == ["NCT1", "NCT2"]
+    text = json.dumps(out)
+    for word in (
+        "Ann",
+        "a@b",
+        "Bob",
+        "Cy",
+        "Dee",
+        "x@y",
+        "centralContacts",
+        "overallOfficials",
+        "pointOfContact",
+    ):
+        assert word not in text
+    kept = out[1]["protocolSection"]
+    assert kept["contactsLocationsModule"]["locations"] == [{"city": "Paris"}]
+    assert kept["sponsorCollaboratorsModule"]["leadSponsor"] == {
+        "name": "Sponsor Inc",
+        "class": "INDUSTRY",
+    }
+    assert kept["sponsorCollaboratorsModule"]["responsibleParty"] == {"type": "PI"}
+    assert kept["identificationModule"]["organization"] == {"fullName": "Org A"}
+    assert frozenset(
+        ["centralContacts", "overallOfficials", "pointOfContact", "contacts", "investigatorFullName",  # noqa: E501
+         "investigatorTitle", "investigatorAffiliation"]
+    ) == ev.CT_DROP  # fmt: skip
+
+
+def test_bibliographic_views_replace_authors_by_their_count_and_sort_by_doi_without_duplicates():
+    works = [
+        {
+            "DOI": "10.2/b",
+            "title": ["T"],
+            "author": [{"name": "Ann", "ORCID": "o"}, {"name": "Bo"}],
+            "reference": [{"DOI": "x"}],
+        },
+        {"DOI": "10.1/a", "title": ["U"]},
+        {"DOI": "10.2/b", "title": ["T again"], "author": []},
+    ]
+    out = ev.crossref_view(works)
+    assert [w["DOI"] for w in out] == ["10.1/a", "10.2/b"]  # one record per DOI
+    assert out[0] == {"DOI": "10.1/a", "title": ["U"], "n_authors": 0}
+    assert (
+        out[1]["n_authors"] == 2
+        and "author" not in out[1]
+        and out[1]["reference"] == [{"DOI": "x"}]
+    )
+    assert "Ann" not in json.dumps(out) and "ORCID" not in json.dumps(out)
+
+
+def test_the_study_and_bibliography_builders_write_sorted_json_lines_and_manifests(
+    tmp_path, monkeypatch
+):
+    root = tmp_path / "acquired"
+    ct = root / "clinicaltrials_v2" / SNAP / "raw"
+    _w(
+        ct / "studies_2023-02.json",
+        json.dumps(
+            {
+                "studies": [
+                    {"protocolSection": {"identificationModule": {"nctId": "NCT2"}, "z": 1, "a": 2}}
+                ]
+            }
+        ),
+    )
+    _w(
+        ct / "studies_2023-01.json",
+        json.dumps({"studies": [{"protocolSection": {"identificationModule": {"nctId": "NCT1"}}}]}),
+    )
+    cr = root / "crossref_works" / SNAP / "raw"
+    _w(
+        cr / "sample_01.json",
+        json.dumps({"message": {"items": [{"DOI": "10.9/z", "author": [{"name": "A"}]}]}}),
+    )
+    _w(
+        cr / "sample_00.json",
+        json.dumps({"message": {"items": [{"DOI": "10.1/a"}, {"DOI": "10.9/z"}]}}),
+    )
+    seen = _accessed(monkeypatch, root)
+    manifest = {}
+    out = tmp_path / "o" / "deep"
+    ev._build_clinicaltrials(root, out, manifest)
+    ev._build_crossref(root, out, manifest)
+    lines = (out / "clinicaltrials_v2" / "studies.jsonl").read_text().splitlines()
+    assert [json.loads(x)["protocolSection"]["identificationModule"]["nctId"] for x in lines] == [
+        "NCT1",
+        "NCT2",
+    ]
+    assert (
+        lines[1]
+        == '{"protocolSection": {"a": 2, "identificationModule": {"nctId": "NCT2"}, "z": 1}}'
+    )
+    dois = [
+        json.loads(x)["DOI"]
+        for x in (out / "crossref_works" / "works.jsonl").read_text().splitlines()
+    ]
+    assert dois == ["10.1/a", "10.9/z"]
+    assert manifest["clinicaltrials_v2"]["files"] == {
+        "studies.jsonl": {"sha256": _sha(out / "clinicaltrials_v2" / "studies.jsonl"), "rows": 2}
+    }
+    assert {k: v for k, v in manifest["clinicaltrials_v2"].items() if k != "files"} == {
+        "dropped": sorted(ev.CT_DROP), "pseudonymised": [], "source_snapshot": "clinicaltrials_v2/2026-11-21",  # noqa: E501
+    }  # fmt: skip
+    assert manifest["crossref_works"]["files"]["works.jsonl"]["rows"] == 2
+    assert {k: v for k, v in manifest["crossref_works"].items() if k != "files"} == {
+        "dropped": ["author"], "pseudonymised": [], "source_snapshot": "crossref_works/2026-11-21",
+        "notes": "authors are replaced by their count; one record per DOI",
+    }  # fmt: skip
+    assert "acquired/clinicaltrials_v2/2026-11-21/raw/studies_2023-01.json" in seen
+    assert "acquired/crossref_works/2026-11-21/raw/sample_01.json" in seen
+
+
+def test_email_addresses_in_free_text_are_redacted_at_every_depth_without_touching_other_text():
+    node = {
+        "a": "write to Jo.Doe+x@lab-1.example.co.uk or sam@x.org now",
+        "b": [{"c": "no address, 3 @ 4"}, "plain@host"],
+        "d": 5,
+        "e": None,
+        "f": {"g": "a@b.cd"},
+    }
+    assert ev.redact_emails(node) == {
+        "a": "write to [email] or [email] now",
+        "b": [{"c": "no address, 3 @ 4"}, "plain@host"],
+        "d": 5,
+        "e": None,
+        "f": {"g": "[email]"},
+    }
+    assert node["a"].startswith("write to Jo.Doe")  # the input is not modified
+
+
+def test_study_views_also_redact_addresses_written_in_data_sharing_statements():
+    study = {
+        "protocolSection": {
+            "identificationModule": {"nctId": "N"},
+            "ipdSharingStatementModule": {"description": "ask me@uni.edu"},
+        }
+    }
+    out = ev.clinical_trials_view([study])
+    assert out[0]["protocolSection"]["ipdSharingStatementModule"]["description"] == "ask [email]"
+
+
+# --- time-series tables with a verified time column ---------------------------------------------
+
+
+def test_series_views_parse_the_declared_format_drop_unreadable_times_and_keep_numeric_columns():
+    raw = pd.DataFrame(
+        {
+            "Date": ["3/10/2004", "3/11/2004", "13/45/2004", "3/10/2004"],
+            "Time": ["18:00:00", "19:00:00", "00:00:00", "17:00:00"],
+            "CO": ["2.6", "2", "9", "x"],
+            "label": ["a", "b", "c", "d"],
+        }
+    )
+    spec = {"time": ["Date", "Time"], "format": "%m/%d/%Y %H:%M:%S"}
+    out = ev.series_view(raw, spec)
+    assert list(out.columns) == ["timestamp", "CO"]
+    assert out["timestamp"].tolist() == [
+        pd.Timestamp("2004-03-10 17:00:00"),
+        pd.Timestamp("2004-03-10 18:00:00"),
+        pd.Timestamp("2004-03-11 19:00:00"),
+    ]
+    assert out["CO"].isna().tolist() == [True, False, False]  # an unreadable value stays missing
+    assert out["CO"].iloc[1] == 2.6
+    assert out.attrs == {"rows_dropped": 1}
+    assert len(raw) == 4
+
+
+def test_series_views_add_an_hour_column_and_handle_a_single_time_column():
+    raw = pd.DataFrame(
+        {"Date": ["1/12/2017", "1/12/2017"], "Hour": ["1", "0"], "Rented": ["10", "5"]}
+    )
+    spec = {"time": ["Date"], "format": "%d/%m/%Y", "hour": "Hour"}
+    out = ev.series_view(raw, spec)
+    assert out["timestamp"].tolist() == [
+        pd.Timestamp("2017-12-01 00:00"),
+        pd.Timestamp("2017-12-01 01:00"),
+    ]
+    assert list(out.columns) == ["timestamp", "Rented"] and out["Rented"].tolist() == [5.0, 10.0]
+    iso = pd.DataFrame(
+        {"t": ["2019-11-06 11:37:13+01:00", "2019-11-06 11:37:12+01:00"], "v": ["1", "2"]}
+    )
+    parsed = ev.series_view(iso, {"time": ["t"], "format": "ISO8601"})
+    assert parsed["v"].tolist() == [2.0, 1.0] and str(parsed["timestamp"].dtype).startswith(
+        "datetime64"
+    )
+    bom = pd.DataFrame({"﻿date": ["01/01/2018 00:15"], "k": ["3"]})
+    assert ev.series_view(bom, {"time": ["date"], "format": "%d/%m/%Y %H:%M"})["k"].tolist() == [
+        3.0
+    ]
+    with pytest.raises(ev.ViewError, match="time column"):
+        ev.series_view(raw, {"time": ["nope"], "format": "%d/%m/%Y"})
+
+
+def test_the_series_builder_reads_pool_and_wave2_tables_and_writes_sorted_views(
+    tmp_path, monkeypatch
+):
+    root = tmp_path / "acquired"
+    root.mkdir()
+    specs = {
+        "uci:5": {"dir": "pool", "time": ["date"], "format": "%Y-%m-%d %H:%M:%S"},
+        "uci:6": {"dir": "uci_wave2", "time": ["d"], "format": "%m/%d/%Y"},
+    }
+    monkeypatch.setattr(ev, "SERIES_SPECS", specs)
+    _w(tmp_path / "pool" / "5.csv", "id,date,v\n1,2015-02-04 17:52:00,2\n2,2015-02-04 17:51:00,1\n")
+    _w(tmp_path / "uci_wave2" / "6.csv", "d,w\n1/2/1998,3\n1/1/1998,4\n")
+    seen = _accessed(monkeypatch, root)
+    manifest = {}
+    ev._build_series(root, tmp_path / "o" / "deep", manifest)
+    assert (
+        tmp_path / "o" / "deep" / "series" / "uci_5.csv"
+    ).read_text() == "timestamp,id,v\n2015-02-04 17:51:00,2,1\n2015-02-04 17:52:00,1,2\n"
+    assert (
+        tmp_path / "o" / "deep" / "series" / "uci_6.csv"
+    ).read_text() == "timestamp,w\n1998-01-01,4\n1998-01-02,3\n"
+    assert list(manifest["series"]["files"]) == ["uci_5.csv", "uci_6.csv"]
+    assert manifest["series"]["files"]["uci_5.csv"] == {
+        "sha256": _sha(tmp_path / "o" / "deep" / "series" / "uci_5.csv"),
+        "rows": 2,
+    }
+    assert manifest["series"]["dropped"] == []
+    assert (
+        manifest["series"]["source_snapshot"]
+        == "data/pool and data/uci_wave2 tables, pinned by the pool manifests"
+    )
+    assert manifest["series"]["rows_dropped"] == {"uci:5": 0, "uci:6": 0}
+    assert "pool/5.csv" in seen and "uci_wave2/6.csv" in seen
+    assert set(ev.SERIES_SPECS) == set(specs)
+
+
+def test_the_new_builders_create_missing_parents_twice_and_write_exact_paths_and_sorted_keys(
+    tmp_path, monkeypatch
+):
+    import builtins
+    import io
+
+    root = tmp_path / "acquired"
+    ct = root / "clinicaltrials_v2" / SNAP / "raw"
+    _w(
+        ct / "studies_2023-01.json",
+        json.dumps({"studies": [{"protocolSection": {"identificationModule": {"nctId": "N1"}}}]}),
+    )
+    cr = root / "crossref_works" / SNAP / "raw"
+    _w(
+        cr / "sample_00.json",
+        json.dumps(
+            {"message": {"items": [{"title": ["t"], "DOI": "10.1/a", "author": [{"name": "A"}]}]}}
+        ),
+    )
+    _w(tmp_path / "pool" / "5.csv", "t,v\n2020-01-01,1\n")
+    monkeypatch.setattr(
+        ev, "SERIES_SPECS", {"uci:5": {"dir": "pool", "time": ["t"], "format": "%Y-%m-%d"}}
+    )
+    out = tmp_path / "o" / "deep"
+    written = []
+    real_open = builtins.open
+
+    def spy(file, mode="r", *a, **k):
+        if "w" in mode and str(file).startswith(str(out)):
+            written.append(str(file)[len(str(out)) + 1 :])
+        return real_open(file, mode, *a, **k)
+
+    monkeypatch.setattr(builtins, "open", spy)
+    monkeypatch.setattr(io, "open", spy)
+    for step in (ev._build_clinicaltrials, ev._build_crossref, ev._build_series):
+        manifest = {}
+        step(root, out, manifest)
+        step(root, out, manifest)  # a second run over existing directories
+    assert sorted(set(written)) == [
+        "clinicaltrials_v2/studies.jsonl",
+        "crossref_works/works.jsonl",
+        "series/uci_5.csv",
+    ]
+    text = (out / "crossref_works" / "works.jsonl").read_text()
+    assert text == '{"DOI": "10.1/a", "n_authors": 1, "title": ["t"]}\n'  # keys in sorted order
+
+
+def test_series_edge_cases_stable_order_unreadable_hours_and_the_error_message():
+    raw = pd.DataFrame(
+        {
+            "t": ["2020-01-01", "2020-01-01", "2020-01-01"],
+            "k": ["a", "b", "c"],
+            "v": ["3", "1", "2"],
+        }
+    )
+    out = ev.series_view(raw, {"time": ["t"], "format": "%Y-%m-%d"})
+    assert out["v"].tolist() == [3.0, 1.0, 2.0]  # equal timestamps keep their file order
+    hours = pd.DataFrame({"d": ["01/01/2020", "01/01/2020"], "h": ["x", "2"], "v": ["1", "2"]})
+    parsed = ev.series_view(hours, {"time": ["d"], "format": "%d/%m/%Y", "hour": "h"})
+    assert parsed["v"].tolist() == [2.0] and parsed.attrs["rows_dropped"] == 1
+    wide = pd.DataFrame({f"c{i}": [1] for i in range(8)})
+    with pytest.raises(ev.ViewError) as info:
+        ev.series_view(wide, {"time": ["missing"], "format": "%Y"})
+    assert str(info.value) == "time column not found in ['c0', 'c1', 'c2', 'c3', 'c4', 'c5']"
+    assert set(ev.SERIES_SPECS) == {
+        "uci:357",
+        "uci:360",
+        "uci:374",
+        "uci:560",
+        "uci:799",
+        "uci:849",
+        "uci:851",
+        "uci:172",
+        "uci:492",
+    }

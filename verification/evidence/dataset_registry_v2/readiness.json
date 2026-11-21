@@ -539,6 +539,98 @@
   },
   {
    "failed": null,
+   "group": "clinicaltrials_gov",
+   "id": "clinicaltrials_v2",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": "crossref",
+   "id": "crossref_works",
+   "status": "discovered",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "candanedo_umons",
+   "id": "uci:357",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "candanedo_umons",
+   "id": "uci:374",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "airquality_italy",
+   "id": "uci:360",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "seoul_bike",
+   "id": "uci:560",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "elder_home",
+   "id": "uci:799",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "tetouan_power",
+   "id": "uci:849",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "steel_korea",
+   "id": "uci:851",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "uci:172",
+   "status": "acquired",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "uci:492",
+   "status": "acquired",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -661,7 +753,13 @@
    "zambia_procurement"
   ],
   "C3": [
-   "melbourne_pedestrian"
+   "airquality_italy",
+   "candanedo_umons",
+   "elder_home",
+   "melbourne_pedestrian",
+   "seoul_bike",
+   "steel_korea",
+   "tetouan_power"
   ],
   "C4": [
    "loghub_collection"
@@ -673,6 +771,7 @@
    "zambia_procurement"
   ],
   "C6": [
+   "clinicaltrials_gov",
    "georgia_procurement",
    "montreal_contracts",
    "openalex",
@@ -692,13 +791,13 @@
    "structurally_valid": 8
   },
   "C3": {
-   "acquired": 2,
-   "discovered": 21,
-   "experiment_ready": 1,
-   "protocol_ready": 1,
-   "rights_verified": 2,
-   "scientifically_eligible": 1,
-   "structurally_valid": 2
+   "acquired": 11,
+   "discovered": 30,
+   "experiment_ready": 8,
+   "protocol_ready": 8,
+   "rights_verified": 11,
+   "scientifically_eligible": 8,
+   "structurally_valid": 9
   },
   "C4": {
    "acquired": 16,
@@ -719,13 +818,13 @@
    "structurally_valid": 13
   },
   "C6": {
-   "acquired": 6,
-   "discovered": 8,
-   "experiment_ready": 6,
-   "protocol_ready": 6,
-   "rights_verified": 6,
-   "scientifically_eligible": 6,
-   "structurally_valid": 6
+   "acquired": 7,
+   "discovered": 10,
+   "experiment_ready": 7,
+   "protocol_ready": 7,
+   "rights_verified": 7,
+   "scientifically_eligible": 7,
+   "structurally_valid": 7
   }
  }
 }

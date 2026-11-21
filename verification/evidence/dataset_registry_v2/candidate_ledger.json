@@ -1,0 +1,798 @@
+{
+ "date": "2026-11-21",
+ "note": "candidates discovered by Zenodo keyword search (queries recorded in the report) and by publisher probes; discovery is not acquisition; counts per status are in the report",
+ "candidates": [
+  {
+   "id": "clinicaltrials_v2",
+   "name": "ClinicalTrials.gov study records (2023 starts)",
+   "publisher": "US National Library of Medicine",
+   "categories": [
+    "C6"
+   ],
+   "licence": "terms read in an archived copy: free use with conditions",
+   "status": "experiment_ready",
+   "reason": "depth 12, 336+ paths, about 90 percent optional",
+   "next_step": "none",
+   "source_url": "https://clinicaltrials.gov/data-api/api",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "crossref_works",
+   "name": "Crossref works (random sample)",
+   "publisher": "Crossref",
+   "categories": [
+    "C6"
+   ],
+   "licence": "documented unrestricted metadata; literal quotation pending",
+   "status": "acquired_rights_pending",
+   "reason": "depth 6 nested; references leave the sample",
+   "next_step": "quote the licence statement literally, then promote",
+   "source_url": "https://api.crossref.org/works",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "uci:357",
+   "name": "UCI time-series table",
+   "publisher": "UCI repository donors",
+   "categories": [
+    "C3"
+   ],
+   "licence": "CC BY 4.0 on the UCI page",
+   "status": "experiment_ready",
+   "reason": "time column verified, exact format view",
+   "next_step": "none",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "uci:360",
+   "name": "UCI time-series table",
+   "publisher": "UCI repository donors",
+   "categories": [
+    "C3"
+   ],
+   "licence": "CC BY 4.0 on the UCI page",
+   "status": "experiment_ready",
+   "reason": "time column verified, exact format view",
+   "next_step": "none",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "uci:374",
+   "name": "UCI time-series table",
+   "publisher": "UCI repository donors",
+   "categories": [
+    "C3"
+   ],
+   "licence": "CC BY 4.0 on the UCI page",
+   "status": "experiment_ready",
+   "reason": "time column verified, exact format view",
+   "next_step": "none",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "uci:560",
+   "name": "UCI time-series table",
+   "publisher": "UCI repository donors",
+   "categories": [
+    "C3"
+   ],
+   "licence": "CC BY 4.0 on the UCI page",
+   "status": "experiment_ready",
+   "reason": "time column verified, exact format view",
+   "next_step": "none",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "uci:799",
+   "name": "UCI time-series table",
+   "publisher": "UCI repository donors",
+   "categories": [
+    "C3"
+   ],
+   "licence": "CC BY 4.0 on the UCI page",
+   "status": "experiment_ready",
+   "reason": "time column verified, exact format view",
+   "next_step": "none",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "uci:849",
+   "name": "UCI time-series table",
+   "publisher": "UCI repository donors",
+   "categories": [
+    "C3"
+   ],
+   "licence": "CC BY 4.0 on the UCI page",
+   "status": "experiment_ready",
+   "reason": "time column verified, exact format view",
+   "next_step": "none",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "uci:851",
+   "name": "UCI time-series table",
+   "publisher": "UCI repository donors",
+   "categories": [
+    "C3"
+   ],
+   "licence": "CC BY 4.0 on the UCI page",
+   "status": "experiment_ready",
+   "reason": "time column verified, exact format view",
+   "next_step": "none",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "uci:172",
+   "name": "Ozone Level Detection",
+   "publisher": "UCI",
+   "categories": [
+    "C3"
+   ],
+   "licence": "CC BY 4.0 (UCI page)",
+   "status": "structurally_unsuitable",
+   "reason": "several series share one file (repeated timestamps)",
+   "next_step": "split by the Dataset column into separate series",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "uci:492",
+   "name": "Metro Interstate Traffic Volume",
+   "publisher": "UCI",
+   "categories": [
+    "C3"
+   ],
+   "licence": "CC BY 4.0 (UCI page)",
+   "status": "structurally_unsuitable",
+   "reason": "repeated timestamps per hour",
+   "next_step": "aggregate per hour with a documented rule",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "uci:275",
+   "name": "Bike Sharing (Capital Bikeshare 2011-12)",
+   "publisher": "UCI / Capital Bikeshare",
+   "categories": [
+    "C3"
+   ],
+   "licence": "CC BY 4.0 (UCI page)",
+   "status": "redundant",
+   "reason": "same operator as the Lyft trips already counted",
+   "next_step": "keep only if grouped with lyft_bikeshare",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:14564935",
+   "name": "DataCenter-Traces-Datasets (VM CPU readings)",
+   "publisher": "Zenodo depositor",
+   "categories": [
+    "C3",
+    "C4"
+   ],
+   "licence": "cc-by-4.0 (Zenodo record)",
+   "status": "accessible_eligible",
+   "reason": "small (1 MB) data-centre VM telemetry",
+   "next_step": "acquire, read provenance of the traces, build a series view",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:24396501",
+   "name": "Notaufnahmesurveillance (emergency departments)",
+   "publisher": "Robert Koch-Institut",
+   "categories": [
+    "C3"
+   ],
+   "licence": "cc-by-4.0 (Zenodo record by the institute)",
+   "status": "accessible_eligible",
+   "reason": "German public-health surveillance series (29 MB); one publisher",
+   "next_step": "acquire with the other RKI surveillance series as one family",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:24388435",
+   "name": "COVID-19 hospitalisations in Germany",
+   "publisher": "Robert Koch-Institut",
+   "categories": [
+    "C3"
+   ],
+   "licence": "cc-by-4.0",
+   "status": "accessible_eligible",
+   "reason": "RKI daily series",
+   "next_step": "same family as the other RKI series",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:12697471",
+   "name": "COVID-19 vaccinations in Germany",
+   "publisher": "Robert Koch-Institut",
+   "categories": [
+    "C3"
+   ],
+   "licence": "cc-by-4.0",
+   "status": "accessible_eligible",
+   "reason": "RKI daily series",
+   "next_step": "same family",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:24397792",
+   "name": "Intensive-care capacity register",
+   "publisher": "RKI / DIVI",
+   "categories": [
+    "C3"
+   ],
+   "licence": "cc-by-4.0",
+   "status": "accessible_eligible",
+   "reason": "hospital reporting register, another producer inside the RKI deposit",
+   "next_step": "check producer independence",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:820576",
+   "name": "Automotive sensor data (AEGIS)",
+   "publisher": "AEGIS Big Data Project",
+   "categories": [
+    "C3"
+   ],
+   "licence": "cc-by-4.0",
+   "status": "accessible_eligible",
+   "reason": "37 MB vehicle sensor series",
+   "next_step": "inspect structure",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:7766691",
+   "name": "MetroPT2 predictive maintenance (metro compressor sensors)",
+   "publisher": "Porto metro researchers",
+   "categories": [
+    "C3"
+   ],
+   "licence": "cc-by-4.0",
+   "status": "needs_bounded_extraction",
+   "reason": "2.8 GB CSV",
+   "next_step": "range or chunked read of a bounded window",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:7224854",
+   "name": "ENTSO-E PECD in Parquet",
+   "publisher": "ENTSO-E",
+   "categories": [
+    "C3"
+   ],
+   "licence": "cc-by-4.0 (Zenodo)",
+   "status": "needs_parquet_reader",
+   "reason": "2.9 GB parquet; upstream terms to read",
+   "next_step": "add an optional parquet dependency only if justified",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:6647220",
+   "name": "NYC telematics with asynchronous sampling",
+   "publisher": "Zenodo depositors",
+   "categories": [
+    "C3",
+    "C2b"
+   ],
+   "licence": "cc-by-4.0",
+   "status": "accessible_eligible",
+   "reason": "vehicle telemetry (25 MB)",
+   "next_step": "inspect structure and provenance",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:6723265",
+   "name": "Bristol ANPR data",
+   "publisher": "Bristol City Council",
+   "categories": [
+    "C2b",
+    "C3"
+   ],
+   "licence": "cc-by-4.0 (Zenodo)",
+   "status": "accessible_privacy_review",
+   "reason": "933 MB plate-recognition events; personal data risk (vehicle identifiers)",
+   "next_step": "privacy review before any acquisition",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:19691950",
+   "name": "Global Transnational Mobility Dataset 2.0",
+   "publisher": "Zenodo authors",
+   "categories": [
+    "C2b"
+   ],
+   "licence": "cc-by-4.0",
+   "status": "accessible_eligible",
+   "reason": "trip records (279 MB)",
+   "next_step": "bounded extraction",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:16947276",
+   "name": "Idling positions and trips of shared mobility vehicles",
+   "publisher": "Zenodo authors",
+   "categories": [
+    "C2b"
+   ],
+   "licence": "odc-odbl",
+   "status": "needs_parquet_reader",
+   "reason": "706 MB parquet",
+   "next_step": "parquet reader decision",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:3549604",
+   "name": "Multi-source distributed system data for AI analytics",
+   "publisher": "Zenodo authors",
+   "categories": [
+    "C4"
+   ],
+   "licence": "cc-by-4.0",
+   "status": "needs_bounded_extraction",
+   "reason": "650 MB logs and traces of a testbed",
+   "next_step": "check whether real or generated",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:7119953",
+   "name": "CLUE cloud user-entity behaviour logs",
+   "publisher": "Zenodo authors",
+   "categories": [
+    "C4"
+   ],
+   "licence": "cc-by-4.0",
+   "status": "needs_bounded_extraction",
+   "reason": "635 MB Azure AD style logs",
+   "next_step": "check real or synthetic",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:8263181",
+   "name": "AIT Alert Data Set",
+   "publisher": "Austrian Institute of Technology",
+   "categories": [
+    "C4"
+   ],
+   "licence": "cc-by-4.0",
+   "status": "synthetic_testbed",
+   "reason": "simulated attacks on a testbed, labelled",
+   "next_step": "keep as simulated complement, outside natural counts",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:3746129",
+   "name": "Traffic and log data from a cyber defence exercise",
+   "publisher": "CSIRT Masaryk University",
+   "categories": [
+    "C4"
+   ],
+   "licence": "cc-by-4.0",
+   "status": "synthetic_exercise",
+   "reason": "exercise traffic, not production",
+   "next_step": "keep outside natural counts",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:10462796",
+   "name": "ROAD CAN intrusion dataset",
+   "publisher": "ORNL",
+   "categories": [
+    "C4"
+   ],
+   "licence": "cc-by-4.0",
+   "status": "synthetic_attacks",
+   "reason": "real car traffic with staged attacks",
+   "next_step": "keep as injected-attack complement",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:7108614",
+   "name": "IEC 60870-5-104 intrusion detection dataset",
+   "publisher": "University of Western Macedonia",
+   "categories": [
+    "C4"
+   ],
+   "licence": "cc-by-4.0",
+   "status": "synthetic_testbed",
+   "reason": "testbed traffic 1 GB",
+   "next_step": "outside natural counts",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:3369582",
+   "name": "3PFL patents and publications with public-funding linkage",
+   "publisher": "Zenodo authors",
+   "categories": [
+    "C5"
+   ],
+   "licence": "cc-by-4.0",
+   "status": "accessible_eligible",
+   "reason": "multi-table CSV (38 MB), procurement links; relation completeness unknown",
+   "next_step": "acquire, measure foreign keys",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:24274793",
+   "name": "Paleobiology Database denormalised tables",
+   "publisher": "PBDB",
+   "categories": [
+    "C5"
+   ],
+   "licence": "cc-by-4.0",
+   "status": "accessible_denormalised",
+   "reason": "736 MB; denormalised tables are not native relations",
+   "next_step": "check for a relational export",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:7788422",
+   "name": "Swiss Dwellings",
+   "publisher": "EPFL authors",
+   "categories": [
+    "C5",
+    "C6"
+   ],
+   "licence": "cc-by-4.0",
+   "status": "needs_bounded_extraction",
+   "reason": "932 MB apartment models with relations",
+   "next_step": "inspect structure",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:3758705",
+   "name": "BPMAI process model collection",
+   "publisher": "BPM Academic Initiative",
+   "categories": [
+    "C6",
+    "C4"
+   ],
+   "licence": "cc-by-3.0",
+   "status": "needs_bounded_extraction",
+   "reason": "388 MB of XML and JSON process models",
+   "next_step": "sample, then structure check",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:7118517",
+   "name": "PURE public requirements documents",
+   "publisher": "Zenodo authors",
+   "categories": [
+    "C6"
+   ],
+   "licence": "cc-by-4.0",
+   "status": "accessible_eligible",
+   "reason": "XML documents of public requirements (34 MB)",
+   "next_step": "structure check; text-heavy",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:18668107",
+   "name": "CC-IN2P3 SLURM jobs",
+   "publisher": "CC-IN2P3",
+   "categories": [
+    "C2b",
+    "C4"
+   ],
+   "licence": "cc-by-4.0",
+   "status": "experiment_ready",
+   "reason": "counted in C2b; operational job events",
+   "next_step": "taxonomy review: C4-like operational events, kept in C2b until decided",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:13625495",
+   "name": "SURF Lisa HPC traces",
+   "publisher": "SURF",
+   "categories": [
+    "C3",
+    "C4"
+   ],
+   "licence": "cc-by-4.0",
+   "status": "needs_parquet_reader",
+   "reason": "SLURM table 16 MB parquet; monitoring 10 GB",
+   "next_step": "parquet reader decision",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "zenodo:11467483",
+   "name": "F-DATA Fugaku job dataset",
+   "publisher": "RIKEN-related authors",
+   "categories": [
+    "C4",
+    "C2b"
+   ],
+   "licence": "cc-by-4.0",
+   "status": "needs_bounded_extraction",
+   "reason": "27 GB parquet",
+   "next_step": "one month, parquet",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "ncei:ghcn-daily",
+   "name": "GHCN-Daily station files",
+   "publisher": "NOAA NCEI",
+   "categories": [
+    "C3"
+   ],
+   "licence": "US Government data; the readme states conditions to be read",
+   "status": "permission_pending",
+   "reason": "one network aggregating many national services; stations are not independent families",
+   "next_step": "read the NCEI use statement literally; choose stations as one family",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "opsd:time_series",
+   "name": "Open Power System Data time series",
+   "publisher": "OPSD (compiler)",
+   "categories": [
+    "C3"
+   ],
+   "licence": "CC BY 4.0 for the package; upstream ENTSO-E and others",
+   "status": "permission_pending",
+   "reason": "compiler's licence does not replace upstream terms",
+   "next_step": "read the ENTSO-E transparency terms",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "google:clusterdata2019",
+   "name": "Google ClusterData2019 (Borg cells a to h)",
+   "publisher": "Google",
+   "categories": [
+    "C4"
+   ],
+   "licence": "CC BY 4.0 (README of google/cluster-data)",
+   "status": "acquisition_blocked_by_size",
+   "reason": "json.gz shards are 60 to 465 MB; a parquet shard of 11 MB needs a parquet reader",
+   "next_step": "add Range-bounded reads or a parquet reader",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "pwa:logs",
+   "name": "Parallel Workloads Archive (30 job logs from different sites)",
+   "publisher": "Feitelson / HUJI curator; original sites",
+   "categories": [
+    "C4"
+   ],
+   "licence": "free for researchers, cite the archive (archive page)",
+   "status": "temporarily_inaccessible",
+   "reason": "the host's web firewall blocked automated requests after a burst; not bypassed",
+   "next_step": "retry politely later with one request per minute; per-log terms to read; each site is a separate machine",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "chicago:taxi-trips-2024",
+   "name": "Chicago taxi trips 2024",
+   "publisher": "City of Chicago",
+   "categories": [
+    "C2b"
+   ],
+   "licence": "portal licence field reads 'See Terms of Use'",
+   "status": "permission_pending",
+   "reason": "real trip events with fares and tips",
+   "next_step": "read the City of Chicago data terms literally",
+   "source_url": "https://data.cityofchicago.org/api/views/ajtu-isnz.json",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "openlibrary:dumps",
+   "name": "Open Library data dumps",
+   "publisher": "Internet Archive",
+   "categories": [
+    "C5",
+    "C6"
+   ],
+   "licence": "no new rights asserted by the publisher; contributions may carry rights",
+   "status": "needs_bounded_extraction",
+   "reason": "multi-GB dumps; works, authors, editions relations",
+   "next_step": "stream the first part of a dump and record the cut",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "clinicaltrials:aact",
+   "name": "AACT relational database of ClinicalTrials.gov",
+   "publisher": "CTTI",
+   "categories": [
+    "C5"
+   ],
+   "licence": "requires registration; separate terms",
+   "status": "permission_pending",
+   "reason": "relational view of the same registry as ClinicalTrials.gov",
+   "next_step": "read AACT terms; same provenance family as clinicaltrials_gov",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "tenderned:ocds",
+   "name": "TenderNed OCDS",
+   "publisher": "TenderNed",
+   "categories": [
+    "C2b",
+    "C6"
+   ],
+   "licence": "no licence stated at the publisher",
+   "status": "unclear",
+   "reason": "public availability is not permission",
+   "next_step": "write to the publisher or find a licence statement",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "usaspending:contracts",
+   "name": "USAspending contract archives",
+   "publisher": "US Treasury",
+   "categories": [
+    "C2b",
+    "C6"
+   ],
+   "licence": "public domain by law",
+   "status": "blocked_tls",
+   "reason": "archive host chain does not verify with the Python trust store",
+   "next_step": "decide on a trust-store option, never disable verification",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "nyc:tlc",
+   "name": "NYC TLC trip records",
+   "publisher": "NYC TLC",
+   "categories": [
+    "C2b"
+   ],
+   "licence": "agency terms page refused automated access",
+   "status": "blocked_access",
+   "reason": "403 to automated requests",
+   "next_step": "wait for a documented bulk licence",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "kaggle:olist",
+   "name": "Olist Brazilian e-commerce orders",
+   "publisher": "Olist via Kaggle",
+   "categories": [
+    "C2b",
+    "C5"
+   ],
+   "licence": "CC BY-NC-SA 4.0 per a secondary source",
+   "status": "authentication_required",
+   "reason": "login required",
+   "next_step": "read the Kaggle terms with an authorised account, if the owner allows",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "relbench:upstreams",
+   "name": "RelBench upstream databases",
+   "publisher": "Stanford and upstream owners",
+   "categories": [
+    "C5"
+   ],
+   "licence": "tooling Apache-2.0; each database has its own upstream terms",
+   "status": "permission_pending",
+   "reason": "per-database terms unread",
+   "next_step": "read Kaggle, Stack Exchange, Ergast and AACT terms",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "ctu:relational",
+   "name": "CTU Prague relational repository",
+   "publisher": "CTU Prague",
+   "categories": [
+    "C5"
+   ],
+   "licence": "no licence on the about page",
+   "status": "unclear",
+   "reason": "148 databases, rights unclear",
+   "next_step": "ask the maintainers or read each database's origin",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  },
+  {
+   "id": "monash:12-families",
+   "name": "Remaining Monash families",
+   "publisher": "Monash compilation and originals",
+   "categories": [
+    "C3"
+   ],
+   "licence": "compiler CC BY 4.0; upstream mostly unread",
+   "status": "permission_pending",
+   "reason": "AEMO, Saugeen, US births unresolved; KDD Cup, NN5, Tourism not read",
+   "next_step": "read each upstream publisher",
+   "source_url": "",
+   "size": null,
+   "notes": ""
+  }
+ ]
+}

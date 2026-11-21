@@ -745,6 +745,164 @@ def _build_ukspend(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+def nested_view(
+    records: list[dict[str, Any]], drop: frozenset[str], key: Any
+) -> list[dict[str, Any]]:
+    """Records without the named keys at every depth, in a fixed order; the input is untouched."""
+    return sorted((_strip(r, drop) for r in records), key=key)
+
+
+#: person and contact keys of ClinicalTrials.gov study records, dropped at every depth
+CT_DROP = frozenset(
+    [
+        "centralContacts",
+        "overallOfficials",
+        "pointOfContact",
+        "contacts",
+        "investigatorFullName",
+        "investigatorTitle",
+        "investigatorAffiliation",
+    ]
+)
+
+
+_EMAIL = re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+")
+
+
+def redact_emails(node: Any) -> Any:
+    """The same structure with every e-mail address inside a string replaced by ``[email]``."""
+    if isinstance(node, dict):
+        return {k: redact_emails(v) for k, v in node.items()}
+    if isinstance(node, list):
+        return [redact_emails(v) for v in node]
+    if isinstance(node, str):
+        return _EMAIL.sub("[email]", node)
+    return node
+
+
+def clinical_trials_view(studies: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Study records without investigators, officials and contacts; addresses in text redacted."""
+    kept = nested_view(
+        studies, CT_DROP, lambda s: s["protocolSection"]["identificationModule"]["nctId"]
+    )
+    return [redact_emails(s) for s in kept]
+
+
+def crossref_view(works: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """One record per DOI, authors (names, ORCID iDs, affiliations) replaced by their number."""
+    unique = {}
+    for work in works:
+        unique.setdefault(work["DOI"], work)
+    out = []
+    for work in nested_view(list(unique.values()), frozenset(["author"]), lambda w: w["DOI"]):
+        out.append({**work, "n_authors": len(unique[work["DOI"]].get("author", []))})
+    return out
+
+
+def _build_clinicaltrials(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    studies: list[dict[str, Any]] = []
+    for path in sorted((root / "clinicaltrials_v2" / SNAPSHOT / "raw").glob("studies_*.json")):
+        studies += json.loads(path.read_text())["studies"]
+    view = clinical_trials_view(studies)
+    folder = out / "clinicaltrials_v2"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "studies.jsonl"
+    target.write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in view))
+    _record(
+        manifest,
+        "clinicaltrials_v2",
+        {"studies.jsonl": (target, len(view))},
+        dropped=sorted(CT_DROP),
+        pseudonymised=[],
+        source_snapshot=f"clinicaltrials_v2/{SNAPSHOT}",
+    )
+
+
+def _build_crossref(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    works: list[dict[str, Any]] = []
+    for path in sorted((root / "crossref_works" / SNAPSHOT / "raw").glob("sample_*.json")):
+        works += json.loads(path.read_text())["message"]["items"]
+    view = crossref_view(works)
+    folder = out / "crossref_works"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "works.jsonl"
+    target.write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in view))
+    _record(
+        manifest,
+        "crossref_works",
+        {"works.jsonl": (target, len(view))},
+        dropped=["author"],
+        pseudonymised=[],
+        source_snapshot=f"crossref_works/{SNAPSHOT}",
+        notes="authors are replaced by their count; one record per DOI",
+    )
+
+
+#: time-series tables of the pools: the file folder, the time column(s) and their exact format
+SERIES_SPECS: dict[str, dict[str, Any]] = {
+    "uci:357": {"dir": "pool", "time": ["date"], "format": "%Y-%m-%d %H:%M:%S"},
+    "uci:360": {"dir": "pool", "time": ["Date", "Time"], "format": "%m/%d/%Y %H:%M:%S"},
+    "uci:374": {"dir": "pool", "time": ["date"], "format": "%Y-%m-%d%H:%M:%S"},
+    "uci:560": {"dir": "pool", "time": ["Date"], "format": "%d/%m/%Y", "hour": "Hour"},
+    "uci:799": {"dir": "pool", "time": ["timestamp"], "format": "ISO8601"},
+    "uci:849": {"dir": "pool", "time": ["DateTime"], "format": "%m/%d/%Y %H:%M"},
+    "uci:851": {"dir": "pool", "time": ["date"], "format": "%d/%m/%Y %H:%M"},
+    "uci:172": {"dir": "uci_wave2", "time": ["Date"], "format": "%m/%d/%Y"},
+    "uci:492": {"dir": "uci_wave2", "time": ["date_time"], "format": "%Y-%m-%d %H:%M:%S"},
+}
+
+
+def series_view(raw: pd.DataFrame, spec: dict[str, Any]) -> pd.DataFrame:
+    """A table in time order with a parsed ``timestamp`` and its numeric columns.
+
+    The time columns are joined with a space and parsed with the exact declared format; a row whose
+    time cannot be read is dropped and counted (``attrs["rows_dropped"]``), never guessed. Other
+    columns are read as numbers (unreadable values become missing); text columns are dropped.
+    """
+    frame = raw.rename(columns=lambda c: str(c).lstrip("\ufeff"))
+    if not all(c in frame.columns for c in spec["time"]):
+        raise ViewError(f"time column not found in {list(frame.columns)[:6]}")
+    joined = frame[spec["time"]].astype(str).agg(" ".join, axis=1)
+    stamps = pd.to_datetime(joined, format=spec["format"], errors="coerce")
+    hour = spec.get("hour")
+    if hour:
+        stamps = stamps + pd.to_timedelta(pd.to_numeric(frame[hour], errors="coerce"), unit="h")
+    used = {*spec["time"], *([hour] if hour else [])}
+    numeric = {
+        c: pd.to_numeric(frame[c], errors="coerce")
+        for c in frame.columns
+        if c not in used and pd.to_numeric(frame[c], errors="coerce").notna().any()
+    }
+    out = pd.DataFrame({"timestamp": stamps, **numeric})
+    kept = out[out["timestamp"].notna()].sort_values("timestamp", kind="stable")
+    kept = kept.reset_index(drop=True)
+    kept.attrs = {"rows_dropped": int(len(out) - len(kept))}
+    return kept
+
+
+def _build_series(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    folder = out / "series"
+    folder.mkdir(parents=True, exist_ok=True)
+    files, dropped = {}, {}
+    for identity, spec in SERIES_SPECS.items():
+        number = identity.split(":", 1)[1]
+        raw = pd.read_csv(root.parent / spec["dir"] / f"{number}.csv", low_memory=False)
+        view = series_view(raw, spec)
+        target = folder / f"uci_{number}.csv"
+        view.to_csv(target, index=False)
+        files[target.name] = (target, len(view))
+        dropped[identity] = view.attrs["rows_dropped"]
+    _record(
+        manifest,
+        "series",
+        files,
+        dropped=[],
+        pseudonymised=[],
+        rows_dropped=dropped,
+        source_snapshot="data/pool and data/uci_wave2 tables, pinned by the pool manifests",
+    )
+
+
 SLURM_MODULO = 20
 SLURM_COLUMNS = (
     "jobid",
@@ -827,6 +985,9 @@ BUILD_STEPS = (
     _build_ocds,
     _build_bikeshare,
     _build_slurm,
+    _build_clinicaltrials,
+    _build_crossref,
+    _build_series,
     _build_ukspend,
 )
 
