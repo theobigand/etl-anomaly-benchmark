@@ -81,16 +81,24 @@ def mechanism(area: str | None) -> str:
     return MECHANISMS.get(area or "", "other")
 
 
+def stratum_of_row(row: dict[str, Any]) -> str | None:
+    """C1 or C2a for a catalogue row of a flat table; None for rows another stratum owns."""
+    if row.get("time_verified") or row.get("stratum"):
+        return None
+    tagged = set(row.get("tags") or [])
+    categorical = row.get("schema_kind") in ("categorical", "mixed") or tagged & {
+        "categorical_only"
+    }
+    return "C2a" if categorical else "C1"
+
+
 def audit(rows: list[dict[str, Any]], metadata: dict[str, dict[str, Any]]) -> dict[str, Any]:
     """Counts per stratum. ``rows`` are catalogue rows (id, source, schema_kind, time_verified)."""
     stratum_rows: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in rows:
-        if row.get("time_verified") or row.get("stratum"):
-            continue
-        kind = row.get("schema_kind")
-        tagged = set(row.get("tags") or [])
-        categorical = kind in ("categorical", "mixed") or tagged & {"categorical_only"}
-        stratum_rows["C2a" if categorical else "C1"].append(row)
+        name = stratum_of_row(row)
+        if name:
+            stratum_rows[name].append(row)
     audited = {r["source"] for rs in stratum_rows.values() for r in rs}
     groups = group_sources({s: metadata.get(s, {}) for s in audited})
     out: dict[str, Any] = {}
@@ -155,14 +163,19 @@ def fetch_metadata(
     opener: Callable[[str], bytes] = _open,
     sleep: Callable[[float], None] = time.sleep,
 ) -> dict[str, dict[str, Any]]:
-    """Creators and subject area of UCI tables, from the cache or the repository's API."""
+    """Creators, area, name and demographic fields of UCI tables, from the cache or the API."""
     have: dict[str, dict[str, Any]] = json.loads(cache.read_text()) if cache.exists() else {}
     for number in ids:
         if str(number) in have:
             continue
         sleep(0.5)
         data = json.loads(opener(API.format(number)))["data"]
-        have[str(number)] = {"creators": data.get("creators") or [], "area": data.get("area")}
+        have[str(number)] = {
+            "creators": data.get("creators") or [],
+            "area": data.get("area"),
+            "name": data.get("name"),
+            "demographics": data.get("demographics") or [],
+        }
     cache.write_text(json.dumps(have, indent=1, sort_keys=True) + "\n")
     return have
 

@@ -118,7 +118,7 @@ def test_fetch_uses_the_cache_and_the_injected_opener_for_missing_ids(tmp_path):
     assert calls == ["https://archive.ics.uci.edu/api/dataset?id=2"]
     assert out == {
         "1": {"creators": ["A"], "area": "Biology"},
-        "2": {"creators": ["B C", "D"], "area": "Business"},
+        "2": {"creators": ["B C", "D"], "area": "Business", "name": "x", "demographics": []},
     }
     assert json.loads(cache.read_text()) == out
 
@@ -255,10 +255,8 @@ def test_fetch_waits_before_each_request_and_writes_a_canonical_cache(tmp_path):
         return json.dumps({"data": {"creators": None, "area": None}}).encode()
 
     out = pa.fetch_metadata([3, 1], tmp_path / "c.json", opener=opener, sleep=waits.append)
-    assert waits == [0.5, 0.5] and out == {
-        "3": {"creators": [], "area": None},
-        "1": {"creators": [], "area": None},
-    }
+    empty = {"creators": [], "area": None, "name": None, "demographics": []}
+    assert waits == [0.5, 0.5] and out == {"3": empty, "1": empty}
     text = (tmp_path / "c.json").read_text()
     assert text == json.dumps(out, indent=1, sort_keys=True) + "\n"
     again = pa.fetch_metadata(

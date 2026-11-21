@@ -294,6 +294,1030 @@
    "units": 70128,
    "view": "ea_hydrology_flow"
   },
+  "flat:uci:101:C2a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "958 rows and 10 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:101",
+   "min_units": 500,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 958,
+   "view": "flat_uci_101_C2a"
+  },
+  "flat:uci:110:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "1484 rows and 10 informative columns in the representative table",
+    "0.0 share of missing values",
+    "2 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:110",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1484,
+   "view": "flat_uci_110_C1"
+  },
+  "flat:uci:143:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "690 rows and 15 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:143",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 690,
+   "view": "flat_uci_143_C1"
+  },
+  "flat:uci:146:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "6435 rows and 37 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:146",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 6435,
+   "view": "flat_uci_146_C1"
+  },
+  "flat:uci:148:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "58000 rows and 8 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:148",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 58000,
+   "view": "flat_uci_148_C1"
+  },
+  "flat:uci:149:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "846 rows and 19 informative columns in the representative table",
+    "0.0001 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:149",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 846,
+   "view": "flat_uci_149_C1"
+  },
+  "flat:uci:159:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "19020 rows and 11 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:159",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 19020,
+   "view": "flat_uci_159_C1"
+  },
+  "flat:uci:15:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "699 rows and 11 informative columns in the representative table",
+    "0.0021 share of missing values",
+    "2 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:15",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 699,
+   "view": "flat_uci_15_C1"
+  },
+  "flat:uci:162:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "39644 rows and 61 informative columns in the representative table",
+    "0.0 share of missing values",
+    "5 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:162",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 39644,
+   "view": "flat_uci_162_C1"
+  },
+  "flat:uci:165:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "1030 rows and 9 informative columns in the representative table",
+    "0.0 share of missing values",
+    "5 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:165",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1030,
+   "view": "flat_uci_165_C1"
+  },
+  "flat:uci:189:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "768 rows and 10 informative columns in the representative table",
+    "0.0 share of missing values",
+    "2 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:189",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 768,
+   "view": "flat_uci_189_C1"
+  },
+  "flat:uci:193:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "2126 rows and 23 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:193",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 2126,
+   "view": "flat_uci_193_C1"
+  },
+  "flat:uci:198:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "1941 rows and 34 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:198",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1941,
+   "view": "flat_uci_198_C1"
+  },
+  "flat:uci:19:C2a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "1728 rows and 7 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:19",
+   "min_units": 500,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1728,
+   "view": "flat_uci_19_C2a"
+  },
+  "flat:uci:212:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "310 rows and 7 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:212",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 310,
+   "view": "flat_uci_212_C1"
+  },
+  "flat:uci:22:C2a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "3196 rows and 36 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:22",
+   "min_units": 500,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 3196,
+   "view": "flat_uci_22_C2a"
+  },
+  "flat:uci:247:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "536 rows and 10 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:247",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 536,
+   "view": "flat_uci_247_C1"
+  },
+  "flat:uci:257:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "403 rows and 6 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:257",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 403,
+   "view": "flat_uci_257_C1"
+  },
+  "flat:uci:264:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "14980 rows and 15 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:264",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 14980,
+   "view": "flat_uci_264_C1"
+  },
+  "flat:uci:267:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "1372 rows and 5 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:267",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1372,
+   "view": "flat_uci_267_C1"
+  },
+  "flat:uci:26:C2a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "67557 rows and 43 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:26",
+   "min_units": 500,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 67557,
+   "view": "flat_uci_26_C2a"
+  },
+  "flat:uci:270:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "13910 rows and 128 informative columns in the representative table",
+    "0.0078 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:270",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 13910,
+   "view": "flat_uci_270_C1"
+  },
+  "flat:uci:27:C2a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "690 rows and 16 informative columns in the representative table",
+    "0.0061 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:27",
+   "min_units": 500,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 690,
+   "view": "flat_uci_27_C2a"
+  },
+  "flat:uci:291:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "1503 rows and 6 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:291",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1503,
+   "view": "flat_uci_291_C1"
+  },
+  "flat:uci:292:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "440 rows and 8 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:292",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 440,
+   "view": "flat_uci_292_C1"
+  },
+  "flat:uci:294:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "9568 rows and 5 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:294",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 9568,
+   "view": "flat_uci_294_C1"
+  },
+  "flat:uci:296:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "1080 rows and 82 informative columns in the representative table",
+    "0.0158 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:296",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1080,
+   "view": "flat_uci_296_C1"
+  },
+  "flat:uci:312:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "750 rows and 16 informative columns in the representative table",
+    "0.005 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:312",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 750,
+   "view": "flat_uci_312_C1"
+  },
+  "flat:uci:31:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "581012 rows and 55 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:31",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 581012,
+   "view": "flat_uci_31_C1"
+  },
+  "flat:uci:327:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "11055 rows and 31 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:327",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 11055,
+   "view": "flat_uci_327_C1"
+  },
+  "flat:uci:329:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "1151 rows and 20 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:329",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1151,
+   "view": "flat_uci_329_C1"
+  },
+  "flat:uci:32:C2a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "541 rows and 40 informative columns in the representative table",
+    "0.0481 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:32",
+   "min_units": 500,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 541,
+   "view": "flat_uci_32_C2a"
+  },
+  "flat:uci:365:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "43405 rows and 66 informative columns in the representative table",
+    "0.0144 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:365",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 43405,
+   "view": "flat_uci_365_C1"
+  },
+  "flat:uci:368:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "500 rows and 19 informative columns in the representative table",
+    "0.0006 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:368",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 500,
+   "view": "flat_uci_368_C1"
+  },
+  "flat:uci:372:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "17898 rows and 9 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:372",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 17898,
+   "view": "flat_uci_372_C1"
+  },
+  "flat:uci:379:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "1353 rows and 10 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:379",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1353,
+   "view": "flat_uci_379_C1"
+  },
+  "flat:uci:381:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "43824 rows and 13 informative columns in the representative table",
+    "0.0036 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:381",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 43824,
+   "view": "flat_uci_381_C1"
+  },
+  "flat:uci:396:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "811 rows and 107 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:396",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 811,
+   "view": "flat_uci_396_C1"
+  },
+  "flat:uci:464:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "21263 rows and 82 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:464",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 21263,
+   "view": "flat_uci_464_C1"
+  },
+  "flat:uci:52:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "351 rows and 34 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:52",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 351,
+   "view": "flat_uci_52_C1"
+  },
+  "flat:uci:536:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "4759 rows and 14 informative columns in the representative table",
+    "0.243 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:536",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 4759,
+   "view": "flat_uci_536_C1"
+  },
+  "flat:uci:545:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "3810 rows and 8 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:545",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 3810,
+   "view": "flat_uci_545_C1"
+  },
+  "flat:uci:551:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "36733 rows and 12 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:551",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 36733,
+   "view": "flat_uci_551_C1"
+  },
+  "flat:uci:555:C2a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "99826 rows and 22 informative columns in the representative table",
+    "0.0772 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:555",
+   "min_units": 500,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 99826,
+   "view": "flat_uci_555_C2a"
+  },
+  "flat:uci:572:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "6819 rows and 95 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:572",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 6819,
+   "view": "flat_uci_572_C1"
+  },
+  "flat:uci:597:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "1197 rows and 15 informative columns in the representative table",
+    "0.0282 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:597",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1197,
+   "view": "flat_uci_597_C1"
+  },
+  "flat:uci:59:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "20000 rows and 17 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:59",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 20000,
+   "view": "flat_uci_59_C1"
+  },
+  "flat:uci:601:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "10000 rows and 14 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:601",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 10000,
+   "view": "flat_uci_601_C1"
+  },
+  "flat:uci:602:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "13611 rows and 17 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:602",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 13611,
+   "view": "flat_uci_602_C1"
+  },
+  "flat:uci:69:C2a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "3190 rows and 62 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:69",
+   "min_units": 500,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 3190,
+   "view": "flat_uci_69_C2a"
+  },
+  "flat:uci:73:C2a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "8124 rows and 22 informative columns in the representative table",
+    "0.0133 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:73",
+   "min_units": 500,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 8124,
+   "view": "flat_uci_73_C2a"
+  },
+  "flat:uci:755:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "31991 rows and 8 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:755",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 31991,
+   "view": "flat_uci_755_C1"
+  },
+  "flat:uci:75:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "6598 rows and 169 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:75",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 6598,
+   "view": "flat_uci_75_C1"
+  },
+  "flat:uci:760:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "181800 rows and 7 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:760",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 181800,
+   "view": "flat_uci_760_C1"
+  },
+  "flat:uci:76:C2a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "12960 rows and 9 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:76",
+   "min_units": 500,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 12960,
+   "view": "flat_uci_76_C2a"
+  },
+  "flat:uci:78:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "5473 rows and 11 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:78",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 5473,
+   "view": "flat_uci_78_C1"
+  },
+  "flat:uci:80:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "10992 rows and 17 informative columns in the representative table",
+    "0.0 share of missing values",
+    "2 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:80",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 10992,
+   "view": "flat_uci_80_C1"
+  },
+  "flat:uci:848:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "61069 rows and 20 informative columns in the representative table",
+    "0.2397 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:848",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 61069,
+   "view": "flat_uci_848_C1"
+  },
+  "flat:uci:850:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "900 rows and 8 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:850",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 900,
+   "view": "flat_uci_850_C1"
+  },
+  "flat:uci:864:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "10129 rows and 19 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:864",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 10129,
+   "view": "flat_uci_864_C1"
+  },
+  "flat:uci:911:C2a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "18182 rows and 15 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:911",
+   "min_units": 500,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 18182,
+   "view": "flat_uci_911_C2a"
+  },
+  "flat:uci:942:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "123117 rows and 84 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:942",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 123117,
+   "view": "flat_uci_942_C1"
+  },
+  "flat:uci:94:C1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "4601 rows and 58 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:94",
+   "min_units": 300,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 4601,
+   "view": "flat_uci_94_C1"
+  },
+  "flat:uci:967:C2a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "235795 rows and 56 informative columns in the representative table",
+    "0.0 share of missing values",
+    "1 audited table(s) in this group and stratum"
+   ],
+   "first_party": false,
+   "independent_group": "uci:967",
+   "min_units": 500,
+   "partitions": "hash of the row index 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 235795,
+   "view": "flat_uci_967_C2a"
+  },
   "grouplens_movielens": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [

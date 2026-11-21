@@ -3,12 +3,30 @@
   "0.2": {
    "ALL": {
     "curators": 20,
-    "domains": 35,
-    "effective_groups": 36.2262,
-    "groups": 54,
-    "largest_schema_family_share": 0.2222,
-    "producers": 54,
-    "schema_families": 26
+    "domains": 45,
+    "effective_groups": 40.9321,
+    "groups": 118,
+    "largest_schema_family_share": 0.5424,
+    "producers": 118,
+    "schema_families": 27
+   },
+   "C1": {
+    "curators": 1,
+    "domains": 8,
+    "effective_groups": 4.6429,
+    "groups": 52,
+    "largest_schema_family_share": 1.0,
+    "producers": 52,
+    "schema_families": 1
+   },
+   "C2a": {
+    "curators": 1,
+    "domains": 7,
+    "effective_groups": 3.75,
+    "groups": 12,
+    "largest_schema_family_share": 1.0,
+    "producers": 12,
+    "schema_families": 1
    },
    "C2b": {
     "curators": 5,
@@ -59,12 +77,30 @@
   "0.5": {
    "ALL": {
     "curators": 20,
-    "domains": 35,
-    "effective_groups": 29.8382,
-    "groups": 54,
-    "largest_schema_family_share": 0.2222,
-    "producers": 54,
-    "schema_families": 26
+    "domains": 45,
+    "effective_groups": 31.8074,
+    "groups": 118,
+    "largest_schema_family_share": 0.5424,
+    "producers": 118,
+    "schema_families": 27
+   },
+   "C1": {
+    "curators": 1,
+    "domains": 8,
+    "effective_groups": 1.9623,
+    "groups": 52,
+    "largest_schema_family_share": 1.0,
+    "producers": 52,
+    "schema_families": 1
+   },
+   "C2a": {
+    "curators": 1,
+    "domains": 7,
+    "effective_groups": 1.8462,
+    "groups": 12,
+    "largest_schema_family_share": 1.0,
+    "producers": 12,
+    "schema_families": 1
    },
    "C2b": {
     "curators": 5,
@@ -188,6 +224,36 @@
   }
  ],
  "diversity": {
+  "C1": {
+   "diversity": true,
+   "domains": 7,
+   "exploratory": true,
+   "families": 4,
+   "gap": 0,
+   "groups": 52,
+   "largest_family": "computational or derived features",
+   "largest_family_share": 0.2885,
+   "missing": [],
+   "quota": true,
+   "target": 36,
+   "unclassified_groups": 1
+  },
+  "C2a": {
+   "diversity": true,
+   "domains": 6,
+   "exploratory": true,
+   "families": 4,
+   "gap": 18,
+   "groups": 12,
+   "largest_family": "administrative or survey records",
+   "largest_family_share": 0.25,
+   "missing": [
+    "groups: 12 of 30"
+   ],
+   "quota": false,
+   "target": 30,
+   "unclassified_groups": 4
+  },
   "C2b": {
    "diversity": true,
    "domains": 7,
@@ -201,7 +267,8 @@
     "groups: 10 of 30"
    ],
    "quota": false,
-   "target": 30
+   "target": 30,
+   "unclassified_groups": 0
   },
   "C3": {
    "diversity": true,
@@ -216,7 +283,8 @@
     "groups: 11 of 40"
    ],
    "quota": false,
-   "target": 40
+   "target": 40,
+   "unclassified_groups": 0
   },
   "C4": {
    "diversity": true,
@@ -231,7 +299,8 @@
     "groups: 13 of 28"
    ],
    "quota": false,
-   "target": 28
+   "target": 28,
+   "unclassified_groups": 0
   },
   "C5": {
    "diversity": true,
@@ -246,7 +315,8 @@
     "groups: 20 of 36"
    ],
    "quota": false,
-   "target": 36
+   "target": 36,
+   "unclassified_groups": 0
   },
   "C6": {
    "diversity": true,
@@ -261,7 +331,8 @@
     "groups: 9 of 30"
    ],
    "quota": false,
-   "target": 30
+   "target": 30,
+   "unclassified_groups": 0
   }
  },
  "effect_requirements": [

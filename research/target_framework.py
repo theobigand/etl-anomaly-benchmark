@@ -245,6 +245,10 @@ MINIMA = {
 }
 
 
+#: labels that name no domain or family and are never counted as one
+UNCLASSIFIED = {"Other", "unknown", "other"}
+
+
 def diversity_report(
     attributes: dict[str, dict[str, Any]],
     ready: dict[str, list[str]],
@@ -259,8 +263,12 @@ def diversity_report(
     """
     out: dict[str, dict[str, Any]] = {}
     for category, groups in sorted(ready.items()):
-        families = Counter(attributes[g]["structure"][category] for g in groups)
-        domains = {attributes[g]["domain"] for g in groups}
+        families = Counter(
+            attributes[g]["structure"][category]
+            for g in groups
+            if attributes[g]["structure"][category] not in UNCLASSIFIED
+        )
+        domains = {attributes[g]["domain"] for g in groups} - UNCLASSIFIED
         need_domains, need_families = minima[category]
         quota = len(groups) >= targets[category]
         missing = []
@@ -279,6 +287,12 @@ def diversity_report(
             "families": len(families),
             "largest_family": biggest[0],
             "largest_family_share": round(biggest[1] / len(groups), 4) if groups else 0.0,
+            "unclassified_groups": sum(
+                1
+                for g in groups
+                if attributes[g]["structure"][category] in UNCLASSIFIED
+                or attributes[g]["domain"] in UNCLASSIFIED
+            ),
             "exploratory": len(domains) >= 3 and len(families) >= 2,
             "quota": quota,
             "diversity": len(domains) >= need_domains and len(families) >= need_families,

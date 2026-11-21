@@ -1,0 +1,3590 @@
+{
+ "checksum_mismatch": [],
+ "tables": [
+  {
+   "area": "Health and Medicine",
+   "group": "uci:15",
+   "id": "adbench:breastw",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Breast Cancer Wisconsin (Original)",
+   "profile": {
+    "categorical": 0,
+    "columns": 11,
+    "constant": 0,
+    "duplicate_share": 0.0114,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0021,
+    "numeric": 11,
+    "rows": 699,
+    "usable": 11
+   },
+   "reasons": [],
+   "rows": 699,
+   "source": "uci:15",
+   "stratum": "C1",
+   "twins": [
+    "uci:15"
+   ]
+  },
+  {
+   "area": "Business",
+   "group": "uci:222",
+   "id": "adbench:campaign",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Bank Marketing",
+   "profile": {
+    "categorical": 10,
+    "columns": 17,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 5,
+    "max_levels": 12,
+    "missing_share": 0.0678,
+    "numeric": 7,
+    "rows": 45211,
+    "usable": 17
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)"
+   ],
+   "rows": 45211,
+   "source": "uci:222",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:193",
+   "id": "adbench:cardio",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Cardiotocography",
+   "profile": {
+    "categorical": 0,
+    "columns": 23,
+    "constant": 0,
+    "duplicate_share": 0.0052,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 23,
+    "rows": 2126,
+    "usable": 23
+   },
+   "reasons": [],
+   "rows": 2126,
+   "source": "uci:193",
+   "stratum": "C1",
+   "twins": [
+    "adbench:Cardiotocography",
+    "uci:193"
+   ]
+  },
+  {
+   "area": "Social Science",
+   "group": "uci:117",
+   "id": "adbench:census",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Census-Income (KDD)",
+   "profile": {
+    "categorical": 29,
+    "columns": 42,
+    "constant": 0,
+    "duplicate_share": 0.0162,
+    "levels_ge3": 27,
+    "max_levels": 50,
+    "missing_share": 0.0496,
+    "numeric": 13,
+    "rows": 199523,
+    "usable": 42
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)"
+   ],
+   "rows": 199523,
+   "source": "uci:117",
+   "stratum": "C1",
+   "twins": [
+    "uci:117"
+   ]
+  },
+  {
+   "area": "Biology",
+   "group": "uci:31",
+   "id": "adbench:cover",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Covertype",
+   "profile": {
+    "categorical": 0,
+    "columns": 55,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 55,
+    "rows": 581012,
+    "usable": 55
+   },
+   "reasons": [],
+   "rows": 581012,
+   "source": "uci:31",
+   "stratum": "C1",
+   "twins": [
+    "uci:31"
+   ]
+  },
+  {
+   "area": "Physics and Chemistry",
+   "group": "uci:198",
+   "id": "adbench:fault",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Steel Plates Faults",
+   "profile": {
+    "categorical": 0,
+    "columns": 34,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 34,
+    "rows": 1941,
+    "usable": 34
+   },
+   "reasons": [],
+   "rows": 1941,
+   "source": "uci:198",
+   "stratum": "C1",
+   "twins": [
+    "uci:198"
+   ]
+  },
+  {
+   "area": "Physics and Chemistry",
+   "group": "uci:52",
+   "id": "adbench:Ionosphere",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Ionosphere",
+   "profile": {
+    "categorical": 1,
+    "columns": 35,
+    "constant": 1,
+    "duplicate_share": 0.0028,
+    "levels_ge3": 0,
+    "max_levels": 2,
+    "missing_share": 0.0,
+    "numeric": 33,
+    "rows": 351,
+    "usable": 34
+   },
+   "reasons": [],
+   "rows": 351,
+   "source": "uci:52",
+   "stratum": "C1",
+   "twins": [
+    "uci:52"
+   ]
+  },
+  {
+   "area": "Climate and Environment",
+   "group": "uci:146",
+   "id": "adbench:landsat",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Statlog (Landsat Satellite)",
+   "profile": {
+    "categorical": 0,
+    "columns": 37,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 37,
+    "rows": 6435,
+    "usable": 37
+   },
+   "reasons": [],
+   "rows": 6435,
+   "source": "uci:146",
+   "stratum": "C1",
+   "twins": [
+    "adbench:satellite",
+    "adbench:satimage-2",
+    "uci:146"
+   ]
+  },
+  {
+   "area": "Computer Science",
+   "group": "uci:59",
+   "id": "adbench:letter",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Letter Recognition",
+   "profile": {
+    "categorical": 1,
+    "columns": 17,
+    "constant": 0,
+    "duplicate_share": 0.0666,
+    "levels_ge3": 1,
+    "max_levels": 26,
+    "missing_share": 0.0,
+    "numeric": 16,
+    "rows": 20000,
+    "usable": 17
+   },
+   "reasons": [],
+   "rows": 20000,
+   "source": "uci:59",
+   "stratum": "C1",
+   "twins": [
+    "uci:59"
+   ]
+  },
+  {
+   "area": "Physics and Chemistry",
+   "group": "uci:159",
+   "id": "adbench:magic.gamma",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "MAGIC Gamma Telescope",
+   "profile": {
+    "categorical": 1,
+    "columns": 11,
+    "constant": 0,
+    "duplicate_share": 0.006,
+    "levels_ge3": 0,
+    "max_levels": 2,
+    "missing_share": 0.0,
+    "numeric": 10,
+    "rows": 19020,
+    "usable": 11
+   },
+   "reasons": [],
+   "rows": 19020,
+   "source": "uci:159",
+   "stratum": "C1",
+   "twins": [
+    "uci:159"
+   ]
+  },
+  {
+   "area": "Physics and Chemistry",
+   "group": "uci:75",
+   "id": "adbench:musk",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Musk (Version 2)",
+   "profile": {
+    "categorical": 2,
+    "columns": 169,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 2,
+    "max_levels": 6598,
+    "missing_share": 0.0,
+    "numeric": 167,
+    "rows": 6598,
+    "usable": 169
+   },
+   "reasons": [],
+   "rows": 6598,
+   "source": "uci:75",
+   "stratum": "C1",
+   "twins": [
+    "uci:75"
+   ]
+  },
+  {
+   "area": "Computer Science",
+   "group": "uci:80",
+   "id": "adbench:optdigits",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Optical Recognition of Handwritten Digits",
+   "profile": {
+    "categorical": 0,
+    "columns": 65,
+    "constant": 2,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 63,
+    "rows": 5620,
+    "usable": 63
+   },
+   "reasons": [],
+   "rows": 5620,
+   "source": "uci:80",
+   "stratum": "C1",
+   "twins": [
+    "uci:80"
+   ]
+  },
+  {
+   "area": "Computer Science",
+   "group": "uci:78",
+   "id": "adbench:PageBlocks",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Page Blocks Classification",
+   "profile": {
+    "categorical": 0,
+    "columns": 11,
+    "constant": 0,
+    "duplicate_share": 0.0122,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 11,
+    "rows": 5473,
+    "usable": 11
+   },
+   "reasons": [],
+   "rows": 5473,
+   "source": "uci:78",
+   "stratum": "C1",
+   "twins": [
+    "uci:78"
+   ]
+  },
+  {
+   "area": "Computer Science",
+   "group": "uci:80",
+   "id": "adbench:pendigits",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Pen-Based Recognition of Handwritten Digits",
+   "profile": {
+    "categorical": 0,
+    "columns": 17,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 17,
+    "rows": 10992,
+    "usable": 17
+   },
+   "reasons": [],
+   "rows": 10992,
+   "source": "uci:81",
+   "stratum": "C1",
+   "twins": [
+    "uci:81"
+   ]
+  },
+  {
+   "area": "Physics and Chemistry",
+   "group": "uci:148",
+   "id": "adbench:shuttle",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Statlog (Shuttle)",
+   "profile": {
+    "categorical": 0,
+    "columns": 8,
+    "constant": 0,
+    "duplicate_share": 0.282,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 8,
+    "rows": 58000,
+    "usable": 8
+   },
+   "reasons": [],
+   "rows": 58000,
+   "source": "uci:148",
+   "stratum": "C1",
+   "twins": [
+    "uci:148"
+   ]
+  },
+  {
+   "area": "Computer Science",
+   "group": "uci:94",
+   "id": "adbench:SpamBase",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Spambase",
+   "profile": {
+    "categorical": 0,
+    "columns": 58,
+    "constant": 0,
+    "duplicate_share": 0.085,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 58,
+    "rows": 4601,
+    "usable": 58
+   },
+   "reasons": [],
+   "rows": 4601,
+   "source": "uci:94",
+   "stratum": "C1",
+   "twins": [
+    "uci:94"
+   ]
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:212",
+   "id": "adbench:vertebral",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Vertebral Column",
+   "profile": {
+    "categorical": 1,
+    "columns": 7,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 1,
+    "max_levels": 3,
+    "missing_share": 0.0,
+    "numeric": 6,
+    "rows": 310,
+    "usable": 7
+   },
+   "reasons": [],
+   "rows": 310,
+   "source": "uci:212",
+   "stratum": "C1",
+   "twins": [
+    "uci:212"
+   ]
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:15",
+   "id": "adbench:WDBC",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Breast Cancer Wisconsin (Diagnostic)",
+   "profile": {
+    "categorical": 1,
+    "columns": 32,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 2,
+    "missing_share": 0.0,
+    "numeric": 31,
+    "rows": 569,
+    "usable": 32
+   },
+   "reasons": [],
+   "rows": 569,
+   "source": "uci:17",
+   "stratum": "C1",
+   "twins": [
+    "uci:17"
+   ]
+  },
+  {
+   "area": "Biology",
+   "group": "uci:110",
+   "id": "adbench:yeast",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Yeast",
+   "profile": {
+    "categorical": 2,
+    "columns": 10,
+    "constant": 0,
+    "duplicate_share": 0.0148,
+    "levels_ge3": 2,
+    "max_levels": 1462,
+    "missing_share": 0.0,
+    "numeric": 8,
+    "rows": 1484,
+    "usable": 10
+   },
+   "reasons": [],
+   "rows": 1484,
+   "source": "uci:110",
+   "stratum": "C1",
+   "twins": [
+    "uci:110"
+   ]
+  },
+  {
+   "area": "Biology",
+   "group": "uci:1",
+   "id": "uci:1",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Abalone",
+   "profile": {
+    "categorical": 1,
+    "columns": 9,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 1,
+    "max_levels": 3,
+    "missing_share": 0.0,
+    "numeric": 8,
+    "rows": 4177,
+    "usable": 9
+   },
+   "reasons": [
+    "fewer than 2 categorical columns"
+   ],
+   "rows": 4177,
+   "source": "uci:1",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Social Science",
+   "group": "uci:2",
+   "id": "uci:2",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Adult",
+   "profile": {
+    "categorical": 9,
+    "columns": 15,
+    "constant": 0,
+    "duplicate_share": 0.0006,
+    "levels_ge3": 8,
+    "max_levels": 42,
+    "missing_share": 0.003,
+    "numeric": 6,
+    "rows": 48842,
+    "usable": 15
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)"
+   ],
+   "rows": 48842,
+   "source": "uci:2",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Physics and Chemistry",
+   "group": "uci:3",
+   "id": "uci:3",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Annealing",
+   "profile": {
+    "categorical": 9,
+    "columns": 39,
+    "constant": 20,
+    "duplicate_share": 0.0134,
+    "levels_ge3": 4,
+    "max_levels": 7,
+    "missing_share": 0.6332,
+    "numeric": 10,
+    "rows": 898,
+    "usable": 19
+   },
+   "reasons": [
+    "more than 30 percent of values missing"
+   ],
+   "rows": 898,
+   "source": "uci:3",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Other",
+   "group": "uci:9",
+   "id": "uci:9",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Auto MPG",
+   "profile": {
+    "categorical": 1,
+    "columns": 9,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 1,
+    "max_levels": 305,
+    "missing_share": 0.0017,
+    "numeric": 8,
+    "rows": 398,
+    "usable": 9
+   },
+   "reasons": [
+    "fewer than 500 rows",
+    "fewer than 2 categorical columns"
+   ],
+   "rows": 398,
+   "source": "uci:9",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Business",
+   "group": "uci:27",
+   "id": "uci:27",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Credit Approval",
+   "profile": {
+    "categorical": 10,
+    "columns": 16,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 5,
+    "max_levels": 14,
+    "missing_share": 0.0061,
+    "numeric": 6,
+    "rows": 690,
+    "usable": 16
+   },
+   "reasons": [],
+   "rows": 690,
+   "source": "uci:27",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:30",
+   "id": "uci:30",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Contraceptive Method Choice",
+   "profile": {
+    "categorical": 0,
+    "columns": 10,
+    "constant": 0,
+    "duplicate_share": 0.0326,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 10,
+    "rows": 1473,
+    "usable": 10
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)",
+    "fewer than 2 categorical columns"
+   ],
+   "rows": 1473,
+   "source": "uci:30",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Physics and Chemistry",
+   "group": "uci:32",
+   "id": "uci:32",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Cylinder Bands",
+   "profile": {
+    "categorical": 16,
+    "columns": 40,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 15,
+    "max_levels": 434,
+    "missing_share": 0.0481,
+    "numeric": 24,
+    "rows": 541,
+    "usable": 40
+   },
+   "reasons": [],
+   "rows": 541,
+   "source": "uci:32",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:33",
+   "id": "uci:33",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Dermatology",
+   "profile": {
+    "categorical": 0,
+    "columns": 35,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0006,
+    "numeric": 35,
+    "rows": 366,
+    "usable": 35
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)",
+    "fewer than 500 rows",
+    "fewer than 2 categorical columns"
+   ],
+   "rows": 366,
+   "source": "uci:33",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Biology",
+   "group": "uci:110",
+   "id": "uci:39",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Ecoli",
+   "profile": {
+    "categorical": 2,
+    "columns": 9,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 2,
+    "max_levels": 336,
+    "missing_share": 0.0,
+    "numeric": 7,
+    "rows": 336,
+    "usable": 9
+   },
+   "reasons": [],
+   "rows": 336,
+   "source": "uci:39",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:45",
+   "id": "uci:45",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Heart Disease",
+   "profile": {
+    "categorical": 0,
+    "columns": 14,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0014,
+    "numeric": 14,
+    "rows": 303,
+    "usable": 14
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)",
+    "fewer than 500 rows",
+    "fewer than 2 categorical columns"
+   ],
+   "rows": 303,
+   "source": "uci:45",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Biology",
+   "group": "uci:47",
+   "id": "uci:47",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Horse Colic",
+   "profile": {
+    "categorical": 0,
+    "columns": 28,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.187,
+    "numeric": 28,
+    "rows": 368,
+    "usable": 28
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)",
+    "fewer than 500 rows",
+    "fewer than 2 categorical columns"
+   ],
+   "rows": 368,
+   "source": "uci:47",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Other",
+   "group": "uci:50",
+   "id": "uci:50",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Image Segmentation",
+   "profile": {
+    "categorical": 1,
+    "columns": 20,
+    "constant": 1,
+    "duplicate_share": 0.0,
+    "levels_ge3": 1,
+    "max_levels": 7,
+    "missing_share": 0.0,
+    "numeric": 18,
+    "rows": 210,
+    "usable": 19
+   },
+   "reasons": [
+    "fewer than 300 rows"
+   ],
+   "rows": 210,
+   "source": "uci:50",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:60",
+   "id": "uci:60",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Liver Disorders",
+   "profile": {
+    "categorical": 0,
+    "columns": 7,
+    "constant": 0,
+    "duplicate_share": 0.0116,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 7,
+    "rows": 345,
+    "usable": 7
+   },
+   "reasons": [
+    "fewer than 500 rows",
+    "fewer than 2 categorical columns"
+   ],
+   "rows": 345,
+   "source": "uci:60",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Biology",
+   "group": "uci:73",
+   "id": "uci:73",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Mushroom",
+   "profile": {
+    "categorical": 22,
+    "columns": 23,
+    "constant": 1,
+    "duplicate_share": 0.0,
+    "levels_ge3": 16,
+    "max_levels": 12,
+    "missing_share": 0.0133,
+    "numeric": 0,
+    "rows": 8124,
+    "usable": 22
+   },
+   "reasons": [],
+   "rows": 8124,
+   "source": "uci:73",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:83",
+   "id": "uci:83",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Primary Tumor",
+   "profile": {
+    "categorical": 0,
+    "columns": 18,
+    "constant": 0,
+    "duplicate_share": 0.0885,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0369,
+    "numeric": 18,
+    "rows": 339,
+    "usable": 18
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)",
+    "fewer than 500 rows",
+    "fewer than 2 categorical columns"
+   ],
+   "rows": 339,
+   "source": "uci:83",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Physics and Chemistry",
+   "group": "uci:89",
+   "id": "uci:89",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Solar Flare",
+   "profile": {
+    "categorical": 3,
+    "columns": 13,
+    "constant": 0,
+    "duplicate_share": 0.6206,
+    "levels_ge3": 3,
+    "max_levels": 6,
+    "missing_share": 0.0,
+    "numeric": 10,
+    "rows": 1389,
+    "usable": 13
+   },
+   "reasons": [
+    "more than half of the rows are duplicates"
+   ],
+   "rows": 1389,
+   "source": "uci:89",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Biology",
+   "group": "uci:90",
+   "id": "uci:90",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Soybean (Large)",
+   "profile": {
+    "categorical": 1,
+    "columns": 36,
+    "constant": 0,
+    "duplicate_share": 0.013,
+    "levels_ge3": 1,
+    "max_levels": 19,
+    "missing_share": 0.0644,
+    "numeric": 35,
+    "rows": 307,
+    "usable": 36
+   },
+   "reasons": [
+    "fewer than 500 rows",
+    "fewer than 2 categorical columns"
+   ],
+   "rows": 307,
+   "source": "uci:90",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Social Science",
+   "group": "uci:105",
+   "id": "uci:105",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Congressional Voting Records",
+   "profile": {
+    "categorical": 17,
+    "columns": 17,
+    "constant": 0,
+    "duplicate_share": 0.2138,
+    "levels_ge3": 0,
+    "max_levels": 2,
+    "missing_share": 0.053,
+    "numeric": 0,
+    "rows": 435,
+    "usable": 17
+   },
+   "reasons": [
+    "fewer than 500 rows",
+    "no categorical column with at least 3 levels"
+   ],
+   "rows": 435,
+   "source": "uci:105",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Social Science",
+   "group": "uci:144",
+   "id": "uci:144",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Statlog (German Credit Data)",
+   "profile": {
+    "categorical": 13,
+    "columns": 21,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 11,
+    "max_levels": 10,
+    "missing_share": 0.0,
+    "numeric": 8,
+    "rows": 1000,
+    "usable": 21
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)"
+   ],
+   "rows": 1000,
+   "source": "uci:144",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Other",
+   "group": "uci:149",
+   "id": "uci:149",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Statlog (Vehicle Silhouettes)",
+   "profile": {
+    "categorical": 1,
+    "columns": 19,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 1,
+    "max_levels": 5,
+    "missing_share": 0.0001,
+    "numeric": 18,
+    "rows": 846,
+    "usable": 19
+   },
+   "reasons": [],
+   "rows": 846,
+   "source": "uci:149",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:161",
+   "id": "uci:161",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Mammographic Mass",
+   "profile": {
+    "categorical": 0,
+    "columns": 6,
+    "constant": 0,
+    "duplicate_share": 0.283,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0281,
+    "numeric": 6,
+    "rows": 961,
+    "usable": 6
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)"
+   ],
+   "rows": 961,
+   "source": "uci:161",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Climate and Environment",
+   "group": "uci:162",
+   "id": "uci:162",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Forest Fires",
+   "profile": {
+    "categorical": 2,
+    "columns": 13,
+    "constant": 0,
+    "duplicate_share": 0.0077,
+    "levels_ge3": 2,
+    "max_levels": 12,
+    "missing_share": 0.0,
+    "numeric": 11,
+    "rows": 517,
+    "usable": 13
+   },
+   "reasons": [],
+   "rows": 517,
+   "source": "uci:162",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Physics and Chemistry",
+   "group": "uci:165",
+   "id": "uci:165",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Concrete Compressive Strength",
+   "profile": {
+    "categorical": 0,
+    "columns": 9,
+    "constant": 0,
+    "duplicate_share": 0.0243,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 9,
+    "rows": 1030,
+    "usable": 9
+   },
+   "reasons": [],
+   "rows": 1030,
+   "source": "uci:165",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Business",
+   "group": "uci:165",
+   "id": "uci:176",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Blood Transfusion Service Center",
+   "profile": {
+    "categorical": 0,
+    "columns": 5,
+    "constant": 0,
+    "duplicate_share": 0.2874,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 5,
+    "rows": 748,
+    "usable": 5
+   },
+   "reasons": [],
+   "rows": 748,
+   "source": "uci:176",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Social Science",
+   "group": "uci:183",
+   "id": "uci:183",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Communities and Crime",
+   "profile": {
+    "categorical": 25,
+    "columns": 128,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 25,
+    "max_levels": 1828,
+    "missing_share": 0.0,
+    "numeric": 103,
+    "rows": 1994,
+    "usable": 128
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)"
+   ],
+   "rows": 1994,
+   "source": "uci:183",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Business",
+   "group": "uci:162",
+   "id": "uci:186",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Wine Quality",
+   "profile": {
+    "categorical": 1,
+    "columns": 13,
+    "constant": 0,
+    "duplicate_share": 0.1812,
+    "levels_ge3": 0,
+    "max_levels": 2,
+    "missing_share": 0.0,
+    "numeric": 12,
+    "rows": 6497,
+    "usable": 13
+   },
+   "reasons": [],
+   "rows": 6497,
+   "source": "uci:186",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:189",
+   "id": "uci:189",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Parkinsons Telemonitoring",
+   "profile": {
+    "categorical": 0,
+    "columns": 22,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 22,
+    "rows": 5875,
+    "usable": 22
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)"
+   ],
+   "rows": 5875,
+   "source": "uci:189",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:225",
+   "id": "uci:225",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "ILPD (Indian Liver Patient Dataset)",
+   "profile": {
+    "categorical": 1,
+    "columns": 11,
+    "constant": 0,
+    "duplicate_share": 0.0223,
+    "levels_ge3": 0,
+    "max_levels": 2,
+    "missing_share": 0.0006,
+    "numeric": 10,
+    "rows": 583,
+    "usable": 11
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)"
+   ],
+   "rows": 583,
+   "source": "uci:225",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Computer Science",
+   "group": "uci:189",
+   "id": "uci:242",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Energy Efficiency",
+   "profile": {
+    "categorical": 0,
+    "columns": 10,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 10,
+    "rows": 768,
+    "usable": 10
+   },
+   "reasons": [],
+   "rows": 768,
+   "source": "uci:242",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Business",
+   "group": "uci:247",
+   "id": "uci:247",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "ISTANBUL STOCK EXCHANGE",
+   "profile": {
+    "categorical": 1,
+    "columns": 10,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 1,
+    "max_levels": 536,
+    "missing_share": 0.0,
+    "numeric": 9,
+    "rows": 536,
+    "usable": 10
+   },
+   "reasons": [],
+   "rows": 536,
+   "source": "uci:247",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Computer Science",
+   "group": "uci:257",
+   "id": "uci:257",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "User Knowledge Modeling",
+   "profile": {
+    "categorical": 1,
+    "columns": 6,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 1,
+    "max_levels": 5,
+    "missing_share": 0.0,
+    "numeric": 5,
+    "rows": 403,
+    "usable": 6
+   },
+   "reasons": [],
+   "rows": 403,
+   "source": "uci:257",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Computer Science",
+   "group": "uci:267",
+   "id": "uci:267",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Banknote Authentication",
+   "profile": {
+    "categorical": 0,
+    "columns": 5,
+    "constant": 0,
+    "duplicate_share": 0.0175,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 5,
+    "rows": 1372,
+    "usable": 5
+   },
+   "reasons": [],
+   "rows": 1372,
+   "source": "uci:267",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Computer Science",
+   "group": "uci:270",
+   "id": "uci:270",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Gas Sensor Array Drift at Different Concentrations",
+   "profile": {
+    "categorical": 0,
+    "columns": 129,
+    "constant": 1,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0078,
+    "numeric": 128,
+    "rows": 13910,
+    "usable": 128
+   },
+   "reasons": [],
+   "rows": 13910,
+   "source": "uci:270",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:277",
+   "id": "uci:277",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Thoracic Surgery Data",
+   "profile": {
+    "categorical": 14,
+    "columns": 17,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 3,
+    "max_levels": 7,
+    "missing_share": 0.0,
+    "numeric": 3,
+    "rows": 470,
+    "usable": 17
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)"
+   ],
+   "rows": 470,
+   "source": "uci:277",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Physics and Chemistry",
+   "group": "uci:291",
+   "id": "uci:291",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Airfoil Self-Noise",
+   "profile": {
+    "categorical": 0,
+    "columns": 6,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 6,
+    "rows": 1503,
+    "usable": 6
+   },
+   "reasons": [],
+   "rows": 1503,
+   "source": "uci:291",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Business",
+   "group": "uci:292",
+   "id": "uci:292",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Wholesale customers",
+   "profile": {
+    "categorical": 0,
+    "columns": 8,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 8,
+    "rows": 440,
+    "usable": 8
+   },
+   "reasons": [],
+   "rows": 440,
+   "source": "uci:292",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Computer Science",
+   "group": "uci:294",
+   "id": "uci:294",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Combined Cycle Power Plant",
+   "profile": {
+    "categorical": 0,
+    "columns": 5,
+    "constant": 0,
+    "duplicate_share": 0.0043,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 5,
+    "rows": 9568,
+    "usable": 5
+   },
+   "reasons": [],
+   "rows": 9568,
+   "source": "uci:294",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:296",
+   "id": "uci:296",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Diabetes 130-US Hospitals for Years 1999-2008",
+   "profile": {
+    "categorical": 35,
+    "columns": 50,
+    "constant": 2,
+    "duplicate_share": 0.0,
+    "levels_ge3": 26,
+    "max_levels": 789,
+    "missing_share": 0.0735,
+    "numeric": 13,
+    "rows": 101766,
+    "usable": 48
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)"
+   ],
+   "rows": 101766,
+   "source": "uci:296",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Business",
+   "group": "uci:312",
+   "id": "uci:312",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Dow Jones Index",
+   "profile": {
+    "categorical": 8,
+    "columns": 16,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 8,
+    "max_levels": 722,
+    "missing_share": 0.005,
+    "numeric": 8,
+    "rows": 750,
+    "usable": 16
+   },
+   "reasons": [],
+   "rows": 750,
+   "source": "uci:312",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Social Science",
+   "group": "uci:162",
+   "id": "uci:320",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Student Performance",
+   "profile": {
+    "categorical": 17,
+    "columns": 33,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 4,
+    "max_levels": 5,
+    "missing_share": 0.0,
+    "numeric": 16,
+    "rows": 649,
+    "usable": 33
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)"
+   ],
+   "rows": 649,
+   "source": "uci:320",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Computer Science",
+   "group": "uci:327",
+   "id": "uci:327",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Phishing Websites",
+   "profile": {
+    "categorical": 0,
+    "columns": 31,
+    "constant": 0,
+    "duplicate_share": 0.4709,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 31,
+    "rows": 11055,
+    "usable": 31
+   },
+   "reasons": [],
+   "rows": 11055,
+   "source": "uci:327",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:329",
+   "id": "uci:329",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Diabetic Retinopathy Debrecen",
+   "profile": {
+    "categorical": 0,
+    "columns": 20,
+    "constant": 0,
+    "duplicate_share": 0.0043,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 20,
+    "rows": 1151,
+    "usable": 20
+   },
+   "reasons": [],
+   "rows": 1151,
+   "source": "uci:329",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Business",
+   "group": "uci:162",
+   "id": "uci:332",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Online News Popularity",
+   "profile": {
+    "categorical": 1,
+    "columns": 61,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 1,
+    "max_levels": 39644,
+    "missing_share": 0.0,
+    "numeric": 60,
+    "rows": 39644,
+    "usable": 61
+   },
+   "reasons": [],
+   "rows": 39644,
+   "source": "uci:332",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Other",
+   "group": "uci:336",
+   "id": "uci:336",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Chronic Kidney Disease",
+   "profile": {
+    "categorical": 11,
+    "columns": 25,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 2,
+    "max_levels": 3,
+    "missing_share": 0.1012,
+    "numeric": 14,
+    "rows": 400,
+    "usable": 25
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)"
+   ],
+   "rows": 400,
+   "source": "uci:336",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Biology",
+   "group": "uci:296",
+   "id": "uci:342",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Mice Protein Expression",
+   "profile": {
+    "categorical": 5,
+    "columns": 82,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 2,
+    "max_levels": 1080,
+    "missing_share": 0.0158,
+    "numeric": 77,
+    "rows": 1080,
+    "usable": 82
+   },
+   "reasons": [],
+   "rows": 1080,
+   "source": "uci:342",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Business",
+   "group": "uci:165",
+   "id": "uci:350",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Default of Credit Card Clients",
+   "profile": {
+    "categorical": 0,
+    "columns": 25,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 25,
+    "rows": 30000,
+    "usable": 25
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)"
+   ],
+   "rows": 30000,
+   "source": "uci:350",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Business",
+   "group": "uci:365",
+   "id": "uci:365",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Polish Companies Bankruptcy",
+   "profile": {
+    "categorical": 0,
+    "columns": 66,
+    "constant": 0,
+    "duplicate_share": 0.0092,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0144,
+    "numeric": 66,
+    "rows": 43405,
+    "usable": 66
+   },
+   "reasons": [],
+   "rows": 43405,
+   "source": "uci:365",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Business",
+   "group": "uci:368",
+   "id": "uci:368",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Facebook Metrics",
+   "profile": {
+    "categorical": 1,
+    "columns": 19,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 1,
+    "max_levels": 4,
+    "missing_share": 0.0006,
+    "numeric": 18,
+    "rows": 500,
+    "usable": 19
+   },
+   "reasons": [],
+   "rows": 500,
+   "source": "uci:368",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Physics and Chemistry",
+   "group": "uci:372",
+   "id": "uci:372",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "HTRU2",
+   "profile": {
+    "categorical": 0,
+    "columns": 9,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 9,
+    "rows": 17898,
+    "usable": 9
+   },
+   "reasons": [],
+   "rows": 17898,
+   "source": "uci:372",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Social Science",
+   "group": "uci:373",
+   "id": "uci:373",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Drug Consumption (Quantified)",
+   "profile": {
+    "categorical": 19,
+    "columns": 32,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 19,
+    "max_levels": 7,
+    "missing_share": 0.0,
+    "numeric": 13,
+    "rows": 1885,
+    "usable": 32
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)"
+   ],
+   "rows": 1885,
+   "source": "uci:373",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Computer Science",
+   "group": "uci:379",
+   "id": "uci:379",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Website Phishing",
+   "profile": {
+    "categorical": 0,
+    "columns": 10,
+    "constant": 0,
+    "duplicate_share": 0.4649,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 10,
+    "rows": 1353,
+    "usable": 10
+   },
+   "reasons": [],
+   "rows": 1353,
+   "source": "uci:379",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Climate and Environment",
+   "group": "uci:381",
+   "id": "uci:381",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Beijing PM2.5",
+   "profile": {
+    "categorical": 1,
+    "columns": 13,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 1,
+    "max_levels": 4,
+    "missing_share": 0.0036,
+    "numeric": 12,
+    "rows": 43824,
+    "usable": 13
+   },
+   "reasons": [],
+   "rows": 43824,
+   "source": "uci:381",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:162",
+   "id": "uci:383",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Cervical Cancer (Risk Factors)",
+   "profile": {
+    "categorical": 0,
+    "columns": 36,
+    "constant": 2,
+    "duplicate_share": 0.0268,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.1173,
+    "numeric": 34,
+    "rows": 858,
+    "usable": 34
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)"
+   ],
+   "rows": 858,
+   "source": "uci:383",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Business",
+   "group": "uci:165",
+   "id": "uci:390",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Stock Portfolio Performance",
+   "profile": {
+    "categorical": 6,
+    "columns": 20,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 6,
+    "max_levels": 282,
+    "missing_share": 0.0,
+    "numeric": 14,
+    "rows": 315,
+    "usable": 20
+   },
+   "reasons": [],
+   "rows": 315,
+   "source": "uci:390",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Social Science",
+   "group": "uci:426",
+   "id": "uci:426",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Autism Screening Adult",
+   "profile": {
+    "categorical": 8,
+    "columns": 21,
+    "constant": 1,
+    "duplicate_share": 0.0071,
+    "levels_ge3": 3,
+    "max_levels": 67,
+    "missing_share": 0.013,
+    "numeric": 12,
+    "rows": 704,
+    "usable": 20
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)"
+   ],
+   "rows": 704,
+   "source": "uci:426",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Business",
+   "group": "uci:445",
+   "id": "uci:445",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Absenteeism at work",
+   "profile": {
+    "categorical": 0,
+    "columns": 21,
+    "constant": 0,
+    "duplicate_share": 0.0459,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 21,
+    "rows": 740,
+    "usable": 21
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)"
+   ],
+   "rows": 740,
+   "source": "uci:445",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Physics and Chemistry",
+   "group": "uci:464",
+   "id": "uci:464",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Superconductivty Data",
+   "profile": {
+    "categorical": 0,
+    "columns": 82,
+    "constant": 0,
+    "duplicate_share": 0.0031,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 82,
+    "rows": 21263,
+    "usable": 82
+   },
+   "reasons": [],
+   "rows": 21263,
+   "source": "uci:464",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Business",
+   "group": "uci:165",
+   "id": "uci:477",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Real Estate Valuation",
+   "profile": {
+    "categorical": 0,
+    "columns": 8,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 8,
+    "rows": 414,
+    "usable": 8
+   },
+   "reasons": [],
+   "rows": 414,
+   "source": "uci:477",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:503",
+   "id": "uci:503",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Hepatitis C Virus (HCV) for Egyptian patients",
+   "profile": {
+    "categorical": 0,
+    "columns": 29,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 29,
+    "rows": 1385,
+    "usable": 29
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)"
+   ],
+   "rows": 1385,
+   "source": "uci:503",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Computer Science",
+   "group": "uci:529",
+   "id": "uci:529",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Early Stage Diabetes Risk Prediction",
+   "profile": {
+    "categorical": 16,
+    "columns": 17,
+    "constant": 0,
+    "duplicate_share": 0.5173,
+    "levels_ge3": 0,
+    "max_levels": 2,
+    "missing_share": 0.0,
+    "numeric": 1,
+    "rows": 520,
+    "usable": 17
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)",
+    "no categorical column with at least 3 levels",
+    "more than half of the rows are duplicates"
+   ],
+   "rows": 520,
+   "source": "uci:529",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:544",
+   "id": "uci:544",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Estimation of Obesity Levels Based On Eating Habits and Physical Condition ",
+   "profile": {
+    "categorical": 9,
+    "columns": 17,
+    "constant": 0,
+    "duplicate_share": 0.0114,
+    "levels_ge3": 4,
+    "max_levels": 7,
+    "missing_share": 0.0,
+    "numeric": 8,
+    "rows": 2111,
+    "usable": 17
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)"
+   ],
+   "rows": 2111,
+   "source": "uci:544",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Biology",
+   "group": "uci:545",
+   "id": "uci:545",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Rice (Cammeo and Osmancik)",
+   "profile": {
+    "categorical": 1,
+    "columns": 8,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 2,
+    "missing_share": 0.0,
+    "numeric": 7,
+    "rows": 3810,
+    "usable": 8
+   },
+   "reasons": [],
+   "rows": 3810,
+   "source": "uci:545",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Computer Science",
+   "group": "uci:551",
+   "id": "uci:551",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Gas Turbine CO and NOx Emission Data Set",
+   "profile": {
+    "categorical": 0,
+    "columns": 12,
+    "constant": 0,
+    "duplicate_share": 0.0002,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 12,
+    "rows": 36733,
+    "usable": 12
+   },
+   "reasons": [],
+   "rows": 36733,
+   "source": "uci:551",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Business",
+   "group": "uci:555",
+   "id": "uci:555",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Apartment for Rent Classified",
+   "profile": {
+    "categorical": 13,
+    "columns": 22,
+    "constant": 0,
+    "duplicate_share": 0.0008,
+    "levels_ge3": 13,
+    "max_levels": 94806,
+    "missing_share": 0.0772,
+    "numeric": 9,
+    "rows": 99826,
+    "usable": 22
+   },
+   "reasons": [],
+   "rows": 99826,
+   "source": "uci:555",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Business",
+   "group": "uci:563",
+   "id": "uci:563",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Iranian Churn",
+   "profile": {
+    "categorical": 0,
+    "columns": 14,
+    "constant": 0,
+    "duplicate_share": 0.0952,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 14,
+    "rows": 3150,
+    "usable": 14
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)"
+   ],
+   "rows": 3150,
+   "source": "uci:563",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:571",
+   "id": "uci:571",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "HCV data",
+   "profile": {
+    "categorical": 2,
+    "columns": 14,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 1,
+    "max_levels": 5,
+    "missing_share": 0.0036,
+    "numeric": 12,
+    "rows": 615,
+    "usable": 14
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)"
+   ],
+   "rows": 615,
+   "source": "uci:571",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Business",
+   "group": "uci:572",
+   "id": "uci:572",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Taiwanese Bankruptcy Prediction",
+   "profile": {
+    "categorical": 0,
+    "columns": 96,
+    "constant": 1,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 95,
+    "rows": 6819,
+    "usable": 95
+   },
+   "reasons": [],
+   "rows": 6819,
+   "source": "uci:572",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:579",
+   "id": "uci:579",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Myocardial infarction complications",
+   "profile": {
+    "categorical": 0,
+    "columns": 124,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0758,
+    "numeric": 124,
+    "rows": 1700,
+    "usable": 124
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)"
+   ],
+   "rows": 1700,
+   "source": "uci:579",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Computer Science",
+   "group": "uci:582",
+   "id": "uci:582",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Student Performance on an Entrance Examination",
+   "profile": {
+    "categorical": 12,
+    "columns": 12,
+    "constant": 0,
+    "duplicate_share": 0.0661,
+    "levels_ge3": 11,
+    "max_levels": 9,
+    "missing_share": 0.0,
+    "numeric": 0,
+    "rows": 666,
+    "usable": 12
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)",
+    "fewer than 3 informative numeric columns"
+   ],
+   "rows": 666,
+   "source": "uci:582",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Business",
+   "group": "uci:597",
+   "id": "uci:597",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Productivity Prediction of Garment Employees",
+   "profile": {
+    "categorical": 4,
+    "columns": 15,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 3,
+    "max_levels": 59,
+    "missing_share": 0.0282,
+    "numeric": 11,
+    "rows": 1197,
+    "usable": 15
+   },
+   "reasons": [],
+   "rows": 1197,
+   "source": "uci:597",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Computer Science",
+   "group": "uci:601",
+   "id": "uci:601",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "AI4I 2020 Predictive Maintenance Dataset",
+   "profile": {
+    "categorical": 2,
+    "columns": 14,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 2,
+    "max_levels": 10000,
+    "missing_share": 0.0,
+    "numeric": 12,
+    "rows": 10000,
+    "usable": 14
+   },
+   "reasons": [],
+   "rows": 10000,
+   "source": "uci:601",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Biology",
+   "group": "uci:602",
+   "id": "uci:602",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Dry Bean",
+   "profile": {
+    "categorical": 1,
+    "columns": 17,
+    "constant": 0,
+    "duplicate_share": 0.005,
+    "levels_ge3": 1,
+    "max_levels": 7,
+    "missing_share": 0.0,
+    "numeric": 16,
+    "rows": 13611,
+    "usable": 17
+   },
+   "reasons": [],
+   "rows": 13611,
+   "source": "uci:602",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Business",
+   "group": "uci:603",
+   "id": "uci:603",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "In-Vehicle Coupon Recommendation",
+   "profile": {
+    "categorical": 18,
+    "columns": 26,
+    "constant": 1,
+    "duplicate_share": 0.0058,
+    "levels_ge3": 16,
+    "max_levels": 25,
+    "missing_share": 0.0405,
+    "numeric": 7,
+    "rows": 12684,
+    "usable": 25
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)"
+   ],
+   "rows": 12684,
+   "source": "uci:603",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Social Science",
+   "group": "uci:697",
+   "id": "uci:697",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Predict Students' Dropout and Academic Success",
+   "profile": {
+    "categorical": 1,
+    "columns": 37,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 1,
+    "max_levels": 3,
+    "missing_share": 0.0,
+    "numeric": 36,
+    "rows": 4424,
+    "usable": 37
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)",
+    "fewer than 2 categorical columns"
+   ],
+   "rows": 4424,
+   "source": "uci:697",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Computer Science",
+   "group": "uci:722",
+   "id": "uci:722",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "NATICUSdroid (Android Permissions)",
+   "profile": {
+    "categorical": 0,
+    "columns": 87,
+    "constant": 0,
+    "duplicate_share": 0.7446,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 87,
+    "rows": 29332,
+    "usable": 87
+   },
+   "reasons": [
+    "more than half of the rows are duplicates"
+   ],
+   "rows": 29332,
+   "source": "uci:722",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:759",
+   "id": "uci:759",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Glioma Grading Clinical and Mutation Features",
+   "profile": {
+    "categorical": 2,
+    "columns": 25,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 2,
+    "max_levels": 839,
+    "missing_share": 0.0,
+    "numeric": 23,
+    "rows": 839,
+    "usable": 25
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)"
+   ],
+   "rows": 839,
+   "source": "uci:759",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Biology",
+   "group": "uci:848",
+   "id": "uci:848",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Secondary Mushroom",
+   "profile": {
+    "categorical": 17,
+    "columns": 21,
+    "constant": 1,
+    "duplicate_share": 0.0024,
+    "levels_ge3": 14,
+    "max_levels": 13,
+    "missing_share": 0.2397,
+    "numeric": 3,
+    "rows": 61069,
+    "usable": 20
+   },
+   "reasons": [],
+   "rows": 61069,
+   "source": "uci:848",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Biology",
+   "group": "uci:850",
+   "id": "uci:850",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Raisin",
+   "profile": {
+    "categorical": 1,
+    "columns": 8,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 2,
+    "missing_share": 0.0,
+    "numeric": 7,
+    "rows": 900,
+    "usable": 8
+   },
+   "reasons": [],
+   "rows": 900,
+   "source": "uci:850",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:863",
+   "id": "uci:863",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Maternal Health Risk",
+   "profile": {
+    "categorical": 1,
+    "columns": 7,
+    "constant": 0,
+    "duplicate_share": 0.5542,
+    "levels_ge3": 1,
+    "max_levels": 3,
+    "missing_share": 0.0,
+    "numeric": 6,
+    "rows": 1014,
+    "usable": 7
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)",
+    "more than half of the rows are duplicates"
+   ],
+   "rows": 1014,
+   "source": "uci:863",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Computer Science",
+   "group": "uci:864",
+   "id": "uci:864",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Room Occupancy Estimation",
+   "profile": {
+    "categorical": 2,
+    "columns": 19,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 2,
+    "max_levels": 10129,
+    "missing_share": 0.0,
+    "numeric": 17,
+    "rows": 10129,
+    "usable": 19
+   },
+   "reasons": [],
+   "rows": 10129,
+   "source": "uci:864",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:878",
+   "id": "uci:878",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Cirrhosis Patient Survival Prediction",
+   "profile": {
+    "categorical": 9,
+    "columns": 20,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 8,
+    "max_levels": 202,
+    "missing_share": 0.1161,
+    "numeric": 11,
+    "rows": 418,
+    "usable": 20
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)",
+    "fewer than 500 rows"
+   ],
+   "rows": 418,
+   "source": "uci:878",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:887",
+   "id": "uci:887",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "National Health and Nutrition Health Survey 2013-2014 (NHANES) Age Prediction Subset",
+   "profile": {
+    "categorical": 1,
+    "columns": 10,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 2,
+    "missing_share": 0.0,
+    "numeric": 9,
+    "rows": 2278,
+    "usable": 10
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)",
+    "fewer than 2 categorical columns"
+   ],
+   "rows": 2278,
+   "source": "uci:887",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Computer Science",
+   "group": "uci:911",
+   "id": "uci:911",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Recipe Reviews and User Feedback",
+   "profile": {
+    "categorical": 5,
+    "columns": 15,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 5,
+    "max_levels": 18182,
+    "missing_share": 0.0,
+    "numeric": 10,
+    "rows": 18182,
+    "usable": 15
+   },
+   "reasons": [],
+   "rows": 18182,
+   "source": "uci:911",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Other",
+   "group": "uci:913",
+   "id": "uci:913",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Forty Soybean Cultivars from Subsequent Harvests",
+   "profile": {
+    "categorical": 1,
+    "columns": 11,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 1,
+    "max_levels": 40,
+    "missing_share": 0.0,
+    "numeric": 10,
+    "rows": 320,
+    "usable": 11
+   },
+   "reasons": [
+    "fewer than 500 rows",
+    "fewer than 2 categorical columns"
+   ],
+   "rows": 320,
+   "source": "uci:913",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:915",
+   "id": "uci:915",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Differentiated Thyroid Cancer Recurrence",
+   "profile": {
+    "categorical": 16,
+    "columns": 17,
+    "constant": 0,
+    "duplicate_share": 0.0496,
+    "levels_ge3": 9,
+    "max_levels": 7,
+    "missing_share": 0.0,
+    "numeric": 1,
+    "rows": 383,
+    "usable": 17
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)",
+    "fewer than 500 rows"
+   ],
+   "rows": 383,
+   "source": "uci:915",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:936",
+   "id": "uci:936",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "National Poll on Healthy Aging (NPHA)",
+   "profile": {
+    "categorical": 0,
+    "columns": 15,
+    "constant": 1,
+    "duplicate_share": 0.0588,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 14,
+    "rows": 714,
+    "usable": 14
+   },
+   "reasons": [
+    "personal attributes listed by the publisher (privacy review pending)",
+    "fewer than 2 categorical columns"
+   ],
+   "rows": 714,
+   "source": "uci:936",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Computer Science",
+   "group": "uci:967",
+   "id": "uci:967",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "PhiUSIIL Phishing URL (Website)",
+   "profile": {
+    "categorical": 5,
+    "columns": 56,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 5,
+    "max_levels": 235795,
+    "missing_share": 0.0,
+    "numeric": 51,
+    "rows": 235795,
+    "usable": 56
+   },
+   "reasons": [],
+   "rows": 235795,
+   "source": "uci:967",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Social Science",
+   "group": "uci:12",
+   "id": "uci:12",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Balance Scale",
+   "profile": {
+    "categorical": 1,
+    "columns": 5,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 1,
+    "max_levels": 3,
+    "missing_share": 0.0,
+    "numeric": 4,
+    "rows": 625,
+    "usable": 5
+   },
+   "reasons": [
+    "fewer than 2 categorical columns"
+   ],
+   "rows": 625,
+   "source": "uci:12",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Other",
+   "group": "uci:19",
+   "id": "uci:19",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Car Evaluation",
+   "profile": {
+    "categorical": 7,
+    "columns": 7,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 7,
+    "max_levels": 4,
+    "missing_share": 0.0,
+    "numeric": 0,
+    "rows": 1728,
+    "usable": 7
+   },
+   "reasons": [],
+   "rows": 1728,
+   "source": "uci:19",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Games",
+   "group": "uci:22",
+   "id": "uci:22",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Chess (King-Rook vs. King-Pawn)",
+   "profile": {
+    "categorical": 36,
+    "columns": 36,
+    "constant": 0,
+    "duplicate_share": 0.015,
+    "levels_ge3": 1,
+    "max_levels": 3,
+    "missing_share": 0.0,
+    "numeric": 0,
+    "rows": 3196,
+    "usable": 36
+   },
+   "reasons": [],
+   "rows": 3196,
+   "source": "uci:22",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Games",
+   "group": "uci:26",
+   "id": "uci:26",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Connect-4",
+   "profile": {
+    "categorical": 43,
+    "columns": 43,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 43,
+    "max_levels": 3,
+    "missing_share": 0.0,
+    "numeric": 0,
+    "rows": 67557,
+    "usable": 43
+   },
+   "reasons": [],
+   "rows": 67557,
+   "source": "uci:26",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Biology",
+   "group": "uci:69",
+   "id": "uci:69",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Molecular Biology (Splice-junction Gene Sequences)",
+   "profile": {
+    "categorical": 62,
+    "columns": 62,
+    "constant": 0,
+    "duplicate_share": 0.0038,
+    "levels_ge3": 62,
+    "max_levels": 3178,
+    "missing_share": 0.0,
+    "numeric": 0,
+    "rows": 3190,
+    "usable": 62
+   },
+   "reasons": [],
+   "rows": 3190,
+   "source": "uci:69",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Other",
+   "group": "uci:70",
+   "id": "uci:70",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "MONK's Problems",
+   "profile": {
+    "categorical": 1,
+    "columns": 8,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 1,
+    "max_levels": 432,
+    "missing_share": 0.0,
+    "numeric": 7,
+    "rows": 432,
+    "usable": 8
+   },
+   "reasons": [
+    "fewer than 500 rows",
+    "fewer than 2 categorical columns"
+   ],
+   "rows": 432,
+   "source": "uci:70",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Social Science",
+   "group": "uci:76",
+   "id": "uci:76",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Nursery",
+   "profile": {
+    "categorical": 9,
+    "columns": 9,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 8,
+    "max_levels": 5,
+    "missing_share": 0.0,
+    "numeric": 0,
+    "rows": 12960,
+    "usable": 9
+   },
+   "reasons": [],
+   "rows": 12960,
+   "source": "uci:76",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Games",
+   "group": "uci:101",
+   "id": "uci:101",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Tic-Tac-Toe Endgame",
+   "profile": {
+    "categorical": 10,
+    "columns": 10,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 9,
+    "max_levels": 3,
+    "missing_share": 0.0,
+    "numeric": 0,
+    "rows": 958,
+    "usable": 10
+   },
+   "reasons": [],
+   "rows": 958,
+   "source": "uci:101",
+   "stratum": "C2a",
+   "twins": []
+  },
+  {
+   "area": "Business",
+   "group": "uci:143",
+   "id": "uci:143",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Statlog (Australian Credit Approval)",
+   "profile": {
+    "categorical": 0,
+    "columns": 15,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 15,
+    "rows": 690,
+    "usable": 15
+   },
+   "reasons": [],
+   "rows": 690,
+   "source": "uci:143",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:264",
+   "id": "uci:264",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "EEG Eye State",
+   "profile": {
+    "categorical": 0,
+    "columns": 15,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 15,
+    "rows": 14980,
+    "usable": 15
+   },
+   "reasons": [],
+   "rows": 14980,
+   "source": "uci:264",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Business",
+   "group": "uci:396",
+   "id": "uci:396",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Sales Transactions Weekly",
+   "profile": {
+    "categorical": 1,
+    "columns": 107,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 1,
+    "max_levels": 811,
+    "missing_share": 0.0,
+    "numeric": 106,
+    "rows": 811,
+    "usable": 107
+   },
+   "reasons": [],
+   "rows": 811,
+   "source": "uci:396",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Computer Science",
+   "group": "uci:536",
+   "id": "uci:536",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Pedestrians in Traffic",
+   "profile": {
+    "categorical": 4,
+    "columns": 14,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 4,
+    "max_levels": 4701,
+    "missing_share": 0.243,
+    "numeric": 10,
+    "rows": 4759,
+    "usable": 14
+   },
+   "reasons": [],
+   "rows": 4759,
+   "source": "uci:536",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Computer Science",
+   "group": "uci:755",
+   "id": "uci:755",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Accelerometer Gyro Mobile Phone",
+   "profile": {
+    "categorical": 0,
+    "columns": 8,
+    "constant": 0,
+    "duplicate_share": 0.0045,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 8,
+    "rows": 31991,
+    "usable": 8
+   },
+   "reasons": [],
+   "rows": 31991,
+   "source": "uci:755",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Health and Medicine",
+   "group": "uci:760",
+   "id": "uci:760",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "Multivariate Gait Data",
+   "profile": {
+    "categorical": 0,
+    "columns": 7,
+    "constant": 0,
+    "duplicate_share": 0.0,
+    "levels_ge3": 0,
+    "max_levels": 0,
+    "missing_share": 0.0,
+    "numeric": 7,
+    "rows": 181800,
+    "usable": 7
+   },
+   "reasons": [],
+   "rows": 181800,
+   "source": "uci:760",
+   "stratum": "C1",
+   "twins": []
+  },
+  {
+   "area": "Engineering",
+   "group": "uci:942",
+   "id": "uci:942",
+   "licence": "CC BY 4.0",
+   "licence_class": "open",
+   "name": "RT-IoT2022 ",
+   "profile": {
+    "categorical": 3,
+    "columns": 85,
+    "constant": 1,
+    "duplicate_share": 0.0,
+    "levels_ge3": 3,
+    "max_levels": 12,
+    "missing_share": 0.0,
+    "numeric": 81,
+    "rows": 123117,
+    "usable": 84
+   },
+   "reasons": [],
+   "rows": 123117,
+   "source": "uci:942",
+   "stratum": "C1",
+   "twins": []
+  }
+ ],
+ "views": [
+  {
+   "key": "flat_uci_101_C2a",
+   "source": "uci:101",
+   "stratum": "C2a",
+   "table": "uci:101"
+  },
+  {
+   "key": "flat_uci_110_C1",
+   "source": "uci:110",
+   "stratum": "C1",
+   "table": "adbench:yeast"
+  },
+  {
+   "key": "flat_uci_143_C1",
+   "source": "uci:143",
+   "stratum": "C1",
+   "table": "uci:143"
+  },
+  {
+   "key": "flat_uci_146_C1",
+   "source": "uci:146",
+   "stratum": "C1",
+   "table": "adbench:landsat"
+  },
+  {
+   "key": "flat_uci_148_C1",
+   "source": "uci:148",
+   "stratum": "C1",
+   "table": "adbench:shuttle"
+  },
+  {
+   "key": "flat_uci_149_C1",
+   "source": "uci:149",
+   "stratum": "C1",
+   "table": "uci:149"
+  },
+  {
+   "key": "flat_uci_15_C1",
+   "source": "uci:15",
+   "stratum": "C1",
+   "table": "adbench:breastw"
+  },
+  {
+   "key": "flat_uci_159_C1",
+   "source": "uci:159",
+   "stratum": "C1",
+   "table": "adbench:magic.gamma"
+  },
+  {
+   "key": "flat_uci_162_C1",
+   "source": "uci:332",
+   "stratum": "C1",
+   "table": "uci:332"
+  },
+  {
+   "key": "flat_uci_165_C1",
+   "source": "uci:165",
+   "stratum": "C1",
+   "table": "uci:165"
+  },
+  {
+   "key": "flat_uci_189_C1",
+   "source": "uci:242",
+   "stratum": "C1",
+   "table": "uci:242"
+  },
+  {
+   "key": "flat_uci_19_C2a",
+   "source": "uci:19",
+   "stratum": "C2a",
+   "table": "uci:19"
+  },
+  {
+   "key": "flat_uci_193_C1",
+   "source": "uci:193",
+   "stratum": "C1",
+   "table": "adbench:cardio"
+  },
+  {
+   "key": "flat_uci_198_C1",
+   "source": "uci:198",
+   "stratum": "C1",
+   "table": "adbench:fault"
+  },
+  {
+   "key": "flat_uci_212_C1",
+   "source": "uci:212",
+   "stratum": "C1",
+   "table": "adbench:vertebral"
+  },
+  {
+   "key": "flat_uci_22_C2a",
+   "source": "uci:22",
+   "stratum": "C2a",
+   "table": "uci:22"
+  },
+  {
+   "key": "flat_uci_247_C1",
+   "source": "uci:247",
+   "stratum": "C1",
+   "table": "uci:247"
+  },
+  {
+   "key": "flat_uci_257_C1",
+   "source": "uci:257",
+   "stratum": "C1",
+   "table": "uci:257"
+  },
+  {
+   "key": "flat_uci_26_C2a",
+   "source": "uci:26",
+   "stratum": "C2a",
+   "table": "uci:26"
+  },
+  {
+   "key": "flat_uci_264_C1",
+   "source": "uci:264",
+   "stratum": "C1",
+   "table": "uci:264"
+  },
+  {
+   "key": "flat_uci_267_C1",
+   "source": "uci:267",
+   "stratum": "C1",
+   "table": "uci:267"
+  },
+  {
+   "key": "flat_uci_27_C2a",
+   "source": "uci:27",
+   "stratum": "C2a",
+   "table": "uci:27"
+  },
+  {
+   "key": "flat_uci_270_C1",
+   "source": "uci:270",
+   "stratum": "C1",
+   "table": "uci:270"
+  },
+  {
+   "key": "flat_uci_291_C1",
+   "source": "uci:291",
+   "stratum": "C1",
+   "table": "uci:291"
+  },
+  {
+   "key": "flat_uci_292_C1",
+   "source": "uci:292",
+   "stratum": "C1",
+   "table": "uci:292"
+  },
+  {
+   "key": "flat_uci_294_C1",
+   "source": "uci:294",
+   "stratum": "C1",
+   "table": "uci:294"
+  },
+  {
+   "key": "flat_uci_296_C1",
+   "source": "uci:342",
+   "stratum": "C1",
+   "table": "uci:342"
+  },
+  {
+   "key": "flat_uci_31_C1",
+   "source": "uci:31",
+   "stratum": "C1",
+   "table": "adbench:cover"
+  },
+  {
+   "key": "flat_uci_312_C1",
+   "source": "uci:312",
+   "stratum": "C1",
+   "table": "uci:312"
+  },
+  {
+   "key": "flat_uci_32_C2a",
+   "source": "uci:32",
+   "stratum": "C2a",
+   "table": "uci:32"
+  },
+  {
+   "key": "flat_uci_327_C1",
+   "source": "uci:327",
+   "stratum": "C1",
+   "table": "uci:327"
+  },
+  {
+   "key": "flat_uci_329_C1",
+   "source": "uci:329",
+   "stratum": "C1",
+   "table": "uci:329"
+  },
+  {
+   "key": "flat_uci_365_C1",
+   "source": "uci:365",
+   "stratum": "C1",
+   "table": "uci:365"
+  },
+  {
+   "key": "flat_uci_368_C1",
+   "source": "uci:368",
+   "stratum": "C1",
+   "table": "uci:368"
+  },
+  {
+   "key": "flat_uci_372_C1",
+   "source": "uci:372",
+   "stratum": "C1",
+   "table": "uci:372"
+  },
+  {
+   "key": "flat_uci_379_C1",
+   "source": "uci:379",
+   "stratum": "C1",
+   "table": "uci:379"
+  },
+  {
+   "key": "flat_uci_381_C1",
+   "source": "uci:381",
+   "stratum": "C1",
+   "table": "uci:381"
+  },
+  {
+   "key": "flat_uci_396_C1",
+   "source": "uci:396",
+   "stratum": "C1",
+   "table": "uci:396"
+  },
+  {
+   "key": "flat_uci_464_C1",
+   "source": "uci:464",
+   "stratum": "C1",
+   "table": "uci:464"
+  },
+  {
+   "key": "flat_uci_52_C1",
+   "source": "uci:52",
+   "stratum": "C1",
+   "table": "adbench:Ionosphere"
+  },
+  {
+   "key": "flat_uci_536_C1",
+   "source": "uci:536",
+   "stratum": "C1",
+   "table": "uci:536"
+  },
+  {
+   "key": "flat_uci_545_C1",
+   "source": "uci:545",
+   "stratum": "C1",
+   "table": "uci:545"
+  },
+  {
+   "key": "flat_uci_551_C1",
+   "source": "uci:551",
+   "stratum": "C1",
+   "table": "uci:551"
+  },
+  {
+   "key": "flat_uci_555_C2a",
+   "source": "uci:555",
+   "stratum": "C2a",
+   "table": "uci:555"
+  },
+  {
+   "key": "flat_uci_572_C1",
+   "source": "uci:572",
+   "stratum": "C1",
+   "table": "uci:572"
+  },
+  {
+   "key": "flat_uci_59_C1",
+   "source": "uci:59",
+   "stratum": "C1",
+   "table": "adbench:letter"
+  },
+  {
+   "key": "flat_uci_597_C1",
+   "source": "uci:597",
+   "stratum": "C1",
+   "table": "uci:597"
+  },
+  {
+   "key": "flat_uci_601_C1",
+   "source": "uci:601",
+   "stratum": "C1",
+   "table": "uci:601"
+  },
+  {
+   "key": "flat_uci_602_C1",
+   "source": "uci:602",
+   "stratum": "C1",
+   "table": "uci:602"
+  },
+  {
+   "key": "flat_uci_69_C2a",
+   "source": "uci:69",
+   "stratum": "C2a",
+   "table": "uci:69"
+  },
+  {
+   "key": "flat_uci_73_C2a",
+   "source": "uci:73",
+   "stratum": "C2a",
+   "table": "uci:73"
+  },
+  {
+   "key": "flat_uci_75_C1",
+   "source": "uci:75",
+   "stratum": "C1",
+   "table": "adbench:musk"
+  },
+  {
+   "key": "flat_uci_755_C1",
+   "source": "uci:755",
+   "stratum": "C1",
+   "table": "uci:755"
+  },
+  {
+   "key": "flat_uci_76_C2a",
+   "source": "uci:76",
+   "stratum": "C2a",
+   "table": "uci:76"
+  },
+  {
+   "key": "flat_uci_760_C1",
+   "source": "uci:760",
+   "stratum": "C1",
+   "table": "uci:760"
+  },
+  {
+   "key": "flat_uci_78_C1",
+   "source": "uci:78",
+   "stratum": "C1",
+   "table": "adbench:PageBlocks"
+  },
+  {
+   "key": "flat_uci_80_C1",
+   "source": "uci:81",
+   "stratum": "C1",
+   "table": "adbench:pendigits"
+  },
+  {
+   "key": "flat_uci_848_C1",
+   "source": "uci:848",
+   "stratum": "C1",
+   "table": "uci:848"
+  },
+  {
+   "key": "flat_uci_850_C1",
+   "source": "uci:850",
+   "stratum": "C1",
+   "table": "uci:850"
+  },
+  {
+   "key": "flat_uci_864_C1",
+   "source": "uci:864",
+   "stratum": "C1",
+   "table": "uci:864"
+  },
+  {
+   "key": "flat_uci_911_C2a",
+   "source": "uci:911",
+   "stratum": "C2a",
+   "table": "uci:911"
+  },
+  {
+   "key": "flat_uci_94_C1",
+   "source": "uci:94",
+   "stratum": "C1",
+   "table": "adbench:SpamBase"
+  },
+  {
+   "key": "flat_uci_942_C1",
+   "source": "uci:942",
+   "stratum": "C1",
+   "table": "uci:942"
+  },
+  {
+   "key": "flat_uci_967_C2a",
+   "source": "uci:967",
+   "stratum": "C2a",
+   "table": "uci:967"
+  }
+ ],
+ "without_file": [
+  "uci:102",
+  "uci:107",
+  "uci:109",
+  "uci:130",
+  "uci:16",
+  "uci:229",
+  "uci:285",
+  "uci:42",
+  "uci:46",
+  "uci:51",
+  "uci:63"
+ ]
+}

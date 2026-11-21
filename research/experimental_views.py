@@ -2120,6 +2120,48 @@ def _build_dvf(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+FLAT_SELECTION = (
+    Path(__file__).resolve().parent.parent
+    / "verification/evidence/dataset_registry_v2/flat_selection.json"
+)
+
+
+def _build_flat(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    """Views of the represented flat tabular and categorical tables (one manifest entry each)."""
+    import sys
+
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import flat_readiness
+    import uci_loader
+
+    folder = out / "flat"
+    folder.mkdir(parents=True, exist_ok=True)
+    for view in json.loads(FLAT_SELECTION.read_text())["views"]:
+        number = view["source"].split(":", 1)[1]
+        path = next(
+            p for p in (root.parent / "pool" / f"{number}.csv", root.parent / "uci_wave2" / f"{number}.csv")  # noqa: E501
+            if p.exists()
+        )  # fmt: skip
+        frame, record = flat_readiness.prepare(uci_loader.read_table(path))
+        target = folder / f"{view['key']}.csv"
+        frame.to_csv(target, index=False)
+        _record(
+            manifest,
+            view["key"],
+            {target.name: (target, len(frame))},
+            dropped=[*record["dropped_constant"], *record["dropped_missing"]],
+            pseudonymised=[],
+            sampling={
+                "rows_in": record["rows_in"],
+                "stride": record["stride"],
+                "method": "every stride-th row from the first; the table is read as published",
+            },
+            table=view["table"],
+            stratum=view["stratum"],
+            source_snapshot=f"{view['source']} (repository file pinned by checksum)",
+        )
+
+
 SLURM_MODULO = 20
 SLURM_COLUMNS = (
     "jobid",
@@ -2218,6 +2260,7 @@ BUILD_STEPS = (
     _build_met,
     _build_ea,
     _build_dvf,
+    _build_flat,
     _build_series,
     _build_ukspend,
 )

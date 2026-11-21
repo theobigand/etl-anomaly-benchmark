@@ -7,53 +7,81 @@
    "Simon Talbot",
    "Andrew Cawthorn",
    "Wes Ford"
-  ]
+  ],
+  "demographics": [],
+  "name": "Abalone"
  },
  "101": {
   "area": "Games",
   "creators": [
    "David Aha"
-  ]
+  ],
+  "demographics": [],
+  "name": "Tic-Tac-Toe Endgame"
  },
  "102": {
   "area": "Health and Medicine",
   "creators": [
    "Ross Quinlan"
-  ]
+  ],
+  "demographics": [],
+  "name": "Thyroid Disease"
  },
  "105": {
   "area": "Social Science",
-  "creators": []
+  "creators": [],
+  "demographics": [],
+  "name": "Congressional Voting Records"
  },
  "107": {
   "area": "Physics and Chemistry",
   "creators": [
    "L. Breiman",
    "C.J. Stone"
-  ]
+  ],
+  "demographics": [],
+  "name": "Waveform Database Generator (Version 1)"
  },
  "109": {
   "area": "Physics and Chemistry",
   "creators": [
    "Stefan Aeberhard",
    "M. Forina"
-  ]
+  ],
+  "demographics": [],
+  "name": "Wine"
  },
  "110": {
   "area": "Biology",
   "creators": [
    "Kenta Nakai"
-  ]
+  ],
+  "demographics": [],
+  "name": "Yeast"
  },
  "117": {
   "area": "Social Science",
-  "creators": []
+  "creators": [],
+  "demographics": [
+   "Age",
+   "Occupation",
+   "Education Level",
+   "Marital Status",
+   "Race",
+   "Sex",
+   "Other",
+   "Nationality",
+   "Income"
+  ],
+  "name": "Census-Income (KDD)"
  },
  "12": {
   "area": "Social Science",
   "creators": [
    "R. Siegler"
-  ]
+  ],
+  "demographics": [],
+  "name": "Balance Scale"
  },
  "130": {
   "area": "Computer Science",
@@ -63,48 +91,69 @@
    "Wenke Lee",
    "Andreas Prodromidis",
    "Philip Chan"
-  ]
+  ],
+  "demographics": [],
+  "name": "KDD Cup 1999 Data"
  },
  "143": {
   "area": "Business",
   "creators": [
    "Ross Quinlan"
-  ]
+  ],
+  "demographics": [],
+  "name": "Statlog (Australian Credit Approval)"
  },
  "144": {
   "area": "Social Science",
   "creators": [
    "Hans Hofmann"
-  ]
+  ],
+  "demographics": [
+   "Other",
+   "Marital Status",
+   "Age",
+   "Occupation"
+  ],
+  "name": "Statlog (German Credit Data)"
  },
  "146": {
   "area": "Climate and Environment",
   "creators": [
    "Ashwin Srinivasan"
-  ]
+  ],
+  "demographics": [],
+  "name": "Statlog (Landsat Satellite)"
  },
  "148": {
   "area": "Physics and Chemistry",
-  "creators": []
+  "creators": [],
+  "demographics": [],
+  "name": "Statlog (Shuttle)"
  },
  "149": {
   "area": "Other",
   "creators": [
    "Pete Mowforth",
    "Barry Shepherd"
-  ]
+  ],
+  "demographics": [],
+  "name": "Statlog (Vehicle Silhouettes)"
  },
  "15": {
   "area": "Health and Medicine",
   "creators": [
    "WIlliam Wolberg"
-  ]
+  ],
+  "demographics": [],
+  "name": "Breast Cancer Wisconsin (Original)"
  },
  "159": {
   "area": "Physics and Chemistry",
   "creators": [
    "R. Bock"
-  ]
+  ],
+  "demographics": [],
+  "name": "MAGIC Gamma Telescope"
  },
  "16": {
   "area": "Health and Medicine",
@@ -112,26 +161,36 @@
    "William Wolberg",
    "W. Street",
    "Olvi Mangasarian"
-  ]
+  ],
+  "demographics": [],
+  "name": "Breast Cancer Wisconsin (Prognostic)"
  },
  "161": {
   "area": "Health and Medicine",
   "creators": [
    "Matthias Elter"
-  ]
+  ],
+  "demographics": [
+   "Age"
+  ],
+  "name": "Mammographic Mass"
  },
  "162": {
   "area": "Climate and Environment",
   "creators": [
    "Paulo Cortez",
    "Anbal Morais"
-  ]
+  ],
+  "demographics": [],
+  "name": "Forest Fires"
  },
  "165": {
   "area": "Physics and Chemistry",
   "creators": [
    "I-Cheng Yeh"
-  ]
+  ],
+  "demographics": [],
+  "name": "Concrete Compressive Strength"
  },
  "17": {
   "area": "Health and Medicine",
@@ -140,19 +199,30 @@
    "Olvi Mangasarian",
    "Nick Street",
    "W. Street"
-  ]
+  ],
+  "demographics": [],
+  "name": "Breast Cancer Wisconsin (Diagnostic)"
  },
  "176": {
   "area": "Business",
   "creators": [
    "I-Cheng Yeh"
-  ]
+  ],
+  "demographics": [],
+  "name": "Blood Transfusion Service Center"
  },
  "183": {
   "area": "Social Science",
   "creators": [
    "Michael Redmond"
-  ]
+  ],
+  "demographics": [
+   "Race",
+   "Age",
+   "Income",
+   "Occupation"
+  ],
+  "name": "Communities and Crime"
  },
  "186": {
   "area": "Business",
@@ -162,27 +232,38 @@
    "F. Almeida",
    "T. Matos",
    "J. Reis"
-  ]
+  ],
+  "demographics": [],
+  "name": "Wine Quality"
  },
  "189": {
   "area": "Health and Medicine",
   "creators": [
    "Athanasios Tsanas",
    "Max Little"
-  ]
+  ],
+  "demographics": [
+   "Age",
+   "Sex"
+  ],
+  "name": "Parkinsons Telemonitoring"
  },
  "19": {
   "area": "Other",
   "creators": [
    "Marko Bohanec"
-  ]
+  ],
+  "demographics": [],
+  "name": "Car Evaluation"
  },
  "193": {
   "area": "Health and Medicine",
   "creators": [
    "D. Campos",
    "J. Bernardes"
-  ]
+  ],
+  "demographics": [],
+  "name": "Cardiotocography"
  },
  "198": {
   "area": "Physics and Chemistry",
@@ -190,27 +271,42 @@
    "M Buscema",
    "S Terzi",
    "W Tastle"
-  ]
+  ],
+  "demographics": [],
+  "name": "Steel Plates Faults"
  },
  "2": {
   "area": "Social Science",
   "creators": [
    "Barry Becker",
    "Ronny Kohavi"
-  ]
+  ],
+  "demographics": [
+   "Age",
+   "Income",
+   "Education Level",
+   "Other",
+   "Race",
+   "Sex"
+  ],
+  "name": "Adult"
  },
  "212": {
   "area": "Health and Medicine",
   "creators": [
    "Guilherme Barreto",
    "Ajalmar Neto"
-  ]
+  ],
+  "demographics": [],
+  "name": "Vertebral Column"
  },
  "22": {
   "area": "Games",
   "creators": [
    "Alen Shapiro"
-  ]
+  ],
+  "demographics": [],
+  "name": "Chess (King-Rook vs. King-Pawn)"
  },
  "222": {
   "area": "Business",
@@ -218,34 +314,52 @@
    "S. Moro",
    "P. Rita",
    "P. Cortez"
-  ]
+  ],
+  "demographics": [
+   "Age",
+   "Occupation",
+   "Marital Status",
+   "Education Level"
+  ],
+  "name": "Bank Marketing"
  },
  "225": {
   "area": "Health and Medicine",
   "creators": [
    "Bendi Ramana",
    "N. Venkateswarlu"
-  ]
+  ],
+  "demographics": [
+   "Age",
+   "Gender"
+  ],
+  "name": "ILPD (Indian Liver Patient Dataset)"
  },
  "229": {
   "area": "Computer Science",
   "creators": [
    "Rajen Bhatt",
    "Abhinav Dhall"
-  ]
+  ],
+  "demographics": [],
+  "name": "Skin Segmentation"
  },
  "242": {
   "area": "Computer Science",
   "creators": [
    "Athanasios Tsanas",
    "Angeliki Xifara"
-  ]
+  ],
+  "demographics": [],
+  "name": "Energy Efficiency"
  },
  "247": {
   "area": "Business",
   "creators": [
    "Oguz Akbilgic"
-  ]
+  ],
+  "demographics": [],
+  "name": "ISTANBUL STOCK EXCHANGE"
  },
  "257": {
   "area": "Computer Science",
@@ -253,37 +367,49 @@
    "Hamdi Kahraman",
    "Ilhami Colak",
    "Seref Sagiroglu"
-  ]
+  ],
+  "demographics": [],
+  "name": "User Knowledge Modeling"
  },
  "26": {
   "area": "Games",
   "creators": [
    "John Tromp"
-  ]
+  ],
+  "demographics": [],
+  "name": "Connect-4"
  },
  "264": {
   "area": "Health and Medicine",
   "creators": [
    "Oliver Roesler"
-  ]
+  ],
+  "demographics": [],
+  "name": "EEG Eye State"
  },
  "267": {
   "area": "Computer Science",
   "creators": [
    "Volker Lohweg"
-  ]
+  ],
+  "demographics": [],
+  "name": "Banknote Authentication"
  },
  "27": {
   "area": "Business",
   "creators": [
    "J. R. Quinlan"
-  ]
+  ],
+  "demographics": [],
+  "name": "Credit Approval"
  },
  "270": {
   "area": "Computer Science",
   "creators": [
    "Alexander Vergara"
-  ]
+  ],
+  "demographics": [],
+  "name": "Gas Sensor Array Drift at Different Concentrations"
  },
  "277": {
   "area": "Health and Medicine",
@@ -292,13 +418,19 @@
    "Konrad Pawelczyk",
    "Adam Rzechonek",
    "Jerzy Kolodziej"
-  ]
+  ],
+  "demographics": [
+   "Age"
+  ],
+  "name": "Thoracic Surgery Data"
  },
  "285": {
   "area": "Biology",
   "creators": [
    "Brian Johnson"
-  ]
+  ],
+  "demographics": [],
+  "name": "Wilt"
  },
  "291": {
   "area": "Physics and Chemistry",
@@ -306,20 +438,26 @@
    "Thomas Brooks",
    "D. Pope",
    "Michael Marcolini"
-  ]
+  ],
+  "demographics": [],
+  "name": "Airfoil Self-Noise"
  },
  "292": {
   "area": "Business",
   "creators": [
    "Margarida Cardoso"
-  ]
+  ],
+  "demographics": [],
+  "name": "Wholesale customers"
  },
  "294": {
   "area": "Computer Science",
   "creators": [
    "Pnar Tfekci",
    "Heysem Kaya"
-  ]
+  ],
+  "demographics": [],
+  "name": "Combined Cycle Power Plant"
  },
  "296": {
   "area": "Health and Medicine",
@@ -328,62 +466,99 @@
    "Krzysztof Cios",
    "Jon DeShazo",
    "Beata Strack"
-  ]
+  ],
+  "demographics": [
+   "Race",
+   "Gender",
+   "Age"
+  ],
+  "name": "Diabetes 130-US Hospitals for Years 1999-2008"
  },
  "3": {
   "area": "Physics and Chemistry",
-  "creators": []
+  "creators": [],
+  "demographics": [],
+  "name": "Annealing"
  },
  "30": {
   "area": "Health and Medicine",
   "creators": [
    "Tjen-Sien Lim"
-  ]
+  ],
+  "demographics": [
+   "Age",
+   "Education Level",
+   "Other",
+   "Occupation"
+  ],
+  "name": "Contraceptive Method Choice"
  },
  "31": {
   "area": "Biology",
   "creators": [
    "Jock Blackard"
-  ]
+  ],
+  "demographics": [],
+  "name": "Covertype"
  },
  "312": {
   "area": "Business",
   "creators": [
    "Michael Brown"
-  ]
+  ],
+  "demographics": [],
+  "name": "Dow Jones Index"
  },
  "32": {
   "area": "Physics and Chemistry",
   "creators": [
    "Bob Evans"
-  ]
+  ],
+  "demographics": [],
+  "name": "Cylinder Bands"
  },
  "320": {
   "area": "Social Science",
   "creators": [
    "Paulo Cortez"
-  ]
+  ],
+  "demographics": [
+   "Sex",
+   "Age",
+   "Other",
+   "Education Level",
+   "Occupation"
+  ],
+  "name": "Student Performance"
  },
  "327": {
   "area": "Computer Science",
   "creators": [
    "Rami Mohammad",
    "Lee McCluskey"
-  ]
+  ],
+  "demographics": [],
+  "name": "Phishing Websites"
  },
  "329": {
   "area": "Health and Medicine",
   "creators": [
    "Balint Antal",
    "Andras Hajdu"
-  ]
+  ],
+  "demographics": [],
+  "name": "Diabetic Retinopathy Debrecen"
  },
  "33": {
   "area": "Health and Medicine",
   "creators": [
    "Nilsel Ilter",
    "H. Guvenir"
-  ]
+  ],
+  "demographics": [
+   "Age"
+  ],
+  "name": "Dermatology"
  },
  "332": {
   "area": "Business",
@@ -392,7 +567,9 @@
    "Pedro Vinagre",
    "Paulo Cortez",
    "Pedro Sernadela"
-  ]
+  ],
+  "demographics": [],
+  "name": "Online News Popularity"
  },
  "336": {
   "area": "Other",
@@ -400,7 +577,11 @@
    "L. Rubini",
    "P. Soundarapandian",
    "P. Eswaran"
-  ]
+  ],
+  "demographics": [
+   "Age"
+  ],
+  "name": "Chronic Kidney Disease"
  },
  "342": {
   "area": "Biology",
@@ -408,19 +589,30 @@
    "Clara Higuera",
    "Katheleen Gardiner",
    "Krzysztof Cios"
-  ]
+  ],
+  "demographics": [],
+  "name": "Mice Protein Expression"
  },
  "350": {
   "area": "Business",
   "creators": [
    "I-Cheng Yeh"
-  ]
+  ],
+  "demographics": [
+   "Sex",
+   "Education Level",
+   "Marital Status",
+   "Age"
+  ],
+  "name": "Default of Credit Card Clients"
  },
  "365": {
   "area": "Business",
   "creators": [
    "Sebastian Tomczak"
-  ]
+  ],
+  "demographics": [],
+  "name": "Polish Companies Bankruptcy"
  },
  "368": {
   "area": "Business",
@@ -428,13 +620,17 @@
    "Srgio Moro",
    "Paulo Rita",
    "Bernardo Vala"
-  ]
+  ],
+  "demographics": [],
+  "name": "Facebook Metrics"
  },
  "372": {
   "area": "Physics and Chemistry",
   "creators": [
    "Robert Lyon"
-  ]
+  ],
+  "demographics": [],
+  "name": "HTRU2"
  },
  "373": {
   "area": "Social Science",
@@ -442,19 +638,31 @@
    "Elaine Fehrman",
    "Vincent Egan",
    "Evgeny Mirkes"
-  ]
+  ],
+  "demographics": [
+   "Age",
+   "Gender",
+   "Education Level",
+   "Nationality",
+   "Ethnicity"
+  ],
+  "name": "Drug Consumption (Quantified)"
  },
  "379": {
   "area": "Computer Science",
   "creators": [
    "Neda Abdelhamid"
-  ]
+  ],
+  "demographics": [],
+  "name": "Website Phishing"
  },
  "381": {
   "area": "Climate and Environment",
   "creators": [
    "Song Chen"
-  ]
+  ],
+  "demographics": [],
+  "name": "Beijing PM2.5"
  },
  "383": {
   "area": "Health and Medicine",
@@ -462,44 +670,69 @@
    "Kelwin Fernandes",
    "Jaime Cardoso",
    "Jessica Fernandes"
-  ]
+  ],
+  "demographics": [
+   "Age",
+   "Other"
+  ],
+  "name": "Cervical Cancer (Risk Factors)"
  },
  "39": {
   "area": "Biology",
   "creators": [
    "Kenta Nakai"
-  ]
+  ],
+  "demographics": [],
+  "name": "Ecoli"
  },
  "390": {
   "area": "Business",
   "creators": [
    "I-Cheng Yeh"
-  ]
+  ],
+  "demographics": [],
+  "name": "Stock Portfolio Performance"
  },
  "396": {
   "area": "Business",
   "creators": [
    "James Tan"
-  ]
+  ],
+  "demographics": [],
+  "name": "Sales Transactions Weekly"
  },
  "42": {
   "area": "Physics and Chemistry",
   "creators": [
    "B. German"
-  ]
+  ],
+  "demographics": [],
+  "name": "Glass Identification"
  },
  "426": {
   "area": "Social Science",
   "creators": [
    "Fadi Thabtah"
-  ]
+  ],
+  "demographics": [
+   "Age",
+   "Gender",
+   "Ethnicity",
+   "Nationality"
+  ],
+  "name": "Autism Screening Adult"
  },
  "445": {
   "area": "Business",
   "creators": [
    "Andrea Martiniano",
    "Ricardo Ferreira"
-  ]
+  ],
+  "demographics": [
+   "Age",
+   "Education Level"
+  ],
+  "name": "Absenteeism at work"
  },
  "45": {
   "area": "Health and Medicine",
@@ -508,34 +741,51 @@
    "William Steinbrunn",
    "Matthias Pfisterer",
    "Robert Detrano"
-  ]
+  ],
+  "demographics": [
+   "Age",
+   "Sex"
+  ],
+  "name": "Heart Disease"
  },
  "46": {
   "area": "Health and Medicine",
-  "creators": []
+  "creators": [],
+  "demographics": [],
+  "name": "Hepatitis"
  },
  "464": {
   "area": "Physics and Chemistry",
   "creators": [
    "Kam Hamidieh"
-  ]
+  ],
+  "demographics": [],
+  "name": "Superconductivty Data"
  },
  "47": {
   "area": "Biology",
   "creators": [
    "Mary McLeish",
    "Matt Cecile"
-  ]
+  ],
+  "demographics": [
+   "Age"
+  ],
+  "name": "Horse Colic"
  },
  "477": {
   "area": "Business",
   "creators": [
    "I-Cheng Yeh"
-  ]
+  ],
+  "demographics": [],
+  "name": "Real Estate Valuation"
  },
  "50": {
   "area": "Other",
-  "creators": []
+  "creators": [],
+  "demographics": [],
+  "name": "Image Segmentation"
  },
  "503": {
   "area": "Health and Medicine",
@@ -544,13 +794,20 @@
    "Mohamed ElEleimy",
    "Doaa Hegazy",
    "Mahmoud Nasr"
-  ]
+  ],
+  "demographics": [
+   "Age",
+   "Gender"
+  ],
+  "name": "Hepatitis C Virus (HCV) for Egyptian patients"
  },
  "51": {
   "area": "Computer Science",
   "creators": [
    "Nicholas Kushmerick"
-  ]
+  ],
+  "demographics": [],
+  "name": "Internet Advertisements"
  },
  "52": {
   "area": "Physics and Chemistry",
@@ -559,35 +816,59 @@
    "S. Wing",
    "L. Hutton",
    "K. Baker"
-  ]
+  ],
+  "demographics": [],
+  "name": "Ionosphere"
  },
  "529": {
   "area": "Computer Science",
-  "creators": []
+  "creators": [],
+  "demographics": [
+   "Age",
+   "Gender"
+  ],
+  "name": "Early Stage Diabetes Risk Prediction"
  },
  "536": {
   "area": "Computer Science",
-  "creators": []
+  "creators": [],
+  "demographics": [],
+  "name": "Pedestrians in Traffic"
  },
  "544": {
   "area": "Health and Medicine",
-  "creators": []
+  "creators": [],
+  "demographics": [
+   "Gender",
+   "Age"
+  ],
+  "name": "Estimation of Obesity Levels Based On Eating Habits and Physical Condition "
  },
  "545": {
   "area": "Biology",
-  "creators": []
+  "creators": [],
+  "demographics": [],
+  "name": "Rice (Cammeo and Osmancik)"
  },
  "551": {
   "area": "Computer Science",
-  "creators": []
+  "creators": [],
+  "demographics": [],
+  "name": "Gas Turbine CO and NOx Emission Data Set"
  },
  "555": {
   "area": "Business",
-  "creators": []
+  "creators": [],
+  "demographics": [],
+  "name": "Apartment for Rent Classified"
  },
  "563": {
   "area": "Business",
-  "creators": []
+  "creators": [],
+  "demographics": [
+   "Age"
+  ],
+  "name": "Iranian Churn"
  },
  "571": {
   "area": "Health and Medicine",
@@ -595,11 +876,18 @@
    "Ralf Lichtinghagen",
    "Frank Klawonn",
    "Georg Hoffmann"
-  ]
+  ],
+  "demographics": [
+   "Age",
+   "Sex"
+  ],
+  "name": "HCV data"
  },
  "572": {
   "area": "Business",
-  "creators": []
+  "creators": [],
+  "demographics": [],
+  "name": "Taiwanese Bankruptcy Prediction"
  },
  "579": {
   "area": "Health and Medicine",
@@ -611,48 +899,83 @@
    "S.Yu. Nikulina",
    "Yu.V. Orlova",
    "V.F. Voino-Yasenetsky"
-  ]
+  ],
+  "demographics": [
+   "Age",
+   "Sex"
+  ],
+  "name": "Myocardial infarction complications"
  },
  "582": {
   "area": "Computer Science",
-  "creators": []
+  "creators": [],
+  "demographics": [
+   "Gender",
+   "Education Level",
+   "Occupation"
+  ],
+  "name": "Student Performance on an Entrance Examination"
  },
  "59": {
   "area": "Computer Science",
   "creators": [
    "David Slate"
-  ]
+  ],
+  "demographics": [],
+  "name": "Letter Recognition"
  },
  "597": {
   "area": "Business",
-  "creators": []
+  "creators": [],
+  "demographics": [],
+  "name": "Productivity Prediction of Garment Employees"
  },
  "60": {
   "area": "Health and Medicine",
-  "creators": []
+  "creators": [],
+  "demographics": [],
+  "name": "Liver Disorders"
  },
  "601": {
   "area": "Computer Science",
-  "creators": []
+  "creators": [],
+  "demographics": [],
+  "name": "AI4I 2020 Predictive Maintenance Dataset"
  },
  "602": {
   "area": "Biology",
-  "creators": []
+  "creators": [],
+  "demographics": [],
+  "name": "Dry Bean"
  },
  "603": {
   "area": "Business",
-  "creators": []
+  "creators": [],
+  "demographics": [
+   "Gender",
+   "Age",
+   "Marital Status",
+   "Other",
+   "Education Level",
+   "Occupation",
+   "Income"
+  ],
+  "name": "In-Vehicle Coupon Recommendation"
  },
  "63": {
   "area": "Health and Medicine",
   "creators": [
    "M. Zwitter",
    "M. Soklic"
-  ]
+  ],
+  "demographics": [],
+  "name": "Lymphography"
  },
  "69": {
   "area": "Biology",
-  "creators": []
+  "creators": [],
+  "demographics": [],
+  "name": "Molecular Biology (Splice-junction Gene Sequences)"
  },
  "697": {
   "area": "Social Science",
@@ -661,36 +984,55 @@
    "M\u00f3nica Vieira Martins",
    "Jorge Machado",
    "Lu\u00eds Baptista"
-  ]
+  ],
+  "demographics": [
+   "Marital Status",
+   "Education Level",
+   "Nationality",
+   "Occupation",
+   "Gender",
+   "Age"
+  ],
+  "name": "Predict Students' Dropout and Academic Success"
  },
  "70": {
   "area": "Other",
   "creators": [
    "J. Wnek"
-  ]
+  ],
+  "demographics": [],
+  "name": "MONK's Problems"
  },
  "722": {
   "area": "Computer Science",
   "creators": [
    "Akshay Mathur"
-  ]
+  ],
+  "demographics": [],
+  "name": "NATICUSdroid (Android Permissions)"
  },
  "73": {
   "area": "Biology",
-  "creators": []
+  "creators": [],
+  "demographics": [],
+  "name": "Mushroom"
  },
  "75": {
   "area": "Physics and Chemistry",
   "creators": [
    "David Chapman",
    "Ajay Jain"
-  ]
+  ],
+  "demographics": [],
+  "name": "Musk (Version 2)"
  },
  "755": {
   "area": "Computer Science",
   "creators": [
    "Abdullah AlSahly"
-  ]
+  ],
+  "demographics": [],
+  "name": "Accelerometer Gyro Mobile Phone"
  },
  "759": {
   "area": "Health and Medicine",
@@ -699,47 +1041,68 @@
    "Kevin Camphausen",
    "Andra Valentina Krauze",
    "Ying Zhuge"
-  ]
+  ],
+  "demographics": [
+   "Gender",
+   "Age",
+   "Race"
+  ],
+  "name": "Glioma Grading Clinical and Mutation Features"
  },
  "76": {
   "area": "Social Science",
   "creators": [
    "Vladislav Rajkovic"
-  ]
+  ],
+  "demographics": [],
+  "name": "Nursery"
  },
  "760": {
   "area": "Health and Medicine",
   "creators": [
    "Nathaniel Helwig",
    "Elizabeth Hsiao-Wecksler"
-  ]
+  ],
+  "demographics": [],
+  "name": "Multivariate Gait Data"
  },
  "78": {
   "area": "Computer Science",
   "creators": [
    "Donato Malerba"
-  ]
+  ],
+  "demographics": [],
+  "name": "Page Blocks Classification"
  },
  "80": {
   "area": "Computer Science",
   "creators": [
    "E. Alpaydin",
    "C. Kaynak"
-  ]
+  ],
+  "demographics": [],
+  "name": "Optical Recognition of Handwritten Digits"
  },
  "81": {
   "area": "Computer Science",
   "creators": [
    "E. Alpaydin",
    "Fevzi. Alimoglu"
-  ]
+  ],
+  "demographics": [],
+  "name": "Pen-Based Recognition of Handwritten Digits"
  },
  "83": {
   "area": "Health and Medicine",
   "creators": [
    "M. Zwitter",
    "M. Soklic"
-  ]
+  ],
+  "demographics": [
+   "Age",
+   "Sex"
+  ],
+  "name": "Primary Tumor"
  },
  "848": {
   "area": "Biology",
@@ -747,7 +1110,9 @@
    "Dennis Wagner",
    "D. Heider",
    "Georges Hattab"
-  ]
+  ],
+  "demographics": [],
+  "name": "Secondary Mushroom"
  },
  "850": {
   "area": "Biology",
@@ -755,20 +1120,28 @@
    "\u0130\u0307lkay \u00c7inar",
    "Murat Koklu",
    "Sakir Tasdemir"
-  ]
+  ],
+  "demographics": [],
+  "name": "Raisin"
  },
  "863": {
   "area": "Health and Medicine",
   "creators": [
    "Marzia Ahmed"
-  ]
+  ],
+  "demographics": [
+   "Age"
+  ],
+  "name": "Maternal Health Risk"
  },
  "864": {
   "area": "Computer Science",
   "creators": [
    "Adarsh Pal Singh",
    "Sachin Chaudhari"
-  ]
+  ],
+  "demographics": [],
+  "name": "Room Occupancy Estimation"
  },
  "878": {
   "area": "Health and Medicine",
@@ -778,30 +1151,46 @@
    "T. Fleming",
    "L. Fisher",
    "A. Langworthy"
-  ]
+  ],
+  "demographics": [
+   "Age",
+   "Sex"
+  ],
+  "name": "Cirrhosis Patient Survival Prediction"
  },
  "887": {
   "area": "Health and Medicine",
   "creators": [
    "NA NA"
-  ]
+  ],
+  "demographics": [
+   "Age",
+   "Gender"
+  ],
+  "name": "National Health and Nutrition Health Survey 2013-2014 (NHANES) Age Prediction Subset"
  },
  "89": {
   "area": "Physics and Chemistry",
-  "creators": []
+  "creators": [],
+  "demographics": [],
+  "name": "Solar Flare"
  },
  "9": {
   "area": "Other",
   "creators": [
    "R. Quinlan"
-  ]
+  ],
+  "demographics": [],
+  "name": "Auto MPG"
  },
  "90": {
   "area": "Biology",
   "creators": [
    "R.S. Michalski",
    "R.L. Chilausky"
-  ]
+  ],
+  "demographics": [],
+  "name": "Soybean (Large)"
  },
  "911": {
   "area": "Computer Science",
@@ -809,25 +1198,40 @@
    "Amir Ali",
    "Stanislaw  Matuszewski",
    "Jacek Czupyt"
-  ]
+  ],
+  "demographics": [],
+  "name": "Recipe Reviews and User Feedback"
  },
  "913": {
   "area": "Other",
   "creators": [
    "Bruno  Rodrigues de Oliveira",
    "Alan  Mario Zuffo"
-  ]
+  ],
+  "demographics": [],
+  "name": "Forty Soybean Cultivars from Subsequent Harvests"
  },
  "915": {
   "area": "Health and Medicine",
   "creators": [
    "Shiva Borzooei",
    "Aidin Tarokhian"
-  ]
+  ],
+  "demographics": [
+   "Age",
+   "Gender"
+  ],
+  "name": "Differentiated Thyroid Cancer Recurrence"
  },
  "936": {
   "area": "Health and Medicine",
-  "creators": []
+  "creators": [],
+  "demographics": [
+   "Age",
+   "Race",
+   "Gender"
+  ],
+  "name": "National Poll on Healthy Aging (NPHA)"
  },
  "94": {
   "area": "Computer Science",
@@ -836,20 +1240,26 @@
    "Erik Reeber",
    "George Forman",
    "Jaap Suermondt"
-  ]
+  ],
+  "demographics": [],
+  "name": "Spambase"
  },
  "942": {
   "area": "Engineering",
   "creators": [
    "B. S.",
    "Rohini Nagapadma"
-  ]
+  ],
+  "demographics": [],
+  "name": "RT-IoT2022 "
  },
  "967": {
   "area": "Computer Science",
   "creators": [
    "Arvind Prasad",
    "Shalini Chandra"
-  ]
+  ],
+  "demographics": [],
+  "name": "PhiUSIIL Phishing URL (Website)"
  }
 }

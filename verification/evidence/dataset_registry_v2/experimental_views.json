@@ -359,6 +359,1184 @@
   },
   "source_snapshot": "ea_hydrology_flow/2026-11-21"
  },
+ "flat_uci_101_C2a": {
+  "dropped": [],
+  "files": {
+   "flat_uci_101_C2a.csv": {
+    "rows": 958,
+    "sha256": "0b2ceb1c8cb0b062bc273e91f3130ba13dd8a7813b9728fc883e166ba4fbafb5"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 958,
+   "stride": 1
+  },
+  "source_snapshot": "uci:101 (repository file pinned by checksum)",
+  "stratum": "C2a",
+  "table": "uci:101"
+ },
+ "flat_uci_110_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_110_C1.csv": {
+    "rows": 1484,
+    "sha256": "895f58e418581e22a22c76ad9f31703e62e9d02f4411f00224375ca1162cd8f0"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 1484,
+   "stride": 1
+  },
+  "source_snapshot": "uci:110 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "adbench:yeast"
+ },
+ "flat_uci_143_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_143_C1.csv": {
+    "rows": 690,
+    "sha256": "d152aa9749ad4deed06c92a6ade0f1ec2184124230d779f0e7aeb3ccc452b80f"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 690,
+   "stride": 1
+  },
+  "source_snapshot": "uci:143 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:143"
+ },
+ "flat_uci_146_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_146_C1.csv": {
+    "rows": 6435,
+    "sha256": "149d65ae7f517f5d594e8eb1c6ed5f159aae3d4ea217ecbca348bfc730f0c92c"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 6435,
+   "stride": 1
+  },
+  "source_snapshot": "uci:146 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "adbench:landsat"
+ },
+ "flat_uci_148_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_148_C1.csv": {
+    "rows": 29000,
+    "sha256": "b13d8626a6b3dafba26115dfcb0c989b485fcab161d068281c5480bc48312ccc"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 58000,
+   "stride": 2
+  },
+  "source_snapshot": "uci:148 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "adbench:shuttle"
+ },
+ "flat_uci_149_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_149_C1.csv": {
+    "rows": 846,
+    "sha256": "55783d84a392ad263fe7fa50300798934b0416106ec8b1f045f81390cadb3798"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 846,
+   "stride": 1
+  },
+  "source_snapshot": "uci:149 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:149"
+ },
+ "flat_uci_159_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_159_C1.csv": {
+    "rows": 19020,
+    "sha256": "0d762a483f7a616d9d773c6b2f9bb487505bf852dc2c48df8773f63600ece94a"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 19020,
+   "stride": 1
+  },
+  "source_snapshot": "uci:159 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "adbench:magic.gamma"
+ },
+ "flat_uci_15_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_15_C1.csv": {
+    "rows": 699,
+    "sha256": "451cff890a564c71453afb2348e51f2707279955bf13fdb56422bd0472337fa1"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 699,
+   "stride": 1
+  },
+  "source_snapshot": "uci:15 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "adbench:breastw"
+ },
+ "flat_uci_162_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_162_C1.csv": {
+    "rows": 39644,
+    "sha256": "35528903e9a2784efae216616709e25673b4caf49b2bf9b7962cbd730c2ec814"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 39644,
+   "stride": 1
+  },
+  "source_snapshot": "uci:332 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:332"
+ },
+ "flat_uci_165_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_165_C1.csv": {
+    "rows": 1030,
+    "sha256": "2f6e632031e655e2344153e4d84bbebcfc7d53f91cad3ab8130076a8e1d4e1be"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 1030,
+   "stride": 1
+  },
+  "source_snapshot": "uci:165 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:165"
+ },
+ "flat_uci_189_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_189_C1.csv": {
+    "rows": 768,
+    "sha256": "0f062b786033cf3f9c9f30ee935b97e8b3066f9f6bf6a3ca38df69e948754ad6"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 768,
+   "stride": 1
+  },
+  "source_snapshot": "uci:242 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:242"
+ },
+ "flat_uci_193_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_193_C1.csv": {
+    "rows": 2126,
+    "sha256": "12d8c36e0070dbbb555a4c8d9897d6a1799286ede5e2a95d92ef9d73925e997b"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 2126,
+   "stride": 1
+  },
+  "source_snapshot": "uci:193 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "adbench:cardio"
+ },
+ "flat_uci_198_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_198_C1.csv": {
+    "rows": 1941,
+    "sha256": "63f960aae25d897d0832e72fc83fb57a5616439950aba1716d400c374a75619c"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 1941,
+   "stride": 1
+  },
+  "source_snapshot": "uci:198 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "adbench:fault"
+ },
+ "flat_uci_19_C2a": {
+  "dropped": [],
+  "files": {
+   "flat_uci_19_C2a.csv": {
+    "rows": 1728,
+    "sha256": "0023b86e0dd3502aaa0e4a610ef4d8aebbba7ff40f53fa7c2f0543c68bee5114"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 1728,
+   "stride": 1
+  },
+  "source_snapshot": "uci:19 (repository file pinned by checksum)",
+  "stratum": "C2a",
+  "table": "uci:19"
+ },
+ "flat_uci_212_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_212_C1.csv": {
+    "rows": 310,
+    "sha256": "648335343fa5e44ea32efbaca7ac2d05f7c3fcbec6b8e716396ddd0b3093657c"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 310,
+   "stride": 1
+  },
+  "source_snapshot": "uci:212 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "adbench:vertebral"
+ },
+ "flat_uci_22_C2a": {
+  "dropped": [],
+  "files": {
+   "flat_uci_22_C2a.csv": {
+    "rows": 3196,
+    "sha256": "4e771d74e1253c9352ce1002d245bb2bf5ee1b11a0e06b6bcf89d6c25c2dd522"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 3196,
+   "stride": 1
+  },
+  "source_snapshot": "uci:22 (repository file pinned by checksum)",
+  "stratum": "C2a",
+  "table": "uci:22"
+ },
+ "flat_uci_247_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_247_C1.csv": {
+    "rows": 536,
+    "sha256": "14d035f6ff783216bd3e32f05e73192ed74b89e98f5d73cd340c4262fedf9c54"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 536,
+   "stride": 1
+  },
+  "source_snapshot": "uci:247 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:247"
+ },
+ "flat_uci_257_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_257_C1.csv": {
+    "rows": 403,
+    "sha256": "55ff679f1772d26fadc210cfe5be40ccc309f0d9630fd1603c9da5528e6062e4"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 403,
+   "stride": 1
+  },
+  "source_snapshot": "uci:257 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:257"
+ },
+ "flat_uci_264_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_264_C1.csv": {
+    "rows": 14980,
+    "sha256": "b8f42456e5c0c3b7d9744fd9e1fbae3aa542eaaf3eec7b3ebd5abdb89da1a7b8"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 14980,
+   "stride": 1
+  },
+  "source_snapshot": "uci:264 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:264"
+ },
+ "flat_uci_267_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_267_C1.csv": {
+    "rows": 1372,
+    "sha256": "6da87da586c6089307c59824a5127df375fe14301ac628acc5d7b3b4a32db9a5"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 1372,
+   "stride": 1
+  },
+  "source_snapshot": "uci:267 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:267"
+ },
+ "flat_uci_26_C2a": {
+  "dropped": [],
+  "files": {
+   "flat_uci_26_C2a.csv": {
+    "rows": 33779,
+    "sha256": "4079f9c6cde44013b79a469fd82df511f43fadd808b0ab68c1ccf6b69812a5c9"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 67557,
+   "stride": 2
+  },
+  "source_snapshot": "uci:26 (repository file pinned by checksum)",
+  "stratum": "C2a",
+  "table": "uci:26"
+ },
+ "flat_uci_270_C1": {
+  "dropped": [
+   "Feature128"
+  ],
+  "files": {
+   "flat_uci_270_C1.csv": {
+    "rows": 13910,
+    "sha256": "b7aeb6dbbe1e9d44c5fbac8a52a87ea85b502ab82413c74df655e031cc42a9ae"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 13910,
+   "stride": 1
+  },
+  "source_snapshot": "uci:270 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:270"
+ },
+ "flat_uci_27_C2a": {
+  "dropped": [],
+  "files": {
+   "flat_uci_27_C2a.csv": {
+    "rows": 690,
+    "sha256": "182c7a4e07f6e6b704af55b19bf1211c8e3d4413af391ab1da4ba1d91d07cfa2"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 690,
+   "stride": 1
+  },
+  "source_snapshot": "uci:27 (repository file pinned by checksum)",
+  "stratum": "C2a",
+  "table": "uci:27"
+ },
+ "flat_uci_291_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_291_C1.csv": {
+    "rows": 1503,
+    "sha256": "3c03e49000be11157fa04e6613a1329a4b764f1bf0ccae270c69fad019a3d60d"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 1503,
+   "stride": 1
+  },
+  "source_snapshot": "uci:291 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:291"
+ },
+ "flat_uci_292_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_292_C1.csv": {
+    "rows": 440,
+    "sha256": "d0213b7d856bc7f98f2f52a86bedb5cb57d5b8e19959605e75bd4532d4ee0896"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 440,
+   "stride": 1
+  },
+  "source_snapshot": "uci:292 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:292"
+ },
+ "flat_uci_294_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_294_C1.csv": {
+    "rows": 9568,
+    "sha256": "51848da3c8b8c29f709f159fad95443eaa8ff2e95c721a00bba582048cd207e4"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 9568,
+   "stride": 1
+  },
+  "source_snapshot": "uci:294 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:294"
+ },
+ "flat_uci_296_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_296_C1.csv": {
+    "rows": 1080,
+    "sha256": "eb572e25bafaebcec6e5bd3d109b807818b29bdbb0cd62f07b4ef1544225bbaf"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 1080,
+   "stride": 1
+  },
+  "source_snapshot": "uci:342 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:342"
+ },
+ "flat_uci_312_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_312_C1.csv": {
+    "rows": 750,
+    "sha256": "5e9d6d23b18f4fabbf445239ef4405c6fa0a06a4e3f314d85e4b4912a33e6d1d"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 750,
+   "stride": 1
+  },
+  "source_snapshot": "uci:312 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:312"
+ },
+ "flat_uci_31_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_31_C1.csv": {
+    "rows": 48418,
+    "sha256": "09bc3776891829e5ca25a43a324aeb845a2f5b867cc8d50cdd1d361a67b117da"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 581012,
+   "stride": 12
+  },
+  "source_snapshot": "uci:31 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "adbench:cover"
+ },
+ "flat_uci_327_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_327_C1.csv": {
+    "rows": 11055,
+    "sha256": "a13fc4835e437bb39e5ddce9ae022af18f67f504332e3383b224c599dd721c40"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 11055,
+   "stride": 1
+  },
+  "source_snapshot": "uci:327 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:327"
+ },
+ "flat_uci_329_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_329_C1.csv": {
+    "rows": 1151,
+    "sha256": "df524e5b2637e4d254e782514f62cb7d11fdfdddbbe45291229787c1139ad32c"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 1151,
+   "stride": 1
+  },
+  "source_snapshot": "uci:329 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:329"
+ },
+ "flat_uci_32_C2a": {
+  "dropped": [],
+  "files": {
+   "flat_uci_32_C2a.csv": {
+    "rows": 541,
+    "sha256": "7dd2e311b88d67de59c3da1a76acd3a1cc9d65509bea2c89dacb242eb6404b13"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 541,
+   "stride": 1
+  },
+  "source_snapshot": "uci:32 (repository file pinned by checksum)",
+  "stratum": "C2a",
+  "table": "uci:32"
+ },
+ "flat_uci_365_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_365_C1.csv": {
+    "rows": 43405,
+    "sha256": "ce52d548654efcb114fb483e4995ba9de8471e313e116820f9ab3622bebd084d"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 43405,
+   "stride": 1
+  },
+  "source_snapshot": "uci:365 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:365"
+ },
+ "flat_uci_368_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_368_C1.csv": {
+    "rows": 500,
+    "sha256": "e890b7f75eef958ce82b8d57eea252c8267b45d5682417fd34bb716be96ce43c"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 500,
+   "stride": 1
+  },
+  "source_snapshot": "uci:368 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:368"
+ },
+ "flat_uci_372_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_372_C1.csv": {
+    "rows": 17898,
+    "sha256": "3c2e6c139d9b52e40690fdacee2e05f04d1a8ebebca7a560f36d5f5e3d396145"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 17898,
+   "stride": 1
+  },
+  "source_snapshot": "uci:372 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:372"
+ },
+ "flat_uci_379_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_379_C1.csv": {
+    "rows": 1353,
+    "sha256": "54012e6218bed2487e8e341d884f9433ced1299ab7dc1632590339ff72fc67ae"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 1353,
+   "stride": 1
+  },
+  "source_snapshot": "uci:379 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:379"
+ },
+ "flat_uci_381_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_381_C1.csv": {
+    "rows": 43824,
+    "sha256": "3e9bffcbc06dad6a7ca89b99b7fea090bc9bd35c5e14d911743f54961e8c32a3"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 43824,
+   "stride": 1
+  },
+  "source_snapshot": "uci:381 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:381"
+ },
+ "flat_uci_396_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_396_C1.csv": {
+    "rows": 811,
+    "sha256": "ca6e2ce9af94d69973dda5d1812b347058154e3408abcbcf7aaa27b58138c0e4"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 811,
+   "stride": 1
+  },
+  "source_snapshot": "uci:396 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:396"
+ },
+ "flat_uci_464_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_464_C1.csv": {
+    "rows": 21263,
+    "sha256": "5f08c2b55e30a0b05dfdb0007435cecadb6b1945f36ca53819bd305301de0540"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 21263,
+   "stride": 1
+  },
+  "source_snapshot": "uci:464 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:464"
+ },
+ "flat_uci_52_C1": {
+  "dropped": [
+   "Attribute2"
+  ],
+  "files": {
+   "flat_uci_52_C1.csv": {
+    "rows": 351,
+    "sha256": "371983b074f5fbd06e7ff638635612f614b88de725647357e2255d97ce89b276"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 351,
+   "stride": 1
+  },
+  "source_snapshot": "uci:52 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "adbench:Ionosphere"
+ },
+ "flat_uci_536_C1": {
+  "dropped": [
+   "body_roll",
+   "body_pitch",
+   "body_yaw",
+   "head_roll",
+   "head_pitch",
+   "head_yaw"
+  ],
+  "files": {
+   "flat_uci_536_C1.csv": {
+    "rows": 4759,
+    "sha256": "fb110dd6ae3c94d9f8e714ab29dd7c0a486e058fd20b36038c3c50b48f9f91c1"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 4759,
+   "stride": 1
+  },
+  "source_snapshot": "uci:536 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:536"
+ },
+ "flat_uci_545_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_545_C1.csv": {
+    "rows": 3810,
+    "sha256": "4c8c6d315d071ca9d78ca32cde0b5072d37b2f9f06fa9acc1fd6540ab738f3c3"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 3810,
+   "stride": 1
+  },
+  "source_snapshot": "uci:545 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:545"
+ },
+ "flat_uci_551_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_551_C1.csv": {
+    "rows": 36733,
+    "sha256": "50ca9753fed1d106364213f7b32e9dee02b45cbcbf406b98f4ab301fbbe06ba5"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 36733,
+   "stride": 1
+  },
+  "source_snapshot": "uci:551 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:551"
+ },
+ "flat_uci_555_C2a": {
+  "dropped": [
+   "pets_allowed",
+   "address"
+  ],
+  "files": {
+   "flat_uci_555_C2a.csv": {
+    "rows": 49913,
+    "sha256": "1b0a594f677710963683cab87c17463b826ab53ec135a0e92ead60f272b6f398"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 99826,
+   "stride": 2
+  },
+  "source_snapshot": "uci:555 (repository file pinned by checksum)",
+  "stratum": "C2a",
+  "table": "uci:555"
+ },
+ "flat_uci_572_C1": {
+  "dropped": [
+   " Net Income Flag"
+  ],
+  "files": {
+   "flat_uci_572_C1.csv": {
+    "rows": 6819,
+    "sha256": "60aa3e45c22ec302e3494867a146d2027bfae2b111bb9eb792f81e6d2b3b6062"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 6819,
+   "stride": 1
+  },
+  "source_snapshot": "uci:572 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:572"
+ },
+ "flat_uci_597_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_597_C1.csv": {
+    "rows": 1197,
+    "sha256": "addc338f82c759b4ec0273d8f33b21071e29e83cf1338fa2dd2958ab9ae76dda"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 1197,
+   "stride": 1
+  },
+  "source_snapshot": "uci:597 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:597"
+ },
+ "flat_uci_59_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_59_C1.csv": {
+    "rows": 20000,
+    "sha256": "9ec44e47110540d997fc2e247464a75ed3da0ad9dfcd49ded7e68fcaab04a9f7"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 20000,
+   "stride": 1
+  },
+  "source_snapshot": "uci:59 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "adbench:letter"
+ },
+ "flat_uci_601_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_601_C1.csv": {
+    "rows": 10000,
+    "sha256": "9724b2eb4479a21bf4c3266bcc68ac60a96de4453a5642dc8f4304362728c966"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 10000,
+   "stride": 1
+  },
+  "source_snapshot": "uci:601 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:601"
+ },
+ "flat_uci_602_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_602_C1.csv": {
+    "rows": 13611,
+    "sha256": "1330e4ccc5c54a925e43daf60d1409ac62dad2a21de9a25213765bee4b655787"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 13611,
+   "stride": 1
+  },
+  "source_snapshot": "uci:602 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:602"
+ },
+ "flat_uci_69_C2a": {
+  "dropped": [],
+  "files": {
+   "flat_uci_69_C2a.csv": {
+    "rows": 3190,
+    "sha256": "622814014217649d07941f7a03a740eacd2795dc2e8590f1e981cfcca60e6b2f"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 3190,
+   "stride": 1
+  },
+  "source_snapshot": "uci:69 (repository file pinned by checksum)",
+  "stratum": "C2a",
+  "table": "uci:69"
+ },
+ "flat_uci_73_C2a": {
+  "dropped": [
+   "veil-type"
+  ],
+  "files": {
+   "flat_uci_73_C2a.csv": {
+    "rows": 8124,
+    "sha256": "a2c75b906fb26a95f195b479f2342b6eb6435e80f173ab0db4249079da304b35"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 8124,
+   "stride": 1
+  },
+  "source_snapshot": "uci:73 (repository file pinned by checksum)",
+  "stratum": "C2a",
+  "table": "uci:73"
+ },
+ "flat_uci_755_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_755_C1.csv": {
+    "rows": 31991,
+    "sha256": "91c182576461e46fcb3a9f073f8946d4a195cd5e1414fd60abc29836528fc017"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 31991,
+   "stride": 1
+  },
+  "source_snapshot": "uci:755 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:755"
+ },
+ "flat_uci_75_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_75_C1.csv": {
+    "rows": 6598,
+    "sha256": "c81be96e4360988621fe76317ab5bb829cc01905adb30d54653caba7bf6668c1"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 6598,
+   "stride": 1
+  },
+  "source_snapshot": "uci:75 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "adbench:musk"
+ },
+ "flat_uci_760_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_760_C1.csv": {
+    "rows": 45450,
+    "sha256": "6b941494441c5de0f35e6e8087e6cf5e21d47ec13b575dc7e42c800db5ca4fee"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 181800,
+   "stride": 4
+  },
+  "source_snapshot": "uci:760 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:760"
+ },
+ "flat_uci_76_C2a": {
+  "dropped": [],
+  "files": {
+   "flat_uci_76_C2a.csv": {
+    "rows": 12960,
+    "sha256": "cfd50f92b8b65b8d398670ce13f1e78fbc0d452ff26906de8b4497f909716951"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 12960,
+   "stride": 1
+  },
+  "source_snapshot": "uci:76 (repository file pinned by checksum)",
+  "stratum": "C2a",
+  "table": "uci:76"
+ },
+ "flat_uci_78_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_78_C1.csv": {
+    "rows": 5473,
+    "sha256": "63fc3776b17786462c02924e27faa0106f2fbc57c9001e6da8018958dabe87ad"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 5473,
+   "stride": 1
+  },
+  "source_snapshot": "uci:78 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "adbench:PageBlocks"
+ },
+ "flat_uci_80_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_80_C1.csv": {
+    "rows": 10992,
+    "sha256": "3a3043879657816e18af4bc0822cb89aff03b30988511590e2c05454ce092656"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 10992,
+   "stride": 1
+  },
+  "source_snapshot": "uci:81 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "adbench:pendigits"
+ },
+ "flat_uci_848_C1": {
+  "dropped": [
+   "veil-type",
+   "stem-root",
+   "stem-surface",
+   "veil-color",
+   "spore-print-color"
+  ],
+  "files": {
+   "flat_uci_848_C1.csv": {
+    "rows": 30535,
+    "sha256": "0414e7e9d6bbe188175d663324631a8b20fa48199b4daff7a6f85c6db14464f1"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 61069,
+   "stride": 2
+  },
+  "source_snapshot": "uci:848 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:848"
+ },
+ "flat_uci_850_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_850_C1.csv": {
+    "rows": 900,
+    "sha256": "47d7b6ae8b3b89d2349f3794a446e0196b3f9f140917920280273ded3f44dc83"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 900,
+   "stride": 1
+  },
+  "source_snapshot": "uci:850 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:850"
+ },
+ "flat_uci_864_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_864_C1.csv": {
+    "rows": 10129,
+    "sha256": "ecfef9dd4761dccd7153095bdadcae4783e77288e7a3474794ea3d46221422d6"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 10129,
+   "stride": 1
+  },
+  "source_snapshot": "uci:864 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:864"
+ },
+ "flat_uci_911_C2a": {
+  "dropped": [],
+  "files": {
+   "flat_uci_911_C2a.csv": {
+    "rows": 18182,
+    "sha256": "de231c991c474114746fe5dbd3657b7ea180a952895d6822587a9648f37931c9"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 18182,
+   "stride": 1
+  },
+  "source_snapshot": "uci:911 (repository file pinned by checksum)",
+  "stratum": "C2a",
+  "table": "uci:911"
+ },
+ "flat_uci_942_C1": {
+  "dropped": [
+   "bwd_URG_flag_count"
+  ],
+  "files": {
+   "flat_uci_942_C1.csv": {
+    "rows": 41039,
+    "sha256": "4e0319b3d2bbcdfc2463a1f3060b541e6b0e6d33d154dd8dc7f7b61ab09aa390"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 123117,
+   "stride": 3
+  },
+  "source_snapshot": "uci:942 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "uci:942"
+ },
+ "flat_uci_94_C1": {
+  "dropped": [],
+  "files": {
+   "flat_uci_94_C1.csv": {
+    "rows": 4601,
+    "sha256": "68df02d322b0a20140f7aeaa8b8094ce94b7b6c5ff17ab6900a6252ebe0cf72b"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 4601,
+   "stride": 1
+  },
+  "source_snapshot": "uci:94 (repository file pinned by checksum)",
+  "stratum": "C1",
+  "table": "adbench:SpamBase"
+ },
+ "flat_uci_967_C2a": {
+  "dropped": [],
+  "files": {
+   "flat_uci_967_C2a.csv": {
+    "rows": 47159,
+    "sha256": "13a398138ce44efa36edb5954a7d7840b2e7e0bcd1a0d7f106a8b0bbf561dd8d"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "every stride-th row from the first; the table is read as published",
+   "rows_in": 235795,
+   "stride": 5
+  },
+  "source_snapshot": "uci:967 (repository file pinned by checksum)",
+  "stratum": "C2a",
+  "table": "uci:967"
+ },
  "google_cluster_2019a": {
   "dropped": [
    "user",

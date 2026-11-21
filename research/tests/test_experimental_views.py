@@ -996,6 +996,9 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
         _c.writestr("clue.json", _clue(1) + "\n")
     monkeypatch.setattr(ev, "XES_SPECS", {})
     monkeypatch.setattr(ev, "CSV_EVENT_SPECS", {})
+    _fs = tmp_path / "flat_sel.json"
+    _fs.write_text('{"views": []}')
+    monkeypatch.setattr(ev, "FLAT_SELECTION", _fs)
     _w(root / "met_museum_objects" / SNAP / "raw" / "obj_1.json", '{"objectID": 1}')
     import gzip as _gz
 

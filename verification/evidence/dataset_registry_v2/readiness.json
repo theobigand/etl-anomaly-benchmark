@@ -963,6 +963,994 @@
    "stratum": "C5"
   },
   {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:1:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:101",
+   "id": "flat:uci:101:C2a",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:105:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:110",
+   "id": "flat:uci:110:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:117:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:12:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:143",
+   "id": "flat:uci:143:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:144:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:146",
+   "id": "flat:uci:146:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:148",
+   "id": "flat:uci:148:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:149",
+   "id": "flat:uci:149:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:15",
+   "id": "flat:uci:15:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:159",
+   "id": "flat:uci:159:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:161:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:162",
+   "id": "flat:uci:162:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:165",
+   "id": "flat:uci:165:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:183:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:189",
+   "id": "flat:uci:189:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:19",
+   "id": "flat:uci:19:C2a",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:193",
+   "id": "flat:uci:193:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:198",
+   "id": "flat:uci:198:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:2:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:212",
+   "id": "flat:uci:212:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:22",
+   "id": "flat:uci:22:C2a",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:222:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:225:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:247",
+   "id": "flat:uci:247:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:257",
+   "id": "flat:uci:257:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:26",
+   "id": "flat:uci:26:C2a",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:264",
+   "id": "flat:uci:264:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:267",
+   "id": "flat:uci:267:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:27",
+   "id": "flat:uci:27:C2a",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:270",
+   "id": "flat:uci:270:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:277:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:291",
+   "id": "flat:uci:291:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:292",
+   "id": "flat:uci:292:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:294",
+   "id": "flat:uci:294:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:296",
+   "id": "flat:uci:296:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:296:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:3:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:30:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:31",
+   "id": "flat:uci:31:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:312",
+   "id": "flat:uci:312:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:32",
+   "id": "flat:uci:32:C2a",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:327",
+   "id": "flat:uci:327:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:329",
+   "id": "flat:uci:329:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:33:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:336:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:365",
+   "id": "flat:uci:365:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:368",
+   "id": "flat:uci:368:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:372",
+   "id": "flat:uci:372:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:373:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:379",
+   "id": "flat:uci:379:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:381",
+   "id": "flat:uci:381:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:396",
+   "id": "flat:uci:396:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:426:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:445:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:45:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:464",
+   "id": "flat:uci:464:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:47:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:50:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:503:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:52",
+   "id": "flat:uci:52:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:529:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:536",
+   "id": "flat:uci:536:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:544:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:545",
+   "id": "flat:uci:545:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:551",
+   "id": "flat:uci:551:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:555",
+   "id": "flat:uci:555:C2a",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:563:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:571:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:572",
+   "id": "flat:uci:572:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:579:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:582:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:59",
+   "id": "flat:uci:59:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:597",
+   "id": "flat:uci:597:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:60:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:601",
+   "id": "flat:uci:601:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:602",
+   "id": "flat:uci:602:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:603:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:69",
+   "id": "flat:uci:69:C2a",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:697:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:70:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:722:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:73",
+   "id": "flat:uci:73:C2a",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:75",
+   "id": "flat:uci:75:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:755",
+   "id": "flat:uci:755:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:759:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:76",
+   "id": "flat:uci:76:C2a",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:760",
+   "id": "flat:uci:760:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:78",
+   "id": "flat:uci:78:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:80",
+   "id": "flat:uci:80:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:83:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:848",
+   "id": "flat:uci:848:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:850",
+   "id": "flat:uci:850:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:863:C1",
+   "status": "acquired",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:864",
+   "id": "flat:uci:864:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:878:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:887:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:89:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:9:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:90:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:911",
+   "id": "flat:uci:911:C2a",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:913:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:915:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "flat:uci:936:C2a",
+   "status": "acquired",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "uci:94",
+   "id": "flat:uci:94:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:942",
+   "id": "flat:uci:942:C1",
+   "status": "experiment_ready",
+   "stratum": "C1"
+  },
+  {
+   "failed": null,
+   "group": "uci:967",
+   "id": "flat:uci:967:C2a",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
    "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
@@ -1076,6 +2064,74 @@
   }
  ],
  "ready_groups": {
+  "C1": [
+   "uci:110",
+   "uci:143",
+   "uci:146",
+   "uci:148",
+   "uci:149",
+   "uci:15",
+   "uci:159",
+   "uci:162",
+   "uci:165",
+   "uci:189",
+   "uci:193",
+   "uci:198",
+   "uci:212",
+   "uci:247",
+   "uci:257",
+   "uci:264",
+   "uci:267",
+   "uci:270",
+   "uci:291",
+   "uci:292",
+   "uci:294",
+   "uci:296",
+   "uci:31",
+   "uci:312",
+   "uci:327",
+   "uci:329",
+   "uci:365",
+   "uci:368",
+   "uci:372",
+   "uci:379",
+   "uci:381",
+   "uci:396",
+   "uci:464",
+   "uci:52",
+   "uci:536",
+   "uci:545",
+   "uci:551",
+   "uci:572",
+   "uci:59",
+   "uci:597",
+   "uci:601",
+   "uci:602",
+   "uci:75",
+   "uci:755",
+   "uci:760",
+   "uci:78",
+   "uci:80",
+   "uci:848",
+   "uci:850",
+   "uci:864",
+   "uci:94",
+   "uci:942"
+  ],
+  "C2a": [
+   "uci:101",
+   "uci:19",
+   "uci:22",
+   "uci:26",
+   "uci:27",
+   "uci:32",
+   "uci:555",
+   "uci:69",
+   "uci:73",
+   "uci:76",
+   "uci:911",
+   "uci:967"
+  ],
   "C2b": [
    "coatings_multinational",
    "dgfip_dvf",
@@ -1151,6 +2207,24 @@
   ]
  },
  "summary": {
+  "C1": {
+   "acquired": 71,
+   "discovered": 71,
+   "experiment_ready": 52,
+   "protocol_ready": 52,
+   "rights_verified": 71,
+   "scientifically_eligible": 52,
+   "structurally_valid": 52
+  },
+  "C2a": {
+   "acquired": 38,
+   "discovered": 38,
+   "experiment_ready": 12,
+   "protocol_ready": 12,
+   "rights_verified": 38,
+   "scientifically_eligible": 12,
+   "structurally_valid": 12
+  },
   "C2b": {
    "acquired": 11,
    "discovered": 17,

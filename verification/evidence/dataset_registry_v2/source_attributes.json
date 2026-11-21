@@ -545,6 +545,710 @@
    "C4": "business process execution"
   }
  },
+ "uci:101": {
+  "curator": "uci",
+  "domain": "Games",
+  "generating_system": "table Tic-Tac-Toe Endgame and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "David Aha",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C2a": "other"
+  }
+ },
+ "uci:110": {
+  "curator": "uci",
+  "domain": "Biology",
+  "generating_system": "table Yeast and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Kenta Nakai",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:143": {
+  "curator": "uci",
+  "domain": "Business",
+  "generating_system": "table Statlog (Australian Credit Approval) and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Ross Quinlan",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "administrative or survey records"
+  }
+ },
+ "uci:146": {
+  "curator": "uci",
+  "domain": "Climate and Environment",
+  "generating_system": "table Statlog (Landsat Satellite) and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Ashwin Srinivasan",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:148": {
+  "curator": "uci",
+  "domain": "Physics and Chemistry",
+  "generating_system": "table Statlog (Shuttle) and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "uci:148",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:149": {
+  "curator": "uci",
+  "domain": "Other",
+  "generating_system": "table Statlog (Vehicle Silhouettes) and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Pete Mowforth; Barry Shepherd",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "other"
+  }
+ },
+ "uci:15": {
+  "curator": "uci",
+  "domain": "Health and Medicine",
+  "generating_system": "table Breast Cancer Wisconsin (Original) and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "WIlliam Wolberg",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:159": {
+  "curator": "uci",
+  "domain": "Physics and Chemistry",
+  "generating_system": "table MAGIC Gamma Telescope and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "R. Bock",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:162": {
+  "curator": "uci",
+  "domain": "Climate and Environment",
+  "generating_system": "table Forest Fires and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Paulo Cortez; Anbal Morais",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:165": {
+  "curator": "uci",
+  "domain": "Physics and Chemistry",
+  "generating_system": "table Concrete Compressive Strength and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "I-Cheng Yeh",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:189": {
+  "curator": "uci",
+  "domain": "Health and Medicine",
+  "generating_system": "table Energy Efficiency and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Athanasios Tsanas; Max Little",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:19": {
+  "curator": "uci",
+  "domain": "Other",
+  "generating_system": "table Car Evaluation and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Marko Bohanec",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C2a": "other"
+  }
+ },
+ "uci:193": {
+  "curator": "uci",
+  "domain": "Health and Medicine",
+  "generating_system": "table Cardiotocography and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "D. Campos; J. Bernardes",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:198": {
+  "curator": "uci",
+  "domain": "Physics and Chemistry",
+  "generating_system": "table Steel Plates Faults and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "M Buscema; S Terzi",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:212": {
+  "curator": "uci",
+  "domain": "Health and Medicine",
+  "generating_system": "table Vertebral Column and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Guilherme Barreto; Ajalmar Neto",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:22": {
+  "curator": "uci",
+  "domain": "Games",
+  "generating_system": "table Chess (King-Rook vs. King-Pawn) and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Alen Shapiro",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C2a": "other"
+  }
+ },
+ "uci:247": {
+  "curator": "uci",
+  "domain": "Business",
+  "generating_system": "table ISTANBUL STOCK EXCHANGE and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Oguz Akbilgic",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "administrative or survey records"
+  }
+ },
+ "uci:257": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table User Knowledge Modeling and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Hamdi Kahraman; Ilhami Colak",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:26": {
+  "curator": "uci",
+  "domain": "Games",
+  "generating_system": "table Connect-4 and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "John Tromp",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C2a": "other"
+  }
+ },
+ "uci:264": {
+  "curator": "uci",
+  "domain": "Health and Medicine",
+  "generating_system": "table EEG Eye State and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Oliver Roesler",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:267": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Banknote Authentication and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Volker Lohweg",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:27": {
+  "curator": "uci",
+  "domain": "Business",
+  "generating_system": "table Credit Approval and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "J. R. Quinlan",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C2a": "administrative or survey records"
+  }
+ },
+ "uci:270": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Gas Sensor Array Drift at Different Concentrations and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Alexander Vergara",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:291": {
+  "curator": "uci",
+  "domain": "Physics and Chemistry",
+  "generating_system": "table Airfoil Self-Noise and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Thomas Brooks; D. Pope",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:292": {
+  "curator": "uci",
+  "domain": "Business",
+  "generating_system": "table Wholesale customers and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Margarida Cardoso",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "administrative or survey records"
+  }
+ },
+ "uci:294": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Combined Cycle Power Plant and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Pnar Tfekci; Heysem Kaya",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:296": {
+  "curator": "uci",
+  "domain": "Health and Medicine",
+  "generating_system": "table Mice Protein Expression and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "John Clore; Krzysztof Cios",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:31": {
+  "curator": "uci",
+  "domain": "Biology",
+  "generating_system": "table Covertype and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Jock Blackard",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:312": {
+  "curator": "uci",
+  "domain": "Business",
+  "generating_system": "table Dow Jones Index and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Michael Brown",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "administrative or survey records"
+  }
+ },
+ "uci:32": {
+  "curator": "uci",
+  "domain": "Physics and Chemistry",
+  "generating_system": "table Cylinder Bands and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Bob Evans",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C2a": "instrument measurement"
+  }
+ },
+ "uci:327": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Phishing Websites and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Rami Mohammad; Lee McCluskey",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:329": {
+  "curator": "uci",
+  "domain": "Health and Medicine",
+  "generating_system": "table Diabetic Retinopathy Debrecen and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Balint Antal; Andras Hajdu",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:365": {
+  "curator": "uci",
+  "domain": "Business",
+  "generating_system": "table Polish Companies Bankruptcy and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Sebastian Tomczak",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "administrative or survey records"
+  }
+ },
+ "uci:368": {
+  "curator": "uci",
+  "domain": "Business",
+  "generating_system": "table Facebook Metrics and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Srgio Moro; Paulo Rita",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "administrative or survey records"
+  }
+ },
+ "uci:372": {
+  "curator": "uci",
+  "domain": "Physics and Chemistry",
+  "generating_system": "table HTRU2 and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Robert Lyon",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:379": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Website Phishing and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Neda Abdelhamid",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:381": {
+  "curator": "uci",
+  "domain": "Climate and Environment",
+  "generating_system": "table Beijing PM2.5 and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Song Chen",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:396": {
+  "curator": "uci",
+  "domain": "Business",
+  "generating_system": "table Sales Transactions Weekly and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "James Tan",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "administrative or survey records"
+  }
+ },
+ "uci:464": {
+  "curator": "uci",
+  "domain": "Physics and Chemistry",
+  "generating_system": "table Superconductivty Data and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Kam Hamidieh",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:52": {
+  "curator": "uci",
+  "domain": "Physics and Chemistry",
+  "generating_system": "table Ionosphere and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "V. Sigillito; S. Wing",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:536": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Pedestrians in Traffic and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "uci:536",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:545": {
+  "curator": "uci",
+  "domain": "Biology",
+  "generating_system": "table Rice (Cammeo and Osmancik) and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "uci:545",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:551": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Gas Turbine CO and NOx Emission Data Set and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "uci:551",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:555": {
+  "curator": "uci",
+  "domain": "Business",
+  "generating_system": "table Apartment for Rent Classified and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "uci:555",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C2a": "administrative or survey records"
+  }
+ },
+ "uci:572": {
+  "curator": "uci",
+  "domain": "Business",
+  "generating_system": "table Taiwanese Bankruptcy Prediction and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "uci:572",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "administrative or survey records"
+  }
+ },
+ "uci:59": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Letter Recognition and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "David Slate",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:597": {
+  "curator": "uci",
+  "domain": "Business",
+  "generating_system": "table Productivity Prediction of Garment Employees and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "uci:597",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "administrative or survey records"
+  }
+ },
+ "uci:601": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table AI4I 2020 Predictive Maintenance Dataset and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "uci:601",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:602": {
+  "curator": "uci",
+  "domain": "Biology",
+  "generating_system": "table Dry Bean and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "uci:602",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:69": {
+  "curator": "uci",
+  "domain": "Biology",
+  "generating_system": "table Molecular Biology (Splice-junction Gene Sequences) and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "uci:69",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C2a": "clinical or biological records"
+  }
+ },
+ "uci:73": {
+  "curator": "uci",
+  "domain": "Biology",
+  "generating_system": "table Mushroom and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "uci:73",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C2a": "clinical or biological records"
+  }
+ },
+ "uci:75": {
+  "curator": "uci",
+  "domain": "Physics and Chemistry",
+  "generating_system": "table Musk (Version 2) and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "David Chapman; Ajay Jain",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:755": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Accelerometer Gyro Mobile Phone and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Abdullah AlSahly",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:76": {
+  "curator": "uci",
+  "domain": "Social Science",
+  "generating_system": "table Nursery and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Vladislav Rajkovic",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C2a": "administrative or survey records"
+  }
+ },
+ "uci:760": {
+  "curator": "uci",
+  "domain": "Health and Medicine",
+  "generating_system": "table Multivariate Gait Data and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Nathaniel Helwig; Elizabeth Hsiao-Wecksler",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:78": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Page Blocks Classification and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Donato Malerba",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:80": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Optical Recognition of Handwritten Digits and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "E. Alpaydin; C. Kaynak",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:848": {
+  "curator": "uci",
+  "domain": "Biology",
+  "generating_system": "table Secondary Mushroom and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Dennis Wagner; D. Heider",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:850": {
+  "curator": "uci",
+  "domain": "Biology",
+  "generating_system": "table Raisin and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "\u0130\u0307lkay \u00c7inar; Murat Koklu",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "clinical or biological records"
+  }
+ },
+ "uci:864": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Room Occupancy Estimation and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Adarsh Pal Singh; Sachin Chaudhari",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:911": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Recipe Reviews and User Feedback and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Amir Ali; Stanislaw  Matuszewski",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C2a": "computational or derived features"
+  }
+ },
+ "uci:94": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table Spambase and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Mark Hopkins; Erik Reeber",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "computational or derived features"
+  }
+ },
+ "uci:942": {
+  "curator": "uci",
+  "domain": "Engineering",
+  "generating_system": "table RT-IoT2022  and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "B. S.; Rohini Nagapadma",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C1": "instrument measurement"
+  }
+ },
+ "uci:967": {
+  "curator": "uci",
+  "domain": "Computer Science",
+  "generating_system": "table PhiUSIIL Phishing URL (Website) and creator-linked tables",
+  "note": "candidate group from the shared-creator closure",
+  "producer": "Arvind Prasad; Shalini Chandra",
+  "schema_family": "uci flat table",
+  "structure": {
+   "C2a": "computational or derived features"
+  }
+ },
  "uk_ledger_mhra": {
   "curator": "data.gov.uk",
   "domain": "public expenditure",

@@ -2210,6 +2210,2186 @@
    "stratum": "C5",
    "system": "eicu_philips",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:1",
+   "id": "flat:uci:1:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:1",
+   "reason": "no eligible table: uci:1: fewer than 2 categorical columns",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:1",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:101",
+   "id": "flat:uci:101:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:101",
+   "reason": "representative table uci:101 (Tic-Tac-Toe Endgame): 958 rows, 10 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "uci:101",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:105",
+   "id": "flat:uci:105:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:105",
+   "reason": "no eligible table: uci:105: fewer than 500 rows, no categorical column with at least 3 levels",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:105",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:110",
+   "id": "flat:uci:110:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:110",
+   "reason": "representative table adbench:yeast (Yeast): 1484 rows, 10 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:110",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:117",
+   "id": "flat:uci:117:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:117",
+   "reason": "no eligible table: adbench:census: personal attributes listed by the publisher (privacy review pending)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C1",
+   "system": "uci:117",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:12",
+   "id": "flat:uci:12:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:12",
+   "reason": "no eligible table: uci:12: fewer than 2 categorical columns",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:12",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:143",
+   "id": "flat:uci:143:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:143",
+   "reason": "representative table uci:143 (Statlog (Australian Credit Approval)): 690 rows, 15 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:143",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:144",
+   "id": "flat:uci:144:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:144",
+   "reason": "no eligible table: uci:144: personal attributes listed by the publisher (privacy review pending)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:144",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:146",
+   "id": "flat:uci:146:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:146",
+   "reason": "representative table adbench:landsat (Statlog (Landsat Satellite)): 6435 rows, 37 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:146",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:148",
+   "id": "flat:uci:148:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:148",
+   "reason": "representative table adbench:shuttle (Statlog (Shuttle)): 58000 rows, 8 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:148",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:149",
+   "id": "flat:uci:149:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:149",
+   "reason": "representative table uci:149 (Statlog (Vehicle Silhouettes)): 846 rows, 19 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:149",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:15",
+   "id": "flat:uci:15:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:15",
+   "reason": "representative table adbench:breastw (Breast Cancer Wisconsin (Original)): 699 rows, 11 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:15",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:159",
+   "id": "flat:uci:159:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:159",
+   "reason": "representative table adbench:magic.gamma (MAGIC Gamma Telescope): 19020 rows, 11 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:159",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:161",
+   "id": "flat:uci:161:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:161",
+   "reason": "no eligible table: uci:161: personal attributes listed by the publisher (privacy review pending)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C1",
+   "system": "uci:161",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:162",
+   "id": "flat:uci:162:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:162",
+   "reason": "representative table uci:332 (Online News Popularity): 39644 rows, 61 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:162",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:165",
+   "id": "flat:uci:165:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:165",
+   "reason": "representative table uci:165 (Concrete Compressive Strength): 1030 rows, 9 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:165",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:183",
+   "id": "flat:uci:183:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:183",
+   "reason": "no eligible table: uci:183: personal attributes listed by the publisher (privacy review pending)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C1",
+   "system": "uci:183",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:189",
+   "id": "flat:uci:189:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:189",
+   "reason": "representative table uci:242 (Energy Efficiency): 768 rows, 10 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:189",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:19",
+   "id": "flat:uci:19:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:19",
+   "reason": "representative table uci:19 (Car Evaluation): 1728 rows, 7 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "uci:19",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:193",
+   "id": "flat:uci:193:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:193",
+   "reason": "representative table adbench:cardio (Cardiotocography): 2126 rows, 23 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:193",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:198",
+   "id": "flat:uci:198:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:198",
+   "reason": "representative table adbench:fault (Steel Plates Faults): 1941 rows, 34 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:198",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:2",
+   "id": "flat:uci:2:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:2",
+   "reason": "no eligible table: uci:2: personal attributes listed by the publisher (privacy review pending)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:2",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:212",
+   "id": "flat:uci:212:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:212",
+   "reason": "representative table adbench:vertebral (Vertebral Column): 310 rows, 7 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:212",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:22",
+   "id": "flat:uci:22:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:22",
+   "reason": "representative table uci:22 (Chess (King-Rook vs. King-Pawn)): 3196 rows, 36 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "uci:22",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:222",
+   "id": "flat:uci:222:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:222",
+   "reason": "no eligible table: adbench:campaign: personal attributes listed by the publisher (privacy review pending)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C1",
+   "system": "uci:222",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:225",
+   "id": "flat:uci:225:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:225",
+   "reason": "no eligible table: uci:225: personal attributes listed by the publisher (privacy review pending)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C1",
+   "system": "uci:225",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:247",
+   "id": "flat:uci:247:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:247",
+   "reason": "representative table uci:247 (ISTANBUL STOCK EXCHANGE): 536 rows, 10 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:247",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:257",
+   "id": "flat:uci:257:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:257",
+   "reason": "representative table uci:257 (User Knowledge Modeling): 403 rows, 6 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:257",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:26",
+   "id": "flat:uci:26:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:26",
+   "reason": "representative table uci:26 (Connect-4): 67557 rows, 43 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "uci:26",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:264",
+   "id": "flat:uci:264:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:264",
+   "reason": "representative table uci:264 (EEG Eye State): 14980 rows, 15 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:264",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:267",
+   "id": "flat:uci:267:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:267",
+   "reason": "representative table uci:267 (Banknote Authentication): 1372 rows, 5 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:267",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:27",
+   "id": "flat:uci:27:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:27",
+   "reason": "representative table uci:27 (Credit Approval): 690 rows, 16 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "uci:27",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:270",
+   "id": "flat:uci:270:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:270",
+   "reason": "representative table uci:270 (Gas Sensor Array Drift at Different Concentrations): 13910 rows, 128 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:270",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:277",
+   "id": "flat:uci:277:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:277",
+   "reason": "no eligible table: uci:277: personal attributes listed by the publisher (privacy review pending)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C1",
+   "system": "uci:277",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:291",
+   "id": "flat:uci:291:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:291",
+   "reason": "representative table uci:291 (Airfoil Self-Noise): 1503 rows, 6 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:291",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:292",
+   "id": "flat:uci:292:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:292",
+   "reason": "representative table uci:292 (Wholesale customers): 440 rows, 8 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:292",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:294",
+   "id": "flat:uci:294:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:294",
+   "reason": "representative table uci:294 (Combined Cycle Power Plant): 9568 rows, 5 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:294",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:296",
+   "id": "flat:uci:296:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:296",
+   "reason": "representative table uci:342 (Mice Protein Expression): 1080 rows, 82 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:296",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:296",
+   "id": "flat:uci:296:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:296",
+   "reason": "no eligible table: uci:296: personal attributes listed by the publisher (privacy review pending)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:296",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:3",
+   "id": "flat:uci:3:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:3",
+   "reason": "no eligible table: uci:3: more than 30 percent of values missing",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:3",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:30",
+   "id": "flat:uci:30:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:30",
+   "reason": "no eligible table: uci:30: personal attributes listed by the publisher (privacy review pending), fewer than 2 categorical columns",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:30",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:31",
+   "id": "flat:uci:31:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:31",
+   "reason": "representative table adbench:cover (Covertype): 581012 rows, 55 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:31",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:312",
+   "id": "flat:uci:312:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:312",
+   "reason": "representative table uci:312 (Dow Jones Index): 750 rows, 16 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:312",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:32",
+   "id": "flat:uci:32:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:32",
+   "reason": "representative table uci:32 (Cylinder Bands): 541 rows, 40 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "uci:32",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:327",
+   "id": "flat:uci:327:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:327",
+   "reason": "representative table uci:327 (Phishing Websites): 11055 rows, 31 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:327",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:329",
+   "id": "flat:uci:329:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:329",
+   "reason": "representative table uci:329 (Diabetic Retinopathy Debrecen): 1151 rows, 20 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:329",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:33",
+   "id": "flat:uci:33:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:33",
+   "reason": "no eligible table: uci:33: personal attributes listed by the publisher (privacy review pending), fewer than 500 rows, fewer than 2 categorical columns",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:33",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:336",
+   "id": "flat:uci:336:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:336",
+   "reason": "no eligible table: uci:336: personal attributes listed by the publisher (privacy review pending)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C1",
+   "system": "uci:336",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:365",
+   "id": "flat:uci:365:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:365",
+   "reason": "representative table uci:365 (Polish Companies Bankruptcy): 43405 rows, 66 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:365",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:368",
+   "id": "flat:uci:368:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:368",
+   "reason": "representative table uci:368 (Facebook Metrics): 500 rows, 19 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:368",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:372",
+   "id": "flat:uci:372:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:372",
+   "reason": "representative table uci:372 (HTRU2): 17898 rows, 9 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:372",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:373",
+   "id": "flat:uci:373:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:373",
+   "reason": "no eligible table: uci:373: personal attributes listed by the publisher (privacy review pending)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C1",
+   "system": "uci:373",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:379",
+   "id": "flat:uci:379:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:379",
+   "reason": "representative table uci:379 (Website Phishing): 1353 rows, 10 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:379",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:381",
+   "id": "flat:uci:381:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:381",
+   "reason": "representative table uci:381 (Beijing PM2.5): 43824 rows, 13 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:381",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:396",
+   "id": "flat:uci:396:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:396",
+   "reason": "representative table uci:396 (Sales Transactions Weekly): 811 rows, 107 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:396",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:426",
+   "id": "flat:uci:426:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:426",
+   "reason": "no eligible table: uci:426: personal attributes listed by the publisher (privacy review pending)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C1",
+   "system": "uci:426",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:445",
+   "id": "flat:uci:445:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:445",
+   "reason": "no eligible table: uci:445: personal attributes listed by the publisher (privacy review pending)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C1",
+   "system": "uci:445",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:45",
+   "id": "flat:uci:45:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:45",
+   "reason": "no eligible table: uci:45: personal attributes listed by the publisher (privacy review pending), fewer than 500 rows, fewer than 2 categorical columns",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:45",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:464",
+   "id": "flat:uci:464:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:464",
+   "reason": "representative table uci:464 (Superconductivty Data): 21263 rows, 82 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:464",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:47",
+   "id": "flat:uci:47:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:47",
+   "reason": "no eligible table: uci:47: personal attributes listed by the publisher (privacy review pending), fewer than 500 rows, fewer than 2 categorical columns",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:47",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:50",
+   "id": "flat:uci:50:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:50",
+   "reason": "no eligible table: uci:50: fewer than 300 rows",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C1",
+   "system": "uci:50",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:503",
+   "id": "flat:uci:503:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:503",
+   "reason": "no eligible table: uci:503: personal attributes listed by the publisher (privacy review pending)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C1",
+   "system": "uci:503",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:52",
+   "id": "flat:uci:52:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:52",
+   "reason": "representative table adbench:Ionosphere (Ionosphere): 351 rows, 34 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:52",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:529",
+   "id": "flat:uci:529:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:529",
+   "reason": "no eligible table: uci:529: personal attributes listed by the publisher (privacy review pending), no categorical column with at least 3 levels, more than half of the rows are duplicates",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:529",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:536",
+   "id": "flat:uci:536:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:536",
+   "reason": "representative table uci:536 (Pedestrians in Traffic): 4759 rows, 14 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:536",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:544",
+   "id": "flat:uci:544:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:544",
+   "reason": "no eligible table: uci:544: personal attributes listed by the publisher (privacy review pending)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C1",
+   "system": "uci:544",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:545",
+   "id": "flat:uci:545:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:545",
+   "reason": "representative table uci:545 (Rice (Cammeo and Osmancik)): 3810 rows, 8 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:545",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:551",
+   "id": "flat:uci:551:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:551",
+   "reason": "representative table uci:551 (Gas Turbine CO and NOx Emission Data Set): 36733 rows, 12 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:551",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:555",
+   "id": "flat:uci:555:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:555",
+   "reason": "representative table uci:555 (Apartment for Rent Classified): 99826 rows, 22 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "uci:555",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:563",
+   "id": "flat:uci:563:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:563",
+   "reason": "no eligible table: uci:563: personal attributes listed by the publisher (privacy review pending)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C1",
+   "system": "uci:563",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:571",
+   "id": "flat:uci:571:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:571",
+   "reason": "no eligible table: uci:571: personal attributes listed by the publisher (privacy review pending)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C1",
+   "system": "uci:571",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:572",
+   "id": "flat:uci:572:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:572",
+   "reason": "representative table uci:572 (Taiwanese Bankruptcy Prediction): 6819 rows, 95 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:572",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:579",
+   "id": "flat:uci:579:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:579",
+   "reason": "no eligible table: uci:579: personal attributes listed by the publisher (privacy review pending)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C1",
+   "system": "uci:579",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:582",
+   "id": "flat:uci:582:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:582",
+   "reason": "no eligible table: uci:582: personal attributes listed by the publisher (privacy review pending), fewer than 3 informative numeric columns",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C1",
+   "system": "uci:582",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:59",
+   "id": "flat:uci:59:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:59",
+   "reason": "representative table adbench:letter (Letter Recognition): 20000 rows, 17 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:59",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:597",
+   "id": "flat:uci:597:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:597",
+   "reason": "representative table uci:597 (Productivity Prediction of Garment Employees): 1197 rows, 15 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:597",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:60",
+   "id": "flat:uci:60:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:60",
+   "reason": "no eligible table: uci:60: fewer than 500 rows, fewer than 2 categorical columns",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:60",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:601",
+   "id": "flat:uci:601:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:601",
+   "reason": "representative table uci:601 (AI4I 2020 Predictive Maintenance Dataset): 10000 rows, 14 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:601",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:602",
+   "id": "flat:uci:602:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:602",
+   "reason": "representative table uci:602 (Dry Bean): 13611 rows, 17 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:602",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:603",
+   "id": "flat:uci:603:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:603",
+   "reason": "no eligible table: uci:603: personal attributes listed by the publisher (privacy review pending)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:603",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:69",
+   "id": "flat:uci:69:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:69",
+   "reason": "representative table uci:69 (Molecular Biology (Splice-junction Gene Sequences)): 3190 rows, 62 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "uci:69",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:697",
+   "id": "flat:uci:697:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:697",
+   "reason": "no eligible table: uci:697: personal attributes listed by the publisher (privacy review pending), fewer than 2 categorical columns",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:697",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:70",
+   "id": "flat:uci:70:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:70",
+   "reason": "no eligible table: uci:70: fewer than 500 rows, fewer than 2 categorical columns",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:70",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:722",
+   "id": "flat:uci:722:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:722",
+   "reason": "no eligible table: uci:722: more than half of the rows are duplicates",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C1",
+   "system": "uci:722",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:73",
+   "id": "flat:uci:73:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:73",
+   "reason": "representative table uci:73 (Mushroom): 8124 rows, 22 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "uci:73",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:75",
+   "id": "flat:uci:75:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:75",
+   "reason": "representative table adbench:musk (Musk (Version 2)): 6598 rows, 169 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:75",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:755",
+   "id": "flat:uci:755:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:755",
+   "reason": "representative table uci:755 (Accelerometer Gyro Mobile Phone): 31991 rows, 8 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:755",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:759",
+   "id": "flat:uci:759:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:759",
+   "reason": "no eligible table: uci:759: personal attributes listed by the publisher (privacy review pending)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:759",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:76",
+   "id": "flat:uci:76:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:76",
+   "reason": "representative table uci:76 (Nursery): 12960 rows, 9 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "uci:76",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:760",
+   "id": "flat:uci:760:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:760",
+   "reason": "representative table uci:760 (Multivariate Gait Data): 181800 rows, 7 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:760",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:78",
+   "id": "flat:uci:78:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:78",
+   "reason": "representative table adbench:PageBlocks (Page Blocks Classification): 5473 rows, 11 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:78",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:80",
+   "id": "flat:uci:80:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:80",
+   "reason": "representative table adbench:pendigits (Pen-Based Recognition of Handwritten Digits): 10992 rows, 17 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:80",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:83",
+   "id": "flat:uci:83:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:83",
+   "reason": "no eligible table: uci:83: personal attributes listed by the publisher (privacy review pending), fewer than 500 rows, fewer than 2 categorical columns",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:83",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:848",
+   "id": "flat:uci:848:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:848",
+   "reason": "representative table uci:848 (Secondary Mushroom): 61069 rows, 20 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:848",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:850",
+   "id": "flat:uci:850:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:850",
+   "reason": "representative table uci:850 (Raisin): 900 rows, 8 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:850",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:863",
+   "id": "flat:uci:863:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:863",
+   "reason": "no eligible table: uci:863: personal attributes listed by the publisher (privacy review pending), more than half of the rows are duplicates",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C1",
+   "system": "uci:863",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:864",
+   "id": "flat:uci:864:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:864",
+   "reason": "representative table uci:864 (Room Occupancy Estimation): 10129 rows, 19 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:864",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:878",
+   "id": "flat:uci:878:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:878",
+   "reason": "no eligible table: uci:878: personal attributes listed by the publisher (privacy review pending), fewer than 500 rows",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:878",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:887",
+   "id": "flat:uci:887:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:887",
+   "reason": "no eligible table: uci:887: personal attributes listed by the publisher (privacy review pending), fewer than 2 categorical columns",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:887",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:89",
+   "id": "flat:uci:89:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:89",
+   "reason": "no eligible table: uci:89: more than half of the rows are duplicates",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:89",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:9",
+   "id": "flat:uci:9:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:9",
+   "reason": "no eligible table: uci:9: fewer than 500 rows, fewer than 2 categorical columns",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:9",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:90",
+   "id": "flat:uci:90:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:90",
+   "reason": "no eligible table: uci:90: fewer than 500 rows, fewer than 2 categorical columns",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:90",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:911",
+   "id": "flat:uci:911:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:911",
+   "reason": "representative table uci:911 (Recipe Reviews and User Feedback): 18182 rows, 15 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "uci:911",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:913",
+   "id": "flat:uci:913:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:913",
+   "reason": "no eligible table: uci:913: fewer than 500 rows, fewer than 2 categorical columns",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:913",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:915",
+   "id": "flat:uci:915:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:915",
+   "reason": "no eligible table: uci:915: personal attributes listed by the publisher (privacy review pending), fewer than 500 rows",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:915",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "uci:936",
+   "id": "flat:uci:936:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:936",
+   "reason": "no eligible table: uci:936: personal attributes listed by the publisher (privacy review pending), fewer than 2 categorical columns",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2a",
+   "system": "uci:936",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:94",
+   "id": "flat:uci:94:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:94",
+   "reason": "representative table adbench:SpamBase (Spambase): 4601 rows, 58 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:94",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:942",
+   "id": "flat:uci:942:C1",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:942",
+   "reason": "representative table uci:942 (RT-IoT2022 ): 123117 rows, 84 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C1",
+   "system": "uci:942",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:967",
+   "id": "flat:uci:967:C2a",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "uci:967",
+   "reason": "representative table uci:967 (PhiUSIIL Phishing URL (Website)): 235795 rows, 56 informative columns, licence CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "uci:967",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

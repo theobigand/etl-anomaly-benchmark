@@ -466,7 +466,7 @@ def test_the_diversity_report_counts_domains_and_families_and_applies_the_approv
     assert c3 == {
         "groups": 3, "target": 40, "gap": 37, "domains": 3, "families": 2,
         "largest_family": "f1", "largest_family_share": round(2 / 3, 4),
-        "exploratory": True, "quota": False, "diversity": False,
+        "unclassified_groups": 0, "exploratory": True, "quota": False, "diversity": False,
         "missing": ["groups: 3 of 40", "domains: 3 of 5", "families: 2 of 3"],
     }  # fmt: skip
     full = tf.diversity_report(attributes, {"C3": ["a", "b", "c", "e", "g"]}, targets={"C3": 5})
@@ -586,7 +586,7 @@ def test_diversity_report_covers_several_categories_in_sorted_order_with_exact_f
     )
     assert list(out) == ["C3", "C4"]
     assert out["C3"] == {"groups": 3, "target": 3, "gap": 0, "domains": 2, "families": 2, "largest_family": "f1",  # noqa: E501
-                         "largest_family_share": round(2 / 3, 4), "exploratory": False, "quota": True,  # noqa: E501
+                         "largest_family_share": round(2 / 3, 4), "unclassified_groups": 0, "exploratory": False, "quota": True,  # noqa: E501
                          "diversity": False, "missing": ["domains: 2 of 5", "families: 2 of 3"]}  # fmt: skip  # noqa: E501
     assert (
         out["C4"]["gap"] == 2
@@ -650,3 +650,20 @@ def test_the_ci_level_default_is_ninety_five_percent_and_the_search_starts_at_tw
         tf.paired_sources(0.1, 0.5) >= 3
     )  # three sources are needed for the usual level at this effect
     assert tf.ci_sources(0.1, 100.0) == 2
+
+
+def test_unclassified_domains_and_families_are_not_counted_but_the_groups_are_reported():
+    attributes = {
+        "a": {"domain": "Other", "structure": {"C1": "other"}},
+        "b": {"domain": "d1", "structure": {"C1": "f1"}},
+        "c": {"domain": "d1", "structure": {"C1": "other"}},
+        "e": {"domain": "unknown", "structure": {"C1": "f2"}},
+    }
+    out = tf.diversity_report(attributes, {"C1": ["a", "b", "c", "e"]}, targets={"C1": 4})["C1"]
+    assert out["domains"] == 1 and out["families"] == 2 and out["groups"] == 4
+    assert (
+        out["unclassified_groups"] == 3
+        and out["largest_family"] == "f1"
+        and out["largest_family_share"] == 0.25
+    )
+    assert {"Other", "unknown", "other"} == tf.UNCLASSIFIED

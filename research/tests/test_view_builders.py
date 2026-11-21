@@ -385,3 +385,38 @@ def test_table_sets_read_gzip_tables_by_extension_and_pseudonymise_listed_column
     view = manifest["clin"]
     assert view["pseudonymised"] == ["adm.pid", "pat.pid"] and view["salt_label"] == ev.SALT
     assert view["relations"] == [{"child": "adm.pid", "parent": "pat.pid", "checked": 3, "orphans": 1, "share": 1 / 3}]  # fmt: skip  # noqa: E501
+
+
+def test_flat_builder_writes_one_view_per_selected_table_and_records_the_cleaning(
+    tmp_path, monkeypatch
+):
+    root = tmp_path / "acquired"
+    (tmp_path / "pool").mkdir()
+    (tmp_path / "uci_wave2").mkdir()
+    frame = pd.DataFrame({"a": range(10), "b": [1.5] * 10, "c": list("xyxyxyxyxy")})
+    frame.to_csv(tmp_path / "pool" / "7.csv", index=False)
+    frame.assign(d=range(10)).to_csv(tmp_path / "uci_wave2" / "8.csv", index=False)
+    selection = tmp_path / "sel.json"
+    selection.write_text(json.dumps({"views": [
+        {"key": "flat_g7_C1", "source": "uci:7", "table": "uci:7", "stratum": "C1"},
+        {"key": "flat_g8_C2a", "source": "uci:8", "table": "adbench:t", "stratum": "C2a"}]}))  # fmt: skip  # noqa: E501
+    monkeypatch.setattr(ev, "FLAT_SELECTION", selection)
+    manifest = {}
+    ev._build_flat(root, tmp_path / "o" / "deep", manifest)
+    ev._build_flat(root, tmp_path / "o" / "deep", manifest)
+    folder = tmp_path / "o" / "deep" / "flat"
+    assert (folder / "flat_g7_C1.csv").read_text().splitlines()[0] == "a,c" and len(
+        pd.read_csv(folder / "flat_g7_C1.csv")
+    ) == 10
+    assert pd.read_csv(folder / "flat_g8_C2a.csv").columns.tolist() == ["a", "c", "d"]
+    one = manifest["flat_g7_C1"]
+    assert one == {
+        "files": {"flat_g7_C1.csv": {"sha256": tev._sha(folder / "flat_g7_C1.csv"), "rows": 10}},
+        "dropped": ["b"], "pseudonymised": [],
+        "sampling": {"rows_in": 10, "stride": 1, "method": "every stride-th row from the first; the table is read as published"},  # noqa: E501
+        "table": "uci:7", "stratum": "C1", "source_snapshot": "uci:7 (repository file pinned by checksum)",  # noqa: E501
+    }  # fmt: skip
+    assert (
+        manifest["flat_g8_C2a"]["table"] == "adbench:t"
+        and manifest["flat_g8_C2a"]["stratum"] == "C2a"
+    )
