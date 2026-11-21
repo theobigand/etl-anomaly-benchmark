@@ -925,6 +925,22 @@
    "units": 50271,
    "view": "zen_3pfl"
   },
+  "zen_aegis_vehicle": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "one driver, one vehicle, 33 trips of 1 to 71 minutes",
+    "ten OBD PIDs sampled about every 0.4 s, averaged per second",
+    "no dates or positions (privacy reduction)"
+   ],
+   "first_party": true,
+   "independent_group": "vif_aegis",
+   "min_units": 1000,
+   "partitions": "by trip id order 70/15/15 (trips are the chronological order)",
+   "privacy": "handled",
+   "protocol_id": "P-TS",
+   "units": 45141,
+   "view": "zen_aegis_vehicle"
+  },
   "zen_fdata_fugaku": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [

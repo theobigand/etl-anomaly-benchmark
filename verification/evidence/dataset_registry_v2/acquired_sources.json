@@ -1418,7 +1418,7 @@
    "licence_class": "open",
    "protocols": "none",
    "publisher": "uma_authors",
-   "reason": "four aggregate usage series without declared provenance of the underlying traces; record metadata is two lines",
+   "reason": "four aggregate usage series without declared provenance of the underlying traces; record metadata is two lines; file names (instance_usage_grouped, machine_usage_days, vm_cpu_readings) match public cloud traces, so these are most likely aggregates of other producers' traces and not an independent source",
    "stages": {
     "collection_implemented": true,
     "data_acquired": true,
@@ -1432,24 +1432,24 @@
    "upstream_status": "unverified"
   },
   {
-   "eligible": false,
+   "eligible": true,
    "family": "zen_aegis_vehicle",
    "id": "zen_aegis_vehicle",
    "licence_class": "open",
-   "protocols": "none",
+   "protocols": "P-TS by controlled injection",
    "publisher": "zen_aegis_vehicle",
-   "reason": "vehicle sensor tables with GPS positions; position fields need a privacy decision; acquired and checksummed, no experimental view",
+   "reason": "AEGIS research example (Virtual Vehicle Research Center, Graz): OBD2 signals of one vehicle and one driver over 33 trips, 45141 one-second rows after pivoting ten PIDs; the view keeps relative time inside each trip only and drops positions, gyroscope, acceleration, absolute dates and trip dates. Privacy is reduced, not anonymised: a single driver's driving style remains in the signals, so the view is for method evaluation only. Single vehicle: limited scope",
    "stages": {
     "collection_implemented": true,
     "data_acquired": true,
     "discovered": true,
-    "licence_verified": "CC BY 4.0 on the Zenodo record",
+    "licence_verified": "CC BY 4.0 on the Zenodo record; data collected by the project's own device",
     "ready_for_experiments": false,
-    "structural_validation": false
+    "structural_validation": true
    },
    "stratum": "C3",
    "system": "zen_aegis_vehicle",
-   "upstream_status": "unverified"
+   "upstream_status": "verified"
   },
   {
    "eligible": false,
@@ -1458,7 +1458,7 @@
    "licence_class": "open",
    "protocols": "none",
    "publisher": "zen_nyc_telematics",
-   "reason": "sixteen raw mixed OBD/GPS logs without a header; position data; acquired and checksummed, no experimental view",
+   "reason": "sixteen raw mixed OBD/GPS logs without a header; position data; acquired and checksummed, no experimental view; columns of the headerless OBD and GPS lines are undocumented in the record, so no view is built; blocked on documentation",
    "stages": {
     "collection_implemented": true,
     "data_acquired": true,

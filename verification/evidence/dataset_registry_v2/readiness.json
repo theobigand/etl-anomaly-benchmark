@@ -675,15 +675,10 @@
    "stratum": "C3"
   },
   {
-   "failed": {
-    "reasons": [
-     "upstream terms not verified at the original publisher"
-    ],
-    "status": "rights_verified"
-   },
-   "group": null,
+   "failed": null,
+   "group": "vif_aegis",
    "id": "zen_aegis_vehicle",
-   "status": "discovered",
+   "status": "experiment_ready",
    "stratum": "C3"
   },
   {
@@ -869,7 +864,8 @@
    "rki_surveillance",
    "seoul_bike",
    "steel_korea",
-   "tetouan_power"
+   "tetouan_power",
+   "vif_aegis"
   ],
   "C4": [
    "ccin2p3_slurm",
@@ -906,13 +902,13 @@
    "structurally_valid": 7
   },
   "C3": {
-   "acquired": 14,
+   "acquired": 15,
    "discovered": 36,
-   "experiment_ready": 11,
-   "protocol_ready": 11,
-   "rights_verified": 14,
-   "scientifically_eligible": 11,
-   "structurally_valid": 12
+   "experiment_ready": 12,
+   "protocol_ready": 12,
+   "rights_verified": 15,
+   "scientifically_eligible": 12,
+   "structurally_valid": 13
   },
   "C4": {
    "acquired": 20,

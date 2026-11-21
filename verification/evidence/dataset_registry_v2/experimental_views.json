@@ -867,6 +867,25 @@
   ],
   "source_snapshot": "zen_3pfl/2026-11-21"
  },
+ "zen_aegis_vehicle": {
+  "dropped": [
+   "positions",
+   "gyroscopes",
+   "accelerations",
+   "absolute dates and times",
+   "trip dates",
+   "vehicle names"
+  ],
+  "files": {
+   "obd.csv": {
+    "rows": 45141,
+    "sha256": "6ba782952144d7826dce439cb6fdac9f4fd7307d2575293dc7c9b00213331584"
+   }
+  },
+  "notes": "one driver and one vehicle (35 trips); relative time inside each trip only",
+  "pseudonymised": [],
+  "source_snapshot": "zen_aegis_vehicle/2026-11-21"
+ },
  "zen_fdata_fugaku": {
   "dropped": [
    "user",

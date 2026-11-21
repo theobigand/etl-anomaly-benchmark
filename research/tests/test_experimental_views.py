@@ -977,12 +977,21 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     ol = root / "openlibrary_dump" / SNAP / "raw"
     ol.mkdir(parents=True)
     (ol / "editions_head.txt.gz").write_bytes(_g.compress((_ol_line(1) + "\n").encode()))
+    import zipfile as _zz
+
+    ag = root / "zen_aegis_vehicle" / SNAP / "raw"
+    ag.mkdir(parents=True)
+    with _zz.ZipFile(ag / "Automotive-ResearchDataSet-VIF-AEGIS.zip", "w") as _a:
+        _a.writestr(
+            "obdData.csv",
+            '"obdData_id","trip_id","obdPid","data","timestamp"\n"1","3","0C","9","2017-01-19 16:19:03.0"\n',  # noqa: E501
+        )
     out = tmp_path / "out"
     manifest = ev.build(root, out)
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -2415,3 +2424,61 @@ def test_blank_keys_are_missing_not_orphans_in_relation_checks():
     assert relations == [
         {"child": "a.k", "parent": "b.k", "checked": 2, "orphans": 1, "share": 0.5}
     ]
+
+
+# --- AEGIS OBD signals: one value per pid and second, relative time, no dates or positions -------
+
+
+def test_the_aegis_view_pivots_pids_to_seconds_since_trip_start_and_drops_absolute_time():
+    raw = pd.DataFrame(
+        {
+            "obdData_id": range(1, 8),
+            "trip_id": [2, 2, 2, 2, 1, 1, 1],
+            "obdPid": ["0C", "0D", "0C", "0D", "0C", "0C", "0D"],
+            "data": ["10", "20", "30", "40", "5", "7", "x"],
+            "timestamp": ["2017-01-19 10:00:00.1", "2017-01-19 10:00:00.5", "2017-01-19 10:00:01.2",
+                          "2017-01-19 10:00:01.6", "2017-02-01 08:00:00.0", "2017-02-01 08:00:00.9", "2017-02-01 08:00:02.0"],  # noqa: E501
+        }
+    )  # fmt: skip
+    out = ev.aegis_obd_view(raw)
+    assert list(out.columns) == ["trip_id", "t_s", "pid_0C", "pid_0D"]
+    assert out[["trip_id", "t_s"]].values.tolist() == [[1, 0], [1, 2], [2, 0], [2, 1]]
+    first = out.iloc[0]
+    assert first["pid_0C"] == 6.0 and pd.isna(first["pid_0D"])  # mean of 5 and 7 inside second 0
+    assert pd.isna(out.iloc[1]["pid_0D"])  # an unreadable value stays missing
+    assert out.iloc[2]["pid_0C"] == 10.0 and out.iloc[3]["pid_0D"] == 40.0
+    assert "timestamp" not in out
+    with pytest.raises(ev.ViewError, match="column"):
+        ev.aegis_obd_view(raw.drop(columns=["data"]))
+
+
+def test_the_aegis_builder_reads_only_the_obd_member_and_records_what_was_dropped(tmp_path):
+    import zipfile
+
+    root = tmp_path / "acquired"
+    raw = root / "zen_aegis_vehicle" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    with zipfile.ZipFile(raw / "Automotive-ResearchDataSet-VIF-AEGIS.zip", "w") as z:
+        z.writestr(
+            "obdData.csv",
+            '"obdData_id","trip_id","obdPid","data","timestamp"\n"1","3","0C","9","2017-01-19 16:19:03.045593"\n',  # noqa: E501
+        )
+        z.writestr("positions.csv", '"lat","lon"\n"47.0","15.4"\n')
+    manifest = {}
+    ev._build_aegis(root, tmp_path / "o" / "deep", manifest)
+    target = tmp_path / "o" / "deep" / "zen_aegis_vehicle" / "obd.csv"
+    assert target.read_text() == "trip_id,t_s,pid_0C\n3,0,9.0\n"
+    view = manifest["zen_aegis_vehicle"]
+    assert view["files"] == {"obd.csv": {"sha256": _sha(target), "rows": 1}}
+    assert view["dropped"] == [
+        "positions",
+        "gyroscopes",
+        "accelerations",
+        "absolute dates and times",
+        "trip dates",
+        "vehicle names",
+    ]
+    assert (
+        view["notes"]
+        == "one driver and one vehicle (35 trips); relative time inside each trip only"
+    )

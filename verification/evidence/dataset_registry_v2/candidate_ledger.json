@@ -189,7 +189,7 @@
    "licence": "cc-by-4.0 (Zenodo record)",
    "name": "DataCenter-Traces-Datasets (VM CPU readings)",
    "next_step": "acquire, read provenance of the traces, build a series view",
-   "notes": "acquired 2026-11-21; provenance of the traces undeclared; not ready",
+   "notes": "acquired; likely aggregates of other producers' public cloud traces (file names); not independent",
    "publisher": "Zenodo depositor",
    "reason": "small (1 MB) data-centre VM telemetry",
    "size": null,
@@ -264,12 +264,12 @@
    "licence": "cc-by-4.0",
    "name": "Automotive sensor data (AEGIS)",
    "next_step": "inspect structure",
-   "notes": "acquired (37 MB); GPS positions need a privacy decision",
+   "notes": "OBD view only (relative time, no positions or dates); single driver and vehicle",
    "publisher": "AEGIS Big Data Project",
    "reason": "37 MB vehicle sensor series",
    "size": null,
    "source_url": "",
-   "status": "accessible_privacy_review"
+   "status": "experiment_ready"
   },
   {
    "categories": [
@@ -310,7 +310,7 @@
    "licence": "cc-by-4.0",
    "name": "NYC telematics with asynchronous sampling",
    "next_step": "inspect structure and provenance",
-   "notes": "acquired; headerless mixed logs with positions",
+   "notes": "acquired; headerless OBD and GPS lines with undocumented columns; blocked on documentation",
    "publisher": "Zenodo depositors",
    "reason": "vehicle telemetry (25 MB)",
    "size": null,

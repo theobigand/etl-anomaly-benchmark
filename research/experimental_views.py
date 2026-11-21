@@ -1495,6 +1495,68 @@ def _build_openlibrary(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+def aegis_obd_view(raw: pd.DataFrame) -> pd.DataFrame:
+    """OBD signals of the AEGIS vehicle: mean value per pid and whole second since the trip's
+    first reading. Absolute dates, positions and other sensors are not part of the view."""
+    need = ("trip_id", "obdPid", "data", "timestamp")
+    absent = [c for c in need if c not in raw.columns]
+    if absent:
+        raise ViewError(f"column {absent[0]} not found")
+    stamps = pd.to_datetime(raw["timestamp"])
+    frame = pd.DataFrame(
+        {
+            "trip_id": raw["trip_id"].astype("int64"),
+            "pid": "pid_" + raw["obdPid"].astype(str),
+            "t_s": ((stamps - stamps.groupby(raw["trip_id"]).transform("min")).dt.total_seconds())
+            .floordiv(1)
+            .astype("int64"),
+            "value": pd.to_numeric(raw["data"], errors="coerce"),
+        }
+    )
+    wide = frame.groupby(["trip_id", "t_s", "pid"])["value"].mean().unstack("pid")
+    out = wide.reset_index()
+    out.columns.name = None
+    return out.sort_values(["trip_id", "t_s"], kind="stable").reset_index(drop=True)
+
+
+def _build_aegis(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import sys
+    import tempfile
+
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from acquisition import extract_member
+
+    archive = (
+        root / "zen_aegis_vehicle" / SNAPSHOT / "raw" / "Automotive-ResearchDataSet-VIF-AEGIS.zip"
+    )
+    with tempfile.TemporaryDirectory() as scratch:
+        got = extract_member(
+            archive, "obdData.csv", Path(scratch), max_bytes=1 << 30, max_ratio=200
+        )
+        raw = pd.read_csv(got["path"])
+    view = aegis_obd_view(raw)
+    folder = out / "zen_aegis_vehicle"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "obd.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "zen_aegis_vehicle",
+        {"obd.csv": (target, len(view))},
+        dropped=[
+            "positions",
+            "gyroscopes",
+            "accelerations",
+            "absolute dates and times",
+            "trip dates",
+            "vehicle names",
+        ],
+        pseudonymised=[],
+        notes="one driver and one vehicle (35 trips); relative time inside each trip only",
+        source_snapshot=f"zen_aegis_vehicle/{SNAPSHOT}",
+    )
+
+
 SLURM_MODULO = 20
 SLURM_COLUMNS = (
     "jobid",
@@ -1586,6 +1648,7 @@ BUILD_STEPS = (
     _build_fugaku,
     _build_metropt,
     _build_openlibrary,
+    _build_aegis,
     _build_series,
     _build_ukspend,
 )
