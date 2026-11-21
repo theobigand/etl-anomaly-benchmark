@@ -47,6 +47,14 @@
   "producer": "multinational coatings company (BPI Challenge 2019)",
   "schema_family": "xes event log"
  },
+ "dgfip_dvf": {
+  "curator": "data.gouv.fr",
+  "domain": "real estate",
+  "generating_system": "French property transaction register",
+  "note": "",
+  "producer": "DGFiP (French tax administration)",
+  "schema_family": "property register csv"
+ },
  "dutch_municipalities": {
   "curator": "4tu",
   "domain": "public administration",
@@ -54,6 +62,14 @@
   "note": "",
   "producer": "Dutch municipalities (BPI Challenge 2015)",
   "schema_family": "xes event log"
+ },
+ "ea_hydrology": {
+  "curator": "environment.data.gov.uk",
+  "domain": "hydrology",
+  "generating_system": "EA hydrometric network",
+  "note": "12 stations, one group",
+  "producer": "Environment Agency (England)",
+  "schema_family": "gauging time series"
  },
  "elder_home": {
   "curator": "uci",
@@ -238,6 +254,14 @@
   "note": "",
   "producer": "City of Melbourne",
   "schema_family": "pedestrian counts"
+ },
+ "met_museum": {
+  "curator": "met open access",
+  "domain": "cultural heritage",
+  "generating_system": "Met collection management",
+  "note": "",
+  "producer": "The Metropolitan Museum of Art",
+  "schema_family": "museum catalogue json"
  },
  "metropt_porto": {
   "curator": "zenodo",

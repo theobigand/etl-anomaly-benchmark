@@ -157,3 +157,134 @@ def test_the_minimum_detectable_difference_inverts_the_power_calculation():
 def test_power_is_one_for_a_huge_standardised_effect_and_the_routines_never_return_nan():
     assert tf.paired_power(100, 0.01, 1.0) == 1.0
     assert 0.0 <= tf.paired_power(3, 1.0, 0.001) <= 1.0
+
+
+def test_required_sources_match_the_recorded_values_for_several_parameter_sets():
+    assert [tf.paired_sources(0.10, 0.05, comparisons=k) for k in (1, 3, 6)] == [34, 45, 52]
+    assert tf.paired_sources(0.05, 0.03) == 24 and tf.paired_sources(0.10, 0.03) == 90
+    assert (
+        tf.paired_sources(0.05, 0.10) == 5
+    )  # the exact t calculation does not go below the normal one by much
+    assert tf.paired_sources(0.20, 0.03, alpha=0.01, power=0.9) == 665
+    assert tf.ci_sources(0.10, 0.03) == 46 and tf.ci_sources(0.05, 0.03) == 14
+    assert tf.ci_sources(0.10, 0.03, level=0.99) == 78 and tf.ci_sources(0.30, 0.20) == 12
+    assert tf.z_sources(0.1, 0.03, alpha=0.01, power=0.9, comparisons=2) == pytest.approx(
+        185.739, abs=0.001
+    )
+    assert tf.normal_factor(0.01, 0.9) == pytest.approx(14.879, abs=0.001)
+
+
+def test_power_values_the_level_and_the_degenerate_sizes_are_exact():
+    assert tf.paired_power(25, 0.1, 0.05) == pytest.approx(0.6697, abs=0.0001)
+    assert tf.paired_power(25, 0.1, 0.05, alpha=0.01) == pytest.approx(0.4023, abs=0.0001)
+    assert tf.paired_power(2, 0.1, 0.05) == pytest.approx(0.0619, abs=0.0001)
+    assert tf.paired_power(1, 0.1, 0.05) == 0.0 and tf.paired_power(0, 0.1, 0.05) == 0.0
+
+
+def test_minimum_detectable_delta_matches_recorded_values_and_accepts_fractional_sizes():
+    assert tf.minimum_detectable_delta(34, 0.10) == 0.0496
+    assert tf.minimum_detectable_delta(10, 0.05) == 0.0499
+    assert tf.minimum_detectable_delta(34.9, 0.10) == 0.0496  # a fractional size is floored
+    assert tf.minimum_detectable_delta(25, 0.10, alpha=0.01, power=0.9) == 0.083
+    with pytest.raises(ValueError) as error:
+        tf.minimum_detectable_delta(1.9, 0.1)
+    assert str(error.value) == "at least 2 sources are needed"
+    assert tf.minimum_detectable_delta(2, 0.1) > 0.5  # two sources detect only a huge difference
+    with pytest.raises(ValueError) as error:
+        tf.paired_sources(-1, 0.1)
+    assert str(error.value) == "sigma and delta must be positive"
+
+
+def test_the_seeded_simulation_returns_the_recorded_rates_for_a_null_and_an_effect():
+    assert tf.simulate_rejection(5, 4, 0.05, 0.05, 0.0, 300, 3) == (0.2133, 0.0433)
+    assert tf.simulate_rejection(5, 4, 0.05, 0.05, 0.08, 300, 3) == (0.9567, 0.63)
+    assert tf.simulate_rejection(5, 4, 0.05, 0.05, 0.0, 300, 3, alpha=0.01)[0] < 0.2133
+
+
+def test_the_report_lists_the_documented_design_effect_grid_and_simulation_settings(tmp_path):
+    import json
+
+    attributes = {
+        "a": {
+            "domain": "d",
+            "producer": "p",
+            "curator": "c",
+            "schema_family": "s",
+            "generating_system": "g",
+        }
+    }
+    out = tf.report(attributes, {"ready_groups": {"C3": ["a"]}})
+    assert sorted(out) == [
+        "coverage",
+        "design_effect_sources",
+        "minimum_detectable_delta",
+        "note",
+        "sensitivity",
+        "simulation",
+    ]
+    assert [(r["cluster_size"], r["icc"]) for r in out["design_effect_sources"]] == [
+        (m, i) for m in (2, 4, 8) for i in (0.0, 0.2, 0.5)
+    ]
+    assert all(r["sigma"] == 0.10 and r["delta"] == 0.05 for r in out["design_effect_sources"])
+    assert (
+        out["design_effect_sources"][0]["sources"] == 34
+        and out["design_effect_sources"][-1]["sources"] == 153
+    )
+    assert [(r["domains"], r["per_domain"], r["sigma_domain"]) for r in out["simulation"]] == [
+        (6, 5, 0.08),
+        (10, 3, 0.08),
+        (10, 3, 0.02),
+    ]
+    assert [(r["sources"], r["sigma"]) for r in out["minimum_detectable_delta"]][:4] == [
+        (10, 0.05),
+        (10, 0.1),
+        (10, 0.15),
+        (18, 0.05),
+    ]
+    assert out["minimum_detectable_delta"][4]["delta"] == 0.0701
+    assert sorted(out["coverage"]) == ["0.2", "0.5"] and out["note"] == "design-only: every sigma, delta and icc below is hypothetical; no detector was run"  # fmt: skip  # noqa: E501
+    (tmp_path / "source_attributes.json").write_text(json.dumps(attributes))
+    (tmp_path / "readiness.json").write_text(json.dumps({"ready_groups": {"C3": ["a"]}}))
+    assert tf.main(["--dir", str(tmp_path)]) == 0
+    text = (tmp_path / "target_framework.json").read_text()
+    assert (
+        text.endswith("}\n")
+        and text == json.dumps(json.loads(text), indent=1, sort_keys=True) + "\n"
+    )
+
+
+def test_main_prints_the_row_count_and_group_count(tmp_path, capsys):
+    import json
+
+    (tmp_path / "source_attributes.json").write_text(
+        json.dumps(
+            {
+                "a": {
+                    "domain": "d",
+                    "producer": "p",
+                    "curator": "c",
+                    "schema_family": "s",
+                    "generating_system": "g",
+                }
+            }
+        )
+    )
+    (tmp_path / "readiness.json").write_text(json.dumps({"ready_groups": {"C3": ["a"]}}))
+    tf.main(["--dir", str(tmp_path)])
+    assert capsys.readouterr().out == "48 sensitivity rows, coverage of 1 groups\n"
+
+
+def test_coverage_summary_handles_an_empty_category_and_uses_the_largest_family_share():
+    attributes = {
+        "a": {
+            "domain": "d",
+            "producer": "p",
+            "curator": "c",
+            "schema_family": "s",
+            "generating_system": "g",
+        }
+    }
+    out = tf.coverage_summary(attributes, {"C1": [], "C3": ["a"]}, icc=0.3)
+    assert out["C1"] == {"groups": 0, "domains": 0, "producers": 0, "curators": 0, "schema_families": 0,  # noqa: E501
+                         "largest_schema_family_share": 0.0, "effective_groups": 0.0}  # fmt: skip
+    assert out["C3"]["largest_schema_family_share"] == 1.0 and out["ALL"]["groups"] == 1

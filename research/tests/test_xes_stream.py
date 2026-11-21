@@ -161,3 +161,134 @@ def test_the_reader_does_not_keep_finished_traces_in_the_parser_tree():
     result = _read(data)
     assert len(result.traces) == 3000 and result.status["traces_kept"] == 3000
     assert result.max_open_children < 1500  # finished traces are detached chunk by chunk
+
+
+def test_error_messages_are_exact_and_name_the_offending_attribute_or_construct():
+    with pytest.raises(xs.XesError) as error:
+        _read(b'<?xml version="1.0"?><!DOCTYPE log [<!ENTITY a "b">]><log/>')
+    assert str(error.value) == "DOCTYPE declarations are not accepted"
+    with pytest.raises(xs.XesError) as error:
+        _read(b'<log><!ENTITY x "y"></log>')
+    assert str(error.value) == "ENTITY declarations are not accepted"
+    bad_trace_attribute = (
+        '<trace><int key="rank" value="x"/><string key="concept:name" value="c"/></trace>'
+    )
+    with pytest.raises(xs.XesError) as error:
+        _read(_log(bad_trace_attribute))
+    assert str(error.value) == "int attribute 'rank' has the unreadable value 'x'"
+    bad_event = '<trace><string key="concept:name" value="c"/><event><float key="amt" value="1,5"/></event></trace>'  # noqa: E501
+    with pytest.raises(xs.XesError) as error:
+        _read(_log(bad_event))
+    assert str(error.value) == "float attribute 'amt' has the unreadable value '1,5'"
+
+
+def test_a_raw_zlib_stream_is_not_accepted_as_gzip_and_only_gzip_is():
+    import zlib
+
+    data = _log(_trace("c1", [("A", "")]))
+    assert _read(gzip.compress(data), compressed=True).status["stream_complete"] is True
+    with pytest.raises(xs.XesError, match="not a readable gzip stream"):
+        _read(zlib.compress(data), compressed=True)
+
+
+def test_the_limits_are_exact_at_the_boundary_and_the_counters_add_up_over_many_chunks():
+    data = _log(*[_trace(f"c{i}", [("A", ""), ("B", "")]) for i in range(1500)])
+    assert len(data) > 3 * xs.CHUNK
+    whole = _read(data)
+    assert whole.status["bytes_in"] == len(data) == whole.status["bytes_out"]
+    exact = _read(data, max_in=len(data))
+    assert (
+        exact.status["stop"] == "log_closed" and exact.status["traces_kept"] == 1500
+    )  # the limit equals the size
+    short = _read(data, max_in=len(data) - 1)
+    assert short.status["stop"] == "input_limit" and short.status["bytes_in"] == len(data) - 1
+    assert short.status["stream_complete"] is False
+    just_in = _read(data, max_in=2 * xs.CHUNK)
+    assert just_in.status["bytes_in"] == 2 * xs.CHUNK and just_in.status["stop"] == "input_limit"
+
+
+def test_a_declaration_split_across_two_chunks_is_still_refused():
+    prefix = b'<?xml version="1.0"?>'
+    filler = b" " * (xs.CHUNK - len(prefix) - 4)
+    data = (
+        prefix + filler + b"<!DOCTYPE log []><log/>"
+    )  # the marker straddles the first chunk boundary
+    assert data.index(b"<!DOCTYPE") < xs.CHUNK < data.index(b"<!DOCTYPE") + 9
+    with pytest.raises(xs.XesError, match="DOCTYPE"):
+        _read(data)
+    entity = prefix + filler + b'<log><!ENTITY a "b"></log>'
+    with pytest.raises(xs.XesError, match="ENTITY"):
+        _read(entity)
+
+
+def test_leading_whitespace_does_not_hide_that_a_document_is_xml_and_text_is_not():
+    with pytest.raises(xs.XesError, match="not well-formed XML"):
+        _read(b"   \n  <log><trace></log>")
+    with pytest.raises(xs.XesError, match="not XML"):
+        _read(b"   plain text   ")
+    with pytest.raises(xs.XesError, match="not XML"):
+        _read(b"text first <log/>")
+
+
+def test_attributes_are_read_only_at_the_event_and_trace_level_not_from_nested_containers():
+    nested = (
+        '<trace><string key="concept:name" value="c"/><list key="tr"><string key="deep_trace" value="x"/></list>'  # noqa: E501
+        '<event><string key="concept:name" value="A"/><list key="ev"><string key="deep_event" value="y"/></list>'  # noqa: E501
+        "</event></trace>"
+    )
+    result = _read(_log(nested))
+    trace = result.traces[0]
+    assert trace["attributes"] == {"concept:name": "c"}
+    assert trace["events"] == [{"concept:name": "A"}]
+
+
+def test_a_trace_attribute_that_follows_the_events_and_an_event_outside_a_trace_are_handled():
+    late = (
+        '<trace><string key="concept:name" value="c"/><event><string key="concept:name" value="A"/></event>'  # noqa: E501
+        '<int key="late" value="4"/></trace>'
+    )
+    result = _read(_log(late))
+    assert result.traces[0]["attributes"] == {"concept:name": "c", "late": 4}
+    assert result.traces[0]["events"] == [{"concept:name": "A"}]
+    stray = '<log><event><string key="concept:name" value="x"/></event><trace><string key="concept:name" value="c"/></trace></log>'  # noqa: E501
+    assert [t["case"] for t in _read(stray.encode()).traces] == ["c"]
+
+
+def test_the_root_element_is_released_so_that_traces_never_pile_up_across_chunks():
+    data = _log(*[_trace(f"c{i}", [("A", "")]) for i in range(9000)])
+    result = _read(data)
+    per_chunk = xs.CHUNK // len(_trace("c0000", [("A", "")]))
+    assert 0 < result.max_open_children <= 2 * per_chunk and len(result.traces) == 9000
+
+
+def test_a_cut_log_whose_size_equals_the_input_limit_ends_as_input_ended_not_as_limit():
+    full = _log(_trace("c1", [("A", "")]), _trace("c2", [("A", "")]))
+    cut = full[: full.index(b"c2") + 5]
+    result = _read(cut, max_in=len(cut))
+    assert (
+        result.status["stop"] == "input_ended_before_log_closed"
+    )  # nothing more to read at the limit
+    assert result.status["bytes_in"] == len(cut) and [t["case"] for t in result.traces] == ["c1"]
+    limited = _read(cut + b"x", max_in=len(cut))
+    assert limited.status["stop"] == "input_limit"  # one more byte exists beyond the limit
+    assert limited.traces and limited.status["stream_complete"] is False
+
+
+def test_an_error_after_the_first_chunk_is_still_reported_as_malformed_xml_not_as_text():
+    data = b"<log>" + b"a" * xs.CHUNK + b"</wrong>"
+    with pytest.raises(xs.XesError, match="not well-formed XML"):
+        _read(data)
+
+
+def test_global_definitions_and_extensions_before_the_traces_are_not_traces():
+    head = (
+        '<extension name="Concept" prefix="concept" uri="http://example.org/c"/>'
+        '<global scope="trace"><string key="concept:name" value="default"/></global>'
+        '<global scope="event"><string key="concept:name" value="default"/></global>'
+        '<classifier name="act" keys="concept:name"/>'
+    )
+    data = _log(head, _trace("c1", [("A", "")]), _trace("c2", [("A", ""), ("B", "")]))
+    result = _read(data)
+    assert [t["case"] for t in result.traces] == ["c1", "c2"]
+    assert result.status["traces_seen"] == 2 and result.status["traces_without_case"] == 0
+    assert [len(t["events"]) for t in result.traces] == [1, 2]

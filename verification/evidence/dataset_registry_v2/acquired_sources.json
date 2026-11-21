@@ -2110,6 +2110,66 @@
    "stratum": "C5",
    "system": "gtfs_fr_transvilles",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "met_museum",
+   "id": "met_museum_objects",
+   "licence_class": "open",
+   "protocols": "P-NEST",
+   "publisher": "met_museum",
+   "reason": "The Metropolitan Museum of Art catalogue records (CC0): 1000 objects by an even stride over the sorted id listing; nesting depth 4 with arrays of constituents, measurements and tags, 72 distinct paths of which 22 optional; 51 percent flagged public domain; artist biographies and image links dropped. The first fetch at five requests per second was answered with 403 by the host and was not bypassed: the retry was paced at one per second",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC0 stated by the museum on its API page",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "met_museum_catalogue",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "ea_hydrology",
+   "id": "ea_hydrology_flow",
+   "licence_class": "open",
+   "protocols": "P-TS by controlled injection",
+   "publisher": "environment_agency_england",
+   "reason": "Environment Agency daily mean river flow, 12 gauging stations chosen by an even stride over the measure list, 2010 to 2025: 70128 rows, 2 percent missing values, 98 percent flagged complete; stations of one agency network are one group (shared instrumentation and processing)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Open Government Licence v3.0 stated by the Environment Agency on the API reference",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "ea_gauging_network",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "dgfip_dvf",
+   "id": "dgfip_dvf",
+   "licence_class": "open",
+   "protocols": "P-TAB on sale rows (value, date, area, duplicate and timestamp faults)",
+   "publisher": "dgfip_dvf",
+   "reason": "French property transaction register (DGFiP), department 69, 2024: 75985 disposition rows of real sales (price, nature, commune, type, areas); addresses, parcels and coordinates dropped, mutation id salted; the register warns that it holds personal data, so no re-identification is attempted",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Licence Ouverte 2.0 on the data.gouv.fr record of the publishing ministry",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "dgfip_property_register",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

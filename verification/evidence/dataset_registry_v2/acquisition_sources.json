@@ -2525,6 +2525,5143 @@
    "stratum": "C5",
    "upstream": "first party: the network's authority or operator publishes its own timetable feed on the national access point",
    "upstream_verified": true
+  },
+  {
+   "attribution": "cite The Metropolitan Museum of Art Open Access (CC0)",
+   "files": [
+    {
+     "name": "obj_1.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/1"
+    },
+    {
+     "name": "obj_570.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/570"
+    },
+    {
+     "name": "obj_1097.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/1097"
+    },
+    {
+     "name": "obj_1652.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/1652"
+    },
+    {
+     "name": "obj_2201.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/2201"
+    },
+    {
+     "name": "obj_2727.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/2727"
+    },
+    {
+     "name": "obj_3261.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/3261"
+    },
+    {
+     "name": "obj_3788.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/3788"
+    },
+    {
+     "name": "obj_4321.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/4321"
+    },
+    {
+     "name": "obj_4915.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/4915"
+    },
+    {
+     "name": "obj_5428.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/5428"
+    },
+    {
+     "name": "obj_5952.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/5952"
+    },
+    {
+     "name": "obj_6472.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/6472"
+    },
+    {
+     "name": "obj_7036.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/7036"
+    },
+    {
+     "name": "obj_7564.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/7564"
+    },
+    {
+     "name": "obj_8090.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/8090"
+    },
+    {
+     "name": "obj_8727.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/8727"
+    },
+    {
+     "name": "obj_9244.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/9244"
+    },
+    {
+     "name": "obj_9813.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/9813"
+    },
+    {
+     "name": "obj_10371.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/10371"
+    },
+    {
+     "name": "obj_10944.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/10944"
+    },
+    {
+     "name": "obj_11545.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/11545"
+    },
+    {
+     "name": "obj_12114.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/12114"
+    },
+    {
+     "name": "obj_12620.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/12620"
+    },
+    {
+     "name": "obj_13183.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/13183"
+    },
+    {
+     "name": "obj_13772.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/13772"
+    },
+    {
+     "name": "obj_14294.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/14294"
+    },
+    {
+     "name": "obj_14813.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/14813"
+    },
+    {
+     "name": "obj_15324.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/15324"
+    },
+    {
+     "name": "obj_16005.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/16005"
+    },
+    {
+     "name": "obj_16515.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/16515"
+    },
+    {
+     "name": "obj_17156.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/17156"
+    },
+    {
+     "name": "obj_18566.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/18566"
+    },
+    {
+     "name": "obj_19935.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/19935"
+    },
+    {
+     "name": "obj_20746.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/20746"
+    },
+    {
+     "name": "obj_22170.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/22170"
+    },
+    {
+     "name": "obj_22685.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/22685"
+    },
+    {
+     "name": "obj_23192.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/23192"
+    },
+    {
+     "name": "obj_23696.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/23696"
+    },
+    {
+     "name": "obj_24201.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/24201"
+    },
+    {
+     "name": "obj_24706.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/24706"
+    },
+    {
+     "name": "obj_25247.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/25247"
+    },
+    {
+     "name": "obj_25800.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/25800"
+    },
+    {
+     "name": "obj_26519.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/26519"
+    },
+    {
+     "name": "obj_27084.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/27084"
+    },
+    {
+     "name": "obj_27615.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/27615"
+    },
+    {
+     "name": "obj_28209.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/28209"
+    },
+    {
+     "name": "obj_28733.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/28733"
+    },
+    {
+     "name": "obj_29244.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/29244"
+    },
+    {
+     "name": "obj_29751.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/29751"
+    },
+    {
+     "name": "obj_30365.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/30365"
+    },
+    {
+     "name": "obj_30869.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/30869"
+    },
+    {
+     "name": "obj_31372.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/31372"
+    },
+    {
+     "name": "obj_31875.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/31875"
+    },
+    {
+     "name": "obj_32382.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/32382"
+    },
+    {
+     "name": "obj_32902.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/32902"
+    },
+    {
+     "name": "obj_33411.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/33411"
+    },
+    {
+     "name": "obj_33929.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/33929"
+    },
+    {
+     "name": "obj_34445.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/34445"
+    },
+    {
+     "name": "obj_34963.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/34963"
+    },
+    {
+     "name": "obj_35799.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/35799"
+    },
+    {
+     "name": "obj_36362.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/36362"
+    },
+    {
+     "name": "obj_36871.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/36871"
+    },
+    {
+     "name": "obj_37378.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/37378"
+    },
+    {
+     "name": "obj_37894.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/37894"
+    },
+    {
+     "name": "obj_38429.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/38429"
+    },
+    {
+     "name": "obj_38997.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/38997"
+    },
+    {
+     "name": "obj_39526.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/39526"
+    },
+    {
+     "name": "obj_40130.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/40130"
+    },
+    {
+     "name": "obj_40689.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/40689"
+    },
+    {
+     "name": "obj_41210.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/41210"
+    },
+    {
+     "name": "obj_41736.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/41736"
+    },
+    {
+     "name": "obj_42250.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/42250"
+    },
+    {
+     "name": "obj_43199.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/43199"
+    },
+    {
+     "name": "obj_43715.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/43715"
+    },
+    {
+     "name": "obj_44239.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/44239"
+    },
+    {
+     "name": "obj_44777.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/44777"
+    },
+    {
+     "name": "obj_45381.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/45381"
+    },
+    {
+     "name": "obj_45923.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/45923"
+    },
+    {
+     "name": "obj_46647.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/46647"
+    },
+    {
+     "name": "obj_47271.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/47271"
+    },
+    {
+     "name": "obj_47956.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/47956"
+    },
+    {
+     "name": "obj_48657.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/48657"
+    },
+    {
+     "name": "obj_49228.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/49228"
+    },
+    {
+     "name": "obj_49746.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/49746"
+    },
+    {
+     "name": "obj_50313.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/50313"
+    },
+    {
+     "name": "obj_50904.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/50904"
+    },
+    {
+     "name": "obj_51481.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/51481"
+    },
+    {
+     "name": "obj_52017.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/52017"
+    },
+    {
+     "name": "obj_52605.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/52605"
+    },
+    {
+     "name": "obj_53341.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/53341"
+    },
+    {
+     "name": "obj_53948.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/53948"
+    },
+    {
+     "name": "obj_54506.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/54506"
+    },
+    {
+     "name": "obj_55019.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/55019"
+    },
+    {
+     "name": "obj_55528.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/55528"
+    },
+    {
+     "name": "obj_56052.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/56052"
+    },
+    {
+     "name": "obj_56729.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/56729"
+    },
+    {
+     "name": "obj_57252.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/57252"
+    },
+    {
+     "name": "obj_57828.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/57828"
+    },
+    {
+     "name": "obj_58492.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/58492"
+    },
+    {
+     "name": "obj_59045.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/59045"
+    },
+    {
+     "name": "obj_59581.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/59581"
+    },
+    {
+     "name": "obj_60114.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/60114"
+    },
+    {
+     "name": "obj_60688.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/60688"
+    },
+    {
+     "name": "obj_61207.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/61207"
+    },
+    {
+     "name": "obj_61766.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/61766"
+    },
+    {
+     "name": "obj_62326.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/62326"
+    },
+    {
+     "name": "obj_62849.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/62849"
+    },
+    {
+     "name": "obj_63377.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/63377"
+    },
+    {
+     "name": "obj_63886.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/63886"
+    },
+    {
+     "name": "obj_65009.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/65009"
+    },
+    {
+     "name": "obj_65839.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/65839"
+    },
+    {
+     "name": "obj_66342.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/66342"
+    },
+    {
+     "name": "obj_66845.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/66845"
+    },
+    {
+     "name": "obj_67348.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/67348"
+    },
+    {
+     "name": "obj_67851.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/67851"
+    },
+    {
+     "name": "obj_68356.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/68356"
+    },
+    {
+     "name": "obj_68859.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/68859"
+    },
+    {
+     "name": "obj_69362.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/69362"
+    },
+    {
+     "name": "obj_69923.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/69923"
+    },
+    {
+     "name": "obj_70428.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/70428"
+    },
+    {
+     "name": "obj_71016.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/71016"
+    },
+    {
+     "name": "obj_71519.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/71519"
+    },
+    {
+     "name": "obj_72022.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/72022"
+    },
+    {
+     "name": "obj_72884.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/72884"
+    },
+    {
+     "name": "obj_73483.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/73483"
+    },
+    {
+     "name": "obj_74421.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/74421"
+    },
+    {
+     "name": "obj_75152.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/75152"
+    },
+    {
+     "name": "obj_77256.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/77256"
+    },
+    {
+     "name": "obj_78810.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/78810"
+    },
+    {
+     "name": "obj_79473.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/79473"
+    },
+    {
+     "name": "obj_80051.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/80051"
+    },
+    {
+     "name": "obj_80620.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/80620"
+    },
+    {
+     "name": "obj_81202.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/81202"
+    },
+    {
+     "name": "obj_81764.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/81764"
+    },
+    {
+     "name": "obj_82745.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/82745"
+    },
+    {
+     "name": "obj_83621.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/83621"
+    },
+    {
+     "name": "obj_84359.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/84359"
+    },
+    {
+     "name": "obj_85026.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/85026"
+    },
+    {
+     "name": "obj_85991.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/85991"
+    },
+    {
+     "name": "obj_86847.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/86847"
+    },
+    {
+     "name": "obj_89767.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/89767"
+    },
+    {
+     "name": "obj_91002.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/91002"
+    },
+    {
+     "name": "obj_91935.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/91935"
+    },
+    {
+     "name": "obj_93630.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/93630"
+    },
+    {
+     "name": "obj_94865.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/94865"
+    },
+    {
+     "name": "obj_96071.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/96071"
+    },
+    {
+     "name": "obj_96873.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/96873"
+    },
+    {
+     "name": "obj_97620.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/97620"
+    },
+    {
+     "name": "obj_98425.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/98425"
+    },
+    {
+     "name": "obj_100398.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/100398"
+    },
+    {
+     "name": "obj_102386.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/102386"
+    },
+    {
+     "name": "obj_103267.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/103267"
+    },
+    {
+     "name": "obj_104429.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/104429"
+    },
+    {
+     "name": "obj_105347.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/105347"
+    },
+    {
+     "name": "obj_106757.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/106757"
+    },
+    {
+     "name": "obj_107713.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/107713"
+    },
+    {
+     "name": "obj_108674.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/108674"
+    },
+    {
+     "name": "obj_109558.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/109558"
+    },
+    {
+     "name": "obj_110398.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/110398"
+    },
+    {
+     "name": "obj_113188.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/113188"
+    },
+    {
+     "name": "obj_114047.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/114047"
+    },
+    {
+     "name": "obj_115307.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/115307"
+    },
+    {
+     "name": "obj_116276.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/116276"
+    },
+    {
+     "name": "obj_117273.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/117273"
+    },
+    {
+     "name": "obj_118939.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/118939"
+    },
+    {
+     "name": "obj_119639.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/119639"
+    },
+    {
+     "name": "obj_120759.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/120759"
+    },
+    {
+     "name": "obj_121692.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/121692"
+    },
+    {
+     "name": "obj_122502.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/122502"
+    },
+    {
+     "name": "obj_124339.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/124339"
+    },
+    {
+     "name": "obj_126919.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/126919"
+    },
+    {
+     "name": "obj_129883.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/129883"
+    },
+    {
+     "name": "obj_138567.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/138567"
+    },
+    {
+     "name": "obj_142775.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/142775"
+    },
+    {
+     "name": "obj_155726.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/155726"
+    },
+    {
+     "name": "obj_156238.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/156238"
+    },
+    {
+     "name": "obj_156767.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/156767"
+    },
+    {
+     "name": "obj_157317.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/157317"
+    },
+    {
+     "name": "obj_157865.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/157865"
+    },
+    {
+     "name": "obj_158371.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/158371"
+    },
+    {
+     "name": "obj_159072.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/159072"
+    },
+    {
+     "name": "obj_159747.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/159747"
+    },
+    {
+     "name": "obj_168587.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/168587"
+    },
+    {
+     "name": "obj_169090.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/169090"
+    },
+    {
+     "name": "obj_169594.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/169594"
+    },
+    {
+     "name": "obj_170097.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/170097"
+    },
+    {
+     "name": "obj_171788.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/171788"
+    },
+    {
+     "name": "obj_173612.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/173612"
+    },
+    {
+     "name": "obj_174321.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/174321"
+    },
+    {
+     "name": "obj_174828.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/174828"
+    },
+    {
+     "name": "obj_175335.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/175335"
+    },
+    {
+     "name": "obj_181515.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/181515"
+    },
+    {
+     "name": "obj_186280.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/186280"
+    },
+    {
+     "name": "obj_186791.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/186791"
+    },
+    {
+     "name": "obj_187300.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/187300"
+    },
+    {
+     "name": "obj_187862.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/187862"
+    },
+    {
+     "name": "obj_188413.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/188413"
+    },
+    {
+     "name": "obj_188975.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/188975"
+    },
+    {
+     "name": "obj_189488.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/189488"
+    },
+    {
+     "name": "obj_190002.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/190002"
+    },
+    {
+     "name": "obj_190505.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/190505"
+    },
+    {
+     "name": "obj_191024.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/191024"
+    },
+    {
+     "name": "obj_191556.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/191556"
+    },
+    {
+     "name": "obj_192123.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/192123"
+    },
+    {
+     "name": "obj_192646.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/192646"
+    },
+    {
+     "name": "obj_193304.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/193304"
+    },
+    {
+     "name": "obj_193825.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/193825"
+    },
+    {
+     "name": "obj_194330.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/194330"
+    },
+    {
+     "name": "obj_194902.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/194902"
+    },
+    {
+     "name": "obj_195466.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/195466"
+    },
+    {
+     "name": "obj_196008.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/196008"
+    },
+    {
+     "name": "obj_196529.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/196529"
+    },
+    {
+     "name": "obj_197051.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/197051"
+    },
+    {
+     "name": "obj_197578.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/197578"
+    },
+    {
+     "name": "obj_198123.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/198123"
+    },
+    {
+     "name": "obj_198700.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/198700"
+    },
+    {
+     "name": "obj_199241.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/199241"
+    },
+    {
+     "name": "obj_199785.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/199785"
+    },
+    {
+     "name": "obj_200295.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/200295"
+    },
+    {
+     "name": "obj_200811.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/200811"
+    },
+    {
+     "name": "obj_201319.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/201319"
+    },
+    {
+     "name": "obj_201837.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/201837"
+    },
+    {
+     "name": "obj_202413.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/202413"
+    },
+    {
+     "name": "obj_202964.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/202964"
+    },
+    {
+     "name": "obj_203511.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/203511"
+    },
+    {
+     "name": "obj_204135.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/204135"
+    },
+    {
+     "name": "obj_204727.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/204727"
+    },
+    {
+     "name": "obj_205270.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/205270"
+    },
+    {
+     "name": "obj_205867.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/205867"
+    },
+    {
+     "name": "obj_206472.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/206472"
+    },
+    {
+     "name": "obj_207055.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/207055"
+    },
+    {
+     "name": "obj_207576.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/207576"
+    },
+    {
+     "name": "obj_208105.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/208105"
+    },
+    {
+     "name": "obj_208658.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/208658"
+    },
+    {
+     "name": "obj_209323.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/209323"
+    },
+    {
+     "name": "obj_209885.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/209885"
+    },
+    {
+     "name": "obj_210726.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/210726"
+    },
+    {
+     "name": "obj_211321.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/211321"
+    },
+    {
+     "name": "obj_211899.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/211899"
+    },
+    {
+     "name": "obj_212465.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/212465"
+    },
+    {
+     "name": "obj_213085.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/213085"
+    },
+    {
+     "name": "obj_213646.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/213646"
+    },
+    {
+     "name": "obj_214150.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/214150"
+    },
+    {
+     "name": "obj_214693.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/214693"
+    },
+    {
+     "name": "obj_215228.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/215228"
+    },
+    {
+     "name": "obj_215815.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/215815"
+    },
+    {
+     "name": "obj_216393.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/216393"
+    },
+    {
+     "name": "obj_217190.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/217190"
+    },
+    {
+     "name": "obj_217764.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/217764"
+    },
+    {
+     "name": "obj_218337.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/218337"
+    },
+    {
+     "name": "obj_218879.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/218879"
+    },
+    {
+     "name": "obj_219403.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/219403"
+    },
+    {
+     "name": "obj_220051.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/220051"
+    },
+    {
+     "name": "obj_220951.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/220951"
+    },
+    {
+     "name": "obj_221491.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/221491"
+    },
+    {
+     "name": "obj_222092.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/222092"
+    },
+    {
+     "name": "obj_222687.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/222687"
+    },
+    {
+     "name": "obj_223238.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/223238"
+    },
+    {
+     "name": "obj_223741.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/223741"
+    },
+    {
+     "name": "obj_224244.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/224244"
+    },
+    {
+     "name": "obj_224752.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/224752"
+    },
+    {
+     "name": "obj_225255.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/225255"
+    },
+    {
+     "name": "obj_225758.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/225758"
+    },
+    {
+     "name": "obj_226273.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/226273"
+    },
+    {
+     "name": "obj_227062.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/227062"
+    },
+    {
+     "name": "obj_227607.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/227607"
+    },
+    {
+     "name": "obj_228114.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/228114"
+    },
+    {
+     "name": "obj_228688.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/228688"
+    },
+    {
+     "name": "obj_229200.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/229200"
+    },
+    {
+     "name": "obj_229708.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/229708"
+    },
+    {
+     "name": "obj_230212.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/230212"
+    },
+    {
+     "name": "obj_230731.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/230731"
+    },
+    {
+     "name": "obj_231977.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/231977"
+    },
+    {
+     "name": "obj_236956.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/236956"
+    },
+    {
+     "name": "obj_239358.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/239358"
+    },
+    {
+     "name": "obj_239996.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/239996"
+    },
+    {
+     "name": "obj_240500.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/240500"
+    },
+    {
+     "name": "obj_241003.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/241003"
+    },
+    {
+     "name": "obj_241508.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/241508"
+    },
+    {
+     "name": "obj_242013.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/242013"
+    },
+    {
+     "name": "obj_242516.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/242516"
+    },
+    {
+     "name": "obj_243019.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/243019"
+    },
+    {
+     "name": "obj_243522.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/243522"
+    },
+    {
+     "name": "obj_244030.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/244030"
+    },
+    {
+     "name": "obj_244535.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/244535"
+    },
+    {
+     "name": "obj_245049.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/245049"
+    },
+    {
+     "name": "obj_245560.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/245560"
+    },
+    {
+     "name": "obj_246087.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/246087"
+    },
+    {
+     "name": "obj_246605.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/246605"
+    },
+    {
+     "name": "obj_247186.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/247186"
+    },
+    {
+     "name": "obj_247699.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/247699"
+    },
+    {
+     "name": "obj_248229.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/248229"
+    },
+    {
+     "name": "obj_248744.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/248744"
+    },
+    {
+     "name": "obj_249265.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/249265"
+    },
+    {
+     "name": "obj_249772.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/249772"
+    },
+    {
+     "name": "obj_250291.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/250291"
+    },
+    {
+     "name": "obj_250823.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/250823"
+    },
+    {
+     "name": "obj_251344.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/251344"
+    },
+    {
+     "name": "obj_251856.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/251856"
+    },
+    {
+     "name": "obj_252393.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/252393"
+    },
+    {
+     "name": "obj_252905.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/252905"
+    },
+    {
+     "name": "obj_253431.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/253431"
+    },
+    {
+     "name": "obj_253949.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/253949"
+    },
+    {
+     "name": "obj_254457.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/254457"
+    },
+    {
+     "name": "obj_254981.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/254981"
+    },
+    {
+     "name": "obj_255496.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/255496"
+    },
+    {
+     "name": "obj_256156.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/256156"
+    },
+    {
+     "name": "obj_257109.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/257109"
+    },
+    {
+     "name": "obj_258449.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/258449"
+    },
+    {
+     "name": "obj_260059.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/260059"
+    },
+    {
+     "name": "obj_260837.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/260837"
+    },
+    {
+     "name": "obj_261350.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/261350"
+    },
+    {
+     "name": "obj_261906.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/261906"
+    },
+    {
+     "name": "obj_262424.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/262424"
+    },
+    {
+     "name": "obj_262938.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/262938"
+    },
+    {
+     "name": "obj_263455.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/263455"
+    },
+    {
+     "name": "obj_263958.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/263958"
+    },
+    {
+     "name": "obj_264463.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/264463"
+    },
+    {
+     "name": "obj_264968.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/264968"
+    },
+    {
+     "name": "obj_265484.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/265484"
+    },
+    {
+     "name": "obj_265994.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/265994"
+    },
+    {
+     "name": "obj_266503.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/266503"
+    },
+    {
+     "name": "obj_267011.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/267011"
+    },
+    {
+     "name": "obj_267531.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/267531"
+    },
+    {
+     "name": "obj_268049.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/268049"
+    },
+    {
+     "name": "obj_268575.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/268575"
+    },
+    {
+     "name": "obj_269117.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/269117"
+    },
+    {
+     "name": "obj_269632.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/269632"
+    },
+    {
+     "name": "obj_270145.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/270145"
+    },
+    {
+     "name": "obj_270662.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/270662"
+    },
+    {
+     "name": "obj_271175.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/271175"
+    },
+    {
+     "name": "obj_271694.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/271694"
+    },
+    {
+     "name": "obj_272202.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/272202"
+    },
+    {
+     "name": "obj_272705.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/272705"
+    },
+    {
+     "name": "obj_273208.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/273208"
+    },
+    {
+     "name": "obj_273711.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/273711"
+    },
+    {
+     "name": "obj_274214.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/274214"
+    },
+    {
+     "name": "obj_274717.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/274717"
+    },
+    {
+     "name": "obj_275220.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/275220"
+    },
+    {
+     "name": "obj_275723.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/275723"
+    },
+    {
+     "name": "obj_276226.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/276226"
+    },
+    {
+     "name": "obj_276729.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/276729"
+    },
+    {
+     "name": "obj_277900.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/277900"
+    },
+    {
+     "name": "obj_278406.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/278406"
+    },
+    {
+     "name": "obj_279822.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/279822"
+    },
+    {
+     "name": "obj_281731.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/281731"
+    },
+    {
+     "name": "obj_282261.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/282261"
+    },
+    {
+     "name": "obj_282770.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/282770"
+    },
+    {
+     "name": "obj_283280.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/283280"
+    },
+    {
+     "name": "obj_283789.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/283789"
+    },
+    {
+     "name": "obj_284457.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/284457"
+    },
+    {
+     "name": "obj_285027.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/285027"
+    },
+    {
+     "name": "obj_285533.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/285533"
+    },
+    {
+     "name": "obj_286111.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/286111"
+    },
+    {
+     "name": "obj_286698.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/286698"
+    },
+    {
+     "name": "obj_287208.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/287208"
+    },
+    {
+     "name": "obj_287921.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/287921"
+    },
+    {
+     "name": "obj_288491.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/288491"
+    },
+    {
+     "name": "obj_289256.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/289256"
+    },
+    {
+     "name": "obj_289996.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/289996"
+    },
+    {
+     "name": "obj_291099.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/291099"
+    },
+    {
+     "name": "obj_291650.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/291650"
+    },
+    {
+     "name": "obj_294484.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/294484"
+    },
+    {
+     "name": "obj_302435.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/302435"
+    },
+    {
+     "name": "obj_306744.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/306744"
+    },
+    {
+     "name": "obj_307532.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/307532"
+    },
+    {
+     "name": "obj_308084.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/308084"
+    },
+    {
+     "name": "obj_308613.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/308613"
+    },
+    {
+     "name": "obj_309120.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/309120"
+    },
+    {
+     "name": "obj_309664.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/309664"
+    },
+    {
+     "name": "obj_310192.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/310192"
+    },
+    {
+     "name": "obj_310750.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/310750"
+    },
+    {
+     "name": "obj_311302.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/311302"
+    },
+    {
+     "name": "obj_311812.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/311812"
+    },
+    {
+     "name": "obj_312323.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/312323"
+    },
+    {
+     "name": "obj_312900.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/312900"
+    },
+    {
+     "name": "obj_313438.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/313438"
+    },
+    {
+     "name": "obj_314004.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/314004"
+    },
+    {
+     "name": "obj_314517.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/314517"
+    },
+    {
+     "name": "obj_315021.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/315021"
+    },
+    {
+     "name": "obj_315529.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/315529"
+    },
+    {
+     "name": "obj_316037.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/316037"
+    },
+    {
+     "name": "obj_316559.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/316559"
+    },
+    {
+     "name": "obj_317065.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/317065"
+    },
+    {
+     "name": "obj_317568.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/317568"
+    },
+    {
+     "name": "obj_318075.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/318075"
+    },
+    {
+     "name": "obj_318689.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/318689"
+    },
+    {
+     "name": "obj_319556.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/319556"
+    },
+    {
+     "name": "obj_321554.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/321554"
+    },
+    {
+     "name": "obj_322091.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/322091"
+    },
+    {
+     "name": "obj_322670.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/322670"
+    },
+    {
+     "name": "obj_323196.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/323196"
+    },
+    {
+     "name": "obj_323701.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/323701"
+    },
+    {
+     "name": "obj_324239.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/324239"
+    },
+    {
+     "name": "obj_324834.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/324834"
+    },
+    {
+     "name": "obj_325359.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/325359"
+    },
+    {
+     "name": "obj_325881.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/325881"
+    },
+    {
+     "name": "obj_326525.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/326525"
+    },
+    {
+     "name": "obj_327050.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/327050"
+    },
+    {
+     "name": "obj_327575.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/327575"
+    },
+    {
+     "name": "obj_329811.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/329811"
+    },
+    {
+     "name": "obj_334013.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/334013"
+    },
+    {
+     "name": "obj_334523.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/334523"
+    },
+    {
+     "name": "obj_335035.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/335035"
+    },
+    {
+     "name": "obj_335541.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/335541"
+    },
+    {
+     "name": "obj_336060.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/336060"
+    },
+    {
+     "name": "obj_336566.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/336566"
+    },
+    {
+     "name": "obj_337070.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/337070"
+    },
+    {
+     "name": "obj_337576.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/337576"
+    },
+    {
+     "name": "obj_338086.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/338086"
+    },
+    {
+     "name": "obj_338593.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/338593"
+    },
+    {
+     "name": "obj_339097.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/339097"
+    },
+    {
+     "name": "obj_339605.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/339605"
+    },
+    {
+     "name": "obj_340109.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/340109"
+    },
+    {
+     "name": "obj_340615.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/340615"
+    },
+    {
+     "name": "obj_341141.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/341141"
+    },
+    {
+     "name": "obj_341647.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/341647"
+    },
+    {
+     "name": "obj_342154.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/342154"
+    },
+    {
+     "name": "obj_342660.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/342660"
+    },
+    {
+     "name": "obj_343164.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/343164"
+    },
+    {
+     "name": "obj_343670.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/343670"
+    },
+    {
+     "name": "obj_344227.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/344227"
+    },
+    {
+     "name": "obj_344742.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/344742"
+    },
+    {
+     "name": "obj_345251.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/345251"
+    },
+    {
+     "name": "obj_345765.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/345765"
+    },
+    {
+     "name": "obj_346273.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/346273"
+    },
+    {
+     "name": "obj_346787.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/346787"
+    },
+    {
+     "name": "obj_347301.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/347301"
+    },
+    {
+     "name": "obj_347815.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/347815"
+    },
+    {
+     "name": "obj_348323.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/348323"
+    },
+    {
+     "name": "obj_348837.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/348837"
+    },
+    {
+     "name": "obj_349350.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/349350"
+    },
+    {
+     "name": "obj_349855.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/349855"
+    },
+    {
+     "name": "obj_350365.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/350365"
+    },
+    {
+     "name": "obj_350879.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/350879"
+    },
+    {
+     "name": "obj_351401.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/351401"
+    },
+    {
+     "name": "obj_351910.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/351910"
+    },
+    {
+     "name": "obj_352416.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/352416"
+    },
+    {
+     "name": "obj_352919.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/352919"
+    },
+    {
+     "name": "obj_353434.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/353434"
+    },
+    {
+     "name": "obj_353955.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/353955"
+    },
+    {
+     "name": "obj_354463.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/354463"
+    },
+    {
+     "name": "obj_354973.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/354973"
+    },
+    {
+     "name": "obj_355483.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/355483"
+    },
+    {
+     "name": "obj_355998.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/355998"
+    },
+    {
+     "name": "obj_356507.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/356507"
+    },
+    {
+     "name": "obj_357026.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/357026"
+    },
+    {
+     "name": "obj_357547.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/357547"
+    },
+    {
+     "name": "obj_358068.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/358068"
+    },
+    {
+     "name": "obj_358579.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/358579"
+    },
+    {
+     "name": "obj_359126.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/359126"
+    },
+    {
+     "name": "obj_359637.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/359637"
+    },
+    {
+     "name": "obj_360145.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/360145"
+    },
+    {
+     "name": "obj_360651.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/360651"
+    },
+    {
+     "name": "obj_361154.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/361154"
+    },
+    {
+     "name": "obj_361657.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/361657"
+    },
+    {
+     "name": "obj_362166.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/362166"
+    },
+    {
+     "name": "obj_362672.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/362672"
+    },
+    {
+     "name": "obj_363198.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/363198"
+    },
+    {
+     "name": "obj_363757.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/363757"
+    },
+    {
+     "name": "obj_364362.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/364362"
+    },
+    {
+     "name": "obj_364956.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/364956"
+    },
+    {
+     "name": "obj_365528.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/365528"
+    },
+    {
+     "name": "obj_366078.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/366078"
+    },
+    {
+     "name": "obj_366685.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/366685"
+    },
+    {
+     "name": "obj_367204.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/367204"
+    },
+    {
+     "name": "obj_367724.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/367724"
+    },
+    {
+     "name": "obj_368240.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/368240"
+    },
+    {
+     "name": "obj_368772.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/368772"
+    },
+    {
+     "name": "obj_369292.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/369292"
+    },
+    {
+     "name": "obj_369810.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/369810"
+    },
+    {
+     "name": "obj_370327.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/370327"
+    },
+    {
+     "name": "obj_370841.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/370841"
+    },
+    {
+     "name": "obj_371355.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/371355"
+    },
+    {
+     "name": "obj_371888.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/371888"
+    },
+    {
+     "name": "obj_372402.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/372402"
+    },
+    {
+     "name": "obj_372908.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/372908"
+    },
+    {
+     "name": "obj_373416.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/373416"
+    },
+    {
+     "name": "obj_373936.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/373936"
+    },
+    {
+     "name": "obj_374471.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/374471"
+    },
+    {
+     "name": "obj_374974.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/374974"
+    },
+    {
+     "name": "obj_375477.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/375477"
+    },
+    {
+     "name": "obj_376013.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/376013"
+    },
+    {
+     "name": "obj_376525.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/376525"
+    },
+    {
+     "name": "obj_377137.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/377137"
+    },
+    {
+     "name": "obj_377646.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/377646"
+    },
+    {
+     "name": "obj_378194.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/378194"
+    },
+    {
+     "name": "obj_378697.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/378697"
+    },
+    {
+     "name": "obj_379200.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/379200"
+    },
+    {
+     "name": "obj_379703.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/379703"
+    },
+    {
+     "name": "obj_380206.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/380206"
+    },
+    {
+     "name": "obj_380756.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/380756"
+    },
+    {
+     "name": "obj_381279.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/381279"
+    },
+    {
+     "name": "obj_381792.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/381792"
+    },
+    {
+     "name": "obj_382340.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/382340"
+    },
+    {
+     "name": "obj_382865.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/382865"
+    },
+    {
+     "name": "obj_383407.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/383407"
+    },
+    {
+     "name": "obj_383929.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/383929"
+    },
+    {
+     "name": "obj_384461.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/384461"
+    },
+    {
+     "name": "obj_384968.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/384968"
+    },
+    {
+     "name": "obj_385478.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/385478"
+    },
+    {
+     "name": "obj_385988.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/385988"
+    },
+    {
+     "name": "obj_386497.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/386497"
+    },
+    {
+     "name": "obj_387003.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/387003"
+    },
+    {
+     "name": "obj_387507.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/387507"
+    },
+    {
+     "name": "obj_388016.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/388016"
+    },
+    {
+     "name": "obj_388520.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/388520"
+    },
+    {
+     "name": "obj_389041.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/389041"
+    },
+    {
+     "name": "obj_389545.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/389545"
+    },
+    {
+     "name": "obj_390056.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/390056"
+    },
+    {
+     "name": "obj_390568.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/390568"
+    },
+    {
+     "name": "obj_391090.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/391090"
+    },
+    {
+     "name": "obj_391611.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/391611"
+    },
+    {
+     "name": "obj_392120.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/392120"
+    },
+    {
+     "name": "obj_392626.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/392626"
+    },
+    {
+     "name": "obj_393139.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/393139"
+    },
+    {
+     "name": "obj_393651.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/393651"
+    },
+    {
+     "name": "obj_394194.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/394194"
+    },
+    {
+     "name": "obj_394780.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/394780"
+    },
+    {
+     "name": "obj_395352.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/395352"
+    },
+    {
+     "name": "obj_395916.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/395916"
+    },
+    {
+     "name": "obj_396430.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/396430"
+    },
+    {
+     "name": "obj_396937.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/396937"
+    },
+    {
+     "name": "obj_397488.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/397488"
+    },
+    {
+     "name": "obj_398005.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/398005"
+    },
+    {
+     "name": "obj_398555.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/398555"
+    },
+    {
+     "name": "obj_399064.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/399064"
+    },
+    {
+     "name": "obj_399575.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/399575"
+    },
+    {
+     "name": "obj_400085.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/400085"
+    },
+    {
+     "name": "obj_400611.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/400611"
+    },
+    {
+     "name": "obj_401120.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/401120"
+    },
+    {
+     "name": "obj_401626.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/401626"
+    },
+    {
+     "name": "obj_402130.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/402130"
+    },
+    {
+     "name": "obj_402654.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/402654"
+    },
+    {
+     "name": "obj_403163.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/403163"
+    },
+    {
+     "name": "obj_403724.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/403724"
+    },
+    {
+     "name": "obj_404441.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/404441"
+    },
+    {
+     "name": "obj_405076.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/405076"
+    },
+    {
+     "name": "obj_405623.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/405623"
+    },
+    {
+     "name": "obj_406181.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/406181"
+    },
+    {
+     "name": "obj_406754.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/406754"
+    },
+    {
+     "name": "obj_407295.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/407295"
+    },
+    {
+     "name": "obj_407962.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/407962"
+    },
+    {
+     "name": "obj_408659.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/408659"
+    },
+    {
+     "name": "obj_409488.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/409488"
+    },
+    {
+     "name": "obj_410097.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/410097"
+    },
+    {
+     "name": "obj_410792.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/410792"
+    },
+    {
+     "name": "obj_411363.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/411363"
+    },
+    {
+     "name": "obj_411990.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/411990"
+    },
+    {
+     "name": "obj_412500.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/412500"
+    },
+    {
+     "name": "obj_413249.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/413249"
+    },
+    {
+     "name": "obj_414083.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/414083"
+    },
+    {
+     "name": "obj_414873.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/414873"
+    },
+    {
+     "name": "obj_415376.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/415376"
+    },
+    {
+     "name": "obj_415954.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/415954"
+    },
+    {
+     "name": "obj_416741.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/416741"
+    },
+    {
+     "name": "obj_417482.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/417482"
+    },
+    {
+     "name": "obj_418054.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/418054"
+    },
+    {
+     "name": "obj_418579.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/418579"
+    },
+    {
+     "name": "obj_419147.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/419147"
+    },
+    {
+     "name": "obj_419651.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/419651"
+    },
+    {
+     "name": "obj_420179.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/420179"
+    },
+    {
+     "name": "obj_420719.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/420719"
+    },
+    {
+     "name": "obj_421305.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/421305"
+    },
+    {
+     "name": "obj_421813.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/421813"
+    },
+    {
+     "name": "obj_422317.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/422317"
+    },
+    {
+     "name": "obj_422912.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/422912"
+    },
+    {
+     "name": "obj_423417.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/423417"
+    },
+    {
+     "name": "obj_423921.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/423921"
+    },
+    {
+     "name": "obj_424582.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/424582"
+    },
+    {
+     "name": "obj_425140.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/425140"
+    },
+    {
+     "name": "obj_425726.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/425726"
+    },
+    {
+     "name": "obj_426284.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/426284"
+    },
+    {
+     "name": "obj_426846.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/426846"
+    },
+    {
+     "name": "obj_427492.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/427492"
+    },
+    {
+     "name": "obj_428124.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/428124"
+    },
+    {
+     "name": "obj_428709.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/428709"
+    },
+    {
+     "name": "obj_429799.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/429799"
+    },
+    {
+     "name": "obj_430914.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/430914"
+    },
+    {
+     "name": "obj_431474.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/431474"
+    },
+    {
+     "name": "obj_432398.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/432398"
+    },
+    {
+     "name": "obj_433126.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/433126"
+    },
+    {
+     "name": "obj_433745.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/433745"
+    },
+    {
+     "name": "obj_434357.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/434357"
+    },
+    {
+     "name": "obj_434983.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/434983"
+    },
+    {
+     "name": "obj_435781.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/435781"
+    },
+    {
+     "name": "obj_436347.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/436347"
+    },
+    {
+     "name": "obj_436957.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/436957"
+    },
+    {
+     "name": "obj_437510.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/437510"
+    },
+    {
+     "name": "obj_438559.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/438559"
+    },
+    {
+     "name": "obj_443097.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/443097"
+    },
+    {
+     "name": "obj_443601.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/443601"
+    },
+    {
+     "name": "obj_444105.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/444105"
+    },
+    {
+     "name": "obj_444614.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/444614"
+    },
+    {
+     "name": "obj_445159.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/445159"
+    },
+    {
+     "name": "obj_445663.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/445663"
+    },
+    {
+     "name": "obj_446168.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/446168"
+    },
+    {
+     "name": "obj_446672.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/446672"
+    },
+    {
+     "name": "obj_447182.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/447182"
+    },
+    {
+     "name": "obj_447686.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/447686"
+    },
+    {
+     "name": "obj_448194.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/448194"
+    },
+    {
+     "name": "obj_448703.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/448703"
+    },
+    {
+     "name": "obj_449206.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/449206"
+    },
+    {
+     "name": "obj_449709.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/449709"
+    },
+    {
+     "name": "obj_450213.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/450213"
+    },
+    {
+     "name": "obj_450717.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/450717"
+    },
+    {
+     "name": "obj_451224.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/451224"
+    },
+    {
+     "name": "obj_451739.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/451739"
+    },
+    {
+     "name": "obj_452244.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/452244"
+    },
+    {
+     "name": "obj_452747.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/452747"
+    },
+    {
+     "name": "obj_453257.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/453257"
+    },
+    {
+     "name": "obj_454344.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/454344"
+    },
+    {
+     "name": "obj_455302.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/455302"
+    },
+    {
+     "name": "obj_457057.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/457057"
+    },
+    {
+     "name": "obj_457566.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/457566"
+    },
+    {
+     "name": "obj_459088.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/459088"
+    },
+    {
+     "name": "obj_459592.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/459592"
+    },
+    {
+     "name": "obj_460278.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/460278"
+    },
+    {
+     "name": "obj_460792.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/460792"
+    },
+    {
+     "name": "obj_461309.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/461309"
+    },
+    {
+     "name": "obj_462905.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/462905"
+    },
+    {
+     "name": "obj_463657.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/463657"
+    },
+    {
+     "name": "obj_464362.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/464362"
+    },
+    {
+     "name": "obj_464956.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/464956"
+    },
+    {
+     "name": "obj_465488.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/465488"
+    },
+    {
+     "name": "obj_466115.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/466115"
+    },
+    {
+     "name": "obj_466717.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/466717"
+    },
+    {
+     "name": "obj_467541.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/467541"
+    },
+    {
+     "name": "obj_468304.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/468304"
+    },
+    {
+     "name": "obj_468863.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/468863"
+    },
+    {
+     "name": "obj_470626.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/470626"
+    },
+    {
+     "name": "obj_471145.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/471145"
+    },
+    {
+     "name": "obj_471786.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/471786"
+    },
+    {
+     "name": "obj_472329.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/472329"
+    },
+    {
+     "name": "obj_474604.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/474604"
+    },
+    {
+     "name": "obj_475257.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/475257"
+    },
+    {
+     "name": "obj_477772.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/477772"
+    },
+    {
+     "name": "obj_479126.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/479126"
+    },
+    {
+     "name": "obj_480054.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/480054"
+    },
+    {
+     "name": "obj_480632.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/480632"
+    },
+    {
+     "name": "obj_481449.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/481449"
+    },
+    {
+     "name": "obj_481979.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/481979"
+    },
+    {
+     "name": "obj_482516.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/482516"
+    },
+    {
+     "name": "obj_483067.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/483067"
+    },
+    {
+     "name": "obj_483592.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/483592"
+    },
+    {
+     "name": "obj_484105.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/484105"
+    },
+    {
+     "name": "obj_484628.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/484628"
+    },
+    {
+     "name": "obj_485151.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/485151"
+    },
+    {
+     "name": "obj_485689.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/485689"
+    },
+    {
+     "name": "obj_486208.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/486208"
+    },
+    {
+     "name": "obj_486734.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/486734"
+    },
+    {
+     "name": "obj_487273.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/487273"
+    },
+    {
+     "name": "obj_487905.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/487905"
+    },
+    {
+     "name": "obj_488473.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/488473"
+    },
+    {
+     "name": "obj_489063.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/489063"
+    },
+    {
+     "name": "obj_489655.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/489655"
+    },
+    {
+     "name": "obj_490708.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/490708"
+    },
+    {
+     "name": "obj_491298.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/491298"
+    },
+    {
+     "name": "obj_491852.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/491852"
+    },
+    {
+     "name": "obj_492570.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/492570"
+    },
+    {
+     "name": "obj_493748.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/493748"
+    },
+    {
+     "name": "obj_496334.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/496334"
+    },
+    {
+     "name": "obj_496863.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/496863"
+    },
+    {
+     "name": "obj_500026.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/500026"
+    },
+    {
+     "name": "obj_500947.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/500947"
+    },
+    {
+     "name": "obj_501458.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/501458"
+    },
+    {
+     "name": "obj_501988.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/501988"
+    },
+    {
+     "name": "obj_502516.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/502516"
+    },
+    {
+     "name": "obj_503027.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/503027"
+    },
+    {
+     "name": "obj_503624.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/503624"
+    },
+    {
+     "name": "obj_504188.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/504188"
+    },
+    {
+     "name": "obj_504755.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/504755"
+    },
+    {
+     "name": "obj_505326.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/505326"
+    },
+    {
+     "name": "obj_506220.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/506220"
+    },
+    {
+     "name": "obj_544189.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/544189"
+    },
+    {
+     "name": "obj_544704.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/544704"
+    },
+    {
+     "name": "obj_545230.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/545230"
+    },
+    {
+     "name": "obj_545742.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/545742"
+    },
+    {
+     "name": "obj_546296.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/546296"
+    },
+    {
+     "name": "obj_546803.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/546803"
+    },
+    {
+     "name": "obj_547308.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/547308"
+    },
+    {
+     "name": "obj_547852.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/547852"
+    },
+    {
+     "name": "obj_548385.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/548385"
+    },
+    {
+     "name": "obj_548920.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/548920"
+    },
+    {
+     "name": "obj_549508.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/549508"
+    },
+    {
+     "name": "obj_550126.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/550126"
+    },
+    {
+     "name": "obj_550723.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/550723"
+    },
+    {
+     "name": "obj_551246.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/551246"
+    },
+    {
+     "name": "obj_551850.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/551850"
+    },
+    {
+     "name": "obj_552412.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/552412"
+    },
+    {
+     "name": "obj_552918.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/552918"
+    },
+    {
+     "name": "obj_553446.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/553446"
+    },
+    {
+     "name": "obj_553961.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/553961"
+    },
+    {
+     "name": "obj_554468.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/554468"
+    },
+    {
+     "name": "obj_554984.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/554984"
+    },
+    {
+     "name": "obj_555512.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/555512"
+    },
+    {
+     "name": "obj_556038.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/556038"
+    },
+    {
+     "name": "obj_556545.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/556545"
+    },
+    {
+     "name": "obj_557074.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/557074"
+    },
+    {
+     "name": "obj_557789.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/557789"
+    },
+    {
+     "name": "obj_558510.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/558510"
+    },
+    {
+     "name": "obj_559016.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/559016"
+    },
+    {
+     "name": "obj_559525.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/559525"
+    },
+    {
+     "name": "obj_560057.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/560057"
+    },
+    {
+     "name": "obj_560619.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/560619"
+    },
+    {
+     "name": "obj_561126.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/561126"
+    },
+    {
+     "name": "obj_561734.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/561734"
+    },
+    {
+     "name": "obj_562252.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/562252"
+    },
+    {
+     "name": "obj_562756.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/562756"
+    },
+    {
+     "name": "obj_563267.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/563267"
+    },
+    {
+     "name": "obj_563771.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/563771"
+    },
+    {
+     "name": "obj_564274.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/564274"
+    },
+    {
+     "name": "obj_564780.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/564780"
+    },
+    {
+     "name": "obj_565785.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/565785"
+    },
+    {
+     "name": "obj_567912.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/567912"
+    },
+    {
+     "name": "obj_568420.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/568420"
+    },
+    {
+     "name": "obj_568924.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/568924"
+    },
+    {
+     "name": "obj_569435.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/569435"
+    },
+    {
+     "name": "obj_569940.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/569940"
+    },
+    {
+     "name": "obj_570458.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/570458"
+    },
+    {
+     "name": "obj_570987.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/570987"
+    },
+    {
+     "name": "obj_571621.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/571621"
+    },
+    {
+     "name": "obj_573253.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/573253"
+    },
+    {
+     "name": "obj_576441.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/576441"
+    },
+    {
+     "name": "obj_577551.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/577551"
+    },
+    {
+     "name": "obj_590565.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/590565"
+    },
+    {
+     "name": "obj_591738.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/591738"
+    },
+    {
+     "name": "obj_623704.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/623704"
+    },
+    {
+     "name": "obj_625180.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/625180"
+    },
+    {
+     "name": "obj_625761.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/625761"
+    },
+    {
+     "name": "obj_626356.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/626356"
+    },
+    {
+     "name": "obj_627033.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/627033"
+    },
+    {
+     "name": "obj_628886.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/628886"
+    },
+    {
+     "name": "obj_629464.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/629464"
+    },
+    {
+     "name": "obj_630953.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/630953"
+    },
+    {
+     "name": "obj_631600.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/631600"
+    },
+    {
+     "name": "obj_632410.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/632410"
+    },
+    {
+     "name": "obj_633546.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/633546"
+    },
+    {
+     "name": "obj_634524.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/634524"
+    },
+    {
+     "name": "obj_635188.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/635188"
+    },
+    {
+     "name": "obj_635867.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/635867"
+    },
+    {
+     "name": "obj_637142.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/637142"
+    },
+    {
+     "name": "obj_638458.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/638458"
+    },
+    {
+     "name": "obj_639541.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/639541"
+    },
+    {
+     "name": "obj_640409.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/640409"
+    },
+    {
+     "name": "obj_642485.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/642485"
+    },
+    {
+     "name": "obj_643696.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/643696"
+    },
+    {
+     "name": "obj_644399.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/644399"
+    },
+    {
+     "name": "obj_645018.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/645018"
+    },
+    {
+     "name": "obj_645760.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/645760"
+    },
+    {
+     "name": "obj_646441.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/646441"
+    },
+    {
+     "name": "obj_647253.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/647253"
+    },
+    {
+     "name": "obj_647884.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/647884"
+    },
+    {
+     "name": "obj_648461.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/648461"
+    },
+    {
+     "name": "obj_648994.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/648994"
+    },
+    {
+     "name": "obj_649876.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/649876"
+    },
+    {
+     "name": "obj_650574.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/650574"
+    },
+    {
+     "name": "obj_651591.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/651591"
+    },
+    {
+     "name": "obj_652228.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/652228"
+    },
+    {
+     "name": "obj_653010.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/653010"
+    },
+    {
+     "name": "obj_653633.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/653633"
+    },
+    {
+     "name": "obj_654216.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/654216"
+    },
+    {
+     "name": "obj_655018.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/655018"
+    },
+    {
+     "name": "obj_655653.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/655653"
+    },
+    {
+     "name": "obj_656239.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/656239"
+    },
+    {
+     "name": "obj_657034.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/657034"
+    },
+    {
+     "name": "obj_657568.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/657568"
+    },
+    {
+     "name": "obj_658764.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/658764"
+    },
+    {
+     "name": "obj_659613.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/659613"
+    },
+    {
+     "name": "obj_660199.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/660199"
+    },
+    {
+     "name": "obj_660875.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/660875"
+    },
+    {
+     "name": "obj_661634.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/661634"
+    },
+    {
+     "name": "obj_662402.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/662402"
+    },
+    {
+     "name": "obj_663193.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/663193"
+    },
+    {
+     "name": "obj_664911.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/664911"
+    },
+    {
+     "name": "obj_666232.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/666232"
+    },
+    {
+     "name": "obj_667588.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/667588"
+    },
+    {
+     "name": "obj_668583.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/668583"
+    },
+    {
+     "name": "obj_669530.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/669530"
+    },
+    {
+     "name": "obj_670317.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/670317"
+    },
+    {
+     "name": "obj_670953.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/670953"
+    },
+    {
+     "name": "obj_675860.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/675860"
+    },
+    {
+     "name": "obj_676734.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/676734"
+    },
+    {
+     "name": "obj_678319.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/678319"
+    },
+    {
+     "name": "obj_679348.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/679348"
+    },
+    {
+     "name": "obj_680025.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/680025"
+    },
+    {
+     "name": "obj_680801.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/680801"
+    },
+    {
+     "name": "obj_681650.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/681650"
+    },
+    {
+     "name": "obj_683022.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/683022"
+    },
+    {
+     "name": "obj_683636.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/683636"
+    },
+    {
+     "name": "obj_684344.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/684344"
+    },
+    {
+     "name": "obj_685373.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/685373"
+    },
+    {
+     "name": "obj_685876.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/685876"
+    },
+    {
+     "name": "obj_686673.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/686673"
+    },
+    {
+     "name": "obj_687500.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/687500"
+    },
+    {
+     "name": "obj_688222.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/688222"
+    },
+    {
+     "name": "obj_689258.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/689258"
+    },
+    {
+     "name": "obj_689814.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/689814"
+    },
+    {
+     "name": "obj_690820.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/690820"
+    },
+    {
+     "name": "obj_691949.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/691949"
+    },
+    {
+     "name": "obj_692670.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/692670"
+    },
+    {
+     "name": "obj_693539.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/693539"
+    },
+    {
+     "name": "obj_694221.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/694221"
+    },
+    {
+     "name": "obj_694906.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/694906"
+    },
+    {
+     "name": "obj_695556.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/695556"
+    },
+    {
+     "name": "obj_696125.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/696125"
+    },
+    {
+     "name": "obj_696695.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/696695"
+    },
+    {
+     "name": "obj_697849.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/697849"
+    },
+    {
+     "name": "obj_698844.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/698844"
+    },
+    {
+     "name": "obj_699352.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/699352"
+    },
+    {
+     "name": "obj_700750.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/700750"
+    },
+    {
+     "name": "obj_701833.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/701833"
+    },
+    {
+     "name": "obj_702896.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/702896"
+    },
+    {
+     "name": "obj_703673.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/703673"
+    },
+    {
+     "name": "obj_704178.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/704178"
+    },
+    {
+     "name": "obj_705252.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/705252"
+    },
+    {
+     "name": "obj_706302.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/706302"
+    },
+    {
+     "name": "obj_707682.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/707682"
+    },
+    {
+     "name": "obj_708862.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/708862"
+    },
+    {
+     "name": "obj_709396.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/709396"
+    },
+    {
+     "name": "obj_709910.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/709910"
+    },
+    {
+     "name": "obj_710444.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/710444"
+    },
+    {
+     "name": "obj_711417.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/711417"
+    },
+    {
+     "name": "obj_712050.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/712050"
+    },
+    {
+     "name": "obj_712873.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/712873"
+    },
+    {
+     "name": "obj_713668.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/713668"
+    },
+    {
+     "name": "obj_714239.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/714239"
+    },
+    {
+     "name": "obj_715053.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/715053"
+    },
+    {
+     "name": "obj_715735.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/715735"
+    },
+    {
+     "name": "obj_716462.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/716462"
+    },
+    {
+     "name": "obj_717228.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/717228"
+    },
+    {
+     "name": "obj_717945.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/717945"
+    },
+    {
+     "name": "obj_718838.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/718838"
+    },
+    {
+     "name": "obj_719551.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/719551"
+    },
+    {
+     "name": "obj_720190.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/720190"
+    },
+    {
+     "name": "obj_721364.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/721364"
+    },
+    {
+     "name": "obj_721868.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/721868"
+    },
+    {
+     "name": "obj_722898.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/722898"
+    },
+    {
+     "name": "obj_725127.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/725127"
+    },
+    {
+     "name": "obj_725787.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/725787"
+    },
+    {
+     "name": "obj_726330.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/726330"
+    },
+    {
+     "name": "obj_726953.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/726953"
+    },
+    {
+     "name": "obj_727594.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/727594"
+    },
+    {
+     "name": "obj_728218.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/728218"
+    },
+    {
+     "name": "obj_728756.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/728756"
+    },
+    {
+     "name": "obj_729267.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/729267"
+    },
+    {
+     "name": "obj_729988.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/729988"
+    },
+    {
+     "name": "obj_732457.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/732457"
+    },
+    {
+     "name": "obj_733190.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/733190"
+    },
+    {
+     "name": "obj_733714.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/733714"
+    },
+    {
+     "name": "obj_734596.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/734596"
+    },
+    {
+     "name": "obj_735272.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/735272"
+    },
+    {
+     "name": "obj_736730.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/736730"
+    },
+    {
+     "name": "obj_737319.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/737319"
+    },
+    {
+     "name": "obj_738084.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/738084"
+    },
+    {
+     "name": "obj_739107.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/739107"
+    },
+    {
+     "name": "obj_739975.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/739975"
+    },
+    {
+     "name": "obj_740478.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/740478"
+    },
+    {
+     "name": "obj_741026.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/741026"
+    },
+    {
+     "name": "obj_741529.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/741529"
+    },
+    {
+     "name": "obj_742032.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/742032"
+    },
+    {
+     "name": "obj_742600.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/742600"
+    },
+    {
+     "name": "obj_744389.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/744389"
+    },
+    {
+     "name": "obj_745272.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/745272"
+    },
+    {
+     "name": "obj_746167.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/746167"
+    },
+    {
+     "name": "obj_746822.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/746822"
+    },
+    {
+     "name": "obj_747536.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/747536"
+    },
+    {
+     "name": "obj_748335.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/748335"
+    },
+    {
+     "name": "obj_749484.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/749484"
+    },
+    {
+     "name": "obj_750224.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/750224"
+    },
+    {
+     "name": "obj_750797.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/750797"
+    },
+    {
+     "name": "obj_752036.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/752036"
+    },
+    {
+     "name": "obj_753157.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/753157"
+    },
+    {
+     "name": "obj_754060.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/754060"
+    },
+    {
+     "name": "obj_755583.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/755583"
+    },
+    {
+     "name": "obj_756138.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/756138"
+    },
+    {
+     "name": "obj_756809.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/756809"
+    },
+    {
+     "name": "obj_757753.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/757753"
+    },
+    {
+     "name": "obj_760089.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/760089"
+    },
+    {
+     "name": "obj_760729.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/760729"
+    },
+    {
+     "name": "obj_762104.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/762104"
+    },
+    {
+     "name": "obj_762911.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/762911"
+    },
+    {
+     "name": "obj_764266.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/764266"
+    },
+    {
+     "name": "obj_764829.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/764829"
+    },
+    {
+     "name": "obj_765820.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/765820"
+    },
+    {
+     "name": "obj_766620.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/766620"
+    },
+    {
+     "name": "obj_767455.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/767455"
+    },
+    {
+     "name": "obj_768194.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/768194"
+    },
+    {
+     "name": "obj_768972.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/768972"
+    },
+    {
+     "name": "obj_770579.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/770579"
+    },
+    {
+     "name": "obj_771406.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/771406"
+    },
+    {
+     "name": "obj_772288.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/772288"
+    },
+    {
+     "name": "obj_772892.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/772892"
+    },
+    {
+     "name": "obj_773636.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/773636"
+    },
+    {
+     "name": "obj_774146.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/774146"
+    },
+    {
+     "name": "obj_774798.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/774798"
+    },
+    {
+     "name": "obj_775346.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/775346"
+    },
+    {
+     "name": "obj_775918.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/775918"
+    },
+    {
+     "name": "obj_776701.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/776701"
+    },
+    {
+     "name": "obj_777355.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/777355"
+    },
+    {
+     "name": "obj_777926.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/777926"
+    },
+    {
+     "name": "obj_778597.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/778597"
+    },
+    {
+     "name": "obj_779274.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/779274"
+    },
+    {
+     "name": "obj_779805.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/779805"
+    },
+    {
+     "name": "obj_780468.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/780468"
+    },
+    {
+     "name": "obj_780979.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/780979"
+    },
+    {
+     "name": "obj_781484.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/781484"
+    },
+    {
+     "name": "obj_782112.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/782112"
+    },
+    {
+     "name": "obj_784415.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/784415"
+    },
+    {
+     "name": "obj_784973.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/784973"
+    },
+    {
+     "name": "obj_785543.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/785543"
+    },
+    {
+     "name": "obj_786413.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/786413"
+    },
+    {
+     "name": "obj_788160.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/788160"
+    },
+    {
+     "name": "obj_789317.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/789317"
+    },
+    {
+     "name": "obj_811236.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/811236"
+    },
+    {
+     "name": "obj_811982.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/811982"
+    },
+    {
+     "name": "obj_812775.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/812775"
+    },
+    {
+     "name": "obj_813341.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/813341"
+    },
+    {
+     "name": "obj_814245.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/814245"
+    },
+    {
+     "name": "obj_815089.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/815089"
+    },
+    {
+     "name": "obj_816021.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/816021"
+    },
+    {
+     "name": "obj_816860.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/816860"
+    },
+    {
+     "name": "obj_818408.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/818408"
+    },
+    {
+     "name": "obj_819505.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/819505"
+    },
+    {
+     "name": "obj_820384.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/820384"
+    },
+    {
+     "name": "obj_821065.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/821065"
+    },
+    {
+     "name": "obj_821939.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/821939"
+    },
+    {
+     "name": "obj_823080.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/823080"
+    },
+    {
+     "name": "obj_823805.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/823805"
+    },
+    {
+     "name": "obj_824382.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/824382"
+    },
+    {
+     "name": "obj_825483.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/825483"
+    },
+    {
+     "name": "obj_826431.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/826431"
+    },
+    {
+     "name": "obj_827325.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/827325"
+    },
+    {
+     "name": "obj_828312.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/828312"
+    },
+    {
+     "name": "obj_829898.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/829898"
+    },
+    {
+     "name": "obj_831038.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/831038"
+    },
+    {
+     "name": "obj_833950.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/833950"
+    },
+    {
+     "name": "obj_834880.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/834880"
+    },
+    {
+     "name": "obj_835913.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/835913"
+    },
+    {
+     "name": "obj_838242.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/838242"
+    },
+    {
+     "name": "obj_839531.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/839531"
+    },
+    {
+     "name": "obj_840918.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/840918"
+    },
+    {
+     "name": "obj_842430.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/842430"
+    },
+    {
+     "name": "obj_845137.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/845137"
+    },
+    {
+     "name": "obj_848669.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/848669"
+    },
+    {
+     "name": "obj_849938.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/849938"
+    },
+    {
+     "name": "obj_852073.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/852073"
+    },
+    {
+     "name": "obj_853388.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/853388"
+    },
+    {
+     "name": "obj_854944.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/854944"
+    },
+    {
+     "name": "obj_855794.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/855794"
+    },
+    {
+     "name": "obj_856536.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/856536"
+    },
+    {
+     "name": "obj_857968.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/857968"
+    },
+    {
+     "name": "obj_871966.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/871966"
+    },
+    {
+     "name": "obj_887981.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/887981"
+    },
+    {
+     "name": "obj_888568.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/888568"
+    },
+    {
+     "name": "obj_889188.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/889188"
+    },
+    {
+     "name": "obj_890314.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/890314"
+    },
+    {
+     "name": "obj_891048.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/891048"
+    },
+    {
+     "name": "obj_892055.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/892055"
+    },
+    {
+     "name": "obj_892817.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/892817"
+    },
+    {
+     "name": "obj_893671.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/893671"
+    },
+    {
+     "name": "obj_894757.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/894757"
+    },
+    {
+     "name": "obj_896096.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/896096"
+    },
+    {
+     "name": "obj_897495.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/897495"
+    },
+    {
+     "name": "obj_899093.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/899093"
+    },
+    {
+     "name": "obj_900802.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/900802"
+    },
+    {
+     "name": "obj_903442.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/903442"
+    },
+    {
+     "name": "obj_904775.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/904775"
+    },
+    {
+     "name": "obj_905932.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/905932"
+    },
+    {
+     "name": "obj_907089.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/907089"
+    },
+    {
+     "name": "obj_910071.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/910071"
+    },
+    {
+     "name": "obj_911817.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/911817"
+    },
+    {
+     "name": "obj_912786.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/912786"
+    },
+    {
+     "name": "obj_914077.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/914077"
+    },
+    {
+     "name": "obj_914877.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/914877"
+    },
+    {
+     "name": "obj_915755.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/915755"
+    },
+    {
+     "name": "obj_917145.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/917145"
+    },
+    {
+     "name": "obj_917779.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/917779"
+    },
+    {
+     "name": "obj_918890.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/918890"
+    },
+    {
+     "name": "obj_919761.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/919761"
+    },
+    {
+     "name": "obj_920365.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/920365"
+    },
+    {
+     "name": "obj_921309.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/921309"
+    },
+    {
+     "name": "obj_921890.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/921890"
+    },
+    {
+     "name": "obj_922527.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/922527"
+    },
+    {
+     "name": "obj_923321.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/923321"
+    },
+    {
+     "name": "obj_924708.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/924708"
+    },
+    {
+     "name": "obj_926071.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/926071"
+    },
+    {
+     "name": "obj_927173.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/927173"
+    },
+    {
+     "name": "obj_928567.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/928567"
+    },
+    {
+     "name": "obj_929962.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/929962"
+    },
+    {
+     "name": "obj_930864.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/930864"
+    },
+    {
+     "name": "obj_932345.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/932345"
+    },
+    {
+     "name": "obj_933852.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/933852"
+    },
+    {
+     "name": "obj_935489.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/935489"
+    },
+    {
+     "name": "obj_937073.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/937073"
+    },
+    {
+     "name": "obj_948903.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/948903"
+    },
+    {
+     "name": "obj_956503.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/956503"
+    },
+    {
+     "name": "obj_968562.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/968562"
+    },
+    {
+     "name": "obj_978246.json",
+     "observed": "2026-11-21",
+     "url": "https://collectionapi.metmuseum.org/public/collection/v1/objects/978246"
+    }
+   ],
+   "hosts": [
+    "collectionapi.metmuseum.org"
+   ],
+   "id": "met_museum_objects",
+   "licence_class": "open",
+   "licence_location": "https://metmuseum.github.io/",
+   "licence_text": "metmuseum.github.io: The Met has waived all copyright and related rights to its Open Access dataset using Creative Commons Zero; the API is free without key at up to 80 requests per second",
+   "max_bytes": 2097152,
+   "method": "official API; one request per object for 1000 object ids chosen deterministically as every 503th id of the sorted id list of the 2026-11-21 listing (503479 ids); paced at one request per second after the first attempt at five per second was answered with 403 by the host's protection, which was respected",
+   "min_interval": 1.0,
+   "privacy": "catalogue records of artworks; artist biographies (free text) are dropped in the view",
+   "publisher": "The Metropolitan Museum of Art (Open Access API)",
+   "rate_limit": "one request per second",
+   "redistribution": "CC0 permits it; raw files stay local",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "first party: the museum publishes its own catalogue records",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Contains Environment Agency information, Open Government Licence v3.0",
+   "files": [
+    {
+     "name": "flow_052d0819-2a32-47df-9b99-c243c9c8235b-flow-m-86400-m3s-qualified.csv",
+     "observed": "2025-12-31",
+     "url": "https://environment.data.gov.uk/hydrology/id/measures/052d0819-2a32-47df-9b99-c243c9c8235b-flow-m-86400-m3s-qualified/readings.csv?mineq-date=2010-01-01&maxeq-date=2025-12-31&_limit=100000"
+    },
+    {
+     "name": "flow_284ea1dd-ee32-47ef-8cbf-4b001775f8ed-flow-m-86400-m3s-qualified.csv",
+     "observed": "2025-12-31",
+     "url": "https://environment.data.gov.uk/hydrology/id/measures/284ea1dd-ee32-47ef-8cbf-4b001775f8ed-flow-m-86400-m3s-qualified/readings.csv?mineq-date=2010-01-01&maxeq-date=2025-12-31&_limit=100000"
+    },
+    {
+     "name": "flow_3eb60c5b-875e-46e7-b8d9-b1208d023bc4-flow-m-86400-m3s-qualified.csv",
+     "observed": "2025-12-31",
+     "url": "https://environment.data.gov.uk/hydrology/id/measures/3eb60c5b-875e-46e7-b8d9-b1208d023bc4-flow-m-86400-m3s-qualified/readings.csv?mineq-date=2010-01-01&maxeq-date=2025-12-31&_limit=100000"
+    },
+    {
+     "name": "flow_48513a18-e485-4317-ae92-93bf4f7f3e54-flow-m-86400-m3s-qualified.csv",
+     "observed": "2025-12-31",
+     "url": "https://environment.data.gov.uk/hydrology/id/measures/48513a18-e485-4317-ae92-93bf4f7f3e54-flow-m-86400-m3s-qualified/readings.csv?mineq-date=2010-01-01&maxeq-date=2025-12-31&_limit=100000"
+    },
+    {
+     "name": "flow_588e6dc1-a77f-4961-9085-4b2617acb48e-flow-m-86400-m3s-qualified.csv",
+     "observed": "2025-12-31",
+     "url": "https://environment.data.gov.uk/hydrology/id/measures/588e6dc1-a77f-4961-9085-4b2617acb48e-flow-m-86400-m3s-qualified/readings.csv?mineq-date=2010-01-01&maxeq-date=2025-12-31&_limit=100000"
+    },
+    {
+     "name": "flow_6c6c174e-519f-4b02-9e3e-1737f2139417_445508-flow-m-86400-m3s-qualified.csv",
+     "observed": "2025-12-31",
+     "url": "https://environment.data.gov.uk/hydrology/id/measures/6c6c174e-519f-4b02-9e3e-1737f2139417_445508-flow-m-86400-m3s-qualified/readings.csv?mineq-date=2010-01-01&maxeq-date=2025-12-31&_limit=100000"
+    },
+    {
+     "name": "flow_7337c648-a4bf-4f8b-80c2-2b17efdba8cd-flow-m-86400-m3s-qualified.csv",
+     "observed": "2025-12-31",
+     "url": "https://environment.data.gov.uk/hydrology/id/measures/7337c648-a4bf-4f8b-80c2-2b17efdba8cd-flow-m-86400-m3s-qualified/readings.csv?mineq-date=2010-01-01&maxeq-date=2025-12-31&_limit=100000"
+    },
+    {
+     "name": "flow_8c0977fe-d8fe-4d98-83ab-7916cbd2eb83-flow-m-86400-m3s-qualified.csv",
+     "observed": "2025-12-31",
+     "url": "https://environment.data.gov.uk/hydrology/id/measures/8c0977fe-d8fe-4d98-83ab-7916cbd2eb83-flow-m-86400-m3s-qualified/readings.csv?mineq-date=2010-01-01&maxeq-date=2025-12-31&_limit=100000"
+    },
+    {
+     "name": "flow_9796dc02-6edf-4392-b727-0d861cbb1edd-flow-m-86400-m3s-qualified.csv",
+     "observed": "2025-12-31",
+     "url": "https://environment.data.gov.uk/hydrology/id/measures/9796dc02-6edf-4392-b727-0d861cbb1edd-flow-m-86400-m3s-qualified/readings.csv?mineq-date=2010-01-01&maxeq-date=2025-12-31&_limit=100000"
+    },
+    {
+     "name": "flow_b23821f8-f8e5-4b3d-a821-70913abe37cf-flow-m-86400-m3s-qualified.csv",
+     "observed": "2025-12-31",
+     "url": "https://environment.data.gov.uk/hydrology/id/measures/b23821f8-f8e5-4b3d-a821-70913abe37cf-flow-m-86400-m3s-qualified/readings.csv?mineq-date=2010-01-01&maxeq-date=2025-12-31&_limit=100000"
+    },
+    {
+     "name": "flow_bf679fd0-8d8f-4815-a569-ec798d81f324-flow-m-86400-m3s-qualified.csv",
+     "observed": "2025-12-31",
+     "url": "https://environment.data.gov.uk/hydrology/id/measures/bf679fd0-8d8f-4815-a569-ec798d81f324-flow-m-86400-m3s-qualified/readings.csv?mineq-date=2010-01-01&maxeq-date=2025-12-31&_limit=100000"
+    },
+    {
+     "name": "flow_d42b68be-0da7-4519-ba9a-e24f789d9c10-flow-m-86400-m3s-qualified.csv",
+     "observed": "2025-12-31",
+     "url": "https://environment.data.gov.uk/hydrology/id/measures/d42b68be-0da7-4519-ba9a-e24f789d9c10-flow-m-86400-m3s-qualified/readings.csv?mineq-date=2010-01-01&maxeq-date=2025-12-31&_limit=100000"
+    }
+   ],
+   "hosts": [
+    "environment.data.gov.uk"
+   ],
+   "id": "ea_hydrology_flow",
+   "licence_class": "open",
+   "licence_location": "https://environment.data.gov.uk/hydrology/doc/reference",
+   "licence_text": "environment.data.gov.uk/hydrology/doc/reference: all content is available under the Open Government Licence v3.0 (the API metadata block also names OGL 3 and the publisher)",
+   "max_bytes": 5242880,
+   "method": "official API: daily mean flow readings 2010-01-01 to 2025-12-31 of 12 gauging stations chosen as every 6th daily mean flow measure of the sorted measure list (first 300 measures of the API)",
+   "min_interval": 2.0,
+   "privacy": "river gauging data; no personal data",
+   "publisher": "Environment Agency (England), Hydrology Data Explorer API",
+   "rate_limit": "one request every 2 seconds",
+   "redistribution": "OGL v3.0 permits it with attribution; raw files stay local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party: the Environment Agency publishes its own gauging station data",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "cite DGFiP, Demandes de valeurs fonci\u00e8res, and Etalab (geolocalised version), Licence Ouverte 2.0",
+   "files": [
+    {
+     "name": "dvf_69_2024.csv.gz",
+     "observed": "2024-12-31",
+     "url": "https://files.data.gouv.fr/geo-dvf/latest/csv/2024/departements/69.csv.gz"
+    }
+   ],
+   "hosts": [
+    "files.data.gouv.fr"
+   ],
+   "id": "dgfip_dvf",
+   "licence_class": "open",
+   "licence_location": "https://www.data.gouv.fr/api/1/datasets/demandes-de-valeurs-foncieres/",
+   "licence_text": "data.gouv.fr record 'Demandes de valeurs fonci\u00e8res' published by the Minist\u00e8res \u00e9conomiques et financiers declares licence lov2 (Licence Ouverte 2.0); the geolocalised republication by data.gouv.fr declares the same licence. The record warns that the file holds personal data with legal obligations on reuse (no re-identification of persons)",
+   "max_bytes": 104857600,
+   "method": "official files.data.gouv.fr mirror of the geolocalised file for department 69, year 2024 (one file, gzip CSV); redirected to the publisher's object storage",
+   "min_interval": 3.0,
+   "privacy": "addresses, parcel ids and coordinates are dropped in the view; the mutation id is salted; no owner names are in the register",
+   "publisher": "Minist\u00e8re de l'\u00c9conomie et des Finances (DGFiP), Demandes de valeurs fonci\u00e8res, geolocalised by Etalab",
+   "rate_limit": "one download",
+   "redirect_hosts": [
+    "geo-dvf.s3.sbg.io.cloud.ovh.net"
+   ],
+   "redistribution": "Licence Ouverte 2.0 permits it with attribution; raw files stay local",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "first party: the tax administration publishes the property transaction register under the decree of 28 December 2018",
+   "upstream_verified": true
   }
  ]
 }

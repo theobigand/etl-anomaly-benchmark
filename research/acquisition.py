@@ -10,10 +10,12 @@ overwritten again; a new snapshot id gets a new directory. Sources whose licence
 
 from __future__ import annotations
 
+import functools
 import hashlib
 import json
 import re
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from collections.abc import Callable, Iterator
@@ -30,18 +32,40 @@ class AcquisitionError(Exception):
     pass
 
 
-def open_url(url: str, limit: int) -> bytes:
+class GuardedRedirect(urllib.request.HTTPRedirectHandler):
+    """Follow a redirect only to https and to a listed host (or a subdomain of one)."""
+
+    def __init__(self, hosts: list[str]) -> None:
+        self.hosts = list(hosts)
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):  # type: ignore[no-untyped-def]
+        parts = urllib.parse.urlparse(newurl)
+        host = parts.hostname or ""
+        listed = any(host == h or host.endswith("." + h) for h in self.hosts)
+        if parts.scheme != "https" or not listed:
+            raise urllib.error.URLError(
+                f"redirect to {newurl} refused (https and listed hosts only)"
+            )
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+
+def _opener(hosts: list[str] | None, url: str) -> urllib.request.OpenerDirector:
+    allowed = hosts if hosts is not None else [urllib.parse.urlparse(url).hostname or ""]
+    return urllib.request.build_opener(GuardedRedirect(allowed))
+
+
+def open_url(url: str, limit: int, hosts: list[str] | None = None) -> bytes:
     request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(request, timeout=120) as response:  # noqa: S310 - https, listed host
+    with _opener(hosts, url).open(request, timeout=120) as response:  # noqa: S310 - https, listed host
         return response.read(limit + 1)
 
 
-def open_range(url: str, start: int, length: int) -> dict[str, Any]:
+def open_range(url: str, start: int, length: int, hosts: list[str] | None = None) -> dict[str, Any]:
     """One HTTP range request; at most ``length + 1`` bytes are read whatever the server does."""
     request = urllib.request.Request(
         url, headers={"User-Agent": USER_AGENT, "Range": f"bytes={start}-{start + length - 1}"}
     )
-    with urllib.request.urlopen(request, timeout=120) as response:  # noqa: S310 - https, listed host
+    with _opener(hosts, url).open(request, timeout=120) as response:  # noqa: S310 - https, listed host
         return {
             "status": response.status,
             "content_range": response.headers.get("Content-Range"),
@@ -58,12 +82,15 @@ class Snapshot:
         root: Path,
         spec: dict[str, Any],
         snapshot_id: str,
-        opener: Callable[[str, int], bytes] = open_url,
+        opener: Callable[[str, int], bytes] | None = None,
         sleep: Callable[[float], None] = time.sleep,
-        range_opener: Callable[[str, int, int], dict[str, Any]] = open_range,
+        range_opener: Callable[[str, int, int], dict[str, Any]] | None = None,
     ) -> None:
         if spec["licence_class"] not in ALLOWED_CLASSES:
             raise AcquisitionError(f"licence class {spec['licence_class']!r} is not collectable")
+        allowed = [*spec["hosts"], *spec.get("redirect_hosts", [])]
+        opener = opener or functools.partial(open_url, hosts=allowed)
+        range_opener = range_opener or functools.partial(open_range, hosts=allowed)
         self.spec, self.opener, self.sleep = spec, opener, sleep
         self.range_opener = range_opener
         self.directory = root / spec["id"] / snapshot_id

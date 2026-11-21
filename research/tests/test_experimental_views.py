@@ -996,12 +996,23 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
         _c.writestr("clue.json", _clue(1) + "\n")
     monkeypatch.setattr(ev, "XES_SPECS", {})
     monkeypatch.setattr(ev, "CSV_EVENT_SPECS", {})
+    _w(root / "met_museum_objects" / SNAP / "raw" / "obj_1.json", '{"objectID": 1}')
+    import gzip as _gz
+
+    dv = root / "dgfip_dvf" / SNAP / "raw"
+    dv.mkdir(parents=True)
+    (dv / "dvf_69_2024.csv.gz").write_bytes(_gz.compress(_dvf_frame().to_csv(index=False).encode()))
+    monkeypatch.setattr(ev, "EA_STATIONS", ["s"])
+    _w(
+        root / "ea_hydrology_flow" / SNAP / "raw" / "flow_s.csv",
+        "date,value,completeness\n2020-01-01,1,Complete\n",
+    )
     out = tmp_path / "out"
     manifest = ev.build(root, out)
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -2756,3 +2767,147 @@ def test_table_sets_support_other_member_extensions_and_skip_missing_optional_ta
     assert sorted(view["files"]) == ["routes.csv", "trips.csv"]
     assert view["relations"] == [{"child": "trips.route_id", "parent": "routes.route_id", "checked": 2, "orphans": 1, "share": 0.5}]  # fmt: skip  # noqa: E501
     assert view["notes"].endswith("; optional tables absent from the archive: calendar")
+
+
+# --- Met Museum catalogue records (nested JSON, one request per object) ----------------------------  # noqa: E501
+
+
+def test_met_view_drops_biographies_and_images_deduplicates_and_sorts_by_object_id():
+    records = [
+        {"objectID": 9, "title": "b", "artistDisplayBio": "bio text", "primaryImage": "u", "additionalImages": ["x"],  # noqa: E501
+         "constituents": [{"name": "n", "role": "Artist"}], "measurements": [{"elementName": "Overall", "elementMeasurements": {"Height": 1.5}}]},  # noqa: E501
+        {"objectID": 3, "title": "a", "artistDisplayBio": "other", "tags": None},
+        {"objectID": 9, "title": "b again"},
+    ]  # fmt: skip
+    out = ev.met_objects_view(records)
+    assert [r["objectID"] for r in out] == [3, 9] and out[1][
+        "title"
+    ] == "b"  # first record per id wins
+    assert (
+        "artistDisplayBio" not in out[0]
+        and "primaryImage" not in out[1]
+        and "additionalImages" not in out[1]
+    )
+    assert out[1]["constituents"] == [{"name": "n", "role": "Artist"}]
+    assert out[1]["measurements"][0]["elementMeasurements"] == {
+        "Height": 1.5
+    }  # nested values are kept
+    assert records[0]["artistDisplayBio"] == "bio text"  # the input is untouched
+
+
+def test_the_met_builder_reads_the_object_files_in_id_order_and_counts_unreadable_ones(tmp_path):
+    root = tmp_path / "acquired"
+    raw = root / "met_museum_objects" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    for i in (20, 5, 11):
+        (raw / f"obj_{i}.json").write_text(
+            json.dumps({"objectID": i, "title": f"t{i}", "artistDisplayBio": "x"})
+        )
+    (raw / "obj_99.json").write_text("not json")
+    (raw / "manifest.json").write_text("{}")  # not an object file
+    manifest = {}
+    ev._build_met(root, tmp_path / "o" / "deep", manifest)
+    target = tmp_path / "o" / "deep" / "met_museum_objects" / "objects.jsonl"
+    rows = [json.loads(x) for x in target.read_text().splitlines()]
+    assert [r["objectID"] for r in rows] == [5, 11, 20] and "artistDisplayBio" not in rows[0]
+    view = manifest["met_museum_objects"]
+    assert view["files"] == {"objects.jsonl": {"sha256": _sha(target), "rows": 3}}
+    assert view["sampling"] == {"object_files": 4, "unreadable": 1, "method": "object ids chosen as an even stride over the sorted listing, not random"}  # fmt: skip  # noqa: E501
+    assert view["dropped"] == [
+        "artistDisplayBio",
+        "primaryImage",
+        "primaryImageSmall",
+        "additionalImages",
+    ]
+
+
+# --- Environment Agency daily river flow: one csv per station, one network -----------------------
+
+
+def test_the_flow_builder_stacks_stations_into_a_panel_and_records_quality_shares(
+    tmp_path, monkeypatch
+):
+    root = tmp_path / "acquired"
+    raw = root / "ea_hydrology_flow" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    head = '"measure","dateTime","date","value","completeness","quality","qcode"\n'
+    (raw / "flow_s1.csv").write_text(
+        head + '"m1","2020-01-02T09:00:00","2020-01-02","2.5","Complete","Good",""\n'
+        '"m1","2020-01-01T09:00:00","2020-01-01","1.5","Incomplete","Estimated",""\n'
+    )
+    (raw / "flow_s2.csv").write_text(
+        head + '"m2","2020-01-01T09:00:00","2020-01-01","","Complete","Unchecked",""\n'
+    )
+    monkeypatch.setattr(ev, "EA_STATIONS", ["s1", "s2"])
+    manifest = {}
+    ev._build_ea(root, tmp_path / "o" / "deep", manifest)
+    target = tmp_path / "o" / "deep" / "ea_hydrology_flow" / "flow.csv"
+    assert (
+        target.read_text()
+        == "timestamp,station,value\n2020-01-01,s1,1.5\n2020-01-02,s1,2.5\n2020-01-01,s2,\n"
+    )
+    view = manifest["ea_hydrology_flow"]
+    assert view["files"] == {"flow.csv": {"sha256": _sha(target), "rows": 3}}
+    assert view["sampling"] == {"stations": 2, "rows_dropped": 0, "complete_share": 0.6667, "missing_value_share": 0.3333,  # noqa: E501
+                                "method": "daily mean flow of stations chosen as an even stride over the sorted measure list"}  # fmt: skip  # noqa: E501
+
+
+# --- French property transactions (DVF): privacy-reduced sales rows --------------------------------  # noqa: E501
+
+
+def _dvf_frame():
+    return pd.DataFrame(
+        {
+            "id_mutation": ["2024-2", "2024-1", "2024-1", "2024-3"],
+            "date_mutation": ["2024-01-03", "2024-01-02", "2024-01-02", "2024-02-01"],
+            "nature_mutation": ["Vente", "Vente", "Vente", "Echange"],
+            "valeur_fonciere": ["10000", "346.5", "346.5", ""],
+            "adresse_nom_voie": ["RUE A", "RUE B", "RUE B", "RUE C"],
+            "id_parcelle": ["p1", "p2", "p2", "p3"],
+            "code_commune": ["69123", "69123", "69123", "69381"],
+            "type_local": ["Maison", "Appartement", None, "Maison"],
+            "surface_reelle_bati": ["100", "50", "", "80"],
+            "nombre_pieces_principales": ["4", "2", "", "3"],
+            "surface_terrain": ["500", "", "20", "300"],
+            "longitude": ["4.8", "4.9", "4.9", "4.7"],
+            "latitude": ["45.7", "45.8", "45.8", "45.6"],
+        }
+    )  # fmt: skip
+
+
+def test_dvf_view_keeps_commercial_fields_pseudonymises_the_mutation_and_drops_addresses_and_positions():  # noqa: E501
+    out = ev.dvf_view(_dvf_frame())
+    assert list(out.columns) == list(ev.DVF_COLUMNS)
+    assert ev.DVF_COLUMNS == (
+        "mutation", "date", "nature", "value_eur", "commune", "local_type", "built_area_m2", "rooms", "land_area_m2",  # noqa: E501
+    )  # fmt: skip
+    assert out["date"].tolist() == sorted(out["date"].tolist())  # date order
+    assert out["mutation"].iloc[0] == ev.pseudonym("2024-1") and out["mutation"].iloc[
+        2
+    ] == ev.pseudonym("2024-2")
+    assert out["value_eur"].tolist()[:2] == [346.5, 346.5] and pd.isna(out["value_eur"].iloc[3])
+    assert out["commune"].tolist()[0] == "69123" and out["local_type"].iloc[0] == "Appartement"
+    assert pd.isna(out["rooms"].iloc[1]) and out["land_area_m2"].iloc[1] == 20.0
+    for gone in ("adresse_nom_voie", "id_parcelle", "longitude", "latitude", "id_mutation"):
+        assert gone not in out
+    with pytest.raises(ev.ViewError, match="column 'valeur_fonciere'"):
+        ev.dvf_view(_dvf_frame().drop(columns=["valeur_fonciere"]))
+
+
+def test_the_dvf_builder_reads_the_gzip_csv_and_records_the_department_scope(tmp_path):
+    import gzip
+
+    root = tmp_path / "acquired"
+    raw = root / "dgfip_dvf" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    (raw / "dvf_69_2024.csv.gz").write_bytes(
+        gzip.compress(_dvf_frame().to_csv(index=False).encode())
+    )
+    manifest = {}
+    ev._build_dvf(root, tmp_path / "o" / "deep", manifest)
+    target = tmp_path / "o" / "deep" / "dgfip_dvf" / "sales.csv"
+    assert len(pd.read_csv(target)) == 4
+    view = manifest["dgfip_dvf"]
+    assert view["files"] == {"sales.csv": {"sha256": _sha(target), "rows": 4}}
+    assert view["pseudonymised"] == ["mutation"] and "address" in view["dropped"][0]
+    assert view["sampling"] == {"scope": "department 69 (Rhone), transactions of 2024 only", "rows": 4, "rows_without_value": 1}  # fmt: skip  # noqa: E501

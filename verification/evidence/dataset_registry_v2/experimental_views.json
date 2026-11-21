@@ -316,6 +316,49 @@
   "pseudonymised": [],
   "source_snapshot": "crossref_works/2026-11-21"
  },
+ "dgfip_dvf": {
+  "dropped": [
+   "address, street code, parcel ids, volume and lot numbers, coordinates"
+  ],
+  "files": {
+   "sales.csv": {
+    "rows": 75985,
+    "sha256": "cdf28e1ed8d76965cfeb207c6d9fdfe05509e9f07a72caeedb9fb3fa79828f2f"
+   }
+  },
+  "pseudonymised": [
+   "mutation"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "rows": 75985,
+   "rows_without_value": 282,
+   "scope": "department 69 (Rhone), transactions of 2024 only"
+  },
+  "source_snapshot": "dgfip_dvf/2026-11-21"
+ },
+ "ea_hydrology_flow": {
+  "dropped": [
+   "measure URL",
+   "dateTime",
+   "quality code text"
+  ],
+  "files": {
+   "flow.csv": {
+    "rows": 70128,
+    "sha256": "fa67c30aa4762cea35d2e56da98e3766c2f534c83cf43af8a9aaa95daec6fe5f"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "complete_share": 0.9784,
+   "method": "daily mean flow of stations chosen as an even stride over the sorted measure list",
+   "missing_value_share": 0.0199,
+   "rows_dropped": 0,
+   "stations": 12
+  },
+  "source_snapshot": "ea_hydrology_flow/2026-11-21"
+ },
  "google_cluster_2019a": {
   "dropped": [
    "user",
@@ -1162,6 +1205,27 @@
   },
   "pseudonymised": [],
   "source_snapshot": "loghub@dd61d09"
+ },
+ "met_museum_objects": {
+  "dropped": [
+   "artistDisplayBio",
+   "primaryImage",
+   "primaryImageSmall",
+   "additionalImages"
+  ],
+  "files": {
+   "objects.jsonl": {
+    "rows": 1000,
+    "sha256": "8364f09ea8f3c04e5f1a50fe9e100745e552567859da2f0b4951e731ea79d277"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "object ids chosen as an even stride over the sorted listing, not random",
+   "object_files": 1000,
+   "unreadable": 0
+  },
+  "source_snapshot": "met_museum_objects/2026-11-21"
  },
  "monash_pedestrian": {
   "dropped": [],

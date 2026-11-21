@@ -929,6 +929,27 @@
   },
   {
    "failed": null,
+   "group": "met_museum",
+   "id": "met_museum_objects",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "ea_hydrology",
+   "id": "ea_hydrology_flow",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "dgfip_dvf",
+   "id": "dgfip_dvf",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -1043,6 +1064,7 @@
  "ready_groups": {
   "C2b": [
    "coatings_multinational",
+   "dgfip_dvf",
    "georgia_procurement",
    "german_paying_agency",
    "italian_road_fines",
@@ -1055,6 +1077,7 @@
   "C3": [
    "airquality_italy",
    "candanedo_umons",
+   "ea_hydrology",
    "elder_home",
    "melbourne_pedestrian",
    "metropt_porto",
@@ -1102,6 +1125,7 @@
   "C6": [
    "clinicaltrials_gov",
    "georgia_procurement",
+   "met_museum",
    "montreal_contracts",
    "openalex",
    "openfda_faers",
@@ -1112,22 +1136,22 @@
  },
  "summary": {
   "C2b": {
-   "acquired": 10,
-   "discovered": 16,
-   "experiment_ready": 10,
-   "protocol_ready": 10,
-   "rights_verified": 10,
-   "scientifically_eligible": 10,
-   "structurally_valid": 10
+   "acquired": 11,
+   "discovered": 17,
+   "experiment_ready": 11,
+   "protocol_ready": 11,
+   "rights_verified": 11,
+   "scientifically_eligible": 11,
+   "structurally_valid": 11
   },
   "C3": {
-   "acquired": 15,
-   "discovered": 36,
-   "experiment_ready": 12,
-   "protocol_ready": 12,
-   "rights_verified": 15,
-   "scientifically_eligible": 12,
-   "structurally_valid": 13
+   "acquired": 16,
+   "discovered": 37,
+   "experiment_ready": 13,
+   "protocol_ready": 13,
+   "rights_verified": 16,
+   "scientifically_eligible": 13,
+   "structurally_valid": 14
   },
   "C4": {
    "acquired": 30,
@@ -1148,13 +1172,13 @@
    "structurally_valid": 27
   },
   "C6": {
-   "acquired": 8,
-   "discovered": 12,
-   "experiment_ready": 8,
-   "protocol_ready": 8,
-   "rights_verified": 8,
-   "scientifically_eligible": 8,
-   "structurally_valid": 8
+   "acquired": 9,
+   "discovered": 13,
+   "experiment_ready": 9,
+   "protocol_ready": 9,
+   "rights_verified": 9,
+   "scientifically_eligible": 9,
+   "structurally_valid": 9
   }
  }
 }

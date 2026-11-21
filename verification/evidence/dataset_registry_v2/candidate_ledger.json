@@ -586,7 +586,7 @@
    "licence": "US Government data; the readme states conditions to be read",
    "name": "GHCN-Daily station files",
    "next_step": "read the NCEI use statement literally; choose stations as one family",
-   "notes": "",
+   "notes": "README asks for citation only; no licence statement located at the publisher in this session; not acquired",
    "publisher": "NOAA NCEI",
    "reason": "one network aggregating many national services; stations are not independent families",
    "size": null,
@@ -1021,6 +1021,66 @@
    "size": null,
    "source_url": "https://data.4tu.nl/",
    "status": "accessible_eligible"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "met:openaccess",
+   "licence": "CC0",
+   "name": "Met Museum Open Access catalogue",
+   "next_step": "none",
+   "notes": "403 at 5 requests per second respected",
+   "publisher": "Metropolitan Museum of Art",
+   "reason": "nested catalogue records",
+   "size": null,
+   "source_url": "https://metmuseum.github.io/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "ea:hydrology",
+   "licence": "OGL v3.0",
+   "name": "Environment Agency Hydrology API",
+   "next_step": "more stations are the same group",
+   "notes": "",
+   "publisher": "Environment Agency",
+   "reason": "river gauge time series",
+   "size": null,
+   "source_url": "https://environment.data.gov.uk/hydrology/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "dgfip:dvf",
+   "licence": "Licence Ouverte 2.0",
+   "name": "DVF French property transactions",
+   "next_step": "other departments and years are the same group",
+   "notes": "",
+   "publisher": "DGFiP",
+   "reason": "real sales with prices",
+   "size": null,
+   "source_url": "https://www.data.gouv.fr/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "transport:gtfs-fr",
+   "licence": "lov2 or odbl per feed",
+   "name": "French GTFS feeds (transport.data.gouv.fr)",
+   "next_step": "stop adding feeds: the schema family is saturated for independence purposes",
+   "notes": "shared schema family",
+   "publisher": "various authorities",
+   "reason": "12 feeds taken; about 190 more open feeds exist in the national access point",
+   "size": null,
+   "source_url": "https://transport.data.gouv.fr/",
+   "status": "experiment_ready"
   }
  ],
  "date": "2026-11-21",

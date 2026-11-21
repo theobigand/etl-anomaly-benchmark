@@ -1896,6 +1896,152 @@ def _build_csv_events(root: Path, out: Path, manifest: dict[str, Any]) -> None:
         )
 
 
+MET_DROP = frozenset(["artistDisplayBio", "primaryImage", "primaryImageSmall", "additionalImages"])
+
+
+def met_objects_view(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Catalogue records without biographies and image links; one record per object id."""
+    unique: dict[Any, dict[str, Any]] = {}
+    for record in records:
+        unique.setdefault(record["objectID"], record)
+    return nested_view(list(unique.values()), MET_DROP, lambda r: r["objectID"])
+
+
+def _build_met(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "met_museum_objects" / SNAPSHOT / "raw"
+    files = sorted(raw.glob("obj_*.json"))
+    records, unreadable = [], 0
+    for path in files:
+        try:
+            records.append(json.loads(path.read_text()))
+        except ValueError:
+            unreadable += 1
+    view = met_objects_view(records)
+    folder = out / "met_museum_objects"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "objects.jsonl"
+    target.write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in view))
+    _record(
+        manifest,
+        "met_museum_objects",
+        {"objects.jsonl": (target, len(view))},
+        dropped=["artistDisplayBio", "primaryImage", "primaryImageSmall", "additionalImages"],
+        pseudonymised=[],
+        sampling={
+            "object_files": len(files),
+            "unreadable": unreadable,
+            "method": "object ids chosen as an even stride over the sorted listing, not random",
+        },
+        source_snapshot=f"met_museum_objects/{SNAPSHOT}",
+    )
+
+
+#: Environment Agency stations (measure notations) whose daily mean flow readings are fetched
+EA_STATIONS: list[str] = [
+    "052d0819-2a32-47df-9b99-c243c9c8235b-flow-m-86400-m3s-qualified",
+    "284ea1dd-ee32-47ef-8cbf-4b001775f8ed-flow-m-86400-m3s-qualified",
+    "3eb60c5b-875e-46e7-b8d9-b1208d023bc4-flow-m-86400-m3s-qualified",
+    "48513a18-e485-4317-ae92-93bf4f7f3e54-flow-m-86400-m3s-qualified",
+    "588e6dc1-a77f-4961-9085-4b2617acb48e-flow-m-86400-m3s-qualified",
+    "6c6c174e-519f-4b02-9e3e-1737f2139417_445508-flow-m-86400-m3s-qualified",
+    "7337c648-a4bf-4f8b-80c2-2b17efdba8cd-flow-m-86400-m3s-qualified",
+    "8c0977fe-d8fe-4d98-83ab-7916cbd2eb83-flow-m-86400-m3s-qualified",
+    "9796dc02-6edf-4392-b727-0d861cbb1edd-flow-m-86400-m3s-qualified",
+    "b23821f8-f8e5-4b3d-a821-70913abe37cf-flow-m-86400-m3s-qualified",
+    "bf679fd0-8d8f-4815-a569-ec798d81f324-flow-m-86400-m3s-qualified",
+    "d42b68be-0da7-4519-ba9a-e24f789d9c10-flow-m-86400-m3s-qualified",
+]
+
+
+def _build_ea(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "ea_hydrology_flow" / SNAPSHOT / "raw"
+    parts = []
+    for station in EA_STATIONS:
+        frame = pd.read_csv(raw / f"flow_{station}.csv", dtype=str)
+        frame["station"] = station
+        parts.append(frame)
+    table = pd.concat(parts, ignore_index=True)
+    view = panel_view(table, {"time": ["date"], "format": "%Y-%m-%d", "keys": ["station"]})
+    folder = out / "ea_hydrology_flow"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "flow.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "ea_hydrology_flow",
+        {"flow.csv": (target, len(view))},
+        dropped=["measure URL", "dateTime", "quality code text"],
+        pseudonymised=[],
+        sampling={
+            "stations": len(EA_STATIONS),
+            "rows_dropped": view.attrs["rows_dropped"],
+            "complete_share": round(float((table["completeness"] == "Complete").mean()), 4),
+            "missing_value_share": round(float((table["value"].fillna("") == "").mean()), 4),
+            "method": "daily mean flow of stations chosen as an even stride over the sorted measure list",  # noqa: E501
+        },
+        source_snapshot=f"ea_hydrology_flow/{SNAPSHOT}",
+    )
+
+
+DVF_COLUMNS = (
+    "mutation", "date", "nature", "value_eur", "commune", "local_type", "built_area_m2", "rooms",
+    "land_area_m2",
+)  # fmt: skip
+
+
+def dvf_view(raw: pd.DataFrame) -> pd.DataFrame:
+    """Property transaction rows without address, parcel or position; the mutation id is salted.
+
+    One row is one disposition of a transaction (a transaction can have several rows: lots and
+    land). Addresses, parcel ids and coordinates are not kept: with them a sale is a located
+    property and, with public registers, a person.
+    """
+    need = ("id_mutation", "date_mutation", "nature_mutation", "valeur_fonciere", "code_commune",
+            "type_local", "surface_reelle_bati", "nombre_pieces_principales", "surface_terrain")  # fmt: skip  # noqa: E501
+    for column in need:
+        if column not in raw.columns:
+            raise ViewError(f"column {column!r} not found")
+    out = pd.DataFrame(
+        {
+            "mutation": raw["id_mutation"].map(lambda v: pseudonym(str(v))),
+            "date": raw["date_mutation"],
+            "nature": raw["nature_mutation"],
+            "value_eur": pd.to_numeric(raw["valeur_fonciere"], errors="coerce"),
+            "commune": raw["code_commune"].astype(str),
+            "local_type": raw["type_local"],
+            "built_area_m2": pd.to_numeric(raw["surface_reelle_bati"], errors="coerce"),
+            "rooms": pd.to_numeric(raw["nombre_pieces_principales"], errors="coerce"),
+            "land_area_m2": pd.to_numeric(raw["surface_terrain"], errors="coerce"),
+        }
+    )
+    return out.sort_values(["date", "mutation"], kind="stable").reset_index(drop=True)
+
+
+def _build_dvf(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = pd.read_csv(
+        root / "dgfip_dvf" / SNAPSHOT / "raw" / "dvf_69_2024.csv.gz", dtype=str, low_memory=False
+    )
+    view = dvf_view(raw)
+    folder = out / "dgfip_dvf"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "sales.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "dgfip_dvf",
+        {"sales.csv": (target, len(view))},
+        dropped=["address, street code, parcel ids, volume and lot numbers, coordinates"],
+        pseudonymised=["mutation"],
+        sampling={
+            "scope": "department 69 (Rhone), transactions of 2024 only",
+            "rows": len(view),
+            "rows_without_value": int(view["value_eur"].isna().sum()),
+        },
+        salt_label=SALT,
+        source_snapshot=f"dgfip_dvf/{SNAPSHOT}",
+    )
+
+
 SLURM_MODULO = 20
 SLURM_COLUMNS = (
     "jobid",
@@ -1991,6 +2137,9 @@ BUILD_STEPS = (
     _build_clue,
     _build_xes,
     _build_csv_events,
+    _build_met,
+    _build_ea,
+    _build_dvf,
     _build_series,
     _build_ukspend,
 )

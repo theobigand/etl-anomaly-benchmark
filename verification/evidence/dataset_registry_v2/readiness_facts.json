@@ -262,6 +262,38 @@
    "units": 2000,
    "view": "crossref_works"
   },
+  "dgfip_dvf": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "one department and one year",
+    "a sale can have several rows (lots, land)",
+    "282 rows without a value (exchanges)"
+   ],
+   "first_party": true,
+   "independent_group": "dgfip_dvf",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the date",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 75985,
+   "view": "dgfip_dvf"
+  },
+  "ea_hydrology_flow": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "12 stations of one network",
+    "2 percent missing values",
+    "daily means, 2010 to 2025"
+   ],
+   "first_party": true,
+   "independent_group": "ea_hydrology",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 per station",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "units": 70128,
+   "view": "ea_hydrology_flow"
+  },
   "grouplens_movielens": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -765,6 +797,22 @@
    "protocol_id": "P-SEQ",
    "units": 2000,
    "view": "loghub"
+  },
+  "met_museum_objects": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "even stride over the id listing, not random",
+    "depth 4, 22 of 72 paths optional",
+    "half of the records flagged public domain"
+   ],
+   "first_party": true,
+   "independent_group": "met_museum",
+   "min_units": 1000,
+   "partitions": "hash of the object id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 1000,
+   "view": "met_museum_objects"
   },
   "monash:4656626": {
    "anomaly_origin": "controlled_injection",

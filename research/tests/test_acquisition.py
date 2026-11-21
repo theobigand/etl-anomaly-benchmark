@@ -1,6 +1,7 @@
 import hashlib
 import json
 import sys
+import types
 from pathlib import Path
 
 import pytest
@@ -342,7 +343,7 @@ def test_open_url_sends_the_user_agent_and_reads_at_most_limit_plus_one(monkeypa
         seen["timeout"] = timeout
         return Response()
 
-    monkeypatch.setattr(aq.urllib.request, "urlopen", fake)
+    monkeypatch.setattr(aq, "_opener", lambda hosts, url: types.SimpleNamespace(open=fake))
     assert aq.open_url("https://example.org/z", 10) == b"data"
     assert seen == {
         "agent": aq.USER_AGENT,
@@ -605,7 +606,7 @@ def test_the_real_range_opener_sends_a_range_header_and_reads_at_most_length_plu
         seen["timeout"] = timeout
         return Response()
 
-    monkeypatch.setattr(aq.urllib.request, "urlopen", fake)
+    monkeypatch.setattr(aq, "_opener", lambda hosts, url: types.SimpleNamespace(open=fake))
     out = aq.open_range("https://example.org/f", 5, 5)
     assert out == {"status": 206, "content_range": "bytes 5-9/100", "body": b"abcde"}
     assert seen == {"range": "bytes=5-9", "agent": aq.USER_AGENT, "timeout": 120, "read": 6}
@@ -854,7 +855,7 @@ def test_the_range_request_object_carries_the_url_agent_and_range(monkeypatch):
         seen["headers"] = dict(request.header_items())
         return Response()
 
-    monkeypatch.setattr(aq.urllib.request, "urlopen", fake)
+    monkeypatch.setattr(aq, "_opener", lambda hosts, url: types.SimpleNamespace(open=fake))
     aq.open_range("https://example.org/path?x=1", 0, 2)
     assert seen["url"] == "https://example.org/path?x=1"
     assert seen["headers"] == {"User-agent": aq.USER_AGENT, "Range": "bytes=0-1"}
@@ -990,3 +991,59 @@ def test_zip_extraction_of_a_member_larger_than_one_read_chunk_sums_every_chunk(
     )
     assert again["sha256"] == out["sha256"]  # extracting into an existing folder is allowed
     assert sorted(out) == ["bytes", "member", "path", "sha256"]
+
+
+# --- redirect safety: a listed host may only send the client to https and to listed hosts --------
+
+
+def _redirect(handler, url, newurl):
+    import email.message
+
+    request = aq.urllib.request.Request(url)
+    return handler.redirect_request(request, None, 302, "Found", email.message.Message(), newurl)
+
+
+def test_redirects_stay_on_https_and_on_listed_hosts_or_their_subdomains():
+    handler = aq.GuardedRedirect(["data.4tu.nl", "files.example.org"])
+    followed = _redirect(handler, "https://data.4tu.nl/file/x", "https://data.4tu.nl/other")
+    assert followed.full_url == "https://data.4tu.nl/other"
+    assert (
+        _redirect(handler, "https://data.4tu.nl/f", "https://cdn.files.example.org/a").full_url
+        == "https://cdn.files.example.org/a"
+    )
+    for bad in (
+        "http://data.4tu.nl/f",
+        "https://evil.example.net/a",
+        "https://data.4tu.nl.evil.net/a",
+        "ftp://data.4tu.nl/a",
+    ):
+        with pytest.raises(aq.urllib.error.URLError, match="redirect"):
+            _redirect(handler, "https://data.4tu.nl/f", bad)
+    with pytest.raises(aq.urllib.error.URLError, match="evil.example.net"):
+        _redirect(handler, "https://data.4tu.nl/f", "https://evil.example.net/a")
+    assert isinstance(
+        aq.urllib.error.URLError("x"), OSError
+    )  # so the retry loop treats it as a network error
+
+
+def test_a_redirect_host_is_matched_by_whole_labels_not_by_suffix_text():
+    handler = aq.GuardedRedirect(["archive.org"])
+    assert _redirect(
+        handler, "https://archive.org/d", "https://ia800702.us.archive.org/x"
+    ).full_url.startswith("https://ia8")
+    with pytest.raises(aq.urllib.error.URLError):
+        _redirect(handler, "https://archive.org/d", "https://notarchive.org/x")
+
+
+def test_the_default_openers_are_bound_to_the_listed_and_redirect_hosts(tmp_path, monkeypatch):
+    seen = {}
+
+    def fake_open_url(url, limit, hosts=None):
+        seen["hosts"] = hosts
+        return b"x"
+
+    monkeypatch.setattr(aq, "open_url", fake_open_url)
+    spec = {**SPEC, "hosts": ["example.org"], "redirect_hosts": ["cdn.example.net"]}
+    snap = aq.Snapshot(tmp_path, spec, "r", sleep=lambda s: None)
+    snap.fetch("https://example.org/a", "a.bin", None)
+    assert sorted(seen["hosts"]) == ["cdn.example.net", "example.org"]
