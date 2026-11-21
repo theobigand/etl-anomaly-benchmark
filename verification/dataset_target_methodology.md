@@ -159,14 +159,14 @@ Effective groups discount groups that share a schema family by an assumed intra-
 
 | stratum | ready groups | domains | curators | schema families | largest schema-family share | effective groups (rho 0.2) | effective groups (rho 0.5) |
 |---|---|---|---|---|---|---|---|
-| ALL | 49 | 31 | 16 | 22 | 0.2449 | 31.5595 | 25.5049 |
-| C2b | 9 | 6 | 4 | 4 | 0.3333 | 6.9524 | 5.3333 |
-| C3 | 10 | 10 | 3 | 5 | 0.6 | 7.0 | 5.7143 |
+| ALL | 52 | 34 | 19 | 25 | 0.2308 | 34.5595 | 28.5049 |
+| C2b | 10 | 7 | 5 | 5 | 0.3 | 7.9524 | 6.3333 |
+| C3 | 11 | 11 | 4 | 6 | 0.5455 | 8.0 | 6.7143 |
 | C4 | 13 | 10 | 3 | 5 | 0.6154 | 8.0 | 6.1111 |
 | C5 | 18 | 6 | 6 | 6 | 0.6667 | 9.4167 | 7.1795 |
-| C6 | 8 | 6 | 6 | 6 | 0.375 | 7.1429 | 6.5 |
+| C6 | 9 | 7 | 7 | 7 | 0.3333 | 8.1429 | 7.5 |
 
-Category participations are not distinct groups: the 49 provenance groups give 58 participations.
+Category participations are not distinct groups: the 52 provenance groups give 61 participations.
 
 ## 6. Evaluation of the historical targets (indeterminate where the pilot is needed)
 
@@ -174,17 +174,17 @@ Category participations are not distinct groups: the 49 provenance groups give 5
 |---|---|---|---|---|
 | C1 flat tabular | 36 | not recomputed under provenance grouping | n/a | indeterminate: historical coarse count only |
 | C2a categorical | none after the split | not recomputed | n/a | undefined: needs a decision |
-| C2b transactional | 30 | 9 | 5.3333 | defensible as planning figure only; effective independence is about 5 to 9 |
-| C3 time series | 40 | 10 | 5.7143 | indeterminate: 40 is in the range of one-comparison requirements for sigma 0.10 and delta 0.05 (34) to sigma 0.15 (73), but not for multiple comparisons |
+| C2b transactional | 30 | 10 | 6.3333 | defensible as planning figure only; effective independence is about 6 to 8 |
+| C3 time series | 40 | 11 | 6.7143 | indeterminate: 40 is in the range of one-comparison requirements for sigma 0.10 and delta 0.05 (34) to sigma 0.15 (73), but not for multiple comparisons |
 | C4 logs and sequences | 28 | 13 | 6.1111 | the 28 is below the one-comparison need for sigma 0.10 and delta 0.05 (34); 8 XES logs share one schema family |
 | C5 relational | 36 | 18 | 7.1795 | the count is inflated by twelve GTFS feeds; domains and schema families are few |
-| C6 nested | 30 | 8 | 6.5 | indeterminate; depth and optionality coverage still thin |
+| C6 nested | 30 | 9 | 7.5 | indeterminate; depth and optionality coverage still thin |
 
 Reading: with sigma 0.10 and delta 0.05 a single stratum needs about 34 independent sources for one comparison
 and about 52 for six; with delta 0.10 it needs 10 to 16. The recommended figures (28 to 40) sit inside that
 range, which is consistent with, but does not demonstrate, the intended precision. Under sigma 0.15 or
-design effects of 2 or more the requirements double. Pooled claims across strata use all groups, so 49 nominal
-groups (about 25 effective at rho 0.5) detect roughly 0.04 to 0.06 at sigma 0.10, but stratum-specific claims
+design effects of 2 or more the requirements double. Pooled claims across strata use all groups, so 52 nominal
+groups (about 29 effective at rho 0.5) detect roughly 0.04 to 0.06 at sigma 0.10, but stratum-specific claims
 remain far from that. No target is shown to be excessive or insufficient until sigma and rho are measured.
 
 ## 7. Proposal (not adopted)

@@ -1,0 +1,5 @@
+{
+ "failed": "NormaliseError('too few anomalies to split (3)')",
+ "problem": "uci:50",
+ "rule": "R5"
+}

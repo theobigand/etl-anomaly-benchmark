@@ -731,3 +731,49 @@ killed, 2 survived (98.7 percent). Range, gzip, zip prefix and extraction code i
 384 generated for these functions (83.1 percent; 63 survived, 2 suspicious), below the L3 threshold of 95
 percent, so that code is not mutation-certified; closing the survivors is open work. The new views and builders in
 `experimental_views.py` have exact tests but no isolated mutation figure yet. No certification is claimed.
+
+## Update 11: streaming logs, relational feeds, new domains and the target audit (2026-11-21)
+
+**Safety work in `acquisition.py`.** Redirects are now guarded: a listed host may send the client only to https and
+to a listed host, a subdomain of one, or a host named in the source's `redirect_hosts` (used once, for the object
+storage behind the property register). The zip extractor no longer carries a size check that the archive reader
+already enforces (dead code removed); decompression is bounded to the output limit plus one byte and returns at
+most the limit. Tests pin the opener construction, the range request, the exact error messages, and the bounds.
+
+**Streaming XES (`research/xes_stream.py`).** Sequential gzip or plain input, incremental XML parsing, complete
+traces only, finished traces detached from the tree, limits on input, decompressed output and traces, refusal of
+DOCTYPE and ENTITY declarations (also when split across chunks), and a status that says how reading ended
+(`log_closed` or the limit or the source cut). A prefix is labelled as a prefix; a case-hash selection is
+deterministic and is not a random sample. BPI Challenge 2018 (CC0, 158 MB gzip) was read as an 80 MiB prefix: 22835
+complete cases decoded, the first 8000 kept. A CSV adapter with an explicit schema mapping (one row is one event)
+was added for BPI Challenge 2014 (Rabobank ICT, 466737 events, 46616 incidents). BPI Challenge 2016 is not an event log
+(one row per complaint) and was rejected; BPIC 2017 is the same producer as 2012.
+
+**New groups.** C4: Rabobank ICT, German paying agency (BPIC 2018, also C2b through payment amounts). C5: twelve
+French GTFS feeds from the national access point (one per network, licences lov2 or odbl declared by the publisher;
+0 orphans on the three key relations; shared schema family, shared curator) and MovieLens is unchanged. C6: The Met
+catalogue (CC0, 1000 objects by an even stride, depth 4; the host answered 403 at five requests per second and
+the retry was paced at one per second). C3: Environment Agency daily river flow (OGL v3, 12 stations as one network
+group). C2b: French property transactions (DGFiP register, Licence Ouverte 2.0, department 69 for 2024, addresses,
+parcels and coordinates dropped). Not processed: GHCN-Daily (no licence statement located at the publisher),
+CTU and RelBench (upstream terms unresolved), BPIC 2011 and Hospital Billing (identifiers not located).
+
+**Coverage (machine-derived, readiness contract).**
+
+| Category | Initial ready (start of this phase) | Newly ready | Final ready | Target | Gap |
+|---|---:|---:|---:|---:|---:|
+| C2b | 8 | 2 | 10 | 30 | 20 |
+| C3 | 10 | 1 | 11 | 40 | 29 |
+| C4 | 11 | 2 | 13 | 28 | 15 |
+| C5 | 6 | 12 | 18 | 36 | 18 |
+| C6 | 8 | 1 | 9 | 30 | 21 |
+
+52 distinct provenance groups (49 at the previous report), 61 category participations, 34 domains, 19 curators and 25
+schema families (`target_framework.json`). The C5 gain is twelve feeds of one schema family: without them C5 would be
+6 groups, and the effective number of groups under an assumed intra-family correlation of 0.5 is 7.2. C1 and C2a were not
+recomputed under provenance grouping.
+
+**Target audit.** `verification/dataset_target_methodology.md` documents where the targets come from (planning
+figures of the recommended tier in `13-pipeline-level-study.md`, no per-stratum calculation), separates sample size from
+diversity, gives design-only sample-size tables with hypothetical parameters, and lists decisions for the owner. The
+approved targets are unchanged.

@@ -1,0 +1,320 @@
+{
+ "errors": {},
+ "features": 34,
+ "metrics": {
+  "copod": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 12.0,
+    "pr_auc": 0.07038750350780426,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.1511111111111111
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 6.0,
+    "pr_auc": 0.07296928916494133,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.2
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 8.0,
+    "pr_auc": 0.06546729112931203,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.08
+   }
+  ],
+  "ecod": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 8.0,
+    "pr_auc": 0.06985958485958486,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.1466666666666667
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 14.000000000000002,
+    "pr_auc": 0.06762973676302837,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.12444444444444444
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 6.0,
+    "pr_auc": 0.06388524586221904,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.0488888888888889
+   }
+  ],
+  "great_expectations": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 2.0,
+    "pr_auc": 0.1,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4888888888888889
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.1,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 0.0,
+    "pr_auc": 0.1,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.5
+   }
+  ],
+  "hbos": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 14.000000000000002,
+    "pr_auc": 0.06737340179200645,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.11555555555555559
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 6.0,
+    "pr_auc": 0.07195873151755505,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.17777777777777778
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 4.0,
+    "pr_auc": 0.06798300324616113,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.12444444444444443
+   }
+  ],
+  "iqr": [
+   {
+    "f1": 0.09090909090909091,
+    "flagged_pct": 34.0,
+    "pr_auc": 0.09666666666666668,
+    "precision": 0.058823529411764705,
+    "recall": 0.2,
+    "roc_auc": 0.4177777777777777
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 16.0,
+    "pr_auc": 0.1,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.4111111111111111
+   },
+   {
+    "f1": 0.16666666666666666,
+    "flagged_pct": 14.000000000000002,
+    "pr_auc": 0.10857142857142858,
+    "precision": 0.14285714285714285,
+    "recall": 0.2,
+    "roc_auc": 0.5266666666666667
+   }
+  ],
+  "isolation_forest": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 10.0,
+    "pr_auc": 0.0650813661522953,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.08444444444444445
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 10.0,
+    "pr_auc": 0.07214966991282781,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.16888888888888887
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 8.0,
+    "pr_auc": 0.068223889931207,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.1288888888888889
+   }
+  ],
+  "knn": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 12.0,
+    "pr_auc": 0.06619047619047619,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.11111111111111112
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 10.0,
+    "pr_auc": 0.06810337959984067,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.13777777777777778
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 8.0,
+    "pr_auc": 0.06567050224345057,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.0977777777777778
+   }
+  ],
+  "lof": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 6.0,
+    "pr_auc": 0.09359659695143566,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.38222222222222224
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 14.000000000000002,
+    "pr_auc": 0.08371405206487666,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.3111111111111111
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 4.0,
+    "pr_auc": 0.10430402930402932,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.2844444444444445
+   }
+  ],
+  "ocsvm": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 10.0,
+    "pr_auc": 0.0878486394557823,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.3466666666666667
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 18.0,
+    "pr_auc": 0.07894773342566211,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.2577777777777778
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 10.0,
+    "pr_auc": 0.07138548381709475,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.1866666666666667
+   }
+  ],
+  "pca": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 24.0,
+    "pr_auc": 0.07864126349840635,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.26222222222222225
+   },
+   {
+    "f1": 0.13333333333333333,
+    "flagged_pct": 20.0,
+    "pr_auc": 0.08601478308925116,
+    "precision": 0.1,
+    "recall": 0.2,
+    "roc_auc": 0.22666666666666668
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 18.0,
+    "pr_auc": 0.0744186281142803,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.22222222222222224
+   }
+  ],
+  "zscore": [
+   {
+    "f1": 0.0,
+    "flagged_pct": 20.0,
+    "pr_auc": 0.06901063829787235,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.1
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 18.0,
+    "pr_auc": 0.07959008780817292,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.21777777777777774
+   },
+   {
+    "f1": 0.0,
+    "flagged_pct": 24.0,
+    "pr_auc": 0.06964769449819283,
+    "precision": 0.0,
+    "recall": 0.0,
+    "roc_auc": 0.11555555555555556
+   }
+  ]
+ },
+ "name": "Dermatology",
+ "prevalence": 0.1,
+ "problem": "uci:33",
+ "report": {
+  "anomalies": 33,
+  "anomaly_class": "4",
+  "conflicting_rows_removed": 0,
+  "dropped_constant": [],
+  "dropped_high_cardinality": [],
+  "dropped_missing": [],
+  "duplicates_removed": 0,
+  "encoded": [],
+  "features_out": 34,
+  "kind": "downsampled",
+  "natural_rate": 0.1416184971098266,
+  "rows": 330,
+  "rows_in": 330,
+  "rows_out": 330,
+  "rule": "R4"
+ },
+ "rows": 330,
+ "rule": "R4",
+ "seeds": [
+  42,
+  1,
+  2
+ ],
+ "skipped": []
+}

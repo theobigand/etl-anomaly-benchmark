@@ -2911,3 +2911,31 @@ def test_the_dvf_builder_reads_the_gzip_csv_and_records_the_department_scope(tmp
     assert view["files"] == {"sales.csv": {"sha256": _sha(target), "rows": 4}}
     assert view["pseudonymised"] == ["mutation"] and "address" in view["dropped"][0]
     assert view["sampling"] == {"scope": "department 69 (Rhone), transactions of 2024 only", "rows": 4, "rows_without_value": 1}  # fmt: skip  # noqa: E501
+
+
+def test_the_gtfs_template_keeps_only_keys_and_the_three_relations_and_registers_every_feed():
+    spec = ev._gtfs_spec("feed.zip")
+    assert spec == {
+        "archive": {"file": "feed.zip", "prefix": "", "ext": ".txt"},
+        "sep": ",",
+        "quote_none": False,
+        "dropped": ["stop and route names", "coordinates", "shapes", "fares", "free text"],
+        "tables": {
+            "routes": {"keep": ["route_id", "route_type"]},
+            "trips": {"keep": ["trip_id", "route_id", "service_id"]},
+            "stop_times": {"keep": ["trip_id", "stop_id", "stop_sequence"]},
+            "stops": {"keep": ["stop_id"]},
+            "calendar_dates": {"keep": ["service_id", "date", "exception_type"], "optional": True},
+        },
+        "relations": [
+            ["trips", "route_id", "routes", "route_id"],
+            ["stop_times", "trip_id", "trips", "trip_id"],
+            ["stop_times", "stop_id", "stops", "stop_id"],
+        ],
+    }
+    assert len(ev.GTFS_FEEDS) == 12 and all(
+        name.endswith(".zip") for name in ev.GTFS_FEEDS.values()
+    )
+    assert all(
+        source in ev.TABLE_SETS for source in ev.GTFS_FEEDS
+    )  # the real registry holds every feed
