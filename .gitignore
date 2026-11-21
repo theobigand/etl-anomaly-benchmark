@@ -70,3 +70,4 @@ data/uci_wave2/
 # slide-quality job output (layout reports, renders)
 experiments/results/slides/
 data/loghub/
+data/acquired/

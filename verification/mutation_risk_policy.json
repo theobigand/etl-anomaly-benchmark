@@ -511,6 +511,14 @@
     "research/uci_wave2.py": {
       "level": "L3",
       "reason": "Licence verification, exclusion of already-pooled tables and checksum pinning define which sources enter the corpus."
+    },
+    "research/acquisition.py": {
+      "level": "L3",
+      "reason": "Licence-class gating, host allow-list, size bounds, snapshot immutability and checksums decide which external data enters the corpus."
+    },
+    "research/acquisition_validate.py": {
+      "level": "L3",
+      "reason": "Structural checks (series content, nesting shape, referential integrity) decide the stratum eligibility of acquired sources."
     }
   }
 }

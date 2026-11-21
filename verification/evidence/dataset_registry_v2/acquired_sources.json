@@ -1,0 +1,652 @@
+{
+ "checked": "2026-11-21",
+ "entries": [
+  {
+   "eligible": true,
+   "family": "monash:sunspot",
+   "id": "monash:4654773",
+   "licence_class": "open",
+   "protocols": "controlled injection only (no natural anomaly labels); chronological order available",
+   "publisher": "monash_compilation",
+   "reason": "daily sunspot numbers 1818-2020 (SILSO); natural series, observation times from the start stamp",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "compiler (Zenodo CC BY 4.0); upstream terms not separately read",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "monash:sunspot"
+  },
+  {
+   "eligible": true,
+   "family": "monash:fred_md",
+   "id": "monash:4654833",
+   "licence_class": "open",
+   "protocols": "controlled injection only (no natural anomaly labels); chronological order available",
+   "publisher": "monash_compilation",
+   "reason": "107 monthly US macro indicators (FRED-MD); observed series",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "compiler (Zenodo CC BY 4.0); upstream terms not separately read",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "monash:fred_md"
+  },
+  {
+   "eligible": true,
+   "family": "monash:covid_deaths",
+   "id": "monash:4656009",
+   "licence_class": "open",
+   "protocols": "controlled injection only (no natural anomaly labels); chronological order available",
+   "publisher": "monash_compilation",
+   "reason": "daily COVID-19 deaths, 266 regions; observed, 212 days",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "compiler (Zenodo CC BY 4.0); upstream terms not separately read",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "monash:covid_deaths"
+  },
+  {
+   "eligible": true,
+   "family": "monash:hospital",
+   "id": "monash:4656014",
+   "licence_class": "open",
+   "protocols": "controlled injection only (no natural anomaly labels); chronological order available",
+   "publisher": "monash_compilation",
+   "reason": "767 monthly patient-count series; observed",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "compiler (Zenodo CC BY 4.0); upstream terms not separately read",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "monash:hospital"
+  },
+  {
+   "eligible": true,
+   "family": "monash:car_parts",
+   "id": "monash:4656022",
+   "licence_class": "open",
+   "protocols": "controlled injection only (no natural anomaly labels); chronological order available",
+   "publisher": "monash_compilation",
+   "reason": "2674 intermittent monthly sales series; observed",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "compiler (Zenodo CC BY 4.0); upstream terms not separately read",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "monash:car_parts"
+  },
+  {
+   "eligible": true,
+   "family": "monash:energy_4s",
+   "id": "monash:4656027",
+   "licence_class": "open",
+   "protocols": "controlled injection only (no natural anomaly labels); chronological order available",
+   "publisher": "monash_compilation",
+   "reason": "4-second solar power series, one very long series",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "compiler (Zenodo CC BY 4.0); upstream terms not separately read",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "monash:energy_4s"
+  },
+  {
+   "eligible": false,
+   "family": "monash:energy_4s",
+   "id": "monash:4656032",
+   "licence_class": "open",
+   "protocols": "controlled injection only (no natural anomaly labels); chronological order available",
+   "publisher": "monash_compilation",
+   "reason": "same collection pipeline and publisher as the 4-second solar series; counted once, not twice",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "compiler (Zenodo CC BY 4.0); upstream terms not separately read",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C3",
+   "system": "monash:energy_4s"
+  },
+  {
+   "eligible": false,
+   "family": "monash:cif2016",
+   "id": "monash:4656042",
+   "licence_class": "open",
+   "protocols": "controlled injection only (no natural anomaly labels); chronological order available",
+   "publisher": "monash_compilation",
+   "reason": "no start timestamps and 48 of 72 series are artificial; cannot support chronological protocols",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "compiler (Zenodo CC BY 4.0); upstream terms not separately read",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C3",
+   "system": "monash:cif2016"
+  },
+  {
+   "eligible": true,
+   "family": "monash:us_births",
+   "id": "monash:4656049",
+   "licence_class": "open",
+   "protocols": "controlled injection only (no natural anomaly labels); chronological order available",
+   "publisher": "monash_compilation",
+   "reason": "daily US births 1969-1988; observed",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "compiler (Zenodo CC BY 4.0); upstream terms not separately read",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "monash:us_births"
+  },
+  {
+   "eligible": true,
+   "family": "monash:saugeen",
+   "id": "monash:4656058",
+   "licence_class": "open",
+   "protocols": "controlled injection only (no natural anomaly labels); chronological order available",
+   "publisher": "monash_compilation",
+   "reason": "daily Saugeen River flow; observed",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "compiler (Zenodo CC BY 4.0); upstream terms not separately read",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "monash:saugeen"
+  },
+  {
+   "eligible": true,
+   "family": "monash:tourism",
+   "id": "monash:4656096",
+   "licence_class": "open",
+   "protocols": "controlled injection only (no natural anomaly labels); chronological order available",
+   "publisher": "monash_compilation",
+   "reason": "366 monthly tourism series (competition); observed",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "compiler (Zenodo CC BY 4.0); upstream terms not separately read",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "monash:tourism"
+  },
+  {
+   "eligible": true,
+   "family": "monash:nn5",
+   "id": "monash:4656110",
+   "licence_class": "open",
+   "protocols": "controlled injection only (no natural anomaly labels); chronological order available",
+   "publisher": "monash_compilation",
+   "reason": "111 daily ATM series, 2% missing; observed",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "compiler (Zenodo CC BY 4.0); upstream terms not separately read",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "monash:nn5"
+  },
+  {
+   "eligible": true,
+   "family": "monash:traffic_sf",
+   "id": "monash:4656132",
+   "licence_class": "open",
+   "protocols": "controlled injection only (no natural anomaly labels); chronological order available",
+   "publisher": "monash_compilation",
+   "reason": "862 hourly road-occupancy series (San Francisco, Lai et al.); observed",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "compiler (Zenodo CC BY 4.0); upstream terms not separately read",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "monash:traffic_sf"
+  },
+  {
+   "eligible": false,
+   "family": "monash:solar_nrel",
+   "id": "monash:4656144",
+   "licence_class": "open",
+   "protocols": "controlled injection only (no natural anomaly labels); chronological order available",
+   "publisher": "monash_compilation",
+   "reason": "simulated solar power series, not observations",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "compiler (Zenodo CC BY 4.0); upstream terms not separately read",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C3",
+   "system": "monash:solar_nrel"
+  },
+  {
+   "eligible": true,
+   "family": "monash:pedestrian",
+   "id": "monash:4656626",
+   "licence_class": "open",
+   "protocols": "controlled injection only (no natural anomaly labels); chronological order available",
+   "publisher": "monash_compilation",
+   "reason": "hourly pedestrian counts, 66 sensors, Melbourne; observed",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "compiler (Zenodo CC BY 4.0); upstream terms not separately read",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "monash:pedestrian"
+  },
+  {
+   "eligible": true,
+   "family": "monash:kdd2018",
+   "id": "monash:4656719",
+   "licence_class": "open",
+   "protocols": "controlled injection only (no natural anomaly labels); chronological order available",
+   "publisher": "monash_compilation",
+   "reason": "hourly air-quality series, 17% missing; observed",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "compiler (Zenodo CC BY 4.0); upstream terms not separately read",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "monash:kdd2018"
+  },
+  {
+   "eligible": true,
+   "family": "monash:aus_electricity",
+   "id": "monash:4659727",
+   "licence_class": "open",
+   "protocols": "controlled injection only (no natural anomaly labels); chronological order available",
+   "publisher": "monash_compilation",
+   "reason": "half-hourly demand of 5 Australian states; observed",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "compiler (Zenodo CC BY 4.0); upstream terms not separately read",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "monash:aus_electricity"
+  },
+  {
+   "eligible": true,
+   "family": "monash:bitcoin",
+   "id": "monash:5121965",
+   "licence_class": "open",
+   "protocols": "controlled injection only (no natural anomaly labels); chronological order available",
+   "publisher": "monash_compilation",
+   "reason": "18 daily series of bitcoin-price influencers, 10% missing; observed",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "compiler (Zenodo CC BY 4.0); upstream terms not separately read",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "monash:bitcoin"
+  },
+  {
+   "eligible": true,
+   "family": "monash:rideshare",
+   "id": "monash:5122114",
+   "licence_class": "open",
+   "protocols": "controlled injection only (no natural anomaly labels); chronological order available",
+   "publisher": "monash_compilation",
+   "reason": "hourly Uber and Lyft ride attributes, 40% missing; observed",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "compiler (Zenodo CC BY 4.0); upstream terms not separately read",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "monash:rideshare"
+  },
+  {
+   "eligible": true,
+   "family": "monash:vehicle_trips",
+   "id": "monash:5122535",
+   "licence_class": "open",
+   "protocols": "controlled injection only (no natural anomaly labels); chronological order available",
+   "publisher": "monash_compilation",
+   "reason": "329 daily vehicle-trip series, 17% missing; observed",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "compiler (Zenodo CC BY 4.0); upstream terms not separately read",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "monash:vehicle_trips"
+  },
+  {
+   "eligible": true,
+   "family": "monash:oikolab_weather",
+   "id": "monash:5184708",
+   "licence_class": "open",
+   "protocols": "controlled injection only (no natural anomaly labels); chronological order available",
+   "publisher": "monash_compilation",
+   "reason": "8 hourly weather series (OikoLab); observed reanalysis-based data",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "compiler (Zenodo CC BY 4.0); upstream terms not separately read",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "monash:oikolab_weather"
+  },
+  {
+   "eligible": true,
+   "family": "stackexchange",
+   "id": "stackexchange:3dprinting",
+   "licence_class": "open",
+   "protocols": "as stackexchange",
+   "publisher": "stackexchange_inc",
+   "reason": "one community of the platform: a distinct population and content domain, same schema",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY-SA",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "stackexchange:3dprinting"
+  },
+  {
+   "eligible": true,
+   "family": "stackexchange",
+   "id": "stackexchange:astronomy",
+   "licence_class": "open",
+   "protocols": "as stackexchange",
+   "publisher": "stackexchange_inc",
+   "reason": "one community of the platform: a distinct population and content domain, same schema",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY-SA",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "stackexchange:astronomy"
+  },
+  {
+   "eligible": true,
+   "family": "stackexchange",
+   "id": "stackexchange:beer",
+   "licence_class": "open",
+   "protocols": "as stackexchange",
+   "publisher": "stackexchange_inc",
+   "reason": "one community of the platform: a distinct population and content domain, same schema",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY-SA",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "stackexchange:beer"
+  },
+  {
+   "eligible": true,
+   "family": "stackexchange",
+   "id": "stackexchange:coffee",
+   "licence_class": "open",
+   "protocols": "as stackexchange",
+   "publisher": "stackexchange_inc",
+   "reason": "one community of the platform: a distinct population and content domain, same schema",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY-SA",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "stackexchange:coffee"
+  },
+  {
+   "eligible": true,
+   "family": "stackexchange",
+   "id": "stackexchange:earthscience",
+   "licence_class": "open",
+   "protocols": "as stackexchange",
+   "publisher": "stackexchange_inc",
+   "reason": "one community of the platform: a distinct population and content domain, same schema",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY-SA",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "stackexchange:earthscience"
+  },
+  {
+   "eligible": true,
+   "family": "stackexchange",
+   "id": "stackexchange:economics",
+   "licence_class": "open",
+   "protocols": "as stackexchange",
+   "publisher": "stackexchange_inc",
+   "reason": "one community of the platform: a distinct population and content domain, same schema",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY-SA",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "stackexchange:economics"
+  },
+  {
+   "eligible": true,
+   "family": "stackexchange",
+   "id": "stackexchange:fitness",
+   "licence_class": "open",
+   "protocols": "as stackexchange",
+   "publisher": "stackexchange_inc",
+   "reason": "one community of the platform: a distinct population and content domain, same schema",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY-SA",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "stackexchange:fitness"
+  },
+  {
+   "eligible": true,
+   "family": "stackexchange",
+   "id": "stackexchange:gardening",
+   "licence_class": "open",
+   "protocols": "as stackexchange",
+   "publisher": "stackexchange_inc",
+   "reason": "one community of the platform: a distinct population and content domain, same schema",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY-SA",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "stackexchange:gardening"
+  },
+  {
+   "eligible": true,
+   "family": "stackexchange",
+   "id": "stackexchange:ham",
+   "licence_class": "open",
+   "protocols": "as stackexchange",
+   "publisher": "stackexchange_inc",
+   "reason": "one community of the platform: a distinct population and content domain, same schema",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY-SA",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "stackexchange:ham"
+  },
+  {
+   "eligible": true,
+   "family": "stackexchange",
+   "id": "stackexchange:health",
+   "licence_class": "open",
+   "protocols": "as stackexchange",
+   "publisher": "stackexchange_inc",
+   "reason": "one community of the platform: a distinct population and content domain, same schema",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY-SA",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "stackexchange:health"
+  },
+  {
+   "eligible": true,
+   "family": "openfda_drug_event",
+   "id": "openfda_drug_event",
+   "licence_class": "open",
+   "protocols": "nested-structure corruption, missing optional fields, type inconsistency, schema drift by controlled injection; no natural labels",
+   "publisher": "us_fda",
+   "reason": "4000 records, depth 6, 21 array paths, 33 optional paths: genuinely nested and variable",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC0 (open.fda.gov/terms)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "openfda_drug_event"
+  },
+  {
+   "eligible": true,
+   "family": "openfda_drug_label",
+   "id": "openfda_drug_label",
+   "licence_class": "open",
+   "protocols": "nested-structure corruption, missing optional fields, type inconsistency, schema drift by controlled injection; no natural labels",
+   "publisher": "us_fda",
+   "reason": "1000 records, 126 array paths, 124 optional paths: heterogeneous nested labels",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC0 (open.fda.gov/terms)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "openfda_drug_label"
+  },
+  {
+   "eligible": false,
+   "family": "openfda_food_enforcement",
+   "id": "openfda_food_enforcement",
+   "licence_class": "open",
+   "protocols": "nested-structure corruption, missing optional fields, type inconsistency, schema drift by controlled injection; no natural labels",
+   "publisher": "us_fda",
+   "reason": "2155 records but depth 2 and no arrays: semi-structured records with little nesting; kept as C6 only provisionally",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC0 (open.fda.gov/terms)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "openfda_food_enforcement"
+  }
+ ],
+ "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run"
+}

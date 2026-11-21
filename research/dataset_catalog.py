@@ -225,18 +225,46 @@ def licence_rows(manifests: list[tuple[Path, str]]) -> list[dict[str, Any]]:
                     "source": t["id"],
                     "stratum": stratum,
                     "licence_class": manifest["licence_class"],
+                    "publisher": "logpai",
                     "origin": "licence_manifest",
                 }
             )
     return rows
 
 
+ACQUIRED = GAP_DIR / "acquired_sources.json"
+
+
+def acquired_rows(path: Path = ACQUIRED) -> list[dict[str, Any]]:
+    """Scientifically eligible acquired entries; the others stay in the file with their reason."""
+    if not path.exists():
+        return []
+    return [
+        {
+            "id": e["id"],
+            "source": e["family"],
+            "system": e["system"],
+            "publisher": e["publisher"],
+            "stratum": e["stratum"],
+            "licence_class": e["licence_class"],
+            "origin": "acquired",
+        }
+        for e in json.loads(path.read_text())["entries"]
+        if e["eligible"]
+    ]
+
+
 def gap_report(rows: list[dict[str, Any]]) -> dict[str, Any]:
     """Independent source families per stratum against the targets (once per stratum)."""
     seen: dict[str, set[str]] = {k: set() for k in STRATA}
+    systems: dict[str, set[str]] = {k: set() for k in STRATA}
+    publishers: dict[str, set[str]] = {k: set() for k in STRATA}
     candidates: set[str] = set()
     for r in rows:
-        seen[stratum_of(r)].add(r["source"])
+        k = stratum_of(r)
+        seen[k].add(r["source"])
+        systems[k].add(r.get("system", r["source"]))
+        publishers[k].add(r.get("publisher", r["source"]))
         if r.get("time_candidate") and not r.get("time_verified"):
             candidates.add(r["source"])
     table = {}
@@ -246,6 +274,8 @@ def gap_report(rows: list[dict[str, Any]]) -> dict[str, Any]:
         table[k] = {
             "stratum": label,
             "sources": n,
+            "systems": len(systems[k]),
+            "publishers": len(publishers[k]),
             "minimum": low,
             "recommended": rec,
             "ambitious": amb,
@@ -267,12 +297,14 @@ def render_gap(report: dict[str, Any]) -> str:
     lines = [
         "# Independent source families per stratum against the targets",
         "",
-        "| Stratum | Sources now | Minimum | Recommended | Ambitious | Missing to recommended |",
-        "|---|---:|---:|---:|---:|---:|",
+        "| Stratum | Families | Systems | Publishers | Minimum | Recommended | Ambitious "
+        "| Missing to recommended |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for k, v in report["strata"].items():
         lines.append(
-            f"| {k} {v['stratum']} | {v['sources']} | {v['minimum']} | {v['recommended']} "
+            f"| {k} {v['stratum']} | {v['sources']} | {v['systems']} | {v['publishers']} "
+            f"| {v['minimum']} | {v['recommended']} "
             f"| {v['ambitious']} | {v['missing_to_recommended']} |"
         )
     lines += [
@@ -296,7 +328,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("command", choices=("gap",))
     parser.add_argument("--out", type=Path, default=GAP_DIR)
     args = parser.parse_args(argv)
-    report = gap_report([*stratum_rows(), *licence_rows(LICENCE_MANIFESTS)])
+    report = gap_report([*stratum_rows(), *licence_rows(LICENCE_MANIFESTS), *acquired_rows()])
     args.out.mkdir(parents=True, exist_ok=True)
     (args.out / "stratum_gap.json").write_text(json.dumps(report, indent=1, sort_keys=True) + "\n")
     (args.out / "stratum_gap.md").write_text(render_gap(report))

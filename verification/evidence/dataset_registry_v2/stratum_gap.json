@@ -1,6 +1,6 @@
 {
  "licence_classes": {
-  "open": 156,
+  "open": 177,
   "research_only": 16
  },
  "strata": {
@@ -9,54 +9,66 @@
    "minimum": 15,
    "missing_to_minimum": 0,
    "missing_to_recommended": 0,
+   "publishers": 92,
    "recommended": 36,
    "sources": 92,
-   "stratum": "flat tabular"
+   "stratum": "flat tabular",
+   "systems": 92
   },
   "C2": {
    "ambitious": 45,
    "minimum": 15,
    "missing_to_minimum": 0,
    "missing_to_recommended": 0,
+   "publishers": 42,
    "recommended": 30,
    "sources": 42,
-   "stratum": "transactional and categorical"
+   "stratum": "transactional and categorical",
+   "systems": 42
   },
   "C3": {
    "ambitious": 55,
    "minimum": 15,
    "missing_to_minimum": 0,
-   "missing_to_recommended": 15,
+   "missing_to_recommended": 0,
+   "publishers": 26,
    "recommended": 40,
-   "sources": 25,
-   "stratum": "time series"
+   "sources": 43,
+   "stratum": "time series",
+   "systems": 43
   },
   "C4": {
    "ambitious": 40,
    "minimum": 15,
    "missing_to_minimum": 0,
    "missing_to_recommended": 12,
+   "publishers": 1,
    "recommended": 28,
    "sources": 16,
-   "stratum": "logs and event sequences"
+   "stratum": "logs and event sequences",
+   "systems": 16
   },
   "C5": {
    "ambitious": 55,
    "minimum": 15,
-   "missing_to_minimum": 15,
-   "missing_to_recommended": 36,
+   "missing_to_minimum": 14,
+   "missing_to_recommended": 35,
+   "publishers": 1,
    "recommended": 36,
-   "sources": 0,
-   "stratum": "relational"
+   "sources": 1,
+   "stratum": "relational",
+   "systems": 10
   },
   "C6": {
    "ambitious": 45,
    "minimum": 15,
-   "missing_to_minimum": 15,
-   "missing_to_recommended": 30,
+   "missing_to_minimum": 13,
+   "missing_to_recommended": 28,
+   "publishers": 1,
    "recommended": 30,
-   "sources": 0,
-   "stratum": "nested"
+   "sources": 2,
+   "stratum": "nested",
+   "systems": 2
   }
  },
  "time_candidates_not_yet_verified": [
@@ -64,5 +76,5 @@
   "uci:755",
   "uci:760"
  ],
- "total_sources": 172
+ "total_sources": 193
 }

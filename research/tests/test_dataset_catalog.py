@@ -179,3 +179,29 @@ def test_licence_classified_manifests_become_explicit_stratum_rows_and_a_class_b
     report = dc.gap_report([*rows, {"id": "u", "source": "u", "schema_kind": "numeric"}])
     assert report["strata"]["C4"]["sources"] == 2
     assert report["licence_classes"] == {"open": 1, "research_only": 2}
+
+
+def test_acquired_entries_count_only_when_eligible_with_three_independence_levels(
+    tmp_path,
+):
+    import json
+
+    entries = {
+        "entries": [
+            {"id": "a:1", "family": "fa", "system": "s1", "publisher": "p", "stratum": "C5",
+             "licence_class": "open", "eligible": True},
+            {"id": "a:2", "family": "fa", "system": "s2", "publisher": "p", "stratum": "C5",
+             "licence_class": "open", "eligible": True},
+            {"id": "b:1", "family": "fb", "system": "s3", "publisher": "q", "stratum": "C3",
+             "licence_class": "open", "eligible": False, "reason": "simulated"},
+        ]
+    }  # fmt: skip
+    path = tmp_path / "acq.json"
+    path.write_text(json.dumps(entries))
+    rows = dc.acquired_rows(path)
+    assert [r["id"] for r in rows] == ["a:1", "a:2"]  # the ineligible entry adds nothing
+    assert rows[0]["source"] == "fa" and rows[0]["stratum"] == "C5"
+    report = dc.gap_report(rows)
+    c5 = report["strata"]["C5"]
+    assert (c5["sources"], c5["systems"], c5["publishers"]) == (1, 2, 1)
+    assert dc.acquired_rows(tmp_path / "none.json") == []

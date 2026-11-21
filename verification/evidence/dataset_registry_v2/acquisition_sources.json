@@ -1,0 +1,348 @@
+{
+ "checked": "2026-11-21",
+ "sources": [
+  {
+   "attribution": "cite Godahewa et al., NeurIPS Datasets and Benchmarks 2021 and the record DOI",
+   "files": [
+    {
+     "checksum_zenodo": "md5:9d25d55656f0fa6ad78e905d5e236727",
+     "name": "4654773_sunspot_dataset_with_missing_values.zip",
+     "observed": null,
+     "record": 4654773,
+     "title": "Sunspot Daily Dataset (with Missing Values)",
+     "url": "https://zenodo.org/records/4654773/files/sunspot_dataset_with_missing_values.zip?download=1"
+    },
+    {
+     "checksum_zenodo": "md5:339cc7c28d9e6358bd6ed4115f1b166d",
+     "name": "4654833_fred_md_dataset.zip",
+     "observed": null,
+     "record": 4654833,
+     "title": "FRED-MD Dataset",
+     "url": "https://zenodo.org/records/4654833/files/fred_md_dataset.zip?download=1"
+    },
+    {
+     "checksum_zenodo": "md5:65c233f20dba0b1e63d1fac2448b7c08",
+     "name": "4656009_covid_deaths_dataset.zip",
+     "observed": null,
+     "record": 4656009,
+     "title": "COVID-19 Deaths Dataset",
+     "url": "https://zenodo.org/records/4656009/files/covid_deaths_dataset.zip?download=1"
+    },
+    {
+     "checksum_zenodo": "md5:00ba7422b837555c0715f4245fe608f7",
+     "name": "4656014_hospital_dataset.zip",
+     "observed": null,
+     "record": 4656014,
+     "title": "Hospital Dataset",
+     "url": "https://zenodo.org/records/4656014/files/hospital_dataset.zip?download=1"
+    },
+    {
+     "checksum_zenodo": "md5:7b104f4549c0b10ad22299304d5fee63",
+     "name": "4656022_car_parts_dataset_with_missing_values.zip",
+     "observed": null,
+     "record": 4656022,
+     "title": "Car Parts Dataset (with Missing Values)",
+     "url": "https://zenodo.org/records/4656022/files/car_parts_dataset_with_missing_values.zip?download=1"
+    },
+    {
+     "checksum_zenodo": "md5:7bfe6bfea883c6e5ffb48ea3ef8c87ae",
+     "name": "4656027_solar_4_seconds_dataset.zip",
+     "observed": null,
+     "record": 4656027,
+     "title": "Solar Power Dataset (4 Seconds Observations)",
+     "url": "https://zenodo.org/records/4656027/files/solar_4_seconds_dataset.zip?download=1"
+    },
+    {
+     "checksum_zenodo": "md5:eecd8693f73c09f3c7b7fe4960bac41c",
+     "name": "4656032_wind_4_seconds_dataset.zip",
+     "observed": null,
+     "record": 4656032,
+     "title": "Wind Power Dataset (4 Seconds Observations)",
+     "url": "https://zenodo.org/records/4656032/files/wind_4_seconds_dataset.zip?download=1"
+    },
+    {
+     "checksum_zenodo": "md5:1e3ff512e4d08849ce71138a6dda9c19",
+     "name": "4656042_cif_2016_dataset.zip",
+     "observed": null,
+     "record": 4656042,
+     "title": "CIF 2016 Dataset",
+     "url": "https://zenodo.org/records/4656042/files/cif_2016_dataset.zip?download=1"
+    },
+    {
+     "checksum_zenodo": "md5:6680000cb82f7db6ced6b480bde89410",
+     "name": "4656049_us_births_dataset.zip",
+     "observed": null,
+     "record": 4656049,
+     "title": "US Births Dataset",
+     "url": "https://zenodo.org/records/4656049/files/us_births_dataset.zip?download=1"
+    },
+    {
+     "checksum_zenodo": "md5:25365107befc47a70fae017043993fd5",
+     "name": "4656058_saugeenday_dataset.zip",
+     "observed": null,
+     "record": 4656058,
+     "title": "Saugeen River Flow (SaugeenDay) Dataset",
+     "url": "https://zenodo.org/records/4656058/files/saugeenday_dataset.zip?download=1"
+    },
+    {
+     "checksum_zenodo": "md5:7b9a152b2736aff87bb5155f6a650693",
+     "name": "4656096_tourism_monthly_dataset.zip",
+     "observed": null,
+     "record": 4656096,
+     "title": "Tourism Monthly Dataset",
+     "url": "https://zenodo.org/records/4656096/files/tourism_monthly_dataset.zip?download=1"
+    },
+    {
+     "checksum_zenodo": "md5:2529489455b2d9f730fbb3c65d39df88",
+     "name": "4656110_nn5_daily_dataset_with_missing_values.zip",
+     "observed": null,
+     "record": 4656110,
+     "title": "NN5 Daily Dataset (with Missing Values)",
+     "url": "https://zenodo.org/records/4656110/files/nn5_daily_dataset_with_missing_values.zip?download=1"
+    },
+    {
+     "checksum_zenodo": "md5:1cf694f99f95700217845078b467fb24",
+     "name": "4656132_traffic_hourly_dataset.zip",
+     "observed": null,
+     "record": 4656132,
+     "title": "Traffic Hourly Dataset",
+     "url": "https://zenodo.org/records/4656132/files/traffic_hourly_dataset.zip?download=1"
+    },
+    {
+     "checksum_zenodo": "md5:84c0de18383c911091a3cd274661b029",
+     "name": "4656144_solar_10_minutes_dataset.zip",
+     "observed": null,
+     "record": 4656144,
+     "title": "Solar Dataset (10 Minutes Observations)",
+     "url": "https://zenodo.org/records/4656144/files/solar_10_minutes_dataset.zip?download=1"
+    },
+    {
+     "checksum_zenodo": "md5:420043b57ed8577564d299742e8acf97",
+     "name": "4656626_pedestrian_counts_dataset.zip",
+     "observed": null,
+     "record": 4656626,
+     "title": "Melbourne Pedestrian Counts Dataset",
+     "url": "https://zenodo.org/records/4656626/files/pedestrian_counts_dataset.zip?download=1"
+    },
+    {
+     "checksum_zenodo": "md5:bd6af1e03c576b6c95c5e4b58aba831f",
+     "name": "4656719_kdd_cup_2018_dataset_with_missing_values.zip",
+     "observed": null,
+     "record": 4656719,
+     "title": "KDD Cup Dataset (with Missing Values)",
+     "url": "https://zenodo.org/records/4656719/files/kdd_cup_2018_dataset_with_missing_values.zip?download=1"
+    },
+    {
+     "checksum_zenodo": "md5:c9ec3ee8e81cd78d9edd2a29a7a2640b",
+     "name": "4659727_australian_electricity_demand_dataset.zip",
+     "observed": null,
+     "record": 4659727,
+     "title": "Australian Electricity Demand Dataset",
+     "url": "https://zenodo.org/records/4659727/files/australian_electricity_demand_dataset.zip?download=1"
+    },
+    {
+     "checksum_zenodo": "md5:43288d2602357cc469c80de40bcb1c64",
+     "name": "5121965_bitcoin_dataset_with_missing_values.zip",
+     "observed": null,
+     "record": 5121965,
+     "title": "Bitcoin Dataset with Missing Values",
+     "url": "https://zenodo.org/records/5121965/files/bitcoin_dataset_with_missing_values.zip?download=1"
+    },
+    {
+     "checksum_zenodo": "md5:b5faa7112787bb6d42e5de56462de7c7",
+     "name": "5122114_rideshare_dataset_with_missing_values.zip",
+     "observed": null,
+     "record": 5122114,
+     "title": "Rideshare Dataset with Missing Values",
+     "url": "https://zenodo.org/records/5122114/files/rideshare_dataset_with_missing_values.zip?download=1"
+    },
+    {
+     "checksum_zenodo": "md5:50dc2572b855bcdce647ea775ddbb3ef",
+     "name": "5122535_vehicle_trips_dataset_with_missing_values.zip",
+     "observed": null,
+     "record": 5122535,
+     "title": "Vehicle Trips Dataset with Missing Values",
+     "url": "https://zenodo.org/records/5122535/files/vehicle_trips_dataset_with_missing_values.zip?download=1"
+    },
+    {
+     "checksum_zenodo": "md5:40675cede7f925e3f0734ccd813f761b",
+     "name": "5184708_oikolab_weather_dataset.zip",
+     "observed": null,
+     "record": 5184708,
+     "title": "Oikolab Weather Dataset",
+     "url": "https://zenodo.org/records/5184708/files/oikolab_weather_dataset.zip?download=1"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "monash_zenodo",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/<record>  (metadata.license.id)",
+   "licence_text": "Zenodo record metadata: Creative Commons Attribution 4.0 International (cc-by-4.0), access_right open, for each record",
+   "max_bytes": 104857600,
+   "method": "official Zenodo record file download",
+   "min_interval": 2.0,
+   "privacy": "no personal data expected (aggregated or sensor series); not reviewed per record",
+   "publisher": "Monash University (compiler); originals from many publishers",
+   "rate_limit": "Zenodo anonymous limits respected by a 2 s interval",
+   "redistribution": "CC BY 4.0 permits it with attribution; raw files are still not committed",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "the compiler's licence is verified; upstream terms of each original (Kaggle competitions, AEMO, BoM, FRED, NN5, KDD Cup, ...) are not separately verified"
+  },
+  {
+   "attribution": "none required; cite openFDA",
+   "hosts": [
+    "api.fda.gov"
+   ],
+   "id": "openfda_drug_event",
+   "licence_class": "open",
+   "licence_location": "https://open.fda.gov/terms/",
+   "licence_text": "Unless otherwise noted, the content, data, documentation, code, and related materials on openFDA is public domain and made available with a Creative Commons CC0 1.0 Universal dedication.",
+   "max_bytes": 52428800,
+   "method": "official API, paged (limit 100; larger limits need a key)",
+   "min_interval": 1.0,
+   "pages": {
+    "count": 40,
+    "name": "event_{n}.json",
+    "observed": "2024-01",
+    "size": 100,
+    "url": "https://api.fda.gov/drug/event.json?search=receivedate:[20240101+TO+20240131]&sort=receivedate:asc&limit=100&skip={skip}"
+   },
+   "privacy": "reporter and patient fields are coarse; no direct identifiers expected; not individually reviewed",
+   "publisher": "U.S. FDA (openFDA, FAERS)",
+   "rate_limit": "240 requests per minute and 1000 per day without a key; 40 requests used",
+   "redistribution": "CC0 permits it",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "FDA; third-party copyrighted works and GMDN content (device endpoints, not used) are excluded"
+  },
+  {
+   "attribution": "none required; cite openFDA",
+   "hosts": [
+    "api.fda.gov"
+   ],
+   "id": "openfda_drug_label",
+   "licence_class": "open",
+   "licence_location": "https://open.fda.gov/terms/",
+   "licence_text": "Unless otherwise noted, the content, data, documentation, code, and related materials on openFDA is public domain and made available with a Creative Commons CC0 1.0 Universal dedication.",
+   "max_bytes": 52428800,
+   "method": "official API, paged (limit 100)",
+   "min_interval": 1.0,
+   "pages": {
+    "count": 10,
+    "name": "label_{n}.json",
+    "observed": "2024",
+    "size": 100,
+    "url": "https://api.fda.gov/drug/label.json?search=effective_time:[20240101+TO+20241231]&sort=effective_time:asc&limit=100&skip={skip}"
+   },
+   "privacy": "no personal data expected",
+   "publisher": "U.S. FDA (openFDA, SPL drug labels)",
+   "rate_limit": "as above; 10 requests used",
+   "redistribution": "CC0 permits it",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "FDA; label text may include third-party material (documented warning on openFDA when so)"
+  },
+  {
+   "attribution": "none required; cite openFDA",
+   "hosts": [
+    "api.fda.gov"
+   ],
+   "id": "openfda_food_enforcement",
+   "licence_class": "open",
+   "licence_location": "https://open.fda.gov/terms/",
+   "licence_text": "Unless otherwise noted, the content, data, documentation, code, and related materials on openFDA is public domain and made available with a Creative Commons CC0 1.0 Universal dedication.",
+   "max_bytes": 52428800,
+   "method": "official API, paged (limit 100)",
+   "min_interval": 1.0,
+   "pages": {
+    "count": 22,
+    "name": "enforcement_{n}.json",
+    "observed": "2023",
+    "size": 100,
+    "url": "https://api.fda.gov/food/enforcement.json?search=report_date:[20230101+TO+20231231]&sort=report_date:asc&limit=100&skip={skip}"
+   },
+   "privacy": "firm names are public company names; no personal data expected",
+   "publisher": "U.S. FDA (openFDA, food recalls)",
+   "rate_limit": "as above; 22 requests used (the whole 2023 report window)",
+   "redistribution": "CC0 permits it",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "FDA"
+  },
+  {
+   "attribution": "CC BY-SA 4.0: attribute Stack Exchange and contributors, share derivatives alike",
+   "files": [
+    {
+     "name": "coffee.stackexchange.com.7z",
+     "observed": null,
+     "url": "https://archive.org/download/stackexchange/coffee.stackexchange.com.7z"
+    },
+    {
+     "name": "beer.stackexchange.com.7z",
+     "observed": null,
+     "url": "https://archive.org/download/stackexchange/beer.stackexchange.com.7z"
+    },
+    {
+     "name": "ham.stackexchange.com.7z",
+     "observed": null,
+     "url": "https://archive.org/download/stackexchange/ham.stackexchange.com.7z"
+    },
+    {
+     "name": "health.stackexchange.com.7z",
+     "observed": null,
+     "url": "https://archive.org/download/stackexchange/health.stackexchange.com.7z"
+    },
+    {
+     "name": "earthscience.stackexchange.com.7z",
+     "observed": null,
+     "url": "https://archive.org/download/stackexchange/earthscience.stackexchange.com.7z"
+    },
+    {
+     "name": "fitness.stackexchange.com.7z",
+     "observed": null,
+     "url": "https://archive.org/download/stackexchange/fitness.stackexchange.com.7z"
+    },
+    {
+     "name": "gardening.stackexchange.com.7z",
+     "observed": null,
+     "url": "https://archive.org/download/stackexchange/gardening.stackexchange.com.7z"
+    },
+    {
+     "name": "economics.stackexchange.com.7z",
+     "observed": null,
+     "url": "https://archive.org/download/stackexchange/economics.stackexchange.com.7z"
+    },
+    {
+     "name": "astronomy.stackexchange.com.7z",
+     "observed": null,
+     "url": "https://archive.org/download/stackexchange/astronomy.stackexchange.com.7z"
+    },
+    {
+     "name": "3dprinting.stackexchange.com.7z",
+     "observed": null,
+     "url": "https://archive.org/download/stackexchange/3dprinting.stackexchange.com.7z"
+    }
+   ],
+   "hosts": [
+    "archive.org"
+   ],
+   "id": "stackexchange_dump",
+   "licence_class": "open",
+   "licence_location": "https://stackoverflow.com/legal/terms-of-service/public",
+   "licence_text": "The Creative Commons Data Dump is licensed under the CC BY-SA license. By downloading the Creative Commons Data Dump, you agree to be bound by the terms of that license.",
+   "max_bytes": 104857600,
+   "method": "official data dump mirrored on archive.org (7z of XML tables)",
+   "min_interval": 2.0,
+   "privacy": "Users and Posts carry display names and free text; user text and names must be dropped or pseudonymised before use; no emails in the dump",
+   "publisher": "Stack Exchange Inc. (Creative Commons Data Dump)",
+   "rate_limit": "single sequential downloads",
+   "redistribution": "CC BY-SA permits it with attribution and share-alike; raw files not committed",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "user contributions under CC BY-SA 4.0 with attribution"
+  }
+ ]
+}

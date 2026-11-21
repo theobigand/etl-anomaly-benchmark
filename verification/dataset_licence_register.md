@@ -41,3 +41,11 @@ tables of one database count as one source.
 1. The category minimum (15 sources) is met for C1 to C4 only. C5 and C6 cannot be claimed.
 2. C1 (92) and C2 (42) exceed their targets by a coarse schema criterion; T437 is still open.
 3. C4 rests on one curator; state it with the claim.
+
+## Update 2026-11-21 (acquisition wave 3)
+
+Accepted after verification at the publisher: Monash records (Zenodo `cc-by-4.0`, compiler only),
+openFDA (CC0, open.fda.gov/terms), Stack Exchange dump (CC BY-SA, Stack Overflow public network terms),
+Open Food Facts (ODbL, not yet collected). Details, stages and rejections:
+`verification/dataset_acquisition_report.md`. OpenAlex: not verified, the API needs a key tied to an
+e-mail address that was not provided. The "Not accepted yet" table above still holds for CTU and RelBench.
