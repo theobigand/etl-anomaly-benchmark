@@ -4,6 +4,8 @@ import json
 import sys
 from pathlib import Path
 
+import pytest
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import provenance_audit as pa  # noqa: E402
 
@@ -290,3 +292,118 @@ def test_main_runs_the_audit_on_the_catalogue_rows_and_writes_the_evidence_file(
         capsys.readouterr().out
         == "{'C1': {'tables': 1, 'sources': 1, 'groups': 1}, 'ALL': {'tables': 1, 'sources': 1, 'groups': 1}}\n"  # noqa: E501
     )
+
+
+def test_person_keys_split_on_the_first_comma_and_on_single_spaces_only():
+    assert (
+        pa.person_key("Smith, John, Jr") == "smith john, jr"
+    )  # the first comma separates the surname
+    assert pa.person_key("A. B Lee") == "lee a"
+    assert pa.person_key("A Lee") == "lee a" and pa.person_key("Ab Lee") == "ab lee"
+    assert (
+        pa.person_key("x") == "x" and pa.person_key("J.") == "j."
+    )  # a single token is not an initial form
+
+
+def test_group_sources_skips_empty_creator_keys_but_continues_with_the_other_creators():
+    meta = {"uci:1": {"creators": ["", "Ann Lee"]}, "uci:2": {"creators": ["Ann Lee"]}}
+    groups = pa.group_sources(meta)
+    assert groups["uci:1"] == groups["uci:2"] == "uci:1"
+
+
+def test_audit_skips_excluded_rows_without_stopping_and_tolerates_missing_metadata():
+    rows = [
+        {"id": "t", "source": "uci:9", "time_verified": True},
+        {"id": "s", "source": "uci:8", "stratum": "C4"},
+        {"id": "a", "source": "uci:1", "schema_kind": "numeric"},
+        {"id": "b", "source": "uci:2", "schema_kind": "categorical"},
+    ]
+    out = pa.audit(
+        rows, {}
+    )  # no metadata at all: every source is its own group, no domain is known
+    assert out["C1"]["sources"] == 1 and out["C1"]["groups"] == 1 and out["C1"]["domains"] == 0
+    assert (
+        out["C2a"]["sources"] == 1
+        and out["C2a"]["domain_list"] == []
+        and out["C2a"]["mechanism_list"] == []
+    )
+    assert out["ALL"] == {"sources": 2, "groups": 2, "tables": 2}
+    only_c2a = pa.audit([rows[3]], {})
+    assert sorted(only_c2a) == ["ALL", "C2a"]  # an empty stratum is left out, not reported as zero
+
+
+def test_audit_rounds_the_largest_group_share_to_four_places():
+    rows = [{"id": str(i), "source": f"uci:{i}", "schema_kind": "numeric"} for i in (1, 2, 3)]
+    meta = {
+        "uci:1": {"creators": ["X"]},
+        "uci:2": {"creators": ["X"]},
+        "uci:3": {"creators": ["Y"]},
+    }
+    assert pa.audit(rows, meta)["C1"]["largest_group_share"] == 0.6667
+
+
+def test_run_audits_both_strata_with_the_same_guardrail_minima_and_ignores_non_uci_sources():
+    rows = [
+        {"id": "a", "source": "uci:12", "schema_kind": "numeric"},
+        {"id": "b", "source": "uci:34", "schema_kind": "mixed"},
+        {"id": "n", "source": "natural:x", "schema_kind": "numeric"},
+        {"id": "t", "source": "uci:99", "time_verified": True},
+    ]
+
+    def opener(url):
+        return json.dumps({"data": {"creators": [url[-2:]], "area": "Biology"}}).encode()
+
+    import tempfile
+
+    with tempfile.TemporaryDirectory() as folder:
+        out = pa.run(rows, Path(folder) / "c.json", opener=opener, sleep=lambda s: None)
+        assert sorted(json.loads((Path(folder) / "c.json").read_text())) == ["12", "34"]
+    assert out["C1"]["guardrails"]["missing"] == [
+        "groups: 2 of 36",
+        "domains: 1 of 5",
+        "mechanisms: 1 of 3",
+    ]
+    assert out["C2a"]["guardrails"]["missing"] == [
+        "groups: 1 of 30",
+        "domains: 1 of 5",
+        "mechanisms: 1 of 3",
+    ]
+    assert (
+        out["C1"]["tables"] == 2 and out["ALL"]["sources"] == 3
+    )  # the natural source is audited but not fetched
+
+
+def test_main_default_folder_and_canonical_json_format(tmp_path, monkeypatch):
+    import dataset_catalog as dc
+
+    here = tmp_path / "research"
+    folder = tmp_path / "verification" / "evidence" / "dataset_registry_v2"
+    folder.mkdir(parents=True)
+    here.mkdir()
+    (tmp_path / "src").mkdir()
+    monkeypatch.setattr(dc, "stratum_rows", lambda: [])
+    monkeypatch.setattr(
+        pa,
+        "run",
+        lambda rows, cache: {
+            "B": {"tables": 1, "sources": 1, "groups": 1, "z": 1},
+            "A": {"tables": 2, "sources": 2, "groups": 2, "y": 2},
+        },
+    )
+    monkeypatch.setattr(pa, "__file__", str(here / "provenance_audit.py"))
+    assert pa.main([]) == 0
+    text = (folder / "provenance_audit_c1_c2a.json").read_text()
+    assert (
+        text
+        == json.dumps(
+            {
+                "A": {"groups": 2, "sources": 2, "tables": 2, "y": 2},
+                "B": {"groups": 1, "sources": 1, "tables": 1, "z": 1},
+            },
+            indent=1,
+            sort_keys=True,
+        )
+        + "\n"
+    )
+    with pytest.raises(SystemExit):
+        pa.main(["--help"])

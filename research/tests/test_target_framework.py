@@ -624,3 +624,29 @@ def test_the_report_has_every_documented_section_with_exact_row_counts():
     assert [r["domains"] for r in out["simulation"]] == [6, 10, 10] and out["simulation"][0][
         "per_domain"
     ] == 5
+
+
+def test_holm_edge_cases_error_text_cap_and_inclusive_alpha():
+    with pytest.raises(ValueError) as error:
+        tf.holm_adjust([2.0])
+    assert str(error.value) == "p-values must be between 0 and 1"
+    assert tf.holm_adjust([0.8, 0.9]) == [1.0, 1.0] and tf.holm_adjust([0.9, 0.8]) == [1.0, 1.0]
+    assert tf.holm_adjust([0.7, 0.9, 0.95]) == [1.0, 1.0, 1.0]
+    assert tf.holm_rejections([0.05], alpha=0.05) == [True] and tf.holm_rejections(
+        [0.0501], alpha=0.05
+    ) == [False]
+    assert tf.holm_rejections([]) == []
+    assert tf.holm_adjust([0.0, 0.0]) == [0.0, 0.0]
+    with pytest.raises(ValueError) as error:
+        tf.log_ratio_delta(-0.2)
+    assert str(error.value) == "a relative reduction must be between 0 and 1"
+
+
+def test_the_ci_level_default_is_ninety_five_percent_and_the_search_starts_at_two_sources():
+    assert tf.ci_sources(0.10, 0.03) == tf.ci_sources(0.10, 0.03, level=0.95)
+    assert tf.ci_sources(0.10, 0.03, level=0.90) < tf.ci_sources(0.10, 0.03)
+    assert tf.paired_sources(0.1, 100.0) == 2  # a huge effect needs only the minimum of two sources
+    assert (
+        tf.paired_sources(0.1, 0.5) >= 3
+    )  # three sources are needed for the usual level at this effect
+    assert tf.ci_sources(0.1, 100.0) == 2
