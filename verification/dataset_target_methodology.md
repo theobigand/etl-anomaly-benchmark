@@ -317,7 +317,7 @@ Pilot size for estimating sigma (upper end of its interval relative to the estim
 
 Reading: for AUROC at delta 0.02 the requirement is very sensitive to sigma (about 10 to 200 sources between sigma 0.02 and
 0.10), so AUROC claims are only feasible if the between-source SD of AUROC differences is small; a 20 percent relative reduction
-(0.223 on the log scale) is easy to detect unless sigma on that scale exceeds about 0.3. These are not validated: sigma and the
+(0.223 on the log scale) needs 9, 17 and 28 sources at a log-scale SD of 0.2, 0.3 and 0.4 (one comparison). These are not validated: sigma and the
 clustering correlation are unknown until the pilot. Normal-approximation and independence assumptions apply; clustered sources
 need the design effect of section 3. Assumptions needing owner approval before confirmatory execution: the metrics list, the
 pairing rule within group, the family definitions, the Holm family sizes, the smallest effects, and the hold-out rule.
