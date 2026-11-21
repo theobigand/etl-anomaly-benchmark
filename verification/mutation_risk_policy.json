@@ -539,6 +539,10 @@
     "research/xes_stream.py": {
       "level": "L3",
       "reason": "Complete-trace extraction, limits and prefix labelling of event logs decide which sequences enter the process-mining views."
+    },
+    "research/target_framework.py": {
+      "level": "L3",
+      "reason": "Design-only sample-size and coverage calculations decide which dataset counts are proposed as scientifically sufficient."
     }
   }
 }

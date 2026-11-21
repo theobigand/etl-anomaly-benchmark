@@ -1,0 +1,250 @@
+"""Design-only calculations for the number of independent source groups (no detector is run).
+
+Everything here uses hypothetical parameters supplied by the caller: the between-source standard
+deviation of a paired performance difference (sigma), the smallest difference worth detecting
+(delta) and a design effect or intra-cluster correlation for sources that share a domain, schema
+or curator. The numbers are planning illustrations, not empirical estimates; the variance pilot
+(T424) is what replaces the assumed sigma.
+"""
+
+from __future__ import annotations
+
+import math
+from collections import Counter
+from typing import Any
+
+import numpy as np
+from scipy import stats
+
+
+def normal_factor(alpha: float, power: float) -> float:
+    """(z_{1-alpha/2} + z_power)^2: the 7.85 of the design decision for alpha 0.05, power 0.80."""
+    return float((stats.norm.ppf(1 - alpha / 2) + stats.norm.ppf(power)) ** 2)
+
+
+def t_quantile(p: float, df: float) -> float:
+    return float(stats.t.ppf(p, df))
+
+
+def _check(sigma: float, delta: float) -> None:
+    if sigma <= 0 or delta <= 0:
+        raise ValueError("sigma and delta must be positive")
+
+
+def z_sources(
+    sigma: float, delta: float, alpha: float = 0.05, power: float = 0.80, comparisons: int = 1
+) -> float:
+    """Normal-approximation number of independent sources (not rounded) for a paired comparison."""
+    _check(sigma, delta)
+    return normal_factor(alpha / comparisons, power) * (sigma / delta) ** 2
+
+
+def paired_power(n: int, sigma: float, delta: float, alpha: float = 0.05) -> float:
+    """Power of a two-sided paired t test on ``n`` source-level differences (non-central t)."""
+    if n < 2:
+        return 0.0
+    df = n - 1
+    cutoff = stats.t.ppf(1 - alpha / 2, df)
+    shift = delta / (sigma / math.sqrt(n))
+    upper = stats.nct.sf(cutoff, df, shift)
+    lower = stats.nct.cdf(-cutoff, df, shift)
+    # for a large shift the tails are tiny and the routines can return nan: treat that as 0 or 1
+    upper = 1.0 if not np.isfinite(upper) else upper
+    return float(upper + (lower if np.isfinite(lower) else 0.0))
+
+
+def minimum_detectable_delta(
+    n: float, sigma: float, alpha: float = 0.05, power: float = 0.80
+) -> float:
+    """Smallest paired difference detected with the given power by ``n`` independent sources."""
+    if n < 2:
+        raise ValueError("at least 2 sources are needed")
+    low, high = 0.0, 10.0 * sigma
+    for _ in range(60):
+        mid = (low + high) / 2
+        if paired_power(math.floor(n), sigma, mid, alpha) >= power:
+            high = mid
+        else:
+            low = mid
+    return math.ceil(high * 10_000) / 10_000  # rounded up so the power is still reached
+
+
+def design_effect(cluster_size: float, icc: float) -> float:
+    """Variance inflation 1 + (m - 1) * icc for sources that come in clusters of size m."""
+    return 1.0 + (cluster_size - 1.0) * icc
+
+
+def paired_sources(
+    sigma: float,
+    delta: float,
+    alpha: float = 0.05,
+    power: float = 0.80,
+    comparisons: int = 1,
+    design_effect: float = 1.0,
+) -> int:
+    """Smallest number of independent sources reaching the power, times the design effect.
+
+    The level is divided by ``comparisons`` (Bonferroni); the result is rounded up.
+    """
+    _check(sigma, delta)
+    level = alpha / comparisons
+    n = max(2, math.ceil(z_sources(sigma, delta, alpha, power, comparisons)) - 2)
+    while paired_power(n, sigma, delta, level) < power:
+        n += 1
+    return math.ceil(n * design_effect)
+
+
+def ci_sources(
+    sigma: float, half_width: float, level: float = 0.95, design_effect: float = 1.0
+) -> int:
+    """Smallest number of independent sources whose mean difference has the given CI half-width."""
+    _check(sigma, half_width)
+    n = 2
+    while t_quantile(1 - (1 - level) / 2, n - 1) * sigma / math.sqrt(n) > half_width:
+        n += 1
+    return math.ceil(n * design_effect)
+
+
+def sensitivity_grid(
+    sigmas: list[float], deltas: list[float], comparisons: list[int]
+) -> list[dict[str, Any]]:
+    """Requirement for every combination, in the order sigma, delta, comparisons."""
+    rows = []
+    for sigma in sigmas:
+        for delta in deltas:
+            for m in comparisons:
+                rows.append(
+                    {
+                        "sigma": sigma,
+                        "delta": delta,
+                        "comparisons": m,
+                        "z_sources": z_sources(sigma, delta, comparisons=m),
+                        "t_sources": paired_sources(sigma, delta, comparisons=m),
+                        "ci_sources_half_width_delta": ci_sources(sigma, delta),
+                    }
+                )
+    return rows
+
+
+def effective_groups(cluster_sizes: list[int], icc: float) -> float:
+    """Sum over clusters of m / (1 + (m - 1) * icc): groups discounted for shared structure."""
+    return float(sum(m / (1 + (m - 1) * icc) for m in cluster_sizes))
+
+
+def simulate_rejection(
+    domains: int,
+    per_domain: int,
+    sigma_domain: float,
+    sigma_source: float,
+    delta: float,
+    reps: int,
+    seed: int,
+    alpha: float = 0.05,
+) -> tuple[float, float]:
+    """Rejection rates of a source-level and of a domain-level paired test on simulated data.
+
+    Each source difference is delta + a domain effect + a source effect. The source-level test
+    treats all sources as independent; the domain-level test averages within domains first.
+    """
+    rng = np.random.default_rng(seed)
+    naive = cluster = 0
+    for _ in range(reps):
+        domain_effect = rng.normal(0, sigma_domain, size=(domains, 1))
+        diffs = delta + domain_effect + rng.normal(0, sigma_source, size=(domains, per_domain))
+        naive += stats.ttest_1samp(diffs.ravel(), 0.0).pvalue < alpha
+        cluster += stats.ttest_1samp(diffs.mean(axis=1), 0.0).pvalue < alpha
+    return round(naive / reps, 4), round(cluster / reps, 4)
+
+
+def coverage_summary(
+    attributes: dict[str, dict[str, str]], ready: dict[str, list[str]], icc: float
+) -> dict[str, dict[str, Any]]:
+    """Distinct domains, producers, curators and schema families per category, plus the groups
+    discounted by the assumed intra-schema-family correlation."""
+    out: dict[str, dict[str, Any]] = {}
+    union: list[str] = sorted({g for groups in ready.values() for g in groups})
+    for name, groups in [*sorted(ready.items()), ("ALL", union)]:
+        rows = [attributes[g] for g in groups]
+        families = Counter(r["schema_family"] for r in rows)
+        out[name] = {
+            "groups": len(groups),
+            "domains": len({r["domain"] for r in rows}),
+            "producers": len({r["producer"] for r in rows}),
+            "curators": len({r["curator"] for r in rows}),
+            "schema_families": len(families),
+            "largest_schema_family_share": round(max(families.values()) / len(groups), 4)
+            if groups
+            else 0.0,
+            "effective_groups": round(effective_groups(list(families.values()), icc), 4),
+        }
+    return out
+
+
+SIGMAS = [0.05, 0.10, 0.15, 0.20]
+DELTAS = [0.02, 0.03, 0.05, 0.10]
+COMPARISONS = [1, 3, 6]
+ICCS = [0.0, 0.2, 0.5]
+
+
+def report(attributes: dict[str, Any], readiness: dict[str, Any]) -> dict[str, Any]:
+    """The illustrative requirement tables and the coverage of the current ready groups."""
+    ready = readiness["ready_groups"]
+    return {
+        "note": "design-only: every sigma, delta and icc below is hypothetical; no detector was run",  # noqa: E501
+        "sensitivity": sensitivity_grid(SIGMAS, DELTAS, COMPARISONS),
+        "design_effect_sources": [
+            {
+                "sigma": 0.10,
+                "delta": 0.05,
+                "cluster_size": m,
+                "icc": icc,
+                "design_effect": design_effect(m, icc),
+                "sources": paired_sources(0.10, 0.05, design_effect=design_effect(m, icc)),
+            }
+            for m in (2, 4, 8)
+            for icc in ICCS
+        ],
+        "simulation": [
+            {
+                "domains": d,
+                "per_domain": k,
+                "sigma_domain": sd,
+                "null_rejection_source_level": naive,
+                "null_rejection_domain_level": cluster,
+            }
+            for d, k, sd in ((6, 5, 0.08), (10, 3, 0.08), (10, 3, 0.02))
+            for naive, cluster in [simulate_rejection(d, k, sd, 0.05, 0.0, reps=2000, seed=11)]
+        ],
+        "minimum_detectable_delta": [
+            {"sources": n, "sigma": sigma, "delta": minimum_detectable_delta(n, sigma)}
+            for n in (10, 18, 25, 34, 49, 73)
+            for sigma in (0.05, 0.10, 0.15)
+        ],
+        "coverage": {str(icc): coverage_summary(attributes, ready, icc) for icc in (0.2, 0.5)},
+    }
+
+
+def main(argv: list[str] | None = None) -> int:
+    import argparse
+    import json
+    from pathlib import Path
+
+    here = Path(__file__).resolve().parent.parent
+    base = here / "verification/evidence/dataset_registry_v2"
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--dir", type=Path, default=base)
+    args = parser.parse_args(argv)
+    attributes = json.loads((args.dir / "source_attributes.json").read_text())
+    readiness = json.loads((args.dir / "readiness.json").read_text())
+    out = report(attributes, readiness)
+    (args.dir / "target_framework.json").write_text(
+        json.dumps(out, indent=1, sort_keys=True) + "\n"
+    )
+    print(
+        f"{len(out['sensitivity'])} sensitivity rows, coverage of {out['coverage']['0.2']['ALL']['groups']} groups"  # noqa: E501
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
