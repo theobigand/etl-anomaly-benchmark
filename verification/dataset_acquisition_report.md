@@ -655,3 +655,10 @@ C6 8, C5 8.
 | C6 | 7 | 7 |
 
 Targets (30, 40, 28, 36, 30) are unchanged and not met. No experiment was run.
+
+**Mutation status of Update 9 (focused, tests narrowed by keyword).** New range and gzip code in
+`acquisition.py`: 208 killed, 35 survived (85.6 percent), below the L3 threshold of 95 percent; survivors are in
+`open_range`, `_get_range`, `fetch_range` and `gzip_prefix_lines`. For `experimental_views.py` the narrowed run
+cannot isolate the new functions (the shared time parser `_stamped` is exercised by the series tests, which the
+filter excluded), so no figure is claimed. The new code is therefore not mutation-certified; closing the
+survivors is open work.
