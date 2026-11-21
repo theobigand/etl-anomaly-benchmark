@@ -223,3 +223,101 @@ proposed before the pilot.
 3. Authorise the T424 variance pilot after the freeze (needed to turn illustrations into requirements).
 4. Decide the minimum number of domains and schema families per stratum.
 5. Decide the default multiplicity family (Bonferroni or Holm) and the smallest meaningful difference delta_min per metric.
+
+
+## 10. Owner decisions of 2026-11-21 and their implementation
+
+Status of this document after the decisions: the three-tier framework, the provisional targets, the diversity guardrails
+and the Holm policy are adopted as planning rules; the numbers below remain illustrative where they depend on
+hypothetical parameters, and none of them is a statistically validated requirement.
+
+**A. Three tiers.** (1) Exploratory coverage: at least 3 distinct application domains and 2 distinct structural or
+generating-mechanism families. (2) Claim-specific inferential coverage: the number of independent groups where both
+detectors of a contrast apply, from `paired_sources` with the pilot's sigma and design effect (section 3). (3) Generalisation
+coverage: the domain and family minima below, with the quota. A category can pass tier 1 and fail tiers 2 and 3.
+
+**B. Provisional acquisition targets** (planning figures; their sum is 230 category participations, not 230 independent groups):
+C1 36, C2a 30, C2b 30, C3 40, C4 28, C5 36, C6 30. Historical note: the figure 30 of 2026-11-21 belonged to the combined C2
+("transactional and categorical"); it was carried to C2b without a new derivation; C2a's 30 is a new provisional target with no statistical basis.
+
+**C. Variance pilot.** Design drafted in `variance_pilot_design.md`; execution is not authorised and the freeze stays active.
+
+**D. Diversity guardrails.** Exploratory: 3 domains and 2 families. Generalisation planning minima (domains / families):
+C1 5/3, C2a 5/3, C2b 5/4, C3 5/3, C4 5/3, C5 5/4, C6 5/4. Domains are the subject areas recorded in `source_attributes.json`
+(`domain`); the structural or generating-mechanism family of a group in a category is `structure[category]` in the same file.
+Classification criteria (fixed before counting): C2b by the business object of the transaction (contract award, expenditure
+ledger, rental, property sale, purchase order process, fine and payment, subsidy payment); C3 by the measured system or
+temporal regime (environmental sensing, building energy, hydrological gauging, urban mobility counts, equipment telemetry, public
+health surveillance, industrial energy metering, utility load, vehicle signals, ambient living sensors); C4 by the sequence
+generator (operational job trace, system and application logs, business process execution, IT service incident log); C5 by
+relational topology (timetable network, clinical record graph, bibliographic graph, community question graph,
+contract-grant-patent linkage, user-item ratings, shallow procurement releases); C6 by the record form (regulatory registry,
+product catalogue, library catalogue, cultural catalogue, scholarly work, procurement release). File formats are not
+families (CSV against Parquet, XML against JSON). C1 and C2a use the subject-area mapping of `research/provenance_audit.py`
+(instrument measurement, clinical or biological records, administrative or survey records, computational or derived features).
+
+Current state (machine-derived; ready groups from the readiness contract):
+
+| Category | Ready groups | Quota | Gap | Domains | Families | Largest family (share) | Exploratory | Generalisation diversity |
+|---|---|---|---|---|---|---|---|---|
+| C2b | 10 | 30 | 20 | 7 | 7 | contract award (0.3) | yes | yes |
+| C3 | 11 | 40 | 29 | 11 | 10 | urban mobility counts (0.1818) | yes | yes |
+| C4 | 13 | 28 | 15 | 10 | 4 | business process execution (0.5385) | yes | yes |
+| C5 | 20 | 36 | 16 | 7 | 7 | timetable network (0.6) | yes | yes |
+| C6 | 9 | 30 | 21 | 7 | 6 | procurement release (0.3333) | yes | yes |
+
+C1 and C2a are not in the readiness contract; their provenance audit (`provenance_audit_c1_c2a.json`) over the historical
+tables gives, for C1, 115 tables, 94 sources, 80 provenance groups (shared-creator closure),
+8 domains and 4 mechanism families; for C2a, 40 tables, 40 sources, 40 groups,
+7 domains and 4 families. These are candidate groups: they have not been re-run through the v2 readiness
+contract, and the T437 finding that many categorical tables are small or toy tables still applies, so they are not counted as ready.
+Globally the readiness contract has 54 distinct provenance groups, 35 domains, 20 curators and
+26 schema families; 12 of the 20 C5 groups are one schema family (timetable feeds) and 7 of 13 C4 groups are business-process
+logs, so those categories are concentrated.
+
+**E. Multiplicity and effect sizes.** Confirmatory families are prespecified before outcomes are seen (F1 to F5 in
+`variance_pilot_design.md`); within a family Holm's step-down procedure at familywise alpha 0.05
+(`holm_adjust`, `holm_rejections`); no single correction over every exploratory metric; adjusted p-values, effect sizes and
+intervals are reported; exploratory results are labelled. Provisional smallest effects of interest: recall at matched alert
+budget 0.05, AUPRC 0.05 (at standardised prevalence), AUROC 0.02, false-positive burden and cost 20 percent relative
+(planned on the log-ratio scale, ln(1/0.8) = 0.2231). They are design assumptions; each metric must exist in the thesis
+methodology before use, and AUROC, AUPRC and recall are related, so they are not independent claims.
+
+Independent sources needed per contrast (exact t, 80 percent power, alpha 0.05 divided by the family size k; hypothetical
+between-source SD sigma on the metric's scale; analysis on source-level paired differences):
+
+| Metric | Scale | sigma | delta | k = 1 | k = 3 | k = 6 |
+|---|---|---|---|---|---|---|
+| recall at matched alert budget | absolute | 0.02 | 0.0500 | 4 | 5 | 6 |
+| recall at matched alert budget | absolute | 0.05 | 0.0500 | 10 | 14 | 16 |
+| recall at matched alert budget | absolute | 0.1 | 0.0500 | 34 | 45 | 52 |
+| AUPRC | absolute | 0.02 | 0.0500 | 4 | 5 | 6 |
+| AUPRC | absolute | 0.05 | 0.0500 | 10 | 14 | 16 |
+| AUPRC | absolute | 0.1 | 0.0500 | 34 | 45 | 52 |
+| AUROC | absolute | 0.02 | 0.0200 | 10 | 14 | 16 |
+| AUROC | absolute | 0.05 | 0.0200 | 52 | 69 | 80 |
+| AUROC | absolute | 0.1 | 0.0200 | 199 | 265 | 307 |
+| false-positive burden | log ratio | 0.02 | 0.2231 | 3 | 3 | 3 |
+| false-positive burden | log ratio | 0.05 | 0.2231 | 3 | 4 | 4 |
+| false-positive burden | log ratio | 0.1 | 0.2231 | 4 | 6 | 6 |
+| cost | log ratio | 0.02 | 0.2231 | 3 | 3 | 3 |
+| cost | log ratio | 0.05 | 0.2231 | 3 | 4 | 4 |
+| cost | log ratio | 0.1 | 0.2231 | 4 | 6 | 6 |
+
+Pilot size for estimating sigma (upper end of its interval relative to the estimate):
+
+| Max upper ratio | Interval level | Pilot sources |
+|---|---|---|
+| 1.25 | 0.8 | 24 |
+| 1.25 | 0.95 | 49 |
+| 1.4 | 0.8 | 13 |
+| 1.4 | 0.95 | 25 |
+| 1.6 | 0.8 | 8 |
+| 1.6 | 0.95 | 15 |
+
+Reading: for AUROC at delta 0.02 the requirement is very sensitive to sigma (about 10 to 200 sources between sigma 0.02 and
+0.10), so AUROC claims are only feasible if the between-source SD of AUROC differences is small; a 20 percent relative reduction
+(0.223 on the log scale) is easy to detect unless sigma on that scale exceeds about 0.3. These are not validated: sigma and the
+clustering correlation are unknown until the pilot. Normal-approximation and independence assumptions apply; clustered sources
+need the design effect of section 3. Assumptions needing owner approval before confirmatory execution: the metrics list, the
+pairing rule within group, the family definitions, the Holm family sizes, the smallest effects, and the hold-out rule.
