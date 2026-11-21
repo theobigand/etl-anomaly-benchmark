@@ -335,9 +335,11 @@ it as specified, and is evaluated once on the test partition. Test labels and ou
   the training and validation partitions) are reported with the cost outcomes.
 - The result is a composite method, not an oracle; no claim of one universally best learned family is made. Fixed representatives (one named
   detector per family) are exploratory diagnostics and are not added to the multiplicity plan.
-- Assumption to confirm: the validation partition may contain injected faults and their labels for selection (it is validation information);
-  if the owner restricts selection to unlabelled validation criteria, the rule changes to a label-free score (for example stability of
-  the ranking) and this section must be revised before the freeze of the candidate set.
+- Owner decision (fifth round): selection uses labelled, controlled injected faults on the validation partition. It is a label-informed validation-selection
+  strategy, not unsupervised model selection, and the validation labels are not assumed to exist in a deployment unless the application provides them. Three stages are
+  kept apart: unsupervised detector fitting on training data; label-informed selection on validation; independent held-out evaluation. The rule-based comparator
+  has no calibration access to validation labels, a difference in supervision that is reported with every F1 and F2 result. Validation and test faults come from disjoint,
+  reproducible partitions with no shared original records, related source groups or injection realisations. Label-free selection stays an exploratory comparison only.
 - Source-aware partitions: partitions are defined inside a source (chronological or by hash of the unit key, as in the protocol) and never across sources; a
   nested source-level split is needed only for the F2 estimate of selection variability and is not part of the confirmatory estimand.
 
