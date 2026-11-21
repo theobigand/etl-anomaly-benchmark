@@ -8087,6 +8087,39 @@
    "stratum": "C6",
    "upstream": "first party: the licence statement was read at Wikidata itself, the original publisher",
    "upstream_verified": true
+  },
+  {
+   "attribution": "cite Crawford and Thompson, Grid-Scale BESS Operational Datasets for Battery Modeling Research (Zenodo record 22947521; PNNL and EPRI)",
+   "files": [
+    {
+     "name": "OPALCO.feather",
+     "observed": "2022",
+     "url": "https://zenodo.org/records/22947521/files/OPALCO.feather?download=1"
+    },
+    {
+     "name": "ENW.feather",
+     "observed": "2022",
+     "url": "https://zenodo.org/records/22947521/files/ENW.feather?download=1"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_bess",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/22947521",
+   "licence_text": "Zenodo record 22947521: license cc-by-4.0, access_right open; the record is the data release of the authors who collected the data at Pacific Northwest National Laboratory with the Electric Power Research Institute",
+   "max_bytes": 104857600,
+   "method": "official Zenodo record download of two of the twelve system files (the two smallest utility systems, OPALCO and ENW); the other ten are not fetched",
+   "min_interval": 3.0,
+   "privacy": "grid-scale battery measurements normalised to C-rates with elapsed time instead of dates; no personal data",
+   "publisher": "PNNL and EPRI (grid-scale battery energy storage systems)",
+   "rate_limit": "two sequential downloads",
+   "redistribution": "CC BY 4.0 permits it; raw files stay local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party: the data collectors released the datasets; host utilities' confidential system specifications are withheld by the release itself",
+   "upstream_verified": true
   }
  ]
 }

@@ -1156,6 +1156,66 @@
    "size": null,
    "source_url": "https://www.wikidata.org/",
    "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:22947521",
+   "licence": "CC BY 4.0, released by the data collectors",
+   "name": "Grid-scale BESS operational datasets (OPALCO and ENW)",
+   "next_step": "none",
+   "notes": "ten further systems of the same release are the same provenance group",
+   "publisher": "PNNL and EPRI",
+   "reason": "battery storage meter readings",
+   "size": null,
+   "source_url": "https://zenodo.org/records/22947521",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "nvd:cve",
+   "licence": "not read: the NVD terms pages are rendered client-side and returned no text to a plain request",
+   "name": "NVD CVE records (API 2.0)",
+   "next_step": "read the NVD and MITRE CVE terms literally in a browser, then acquire dated windows",
+   "notes": "the API works and returns deeply nested records",
+   "publisher": "NIST",
+   "reason": "security vulnerability records with arrays and optional paths",
+   "size": null,
+   "source_url": "https://nvd.nist.gov/developers/vulnerabilities",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "zenodo:7492814",
+   "licence": "cc-by-4.0 on the record; the depositor is an INFINITECH project member and the bank's own release statement was not found",
+   "name": "NBG deposit account transactions",
+   "next_step": "find the bank's or the project's release statement, then acquire (7z, 1.8 MB)",
+   "notes": "real bank transactions with masked customer ids",
+   "publisher": "National Bank of Greece via INFINITECH",
+   "reason": "financial payments, a new transaction mechanism",
+   "size": null,
+   "source_url": "https://zenodo.org/records/7492814",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "zenodo:13254389",
+   "licence": "cc-by-4.0 on the record; the operator that supplied the calls is not named",
+   "name": "Anonymised phone call dataset (blacklisted calls)",
+   "next_step": "confirm the operator's release, then range-read a prefix of dataset_1.zip",
+   "notes": "83 million records with a natural blacklisted label; hashed numbers",
+   "publisher": "INESC TEC authors",
+   "reason": "telecommunications usage records",
+   "size": null,
+   "source_url": "https://zenodo.org/records/13254389",
+   "status": "permission_pending"
   }
  ],
  "date": "2026-11-21",

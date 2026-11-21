@@ -2521,6 +2521,23 @@
    "units": 45141,
    "view": "zen_aegis_vehicle"
   },
+  "zen_bess": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "time is elapsed hours, not calendar dates",
+    "each meter reports only its own channels, most columns are missing by design",
+    "6 percent of readings carry the publisher's quality flag",
+    "two of twelve systems of one release are one provenance group"
+   ],
+   "first_party": true,
+   "independent_group": "pnnl_epri_bess",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the elapsed hours of each system",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "units": 1452814,
+   "view": "zen_bess"
+  },
   "zen_clue_lds": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [

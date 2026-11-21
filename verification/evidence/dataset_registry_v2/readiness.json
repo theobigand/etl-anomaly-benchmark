@@ -1987,6 +1987,13 @@
   },
   {
    "failed": null,
+   "group": "pnnl_epri_bess",
+   "id": "zen_bess",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2190,6 +2197,7 @@
    "elder_home",
    "melbourne_pedestrian",
    "metropt_porto",
+   "pnnl_epri_bess",
    "rki_surveillance",
    "seoul_bike",
    "steel_korea",
@@ -2275,13 +2283,13 @@
    "structurally_valid": 13
   },
   "C3": {
-   "acquired": 17,
-   "discovered": 38,
-   "experiment_ready": 14,
-   "protocol_ready": 14,
-   "rights_verified": 17,
-   "scientifically_eligible": 14,
-   "structurally_valid": 15
+   "acquired": 18,
+   "discovered": 39,
+   "experiment_ready": 15,
+   "protocol_ready": 15,
+   "rights_verified": 18,
+   "scientifically_eligible": 15,
+   "structurally_valid": 16
   },
   "C4": {
    "acquired": 30,

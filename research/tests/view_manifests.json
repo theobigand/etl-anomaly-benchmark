@@ -22,6 +22,28 @@
    "source_snapshot": "zen_aegis_vehicle/2026-11-21"
   }
  },
+ "bess": {
+  "zen_bess": {
+   "dropped": [],
+   "files": {
+    "readings.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "readings.csv": "system,meter,hours_elapsed,day_number,power,requested_power,reactive_power,requested_reactive_power,voltage,voltage_max,"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "two of the twelve system files of the release (the two smallest utility systems); the others were not fetched",
+    "rows_in": 3,
+    "systems": [
+     "SYS"
+    ]
+   },
+   "source_snapshot": "zen_bess/2026-11-21"
+  }
+ },
  "borg": {
   "google_cluster_2019a": {
    "dropped": [

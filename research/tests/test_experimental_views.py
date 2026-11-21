@@ -1025,6 +1025,11 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
         root / "wikidata_entities" / SNAP / "raw" / "entities_00.json",
         json.dumps({"entities": {"Q1": {"id": "Q1", "claims": {}}}}),
     )
+    import pyarrow.feather as _fe2
+
+    bs = root / "zen_bess" / SNAP / "raw"
+    bs.mkdir(parents=True)
+    _fe2.write_feather(_pa.Table.from_pandas(_bess_frame(), preserve_index=False), bs / "S.feather")
     monkeypatch.setattr(ev, "EA_STATIONS", ["s"])
     _w(
         root / "ea_hydrology_flow" / SNAP / "raw" / "flow_s.csv",
@@ -1035,7 +1040,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_kelmarsh", "wikidata_entities", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_kelmarsh", "wikidata_entities", "zen_bess", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -3350,3 +3355,73 @@ def test_the_wikidata_builder_skips_missing_items_counts_people_and_writes_sorte
         "items that are instances of human"
     ]
     assert view["source_snapshot"] == f"wikidata_entities/{SNAP}"
+
+
+# --- Grid-scale battery systems ----------------------------------------------------------------------  # noqa: E501
+
+
+def _bess_frame():
+    return pd.DataFrame(
+        {
+            "HoursElapsed": [1.0, 0.0, 0.0, None], "DayNumber": [0, 0, 0, 1],
+            "Meter": ["PDC", "PDC", "PAC", "PAC"], "Power": [0.5, 0.1, 0.2, 0.3],
+            "RequestedPower": [None, None, 0.2, 0.3], "ReactivePower": [None] * 4,
+            "RequestedReactivePower": [None] * 4, "Voltage": [3.3, 3.2, None, None],
+            "VoltageMax": [None] * 4, "VoltageMin": [None] * 4, "VoltageAvg": [3.3, 3.2, None, None],  # noqa: E501
+            "Current": [0.1, 0.0, None, None], "SOC": [0.9, 0.8, None, None],
+            "TempMax": [None] * 4, "TempMin": [None] * 4, "TempAvg": [25.0, 24.0, None, None],
+            "TempAmbient": [None] * 4, "QualityFlag": [False, True, False, False],
+            "CycleIndex": ["0Out", "1", "0Out", "2"], "Use": [True, False, True, True],
+        }
+    )  # fmt: skip
+
+
+def test_bess_view_keeps_missing_channels_and_flags_in_elapsed_time_order():
+    out = ev.bess_view(_bess_frame(), "SYS")
+    assert list(out.columns) == list(ev.BESS_COLUMNS) and ev.BESS_COLUMNS[:3] == (
+        "system",
+        "meter",
+        "hours_elapsed",
+    )
+    assert len(out) == 3 and set(out["system"]) == {
+        "SYS"
+    }  # the row without elapsed time is dropped
+    assert out[["hours_elapsed", "meter"]].values.tolist() == [
+        [0.0, "PAC"],
+        [0.0, "PDC"],
+        [1.0, "PDC"],
+    ]
+    assert out["voltage"].isna().tolist() == [True, False, False] and out["soc"].iloc[2] == 0.9
+    assert (
+        out["quality_flag"].tolist() == [False, True, False] and out["quality_flag"].dtype == bool
+    )
+    assert out["cycle_index"].tolist() == ["0Out", "1", "0Out"] and out["use"].tolist() == [
+        True,
+        False,
+        True,
+    ]
+    with pytest.raises(ev.ViewError, match="columns not found: .*SOC"):
+        ev.bess_view(_bess_frame().drop(columns=["SOC"]), "SYS")
+
+
+def test_the_bess_builder_stacks_the_system_files_and_refuses_an_empty_snapshot(tmp_path):
+    import pyarrow as _pa
+    import pyarrow.feather as _fe
+
+    raw = tmp_path / "acquired" / "zen_bess" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    with pytest.raises(ev.ViewError, match="no feather file in the snapshot"):
+        ev._build_bess(tmp_path / "acquired", tmp_path / "o", {})
+    for name in ("B_SYS", "A_SYS"):
+        _fe.write_feather(
+            _pa.Table.from_pandas(_bess_frame(), preserve_index=False), raw / f"{name}.feather"
+        )
+    manifest: dict = {}
+    ev._build_bess(tmp_path / "acquired", tmp_path / "o", manifest)
+    out = pd.read_csv(tmp_path / "o" / "zen_bess" / "readings.csv")
+    assert out["system"].tolist() == ["A_SYS"] * 3 + ["B_SYS"] * 3
+    view = manifest["zen_bess"]
+    assert view["sampling"]["systems"] == ["A_SYS", "B_SYS"] and view["sampling"]["rows_in"] == 6
+    assert (
+        view["files"]["readings.csv"]["rows"] == 6 and view["source_snapshot"] == f"zen_bess/{SNAP}"
+    )

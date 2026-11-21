@@ -2264,6 +2264,75 @@ def _build_wikidata(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+BESS_NUMBERS = {
+    "HoursElapsed": "hours_elapsed",
+    "DayNumber": "day_number",
+    "Power": "power",
+    "RequestedPower": "requested_power",
+    "ReactivePower": "reactive_power",
+    "RequestedReactivePower": "requested_reactive_power",
+    "Voltage": "voltage",
+    "VoltageMax": "voltage_max",
+    "VoltageMin": "voltage_min",
+    "VoltageAvg": "voltage_avg",
+    "Current": "current",
+    "SOC": "soc",
+    "TempMax": "temp_max",
+    "TempMin": "temp_min",
+    "TempAvg": "temp_avg",
+    "TempAmbient": "temp_ambient",
+}
+BESS_COLUMNS = ("system", "meter", *BESS_NUMBERS.values(), "quality_flag", "cycle_index", "use")
+
+
+def bess_view(raw: pd.DataFrame, system: str) -> pd.DataFrame:
+    """Meter readings of one grid-scale battery system in elapsed time.
+
+    Time is the published elapsed time in hours, not a calendar date. Missing values stay missing
+    (each meter reports only its own channels); the publisher's quality and use flags are kept.
+    """
+    need = [*BESS_NUMBERS, "Meter", "QualityFlag", "CycleIndex", "Use"]
+    missing = [c for c in need if c not in raw.columns]
+    if missing:
+        raise ViewError(f"columns not found: {missing}")
+    out = pd.DataFrame({"system": system, "meter": raw["Meter"].astype("string")}, index=raw.index)
+    for source, name in BESS_NUMBERS.items():
+        out[name] = pd.to_numeric(raw[source], errors="coerce")
+    out["quality_flag"] = raw["QualityFlag"].astype(bool)
+    out["cycle_index"] = raw["CycleIndex"].astype("string")
+    out["use"] = raw["Use"].astype(bool)
+    out = out[out["hours_elapsed"].notna()]
+    return out.sort_values(["hours_elapsed", "meter"], kind="stable").reset_index(drop=True)
+
+
+def _build_bess(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import pyarrow.feather as feather
+
+    raw = root / "zen_bess" / SNAPSHOT / "raw"
+    files = sorted(raw.glob("*.feather"))
+    if not files:
+        raise ViewError("no feather file in the snapshot")
+    frames = [bess_view(feather.read_table(f).to_pandas(), f.stem) for f in files]
+    view = pd.concat(frames, ignore_index=True)
+    folder = out / "zen_bess"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "readings.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "zen_bess",
+        {"readings.csv": (target, len(view))},
+        dropped=[],
+        pseudonymised=[],
+        sampling={
+            "method": "two of the twelve system files of the release (the two smallest utility systems); the others were not fetched",  # noqa: E501
+            "systems": [f.stem for f in files],
+            "rows_in": len(view),
+        },
+        source_snapshot=f"zen_bess/{SNAPSHOT}",
+    )
+
+
 KELMARSH_SIGNALS = {
     "Wind speed (m/s)": "wind_speed",
     "Wind direction (°)": "wind_direction",
@@ -2610,6 +2679,7 @@ BUILD_STEPS = (
     _build_pbdb,
     _build_kelmarsh,
     _build_wikidata,
+    _build_bess,
     _build_flat,
     _build_series,
     _build_ukspend,

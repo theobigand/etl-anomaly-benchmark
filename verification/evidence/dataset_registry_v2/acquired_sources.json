@@ -4490,6 +4490,26 @@
    "stratum": "C6",
    "system": "wikidata",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "bess",
+   "id": "zen_bess",
+   "licence_class": "open",
+   "protocols": "P-TS by controlled injection on meter readings in elapsed time; the publisher's quality flags are baseline properties",
+   "publisher": "pnnl_epri_bess",
+   "reason": "Grid-scale battery storage operational data (PNNL and EPRI release, CC BY 4.0): two utility systems, 1,452,814 meter readings (AC, DC, grid and auxiliary meters), power, voltage, state of charge and temperatures, in elapsed hours rather than dates; 6 percent of readings carry the publisher's quality flag. Energy storage, a domain absent from the corpus",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 on the Zenodo record released by the data collectors",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "grid_scale_bess",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

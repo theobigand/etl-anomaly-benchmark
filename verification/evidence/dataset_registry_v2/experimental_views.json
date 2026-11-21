@@ -3348,6 +3348,25 @@
   "pseudonymised": [],
   "source_snapshot": "zen_aegis_vehicle/2026-11-21"
  },
+ "zen_bess": {
+  "dropped": [],
+  "files": {
+   "readings.csv": {
+    "rows": 1452814,
+    "sha256": "7f9fa9be4811466d6d07958892a7eb51f2ba18d745d50790a02c3aadb3af4d0f"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "two of the twelve system files of the release (the two smallest utility systems); the others were not fetched",
+   "rows_in": 1452814,
+   "systems": [
+    "ENW",
+    "OPALCO"
+   ]
+  },
+  "source_snapshot": "zen_bess/2026-11-21"
+ },
  "zen_clue_lds": {
   "dropped": [
    "params (paths, groups)",
