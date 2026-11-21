@@ -1033,6 +1033,38 @@
    "units": 19269,
    "view": "openlibrary_dump"
   },
+  "physionet_eicu_demo": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "demo subset: key relations complete (0 natural orphans)",
+    "de-identified by the publisher with shifted dates",
+    "small cohort (demo)"
+   ],
+   "first_party": true,
+   "independent_group": "eicu_philips",
+   "min_units": 1000,
+   "partitions": "hash of the patient or stay id 70/15/15, child tables follow",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 434660,
+   "view": "physionet_eicu_demo"
+  },
+  "physionet_mimic_iv_demo": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "demo subset: key relations complete (0 natural orphans)",
+    "de-identified by the publisher with shifted dates",
+    "small cohort (demo)"
+   ],
+   "first_party": true,
+   "independent_group": "mimic_iv_bidmc",
+   "min_units": 1000,
+   "partitions": "hash of the patient or stay id 70/15/15, child tables follow",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 107727,
+   "view": "physionet_mimic_iv_demo"
+  },
   "rki_hospitalisation": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [

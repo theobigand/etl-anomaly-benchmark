@@ -1454,6 +1454,166 @@
   },
   "source_snapshot": "zen_rki_* records of 2026-11-21 (the series are revised by the publisher)"
  },
+ "physionet_eicu_demo": {
+  "dropped": [
+   "free-text diagnosis and treatment strings",
+   "ward ids",
+   "admission diagnosis text"
+  ],
+  "files": {
+   "diagnosis.csv": {
+    "rows": 24978,
+    "sha256": "29f16a7e7db5e213a8350bcd88301c50de6d4161b4885ae8a2ffcbad5f4649e3"
+   },
+   "hospital.csv": {
+    "rows": 186,
+    "sha256": "19512f8e5c0625d3bf398b6583877f7e72692f5dedb83dee2e6e8214abbe58ec"
+   },
+   "lab.csv": {
+    "rows": 434660,
+    "sha256": "58e403588b48a5723620983a035f9223d347e3d4214ecd77a4a8ff4167286695"
+   },
+   "medication.csv": {
+    "rows": 75604,
+    "sha256": "511ec7f435154895e943716fab388668a858bb7e8ef51b18c9c116c29dc993de"
+   },
+   "patient.csv": {
+    "rows": 2520,
+    "sha256": "7677a91f46a9e5534aecc72608f81cfa62c83a63aeca2212a8bd927ad86099a5"
+   },
+   "treatment.csv": {
+    "rows": 38290,
+    "sha256": "e5d18d52c75149517c090447ca7ebbc762d8bc3a201ca3bfee4a2bb18a845b0b"
+   }
+  },
+  "notes": "relations are the source's own keys; orphans are natural incompleteness of the published extract",
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 2520,
+    "child": "patient.hospitalid",
+    "orphans": 0,
+    "parent": "hospital.hospitalid",
+    "share": 0.0
+   },
+   {
+    "checked": 24978,
+    "child": "diagnosis.patientunitstayid",
+    "orphans": 0,
+    "parent": "patient.patientunitstayid",
+    "share": 0.0
+   },
+   {
+    "checked": 434660,
+    "child": "lab.patientunitstayid",
+    "orphans": 0,
+    "parent": "patient.patientunitstayid",
+    "share": 0.0
+   },
+   {
+    "checked": 75604,
+    "child": "medication.patientunitstayid",
+    "orphans": 0,
+    "parent": "patient.patientunitstayid",
+    "share": 0.0
+   },
+   {
+    "checked": 38290,
+    "child": "treatment.patientunitstayid",
+    "orphans": 0,
+    "parent": "patient.patientunitstayid",
+    "share": 0.0
+   }
+  ],
+  "source_snapshot": "physionet_eicu_demo/2026-11-21"
+ },
+ "physionet_mimic_iv_demo": {
+  "dropped": [
+   "free-text comments",
+   "provider ids",
+   "marital status, language, race, insurance"
+  ],
+  "files": {
+   "hosp_admissions.csv": {
+    "rows": 275,
+    "sha256": "c025ba4589fa0e03c32cddb95ee053b4cdbda77ff5b0ad09a0218533f0b42f14"
+   },
+   "hosp_d_labitems.csv": {
+    "rows": 1622,
+    "sha256": "366599bff2df4ef90d9eba0a3a9ff68160efb5acfe39b46046dccaea8bafc80d"
+   },
+   "hosp_diagnoses_icd.csv": {
+    "rows": 4506,
+    "sha256": "ca576b7e4af8a9335b87f2fa5bfbee9e0a2b65350da9d1d067db32ebf1137eb1"
+   },
+   "hosp_labevents.csv": {
+    "rows": 107727,
+    "sha256": "9bb72fcd21e9730a9c9a461d7bc2337c0fb5cd6e1048557c502f72b87e26ff98"
+   },
+   "hosp_patients.csv": {
+    "rows": 100,
+    "sha256": "ce30c1d4013016a7b3c3be8237aacf5382b192ddfb98060a755644b11ed25681"
+   },
+   "icu_icustays.csv": {
+    "rows": 140,
+    "sha256": "266897c76cb279124f1d154847b60eb59d7ff727fab2a0918d0c0a5c53354eda"
+   }
+  },
+  "notes": "relations are the source's own keys; orphans are natural incompleteness of the published extract",
+  "pseudonymised": [
+   "hosp_admissions.subject_id",
+   "hosp_diagnoses_icd.subject_id",
+   "hosp_labevents.subject_id",
+   "hosp_patients.subject_id",
+   "icu_icustays.subject_id"
+  ],
+  "relations": [
+   {
+    "checked": 275,
+    "child": "hosp_admissions.subject_id",
+    "orphans": 0,
+    "parent": "hosp_patients.subject_id",
+    "share": 0.0
+   },
+   {
+    "checked": 4506,
+    "child": "hosp_diagnoses_icd.hadm_id",
+    "orphans": 0,
+    "parent": "hosp_admissions.hadm_id",
+    "share": 0.0
+   },
+   {
+    "checked": 79307,
+    "child": "hosp_labevents.hadm_id",
+    "orphans": 0,
+    "parent": "hosp_admissions.hadm_id",
+    "share": 0.0
+   },
+   {
+    "checked": 107727,
+    "child": "hosp_labevents.itemid",
+    "orphans": 0,
+    "parent": "hosp_d_labitems.itemid",
+    "share": 0.0
+   },
+   {
+    "checked": 140,
+    "child": "icu_icustays.hadm_id",
+    "orphans": 0,
+    "parent": "hosp_admissions.hadm_id",
+    "share": 0.0
+   },
+   {
+    "checked": 140,
+    "child": "icu_icustays.subject_id",
+    "orphans": 0,
+    "parent": "hosp_patients.subject_id",
+    "share": 0.0
+   }
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "source_snapshot": "physionet_mimic_iv_demo/2026-11-21"
+ },
  "series": {
   "dropped": [],
   "files": {

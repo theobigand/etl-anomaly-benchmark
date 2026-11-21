@@ -99,6 +99,17 @@
    "C3": "hydrological gauging"
   }
  },
+ "eicu_philips": {
+  "curator": "physionet",
+  "domain": "intensive care",
+  "generating_system": "hospital electronic health record (eICU demo)",
+  "note": "two hospital systems of the same domain and schema family",
+  "producer": "Philips eICU multi-hospital programme via MIT LCP",
+  "schema_family": "clinical record tables",
+  "structure": {
+   "C5": "clinical record graph"
+  }
+ },
  "elder_home": {
   "curator": "uci",
   "domain": "ambient assisted living",
@@ -376,6 +387,17 @@
   "schema_family": "sensor csv",
   "structure": {
    "C3": "equipment telemetry"
+  }
+ },
+ "mimic_iv_bidmc": {
+  "curator": "physionet",
+  "domain": "intensive care",
+  "generating_system": "hospital electronic health record (MIMIC-IV demo)",
+  "note": "two hospital systems of the same domain and schema family",
+  "producer": "Beth Israel Deaconess Medical Center via MIT LCP",
+  "schema_family": "clinical record tables",
+  "structure": {
+   "C5": "clinical record graph"
   }
  },
  "montreal_contracts": {

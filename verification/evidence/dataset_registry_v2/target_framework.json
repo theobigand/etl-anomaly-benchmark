@@ -2,13 +2,13 @@
  "coverage": {
   "0.2": {
    "ALL": {
-    "curators": 19,
-    "domains": 34,
-    "effective_groups": 34.5595,
-    "groups": 52,
-    "largest_schema_family_share": 0.2308,
-    "producers": 52,
-    "schema_families": 25
+    "curators": 20,
+    "domains": 35,
+    "effective_groups": 36.2262,
+    "groups": 54,
+    "largest_schema_family_share": 0.2222,
+    "producers": 54,
+    "schema_families": 26
    },
    "C2b": {
     "curators": 5,
@@ -38,13 +38,13 @@
     "schema_families": 5
    },
    "C5": {
-    "curators": 6,
-    "domains": 6,
-    "effective_groups": 9.4167,
-    "groups": 18,
-    "largest_schema_family_share": 0.6667,
-    "producers": 18,
-    "schema_families": 6
+    "curators": 7,
+    "domains": 7,
+    "effective_groups": 11.0833,
+    "groups": 20,
+    "largest_schema_family_share": 0.6,
+    "producers": 20,
+    "schema_families": 7
    },
    "C6": {
     "curators": 7,
@@ -58,13 +58,13 @@
   },
   "0.5": {
    "ALL": {
-    "curators": 19,
-    "domains": 34,
-    "effective_groups": 28.5049,
-    "groups": 52,
-    "largest_schema_family_share": 0.2308,
-    "producers": 52,
-    "schema_families": 25
+    "curators": 20,
+    "domains": 35,
+    "effective_groups": 29.8382,
+    "groups": 54,
+    "largest_schema_family_share": 0.2222,
+    "producers": 54,
+    "schema_families": 26
    },
    "C2b": {
     "curators": 5,
@@ -94,13 +94,13 @@
     "schema_families": 5
    },
    "C5": {
-    "curators": 6,
-    "domains": 6,
-    "effective_groups": 7.1795,
-    "groups": 18,
-    "largest_schema_family_share": 0.6667,
-    "producers": 18,
-    "schema_families": 6
+    "curators": 7,
+    "domains": 7,
+    "effective_groups": 8.5128,
+    "groups": 20,
+    "largest_schema_family_share": 0.6,
+    "producers": 20,
+    "schema_families": 7
    },
    "C6": {
     "curators": 7,
@@ -185,6 +185,220 @@
    "icc": 0.5,
    "sigma": 0.1,
    "sources": 153
+  }
+ ],
+ "diversity": {
+  "C2b": {
+   "diversity": true,
+   "domains": 7,
+   "exploratory": true,
+   "families": 7,
+   "gap": 20,
+   "groups": 10,
+   "largest_family": "contract award",
+   "largest_family_share": 0.3,
+   "missing": [
+    "groups: 10 of 30"
+   ],
+   "quota": false,
+   "target": 30
+  },
+  "C3": {
+   "diversity": true,
+   "domains": 11,
+   "exploratory": true,
+   "families": 10,
+   "gap": 29,
+   "groups": 11,
+   "largest_family": "urban mobility counts",
+   "largest_family_share": 0.1818,
+   "missing": [
+    "groups: 11 of 40"
+   ],
+   "quota": false,
+   "target": 40
+  },
+  "C4": {
+   "diversity": true,
+   "domains": 10,
+   "exploratory": true,
+   "families": 4,
+   "gap": 15,
+   "groups": 13,
+   "largest_family": "business process execution",
+   "largest_family_share": 0.5385,
+   "missing": [
+    "groups: 13 of 28"
+   ],
+   "quota": false,
+   "target": 28
+  },
+  "C5": {
+   "diversity": true,
+   "domains": 7,
+   "exploratory": true,
+   "families": 7,
+   "gap": 16,
+   "groups": 20,
+   "largest_family": "timetable network",
+   "largest_family_share": 0.6,
+   "missing": [
+    "groups: 20 of 36"
+   ],
+   "quota": false,
+   "target": 36
+  },
+  "C6": {
+   "diversity": true,
+   "domains": 7,
+   "exploratory": true,
+   "families": 6,
+   "gap": 21,
+   "groups": 9,
+   "largest_family": "procurement release",
+   "largest_family_share": 0.3333,
+   "missing": [
+    "groups: 9 of 30"
+   ],
+   "quota": false,
+   "target": 30
+  }
+ },
+ "effect_requirements": [
+  {
+   "delta": 0.05,
+   "metric": "recall at matched alert budget",
+   "scale": "absolute",
+   "sigma": 0.02,
+   "sources_holm_k3": 5,
+   "sources_holm_k6": 6,
+   "sources_k1": 4
+  },
+  {
+   "delta": 0.05,
+   "metric": "recall at matched alert budget",
+   "scale": "absolute",
+   "sigma": 0.05,
+   "sources_holm_k3": 14,
+   "sources_holm_k6": 16,
+   "sources_k1": 10
+  },
+  {
+   "delta": 0.05,
+   "metric": "recall at matched alert budget",
+   "scale": "absolute",
+   "sigma": 0.1,
+   "sources_holm_k3": 45,
+   "sources_holm_k6": 52,
+   "sources_k1": 34
+  },
+  {
+   "delta": 0.05,
+   "metric": "AUPRC",
+   "scale": "absolute",
+   "sigma": 0.02,
+   "sources_holm_k3": 5,
+   "sources_holm_k6": 6,
+   "sources_k1": 4
+  },
+  {
+   "delta": 0.05,
+   "metric": "AUPRC",
+   "scale": "absolute",
+   "sigma": 0.05,
+   "sources_holm_k3": 14,
+   "sources_holm_k6": 16,
+   "sources_k1": 10
+  },
+  {
+   "delta": 0.05,
+   "metric": "AUPRC",
+   "scale": "absolute",
+   "sigma": 0.1,
+   "sources_holm_k3": 45,
+   "sources_holm_k6": 52,
+   "sources_k1": 34
+  },
+  {
+   "delta": 0.02,
+   "metric": "AUROC",
+   "scale": "absolute",
+   "sigma": 0.02,
+   "sources_holm_k3": 14,
+   "sources_holm_k6": 16,
+   "sources_k1": 10
+  },
+  {
+   "delta": 0.02,
+   "metric": "AUROC",
+   "scale": "absolute",
+   "sigma": 0.05,
+   "sources_holm_k3": 69,
+   "sources_holm_k6": 80,
+   "sources_k1": 52
+  },
+  {
+   "delta": 0.02,
+   "metric": "AUROC",
+   "scale": "absolute",
+   "sigma": 0.1,
+   "sources_holm_k3": 265,
+   "sources_holm_k6": 307,
+   "sources_k1": 199
+  },
+  {
+   "delta": 0.2231435513142097,
+   "metric": "false-positive burden",
+   "scale": "log ratio",
+   "sigma": 0.02,
+   "sources_holm_k3": 3,
+   "sources_holm_k6": 3,
+   "sources_k1": 3
+  },
+  {
+   "delta": 0.2231435513142097,
+   "metric": "false-positive burden",
+   "scale": "log ratio",
+   "sigma": 0.05,
+   "sources_holm_k3": 4,
+   "sources_holm_k6": 4,
+   "sources_k1": 3
+  },
+  {
+   "delta": 0.2231435513142097,
+   "metric": "false-positive burden",
+   "scale": "log ratio",
+   "sigma": 0.1,
+   "sources_holm_k3": 6,
+   "sources_holm_k6": 6,
+   "sources_k1": 4
+  },
+  {
+   "delta": 0.2231435513142097,
+   "metric": "cost",
+   "scale": "log ratio",
+   "sigma": 0.02,
+   "sources_holm_k3": 3,
+   "sources_holm_k6": 3,
+   "sources_k1": 3
+  },
+  {
+   "delta": 0.2231435513142097,
+   "metric": "cost",
+   "scale": "log ratio",
+   "sigma": 0.05,
+   "sources_holm_k3": 4,
+   "sources_holm_k6": 4,
+   "sources_k1": 3
+  },
+  {
+   "delta": 0.2231435513142097,
+   "metric": "cost",
+   "scale": "log ratio",
+   "sigma": 0.1,
+   "sources_holm_k3": 6,
+   "sources_holm_k6": 6,
+   "sources_k1": 4
   }
  ],
  "minimum_detectable_delta": [
@@ -280,6 +494,38 @@
   }
  ],
  "note": "design-only: every sigma, delta and icc below is hypothetical; no detector was run",
+ "pilot_sd_precision": [
+  {
+   "level": 0.8,
+   "max_upper_ratio": 1.25,
+   "pilot_sources": 24
+  },
+  {
+   "level": 0.95,
+   "max_upper_ratio": 1.25,
+   "pilot_sources": 49
+  },
+  {
+   "level": 0.8,
+   "max_upper_ratio": 1.4,
+   "pilot_sources": 13
+  },
+  {
+   "level": 0.95,
+   "max_upper_ratio": 1.4,
+   "pilot_sources": 25
+  },
+  {
+   "level": 0.8,
+   "max_upper_ratio": 1.6,
+   "pilot_sources": 8
+  },
+  {
+   "level": 0.95,
+   "max_upper_ratio": 1.6,
+   "pilot_sources": 15
+  }
+ ],
  "sensitivity": [
   {
    "ci_sources_half_width_delta": 27,

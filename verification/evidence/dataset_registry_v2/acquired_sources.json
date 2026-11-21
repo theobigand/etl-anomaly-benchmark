@@ -2170,6 +2170,46 @@
    "stratum": "C2b",
    "system": "dgfip_property_register",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "physionet_mimic_iv_demo",
+   "id": "physionet_mimic_iv_demo",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "mimic_iv_bidmc",
+   "reason": "MIMIC-IV Clinical Database Demo 2.2: 100 patients of one Boston hospital; patients, admissions, diagnoses, 107727 lab events, lab item dictionary and ICU stays; all six key relations have 0 orphans (a self-contained subset); subject ids salted; free text and provider ids dropped. Open Data Commons ODbL v1.0 stated on the PhysioNet project page; open access without credentialing for the demo",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "ODbL v1.0 on the PhysioNet project page (publisher)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "mimic_iv_bidmc",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "physionet_eicu_demo",
+   "id": "physionet_eicu_demo",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "eicu_philips",
+   "reason": "eICU Collaborative Research Database demo 2.0.1: 2520 ICU stays of 20 hospitals; patient, hospital, diagnosis, 434660 lab rows, medication and treatment; the five key relations have 0 orphans; free-text strings and ward ids dropped. Open Data Commons ODbL v1.0 stated on the PhysioNet project page; open access without credentialing for the demo",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "ODbL v1.0 on the PhysioNet project page (publisher)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "eicu_philips",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

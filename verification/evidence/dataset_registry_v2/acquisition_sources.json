@@ -7662,6 +7662,112 @@
    "stratum": "C2b",
    "upstream": "first party: the tax administration publishes the property transaction register under the decree of 28 December 2018",
    "upstream_verified": true
+  },
+  {
+   "attribution": "cite PhysioNet and the project DOI 10.13026/dp1f-ex47",
+   "files": [
+    {
+     "name": "hosp_patients.csv.gz",
+     "observed": "2023-01-31",
+     "url": "https://physionet.org/files/mimic-iv-demo/2.2/hosp/patients.csv.gz"
+    },
+    {
+     "name": "hosp_admissions.csv.gz",
+     "observed": "2023-01-31",
+     "url": "https://physionet.org/files/mimic-iv-demo/2.2/hosp/admissions.csv.gz"
+    },
+    {
+     "name": "hosp_diagnoses_icd.csv.gz",
+     "observed": "2023-01-31",
+     "url": "https://physionet.org/files/mimic-iv-demo/2.2/hosp/diagnoses_icd.csv.gz"
+    },
+    {
+     "name": "hosp_labevents.csv.gz",
+     "observed": "2023-01-31",
+     "url": "https://physionet.org/files/mimic-iv-demo/2.2/hosp/labevents.csv.gz"
+    },
+    {
+     "name": "hosp_d_labitems.csv.gz",
+     "observed": "2023-01-31",
+     "url": "https://physionet.org/files/mimic-iv-demo/2.2/hosp/d_labitems.csv.gz"
+    },
+    {
+     "name": "icu_icustays.csv.gz",
+     "observed": "2023-01-31",
+     "url": "https://physionet.org/files/mimic-iv-demo/2.2/icu/icustays.csv.gz"
+    }
+   ],
+   "hosts": [
+    "physionet.org"
+   ],
+   "id": "physionet_mimic_iv_demo",
+   "licence_class": "open",
+   "licence_location": "https://physionet.org/content/mimic-iv-demo/2.2/",
+   "licence_text": "PhysioNet project page (MIMIC-IV demo 2.2): access policy 'Anyone can access the files, as long as they conform to the terms of the specified license'; licence Open Data Commons Open Database License v1.0; DOI 10.13026/dp1f-ex47",
+   "max_bytes": 104857600,
+   "method": "official PhysioNet file downloads of selected tables (gzip CSV)",
+   "min_interval": 3.0,
+   "privacy": "de-identified by the publisher (dates shifted); person-level ids are salted again in the view; free text is not kept",
+   "publisher": "MIT Laboratory for Computational Physiology with Beth Israel Deaconess Medical Center (MIMIC-IV Clinical Database Demo 2.2)",
+   "rate_limit": "one download per table, 3 s apart",
+   "redistribution": "ODbL v1.0 with share-alike for the database; raw files and views stay local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: the MIT Laboratory for Computational Physiology publishes the demo with the hospital data owners; the demo is de-identified and openly accessible",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "cite PhysioNet and the project DOI 10.13026/4mxk-na84",
+   "files": [
+    {
+     "name": "patient.csv.gz",
+     "observed": "2023-01-31",
+     "url": "https://physionet.org/files/eicu-crd-demo/2.0.1/patient.csv.gz"
+    },
+    {
+     "name": "hospital.csv.gz",
+     "observed": "2023-01-31",
+     "url": "https://physionet.org/files/eicu-crd-demo/2.0.1/hospital.csv.gz"
+    },
+    {
+     "name": "diagnosis.csv.gz",
+     "observed": "2023-01-31",
+     "url": "https://physionet.org/files/eicu-crd-demo/2.0.1/diagnosis.csv.gz"
+    },
+    {
+     "name": "lab.csv.gz",
+     "observed": "2023-01-31",
+     "url": "https://physionet.org/files/eicu-crd-demo/2.0.1/lab.csv.gz"
+    },
+    {
+     "name": "medication.csv.gz",
+     "observed": "2023-01-31",
+     "url": "https://physionet.org/files/eicu-crd-demo/2.0.1/medication.csv.gz"
+    },
+    {
+     "name": "treatment.csv.gz",
+     "observed": "2023-01-31",
+     "url": "https://physionet.org/files/eicu-crd-demo/2.0.1/treatment.csv.gz"
+    }
+   ],
+   "hosts": [
+    "physionet.org"
+   ],
+   "id": "physionet_eicu_demo",
+   "licence_class": "open",
+   "licence_location": "https://physionet.org/content/eicu-crd-demo/2.0.1/",
+   "licence_text": "PhysioNet project page (eICU demo 2.0.1): access policy 'Anyone can access the files, as long as they conform to the terms of the specified license'; licence Open Data Commons Open Database License v1.0; DOI 10.13026/4mxk-na84",
+   "max_bytes": 104857600,
+   "method": "official PhysioNet file downloads of selected tables (gzip CSV)",
+   "min_interval": 3.0,
+   "privacy": "de-identified by the publisher (dates shifted); person-level ids are salted again in the view; free text is not kept",
+   "publisher": "MIT Laboratory for Computational Physiology with Philips eICU (eICU Collaborative Research Database Demo 2.0.1)",
+   "rate_limit": "one download per table, 3 s apart",
+   "redistribution": "ODbL v1.0 with share-alike for the database; raw files and views stay local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: the MIT Laboratory for Computational Physiology publishes the demo with the hospital data owners; the demo is de-identified and openly accessible",
+   "upstream_verified": true
   }
  ]
 }

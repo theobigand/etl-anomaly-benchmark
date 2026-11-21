@@ -1081,6 +1081,77 @@ def _gtfs_spec(archive: str) -> dict[str, Any]:
 TABLE_SETS.update({source: _gtfs_spec(name) for source, name in GTFS_FEEDS.items()})
 
 
+#: de-identified clinical demo databases from PhysioNet (ODbL): tables kept and key relations
+CLINICAL_TABLE_SETS: dict[str, dict[str, Any]] = {
+    "physionet_mimic_iv_demo": {
+        "ext": ".csv.gz",
+        "sep": ",",
+        "quote_none": False,
+        "dropped": ["free-text comments", "provider ids", "marital status, language, race, insurance"],  # noqa: E501
+        "tables": {
+            "hosp_patients": {
+                "keep": ["subject_id", "gender", "anchor_age", "anchor_year_group"],
+                "pseudonymise": ["subject_id"],
+            },
+            "hosp_admissions": {
+                "keep": ["subject_id", "hadm_id", "admittime", "dischtime", "admission_type",
+                         "hospital_expire_flag"],
+                "pseudonymise": ["subject_id"],
+            },
+            "hosp_diagnoses_icd": {
+                "keep": ["subject_id", "hadm_id", "seq_num", "icd_code", "icd_version"],
+                "pseudonymise": ["subject_id"],
+            },
+            "hosp_labevents": {
+                "keep": ["labevent_id", "subject_id", "hadm_id", "itemid", "charttime", "valuenum", "flag"],  # noqa: E501
+                "pseudonymise": ["subject_id"],
+            },
+            "hosp_d_labitems": {"keep": ["itemid", "fluid", "category"]},
+            "icu_icustays": {
+                "keep": ["subject_id", "hadm_id", "stay_id", "first_careunit", "last_careunit", "intime",  # noqa: E501
+                         "outtime", "los"],
+                "pseudonymise": ["subject_id"],
+            },
+        },
+        "relations": [
+            ["hosp_admissions", "subject_id", "hosp_patients", "subject_id"],
+            ["hosp_diagnoses_icd", "hadm_id", "hosp_admissions", "hadm_id"],
+            ["hosp_labevents", "hadm_id", "hosp_admissions", "hadm_id"],
+            ["hosp_labevents", "itemid", "hosp_d_labitems", "itemid"],
+            ["icu_icustays", "hadm_id", "hosp_admissions", "hadm_id"],
+            ["icu_icustays", "subject_id", "hosp_patients", "subject_id"],
+        ],
+    },
+    "physionet_eicu_demo": {
+        "ext": ".csv.gz",
+        "sep": ",",
+        "quote_none": False,
+        "dropped": ["free-text diagnosis and treatment strings", "ward ids", "admission diagnosis text"],  # noqa: E501
+        "tables": {
+            "patient": {
+                "keep": ["patientunitstayid", "patienthealthsystemstayid", "gender", "age", "hospitalid",  # noqa: E501
+                         "unittype", "unitdischargestatus", "hospitaldischargestatus"],
+            },
+            "hospital": {"keep": ["hospitalid", "numbedscategory", "teachingstatus", "region"]},
+            "diagnosis": {"keep": ["diagnosisid", "patientunitstayid", "activeupondischarge",
+                                   "diagnosisoffset", "icd9code"]},
+            "lab": {"keep": ["labid", "patientunitstayid", "labresultoffset", "labname", "labresult"]},  # noqa: E501
+            "medication": {"keep": ["medicationid", "patientunitstayid", "drugstartoffset", "drugname",  # noqa: E501
+                                    "routeadmin"]},
+            "treatment": {"keep": ["treatmentid", "patientunitstayid", "treatmentoffset"]},
+        },
+        "relations": [
+            ["patient", "hospitalid", "hospital", "hospitalid"],
+            ["diagnosis", "patientunitstayid", "patient", "patientunitstayid"],
+            ["lab", "patientunitstayid", "patient", "patientunitstayid"],
+            ["medication", "patientunitstayid", "patient", "patientunitstayid"],
+            ["treatment", "patientunitstayid", "patient", "patientunitstayid"],
+        ],
+    },
+}  # fmt: skip
+TABLE_SETS.update(CLINICAL_TABLE_SETS)
+
+
 def _build_panels(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     folder = out / "panels"
     folder.mkdir(parents=True, exist_ok=True)
@@ -1118,7 +1189,7 @@ def _build_tables(root: Path, out: Path, manifest: dict[str, Any]) -> None:
 
     for source, spec in TABLE_SETS.items():
         raw = root / source / SNAPSHOT / "raw"
-        tables, absent = {}, []
+        tables, absent, pseudonymised = {}, [], []
         with tempfile.TemporaryDirectory() as scratch:
             members = (
                 {m["name"] for m in zip_members(raw / spec["archive"]["file"])}
@@ -1137,7 +1208,7 @@ def _build_tables(root: Path, out: Path, manifest: dict[str, Any]) -> None:
                         raw / spec["archive"]["file"], member, Path(scratch), 1 << 30, 200
                     )["path"]
                 else:
-                    path = raw / f"{name}.csv"
+                    path = raw / f"{name}{spec.get('ext', '.csv')}"
                 frame = pd.read_csv(
                     path,
                     sep=spec.get("sep", "\t"),
@@ -1148,7 +1219,13 @@ def _build_tables(root: Path, out: Path, manifest: dict[str, Any]) -> None:
                 )
                 frame.columns = [c.strip('"') for c in frame.columns]
                 chars = spec["tables"][name].get("strip", '"')
-                tables[name] = frame.apply(lambda col, chars=chars: col.str.strip(chars))
+                frame = frame.apply(lambda col, chars=chars: col.str.strip(chars))
+                for column in spec["tables"][name].get("pseudonymise", []):
+                    frame[column] = frame[column].map(
+                        lambda v: pseudonym(v) if pd.notna(v) and v != "" else v
+                    )
+                    pseudonymised.append(f"{name}.{column}")
+                tables[name] = frame
         present = {
             "tables": {n: r for n, r in spec["tables"].items() if n not in absent},
             "relations": [
@@ -1170,9 +1247,10 @@ def _build_tables(root: Path, out: Path, manifest: dict[str, Any]) -> None:
             source,
             files,
             dropped=spec["dropped"],
-            pseudonymised=[],
+            pseudonymised=sorted(pseudonymised),
             relations=relations,
             notes=notes,
+            **({"salt_label": SALT} if pseudonymised else {}),
             source_snapshot=f"{source}/{SNAPSHOT}",
         )
 

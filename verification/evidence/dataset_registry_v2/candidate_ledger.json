@@ -1081,6 +1081,36 @@
    "size": null,
    "source_url": "https://transport.data.gouv.fr/",
    "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "physionet:mimic-iv-demo",
+   "licence": "ODbL v1.0 on the project page",
+   "name": "MIMIC-IV Clinical Database Demo",
+   "next_step": "full MIMIC-IV and eICU need credentialing and are not used",
+   "notes": "demo subsets only",
+   "publisher": "MIT LCP (PhysioNet)",
+   "reason": "real hospital relational tables",
+   "size": null,
+   "source_url": "https://physionet.org/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "physionet:eicu-demo",
+   "licence": "ODbL v1.0 on the project page",
+   "name": "eICU Collaborative Research Database Demo",
+   "next_step": "full MIMIC-IV and eICU need credentialing and are not used",
+   "notes": "demo subsets only",
+   "publisher": "MIT LCP (PhysioNet)",
+   "reason": "real hospital relational tables",
+   "size": null,
+   "source_url": "https://physionet.org/",
+   "status": "experiment_ready"
   }
  ],
  "date": "2026-11-21",

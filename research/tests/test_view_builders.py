@@ -360,3 +360,28 @@ def test_relations_with_an_absent_child_or_parent_are_dropped_when_the_table_is_
         "a.k"
     ]  # only the relation between present tables
     assert manifest["src"]["notes"].endswith("optional tables absent from the archive: c")
+
+
+def test_table_sets_read_gzip_tables_by_extension_and_pseudonymise_listed_columns_consistently(
+    tmp_path, monkeypatch
+):
+    root = tmp_path / "acquired"
+    raw = root / "clin" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    (raw / "pat.csv.gz").write_bytes(gzip.compress(b"pid,sex,note\n7,F,a\n8,M,b\n"))
+    (raw / "adm.csv.gz").write_bytes(gzip.compress(b"pid,adm\n7,1\n7,2\n9,3\n"))
+    monkeypatch.setattr(ev, "TABLE_SETS", {"clin": {
+        "ext": ".csv.gz", "sep": ",", "quote_none": False, "dropped": ["note"],
+        "tables": {"pat": {"keep": ["pid", "sex"], "pseudonymise": ["pid"]},
+                   "adm": {"keep": ["pid", "adm"], "pseudonymise": ["pid"]}},
+        "relations": [["adm", "pid", "pat", "pid"]]}})  # fmt: skip
+    manifest = {}
+    ev._build_tables(root, tmp_path / "o" / "deep", manifest)
+    folder = tmp_path / "o" / "deep" / "clin"
+    pat = pd.read_csv(folder / "pat.csv", dtype=str)
+    adm = pd.read_csv(folder / "adm.csv", dtype=str)
+    assert pat["pid"].tolist() == [ev.pseudonym("7"), ev.pseudonym("8")] and "note" not in pat
+    assert adm["pid"].tolist() == [ev.pseudonym("7"), ev.pseudonym("7"), ev.pseudonym("9")]
+    view = manifest["clin"]
+    assert view["pseudonymised"] == ["adm.pid", "pat.pid"] and view["salt_label"] == ev.SALT
+    assert view["relations"] == [{"child": "adm.pid", "parent": "pat.pid", "checked": 3, "orphans": 1, "share": 1 / 3}]  # fmt: skip  # noqa: E501
