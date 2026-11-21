@@ -849,3 +849,57 @@ the rest are manifest texts and numeric limits; none is approved as equivalent. 
 mutated search loops. Thresholds, classifications and exclusions are unchanged; the three modules below 95 percent are open work.
 The `experimental_views.py` figure was measured before the clinical table additions; a first `target_framework.py` rerun crashed in the harness
 (child exit -10) and was repeated.
+
+
+## Update 13: C1 and C2a in the readiness contract, revised pilot design, Price Paid, mutation (2026-11-21)
+
+**C1 and C2a.** The repository tables audited in Update 12 were assessed with `research/flat_readiness.py` and entered the common
+seven-stage readiness contract (details and thresholds in `dataset_target_methodology.md` section 11). Initial candidates: C1 80 and
+C2a 40 provenance groups; 71 and 38 had a local checksum-matched table (11 sources have no file). Experiment-ready: C1 52 (quota 36, met) and
+C2a 12 (quota 30, gap 18). Rejected: privacy review pending for 37 tables that list personal attributes, small or duplicated tables, and tables
+with too few categorical columns. The C1 quota is met by groups of one curator and one schema family and is not evidence of domain
+generalisation.
+
+**C2b.** HM Land Registry Price Paid Data (OGL stated by the publisher; first 30 MiB of the 2024 file, 180229 sales, addresses dropped,
+postcode reduced to its district): a second property-sale system beside the French register. The City of Chicago taxi data were read
+literally (no licence grant, a user indemnification clause) and are recorded as unclear, not acquired.
+
+**Pilot design** (`variance_pilot_design.md` section 10): recall at a matched alert budget is the primary outcome with protocol-specific
+detection units; AUPRC at a standardised prevalence, AUROC, alert burden and cost are secondary; pairing at the provenance group;
+five Holm families with 16 planned primary comparisons derived from the research questions; pilot and confirmatory groups disjoint with
+linked sets kept apart; 24 pilot slots allocated by a seeded draw over ready groups (22 distinct groups in a dry run), which leaves
+confirmatory holdouts of 6 to 16 groups in the scarce categories, so category-level confirmatory claims are not supported by the current
+inventory. The 1.40 bound holds only for independent normal differences; clustering widens it (1.50 to 2.04 at design effects of 1.3 to 3.0).
+The pilot was not run.
+
+**Coverage** (readiness contract; unclassified areas are not counted):
+
+| Category | Ready groups | Quota | Gap | Domains | Families | Largest family (share) |
+|---|---|---|---|---|---|---|
+| C1 | 52 | 36 | 0 | 7 | 4 | computational or derived features (0.2885) |
+| C2a | 12 | 30 | 18 | 6 | 4 | administrative or survey records (0.25) |
+| C2b | 11 | 30 | 19 | 7 | 7 | contract award (0.2727) |
+| C3 | 11 | 40 | 29 | 11 | 10 | urban mobility counts (0.1818) |
+| C4 | 13 | 28 | 15 | 10 | 4 | business process execution (0.5385) |
+| C5 | 20 | 36 | 16 | 7 | 7 | timetable network (0.6) |
+| C6 | 9 | 30 | 21 | 7 | 6 | procurement release (0.3333) |
+
+119 provenance groups, 45 domains, 21 curators, 27 schema families.
+
+**Mutation status** (focused measurements, development feedback, threshold 95 percent, not release certification):
+
+| Module | Killed / total | Raw score | Survived | Suspicious or timeout | Met |
+|---|---:|---:|---:|---:|---|
+| `acquisition.py` | 836 / 862 | 97.0 | 22 | 4 | yes |
+| `xes_stream.py` | 267 / 281 | 95.0 | 12 | 2 | yes |
+| `parquet_reader.py` | 152 / 154 | 98.7 | 2 | 0 | yes |
+| `provenance_audit.py` | 387 / 402 | 96.3 | 14 | 1 | yes |
+| `flat_readiness.py` | 679 / 708 | 95.9 | 21 | 8 | yes |
+| `target_framework.py` | 853 / 890 | 95.8 | 26 | 11 | yes |
+| `experimental_views.py`, 37 new or changed functions | 2636 / 2892 | 91.2 | 246 | 10 | no |
+
+For `experimental_views.py` the deficit at this denominator is 112 kills. About 45 survivors are upper-case path literals that a
+case-insensitive file system cannot distinguish, about 19 are numeric size limits of the extraction helpers, about 20 are
+text of error or note strings, and the rest are keyword arguments of file writes and pandas calls; none is approved as equivalent.
+`acquisition.py` and `xes_stream.py` figures predate this update's work and the modules were not changed. The first `provenance_audit.py`
+runs in this session were below the threshold and were fixed by tests and by removing dead branches and per-function path edits.
