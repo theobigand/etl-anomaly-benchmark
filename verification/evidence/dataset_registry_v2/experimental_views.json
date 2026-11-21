@@ -3227,6 +3227,25 @@
   },
   "source_snapshot": "ukspend_*/2026-11-21"
  },
+ "wikidata_entities": {
+  "dropped": [
+   "items that are instances of human"
+  ],
+  "files": {
+   "items.jsonl": {
+    "rows": 1611,
+    "sha256": "7650a4e22c5ba535b4bbed422ef6439fcb91f48c429bfa368df3463cd096bb78"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "identifiers_absent": 214,
+   "method": "identifiers Q(1 + k x 52361) spread over the identifier range, not random; items about people are excluded",
+   "people_dropped": 175,
+   "request_files": 40
+  },
+  "source_snapshot": "wikidata_entities/2026-11-21"
+ },
  "zen_3pfl": {
   "dropped": [
    "names, street addresses, phone numbers, free-text descriptions",

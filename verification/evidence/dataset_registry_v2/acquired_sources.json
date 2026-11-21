@@ -4470,6 +4470,26 @@
    "stratum": "C3",
    "system": "kelmarsh_wind_farm",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "wikidata",
+   "id": "wikidata_entities",
+   "licence_class": "open",
+   "protocols": "P-NEST on item records (type, optional-path and structure faults)",
+   "publisher": "wikimedia_wikidata",
+   "reason": "Wikidata items (CC0): 1611 items without people, from 40 API requests over an even identifier stride; labels, aliases, descriptions, claims with qualifiers and references and sitelinks, depth up to 11, a community knowledge base unlike the catalogue and registry records of the other nested sources",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC0 statement read at Wikidata:Licensing, the original publisher",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "wikidata",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

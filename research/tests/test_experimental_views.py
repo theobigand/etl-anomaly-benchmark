@@ -1021,6 +1021,10 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     km = root / "zen_kelmarsh" / SNAP / "raw"
     km.mkdir(parents=True)
     _kelmarsh_zip(km / "Kelmarsh_SCADA_2016_3082.zip")
+    _w(
+        root / "wikidata_entities" / SNAP / "raw" / "entities_00.json",
+        json.dumps({"entities": {"Q1": {"id": "Q1", "claims": {}}}}),
+    )
     monkeypatch.setattr(ev, "EA_STATIONS", ["s"])
     _w(
         root / "ea_hydrology_flow" / SNAP / "raw" / "flow_s.csv",
@@ -1031,7 +1035,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_kelmarsh", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_kelmarsh", "wikidata_entities", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -3254,3 +3258,95 @@ def test_the_kelmarsh_builder_refuses_an_archive_without_turbine_files_or_header
     _kelmarsh_zip(raw / "Kelmarsh_SCADA_2016_3082.zip", text="no header here\n1,2\n")
     with pytest.raises(ev.ViewError, match="column header line not found"):
         ev._build_kelmarsh(tmp_path / "acquired", tmp_path / "o", {})
+
+
+# --- Wikidata items ----------------------------------------------------------------------------------  # noqa: E501
+
+
+def _wd_item(number, instance=None, extra=None):
+    claims = {}
+    if instance:
+        claims["P31"] = [{"mainsnak": {"datavalue": {"value": {"id": instance}}}}]
+    item = {
+        "id": f"Q{number}",
+        "type": "item",
+        "labels": {"en": {"language": "en", "value": f"x{number}"}},
+        "claims": claims,
+    }
+    item.update(extra or {})
+    return item
+
+
+def test_wikidata_view_drops_people_keeps_everything_else_and_orders_by_identifier():
+    records = [_wd_item(30, "Q5"), _wd_item(100, "Q13442814"), _wd_item(9), _wd_item(100, "Q5"), _wd_item(7, "Q5"),  # noqa: E501
+               _wd_item(20, "Q6256", {"sitelinks": {"enwiki": {"title": "T"}}})]  # fmt: skip
+    view, people = ev.wikidata_view(records)
+    assert [r["id"] for r in view] == [
+        "Q9",
+        "Q20",
+        "Q100",
+    ] and people == 2  # Q100 keeps its first record
+    assert (
+        view[1]["sitelinks"] == {"enwiki": {"title": "T"}}
+        and view[2]["claims"]["P31"][0]["mainsnak"]["datavalue"]["value"]["id"] == "Q13442814"
+    )
+    assert (
+        ev.wikidata_view([])[1] == 0
+        and ev.wikidata_view([_wd_item(1)])[0][0]["labels"]["en"]["value"] == "x1"
+    )
+
+
+def test_a_human_is_recognised_only_by_an_instance_of_human_claim():
+    assert (
+        ev._is_human(_wd_item(1, "Q5"))
+        and not ev._is_human(_wd_item(1, "Q6256"))
+        and not ev._is_human(_wd_item(1))
+    )
+    odd = {
+        "id": "Q1",
+        "claims": {
+            "P31": [
+                {"mainsnak": {"snaktype": "novalue"}},
+                {"mainsnak": {"datavalue": {"value": "Q5"}}},
+            ]
+        },
+    }
+    assert not ev._is_human(odd)
+    assert not ev._is_human(
+        {"id": "Q1", "claims": {"P279": [{"mainsnak": {"datavalue": {"value": {"id": "Q5"}}}}]}}
+    )
+
+
+def test_the_wikidata_builder_skips_missing_items_counts_people_and_writes_sorted_json_lines(
+    tmp_path,
+):
+    raw = tmp_path / "acquired" / "wikidata_entities" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    (raw / "entities_01.json").write_text(
+        json.dumps({"entities": {"Q50": _wd_item(50), "Q51": {"id": "Q51", "missing": ""}}})
+    )
+    (raw / "entities_00.json").write_text(
+        json.dumps(
+            {
+                "entities": {
+                    "Q5000": _wd_item(5000, "Q5"),
+                    "Q40": _wd_item(40, "Q1", {"z": 1, "a": 2}),
+                }
+            }
+        )
+    )
+    manifest: dict = {}
+    ev._build_wikidata(tmp_path / "acquired", tmp_path / "o", manifest)
+    lines = (tmp_path / "o" / "wikidata_entities" / "items.jsonl").read_text().splitlines()
+    assert [json.loads(line)["id"] for line in lines] == ["Q40", "Q50"]
+    assert lines[0].startswith('{"a": 2, "claims"') and lines[0].endswith('"z": 1}')  # keys sorted
+    view = manifest["wikidata_entities"]
+    assert (
+        view["sampling"]["identifiers_absent"] == 1
+        and view["sampling"]["people_dropped"] == 1
+        and view["sampling"]["request_files"] == 2
+    )
+    assert view["files"]["items.jsonl"]["rows"] == 2 and view["dropped"] == [
+        "items that are instances of human"
+    ]
+    assert view["source_snapshot"] == f"wikidata_entities/{SNAP}"

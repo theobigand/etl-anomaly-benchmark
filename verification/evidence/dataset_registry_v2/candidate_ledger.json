@@ -1141,6 +1141,21 @@
    "size": null,
    "source_url": "https://zenodo.org/records/16807551",
    "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "wikidata:items",
+   "licence": "CC0 (Wikidata:Licensing)",
+   "name": "Wikidata items",
+   "next_step": "none",
+   "notes": "",
+   "publisher": "Wikimedia Foundation",
+   "reason": "deep optional-path nested records from a community knowledge base",
+   "size": null,
+   "source_url": "https://www.wikidata.org/",
+   "status": "experiment_ready"
   }
  ],
  "date": "2026-11-21",

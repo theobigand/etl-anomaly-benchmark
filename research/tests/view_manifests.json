@@ -400,6 +400,29 @@
    "source_snapshot": "src_zip/2026-11-21"
   }
  },
+ "wikidata": {
+  "wikidata_entities": {
+   "dropped": [
+    "items that are instances of human"
+   ],
+   "files": {
+    "items.jsonl": {
+     "rows": 1
+    }
+   },
+   "heads": {
+    "items.jsonl": "{\"claims\": {}, \"id\": \"Q9\", \"labels\": {\"en\": {\"language\": \"en\", \"value\": \"x9\"}}, \"type\": \"item\"}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "identifiers_absent": 1,
+    "method": "identifiers Q(1 + k x 52361) spread over the identifier range, not random; items about people are excluded",
+    "people_dropped": 1,
+    "request_files": 1
+   },
+   "source_snapshot": "wikidata_entities/2026-11-21"
+  }
+ },
  "xes": {
   "4tu_a": {
    "dropped": [

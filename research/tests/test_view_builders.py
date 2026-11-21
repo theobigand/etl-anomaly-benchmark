@@ -228,10 +228,27 @@ def _kelmarsh(root, tmp):
     tev._kelmarsh_zip(raw / "Kelmarsh_SCADA_2016_3082.zip")
 
 
+def _wikidata(root, tmp):
+    raw = root / "wikidata_entities" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    (raw / "entities_00.json").write_text(
+        json.dumps(
+            {
+                "entities": {
+                    "Q9": tev._wd_item(9),
+                    "Q4": tev._wd_item(4, "Q5"),
+                    "Q3": {"id": "Q3", "missing": ""},
+                }
+            }
+        )
+    )
+
+
 CASES = {
     "surf": (_surf, ev._build_surf, ["zen_surf_lisa_slurm"], {}),
     "pbdb": (_pbdb, ev._build_pbdb, ["zen_pbdb"], {"PBDB_STRIDE": 2}),
     "kelmarsh": (_kelmarsh, ev._build_kelmarsh, ["zen_kelmarsh"], {}),
+    "wikidata": (_wikidata, ev._build_wikidata, ["wikidata_entities"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),
     "metropt": (_metropt, ev._build_metropt, ["zen_metropt2"], {}),
     "openlibrary": (_openlibrary, ev._build_openlibrary, ["openlibrary_dump"], {"OPENLIBRARY_MODULO": 1}),  # noqa: E501

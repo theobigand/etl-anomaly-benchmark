@@ -2473,6 +2473,22 @@
    "units": 3477,
    "view": "ukspend"
   },
+  "wikidata_entities": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "identifier stride over the item range, not random",
+    "scholarly articles are about a third of the sampled items, as in the whole base",
+    "items about people excluded; about one in eight requested identifiers do not exist"
+   ],
+   "first_party": true,
+   "independent_group": "wikimedia_wikidata",
+   "min_units": 1000,
+   "partitions": "hash of the item identifier 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 1611,
+   "view": "wikidata_entities"
+  },
   "zen_3pfl": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [

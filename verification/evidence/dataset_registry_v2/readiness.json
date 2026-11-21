@@ -1980,6 +1980,13 @@
   },
   {
    "failed": null,
+   "group": "wikimedia_wikidata",
+   "id": "wikidata_entities",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2235,6 +2242,7 @@
    "openfda_faers",
    "openfoodfacts",
    "openlibrary",
+   "wikimedia_wikidata",
    "zambia_procurement"
   ]
  },
@@ -2294,13 +2302,13 @@
    "structurally_valid": 29
   },
   "C6": {
-   "acquired": 9,
-   "discovered": 13,
-   "experiment_ready": 9,
-   "protocol_ready": 9,
-   "rights_verified": 9,
-   "scientifically_eligible": 9,
-   "structurally_valid": 9
+   "acquired": 10,
+   "discovered": 14,
+   "experiment_ready": 10,
+   "protocol_ready": 10,
+   "rights_verified": 10,
+   "scientifically_eligible": 10,
+   "structurally_valid": 10
   }
  }
 }

@@ -2210,6 +2210,60 @@ def _build_ppd(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+def _is_human(entity: dict[str, Any]) -> bool:
+    """True when the item states that it is an instance of human (property P31, item Q5)."""
+    for claim in entity.get("claims", {}).get("P31", []):
+        value = claim.get("mainsnak", {}).get("datavalue", {}).get("value")
+        if isinstance(value, dict) and value.get("id") == "Q5":
+            return True
+    return False
+
+
+def wikidata_view(records: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], int]:
+    """Wikidata items in identifier order, one per identifier, without items about people.
+
+    Returns the items and the number of people dropped. Everything else, including the language,
+    claim, qualifier, reference and sitelink structure, is kept as published.
+    """
+    unique: dict[str, dict[str, Any]] = {}
+    for record in records:
+        unique.setdefault(record["id"], record)
+    people = [i for i, r in unique.items() if _is_human(r)]
+    kept = [r for i, r in unique.items() if i not in people]
+    return nested_view(kept, frozenset(), lambda r: int(r["id"][1:])), len(people)
+
+
+def _build_wikidata(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "wikidata_entities" / SNAPSHOT / "raw"
+    files = sorted(raw.glob("entities_*.json"))
+    records, absent = [], 0
+    for path in files:
+        for entity in json.loads(path.read_text())["entities"].values():
+            if "missing" in entity:
+                absent += 1
+            else:
+                records.append(entity)
+    view, people = wikidata_view(records)
+    folder = out / "wikidata_entities"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "items.jsonl"
+    target.write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in view))
+    _record(
+        manifest,
+        "wikidata_entities",
+        {"items.jsonl": (target, len(view))},
+        dropped=["items that are instances of human"],
+        pseudonymised=[],
+        sampling={
+            "request_files": len(files),
+            "identifiers_absent": absent,
+            "people_dropped": people,
+            "method": "identifiers Q(1 + k x 52361) spread over the identifier range, not random; items about people are excluded",  # noqa: E501
+        },
+        source_snapshot=f"wikidata_entities/{SNAPSHOT}",
+    )
+
+
 KELMARSH_SIGNALS = {
     "Wind speed (m/s)": "wind_speed",
     "Wind direction (°)": "wind_direction",
@@ -2555,6 +2609,7 @@ BUILD_STEPS = (
     _build_retail,
     _build_pbdb,
     _build_kelmarsh,
+    _build_wikidata,
     _build_flat,
     _build_series,
     _build_ukspend,
