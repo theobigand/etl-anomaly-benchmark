@@ -468,3 +468,206 @@ def test_the_command_line_keeps_observation_times_uses_its_default_root_and_adds
     with _pytest.raises(SystemExit):
         aq.main(["--help"])
     assert "Lightweight, reproducible acquisition" in capsys.readouterr().out
+
+
+# --- bounded range acquisition and gzip prefixes ------------------------------------------------
+
+RANGE_SPEC = {**SPEC, "max_bytes": 50}
+
+
+def _partial(start, body, total, status=206):
+    end = start + len(body) - 1
+    return {"status": status, "content_range": f"bytes {start}-{end}/{total}", "body": body}
+
+
+def test_a_range_fetch_stores_the_fragment_with_its_exact_range_and_the_source_size(tmp_path):
+    calls = []
+
+    def range_opener(url, start, length):
+        calls.append((url, start, length))
+        return _partial(start, b"x" * length, 1000)
+
+    snap = aq.Snapshot(tmp_path, RANGE_SPEC, "r", range_opener=range_opener, sleep=lambda s: None)
+    entry = snap.fetch_range(
+        "https://example.org/big.gz", "head.gz", start=0, length=40, observed="2024"
+    )
+    assert calls == [("https://example.org/big.gz", 0, 40)]
+    assert entry["partial"] is True and entry["range"] == [0, 39] and entry["total_bytes"] == 1000
+    assert entry["bytes"] == 40 and entry["sha256"] == hashlib.sha256(b"x" * 40).hexdigest()
+    assert (
+        entry["observed"] == "2024"
+        and entry["name"] == "head.gz"
+        and entry["url"].endswith("big.gz")
+    )
+    assert (tmp_path / "demo" / "r" / "raw" / "head.gz").read_bytes() == b"x" * 40
+    manifest = json.loads((tmp_path / "demo" / "r" / "manifest.json").read_text())
+    assert manifest["files"] == [entry]
+    again = snap.fetch_range(
+        "https://example.org/big.gz", "head.gz", start=0, length=40, observed="2024"
+    )
+    assert again == entry and len(calls) == 1  # a stored fragment is not fetched again
+    assert snap.verify() == []
+    mid = snap.fetch_range(
+        "https://example.org/big.gz", "mid.gz", start=100, length=10, observed=None
+    )
+    assert mid["range"] == [100, 109]
+
+
+def test_a_range_fetch_rejects_servers_that_ignore_the_range_or_answer_inconsistently(tmp_path):
+    def snap_with(opener):
+        return aq.Snapshot(tmp_path, RANGE_SPEC, "r", range_opener=opener, sleep=lambda s: None)
+
+    def fetch(snap, start=10, length=20):
+        return snap.fetch_range(
+            "https://example.org/f", "f", start=start, length=length, observed=None
+        )
+
+    with pytest.raises(aq.AcquisitionError, match="did not honour the range"):
+        fetch(snap_with(lambda u, s, n: {"status": 200, "content_range": None, "body": b"x" * 20}))
+    with pytest.raises(aq.AcquisitionError, match="Content-Range"):
+        fetch(snap_with(lambda u, s, n: {"status": 206, "content_range": None, "body": b"x" * 20}))
+    with pytest.raises(aq.AcquisitionError, match="offset"):
+        fetch(snap_with(lambda u, s, n: _partial(5, b"x" * 20, 100)))
+    with pytest.raises(aq.AcquisitionError, match="length"):
+        fetch(
+            snap_with(
+                lambda u, s, n: {
+                    "status": 206,
+                    "content_range": "bytes 10-40/100",
+                    "body": b"x" * 20,
+                }
+            )
+        )
+    with pytest.raises(aq.AcquisitionError, match="larger than 50 bytes"):
+        fetch(snap_with(lambda u, s, n: _partial(10, b"x" * 60, 100)), length=60)
+    with pytest.raises(aq.AcquisitionError, match="malformed"):
+        fetch(
+            snap_with(
+                lambda u, s, n: {
+                    "status": 206,
+                    "content_range": "items 10-29/100",
+                    "body": b"x" * 20,
+                }
+            )
+        )
+    with pytest.raises(aq.AcquisitionError, match="host"):
+        aq.Snapshot(tmp_path, RANGE_SPEC, "r").fetch_range(
+            "https://evil.net/f", "f", start=0, length=1, observed=None
+        )
+    with pytest.raises(aq.AcquisitionError, match="length"):
+        fetch(snap_with(lambda u, s, n: _partial(0, b"", 10)), start=0, length=0)
+    with pytest.raises(aq.AcquisitionError, match="length"):
+        fetch(snap_with(lambda u, s, n: _partial(0, b"", 10)), start=-1, length=5)
+    unknown = snap_with(
+        lambda u, s, n: {"status": 206, "content_range": "bytes 10-29/*", "body": b"x" * 20}
+    )
+    assert fetch(unknown)["total_bytes"] is None  # a server that does not know the total size
+
+
+def test_range_requests_retry_with_pacing_and_report_the_last_error(tmp_path):
+    waits, errors = [], [OSError("a"), OSError("b"), OSError("c")]
+
+    def failing(url, start, length):
+        raise errors.pop(0)
+
+    snap = aq.Snapshot(
+        tmp_path,
+        {**RANGE_SPEC, "min_interval": 1.0, "retries": 2},
+        "r",
+        range_opener=failing,
+        sleep=waits.append,
+    )
+    with pytest.raises(aq.AcquisitionError, match="after 3 attempts"):
+        snap.fetch_range("https://example.org/f", "f", start=0, length=5, observed=None)
+    assert waits == [1.0, 2.0, 1.0, 4.0, 1.0, 8.0]
+
+
+def test_the_real_range_opener_sends_a_range_header_and_reads_at_most_length_plus_one(monkeypatch):
+    seen = {}
+
+    class Response:
+        status = 206
+        headers = {"Content-Range": "bytes 5-9/100"}
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc):
+            return False
+
+        def read(self, n):
+            seen["read"] = n
+            return b"abcde"
+
+    def fake(request, timeout):
+        seen["range"] = request.get_header("Range")
+        seen["agent"] = request.get_header("User-agent")
+        seen["timeout"] = timeout
+        return Response()
+
+    monkeypatch.setattr(aq.urllib.request, "urlopen", fake)
+    out = aq.open_range("https://example.org/f", 5, 5)
+    assert out == {"status": 206, "content_range": "bytes 5-9/100", "body": b"abcde"}
+    assert seen == {"range": "bytes=5-9", "agent": aq.USER_AGENT, "timeout": 120, "read": 6}
+
+
+def test_gzip_prefixes_return_only_complete_lines_and_say_whether_the_stream_ended():
+    import gzip
+
+    text = "".join(f'{{"n": {i}}}\n' for i in range(100)).encode()
+    blob = gzip.compress(text)
+    full = aq.gzip_prefix_lines(blob, max_output=10**6)
+    assert len(full["lines"]) == 100 and full["complete"] is True and full["lines"][0] == '{"n": 0}'
+    cut = aq.gzip_prefix_lines(blob[: len(blob) // 2], max_output=10**6)
+    assert cut["complete"] is False and 0 < len(cut["lines"]) < 100
+    assert cut["lines"] == [f'{{"n": {i}}}' for i in range(len(cut["lines"]))]  # a clean prefix
+    assert all(line.endswith("}") for line in cut["lines"])  # a torn last line is dropped
+    small = aq.gzip_prefix_lines(blob, max_output=50)
+    assert small["complete"] is False and 0 < len(small["lines"]) <= 5
+    assert small["output_bytes"] <= 50 + 64
+    empty = aq.gzip_prefix_lines(gzip.compress(b""), max_output=10)
+    assert empty == {"lines": [], "complete": True, "output_bytes": 0}
+    with pytest.raises(aq.AcquisitionError, match="gzip"):
+        aq.gzip_prefix_lines(b"not gzip at all, but long enough to be read", max_output=10)
+    no_newline = aq.gzip_prefix_lines(gzip.compress(b"abc"), max_output=100)
+    assert (
+        no_newline["lines"] == ["abc"] and no_newline["complete"] is True
+    )  # the last line of a complete stream
+
+
+def test_the_command_line_fetches_configured_ranges_and_reports_them(tmp_path, monkeypatch, capsys):
+    spec = {
+        **SPEC,
+        "id": "rng",
+        "ranges": [
+            {
+                "url": "https://example.org/big",
+                "name": "head",
+                "start": 0,
+                "length": 4,
+                "observed": "2019",
+            }
+        ],
+    }
+    sources = tmp_path / "sources.json"
+    sources.write_text(json.dumps({"sources": [spec]}))
+    monkeypatch.setattr(aq, "SOURCES", sources)
+    real = aq.Snapshot.__init__
+
+    def init(
+        self,
+        root,
+        spec,
+        snapshot_id,
+        opener=aq.open_url,
+        sleep=aq.time.sleep,
+        range_opener=aq.open_range,
+    ):
+        real(self, root, spec, snapshot_id, opener=opener, sleep=lambda s: None,
+             range_opener=lambda u, s, n: _partial(s, b"abcd", 99))  # fmt: skip
+
+    monkeypatch.setattr(aq.Snapshot, "__init__", init)
+    assert aq.main(["rng", "--snapshot", "s", "--root", str(tmp_path / "out")]) == 0
+    assert capsys.readouterr().out == "rng/s: 1 files, mismatches []\n"
+    manifest = json.loads((tmp_path / "out" / "rng" / "s" / "manifest.json").read_text())
+    assert manifest["files"][0]["range"] == [0, 3] and manifest["files"][0]["observed"] == "2019"

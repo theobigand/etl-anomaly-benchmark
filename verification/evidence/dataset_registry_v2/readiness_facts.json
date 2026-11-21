@@ -542,6 +542,36 @@
    "units": 9688,
    "view": "openfoodfacts"
   },
+  "rki_hospitalisation": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "publisher revises the series; the snapshot is 2026-11-21",
+    "missing values marked NA are kept missing"
+   ],
+   "first_party": true,
+   "independent_group": "rki_surveillance",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the timestamp, per series",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "units": 292264,
+   "view": "panels"
+  },
+  "rki_notaufnahme": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "publisher revises the series; the snapshot is 2026-11-21",
+    "missing values marked NA are kept missing"
+   ],
+   "first_party": true,
+   "independent_group": "rki_surveillance",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the timestamp, per series",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "units": 343682,
+   "view": "panels"
+  },
   "slurm_ccin2p3": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -862,6 +892,20 @@
    "protocol_id": "P-TAB",
    "units": 3477,
    "view": "ukspend"
+  },
+  "zen_3pfl": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "natural orphans: 3 of 14282 contract links, 2 of 35989 grant links, 19 of 50271 patent links"
+   ],
+   "first_party": false,
+   "independent_group": "3pfl",
+   "min_units": 1000,
+   "partitions": "hash of the contract id 70/15/15, tables follow",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 50271,
+   "view": "zen_3pfl"
   }
  }
 }

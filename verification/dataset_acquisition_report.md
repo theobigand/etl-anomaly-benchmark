@@ -606,3 +606,52 @@ Tests: the focused research tests and the mutation inventory pass in the complet
 for the study, bibliography, job, series and redaction views). Focused mutation of
 `experimental_views.py` after the additions: 2076 of 2163 killed (96.0 percent). No full campaign and no
 certification. No experiment was run.
+
+## Update 9: bounded range acquisition, panels, relational tables and the Borg prefix (2026-11-21)
+
+**Capability.** `Snapshot.fetch_range` stores a byte range of a remote file only when the server answers
+`206` with a consistent `Content-Range` (offset, length and `bytes a-b/total` are checked; a `200` full
+response, a missing or malformed header, an oversized body and a foreign host are rejected). The manifest
+entry is marked `partial`, records the exact range and the reported total size, and its checksum is that of
+the fragment, never of the whole file. `gzip_prefix_lines` decodes a gzip stream from its start under an
+output cap, keeps only complete lines and reports whether the stream ended; such a sample is a prefix in file
+order, not a random sample. Both are covered by exact tests and a focused mutation run.
+
+**Wave A1 (accessible, legally eligible).** Seven Zenodo records were acquired and checksummed:
+
+| Record | Outcome |
+|---|---|
+| RKI emergency-department surveillance (24396501) | experiment-ready C3 panel, 343682 rows |
+| RKI COVID-19 hospitalisations (24388435) | experiment-ready C3 panel, 292264 rows; same producer, one group `rki_surveillance` |
+| 3PFL linked contracts, grants, patents (3369582) | five-table C5 view with measured key orphans (contract links 3 of 14282, grant links 2 of 35989, patent links 19 of 50271); upstream terms pending, so not ready |
+| DataCenter traces (14564935) | acquired; provenance of the traces undeclared; not ready |
+| AEGIS vehicle sensors (820576), NYC telematics (6647220) | acquired; GPS positions need a privacy decision; no view |
+| PURE requirements (7118517) | PDF documents; structurally unsuitable |
+
+**Wave A2.** Google ClusterData 2019 cell a: the bucket honours ranges (206 verified). A 30 MiB prefix of a
+collection-events shard and a 40 MiB prefix of an instance-events shard were read (prefix sample, not random).
+Result: of 299716 collections in the prefix only 284 have two events and none three, because shards split
+lifecycles by id. The data are a valid tabular event sample but not an event-sequence source, so Google is
+structurally valid and scientifically ineligible for C4. The zip central directories of two large Zenodo
+records (CLUE 7119953 holds one 635 MB compressed member; 3549604 holds 2776 members) were read with ranges;
+no member was extracted. MetroPT2, Swiss Dwellings and Open Library were not processed in this update.
+
+**Reclassification.** CC-IN2P3 SLURM jobs move from C2b to C4: they are usage events without amounts. C2b now
+has 6 ready groups; C4 has 2 (Loghub, CC-IN2P3).
+
+**Wave A3.** `pyarrow` is absent from both environments; adding it changes `pyproject.toml` and
+`environment.yml` and would invalidate preserved mutation caches, so the Parquet candidates remain deferred
+for an owner decision.
+
+**Ledger by machine** (`candidate_ledger.json`, 52 unique entries). Participations: C3 24, C4 13, C2b 11,
+C6 8, C5 8.
+
+| Ready groups | Initial (Update 8) | Final |
+|---|---:|---:|
+| C2b | 7 | 6 |
+| C3 | 7 | 8 |
+| C4 | 1 | 2 |
+| C5 | 4 | 4 |
+| C6 | 7 | 7 |
+
+Targets (30, 40, 28, 36, 30) are unchanged and not met. No experiment was run.

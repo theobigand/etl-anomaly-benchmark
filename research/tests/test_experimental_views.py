@@ -604,6 +604,16 @@ def _raw_tree(tmp_path, monkeypatch):
         root / "crossref_works" / SNAP / "raw" / "sample_00.json",
         json.dumps({"message": {"items": [{"DOI": "10.1/a"}]}}),
     )
+    import gzip as _gzip
+
+    borg = root / "google_cluster_2019a" / SNAP / "raw"
+    borg.mkdir(parents=True)
+    (borg / "collection_events_head.json.gz").write_bytes(
+        _gzip.compress((_collection_line(1, 1, 0) + "\n").encode())
+    )
+    (borg / "instance_events_head.json.gz").write_bytes(
+        _gzip.compress((_instance_line(1, 0, 1, 0) + "\n").encode())
+    )
     good = "Department family,Entity,Date,Expense type,Expense area,Supplier,Transaction number,Amount\n"  # noqa: E501
     good += 'D,E,01/02/2024,Fees,A,Acme,2,"£1,000.50"\nD,E,03/02/2024,Fees,A,Beta,1,30\n'
     _w(root / "ukspend_mhra" / SNAP / "raw" / "00.csv", good)
@@ -923,12 +933,31 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
         ev, "SERIES_SPECS", {"uci:5": {"dir": "pool", "time": ["t"], "format": "%Y-%m-%d"}}
     )
     _w(tmp_path / "pool" / "5.csv", "t,v\n2020-01-01,1\n")
+    _w(root / "zen_p" / SNAP / "raw" / "p.csv", "d,k,v\n2020-01-01,a,1\n")
+    monkeypatch.setattr(
+        ev,
+        "PANEL_SPECS",
+        {
+            "p": {
+                "source": "zen_p",
+                "file": "p.csv",
+                "sep": ",",
+                "time": ["d"],
+                "format": "%Y-%m-%d",
+                "keys": ["k"],
+            }
+        },
+    )
+    _w(root / "zen_t" / SNAP / "raw" / "a.csv", "k\tv\n1\t2\n")
+    monkeypatch.setattr(
+        ev, "TABLE_SETS", {"zen_t": {"tables": {"a": {"keep": ["k"]}}, "relations": []}}
+    )
     out = tmp_path / "out"
     manifest = ev.build(root, out)
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -1853,3 +1882,266 @@ def test_series_edge_cases_stable_order_unreadable_hours_and_the_error_message()
         "uci:172",
         "uci:492",
     }
+
+
+# --- Borg cluster trace prefixes (event sequences) -----------------------------------------------
+
+
+def _collection_line(cid, time, kind, **over):
+    record = {
+        "time": str(time), "type": str(kind), "collection_id": str(cid), "scheduling_class": "1",
+        "collection_type": "0", "priority": "103", "user": "HASHED=", "collection_name": "HASHED2=",
+        "collection_logical_name": "HASHED3=", "start_after_collection_ids": [], "vertical_scaling": "2",  # noqa: E501
+        "scheduler": "1",
+    }  # fmt: skip
+    record.update(over)
+    return json.dumps(record)
+
+
+def _instance_line(cid, index, time, kind, machine="9"):
+    return json.dumps(
+        {"time": str(time), "type": str(kind), "collection_id": str(cid), "scheduling_class": "0",
+         "collection_type": "0", "priority": "114", "instance_index": str(index), "machine_id": machine,  # noqa: E501
+         "alloc_collection_id": "0", "alloc_instance_index": "-1", "missing_type": "1",
+         "resource_request": {"cpus": 0.5, "memory": 0.25}, "constraint": []}
+    )  # fmt: skip
+
+
+def test_collection_event_views_keep_the_sequence_fields_drop_hashed_names_and_order_each_collection():  # noqa: E501
+    lines = [
+        _collection_line(2, 30, 6),
+        _collection_line(1, 20, 3),
+        _collection_line(1, 10, 0),
+        "",
+        _collection_line(2, 5, 0),
+    ]
+    out = ev.borg_collection_view(lines)
+    assert list(out.columns) == list(ev.BORG_COLLECTION_COLUMNS)
+    assert ev.BORG_COLLECTION_COLUMNS == (
+        "collection_id", "time_us", "type", "collection_type", "priority", "scheduling_class",
+        "scheduler", "vertical_scaling",
+    )  # fmt: skip
+    assert out["collection_id"].tolist() == [1, 1, 2, 2]
+    assert out["time_us"].tolist() == [10, 20, 5, 30]  # time order inside each collection
+    assert out["type"].tolist() == [0, 3, 0, 6]
+    assert out.iloc[0].to_dict() == {
+        "collection_id": 1,
+        "time_us": 10,
+        "type": 0,
+        "collection_type": 0,
+        "priority": 103,
+        "scheduling_class": 1,
+        "scheduler": 1,
+        "vertical_scaling": 2,
+    }
+    assert "user" not in out and "collection_name" not in out
+    assert len(ev.borg_collection_view([])) == 0
+    missing = json.dumps({"time": "1", "type": "0", "collection_id": "7"})
+    assert pd.isna(ev.borg_collection_view([missing])["priority"].iloc[0])
+
+
+def test_instance_event_views_unpack_the_resource_request_and_order_each_instance():
+    lines = [
+        _instance_line(1, 1, 50, 6),
+        _instance_line(1, 0, 40, 3),
+        _instance_line(1, 1, 10, 0, machine=""),
+    ]
+    out = ev.borg_instance_view(lines)
+    assert list(out.columns) == list(ev.BORG_INSTANCE_COLUMNS)
+    assert out[["collection_id", "instance_index", "time_us", "type"]].values.tolist() == [
+        [1, 0, 40, 3],
+        [1, 1, 10, 0],
+        [1, 1, 50, 6],
+    ]
+    assert out["cpus"].tolist() == [0.5, 0.5, 0.5] and out["memory"].tolist() == [0.25, 0.25, 0.25]
+    assert out["machine_id"].tolist()[0] == 9 and pd.isna(out["machine_id"].iloc[1])
+    bare = json.dumps({"time": "1", "type": "0", "collection_id": "1", "instance_index": "0"})
+    row = ev.borg_instance_view([bare]).iloc[0]
+    assert pd.isna(row["cpus"]) and pd.isna(row["memory"])
+
+
+def test_the_borg_builder_reads_gzip_prefixes_records_the_cut_and_caps_the_rows(
+    tmp_path, monkeypatch
+):
+    import gzip
+
+    root = tmp_path / "acquired"
+    raw = root / "google_cluster_2019a" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    text = "\n".join(_collection_line(i % 7, 100 - i, i % 4) for i in range(60)) + "\n"
+    blob = gzip.compress(text.encode())
+    (raw / "collection_events_head.json.gz").write_bytes(blob[: len(blob) * 3 // 4])  # a cut stream
+    text = "\n".join(_instance_line(i % 3, i % 5, 100 - i, i % 4) for i in range(40)) + "\n"
+    (raw / "instance_events_head.json.gz").write_bytes(gzip.compress(text.encode()))
+    monkeypatch.setattr(ev, "BORG_MAX_LINES", 25)
+    manifest = {}
+    ev._build_borg(root, tmp_path / "o" / "deep", manifest)
+    folder = tmp_path / "o" / "deep" / "google_cluster_2019a"
+    assert len(pd.read_csv(folder / "collection_events.csv")) == 25  # capped, a prefix of the file
+    assert len(pd.read_csv(folder / "instance_events.csv")) == 25
+    view = manifest["google_cluster_2019a"]
+    assert view["files"] == {
+        "collection_events.csv": {"sha256": _sha(folder / "collection_events.csv"), "rows": 25},
+        "instance_events.csv": {"sha256": _sha(folder / "instance_events.csv"), "rows": 25},
+    }
+    assert view["sampling"].startswith("prefix of one shard in file order")
+    assert view["fragments"]["collection_events_head.json.gz"]["stream_complete"] is False
+    assert view["fragments"]["instance_events_head.json.gz"]["stream_complete"] is True
+    assert view["fragments"]["instance_events_head.json.gz"]["lines_read"] == 40
+    assert {k: v for k, v in view.items() if k not in ("files", "fragments", "sampling")} == {
+        "dropped": [
+            "user",
+            "collection_name",
+            "collection_logical_name",
+            "constraint",
+            "alloc fields",
+        ],
+        "pseudonymised": [],
+        "source_snapshot": "google_cluster_2019a/2026-11-21",
+    }
+
+
+# --- panels of series (RKI) and multi-table relational extracts (3PFL) ---------------------------
+
+
+def test_panel_views_keep_key_columns_sort_by_key_then_time_and_read_na_markers_as_missing():
+    raw = pd.DataFrame(
+        {
+            "date": ["2020-01-02", "2020-01-01", "2020-01-01", "bad"],
+            "region": ["B", "B", "A", "A"],
+            "cases": ["5", "NA", "3", "9"],
+            "note": ["x", "y", "z", "w"],
+        }
+    )
+    spec = {"time": ["date"], "format": "%Y-%m-%d", "keys": ["region"]}
+    out = ev.panel_view(raw, spec)
+    assert list(out.columns) == ["timestamp", "region", "cases"]
+    assert out["region"].tolist() == ["A", "B", "B"]
+    assert out["timestamp"].tolist() == [
+        pd.Timestamp("2020-01-01"),
+        pd.Timestamp("2020-01-01"),
+        pd.Timestamp("2020-01-02"),
+    ]
+    assert out["cases"].isna().tolist() == [False, True, False]
+    assert out.attrs == {"rows_dropped": 1}
+    with pytest.raises(ev.ViewError, match="key column"):
+        ev.panel_view(raw, {**spec, "keys": ["zzz"]})
+
+
+def _tables():
+    return {
+        "01_links": pd.DataFrame({"piid": ["p1", "p2", "p9"], "patent": ["10", "11", "12"]}),
+        "02_orders": pd.DataFrame(
+            {"piid": ["p1", "p2"], "vendor": ["v1", "v2"], "title": ["secret a", "secret b"]}
+        ),
+        "03_vendors": pd.DataFrame({"vendor": ["v1"], "street": ["1 rue"], "state": ["OH"]}),
+    }
+
+
+TABLE_SPEC = {
+    "tables": {
+        "01_links": {"keep": ["piid", "patent"]},
+        "02_orders": {"keep": ["piid", "vendor"]},
+        "03_vendors": {"keep": ["vendor", "state"]},
+    },
+    "relations": [
+        ["01_links", "piid", "02_orders", "piid"],
+        ["02_orders", "vendor", "03_vendors", "vendor"],
+        ["01_links", "piid", "02_orders", "piid", {"where": ["patent", "10"]}],
+    ],
+}
+
+
+def test_table_views_keep_only_listed_columns_and_measure_every_relation_with_its_orphans():
+    out, relations = ev.tables_view(_tables(), TABLE_SPEC)
+    assert list(out) == ["01_links", "02_orders", "03_vendors"]
+    assert (
+        list(out["02_orders"].columns) == ["piid", "vendor"] and "street" not in out["03_vendors"]
+    )
+    assert relations == [
+        {
+            "child": "01_links.piid",
+            "parent": "02_orders.piid",
+            "checked": 3,
+            "orphans": 1,
+            "share": 1 / 3,
+        },
+        {
+            "child": "02_orders.vendor",
+            "parent": "03_vendors.vendor",
+            "checked": 2,
+            "orphans": 1,
+            "share": 0.5,
+        },
+        {
+            "child": "01_links.piid where patent=10",
+            "parent": "02_orders.piid",
+            "checked": 1,
+            "orphans": 0,
+            "share": 0.0,
+        },
+    ]
+    with pytest.raises(ev.ViewError, match="column"):
+        ev.tables_view(_tables(), {"tables": {"01_links": {"keep": ["nope"]}}, "relations": []})
+    with pytest.raises(ev.ViewError, match="table"):
+        ev.tables_view({}, TABLE_SPEC)
+
+
+def test_the_panel_and_relational_builders_write_views_and_record_relations(tmp_path, monkeypatch):
+    root = tmp_path / "acquired"
+    raw = root / "zen_rki_notaufnahme" / SNAP / "raw"
+    _w(
+        raw / "Notaufnahmesurveillance_Zeitreihen_Syndrome.tsv",
+        "date\tsyndrome\tn\n2019-01-02\tARI\t2\n2019-01-01\tARI\t1\n",
+    )
+    monkeypatch.setattr(
+        ev,
+        "PANEL_SPECS",
+        {
+            "rki_notaufnahme": {
+                "source": "zen_rki_notaufnahme",
+                "file": "Notaufnahmesurveillance_Zeitreihen_Syndrome.tsv",
+                "sep": "\t",
+                "time": ["date"],
+                "format": "%Y-%m-%d",
+                "keys": ["syndrome"],
+            }
+        },
+    )
+    manifest = {}
+    ev._build_panels(root, tmp_path / "o" / "deep", manifest)
+    ev._build_panels(root, tmp_path / "o" / "deep", manifest)
+    target = tmp_path / "o" / "deep" / "panels" / "rki_notaufnahme.csv"
+    assert target.read_text() == "timestamp,syndrome,n\n2019-01-01,ARI,1\n2019-01-02,ARI,2\n"
+    assert manifest["panels"]["files"] == {
+        "rki_notaufnahme.csv": {"sha256": _sha(target), "rows": 2}
+    }
+    assert manifest["panels"]["rows_dropped"] == {"rki_notaufnahme": 0}
+    tables = root / "zen_3pfl" / SNAP / "raw"
+    _w(tables / "01_links.csv", 'piid\tpatent\n"p1"\t"10"\n"p9"\t"12"\n')
+    _w(tables / "02_orders.csv", 'piid\tvendor\ttitle\n"p1"\t"v1"\t"s"\n')
+    monkeypatch.setattr(ev, "TABLE_SETS", {"zen_3pfl": {
+        "tables": {"01_links": {"keep": ["piid", "patent"]}, "02_orders": {"keep": ["piid", "vendor"]}},  # noqa: E501
+        "relations": [["01_links", "piid", "02_orders", "piid"]]}})  # fmt: skip
+    ev._build_tables(root, tmp_path / "o" / "deep", manifest)
+    ev._build_tables(root, tmp_path / "o" / "deep", manifest)
+    folder = tmp_path / "o" / "deep" / "zen_3pfl"
+    assert (
+        folder / "01_links.csv"
+    ).read_text() == "piid,patent\np1,10\np9,12\n"  # quotes are not data
+    assert (folder / "02_orders.csv").read_text() == "piid,vendor\np1,v1\n"
+    view = manifest["zen_3pfl"]
+    assert view["relations"] == [
+        {
+            "child": "01_links.piid",
+            "parent": "02_orders.piid",
+            "checked": 2,
+            "orphans": 1,
+            "share": 0.5,
+        }
+    ]
+    assert view["files"]["01_links.csv"] == {"sha256": _sha(folder / "01_links.csv"), "rows": 2}
+    assert (
+        view["notes"]
+        == "relations are the source's own keys; orphans are natural incompleteness of the published extract"  # noqa: E501
+    )

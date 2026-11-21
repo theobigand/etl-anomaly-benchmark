@@ -1097,7 +1097,7 @@
    "licence_class": "open",
    "protocols": "P-TAB on jobs (duration, resource, state-code, duplicate and timestamp-order faults); natural job states are a baseline and a separate natural outcome, never confirmed pipeline faults",
    "publisher": "cc_in2p3",
-   "reason": "job accounting events of a national computing centre (SLURM): 233716 jobs in the id-sampled view over two months (July and December 2024, 189 days by submit time), 462 users, 86 accounts, job states 80 percent completed, 12 percent failed, 5 percent cancelled, 1.6 percent timeout; user and account names are the producer's pseudonyms; no monetary amount (usage events), so it supports no payment-specific claim; failed and cancelled jobs are natural scheduler outcomes, not ETL faults",
+   "reason": "job accounting events of a national computing centre (SLURM): 233716 jobs in the id-sampled view over two months (July and December 2024, 189 days by submit time), 462 users, 86 accounts, job states 80 percent completed, 12 percent failed, 5 percent cancelled, 1.6 percent timeout; user and account names are the producer's pseudonyms; no monetary amount (usage events), so it supports no payment-specific claim; failed and cancelled jobs are natural scheduler outcomes, not ETL faults; reclassified from C2b to C4 on 2026-11-21: usage events without amounts are operational events of a computing system, not transactions",
    "stages": {
     "collection_implemented": true,
     "data_acquired": true,
@@ -1106,7 +1106,7 @@
     "ready_for_experiments": false,
     "structural_validation": true
    },
-   "stratum": "C2b",
+   "stratum": "C4",
    "system": "slurm_ccin2p3",
    "upstream_licence": "CC BY 4.0 on Zenodo record 18668107 (metadata.license.id cc-by-4.0, open access); the depositors are the authors and staff of the producing centre",
    "upstream_status": "verified"
@@ -1330,6 +1330,166 @@
    "stratum": "C3",
    "system": "uci:492",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "rki",
+   "id": "rki_notaufnahme",
+   "licence_class": "open",
+   "protocols": "P-TS by controlled injection; the producer's expected-value bounds are a natural baseline, not labels",
+   "publisher": "rki",
+   "reason": "Robert Koch-Institut emergency-department surveillance: daily relative case shares by syndrome, age group and department type, 343682 rows, 2019 onwards, with the producer's own expected values; 92 sites listed separately (not used)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 on the Zenodo record deposited by the institute itself",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "rki_notaufnahme",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "rki",
+   "id": "rki_hospitalisation",
+   "licence_class": "open",
+   "protocols": "P-TS by controlled injection",
+   "publisher": "rki",
+   "reason": "Robert Koch-Institut COVID-19 hospitalisation 7-day counts and incidence by federal state and age group, 292264 rows; the series is revised by the publisher; same producer as rki_notaufnahme, so one group",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 on the Zenodo record deposited by the institute itself",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "rki_hospitalisation",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "google_cluster",
+   "id": "google_cluster_2019a",
+   "licence_class": "open",
+   "protocols": "none: event sequences are not recoverable from a prefix",
+   "publisher": "google",
+   "reason": "Borg trace shard prefixes obtained with HTTP range requests (30 MiB and 40 MiB gzip prefixes, 206 verified). In the prefix 299716 collections have 284 with two events and none with three; shards split lifecycles by id, so complete event sequences would need every shard. Valid as a tabular event sample, not as a sequence stratum",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC-BY stated in the README of the publisher's repository",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C4",
+   "system": "google_borg",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "3pfl",
+   "id": "zen_3pfl",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "3pfl_authors",
+   "reason": "Nine linked tables of US federal contracts, grants, vendors, patents and papers (de Rassenfosse and Raiteri); natural key orphans: contract links 3 of 14282, grant links 2 of 35989, patent links 19 of 50271. Upstream sources (federal spending data, patent office, Web of Science identifiers) not yet read at their publishers",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 on the Zenodo record; upstream terms pending",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "3pfl",
+   "upstream_status": "unverified"
+  },
+  {
+   "eligible": false,
+   "family": "datacenter_traces",
+   "id": "zen_datacenter_traces",
+   "licence_class": "open",
+   "protocols": "none",
+   "publisher": "uma_authors",
+   "reason": "four aggregate usage series without declared provenance of the underlying traces; record metadata is two lines",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 on the Zenodo record; provenance of the traces not stated",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C3",
+   "system": "datacenter_traces",
+   "upstream_status": "unverified"
+  },
+  {
+   "eligible": false,
+   "family": "zen_aegis_vehicle",
+   "id": "zen_aegis_vehicle",
+   "licence_class": "open",
+   "protocols": "none",
+   "publisher": "zen_aegis_vehicle",
+   "reason": "vehicle sensor tables with GPS positions; position fields need a privacy decision; acquired and checksummed, no experimental view",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 on the Zenodo record",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C3",
+   "system": "zen_aegis_vehicle",
+   "upstream_status": "unverified"
+  },
+  {
+   "eligible": false,
+   "family": "zen_nyc_telematics",
+   "id": "zen_nyc_telematics",
+   "licence_class": "open",
+   "protocols": "none",
+   "publisher": "zen_nyc_telematics",
+   "reason": "sixteen raw mixed OBD/GPS logs without a header; position data; acquired and checksummed, no experimental view",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 on the Zenodo record",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C3",
+   "system": "zen_nyc_telematics",
+   "upstream_status": "unverified"
+  },
+  {
+   "eligible": false,
+   "family": "zen_pure_requirements",
+   "id": "zen_pure_requirements",
+   "licence_class": "open",
+   "protocols": "none",
+   "publisher": "zen_pure_requirements",
+   "reason": "requirements documents (PDF and XML) for text, not tabular or event data; acquired and checksummed, no experimental view",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 on the Zenodo record",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C6",
+   "system": "zen_pure_requirements",
+   "upstream_status": "unverified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

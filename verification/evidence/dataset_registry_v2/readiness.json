@@ -535,7 +535,7 @@
    "group": "ccin2p3_slurm",
    "id": "slurm_ccin2p3",
    "status": "experiment_ready",
-   "stratum": "C2b"
+   "stratum": "C4"
   },
   {
    "failed": null,
@@ -628,6 +628,92 @@
    "id": "uci:492",
    "status": "acquired",
    "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "rki_surveillance",
+   "id": "rki_notaufnahme",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "rki_surveillance",
+   "id": "rki_hospitalisation",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "structural validation not passed"
+    ],
+    "status": "structurally_valid"
+   },
+   "group": null,
+   "id": "google_cluster_2019a",
+   "status": "acquired",
+   "stratum": "C4"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": "3pfl",
+   "id": "zen_3pfl",
+   "status": "discovered",
+   "stratum": "C5"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "zen_datacenter_traces",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "zen_aegis_vehicle",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "zen_nyc_telematics",
+   "status": "discovered",
+   "stratum": "C3"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "zen_pure_requirements",
+   "status": "discovered",
+   "stratum": "C6"
   },
   {
    "failed": null,
@@ -744,7 +830,6 @@
  ],
  "ready_groups": {
   "C2b": [
-   "ccin2p3_slurm",
    "georgia_procurement",
    "lyft_bikeshare",
    "montreal_contracts",
@@ -757,11 +842,13 @@
    "candanedo_umons",
    "elder_home",
    "melbourne_pedestrian",
+   "rki_surveillance",
    "seoul_bike",
    "steel_korea",
    "tetouan_power"
   ],
   "C4": [
+   "ccin2p3_slurm",
    "loghub_collection"
   ],
   "C5": [
@@ -782,35 +869,35 @@
  },
  "summary": {
   "C2b": {
-   "acquired": 8,
-   "discovered": 14,
-   "experiment_ready": 8,
-   "protocol_ready": 8,
-   "rights_verified": 8,
-   "scientifically_eligible": 8,
-   "structurally_valid": 8
+   "acquired": 7,
+   "discovered": 13,
+   "experiment_ready": 7,
+   "protocol_ready": 7,
+   "rights_verified": 7,
+   "scientifically_eligible": 7,
+   "structurally_valid": 7
   },
   "C3": {
-   "acquired": 11,
-   "discovered": 30,
-   "experiment_ready": 8,
-   "protocol_ready": 8,
-   "rights_verified": 11,
-   "scientifically_eligible": 8,
-   "structurally_valid": 9
+   "acquired": 13,
+   "discovered": 35,
+   "experiment_ready": 10,
+   "protocol_ready": 10,
+   "rights_verified": 13,
+   "scientifically_eligible": 10,
+   "structurally_valid": 11
   },
   "C4": {
-   "acquired": 16,
-   "discovered": 16,
-   "experiment_ready": 16,
-   "protocol_ready": 16,
-   "rights_verified": 16,
-   "scientifically_eligible": 16,
-   "structurally_valid": 16
+   "acquired": 18,
+   "discovered": 18,
+   "experiment_ready": 17,
+   "protocol_ready": 17,
+   "rights_verified": 18,
+   "scientifically_eligible": 17,
+   "structurally_valid": 17
   },
   "C5": {
    "acquired": 13,
-   "discovered": 13,
+   "discovered": 14,
    "experiment_ready": 13,
    "protocol_ready": 13,
    "rights_verified": 13,
@@ -819,7 +906,7 @@
   },
   "C6": {
    "acquired": 7,
-   "discovered": 10,
+   "discovered": 11,
    "experiment_ready": 7,
    "protocol_ready": 7,
    "rights_verified": 7,

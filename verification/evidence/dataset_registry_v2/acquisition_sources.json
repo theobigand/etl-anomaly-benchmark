@@ -1326,19 +1326,353 @@
    "upstream_verified": false
   },
   {
-   "attribution": "cite Wilkes, Google cluster-usage traces v3 (ClusterData2019)",
+   "attribution": "cite the Zenodo record 14564935 and its authors",
    "files": [
     {
-     "name": "collection_events-000000000000.json.gz",
-     "observed": "2019-05",
-     "url": "https://storage.googleapis.com/clusterdata_2019_a/collection_events-000000000000.json.gz"
+     "name": "metadata.jsonld",
+     "observed": "2024-12-28",
+     "url": "https://zenodo.org/records/14564935/files/metadata.jsonld?download=1"
     },
     {
-     "name": "instance_events-000000000000.json.gz",
-     "observed": "2019-05",
-     "url": "https://storage.googleapis.com/clusterdata_2019_a/instance_events-000000000000.json.gz"
+     "name": "vm_cpu_readings_month_aggregated_cpu_mem.csv",
+     "observed": "2024-12-28",
+     "url": "https://zenodo.org/records/14564935/files/vm_cpu_readings_month_aggregated_cpu_mem.csv?download=1"
+    },
+    {
+     "name": "machine_usage_days_1_to_8_grouped_300_seconds.csv",
+     "observed": "2024-12-28",
+     "url": "https://zenodo.org/records/14564935/files/machine_usage_days_1_to_8_grouped_300_seconds.csv?download=1"
+    },
+    {
+     "name": "instance_usage_grouped_300_seconds_month.csv",
+     "observed": "2024-12-28",
+     "url": "https://zenodo.org/records/14564935/files/instance_usage_grouped_300_seconds_month.csv?download=1"
     }
    ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_datacenter_traces",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/14564935",
+   "licence_text": "Zenodo record 14564935 metadata: cc-by-4.0, access_right open; depositors: Fern\u00e1ndez-Montes, Alejandro, Fern\u00e1ndez Cerero, Dami\u00e1n",
+   "max_bytes": 104857600,
+   "method": "official Zenodo record file download",
+   "min_interval": 3.0,
+   "privacy": "aggregated usage, no personal data expected",
+   "publisher": "Zenodo depositors (data-centre trace aggregates)",
+   "rate_limit": "sequential downloads, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "provenance of the traces to be read in the record description",
+   "upstream_verified": false
+  },
+  {
+   "attribution": "cite the Zenodo record 24396501 and its authors",
+   "files": [
+    {
+     "name": "Notaufnahmesurveillance_Zeitreihen_Syndrome.tsv",
+     "observed": "2026-11-20",
+     "url": "https://zenodo.org/records/24396501/files/Notaufnahmesurveillance_Zeitreihen_Syndrome.tsv?download=1"
+    },
+    {
+     "name": "Notaufnahmesurveillance_Standorte.tsv",
+     "observed": "2026-11-20",
+     "url": "https://zenodo.org/records/24396501/files/Notaufnahmesurveillance_Standorte.tsv?download=1"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_rki_notaufnahme",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/24396501",
+   "licence_text": "Zenodo record 24396501 metadata: cc-by-4.0, access_right open; depositors: Robert Koch-Institut, AKTIN-Infrastruktur und das Notaufnahmeregister",
+   "max_bytes": 104857600,
+   "method": "official Zenodo record file download",
+   "min_interval": 3.0,
+   "privacy": "aggregated counts by site and syndrome; site identifiers pseudonymous",
+   "publisher": "Robert Koch-Institut (emergency department surveillance)",
+   "rate_limit": "sequential downloads, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party: deposited by the institute",
+   "upstream_verified": false
+  },
+  {
+   "attribution": "cite the Zenodo record 24388435 and its authors",
+   "files": [
+    {
+     "name": "Aktuell_Deutschland_COVID-19-Hospitalisierungen.csv",
+     "observed": "2026-11-20",
+     "url": "https://zenodo.org/records/24388435/files/Aktuell_Deutschland_COVID-19-Hospitalisierungen.csv?download=1"
+    },
+    {
+     "name": "Aktuell_Deutschland_adjustierte-COVID-19-Hospitalisierungen.csv",
+     "observed": "2026-11-20",
+     "url": "https://zenodo.org/records/24388435/files/Aktuell_Deutschland_adjustierte-COVID-19-Hospitalisierungen.csv?download=1"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_rki_hospitalisation",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/24388435",
+   "licence_text": "Zenodo record 24388435 metadata: cc-by-4.0, access_right open; depositors: Robert Koch-Institut",
+   "max_bytes": 104857600,
+   "method": "official Zenodo record file download",
+   "min_interval": 3.0,
+   "privacy": "aggregated counts",
+   "publisher": "Robert Koch-Institut (COVID-19 hospitalisations)",
+   "rate_limit": "sequential downloads, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party: deposited by the institute",
+   "upstream_verified": false
+  },
+  {
+   "attribution": "cite the Zenodo record 820576 and its authors",
+   "files": [
+    {
+     "name": "Automotive-ResearchDataSet-VIF-AEGIS.zip",
+     "observed": "2017-06-28",
+     "url": "https://zenodo.org/records/820576/files/Automotive-ResearchDataSet-VIF-AEGIS.zip?download=1"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_aegis_vehicle",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/820576",
+   "licence_text": "Zenodo record 820576 metadata: cc-by-4.0, access_right open; depositors: Stocker, Alexander, Kaiser, Christian, Festl, Andreas",
+   "max_bytes": 104857600,
+   "method": "official Zenodo record file download",
+   "min_interval": 3.0,
+   "privacy": "vehicle sensor values; position data may exist",
+   "publisher": "AEGIS Big Data Project (vehicle sensor data)",
+   "rate_limit": "sequential downloads, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "depositors are the project authors",
+   "upstream_verified": false
+  },
+  {
+   "attribution": "cite the Zenodo record 6647220 and its authors",
+   "files": [
+    {
+     "name": "SCV_2021_02_05_16_49_12.csv",
+     "observed": "2022-06-15",
+     "url": "https://zenodo.org/records/6647220/files/SCV_2021_02_05_16_49_12.csv?download=1"
+    },
+    {
+     "name": "SCV_2021_02_05_17_16_06.csv",
+     "observed": "2022-06-15",
+     "url": "https://zenodo.org/records/6647220/files/SCV_2021_02_05_17_16_06.csv?download=1"
+    },
+    {
+     "name": "SCV_2021_02_05_17_37_22.csv",
+     "observed": "2022-06-15",
+     "url": "https://zenodo.org/records/6647220/files/SCV_2021_02_05_17_37_22.csv?download=1"
+    },
+    {
+     "name": "SCV_2021_02_05_15_26_13.csv",
+     "observed": "2022-06-15",
+     "url": "https://zenodo.org/records/6647220/files/SCV_2021_02_05_15_26_13.csv?download=1"
+    },
+    {
+     "name": "SCV_2021_02_05_14_07_51.csv",
+     "observed": "2022-06-15",
+     "url": "https://zenodo.org/records/6647220/files/SCV_2021_02_05_14_07_51.csv?download=1"
+    },
+    {
+     "name": "SCV_2021_02_05_15_07_26.csv",
+     "observed": "2022-06-15",
+     "url": "https://zenodo.org/records/6647220/files/SCV_2021_02_05_15_07_26.csv?download=1"
+    },
+    {
+     "name": "SCV_2021_02_05_14_47_52.csv",
+     "observed": "2022-06-15",
+     "url": "https://zenodo.org/records/6647220/files/SCV_2021_02_05_14_47_52.csv?download=1"
+    },
+    {
+     "name": "SCV_2021_02_05_17_51_04.csv",
+     "observed": "2022-06-15",
+     "url": "https://zenodo.org/records/6647220/files/SCV_2021_02_05_17_51_04.csv?download=1"
+    },
+    {
+     "name": "SCV_2021_02_05_14_21_06.csv",
+     "observed": "2022-06-15",
+     "url": "https://zenodo.org/records/6647220/files/SCV_2021_02_05_14_21_06.csv?download=1"
+    },
+    {
+     "name": "SCV_2021_02_05_13_39_27.csv",
+     "observed": "2022-06-15",
+     "url": "https://zenodo.org/records/6647220/files/SCV_2021_02_05_13_39_27.csv?download=1"
+    },
+    {
+     "name": "SCV_2021_02_05_15_10_02.csv",
+     "observed": "2022-06-15",
+     "url": "https://zenodo.org/records/6647220/files/SCV_2021_02_05_15_10_02.csv?download=1"
+    },
+    {
+     "name": "SCV_2021_02_05_13_03_30.csv",
+     "observed": "2022-06-15",
+     "url": "https://zenodo.org/records/6647220/files/SCV_2021_02_05_13_03_30.csv?download=1"
+    },
+    {
+     "name": "SCV_2021_02_05_16_31_26.csv",
+     "observed": "2022-06-15",
+     "url": "https://zenodo.org/records/6647220/files/SCV_2021_02_05_16_31_26.csv?download=1"
+    },
+    {
+     "name": "SCV_2021_02_05_13_21_21.csv",
+     "observed": "2022-06-15",
+     "url": "https://zenodo.org/records/6647220/files/SCV_2021_02_05_13_21_21.csv?download=1"
+    },
+    {
+     "name": "SCV_2021_02_05_15_41_32.csv",
+     "observed": "2022-06-15",
+     "url": "https://zenodo.org/records/6647220/files/SCV_2021_02_05_15_41_32.csv?download=1"
+    },
+    {
+     "name": "SCV_2021_02_05_13_59_44.csv",
+     "observed": "2022-06-15",
+     "url": "https://zenodo.org/records/6647220/files/SCV_2021_02_05_13_59_44.csv?download=1"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_nyc_telematics",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/6647220",
+   "licence_text": "Zenodo record 6647220 metadata: cc-by-4.0, access_right open; depositors: Jang, Jinwoo, Alrassy, Patrick, Smyth, Andrew",
+   "max_bytes": 104857600,
+   "method": "official Zenodo record file download",
+   "min_interval": 3.0,
+   "privacy": "vehicle trajectories; position data of vehicles",
+   "publisher": "Zenodo authors (NYC telematics)",
+   "rate_limit": "sequential downloads, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "depositors are the authors",
+   "upstream_verified": false
+  },
+  {
+   "attribution": "cite the Zenodo record 3369582 and its authors",
+   "files": [
+    {
+     "name": "01_patent_contract.csv",
+     "observed": "2019-07-23",
+     "url": "https://zenodo.org/records/3369582/files/01_patent_contract.csv?download=1"
+    },
+    {
+     "name": "02_procurement_information.csv",
+     "observed": "2019-07-23",
+     "url": "https://zenodo.org/records/3369582/files/02_procurement_information.csv?download=1"
+    },
+    {
+     "name": "03_procurement_year.csv",
+     "observed": "2019-07-23",
+     "url": "https://zenodo.org/records/3369582/files/03_procurement_year.csv?download=1"
+    },
+    {
+     "name": "07_grantee_information.csv",
+     "observed": "2019-07-23",
+     "url": "https://zenodo.org/records/3369582/files/07_grantee_information.csv?download=1"
+    },
+    {
+     "name": "05_grant_information.csv",
+     "observed": "2019-07-23",
+     "url": "https://zenodo.org/records/3369582/files/05_grant_information.csv?download=1"
+    },
+    {
+     "name": "06_grant_year.csv",
+     "observed": "2019-07-23",
+     "url": "https://zenodo.org/records/3369582/files/06_grant_year.csv?download=1"
+    },
+    {
+     "name": "04_vendor_information.csv",
+     "observed": "2019-07-23",
+     "url": "https://zenodo.org/records/3369582/files/04_vendor_information.csv?download=1"
+    },
+    {
+     "name": "08_patent_information.csv",
+     "observed": "2019-07-23",
+     "url": "https://zenodo.org/records/3369582/files/08_patent_information.csv?download=1"
+    },
+    {
+     "name": "09_paper_information.csv",
+     "observed": "2019-07-23",
+     "url": "https://zenodo.org/records/3369582/files/09_paper_information.csv?download=1"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_3pfl",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/3369582",
+   "licence_text": "Zenodo record 3369582 metadata: cc-by-4.0, access_right open; depositors: de Rassenfosse Ga\u00e9tan, Emilio Raiteri",
+   "max_bytes": 104857600,
+   "method": "official Zenodo record file download",
+   "min_interval": 3.0,
+   "privacy": "patent and grant records name organisations and possibly inventors",
+   "publisher": "3PFL authors (patents and public funding)",
+   "rate_limit": "sequential downloads, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "depositors are the authors",
+   "upstream_verified": false
+  },
+  {
+   "attribution": "cite the Zenodo record 7118517 and its authors",
+   "files": [
+    {
+     "name": "requirements-xml.zip",
+     "observed": "2018-09-12",
+     "url": "https://zenodo.org/records/7118517/files/requirements-xml.zip?download=1"
+    },
+    {
+     "name": "req_document.xsd",
+     "observed": "2018-09-12",
+     "url": "https://zenodo.org/records/7118517/files/req_document.xsd?download=1"
+    },
+    {
+     "name": "requirements.zip",
+     "observed": "2018-09-12",
+     "url": "https://zenodo.org/records/7118517/files/requirements.zip?download=1"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_pure_requirements",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/7118517",
+   "licence_text": "Zenodo record 7118517 metadata: cc-by-4.0, access_right open; depositors: Ferrari, Alessio, Spagnolo, Giorgio Oronzo, Gnesi, Stefania",
+   "max_bytes": 104857600,
+   "method": "official Zenodo record file download",
+   "min_interval": 3.0,
+   "privacy": "documents of public requirements",
+   "publisher": "PURE authors (public requirements documents)",
+   "rate_limit": "sequential downloads, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "depositors are the authors",
+   "upstream_verified": false
+  },
+  {
+   "attribution": "cite Wilkes, Google cluster-usage traces v3 (ClusterData2019)",
    "hosts": [
     "storage.googleapis.com"
    ],
@@ -1347,11 +1681,27 @@
    "licence_location": "https://raw.githubusercontent.com/google/cluster-data/master/README.md",
    "licence_text": "The data and trace documentation are made available under the CC-BY license (README of github.com/google/cluster-data, section License)",
    "max_bytes": 104857600,
-   "method": "official public storage bucket (JSON API listing and object download), one collection-events and one instance-events shard",
+   "method": "official public storage bucket; HTTP range requests of the first bytes of one collection-events and one instance-events shard (the server answers 206 Partial Content); the fragments are gzip prefixes, so the sample is the start of the trace in file order, not random",
    "min_interval": 3.0,
-   "privacy": "job, user and collection names are hashed by the publisher; no personal data expected",
+   "privacy": "job, user and collection names are hashed by the publisher",
    "publisher": "Google (ClusterData2019, Borg cell a)",
-   "rate_limit": "two shard downloads",
+   "ranges": [
+    {
+     "length": 31457280,
+     "name": "collection_events_head.json.gz",
+     "observed": "2019-05",
+     "start": 0,
+     "url": "https://storage.googleapis.com/clusterdata_2019_a/collection_events-000000000000.json.gz"
+    },
+    {
+     "length": 41943040,
+     "name": "instance_events_head.json.gz",
+     "observed": "2019-05",
+     "start": 0,
+     "url": "https://storage.googleapis.com/clusterdata_2019_a/instance_events-000000000000.json.gz"
+    }
+   ],
+   "rate_limit": "two range requests",
    "redistribution": "CC BY 4.0 permits it with attribution; raw files stay local",
    "retries": 2,
    "stratum": "C4",

@@ -60,6 +60,38 @@
   "pseudonymised": [],
   "source_snapshot": "crossref_works/2026-11-21"
  },
+ "google_cluster_2019a": {
+  "dropped": [
+   "user",
+   "collection_name",
+   "collection_logical_name",
+   "constraint",
+   "alloc fields"
+  ],
+  "files": {
+   "collection_events.csv": {
+    "rows": 300000,
+    "sha256": "761a396af078a032b8f3a9bdee691f9511a0db80316c534199787bd0981b1e2c"
+   },
+   "instance_events.csv": {
+    "rows": 300000,
+    "sha256": "3fdf36cae7665d5e10228c54e2b334eab22f5974e13e225757237dac70551797"
+   }
+  },
+  "fragments": {
+   "collection_events_head.json.gz": {
+    "lines_read": 499829,
+    "stream_complete": false
+   },
+   "instance_events_head.json.gz": {
+    "lines_read": 1690938,
+    "stream_complete": false
+   }
+  },
+  "pseudonymised": [],
+  "sampling": "prefix of one shard in file order (first 300000 lines of each fragment), not random",
+  "source_snapshot": "google_cluster_2019a/2026-11-21"
+ },
  "loghub": {
   "dropped": [
    "Content",
@@ -318,6 +350,25 @@
   },
   "pseudonymised": [],
   "source_snapshot": "openfoodfacts_products/2026-11-21"
+ },
+ "panels": {
+  "dropped": [],
+  "files": {
+   "rki_hospitalisation.csv": {
+    "rows": 292264,
+    "sha256": "916ad07e892112e7d17c9deab2d64fd3c87764169f50e1bbe7122eade9f8e273"
+   },
+   "rki_notaufnahme.csv": {
+    "rows": 343682,
+    "sha256": "0c3239dc084ccc173b9fb219766fe537169091a96383238a295c202a0b3306e0"
+   }
+  },
+  "pseudonymised": [],
+  "rows_dropped": {
+   "rki_hospitalisation": 0,
+   "rki_notaufnahme": 0
+  },
+  "source_snapshot": "zen_rki_* records of 2026-11-21 (the series are revised by the publisher)"
  },
  "series": {
   "dropped": [],
@@ -709,5 +760,76 @@
    ]
   },
   "source_snapshot": "ukspend_*/2026-11-21"
+ },
+ "zen_3pfl": {
+  "dropped": [
+   "names, street addresses, phone numbers, free-text descriptions"
+  ],
+  "files": {
+   "01_patent_contract.csv": {
+    "rows": 50271,
+    "sha256": "452c80b7dcb99f070931d68da65528e38a89c2e2354672fac7bcee2fe7823bf1"
+   },
+   "02_procurement_information.csv": {
+    "rows": 3824,
+    "sha256": "dcdfcbbc016a2b99bd9caf105def00ec028f43872ea14053a90cf25bd81cb561"
+   },
+   "03_procurement_year.csv": {
+    "rows": 13873,
+    "sha256": "ea958b2053a49bfef4880eb86548aea69b04847c7523ce5ec59ba2d205eea0bd"
+   },
+   "04_vendor_information.csv": {
+    "rows": 1626,
+    "sha256": "bc3c507c810e2cbe783bf2ef8fae9c4632e34b1752f5cbbd030ecc537e3e5536"
+   },
+   "05_grant_information.csv": {
+    "rows": 16400,
+    "sha256": "49331d4dfbfa7e92b8ea595b500f9fe5be8fe62d19e0ea3c75acfe9500c0293d"
+   },
+   "08_patent_information.csv": {
+    "rows": 37910,
+    "sha256": "9b4b9ae5deac649215f132c4a31e6e49a404429828f761bd324024e9b6e53d06"
+   }
+  },
+  "notes": "relations are the source's own keys; orphans are natural incompleteness of the published extract",
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 14282,
+    "child": "01_patent_contract.piid where contract=1",
+    "orphans": 3,
+    "parent": "02_procurement_information.piid",
+    "share": 0.0002100546141996919
+   },
+   {
+    "checked": 35989,
+    "child": "01_patent_contract.piid where grant=1",
+    "orphans": 2,
+    "parent": "05_grant_information.piid",
+    "share": 5.557253605268276e-05
+   },
+   {
+    "checked": 50271,
+    "child": "01_patent_contract.patent",
+    "orphans": 19,
+    "parent": "08_patent_information.patent",
+    "share": 0.00037795150285452843
+   },
+   {
+    "checked": 3824,
+    "child": "02_procurement_information.dunsnumber",
+    "orphans": 0,
+    "parent": "04_vendor_information.dunsnumber",
+    "share": 0.0
+   },
+   {
+    "checked": 13873,
+    "child": "03_procurement_year.piid",
+    "orphans": 1,
+    "parent": "02_procurement_information.piid",
+    "share": 7.208246233691343e-05
+   }
+  ],
+  "source_snapshot": "zen_3pfl/2026-11-21"
  }
 }

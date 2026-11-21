@@ -36,6 +36,22 @@ def open_url(url: str, limit: int) -> bytes:
         return response.read(limit + 1)
 
 
+def open_range(url: str, start: int, length: int) -> dict[str, Any]:
+    """One HTTP range request; at most ``length + 1`` bytes are read whatever the server does."""
+    request = urllib.request.Request(
+        url, headers={"User-Agent": USER_AGENT, "Range": f"bytes={start}-{start + length - 1}"}
+    )
+    with urllib.request.urlopen(request, timeout=120) as response:  # noqa: S310 - https, listed host
+        return {
+            "status": response.status,
+            "content_range": response.headers.get("Content-Range"),
+            "body": response.read(length + 1),
+        }
+
+
+_CONTENT_RANGE = re.compile(r"^bytes (\d+)-(\d+)/(\d+|\*)$")
+
+
 class Snapshot:
     def __init__(
         self,
@@ -44,10 +60,12 @@ class Snapshot:
         snapshot_id: str,
         opener: Callable[[str, int], bytes] = open_url,
         sleep: Callable[[float], None] = time.sleep,
+        range_opener: Callable[[str, int, int], dict[str, Any]] = open_range,
     ) -> None:
         if spec["licence_class"] not in ALLOWED_CLASSES:
             raise AcquisitionError(f"licence class {spec['licence_class']!r} is not collectable")
         self.spec, self.opener, self.sleep = spec, opener, sleep
+        self.range_opener = range_opener
         self.directory = root / spec["id"] / snapshot_id
         self.raw = self.directory / "raw"
         self.manifest_path = self.directory / "manifest.json"
@@ -81,6 +99,74 @@ class Snapshot:
                 raise AcquisitionError(f"{url}: body larger than {self.spec['max_bytes']} bytes")
             return body
         raise AcquisitionError(f"{url}: failed after {attempts} attempts ({last!r})")
+
+    def _get_range(self, url: str, start: int, length: int) -> dict[str, Any]:
+        attempts = self.spec["retries"] + 1
+        for attempt in range(attempts):
+            self.sleep(self.spec["min_interval"])
+            try:
+                return self.range_opener(url, start, length)
+            except OSError as error:
+                last = error
+                self.sleep(self.spec["min_interval"] * 2 ** (attempt + 1))
+        raise AcquisitionError(f"{url}: failed after {attempts} attempts ({last!r})")
+
+    def fetch_range(
+        self, url: str, name: str, start: int, length: int, observed: str | None
+    ) -> dict[str, Any]:
+        """Store ``length`` bytes at ``start`` of a remote file if the server honours the range.
+
+        The entry is marked ``partial``: its checksum is that of the fragment, never of the whole
+        file, and it records the exact range and the total size the server reported.
+        """
+        from etl_benchmark.atomic import atomic_path
+
+        self._check(url, name)
+        if start < 0 or length < 1:
+            raise AcquisitionError(f"{url}: range length must be positive and start non-negative")
+        manifest = self._manifest()
+        for entry in manifest["files"]:
+            if entry["name"] == name:
+                return entry
+        if length > self.spec["max_bytes"]:
+            raise AcquisitionError(f"{url}: range larger than {self.spec['max_bytes']} bytes")
+        answer = self._get_range(url, start, length)
+        if answer["status"] != 206:
+            raise AcquisitionError(
+                f"{url}: the server did not honour the range (status {answer['status']})"
+            )
+        if answer["content_range"] is None:
+            raise AcquisitionError(f"{url}: no Content-Range header in the partial response")
+        found = _CONTENT_RANGE.match(answer["content_range"])
+        if not found:
+            raise AcquisitionError(f"{url}: malformed Content-Range {answer['content_range']!r}")
+        first, last_byte = int(found.group(1)), int(found.group(2))
+        body = answer["body"]
+        if first != start:
+            raise AcquisitionError(f"{url}: unexpected offset {first}, asked for {start}")
+        if len(body) != last_byte - first + 1 or len(body) > length:
+            raise AcquisitionError(f"{url}: body length {len(body)} does not match the range")
+        if len(body) > self.spec["max_bytes"]:
+            raise AcquisitionError(f"{url}: body larger than {self.spec['max_bytes']} bytes")
+        target = self.raw / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        with atomic_path(target) as partial:
+            partial.write_bytes(body)
+        entry = {
+            "name": name,
+            "url": url,
+            "sha256": hashlib.sha256(body).hexdigest(),
+            "bytes": len(body),
+            "collected": datetime.now(UTC).isoformat(timespec="seconds"),
+            "observed": observed,
+            "partial": True,
+            "range": [first, last_byte],
+            "total_bytes": None if found.group(3) == "*" else int(found.group(3)),
+        }
+        manifest["files"].append(entry)
+        with atomic_path(self.manifest_path) as partial:
+            partial.write_text(json.dumps(manifest, indent=1, sort_keys=True) + "\n")
+        return entry
 
     def fetch(self, url: str, name: str, observed: str | None) -> dict[str, Any]:
         """Store one file once; ``observed`` is when the data describes, not when it was fetched."""
@@ -120,6 +206,33 @@ class Snapshot:
             ):
                 bad.append(entry["name"])
         return bad
+
+
+def gzip_prefix_lines(blob: bytes, max_output: int) -> dict[str, Any]:
+    """Complete text lines at the start of a gzip stream, even if the stream is cut off.
+
+    Reading is sequential from the stream start, so the result is a prefix sample (ordered by the
+    file, not random). A line torn by the cut is dropped. ``complete`` is true only when the whole
+    stream ended inside ``blob`` and ``max_output`` was not reached.
+    """
+    import zlib
+
+    decoder = zlib.decompressobj(wbits=31)
+    out = bytearray()
+    try:
+        for offset in range(0, len(blob), 4096):
+            out += decoder.decompress(blob[offset : offset + 4096], max_output + 1 - len(out))
+            if len(out) > max_output or decoder.unconsumed_tail:
+                break
+    except zlib.error as error:
+        raise AcquisitionError(f"not a readable gzip stream ({error})") from error
+    complete = decoder.eof and len(out) <= max_output and not decoder.unconsumed_tail
+    lines = bytes(out).split(b"\n")
+    tail = lines.pop()  # what follows the last newline: a torn line unless the stream ended
+    if complete and tail:
+        lines.append(tail)
+    decoded = [line.decode("utf-8", "replace") for line in lines]
+    return {"lines": decoded, "complete": complete, "output_bytes": len(out)}
 
 
 def paginate(get_page: Callable[[int], list[Any]], max_pages: int) -> Iterator[list[Any]]:
@@ -200,6 +313,11 @@ def main(argv: list[str] | None = None) -> int:
     done = 0
     for request in plan(specs[args.source]):
         snap.fetch(request["url"], request["name"], request.get("observed"))
+        done += 1
+    for part in specs[args.source].get("ranges", []):  # bounded fragments of large files
+        snap.fetch_range(
+            part["url"], part["name"], part["start"], part["length"], part.get("observed")
+        )
         done += 1
     for stage in specs[args.source].get("stages", []):  # later stages read earlier files
         for request in expand(stage, snap.raw):

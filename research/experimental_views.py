@@ -852,13 +852,8 @@ SERIES_SPECS: dict[str, dict[str, Any]] = {
 }
 
 
-def series_view(raw: pd.DataFrame, spec: dict[str, Any]) -> pd.DataFrame:
-    """A table in time order with a parsed ``timestamp`` and its numeric columns.
-
-    The time columns are joined with a space and parsed with the exact declared format; a row whose
-    time cannot be read is dropped and counted (``attrs["rows_dropped"]``), never guessed. Other
-    columns are read as numbers (unreadable values become missing); text columns are dropped.
-    """
+def _stamped(raw: pd.DataFrame, spec: dict[str, Any]) -> tuple[pd.DataFrame, pd.Series, set[str]]:
+    """The table with clean column names, its parsed timestamps and the columns they came from."""
     frame = raw.rename(columns=lambda c: str(c).lstrip("\ufeff"))
     if not all(c in frame.columns for c in spec["time"]):
         raise ViewError(f"time column not found in {list(frame.columns)[:6]}")
@@ -867,7 +862,234 @@ def series_view(raw: pd.DataFrame, spec: dict[str, Any]) -> pd.DataFrame:
     hour = spec.get("hour")
     if hour:
         stamps = stamps + pd.to_timedelta(pd.to_numeric(frame[hour], errors="coerce"), unit="h")
-    used = {*spec["time"], *([hour] if hour else [])}
+    return frame, stamps, {*spec["time"], *([hour] if hour else [])}
+
+
+def panel_view(raw: pd.DataFrame, spec: dict[str, Any]) -> pd.DataFrame:
+    """Many series in one table: a timestamp, the key columns and the numeric columns, ordered by
+    key then time. Rows with an unreadable time are dropped and counted, never guessed."""
+    frame, stamps, used = _stamped(raw, spec)
+    keys = spec["keys"]
+    if not all(k in frame.columns for k in keys):
+        raise ViewError(f"key column not found in {list(frame.columns)[:6]}")
+    numeric = {
+        c: pd.to_numeric(frame[c], errors="coerce")
+        for c in frame.columns
+        if c not in used
+        and c not in keys
+        and pd.to_numeric(frame[c], errors="coerce").notna().any()  # noqa: E501
+    }
+    out = pd.DataFrame({"timestamp": stamps, **{k: frame[k] for k in keys}, **numeric})
+    kept = out[out["timestamp"].notna()].sort_values([*keys, "timestamp"], kind="stable")
+    kept = kept.reset_index(drop=True)
+    kept.attrs = {"rows_dropped": int(len(out) - len(kept))}
+    return kept
+
+
+def tables_view(
+    tables: dict[str, pd.DataFrame], spec: dict[str, Any]
+) -> tuple[dict[str, pd.DataFrame], list[dict[str, Any]]]:
+    """Listed columns of each table and, for each declared key relation, its orphan count.
+
+    A relation is (child table, child column, parent table, parent column); missing child keys
+    are not counted. A relation may carry ``{"where": [column, value]}`` to check only the child
+    rows of one kind (a key that points to different parents by row type). Orphans are reported,
+    never removed.
+    """
+    out = {}
+    for name, rule in spec["tables"].items():
+        if name not in tables:
+            raise ViewError(f"table {name} not found")
+        missing = [c for c in rule["keep"] if c not in tables[name].columns]
+        if missing:
+            raise ViewError(f"column {missing[0]} not found in table {name}")
+        out[name] = tables[name][rule["keep"]].copy()
+    relations = []
+    for child, child_col, parent, parent_col, *options in spec["relations"]:
+        rows = out[child]
+        where = options[0]["where"] if options else None
+        if where:
+            rows = rows[rows[where[0]] == where[1]]
+        values = rows[child_col].dropna()
+        known = set(out[parent][parent_col].dropna())
+        bad = int((~values.isin(known)).sum())
+        relations.append(
+            {
+                "child": f"{child}.{child_col}"
+                + (f" where {where[0]}={where[1]}" if where else ""),
+                "parent": f"{parent}.{parent_col}",
+                "checked": len(values),
+                "orphans": bad,
+                "share": bad / len(values) if len(values) else 0.0,
+            }
+        )
+    return out, relations
+
+
+#: panels of series: the raw file of an acquired source and how to read its time and key columns
+PANEL_SPECS: dict[str, dict[str, Any]] = {
+    "rki_notaufnahme": {
+        "source": "zen_rki_notaufnahme",
+        "file": "Notaufnahmesurveillance_Zeitreihen_Syndrome.tsv",
+        "sep": "\t",
+        "time": ["date"],
+        "format": "%Y-%m-%d",
+        "keys": ["ed_type", "age_group", "syndrome"],
+    },
+    "rki_hospitalisation": {
+        "source": "zen_rki_hospitalisation",
+        "file": "Aktuell_Deutschland_COVID-19-Hospitalisierungen.csv",
+        "sep": ",",
+        "time": ["Datum"],
+        "format": "%Y-%m-%d",
+        "keys": ["Bundesland", "Altersgruppe"],
+    },
+}
+
+#: multi-table relational extracts: the columns kept per table and the relations to measure
+TABLE_SETS: dict[str, dict[str, Any]] = {
+    "zen_3pfl": {
+        "tables": {
+            "01_patent_contract": {
+                "keep": ["patent_contract_id", "piid", "patent", "contract", "grant"]
+            },  # noqa: E501
+            "02_procurement_information": {
+                "keep": [
+                    "piid",
+                    "maj_agency_cat",
+                    "dunsnumber",
+                    "typeofcontractpricing",
+                    "extentcompeted",
+                    "numberofoffersreceived",
+                    "first_signed_date",
+                ]  # noqa: E501
+            },
+            "03_procurement_year": {
+                "keep": ["piid", "fiscal_year", "total_amount", "nr_of_transactions"]
+            },  # noqa: E501
+            "04_vendor_information": {
+                "keep": ["dunsnumber", "state", "organizational_type", "receive_grants"]
+            },
+            "05_grant_information": {
+                "keep": [
+                    "piid",
+                    "maj_agency_cat",
+                    "assistance_type",
+                    "start_date",
+                    "end_date",
+                    "principal_place_state",
+                ],
+                "strip": '"; ',
+            },
+            "08_patent_information": {
+                "keep": [
+                    "patent",
+                    "filing_date",
+                    "grant_date",
+                    "tot_ipc4",
+                    "claims",
+                    "independent_claims",
+                    "family_size",
+                    "bwd_citation",
+                    "fwd_cit_5",
+                ]  # noqa: E501
+            },
+        },
+        "relations": [
+            [
+                "01_patent_contract",
+                "piid",
+                "02_procurement_information",
+                "piid",
+                {"where": ["contract", "1"]},
+            ],
+            [
+                "01_patent_contract",
+                "piid",
+                "05_grant_information",
+                "piid",
+                {"where": ["grant", "1"]},
+            ],
+            ["01_patent_contract", "patent", "08_patent_information", "patent"],
+            ["02_procurement_information", "dunsnumber", "04_vendor_information", "dunsnumber"],
+            ["03_procurement_year", "piid", "02_procurement_information", "piid"],
+        ],
+    }
+}
+
+
+def _build_panels(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    folder = out / "panels"
+    folder.mkdir(parents=True, exist_ok=True)
+    files, dropped = {}, {}
+    for name, spec in PANEL_SPECS.items():
+        raw = pd.read_csv(
+            root / spec["source"] / SNAPSHOT / "raw" / spec["file"],
+            sep=spec["sep"],
+            dtype=str,
+            low_memory=False,
+        )
+        view = panel_view(raw, spec)
+        target = folder / f"{name}.csv"
+        view.to_csv(target, index=False)
+        files[target.name] = (target, len(view))
+        dropped[name] = view.attrs["rows_dropped"]
+    _record(
+        manifest,
+        "panels",
+        files,
+        dropped=[],
+        pseudonymised=[],
+        rows_dropped=dropped,
+        source_snapshot="zen_rki_* records of 2026-11-21 (the series are revised by the publisher)",
+    )
+
+
+def _build_tables(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import csv
+
+    for source, spec in TABLE_SETS.items():
+        raw = root / source / SNAPSHOT / "raw"
+        tables = {}
+        for name in spec["tables"]:
+            frame = pd.read_csv(
+                raw / f"{name}.csv",
+                sep="\t",
+                dtype=str,
+                quoting=csv.QUOTE_NONE,
+                on_bad_lines="skip",
+                low_memory=False,
+            )
+            frame.columns = [c.strip('"') for c in frame.columns]
+            chars = spec["tables"][name].get("strip", '"')
+            tables[name] = frame.apply(lambda col, chars=chars: col.str.strip(chars))
+        views, relations = tables_view(tables, spec)
+        folder = out / source
+        folder.mkdir(parents=True, exist_ok=True)
+        files = {}
+        for name, frame in views.items():
+            frame.to_csv(folder / f"{name}.csv", index=False)
+            files[f"{name}.csv"] = (folder / f"{name}.csv", len(frame))
+        _record(
+            manifest,
+            source,
+            files,
+            dropped=["names, street addresses, phone numbers, free-text descriptions"],
+            pseudonymised=[],
+            relations=relations,
+            notes="relations are the source's own keys; orphans are natural incompleteness of the published extract",  # noqa: E501
+            source_snapshot=f"{source}/{SNAPSHOT}",
+        )
+
+
+def series_view(raw: pd.DataFrame, spec: dict[str, Any]) -> pd.DataFrame:
+    """A table in time order with a parsed ``timestamp`` and its numeric columns.
+
+    The time columns are joined with a space and parsed with the exact declared format; a row whose
+    time cannot be read is dropped and counted (``attrs["rows_dropped"]``), never guessed. Other
+    columns are read as numbers (unreadable values become missing); text columns are dropped.
+    """
+    frame, stamps, used = _stamped(raw, spec)
     numeric = {
         c: pd.to_numeric(frame[c], errors="coerce")
         for c in frame.columns
@@ -900,6 +1122,121 @@ def _build_series(root: Path, out: Path, manifest: dict[str, Any]) -> None:
         pseudonymised=[],
         rows_dropped=dropped,
         source_snapshot="data/pool and data/uci_wave2 tables, pinned by the pool manifests",
+    )
+
+
+BORG_COLLECTION_COLUMNS = (
+    "collection_id",
+    "time_us",
+    "type",
+    "collection_type",
+    "priority",
+    "scheduling_class",
+    "scheduler",
+    "vertical_scaling",
+)
+BORG_INSTANCE_COLUMNS = (
+    "collection_id",
+    "instance_index",
+    "time_us",
+    "type",
+    "collection_type",
+    "priority",
+    "scheduling_class",
+    "machine_id",
+    "cpus",
+    "memory",
+)
+#: lines kept from the start of each Borg shard fragment
+BORG_MAX_LINES = 300_000
+
+
+def _json_rows(lines: list[str]) -> list[dict[str, Any]]:
+    return [json.loads(line) for line in lines if line.strip()]
+
+
+def borg_collection_view(lines: list[str]) -> pd.DataFrame:
+    """Collection (job) events of a Borg trace: ids, type codes and time, one sequence per id."""
+    rows = [
+        {
+            "collection_id": r["collection_id"],
+            "time_us": r["time"],
+            "type": r["type"],
+            "collection_type": r.get("collection_type"),
+            "priority": r.get("priority"),
+            "scheduling_class": r.get("scheduling_class"),
+            "scheduler": r.get("scheduler"),
+            "vertical_scaling": r.get("vertical_scaling"),
+        }
+        for r in _json_rows(lines)
+    ]
+    frame = pd.DataFrame(rows, columns=list(BORG_COLLECTION_COLUMNS))
+    for column in frame.columns:
+        frame[column] = pd.to_numeric(frame[column], errors="coerce")
+    return frame.sort_values(["collection_id", "time_us"], kind="stable").reset_index(drop=True)
+
+
+def borg_instance_view(lines: list[str]) -> pd.DataFrame:
+    """Instance (task) events of a Borg trace with the requested cpus and memory unpacked."""
+    rows = []
+    for r in _json_rows(lines):
+        request = r.get("resource_request") or {}
+        rows.append(
+            {
+                "collection_id": r["collection_id"],
+                "instance_index": r["instance_index"],
+                "time_us": r["time"],
+                "type": r["type"],
+                "collection_type": r.get("collection_type"),
+                "priority": r.get("priority"),
+                "scheduling_class": r.get("scheduling_class"),
+                "machine_id": r.get("machine_id"),
+                "cpus": request.get("cpus"),
+                "memory": request.get("memory"),
+            }
+        )
+    frame = pd.DataFrame(rows, columns=list(BORG_INSTANCE_COLUMNS))
+    for column in frame.columns:
+        frame[column] = pd.to_numeric(frame[column], errors="coerce")
+    order = ["collection_id", "instance_index", "time_us"]
+    return frame.sort_values(order, kind="stable").reset_index(drop=True)
+
+
+def _build_borg(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import sys
+
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from acquisition import gzip_prefix_lines
+
+    raw = root / "google_cluster_2019a" / SNAPSHOT / "raw"
+    folder = out / "google_cluster_2019a"
+    folder.mkdir(parents=True, exist_ok=True)
+    files, fragments = {}, {}
+    for name, view, table in (
+        ("collection_events_head.json.gz", borg_collection_view, "collection_events.csv"),
+        ("instance_events_head.json.gz", borg_instance_view, "instance_events.csv"),
+    ):
+        read = gzip_prefix_lines((raw / name).read_bytes(), max_output=1 << 31)
+        lines = read["lines"][:BORG_MAX_LINES]
+        frame = view(lines)
+        frame.to_csv(folder / table, index=False)
+        files[table] = (folder / table, len(frame))
+        fragments[name] = {"lines_read": len(read["lines"]), "stream_complete": read["complete"]}
+    _record(
+        manifest,
+        "google_cluster_2019a",
+        files,
+        dropped=[
+            "user",
+            "collection_name",
+            "collection_logical_name",
+            "constraint",
+            "alloc fields",
+        ],
+        pseudonymised=[],
+        sampling=f"prefix of one shard in file order (first {BORG_MAX_LINES} lines of each fragment), not random",  # noqa: E501
+        fragments=fragments,
+        source_snapshot=f"google_cluster_2019a/{SNAPSHOT}",
     )
 
 
@@ -987,6 +1324,9 @@ BUILD_STEPS = (
     _build_slurm,
     _build_clinicaltrials,
     _build_crossref,
+    _build_borg,
+    _build_panels,
+    _build_tables,
     _build_series,
     _build_ukspend,
 )
