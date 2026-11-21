@@ -210,6 +210,19 @@ def conformance(data: dict[str, Any], seed: int) -> dict[str, dict[str, Any]]:
         ),
     }
 
+    if "contracts" in data:
+        contracts, awards = data["contracts"], data["awards"]
+        c_out, c_truth, c_base = break_foreign_key(
+            contracts, "award_id", set(awards["award_id"]), 20, seed
+        )
+        report["P-REL"].update(
+            ocds_baseline_orphans=len(c_base),
+            ocds_baseline_not_labelled=not (set(c_truth) & set(c_base)),
+            ocds_unaffected_rows_unchanged=contracts.drop(index=c_truth).equals(
+                c_out.drop(index=c_truth)
+            ),
+        )
+
     events = data["events"]
     corrupted, e_truth = corrupt_path(events, "patient.sex", "remove", 30, seed)
     changed = [i for i, (a, b) in enumerate(zip(events, corrupted, strict=True)) if a != b]
@@ -307,6 +320,9 @@ def main(argv: list[str] | None = None) -> int:
         .ffill()
         .fillna(0.0),
     }
+    if (v / "ocds_zambia/contracts.csv").exists():
+        data["contracts"] = pd.read_csv(v / "ocds_zambia/contracts.csv", dtype=str)
+        data["awards"] = pd.read_csv(v / "ocds_zambia/awards.csv", dtype=str)
     report = conformance(data, args.seed)
     args.out.write_text(json.dumps(report, indent=1, sort_keys=True) + "\n")
     print({k: all(x for x in c.values() if isinstance(x, bool)) for k, c in report.items()})

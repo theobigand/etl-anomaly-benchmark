@@ -376,3 +376,78 @@ no open source with a verified licence was found for them.
 - Targeted L3 mutation runs: `make mutation-focus` runs the whole pinned test suite to map tests to
   mutants and needs the full dev and deep environment (torch, mutmut). That environment is not
   installed in this working copy, so no mutation result exists for the new modules.
+
+# Update 6 (2026-11-21): publisher-level OCDS verification, bike-share, readiness
+
+Separate stages: licensing, scientific readiness, experiments (none executed).
+
+## OCDS publishers (rights read at the publisher)
+
+| Source | Decision | Basis |
+|---|---|---|
+| Georgia SPA | open (CC0), experiment-ready | the Agency's Publication Policy states CC0 for its OCDS 1.1 data; read in the 2023-02-28 Wayback copy because the live host's TLS chain does not verify; terms of service allow third-party exposure and forbid circumventing API limits |
+| Zambia ZPPA | open (ODC-PDDL), experiment-ready | `zppa.org.zm/ocds-license` read live; the registry says CC BY 4.0 (discrepancy, publisher's statement governs, both permit this use); personal data only as authorised; security and defence contracts excluded |
+| Netherlands (TenderNed) | unclear, not accepted | TenderNed says announcements are public and offers datasets but states no reuse licence; the registry's CC0 was not found at the publisher; public availability is not permission |
+
+Every acquired export has one compiled release per contracting process, so one award row is one process
+and a repeated row is a real duplicate. Georgia's registry export ends in 2019 and omits simplified
+procurements; Zambia publishes selectively; all three describe awards and contracts, not payments.
+
+## Bike-share (non-procurement transactional)
+
+Capital Bikeshare and the Citi Bike Jersey City files: research_only under the operator's Data License
+Agreement (any lawful purpose, analysis allowed, no stand-alone redistribution), read at the publishers.
+1947784 and 319159 rental events (Sep to Nov 2024), no monetary amount, no rider identifiers; start and
+end coordinates and station names are dropped. One operator and one trip schema, so one family, two
+systems, one independent group.
+
+## Counts by stage (independent groups for experiment-ready)
+
+| Stratum | Acquired families | Rights-verified groups | Experiment-ready groups | Target |
+|---|---:|---:|---:|---:|
+| C2b | 7 (Online Retail, 2 UK ledgers, 3 OCDS accepted, bike-share; Netherlands not counted) | 7 | 6 (all but Online Retail) | 30 |
+| C3 | 41 | 2 | 1 | 40 |
+| C4 | 16 systems, 1 curator | 1 | 1 | 28 |
+| C5 | 4 | 4 | 4 (OpenAlex, Stack Exchange, Georgia, Zambia) | 36 |
+| C6 | 7 | 7 | 6 | 30 |
+
+Georgia and Zambia appear in C2b, C5 and C6 under one provenance identity each. Their C5 entries rely
+on native OCDS relations only (award, contract, party): a shallow relational structure that adds two
+producers but not deep multi-table schemas.
+
+## Diminishing return
+
+Seven C2b families now cover four mechanisms (purchase lines, payments, contract awards, rental events).
+The three OCDS producers and the two UK ledgers repeat a mechanism; more of them would add producers
+and no mechanism. The next useful C2b sources have a different mechanism: card or bank payments,
+utility or telecom usage events, subscription events, inventory movements.
+
+## Mutation verification of the new L3 modules
+
+Investigation, in order (no thresholds, policy or cache configuration were changed):
+
+1. `make mutation-focus MODULE=research.readiness` needs the complete pinned environment. One exists:
+   the conda environment `etl-benchmark` (Python 3.11.17, torch 2.14.1, mutmut 3.8.0). The `.venv`
+   used for the fast checks lacks torch and mutmut.
+2. The target runs the whole selected test suite once (`tests` and `research/tests`, markers
+   `not real and not fault`, with the deselections of `pyproject.toml`) inside the copy under
+   `mutants/`, to map tests to mutants. That is why one module still costs a full suite run.
+3. The stats phase failed twice, with "runner returned 1". Running the same tests in the copy showed
+   two genuine defects of this branch, not of the environment, both fixed:
+   - six `test_dataset_catalog.py` tests read `data/catalog.json`, and `data/` is not part of the
+     mutation copy (`also_copy` lists `verification` and `research`). Changing `also_copy` would edit
+     `pyproject.toml`, which is a cache-invalidation file (`on_dependency_change = "rerun"`) and would
+     discard the preserved mutation caches, so the catalog was moved instead to
+     `verification/legacy_data_catalog.json`, a copied directory (the path in `dataset_catalog.py`,
+     `coverage_matrix.py`, `data/README.md` and the design note follows);
+   - `test_labelled_contracts.py::test_main_writes_every_problem...` failed because its fake `run_job`
+     predated the `--seeds` option added earlier in this work; the fake now accepts `seeds`, and two
+     assertions check the default seeds and the `--seeds` pass-through.
+4. After these fixes the 139 focused tests pass in the complete environment. A full stats pass of
+   the whole suite was not run to completion: the full suite progressed about 1 percent in five
+   minutes in this session, so it is a multi-hour run, not a bounded one.
+
+Status: no mutation verdict exists for `readiness`, `experimental_views`, `acquisition`,
+`acquisition_validate`, `fault_protocols` or the changed `dataset_catalog`; the 95 percent threshold is
+not evaluated; certification stays pending. The next step is one `make mutation-focus` run per module in
+the complete environment on a machine that can spend the hours.

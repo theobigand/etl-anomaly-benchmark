@@ -9,6 +9,9 @@
   "baseline_orphans_reported_not_labelled": true,
   "baseline_unchanged": true,
   "deterministic": true,
+  "ocds_baseline_not_labelled": true,
+  "ocds_baseline_orphans": 7,
+  "ocds_unaffected_rows_unchanged": true,
   "truth_rows_now_orphans": true,
   "unaffected_rows_unchanged": true
  },

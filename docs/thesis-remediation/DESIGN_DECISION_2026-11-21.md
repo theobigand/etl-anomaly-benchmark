@@ -55,7 +55,7 @@ for the confirmatory stage. They are revisited after the variance pilot.
 
 Made: a second UCI acquisition wave (`research/uci_wave2.py`, protocol `verification/dataset_wave2.md`),
 a logical catalog that separates duplicate representations and supplementary data from independent
-sources (`data/catalog.json`, `research/dataset_catalog.py`), and a stratum gap report. Result: the
+sources (`verification/legacy_data_catalog.json`, `research/dataset_catalog.py`), and a stratum gap report. Result: the
 flat tabular and transactional/categorical strata are at or above their recommended counts by the
 coarse rule, the time-series stratum has 25 of 40 source families, and logs, relational and nested
 sources are absent (0 of 28, 36 and 30). The UCI catalogue cannot fill the last three strata. Their

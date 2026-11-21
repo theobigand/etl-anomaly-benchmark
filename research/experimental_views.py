@@ -304,8 +304,20 @@ AWARD_COLUMNS = (
     "buyer_id",
     "method",
 )
+CONTRACT_COLUMNS = ("ocid", "contract_id", "award_id", "date_signed", "amount", "currency")
 #: OCDS keys that carry names, contact data or free text, dropped at every depth
-OCDS_DROP = frozenset(["name", "address", "contactPoint", "description", "legalName", "identifier"])
+OCDS_DROP = frozenset(
+    [
+        "name",
+        "address",
+        "contactPoint",
+        "description",
+        "legalName",
+        "identifier",
+        "title",
+        "documents",
+    ]
+)
 
 
 def _ocds_ids(node: Any, salt: str) -> Any:
@@ -326,13 +338,13 @@ def _ocds_party(entry: dict[str, Any], salt: str) -> dict[str, Any]:
 
 def ocds_view(
     releases: list[dict[str, Any]], salt: str = SALT, keep_modulo: int = 10
-) -> tuple[list[dict[str, Any]], pd.DataFrame]:
-    """Compiled OCDS releases without names, addresses or free text, and a flat awards table.
+) -> tuple[list[dict[str, Any]], pd.DataFrame, pd.DataFrame]:
+    """Compiled OCDS releases without names or free text, a flat awards table and a contracts table.
 
     A contract is kept when a stable hash of its ``ocid`` is 0 modulo ``keep_modulo``, so whole
     contracts stay together; party references use one pseudonym mapping so that links resolve.
     """
-    kept, rows = [], []
+    kept, rows, contract_rows = [], [], []
     for release in releases:
         h = int(hashlib.sha256(release["ocid"].encode()).hexdigest()[:8], 16)
         if h % keep_modulo:
@@ -361,9 +373,67 @@ def ocds_view(
                     "method": (r.get("tender") or {}).get("procurementMethod"),
                 }
             )
+        for c in r.get("contracts", []):
+            value = c.get("value") or {}
+            contract_rows.append(
+                {
+                    "ocid": r["ocid"],
+                    "contract_id": c.get("id"),
+                    "award_id": c.get("awardID"),
+                    "date_signed": c.get("dateSigned"),
+                    "amount": value.get("amount"),
+                    "currency": value.get("currency"),
+                }
+            )
     kept.sort(key=lambda r: (r["date"], r["id"]))
     awards = pd.DataFrame(rows, columns=list(AWARD_COLUMNS))
-    return kept, awards
+    contracts = pd.DataFrame(contract_rows, columns=list(CONTRACT_COLUMNS))
+    return kept, awards, contracts
+
+
+TRIP_COLUMNS = (
+    "ride_id",
+    "rideable_type",
+    "started_at",
+    "ended_at",
+    "duration_min",
+    "start_station_id",
+    "end_station_id",
+    "member_casual",
+)
+
+
+def trip_view(raw: pd.DataFrame) -> pd.DataFrame:
+    """Bike-share trips without names or coordinates; impossible durations stay visible."""
+    needed = ["ride_id", "started_at", "ended_at", "start_station_id", "end_station_id"]
+    if not all(c in raw.columns for c in needed):
+        raise ViewError(f"trip columns not found in {list(raw.columns)[:6]}")
+    start = pd.to_datetime(raw["started_at"], errors="coerce")
+    end = pd.to_datetime(raw["ended_at"], errors="coerce")
+    frame = pd.DataFrame(
+        {
+            "ride_id": raw["ride_id"],
+            "rideable_type": raw.get("rideable_type"),
+            "started_at": start,
+            "ended_at": end,
+            "duration_min": (end - start).dt.total_seconds() / 60.0,
+            "start_station_id": raw["start_station_id"],
+            "end_station_id": raw["end_station_id"],
+            "member_casual": raw.get("member_casual"),
+        }
+    )
+    return frame[list(TRIP_COLUMNS)]
+
+
+def csv_members(names: list[str]) -> list[str]:
+    """CSV members of an archive, without macOS resource-fork files that carry a .csv name."""
+    return sorted(
+        n
+        for n in names
+        if n.endswith(".csv")
+        and not n.startswith("__MACOSX/")
+        and not n.rsplit("/", 1)[-1].startswith("._")
+    )
 
 
 def digest(path: Path) -> str:
@@ -382,6 +452,34 @@ def _results(raw: Path, prefix: str) -> list[dict[str, Any]]:
     for path in sorted(raw.glob(f"{prefix}_*.json")):
         out += json.loads(path.read_text())["results"]
     return out
+
+
+def _ocds_source(path: Path) -> tuple[list[dict[str, Any]], pd.DataFrame, pd.DataFrame]:
+    """Stream one registry export through ``ocds_view`` in batches (whole file never in memory)."""
+    import gzip
+
+    nested: list[dict[str, Any]] = []
+    awards, contracts = [], []
+    batch: list[dict[str, Any]] = []
+
+    def flush() -> None:
+        kept, a, c = ocds_view(batch)
+        nested.extend(kept)
+        awards.append(a)
+        contracts.append(c)
+        batch.clear()
+
+    with gzip.open(path, "rt", encoding="utf-8") as handle:
+        for line in handle:
+            batch.append(json.loads(line))
+            if len(batch) == 20000:
+                flush()
+    flush()
+    nested.sort(key=lambda r: (r["date"], r["id"]))
+    order = ["date", "ocid", "award_id"]
+    awards_frame = pd.concat(awards, ignore_index=True).sort_values(order)
+    contracts_frame = pd.concat(contracts, ignore_index=True).sort_values(["ocid", "contract_id"])
+    return nested, awards_frame, contracts_frame
 
 
 def build(root: Path, out: Path) -> dict[str, Any]:
@@ -524,41 +622,52 @@ def build(root: Path, out: Path) -> dict[str, Any]:
         notes="CC BY-SA: a redistributed derived database needs attribution and the same licence",
     )
 
-    nested: list[dict[str, Any]] = []
-    award_frames = []
-    batch: list[dict[str, Any]] = []
-    path = root / "ocds_montreal" / snap / "raw" / "full.jsonl.gz"
-    with gzip.open(path, "rt", encoding="utf-8") as handle:
-        for line in handle:
-            batch.append(json.loads(line))
-            if len(batch) == 20000:
-                kept, frame = ocds_view(batch)
-                nested += kept
-                award_frames.append(frame)
-                batch = []
-    kept, frame = ocds_view(batch)
-    nested += kept
-    award_frames.append(frame)
-    nested.sort(key=lambda r: (r["date"], r["id"]))
-    awards = pd.concat(award_frames, ignore_index=True).sort_values(["date", "ocid", "award_id"])
-    folder = out / "ocds_montreal"
-    folder.mkdir(parents=True, exist_ok=True)
-    (folder / "releases.jsonl").write_text(
-        "".join(json.dumps(r, sort_keys=True) + "\n" for r in nested)
-    )
-    awards.to_csv(folder / "awards.csv", index=False)
-    record(
-        "ocds_montreal",
-        {
-            "releases.jsonl": (folder / "releases.jsonl", len(nested)),
-            "awards.csv": (folder / "awards.csv", len(awards)),
-        },
-        dropped=sorted(OCDS_DROP),
-        pseudonymised=["party ids"],
-        salt_label=SALT,
-        sampling="contracts with sha256(ocid) % 10 == 0, whole contracts, sorted by date",
-        source_snapshot=f"ocds_montreal/{snap}",
-    )
+    for source in ("ocds_montreal", "ocds_georgia", "ocds_zambia"):
+        nested, awards, contracts = _ocds_source(root / source / snap / "raw" / "full.jsonl.gz")
+        folder = out / source
+        folder.mkdir(parents=True, exist_ok=True)
+        (folder / "releases.jsonl").write_text(
+            "".join(json.dumps(r, sort_keys=True) + "\n" for r in nested)
+        )
+        awards.to_csv(folder / "awards.csv", index=False)
+        contracts.to_csv(folder / "contracts.csv", index=False)
+        record(
+            source,
+            {
+                "releases.jsonl": (folder / "releases.jsonl", len(nested)),
+                "awards.csv": (folder / "awards.csv", len(awards)),
+                "contracts.csv": (folder / "contracts.csv", len(contracts)),
+            },
+            dropped=sorted(OCDS_DROP),
+            pseudonymised=["party ids"],
+            salt_label=SALT,
+            sampling="contracting processes with sha256(ocid) % 10 == 0, whole processes, by date",
+            source_snapshot=f"{source}/{snap}",
+        )
+
+    import io
+    import zipfile
+
+    for source in ("bikeshare_capital", "bikeshare_jc"):
+        frames = []
+        for path in sorted((root / source / snap / "raw").glob("*.zip")):
+            with zipfile.ZipFile(path) as zf:
+                for member in csv_members(zf.namelist()):
+                    raw = pd.read_csv(
+                        io.BytesIO(zf.read(member)), dtype=str, encoding_errors="replace"
+                    )
+                    frames.append(trip_view(raw))
+        table = pd.concat(frames).sort_values(["started_at", "ride_id"])
+        folder = out / source
+        folder.mkdir(parents=True, exist_ok=True)
+        table.to_csv(folder / "trips.csv", index=False)
+        record(
+            source,
+            {"trips.csv": (folder / "trips.csv", len(table))},
+            dropped=["station names", "start and end coordinates"],
+            pseudonymised=[],
+            source_snapshot=f"{source}/{snap}",
+        )
 
     folder = out / "ukspend"
     folder.mkdir(parents=True, exist_ok=True)

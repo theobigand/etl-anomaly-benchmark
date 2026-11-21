@@ -1,4 +1,32 @@
 {
+ "bikeshare_capital": {
+  "dropped": [
+   "station names",
+   "start and end coordinates"
+  ],
+  "files": {
+   "trips.csv": {
+    "rows": 1947784,
+    "sha256": "358672ab8cd50b3c6a2fa2b69100309f07d2249f927510005cdd2a7208c77e55"
+   }
+  },
+  "pseudonymised": [],
+  "source_snapshot": "bikeshare_capital/2026-11-21"
+ },
+ "bikeshare_jc": {
+  "dropped": [
+   "station names",
+   "start and end coordinates"
+  ],
+  "files": {
+   "trips.csv": {
+    "rows": 319159,
+    "sha256": "deb7292ddfb4002b5e4f77730da38ab1099acb1053d67a20af2b2c6d0f93fa01"
+   }
+  },
+  "pseudonymised": [],
+  "source_snapshot": "bikeshare_jc/2026-11-21"
+ },
  "loghub": {
   "dropped": [
    "Content",
@@ -84,19 +112,57 @@
   "pseudonymised": [],
   "source_snapshot": "monash_zenodo/2026-11-21"
  },
+ "ocds_georgia": {
+  "dropped": [
+   "address",
+   "contactPoint",
+   "description",
+   "documents",
+   "identifier",
+   "legalName",
+   "name",
+   "title"
+  ],
+  "files": {
+   "awards.csv": {
+    "rows": 18299,
+    "sha256": "ce46e8f47a5ba1e140b04d2eae2d6f500d57bd6447db096aee99444c837928b0"
+   },
+   "contracts.csv": {
+    "rows": 18299,
+    "sha256": "6192086207a24bb26f6c4cb8983b6fa5622768652a79cad247a711ca4be52ddd"
+   },
+   "releases.jsonl": {
+    "rows": 27503,
+    "sha256": "47648565aef97ba3b93a8af98407ef3b57722fc3472fdc38006cd636a1e86e49"
+   }
+  },
+  "pseudonymised": [
+   "party ids"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": "contracting processes with sha256(ocid) % 10 == 0, whole processes, by date",
+  "source_snapshot": "ocds_georgia/2026-11-21"
+ },
  "ocds_montreal": {
   "dropped": [
    "address",
    "contactPoint",
    "description",
+   "documents",
    "identifier",
    "legalName",
-   "name"
+   "name",
+   "title"
   ],
   "files": {
    "awards.csv": {
     "rows": 30551,
     "sha256": "e3e42f754e28a20f9cb1a0ddfc636a28e62d3b32ca92884ae06bcf709e6f0581"
+   },
+   "contracts.csv": {
+    "rows": 0,
+    "sha256": "3e66a2afb7c1b8725e1e3a6a667943f24d2d1840cda715e013ca5e84a929ad9a"
    },
    "releases.jsonl": {
     "rows": 30551,
@@ -107,8 +173,40 @@
    "party ids"
   ],
   "salt_label": "etl-benchmark-views-v1",
-  "sampling": "contracts with sha256(ocid) % 10 == 0, whole contracts, sorted by date",
+  "sampling": "contracting processes with sha256(ocid) % 10 == 0, whole processes, by date",
   "source_snapshot": "ocds_montreal/2026-11-21"
+ },
+ "ocds_zambia": {
+  "dropped": [
+   "address",
+   "contactPoint",
+   "description",
+   "documents",
+   "identifier",
+   "legalName",
+   "name",
+   "title"
+  ],
+  "files": {
+   "awards.csv": {
+    "rows": 2999,
+    "sha256": "e317f7706b19d5b901271c6fd229b9e2dcf170f1185995e9bb2bcc36c09efab2"
+   },
+   "contracts.csv": {
+    "rows": 1368,
+    "sha256": "35417978820c487160c714370713a34f0c93605cef3c929d9a9ae145f734c895"
+   },
+   "releases.jsonl": {
+    "rows": 17971,
+    "sha256": "d42fdfd34e3ed12c547151e01fc1f35face11b1f43cf90c1bdeea633c3f57fe7"
+   }
+  },
+  "pseudonymised": [
+   "party ids"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": "contracting processes with sha256(ocid) % 10 == 0, whole processes, by date",
+  "source_snapshot": "ocds_zambia/2026-11-21"
  },
  "openalex": {
   "dropped": [

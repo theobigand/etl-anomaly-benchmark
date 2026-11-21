@@ -295,7 +295,7 @@ def _release(i, supplier="s1", amount=100.0):
 
 def test_ocds_views_drop_names_addresses_and_free_text_but_keep_the_nesting_and_the_links():
     releases = [_release(i, supplier=f"s{i % 3}") for i in range(30)]
-    nested, awards = ev.ocds_view(releases, salt="s", keep_modulo=1)
+    nested, awards, contracts = ev.ocds_view(releases, salt="s", keep_modulo=1)
     text = json.dumps(nested)
     for word in (
         "Tremblay",
@@ -319,8 +319,70 @@ def test_ocds_views_drop_names_addresses_and_free_text_but_keep_the_nesting_and_
 
 def test_ocds_sampling_keeps_whole_contracts_by_a_stable_hash_of_the_contract_id():
     releases = [_release(i) for i in range(400)]
-    a, _ = ev.ocds_view(releases, salt="s", keep_modulo=10)
-    b, _ = ev.ocds_view(list(reversed(releases)), salt="s", keep_modulo=10)
+    a, _, _ = ev.ocds_view(releases, salt="s", keep_modulo=10)
+    b, _, _ = ev.ocds_view(list(reversed(releases)), salt="s", keep_modulo=10)
     assert sorted(r["ocid"] for r in a) == sorted(r["ocid"] for r in b)
     assert 10 < len(a) < 90
     assert [r["date"] for r in a] == sorted(r["date"] for r in a)  # fixed chronological order
+
+
+def test_ocds_contracts_link_to_their_awards_and_a_process_without_awards_adds_no_rows():
+    r = _release(1)
+    r["contracts"] = [
+        {"id": "c1", "awardID": "a1", "dateSigned": "2022-06-01T00:00:00Z", "title": "Jean T",
+         "value": {"amount": 90.0, "currency": "CAD"}},
+        {"id": "c2", "awardID": "zzz", "value": {"amount": 5.0, "currency": "CAD"}},
+    ]  # fmt: skip
+    bare = {
+        "id": "r2",
+        "ocid": "oc-bare",
+        "date": "2022-01-01",
+        "buyer": {"id": "b1"},
+        "parties": [],
+    }
+    nested, awards, contracts = ev.ocds_view([r, bare], salt="s", keep_modulo=1)
+    assert len(nested) == 2 and len(awards) == 1
+    assert list(contracts.columns) == list(ev.CONTRACT_COLUMNS) and len(contracts) == 2
+    assert contracts["award_id"].tolist() == ["a1", "zzz"]
+    assert "Jean T" not in json.dumps(nested)  # titles are free text
+    assert contracts.loc[0, "amount"] == 90.0 and contracts.loc[0, "date_signed"].startswith(
+        "2022-06-01"
+    )
+
+
+def test_trip_views_drop_coordinates_and_names_and_derive_the_duration_without_hiding_bad_rows():
+    raw = pd.DataFrame(
+        {
+            "ride_id": ["a", "b", "c"],
+            "rideable_type": ["classic_bike", "electric_bike", "classic_bike"],
+            "started_at": ["2024-09-01 10:00:00", "2024-09-01 11:00:00", "2024-09-01 12:00:00"],
+            "ended_at": ["2024-09-01 10:30:00", "2024-09-01 10:00:00", "not a time"],
+            "start_station_name": ["X st", "Y st", "Z st"],
+            "start_station_id": ["31001", "31002", None],
+            "end_station_name": ["A", "B", "C"],
+            "end_station_id": ["31005", None, None],
+            "start_lat": [38.9, 38.8, 38.7],
+            "start_lng": [-77.0, -77.1, -77.2],
+            "end_lat": [38.9, None, None],
+            "end_lng": [-77.0, None, None],
+            "member_casual": ["member", "casual", "member"],
+        }
+    )
+    out = ev.trip_view(raw)
+    assert list(out.columns) == list(ev.TRIP_COLUMNS)
+    text = out.to_csv()
+    for word in ("X st", "38.9", "-77"):
+        assert word not in text
+    assert len(out) == 3  # nothing is silently dropped
+    assert out["duration_min"].iloc[0] == 30.0
+    assert out["duration_min"].iloc[1] == -60.0  # an impossible trip stays visible
+    assert pd.isna(out["duration_min"].iloc[2])
+    import pytest
+
+    with pytest.raises(ev.ViewError, match="columns"):
+        ev.trip_view(pd.DataFrame({"x": [1]}))
+
+
+def test_zip_members_skip_macos_resource_forks_and_keep_real_csv_files():
+    names = ["a.csv", "__MACOSX/._a.csv", "dir/._b.csv", "dir/b.csv", "readme.txt"]
+    assert ev.csv_members(names) == ["a.csv", "dir/b.csv"]

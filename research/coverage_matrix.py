@@ -707,7 +707,12 @@ def inventory_csv(matrix: dict[str, Any]) -> str:
 PARSER = argparse.ArgumentParser(description=__doc__)
 PARSER.add_argument("--evidence", type=Path, default=EVIDENCE)
 PARSER.add_argument("--out", type=Path, default=OUT)
-PARSER.add_argument("--catalog", type=Path, default=None, help="legacy catalog (data/catalog.json)")
+PARSER.add_argument(
+    "--catalog",
+    type=Path,
+    default=None,
+    help="legacy catalog (verification/legacy_data_catalog.json)",
+)
 
 
 def main(argv: list[str] | None = None) -> int:

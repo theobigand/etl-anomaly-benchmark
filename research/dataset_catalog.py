@@ -2,8 +2,9 @@
 
 The 152 pool entries stay in the archived ``pool_manifest.json`` (never rewritten); everything
 else, the four historical CSV files and the naturally labelled series, is described in
-``data/catalog.json`` and ``verification/evidence/natural_temporal/manifest.json``. This module
-presents them through one interface: identity, role, local path, independent source and checksum.
+``verification/legacy_data_catalog.json`` (a copied directory, so that the mutation run sees it) and
+``verification/evidence/natural_temporal/manifest.json``. This module presents them through one
+interface: identity, role, local path, independent source and checksum.
 """
 
 from __future__ import annotations
@@ -22,7 +23,7 @@ sys.path[:0] = [str(HERE), str(ROOT / "src")]
 import dataset_registry as dr  # noqa: E402
 import pandas as pd  # noqa: E402
 
-CATALOG = ROOT / "data" / "catalog.json"
+CATALOG = ROOT / "verification" / "legacy_data_catalog.json"
 POOL_MANIFEST = ROOT / "verification" / "evidence" / "dataset_registry" / "pool_manifest.json"
 TEMPORAL_MANIFEST = ROOT / "verification" / "evidence" / "natural_temporal" / "manifest.json"
 TEMPORAL_DIR = ROOT / "data" / "temporal"

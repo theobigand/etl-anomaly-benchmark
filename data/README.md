@@ -7,11 +7,11 @@ through one interface; none is duplicated:
 
 - the 152 UCI and ADBench tables of the pool: `verification/evidence/dataset_registry/pool_manifest.json`
   (archived evidence, never rewritten), files in `data/pool/` and `data/adbench/`;
-- the historical benchmark files and the synthetic data: `data/catalog.json`;
+- the historical benchmark files and the synthetic data: `verification/legacy_data_catalog.json`;
 - the naturally labelled time series (SKAB, NAB): `verification/evidence/natural_temporal/manifest.json`,
   files in `data/temporal/`, fetched by `python research/natural_temporal.py fetch`.
 
-Roles in `data/catalog.json`: `cardio.csv` and `creditcard.csv` are duplicate representations of
+Roles in `verification/legacy_data_catalog.json`: `cardio.csv` and `creditcard.csv` are duplicate representations of
 `adbench:cardio` (UCI Cardiotocography) and `adbench:fraud`, verified element by element and
 therefore not independent sources; `water_quality.csv` is a supplementary real dataset whose positive
 class is common (61 %) and is never pooled with the rare-anomaly results; `synthetic.csv` is generated

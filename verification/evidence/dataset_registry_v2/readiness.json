@@ -450,20 +450,16 @@
    "stratum": "C6"
   },
   {
-   "failed": {
-    "reasons": [
-     "upstream terms not verified at the original publisher"
-    ],
-    "status": "rights_verified"
-   },
-   "group": null,
+   "failed": null,
+   "group": "georgia_procurement",
    "id": "ocds_georgia",
-   "status": "discovered",
+   "status": "experiment_ready",
    "stratum": "C2b"
   },
   {
    "failed": {
     "reasons": [
+     "licence class 'unclear' is not open or research_only",
      "upstream terms not verified at the original publisher"
     ],
     "status": "rights_verified"
@@ -474,15 +470,10 @@
    "stratum": "C2b"
   },
   {
-   "failed": {
-    "reasons": [
-     "upstream terms not verified at the original publisher"
-    ],
-    "status": "rights_verified"
-   },
-   "group": null,
+   "failed": null,
+   "group": "zambia_procurement",
    "id": "ocds_zambia",
-   "status": "discovered",
+   "status": "experiment_ready",
    "stratum": "C2b"
   },
   {
@@ -495,6 +486,48 @@
    "group": null,
    "id": "rejected:usaspending",
    "status": "discovered",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "georgia_procurement",
+   "id": "ocds_georgia:nested",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "georgia_procurement",
+   "id": "ocds_georgia:relational",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "zambia_procurement",
+   "id": "ocds_zambia:nested",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "zambia_procurement",
+   "id": "ocds_zambia:relational",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "lyft_bikeshare",
+   "id": "bikeshare_capital",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "lyft_bikeshare",
+   "id": "bikeshare_jc",
+   "status": "experiment_ready",
    "stratum": "C2b"
   },
   {
@@ -612,9 +645,12 @@
  ],
  "ready_groups": {
   "C2b": [
+   "georgia_procurement",
+   "lyft_bikeshare",
    "montreal_contracts",
    "uk_ledger_mhra",
-   "uk_ledger_nhsbsa"
+   "uk_ledger_nhsbsa",
+   "zambia_procurement"
   ],
   "C3": [
    "melbourne_pedestrian"
@@ -623,25 +659,29 @@
    "loghub_collection"
   ],
   "C5": [
+   "georgia_procurement",
    "openalex",
-   "stackexchange"
+   "stackexchange",
+   "zambia_procurement"
   ],
   "C6": [
+   "georgia_procurement",
    "montreal_contracts",
    "openalex",
    "openfda_faers",
-   "openfoodfacts"
+   "openfoodfacts",
+   "zambia_procurement"
   ]
  },
  "summary": {
   "C2b": {
-   "acquired": 3,
-   "discovered": 11,
-   "experiment_ready": 3,
-   "protocol_ready": 3,
-   "rights_verified": 3,
-   "scientifically_eligible": 3,
-   "structurally_valid": 3
+   "acquired": 7,
+   "discovered": 13,
+   "experiment_ready": 7,
+   "protocol_ready": 7,
+   "rights_verified": 7,
+   "scientifically_eligible": 7,
+   "structurally_valid": 7
   },
   "C3": {
    "acquired": 2,
@@ -662,22 +702,22 @@
    "structurally_valid": 16
   },
   "C5": {
-   "acquired": 11,
-   "discovered": 11,
-   "experiment_ready": 11,
-   "protocol_ready": 11,
-   "rights_verified": 11,
-   "scientifically_eligible": 11,
-   "structurally_valid": 11
+   "acquired": 13,
+   "discovered": 13,
+   "experiment_ready": 13,
+   "protocol_ready": 13,
+   "rights_verified": 13,
+   "scientifically_eligible": 13,
+   "structurally_valid": 13
   },
   "C6": {
-   "acquired": 4,
-   "discovered": 6,
-   "experiment_ready": 4,
-   "protocol_ready": 4,
-   "rights_verified": 4,
-   "scientifically_eligible": 4,
-   "structurally_valid": 4
+   "acquired": 6,
+   "discovered": 8,
+   "experiment_ready": 6,
+   "protocol_ready": 6,
+   "rights_verified": 6,
+   "scientifically_eligible": 6,
+   "structurally_valid": 6
   }
  }
 }

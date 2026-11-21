@@ -148,3 +148,32 @@ def test_conformance_checks_report_true_for_every_invariant_on_small_inputs():
         assert checks and all(v is True for v in checks.values() if isinstance(v, bool)), protocol
     assert report["P-REL"]["baseline_orphans_reported_not_labelled"] is True
     assert report["P-REL"]["baseline_orphan_count"] > 0
+
+
+def test_award_references_of_contracts_report_their_natural_orphans_as_a_baseline():
+    n = 300
+    awards = pd.DataFrame({"award_id": [str(i) for i in range(n)]})
+    contracts = pd.DataFrame(
+        {"award_id": [str(i % n) for i in range(n)] + ["missing-1", "missing-2"]}
+    )
+    data = {
+        "authorships": pd.DataFrame({"author_id": [f"a{i % 40}" for i in range(n)]}),
+        "authors": pd.DataFrame({"author_id": [f"a{i}" for i in range(40)]}),
+        "votes": pd.DataFrame({"post_id": [str(i % 60) for i in range(n)]}),
+        "posts": pd.DataFrame({"post_id": [str(i) for i in range(50)]}),
+        "events": [{"patient": {"sex": "1"}, "id": str(i)} for i in range(n)],
+        "ledger": pd.DataFrame(
+            {"date": pd.date_range("2024-01-01", periods=n), "amount": np.arange(n) + 1.0}
+        ),
+        "sequence": [f"E{i % 7}" for i in range(n)],
+        "series": pd.DataFrame(
+            {"s1": np.arange(n, dtype=float), "s2": np.arange(n, dtype=float)},
+            index=pd.date_range("2024-01-01", periods=n, freq="h"),
+        ),
+        "contracts": contracts,
+        "awards": awards,
+    }
+    checks = fp.conformance(data, seed=3)["P-REL"]
+    assert checks["ocds_baseline_orphans"] == 2
+    assert checks["ocds_baseline_not_labelled"] is True
+    assert checks["ocds_unaffected_rows_unchanged"] is True

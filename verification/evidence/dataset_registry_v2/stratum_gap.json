@@ -1,7 +1,7 @@
 {
  "licence_classes": {
-  "open": 179,
-  "research_only": 17
+  "open": 181,
+  "research_only": 18
  },
  "strata": {
   "C1": {
@@ -29,13 +29,13 @@
   "C2b": {
    "ambitious": 45,
    "minimum": 15,
-   "missing_to_minimum": 11,
-   "missing_to_recommended": 26,
-   "publishers": 4,
+   "missing_to_minimum": 8,
+   "missing_to_recommended": 23,
+   "publishers": 7,
    "recommended": 30,
-   "sources": 4,
+   "sources": 7,
    "stratum": "transactional events",
-   "systems": 4
+   "systems": 8
   },
   "C3": {
    "ambitious": 55,
@@ -62,24 +62,24 @@
   "C5": {
    "ambitious": 55,
    "minimum": 15,
-   "missing_to_minimum": 13,
-   "missing_to_recommended": 34,
-   "publishers": 2,
+   "missing_to_minimum": 11,
+   "missing_to_recommended": 32,
+   "publishers": 4,
    "recommended": 36,
-   "sources": 2,
+   "sources": 4,
    "stratum": "relational",
-   "systems": 11
+   "systems": 13
   },
   "C6": {
    "ambitious": 45,
    "minimum": 15,
-   "missing_to_minimum": 10,
-   "missing_to_recommended": 25,
-   "publishers": 4,
+   "missing_to_minimum": 8,
+   "missing_to_recommended": 23,
+   "publishers": 6,
    "recommended": 30,
-   "sources": 5,
+   "sources": 7,
    "stratum": "nested",
-   "systems": 5
+   "systems": 7
   }
  },
  "time_candidates_not_yet_verified": [
@@ -87,5 +87,5 @@
   "uci:755",
   "uci:760"
  ],
- "total_sources": 196
+ "total_sources": 199
 }

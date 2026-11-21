@@ -1,5 +1,39 @@
 {
  "facts": {
+  "bikeshare_capital": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "negative and multi-day durations occur in the source",
+    "three monthly files only",
+    "23 percent of trips without start station",
+    "no monetary amount: rental events, not payments"
+   ],
+   "first_party": true,
+   "independent_group": "lyft_bikeshare",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on start time",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1947784,
+   "view": "bikeshare_capital"
+  },
+  "bikeshare_jc": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "negative and multi-day durations occur in the source",
+    "three monthly files only",
+    "all trips with stations",
+    "no monetary amount: rental events, not payments"
+   ],
+   "first_party": true,
+   "independent_group": "lyft_bikeshare",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on start time",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 319159,
+   "view": "bikeshare_jc"
+  },
   "loghub:Android": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -289,6 +323,52 @@
    "units": 98723,
    "view": "monash_pedestrian"
   },
+  "ocds_georgia": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "contract awards, not payments",
+    "records stop in 2019; 151 awards without amount; simplified procurements absent",
+    "hash sample of whole contracting processes"
+   ],
+   "first_party": false,
+   "independent_group": "georgia_procurement",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on award date",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 18299,
+   "view": "ocds_georgia"
+  },
+  "ocds_georgia:nested": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "optional fields and extensions differ by publisher",
+    "records stop in 2019; 151 awards without amount; simplified procurements absent"
+   ],
+   "first_party": false,
+   "independent_group": "georgia_procurement",
+   "min_units": 1000,
+   "partitions": "hash of ocid 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 18299,
+   "view": "ocds_georgia"
+  },
+  "ocds_georgia:relational": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "native OCDS links only",
+    "records stop in 2019; 151 awards without amount; simplified procurements absent"
+   ],
+   "first_party": false,
+   "independent_group": "georgia_procurement",
+   "min_units": 1000,
+   "partitions": "hash of ocid 70/15/15, tables follow their process",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 18299,
+   "view": "ocds_georgia"
+  },
   "ocds_montreal": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -319,6 +399,52 @@
    "protocol_id": "P-NEST",
    "units": 30551,
    "view": "ocds_montreal"
+  },
+  "ocds_zambia": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "contract awards, not payments",
+    "selective publication; 7 contracts reference an absent award",
+    "hash sample of whole contracting processes"
+   ],
+   "first_party": false,
+   "independent_group": "zambia_procurement",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on award date",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 2999,
+   "view": "ocds_zambia"
+  },
+  "ocds_zambia:nested": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "optional fields and extensions differ by publisher",
+    "selective publication; 7 contracts reference an absent award"
+   ],
+   "first_party": false,
+   "independent_group": "zambia_procurement",
+   "min_units": 1000,
+   "partitions": "hash of ocid 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 2999,
+   "view": "ocds_zambia"
+  },
+  "ocds_zambia:relational": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "native OCDS links only",
+    "selective publication; 7 contracts reference an absent award"
+   ],
+   "first_party": false,
+   "independent_group": "zambia_procurement",
+   "min_units": 1000,
+   "partitions": "hash of ocid 70/15/15, tables follow their process",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 1368,
+   "view": "ocds_zambia"
   },
   "openalex:nested": {
    "anomaly_origin": "controlled_injection",

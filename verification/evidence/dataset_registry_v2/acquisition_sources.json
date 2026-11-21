@@ -1011,6 +1011,80 @@
    "stratum": "C2b",
    "upstream": "original producer: Zambia Public Procurement Authority; registry is the curator; terms at the original not read",
    "upstream_verified": false
+  },
+  {
+   "attribution": "credit the system; do not imply endorsement; do not use its marks",
+   "files": [
+    {
+     "name": "202409.zip",
+     "observed": "202409",
+     "url": "https://s3.amazonaws.com/capitalbikeshare-data/202409-capitalbikeshare-tripdata.zip"
+    },
+    {
+     "name": "202410.zip",
+     "observed": "202410",
+     "url": "https://s3.amazonaws.com/capitalbikeshare-data/202410-capitalbikeshare-tripdata.zip"
+    },
+    {
+     "name": "202411.zip",
+     "observed": "202411",
+     "url": "https://s3.amazonaws.com/capitalbikeshare-data/202411-capitalbikeshare-tripdata.zip"
+    }
+   ],
+   "hosts": [
+    "s3.amazonaws.com"
+   ],
+   "id": "bikeshare_capital",
+   "licence_class": "research_only",
+   "licence_location": "https://capitalbikeshare.com/data-license-agreement",
+   "licence_text": "Data License Agreement of Capital Bikeshare (Lyft Bikes and Scooters for the member jurisdictions): a non-exclusive, royalty-free, limited, perpetual licence to access, reproduce, analyze, copy, modify, distribute in your product or service and use the Data for any lawful purpose; the Data may not be hosted or published as a stand-alone dataset and may be included as source material in analyses published for non-commercial purposes; no correlation with customers' names or addresses; no circumvention of access restrictions",
+   "max_bytes": 104857600,
+   "method": "the official trip-data bucket listed by the publisher's data page",
+   "min_interval": 3.0,
+   "privacy": "trip coordinates and station names dropped; no rider identifiers are present; the licence forbids correlating with customers",
+   "publisher": "Capital Bikeshare (Lyft Bikes and Scooters for the member jurisdictions)",
+   "rate_limit": "three monthly files, sequential",
+   "redistribution": "not permitted as a stand-alone dataset: raw files and views stay local",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "the operator (Lyft Bikes and Scooters) publishes for the member jurisdictions; one operator and one trip schema for both cities"
+  },
+  {
+   "attribution": "credit the system; do not imply endorsement; do not use its marks",
+   "files": [
+    {
+     "name": "202409.zip",
+     "observed": "202409",
+     "url": "https://s3.amazonaws.com/tripdata/JC-202409-citibike-tripdata.csv.zip"
+    },
+    {
+     "name": "202410.zip",
+     "observed": "202410",
+     "url": "https://s3.amazonaws.com/tripdata/JC-202410-citibike-tripdata.csv.zip"
+    },
+    {
+     "name": "202411.zip",
+     "observed": "202411",
+     "url": "https://s3.amazonaws.com/tripdata/JC-202411-citibike-tripdata.csv.zip"
+    }
+   ],
+   "hosts": [
+    "s3.amazonaws.com"
+   ],
+   "id": "bikeshare_jc",
+   "licence_class": "research_only",
+   "licence_location": "https://citibikenyc.com/data-sharing-policy",
+   "licence_text": "Data License Agreement of Citi Bike, Jersey City trip files (Lyft Bikes and Scooters): a non-exclusive, royalty-free, limited, perpetual licence to access, reproduce, analyze, copy, modify, distribute in your product or service and use the Data for any lawful purpose; the Data may not be hosted or published as a stand-alone dataset and may be included as source material in analyses published for non-commercial purposes; no correlation with customers' names or addresses; no circumvention of access restrictions",
+   "max_bytes": 104857600,
+   "method": "the official trip-data bucket listed by the publisher's data page",
+   "min_interval": 3.0,
+   "privacy": "trip coordinates and station names dropped; no rider identifiers are present; the licence forbids correlating with customers",
+   "publisher": "Citi Bike, Jersey City trip files (Lyft Bikes and Scooters)",
+   "rate_limit": "three monthly files, sequential",
+   "redistribution": "not permitted as a stand-alone dataset: raw files and views stay local",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "the operator (Lyft Bikes and Scooters) publishes for the member jurisdictions; one operator and one trip schema for both cities"
   }
  ]
 }

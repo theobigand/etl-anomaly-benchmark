@@ -49,3 +49,14 @@ openFDA (CC0, open.fda.gov/terms), Stack Exchange dump (CC BY-SA, Stack Overflow
 Open Food Facts (ODbL, not yet collected). Details, stages and rejections:
 `verification/dataset_acquisition_report.md`. OpenAlex: not verified, the API needs a key tied to an
 e-mail address that was not provided. The "Not accepted yet" table above still holds for CTU and RelBench.
+
+## Update 2026-11-21 (OCDS publishers, bike-share)
+
+| Source | Class | Evidence at the publisher | Notes |
+|---|---|---|---|
+| Georgia, State Procurement Agency (OCDS) | open (CC0) | the Agency's own Publication Policy page states that the data is published as Open Data under CC0 in OCDS 1.1; read in the Wayback Machine copy of 2023-02-28 because `odapi.spa.ge` does not present a verifiable TLS chain (certificate checking was not disabled); the Terms of Service allow content to be exposed to third parties without restriction and forbid circumventing API limits | the registry export ends in 2019; the policy says simplified procurements and some dates are absent; ocid prefix of the acquired file matches the registry's prefix for this publisher |
+| Zambia Public Procurement Authority (OCDS) | open (ODC-PDDL) | `zppa.org.zm/ocds-license` (read live) states ODC-PDDL; the Publication Policy limits personal data to what the Public Procurement Act authorises and excludes security and defence contracts | the OCP registry's metadata says CC BY 4.0: a curator-versus-publisher discrepancy, both permit this use; the publisher's statement governs |
+| Netherlands (TenderNed / Ministry of Economic Affairs, OCDS) | unclear | TenderNed's dataset page says that announcements are public and offers the datasets, and its terms of use state no reuse licence; the registry's CC0 is not found at the publisher; the registry export is a transformation of TenderNed data | public availability is not permission; kept out of counts |
+| Capital Bikeshare | research_only | Data License Agreement read live: any lawful purpose, analysis allowed; the data may not be hosted or published as a stand-alone dataset; analyses may be published for non-commercial purposes; no correlation with rider identities | raw files and views stay local |
+| Citi Bike (Jersey City files) | research_only | the same agreement text on `citibikenyc.com/data-sharing-policy` | same operator and schema as Capital Bikeshare |
+| USAspending | open by law, not acquired | 17 U.S.C. 105 (public domain); Treasury licence notice not retrievable | the archive host's TLS chain does not verify with the Python trust store; not disabled |

@@ -886,36 +886,37 @@
    "upstream_status": "verified"
   },
   {
-   "eligible": false,
+   "eligible": true,
    "family": "ocds_georgia",
    "id": "ocds_georgia",
    "licence_class": "open",
    "publisher": "ocds_georgia",
-   "reason": "acquired from the registry (State Procurement Agency of Georgia); the licence is the registry's statement and the original publisher's terms were not read; kept out of counts until verified; no view built",
+   "reason": "275439 compiled releases 2010-2019 (publisher stopped updating in 2019), hash sample 27503 processes: 18299 awards in GEL (151 without amount), 18299 contracts linked by awardID (0 orphans), 6395 suppliers; tender to award to contract lifecycle; a subset of the e-GP data (simplified procurements are absent, per the publication policy and a 2020 civil-society report); awards are not payments",
    "stages": {
     "collection_implemented": true,
     "data_acquired": true,
     "discovered": true,
-    "licence_verified": "registry statement only",
+    "licence_verified": "CC0 at the publisher (archived copy)",
     "ready_for_experiments": false,
-    "structural_validation": false
+    "structural_validation": true
    },
    "stratum": "C2b",
    "system": "ocds_georgia",
-   "upstream_status": "not_verified"
+   "upstream_licence": "CC0 stated by the State Procurement Agency of Georgia on its own Publication Policy page (odapi.spa.ge/publication-policy), read in the Wayback Machine copy of 2023-02-28 because the live host's TLS chain does not verify; the terms of service allow content to be exposed to third parties without restriction and forbid circumventing API limits",
+   "upstream_status": "verified"
   },
   {
    "eligible": false,
    "family": "ocds_netherlands",
    "id": "ocds_netherlands",
-   "licence_class": "open",
+   "licence_class": "unclear",
    "publisher": "ocds_netherlands",
-   "reason": "acquired from the registry (Dutch Ministry of Economic Affairs and Climate Policy); the licence is the registry's statement and the original publisher's terms were not read; kept out of counts until verified; no view built",
+   "reason": "TenderNed (the publisher) states that announcements are public and offers the datasets, but its dataset page and terms of use state no reuse licence; the registry's CC0 for the Dutch Ministry publication is a curator statement and was not found at the publisher; public availability is not permission; kept unclear; also the registry export is a transformation of TenderNed data",
    "stages": {
     "collection_implemented": true,
     "data_acquired": true,
     "discovered": true,
-    "licence_verified": "registry statement only",
+    "licence_verified": "none found at the publisher",
     "ready_for_experiments": false,
     "structural_validation": false
    },
@@ -924,23 +925,24 @@
    "upstream_status": "not_verified"
   },
   {
-   "eligible": false,
+   "eligible": true,
    "family": "ocds_zambia",
    "id": "ocds_zambia",
    "licence_class": "open",
    "publisher": "ocds_zambia",
-   "reason": "acquired from the registry (Zambia Public Procurement Authority); the licence is the registry's statement and the original publisher's terms were not read; kept out of counts until verified; no view built",
+   "reason": "178732 compiled releases 2017-2026, hash sample 17971 processes: 2999 awards in ZMW, 1368 contracts linked by awardID (7 of 1368 point at an absent award: a baseline of 0.5 percent), 1756 suppliers; planning, tender, award, contract; selective publication; awards are not payments",
    "stages": {
     "collection_implemented": true,
     "data_acquired": true,
     "discovered": true,
-    "licence_verified": "registry statement only",
+    "licence_verified": "ODC-PDDL at the publisher",
     "ready_for_experiments": false,
-    "structural_validation": false
+    "structural_validation": true
    },
    "stratum": "C2b",
    "system": "ocds_zambia",
-   "upstream_status": "not_verified"
+   "upstream_licence": "ODC-PDDL stated by the Zambia Public Procurement Authority (zppa.org.zm/ocds-license, read live); the OCDS publication policy limits personal data to what the Public Procurement Act authorises and excludes security and defence contracts; the registry's own metadata says CC BY 4.0, a discrepancy between a curator and the publisher: the publisher's more permissive PDDL governs and both permit this use",
+   "upstream_status": "verified"
   },
   {
    "eligible": false,
@@ -960,6 +962,132 @@
    "stratum": "C2b",
    "system": "usaspending_fpds",
    "upstream_status": "not_verified"
+  },
+  {
+   "eligible": true,
+   "family": "ocds_georgia",
+   "id": "ocds_georgia:nested",
+   "licence_class": "open",
+   "protocols": "P-NEST",
+   "publisher": "ocds_georgia",
+   "reason": "the same releases kept nested (depth 7, 46 paths, 17 optional): clearly variable nested structure; one family with the C2b entry",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC0 at the publisher (archived copy)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "ocds_georgia",
+   "upstream_licence": "CC0 stated by the State Procurement Agency of Georgia on its own Publication Policy page (odapi.spa.ge/publication-policy), read in the Wayback Machine copy of 2023-02-28 because the live host's TLS chain does not verify; the terms of service allow content to be exposed to third parties without restriction and forbid circumventing API limits",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "ocds_georgia",
+   "id": "ocds_georgia:relational",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "ocds_georgia",
+   "reason": "native OCDS relations only: awards, contracts (awardID) and parties (party ids); three entity types, so a shallow relational structure; same family",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC0 at the publisher (archived copy)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "ocds_georgia",
+   "upstream_licence": "CC0 stated by the State Procurement Agency of Georgia on its own Publication Policy page (odapi.spa.ge/publication-policy), read in the Wayback Machine copy of 2023-02-28 because the live host's TLS chain does not verify; the terms of service allow content to be exposed to third parties without restriction and forbid circumventing API limits",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "ocds_zambia",
+   "id": "ocds_zambia:nested",
+   "licence_class": "open",
+   "protocols": "P-NEST",
+   "publisher": "ocds_zambia",
+   "reason": "the same releases kept nested (depth 7, 72 paths, 57 optional): clearly variable nested structure; one family with the C2b entry",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "ODC-PDDL at the publisher",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "ocds_zambia",
+   "upstream_licence": "ODC-PDDL stated by the Zambia Public Procurement Authority (zppa.org.zm/ocds-license, read live); the OCDS publication policy limits personal data to what the Public Procurement Act authorises and excludes security and defence contracts; the registry's own metadata says CC BY 4.0, a discrepancy between a curator and the publisher: the publisher's more permissive PDDL governs and both permit this use",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "ocds_zambia",
+   "id": "ocds_zambia:relational",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "ocds_zambia",
+   "reason": "native OCDS relations only: awards, contracts (awardID) and parties (party ids); three entity types, so a shallow relational structure; same family",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "ODC-PDDL at the publisher",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "ocds_zambia",
+   "upstream_licence": "ODC-PDDL stated by the Zambia Public Procurement Authority (zppa.org.zm/ocds-license, read live); the OCDS publication policy limits personal data to what the Public Procurement Act authorises and excludes security and defence contracts; the registry's own metadata says CC BY 4.0, a discrepancy between a curator and the publisher: the publisher's more permissive PDDL governs and both permit this use",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "lyft_bikeshare",
+   "id": "bikeshare_capital",
+   "licence_class": "research_only",
+   "protocols": "P-TAB on trips (duration, station, timestamp, duplicate and invalid-order faults); no natural labels; impossible durations are natural properties",
+   "publisher": "lyft_bikeshare_operator",
+   "reason": "1947784 rental events, Sep to Nov 2024 (Aug 31 to Nov 30 by timestamp); 784 stations, 23 percent of trips without a start station (dockless), 60 negative and 1349 over-a-day durations; events with a start, an end and a station, no monetary amount; one operator and one trip schema for both cities, so one family and two systems",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence read at the publisher",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "bikeshare_capital",
+   "upstream_licence": "Data License Agreement read live on the system's own page: any lawful purpose with analysis allowed; no stand-alone redistribution; non-commercial publication of analyses",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "lyft_bikeshare",
+   "id": "bikeshare_jc",
+   "licence_class": "research_only",
+   "protocols": "P-TAB on trips (duration, station, timestamp, duplicate and invalid-order faults); no natural labels; impossible durations are natural properties",
+   "publisher": "lyft_bikeshare_operator",
+   "reason": "319159 rental events, Sep to Nov 2024 (Aug 31 to Nov 30 by timestamp); 83 stations, 3 negative durations, 72 over a day; events with a start, an end and a station, no monetary amount; one operator and one trip schema for both cities, so one family and two systems",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "licence read at the publisher",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "bikeshare_jc",
+   "upstream_licence": "Data License Agreement read live on the system's own page: any lawful purpose with analysis allowed; no stand-alone redistribution; non-commercial publication of analyses",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

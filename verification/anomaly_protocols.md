@@ -98,3 +98,27 @@ Not covered because static data cannot support the ground truth: late publicatio
 runs of a real pipeline, and operational metadata (run ids, row counts at load). The batch-level
 pipeline study keeps those under its own protocol. Controlled injections are never described as
 natural anomalies.
+
+## Injection realism by anomaly family (review, 2026-11-21)
+
+Severity ranges are proposed design ranges, not measured failure rates; they are fixed before any
+detector runs. No range here is evidence about real pipeline failure frequency.
+
+| Family | Failure mechanism | Applicable structures and needed source information | Proposed severity range | Ground truth | Detector-specific bias to control | Interaction with natural irregularities | Limits on interpretation |
+|---|---|---|---|---|---|---|---|
+| Scale or unit error | conversion applied twice, thousands/millions mix-up | numeric amount columns with a known unit (ledger amounts, award values, durations) | factors 10, 100, 1000 and 0.1 on 0.1 to 5 percent of rows | row ids changed | a single factor favours distance detectors; use several factors and a cell fraction grid | credit notes and zero values are natural extremes: exclude rows already negative or zero | the factor is a design choice, not a measured error |
+| Duplicates | retried load, replay without idempotency | any table with a row id or a natural key; for OCDS one row per process, so a repeat is clean | 0.1 to 5 percent appended copies | positions of copies | rule detectors catch exact duplicates trivially; add near-duplicates with a changed non-key field | NHSBSA multi-line payments share numbers legitimately: duplicate on the full row, not on the number | exact duplicates are the easy case |
+| Missing rows, events or intervals | partial load, lost partition | time-indexed or ordered data; X for sources that are censored views (UK ledgers) | drop 1 to 20 percent of a window or whole intervals | removed units recorded | volume detectors win by construction; keep the unit-level truth separate from volume truth | MHRA gaps between returns are not missing data | not applicable where the source is already censored |
+| Level shift, drift, delay | upstream recalibration, changed definition, late data | regular time index | shift 1 to 5 standard deviations, windows of 1 to 10 percent of the series | series and window | window length changes difficulty more than size; vary both | natural seasonality in pedestrian counts must be baselined before shifting | no natural drift labels |
+| Invalid category or code | stale mapping after an upstream enumeration change | categorical columns with a closed vocabulary (expense type, rideable type) | 0.1 to 5 percent of cells | cells | frequency detectors favour rare replacement codes: also replace with a frequent wrong code | rare valid codes exist naturally | vocabularies are inferred, not published |
+| Event order and drops | out-of-order delivery, lossy collector | sequences with an order that has meaning (log event ids); not trips | one swap or drop per sequence, or 1 to 10 percent of sequences | (sequence, position) | sequence models see order only if sequences are long enough: Loghub samples are single 2000-event streams | repeated events are normal in logs | no real session boundaries in the samples |
+| Broken reference | late parent table, filtered or deleted parent, orphaning delete | tables with native keys: OpenAlex, Stack Exchange, OCDS awards and contracts | 0.1 to 5 percent of references | (table, key, relation) | join-based rules detect all of them; a learned detector must be given join context to be fairly compared | natural orphans (deleted posts, 7 Zambia contracts, sampling-induced `referenced_works`) are a baseline and never selected | OpenAlex references to works outside the sample are sampling artefacts |
+| Missing required nested field, type change | schema change or mapping that drops a path; serialisation error | nested records with a field present in nearly all records (nested paths with presence above 0.95) | 0.1 to 5 percent of records, one path | (record, path) | schema validators detect all of them; statistical detectors need path-level features | optional fields are natural variation: only paths that are almost always present are eligible | required-ness is inferred from presence, not from a published schema |
+| Distribution shift, volume change | upstream population or batch size change | any table with a time order | shift of a column mean or a batch size change over a window | window | batch statistics detect volume shifts directly | seasonality and business cycles | not the same as concept drift in labels |
+
+Cross-cutting rules: injections draw rows only from the test partition (checked by
+`fault_protocols.conformance`); the reference partition is never touched; the same seed and the same
+data give the same truth; a fault whose precondition fails raises instead of silently doing nothing; the
+interaction columns above are checked against the natural-property baseline of each dataset before the
+injection set is frozen. Reusable mechanisms live in `research/fault_protocols.py` by structure, not
+per dataset.
