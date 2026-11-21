@@ -662,3 +662,66 @@ Targets (30, 40, 28, 36, 30) are unchanged and not met. No experiment was run.
 cannot isolate the new functions (the shared time parser `_stamped` is exercised by the series tests, which the
 filter excluded), so no figure is claimed. The new code is therefore not mutation-certified; closing the
 survivors is open work.
+
+## Update 10: Parquet, archives, process-mining logs and new groups (2026-11-21)
+
+**Dependency.** `pyarrow>=21,<27` was added to `pyproject.toml` (runtime dependencies) and `environment.yml`
+(conda). Installed: 25.0.0 in the conda environment `etl-benchmark` (Python 3.11, the newest conda-forge build
+that solves there) and 26.0.1 in the local `.venv`; both pass the Parquet tests, and the lower bound is the first
+major version with the batch and row-group API used. The change invalidates the previous mutation caches by
+design (they hash the manifests); no earlier mutation figure is reused for the changed environment.
+
+**Capabilities added.** `research/parquet_reader.py` (L3): footer-only inspection, column projection, row-group
+selection, bounded record batches with a per-batch byte limit, a deterministic stride by global row position,
+file-size limit, explicit errors for malformed or truncated files, and a sampling record (columns, row groups,
+rows read and kept, truncation). `acquisition.py`: `zip_members`, `extract_member` (flat extraction, path
+traversal, size and compression-ratio limits) and `zip_prefix_lines` (deflate prefix of the first member of a cut
+archive). Unsupported: Parquet over HTTP without a full download (the footer sits at the end of the file, so a
+remote Parquet file needs a complete bounded copy), encrypted or stored zip members, zip64 prefix of members that
+are not the first.
+
+**Ledger.** 63 entries (52 initial plus 11 discovered): 25 experiment-ready, 3 acquired with rights pending,
+5 structurally unsuitable, 5 accessible and eligible, 6 permission pending, the rest blocked or synthetic.
+
+**Candidates processed.** Parquet: SURF Lisa SLURM jobs (C4, ready, one row in 8 of 1.6 million jobs); F-DATA
+Fugaku (C4, ready, April 2021 file only); PECD (permission pending: it repackages ENTSO-E inputs whose terms are
+unread); idling positions of Munich shared vehicles (location data scraped from providers: rights and privacy
+block, not acquired). Other: MetroPT2 (C3, ready, first 4.5 days by range); RKI series (C3 ready, Update 9);
+3PFL (C5 ready after excluding the PATSTAT-derived patent table; blank keys are treated as missing, 143 natural
+grant-to-grantee orphans of 11457); AEGIS (C3 ready, OBD signals only, relative time, no positions, dates or
+other sensors; one driver, one vehicle, 33 trips, reduced privacy not anonymisation); NYC telematics (blocked:
+undocumented columns); DataCenter traces (file names match public cloud traces, not an independent source);
+Open Library (C6 ready from editions, depth 3; C5 not supported because dump prefixes in key-text order contain
+12 editions with a fully resolved work in 192930); CLUE-LDS (view built from a 40 MiB zip prefix, rights pending);
+Swiss Dwellings (structurally unsuitable: two single wide tables of 1.1 and 1.6 GB); Google ClusterData
+(prefixes have 284 of 299716 collections with two events: no lifecycle continuity; full reconstruction would need
+every shard of the cell, so no P-SEQ claim).
+
+**4TU.ResearchData.** The repository's terms resource states CC0 for datasets without another licence. Real
+event logs: BPI Challenge 2012 (financial institution), 2013 incidents (Volvo IT), 2015 municipality 5, Road
+Traffic Fines, 2019 purchase orders (CC BY, 60 MiB prefix, 19484 complete cases), 2020 travel claims (CC BY-NC,
+research only; domestic and international are one group) and Sepsis. Each is a C4 group; Road Traffic Fines and
+BPIC 2019 also count in C2b through amounts (same provenance group). BPIC 2017 shares the provenance of 2012;
+the other four 2015 municipalities share one group. Natural irregularities stay baselines: BPIC 2019 has event
+times before 1999, Road Traffic Fines start at 1999-12-31.
+
+**Other additions.** MovieLens ml-latest-small (C5, research only, no redistribution; four tables without
+orphans). Candidates still actionable: BPIC 2014 (CSV log), BPIC 2018 (158 MB gzip XES: needs a gunzip-to-bytes
+prefix helper), BPIC 2016 (CSV), more 4TU logs, MusicBrainz tables, CTU and RelBench upstream terms.
+
+| Category | Initial ready (Update 9) | Newly ready | Final ready | Target | Gap |
+|---|---:|---:|---:|---:|---:|
+| C2b | 6 | 2 | 8 | 30 | 22 |
+| C3 | 8 | 2 | 10 | 40 | 30 |
+| C4 | 2 | 9 | 11 | 28 | 17 |
+| C5 | 4 | 2 | 6 | 36 | 30 |
+| C6 | 7 | 1 | 8 | 30 | 22 |
+
+Distinct provenance groups with at least one ready category: 35 (21 before the previous update). Independent
+original producers are the same list: no group is a curator of another. Shared curators: Loghub (one group),
+4TU.ResearchData (hosting only; each log has its own producer), Zenodo (hosting only). New anomaly mechanisms
+supported by protocols: P-SEQ on real process cases, P-TAB on supercomputer job records (SURF, Fugaku,
+CC-IN2P3: three producers), P-TS on a metro compressor and a vehicle signal set. Application domains added:
+HPC operations, public health surveillance, industrial maintenance, automotive, hospital pathways, public
+administration processes, police fines, purchasing, travel expenses, recommender data, library catalogues.
+The targets are unchanged and not met.

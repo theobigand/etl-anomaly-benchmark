@@ -294,12 +294,12 @@
    "licence": "cc-by-4.0 (Zenodo)",
    "name": "ENTSO-E PECD in Parquet",
    "next_step": "add an optional parquet dependency only if justified",
-   "notes": "",
+   "notes": "Parquet reader now available. Files are 32 to 390 MB; the record repackages ENTSO-E ERAA inputs, so the ENTSO-E and Copernicus terms must be read at the publishers before any acquisition",
    "publisher": "ENTSO-E",
    "reason": "2.9 GB parquet; upstream terms to read",
    "size": null,
    "source_url": "",
-   "status": "needs_parquet_reader"
+   "status": "permission_pending"
   },
   {
    "categories": [
@@ -341,7 +341,7 @@
    "licence": "cc-by-4.0",
    "name": "Global Transnational Mobility Dataset 2.0",
    "next_step": "bounded extraction",
-   "notes": "",
+   "notes": "Global Transnational Mobility (migration flows), not transactions; not processed",
    "publisher": "Zenodo authors",
    "reason": "trip records (279 MB)",
    "size": null,
@@ -356,12 +356,12 @@
    "licence": "odc-odbl",
    "name": "Idling positions and trips of shared mobility vehicles",
    "next_step": "parquet reader decision",
-   "notes": "",
+   "notes": "Parquet reader available. Scraped provider positions of Munich shared vehicles (ODbL by the authors): provider terms unread and idling positions are location data; blocked on rights and privacy, no acquisition",
    "publisher": "Zenodo authors",
    "reason": "706 MB parquet",
    "size": null,
    "source_url": "",
-   "status": "needs_parquet_reader"
+   "status": "accessible_privacy_review"
   },
   {
    "categories": [
