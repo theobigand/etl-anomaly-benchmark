@@ -321,3 +321,49 @@ Reading: for AUROC at delta 0.02 the requirement is very sensitive to sigma (abo
 clustering correlation are unknown until the pilot. Normal-approximation and independence assumptions apply; clustered sources
 need the design effect of section 3. Assumptions needing owner approval before confirmatory execution: the metrics list, the
 pairing rule within group, the family definitions, the Holm family sizes, the smallest effects, and the hold-out rule.
+
+
+## 11. Flat tabular (C1) and categorical or mixed (C2a) readiness
+
+C1 and C2a use the same seven-stage readiness contract as the other categories (`research/readiness.py`); the assessment of a table is
+`research/flat_readiness.py`, evidence in `flat_selection.json`, `acquired_sources.json` (entries `flat:<group>:<stratum>`) and
+`readiness_facts.json`. Thresholds are fixed in code before any detector runs.
+
+- Rights: licence class from the licence text of the repository page (`CC BY` and `CC0` open; a non-commercial variant research_only;
+  anything else unclear and blocked). Privacy: a table whose publisher lists demographic or personal attributes is blocked pending review
+  (it is not silently trimmed).
+- Structure, C1: at least 300 rows, at least 3 informative numeric columns, at least 4 informative columns; C2a: at least 500 rows, at least 5
+  informative columns, at least 2 categorical columns and one with 3 or more levels. Both: at most 30 percent missing values and at
+  most half duplicate rows. Constant columns are not informative; a categorical column is a non-numeric column.
+- A provenance group (transitive closure of shared creators; twins of one source are one table) is represented per stratum by its largest
+  eligible table; a group with none is rejected for that stratum with the reasons of its tables. Views drop constant columns and columns
+  missing in more than half of the rows and keep every stride-th row above 50000 rows.
+- Independence limit: creator overlap is a lower bound of dependence. Two repository tables by unrelated donors can still derive from one
+  original collection, and the repository is a shared curator and schema family; the groups are candidates for independence, not proof.
+
+Result of the first full pass (115 C1 tables and 40 C2a tables audited; 11 without a local file; every local file matched its pinned checksum):
+
+| Stratum | Candidate groups with a file | Rights verified | Acquired | Structurally valid | Scientifically eligible | Protocol ready | Experiment ready |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| C1 | 71 | 71 | 71 | 52 | 52 | 52 | 52 |
+| C2a | 38 | 38 | 38 | 12 | 12 | 12 | 12 |
+
+Rejected tables (a table can have several reasons): C1 21 for listed personal attributes, 2 for duplicates, 1 for fewer than 300 rows, 1 for
+fewer than 3 numeric columns; C2a 16 for listed personal attributes, 15 for fewer than 2 categorical columns, 12 for fewer than 500
+rows, 2 for duplicates, 2 for no 3-level categorical column, 1 for missing values. The C1 quota (36) is met by candidate groups
+of one curator and one schema family; the C2a gap is 18. Neither count is evidence about domain generalisation beyond the repository.
+
+Coverage after this pass (`target_framework.json`; unclassified areas are not counted as domains or families):
+
+| Category | Ready groups | Quota | Gap | Domains | Families | Largest family (share) | Unclassified groups |
+|---|---|---|---|---|---|---|---|
+| C1 | 52 | 36 | 0 | 7 | 4 | computational or derived features (0.2885) | 1 |
+| C2a | 12 | 30 | 18 | 6 | 4 | administrative or survey records (0.25) | 4 |
+| C2b | 11 | 30 | 19 | 7 | 7 | contract award (0.2727) | 0 |
+| C3 | 11 | 40 | 29 | 11 | 10 | urban mobility counts (0.1818) | 0 |
+| C4 | 13 | 28 | 15 | 10 | 4 | business process execution (0.5385) | 0 |
+| C5 | 20 | 36 | 16 | 7 | 7 | timetable network (0.6) | 0 |
+| C6 | 9 | 30 | 21 | 7 | 6 | procurement release (0.3333) | 0 |
+
+Global: 119 provenance groups, 45 domains, 21 curators, 27 schema families; the repository
+flat-table schema family holds 54% of them.
