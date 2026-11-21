@@ -1,6 +1,6 @@
 {
  "licence_classes": {
-  "open": 177,
+  "open": 179,
   "research_only": 16
  },
  "strata": {
@@ -51,24 +51,24 @@
   "C5": {
    "ambitious": 55,
    "minimum": 15,
-   "missing_to_minimum": 14,
-   "missing_to_recommended": 35,
-   "publishers": 1,
+   "missing_to_minimum": 13,
+   "missing_to_recommended": 34,
+   "publishers": 2,
    "recommended": 36,
-   "sources": 1,
+   "sources": 2,
    "stratum": "relational",
-   "systems": 10
+   "systems": 11
   },
   "C6": {
    "ambitious": 45,
    "minimum": 15,
-   "missing_to_minimum": 13,
-   "missing_to_recommended": 28,
-   "publishers": 1,
+   "missing_to_minimum": 11,
+   "missing_to_recommended": 26,
+   "publishers": 3,
    "recommended": 30,
-   "sources": 2,
+   "sources": 4,
    "stratum": "nested",
-   "systems": 2
+   "systems": 4
   }
  },
  "time_candidates_not_yet_verified": [
@@ -76,5 +76,5 @@
   "uci:755",
   "uci:760"
  ],
- "total_sources": 193
+ "total_sources": 195
 }

@@ -343,6 +343,92 @@
    "retries": 2,
    "stratum": "C5",
    "upstream": "user contributions under CC BY-SA 4.0 with attribution"
+  },
+  {
+   "attribution": "cite OpenAlex (Priem, Piwowar, Orr 2022)",
+   "hosts": [
+    "api.openalex.org"
+   ],
+   "id": "openalex_works",
+   "licence_class": "open",
+   "licence_location": "https://docs.openalex.org/ (data licence) and https://openalex.org/about",
+   "licence_text": "OpenAlex data is CC0 (public domain dedication).",
+   "max_bytes": 52428800,
+   "method": "official keyless API, sample=1000 with seed 42 then entity batches by id (page-based, no cursor)",
+   "min_interval": 0.5,
+   "pages": {
+    "count": 10,
+    "name": "works_{n}.json",
+    "observed": "2023",
+    "size": 100,
+    "url": "https://api.openalex.org/works?filter=publication_year:2023,type:article&sample=1000&seed=42&per-page=100&page={n1}&select=id,publication_year,type,authorships,primary_location,topics,referenced_works,open_access,cited_by_count,biblio,language"
+   },
+   "privacy": "authorships carry author names and ORCID iDs: personal data of researchers; names and ORCIDs must be dropped or hashed in normalised data; entity requests select no name fields",
+   "publisher": "OurResearch (OpenAlex)",
+   "rate_limit": "free anonymous budget 1000 credits per day shared by IP; a list request costs 1 credit; about 75 requests used",
+   "redistribution": "CC0 permits it",
+   "retries": 2,
+   "stages": [
+    {
+     "batch": 100,
+     "from": "works_*.json",
+     "join": "|",
+     "name": "authors_{n}.json",
+     "observed": "2023",
+     "path": "results.authorships.author.id",
+     "short": true,
+     "url": "https://api.openalex.org/authors?filter=ids.openalex:{ids}&per-page=100&select=id,works_count,cited_by_count,summary_stats,affiliations,topics"
+    },
+    {
+     "batch": 100,
+     "from": "works_*.json",
+     "join": "|",
+     "name": "institutions_{n}.json",
+     "observed": "2023",
+     "path": "results.authorships.institutions.id",
+     "short": true,
+     "url": "https://api.openalex.org/institutions?filter=ids.openalex:{ids}&per-page=100&select=id,country_code,type,works_count,cited_by_count,lineage,associated_institutions"
+    },
+    {
+     "batch": 100,
+     "from": "works_*.json",
+     "join": "|",
+     "name": "sources_{n}.json",
+     "observed": "2023",
+     "path": "results.primary_location.source.id",
+     "short": true,
+     "url": "https://api.openalex.org/sources?filter=ids.openalex:{ids}&per-page=100&select=id,type,works_count,cited_by_count,is_oa,host_organization,country_code,topics"
+    }
+   ],
+   "stratum": "C5",
+   "upstream": "metadata aggregated from Crossref, PubMed, ORCID, ROR and others; each is separately open or public-domain metadata; not individually re-verified"
+  },
+  {
+   "attribution": "ODbL: attribute Open Food Facts contributors; share-alike on derived databases",
+   "files": [
+    {
+     "name": "delta_1794292097_1794378650.json.gz",
+     "observed": "2026-11-10T06:28:17+00:00/2026-11-11T06:30:50+00:00",
+     "url": "https://static.openfoodfacts.org/data/delta/openfoodfacts_products_1794292097_1794378650.json.gz"
+    }
+   ],
+   "hosts": [
+    "static.openfoodfacts.org"
+   ],
+   "id": "openfoodfacts_products",
+   "licence_class": "open",
+   "licence_location": "https://world.openfoodfacts.org/terms-of-use",
+   "licence_text": "The Open Food Facts database is available under the Open Database License. Individual contents of the database are available under the Database Contents License. Product images are available under the Creative Commons Attribution ShareAlike licence.",
+   "max_bytes": 104857600,
+   "method": "official delta export (changed products of one day, nested JSON lines); the search API answered 503/401 at collection time and was not retried or circumvented",
+   "min_interval": 2.0,
+   "privacy": "records carry contributor user names (creator, editors, checkers); these fields must be dropped or hashed in normalised data",
+   "publisher": "Open Food Facts association",
+   "rate_limit": "single file download",
+   "redistribution": "ODbL permits it with attribution and share-alike; raw files not committed",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "crowd-sourced contributions and manufacturer data published under ODbL/DbCL; contributor identifiers appear in the records"
   }
  ]
 }

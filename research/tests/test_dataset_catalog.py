@@ -205,3 +205,51 @@ def test_acquired_entries_count_only_when_eligible_with_three_independence_level
     c5 = report["strata"]["C5"]
     assert (c5["sources"], c5["systems"], c5["publishers"]) == (1, 2, 1)
     assert dc.acquired_rows(tmp_path / "none.json") == []
+
+
+def test_transactional_needs_a_repeated_entity_key_and_an_event_signal_not_just_categories():
+    import pandas as pd
+
+    n = 60
+    retail = pd.DataFrame(
+        {
+            "InvoiceNo": [i // 2 for i in range(n)],
+            "CustomerID": [i // 3 for i in range(n)],
+            "Quantity": range(n),
+            "Country": ["a", "b"] * (n // 2),
+        }
+    )
+    sig = dc.transactional_signals(retail)
+    assert sig["keys"] == ["CustomerID", "InvoiceNo"] and sig["event_columns"] == ["Quantity"]
+    assert dc.is_transactional(sig)
+    toy = pd.DataFrame({"colour": list("abcab") * 12, "shape": list("xyzxy") * 12})
+    assert not dc.is_transactional(dc.transactional_signals(toy))
+    row_ids = pd.DataFrame({"id": range(n), "amount": range(n)})
+    assert dc.transactional_signals(row_ids)["keys"] == []  # an id that never repeats is a row id
+    few = pd.DataFrame({"user": [1, 1, 2, 2] * 5, "amount": range(20)})
+    assert dc.transactional_signals(few)["keys"] == []  # two entities are a category, not a key
+    measure = pd.DataFrame({"customer_value": [0.5, 0.5] * 30, "amount": range(n)})
+    assert dc.transactional_signals(measure)["keys"] == []  # a float is a measure, not a key
+    timed = pd.DataFrame({"user": [i // 2 for i in range(n)], "when": range(n)})
+    assert dc.is_transactional(dc.transactional_signals(timed, time_columns=["when"]))
+    assert dc.transactional_signals(timed)["event_columns"] == []
+
+
+def test_the_audit_splits_c2_and_leaves_unreadable_tables_unassigned():
+    import pandas as pd
+
+    tables = {
+        "uci:1": pd.DataFrame({"customer": [i // 2 for i in range(60)], "amount": range(60)}),
+        "uci:2": pd.DataFrame({"colour": list("abca"), "shape": list("xyzx")}),
+    }
+    rows = [
+        {"id": "uci:1", "source": "uci:1", "schema_kind": "mixed"},
+        {"id": "uci:2", "source": "uci:2", "schema_kind": "categorical"},
+        {"id": "uci:3", "source": "uci:3", "schema_kind": "mixed"},
+        {"id": "uci:4", "source": "uci:4", "schema_kind": "numeric"},
+    ]
+    audit = dc.transactional_audit(rows, lambda r: tables.get(r["id"]))
+    assert list(audit["transactional"]) == ["uci:1"]
+    assert list(audit["not_transactional"]) == ["uci:2"]
+    assert audit["not_audited"] == ["uci:3", "uci:4"]
+    assert audit["counts"] == {"transactional": 1, "not_transactional": 1, "not_audited": 2}

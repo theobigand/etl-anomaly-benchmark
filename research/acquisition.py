@@ -143,15 +143,46 @@ def plan(spec: dict[str, Any]) -> list[dict[str, Any]]:
     requests = [dict(f) for f in spec.get("files", [])]
     paged = spec.get("pages")
     if paged:
-        for n in range(paged["count"]):
+        numbers = paged.get("numbers") or range(paged["count"])
+        for n in numbers:
             requests.append(
                 {
-                    "url": paged["url"].format(n=n, skip=n * paged["size"]),
+                    "url": paged["url"].format(n=n, n1=n + 1, skip=n * paged["size"]),
                     "name": paged["name"].format(n=n),
                     "observed": paged.get("observed"),
                 }
             )
     return requests
+
+
+def _collect(node: Any, parts: list[str]) -> Iterator[Any]:
+    if isinstance(node, list):
+        for item in node:
+            yield from _collect(item, parts)
+    elif parts and isinstance(node, dict):
+        if parts[0] in node:
+            yield from _collect(node[parts[0]], parts[1:])
+    elif not parts and node is not None:
+        yield node
+
+
+def expand(stage: dict[str, Any], raw: Path) -> list[dict[str, Any]]:
+    """Batched requests for the distinct values at a dotted path in earlier-stage files."""
+    found: set[str] = set()
+    for path in sorted(raw.glob(stage["from"])):
+        found.update(
+            str(v) for v in _collect(json.loads(path.read_text()), stage["path"].split("."))
+        )
+    values = sorted({v.rsplit("/", 1)[-1] for v in found} if stage.get("short") else found)
+    size = stage["batch"]
+    return [
+        {
+            "url": stage["url"].format(ids=stage["join"].join(values[i : i + size])),
+            "name": stage["name"].format(n=i // size),
+            "observed": stage.get("observed"),
+        }
+        for i in range(0, len(values), size)
+    ]
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -170,6 +201,10 @@ def main(argv: list[str] | None = None) -> int:
     for request in plan(specs[args.source]):
         snap.fetch(request["url"], request["name"], request.get("observed"))
         done += 1
+    for stage in specs[args.source].get("stages", []):  # later stages read earlier files
+        for request in expand(stage, snap.raw):
+            snap.fetch(request["url"], request["name"], request.get("observed"))
+            done += 1
     print(f"{args.source}/{args.snapshot}: {done} files, mismatches {snap.verify()}")
     return 0
 

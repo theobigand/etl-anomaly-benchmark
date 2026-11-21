@@ -98,7 +98,7 @@ def test_a_plan_lists_fixed_files_then_numbered_pages():
     spec = {
         "files": [{"url": "https://example.org/f", "name": "f", "observed": None}],
         "pages": {
-            "url": "https://example.org/p?skip={skip}",
+            "url": "https://example.org/p?skip={skip}&page={n1}",
             "name": "p{n}.json",
             "count": 2,
             "size": 100,
@@ -106,4 +106,51 @@ def test_a_plan_lists_fixed_files_then_numbered_pages():
     }
     got = aq.plan(spec)
     assert [r["name"] for r in got] == ["f", "p0.json", "p1.json"]
-    assert got[2]["url"] == "https://example.org/p?skip=100"
+    assert got[2]["url"] == "https://example.org/p?skip=100&page=2"
+
+
+def test_a_second_stage_requests_the_distinct_ids_found_in_the_first_stage_files(tmp_path):
+    raw = tmp_path / "raw"
+    raw.mkdir()
+    (raw / "w0.json").write_text(
+        json.dumps(
+            {"results": [{"a": [{"id": "A2"}, {"id": "A1"}]}, {"a": [{"id": "A1"}, {"id": None}]}]}
+        )
+    )
+    (raw / "w1.json").write_text(json.dumps({"results": [{"a": [{"id": "A3"}]}]}))
+    stage = {
+        "from": "w*.json",
+        "path": "results.a.id",
+        "batch": 2,
+        "url": "https://example.org/e?ids={ids}",
+        "name": "e{n}.json",
+        "join": "|",
+    }
+    got = aq.expand(stage, raw)
+    assert [r["name"] for r in got] == ["e0.json", "e1.json"]
+    assert got[0]["url"] == "https://example.org/e?ids=A1|A2" and got[1]["url"].endswith("ids=A3")
+    assert aq.expand({**stage, "path": "results.zzz"}, raw) == []
+
+
+def test_short_ids_drop_the_url_prefix(tmp_path):
+    raw = tmp_path / "raw"
+    raw.mkdir()
+    (raw / "w.json").write_text(
+        json.dumps({"results": [{"id": "https://x.org/W2"}, {"id": "https://x.org/W1"}]})
+    )
+    stage = {"from": "w.json", "path": "results.id", "batch": 5, "url": "https://e.org/?i={ids}",
+             "name": "e{n}", "join": "|", "short": True}  # fmt: skip
+    assert aq.expand(stage, raw)[0]["url"] == "https://e.org/?i=W1|W2"
+
+
+def test_explicit_page_numbers_replace_the_count():
+    spec = {
+        "pages": {
+            "url": "https://e.org/?p={n1}",
+            "name": "p{n}",
+            "count": 99,
+            "size": 1,
+            "numbers": [7, 3],
+        }
+    }
+    assert [r["url"] for r in aq.plan(spec)] == ["https://e.org/?p=8", "https://e.org/?p=4"]

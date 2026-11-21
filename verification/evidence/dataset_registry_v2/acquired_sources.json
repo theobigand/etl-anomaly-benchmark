@@ -646,6 +646,63 @@
    },
    "stratum": "C6",
    "system": "openfda_food_enforcement"
+  },
+  {
+   "eligible": true,
+   "family": "openalex",
+   "id": "openalex:relational",
+   "licence_class": "open",
+   "protocols": "referential-integrity, duplicate and volume faults by controlled injection with a complete FK baseline; authors' names and ORCID iDs are personal data and are dropped before use; one sample is one snapshot, not several sources",
+   "publisher": "ourresearch",
+   "reason": "native identifier graph: 1000 sampled works (seed 42, 2023 articles) with their 3756 authors, 1520 institutions and 884 sources fetched by id; the three foreign keys are complete (0 orphans in 3762, 4477 and 990 references); works.referenced_works point outside the sample by construction and must not be treated as broken",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC0 (OpenAlex data licence); upstream metadata sources not re-verified",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "openalex"
+  },
+  {
+   "eligible": true,
+   "family": "openalex",
+   "id": "openalex:nested",
+   "licence_class": "open",
+   "protocols": "nested-structure corruption, optional-field and type faults by controlled injection",
+   "publisher": "ourresearch",
+   "reason": "works records are genuinely nested (depth 6, arrays of authorships with institutions, 14 optional paths); same data-generating system as the C5 entry, so it is one family counted in two strata, not a second source",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC0",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "openalex"
+  },
+  {
+   "eligible": true,
+   "family": "openfoodfacts",
+   "id": "openfoodfacts_products",
+   "licence_class": "open",
+   "protocols": "schema-drift, nested corruption, type and missing-field faults by controlled injection; contributor user names dropped before use; ODbL share-alike applies to a derived database; the search API refused requests (503/401) and was not circumvented",
+   "publisher": "off_association",
+   "reason": "9688 product records changed in one day (official delta export); depth 12, 359 array paths, 866 paths with more than one type and about 10000 distinct paths: strongly heterogeneous nested records; crowd-sourced, so natural data-quality variation is high",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "ODbL and DbCL (terms of use page)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "openfoodfacts"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run"

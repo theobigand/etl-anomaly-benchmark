@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -19,6 +20,7 @@ ROOT = HERE.parent
 sys.path[:0] = [str(HERE), str(ROOT / "src")]
 
 import dataset_registry as dr  # noqa: E402
+import pandas as pd  # noqa: E402
 
 CATALOG = ROOT / "data" / "catalog.json"
 POOL_MANIFEST = ROOT / "verification" / "evidence" / "dataset_registry" / "pool_manifest.json"
@@ -232,6 +234,89 @@ def licence_rows(manifests: list[tuple[Path, str]]) -> list[dict[str, Any]]:
     return rows
 
 
+_TOKEN = re.compile(r"[A-Z]+(?![a-z])|[A-Z]?[a-z]+|\d+")
+_KEY_TOKENS = frozenset(
+    ["id", "ids", "nbr", "customer", "client", "user", "account", "invoice", "session"]
+    + ["patient", "transaction", "txn", "card", "merchant", "basket"]
+)
+_EVENT_NAME = re.compile(
+    r"(amount|price|quantity|qty|balance|revenue|payment|debit|credit|fare)", re.I
+)
+MIN_KEY_ENTITIES = 20
+MIN_REPEATED_ROWS = 0.2
+
+
+def transactional_signals(frame: Any, time_columns: list[str] | None = None) -> dict[str, Any]:
+    """Entity keys that repeat across rows, event columns and time columns of a table (T437).
+
+    A key is a column named like an identifier whose values are not all distinct and where at least
+    ``MIN_REPEATED_ROWS`` of the rows share their value with another row; an identifier that never
+    repeats is a row number. Categorical columns alone carry no transaction semantics.
+    """
+    keys = []
+    for name in map(str, frame.columns):
+        if not _KEY_TOKENS & {t.lower() for t in _TOKEN.findall(name)}:
+            continue
+        column = frame[name].dropna()
+        if pd.api.types.is_float_dtype(column) or not len(column):
+            continue
+        distinct = column.nunique()
+        shared = float(column.duplicated(keep=False).mean())
+        if MIN_KEY_ENTITIES <= distinct < len(column) and shared >= MIN_REPEATED_ROWS:
+            keys.append(name)
+    events = [
+        str(c)
+        for c in frame.columns
+        if _EVENT_NAME.search(str(c)) and pd.api.types.is_numeric_dtype(frame[c])
+    ]
+    return {
+        "keys": sorted(keys),
+        "event_columns": sorted(events),
+        "time_columns": sorted(time_columns or []),
+    }
+
+
+def is_transactional(signals: dict[str, Any]) -> bool:
+    """A repeated entity key together with an event or time column."""
+    return bool(signals["keys"]) and bool(signals["event_columns"] or signals["time_columns"])
+
+
+def transactional_audit(
+    rows: list[dict[str, Any]], read: Any, wave2_time: dict[str, Any] | None = None
+) -> dict[str, Any]:
+    """Tables of C1 to C3 with a readable file, split into transactional and not (T437).
+
+    Transactional semantics are orthogonal to the time stratum (Online Retail is both), so every
+    table of the first three strata is audited. ``read(row)`` returns the table or None; the
+    historical strata stay untouched and tables without a readable file are "not audited".
+    """
+    verified = wave2_time or {}
+    out: dict[str, Any] = {"transactional": {}, "not_transactional": {}, "not_audited": []}
+    for r in rows:
+        if stratum_of(r) not in ("C1", "C2", "C3"):
+            continue
+        frame = read(r)
+        if frame is None:
+            out["not_audited"].append(r["id"])
+            continue
+        timed = [verified[r["id"]]["column"]] if verified.get(r["id"], {}).get("verified") else []
+        sig = transactional_signals(frame, timed)
+        out["transactional" if is_transactional(sig) else "not_transactional"][r["id"]] = sig
+    out["counts"] = {k: len(out[k]) for k in ("transactional", "not_transactional", "not_audited")}
+    return out
+
+
+def _read_row(row: dict[str, Any]) -> Any:
+    import pandas as pd
+
+    number = row["id"].split(":", 1)[-1]
+    folder = "uci_wave2" if row.get("origin") == "wave2" else "pool"
+    path = ROOT / "data" / folder / f"{number}.csv"
+    if not row["id"].startswith("uci:") or not path.exists():
+        return None
+    return pd.read_csv(path, low_memory=False)
+
+
 ACQUIRED = GAP_DIR / "acquired_sources.json"
 
 
@@ -325,9 +410,18 @@ def main(argv: list[str] | None = None) -> int:
     import argparse
 
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=("gap",))
+    parser.add_argument("command", choices=("gap", "transactional"))
     parser.add_argument("--out", type=Path, default=GAP_DIR)
     args = parser.parse_args(argv)
+    if args.command == "transactional":
+        checked = json.loads(WAVE2_TIME.read_text()) if WAVE2_TIME.exists() else {}
+        audit = transactional_audit(stratum_rows(), _read_row, checked)
+        args.out.mkdir(parents=True, exist_ok=True)
+        (args.out / "transactional_audit.json").write_text(
+            json.dumps(audit, indent=1, sort_keys=True) + "\n"
+        )
+        print(audit["counts"])
+        return 0
     report = gap_report([*stratum_rows(), *licence_rows(LICENCE_MANIFESTS), *acquired_rows()])
     args.out.mkdir(parents=True, exist_ok=True)
     (args.out / "stratum_gap.json").write_text(json.dumps(report, indent=1, sort_keys=True) + "\n")

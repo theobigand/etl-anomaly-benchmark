@@ -181,6 +181,64 @@ def _stack_report(root: Any) -> dict[str, Any]:
     return out
 
 
+def _off_report(root: Any) -> dict[str, Any]:
+    import gzip
+    import json
+
+    path = next((root / "openfoodfacts_products" / "2026-11-21" / "raw").glob("*.gz"))
+    with gzip.open(path, "rt", encoding="utf-8") as handle:
+        records = [json.loads(line) for line in handle if line.strip()]
+    shape = json_shape(records)
+    return {
+        k: shape[k] for k in ("records", "max_depth", "optional_paths", "variable_structure")
+    } | {
+        "paths": len(shape["paths"]),
+        "array_paths": sum(v["array_share"] > 0 for v in shape["paths"].values()),
+        "multi_type_paths": sum(len(v["types"]) > 1 for v in shape["paths"].values()),
+    }
+
+
+def _openalex_report(root: Any) -> dict[str, Any]:
+    import json
+
+    raw = root / "openalex_works" / "2026-11-21" / "raw"
+
+    def load(prefix: str) -> list[dict[str, Any]]:
+        out: list[dict[str, Any]] = []
+        for path in sorted(raw.glob(f"{prefix}_*.json")):
+            out += json.loads(path.read_text())["results"]
+        return out
+
+    works, authors = load("works"), load("authors")
+    institutions, sources = load("institutions"), load("sources")
+    author_ids = [a["author"]["id"] for w in works for a in w["authorships"]]
+    inst_ids = [i["id"] for w in works for a in w["authorships"] for i in a["institutions"]]
+    source_ids = [(w.get("primary_location") or {}).get("source") for w in works]
+    source_ids = [s["id"] for s in source_ids if s]
+    cited = [r for w in works for r in w["referenced_works"]]
+    shape = json_shape(works)
+    return {
+        "tables": {
+            "works": len(works),
+            "authors": len(authors),
+            "institutions": len(institutions),
+            "sources": len(sources),
+        },
+        "foreign_keys": {
+            "authorships.author->authors": orphans(author_ids, {a["id"] for a in authors}),
+            "authorships.institution->institutions": orphans(
+                inst_ids, {i["id"] for i in institutions}
+            ),
+            "primary_location.source->sources": orphans(source_ids, {s["id"] for s in sources}),
+            "referenced_works->works (sample only, expected incomplete)": orphans(
+                cited, {w["id"] for w in works}
+            ),
+        },
+        "works_shape": {k: shape[k] for k in ("records", "max_depth", "optional_paths")}
+        | {"paths": len(shape["paths"])},
+    }
+
+
 def main(argv: list[str] | None = None) -> int:
     import argparse
     import json
@@ -199,6 +257,8 @@ def main(argv: list[str] | None = None) -> int:
         "monash_zenodo": _tsf_report(args.root),
         "openfda": _json_report(args.root),
         "stackexchange": _stack_report(args.root),
+        "openalex": _openalex_report(args.root),
+        "openfoodfacts": _off_report(args.root),
     }
     args.out.write_text(json.dumps(report, indent=1, sort_keys=True) + "\n")
     print({k: len(v) for k, v in report.items()})

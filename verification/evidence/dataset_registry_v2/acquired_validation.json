@@ -190,6 +190,42 @@
    "series": 8
   }
  },
+ "openalex": {
+  "foreign_keys": {
+   "authorships.author->authors": {
+    "checked": 3762,
+    "orphans": 0,
+    "share": 0.0
+   },
+   "authorships.institution->institutions": {
+    "checked": 4477,
+    "orphans": 0,
+    "share": 0.0
+   },
+   "primary_location.source->sources": {
+    "checked": 990,
+    "orphans": 0,
+    "share": 0.0
+   },
+   "referenced_works->works (sample only, expected incomplete)": {
+    "checked": 24763,
+    "orphans": 24763,
+    "share": 1.0
+   }
+  },
+  "tables": {
+   "authors": 3756,
+   "institutions": 1520,
+   "sources": 884,
+   "works": 1000
+  },
+  "works_shape": {
+   "max_depth": 6,
+   "optional_paths": 14,
+   "paths": 74,
+   "records": 1000
+  }
+ },
  "openfda": {
   "openfda_drug_event": {
    "array_paths": 21,
@@ -215,6 +251,15 @@
    "records": 2155,
    "variable_structure": true
   }
+ },
+ "openfoodfacts": {
+  "array_paths": 359,
+  "max_depth": 12,
+  "multi_type_paths": 866,
+  "optional_paths": 9924,
+  "paths": 9999,
+  "records": 9688,
+  "variable_structure": true
  },
  "stackexchange": {
   "3dprinting.stackexchange.com.7z": {
