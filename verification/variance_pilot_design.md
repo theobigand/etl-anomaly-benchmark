@@ -315,3 +315,88 @@ With sigma 0.07 the requirement for three comparisons is 24 sources. These are h
   proportion of comparisons that are ineligible under the 20 positives and 10 alerts rule.
 - Decisions still needed: the seed and the freeze date, the F2 option (A or B), the heterogeneity rule, the replacement of F4,
   the minimum positives and alerts, and whether the 24-group scenario is authorised.
+
+## 12. Decisions of the fourth owner round (design only; nothing was run; supersedes 11.3 to 11.6 where they differ)
+
+History is kept: section 10.4 lists the original five families (16 comparisons) and 11.3 records why four of them changed; this section is the active plan.
+
+### 12.1 F2: the validation-only learned method
+
+The learned method is one composite method per family: for every source problem it fits each eligible candidate on the training partition, scores
+it on the validation partition at the same budget rule as the evaluation (recall at 1 percent of the validation units, with validation fault
+realisations that are disjoint from the test realisations), selects the candidate with the highest validation value (ties: registry order), refits
+it as specified, and is evaluated once on the test partition. Test labels and outcomes never enter selection.
+
+- Candidate sets, frozen before the pilot (registry names, default hyperparameters fixed by the protocol): classical machine learning `isolation_forest`,
+  `lof`, `ocsvm`, `ecod`, `copod`, `hbos`, `knn`, `pca`; neural `autoencoder`, `vae`, `deep_svdd`, `dif`, `ae1svm`, `lunar`. The rule-based
+  comparator is the single prespecified label-free constraint baseline (T419); `zscore`, `iqr` and `great_expectations` are exploratory diagnostics.
+- Inapplicable candidates (a detector that cannot run on the structure or protocol) are removed for that source and recorded; a source with no
+  applicable candidate in a family leaves the contrasts of that family. The selected candidate per source and the cost of selection (fits on
+  the training and validation partitions) are reported with the cost outcomes.
+- The result is a composite method, not an oracle; no claim of one universally best learned family is made. Fixed representatives (one named
+  detector per family) are exploratory diagnostics and are not added to the multiplicity plan.
+- Assumption to confirm: the validation partition may contain injected faults and their labels for selection (it is validation information);
+  if the owner restricts selection to unlabelled validation criteria, the rule changes to a label-free score (for example stability of
+  the ranking) and this section must be revised before the freeze of the candidate set.
+- Source-aware partitions: partitions are defined inside a source (chronological or by hash of the unit key, as in the protocol) and never across sources; a
+  nested source-level split is needed only for the F2 estimate of selection variability and is not part of the confirmatory estimand.
+
+### 12.2 Status of F1 to F5 and the exact confirmatory list
+
+| Label | Status | Comparisons |
+|---|---|---:|
+| F1 | confirmatory | 3 |
+| F2 | confirmatory, validation-only composite | 5 |
+| F3 | exploratory and methodological sensitivity (budgets 0.5, 2 and 5 percent; chronological versus random split; training-prevalence thresholds) | 0 |
+| F4 | removed as a confirmatory hypothesis: at a matched allowance false positives equal k minus true positives, so it duplicates the recall contrast; burden, alert counts, cost per alert and alerts under validation thresholds stay secondary or exploratory | 0 |
+| F5 | confirmatory | 3 |
+
+Total: 11 primary comparisons in one Holm family at familywise alpha 0.05 (an alternative hierarchical or alpha-allocation scheme would need a
+justification and owner approval). The maximum of 11 is not a target; a contrast whose eligible-source condition fails is dropped from the list
+before the confirmatory run and the family size is recomputed from the frozen list.
+
+| ID | Hypothesis | Eligible sources | Detection unit | Primary outcome | Paired strategies | Source-level estimand | Analysis |
+|---|---|---|---|---|---|---|---|
+| F1.1 | rule-based versus classical composite | groups where the rule baseline and at least one classical candidate apply | the protocol's unit | recall at the 1 percent matched budget | rule baseline; classical composite | mean over groups of the paired recall difference at the reference prevalence | random effects for source, domain, schema family; Holm |
+| F1.2 | classical versus neural composite | groups where both families have an applicable candidate | same | same | classical composite; neural composite | same | same |
+| F1.3 | rule-based versus neural composite | groups where the baseline and a neural candidate apply | same | same | rule baseline; neural composite | same | same |
+| F2.1 to F2.5 | rule-based versus the learned composite (the better of the two families is not chosen on test data: the composite over all classical and neural candidates is used) inside P-TAB, P-TS, P-SEQ, P-REL, P-NEST respectively | groups where the protocol applies and the composite has a candidate | the protocol's unit | same | rule baseline; learned composite | same inside the protocol | same, one model per protocol |
+| F5.1 to F5.3 | cost of the three F1 pairs | groups of the matching F1 contrast | per 1,000 units | fit plus score time (log ratio), with selection time reported separately | as in F1 | mean log ratio per source on fixed hardware | same, interpreted as cost conditional on the dataset sizes |
+
+A protocol contrast (F2.k) is confirmatory only if the holdout holds enough eligible groups (section 12.4); otherwise it is exploratory and the family
+size shrinks accordingly.
+
+### 12.3 Heterogeneity and pooling
+
+The primary model is a random-effects model with a source effect and, where the design supports them, domain and schema-family effects;
+the estimand is the mean paired source-level effect over the defined source population. Pooling is allowed only if the contributing
+source-level contrasts estimate one common quantity: the same detection-unit concept, the same budget definition and prevalence reference,
+compatible mechanisms and preprocessing, and applicability of both strategies. This is decided from the design, before results; it is not
+decided by Cochran's Q, a fixed I-squared value or the sign of the pooled result, and absence of evidence of heterogeneity is not taken as homogeneity.
+
+Reported for every pooled contrast: the mean effect with its interval; the between-source variance with an interval (profile likelihood or
+cluster bootstrap) and a statement of how reliable it is for the number of sources; a prediction interval for a new source where the number of
+sources and the clustering allow it, and otherwise an explicit statement that it is not supported; the variation by domain and schema family. Five
+different conclusions are kept apart: the average over the defined population; between-source variability; expected performance on a
+future source (the prediction interval); performance inside one category (exploratory until its own requirements are met); generalisation
+across domains (only as far as the domains of the holdout support it). A positive pooled mean never implies superiority on every source; a broad
+claim is narrowed if the prediction interval or unexplained heterogeneity does not support it. With few sources, inference is cautious (small-sample
+corrections, bootstrap over clusters) and the limitation is stated.
+
+### 12.4 Confirmatory eligibility floors
+
+For the primary 1 percent budget a source problem is eligible for a confirmatory contrast only if the test problem has at least 20 positive units and
+the allowance k = floor(0.01 N) is at least 10 (N the eligible test units, the same k for both strategies, no minimum-one-alert exception), so N is
+at least 1,000. These are feasibility floors, not power guarantees: the maximum attainable recall is min(1, k / P) with P the number of positives, so with 20 positives
+and 10 alerts it is 0.5; each positive moves recall by 0.05 at P = 20, which is the size of the smallest effect of interest, so a single source's recall
+cannot resolve it and the precision comes from the number of sources. Ineligible problems are documented, kept in the exploratory corpus and never dropped after
+seeing outcomes. If a pilot shows that stricter floors are needed, the change is proposed before the confirmatory run. A protocol contrast also needs
+enough eligible holdout groups from the sample-size tables (34 sources for one comparison at sigma 0.10 and a difference of 0.05; 61 at Holm size 14 and 63 at 16;
+tables in `dataset_target_methodology.md`) and the domain and family minima inside the holdout.
+
+### 12.5 Pilot
+
+The pilot stays at 16 distinct provenance groups (`pilot_plan_dry_run.json`: 16 pilot and 103 holdout groups; category participations overlap, so the category holdouts
+45, 10, 9, 9, 11, 17 and 7 sum to 108 over 103 distinct groups); the 24-group alternative is deferred and not authorised, because its extra groups all came from C1.
+16 groups do not estimate the variance components of seven categories separately; they estimate the pooled between-source SD and a coarse
+design effect, and the pilot is revisited only after the corpus has grown. Execution remains unauthorised.

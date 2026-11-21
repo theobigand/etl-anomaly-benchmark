@@ -367,3 +367,13 @@ Coverage after this pass (`target_framework.json`; unclassified areas are not co
 
 Global: 119 provenance groups, 45 domains, 21 curators, 27 schema families; the repository
 flat-table schema family holds 54% of them.
+
+
+## 12. Fourth-round decisions: where they are specified
+
+The active confirmatory plan (one Holm family of at most 11 primary comparisons: F1 3, F2 5 with the validation-only learned composite, F5 3; F3 exploratory;
+F4 removed as redundant at a matched budget), the random-effects and prediction-interval reporting rules, the eligibility floors (20 positives, 10 alerts at the
+1 percent budget) and the 16-group pilot with the 24-group alternative deferred are in `variance_pilot_design.md` section 12. The sample-size tables of section 10 here
+are the planning basis; with a Holm family of 11, the one-comparison requirement of 34 sources at sigma 0.10 and delta 0.05 rises to 59 sources (computed with
+`paired_sources(0.10, 0.05, comparisons=11)`), which no single category holdout and not even the pooled holdout of 103 groups (about 30 to 38 effective groups under
+hypothetical schema-family correlations) reaches; the confirmatory plan therefore depends on the pilot's SD, on a larger smallest effect, or on a smaller list.
