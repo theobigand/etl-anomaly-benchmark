@@ -434,3 +434,79 @@ def test_pbdb_builder_needs_exactly_one_parquet_member_and_all_columns(tmp_path)
         manifest["zen_pbdb"]["sampling"]["rows_kept"] == 1
         and manifest["zen_pbdb"]["sampling"]["member"] == "a.parquet"
     )
+
+
+def test_new_builders_pass_the_extraction_limits_and_exact_error_messages(tmp_path, monkeypatch):
+    seen = []
+    real = aq.extract_member
+    monkeypatch.setattr(
+        aq, "extract_member", lambda *a, **k: seen.append((a[1], k)) or real(*a, **k)
+    )
+    raw = tmp_path / "acquired" / "zen_kelmarsh" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    tev._kelmarsh_zip(raw / "Kelmarsh_SCADA_2016_3082.zip", turbines=(1,))
+    ev._build_kelmarsh(tmp_path / "acquired", tmp_path / "o", {})
+    pb = tmp_path / "acquired" / "zen_pbdb" / SNAP / "raw"
+    pb.mkdir(parents=True)
+    pq.write_table(
+        pa.Table.from_pandas(tev._pbdb_frame(), preserve_index=False), tmp_path / "o.parquet"
+    )
+    with zipfile.ZipFile(pb / "pbdb_parquet.zip", "w") as z:
+        z.write(tmp_path / "o.parquet", "a.parquet")
+    ev._build_pbdb(tmp_path / "acquired", tmp_path / "o", {})
+    assert [k for _, k in seen] == [{"max_bytes": 1 << 30, "max_ratio": 200}] * 2
+    with pytest.raises(ev.ViewError, match=r"^column header line not found$"):
+        ev._kelmarsh_header(["x"])
+    empty = tmp_path / "acquired" / "zen_bess" / SNAP / "raw"
+    empty.mkdir(parents=True)
+    with pytest.raises(ev.ViewError, match=r"^no feather file in the snapshot$"):
+        ev._build_bess(tmp_path / "acquired", tmp_path / "o", {})
+    with zipfile.ZipFile(raw / "Kelmarsh_SCADA_2016_3082.zip", "w") as z:
+        z.writestr("Status_Kelmarsh_1_x.csv", "")
+    with pytest.raises(ev.ViewError, match=r"^no turbine data file in the archive$"):
+        ev._build_kelmarsh(tmp_path / "acquired", tmp_path / "o", {})
+
+
+def test_a_human_check_tolerates_items_without_claims_or_main_snaks():
+    assert ev._is_human({"id": "Q1"}) is False
+    assert ev._is_human({"id": "Q1", "claims": {"P31": [{"rank": "normal"}]}}) is False
+    assert (
+        ev._is_human(
+            {
+                "id": "Q1",
+                "claims": {
+                    "P31": [
+                        {"rank": "normal"},
+                        {"mainsnak": {"datavalue": {"value": {"id": "Q5"}}}},
+                    ]
+                },
+            }
+        )
+        is True
+    )
+
+
+def test_wikidata_builder_counts_every_missing_identifier(tmp_path):
+    raw = tmp_path / "acquired" / "wikidata_entities" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    missing = {f"Q{i}": {"id": f"Q{i}", "missing": ""} for i in (1, 2, 3)}
+    (raw / "entities_00.json").write_text(
+        __import__("json").dumps({"entities": {**missing, "Q9": tev._wd_item(9)}})
+    )
+    manifest: dict = {}
+    ev._build_wikidata(tmp_path / "acquired", tmp_path / "o", manifest)
+    assert manifest["wikidata_entities"]["sampling"]["identifiers_absent"] == 3
+
+
+def test_new_views_turn_unreadable_numbers_into_missing_and_keep_flag_types():
+    raw = tev._bess_frame().astype({"Power": object})
+    raw.loc[0, "Power"] = "n/a"
+    out = ev.bess_view(raw, "S")
+    assert out["power"].isna().sum() == 1 and str(out["power"].dtype) == "float64"
+    assert out["use"].dtype == bool and out["quality_flag"].dtype == bool
+    km = pd.DataFrame(
+        {"Date and time": ["2016-01-03 00:00:00"], **{c: ["x"] for c in ev.KELMARSH_SIGNALS}}
+    )
+    assert ev.kelmarsh_view(km, "T1")["wind_speed"].isna().all()
+    blank = tev._pbdb_frame()
+    assert ev.pbdb_occurrence_view(blank)["class"].isna().tolist() == [False, True, False, True]
