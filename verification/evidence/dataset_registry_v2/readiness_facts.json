@@ -278,6 +278,222 @@
    "units": 100836,
    "view": "grouplens_movielens"
   },
+  "gtfs_fr_alterneo": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the published feed (0 orphans on 3 relations)",
+    "one timetable snapshot of November 2026",
+    "shared GTFS schema family and exporter conventions with the other feeds"
+   ],
+   "curator": "transport.data.gouv.fr",
+   "first_party": true,
+   "independent_group": "gtfs_fr_alterneo",
+   "min_units": 1000,
+   "partitions": "hash of the trip id 70/15/15, stop times follow their trip",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "schema_family": "gtfs",
+   "units": 367750,
+   "view": "gtfs_fr_alterneo"
+  },
+  "gtfs_fr_aravis": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the published feed (0 orphans on 3 relations)",
+    "one timetable snapshot of November 2026",
+    "shared GTFS schema family and exporter conventions with the other feeds"
+   ],
+   "curator": "transport.data.gouv.fr",
+   "first_party": true,
+   "independent_group": "gtfs_fr_aravis",
+   "min_units": 1000,
+   "partitions": "hash of the trip id 70/15/15, stop times follow their trip",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "schema_family": "gtfs",
+   "units": 396301,
+   "view": "gtfs_fr_aravis"
+  },
+  "gtfs_fr_citea": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the published feed (0 orphans on 3 relations)",
+    "one timetable snapshot of November 2026",
+    "shared GTFS schema family and exporter conventions with the other feeds"
+   ],
+   "curator": "transport.data.gouv.fr",
+   "first_party": true,
+   "independent_group": "gtfs_fr_citea",
+   "min_units": 1000,
+   "partitions": "hash of the trip id 70/15/15, stop times follow their trip",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "schema_family": "gtfs",
+   "units": 497486,
+   "view": "gtfs_fr_citea"
+  },
+  "gtfs_fr_diviamobilites": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the published feed (0 orphans on 3 relations)",
+    "one timetable snapshot of November 2026",
+    "shared GTFS schema family and exporter conventions with the other feeds"
+   ],
+   "curator": "transport.data.gouv.fr",
+   "first_party": true,
+   "independent_group": "gtfs_fr_diviamobilites",
+   "min_units": 1000,
+   "partitions": "hash of the trip id 70/15/15, stop times follow their trip",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "schema_family": "gtfs",
+   "units": 712352,
+   "view": "gtfs_fr_diviamobilites"
+  },
+  "gtfs_fr_filibus": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the published feed (0 orphans on 3 relations)",
+    "one timetable snapshot of November 2026",
+    "shared GTFS schema family and exporter conventions with the other feeds"
+   ],
+   "curator": "transport.data.gouv.fr",
+   "first_party": true,
+   "independent_group": "gtfs_fr_filibus",
+   "min_units": 1000,
+   "partitions": "hash of the trip id 70/15/15, stop times follow their trip",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "schema_family": "gtfs",
+   "units": 255903,
+   "view": "gtfs_fr_filibus"
+  },
+  "gtfs_fr_kiceo": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the published feed (0 orphans on 3 relations)",
+    "one timetable snapshot of November 2026",
+    "shared GTFS schema family and exporter conventions with the other feeds"
+   ],
+   "curator": "transport.data.gouv.fr",
+   "first_party": true,
+   "independent_group": "gtfs_fr_kiceo",
+   "min_units": 1000,
+   "partitions": "hash of the trip id 70/15/15, stop times follow their trip",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "schema_family": "gtfs",
+   "units": 65019,
+   "view": "gtfs_fr_kiceo"
+  },
+  "gtfs_fr_optymo": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the published feed (0 orphans on 3 relations)",
+    "one timetable snapshot of November 2026",
+    "shared GTFS schema family and exporter conventions with the other feeds"
+   ],
+   "curator": "transport.data.gouv.fr",
+   "first_party": true,
+   "independent_group": "gtfs_fr_optymo",
+   "min_units": 1000,
+   "partitions": "hash of the trip id 70/15/15, stop times follow their trip",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "schema_family": "gtfs",
+   "units": 165089,
+   "view": "gtfs_fr_optymo"
+  },
+  "gtfs_fr_palmbus": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the published feed (0 orphans on 3 relations)",
+    "one timetable snapshot of November 2026",
+    "shared GTFS schema family and exporter conventions with the other feeds"
+   ],
+   "curator": "transport.data.gouv.fr",
+   "first_party": true,
+   "independent_group": "gtfs_fr_palmbus",
+   "min_units": 1000,
+   "partitions": "hash of the trip id 70/15/15, stop times follow their trip",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "schema_family": "gtfs",
+   "units": 836508,
+   "view": "gtfs_fr_palmbus"
+  },
+  "gtfs_fr_sankeo": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the published feed (0 orphans on 3 relations)",
+    "one timetable snapshot of November 2026",
+    "shared GTFS schema family and exporter conventions with the other feeds"
+   ],
+   "curator": "transport.data.gouv.fr",
+   "first_party": true,
+   "independent_group": "gtfs_fr_sankeo",
+   "min_units": 1000,
+   "partitions": "hash of the trip id 70/15/15, stop times follow their trip",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "schema_family": "gtfs",
+   "units": 377481,
+   "view": "gtfs_fr_sankeo"
+  },
+  "gtfs_fr_sibra": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the published feed (0 orphans on 3 relations)",
+    "one timetable snapshot of November 2026",
+    "shared GTFS schema family and exporter conventions with the other feeds"
+   ],
+   "curator": "transport.data.gouv.fr",
+   "first_party": true,
+   "independent_group": "gtfs_fr_sibra",
+   "min_units": 1000,
+   "partitions": "hash of the trip id 70/15/15, stop times follow their trip",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "schema_family": "gtfs",
+   "units": 269669,
+   "view": "gtfs_fr_sibra"
+  },
+  "gtfs_fr_tango": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the published feed (0 orphans on 3 relations)",
+    "one timetable snapshot of November 2026",
+    "shared GTFS schema family and exporter conventions with the other feeds"
+   ],
+   "curator": "transport.data.gouv.fr",
+   "first_party": true,
+   "independent_group": "gtfs_fr_tango",
+   "min_units": 1000,
+   "partitions": "hash of the trip id 70/15/15, stop times follow their trip",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "schema_family": "gtfs",
+   "units": 387117,
+   "view": "gtfs_fr_tango"
+  },
+  "gtfs_fr_transvilles": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the published feed (0 orphans on 3 relations)",
+    "one timetable snapshot of November 2026",
+    "shared GTFS schema family and exporter conventions with the other feeds"
+   ],
+   "curator": "transport.data.gouv.fr",
+   "first_party": true,
+   "independent_group": "gtfs_fr_transvilles",
+   "min_units": 1000,
+   "partitions": "hash of the trip id 70/15/15, stop times follow their trip",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "schema_family": "gtfs",
+   "units": 325127,
+   "view": "gtfs_fr_transvilles"
+  },
   "loghub:Android": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [

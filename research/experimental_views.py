@@ -1039,6 +1039,48 @@ TABLE_SETS: dict[str, dict[str, Any]] = {
 }
 
 
+#: GTFS timetable feeds of French public transport networks (national access point, open licences)
+GTFS_FEEDS: dict[str, str] = {
+    "gtfs_fr_citea": "gtfs-nov2026-juin2027-citea.zip",
+    "gtfs_fr_palmbus": "palmbus-cannes-fr.zip",
+    "gtfs_fr_kiceo": "gtfs-20261121-112920-kiceo.zip",
+    "gtfs_fr_diviamobilites": "gtfs-diviamobilites-current.zip",
+    "gtfs_fr_sankeo": "gtfssankeo.zip",
+    "gtfs_fr_alterneo": "gtfs-cineo-20260825-20270825.zip",
+    "gtfs_fr_transvilles": "google-transit.zip",
+    "gtfs_fr_tango": "gtfs-production.zip",
+    "gtfs_fr_filibus": "gtfs-filibus-20260919-20270702.zip",
+    "gtfs_fr_sibra": "gtfs-sibra.zip",
+    "gtfs_fr_aravis": "export-gtfs-aravis-hiver-2026-hiver20252026.zip",
+    "gtfs_fr_optymo": "gtfs.zip",
+}
+
+
+def _gtfs_spec(archive: str) -> dict[str, Any]:
+    """Tables and key relations of a GTFS feed: names, coordinates and fares are not kept."""
+    return {
+        "archive": {"file": archive, "prefix": "", "ext": ".txt"},
+        "sep": ",",
+        "quote_none": False,
+        "dropped": ["stop and route names", "coordinates", "shapes", "fares", "free text"],
+        "tables": {
+            "routes": {"keep": ["route_id", "route_type"]},
+            "trips": {"keep": ["trip_id", "route_id", "service_id"]},
+            "stop_times": {"keep": ["trip_id", "stop_id", "stop_sequence"]},
+            "stops": {"keep": ["stop_id"]},
+            "calendar_dates": {"keep": ["service_id", "date", "exception_type"], "optional": True},
+        },
+        "relations": [
+            ["trips", "route_id", "routes", "route_id"],
+            ["stop_times", "trip_id", "trips", "trip_id"],
+            ["stop_times", "stop_id", "stops", "stop_id"],
+        ],
+    }
+
+
+TABLE_SETS.update({source: _gtfs_spec(name) for source, name in GTFS_FEEDS.items()})
+
+
 def _build_panels(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     folder = out / "panels"
     folder.mkdir(parents=True, exist_ok=True)
@@ -1072,15 +1114,25 @@ def _build_tables(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     import tempfile
 
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-    from acquisition import extract_member
+    from acquisition import extract_member, zip_members
 
     for source, spec in TABLE_SETS.items():
         raw = root / source / SNAPSHOT / "raw"
-        tables = {}
+        tables, absent = {}, []
         with tempfile.TemporaryDirectory() as scratch:
+            members = (
+                {m["name"] for m in zip_members(raw / spec["archive"]["file"])}
+                if "archive" in spec
+                else set()
+            )
             for name in spec["tables"]:
                 if "archive" in spec:  # tables are members of a zip archive
-                    member = f"{spec['archive']['prefix']}{name}.csv"
+                    member = (
+                        f"{spec['archive']['prefix']}{name}{spec['archive'].get('ext', '.csv')}"
+                    )
+                    if member not in members and spec["tables"][name].get("optional"):
+                        absent.append(name)
+                        continue
                     path = extract_member(
                         raw / spec["archive"]["file"], member, Path(scratch), 1 << 30, 200
                     )["path"]
@@ -1097,13 +1149,22 @@ def _build_tables(root: Path, out: Path, manifest: dict[str, Any]) -> None:
                 frame.columns = [c.strip('"') for c in frame.columns]
                 chars = spec["tables"][name].get("strip", '"')
                 tables[name] = frame.apply(lambda col, chars=chars: col.str.strip(chars))
-        views, relations = tables_view(tables, spec)
+        present = {
+            "tables": {n: r for n, r in spec["tables"].items() if n not in absent},
+            "relations": [
+                r for r in spec["relations"] if r[0] not in absent and r[2] not in absent
+            ],
+        }
+        views, relations = tables_view(tables, present)
         folder = out / source
         folder.mkdir(parents=True, exist_ok=True)
         files = {}
         for name, frame in views.items():
             frame.to_csv(folder / f"{name}.csv", index=False)
             files[f"{name}.csv"] = (folder / f"{name}.csv", len(frame))
+        notes = "relations are the source's own keys; orphans are natural incompleteness of the published extract"  # noqa: E501
+        if absent:
+            notes += f"; optional tables absent from the archive: {', '.join(absent)}"
         _record(
             manifest,
             source,
@@ -1111,7 +1172,7 @@ def _build_tables(root: Path, out: Path, manifest: dict[str, Any]) -> None:
             dropped=spec["dropped"],
             pseudonymised=[],
             relations=relations,
-            notes="relations are the source's own keys; orphans are natural incompleteness of the published extract",  # noqa: E501
+            notes=notes,
             source_snapshot=f"{source}/{SNAPSHOT}",
         )
 

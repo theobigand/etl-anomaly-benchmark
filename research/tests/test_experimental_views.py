@@ -2726,3 +2726,33 @@ def test_the_csv_event_builder_reads_the_declared_file_and_records_the_mapping(
     assert view["sampling"]["cases_kept"] == 1 and view["sampling"]["rows_without_time"] == 0
     assert view["sampling"]["mapping"] == {"case": "Incident ID", "activity": "Type", "time": "Stamp", "order": "Num", "resource": "Group"}  # fmt: skip  # noqa: E501
     assert view["pseudonymised"] == ["resource"]
+
+
+def test_table_sets_support_other_member_extensions_and_skip_missing_optional_tables(
+    tmp_path, monkeypatch
+):
+    import zipfile
+
+    root = tmp_path / "acquired"
+    raw = root / "feed_a" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    with zipfile.ZipFile(raw / "gtfs.zip", "w") as z:
+        z.writestr("routes.txt", "route_id,route_name\nR1,x\n")
+        z.writestr("trips.txt", "trip_id,route_id\nT1,R1\nT2,R9\n")
+    monkeypatch.setattr(ev, "TABLE_SETS", {"feed_a": {
+        "archive": {"file": "gtfs.zip", "prefix": "", "ext": ".txt"}, "sep": ",", "quote_none": False,  # noqa: E501
+        "dropped": ["names"],
+        "tables": {"routes": {"keep": ["route_id"]}, "trips": {"keep": ["trip_id", "route_id"]},
+                   "calendar": {"keep": ["service_id"], "optional": True}},
+        "relations": [["trips", "route_id", "routes", "route_id"], ["trips", "service_id", "calendar", "service_id"]]}})  # fmt: skip  # noqa: E501
+    manifest = {}
+    ev._build_tables(root, tmp_path / "o" / "deep", manifest)
+    folder = tmp_path / "o" / "deep" / "feed_a"
+    assert sorted(p.name for p in folder.iterdir()) == [
+        "routes.csv",
+        "trips.csv",
+    ]  # no calendar table
+    view = manifest["feed_a"]
+    assert sorted(view["files"]) == ["routes.csv", "trips.csv"]
+    assert view["relations"] == [{"child": "trips.route_id", "parent": "routes.route_id", "checked": 2, "orphans": 1, "share": 0.5}]  # fmt: skip  # noqa: E501
+    assert view["notes"].endswith("; optional tables absent from the archive: calendar")

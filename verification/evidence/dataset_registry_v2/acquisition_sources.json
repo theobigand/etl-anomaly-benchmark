@@ -2189,6 +2189,342 @@
    "stratum": "C4",
    "upstream": "the bank's log was published by the data owner's academic partners through 4TU; the record names Rabobank Nederland as publisher; identifiers pseudonymised by the publisher",
    "upstream_verified": true
+  },
+  {
+   "attribution": "cite Valence Romans Mobilit\u00e9s and the national access point record 649c3cc8d773e2df916455c7",
+   "files": [
+    {
+     "name": "gtfs-nov2026-juin2027-citea.zip",
+     "observed": "2026-11",
+     "url": "https://static.data.gouv.fr/resources/ce-jeu-de-donnees-contient-la-liste-des-arrets-des-horaires-et-des-parcours-theoriques-du-reseau-de-transport-urbain-et-interurbain-de-vrm/20261022-080050/gtfs-nov2026-juin2027-citea.zip"
+    }
+   ],
+   "hosts": [
+    "static.data.gouv.fr"
+   ],
+   "id": "gtfs_fr_citea",
+   "licence_class": "open",
+   "licence_location": "https://transport.data.gouv.fr/datasets/ce-jeu-de-donnees-contient-la-liste-des-arrets-des-horaires-et-des-parcours-theoriques-du-reseau-de-transport-urbain-et-interurbain-de-vrm",
+   "licence_text": "transport.data.gouv.fr (the national access point) declares licence 'lov2' = Licence Ouverte 2.0 (Etalab) for this dataset, published by Valence Romans Mobilit\u00e9s",
+   "max_bytes": 104857600,
+   "method": "download of the current GTFS zip file listed in the national access point's dataset record",
+   "min_interval": 3.0,
+   "privacy": "timetables of public transport; no personal data",
+   "publisher": "Valence Romans Mobilit\u00e9s (public transport network 'R\u00e9seau urbain Cit\u00e9a', GTFS timetable feed)",
+   "rate_limit": "one download per feed, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: the network's authority or operator publishes its own timetable feed on the national access point",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "cite Palmbus and the national access point record 5c65bad88b4c4143d45c9d5c",
+   "files": [
+    {
+     "name": "palmbus-cannes-fr.zip",
+     "observed": "2026-11",
+     "url": "https://static.data.gouv.fr/resources/horaires-theoriques-et-temps-reel-gtfs-gtfs-rt-du-reseau-palmbus-cannes-pays-de-lerins/20261027-070043/palmbus-cannes-fr.zip"
+    }
+   ],
+   "hosts": [
+    "static.data.gouv.fr"
+   ],
+   "id": "gtfs_fr_palmbus",
+   "licence_class": "open",
+   "licence_location": "https://transport.data.gouv.fr/datasets/horaires-theoriques-et-temps-reel-gtfs-gtfs-rt-du-reseau-palmbus-cannes-pays-de-lerins",
+   "licence_text": "transport.data.gouv.fr (the national access point) declares licence 'lov2' = Licence Ouverte 2.0 (Etalab) for this dataset, published by Palmbus",
+   "max_bytes": 104857600,
+   "method": "download of the current GTFS zip file listed in the national access point's dataset record",
+   "min_interval": 3.0,
+   "privacy": "timetables of public transport; no personal data",
+   "publisher": "Palmbus (public transport network 'R\u00e9seau urbain Palmbus', GTFS timetable feed)",
+   "rate_limit": "one download per feed, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: the network's authority or operator publishes its own timetable feed on the national access point",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "cite Transdev GMVA Mobilit\u00e9s \u2022 Kic\u00e9o and the national access point record 5a6f2ae8c751df6d2358936b",
+   "files": [
+    {
+     "name": "gtfs-20261121-112920-kiceo.zip",
+     "observed": "2026-11",
+     "url": "https://static.data.gouv.fr/resources/reseau-urbain-kiceo/20261121-103309/gtfs-20261121-112920-kiceo.zip"
+    }
+   ],
+   "hosts": [
+    "static.data.gouv.fr"
+   ],
+   "id": "gtfs_fr_kiceo",
+   "licence_class": "open",
+   "licence_location": "https://transport.data.gouv.fr/datasets/reseau-urbain-kiceo",
+   "licence_text": "transport.data.gouv.fr (the national access point) declares licence 'lov2' = Licence Ouverte 2.0 (Etalab) for this dataset, published by Transdev GMVA Mobilit\u00e9s \u2022 Kic\u00e9o",
+   "max_bytes": 104857600,
+   "method": "download of the current GTFS zip file listed in the national access point's dataset record",
+   "min_interval": 3.0,
+   "privacy": "timetables of public transport; no personal data",
+   "publisher": "Transdev GMVA Mobilit\u00e9s \u2022 Kic\u00e9o (public transport network 'R\u00e9seau urbain Kic\u00e9o', GTFS timetable feed)",
+   "rate_limit": "one download per feed, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: the network's authority or operator publishes its own timetable feed on the national access point",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "cite DiviaMobilit\u00e9s and the national access point record 5d31d8b69ce2e703da90b699",
+   "files": [
+    {
+     "name": "gtfs-diviamobilites-current.zip",
+     "observed": "2026-11",
+     "url": "https://static.data.gouv.fr/resources/gtfs-diviamobilites/20261118-131801/gtfs-diviamobilites-current.zip"
+    }
+   ],
+   "hosts": [
+    "static.data.gouv.fr"
+   ],
+   "id": "gtfs_fr_diviamobilites",
+   "licence_class": "open",
+   "licence_location": "https://transport.data.gouv.fr/datasets/gtfs-diviamobilites",
+   "licence_text": "transport.data.gouv.fr (the national access point) declares licence 'lov2' = Licence Ouverte 2.0 (Etalab) for this dataset, published by DiviaMobilit\u00e9s",
+   "max_bytes": 104857600,
+   "method": "download of the current GTFS zip file listed in the national access point's dataset record",
+   "min_interval": 3.0,
+   "privacy": "timetables of public transport; no personal data",
+   "publisher": "DiviaMobilit\u00e9s (public transport network 'R\u00e9seau urbain DiviaMobilit\u00e9s', GTFS timetable feed)",
+   "rate_limit": "one download per feed, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: the network's authority or operator publishes its own timetable feed on the national access point",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "cite Sank\u00e9o and the national access point record 615fd9d5bbb0c1c35fe86fe3",
+   "files": [
+    {
+     "name": "gtfssankeo.zip",
+     "observed": "2026-11",
+     "url": "https://static.data.gouv.fr/resources/gtfs-sankeo/20260724-111849/gtfssankeo.zip"
+    }
+   ],
+   "hosts": [
+    "static.data.gouv.fr"
+   ],
+   "id": "gtfs_fr_sankeo",
+   "licence_class": "open",
+   "licence_location": "https://transport.data.gouv.fr/datasets/gtfs-sankeo",
+   "licence_text": "transport.data.gouv.fr (the national access point) declares licence 'lov2' = Licence Ouverte 2.0 (Etalab) for this dataset, published by Sank\u00e9o",
+   "max_bytes": 104857600,
+   "method": "download of the current GTFS zip file listed in the national access point's dataset record",
+   "min_interval": 3.0,
+   "privacy": "timetables of public transport; no personal data",
+   "publisher": "Sank\u00e9o (public transport network 'R\u00e9seau urbain et scolaire Sank\u00e9o', GTFS timetable feed)",
+   "rate_limit": "one download per feed, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: the network's authority or operator publishes its own timetable feed on the national access point",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "cite ALTERNEO and the national access point record 5cb7170d634f414f552323c7",
+   "files": [
+    {
+     "name": "gtfs-cineo-20260825-20270825.zip",
+     "observed": "2026-11",
+     "url": "https://static.data.gouv.fr/resources/donnees-du-reseau-alterneo/20260825-092437/gtfs-cineo-20260825-20270825.zip"
+    }
+   ],
+   "hosts": [
+    "static.data.gouv.fr"
+   ],
+   "id": "gtfs_fr_alterneo",
+   "licence_class": "open",
+   "licence_location": "https://transport.data.gouv.fr/datasets/donnees-du-reseau-alterneo",
+   "licence_text": "transport.data.gouv.fr (the national access point) declares licence 'lov2' = Licence Ouverte 2.0 (Etalab) for this dataset, published by ALTERNEO",
+   "max_bytes": 104857600,
+   "method": "download of the current GTFS zip file listed in the national access point's dataset record",
+   "min_interval": 3.0,
+   "privacy": "timetables of public transport; no personal data",
+   "publisher": "ALTERNEO (public transport network 'R\u00e9seau urbain Altern\u00e9o', GTFS timetable feed)",
+   "rate_limit": "one download per feed, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: the network's authority or operator publishes its own timetable feed on the national access point",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "cite Syndicat Intercommunal de Mobilit\u00e9 et d'Organisation Urbaine du Valenciennois and the national access point record 63eb6d550f2b31a8efe618fe",
+   "files": [
+    {
+     "name": "google-transit.zip",
+     "observed": "2026-11",
+     "url": "https://static.data.gouv.fr/resources/simouv-horaires-theoriques-format-gtfs-et-temps-reel-format-siri-transvilles-valenciennes/20261029-104003/google-transit.zip"
+    }
+   ],
+   "hosts": [
+    "static.data.gouv.fr"
+   ],
+   "id": "gtfs_fr_transvilles",
+   "licence_class": "open",
+   "licence_location": "https://transport.data.gouv.fr/datasets/simouv-horaires-theoriques-format-gtfs-et-temps-reel-format-siri-transvilles-valenciennes",
+   "licence_text": "transport.data.gouv.fr (the national access point) declares licence 'lov2' = Licence Ouverte 2.0 (Etalab) for this dataset, published by Syndicat Intercommunal de Mobilit\u00e9 et d'Organisation Urbaine du Valenciennois",
+   "max_bytes": 104857600,
+   "method": "download of the current GTFS zip file listed in the national access point's dataset record",
+   "min_interval": 3.0,
+   "privacy": "timetables of public transport; no personal data",
+   "publisher": "Syndicat Intercommunal de Mobilit\u00e9 et d'Organisation Urbaine du Valenciennois (public transport network 'R\u00e9seau urbain Transvilles', GTFS timetable feed)",
+   "rate_limit": "one download per feed, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: the network's authority or operator publishes its own timetable feed on the national access point",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "cite Tango and the national access point record 5c642379634f41657e9b5ea4",
+   "files": [
+    {
+     "name": "gtfs-production.zip",
+     "observed": "2026-11",
+     "url": "https://static.data.gouv.fr/resources/offre-de-transport-du-reseau-tango-de-nimes-metropole-gtfs-gtfs-rt/20261119-155657/gtfs-production.zip"
+    }
+   ],
+   "hosts": [
+    "static.data.gouv.fr"
+   ],
+   "id": "gtfs_fr_tango",
+   "licence_class": "open",
+   "licence_location": "https://transport.data.gouv.fr/datasets/offre-de-transport-du-reseau-tango-de-nimes-metropole-gtfs-gtfs-rt",
+   "licence_text": "transport.data.gouv.fr (the national access point) declares licence 'lov2' = Licence Ouverte 2.0 (Etalab) for this dataset, published by Tango",
+   "max_bytes": 104857600,
+   "method": "download of the current GTFS zip file listed in the national access point's dataset record",
+   "min_interval": 3.0,
+   "privacy": "timetables of public transport; no personal data",
+   "publisher": "Tango (public transport network 'R\u00e9seau urbain Tango', GTFS timetable feed)",
+   "rate_limit": "one download per feed, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: the network's authority or operator publishes its own timetable feed on the national access point",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "cite Filibus - Chartres M\u00e9tropole Transports and the national access point record 5d307087634f4152aca84a8b",
+   "files": [
+    {
+     "name": "gtfs-filibus-20260919-20270702.zip",
+     "observed": "2026-11",
+     "url": "https://static.data.gouv.fr/resources/reseau-filibus/20260929-093257/gtfs-filibus-20260919-20270702.zip"
+    }
+   ],
+   "hosts": [
+    "static.data.gouv.fr"
+   ],
+   "id": "gtfs_fr_filibus",
+   "licence_class": "open",
+   "licence_location": "https://transport.data.gouv.fr/datasets/reseau-filibus",
+   "licence_text": "transport.data.gouv.fr (the national access point) declares licence 'lov2' = Licence Ouverte 2.0 (Etalab) for this dataset, published by Filibus - Chartres M\u00e9tropole Transports",
+   "max_bytes": 104857600,
+   "method": "download of the current GTFS zip file listed in the national access point's dataset record",
+   "min_interval": 3.0,
+   "privacy": "timetables of public transport; no personal data",
+   "publisher": "Filibus - Chartres M\u00e9tropole Transports (public transport network 'R\u00e9seau Filibus', GTFS timetable feed)",
+   "rate_limit": "one download per feed, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: the network's authority or operator publishes its own timetable feed on the national access point",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "cite Sibra and the national access point record 5bd9843e634f413220f7f04a",
+   "files": [
+    {
+     "name": "gtfs-sibra.zip",
+     "observed": "2026-11",
+     "url": "https://static.data.gouv.fr/resources/offre-de-transports-sibra-a-annecy-gtfs/20261112-080150/gtfs-sibra.zip"
+    }
+   ],
+   "hosts": [
+    "static.data.gouv.fr"
+   ],
+   "id": "gtfs_fr_sibra",
+   "licence_class": "open",
+   "licence_location": "https://transport.data.gouv.fr/datasets/offre-de-transports-sibra-a-annecy-gtfs",
+   "licence_text": "transport.data.gouv.fr (the national access point) declares licence 'odc-odbl' = Open Database Licence (ODbL) for this dataset, published by Sibra",
+   "max_bytes": 104857600,
+   "method": "download of the current GTFS zip file listed in the national access point's dataset record",
+   "min_interval": 3.0,
+   "privacy": "timetables of public transport; no personal data",
+   "publisher": "Sibra (public transport network 'R\u00e9seau urbain Sibra', GTFS timetable feed)",
+   "rate_limit": "one download per feed, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: the network's authority or operator publishes its own timetable feed on the national access point",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "cite ARAVIS Bus and the national access point record 69398942abbf3c01c143b6eb",
+   "files": [
+    {
+     "name": "export-gtfs-aravis-hiver-2026-hiver20252026.zip",
+     "observed": "2026-11",
+     "url": "https://static.data.gouv.fr/resources/aravis-bus-hiver-2025-2026/20251210-145252/export-gtfs-aravis-hiver-2026-hiver20252026.zip"
+    }
+   ],
+   "hosts": [
+    "static.data.gouv.fr"
+   ],
+   "id": "gtfs_fr_aravis",
+   "licence_class": "open",
+   "licence_location": "https://transport.data.gouv.fr/datasets/aravis-bus-hiver-2025-2026",
+   "licence_text": "transport.data.gouv.fr (the national access point) declares licence 'lov2' = Licence Ouverte 2.0 (Etalab) for this dataset, published by ARAVIS Bus",
+   "max_bytes": 104857600,
+   "method": "download of the current GTFS zip file listed in the national access point's dataset record",
+   "min_interval": 3.0,
+   "privacy": "timetables of public transport; no personal data",
+   "publisher": "ARAVIS Bus (public transport network 'R\u00e9seau urbain ARAVIS Bus', GTFS timetable feed)",
+   "rate_limit": "one download per feed, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: the network's authority or operator publishes its own timetable feed on the national access point",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "cite Optymo - Belfort and the national access point record 5b11435b88ee387a7f45434c",
+   "files": [
+    {
+     "name": "gtfs.zip",
+     "observed": "2026-11",
+     "url": "https://static.data.gouv.fr/resources/arrets-circuits-et-horaires-du-reseau-optymo-de-belfort/20261022-093716/gtfs.zip"
+    }
+   ],
+   "hosts": [
+    "static.data.gouv.fr"
+   ],
+   "id": "gtfs_fr_optymo",
+   "licence_class": "open",
+   "licence_location": "https://transport.data.gouv.fr/datasets/arrets-circuits-et-horaires-du-reseau-optymo-de-belfort",
+   "licence_text": "transport.data.gouv.fr (the national access point) declares licence 'odc-odbl' = Open Database Licence (ODbL) for this dataset, published by Optymo - Belfort",
+   "max_bytes": 104857600,
+   "method": "download of the current GTFS zip file listed in the national access point's dataset record",
+   "min_interval": 3.0,
+   "privacy": "timetables of public transport; no personal data",
+   "publisher": "Optymo - Belfort (public transport network 'R\u00e9seau urbain Optymo', GTFS timetable feed)",
+   "rate_limit": "one download per feed, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: the network's authority or operator publishes its own timetable feed on the national access point",
+   "upstream_verified": true
   }
  ]
 }

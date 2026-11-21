@@ -405,6 +405,690 @@
   ],
   "source_snapshot": "grouplens_movielens/2026-11-21"
  },
+ "gtfs_fr_alterneo": {
+  "dropped": [
+   "stop and route names",
+   "coordinates",
+   "shapes",
+   "fares",
+   "free text"
+  ],
+  "files": {
+   "calendar_dates.csv": {
+    "rows": 187,
+    "sha256": "b3ab18649b8211ba481975de958feb761ed59789dc6dcc82cf465701588b6b94"
+   },
+   "routes.csv": {
+    "rows": 68,
+    "sha256": "a6d4d2a20bac6944423804bf38f5b9d9ab3260fa6e22164110b18cd3b2c02561"
+   },
+   "stop_times.csv": {
+    "rows": 367750,
+    "sha256": "c489f1c40216aef2251d66b561c057054fd1d5f49bbc3b9a5bc944de66bbd002"
+   },
+   "stops.csv": {
+    "rows": 3640,
+    "sha256": "a013af529692e7e2a1aa9125ffc4c5d110a4601ba124bc26815e2b116f3e12f0"
+   },
+   "trips.csv": {
+    "rows": 10483,
+    "sha256": "557bec88508455ab04a1152c2eca65bb7329e0a8098878fd63319b93b7bedbfe"
+   }
+  },
+  "notes": "relations are the source's own keys; orphans are natural incompleteness of the published extract",
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 10483,
+    "child": "trips.route_id",
+    "orphans": 0,
+    "parent": "routes.route_id",
+    "share": 0.0
+   },
+   {
+    "checked": 367750,
+    "child": "stop_times.trip_id",
+    "orphans": 0,
+    "parent": "trips.trip_id",
+    "share": 0.0
+   },
+   {
+    "checked": 367750,
+    "child": "stop_times.stop_id",
+    "orphans": 0,
+    "parent": "stops.stop_id",
+    "share": 0.0
+   }
+  ],
+  "source_snapshot": "gtfs_fr_alterneo/2026-11-21"
+ },
+ "gtfs_fr_aravis": {
+  "dropped": [
+   "stop and route names",
+   "coordinates",
+   "shapes",
+   "fares",
+   "free text"
+  ],
+  "files": {
+   "calendar_dates.csv": {
+    "rows": 135,
+    "sha256": "b58719e0904f8ba9e67f1d9065b7d220a719272164978f325e4bfe147b737fc2"
+   },
+   "routes.csv": {
+    "rows": 29,
+    "sha256": "a50f46cfb7eee5897356bbeec57050889ab59b3f8718c70e4e136ed2a197a677"
+   },
+   "stop_times.csv": {
+    "rows": 396301,
+    "sha256": "c34f0da32366fbc43738188a59721e4999318025feafc1ebe7bf8ed818b5a40d"
+   },
+   "stops.csv": {
+    "rows": 386,
+    "sha256": "052bd013396d0bc53403882258dd1f5118f49a3b2e6ea497f9adac7425889ddb"
+   },
+   "trips.csv": {
+    "rows": 20126,
+    "sha256": "4ddce0e2b55a76f05b3ea075681a333924359f48e320c0dbb39e25cc114c5a95"
+   }
+  },
+  "notes": "relations are the source's own keys; orphans are natural incompleteness of the published extract",
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 20126,
+    "child": "trips.route_id",
+    "orphans": 0,
+    "parent": "routes.route_id",
+    "share": 0.0
+   },
+   {
+    "checked": 396301,
+    "child": "stop_times.trip_id",
+    "orphans": 0,
+    "parent": "trips.trip_id",
+    "share": 0.0
+   },
+   {
+    "checked": 396301,
+    "child": "stop_times.stop_id",
+    "orphans": 0,
+    "parent": "stops.stop_id",
+    "share": 0.0
+   }
+  ],
+  "source_snapshot": "gtfs_fr_aravis/2026-11-21"
+ },
+ "gtfs_fr_citea": {
+  "dropped": [
+   "stop and route names",
+   "coordinates",
+   "shapes",
+   "fares",
+   "free text"
+  ],
+  "files": {
+   "calendar_dates.csv": {
+    "rows": 244,
+    "sha256": "5bf86e94a95f76f46b344f3f3d16630e0f4c8e11d84bf8ed21a76ac12612da45"
+   },
+   "routes.csv": {
+    "rows": 328,
+    "sha256": "b04560b8e91734464c475166490c82c29f3cb540f76f2610f39c0be772fdcc1c"
+   },
+   "stop_times.csv": {
+    "rows": 497486,
+    "sha256": "ee928ea26ae39ee465591e7d77789b4850b630de211dda6c90cc14689aad74f7"
+   },
+   "stops.csv": {
+    "rows": 2688,
+    "sha256": "91c9ce7f09736797795243142542c356a1defc3c5e3045f80b43018665736d54"
+   },
+   "trips.csv": {
+    "rows": 17775,
+    "sha256": "7ef967a0f01c217c3235e1b5a6ac282d9cb735ce436b3780bdd206fe7181e4dc"
+   }
+  },
+  "notes": "relations are the source's own keys; orphans are natural incompleteness of the published extract",
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 17775,
+    "child": "trips.route_id",
+    "orphans": 0,
+    "parent": "routes.route_id",
+    "share": 0.0
+   },
+   {
+    "checked": 497486,
+    "child": "stop_times.trip_id",
+    "orphans": 0,
+    "parent": "trips.trip_id",
+    "share": 0.0
+   },
+   {
+    "checked": 497486,
+    "child": "stop_times.stop_id",
+    "orphans": 0,
+    "parent": "stops.stop_id",
+    "share": 0.0
+   }
+  ],
+  "source_snapshot": "gtfs_fr_citea/2026-11-21"
+ },
+ "gtfs_fr_diviamobilites": {
+  "dropped": [
+   "stop and route names",
+   "coordinates",
+   "shapes",
+   "fares",
+   "free text"
+  ],
+  "files": {
+   "calendar_dates.csv": {
+    "rows": 132,
+    "sha256": "a9802465e67543c49a5e3b02d0a7b769e5ae2174d3cd3aa7135f5a77cfcf8868"
+   },
+   "routes.csv": {
+    "rows": 60,
+    "sha256": "3543e5a37355d104816e71b906a222edf1005d869b8c6dd6e8293d1e2a8f8984"
+   },
+   "stop_times.csv": {
+    "rows": 712352,
+    "sha256": "18dfde7c170576130f44079f92a42bbfbe1040ffe00441aa815a6e83448ac664"
+   },
+   "stops.csv": {
+    "rows": 1126,
+    "sha256": "86dfa1666a7a351424f48593f8563fcfab73eca32d4db167511d727e78d1a4bd"
+   },
+   "trips.csv": {
+    "rows": 30235,
+    "sha256": "8dbf4fbfe33aebe70363f8212a7494e8ce10b12ded91cfc643a45dfd43a0d2f5"
+   }
+  },
+  "notes": "relations are the source's own keys; orphans are natural incompleteness of the published extract",
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 30235,
+    "child": "trips.route_id",
+    "orphans": 0,
+    "parent": "routes.route_id",
+    "share": 0.0
+   },
+   {
+    "checked": 712352,
+    "child": "stop_times.trip_id",
+    "orphans": 0,
+    "parent": "trips.trip_id",
+    "share": 0.0
+   },
+   {
+    "checked": 712352,
+    "child": "stop_times.stop_id",
+    "orphans": 0,
+    "parent": "stops.stop_id",
+    "share": 0.0
+   }
+  ],
+  "source_snapshot": "gtfs_fr_diviamobilites/2026-11-21"
+ },
+ "gtfs_fr_filibus": {
+  "dropped": [
+   "stop and route names",
+   "coordinates",
+   "shapes",
+   "fares",
+   "free text"
+  ],
+  "files": {
+   "calendar_dates.csv": {
+    "rows": 287,
+    "sha256": "4f7ad8cad1bdb0a41c6283a6469eb13db14cfb637feddb27406fdba206e3875d"
+   },
+   "routes.csv": {
+    "rows": 84,
+    "sha256": "9f6299bc64b75d29375b738b1c73c2f72c83021c5f6caf1738402694e063a16e"
+   },
+   "stop_times.csv": {
+    "rows": 255903,
+    "sha256": "08262c61956c621b06ee1095ea02683d23a0a6426c1a0a829a4f91035a21dbc5"
+   },
+   "stops.csv": {
+    "rows": 1294,
+    "sha256": "48043b7b2abdd072690b4be435c98b71d17c34a4e960dc912ef3e1d000b03bdb"
+   },
+   "trips.csv": {
+    "rows": 11015,
+    "sha256": "1d0d2c8a8c07e31693867b48013e028a108b3b11b256ee1919938620078739a8"
+   }
+  },
+  "notes": "relations are the source's own keys; orphans are natural incompleteness of the published extract",
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 11015,
+    "child": "trips.route_id",
+    "orphans": 0,
+    "parent": "routes.route_id",
+    "share": 0.0
+   },
+   {
+    "checked": 255903,
+    "child": "stop_times.trip_id",
+    "orphans": 0,
+    "parent": "trips.trip_id",
+    "share": 0.0
+   },
+   {
+    "checked": 255903,
+    "child": "stop_times.stop_id",
+    "orphans": 0,
+    "parent": "stops.stop_id",
+    "share": 0.0
+   }
+  ],
+  "source_snapshot": "gtfs_fr_filibus/2026-11-21"
+ },
+ "gtfs_fr_kiceo": {
+  "dropped": [
+   "stop and route names",
+   "coordinates",
+   "shapes",
+   "fares",
+   "free text"
+  ],
+  "files": {
+   "calendar_dates.csv": {
+    "rows": 1741,
+    "sha256": "fc17717c1add8c47b0b15fa6f467e011655d02e9a88caf9cd616a33fa4385102"
+   },
+   "routes.csv": {
+    "rows": 199,
+    "sha256": "5e98078b3d5128e094fa877d71e452941a5a2b6ae113d99541c98932cee64aec"
+   },
+   "stop_times.csv": {
+    "rows": 65019,
+    "sha256": "7009bcc201c006ceffe4aaef17ede1a46332e19d36f2ee0fb89d33570179c952"
+   },
+   "stops.csv": {
+    "rows": 2601,
+    "sha256": "6c3fdb461d69d21cfbf46f76d36ef48cea95091b1ad5b6c6f9f70121deb51d00"
+   },
+   "trips.csv": {
+    "rows": 2579,
+    "sha256": "e000d87a7c0fc041f3146737a68da18937757848d6948e90e3a5fc4f6e00c3b9"
+   }
+  },
+  "notes": "relations are the source's own keys; orphans are natural incompleteness of the published extract",
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 2579,
+    "child": "trips.route_id",
+    "orphans": 0,
+    "parent": "routes.route_id",
+    "share": 0.0
+   },
+   {
+    "checked": 65019,
+    "child": "stop_times.trip_id",
+    "orphans": 0,
+    "parent": "trips.trip_id",
+    "share": 0.0
+   },
+   {
+    "checked": 65019,
+    "child": "stop_times.stop_id",
+    "orphans": 0,
+    "parent": "stops.stop_id",
+    "share": 0.0
+   }
+  ],
+  "source_snapshot": "gtfs_fr_kiceo/2026-11-21"
+ },
+ "gtfs_fr_optymo": {
+  "dropped": [
+   "stop and route names",
+   "coordinates",
+   "shapes",
+   "fares",
+   "free text"
+  ],
+  "files": {
+   "calendar_dates.csv": {
+    "rows": 79,
+    "sha256": "27526307ad7faa06c4830c857b85e5e2d94c59dab0d387d69fac48672984164f"
+   },
+   "routes.csv": {
+    "rows": 50,
+    "sha256": "273d89b9415595e246629e0cb95165460e05654c1943af4085d579cae6db32de"
+   },
+   "stop_times.csv": {
+    "rows": 165089,
+    "sha256": "6e00e6a0d59d4363c4d81af8ed3cfdf29c7bd7623370a2f6d687ff2a84317d88"
+   },
+   "stops.csv": {
+    "rows": 1583,
+    "sha256": "233ab8515a7bdbc393c8d62be076b0b43241c0e1f00ce8b322b5c6acc23febe1"
+   },
+   "trips.csv": {
+    "rows": 6846,
+    "sha256": "a4d234a4a7781ff9215ffc2358e930bf07fba1121ec1066c7cf8e84873c19fee"
+   }
+  },
+  "notes": "relations are the source's own keys; orphans are natural incompleteness of the published extract",
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 6846,
+    "child": "trips.route_id",
+    "orphans": 0,
+    "parent": "routes.route_id",
+    "share": 0.0
+   },
+   {
+    "checked": 165089,
+    "child": "stop_times.trip_id",
+    "orphans": 0,
+    "parent": "trips.trip_id",
+    "share": 0.0
+   },
+   {
+    "checked": 165089,
+    "child": "stop_times.stop_id",
+    "orphans": 0,
+    "parent": "stops.stop_id",
+    "share": 0.0
+   }
+  ],
+  "source_snapshot": "gtfs_fr_optymo/2026-11-21"
+ },
+ "gtfs_fr_palmbus": {
+  "dropped": [
+   "stop and route names",
+   "coordinates",
+   "shapes",
+   "fares",
+   "free text"
+  ],
+  "files": {
+   "calendar_dates.csv": {
+    "rows": 81,
+    "sha256": "9ea537721cf934a63a99f6f13eff5bbeadedc4f01672aa71d511de82387b45f5"
+   },
+   "routes.csv": {
+    "rows": 45,
+    "sha256": "56e33527b83cd392100c740eae15109cdabe88cb4a11c9214bc7845a22d96b4e"
+   },
+   "stop_times.csv": {
+    "rows": 836508,
+    "sha256": "db823f24cfb5e0942e3221f48d73be7412ea003847556aaab2fff098154da931"
+   },
+   "stops.csv": {
+    "rows": 1490,
+    "sha256": "3a88346f716ed8fff8887c6dbca7aa1812abcf96ff15257804c289f0c58ae303"
+   },
+   "trips.csv": {
+    "rows": 28323,
+    "sha256": "9261d817ec8a608e103f2c1df2afc771d52571b3432231ee197101060dbf7879"
+   }
+  },
+  "notes": "relations are the source's own keys; orphans are natural incompleteness of the published extract",
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 28323,
+    "child": "trips.route_id",
+    "orphans": 0,
+    "parent": "routes.route_id",
+    "share": 0.0
+   },
+   {
+    "checked": 836508,
+    "child": "stop_times.trip_id",
+    "orphans": 0,
+    "parent": "trips.trip_id",
+    "share": 0.0
+   },
+   {
+    "checked": 836508,
+    "child": "stop_times.stop_id",
+    "orphans": 0,
+    "parent": "stops.stop_id",
+    "share": 0.0
+   }
+  ],
+  "source_snapshot": "gtfs_fr_palmbus/2026-11-21"
+ },
+ "gtfs_fr_sankeo": {
+  "dropped": [
+   "stop and route names",
+   "coordinates",
+   "shapes",
+   "fares",
+   "free text"
+  ],
+  "files": {
+   "calendar_dates.csv": {
+    "rows": 501,
+    "sha256": "f9dcd718f46360dbaa5c663e2bc1446e811c77c2593bce2ecdc0bfa780c9394e"
+   },
+   "routes.csv": {
+    "rows": 42,
+    "sha256": "78b406604a3674397c9c41e1b64b79b2f5ac1d3fe0adffc05a1589bd2805c750"
+   },
+   "stop_times.csv": {
+    "rows": 377481,
+    "sha256": "75da0c3f07b691f2c84126cce2f7484876748fc0c31b11af3b79ac93036dcca6"
+   },
+   "stops.csv": {
+    "rows": 1052,
+    "sha256": "6475cb7f1388c07eaaf6e829798d7982f8b8dfc2f994ae5a98c751088e07a17e"
+   },
+   "trips.csv": {
+    "rows": 13029,
+    "sha256": "8daacd8e82f95920bbf141ebcf9886fa8ea92913e9f3b2451effd5e557d49b48"
+   }
+  },
+  "notes": "relations are the source's own keys; orphans are natural incompleteness of the published extract",
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 13029,
+    "child": "trips.route_id",
+    "orphans": 0,
+    "parent": "routes.route_id",
+    "share": 0.0
+   },
+   {
+    "checked": 377481,
+    "child": "stop_times.trip_id",
+    "orphans": 0,
+    "parent": "trips.trip_id",
+    "share": 0.0
+   },
+   {
+    "checked": 377481,
+    "child": "stop_times.stop_id",
+    "orphans": 0,
+    "parent": "stops.stop_id",
+    "share": 0.0
+   }
+  ],
+  "source_snapshot": "gtfs_fr_sankeo/2026-11-21"
+ },
+ "gtfs_fr_sibra": {
+  "dropped": [
+   "stop and route names",
+   "coordinates",
+   "shapes",
+   "fares",
+   "free text"
+  ],
+  "files": {
+   "calendar_dates.csv": {
+    "rows": 46,
+    "sha256": "47e6bf75da56f32e81c5629d37a3b1b3f57e6cc17af27dfedb4505b3812b77c3"
+   },
+   "routes.csv": {
+    "rows": 32,
+    "sha256": "8dec116731ca838158a8c4f0f3a836549e78222e09c2637133a08465bade97a9"
+   },
+   "stop_times.csv": {
+    "rows": 269669,
+    "sha256": "58210514c96d20257d8bc56978e1cf6a2fe75835dcc4378f16fecf991283df61"
+   },
+   "stops.csv": {
+    "rows": 1862,
+    "sha256": "99c40b59095f42ab49998de143e54fcf21acb4d438226536da48822c9cd0f076"
+   },
+   "trips.csv": {
+    "rows": 9204,
+    "sha256": "efa16533397fdfdbecbd81da87035525c1cc7ea0ad199426f1d86ab30e017f53"
+   }
+  },
+  "notes": "relations are the source's own keys; orphans are natural incompleteness of the published extract",
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 9204,
+    "child": "trips.route_id",
+    "orphans": 0,
+    "parent": "routes.route_id",
+    "share": 0.0
+   },
+   {
+    "checked": 269669,
+    "child": "stop_times.trip_id",
+    "orphans": 0,
+    "parent": "trips.trip_id",
+    "share": 0.0
+   },
+   {
+    "checked": 269669,
+    "child": "stop_times.stop_id",
+    "orphans": 0,
+    "parent": "stops.stop_id",
+    "share": 0.0
+   }
+  ],
+  "source_snapshot": "gtfs_fr_sibra/2026-11-21"
+ },
+ "gtfs_fr_tango": {
+  "dropped": [
+   "stop and route names",
+   "coordinates",
+   "shapes",
+   "fares",
+   "free text"
+  ],
+  "files": {
+   "calendar_dates.csv": {
+    "rows": 34,
+    "sha256": "cb5b6f58d6ff10664a3cd83da4757dd479fe7d5a34f8b0fce8df62eeb698b14d"
+   },
+   "routes.csv": {
+    "rows": 83,
+    "sha256": "4c2acba552c681457d407eae6d3218b969c717935d5cd903ca398e549ffb1e48"
+   },
+   "stop_times.csv": {
+    "rows": 387117,
+    "sha256": "e89ac3198669c812f5dda5b617bb06656bb27699449354ea410d21187d1d0f25"
+   },
+   "stops.csv": {
+    "rows": 1131,
+    "sha256": "4eeea1200bfe9445de0dc4c5d20d0ec80f47ea84bc6511791fb1ece4cbdb335f"
+   },
+   "trips.csv": {
+    "rows": 20487,
+    "sha256": "39eaeef47b3de67ac950d478d1fecabbc0326249390777e50cdb6e20c4a8752d"
+   }
+  },
+  "notes": "relations are the source's own keys; orphans are natural incompleteness of the published extract",
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 20487,
+    "child": "trips.route_id",
+    "orphans": 0,
+    "parent": "routes.route_id",
+    "share": 0.0
+   },
+   {
+    "checked": 387117,
+    "child": "stop_times.trip_id",
+    "orphans": 0,
+    "parent": "trips.trip_id",
+    "share": 0.0
+   },
+   {
+    "checked": 387117,
+    "child": "stop_times.stop_id",
+    "orphans": 0,
+    "parent": "stops.stop_id",
+    "share": 0.0
+   }
+  ],
+  "source_snapshot": "gtfs_fr_tango/2026-11-21"
+ },
+ "gtfs_fr_transvilles": {
+  "dropped": [
+   "stop and route names",
+   "coordinates",
+   "shapes",
+   "fares",
+   "free text"
+  ],
+  "files": {
+   "calendar_dates.csv": {
+    "rows": 676,
+    "sha256": "7ae5f5c64d20249c434282e930c2032eb8808c796600b81c78dec34646b291f5"
+   },
+   "routes.csv": {
+    "rows": 118,
+    "sha256": "dd3eb119422c28fc7cfae24509c87dd01aa69d0f035e9f2559d63d2839c65ed3"
+   },
+   "stop_times.csv": {
+    "rows": 325127,
+    "sha256": "a0b31d8299f8a818c9448ac9deb3a4158999b22c72107815f03d87216a97f252"
+   },
+   "stops.csv": {
+    "rows": 1912,
+    "sha256": "846cf361676b295b1d7bb3dc8402ce1170af5ab7d4cbc3eeb33a99ea3da5d15d"
+   },
+   "trips.csv": {
+    "rows": 13416,
+    "sha256": "148a0682b53547598c5f8c42d802113182357b8b1ce77cc36d8e746012811ced"
+   }
+  },
+  "notes": "relations are the source's own keys; orphans are natural incompleteness of the published extract",
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 13416,
+    "child": "trips.route_id",
+    "orphans": 0,
+    "parent": "routes.route_id",
+    "share": 0.0
+   },
+   {
+    "checked": 325127,
+    "child": "stop_times.trip_id",
+    "orphans": 0,
+    "parent": "trips.trip_id",
+    "share": 0.0
+   },
+   {
+    "checked": 325127,
+    "child": "stop_times.stop_id",
+    "orphans": 0,
+    "parent": "stops.stop_id",
+    "share": 0.0
+   }
+  ],
+  "source_snapshot": "gtfs_fr_transvilles/2026-11-21"
+ },
  "loghub": {
   "dropped": [
    "Content",

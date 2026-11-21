@@ -1870,6 +1870,246 @@
    "stratum": "C2b",
    "system": "german_paying_agency",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "gtfs",
+   "id": "gtfs_fr_alterneo",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "gtfs_fr_alterneo",
+   "reason": "GTFS timetable feed, ALTERNEO (public transport network 'R\u00e9seau urbain Altern\u00e9o', GTFS timetable feed): routes 68, trips 10483, stop times 367750, stops 3640; the three key relations (trip to route, stop time to trip and to stop) have 0 orphans; names, coordinates, shapes and fares dropped. Shared schema family GTFS and shared curator (the national access point); the networks are distinct producers",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "transport.data.gouv.fr (the national access point) declares licence 'lov2' = Licence Ouverte 2.0 (Etalab) for this dataset, published by ALTERNEO",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "gtfs_fr_alterneo",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "gtfs",
+   "id": "gtfs_fr_aravis",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "gtfs_fr_aravis",
+   "reason": "GTFS timetable feed, ARAVIS Bus (public transport network 'R\u00e9seau urbain ARAVIS Bus', GTFS timetable feed): routes 29, trips 20126, stop times 396301, stops 386; the three key relations (trip to route, stop time to trip and to stop) have 0 orphans; names, coordinates, shapes and fares dropped. Shared schema family GTFS and shared curator (the national access point); the networks are distinct producers",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "transport.data.gouv.fr (the national access point) declares licence 'lov2' = Licence Ouverte 2.0 (Etalab) for this dataset, published by ARAVIS Bus",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "gtfs_fr_aravis",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "gtfs",
+   "id": "gtfs_fr_citea",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "gtfs_fr_citea",
+   "reason": "GTFS timetable feed, Valence Romans Mobilit\u00e9s (public transport network 'R\u00e9seau urbain Cit\u00e9a', GTFS timetable feed): routes 328, trips 17775, stop times 497486, stops 2688; the three key relations (trip to route, stop time to trip and to stop) have 0 orphans; names, coordinates, shapes and fares dropped. Shared schema family GTFS and shared curator (the national access point); the networks are distinct producers",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "transport.data.gouv.fr (the national access point) declares licence 'lov2' = Licence Ouverte 2.0 (Etalab) for this dataset, published by Valence Romans Mobilit\u00e9s",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "gtfs_fr_citea",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "gtfs",
+   "id": "gtfs_fr_diviamobilites",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "gtfs_fr_diviamobilites",
+   "reason": "GTFS timetable feed, DiviaMobilit\u00e9s (public transport network 'R\u00e9seau urbain DiviaMobilit\u00e9s', GTFS timetable feed): routes 60, trips 30235, stop times 712352, stops 1126; the three key relations (trip to route, stop time to trip and to stop) have 0 orphans; names, coordinates, shapes and fares dropped. Shared schema family GTFS and shared curator (the national access point); the networks are distinct producers",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "transport.data.gouv.fr (the national access point) declares licence 'lov2' = Licence Ouverte 2.0 (Etalab) for this dataset, published by DiviaMobilit\u00e9s",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "gtfs_fr_diviamobilites",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "gtfs",
+   "id": "gtfs_fr_filibus",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "gtfs_fr_filibus",
+   "reason": "GTFS timetable feed, Filibus - Chartres M\u00e9tropole Transports (public transport network 'R\u00e9seau Filibus', GTFS timetable feed): routes 84, trips 11015, stop times 255903, stops 1294; the three key relations (trip to route, stop time to trip and to stop) have 0 orphans; names, coordinates, shapes and fares dropped. Shared schema family GTFS and shared curator (the national access point); the networks are distinct producers",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "transport.data.gouv.fr (the national access point) declares licence 'lov2' = Licence Ouverte 2.0 (Etalab) for this dataset, published by Filibus - Chartres M\u00e9tropole Transports",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "gtfs_fr_filibus",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "gtfs",
+   "id": "gtfs_fr_kiceo",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "gtfs_fr_kiceo",
+   "reason": "GTFS timetable feed, Transdev GMVA Mobilit\u00e9s \u2022 Kic\u00e9o (public transport network 'R\u00e9seau urbain Kic\u00e9o', GTFS timetable feed): routes 199, trips 2579, stop times 65019, stops 2601; the three key relations (trip to route, stop time to trip and to stop) have 0 orphans; names, coordinates, shapes and fares dropped. Shared schema family GTFS and shared curator (the national access point); the networks are distinct producers",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "transport.data.gouv.fr (the national access point) declares licence 'lov2' = Licence Ouverte 2.0 (Etalab) for this dataset, published by Transdev GMVA Mobilit\u00e9s \u2022 Kic\u00e9o",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "gtfs_fr_kiceo",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "gtfs",
+   "id": "gtfs_fr_optymo",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "gtfs_fr_optymo",
+   "reason": "GTFS timetable feed, Optymo - Belfort (public transport network 'R\u00e9seau urbain Optymo', GTFS timetable feed): routes 50, trips 6846, stop times 165089, stops 1583; the three key relations (trip to route, stop time to trip and to stop) have 0 orphans; names, coordinates, shapes and fares dropped. Shared schema family GTFS and shared curator (the national access point); the networks are distinct producers",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "transport.data.gouv.fr (the national access point) declares licence 'odc-odbl' = Open Database Licence (ODbL) for this dataset, published by Optymo - Belfort",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "gtfs_fr_optymo",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "gtfs",
+   "id": "gtfs_fr_palmbus",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "gtfs_fr_palmbus",
+   "reason": "GTFS timetable feed, Palmbus (public transport network 'R\u00e9seau urbain Palmbus', GTFS timetable feed): routes 45, trips 28323, stop times 836508, stops 1490; the three key relations (trip to route, stop time to trip and to stop) have 0 orphans; names, coordinates, shapes and fares dropped. Shared schema family GTFS and shared curator (the national access point); the networks are distinct producers",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "transport.data.gouv.fr (the national access point) declares licence 'lov2' = Licence Ouverte 2.0 (Etalab) for this dataset, published by Palmbus",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "gtfs_fr_palmbus",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "gtfs",
+   "id": "gtfs_fr_sankeo",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "gtfs_fr_sankeo",
+   "reason": "GTFS timetable feed, Sank\u00e9o (public transport network 'R\u00e9seau urbain et scolaire Sank\u00e9o', GTFS timetable feed): routes 42, trips 13029, stop times 377481, stops 1052; the three key relations (trip to route, stop time to trip and to stop) have 0 orphans; names, coordinates, shapes and fares dropped. Shared schema family GTFS and shared curator (the national access point); the networks are distinct producers",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "transport.data.gouv.fr (the national access point) declares licence 'lov2' = Licence Ouverte 2.0 (Etalab) for this dataset, published by Sank\u00e9o",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "gtfs_fr_sankeo",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "gtfs",
+   "id": "gtfs_fr_sibra",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "gtfs_fr_sibra",
+   "reason": "GTFS timetable feed, Sibra (public transport network 'R\u00e9seau urbain Sibra', GTFS timetable feed): routes 32, trips 9204, stop times 269669, stops 1862; the three key relations (trip to route, stop time to trip and to stop) have 0 orphans; names, coordinates, shapes and fares dropped. Shared schema family GTFS and shared curator (the national access point); the networks are distinct producers",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "transport.data.gouv.fr (the national access point) declares licence 'odc-odbl' = Open Database Licence (ODbL) for this dataset, published by Sibra",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "gtfs_fr_sibra",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "gtfs",
+   "id": "gtfs_fr_tango",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "gtfs_fr_tango",
+   "reason": "GTFS timetable feed, Tango (public transport network 'R\u00e9seau urbain Tango', GTFS timetable feed): routes 83, trips 20487, stop times 387117, stops 1131; the three key relations (trip to route, stop time to trip and to stop) have 0 orphans; names, coordinates, shapes and fares dropped. Shared schema family GTFS and shared curator (the national access point); the networks are distinct producers",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "transport.data.gouv.fr (the national access point) declares licence 'lov2' = Licence Ouverte 2.0 (Etalab) for this dataset, published by Tango",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "gtfs_fr_tango",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "gtfs",
+   "id": "gtfs_fr_transvilles",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "gtfs_fr_transvilles",
+   "reason": "GTFS timetable feed, Syndicat Intercommunal de Mobilit\u00e9 et d'Organisation Urbaine du Valenciennois (public transport network 'R\u00e9seau urbain Transvilles', GTFS timetable feed): routes 118, trips 13416, stop times 325127, stops 1912; the three key relations (trip to route, stop time to trip and to stop) have 0 orphans; names, coordinates, shapes and fares dropped. Shared schema family GTFS and shared curator (the national access point); the networks are distinct producers",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "transport.data.gouv.fr (the national access point) declares licence 'lov2' = Licence Ouverte 2.0 (Etalab) for this dataset, published by Syndicat Intercommunal de Mobilit\u00e9 et d'Organisation Urbaine du Valenciennois",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "gtfs_fr_transvilles",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

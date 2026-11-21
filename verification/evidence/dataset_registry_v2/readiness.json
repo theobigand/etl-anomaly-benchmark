@@ -845,6 +845,90 @@
   },
   {
    "failed": null,
+   "group": "gtfs_fr_alterneo",
+   "id": "gtfs_fr_alterneo",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "gtfs_fr_aravis",
+   "id": "gtfs_fr_aravis",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "gtfs_fr_citea",
+   "id": "gtfs_fr_citea",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "gtfs_fr_diviamobilites",
+   "id": "gtfs_fr_diviamobilites",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "gtfs_fr_filibus",
+   "id": "gtfs_fr_filibus",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "gtfs_fr_kiceo",
+   "id": "gtfs_fr_kiceo",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "gtfs_fr_optymo",
+   "id": "gtfs_fr_optymo",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "gtfs_fr_palmbus",
+   "id": "gtfs_fr_palmbus",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "gtfs_fr_sankeo",
+   "id": "gtfs_fr_sankeo",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "gtfs_fr_sibra",
+   "id": "gtfs_fr_sibra",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "gtfs_fr_tango",
+   "id": "gtfs_fr_tango",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "gtfs_fr_transvilles",
+   "id": "gtfs_fr_transvilles",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -999,6 +1083,18 @@
    "3pfl",
    "georgia_procurement",
    "grouplens",
+   "gtfs_fr_alterneo",
+   "gtfs_fr_aravis",
+   "gtfs_fr_citea",
+   "gtfs_fr_diviamobilites",
+   "gtfs_fr_filibus",
+   "gtfs_fr_kiceo",
+   "gtfs_fr_optymo",
+   "gtfs_fr_palmbus",
+   "gtfs_fr_sankeo",
+   "gtfs_fr_sibra",
+   "gtfs_fr_tango",
+   "gtfs_fr_transvilles",
    "openalex",
    "stackexchange",
    "zambia_procurement"
@@ -1043,13 +1139,13 @@
    "structurally_valid": 29
   },
   "C5": {
-   "acquired": 15,
-   "discovered": 15,
-   "experiment_ready": 15,
-   "protocol_ready": 15,
-   "rights_verified": 15,
-   "scientifically_eligible": 15,
-   "structurally_valid": 15
+   "acquired": 27,
+   "discovered": 27,
+   "experiment_ready": 27,
+   "protocol_ready": 27,
+   "rights_verified": 27,
+   "scientifically_eligible": 27,
+   "structurally_valid": 27
   },
   "C6": {
    "acquired": 8,
