@@ -955,3 +955,28 @@ registers). C2b rises from 11 to 12 ready groups (gap 18); global distinct prove
 concentration: C2b is now 5 of 12 groups from public procurement and expenditure ledgers, 2 land registers, 1 bike-share, 1 road-fines log, 1 coatings
 process log and 1 retail system. Anomaly mechanisms available on the retail lines: price and quantity faults, duplicate invoices, timestamp
 faults; natural irregularities (cancellations, missing customer ids, negative quantities) stay baseline properties, not labels.
+
+## Update 16: four new original generating systems (2026-11-22)
+
+Four sources that were not in the corpus were acquired from their original publishers' statements and promoted to experiment-ready; the retail table of
+Update 15 was a catalogued source and is counted separately. Global distinct provenance groups: 119 before this work, 120 after the retail promotion, 124 now.
+
+| Group | Category | Original publisher and rights | Structure and size | New contribution |
+|---|---|---|---|---|
+| `paleobiology_database` | C2a | PBDB data service states CC0 (read at the service); Zenodo archive 24274793 cc-by-4.0, md5 verified | 201,107 occurrences (one in ten, file order), 31 columns, 22 categorical with up to 13,479 levels | palaeontology, high-cardinality taxonomy and geology with 3 to 96 percent structural missingness |
+| `cubico_kelmarsh` | C3 | Cubico Sustainable Investments released the data under CC BY 4.0 (record text) | 314,496 ten-minute rows, six turbines, 2016, 16 signals | wind-energy generation; constant spacing; natural gaps |
+| `wikimedia_wikidata` | C6 | Wikidata:Licensing states CC0 for structured data | 1,611 items (people excluded), depth up to 11, claims with qualifiers and references | community knowledge base, a third of the items scholarly articles |
+| `pnnl_epri_bess` | C3 | PNNL and EPRI data collectors, CC BY 4.0 | 1,452,814 meter readings of two utility battery systems in elapsed hours | grid-scale energy storage; publisher quality flag on 6 percent of rows |
+
+Counts after this update (machine-derived, `readiness.json`): C1 52, C2a 13, C2b 12, C3 13, C4 13, C5 20, C6 10; 124 distinct provenance groups. Gaps to the provisional
+quotas: C2a 17, C2b 18, C3 27, C4 15, C5 16, C6 20. Concentration is unchanged for C1 (one repository), C4 (7 of 13 process-mining logs) and C5 (12 of 20 timetable feeds).
+
+Limits recorded with the sources. The PBDB occurrences are every tenth row in entry order, not a random sample; the taxon table of the same archive was downloaded but
+not turned into a C5 view, which would be a second participation of the same group and not a new group. The Kelmarsh view covers one year of a ten-year release and the six turbines are
+one generating system. The Wikidata items follow an even identifier stride (about 11 percent of the requested identifiers do not exist). The battery files use elapsed time, so
+calendar effects cannot be studied, and two of twelve systems of the release were taken. No natural anomaly labels are used for any of them; the publisher's quality flags are baseline properties.
+
+Candidates examined and not acquired: NVD CVE records (the API returns deeply nested records, but the NVD terms pages are rendered client side and could not be read literally; recorded as
+permission pending); NBG deposit transactions (real bank transactions; the record's depositor is a project member and the bank's own release statement was not found); the anonymised phone-call
+records of INESC TEC (83 million rows with a natural blacklist label; the supplying operator is not named); the GTMD 2.0 mobility table (modelled estimates, not observations); the multi-source distributed-system
+data of Nedelkoski et al. (an instrumented test bed, not an operational system); OpenSky 2020 (non-commercial licence).
