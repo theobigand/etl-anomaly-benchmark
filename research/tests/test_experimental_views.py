@@ -1006,6 +1006,8 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     dv.mkdir(parents=True)
     (dv / "dvf_69_2024.csv.gz").write_bytes(_gz.compress(_dvf_frame().to_csv(index=False).encode()))
     _w(root / "hmlr_price_paid" / SNAP / "raw" / "pp-2024_head.csv", PPD_HEAD)
+    (tmp_path / "uci_wave2").mkdir(exist_ok=True)
+    _retail_frame().to_csv(tmp_path / "uci_wave2" / "352.csv", index=False)
     monkeypatch.setattr(ev, "EA_STATIONS", ["s"])
     _w(
         root / "ea_hydrology_flow" / SNAP / "raw" / "flow_s.csv",
@@ -1016,7 +1018,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -2999,3 +3001,76 @@ def test_the_price_paid_builder_reads_the_fragment_and_records_the_cut_and_the_s
         "postcode unit",
     ]
     assert view["sampling"] == {"method": "first bytes of the 2024 file (HTTP range from byte 0), file order, not random", "rows": 2, "bytes_cut_partial_line": 11}  # fmt: skip  # noqa: E501
+
+
+# --- Online Retail invoice lines (UK e-commerce) ----------------------------------------------------  # noqa: E501
+
+
+def _retail_frame():
+    return pd.DataFrame(
+        {
+            "InvoiceNo": ["536366", "C536379", "536365", "536365"],
+            "StockCode": ["22633", "D", "85123A", "71053"],
+            "Description": ["HAND WARMER", "Discount", "WHITE HANGING HEART", "WHITE METAL LANTERN"],  # noqa: E501
+            "Quantity": ["6", "-1", "6", "x"],
+            "InvoiceDate": ["12/1/2010 8:28", "12/1/2010 9:41", "12/1/2010 8:26", "12/1/2010 8:26"],
+            "UnitPrice": ["1.85", "27.50", "2.55", "3.39"],
+            "CustomerID": ["17850", None, "17850", "13047.0"],
+            "Country": ["United Kingdom", "United Kingdom", "United Kingdom", "France"],
+        }
+    )  # fmt: skip
+
+
+def test_retail_view_pseudonymises_invoices_and_customers_flags_cancellations_and_computes_line_values():  # noqa: E501
+    out = ev.retail_view(_retail_frame())
+    assert list(out.columns) == list(ev.RETAIL_COLUMNS)
+    assert ev.RETAIL_COLUMNS == (
+        "timestamp", "invoice", "stock_code", "quantity", "unit_price", "line_value", "customer", "country", "cancellation",  # noqa: E501
+    )  # fmt: skip
+    assert out["timestamp"].tolist() == sorted(out["timestamp"].tolist())
+    assert out["invoice"].tolist()[:2] == [ev.pseudonym("536365")] * 2
+    assert out["cancellation"].tolist() == [
+        False,
+        False,
+        False,
+        True,
+    ]  # the invoice number starts with C
+    assert out["customer"].iloc[0] == ev.pseudonym("17850") and pd.isna(out["customer"].iloc[3])
+    assert out["customer"].iloc[1] == ev.pseudonym(
+        "13047"
+    )  # a float-formatted id is the same customer
+    assert (
+        out["line_value"].iloc[0] == pytest.approx(15.3)
+        and out["quantity"].iloc[1] != out["quantity"].iloc[1]
+    )  # x is missing
+    assert pd.isna(out["line_value"].iloc[1])
+    assert out["cancellation"].dtype == bool and out["stock_code"].tolist()[0] == "85123A"
+    for gone in ("Description", "InvoiceNo", "CustomerID"):
+        assert gone not in out
+    with pytest.raises(ev.ViewError, match="column 'UnitPrice'"):
+        ev.retail_view(_retail_frame().drop(columns=["UnitPrice"]))
+
+
+def test_the_retail_builder_reads_the_pinned_table_and_records_what_it_dropped(tmp_path):
+    root = tmp_path / "acquired"
+    (tmp_path / "uci_wave2").mkdir()
+    _retail_frame().to_csv(tmp_path / "uci_wave2" / "352.csv", index=False)
+    manifest: dict = {}
+    ev._build_retail(root, tmp_path / "o", manifest)
+    ev._build_retail(root, tmp_path / "o", manifest)
+    target = tmp_path / "o" / "uci_online_retail" / "lines.csv"
+    assert len(pd.read_csv(target)) == 4 and target.read_text().splitlines()[0] == ",".join(
+        ev.RETAIL_COLUMNS
+    )
+    view = manifest["uci_online_retail"]
+    assert view["files"] == {"lines.csv": {"sha256": _sha(target), "rows": 4}}
+    assert view["dropped"] == ["product description (free text)"] and view["pseudonymised"] == [
+        "invoice",
+        "customer",
+    ]
+    assert view["salt_label"] == ev.SALT and view["sampling"] == {
+        "rows_in": 4,
+        "cancellations": 1,
+        "rows_without_customer": 1,
+    }
+    assert view["source_snapshot"] == "uci:352 (repository file pinned by checksum)"

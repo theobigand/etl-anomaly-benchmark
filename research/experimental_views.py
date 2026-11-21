@@ -2210,6 +2210,75 @@ def _build_ppd(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+RETAIL_COLUMNS = (
+    "timestamp", "invoice", "stock_code", "quantity", "unit_price", "line_value", "customer",
+    "country", "cancellation",
+)  # fmt: skip
+
+
+def retail_view(raw: pd.DataFrame) -> pd.DataFrame:
+    """Invoice lines of an online retailer: time, salted invoice and customer, item, price.
+
+    A cancellation is an invoice whose number starts with C; its negative quantities are kept as
+    published. The product description (free text) is not kept. Unreadable numbers become missing.
+    """
+    for column in (
+        "InvoiceNo",
+        "StockCode",
+        "Quantity",
+        "InvoiceDate",
+        "UnitPrice",
+        "CustomerID",
+        "Country",
+    ):
+        if column not in raw.columns:
+            raise ViewError(f"column {column!r} not found")
+    quantity = pd.to_numeric(raw["Quantity"], errors="coerce")
+    price = pd.to_numeric(raw["UnitPrice"], errors="coerce")
+    customer = pd.to_numeric(raw["CustomerID"], errors="coerce").map(
+        lambda v: pseudonym(str(int(v))) if pd.notna(v) else None
+    )
+    out = pd.DataFrame(
+        {
+            "timestamp": pd.to_datetime(
+                raw["InvoiceDate"], format="%m/%d/%Y %H:%M", errors="coerce"
+            ),
+            "invoice": raw["InvoiceNo"].astype(str).map(pseudonym),
+            "stock_code": raw["StockCode"].astype(str),
+            "quantity": quantity,
+            "unit_price": price,
+            "line_value": quantity * price,
+            "customer": customer,
+            "country": raw["Country"],
+            "cancellation": raw["InvoiceNo"].astype(str).str.startswith("C"),
+        }
+    )
+    return out.sort_values(["timestamp", "invoice"], kind="stable").reset_index(drop=True)
+
+
+def _build_retail(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = pd.read_csv(root.parent / "uci_wave2" / "352.csv", dtype=str, low_memory=False)
+    view = retail_view(raw)
+    folder = out / "uci_online_retail"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "lines.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "uci_online_retail",
+        {"lines.csv": (target, len(view))},
+        dropped=["product description (free text)"],
+        pseudonymised=["invoice", "customer"],
+        sampling={
+            "rows_in": len(raw),
+            "cancellations": int(view["cancellation"].sum()),
+            "rows_without_customer": int(view["customer"].isna().sum()),
+        },
+        salt_label=SALT,
+        source_snapshot="uci:352 (repository file pinned by checksum)",
+    )
+
+
 SLURM_MODULO = 20
 SLURM_COLUMNS = (
     "jobid",
@@ -2309,6 +2378,7 @@ BUILD_STEPS = (
     _build_ea,
     _build_dvf,
     _build_ppd,
+    _build_retail,
     _build_flat,
     _build_series,
     _build_ukspend,
