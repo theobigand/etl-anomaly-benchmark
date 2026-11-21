@@ -470,18 +470,18 @@
   },
   {
    "categories": [
-    "C5"
+    "C2a"
    ],
    "id": "zenodo:24274793",
-   "licence": "cc-by-4.0",
+   "licence": "CC0 stated by the PBDB data service; cc-by-4.0 on the Zenodo archive record",
    "name": "Paleobiology Database denormalised tables",
-   "next_step": "check for a relational export",
-   "notes": "",
+   "next_step": "none",
+   "notes": "occurrence table sampled one in ten; the taxon table is downloaded and could support a C5 view of the same provenance group",
    "publisher": "PBDB",
    "reason": "736 MB; denormalised tables are not native relations",
    "size": null,
    "source_url": "",
-   "status": "accessible_denormalised"
+   "status": "experiment_ready"
   },
   {
    "categories": [

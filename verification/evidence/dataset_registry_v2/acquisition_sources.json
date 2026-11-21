@@ -7798,6 +7798,39 @@
    "stratum": "C2b",
    "upstream": "first party: the land registry publishes the sales recorded on its register",
    "upstream_verified": true
+  },
+  {
+   "attribution": "cite the Paleobiology Database (data service, CC0) and the Zenodo archive 24274793 (Kocsis, Chronosphere)",
+   "files": [
+    {
+     "name": "pbdb_parquet.zip",
+     "observed": "2026-11-15",
+     "url": "https://zenodo.org/records/24274793/files/pbdb_parquet.zip?download=1"
+    },
+    {
+     "name": "pbdb_taxa_parquet.zip",
+     "observed": "2026-11-15",
+     "url": "https://zenodo.org/records/24274793/files/pbdb_taxa_parquet.zip?download=1"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_pbdb",
+   "licence_class": "open",
+   "licence_location": "https://paleobiodb.org/data1.2/occs/list.csv?occ_id=1&datainfo&rowcount",
+   "licence_text": "The PBDB data service itself states 'Data License: Creative Commons CC0' with the licence URL https://creativecommons.org/publicdomain/zero/1.0/; the Zenodo archive record 24274793 states cc-by-4.0",
+   "max_bytes": 262144000,
+   "method": "official Zenodo record download of the occurrence and taxon tables as Parquet zips (the archive of the PBDB API downloads of 2026-11-15)",
+   "min_interval": 3.0,
+   "privacy": "scientific records; contributor and enterer names are published fields and are dropped from the view",
+   "publisher": "The Paleobiology Database community (archived by A. T. Kocsis for the Chronosphere project)",
+   "rate_limit": "two sequential downloads",
+   "redistribution": "CC0 at the data service; raw files stay local",
+   "retries": 2,
+   "stratum": "C2a",
+   "upstream": "first party: the licence statement was read at the PBDB data service, the original producer of the records",
+   "upstream_verified": true
   }
  ]
 }

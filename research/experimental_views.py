@@ -2210,6 +2210,87 @@ def _build_ppd(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+PBDB_STRIDE = 10
+PBDB_TEXT = (
+    "accepted_rank", "phylum", "class", "order", "family", "early_interval", "late_interval", "cc",
+    "state", "latlng_basis", "geogscale", "formation", "geological_group", "lithology1",
+    "lithification1", "environment", "taxon_environment", "motility", "life_habit", "diet",
+    "collection_type", "tectonic_setting",
+)  # fmt: skip
+PBDB_NUMBER = (
+    "max_ma", "min_ma", "lng", "lat", "paleolng", "paleolat", "altitude_value", "ref_pubyr",
+)  # fmt: skip
+PBDB_COLUMNS = ("occurrence_no", *PBDB_TEXT, *PBDB_NUMBER)
+
+
+def pbdb_occurrence_view(raw: pd.DataFrame) -> pd.DataFrame:
+    """Fossil occurrences of the Paleobiology Database: taxonomy, age, place, rock and ecology.
+
+    Categorical columns stay text and numeric columns numbers (unreadable values become missing).
+    Names of contributors, free-text comments and identifier columns are not kept. A file that lacks
+    one of the columns is an error.
+    """
+    missing = [c for c in PBDB_COLUMNS if c not in raw.columns]
+    if missing:
+        raise ViewError(f"columns not found: {missing}")
+    out = pd.DataFrame({"occurrence_no": pd.to_numeric(raw["occurrence_no"], errors="coerce")})
+    for column in PBDB_TEXT:
+        out[column] = raw[column].astype("string").str.strip().replace("", pd.NA)
+    for column in PBDB_NUMBER:
+        out[column] = pd.to_numeric(raw[column], errors="coerce")
+    return out.sort_values("occurrence_no", kind="stable").reset_index(drop=True)
+
+
+def _build_pbdb(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import tempfile
+
+    import parquet_reader as pr
+    from acquisition import extract_member, zip_members
+
+    raw = root / "zen_pbdb" / SNAPSHOT / "raw" / "pbdb_parquet.zip"
+    members = [m for m in zip_members(raw) if m["name"].endswith(".parquet")]
+    if len(members) != 1:
+        raise ViewError(f"expected one Parquet member, found {len(members)}")
+    folder = out / "zen_pbdb"
+    folder.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory() as scratch:
+        got = extract_member(
+            raw, members[0]["name"], Path(scratch), max_bytes=1 << 30, max_ratio=200
+        )
+        names = [c["name"] for c in pr.inspect(got["path"])["columns"]]
+        absent = [c for c in PBDB_COLUMNS if c not in names]
+        if absent:
+            raise ViewError(f"columns not found: {absent}")
+        frame, record = pr.read_sample(
+            got["path"], columns=list(PBDB_COLUMNS), max_rows=10**7, stride=PBDB_STRIDE
+        )
+    view = pbdb_occurrence_view(frame)
+    target = folder / "occurrences.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "zen_pbdb",
+        {"occurrences.csv": (target, len(view))},
+        dropped=[
+            "contributor and enterer names",
+            "free-text comments",
+            "identifier columns",
+            "image and reference text",
+        ],
+        pseudonymised=[],
+        sampling={
+            "method": f"one row in {PBDB_STRIDE} of the occurrence table in file order (the order of entry), not random",  # noqa: E501
+            "stride": PBDB_STRIDE,
+            "rows_read": record["rows_read"],
+            "rows_kept": record["rows_kept"],
+            "source_rows": record["source_rows"],
+            "truncated": record["truncated"],
+            "member": members[0]["name"],
+        },
+        source_snapshot=f"zen_pbdb/{SNAPSHOT}",
+    )
+
+
 RETAIL_COLUMNS = (
     "timestamp", "invoice", "stock_code", "quantity", "unit_price", "line_value", "customer",
     "country", "cancellation",
@@ -2379,6 +2460,7 @@ BUILD_STEPS = (
     _build_dvf,
     _build_ppd,
     _build_retail,
+    _build_pbdb,
     _build_flat,
     _build_series,
     _build_ukspend,

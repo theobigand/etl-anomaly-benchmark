@@ -405,3 +405,32 @@ def test_pseudonymisation_leaves_blank_and_missing_values_as_they_are(tmp_path, 
         "k"
     ].tolist()[1] in ("", "nan")
     assert table["k"].iloc[0] != "1" and table["k"].iloc[2] != "3"
+
+
+def test_pbdb_builder_needs_exactly_one_parquet_member_and_all_columns(tmp_path):
+    raw = tmp_path / "acquired" / "zen_pbdb" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    frame = tev._pbdb_frame()
+    pq.write_table(pa.Table.from_pandas(frame, preserve_index=False), tmp_path / "o.parquet")
+    pq.write_table(
+        pa.Table.from_pandas(frame.drop(columns=["lat"]), preserve_index=False),
+        tmp_path / "n.parquet",
+    )
+    with zipfile.ZipFile(raw / "pbdb_parquet.zip", "w") as z:
+        z.write(tmp_path / "o.parquet", "a.parquet")
+        z.write(tmp_path / "o.parquet", "b.parquet")
+    with pytest.raises(ev.ViewError, match="expected one Parquet member, found 2"):
+        ev._build_pbdb(tmp_path / "acquired", tmp_path / "o", {})
+    with zipfile.ZipFile(raw / "pbdb_parquet.zip", "w") as z:
+        z.write(tmp_path / "n.parquet", "a.parquet")
+    with pytest.raises(ev.ViewError, match="columns not found: .*'lat'"):
+        ev._build_pbdb(tmp_path / "acquired", tmp_path / "o", {})
+    with zipfile.ZipFile(raw / "pbdb_parquet.zip", "w") as z:
+        z.write(tmp_path / "o.parquet", "a.parquet")
+    manifest: dict = {}
+    ev._build_pbdb(tmp_path / "acquired", tmp_path / "o", manifest)
+    assert manifest["zen_pbdb"]["sampling"]["stride"] == ev.PBDB_STRIDE == 10
+    assert (
+        manifest["zen_pbdb"]["sampling"]["rows_kept"] == 1
+        and manifest["zen_pbdb"]["sampling"]["member"] == "a.parquet"
+    )

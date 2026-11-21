@@ -1966,6 +1966,13 @@
   },
   {
    "failed": null,
+   "group": "paleobiology_database",
+   "id": "zen_pbdb",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2133,6 +2140,7 @@
    "uci:942"
   ],
   "C2a": [
+   "paleobiology_database",
    "uci:101",
    "uci:19",
    "uci:22",
@@ -2233,13 +2241,13 @@
    "structurally_valid": 52
   },
   "C2a": {
-   "acquired": 38,
-   "discovered": 38,
-   "experiment_ready": 12,
-   "protocol_ready": 12,
-   "rights_verified": 38,
-   "scientifically_eligible": 12,
-   "structurally_valid": 12
+   "acquired": 39,
+   "discovered": 39,
+   "experiment_ready": 13,
+   "protocol_ready": 13,
+   "rights_verified": 39,
+   "scientifically_eligible": 13,
+   "structurally_valid": 13
   },
   "C2b": {
    "acquired": 13,

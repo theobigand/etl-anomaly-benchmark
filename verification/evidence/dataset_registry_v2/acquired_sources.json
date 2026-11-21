@@ -4430,6 +4430,26 @@
    "stratum": "C2b",
    "system": "uci_online_retail",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "pbdb",
+   "id": "zen_pbdb",
+   "licence_class": "open",
+   "protocols": "P-TAB on fossil occurrence rows (categorical, numeric and missing-value faults, duplicates)",
+   "publisher": "paleobiology_database",
+   "reason": "Paleobiology Database occurrences (Zenodo archive 24274793 of the PBDB API download of 2026-11-15): every tenth of 2,011,062 occurrences in file order, 31 columns (22 categorical with up to 13,479 levels, 9 numeric), taxonomy, geological age, place, rock and ecology; contributor names and free text dropped. The PBDB data service states CC0. A palaeontology registry, a domain absent from the corpus",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC0 stated by the PBDB data service (original producer) and cc-by-4.0 on the archive record",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "zen_pbdb",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

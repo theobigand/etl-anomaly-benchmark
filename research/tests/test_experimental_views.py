@@ -1008,6 +1008,16 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _w(root / "hmlr_price_paid" / SNAP / "raw" / "pp-2024_head.csv", PPD_HEAD)
     (tmp_path / "uci_wave2").mkdir(exist_ok=True)
     _retail_frame().to_csv(tmp_path / "uci_wave2" / "352.csv", index=False)
+    import pyarrow as _pa
+    import pyarrow.parquet as _pq
+
+    pb = root / "zen_pbdb" / SNAP / "raw"
+    pb.mkdir(parents=True)
+    _pq.write_table(
+        _pa.Table.from_pandas(_pbdb_frame(), preserve_index=False), tmp_path / "pb.parquet"
+    )
+    with _zc.ZipFile(pb / "pbdb_parquet.zip", "w") as _p:
+        _p.write(tmp_path / "pb.parquet", "pbdb_occs.parquet")
     monkeypatch.setattr(ev, "EA_STATIONS", ["s"])
     _w(
         root / "ea_hydrology_flow" / SNAP / "raw" / "flow_s.csv",
@@ -1018,7 +1028,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -3111,3 +3121,34 @@ def test_the_retail_builder_keeps_codes_with_leading_zeros_as_text(tmp_path):
     assert (
         out["quantity"].tolist().count("6.0") == 2
     )  # numbers were parsed by the view, not the reader
+
+
+# --- Paleobiology Database occurrences ---------------------------------------------------------------  # noqa: E501
+
+
+def _pbdb_frame():
+    base = {c: ["x", " Mammalia ", "", None] for c in ev.PBDB_TEXT}
+    base.update({c: ["1.5", "bad", "3", None] for c in ev.PBDB_NUMBER})
+    base["occurrence_no"] = ["30", "10", "20", "x"]
+    base["enterer"] = ["a person", "b", "c", "d"]  # contributor names must not reach the view
+    base["collection_aka"] = ["free text"] * 4
+    return pd.DataFrame(base)
+
+
+def test_pbdb_view_keeps_the_named_columns_trims_text_and_turns_unreadable_numbers_into_missing():
+    out = ev.pbdb_occurrence_view(_pbdb_frame())
+    assert list(out.columns) == list(ev.PBDB_COLUMNS) and ev.PBDB_COLUMNS[0] == "occurrence_no"
+    assert out["occurrence_no"].iloc[:3].tolist() == [10, 20, 30] and pd.isna(
+        out["occurrence_no"].iloc[3]
+    )
+    assert out["class"].tolist() == [
+        "Mammalia",
+        pd.NA,
+        "x",
+        pd.NA,
+    ]  # trimmed; blank and missing both missing
+    assert out.loc[out["occurrence_no"] == 10, "max_ma"].isna().all()
+    assert out.loc[out["occurrence_no"] == 30, "max_ma"].iloc[0] == 1.5
+    assert "enterer" not in out and "collection_aka" not in out
+    with pytest.raises(ev.ViewError, match="columns not found: .*'lat'"):
+        ev.pbdb_occurrence_view(_pbdb_frame().drop(columns=["lat"]))

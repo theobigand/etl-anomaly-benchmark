@@ -212,8 +212,19 @@ def _tables_zip(root, tmp):
         z.writestr("d/ratings.csv", "userId,movieId,rating\n1,1,5\n1,3,4\n")
 
 
+def _pbdb(root, tmp):
+    raw = root / "zen_pbdb" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    frame = pd.concat([tev._pbdb_frame().iloc[:3]] * 2, ignore_index=True)
+    frame["occurrence_no"] = ["6", "5", "4", "3", "2", "1"]
+    pq.write_table(pa.Table.from_pandas(frame, preserve_index=False), tmp / "o.parquet")
+    with zipfile.ZipFile(raw / "pbdb_parquet.zip", "w") as z:
+        z.write(tmp / "o.parquet", "pbdb_occs.parquet")
+
+
 CASES = {
     "surf": (_surf, ev._build_surf, ["zen_surf_lisa_slurm"], {}),
+    "pbdb": (_pbdb, ev._build_pbdb, ["zen_pbdb"], {"PBDB_STRIDE": 2}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),
     "metropt": (_metropt, ev._build_metropt, ["zen_metropt2"], {}),
     "openlibrary": (_openlibrary, ev._build_openlibrary, ["openlibrary_dump"], {"OPENLIBRARY_MODULO": 1}),  # noqa: E501

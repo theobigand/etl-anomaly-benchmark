@@ -291,6 +291,35 @@
    "source_snapshot": "zen_rki_* records of 2026-11-21 (the series are revised by the publisher)"
   }
  },
+ "pbdb": {
+  "zen_pbdb": {
+   "dropped": [
+    "contributor and enterer names",
+    "free-text comments",
+    "identifier columns",
+    "image and reference text"
+   ],
+   "files": {
+    "occurrences.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "occurrences.csv": "occurrence_no,accepted_rank,phylum,class,order,family,early_interval,late_interval,cc,state,latlng_basis,geogscale,forma"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "member": "pbdb_occs.parquet",
+    "method": "one row in 2 of the occurrence table in file order (the order of entry), not random",
+    "rows_kept": 3,
+    "rows_read": 6,
+    "source_rows": 6,
+    "stride": 2,
+    "truncated": false
+   },
+   "source_snapshot": "zen_pbdb/2026-11-21"
+  }
+ },
  "surf": {
   "zen_surf_lisa_slurm": {
    "dropped": [

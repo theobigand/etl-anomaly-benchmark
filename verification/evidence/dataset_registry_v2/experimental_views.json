@@ -3394,6 +3394,31 @@
   },
   "source_snapshot": "zen_metropt2/2026-11-21 (fragment)"
  },
+ "zen_pbdb": {
+  "dropped": [
+   "contributor and enterer names",
+   "free-text comments",
+   "identifier columns",
+   "image and reference text"
+  ],
+  "files": {
+   "occurrences.csv": {
+    "rows": 201107,
+    "sha256": "cd3b11ceda7195c5c640d8e49ce4c93b74517508e88bf317183f659e3ac25791"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "member": "pbdb_occs.parquet",
+   "method": "one row in 10 of the occurrence table in file order (the order of entry), not random",
+   "rows_kept": 201107,
+   "rows_read": 2011062,
+   "source_rows": 2011062,
+   "stride": 10,
+   "truncated": false
+  },
+  "source_snapshot": "zen_pbdb/2026-11-21"
+ },
  "zen_surf_lisa_slurm": {
   "dropped": [
    "node host names"
