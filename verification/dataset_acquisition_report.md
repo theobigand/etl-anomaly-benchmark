@@ -903,3 +903,43 @@ case-insensitive file system cannot distinguish, about 19 are numeric size limit
 text of error or note strings, and the rest are keyword arguments of file writes and pandas calls; none is approved as equivalent.
 `acquisition.py` and `xes_stream.py` figures predate this update's work and the modules were not changed. The first `provenance_audit.py`
 runs in this session were below the threshold and were fixed by tests and by removing dead branches and per-function path edits.
+
+
+## Update 14: final pilot design, view-builder mutation and portability (2026-11-21)
+
+**Pilot design** (`variance_pilot_design.md` section 11, design only, no detector run): primary alert budget 1 percent of the eligible test
+units of a source and problem (sensitivity 0.5, 2 and 5 percent), integer allowance floor(B x N) shared by paired detectors, no
+minimum-one-alert exception, deterministic tie-break, handling of detectors without scores, the budget-prevalence ceiling on recall;
+AUPRC reported as average precision with an operating-characteristics standardisation at the reference prevalence of 1 percent
+(sensitivity 0.5 and 5 percent) only where its assumptions hold; an audit of F1 to F5 that finds F4 redundant at a matched budget (false
+positives are the budget minus true positives), F3 outside the matched-budget estimand, and F2 dependent on a best-learner choice that
+may not use confirmatory data (two prespecified options, a fixed representative per family or a validation-only rule); corrected proposal
+of at most 11 confirmatory comparisons (F1 3, F2 5, F5 3) instead of 16. Pilot of 16 distinct provenance groups by a seeded,
+domain-aware allocation (`plan_pilot`, seed 20261121, evidence `pilot_plan_dry_run.json`): pilot / holdout per category C1 7/45, C2a 2/10, C2b 2/9,
+C3 2/9, C4 2/11, C5 3/17, C6 2/7, 103 holdout groups in total; the 24-group alternative takes its 8 extra groups from C1. Category-level
+confirmatory claims are not supported by holdouts of 7 to 17 groups (one comparison at sigma 0.10 and a difference of 0.05 needs 34); a pooled claim
+over the holdout (about 30 to 38 effective groups under hypothetical schema-family correlations of 0.5 and 0.2) is conditional on the pilot SD, the design effect, the number
+of Holm comparisons and a heterogeneity check.
+
+**Mutation of the view builders.** The 37 new or changed functions of `experimental_views.py` were measured at 2636 of 2892 (91.2 percent) on the
+development file system, which is case-insensitive. Tests were then added for the helpers and builders (types, limits, decoy archive
+members, unreadable-file counts, XES trace limits and modulo, quoting and pseudonymisation of blank values, header lines of every written file, resolution
+of sibling imports at import time instead of per builder) and the measurement was repeated with the tests running on a case-sensitive APFS
+volume: 2767 of 2892 killed (95.7 percent), 112 survived, 13 suspicious; the threshold of 95 percent is met in this focused measurement. The
+same tests pass on both file systems, so the code is portable to case-sensitive systems; the earlier upper-case path survivors were an artefact of the
+case-insensitive volume, not of missing tests. The remaining survivors are keyword arguments with no effect in pandas for multi-key sorts
+(`kind`), `index=None` writes, `low_memory`, and a few message strings; none is approved as equivalent. This is development evidence, not release certification.
+
+**Coverage** (readiness contract; unclassified areas not counted):
+
+| Category | Ready groups | Quota | Gap | Domains | Families | Largest family (share) |
+|---|---|---|---|---|---|---|
+| C1 | 52 | 36 | 0 | 7 | 4 | computational or derived features (0.2885) |
+| C2a | 12 | 30 | 18 | 6 | 4 | administrative or survey records (0.25) |
+| C2b | 11 | 30 | 19 | 7 | 7 | contract award (0.2727) |
+| C3 | 11 | 40 | 29 | 11 | 10 | urban mobility counts (0.1818) |
+| C4 | 13 | 28 | 15 | 10 | 4 | business process execution (0.5385) |
+| C5 | 20 | 36 | 16 | 7 | 7 | timetable network (0.6) |
+| C6 | 9 | 30 | 21 | 7 | 6 | procurement release (0.3333) |
+
+119 provenance groups, 45 domains, 21 curators, 27 schema families. No new group was added in this update.
