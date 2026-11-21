@@ -1,0 +1,360 @@
+{
+ "aegis": {
+  "zen_aegis_vehicle": {
+   "dropped": [
+    "positions",
+    "gyroscopes",
+    "accelerations",
+    "absolute dates and times",
+    "trip dates",
+    "vehicle names"
+   ],
+   "files": {
+    "obd.csv": {
+     "rows": 1
+    }
+   },
+   "notes": "one driver and one vehicle (35 trips); relative time inside each trip only",
+   "pseudonymised": [],
+   "source_snapshot": "zen_aegis_vehicle/2026-11-21"
+  }
+ },
+ "borg": {
+  "google_cluster_2019a": {
+   "dropped": [
+    "user",
+    "collection_name",
+    "collection_logical_name",
+    "constraint",
+    "alloc fields"
+   ],
+   "files": {
+    "collection_events.csv": {
+     "rows": 25
+    },
+    "instance_events.csv": {
+     "rows": 25
+    }
+   },
+   "fragments": {
+    "collection_events_head.json.gz": {
+     "lines_read": 33,
+     "stream_complete": false
+    },
+    "instance_events_head.json.gz": {
+     "lines_read": 40,
+     "stream_complete": true
+    }
+   },
+   "pseudonymised": [],
+   "sampling": "prefix of one shard in file order (first 25 lines of each fragment), not random",
+   "source_snapshot": "google_cluster_2019a/2026-11-21"
+  }
+ },
+ "clue": {
+  "zen_clue_lds": {
+   "dropped": [
+    "params (paths, groups)",
+    "location",
+    "uidType"
+   ],
+   "files": {
+    "events.csv": {
+     "rows": 100
+    }
+   },
+   "pseudonymised": [
+    "user"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "events_kept": 100,
+    "events_read": 251,
+    "method": "zip prefix of clue.json (HTTP range from byte 0), first events in log order; not random",
+    "stream_complete": false
+   },
+   "source_snapshot": "zen_clue_lds/2026-11-21 (fragment)"
+  }
+ },
+ "csv_events": {
+  "4tu_csv": {
+   "dropped": [
+    "all columns except case, activity, time, sequence and resource"
+   ],
+   "files": {
+    "events.csv": {
+     "rows": 2
+    }
+   },
+   "pseudonymised": [
+    "resource"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "cases": 1,
+    "cases_kept": 1,
+    "mapping": {
+     "activity": "Type",
+     "case": "Incident ID",
+     "order": "Num",
+     "resource": "Group",
+     "time": "Stamp"
+    },
+    "modulo": 1,
+    "rows": 2,
+    "rows_without_activity": 0,
+    "rows_without_time": 0
+   },
+   "source_snapshot": "4tu_csv/2026-11-21"
+  }
+ },
+ "dvf": {
+  "dgfip_dvf": {
+   "dropped": [
+    "address, street code, parcel ids, volume and lot numbers, coordinates"
+   ],
+   "files": {
+    "sales.csv": {
+     "rows": 4
+    }
+   },
+   "pseudonymised": [
+    "mutation"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "rows": 4,
+    "rows_without_value": 1,
+    "scope": "department 69 (Rhone), transactions of 2024 only"
+   },
+   "source_snapshot": "dgfip_dvf/2026-11-21"
+  }
+ },
+ "ea": {
+  "ea_hydrology_flow": {
+   "dropped": [
+    "measure URL",
+    "dateTime",
+    "quality code text"
+   ],
+   "files": {
+    "flow.csv": {
+     "rows": 3
+    }
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "complete_share": 0.6667,
+    "method": "daily mean flow of stations chosen as an even stride over the sorted measure list",
+    "missing_value_share": 0.3333,
+    "rows_dropped": 0,
+    "stations": 2
+   },
+   "source_snapshot": "ea_hydrology_flow/2026-11-21"
+  }
+ },
+ "fugaku": {
+  "zen_fdata_fugaku": {
+   "dropped": [
+    "user",
+    "job name",
+    "job id",
+    "text embedding",
+    "job environment string"
+   ],
+   "files": {
+    "jobs.csv": {
+     "rows": 3
+    }
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "all rows of one monthly Parquet file (2021-04); the other months were not fetched",
+    "rows_read": 3,
+    "source_rows": 3,
+    "truncated": false
+   },
+   "source_snapshot": "zen_fdata_fugaku/2026-11-21"
+  }
+ },
+ "met": {
+  "met_museum_objects": {
+   "dropped": [
+    "artistDisplayBio",
+    "primaryImage",
+    "primaryImageSmall",
+    "additionalImages"
+   ],
+   "files": {
+    "objects.jsonl": {
+     "rows": 3
+    }
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "object ids chosen as an even stride over the sorted listing, not random",
+    "object_files": 4,
+    "unreadable": 1
+   },
+   "source_snapshot": "met_museum_objects/2026-11-21"
+  }
+ },
+ "metropt": {
+  "zen_metropt2": {
+   "dropped": [
+    "GPS position, speed and quality columns"
+   ],
+   "files": {
+    "series.csv": {
+     "rows": 2
+    }
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "bytes_cut_partial_line": 21,
+    "method": "time-ordered prefix of the CSV (HTTP range from byte 0), not random",
+    "rows_dropped": 0
+   },
+   "source_snapshot": "zen_metropt2/2026-11-21 (fragment)"
+  }
+ },
+ "openlibrary": {
+  "openlibrary_dump": {
+   "dropped": [
+    "notes",
+    "description",
+    "first_sentence",
+    "table_of_contents"
+   ],
+   "files": {
+    "editions.jsonl": {
+     "rows": 19
+    }
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "lines_read": 19,
+    "lines_skipped": 0,
+    "method": "gzip prefix of the editions dump in key-text order, then one record in 1 by key hash; not a random sample of the catalogue",
+    "modulo": 1,
+    "stream_complete": false
+   },
+   "source_snapshot": "openlibrary_dump/2026-11-21 (dump of 2026-10-31, fragment)"
+  }
+ },
+ "panels": {
+  "panels": {
+   "dropped": [],
+   "files": {
+    "p.csv": {
+     "rows": 2
+    }
+   },
+   "pseudonymised": [],
+   "rows_dropped": {
+    "p": 1
+   },
+   "source_snapshot": "zen_rki_* records of 2026-11-21 (the series are revised by the publisher)"
+  }
+ },
+ "surf": {
+  "zen_surf_lisa_slurm": {
+   "dropped": [
+    "node host names"
+   ],
+   "files": {
+    "jobs.csv": {
+     "rows": 2
+    }
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "member": "slurm_table_cleaned.parquet/part-00003-x.snappy.parquet",
+    "method": "one row in 8 of the only non-empty Parquet part, from the first, in file order",
+    "rows_kept": 2,
+    "rows_read": 12,
+    "source_rows": 12,
+    "stride": 8,
+    "truncated": false
+   },
+   "source_snapshot": "zen_surf_lisa_slurm/2026-11-21"
+  }
+ },
+ "tables_zip": {
+  "src_zip": {
+   "dropped": [
+    "title"
+   ],
+   "files": {
+    "movies.csv": {
+     "rows": 2
+    },
+    "ratings.csv": {
+     "rows": 2
+    }
+   },
+   "notes": "relations are the source's own keys; orphans are natural incompleteness of the published extract; optional tables absent from the archive: calendar",
+   "pseudonymised": [],
+   "relations": [
+    {
+     "checked": 2,
+     "child": "ratings.movieId",
+     "orphans": 1,
+     "parent": "movies.movieId",
+     "share": 0.5
+    }
+   ],
+   "source_snapshot": "src_zip/2026-11-21"
+  }
+ },
+ "xes": {
+  "4tu_a": {
+   "dropped": [
+    "all trace and event attributes except activity, time, transition, resource and listed numbers"
+   ],
+   "files": {
+    "events.csv": {
+     "rows": 4
+    }
+   },
+   "pseudonymised": [
+    "resource"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "cases_kept": 3,
+    "cases_read": 3,
+    "modulo": 1,
+    "selection": "complete traces in log order, then one case in 1 by case-name hash; a prefix of the log is not a random sample",
+    "source_fragment": false,
+    "stop": "log_closed",
+    "stream_complete": true
+   },
+   "source_snapshot": "4tu_a/2026-11-21"
+  },
+  "4tu_b": {
+   "dropped": [
+    "all trace and event attributes except activity, time, transition, resource and listed numbers"
+   ],
+   "files": {
+    "events.csv": {
+     "rows": 3
+    }
+   },
+   "pseudonymised": [
+    "resource"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "cases_kept": 2,
+    "cases_read": 2,
+    "modulo": 1,
+    "selection": "complete traces in log order, then one case in 1 by case-name hash; a prefix of the log is not a random sample",
+    "source_fragment": true,
+    "stop": "input_ended_before_log_closed",
+    "stream_complete": false
+   },
+   "source_snapshot": "4tu_b/2026-11-21"
+  }
+ }
+}
