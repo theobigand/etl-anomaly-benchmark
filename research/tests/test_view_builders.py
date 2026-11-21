@@ -28,10 +28,17 @@ def _golden():
     return json.loads(GOLDEN_FILE.read_text()) if GOLDEN_FILE.exists() else {}
 
 
-def _stripped(entry):
-    """A manifest entry without checksums: the row counts, facts and sampling records."""
+def _stripped(entry, folder=None):
+    """A manifest entry without checksums: row counts, facts, sampling records and, when the
+    folder is given, the header line of every written file (so column order and no index column
+    are part of the contract)."""
     out = dict(entry)
     out["files"] = {name: {"rows": f["rows"]} for name, f in entry["files"].items()}
+    if folder is not None:
+        out["heads"] = {
+            name: (folder / name).read_text().split("\n", 1)[0][:120]
+            for name in sorted(entry["files"])
+        }
     return out
 
 
@@ -46,7 +53,7 @@ def _check(name, builder, root, out, views, monkeypatch=None):
         for fname, entry in first[view]["files"].items():
             folder = out / view
             assert entry["sha256"] == tev._sha(folder / fname)
-        result[view] = _stripped(first[view])
+        result[view] = _stripped(first[view], out / view)
     expected = _golden().get(name)
     if expected is None:
         GENERATED[name] = result

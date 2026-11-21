@@ -14,6 +14,9 @@
      "rows": 1
     }
    },
+   "heads": {
+    "obd.csv": "trip_id,t_s,pid_0C"
+   },
    "notes": "one driver and one vehicle (35 trips); relative time inside each trip only",
    "pseudonymised": [],
    "source_snapshot": "zen_aegis_vehicle/2026-11-21"
@@ -46,6 +49,10 @@
      "stream_complete": true
     }
    },
+   "heads": {
+    "collection_events.csv": "collection_id,time_us,type,collection_type,priority,scheduling_class,scheduler,vertical_scaling",
+    "instance_events.csv": "collection_id,instance_index,time_us,type,collection_type,priority,scheduling_class,machine_id,cpus,memory"
+   },
    "pseudonymised": [],
    "sampling": "prefix of one shard in file order (first 25 lines of each fragment), not random",
    "source_snapshot": "google_cluster_2019a/2026-11-21"
@@ -62,6 +69,9 @@
     "events.csv": {
      "rows": 100
     }
+   },
+   "heads": {
+    "events.csv": "event_id,time,user,type,role,is_local_ip"
    },
    "pseudonymised": [
     "user"
@@ -85,6 +95,9 @@
     "events.csv": {
      "rows": 2
     }
+   },
+   "heads": {
+    "events.csv": "case_id,position,time,activity,transition,resource"
    },
    "pseudonymised": [
     "resource"
@@ -118,6 +131,9 @@
      "rows": 4
     }
    },
+   "heads": {
+    "sales.csv": "mutation,date,nature,value_eur,commune,local_type,built_area_m2,rooms,land_area_m2"
+   },
    "pseudonymised": [
     "mutation"
    ],
@@ -141,6 +157,9 @@
     "flow.csv": {
      "rows": 3
     }
+   },
+   "heads": {
+    "flow.csv": "timestamp,station,value"
    },
    "pseudonymised": [],
    "sampling": {
@@ -167,6 +186,9 @@
      "rows": 3
     }
    },
+   "heads": {
+    "jobs.csv": "submit_ts,wait_s,runtime_s,cores_req,cores_alloc,nodes_req,nodes_alloc,exit_code,time_limit_s,priority,energy,avg_power,"
+   },
    "pseudonymised": [],
    "sampling": {
     "method": "all rows of one monthly Parquet file (2021-04); the other months were not fetched",
@@ -190,6 +212,9 @@
      "rows": 3
     }
    },
+   "heads": {
+    "objects.jsonl": "{\"objectID\": 5, \"title\": \"t5\"}"
+   },
    "pseudonymised": [],
    "sampling": {
     "method": "object ids chosen as an even stride over the sorted listing, not random",
@@ -208,6 +233,9 @@
     "series.csv": {
      "rows": 2
     }
+   },
+   "heads": {
+    "series.csv": "timestamp,TP2"
    },
    "pseudonymised": [],
    "sampling": {
@@ -231,6 +259,9 @@
      "rows": 19
     }
    },
+   "heads": {
+    "editions.jsonl": "{\"authors\": [{\"key\": \"/authors/OL1A\"}], \"key\": \"/books/OL10M\", \"title\": \"t10\", \"type\": {\"key\": \"/type/edition\"}}"
+   },
    "pseudonymised": [],
    "sampling": {
     "lines_read": 19,
@@ -250,6 +281,9 @@
      "rows": 2
     }
    },
+   "heads": {
+    "p.csv": "timestamp,syndrome,n"
+   },
    "pseudonymised": [],
    "rows_dropped": {
     "p": 1
@@ -266,6 +300,9 @@
     "jobs.csv": {
      "rows": 2
     }
+   },
+   "heads": {
+    "jobs.csv": "job_id,submit_ts,wait_s,runtime_s,nodes,cores,node_type,state"
    },
    "pseudonymised": [],
    "sampling": {
@@ -293,6 +330,10 @@
      "rows": 2
     }
    },
+   "heads": {
+    "movies.csv": "movieId,genres",
+    "ratings.csv": "userId,movieId"
+   },
    "notes": "relations are the source's own keys; orphans are natural incompleteness of the published extract; optional tables absent from the archive: calendar",
    "pseudonymised": [],
    "relations": [
@@ -317,6 +358,9 @@
      "rows": 4
     }
    },
+   "heads": {
+    "events.csv": "case_id,position,time,activity,transition,resource,amount"
+   },
    "pseudonymised": [
     "resource"
    ],
@@ -340,6 +384,9 @@
     "events.csv": {
      "rows": 3
     }
+   },
+   "heads": {
+    "events.csv": "case_id,position,time,activity,transition,resource"
    },
    "pseudonymised": [
     "resource"

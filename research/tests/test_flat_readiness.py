@@ -460,3 +460,60 @@ def test_the_representative_choice_is_none_for_a_group_whose_only_tables_are_ine
     mixed = [{"id": "a", "group": "g", "stratum": "C1", "rows": 5, "reasons": ["r"]},
              {"id": "b", "group": "g", "stratum": "C1", "rows": 3, "reasons": []}]  # fmt: skip
     assert fr.representatives(mixed)[("g", "C1")]["id"] == "b"
+
+
+def test_main_uses_the_default_evidence_folder_and_writes_canonical_json(tmp_path, monkeypatch):
+    import json
+
+    import dataset_catalog as dc
+
+    root, evidence, rows = _tree(tmp_path)
+    monkeypatch.setattr(dc, "stratum_rows", lambda: rows)
+    monkeypatch.setattr(fr, "__file__", str(root / "research" / "flat_readiness.py"))
+    assert fr.main([]) == 0  # no --dir: the evidence folder next to the package
+    for name in ("acquired_sources.json", "readiness_facts.json", "flat_selection.json"):
+        text = (evidence / name).read_text()
+        assert text == json.dumps(json.loads(text), indent=1, sort_keys=True) + "\n"
+    assert json.loads((evidence / "flat_selection.json").read_text())["checksum_mismatch"] == [
+        "uci:4"
+    ]
+
+
+def test_a_table_is_found_in_the_pool_folder_before_the_wave_two_folder_and_the_stratum_order_is_stable():  # noqa: E501
+    import tempfile
+    from pathlib import Path
+
+    with tempfile.TemporaryDirectory() as folder:
+        root = Path(folder)
+        (root / "data" / "pool").mkdir(parents=True)
+        (root / "data" / "uci_wave2").mkdir(parents=True)
+        assert fr._has_file(lambda s: (_ for _ in ()).throw(FileNotFoundError(s)), "uci:1") is False
+        assert fr._has_file(lambda s: root, "uci:1") is True
+
+
+def test_reasons_of_several_tables_are_joined_with_semicolons_and_commas_in_the_rejection_text():
+    tables = [
+        {"id": "a", "source": "a", "group": "g", "stratum": "C1", "rows": 10, "licence": "x", "licence_class": "open",  # noqa: E501
+         "name": "A", "profile": {"usable": 1, "missing_share": 0.0}, "reasons": ["r1", "r2"]},
+        {"id": "b", "source": "b", "group": "g", "stratum": "C1", "rows": 20, "licence": "x", "licence_class": "open",  # noqa: E501
+         "name": "B", "profile": {"usable": 1, "missing_share": 0.0}, "reasons": ["r3"]},
+    ]  # fmt: skip
+    entries, facts, views = fr.register(tables)
+    assert entries[0]["reason"] == "no eligible table: a: r1, r2; b: r3"
+    assert facts == {} and views == []
+
+
+def test_a_source_missing_from_the_metadata_has_no_area_name_or_demographics():
+    tables = fr.assess(_rows()[:1], {}, {"uci:1": "CC BY 4.0"}, _loader)
+    assert tables[0]["area"] is None and tables[0]["name"] is None and tables[0]["reasons"] == []
+    assert tables[0]["group"] == "uci:1"
+
+
+def test_a_column_with_one_value_and_missing_values_is_constant_and_prepare_subsamples_at_stride_two():  # noqa: E501
+    f = pd.DataFrame({"a": [1.0, np.nan, 1.0, np.nan], "b": [1, 2, 3, 4]})
+    assert fr.profile(f)["constant"] == 1 and fr.prepare(f)[1]["dropped_constant"] == ["a"]
+    out, record = fr.prepare(_frame(11), max_rows=10)
+    assert record["stride"] == 2 and len(out) == 6 and record["rows_out"] == 6
+    assert out["a"].iloc[1] == _frame(11)["a"].iloc[2]
+    three, rec3 = fr.prepare(_frame(25), max_rows=10)
+    assert rec3["stride"] == 3 and len(three) == 9
