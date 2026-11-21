@@ -4410,6 +4410,26 @@
    "stratum": "C2b",
    "system": "hmlr_price_paid",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uci:352",
+   "id": "uci_online_retail",
+   "licence_class": "open",
+   "protocols": "P-TAB on invoice lines (price, quantity, date, duplicate and timestamp faults)",
+   "publisher": "uci:352",
+   "reason": "Online Retail (UCI 352, Daqing Chen, South Bank University): 541909 invoice lines of a UK online gift retailer, 2010-12 to 2011-12; descriptions dropped, invoice and customer salted; cancellations (invoice numbers starting with C) kept as published. Counts as a retail e-commerce transaction system, a different generating system from public procurement and land registers",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 stated on the repository page of the table",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "uci_online_retail",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

@@ -1959,6 +1959,13 @@
   },
   {
    "failed": null,
+   "group": "uci:352",
+   "id": "uci_online_retail",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2148,6 +2155,7 @@
    "italian_road_fines",
    "lyft_bikeshare",
    "montreal_contracts",
+   "uci:352",
    "uk_ledger_mhra",
    "uk_ledger_nhsbsa",
    "zambia_procurement"
@@ -2234,13 +2242,13 @@
    "structurally_valid": 12
   },
   "C2b": {
-   "acquired": 12,
-   "discovered": 18,
-   "experiment_ready": 12,
-   "protocol_ready": 12,
-   "rights_verified": 12,
-   "scientifically_eligible": 12,
-   "structurally_valid": 12
+   "acquired": 13,
+   "discovered": 19,
+   "experiment_ready": 13,
+   "protocol_ready": 13,
+   "rights_verified": 13,
+   "scientifically_eligible": 13,
+   "structurally_valid": 13
   },
   "C3": {
    "acquired": 16,

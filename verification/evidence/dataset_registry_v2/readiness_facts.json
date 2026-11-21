@@ -2424,6 +2424,23 @@
    "units": 35040,
    "view": "series"
   },
+  "uci_online_retail": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "full table in file order",
+    "negative quantities of cancelled invoices kept as published",
+    "about a quarter of the lines have no customer id",
+    "product description dropped"
+   ],
+   "first_party": false,
+   "independent_group": "uci:352",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the invoice date",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 541909,
+   "view": "uci_online_retail"
+  },
   "ukspend_mhra": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [

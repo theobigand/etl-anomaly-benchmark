@@ -3151,6 +3151,28 @@
   "salt_label": "etl-benchmark-views-v1",
   "source_snapshot": "stackexchange_dump/2026-11-21"
  },
+ "uci_online_retail": {
+  "dropped": [
+   "product description (free text)"
+  ],
+  "files": {
+   "lines.csv": {
+    "rows": 541909,
+    "sha256": "1cf15ba5316392e05c6785ff6e7bb9c00d38841c31a8a21fe304dfbd645fa1c5"
+   }
+  },
+  "pseudonymised": [
+   "invoice",
+   "customer"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "cancellations": 9288,
+   "rows_in": 541909,
+   "rows_without_customer": 135080
+  },
+  "source_snapshot": "uci:352 (repository file pinned by checksum)"
+ },
  "ukspend": {
   "dropped": [
    "Description",

@@ -943,3 +943,15 @@ case-insensitive volume, not of missing tests. The remaining survivors are keywo
 | C6 | 9 | 30 | 21 | 7 | 6 | procurement release (0.3333) |
 
 119 provenance groups, 45 domains, 21 curators, 27 schema families. No new group was added in this update.
+
+## Update 15: online retail added to the transactional category (2026-11-21)
+
+Online Retail (UCI 352, creator Daqing Chen, CC BY 4.0 stated on the repository page) was already downloaded and checksum-pinned in the second UCI
+wave but never entered the readiness contract: the transactional audit found it as the only table with an invoice key, a time column and event
+columns. A view builder (`retail_view`) now keeps 541,909 invoice lines with a salted invoice and customer, the item code, quantity, unit price,
+line value, country and a cancellation flag (invoice numbers starting with C, negative quantities kept as published); the free-text product
+description is dropped. It is registered as C2b under the provenance group `uci:352` (a retail e-commerce system, distinct from procurement and land
+registers). C2b rises from 11 to 12 ready groups (gap 18); global distinct provenance groups rise from 119 to 120. The other categories are unchanged. Source
+concentration: C2b is now 5 of 12 groups from public procurement and expenditure ledgers, 2 land registers, 1 bike-share, 1 road-fines log, 1 coatings
+process log and 1 retail system. Anomaly mechanisms available on the retail lines: price and quantity faults, duplicate invoices, timestamp
+faults; natural irregularities (cancellations, missing customer ids, negative quantities) stay baseline properties, not labels.
