@@ -1510,6 +1510,46 @@
    "stratum": "C4",
    "system": "surf_lisa_slurm",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "fugaku",
+   "id": "zen_fdata_fugaku",
+   "licence_class": "open",
+   "protocols": "P-TAB on jobs (duration, resource, power, state-code, duplicate and timestamp-order faults); natural failed jobs are a baseline",
+   "publisher": "fugaku_riken",
+   "reason": "Fugaku (RIKEN R-CCS) job records of April 2021: 116977 jobs, 88 percent completed and 12 percent failed (natural outcomes), 30 days by submit time; user, job name and text embedding dropped; co-published with the operator; only one of 37 monthly files fetched",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 on the Zenodo record; the operator (RIKEN R-CCS) is a creator",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "fugaku_jobs",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "metropt",
+   "id": "zen_metropt2",
+   "licence_class": "open",
+   "protocols": "P-TS by controlled injection; no labelled failure intervals are used",
+   "publisher": "metropt_porto",
+   "reason": "MetroPT2 metro-compressor sensor series, first 4.5 days of a 1.2 GB CSV obtained by HTTP range (373470 rows at about one per second, 6 gaps above one minute, longest 4.5 hours); GPS columns dropped; prefix in time order, not random",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 on the Zenodo record; the data were collected by the authors' project",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "metropt_compressor",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

@@ -1332,6 +1332,110 @@ def _build_surf(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+FUGAKU_COLUMNS = (
+    "submit_ts", "wait_s", "runtime_s", "cores_req", "cores_alloc", "nodes_req", "nodes_alloc",
+    "exit_code", "time_limit_s", "priority", "energy", "avg_power", "max_power", "mem_limit",
+    "mem_alloc", "mem_used", "pclass", "state",
+)  # fmt: skip
+
+
+def fugaku_jobs_view(raw: pd.DataFrame) -> pd.DataFrame:
+    """Fugaku job records: times, sizes, power, memory and outcome. User, job name, the text
+    embedding and the job environment string are dropped (the publisher anonymised them but they
+    are not experiment features)."""
+    need = ("adt", "sdt", "edt", "cnumr", "cnumat", "nnumr", "nnuma", "ec", "elpl", "pri", "econ",
+            "avgpcon", "maxpcon", "mszl", "msza", "mmszu", "pclass", "exit state")  # fmt: skip
+    absent = [c for c in need if c not in raw.columns]
+    if absent:
+        raise ViewError(f"column {absent[0]} not found")
+    submit, start, end = (pd.to_datetime(raw[c]) for c in ("adt", "sdt", "edt"))
+    out = pd.DataFrame(
+        {
+            "submit_ts": submit,
+            "wait_s": (start - submit).dt.total_seconds(),
+            "runtime_s": (end - start).dt.total_seconds(),
+            "cores_req": raw["cnumr"], "cores_alloc": raw["cnumat"],
+            "nodes_req": raw["nnumr"], "nodes_alloc": raw["nnuma"],
+            "exit_code": raw["ec"], "time_limit_s": raw["elpl"], "priority": raw["pri"],
+            "energy": raw["econ"], "avg_power": raw["avgpcon"], "max_power": raw["maxpcon"],
+            "mem_limit": raw["mszl"], "mem_alloc": raw["msza"], "mem_used": raw["mmszu"],
+            "pclass": raw["pclass"], "state": raw["exit state"],
+        }
+    )  # fmt: skip
+    return out.sort_values("submit_ts", kind="stable").reset_index(drop=True)
+
+
+def csv_prefix(blob: bytes) -> tuple[pd.DataFrame, int]:
+    """A CSV from the start of a file: only complete lines are parsed. Returns the table and the
+    number of bytes of the torn last line that were left out."""
+    import io
+
+    end = blob.rfind(b"\n") + 1
+    return pd.read_csv(io.BytesIO(blob[:end])), len(blob) - end
+
+
+METROPT_GPS = ("gpsLat", "gpsLong", "gpsSpeed", "gpsQuality")
+
+
+def metropt_view(raw: pd.DataFrame) -> pd.DataFrame:
+    """MetroPT2 sensor series in time order; the train's GPS columns are dropped."""
+    frame = raw.drop(columns=[c for c in METROPT_GPS if c in raw.columns])
+    return series_view(frame, {"time": ["timestamp"], "format": "%Y-%m-%d %H:%M:%S.%f"})
+
+
+def _build_fugaku(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import sys
+
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import parquet_reader as pr
+
+    source = root / "zen_fdata_fugaku" / SNAPSHOT / "raw" / "21_04.parquet"
+    names = [c["name"] for c in pr.inspect(source)["columns"] if c["name"] != "embedding"]
+    frame, record = pr.read_sample(source, columns=names, max_rows=10**7)
+    view = fugaku_jobs_view(frame)
+    folder = out / "zen_fdata_fugaku"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "jobs.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "zen_fdata_fugaku",
+        {"jobs.csv": (target, len(view))},
+        dropped=["user", "job name", "job id", "text embedding", "job environment string"],
+        pseudonymised=[],
+        sampling={
+            "method": "all rows of one monthly Parquet file (2021-04); the other months were not fetched",  # noqa: E501
+            "rows_read": record["rows_read"],
+            "source_rows": record["source_rows"],
+            "truncated": record["truncated"],
+        },
+        source_snapshot=f"zen_fdata_fugaku/{SNAPSHOT}",
+    )
+
+
+def _build_metropt(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    blob = (root / "zen_metropt2" / SNAPSHOT / "raw" / "MetroPT2_head.csv").read_bytes()
+    frame, cut = csv_prefix(blob)
+    view = metropt_view(frame)
+    folder = out / "zen_metropt2"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "series.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "zen_metropt2",
+        {"series.csv": (target, len(view))},
+        dropped=["GPS position, speed and quality columns"],
+        pseudonymised=[],
+        sampling={
+            "method": "time-ordered prefix of the CSV (HTTP range from byte 0), not random",
+            "bytes_cut_partial_line": cut,
+            "rows_dropped": view.attrs["rows_dropped"],
+        },
+        source_snapshot=f"zen_metropt2/{SNAPSHOT} (fragment)",
+    )
+
+
 SLURM_MODULO = 20
 SLURM_COLUMNS = (
     "jobid",
@@ -1420,6 +1524,8 @@ BUILD_STEPS = (
     _build_panels,
     _build_tables,
     _build_surf,
+    _build_fugaku,
+    _build_metropt,
     _build_series,
     _build_ukspend,
 )

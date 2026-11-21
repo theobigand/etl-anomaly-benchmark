@@ -832,6 +832,47 @@
   ],
   "source_snapshot": "zen_3pfl/2026-11-21"
  },
+ "zen_fdata_fugaku": {
+  "dropped": [
+   "user",
+   "job name",
+   "job id",
+   "text embedding",
+   "job environment string"
+  ],
+  "files": {
+   "jobs.csv": {
+    "rows": 116977,
+    "sha256": "8b31bf276caa3f12f4386f2ec615bcd3dba0bbcd555349f72350381decf945b1"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "all rows of one monthly Parquet file (2021-04); the other months were not fetched",
+   "rows_read": 116977,
+   "source_rows": 116977,
+   "truncated": false
+  },
+  "source_snapshot": "zen_fdata_fugaku/2026-11-21"
+ },
+ "zen_metropt2": {
+  "dropped": [
+   "GPS position, speed and quality columns"
+  ],
+  "files": {
+   "series.csv": {
+    "rows": 373470,
+    "sha256": "25cbc768b33b574e1963e8a6bfda72a8150546e132f4491bce8df90db66c6d3d"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "bytes_cut_partial_line": 35,
+   "method": "time-ordered prefix of the CSV (HTTP range from byte 0), not random",
+   "rows_dropped": 0
+  },
+  "source_snapshot": "zen_metropt2/2026-11-21 (fragment)"
+ },
  "zen_surf_lisa_slurm": {
   "dropped": [
    "node host names"

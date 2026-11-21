@@ -724,6 +724,20 @@
   },
   {
    "failed": null,
+   "group": "fugaku_riken",
+   "id": "zen_fdata_fugaku",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "metropt_porto",
+   "id": "zen_metropt2",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -849,6 +863,7 @@
    "candanedo_umons",
    "elder_home",
    "melbourne_pedestrian",
+   "metropt_porto",
    "rki_surveillance",
    "seoul_bike",
    "steel_korea",
@@ -856,6 +871,7 @@
   ],
   "C4": [
    "ccin2p3_slurm",
+   "fugaku_riken",
    "loghub_collection",
    "surf_lisa_slurm"
   ],
@@ -886,22 +902,22 @@
    "structurally_valid": 7
   },
   "C3": {
-   "acquired": 13,
-   "discovered": 35,
-   "experiment_ready": 10,
-   "protocol_ready": 10,
-   "rights_verified": 13,
-   "scientifically_eligible": 10,
-   "structurally_valid": 11
+   "acquired": 14,
+   "discovered": 36,
+   "experiment_ready": 11,
+   "protocol_ready": 11,
+   "rights_verified": 14,
+   "scientifically_eligible": 11,
+   "structurally_valid": 12
   },
   "C4": {
-   "acquired": 19,
-   "discovered": 19,
-   "experiment_ready": 18,
-   "protocol_ready": 18,
-   "rights_verified": 19,
-   "scientifically_eligible": 18,
-   "structurally_valid": 18
+   "acquired": 20,
+   "discovered": 20,
+   "experiment_ready": 19,
+   "protocol_ready": 19,
+   "rights_verified": 20,
+   "scientifically_eligible": 19,
+   "structurally_valid": 19
   },
   "C5": {
    "acquired": 13,

@@ -907,6 +907,38 @@
    "units": 50271,
    "view": "zen_3pfl"
   },
+  "zen_fdata_fugaku": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "April 2021 only, one of 37 monthly files",
+    "88 percent completed, 12 percent failed (natural)",
+    "one supercomputer"
+   ],
+   "first_party": true,
+   "independent_group": "fugaku_riken",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on submit time",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 116977,
+   "view": "zen_fdata_fugaku"
+  },
+  "zen_metropt2": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "first 4.5 days of the series (range prefix)",
+    "6 gaps above one minute, longest 4.5 hours",
+    "COMP and digital signals are natural states"
+   ],
+   "first_party": true,
+   "independent_group": "metropt_porto",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the timestamp",
+   "privacy": "handled",
+   "protocol_id": "P-TS",
+   "units": 373470,
+   "view": "zen_metropt2"
+  },
   "zen_surf_lisa_slurm": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [

@@ -964,12 +964,20 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     )
     with _zf.ZipFile(surf / "slurm_table_cleaned.zip", "w") as _z:
         _z.write(tmp_path / "s.parquet", "d.parquet/part-00001-x.parquet")
+    fz = root / "zen_fdata_fugaku" / SNAP / "raw"
+    fz.mkdir(parents=True)
+    _pq.write_table(
+        _pa.Table.from_pandas(_fdata_frame(), preserve_index=False), fz / "21_04.parquet"
+    )
+    mz = root / "zen_metropt2" / SNAP / "raw"
+    mz.mkdir(parents=True)
+    (mz / "MetroPT2_head.csv").write_bytes(b"timestamp,TP2\n2022-04-28 12:33:29.120,1.0\n")
     out = tmp_path / "out"
     manifest = ev.build(root, out)
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -2235,3 +2243,100 @@ def test_the_surf_builder_extracts_the_zipped_part_samples_with_a_stride_and_rec
         "member": "slurm_table_cleaned.parquet/part-00003-x.snappy.parquet",
     }  # fmt: skip
     assert view["dropped"] == ["node host names"]
+
+
+# --- Fugaku job records (Parquet) and the MetroPT2 time-ordered CSV prefix ------------------------
+
+
+def _fdata_frame():
+    return pd.DataFrame(
+        {
+            "jid": ["a", "b", "c"], "usr": ["u1", "u2", "u3"], "jnam": ["n1", "n2", "n3"],
+            "cnumr": [48, 96, 48], "cnumat": [48, 96, 48], "nnumr": [1, 2, 1], "nnuma": [1, 2, 1],
+            "adt": ["2021-04-02 10:00:00", "2021-04-01 09:00:00", "2021-04-03 08:00:00"],
+            "sdt": ["2021-04-02 10:10:00", "2021-04-01 09:30:00", None],
+            "edt": ["2021-04-02 11:10:00", "2021-04-01 09:40:00", None],
+            "ec": [0, 1, 0], "elpl": [3600.0, 600.0, 60.0], "pri": [1, 2, 3],
+            "econ": [5.0, 1.0, None], "avgpcon": [100.0, 90.0, None], "maxpcon": [120.0, 95.0, None],  # noqa: E501
+            "mszl": [1.0, 2.0, 3.0], "msza": [1, 2, 3], "mmszu": [0.5, 1.0, None], "pclass": ["compute", "memory", None],  # noqa: E501
+            "exit state": ["completed", "failed", "cancelled"], "duration": [3600.0, 600.0, None],
+            "embedding": [[0.1], [0.2], [0.3]], "jobenv_req": ["x", "y", "z"],
+        }
+    )  # fmt: skip
+
+
+def test_fugaku_job_view_drops_identifiers_and_text_derives_wait_and_orders_by_arrival():
+    out = ev.fugaku_jobs_view(_fdata_frame())
+    assert list(out.columns) == list(ev.FUGAKU_COLUMNS)
+    assert out["submit_ts"].tolist() == sorted(out["submit_ts"].tolist())
+    assert (
+        out["wait_s"].iloc[0] == 1800.0
+        and out["wait_s"].iloc[1] == 600.0
+        and pd.isna(out["wait_s"].iloc[2])
+    )
+    assert out["state"].tolist() == ["failed", "completed", "cancelled"]
+    for gone in ("jid", "usr", "jnam", "embedding", "jobenv_req"):
+        assert gone not in out
+    with pytest.raises(ev.ViewError, match="column"):
+        ev.fugaku_jobs_view(_fdata_frame().drop(columns=["adt"]))
+
+
+def test_csv_prefixes_keep_only_complete_lines_and_say_how_many_bytes_were_cut():
+    blob = b"a,b\n1,2\n3,4\n5,"
+    frame, cut = ev.csv_prefix(blob)
+    assert frame.to_dict("list") == {"a": [1, 3], "b": [2, 4]} and cut == 2
+    whole, none = ev.csv_prefix(b"a,b\n1,2\n")
+    assert len(whole) == 1 and none == 0
+
+
+def test_the_metropt_view_drops_gps_columns_and_keeps_time_order_and_sensors():
+    raw = pd.DataFrame(
+        {"timestamp": ["2022-04-28 12:33:30.111", "2022-04-28 12:33:29.120"], "TP2": [1.0, 2.0],
+         "COMP": [0.0, 1.0], "gpsLat": [41.1, 41.2], "gpsLong": [-8.6, -8.7], "gpsSpeed": [1.0, 2.0], "gpsQuality": [1.0, 1.0]}  # noqa: E501
+    )  # fmt: skip
+    out = ev.metropt_view(raw)
+    assert list(out.columns) == ["timestamp", "TP2", "COMP"]
+    assert out["TP2"].tolist() == [2.0, 1.0]  # time order
+    assert out["timestamp"].iloc[0] == pd.Timestamp("2022-04-28 12:33:29.120")
+
+
+def test_the_fugaku_and_metropt_builders_write_views_with_sampling_records(tmp_path):
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+
+    root = tmp_path / "acquired"
+    raw = root / "zen_fdata_fugaku" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    pq.write_table(
+        pa.Table.from_pandas(_fdata_frame(), preserve_index=False), raw / "21_04.parquet"
+    )
+    m = root / "zen_metropt2" / SNAP / "raw"
+    m.mkdir(parents=True)
+    (m / "MetroPT2_head.csv").write_bytes(
+        b"timestamp,TP2,gpsLat\n2022-04-28 12:33:29.120,1.0,41.1\n2022-04-28 12:33:30.111,2.0,41.2\n2022-04-28 12:33:31.1"  # noqa: E501
+    )
+    manifest = {}
+    ev._build_fugaku(root, tmp_path / "o" / "deep", manifest)
+    ev._build_metropt(root, tmp_path / "o" / "deep", manifest)
+    jobs = tmp_path / "o" / "deep" / "zen_fdata_fugaku" / "jobs.csv"
+    assert len(pd.read_csv(jobs)) == 3
+    f = manifest["zen_fdata_fugaku"]
+    assert f["files"] == {"jobs.csv": {"sha256": _sha(jobs), "rows": 3}}
+    assert f["sampling"] == {
+        "method": "all rows of one monthly Parquet file (2021-04); the other months were not fetched",  # noqa: E501
+        "rows_read": 3,
+        "source_rows": 3,
+        "truncated": False,
+    }
+    series = tmp_path / "o" / "deep" / "zen_metropt2" / "series.csv"
+    assert (
+        series.read_text().splitlines()[0] == "timestamp,TP2"
+        and len(series.read_text().splitlines()) == 3
+    )
+    g = manifest["zen_metropt2"]
+    assert g["sampling"] == {
+        "method": "time-ordered prefix of the CSV (HTTP range from byte 0), not random",
+        "bytes_cut_partial_line": 21,
+        "rows_dropped": 0,
+    }
+    assert g["dropped"] == ["GPS position, speed and quality columns"]

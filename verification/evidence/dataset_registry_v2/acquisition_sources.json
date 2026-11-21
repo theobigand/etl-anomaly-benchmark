@@ -1740,6 +1740,69 @@
    "stratum": "C4",
    "upstream": "first party: the authors publish traces of the SURF Lisa cluster they describe; permission of the operator is implied by the record but not separately stated",
    "upstream_verified": false
+  },
+  {
+   "attribution": "cite F-DATA (Antici et al.) and the Zenodo record 11467483",
+   "files": [
+    {
+     "name": "21_04.parquet",
+     "observed": "2021-04",
+     "url": "https://zenodo.org/records/11467483/files/21_04.parquet?download=1"
+    },
+    {
+     "name": "feature_list.csv",
+     "observed": "2021-04",
+     "url": "https://zenodo.org/records/11467483/files/feature_list.csv?download=1"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_fdata_fugaku",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/11467483",
+   "licence_text": "Zenodo record 11467483: license cc-by-4.0, access_right open; creators include RIKEN Center for Computational Science, the operator",
+   "max_bytes": 209715200,
+   "method": "official Zenodo record download of one monthly Parquet file (April 2021, the smallest) and the feature list; the other 36 months are not fetched",
+   "min_interval": 3.0,
+   "privacy": "user and group fields are published anonymised and as encodings; they are dropped from the view",
+   "publisher": "F-DATA (University of Bologna and RIKEN R-CCS; Supercomputer Fugaku job records)",
+   "rate_limit": "two sequential downloads",
+   "redistribution": "CC BY 4.0 permits it; raw files stay local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "first party: the dataset is released with RIKEN R-CCS, which operates Fugaku; sensitive fields are published anonymised and encoded",
+   "upstream_verified": false
+  },
+  {
+   "attribution": "cite MetroPT2 (Veloso et al.) and the Zenodo record 7766691",
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_metropt2",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/7766691",
+   "licence_text": "Zenodo record 7766691: license cc-by-4.0, access_right open",
+   "max_bytes": 104857600,
+   "method": "HTTP range request of the first bytes of the 1.2 GB CSV (server answers 206): a time-ordered prefix, i.e. the first days of the series, not a random sample",
+   "min_interval": 3.0,
+   "privacy": "GPS columns of a train are dropped from the view; no personal data",
+   "publisher": "INESC TEC and U. Portucalense with the Porto metro operator (MetroPT2)",
+   "ranges": [
+    {
+     "length": 62914560,
+     "name": "MetroPT2_head.csv",
+     "observed": "2022",
+     "start": 0,
+     "url": "https://zenodo.org/records/7766691/files/MetroPT2.csv?download=1"
+    }
+   ],
+   "rate_limit": "one range request",
+   "redistribution": "CC BY 4.0 permits it; raw files stay local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party: collected by the authors' predictive-maintenance project on a metro compressor; operator permission implied by publication, not separately stated",
+   "upstream_verified": false
   }
  ]
 }
