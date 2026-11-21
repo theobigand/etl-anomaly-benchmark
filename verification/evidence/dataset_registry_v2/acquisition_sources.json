@@ -899,6 +899,118 @@
    "retries": 2,
    "stratum": "C2b",
    "upstream": "the publisher is the original producer of its own ledger extract; rows may contain third-party supplier names (organisations)"
+  },
+  {
+   "attribution": "credit the publisher and the OCP Data Registry; licence as stated",
+   "files": [
+    {
+     "name": "full.jsonl.gz",
+     "observed": "2011-08-27/2025-12-05",
+     "url": "https://data.open-contracting.org/en/publication/21/download?name=full.jsonl.gz"
+    }
+   ],
+   "hosts": [
+    "data.open-contracting.org"
+   ],
+   "id": "ocds_montreal",
+   "licence_class": "open",
+   "licence_location": "https://data.open-contracting.org/en/publication/21 and https://donnees.montreal.ca/api/3/action/package_search?q=contrats",
+   "licence_text": "OCP Data Registry publication 21 states licence https://creativecommons.org/licenses/by/4.0/ ; confirmed at the original publisher's portal (donnees.montreal.ca, CKAN licence cc-by, Creative Commons Attribution 4.0 International)",
+   "max_bytes": 104857600,
+   "method": "OCP Data Registry full OCDS JSON-lines download (official bulk export of the registry)",
+   "min_interval": 3.0,
+   "privacy": "parties may be sole traders; names, addresses and contact points are dropped and party ids pseudonymised in the view",
+   "publisher": "Canada: Ville de Montr\u00e9al",
+   "rate_limit": "single download",
+   "redistribution": "as the licence states; raw files not committed",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "original producer: Ville de Montr\u00e9al (Vue sur les contrats); the registry is the curator",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "credit the publisher and the OCP Data Registry; licence as stated",
+   "files": [
+    {
+     "name": "full.jsonl.gz",
+     "observed": "2010-12-02/2019-06-25",
+     "url": "https://data.open-contracting.org/en/publication/24/download?name=full.jsonl.gz"
+    }
+   ],
+   "hosts": [
+    "data.open-contracting.org"
+   ],
+   "id": "ocds_georgia",
+   "licence_class": "open",
+   "licence_location": "https://data.open-contracting.org/en/publication/24",
+   "licence_text": "OCP Data Registry publication 24 states licence https://creativecommons.org/publicdomain/zero/1.0/ ; not yet confirmed at the original publisher",
+   "max_bytes": 104857600,
+   "method": "OCP Data Registry full OCDS JSON-lines download (official bulk export of the registry)",
+   "min_interval": 3.0,
+   "privacy": "parties may be sole traders; names, addresses and contact points are dropped and party ids pseudonymised in the view",
+   "publisher": "Georgia: State Procurement Agency (SPA)",
+   "rate_limit": "single download",
+   "redistribution": "as the licence states; raw files not committed",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "original producer: State Procurement Agency of Georgia; registry is the curator; terms at the original not read",
+   "upstream_verified": false
+  },
+  {
+   "attribution": "credit the publisher and the OCP Data Registry; licence as stated",
+   "files": [
+    {
+     "name": "full.jsonl.gz",
+     "observed": "2016-01-04/2026-10-01",
+     "url": "https://data.open-contracting.org/en/publication/133/download?name=full.jsonl.gz"
+    }
+   ],
+   "hosts": [
+    "data.open-contracting.org"
+   ],
+   "id": "ocds_netherlands",
+   "licence_class": "open",
+   "licence_location": "https://data.open-contracting.org/en/publication/133",
+   "licence_text": "OCP Data Registry publication 133 states licence https://creativecommons.org/publicdomain/zero/1.0/ ; not yet confirmed at the original publisher",
+   "max_bytes": 104857600,
+   "method": "OCP Data Registry full OCDS JSON-lines download (official bulk export of the registry)",
+   "min_interval": 3.0,
+   "privacy": "parties may be sole traders; names, addresses and contact points are dropped and party ids pseudonymised in the view",
+   "publisher": "Netherlands: Ministry of Economic Affairs and Climate Policy",
+   "rate_limit": "single download",
+   "redistribution": "as the licence states; raw files not committed",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "original producer: Dutch Ministry of Economic Affairs and Climate Policy; registry is the curator; terms at the original not read",
+   "upstream_verified": false
+  },
+  {
+   "attribution": "credit the publisher and the OCP Data Registry; licence as stated",
+   "files": [
+    {
+     "name": "full.jsonl.gz",
+     "observed": "2016-08-10/2026-05-29",
+     "url": "https://data.open-contracting.org/en/publication/3/download?name=full.jsonl.gz"
+    }
+   ],
+   "hosts": [
+    "data.open-contracting.org"
+   ],
+   "id": "ocds_zambia",
+   "licence_class": "open",
+   "licence_location": "https://data.open-contracting.org/en/publication/3",
+   "licence_text": "OCP Data Registry publication 3 states licence https://creativecommons.org/licenses/by/4.0/ ; not yet confirmed at the original publisher",
+   "max_bytes": 104857600,
+   "method": "OCP Data Registry full OCDS JSON-lines download (official bulk export of the registry)",
+   "min_interval": 3.0,
+   "privacy": "parties may be sole traders; names, addresses and contact points are dropped and party ids pseudonymised in the view",
+   "publisher": "Zambia: Public Procurement Authority (ZPPA)",
+   "rate_limit": "single download",
+   "redistribution": "as the licence states; raw files not committed",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "original producer: Zambia Public Procurement Authority; registry is the curator; terms at the original not read",
+   "upstream_verified": false
   }
  ]
 }

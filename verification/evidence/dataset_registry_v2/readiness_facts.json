@@ -289,6 +289,37 @@
    "units": 98723,
    "view": "monash_pedestrian"
   },
+  "ocds_montreal": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "contract awards, not payments",
+    "correction awards (0.02 percent)",
+    "hash sample of whole contracts",
+    "registry compiled releases"
+   ],
+   "first_party": false,
+   "independent_group": "montreal_contracts",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on award date",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 30551,
+   "view": "ocds_montreal"
+  },
+  "ocds_montreal:nested": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "regular structure: 1 optional path"
+   ],
+   "first_party": false,
+   "independent_group": "montreal_contracts",
+   "min_units": 1000,
+   "partitions": "hash of ocid 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 30551,
+   "view": "ocds_montreal"
+  },
   "openalex:nested": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [

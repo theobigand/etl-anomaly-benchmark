@@ -843,6 +843,123 @@
    },
    "stratum": "C2b",
    "system": "ukspend_tate"
+  },
+  {
+   "eligible": true,
+   "family": "ocds_montreal",
+   "id": "ocds_montreal",
+   "licence_class": "open",
+   "protocols": "P-TAB on the awards table (amount, duplicate, supplier-behaviour, date faults); contracting-lifecycle faults limited to what compiled releases contain; no natural labels",
+   "publisher": "ville_de_montreal",
+   "reason": "305922 compiled contract releases 2011-2025, 61102 in the whole-contract hash sample (30551 awards, 8930 suppliers); award value, supplier, buyer and date; these are contract awards, not payments; party references resolve completely (0 of 40000 broken)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 verified at the original publisher",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "ocds_montreal",
+   "upstream_licence": "CC BY 4.0 on donnees.montreal.ca (CKAN licence field of the contracts datasets); the OCP Data Registry curates the OCDS export",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "ocds_montreal",
+   "id": "ocds_montreal:nested",
+   "licence_class": "open",
+   "protocols": "P-NEST: missing required nested fields, type faults, broken party references",
+   "publisher": "ville_de_montreal",
+   "reason": "the same releases kept nested (depth 6, parties, awards and items arrays); heterogeneity is low (24 paths, 1 optional path): a regular nested structure, so it adds depth but little schema variability; same family as the C2b entry",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 verified at the original publisher",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "ocds_montreal",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": false,
+   "family": "ocds_georgia",
+   "id": "ocds_georgia",
+   "licence_class": "open",
+   "publisher": "ocds_georgia",
+   "reason": "acquired from the registry (State Procurement Agency of Georgia); the licence is the registry's statement and the original publisher's terms were not read; kept out of counts until verified; no view built",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "registry statement only",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2b",
+   "system": "ocds_georgia",
+   "upstream_status": "not_verified"
+  },
+  {
+   "eligible": false,
+   "family": "ocds_netherlands",
+   "id": "ocds_netherlands",
+   "licence_class": "open",
+   "publisher": "ocds_netherlands",
+   "reason": "acquired from the registry (Dutch Ministry of Economic Affairs and Climate Policy); the licence is the registry's statement and the original publisher's terms were not read; kept out of counts until verified; no view built",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "registry statement only",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2b",
+   "system": "ocds_netherlands",
+   "upstream_status": "not_verified"
+  },
+  {
+   "eligible": false,
+   "family": "ocds_zambia",
+   "id": "ocds_zambia",
+   "licence_class": "open",
+   "publisher": "ocds_zambia",
+   "reason": "acquired from the registry (Zambia Public Procurement Authority); the licence is the registry's statement and the original publisher's terms were not read; kept out of counts until verified; no view built",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "registry statement only",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2b",
+   "system": "ocds_zambia",
+   "upstream_status": "not_verified"
+  },
+  {
+   "eligible": false,
+   "family": "usaspending_fpds",
+   "id": "rejected:usaspending",
+   "licence_class": "open",
+   "publisher": "us_treasury",
+   "reason": "public domain by law, but the official archive host's TLS chain does not verify with the Python trust store (curl succeeds with the OS store); certificate checking was not disabled; not acquired; obligations are not payments",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": false,
+    "discovered": true,
+    "licence_verified": "17 U.S.C. 105; USAspending licence notice not retrievable",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2b",
+   "system": "usaspending_fpds",
+   "upstream_status": "not_verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

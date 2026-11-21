@@ -69,3 +69,32 @@ change, number of fields, number of records), not in detector units. Each mechan
 generators where one is likely to favour a detector family (for example, both a shifted mean and a
 variance change for outliers). Injection results that depend on one generator are reported as
 conditional on it.
+
+
+## Realism mapping: which failure each fault stands for
+
+A mechanically valid fault is not automatically realistic. Each fault is tied to a plausible failure
+and to its class: S = ordinary statistical anomaly (a value is unusual but the pipeline is correct),
+T = ETL transformation failure (a step changes data wrongly), B = business-rule violation, O =
+pipeline-operation failure (a run is late, partial or repeated). A fault is only claimed for the class
+it is mapped to.
+
+| Fault | Plausible failure mechanism | Class |
+|---|---|---|
+| Value scaled by a factor (P-TAB, P-TS) | unit or currency conversion applied twice, thousands/millions mix-up | T |
+| Unusual amount without a rule being broken | a genuine large purchase | S |
+| Duplicate rows or events | a retried load or a replayed batch without idempotency | O |
+| Missing rows, events or intervals | a partial load, a dropped partition, a failed extract | O |
+| Delayed arrival, level shift, drift | late upstream data, a sensor or source recalibration, a changed upstream definition | O, T |
+| Invalid category code | an enumeration changed upstream and a mapping is stale | T |
+| Cross-field violation (date before order) | a join on the wrong key or a timezone error | T, B |
+| Event order swapped or event dropped (P-SEQ) | out-of-order delivery or a lossy collector | O |
+| Foreign key to an absent parent (P-REL) | a parent table loaded late or filtered, an orphaning delete | O, T |
+| Duplicate entity with a new key | a merge or deduplication failure | T |
+| Missing required nested field (P-NEST) | a schema change or a mapping that drops a path | T |
+| Nested type change | a serialisation or schema-evolution error | T |
+
+Not covered because static data cannot support the ground truth: late publication timing, partial
+runs of a real pipeline, and operational metadata (run ids, row counts at load). The batch-level
+pipeline study keeps those under its own protocol. Controlled injections are never described as
+natural anomalies.

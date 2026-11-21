@@ -437,6 +437,68 @@
   },
   {
    "failed": null,
+   "group": "montreal_contracts",
+   "id": "ocds_montreal",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "montreal_contracts",
+   "id": "ocds_montreal:nested",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "ocds_georgia",
+   "status": "discovered",
+   "stratum": "C2b"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "ocds_netherlands",
+   "status": "discovered",
+   "stratum": "C2b"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "ocds_zambia",
+   "status": "discovered",
+   "stratum": "C2b"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "rejected:usaspending",
+   "status": "discovered",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -550,6 +612,7 @@
  ],
  "ready_groups": {
   "C2b": [
+   "montreal_contracts",
    "uk_ledger_mhra",
    "uk_ledger_nhsbsa"
   ],
@@ -564,6 +627,7 @@
    "stackexchange"
   ],
   "C6": [
+   "montreal_contracts",
    "openalex",
    "openfda_faers",
    "openfoodfacts"
@@ -571,13 +635,13 @@
  },
  "summary": {
   "C2b": {
-   "acquired": 2,
-   "discovered": 6,
-   "experiment_ready": 2,
-   "protocol_ready": 2,
-   "rights_verified": 2,
-   "scientifically_eligible": 2,
-   "structurally_valid": 2
+   "acquired": 3,
+   "discovered": 11,
+   "experiment_ready": 3,
+   "protocol_ready": 3,
+   "rights_verified": 3,
+   "scientifically_eligible": 3,
+   "structurally_valid": 3
   },
   "C3": {
    "acquired": 2,
@@ -607,13 +671,13 @@
    "structurally_valid": 11
   },
   "C6": {
-   "acquired": 3,
-   "discovered": 5,
-   "experiment_ready": 3,
-   "protocol_ready": 3,
-   "rights_verified": 3,
-   "scientifically_eligible": 3,
-   "structurally_valid": 3
+   "acquired": 4,
+   "discovered": 6,
+   "experiment_ready": 4,
+   "protocol_ready": 4,
+   "rights_verified": 4,
+   "scientifically_eligible": 4,
+   "structurally_valid": 4
   }
  }
 }

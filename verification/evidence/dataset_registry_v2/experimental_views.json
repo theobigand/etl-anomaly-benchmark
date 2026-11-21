@@ -84,6 +84,32 @@
   "pseudonymised": [],
   "source_snapshot": "monash_zenodo/2026-11-21"
  },
+ "ocds_montreal": {
+  "dropped": [
+   "address",
+   "contactPoint",
+   "description",
+   "identifier",
+   "legalName",
+   "name"
+  ],
+  "files": {
+   "awards.csv": {
+    "rows": 30551,
+    "sha256": "e3e42f754e28a20f9cb1a0ddfc636a28e62d3b32ca92884ae06bcf709e6f0581"
+   },
+   "releases.jsonl": {
+    "rows": 30551,
+    "sha256": "fe331e155f3b21e98c71524880f1fad121d1b23c63d111130aaa000c18417f0f"
+   }
+  },
+  "pseudonymised": [
+   "party ids"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": "contracts with sha256(ocid) % 10 == 0, whole contracts, sorted by date",
+  "source_snapshot": "ocds_montreal/2026-11-21"
+ },
  "openalex": {
   "dropped": [
    "display_name",
@@ -415,7 +441,7 @@
     "sha256": "e9568349ed84c0e31bfbacc5e0ccbe92ac6f3f48bd84a140be8a707d4bec52af"
    }
   },
-  "notes": "CC BY-SA: a redistributed derived database must carry attribution and the same licence",
+  "notes": "CC BY-SA: a redistributed derived database needs attribution and the same licence",
   "pseudonymised": [
    "user_id",
    "owner_user_id"

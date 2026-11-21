@@ -263,3 +263,64 @@ def test_stack_views_drop_text_and_names_pseudonymise_users_and_keep_every_link(
     )  # same mapping, orphan kept
     assert list(views["Votes"].columns) == ["vote_id", "post_id", "vote_type_id", "creation_date"]
     assert views["PostLinks"].loc[0, "related_post_id"] == "2"
+
+
+def _release(i, supplier="s1", amount=100.0):
+    return {
+        "id": f"r{i}",
+        "ocid": f"oc-{i}",
+        "date": f"2022-05-{i % 28 + 1:02d}T00:00:00-04:00",
+        "buyer": {"id": "b1", "name": "Dept"},
+        "awards": [
+            {
+                "id": f"a{i}",
+                "date": "2022-05-30T00:00:00-04:00",
+                "items": [{"id": "", "quantity": 1, "description": "buy from Jean Tremblay"}],
+                "value": {"amount": amount, "currency": "CAD"},
+                "suppliers": [{"id": supplier, "name": "J Tremblay"}],
+            }
+        ],
+        "tender": {"status": "complete", "procuringEntity": {"id": "p1", "name": "X"}},
+        "parties": [
+            {"id": "b1", "name": "Dept", "roles": ["buyer"], "address": {"streetAddress": "1 rue"}},
+            {
+                "id": supplier,
+                "name": "J Tremblay",
+                "roles": ["supplier"],
+                "contactPoint": {"email": "a@b"},
+            },
+        ],
+    }
+
+
+def test_ocds_views_drop_names_addresses_and_free_text_but_keep_the_nesting_and_the_links():
+    releases = [_release(i, supplier=f"s{i % 3}") for i in range(30)]
+    nested, awards = ev.ocds_view(releases, salt="s", keep_modulo=1)
+    text = json.dumps(nested)
+    for word in (
+        "Tremblay",
+        "Dept",
+        "rue",
+        "a@b",
+        "name",
+        "address",
+        "contactPoint",
+        "description",
+    ):
+        assert word not in text
+    first = nested[0]
+    assert first["awards"][0]["value"]["amount"] == 100.0 and "items" in first["awards"][0]
+    supplier = first["awards"][0]["suppliers"][0]["id"]
+    assert supplier in {p["id"] for p in first["parties"]}  # the same pseudonym on both sides
+    assert first["buyer"]["id"] == ev.pseudonym("b1", "s")
+    assert list(awards.columns) == list(ev.AWARD_COLUMNS) and len(awards) == 30
+    assert awards["supplier_id"].nunique() == 3 and awards["amount"].eq(100.0).all()
+
+
+def test_ocds_sampling_keeps_whole_contracts_by_a_stable_hash_of_the_contract_id():
+    releases = [_release(i) for i in range(400)]
+    a, _ = ev.ocds_view(releases, salt="s", keep_modulo=10)
+    b, _ = ev.ocds_view(list(reversed(releases)), salt="s", keep_modulo=10)
+    assert sorted(r["ocid"] for r in a) == sorted(r["ocid"] for r in b)
+    assert 10 < len(a) < 90
+    assert [r["date"] for r in a] == sorted(r["date"] for r in a)  # fixed chronological order

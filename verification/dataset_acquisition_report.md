@@ -309,3 +309,70 @@ Online Retail itself has no experimental view yet.
 5. C6: another independent nested producer beyond FDA, OpenAlex and Open Food Facts.
 6. Claims: effective sample size for any claim equals the number of independent groups of its stratum
    (today 1 to 3), so no per-stratum statistical claim is supportable yet.
+
+# Update 5 (2026-11-21): Open Contracting, USAspending, TLC, domains and diminishing return
+
+Discovery (what exists), acquisition, readiness and experiments are separate here: nothing in this
+update is an experiment.
+
+## Open Contracting registry (136 publications read)
+
+Each publication page states its own licence. Counts of stated licences: CC BY-NC-SA 4.0 41 (mostly
+OpenTender), CC BY 4.0 19, PDDL 16, Mexican open-use licence 14, none stated 10, CC0 5, OGL 4, others.
+The registry is the curator; the original publisher's terms are the ones that count. For the
+publications that are acquired:
+
+| Publication | Registry licence | Original publisher check | Decision |
+|---|---|---|---|
+| Ville de Montréal | CC BY 4.0 | confirmed: donnees.montreal.ca CKAN licence `cc-by` (Creative Commons Attribution 4.0 International) | accepted, experiment-ready (C2b and C6) |
+| Georgia State Procurement Agency | CC0 | not read | acquired, excluded from counts |
+| Dutch Ministry of Economic Affairs | CC0 | not read | acquired, excluded from counts |
+| Zambia Public Procurement Authority | CC BY 4.0 | not read | acquired, excluded from counts |
+
+Permissive publications of other producers with a bulk file under the size limit (Bulgaria, Honduras)
+or above it (Chile, Colombia, Paraguay, Peru, Brazil, Guatemala, Ecuador: 1 to 5 GB) were not acquired.
+Publications under CC BY-NC-SA (OpenTender, 41 of 136) are a research-only class, not acquired in this
+pass because they are re-compiled from EU tender notices. All OCDS records are contract awards and
+notices, not payments.
+
+Montréal: 305922 compiled releases 2011-2025; the stable whole-contract hash sample (1 of 10) has
+61102 view rows (30551 awards, 8930 suppliers); party references resolve completely; depth 6 but only
+24 paths and 1 optional path, so it is a regular nested structure (adds depth, little schema
+variability).
+
+## USAspending and NYC TLC
+
+- USAspending: public domain by 17 U.S.C. 105; Treasury added a licence notice in 2019 stating
+  commercial and non-commercial reuse (GAO follow-up; the notice itself was not retrievable). The
+  monthly award archives download with curl, but the Python client cannot verify the host's TLS chain
+  (self-signed certificate in chain). Certificate checking was not disabled, so nothing was acquired.
+  Records are contract actions with obligated amounts, not payments.
+- NYC TLC: the NYC Open Data law says no use restrictions; the agency page returned 403 to automated
+  access and the dataset metadata has no licence field. Kept as a candidate, not collected.
+
+## C2b after this update
+
+Four families (Online Retail without a view, MHRA, NHSBSA, Montréal), three experiment-ready, in three
+domains (retail purchases, public payments, municipal contract awards). See
+`verification/transactional_coverage.md` for the independence dimensions and fault applicability.
+Diminishing return: more same-template UK ledgers add producers but not mechanisms; the missing
+domains are card or bank payments, utility and telecom events, transport fares, inventory movements, and
+no open source with a verified licence was found for them.
+
+## Counts by stage (independent groups; experiment-ready counts independent groups)
+
+| Stratum | Acquired families | Rights-verified groups | Experiment-ready groups | Target |
+|---|---:|---:|---:|---:|
+| C2b | 4 (+3 OCDS acquired, unverified) | 4 | 3 | 30 |
+| C3 | 41 | 2 | 1 | 40 |
+| C4 | 16 systems, 1 curator | 1 | 1 | 28 |
+| C5 | 2 | 2 | 2 | 36 |
+| C6 | 5 | 5 | 4 | 30 |
+
+## Not done in this pass
+
+- Monash upstream terms (13 families), RelBench and CTU terms, independent C4 producers, HMRC.
+- Spreadsheet support (decision in the transactional coverage note: not justified now).
+- Targeted L3 mutation runs: `make mutation-focus` runs the whole pinned test suite to map tests to
+  mutants and needs the full dev and deep environment (torch, mutmut). That environment is not
+  installed in this working copy, so no mutation result exists for the new modules.

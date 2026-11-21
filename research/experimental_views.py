@@ -294,6 +294,78 @@ def stack_views(
     return out
 
 
+AWARD_COLUMNS = (
+    "ocid",
+    "award_id",
+    "date",
+    "amount",
+    "currency",
+    "supplier_id",
+    "buyer_id",
+    "method",
+)
+#: OCDS keys that carry names, contact data or free text, dropped at every depth
+OCDS_DROP = frozenset(["name", "address", "contactPoint", "description", "legalName", "identifier"])
+
+
+def _ocds_ids(node: Any, salt: str) -> Any:
+    """Drop identifying keys everywhere and pseudonymise party references (`id` of parties)."""
+    if isinstance(node, dict):
+        return {k: _ocds_ids(v, salt) for k, v in node.items() if k not in OCDS_DROP}
+    if isinstance(node, list):
+        return [_ocds_ids(v, salt) for v in node]
+    return node
+
+
+def _ocds_party(entry: dict[str, Any], salt: str) -> dict[str, Any]:
+    out = dict(entry)
+    if out.get("id"):
+        out["id"] = pseudonym(str(out["id"]), salt)
+    return out
+
+
+def ocds_view(
+    releases: list[dict[str, Any]], salt: str = SALT, keep_modulo: int = 10
+) -> tuple[list[dict[str, Any]], pd.DataFrame]:
+    """Compiled OCDS releases without names, addresses or free text, and a flat awards table.
+
+    A contract is kept when a stable hash of its ``ocid`` is 0 modulo ``keep_modulo``, so whole
+    contracts stay together; party references use one pseudonym mapping so that links resolve.
+    """
+    kept, rows = [], []
+    for release in releases:
+        h = int(hashlib.sha256(release["ocid"].encode()).hexdigest()[:8], 16)
+        if h % keep_modulo:
+            continue
+        r = _ocds_ids(release, salt)
+        if "buyer" in r:
+            r["buyer"] = _ocds_party(r["buyer"], salt)
+        r["parties"] = [_ocds_party(p, salt) for p in r.get("parties", [])]
+        for a in r.get("awards", []):
+            a["suppliers"] = [_ocds_party(x, salt) for x in a.get("suppliers", [])]
+        entity = (r.get("tender") or {}).get("procuringEntity")
+        if entity:
+            r["tender"]["procuringEntity"] = _ocds_party(entity, salt)
+        kept.append(r)
+        for a in r.get("awards", []):
+            value = a.get("value") or {}
+            rows.append(
+                {
+                    "ocid": r["ocid"],
+                    "award_id": a.get("id"),
+                    "date": a.get("date") or r.get("date"),
+                    "amount": value.get("amount"),
+                    "currency": value.get("currency"),
+                    "supplier_id": (a.get("suppliers") or [{}])[0].get("id"),
+                    "buyer_id": (r.get("buyer") or {}).get("id"),
+                    "method": (r.get("tender") or {}).get("procurementMethod"),
+                }
+            )
+    kept.sort(key=lambda r: (r["date"], r["id"]))
+    awards = pd.DataFrame(rows, columns=list(AWARD_COLUMNS))
+    return kept, awards
+
+
 def digest(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -450,6 +522,42 @@ def build(root: Path, out: Path) -> dict[str, Any]:
         salt_label=SALT,
         source_snapshot=f"stackexchange_dump/{snap}",
         notes="CC BY-SA: a redistributed derived database needs attribution and the same licence",
+    )
+
+    nested: list[dict[str, Any]] = []
+    award_frames = []
+    batch: list[dict[str, Any]] = []
+    path = root / "ocds_montreal" / snap / "raw" / "full.jsonl.gz"
+    with gzip.open(path, "rt", encoding="utf-8") as handle:
+        for line in handle:
+            batch.append(json.loads(line))
+            if len(batch) == 20000:
+                kept, frame = ocds_view(batch)
+                nested += kept
+                award_frames.append(frame)
+                batch = []
+    kept, frame = ocds_view(batch)
+    nested += kept
+    award_frames.append(frame)
+    nested.sort(key=lambda r: (r["date"], r["id"]))
+    awards = pd.concat(award_frames, ignore_index=True).sort_values(["date", "ocid", "award_id"])
+    folder = out / "ocds_montreal"
+    folder.mkdir(parents=True, exist_ok=True)
+    (folder / "releases.jsonl").write_text(
+        "".join(json.dumps(r, sort_keys=True) + "\n" for r in nested)
+    )
+    awards.to_csv(folder / "awards.csv", index=False)
+    record(
+        "ocds_montreal",
+        {
+            "releases.jsonl": (folder / "releases.jsonl", len(nested)),
+            "awards.csv": (folder / "awards.csv", len(awards)),
+        },
+        dropped=sorted(OCDS_DROP),
+        pseudonymised=["party ids"],
+        salt_label=SALT,
+        sampling="contracts with sha256(ocid) % 10 == 0, whole contracts, sorted by date",
+        source_snapshot=f"ocds_montreal/{snap}",
     )
 
     folder = out / "ukspend"
