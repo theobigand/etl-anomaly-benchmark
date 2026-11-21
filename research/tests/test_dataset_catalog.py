@@ -274,3 +274,698 @@ def test_c2b_is_a_stratum_and_audited_transactional_tables_are_its_rows(tmp_path
     assert dc.transactional_rows(tmp_path / "none.json") == []
     report = dc.gap_report(rows)
     assert report["strata"]["C2b"]["sources"] == 1
+
+
+# --- exact contracts of every function ----------------------------------------------------------
+
+
+def test_the_strata_and_targets_are_the_documented_ones():
+    assert dc.STRATA == {
+        "C1": "flat tabular",
+        "C2": "transactional and categorical (historical)",
+        "C2b": "transactional events",
+        "C3": "time series",
+        "C4": "logs and event sequences",
+        "C5": "relational",
+        "C6": "nested",
+    }
+    assert dc.TARGETS == {
+        "C1": (15, 36, 50),
+        "C2": (15, 30, 45),
+        "C2b": (15, 30, 45),
+        "C3": (15, 40, 55),
+        "C4": (15, 28, 40),
+        "C5": (15, 36, 55),
+        "C6": (15, 30, 45),
+    }
+    assert set(dc.TARGETS) == set(dc.STRATA)
+    assert dc.NOT_INDEPENDENT == ("synthetic", "duplicate_representation")
+    assert (dc.MIN_KEY_ENTITIES, dc.MIN_REPEATED_ROWS) == (20, 0.2)
+
+
+def test_sha256_reads_in_blocks_and_matches_hashlib(tmp_path):
+    import hashlib
+
+    empty = tmp_path / "e"
+    empty.write_bytes(b"")
+    assert dc.sha256(empty) == hashlib.sha256(b"").hexdigest()
+    small = tmp_path / "s"
+    small.write_bytes(b"abc")
+    assert dc.sha256(small) == "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+    big = tmp_path / "b"
+    payload = bytes(range(256)) * 10_000 + b"tail"  # more than one 1 MiB block
+    payload = payload * 1 + payload
+    big.write_bytes(payload)
+    assert dc.sha256(big) == hashlib.sha256(payload).hexdigest()
+    assert len(payload) > (1 << 20)
+
+
+def test_source_keys_map_adbench_twins_and_keep_everything_else():
+    assert dc.source_key("adbench:cardio") == "uci:193"
+    assert dc.source_key("adbench:nonexistent-table") == "adbench:nonexistent-table"
+    assert dc.source_key("uci:5") == "uci:5"
+    assert dc.source_key("natural:g") == "natural:g"
+    assert dc.source_key("plain") == "plain"
+    assert dc.source_key("uci:cardio") == "uci:cardio"  # only the adbench prefix is a twin
+
+
+def test_catalog_problems_have_exact_messages_in_order(tmp_path):
+    import json
+
+    pool = tmp_path / "pool.json"
+    pool.write_text(json.dumps([{"id": "adbench:cardio"}, {"id": "uci:9"}]))
+    catalog = tmp_path / "c.json"
+    entries = [
+        {"id": "legacy:a", "role": "mystery", "source_identity": "x"},
+        {"id": "legacy:a", "role": "supplementary", "source_identity": "x", "same_as": "uci:9"},
+        {"id": "uci:9", "role": "supplementary", "source_identity": "uci:9"},
+        {
+            "id": "legacy:d",
+            "role": "duplicate_representation",
+            "same_as": "nowhere",
+            "source_identity": "y",
+        },
+        {
+            "id": "legacy:e",
+            "role": "duplicate_representation",
+            "same_as": "adbench:cardio",
+            "source_identity": "z",
+        },
+    ]
+    catalog.write_text(
+        json.dumps({"roles": ["supplementary", "duplicate_representation"], "entries": entries})
+    )
+    assert dc.problems(catalog, pool) == [
+        "legacy:a: unknown role mystery",
+        "legacy:a: identity is not unique",
+        "legacy:a: only a duplicate representation may name same_as",
+        "uci:9: identity is not unique",
+        "legacy:d: same_as nowhere is not in the pool",
+        "legacy:e: source identity differs from that of adbench:cardio",
+    ]
+
+
+def test_independent_source_counting_ignores_duplicates_synthetic_and_pool_sources(tmp_path):
+    import json
+
+    catalog = tmp_path / "c.json"
+    entries = [
+        {"id": "a", "role": "supplementary", "source_identity": "new1"},
+        {"id": "b", "role": "supplementary", "source_identity": "new1"},  # the same source twice
+        {"id": "c", "role": "supplementary", "source_identity": "in-pool"},
+        {"id": "d", "role": "synthetic", "source_identity": "synth"},
+        {"id": "e", "role": "duplicate_representation", "source_identity": "dup", "same_as": "x"},
+    ]
+    catalog.write_text(json.dumps({"roles": [], "entries": entries}))
+    assert dc.independent_source_count({"in-pool", "other"}, catalog) == {
+        "pool": 2,
+        "added_by_supplementary": 1,
+    }
+    assert dc.resolve({"path": "data/x.csv"}, tmp_path) == tmp_path / "data" / "x.csv"
+
+
+def test_a_stratum_follows_the_documented_priority_and_triggers():
+    assert dc.stratum_of({"stratum": "C5", "time_verified": True}) == "C5"
+    assert dc.stratum_of({"time_verified": True, "tags": ["transactional"]}) == "C3"
+    for kind in ("categorical", "mixed"):
+        assert dc.stratum_of({"schema_kind": kind}) == "C2"
+    for tag in ("transactional", "categorical_only"):
+        assert dc.stratum_of({"tags": [tag]}) == "C2"
+    assert dc.stratum_of({"tags": ["time_series"], "schema_kind": "numeric"}) == "C1"
+    assert dc.stratum_of({"tags": None}) == "C1" and dc.stratum_of({}) == "C1"
+    assert (
+        dc.stratum_of({"stratum": "", "schema_kind": "mixed"}) == "C2"
+    )  # an empty stratum is no stratum
+    assert dc.stratum_of({"time_verified": False, "schema_kind": "numeric"}) == "C1"
+
+
+def _coverage_file(tmp_path):
+    import json
+
+    def cell(status):
+        return {"status": status}
+
+    def entry(i, source, decision, chrono, injected, kind="numeric"):
+        return {
+            "id": i,
+            "independent_source": source,
+            "decision": decision,
+            "schema_kind": kind,
+            "protocols": {
+                "chronological": cell(chrono),
+                "chronological_injected_classical": cell(injected),
+            },
+        }
+
+    data = {
+        "datasets": [
+            entry("uci:1", "s1", "retained", "executed", "not_evaluated"),
+            entry("uci:2", "s2", "retained", "not_evaluated", "executed", "mixed"),
+            entry("uci:3", "s3", "retained", "not_evaluated", "not_evaluated"),
+            entry("uci:4", "s4", "retired", "executed", "executed"),
+        ]
+    }
+    path = tmp_path / "coverage.json"
+    path.write_text(json.dumps(data))
+    return path
+
+
+def test_stratum_rows_have_exact_fields_for_every_origin(tmp_path):
+    import json
+
+    coverage = _coverage_file(tmp_path)
+    wave2 = tmp_path / "wave2.json"
+    wave2.write_text(
+        json.dumps(
+            {
+                "tables": [
+                    {"uci_id": 7, "tags": ["sequential"], "time_candidates": ["t"]},
+                    {"uci_id": 8, "tags": [], "time_candidates": []},
+                ]
+            }
+        )
+    )
+    times = tmp_path / "times.json"
+    times.write_text(json.dumps({"uci:7": {"verified": True}, "uci:8": {"verified": False}}))
+    natural = tmp_path / "nat"
+    natural.mkdir()
+    (natural / "b.json").write_text(json.dumps({"id": "n/2", "group": "g2", "chronological": {}}))
+    (natural / "a.json").write_text(json.dumps({"id": "n/1", "group": "g1", "chronological": {}}))
+    (natural / "c.json").write_text(json.dumps({"id": "n/3", "group": "g3", "excluded": "x"}))
+    rows = dc.stratum_rows(coverage, wave2, natural, times)
+    assert rows == [
+        {
+            "id": "uci:1",
+            "source": "s1",
+            "schema_kind": "numeric",
+            "time_verified": True,
+            "origin": "first_pool",
+        },
+        {
+            "id": "uci:2",
+            "source": "s2",
+            "schema_kind": "mixed",
+            "time_verified": True,
+            "origin": "first_pool",
+        },
+        {
+            "id": "uci:3",
+            "source": "s3",
+            "schema_kind": "numeric",
+            "time_verified": False,
+            "origin": "first_pool",
+        },
+        {
+            "id": "uci:7",
+            "source": "uci:7",
+            "tags": ["sequential"],
+            "time_verified": True,
+            "time_candidate": True,
+            "origin": "wave2",
+        },
+        {
+            "id": "uci:8",
+            "source": "uci:8",
+            "tags": [],
+            "time_verified": False,
+            "time_candidate": False,
+            "origin": "wave2",
+        },
+        {"id": "n/1", "source": "natural:g1", "time_verified": True, "origin": "natural_temporal"},
+        {"id": "n/2", "source": "natural:g2", "time_verified": True, "origin": "natural_temporal"},
+    ]
+    no_times = dc.stratum_rows(
+        tmp_path / "none.json", wave2, tmp_path / "none", tmp_path / "none2.json"
+    )
+    assert [r["id"] for r in no_times] == ["uci:7", "uci:8"]
+    assert all(r["time_verified"] is False for r in no_times)
+
+
+def test_licence_and_acquired_rows_have_exact_fields_and_skip_missing_or_ineligible(tmp_path):
+    import json
+
+    manifest = tmp_path / "m.json"
+    manifest.write_text(
+        json.dumps({"licence_class": "research_only", "tables": [{"id": "log:1"}, {"id": "log:2"}]})
+    )
+    assert dc.licence_rows([(manifest, "C4"), (tmp_path / "none.json", "C9")]) == [
+        {
+            "id": "log:1",
+            "source": "log:1",
+            "stratum": "C4",
+            "licence_class": "research_only",
+            "publisher": "logpai",
+            "origin": "licence_manifest",
+        },
+        {
+            "id": "log:2",
+            "source": "log:2",
+            "stratum": "C4",
+            "licence_class": "research_only",
+            "publisher": "logpai",
+            "origin": "licence_manifest",
+        },
+    ]
+    entries = {
+        "entries": [
+            {
+                "id": "a:1",
+                "family": "fam",
+                "system": "sys",
+                "publisher": "pub",
+                "stratum": "C5",
+                "licence_class": "open",
+                "eligible": True,
+            },
+            {
+                "id": "a:2",
+                "family": "fam2",
+                "system": "s2",
+                "publisher": "p2",
+                "stratum": "C6",
+                "licence_class": "open",
+                "eligible": False,
+            },
+        ]
+    }
+    path = tmp_path / "a.json"
+    path.write_text(json.dumps(entries))
+    assert dc.acquired_rows(path) == [
+        {
+            "id": "a:1",
+            "source": "fam",
+            "system": "sys",
+            "publisher": "pub",
+            "stratum": "C5",
+            "licence_class": "open",
+            "origin": "acquired",
+        }
+    ]
+    assert dc.transactional_rows(tmp_path / "none.json") == []
+    audit = tmp_path / "audit.json"
+    audit.write_text(json.dumps({"transactional": {"uci:1": {}, "uci:2": {}}}))
+    assert [r["id"] for r in dc.transactional_rows(audit)] == ["uci:1", "uci:2"]
+
+
+def _frame(n=60, **columns):
+    import pandas as pd
+
+    return pd.DataFrame({k: v(n) if callable(v) else v for k, v in columns.items()})
+
+
+def test_transactional_signals_follow_their_thresholds_exactly():
+    import pandas as pd
+
+    def table(distinct, rows, name="user_id"):
+        return pd.DataFrame({name: [i % distinct for i in range(rows)], "amount": range(rows)})
+
+    assert dc.transactional_signals(table(20, 60))["keys"] == ["user_id"]
+    assert dc.transactional_signals(table(19, 60))["keys"] == []  # fewer than 20 distinct values
+    assert dc.transactional_signals(table(30, 30))["keys"] == []  # no value repeats
+    assert (
+        dc.transactional_signals(table(30, 31))["keys"] == []
+    )  # 2 of 31 rows share a value: below 0.2
+    assert dc.transactional_signals(table(30, 36))["keys"] == [
+        "user_id"
+    ]  # 12 of 36 share: above 0.2
+    boundary = pd.DataFrame(
+        {"user_id": [i % 10 for i in range(20)] + list(range(100, 180)), "amount": range(100)}
+    )
+    assert dc.transactional_signals(boundary)["keys"] == [
+        "user_id"
+    ]  # 20 of 100 rows share: exactly 0.2
+    below = pd.DataFrame(
+        {"user_id": [i % 10 for i in range(20)] + list(range(100, 185)), "amount": range(105)}
+    )
+    assert dc.transactional_signals(below)["keys"] == []  # 20 of 105 rows: under 0.2
+    for name in (
+        "CustomerID",
+        "invoiceNo",
+        "txn_id",
+        "patient_nbr",
+        "SESSION",
+        "card-id",
+        "merchant",
+    ):
+        assert dc.transactional_signals(table(20, 60, name))["keys"] == [name], name
+    for name in ("country", "identifier", "bid", "customerValue_x"):
+        keys = dc.transactional_signals(table(20, 60, name))["keys"]
+        assert keys == ([name] if name == "customerValue_x" else []), name
+    floats = pd.DataFrame({"user_id": [float(i % 20) for i in range(60)], "amount": range(60)})
+    assert dc.transactional_signals(floats)["keys"] == []  # a float is a measure
+    with_nan = pd.DataFrame(
+        {"user_id": [None] * 10 + [i % 20 for i in range(50)], "amount": range(60)}
+    )
+    assert dc.transactional_signals(with_nan)["keys"] == []  # float because of the missing values
+    text = pd.DataFrame({"user_id": [f"u{i % 20}" for i in range(60)], "amount": range(60)})
+    assert dc.transactional_signals(text)["keys"] == ["user_id"]
+    assert dc.transactional_signals(pd.DataFrame({"user_id": []}))["keys"] == []
+
+
+def test_transactional_signals_events_and_times_are_exact():
+    import pandas as pd
+
+    frame = pd.DataFrame(
+        {
+            "Price": [1.0, 2.0],
+            "quantity_ordered": [1, 2],
+            "payment_type": ["a", "b"],  # not numeric: not an event column
+            "Fare": [1, 2],
+            "revenue": [1, 2],
+            "Balance": [1, 2],
+            "qty": [1, 2],
+            "debit": [1, 2],
+            "credit": [1, 2],
+            "other": [1, 2],
+        }
+    )
+    assert dc.transactional_signals(frame)["event_columns"] == [
+        "Balance",
+        "Fare",
+        "Price",
+        "credit",
+        "debit",
+        "qty",
+        "quantity_ordered",
+        "revenue",
+    ]
+    assert dc.transactional_signals(frame, ["b", "a"])["time_columns"] == ["a", "b"]
+    assert dc.transactional_signals(frame)["time_columns"] == []
+    assert dc.transactional_signals(frame, None)["time_columns"] == []
+
+
+def test_is_transactional_needs_a_key_and_an_event_or_a_time_column():
+    base = {"keys": ["k"], "event_columns": [], "time_columns": []}
+    assert dc.is_transactional({**base, "event_columns": ["e"]}) is True
+    assert dc.is_transactional({**base, "time_columns": ["t"]}) is True
+    assert dc.is_transactional(base) is False
+    assert dc.is_transactional({"keys": [], "event_columns": ["e"], "time_columns": ["t"]}) is False
+
+
+def test_the_audit_has_exact_sections_counts_and_uses_verified_time_columns():
+    import pandas as pd
+
+    n = 60
+    retail = pd.DataFrame({"customer_id": [i % 20 for i in range(n)], "note": range(n)})
+    plain = pd.DataFrame({"x": range(n)})
+    tables = {"uci:1": retail, "uci:2": plain, "uci:9": retail}
+    rows = [
+        {"id": "uci:1", "source": "1", "schema_kind": "mixed"},
+        {"id": "uci:2", "source": "2", "schema_kind": "numeric"},
+        {"id": "adbench:cardio", "source": "3", "schema_kind": "numeric"},
+        {"id": "nab/x", "source": "4", "time_verified": True},
+        {"id": "skab/x", "source": "5", "time_verified": True},
+        {"id": "uci:3", "source": "6", "schema_kind": "mixed"},
+        {"id": "uci:9", "source": "7", "stratum": "C4"},  # not audited: not in C1 to C3
+    ]
+    audit = dc.transactional_audit(
+        rows, lambda r: tables.get(r["id"]), {"uci:1": {"verified": True, "column": "when"}}
+    )
+    assert audit["transactional"] == {
+        "uci:1": {"keys": ["customer_id"], "event_columns": [], "time_columns": ["when"]}
+    }
+    assert audit["not_transactional"] == {
+        "uci:2": {"keys": [], "event_columns": [], "time_columns": []}
+    }
+    assert audit["numeric_arrays_without_schema"] == ["adbench:cardio", "nab/x", "skab/x"]
+    assert audit["not_audited"] == ["uci:3"]
+    assert audit["counts"] == {
+        "transactional": 1,
+        "not_transactional": 1,
+        "numeric_arrays_without_schema": 3,
+        "not_audited": 1,
+    }
+    unverified = dc.transactional_audit(
+        rows[:1], lambda r: retail, {"uci:1": {"verified": False, "column": "when"}}
+    )
+    assert unverified["counts"]["transactional"] == 0  # a key alone is not enough
+    assert dc.transactional_audit(rows[:1], lambda r: retail)["counts"]["transactional"] == 0
+
+
+def test_read_row_chooses_the_folder_by_origin_and_ignores_other_sources(tmp_path, monkeypatch):
+    monkeypatch.setattr(dc, "ROOT", tmp_path)
+    (tmp_path / "data" / "pool").mkdir(parents=True)
+    (tmp_path / "data" / "uci_wave2").mkdir()
+    (tmp_path / "data" / "pool" / "5.csv").write_text("a,b\n1,2\n")
+    (tmp_path / "data" / "uci_wave2" / "5.csv").write_text("a,b\n7,8\n")
+    first = dc._read_row({"id": "uci:5", "origin": "first_pool"})
+    wave = dc._read_row({"id": "uci:5", "origin": "wave2"})
+    assert first["a"].tolist() == [1] and wave["a"].tolist() == [7]
+    assert dc._read_row({"id": "uci:5"})["a"].tolist() == [1]  # no origin: the pool
+    assert dc._read_row({"id": "uci:6", "origin": "wave2"}) is None  # no such file
+    assert dc._read_row({"id": "adbench:5"}) is None and dc._read_row({"id": "nab/5"}) is None
+
+
+def _report_rows():
+    return [
+        {"id": "a", "source": "s1", "schema_kind": "numeric"},
+        {"id": "b", "source": "s1", "schema_kind": "numeric", "system": "sy", "publisher": "p1"},
+        {
+            "id": "c",
+            "source": "s2",
+            "stratum": "C4",
+            "system": "sy",
+            "publisher": "p1",
+            "licence_class": "research_only",
+        },
+        {"id": "d", "source": "s3", "tags": ["x"], "time_candidate": True, "time_verified": False},
+        {"id": "e", "source": "s4", "time_candidate": True, "time_verified": True},
+    ]
+
+
+def test_the_gap_report_is_exact():
+    report = dc.gap_report(_report_rows())
+    assert report["total_sources"] == 4
+    assert report["licence_classes"] == {"open": 3, "research_only": 1}
+    assert report["time_candidates_not_yet_verified"] == ["s3"]
+    c1 = report["strata"]["C1"]
+    assert c1 == {
+        "stratum": "flat tabular",
+        "sources": 2,
+        "systems": 3,
+        "publishers": 3,
+        "minimum": 15,
+        "recommended": 36,
+        "ambitious": 50,
+        "missing_to_minimum": 13,
+        "missing_to_recommended": 34,
+    }
+    c4 = report["strata"]["C4"]
+    assert (c4["sources"], c4["systems"], c4["publishers"]) == (1, 1, 1)
+    assert report["strata"]["C3"]["sources"] == 1
+    assert (
+        report["strata"]["C2"]["sources"] == 0
+        and report["strata"]["C2"]["missing_to_minimum"] == 15
+    )
+    big = [{"id": str(i), "source": f"s{i}", "schema_kind": "numeric"} for i in range(60)]
+    capped = dc.gap_report(big)["strata"]["C1"]
+    assert capped["missing_to_minimum"] == 0 and capped["missing_to_recommended"] == 0
+    assert list(report["strata"]) == list(dc.STRATA)
+    exactly = [{"id": str(i), "source": f"s{i}", "schema_kind": "numeric"} for i in range(15)]
+    assert dc.gap_report(exactly)["strata"]["C1"]["missing_to_minimum"] == 0
+    assert dc.gap_report(exactly)["strata"]["C1"]["missing_to_recommended"] == 21
+    assert dc.gap_report([])["total_sources"] == 0
+
+
+def test_the_gap_report_renders_exactly():
+    text = dc.render_gap(dc.gap_report(_report_rows()))
+    lines = text.split("\n")
+    assert lines[0] == "# Independent source families per stratum against the targets"
+    assert lines[1] == ""
+    assert lines[2] == (
+        "| Stratum | Families | Systems | Publishers | Minimum | Recommended | Ambitious "
+        "| Missing to recommended |"
+    )
+    assert lines[3] == "|---|---:|---:|---:|---:|---:|---:|---:|"
+    assert lines[4] == "| C1 flat tabular | 2 | 3 | 3 | 15 | 36 | 50 | 34 |"
+    assert lines[5].startswith(
+        "| C2 transactional and categorical (historical) | 0 | 0 | 0 | 15 | 30 | 45 | 30 |"
+    )
+    assert lines[10] == "| C6 nested | 0 | 0 | 0 | 15 | 30 | 45 | 30 |"
+    assert lines[11] == ""
+    assert lines[12] == "Licence classes (sources): open 3, research_only 1."
+    assert lines[13] == ""
+    assert lines[14] == (
+        "Distinct source families: 4. Wave-2 tables with a time-column candidate that is not yet "
+        "verified as a single chronological series: 1."
+    )
+    assert text.endswith("\n") and len(lines) == 16 and lines[15] == ""
+    assert len([line for line in lines if line.startswith("| C")]) == 7
+
+
+def test_main_writes_the_gap_report_and_the_audit_and_prints_them(tmp_path, monkeypatch, capsys):
+    import json
+
+    monkeypatch.setattr(dc, "stratum_rows", lambda: _report_rows()[:2])
+    monkeypatch.setattr(
+        dc, "licence_rows", lambda manifests: [{"id": "l", "source": "l", "stratum": "C4"}]
+    )
+    monkeypatch.setattr(dc, "acquired_rows", lambda: [{"id": "q", "source": "q", "stratum": "C5"}])
+    monkeypatch.setattr(
+        dc, "transactional_rows", lambda: [{"id": "t", "source": "t", "stratum": "C2b"}]
+    )
+    out = tmp_path / "o" / "deep"
+    assert dc.main(["gap", "--out", str(out)]) == 0
+    data = json.loads((out / "stratum_gap.json").read_text())
+    assert data["total_sources"] == 4 and data["strata"]["C2b"]["sources"] == 1
+    text = (out / "stratum_gap.json").read_text()
+    assert text == json.dumps(data, indent=1, sort_keys=True) + "\n"
+    assert (out / "stratum_gap.md").read_text() == dc.render_gap(data)
+    assert capsys.readouterr().out == dc.render_gap(data) + "\n"
+    times = tmp_path / "times.json"
+    times.write_text(json.dumps({"uci:1": {"verified": True, "column": "when"}}))
+    monkeypatch.setattr(dc, "WAVE2_TIME", times)
+    seen = {}
+
+    def fake_audit(rows, read, wave2_time):
+        seen.update(rows=rows, read=read, times=wave2_time)
+        return {"counts": {"transactional": 1}, "transactional": {}}
+
+    monkeypatch.setattr(dc, "transactional_audit", fake_audit)
+    out2 = tmp_path / "o2"
+    assert dc.main(["transactional", "--out", str(out2)]) == 0
+    assert seen["read"] is dc._read_row and seen["times"] == {
+        "uci:1": {"verified": True, "column": "when"}
+    }
+    assert (out2 / "transactional_audit.json").read_text() == json.dumps(
+        {"counts": {"transactional": 1}, "transactional": {}}, indent=1, sort_keys=True
+    ) + "\n"
+    assert capsys.readouterr().out.strip().endswith("{'transactional': 1}")
+    monkeypatch.setattr(dc, "WAVE2_TIME", tmp_path / "absent.json")
+    assert dc.main(["transactional", "--out", str(out2)]) == 0
+    assert seen["times"] == {}
+    import pytest as _pytest
+
+    with _pytest.raises(SystemExit):
+        dc.main(["nonsense"])
+
+
+def test_skipped_inputs_do_not_stop_the_scan_of_later_ones(tmp_path):
+    import json
+
+    import pandas as pd
+
+    coverage = tmp_path / "coverage.json"
+    base = {"independent_source": "s", "schema_kind": "numeric"}
+    cell = {"status": "not_evaluated"}
+    protocols = {"chronological": cell, "chronological_injected_classical": cell}
+    coverage.write_text(json.dumps({"datasets": [
+        {**base, "id": "r", "decision": "retired", "protocols": protocols},  # a retired table first
+        {**base, "id": "k", "decision": "retained", "protocols": protocols},
+    ]}))  # fmt: skip
+    natural = tmp_path / "nat"
+    natural.mkdir()
+    (natural / "0.json").write_text(json.dumps({"id": "skip", "group": "g", "excluded": "x"}))
+    (natural / "1.json").write_text(json.dumps({"id": "n/1", "group": "g", "chronological": {}}))
+    rows = dc.stratum_rows(coverage, tmp_path / "none.json", natural, tmp_path / "none2.json")
+    assert [r["id"] for r in rows] == ["k", "n/1"]
+    manifest = tmp_path / "m.json"
+    manifest.write_text(json.dumps({"licence_class": "open", "tables": [{"id": "x"}]}))
+    assert [
+        r["id"] for r in dc.licence_rows([(tmp_path / "gone.json", "C4"), (manifest, "C4")])
+    ] == ["x"]
+    n = 60
+    frame = pd.DataFrame(
+        {
+            "note": range(n),
+            "country": ["a"] * n,
+            "user_id": [i % 20 for i in range(n)],
+            "amount": range(n),
+        }
+    )  # key columns after non-key columns
+    assert dc.transactional_signals(frame)["keys"] == ["user_id"]
+    floats = pd.DataFrame(
+        {"fl": [0.5] * n, "empty_id": [None] * n, "user_id": [i % 20 for i in range(n)]}
+    )
+    assert dc.transactional_signals(floats)["keys"] == [
+        "user_id"
+    ]  # a float and an empty column first
+    audit = dc.transactional_audit(
+        [
+            {"id": "x", "source": "x", "stratum": "C5"},
+            {"id": "uci:1", "source": "1", "schema_kind": "numeric"},
+        ],
+        lambda r: frame,
+    )
+    assert list(audit["not_transactional"]) + list(audit["transactional"]) == ["uci:1"]
+
+
+def test_read_row_uses_exact_paths_and_reads_without_low_memory(tmp_path, monkeypatch):
+    import pandas as pd
+
+    monkeypatch.setattr(dc, "ROOT", tmp_path)
+    seen = []
+    real = pd.read_csv
+
+    def spy(path, *args, **kwargs):
+        seen.append((str(path), kwargs))
+        return real(path, *args, **kwargs)
+
+    monkeypatch.setattr(pd, "read_csv", spy)
+    for folder in ("pool", "uci_wave2"):
+        (tmp_path / "data" / folder).mkdir(parents=True)
+        (tmp_path / "data" / folder / "5.csv").write_text("a\n1\n".replace("\\\\n", "\\n"))
+    (tmp_path / "data" / "pool" / "a:b.csv").write_text("a\n2\n")
+    dc._read_row({"id": "uci:5", "origin": "wave2"})
+    dc._read_row({"id": "uci:5", "origin": "first_pool"})
+    assert dc._read_row({"id": "uci:a:b"})["a"].tolist() == [2]  # only the first colon splits
+    assert seen[0] == (f"{tmp_path}/data/uci_wave2/5.csv", {"low_memory": False})
+    assert seen[1] == (f"{tmp_path}/data/pool/5.csv", {"low_memory": False})
+    assert seen[2][0] == f"{tmp_path}/data/pool/a:b.csv"
+
+
+def test_main_creates_nested_output_directories_twice_names_its_files_and_describes_itself(
+    tmp_path, monkeypatch, capsys
+):
+    import json
+    from pathlib import Path
+
+    monkeypatch.setattr(
+        dc, "stratum_rows", lambda: [{"id": "a", "source": "a", "schema_kind": "numeric"}]
+    )
+    monkeypatch.setattr(dc, "licence_rows", lambda manifests: [])
+    monkeypatch.setattr(dc, "acquired_rows", lambda: [])
+    monkeypatch.setattr(dc, "transactional_rows", lambda: [])
+    manifests = []
+    monkeypatch.setattr(dc, "licence_rows", lambda m: manifests.append(m) or [])
+    names = []
+    real = Path.write_text
+
+    def spy(self, data, *a, **k):
+        names.append(self.name)
+        return real(self, data, *a, **k)
+
+    monkeypatch.setattr(Path, "write_text", spy)
+    out = tmp_path / "a" / "b" / "c"
+    assert dc.main(["gap", "--out", str(out)]) == 0
+    assert dc.main(["gap", "--out", str(out)]) == 0  # an existing directory is fine
+    assert names == ["stratum_gap.json", "stratum_gap.md"] * 2
+    assert manifests == [dc.LICENCE_MANIFESTS, dc.LICENCE_MANIFESTS]
+    text = (out / "stratum_gap.json").read_text()
+    assert text == json.dumps(json.loads(text), indent=1, sort_keys=True) + "\n"
+    names.clear()
+    monkeypatch.setattr(dc, "WAVE2_TIME", tmp_path / "absent.json")
+    rows = [{"id": "uci:z", "source": "z", "schema_kind": "numeric"}]
+    monkeypatch.setattr(dc, "stratum_rows", lambda: rows)
+    got = {}
+    monkeypatch.setattr(
+        dc,
+        "transactional_audit",
+        lambda r, read, t: got.update(rows=r) or {"counts": {}, "z": 1, "a": 2},
+    )
+    out2 = tmp_path / "x" / "y"
+    assert dc.main(["transactional", "--out", str(out2)]) == 0
+    assert dc.main(["transactional", "--out", str(out2)]) == 0
+    assert got["rows"] is rows and names == ["transactional_audit.json"] * 2
+    audit_text = (out2 / "transactional_audit.json").read_text()
+    assert list(json.loads(audit_text)) == ["a", "counts", "z"]  # sorted keys
+    assert audit_text.startswith('{\n "a": 2')  # one-space indent
+    monkeypatch.setattr(dc, "GAP_DIR", tmp_path / "default")
+    assert dc.main(["gap"]) == 0
+    assert (tmp_path / "default" / "stratum_gap.json").exists()
+    capsys.readouterr()
+    import pytest as _pytest
+
+    with _pytest.raises(SystemExit):
+        dc.main(["--help"])
+    assert "One logical catalog" in capsys.readouterr().out

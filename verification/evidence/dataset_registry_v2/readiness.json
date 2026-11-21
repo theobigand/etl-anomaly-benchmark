@@ -19,7 +19,7 @@
   {
    "failed": {
     "reasons": [
-     "upstream terms not verified at the original publisher"
+     "licence class 'restricted' is not open or research_only"
     ],
     "status": "rights_verified"
    },
@@ -532,6 +532,13 @@
   },
   {
    "failed": null,
+   "group": "ccin2p3_slurm",
+   "id": "slurm_ccin2p3",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -645,6 +652,7 @@
  ],
  "ready_groups": {
   "C2b": [
+   "ccin2p3_slurm",
    "georgia_procurement",
    "lyft_bikeshare",
    "montreal_contracts",
@@ -675,13 +683,13 @@
  },
  "summary": {
   "C2b": {
-   "acquired": 7,
-   "discovered": 13,
-   "experiment_ready": 7,
-   "protocol_ready": 7,
-   "rights_verified": 7,
-   "scientifically_eligible": 7,
-   "structurally_valid": 7
+   "acquired": 8,
+   "discovered": 14,
+   "experiment_ready": 8,
+   "protocol_ready": 8,
+   "rights_verified": 8,
+   "scientifically_eligible": 8,
+   "structurally_valid": 8
   },
   "C3": {
    "acquired": 2,

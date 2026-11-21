@@ -4,8 +4,8 @@
 |---|---:|---:|---:|---:|---:|---:|---:|
 | C1 flat tabular | 92 | 92 | 92 | 15 | 36 | 50 | 0 |
 | C2 transactional and categorical (historical) | 42 | 42 | 42 | 15 | 30 | 45 | 0 |
-| C2b transactional events | 7 | 8 | 7 | 15 | 30 | 45 | 23 |
-| C3 time series | 41 | 41 | 26 | 15 | 40 | 55 | 0 |
+| C2b transactional events | 8 | 9 | 8 | 15 | 30 | 45 | 22 |
+| C3 time series | 40 | 40 | 26 | 15 | 40 | 55 | 0 |
 | C4 logs and event sequences | 16 | 16 | 1 | 15 | 28 | 40 | 12 |
 | C5 relational | 4 | 13 | 4 | 15 | 36 | 55 | 32 |
 | C6 nested | 7 | 7 | 6 | 15 | 30 | 45 | 23 |

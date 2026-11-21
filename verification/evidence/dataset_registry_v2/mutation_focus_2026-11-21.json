@@ -1,0 +1,63 @@
+{
+ "date": "2026-11-21",
+ "kind": "development feedback from focused runs, not release evidence",
+ "method": "each module mutated alone (`mutmut run research.<module>.*`) with the test selection narrowed by PYTEST_ADDOPTS=-k to that module's own test file, so tests of other files could only kill more; stats re-collected per run; the module's .meta cache removed first; killed share counts only `killed` (suspicious and timeout are not counted as kills)",
+ "modules": {
+  "acquisition": {
+   "killed": 377,
+   "killed_share": 0.9792,
+   "mutants": 385,
+   "no_tests": 0,
+   "survived": 4,
+   "suspicious": 4,
+   "timeout": 0
+  },
+  "acquisition_validate": {
+   "killed": 654,
+   "killed_share": 0.979,
+   "mutants": 668,
+   "no_tests": 0,
+   "survived": 12,
+   "suspicious": 2,
+   "timeout": 0
+  },
+  "dataset_catalog": {
+   "killed": 771,
+   "killed_share": 0.9859,
+   "mutants": 782,
+   "no_tests": 0,
+   "survived": 5,
+   "suspicious": 4,
+   "timeout": 2
+  },
+  "experimental_views": {
+   "killed": 1744,
+   "killed_share": 0.9609,
+   "mutants": 1815,
+   "no_tests": 0,
+   "survived": 64,
+   "suspicious": 6,
+   "timeout": 1
+  },
+  "fault_protocols": {
+   "killed": 843,
+   "killed_share": 0.969,
+   "mutants": 870,
+   "no_tests": 0,
+   "survived": 22,
+   "suspicious": 5,
+   "timeout": 0
+  },
+  "readiness": {
+   "killed": 450,
+   "killed_share": 1.0,
+   "mutants": 450,
+   "no_tests": 0,
+   "survived": 0,
+   "suspicious": 0,
+   "timeout": 0
+  }
+ },
+ "threshold_L3": 0.95,
+ "tool": "mutmut 3.8.0 in the conda environment etl-benchmark (python 3.11.17)"
+}

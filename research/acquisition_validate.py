@@ -8,8 +8,6 @@ from __future__ import annotations
 
 from typing import Any
 
-_TYPES = {bool: "bool", int: "int", float: "float", str: "str", list: "list", dict: "dict"}
-
 
 def read_tsf(text: str) -> dict[str, Any]:
     """Header facts and series of a .tsf file; ``?`` marks a missing value."""
@@ -64,16 +62,16 @@ def tsf_summary(parsed: dict[str, Any]) -> dict[str, Any]:
 
 
 def _walk(value: Any, path: str, out: dict[str, dict[str, Any]], depth: int) -> int:
+    """Record the types of every leaf path of one record in ``out``; return the deepest level."""
     deepest = depth
     if isinstance(value, dict):
         for key, child in value.items():
             deepest = max(deepest, _walk(child, f"{path}.{key}" if path else key, out, depth + 1))
     else:
-        node = out.setdefault(path, {"present": 0, "types": set(), "arrays": 0})
-        node["present"] += 1
-        node["types"].add(_TYPES.get(type(value), type(value).__name__))
+        node = out.setdefault(path, {"types": set(), "array": False})
+        node["types"].add(type(value).__name__)
         if isinstance(value, list):
-            node["arrays"] += 1
+            node["array"] = True
             for item in value:
                 if isinstance(item, dict):
                     deepest = max(deepest, _walk(item, path, out, depth + 1))
@@ -81,11 +79,21 @@ def _walk(value: Any, path: str, out: dict[str, dict[str, Any]], depth: int) -> 
 
 
 def json_shape(records: list[dict[str, Any]]) -> dict[str, Any]:
-    """Depth, per-path presence, array share and type set of a list of JSON objects."""
+    """Depth, per-path presence, array share and type set of a list of JSON objects.
+
+    Presence and array share are shares of records: a path repeated inside one record (objects in
+    an array) still counts once for that record.
+    """
     paths: dict[str, dict[str, Any]] = {}
     deepest = 0
     for record in records:
-        deepest = max(deepest, _walk(record, "", paths, 1))
+        local: dict[str, dict[str, Any]] = {}
+        deepest = max(deepest, _walk(record, "", local, 1))
+        for path, node in local.items():
+            total = paths.setdefault(path, {"present": 0, "types": set(), "arrays": 0})
+            total["present"] += 1
+            total["types"] |= node["types"]
+            total["arrays"] += int(node["array"])
     n = len(records)
     report = {
         p: {

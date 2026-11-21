@@ -449,7 +449,7 @@
   "openalex:nested": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
-    "optional fields (14 paths)"
+    "optional fields (46 paths)"
    ],
    "first_party": true,
    "independent_group": "openalex",
@@ -479,7 +479,7 @@
   "openfda_drug_event": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
-    "optional fields (33 paths)",
+    "optional fields (64 paths)",
     "type variation",
     "sample covers 2 receipt dates only"
    ],
@@ -508,6 +508,23 @@
    "protocol_id": "P-NEST",
    "units": 9688,
    "view": "openfoodfacts"
+  },
+  "slurm_ccin2p3": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "20 percent of jobs end failed, cancelled, timed out or out of memory (natural scheduler outcomes)",
+    "3.2 percent of jobs never started (no wait time)",
+    "two months only, one centre",
+    "job id sample 1 in 20"
+   ],
+   "first_party": true,
+   "independent_group": "ccin2p3_slurm",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on submit time",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 233716,
+   "view": "slurm_ccin2p3"
   },
   "stackexchange:3dprinting": {
    "anomaly_origin": "controlled_injection",

@@ -23,13 +23,13 @@
    "upstream_status": "verified"
   },
   {
-   "eligible": true,
+   "eligible": false,
    "family": "monash:fred_md",
    "id": "monash:4654833",
-   "licence_class": "open",
+   "licence_class": "restricted",
    "protocols": "controlled injection only (no natural anomaly labels); chronological order available",
    "publisher": "monash_compilation",
-   "reason": "107 monthly US macro indicators (FRED-MD); observed series",
+   "reason": "107 monthly US macro indicators (FRED-MD); observed series; RESTRICTED for this benchmark: training and evaluating anomaly detectors, including learned ones, is use in connection with machine-learning development under the FRED terms; the compiler's CC BY label does not lift it",
    "stages": {
     "collection_implemented": true,
     "data_acquired": true,
@@ -40,7 +40,8 @@
    },
    "stratum": "C3",
    "system": "monash:fred_md",
-   "upstream_status": "not_verified"
+   "upstream_licence": "FRED Services Terms of Use (fred.stlouisfed.org/legal/terms_of_use.html, read 2026-11-21): free for non-commercial, educational and personal use with attribution, but the terms prohibit using FRED content in connection with the development or training of any software program or system or machine learning; FRED-MD is built from FRED series",
+   "upstream_status": "verified"
   },
   {
    "eligible": true,
@@ -624,7 +625,7 @@
    "licence_class": "open",
    "protocols": "nested-structure corruption, missing optional fields, type inconsistency, schema drift by controlled injection; no natural labels",
    "publisher": "us_fda",
-   "reason": "4000 records, depth 6, 21 array paths, 33 optional paths: genuinely nested and variable",
+   "reason": "4000 records, depth 6, 21 array paths, 64 optional paths: genuinely nested and variable",
    "stages": {
     "collection_implemented": true,
     "data_acquired": true,
@@ -700,7 +701,7 @@
    "licence_class": "open",
    "protocols": "nested-structure corruption, optional-field and type faults by controlled injection",
    "publisher": "ourresearch",
-   "reason": "works records are genuinely nested (depth 6, arrays of authorships with institutions, 14 optional paths); same data-generating system as the C5 entry, so it is one family counted in two strata, not a second source",
+   "reason": "works records are genuinely nested (depth 6, arrays of authorships with institutions, 46 optional paths); same data-generating system as the C5 entry, so it is one family counted in two strata, not a second source",
    "stages": {
     "collection_implemented": true,
     "data_acquired": true,
@@ -970,7 +971,7 @@
    "licence_class": "open",
    "protocols": "P-NEST",
    "publisher": "ocds_georgia",
-   "reason": "the same releases kept nested (depth 7, 46 paths, 17 optional): clearly variable nested structure; one family with the C2b entry",
+   "reason": "the same releases kept nested (depth 7, 46 paths, 18 optional): clearly variable nested structure; one family with the C2b entry",
    "stages": {
     "collection_implemented": true,
     "data_acquired": true,
@@ -1012,7 +1013,7 @@
    "licence_class": "open",
    "protocols": "P-NEST",
    "publisher": "ocds_zambia",
-   "reason": "the same releases kept nested (depth 7, 72 paths, 57 optional): clearly variable nested structure; one family with the C2b entry",
+   "reason": "the same releases kept nested (depth 7, 72 paths, 62 optional): clearly variable nested structure; one family with the C2b entry",
    "stages": {
     "collection_implemented": true,
     "data_acquired": true,
@@ -1087,6 +1088,27 @@
    "stratum": "C2b",
    "system": "bikeshare_jc",
    "upstream_licence": "Data License Agreement read live on the system's own page: any lawful purpose with analysis allowed; no stand-alone redistribution; non-commercial publication of analyses",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "slurm_ccin2p3",
+   "id": "slurm_ccin2p3",
+   "licence_class": "open",
+   "protocols": "P-TAB on jobs (duration, resource, state-code, duplicate and timestamp-order faults); natural job states are a baseline and a separate natural outcome, never confirmed pipeline faults",
+   "publisher": "cc_in2p3",
+   "reason": "job accounting events of a national computing centre (SLURM): 233716 jobs in the id-sampled view over two months (July and December 2024, 189 days by submit time), 462 users, 86 accounts, job states 80 percent completed, 12 percent failed, 5 percent cancelled, 1.6 percent timeout; user and account names are the producer's pseudonyms; no monetary amount (usage events), so it supports no payment-specific claim; failed and cancelled jobs are natural scheduler outcomes, not ETL faults",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 at the publisher (Zenodo record by its authors)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "slurm_ccin2p3",
+   "upstream_licence": "CC BY 4.0 on Zenodo record 18668107 (metadata.license.id cc-by-4.0, open access); the depositors are the authors and staff of the producing centre",
    "upstream_status": "verified"
   }
  ],

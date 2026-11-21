@@ -221,7 +221,7 @@
   },
   "works_shape": {
    "max_depth": 6,
-   "optional_paths": 14,
+   "optional_paths": 46,
    "paths": 74,
    "records": 1000
   }
@@ -230,7 +230,7 @@
   "openfda_drug_event": {
    "array_paths": 21,
    "max_depth": 6,
-   "optional_paths": 33,
+   "optional_paths": 64,
    "paths": 86,
    "records": 4000,
    "variable_structure": true
@@ -256,7 +256,7 @@
   "array_paths": 359,
   "max_depth": 12,
   "multi_type_paths": 866,
-  "optional_paths": 9924,
+  "optional_paths": 9964,
   "paths": 9999,
   "records": 9688,
   "variable_structure": true

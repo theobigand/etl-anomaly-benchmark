@@ -1085,6 +1085,39 @@
    "retries": 2,
    "stratum": "C2b",
    "upstream": "the operator (Lyft Bikes and Scooters) publishes for the member jurisdictions; one operator and one trip schema for both cities"
+  },
+  {
+   "attribution": "cite Cochard and Simon, CC-IN2P3 2024 Workload Dataset, doi 10.5281/zenodo.18668107",
+   "files": [
+    {
+     "name": "07.tsv.tar.gz",
+     "observed": "2024-07",
+     "url": "https://zenodo.org/records/18668107/files/07.tsv.tar.gz?download=1"
+    },
+    {
+     "name": "12.tsv.tar.gz",
+     "observed": "2024-12",
+     "url": "https://zenodo.org/records/18668107/files/12.tsv.tar.gz?download=1"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "slurm_ccin2p3",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/18668107 (metadata.license.id) and https://doi.org/10.5281/zenodo.18668107",
+   "licence_text": "Zenodo record 18668107 metadata: Creative Commons Attribution 4.0 International (cc-by-4.0), access_right open; the depositors are the dataset's authors (companion paper arXiv 2606.05914)",
+   "max_bytes": 104857600,
+   "method": "official Zenodo record file download",
+   "min_interval": 3.0,
+   "privacy": "job records can carry user, group and project identifiers: pseudonymised or dropped in the view",
+   "publisher": "CC-IN2P3 (French national computing centre); depositors G. Cochard and B. Simon",
+   "rate_limit": "two files, sequential",
+   "redistribution": "CC BY 4.0 permits it with attribution; raw files stay local",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "first-party: the producers of the job records deposit them",
+   "upstream_verified": true
   }
  ]
 }

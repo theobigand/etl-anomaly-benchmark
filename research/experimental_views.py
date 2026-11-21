@@ -37,7 +37,7 @@ def pseudonym(value: str | None, salt: str = SALT) -> str | None:
 
 
 def _short(value: str | None) -> str | None:
-    return None if value is None else value.rsplit("/", 1)[-1]
+    return None if value is None else value.rpartition("/")[2]
 
 
 def openalex_views(
@@ -161,12 +161,28 @@ class ViewError(Exception):
 
 
 def _find(columns: list[str], names: tuple[str, ...]) -> str | None:
-    cleaned = {c: re.sub(r"[^a-z ]", "", c.lower().replace("\ufeff", "")).strip() for c in columns}
+    cleaned = {c: re.sub(r"[^a-z ]", "", c.lower()).strip() for c in columns}  # also drops a BOM
     for name in names:
         for original, clean in cleaned.items():
             if name in clean:
                 return original
     return None
+
+
+def _parse_dates(values: pd.Series) -> pd.Series:
+    """ISO dates as written, every other format day-first; unreadable values become missing.
+
+    ``dayfirst`` alone would turn an ISO date such as 2024-02-03 into 3 March, so ISO strings are
+    parsed separately.
+    """
+    text = values.astype("string")
+    iso = text.str.match(r"^\d{4}-\d{2}-\d{2}").fillna(False).to_numpy(dtype=bool)
+    out = pd.Series(pd.NaT, index=values.index, dtype="datetime64[ns]")
+    out[iso] = pd.to_datetime(text[iso], errors="coerce", format="ISO8601").to_numpy()
+    out[~iso] = pd.to_datetime(
+        text[~iso], errors="coerce", dayfirst=True, format="mixed"
+    ).to_numpy()
+    return out
 
 
 def spend_view(raw: pd.DataFrame, organisation: str, salt: str = SALT) -> pd.DataFrame:
@@ -178,7 +194,7 @@ def spend_view(raw: pd.DataFrame, organisation: str, salt: str = SALT) -> pd.Dat
     amount = pd.to_numeric(
         raw[found["amount"]].astype(str).str.replace(r"[£,\s]", "", regex=True), errors="coerce"
     )
-    date = pd.to_datetime(raw[found["date"]], errors="coerce", dayfirst=True, format="mixed")
+    date = _parse_dates(raw[found["date"]])
     frame = pd.DataFrame(
         {
             "organisation": organisation,
@@ -320,12 +336,12 @@ OCDS_DROP = frozenset(
 )
 
 
-def _ocds_ids(node: Any, salt: str) -> Any:
-    """Drop identifying keys everywhere and pseudonymise party references (`id` of parties)."""
+def _ocds_ids(node: Any) -> Any:
+    """Drop the identifying keys (names, addresses, free text) at every depth."""
     if isinstance(node, dict):
-        return {k: _ocds_ids(v, salt) for k, v in node.items() if k not in OCDS_DROP}
+        return {k: _ocds_ids(v) for k, v in node.items() if k not in OCDS_DROP}
     if isinstance(node, list):
-        return [_ocds_ids(v, salt) for v in node]
+        return [_ocds_ids(v) for v in node]
     return node
 
 
@@ -349,7 +365,7 @@ def ocds_view(
         h = int(hashlib.sha256(release["ocid"].encode()).hexdigest()[:8], 16)
         if h % keep_modulo:
             continue
-        r = _ocds_ids(release, salt)
+        r = _ocds_ids(release)
         if "buyer" in r:
             r["buyer"] = _ocds_party(r["buyer"], salt)
         r["parties"] = [_ocds_party(p, salt) for p in r.get("parties", [])]
@@ -427,13 +443,12 @@ def trip_view(raw: pd.DataFrame) -> pd.DataFrame:
 
 def csv_members(names: list[str]) -> list[str]:
     """CSV members of an archive, without macOS resource-fork files that carry a .csv name."""
-    return sorted(
-        n
-        for n in names
-        if n.endswith(".csv")
-        and not n.startswith("__MACOSX/")
-        and not n.rsplit("/", 1)[-1].startswith("._")
-    )
+    keep = []
+    for name in names:
+        parts = name.split("/")
+        if name.endswith(".csv") and parts[0] != "__MACOSX" and not parts[-1].startswith("._"):
+            keep.append(name)
+    return sorted(keep)
 
 
 def digest(path: Path) -> str:
@@ -477,29 +492,26 @@ def _ocds_source(path: Path) -> tuple[list[dict[str, Any]], pd.DataFrame, pd.Dat
     flush()
     nested.sort(key=lambda r: (r["date"], r["id"]))
     order = ["date", "ocid", "award_id"]
-    awards_frame = pd.concat(awards, ignore_index=True).sort_values(order)
-    contracts_frame = pd.concat(contracts, ignore_index=True).sort_values(["ocid", "contract_id"])
+    awards_frame = pd.concat(awards).sort_values(order)
+    contracts_frame = pd.concat(contracts).sort_values(["ocid", "contract_id"])
     return nested, awards_frame, contracts_frame
 
 
-def build(root: Path, out: Path) -> dict[str, Any]:
-    """Write the four views and return their manifest (checksums, rows, dropped fields)."""
-    import sys
-    import zipfile
+SNAPSHOT = "2026-11-21"
 
-    sys.path.insert(0, str(Path(__file__).resolve().parent))
-    import acquisition_validate as av
 
-    manifest: dict[str, Any] = {}
+def _record(
+    manifest: dict[str, Any], view: str, files: dict[str, tuple[Path, int]], **facts: Any
+) -> None:
+    """Add one view to the manifest: a checksum and a row count per written file, then the facts."""
+    manifest[view] = {
+        "files": {n: {"sha256": digest(p), "rows": rows} for n, (p, rows) in files.items()},
+        **facts,
+    }
 
-    def record(view: str, files: dict[str, tuple[Path, int]], **facts: Any) -> None:
-        manifest[view] = {
-            "files": {n: {"sha256": digest(p), "rows": rows} for n, (p, rows) in files.items()},
-            **facts,
-        }
 
-    snap = "2026-11-21"
-    raw = root / "openalex_works" / snap / "raw"
+def _build_openalex(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "openalex_works" / SNAPSHOT / "raw"
     tables = openalex_views(
         _results(raw, "works"),
         _results(raw, "authors"),
@@ -513,45 +525,60 @@ def build(root: Path, out: Path) -> dict[str, Any]:
         path = folder / f"{name}.csv"
         frame.sort_values(list(frame.columns)).to_csv(path, index=False)
         files[f"{name}.csv"] = (path, len(frame))
-    record(
+    _record(
+        manifest,
         "openalex",
         files,
         dropped=["display_name", "orcid", "observed_orcids", "raw works ids of authors"],
         pseudonymised=["author_id"],
         salt_label=SALT,
-        source_snapshot=f"openalex_works/{snap}",
+        source_snapshot=f"openalex_works/{SNAPSHOT}",
     )
 
-    archive = root / "monash_zenodo" / snap / "raw" / "4656626_pedestrian_counts_dataset.zip"
+
+def _build_monash(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import sys
+    import zipfile
+
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import acquisition_validate as av
+
+    archive = root / "monash_zenodo" / SNAPSHOT / "raw" / "4656626_pedestrian_counts_dataset.zip"
     with zipfile.ZipFile(archive) as zf:
         member = next(n for n in zf.namelist() if n.endswith(".tsf"))
         wide = tsf_wide(av.read_tsf(zf.read(member).decode("utf-8", "replace")))
     folder = out / "monash_pedestrian"
     folder.mkdir(parents=True, exist_ok=True)
     wide.to_csv(folder / "wide.csv", index_label="timestamp")
-    record(
+    _record(
+        manifest,
         "monash_pedestrian",
         {"wide.csv": (folder / "wide.csv", len(wide))},
         dropped=[],
         pseudonymised=[],
-        source_snapshot=f"monash_zenodo/{snap}",
+        source_snapshot=f"monash_zenodo/{SNAPSHOT}",
     )
 
-    pages = sorted((root / "openfda_drug_event" / snap / "raw").glob("event_*.json"))
+
+def _build_faers(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    pages = sorted((root / "openfda_drug_event" / SNAPSHOT / "raw").glob("event_*.json"))
     records = [r for p in pages for r in json.loads(p.read_text())["results"]]
     view = faers_view(records)
     folder = out / "openfda_drug_event"
     folder.mkdir(parents=True, exist_ok=True)
     path = folder / "events.jsonl"
     path.write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in view))
-    record(
+    _record(
+        manifest,
         "openfda_drug_event",
         {"events.jsonl": (path, len(view))},
         dropped=list(FAERS_DROP),
         pseudonymised=[],
-        source_snapshot=f"openfda_drug_event/{snap}",
+        source_snapshot=f"openfda_drug_event/{SNAPSHOT}",
     )
 
+
+def _build_loghub(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     folder = out / "loghub"
     folder.mkdir(parents=True, exist_ok=True)
     files = {}
@@ -560,36 +587,43 @@ def build(root: Path, out: Path) -> dict[str, Any]:
         path = folder / source.name
         frame.to_csv(path, index=False)
         files[source.name] = (path, len(frame))
-    record(
+    _record(
+        manifest,
         "loghub",
         files,
         dropped=["Content", "EventTemplate"],
         pseudonymised=[],
         source_snapshot="loghub@dd61d09",
     )
+
+
+def _build_food(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     import gzip
 
-    path = next((root / "openfoodfacts_products" / snap / "raw").glob("*.gz"))
+    path = next((root / "openfoodfacts_products" / SNAPSHOT / "raw").glob("*.gz"))
     with gzip.open(path, "rt", encoding="utf-8") as handle:
         products = off_view([json.loads(line) for line in handle if line.strip()])
     folder = out / "openfoodfacts"
     folder.mkdir(parents=True, exist_ok=True)
     target = folder / "products.jsonl"
     target.write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in products))
-    record(
+    _record(
+        manifest,
         "openfoodfacts",
         {"products.jsonl": (target, len(products))},
         dropped=sorted(OFF_DROP),
         pseudonymised=[],
-        source_snapshot=f"openfoodfacts_products/{snap}",
+        source_snapshot=f"openfoodfacts_products/{SNAPSHOT}",
     )
 
+
+def _build_stack(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     import subprocess
     import tempfile
     import xml.etree.ElementTree as ET
 
     files = {}
-    for archive in sorted((root / "stackexchange_dump" / snap / "raw").glob("*.7z")):
+    for archive in sorted((root / "stackexchange_dump" / SNAPSHOT / "raw").glob("*.7z")):
         site = archive.name.split(".")[0]
         with tempfile.TemporaryDirectory() as tmp:
             subprocess.run(["bsdtar", "-xf", str(archive), "-C", tmp], check=True)  # noqa: S603, S607
@@ -603,7 +637,8 @@ def build(root: Path, out: Path) -> dict[str, Any]:
             target = folder / f"{name}.csv"
             frame.to_csv(target, index=False)
             files[f"{site}/{name}.csv"] = (target, len(frame))
-    record(
+    _record(
+        manifest,
         "stackexchange",
         files,
         dropped=[
@@ -618,12 +653,14 @@ def build(root: Path, out: Path) -> dict[str, Any]:
         ],
         pseudonymised=["user_id", "owner_user_id"],
         salt_label=SALT,
-        source_snapshot=f"stackexchange_dump/{snap}",
+        source_snapshot=f"stackexchange_dump/{SNAPSHOT}",
         notes="CC BY-SA: a redistributed derived database needs attribution and the same licence",
     )
 
+
+def _build_ocds(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     for source in ("ocds_montreal", "ocds_georgia", "ocds_zambia"):
-        nested, awards, contracts = _ocds_source(root / source / snap / "raw" / "full.jsonl.gz")
+        nested, awards, contracts = _ocds_source(root / source / SNAPSHOT / "raw" / "full.jsonl.gz")
         folder = out / source
         folder.mkdir(parents=True, exist_ok=True)
         (folder / "releases.jsonl").write_text(
@@ -631,7 +668,8 @@ def build(root: Path, out: Path) -> dict[str, Any]:
         )
         awards.to_csv(folder / "awards.csv", index=False)
         contracts.to_csv(folder / "contracts.csv", index=False)
-        record(
+        _record(
+            manifest,
             source,
             {
                 "releases.jsonl": (folder / "releases.jsonl", len(nested)),
@@ -642,15 +680,17 @@ def build(root: Path, out: Path) -> dict[str, Any]:
             pseudonymised=["party ids"],
             salt_label=SALT,
             sampling="contracting processes with sha256(ocid) % 10 == 0, whole processes, by date",
-            source_snapshot=f"{source}/{snap}",
+            source_snapshot=f"{source}/{SNAPSHOT}",
         )
 
+
+def _build_bikeshare(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     import io
     import zipfile
 
     for source in ("bikeshare_capital", "bikeshare_jc"):
         frames = []
-        for path in sorted((root / source / snap / "raw").glob("*.zip")):
+        for path in sorted((root / source / SNAPSHOT / "raw").glob("*.zip")):
             with zipfile.ZipFile(path) as zf:
                 for member in csv_members(zf.namelist()):
                     raw = pd.read_csv(
@@ -661,20 +701,23 @@ def build(root: Path, out: Path) -> dict[str, Any]:
         folder = out / source
         folder.mkdir(parents=True, exist_ok=True)
         table.to_csv(folder / "trips.csv", index=False)
-        record(
+        _record(
+            manifest,
             source,
             {"trips.csv": (folder / "trips.csv", len(table))},
             dropped=["station names", "start and end coordinates"],
             pseudonymised=[],
-            source_snapshot=f"{source}/{snap}",
+            source_snapshot=f"{source}/{SNAPSHOT}",
         )
 
+
+def _build_ukspend(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     folder = out / "ukspend"
     folder.mkdir(parents=True, exist_ok=True)
     files, skipped = {}, {}
     for org in ("mhra", "nhsbsa", "charity_commission", "ofsted", "nice"):
         frames = []
-        for path in sorted((root / f"ukspend_{org}" / snap / "raw").glob("*.csv")):
+        for path in sorted((root / f"ukspend_{org}" / SNAPSHOT / "raw").glob("*.csv")):
             try:
                 frames.append(spend_view(read_spend(path.read_bytes()), org))
             except ViewError as error:
@@ -684,7 +727,8 @@ def build(root: Path, out: Path) -> dict[str, Any]:
             target = folder / f"{org}.csv"
             table.to_csv(target, index=False)
             files[f"{org}.csv"] = (target, len(table))
-    record(
+    _record(
+        manifest,
         "ukspend",
         files,
         dropped=[
@@ -696,9 +740,102 @@ def build(root: Path, out: Path) -> dict[str, Any]:
         ],
         pseudonymised=["supplier_id"],
         salt_label=SALT,
-        source_snapshot=f"ukspend_*/{snap}",
+        source_snapshot=f"ukspend_*/{SNAPSHOT}",
         skipped=skipped,
     )
+
+
+SLURM_MODULO = 20
+SLURM_COLUMNS = (
+    "jobid",
+    "state",
+    "account",
+    "user",
+    "partition",
+    "submit",
+    "start",
+    "end",
+    "timelimit",
+    "elapsed",
+    "allocmem",
+    "alloccpus",
+    "allocgpus",
+    "wait_s",
+)
+
+
+def slurm_view(raw: pd.DataFrame, keep_modulo: int | None = None) -> pd.DataFrame:
+    """Scheduler job records without host names, sampled by job id, with the waiting time derived.
+
+    User and account names are the producer's own pseudonyms and are kept as published. A job
+    that never started has no waiting time. Failed, cancelled and timed-out jobs stay as written.
+    """
+    modulo = SLURM_MODULO if keep_modulo is None else keep_modulo
+    needed = [c for c in SLURM_COLUMNS if c != "wait_s"]
+    if not all(c in raw.columns for c in needed):
+        raise ViewError(f"job columns not found in {list(raw.columns)[:6]}")
+    frame = raw[needed].copy()
+    frame = frame[pd.to_numeric(frame["jobid"]) % modulo == 0]
+    for column in ("submit", "start", "end", "timelimit", "elapsed", "allocmem", "alloccpus"):
+        frame[column] = pd.to_numeric(frame[column], errors="coerce")
+    frame["wait_s"] = frame["start"] - frame["submit"]
+    frame = frame.sort_values(["submit", "jobid"])
+    return frame.reset_index(drop=True)
+
+
+def _build_slurm(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import tarfile
+
+    frames = []
+    for archive in sorted((root / "slurm_ccin2p3" / SNAPSHOT / "raw").glob("*.tsv.tar.gz")):
+        with tarfile.open(archive) as tar:
+            member = next(m for m in tar.getmembers() if m.isfile())
+            raw = pd.read_csv(tar.extractfile(member), sep="\t", dtype=str)
+        frames.append(slurm_view(raw))
+    table = pd.concat(frames).sort_values(["submit", "jobid"])
+    folder = out / "slurm_ccin2p3"
+    folder.mkdir(parents=True, exist_ok=True)
+    table.to_csv(folder / "jobs.csv", index=False)
+    _record(
+        manifest,
+        "slurm_ccin2p3",
+        {"jobs.csv": (folder / "jobs.csv", len(table))},
+        dropped=[
+            "hostnames",
+            "eligible",
+            "maxrss",
+            "totalcpu",
+            "started",
+            "maxdiskwrite",
+            "nsteps",
+            "el9",
+        ],
+        pseudonymised=[],
+        sampling=f"jobs with job id % {SLURM_MODULO} == 0, by submit time",  # noqa: E501
+        source_snapshot=f"slurm_ccin2p3/{SNAPSHOT}",
+        notes="user and account names are the producer's pseudonyms",
+    )
+
+
+BUILD_STEPS = (
+    _build_openalex,
+    _build_monash,
+    _build_faers,
+    _build_loghub,
+    _build_food,
+    _build_stack,
+    _build_ocds,
+    _build_bikeshare,
+    _build_slurm,
+    _build_ukspend,
+)
+
+
+def build(root: Path, out: Path) -> dict[str, Any]:
+    """Write every view and return the manifest (checksums, rows, dropped fields)."""
+    manifest: dict[str, Any] = {}
+    for step in BUILD_STEPS:
+        step(root, out, manifest)
     return manifest
 
 

@@ -286,6 +286,28 @@
   "pseudonymised": [],
   "source_snapshot": "openfoodfacts_products/2026-11-21"
  },
+ "slurm_ccin2p3": {
+  "dropped": [
+   "hostnames",
+   "eligible",
+   "maxrss",
+   "totalcpu",
+   "started",
+   "maxdiskwrite",
+   "nsteps",
+   "el9"
+  ],
+  "files": {
+   "jobs.csv": {
+    "rows": 233716,
+    "sha256": "eaa04dc6d4fe74ad4933b4d41f49f8b527d3253f2b8a327806cff14d301a659e"
+   }
+  },
+  "notes": "user and account names are the producer's pseudonyms",
+  "pseudonymised": [],
+  "sampling": "jobs with job id % 20 == 0, by submit time",
+  "source_snapshot": "slurm_ccin2p3/2026-11-21"
+ },
  "stackexchange": {
   "dropped": [
    "Title",

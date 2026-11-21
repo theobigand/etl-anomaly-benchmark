@@ -237,18 +237,13 @@ def conformance(data: dict[str, Any], seed: int) -> dict[str, dict[str, Any]]:
 
     ledger = data["ledger"]
     ref, test = _split_rows(len(ledger))
-    rows = choose_within(test, 10, seed)
-    scaled, s_truth = inject_scale(
-        ledger.iloc[test].reset_index(drop=True), "amount", 10, 5.0, seed
-    )
+    scaled, s_truth = inject_scale(ledger, "amount", 10, 5.0, seed, candidates=test)
     dup, d_truth = inject_duplicates(ledger.iloc[test].reset_index(drop=True), 10, seed)
+    changed_rows = scaled.index[(scaled["amount"] != ledger["amount"]).to_numpy()].tolist()
     report["P-TAB"] = {
-        "faults_only_in_test_partition": set(rows) <= set(test),
-        "reference_untouched": ledger.iloc[ref].equals(ledger.iloc[ref]),
-        "scale_changes_only_truth": int(
-            (scaled["amount"] != ledger.iloc[test]["amount"].to_numpy()).sum()
-        )
-        == len(s_truth),
+        "faults_only_in_test_partition": set(s_truth) <= set(test),
+        "reference_untouched": scaled.iloc[ref].equals(ledger.iloc[ref]),
+        "scale_changes_only_truth": changed_rows == sorted(s_truth),
         "duplicates_appended_after_originals": min(d_truth) == len(test)
         and len(dup) == len(test) + 10,
     }

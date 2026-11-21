@@ -60,3 +60,10 @@ e-mail address that was not provided. The "Not accepted yet" table above still h
 | Capital Bikeshare | research_only | Data License Agreement read live: any lawful purpose, analysis allowed; the data may not be hosted or published as a stand-alone dataset; analyses may be published for non-commercial purposes; no correlation with rider identities | raw files and views stay local |
 | Citi Bike (Jersey City files) | research_only | the same agreement text on `citibikenyc.com/data-sharing-policy` | same operator and schema as Capital Bikeshare |
 | USAspending | open by law, not acquired | 17 U.S.C. 105 (public domain); Treasury licence notice not retrievable | the archive host's TLS chain does not verify with the Python trust store; not disabled |
+
+## Update 2026-11-21 (FRED-MD, CC-IN2P3)
+
+| Source | Class | Evidence | Decision |
+|---|---|---|---|
+| FRED-MD (Monash record 4654833; series from FRED) | restricted | FRED Services Terms of Use: non-commercial, educational and personal use with attribution, and a prohibition on using FRED content in connection with the development or training of any software program or system or machine learning | not used: learned detectors are trained on the data; the compiler's CC BY label does not lift the upstream clause |
+| CC-IN2P3 2024 Workload Dataset (Zenodo 18668107) | open (CC BY 4.0) | Zenodo metadata `cc-by-4.0`, open access; the depositors are the dataset's authors and the producing centre's staff (first party) | acquired for two months; user and account identifiers are already pseudonymised by the producer |

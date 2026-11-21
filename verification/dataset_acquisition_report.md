@@ -50,7 +50,7 @@ Counts keep three levels (gap report): families (what a stratum target counts), 
   fault study must baseline these natural orphans and must not count them as injected faults.
   Orphans are not evidence of ETL failure: the collection is not a complete database snapshot.
 - Monash: missing shares reach 40 percent (rideshare); a missing-value fault study needs a baseline.
-- openFDA: every record set shows variable structure (optional paths 33 to 124), so
+- openFDA: every record set shows variable structure (optional paths 64 to 124), so
   schema-drift detection needs a baseline of natural variation.
 
 ## Anomaly applicability matrix
@@ -451,3 +451,96 @@ Status: no mutation verdict exists for `readiness`, `experimental_views`, `acqui
 `acquisition_validate`, `fault_protocols` or the changed `dataset_catalog`; the 95 percent threshold is
 not evaluated; certification stays pending. The next step is one `make mutation-focus` run per module in
 the complete environment on a machine that can spend the hours.
+
+# Update 7 (2026-11-21): mutation measurements of the new L3 modules, defects found, job records, FRED
+
+## Why the mutation statistics phase is expensive, and the workflow that worked
+
+Root cause. `mutmut run` first runs the whole selected suite once to learn which tests cover which
+function ("Running stats"). The selection in `pyproject.toml` is `tests` plus `research/tests` (4548
+tests); in this session it ran at about 4 percent per 20 minutes, so a complete pass takes many hours.
+`make mutation-focus` deletes `mutants/mutmut-stats.json` each time, so every module pays that cost again.
+Stats can be reused only when no test or source changed, which a development loop never allows.
+
+Two defects of this branch, not of the environment, made the stats phase fail with "runner returned 1";
+both were fixed earlier in this branch (the catalog moved to a copied directory, and a stale
+`--seeds` test). A third environmental detail: the forkserver worker crashed once with a bus error
+until the controller's fixed environment (`OMP_NUM_THREADS=1`, `OPENBLAS_NUM_THREADS=1`,
+`MKL_NUM_THREADS=1`, `PYTHONHASHSEED=0`, empty `PYTHONPATH`, `python -P`) was used, as
+`verification/mutation_run.py` does.
+
+Workflow used (supported mutmut features only; no flag invented, no configuration changed): per module,
+`mutmut run "research.<module>.*"` with `PYTEST_ADDOPTS="-k <test file>"` restricting the pytest selection
+to that module's own tests. The stats pass then takes seconds and the run minutes. This is a lower bound on
+kills (tests of other files could only kill more) and it is development feedback, not release evidence:
+the release evidence is still the sharded campaign of `make verify-deep`.
+
+## Results against the L3 threshold of 95 percent
+
+Killed share, counting only `killed` (suspicious and timeout are not counted as kills):
+
+| Module | Mutants | Killed | Survived | Suspicious | Timeout | Killed share |
+|---|---:|---:|---:|---:|---:|---:|
+| `research/readiness.py` | 450 | 450 | 0 | 0 | 0 | 100.0 percent |
+| `research/acquisition.py` | 385 | 377 | 4 | 4 | 0 | 97.9 percent |
+| `research/acquisition_validate.py` | 668 | 654 | 12 | 2 | 0 | 97.9 percent |
+| `research/dataset_catalog.py` | 782 | 771 | 5 | 4 | 2 | 98.6 percent |
+| `research/fault_protocols.py` | 870 | 843 | 22 | 5 | 0 | 96.9 percent |
+| `research/experimental_views.py` | 1815 | 1744 | 64 | 6 | 1 | 96.1 percent |
+
+Raw counts: `verification/evidence/dataset_registry_v2/mutation_focus_2026-11-21.json`. The first measurements
+before the test work were far lower (readiness 54 percent, acquisition 61 percent, acquisition_validate
+34 percent, fault_protocols 63 percent, dataset_catalog 66 percent, experimental_views 33 percent, with
+many `no tests` mutants in the command-line and builder code), so the gain comes from new exact tests, not
+from excluding code.
+
+Surviving mutants, by kind (not each one reviewed individually, none approved as equivalent): path
+mutants that change only the letter case of a directory or file name, which a case-insensitive
+file system (macOS APFS) cannot tell apart; arguments that equal their defaults (`ignore_index`,
+`encoding="UTF-8"`, `maxsplit`); sample-boundary comparisons that need a hash exactly on a cut point;
+and a few mutants of parameters that are accepted but unused. No equivalence approval was made.
+
+## Defects found by the tests and fixed
+
+- `acquisition_validate.json_shape` counted a path once per occurrence, so a path repeated inside an array
+  could look present in every record; presence is now a share of records. Evidence regenerated: optional
+  paths of openFDA events 33 to 64, Open Food Facts 9924 to 9964, OpenAlex works 14 to 46, Georgia 17 to
+  18, Zambia 57 to 62. The earlier figures understated schema variability; documents were corrected.
+  The remaining validation numbers did not change.
+- `fault_protocols.conformance` compared the reference rows of a ledger with themselves (a check that
+  could not fail) and did not draw the scaled rows from the test partition. It now injects over the whole
+  table restricted to the test rows and checks the reference rows, the truth rows and the changed rows.
+- `experimental_views.spend_view` parsed dates day-first, which turns an ISO date 2024-02-03 into
+  3 March. ISO dates are now parsed as written. No acquired ledger holds ISO dates (0 of 5033), so the
+  existing views are unchanged (the manifest checksums are identical).
+- `experimental_views.build` was split into one builder per source so that each can be tested; outputs are
+  byte-identical (same manifest checksums).
+- Redundant code that only created unkillable mutants was removed (a type table identical to the type
+  name, an unused salt argument, a BOM replace that the following regular expression already did).
+
+## New source and one rejection
+
+- CC-IN2P3 SLURM job records (Zenodo record 18668107, CC BY 4.0 at the depositors, who are the producing
+  centre's staff): 233716 jobs in the id-sampled view over two months, experiment-ready in C2b, no
+  monetary amount. About one job in five ends failed, cancelled, timed out or out of memory: a natural
+  scheduler outcome and baseline, not an ETL fault.
+- FRED-MD (Monash record 4654833): restricted. The FRED terms of use prohibit using FRED content in
+  connection with the development or training of any software program or machine learning, and
+  anomaly detectors are trained on the data. The compiler's CC BY label does not lift the clause.
+- Discovered, not acquired: SURF Lisa HPC traces (Zenodo 13625495, CC BY 4.0, parquet files and large
+  monitoring tables), F-DATA Fugaku jobs (Zenodo 11467483, CC BY 4.0, 27 GB), Olist Brazilian e-commerce
+  (Kaggle, CC BY-NC-SA 4.0 per a secondary source, login required, not acquired), Low Carbon London smart
+  meters (4TU CC BY 4.0, 137 MB zip above the size limit).
+
+## Counts by stage after this update
+
+| Stratum | Acquired families | Experiment-ready groups | Target |
+|---|---:|---:|---:|
+| C2b | 8 (Online Retail, 2 UK ledgers, 3 OCDS, bike-share, SLURM; Netherlands not counted) | 7 | 30 |
+| C3 | 40 | 1 | 40 |
+| C4 | 16 systems, 1 curator | 1 | 28 |
+| C5 | 4 | 4 | 36 |
+| C6 | 7 | 6 | 30 |
+
+The mutation figures concern verification of software, not scientific results. No experiment was run.
+Certification stays pending: only the full sharded campaign of the exact release commit can certify.

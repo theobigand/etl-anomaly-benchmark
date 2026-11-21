@@ -15,6 +15,7 @@ Date 2026-11-21. Status: acquisition and readiness only; no detector experiment 
 | Netherlands (TenderNed) | Dutch Ministry of Economic Affairs and Climate Policy | TenderNed, OCP Data Registry | TenderNed | national tender notices and awards | OCDS | 2016-2026 | acquired, rights unclear |
 | Capital Bikeshare, Citi Bike Jersey City | Lyft operator for member jurisdictions | the systems' own data pages | bike-share rental systems | rental events (no monetary amount) | Lyft trip schema | Sep-Nov 2024 | experiment-ready, research_only |
 | USAspending | US federal agencies via FPDS | US Treasury | FPDS reporting | federal contract actions (obligations, not payments) | FPDS award record | FY2024 | blocked: TLS chain does not verify with the Python trust store |
+| CC-IN2P3 SLURM jobs (2 months of 2024) | CC-IN2P3, French national computing centre | Zenodo record by its authors | SLURM accounting | compute-job events (submit, start, end, state, resources), no monetary amount | SLURM job record | 2024-07 and 2024-12 | experiment-ready (CC BY 4.0 verified) |
 | NYC TLC | NYC TLC | NYC Open Data | taxi technology providers | trips with fares | TLC trip record | not collected | candidate: agency terms page refused automated access |
 | Instacart 2017 | Instacart | Instacart | order platform | grocery orders | orders and products | 2017 | rejected: no licence is granted |
 
@@ -86,7 +87,7 @@ Similarity of the four OCDS sources (Montréal, Georgia, Zambia, and the unaccep
 | Lifecycle present | award only | tender, award, contract | planning, tender, award, contract |
 | Awards in the view | 30551 | 18299 | 2999 |
 | Contracts linked by awardID | none | 18299, 0 orphans | 1368, 7 orphans |
-| Nested depth, paths, optional | 6, 24, 1 | 7, 46, 17 | 7, 72, 57 |
+| Nested depth, paths, optional | 6, 24, 1 | 7, 46, 18 | 7, 72, 62 |
 | Period | 2011-2025 | 2010-2019 | 2017-2026 |
 
 Independence of observations: three separate producers and systems in three jurisdictions; no shared
@@ -123,3 +124,25 @@ Fault applicability additions (I = injection valid, B = baseline, X = not measur
 | Schema transformation error | I (nested path rename or type change) | I |
 | Distribution shift, abnormal value pattern | I | I |
 | Natural labels | none | none |
+
+
+## Update: compute-job events (2026-11-21)
+
+CC-IN2P3 SLURM job records add a fifth mechanism: compute-job events with a start, an end, a final state
+and resource requests, from one national computing centre, CC BY 4.0 at the depositors (the centre's
+own staff). 233716 jobs in the 1-in-20 job-id sample over two months; user and account names are the
+producer's pseudonyms. About one job in five ends failed, cancelled, timed out or out of memory; these are
+natural scheduler outcomes, a baseline and a separate natural outcome, and never confirmed ETL faults.
+The records have no monetary amount, so they support no payment-specific claim. Two months of one
+centre count once.
+
+| Mechanism | SLURM jobs |
+|---|---|
+| Univariate amount-like anomaly (elapsed, memory, cpus) | I |
+| Context-dependent value (by account or partition) | I |
+| Duplicate job records | I |
+| Impossible timestamp order (end before start, start before submit) | I; none occur naturally in the sample |
+| Invalid state code | I; the natural states are a baseline |
+| Volume change over time | I |
+| Missing transactions | X (a sample by job id) |
+| Natural labels | job states exist as outcomes, not as pipeline-fault labels |

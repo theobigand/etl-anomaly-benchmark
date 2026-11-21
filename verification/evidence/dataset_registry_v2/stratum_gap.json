@@ -29,13 +29,13 @@
   "C2b": {
    "ambitious": 45,
    "minimum": 15,
-   "missing_to_minimum": 8,
-   "missing_to_recommended": 23,
-   "publishers": 7,
+   "missing_to_minimum": 7,
+   "missing_to_recommended": 22,
+   "publishers": 8,
    "recommended": 30,
-   "sources": 7,
+   "sources": 8,
    "stratum": "transactional events",
-   "systems": 8
+   "systems": 9
   },
   "C3": {
    "ambitious": 55,
@@ -44,9 +44,9 @@
    "missing_to_recommended": 0,
    "publishers": 26,
    "recommended": 40,
-   "sources": 41,
+   "sources": 40,
    "stratum": "time series",
-   "systems": 41
+   "systems": 40
   },
   "C4": {
    "ambitious": 40,
