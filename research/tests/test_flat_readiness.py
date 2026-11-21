@@ -5,6 +5,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import flat_readiness as fr  # noqa: E402
@@ -255,3 +256,207 @@ def test_register_creates_one_entry_and_fact_set_per_group_and_stratum_with_a_vi
         {"key": "flat_uci_1_C1", "source": "uci:1", "table": "uci:1", "stratum": "C1"},
         {"key": "flat_uci_1_C2a", "source": "uci:2", "table": "uci:2", "stratum": "C2a"},
     ]
+
+
+# --- the command: reads the catalogue and the pinned tables and rewrites the evidence ---------------  # noqa: E501
+
+
+def _tree(tmp_path):
+    import hashlib
+    import json
+
+    root = tmp_path
+    (root / "research").mkdir()
+    (root / "src").mkdir()
+    (root / "data" / "pool").mkdir(parents=True)
+    (root / "data" / "uci_wave2").mkdir(parents=True)
+    evidence = root / "verification" / "evidence" / "dataset_registry_v2"
+    evidence.mkdir(parents=True)
+    (root / "verification" / "evidence" / "dataset_registry").mkdir(parents=True)
+    frames = {1: _frame(600), 2: _frame(700), 3: _frame(650)}
+    shas = {}
+    for n, f in frames.items():
+        folder = "pool" if n < 3 else "uci_wave2"
+        path = root / "data" / folder / f"{n}.csv"
+        f.to_csv(path, index=False)
+        shas[n] = hashlib.sha256(path.read_bytes()).hexdigest()
+    (root / "data" / "pool" / "4.csv").write_text(
+        "a,b\n1,2\n"
+    )  # a table whose checksum does not match
+    pool = {"rows": [
+        {"uci_id": 1, "licence": "CC BY 4.0", "sha256": shas[1]},
+        {"uci_id": 2, "licence": "CC BY 4.0", "sha256": shas[2]},
+        {"uci_id": 4, "licence": "CC BY 4.0", "sha256": "0" * 64}]}  # fmt: skip
+    (root / "verification/evidence/dataset_registry/uci_pool.json").write_text(json.dumps(pool))
+    (evidence / "uci_wave2_selection.json").write_text(
+        json.dumps({"chosen": [{"uci_id": 3, "licence": "CC BY-NC 4.0"}]})
+    )
+    (evidence / "uci_wave2_manifest.json").write_text(
+        json.dumps({"tables": [{"uci_id": 3, "sha256": shas[3]}]})
+    )
+    meta = {
+        str(i): {"creators": [f"P{i}"], "area": "Biology", "name": f"T{i}", "demographics": []}
+        for i in (1, 2, 3, 4)
+    }
+    meta["2"]["creators"] = ["P1"]  # tables 1 and 2 share a creator
+    (evidence / "uci_metadata_cache.json").write_text(json.dumps(meta))
+    (evidence / "acquired_sources.json").write_text(
+        json.dumps({"entries": [{"id": "other", "stratum": "C3"}, {"id": "flat:old:C1"}]})
+    )
+    (evidence / "readiness_facts.json").write_text(
+        json.dumps({"facts": {"other": {"x": 1}, "flat:old:C1": {"y": 2}}})
+    )
+    rows = [
+        {"id": "uci:1", "source": "uci:1", "schema_kind": "numeric"},
+        {"id": "uci:2", "source": "uci:2", "schema_kind": "mixed"},
+        {"id": "uci:3", "source": "uci:3", "schema_kind": "numeric"},
+        {"id": "uci:4", "source": "uci:4", "schema_kind": "numeric"},
+        {"id": "uci:5", "source": "uci:5", "schema_kind": "numeric"},  # no file on disk
+        {"id": "natural:x", "source": "natural:x", "schema_kind": "numeric"},
+    ]
+    return root, evidence, rows
+
+
+def test_main_writes_the_selection_replaces_only_flat_entries_and_reports_missing_and_changed_files(
+    tmp_path, monkeypatch, capsys
+):
+    import json
+
+    import dataset_catalog as dc
+
+    root, evidence, rows = _tree(tmp_path)
+    monkeypatch.setattr(dc, "stratum_rows", lambda: rows)
+    monkeypatch.setattr(fr, "__file__", str(root / "research" / "flat_readiness.py"))
+    assert fr.main(["--dir", str(evidence)]) == 0
+    selection = json.loads((evidence / "flat_selection.json").read_text())
+    assert [t["id"] for t in selection["tables"]] == ["uci:1", "uci:2", "uci:3"]
+    assert selection["without_file"] == ["uci:5"] and selection["checksum_mismatch"] == ["uci:4"]
+    assert [v["key"] for v in selection["views"]] == [
+        "flat_uci_1_C1",
+        "flat_uci_1_C2a",
+        "flat_uci_3_C1",
+    ]
+    third = selection["tables"][2]
+    assert third["licence_class"] == "research_only" and third["reasons"] == []
+    acquired = json.loads((evidence / "acquired_sources.json").read_text())
+    assert [e["id"] for e in acquired["entries"]] == [
+        "other",
+        "flat:uci:1:C1",
+        "flat:uci:1:C2a",
+        "flat:uci:3:C1",
+    ]
+    facts = json.loads((evidence / "readiness_facts.json").read_text())["facts"]
+    assert sorted(facts) == ["flat:uci:1:C1", "flat:uci:1:C2a", "flat:uci:3:C1", "other"]
+    assert facts["other"] == {"x": 1}
+    assert capsys.readouterr().out == "3 tables, 3 group entries, 3 represented, 3 views\n"
+    text = (evidence / "flat_selection.json").read_text()
+    assert text == json.dumps(selection, indent=1, sort_keys=True) + "\n"
+    with pytest.raises(SystemExit):
+        fr.main(["--help"])
+
+
+def test_assess_and_register_produce_exactly_the_documented_records():
+    meta = {**META, "uci:1": {**META["uci:1"], "name": "Alpha"}}
+    tables = fr.assess(_rows(), meta, LICENCES, _loader)
+    assert tables[0] == {
+        "id": "uci:1", "source": "uci:1", "group": "uci:1", "stratum": "C1", "twins": ["adbench:t"], "rows": 600,  # noqa: E501
+        "profile": {"categorical": 2, "columns": 7, "constant": 1, "duplicate_share": 0.0, "levels_ge3": 2,  # noqa: E501
+                    "max_levels": 4, "missing_share": 0.0, "numeric": 4, "rows": 600, "usable": 6},
+        "licence": "CC BY 4.0", "licence_class": "open", "area": "Biology", "name": "Alpha", "reasons": [],  # noqa: E501
+    }  # fmt: skip
+    entries, facts, views = fr.register(fr.assess(_rows(), meta, LICENCES, _loader))
+    assert entries[0] == {
+        "id": "flat:uci:1:C1", "family": "uci:1", "publisher": "uci:1", "stratum": "C1", "licence_class": "open",  # noqa: E501
+        "eligible": True, "system": "uci:1", "upstream_status": "verified", "protocols": "P-TAB",
+        "reason": "representative table uci:1 (Alpha): 600 rows, 6 informative columns, licence CC BY 4.0",  # noqa: E501
+        "stages": {"collection_implemented": True, "data_acquired": True, "discovered": True,
+                   "licence_verified": "licence stated on the repository page of the table",
+                   "ready_for_experiments": False, "structural_validation": True},
+    }  # fmt: skip
+    assert (
+        entries[2]["reason"]
+        == "no eligible table: uci:3: personal attributes listed by the publisher (privacy review pending)"  # noqa: E501
+    )
+    assert (
+        entries[2]["stages"]["structural_validation"] is False and entries[2]["eligible"] is False
+    )
+    assert facts["flat:uci:1:C1"] == {
+        "anomaly_origin": "controlled_injection",
+        "baseline_properties": ["600 rows and 6 informative columns in the representative table",
+                                "0.0 share of missing values", "1 audited table(s) in this group and stratum"],  # noqa: E501
+        "first_party": False, "independent_group": "uci:1", "min_units": 300,
+        "partitions": "hash of the row index 70/15/15", "privacy": "handled", "protocol_id": "P-TAB",  # noqa: E501
+        "units": 600, "view": "flat_uci_1_C1",
+    }  # fmt: skip
+    assert facts["flat:uci:1:C2a"]["min_units"] == 500 and facts["flat:uci:1:C2a"]["units"] == 700
+    assert len(views) == 2
+
+
+def test_licence_text_edge_cases_and_the_profile_of_missing_and_empty_columns():
+    assert (
+        fr.licence_class("creative commons attribution 4.0") == "open"
+        and fr.licence_class("cc by 4.0") == "open"
+    )
+    assert fr.licence_class(None) == "unclear" and fr.licence_class("CC BY-NC") == "research_only"
+    f = pd.DataFrame(
+        {
+            "a": [1.0, np.nan, 3.0, 4.0],
+            "b": [np.nan, np.nan, np.nan, np.nan],
+            "c": ["x", "y", None, "x"],
+        }
+    )
+    p = fr.profile(f)
+    assert p["constant"] == 1 and p["usable"] == 2 and p["numeric"] == 1 and p["categorical"] == 1
+    assert p["max_levels"] == 2 and p["levels_ge3"] == 0  # a missing value is not a level
+    assert p["missing_share"] == round(6 / 12, 4)
+    empty = fr.profile(pd.DataFrame({"a": []}))
+    assert empty["rows"] == 0 and empty["missing_share"] == 0.0 and empty["duplicate_share"] == 0.0
+    assert empty["max_levels"] == 0
+    two = pd.DataFrame({"a": [1, 2, 3], "b": [1, 1, 1]})
+    assert (
+        fr.profile(two)["constant"] == 1
+    )  # a column with one value is constant, with two it is not
+    assert fr.profile(pd.DataFrame({"a": [1, 2]}))["constant"] == 0
+
+
+def test_preparation_keeps_missing_values_in_kept_columns_and_the_exact_dropped_lists():
+    f = pd.DataFrame(
+        {
+            "a": [1.0, 2.0, np.nan, 4.0],
+            "b": [np.nan, np.nan, np.nan, 1.0],
+            "c": [5] * 4,
+            "d": [1, 2, 3, 4],
+        }
+    )
+    out, record = fr.prepare(f)
+    assert (
+        list(out.columns) == ["a", "d"] and out["a"].isna().sum() == 1
+    )  # a is 25 percent missing: kept
+    assert record == {
+        "rows_in": 4,
+        "rows_out": 4,
+        "stride": 1,
+        "dropped_constant": ["b", "c"],
+        "dropped_missing": [],
+    }
+    half = pd.DataFrame(
+        {"a": [1.0, np.nan, np.nan, 4.0, 5.0], "b": [1.0, 2.0, np.nan, np.nan, np.nan]}
+    )
+    kept, rec = fr.prepare(half)
+    assert list(kept.columns) == ["a"] and rec["dropped_missing"] == [
+        "b"
+    ]  # b is 60 percent missing
+    exactly = pd.DataFrame({"a": [1.0, 2.0, 3.0, 4.0], "b": [1.0, 2.0, np.nan, np.nan]})
+    assert list(fr.prepare(exactly)[0].columns) == ["a", "b"]  # exactly 50 percent missing is kept
+    assert (
+        fr.prepare(_frame(10), max_rows=10)[1]["stride"] == 1
+        and fr.prepare(_frame(11), max_rows=10)[1]["stride"] == 2
+    )
+
+
+def test_the_representative_choice_is_none_for_a_group_whose_only_tables_are_ineligible():
+    tables = [{"id": "x", "group": "g", "stratum": "C1", "rows": 5, "reasons": ["r"]}]
+    assert fr.representatives(tables) == {("g", "C1"): None}
+    mixed = [{"id": "a", "group": "g", "stratum": "C1", "rows": 5, "reasons": ["r"]},
+             {"id": "b", "group": "g", "stratum": "C1", "rows": 3, "reasons": []}]  # fmt: skip
+    assert fr.representatives(mixed)[("g", "C1")]["id"] == "b"

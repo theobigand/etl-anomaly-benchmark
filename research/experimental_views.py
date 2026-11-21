@@ -2162,6 +2162,75 @@ def _build_flat(root: Path, out: Path, manifest: dict[str, Any]) -> None:
         )
 
 
+PPD_COLUMNS = (
+    "transaction", "price_gbp", "date", "postcode_district", "property_type", "new_build",
+    "tenure", "county", "ppd_category", "status",
+)  # fmt: skip
+_PPD_NAMES = (
+    "id", "price", "date", "postcode", "type", "new", "tenure", "paon", "saon", "street",
+    "locality", "town", "district", "county", "category", "status",
+)  # fmt: skip
+
+
+def csv_prefix_no_header(blob: bytes) -> tuple[pd.DataFrame, int]:
+    """Complete lines of a header-less quoted CSV prefix and the byte count of the torn line."""
+    import io
+
+    end = blob.rfind(b"\n") + 1
+    frame = pd.read_csv(io.BytesIO(blob[:end]), header=None, dtype=str, keep_default_na=False)
+    return frame, len(blob) - end
+
+
+def price_paid_view(raw: pd.DataFrame) -> pd.DataFrame:
+    """Property sales: salted transaction id, price, date, postcode district, type, tenure, county.
+
+    Street, house number, flat, locality, town, district and the postcode unit are not kept: with
+    the public register they would identify a property and its owner.
+    """
+    if raw.shape[1] != len(_PPD_NAMES):
+        raise ViewError(f"expected {len(_PPD_NAMES)} columns, found {raw.shape[1]}")
+    named = raw.set_axis(_PPD_NAMES, axis=1)
+    out = pd.DataFrame(
+        {
+            "transaction": named["id"].map(pseudonym),
+            "price_gbp": named["price"].astype("int64"),
+            "date": named["date"].str.slice(0, 10),
+            "postcode_district": named["postcode"].str.split(" ").str[0],
+            "property_type": named["type"],
+            "new_build": named["new"],
+            "tenure": named["tenure"],
+            "county": named["county"],
+            "ppd_category": named["category"],
+            "status": named["status"],
+        }
+    )
+    return out.sort_values(["date", "transaction"], kind="stable").reset_index(drop=True)
+
+
+def _build_ppd(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    blob = (root / "hmlr_price_paid" / SNAPSHOT / "raw" / "pp-2024_head.csv").read_bytes()
+    frame, cut = csv_prefix_no_header(blob)
+    view = price_paid_view(frame)
+    folder = out / "hmlr_price_paid"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "sales.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "hmlr_price_paid",
+        {"sales.csv": (target, len(view))},
+        dropped=["street, house number, flat, locality, town and district", "postcode unit"],
+        pseudonymised=["transaction"],
+        sampling={
+            "method": "first bytes of the 2024 file (HTTP range from byte 0), file order, not random",  # noqa: E501
+            "rows": len(view),
+            "bytes_cut_partial_line": cut,
+        },
+        salt_label=SALT,
+        source_snapshot=f"hmlr_price_paid/{SNAPSHOT} (fragment)",
+    )
+
+
 SLURM_MODULO = 20
 SLURM_COLUMNS = (
     "jobid",
@@ -2260,6 +2329,7 @@ BUILD_STEPS = (
     _build_met,
     _build_ea,
     _build_dvf,
+    _build_ppd,
     _build_flat,
     _build_series,
     _build_ukspend,

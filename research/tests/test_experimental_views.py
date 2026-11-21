@@ -1005,6 +1005,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     dv = root / "dgfip_dvf" / SNAP / "raw"
     dv.mkdir(parents=True)
     (dv / "dvf_69_2024.csv.gz").write_bytes(_gz.compress(_dvf_frame().to_csv(index=False).encode()))
+    _w(root / "hmlr_price_paid" / SNAP / "raw" / "pp-2024_head.csv", PPD_HEAD)
     monkeypatch.setattr(ev, "EA_STATIONS", ["s"])
     _w(
         root / "ea_hydrology_flow" / SNAP / "raw" / "flow_s.csv",
@@ -1015,7 +1016,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -2942,3 +2943,55 @@ def test_the_gtfs_template_keeps_only_keys_and_the_three_relations_and_registers
     assert all(
         source in ev.TABLE_SETS for source in ev.GTFS_FEEDS
     )  # the real registry holds every feed
+
+
+# --- UK Price Paid Data (property sales of England and Wales) --------------------------------------  # noqa: E501
+
+PPD_HEAD = (
+    '"{A}","320000","2024-03-20 00:00","NR9 5FP","D","Y","F","24","","DUSTY MILLER DRIVE","EASTON",'
+    '"NORWICH","SOUTH NORFOLK","NORFOLK","A","A"\n'
+    '"{B}","291000","2024-01-26 00:00","NR20 3UF","S","N","L","8","FLAT 2","CLIFTONVILLE DRIVE","",'
+    '"DEREHAM","BRECKLAND","NORFOLK","B","A"\n'
+)
+
+
+def test_price_paid_view_keeps_the_commercial_fields_a_postcode_district_and_a_salted_transaction_id():  # noqa: E501
+    frame, cut = ev.csv_prefix_no_header(PPD_HEAD.encode() + b'"{C}","1","2024')
+    assert cut == len(b'"{C}","1","2024') and len(frame) == 2
+    out = ev.price_paid_view(frame)
+    assert list(out.columns) == list(ev.PPD_COLUMNS)
+    assert ev.PPD_COLUMNS == (
+        "transaction", "price_gbp", "date", "postcode_district", "property_type", "new_build",
+        "tenure", "county", "ppd_category", "status",
+    )  # fmt: skip
+    assert out["date"].tolist() == ["2024-01-26", "2024-03-20"]  # date order, time of day dropped
+    assert out["price_gbp"].tolist() == [291000, 320000] and str(out["price_gbp"].dtype) == "int64"
+    assert out["postcode_district"].tolist() == ["NR20", "NR9"]
+    assert out["transaction"].tolist() == [ev.pseudonym("{B}"), ev.pseudonym("{A}")]
+    assert out["property_type"].tolist() == ["S", "D"] and out["new_build"].tolist() == ["N", "Y"]
+    assert out["tenure"].tolist() == ["L", "F"] and out["county"].tolist() == ["NORFOLK", "NORFOLK"]
+    assert out["ppd_category"].tolist() == ["B", "A"] and out["status"].tolist() == ["A", "A"]
+    for gone in ("street", "paon", "saon", "locality", "town", "district"):
+        assert gone not in out
+    with pytest.raises(ev.ViewError, match="16 columns"):
+        ev.price_paid_view(frame.iloc[:, :10])
+
+
+def test_the_price_paid_builder_reads_the_fragment_and_records_the_cut_and_the_scope(tmp_path):
+    root = tmp_path / "acquired"
+    raw = root / "hmlr_price_paid" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    (raw / "pp-2024_head.csv").write_bytes(PPD_HEAD.encode() + b'"{C}","5000')
+    manifest = {}
+    ev._build_ppd(root, tmp_path / "o" / "deep", manifest)
+    ev._build_ppd(root, tmp_path / "o" / "deep", manifest)
+    target = tmp_path / "o" / "deep" / "hmlr_price_paid" / "sales.csv"
+    assert len(pd.read_csv(target)) == 2
+    view = manifest["hmlr_price_paid"]
+    assert view["files"] == {"sales.csv": {"sha256": _sha(target), "rows": 2}}
+    assert view["pseudonymised"] == ["transaction"] and view["salt_label"] == ev.SALT
+    assert view["dropped"] == [
+        "street, house number, flat, locality, town and district",
+        "postcode unit",
+    ]
+    assert view["sampling"] == {"method": "first bytes of the 2024 file (HTTP range from byte 0), file order, not random", "rows": 2, "bytes_cut_partial_line": 11}  # fmt: skip  # noqa: E501
