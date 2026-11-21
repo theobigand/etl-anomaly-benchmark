@@ -5,7 +5,10 @@
   "generating_system": "US federal contracting and grant databases",
   "note": "",
   "producer": "US federal agencies (FPDS, grant systems) compiled by de Rassenfosse and Raiteri",
-  "schema_family": "federal procurement/grants tables"
+  "schema_family": "federal procurement/grants tables",
+  "structure": {
+   "C5": "contract-grant-patent linkage"
+  }
  },
  "airquality_italy": {
   "curator": "uci",
@@ -13,7 +16,10 @@
   "generating_system": "one multisensor device in one Italian town",
   "note": "",
   "producer": "UCI donors (Italian air quality sensors)",
-  "schema_family": "uci time series"
+  "schema_family": "uci time series",
+  "structure": {
+   "C3": "environmental sensing"
+  }
  },
  "candanedo_umons": {
   "curator": "uci",
@@ -21,7 +27,10 @@
   "generating_system": "experimental building (two UCI tables, one team)",
   "note": "",
   "producer": "Candanedo (UMons)",
-  "schema_family": "uci time series"
+  "schema_family": "uci time series",
+  "structure": {
+   "C3": "building energy and occupancy"
+  }
  },
  "ccin2p3_slurm": {
   "curator": "zenodo",
@@ -29,7 +38,10 @@
   "generating_system": "SLURM at CC-IN2P3",
   "note": "",
   "producer": "CC-IN2P3",
-  "schema_family": "slurm job accounting"
+  "schema_family": "slurm job accounting",
+  "structure": {
+   "C4": "operational job trace"
+  }
  },
  "clinicaltrials_gov": {
   "curator": "clinicaltrials.gov",
@@ -37,7 +49,10 @@
   "generating_system": "ClinicalTrials.gov registration system",
   "note": "",
   "producer": "US National Library of Medicine",
-  "schema_family": "study records json"
+  "schema_family": "study records json",
+  "structure": {
+   "C6": "regulatory registry record"
+  }
  },
  "coatings_multinational": {
   "curator": "4tu",
@@ -45,7 +60,11 @@
   "generating_system": "ERP purchase order process",
   "note": "",
   "producer": "multinational coatings company (BPI Challenge 2019)",
-  "schema_family": "xes event log"
+  "schema_family": "xes event log",
+  "structure": {
+   "C2b": "purchase order process",
+   "C4": "business process execution"
+  }
  },
  "dgfip_dvf": {
   "curator": "data.gouv.fr",
@@ -53,7 +72,10 @@
   "generating_system": "French property transaction register",
   "note": "",
   "producer": "DGFiP (French tax administration)",
-  "schema_family": "property register csv"
+  "schema_family": "property register csv",
+  "structure": {
+   "C2b": "property sale"
+  }
  },
  "dutch_municipalities": {
   "curator": "4tu",
@@ -61,7 +83,10 @@
   "generating_system": "building permit process (five municipalities, one group)",
   "note": "",
   "producer": "Dutch municipalities (BPI Challenge 2015)",
-  "schema_family": "xes event log"
+  "schema_family": "xes event log",
+  "structure": {
+   "C4": "business process execution"
+  }
  },
  "ea_hydrology": {
   "curator": "environment.data.gov.uk",
@@ -69,7 +94,10 @@
   "generating_system": "EA hydrometric network",
   "note": "12 stations, one group",
   "producer": "Environment Agency (England)",
-  "schema_family": "gauging time series"
+  "schema_family": "gauging time series",
+  "structure": {
+   "C3": "hydrological gauging"
+  }
  },
  "elder_home": {
   "curator": "uci",
@@ -77,7 +105,10 @@
   "generating_system": "one care-home sensor set",
   "note": "",
   "producer": "UCI donors",
-  "schema_family": "uci time series"
+  "schema_family": "uci time series",
+  "structure": {
+   "C3": "ambient living sensors"
+  }
  },
  "fin_institute_nl": {
   "curator": "4tu",
@@ -85,7 +116,10 @@
   "generating_system": "loan application process",
   "note": "",
   "producer": "Dutch financial institution (BPI Challenge 2012)",
-  "schema_family": "xes event log"
+  "schema_family": "xes event log",
+  "structure": {
+   "C4": "business process execution"
+  }
  },
  "fugaku_riken": {
   "curator": "zenodo",
@@ -93,7 +127,10 @@
   "generating_system": "Supercomputer Fugaku scheduler",
   "note": "",
   "producer": "RIKEN R-CCS (F-DATA)",
-  "schema_family": "fugaku job records"
+  "schema_family": "fugaku job records",
+  "structure": {
+   "C4": "operational job trace"
+  }
  },
  "georgia_procurement": {
   "curator": "ocds registry",
@@ -101,7 +138,12 @@
   "generating_system": "Georgian e-procurement system",
   "note": "",
   "producer": "State Procurement Agency of Georgia",
-  "schema_family": "ocds"
+  "schema_family": "ocds",
+  "structure": {
+   "C2b": "contract award",
+   "C5": "procurement releases (shallow)",
+   "C6": "procurement release"
+  }
  },
  "german_paying_agency": {
   "curator": "4tu",
@@ -109,7 +151,11 @@
   "generating_system": "direct payment application process",
   "note": "",
   "producer": "German paying agency (BPI Challenge 2018)",
-  "schema_family": "xes event log"
+  "schema_family": "xes event log",
+  "structure": {
+   "C2b": "subsidy payment",
+   "C4": "business process execution"
+  }
  },
  "grouplens": {
   "curator": "grouplens",
@@ -117,7 +163,10 @@
   "generating_system": "MovieLens service",
   "note": "",
   "producer": "GroupLens (University of Minnesota)",
-  "schema_family": "ratings tables"
+  "schema_family": "ratings tables",
+  "structure": {
+   "C5": "user-item ratings"
+  }
  },
  "gtfs_fr_alterneo": {
   "curator": "transport.data.gouv.fr",
@@ -125,7 +174,10 @@
   "generating_system": "scheduling system of Alterneo",
   "note": "distinct network, shared GTFS schema and national access point",
   "producer": "Alterneo",
-  "schema_family": "gtfs"
+  "schema_family": "gtfs",
+  "structure": {
+   "C5": "timetable network"
+  }
  },
  "gtfs_fr_aravis": {
   "curator": "transport.data.gouv.fr",
@@ -133,7 +185,10 @@
   "generating_system": "scheduling system of ARAVIS Bus",
   "note": "distinct network, shared GTFS schema and national access point",
   "producer": "ARAVIS Bus",
-  "schema_family": "gtfs"
+  "schema_family": "gtfs",
+  "structure": {
+   "C5": "timetable network"
+  }
  },
  "gtfs_fr_citea": {
   "curator": "transport.data.gouv.fr",
@@ -141,7 +196,10 @@
   "generating_system": "scheduling system of Citea (Valence Romans)",
   "note": "distinct network, shared GTFS schema and national access point",
   "producer": "Citea (Valence Romans)",
-  "schema_family": "gtfs"
+  "schema_family": "gtfs",
+  "structure": {
+   "C5": "timetable network"
+  }
  },
  "gtfs_fr_diviamobilites": {
   "curator": "transport.data.gouv.fr",
@@ -149,7 +207,10 @@
   "generating_system": "scheduling system of DiviaMobilites",
   "note": "distinct network, shared GTFS schema and national access point",
   "producer": "DiviaMobilites",
-  "schema_family": "gtfs"
+  "schema_family": "gtfs",
+  "structure": {
+   "C5": "timetable network"
+  }
  },
  "gtfs_fr_filibus": {
   "curator": "transport.data.gouv.fr",
@@ -157,7 +218,10 @@
   "generating_system": "scheduling system of Filibus",
   "note": "distinct network, shared GTFS schema and national access point",
   "producer": "Filibus",
-  "schema_family": "gtfs"
+  "schema_family": "gtfs",
+  "structure": {
+   "C5": "timetable network"
+  }
  },
  "gtfs_fr_kiceo": {
   "curator": "transport.data.gouv.fr",
@@ -165,7 +229,10 @@
   "generating_system": "scheduling system of Kiceo (Vannes)",
   "note": "distinct network, shared GTFS schema and national access point",
   "producer": "Kiceo (Vannes)",
-  "schema_family": "gtfs"
+  "schema_family": "gtfs",
+  "structure": {
+   "C5": "timetable network"
+  }
  },
  "gtfs_fr_optymo": {
   "curator": "transport.data.gouv.fr",
@@ -173,7 +240,10 @@
   "generating_system": "scheduling system of Optymo (Belfort)",
   "note": "distinct network, shared GTFS schema and national access point",
   "producer": "Optymo (Belfort)",
-  "schema_family": "gtfs"
+  "schema_family": "gtfs",
+  "structure": {
+   "C5": "timetable network"
+  }
  },
  "gtfs_fr_palmbus": {
   "curator": "transport.data.gouv.fr",
@@ -181,7 +251,10 @@
   "generating_system": "scheduling system of Palmbus",
   "note": "distinct network, shared GTFS schema and national access point",
   "producer": "Palmbus",
-  "schema_family": "gtfs"
+  "schema_family": "gtfs",
+  "structure": {
+   "C5": "timetable network"
+  }
  },
  "gtfs_fr_sankeo": {
   "curator": "transport.data.gouv.fr",
@@ -189,7 +262,10 @@
   "generating_system": "scheduling system of Sankeo",
   "note": "distinct network, shared GTFS schema and national access point",
   "producer": "Sankeo",
-  "schema_family": "gtfs"
+  "schema_family": "gtfs",
+  "structure": {
+   "C5": "timetable network"
+  }
  },
  "gtfs_fr_sibra": {
   "curator": "transport.data.gouv.fr",
@@ -197,7 +273,10 @@
   "generating_system": "scheduling system of Sibra (Annecy)",
   "note": "distinct network, shared GTFS schema and national access point",
   "producer": "Sibra (Annecy)",
-  "schema_family": "gtfs"
+  "schema_family": "gtfs",
+  "structure": {
+   "C5": "timetable network"
+  }
  },
  "gtfs_fr_tango": {
   "curator": "transport.data.gouv.fr",
@@ -205,7 +284,10 @@
   "generating_system": "scheduling system of Tango (Niort)",
   "note": "distinct network, shared GTFS schema and national access point",
   "producer": "Tango (Niort)",
-  "schema_family": "gtfs"
+  "schema_family": "gtfs",
+  "structure": {
+   "C5": "timetable network"
+  }
  },
  "gtfs_fr_transvilles": {
   "curator": "transport.data.gouv.fr",
@@ -213,7 +295,10 @@
   "generating_system": "scheduling system of Transvilles",
   "note": "distinct network, shared GTFS schema and national access point",
   "producer": "Transvilles",
-  "schema_family": "gtfs"
+  "schema_family": "gtfs",
+  "structure": {
+   "C5": "timetable network"
+  }
  },
  "hospital_sepsis_nl": {
   "curator": "4tu",
@@ -221,7 +306,10 @@
   "generating_system": "hospital information system",
   "note": "",
   "producer": "Dutch hospital ERP (sepsis cases)",
-  "schema_family": "xes event log"
+  "schema_family": "xes event log",
+  "structure": {
+   "C4": "business process execution"
+  }
  },
  "italian_road_fines": {
   "curator": "4tu",
@@ -229,7 +317,11 @@
   "generating_system": "road traffic fine management",
   "note": "",
   "producer": "Italian police information system",
-  "schema_family": "xes event log"
+  "schema_family": "xes event log",
+  "structure": {
+   "C2b": "fine and payment",
+   "C4": "business process execution"
+  }
  },
  "loghub_collection": {
   "curator": "loghub (one curator)",
@@ -237,7 +329,10 @@
   "generating_system": "16 distinct systems, grouped as one for conservatism",
   "note": "",
   "producer": "16 software and hardware systems",
-  "schema_family": "raw logs"
+  "schema_family": "raw logs",
+  "structure": {
+   "C4": "system and application logs"
+  }
  },
  "lyft_bikeshare": {
   "curator": "operator open data",
@@ -245,7 +340,10 @@
   "generating_system": "bike sharing operations",
   "note": "",
   "producer": "Lyft (Capital Bikeshare, Citi Bike)",
-  "schema_family": "trip records"
+  "schema_family": "trip records",
+  "structure": {
+   "C2b": "rental"
+  }
  },
  "melbourne_pedestrian": {
   "curator": "monash",
@@ -253,7 +351,10 @@
   "generating_system": "Melbourne sensor network",
   "note": "",
   "producer": "City of Melbourne",
-  "schema_family": "pedestrian counts"
+  "schema_family": "pedestrian counts",
+  "structure": {
+   "C3": "urban mobility counts"
+  }
  },
  "met_museum": {
   "curator": "met open access",
@@ -261,7 +362,10 @@
   "generating_system": "Met collection management",
   "note": "",
   "producer": "The Metropolitan Museum of Art",
-  "schema_family": "museum catalogue json"
+  "schema_family": "museum catalogue json",
+  "structure": {
+   "C6": "cultural catalogue record"
+  }
  },
  "metropt_porto": {
   "curator": "zenodo",
@@ -269,7 +373,10 @@
   "generating_system": "metro train compressor",
   "note": "",
   "producer": "INESC TEC with the Porto metro operator",
-  "schema_family": "sensor csv"
+  "schema_family": "sensor csv",
+  "structure": {
+   "C3": "equipment telemetry"
+  }
  },
  "montreal_contracts": {
   "curator": "ocds registry",
@@ -277,7 +384,11 @@
   "generating_system": "Montreal contract management",
   "note": "",
   "producer": "City of Montreal",
-  "schema_family": "ocds"
+  "schema_family": "ocds",
+  "structure": {
+   "C2b": "contract award",
+   "C6": "procurement release"
+  }
  },
  "openalex": {
   "curator": "openalex",
@@ -285,7 +396,11 @@
   "generating_system": "OpenAlex pipeline",
   "note": "",
   "producer": "OpenAlex",
-  "schema_family": "scholarly graph json"
+  "schema_family": "scholarly graph json",
+  "structure": {
+   "C5": "bibliographic graph",
+   "C6": "scholarly work record"
+  }
  },
  "openfda_faers": {
   "curator": "openfda",
@@ -293,7 +408,10 @@
   "generating_system": "FAERS reporting system",
   "note": "",
   "producer": "US FDA",
-  "schema_family": "adverse event reports json"
+  "schema_family": "adverse event reports json",
+  "structure": {
+   "C6": "regulatory registry record"
+  }
  },
  "openfoodfacts": {
   "curator": "openfoodfacts",
@@ -301,7 +419,10 @@
   "generating_system": "crowdsourced product database",
   "note": "",
   "producer": "Open Food Facts contributors",
-  "schema_family": "product records json"
+  "schema_family": "product records json",
+  "structure": {
+   "C6": "product catalogue record"
+  }
  },
  "openlibrary": {
   "curator": "internet archive",
@@ -309,7 +430,10 @@
   "generating_system": "Open Library catalogue",
   "note": "",
   "producer": "Open Library",
-  "schema_family": "catalogue records json"
+  "schema_family": "catalogue records json",
+  "structure": {
+   "C6": "library catalogue record"
+  }
  },
  "rabobank_ict": {
   "curator": "4tu",
@@ -317,7 +441,10 @@
   "generating_system": "incident management system",
   "note": "",
   "producer": "Rabobank Group ICT (BPI Challenge 2014)",
-  "schema_family": "csv event log"
+  "schema_family": "csv event log",
+  "structure": {
+   "C4": "IT service incident log"
+  }
  },
  "rki_surveillance": {
   "curator": "zenodo",
@@ -325,7 +452,10 @@
   "generating_system": "RKI emergency-department and hospitalisation surveillance",
   "note": "",
   "producer": "Robert Koch-Institut",
-  "schema_family": "surveillance panels"
+  "schema_family": "surveillance panels",
+  "structure": {
+   "C3": "public health surveillance"
+  }
  },
  "seoul_bike": {
   "curator": "uci",
@@ -333,7 +463,10 @@
   "generating_system": "Seoul rental bikes",
   "note": "",
   "producer": "Seoul bike service via UCI donors",
-  "schema_family": "uci time series"
+  "schema_family": "uci time series",
+  "structure": {
+   "C3": "urban mobility counts"
+  }
  },
  "stackexchange": {
   "curator": "stack exchange dump",
@@ -341,7 +474,10 @@
   "generating_system": "Stack Exchange platform",
   "note": "",
   "producer": "Stack Exchange network (10 sites as one group)",
-  "schema_family": "relational dump"
+  "schema_family": "relational dump",
+  "structure": {
+   "C5": "community question graph"
+  }
  },
  "steel_korea": {
   "curator": "uci",
@@ -349,7 +485,10 @@
   "generating_system": "steel industry energy meter",
   "note": "",
   "producer": "Korean steel plant via UCI donors",
-  "schema_family": "uci time series"
+  "schema_family": "uci time series",
+  "structure": {
+   "C3": "industrial energy metering"
+  }
  },
  "surf_lisa_slurm": {
   "curator": "zenodo",
@@ -357,7 +496,10 @@
   "generating_system": "SLURM at SURF Lisa",
   "note": "",
   "producer": "SURF (Lisa cluster)",
-  "schema_family": "slurm job accounting"
+  "schema_family": "slurm job accounting",
+  "structure": {
+   "C4": "operational job trace"
+  }
  },
  "tetouan_power": {
   "curator": "uci",
@@ -365,7 +507,10 @@
   "generating_system": "Tetouan power consumption",
   "note": "",
   "producer": "Moroccan utility via UCI donors",
-  "schema_family": "uci time series"
+  "schema_family": "uci time series",
+  "structure": {
+   "C3": "utility load"
+  }
  },
  "tue_travel_claims": {
   "curator": "4tu",
@@ -373,7 +518,10 @@
   "generating_system": "travel expense claim process",
   "note": "",
   "producer": "Eindhoven University of Technology (BPI Challenge 2020)",
-  "schema_family": "xes event log"
+  "schema_family": "xes event log",
+  "structure": {
+   "C4": "business process execution"
+  }
  },
  "uk_ledger_mhra": {
   "curator": "data.gov.uk",
@@ -381,7 +529,10 @@
   "generating_system": "MHRA finance system",
   "note": "",
   "producer": "MHRA (UK government)",
-  "schema_family": "ledger csv"
+  "schema_family": "ledger csv",
+  "structure": {
+   "C2b": "expenditure ledger"
+  }
  },
  "uk_ledger_nhsbsa": {
   "curator": "data.gov.uk",
@@ -389,7 +540,10 @@
   "generating_system": "NHSBSA finance system",
   "note": "",
   "producer": "NHS Business Services Authority",
-  "schema_family": "ledger csv"
+  "schema_family": "ledger csv",
+  "structure": {
+   "C2b": "expenditure ledger"
+  }
  },
  "vif_aegis": {
   "curator": "zenodo",
@@ -397,7 +551,10 @@
   "generating_system": "one instrumented vehicle",
   "note": "",
   "producer": "Virtual Vehicle Research Center",
-  "schema_family": "obd signals"
+  "schema_family": "obd signals",
+  "structure": {
+   "C3": "vehicle signals"
+  }
  },
  "volvo_it": {
   "curator": "4tu",
@@ -405,7 +562,10 @@
   "generating_system": "incident management system",
   "note": "",
   "producer": "Volvo IT Belgium (BPI Challenge 2013)",
-  "schema_family": "xes event log"
+  "schema_family": "xes event log",
+  "structure": {
+   "C4": "IT service incident log"
+  }
  },
  "zambia_procurement": {
   "curator": "ocds registry",
@@ -413,6 +573,11 @@
   "generating_system": "Zambian e-procurement system",
   "note": "",
   "producer": "Zambia Public Procurement Authority",
-  "schema_family": "ocds"
+  "schema_family": "ocds",
+  "structure": {
+   "C2b": "contract award",
+   "C5": "procurement releases (shallow)",
+   "C6": "procurement release"
+  }
  }
 }

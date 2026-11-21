@@ -126,6 +126,81 @@ def sensitivity_grid(
     return rows
 
 
+def holm_adjust(pvalues: list[float]) -> list[float]:
+    """Holm step-down adjusted p-values, in the order given (monotone, capped at 1)."""
+    if any(not 0.0 <= p <= 1.0 for p in pvalues):
+        raise ValueError("p-values must be between 0 and 1")
+    m = len(pvalues)
+    order = sorted(range(m), key=lambda i: pvalues[i])
+    adjusted = [0.0] * m
+    running = 0.0
+    for rank, index in enumerate(order):
+        running = max(running, min(1.0, (m - rank) * pvalues[index]))
+        adjusted[index] = round(running, 12)
+    return adjusted
+
+
+def holm_rejections(pvalues: list[float], alpha: float = 0.05) -> list[bool]:
+    """Hypotheses of a prespecified family that Holm's procedure rejects at familywise ``alpha``."""
+    return [p <= alpha for p in holm_adjust(pvalues)]
+
+
+def log_ratio_delta(relative_reduction: float) -> float:
+    """Difference on the log scale for a relative reduction r: ln(1 / (1 - r))."""
+    if not 0.0 < relative_reduction < 1.0:
+        raise ValueError("a relative reduction must be between 0 and 1")
+    return -math.log(1.0 - relative_reduction)
+
+
+def sd_ratio_interval(n: int, level: float = 0.95) -> tuple[float, float]:
+    """Confidence interval of sigma-hat / sigma from n sources (chi-square, normal differences)."""
+    tail = (1.0 - level) / 2.0
+    low = math.sqrt((n - 1) / stats.chi2.ppf(1.0 - tail, n - 1))
+    high = math.sqrt((n - 1) / stats.chi2.ppf(tail, n - 1))
+    return low, high
+
+
+def pilot_sources_for_sd(max_upper_ratio: float, level: float = 0.95) -> int:
+    """Fewest pilot sources whose SD interval ends at most ``max_upper_ratio`` times sigma-hat."""
+    if max_upper_ratio <= 1.0:
+        raise ValueError("the upper ratio must be above 1")
+    n = 3
+    while sd_ratio_interval(n, level)[1] > max_upper_ratio:
+        n += 1
+    return n
+
+
+#: provisional smallest effects of interest (owner decision E); illustrative, not validated
+EFFECT_SCENARIOS: list[dict[str, Any]] = [
+    {"metric": "recall at matched alert budget", "delta": 0.05},
+    {"metric": "AUPRC", "delta": 0.05},
+    {"metric": "AUROC", "delta": 0.02},
+    {"metric": "false-positive burden", "relative_reduction": 0.20},
+    {"metric": "cost", "relative_reduction": 0.20},
+]
+
+
+def effect_requirements(sigmas: list[float]) -> list[dict[str, Any]]:
+    """Independent sources per scenario and hypothetical SD (log-ratio scale for relative ones)."""
+    rows = []
+    for scenario in EFFECT_SCENARIOS:
+        relative = "relative_reduction" in scenario
+        delta = log_ratio_delta(scenario["relative_reduction"]) if relative else scenario["delta"]
+        for sigma in sigmas:
+            rows.append(
+                {
+                    "metric": scenario["metric"],
+                    "scale": "log ratio" if relative else "absolute",
+                    "sigma": sigma,
+                    "delta": delta,
+                    "sources_k1": paired_sources(sigma, delta),
+                    "sources_holm_k3": paired_sources(sigma, delta, comparisons=3),
+                    "sources_holm_k6": paired_sources(sigma, delta, comparisons=6),
+                }
+            )
+    return rows
+
+
 def effective_groups(cluster_sizes: list[int], icc: float) -> float:
     """Sum over clusters of m / (1 + (m - 1) * icc): groups discounted for shared structure."""
     return float(sum(m / (1 + (m - 1) * icc) for m in cluster_sizes))
@@ -154,6 +229,62 @@ def simulate_rejection(
         naive += stats.ttest_1samp(diffs.ravel(), 0.0).pvalue < alpha
         cluster += stats.ttest_1samp(diffs.mean(axis=1), 0.0).pvalue < alpha
     return round(naive / reps, 4), round(cluster / reps, 4)
+
+
+#: provisional acquisition quotas (owner decision B): planning figures, not statistical requirements
+TARGETS = {"C1": 36, "C2a": 30, "C2b": 30, "C3": 40, "C4": 28, "C5": 36, "C6": 30}
+#: provisional generalisation guardrails (owner decision D): distinct domains, distinct structural families  # noqa: E501
+MINIMA = {
+    "C1": (5, 3),
+    "C2a": (5, 3),
+    "C2b": (5, 4),
+    "C3": (5, 3),
+    "C4": (5, 3),
+    "C5": (5, 4),
+    "C6": (5, 4),
+}
+
+
+def diversity_report(
+    attributes: dict[str, dict[str, Any]],
+    ready: dict[str, list[str]],
+    targets: dict[str, int] = TARGETS,
+    minima: dict[str, tuple[int, int]] = MINIMA,
+) -> dict[str, dict[str, Any]]:
+    """Per category: groups against the quota, distinct domains and structural families, and the
+    exploratory (3 domains, 2 families) and generalisation (minima) coverage status.
+
+    The structural family of a group in a category is ``attributes[group]["structure"][category]``;
+    a group without one for that category is an error, not a family of its own.
+    """
+    out: dict[str, dict[str, Any]] = {}
+    for category, groups in sorted(ready.items()):
+        families = Counter(attributes[g]["structure"][category] for g in groups)
+        domains = {attributes[g]["domain"] for g in groups}
+        need_domains, need_families = minima[category]
+        quota = len(groups) >= targets[category]
+        missing = []
+        if not quota:
+            missing.append(f"groups: {len(groups)} of {targets[category]}")
+        if len(domains) < need_domains:
+            missing.append(f"domains: {len(domains)} of {need_domains}")
+        if len(families) < need_families:
+            missing.append(f"families: {len(families)} of {need_families}")
+        biggest = families.most_common(1)[0] if families else ("", 0)
+        out[category] = {
+            "groups": len(groups),
+            "target": targets[category],
+            "gap": max(0, targets[category] - len(groups)),
+            "domains": len(domains),
+            "families": len(families),
+            "largest_family": biggest[0],
+            "largest_family_share": round(biggest[1] / len(groups), 4) if groups else 0.0,
+            "exploratory": len(domains) >= 3 and len(families) >= 2,
+            "quota": quota,
+            "diversity": len(domains) >= need_domains and len(families) >= need_families,
+            "missing": missing,
+        }
+    return out
 
 
 def coverage_summary(
@@ -186,7 +317,9 @@ COMPARISONS = [1, 3, 6]
 ICCS = [0.0, 0.2, 0.5]
 
 
-def report(attributes: dict[str, Any], readiness: dict[str, Any]) -> dict[str, Any]:
+def report(
+    attributes: dict[str, Any], readiness: dict[str, Any], reps: int = 2000
+) -> dict[str, Any]:
     """The illustrative requirement tables and the coverage of the current ready groups."""
     ready = readiness["ready_groups"]
     return {
@@ -213,13 +346,20 @@ def report(attributes: dict[str, Any], readiness: dict[str, Any]) -> dict[str, A
                 "null_rejection_domain_level": cluster,
             }
             for d, k, sd in ((6, 5, 0.08), (10, 3, 0.08), (10, 3, 0.02))
-            for naive, cluster in [simulate_rejection(d, k, sd, 0.05, 0.0, reps=2000, seed=11)]
+            for naive, cluster in [simulate_rejection(d, k, sd, 0.05, 0.0, reps=reps, seed=11)]
+        ],
+        "effect_requirements": effect_requirements([0.02, 0.05, 0.10]),
+        "pilot_sd_precision": [
+            {"max_upper_ratio": r, "level": lv, "pilot_sources": pilot_sources_for_sd(r, lv)}
+            for r in (1.25, 1.40, 1.60)
+            for lv in (0.80, 0.95)
         ],
         "minimum_detectable_delta": [
             {"sources": n, "sigma": sigma, "delta": minimum_detectable_delta(n, sigma)}
             for n in (10, 18, 25, 34, 49, 73)
             for sigma in (0.05, 0.10, 0.15)
         ],
+        "diversity": diversity_report(attributes, ready),
         "coverage": {str(icc): coverage_summary(attributes, ready, icc) for icc in (0.2, 0.5)},
     }
 
@@ -233,10 +373,11 @@ def main(argv: list[str] | None = None) -> int:
     base = here / "verification/evidence/dataset_registry_v2"
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dir", type=Path, default=base)
+    parser.add_argument("--reps", type=int, default=2000, help="simulation repetitions")
     args = parser.parse_args(argv)
     attributes = json.loads((args.dir / "source_attributes.json").read_text())
     readiness = json.loads((args.dir / "readiness.json").read_text())
-    out = report(attributes, readiness)
+    out = report(attributes, readiness, reps=args.reps)
     (args.dir / "target_framework.json").write_text(
         json.dumps(out, indent=1, sort_keys=True) + "\n"
     )

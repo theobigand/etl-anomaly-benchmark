@@ -115,12 +115,12 @@ def test_the_report_has_the_documented_tables_and_main_writes_it_next_to_its_inp
     import json
 
     attributes = {
-        "a": {"domain": "d1", "producer": "p1", "curator": "c1", "schema_family": "s1", "generating_system": "g1"},  # noqa: E501
-        "b": {"domain": "d2", "producer": "p2", "curator": "c2", "schema_family": "s1", "generating_system": "g2"},  # noqa: E501
+        "a": {"domain": "d1", "producer": "p1", "curator": "c1", "schema_family": "s1", "generating_system": "g1", "structure": {"C3": "f1"}},  # noqa: E501
+        "b": {"domain": "d2", "producer": "p2", "curator": "c2", "schema_family": "s1", "generating_system": "g2", "structure": {"C3": "f2"}},  # noqa: E501
     }  # fmt: skip
     (tmp_path / "source_attributes.json").write_text(json.dumps(attributes))
     (tmp_path / "readiness.json").write_text(json.dumps({"ready_groups": {"C3": ["a", "b"]}}))
-    assert tf.main(["--dir", str(tmp_path)]) == 0
+    assert tf.main(["--dir", str(tmp_path), "--reps", "40"]) == 0
     out = json.loads((tmp_path / "target_framework.json").read_text())
     assert len(out["sensitivity"]) == len(tf.SIGMAS) * len(tf.DELTAS) * len(tf.COMPARISONS) == 48
     assert out["coverage"]["0.5"]["C3"]["effective_groups"] == round(2 / 1.5, 4)
@@ -211,14 +211,18 @@ def test_the_report_lists_the_documented_design_effect_grid_and_simulation_setti
             "curator": "c",
             "schema_family": "s",
             "generating_system": "g",
+            "structure": {"C3": "f"},
         }
     }
-    out = tf.report(attributes, {"ready_groups": {"C3": ["a"]}})
+    out = tf.report(attributes, {"ready_groups": {"C3": ["a"]}}, reps=40)
     assert sorted(out) == [
         "coverage",
         "design_effect_sources",
+        "diversity",
+        "effect_requirements",
         "minimum_detectable_delta",
         "note",
+        "pilot_sd_precision",
         "sensitivity",
         "simulation",
     ]
@@ -245,7 +249,7 @@ def test_the_report_lists_the_documented_design_effect_grid_and_simulation_setti
     assert sorted(out["coverage"]) == ["0.2", "0.5"] and out["note"] == "design-only: every sigma, delta and icc below is hypothetical; no detector was run"  # fmt: skip  # noqa: E501
     (tmp_path / "source_attributes.json").write_text(json.dumps(attributes))
     (tmp_path / "readiness.json").write_text(json.dumps({"ready_groups": {"C3": ["a"]}}))
-    assert tf.main(["--dir", str(tmp_path)]) == 0
+    assert tf.main(["--dir", str(tmp_path), "--reps", "40"]) == 0
     text = (tmp_path / "target_framework.json").read_text()
     assert (
         text.endswith("}\n")
@@ -265,12 +269,13 @@ def test_main_prints_the_row_count_and_group_count(tmp_path, capsys):
                     "curator": "c",
                     "schema_family": "s",
                     "generating_system": "g",
+                    "structure": {"C3": "f"},
                 }
             }
         )
     )
     (tmp_path / "readiness.json").write_text(json.dumps({"ready_groups": {"C3": ["a"]}}))
-    tf.main(["--dir", str(tmp_path)])
+    tf.main(["--dir", str(tmp_path), "--reps", "40"])
     assert capsys.readouterr().out == "48 sensitivity rows, coverage of 1 groups\n"
 
 
@@ -282,6 +287,7 @@ def test_coverage_summary_handles_an_empty_category_and_uses_the_largest_family_
             "curator": "c",
             "schema_family": "s",
             "generating_system": "g",
+            "structure": {"C3": "f"},
         }
     }
     out = tf.coverage_summary(attributes, {"C1": [], "C3": ["a"]}, icc=0.3)
@@ -311,6 +317,7 @@ def test_the_report_pins_its_simulation_and_minimum_detectable_grids():
             "curator": "c",
             "schema_family": "s",
             "generating_system": "g",
+            "structure": {"C3": "f"},
         }
     }
     out = tf.report(attributes, {"ready_groups": {"C3": ["a"]}})
@@ -350,6 +357,7 @@ def test_main_without_arguments_uses_the_evidence_folder_next_to_the_package_and
                     "curator": "c",
                     "schema_family": "s",
                     "generating_system": "g",
+                    "structure": {"C3": "f"},
                 }
             }
         )
@@ -357,9 +365,145 @@ def test_main_without_arguments_uses_the_evidence_folder_next_to_the_package_and
     (folder / "readiness.json").write_text(json.dumps({"ready_groups": {"C3": ["a"]}}))
     (tmp_path / "research").mkdir()
     monkeypatch.setattr(tf, "__file__", str(tmp_path / "research" / "target_framework.py"))
-    assert tf.main([]) == 0
+    assert tf.main(["--reps", "40"]) == 0
     assert (folder / "target_framework.json").exists()
     with pytest.raises(SystemExit):
         tf.main(["--help"])
     help_text = capsys.readouterr().out
     assert "Design-only calculations" in help_text and "--dir DIR" in help_text
+
+
+def test_holm_adjustment_is_step_down_monotone_and_capped_at_one():
+    p = [0.01, 0.04, 0.03, 0.20]
+    assert tf.holm_adjust(p) == [
+        0.04,
+        0.09,
+        0.09,
+        0.2,
+    ]  # sorted 0.01*4, 0.03*3, 0.04*2 -> monotone, 0.20*1
+    assert tf.holm_adjust([0.5, 0.6]) == [1.0, 1.0]
+    assert tf.holm_adjust([0.2]) == [0.2] and tf.holm_adjust([]) == []
+    assert tf.holm_adjust([0.30, 0.001]) == [0.3, 0.002]  # order of the input is kept
+    with pytest.raises(ValueError, match="between 0 and 1"):
+        tf.holm_adjust([1.5])
+    with pytest.raises(ValueError, match="between 0 and 1"):
+        tf.holm_adjust([-0.1])
+    assert tf.holm_rejections([0.01, 0.04, 0.03, 0.20], alpha=0.05) == [True, False, False, False]
+    assert tf.holm_rejections([0.001, 0.01], alpha=0.05) == [True, True]
+
+
+def test_a_relative_reduction_is_planned_on_the_log_ratio_scale():
+    assert tf.log_ratio_delta(0.2) == pytest.approx(0.22314, abs=1e-5)  # ln(1 / 0.8)
+    assert tf.log_ratio_delta(0.5) == pytest.approx(0.69315, abs=1e-5)
+    with pytest.raises(ValueError, match="between 0 and 1"):
+        tf.log_ratio_delta(1.0)
+    with pytest.raises(ValueError, match="between 0 and 1"):
+        tf.log_ratio_delta(0.0)
+
+
+def test_the_sd_confidence_ratio_shrinks_with_the_number_of_pilot_sources():
+    low, high = tf.sd_ratio_interval(24)
+    assert (round(low, 3), round(high, 3)) == (0.777, 1.403)
+    assert tf.sd_ratio_interval(10) == (
+        pytest.approx(0.688, abs=0.001),
+        pytest.approx(1.826, abs=0.001),
+    )
+    assert tf.sd_ratio_interval(48)[1] < tf.sd_ratio_interval(24)[1] < tf.sd_ratio_interval(10)[1]
+    n = tf.pilot_sources_for_sd(1.40)
+    assert tf.sd_ratio_interval(n)[1] <= 1.40 < tf.sd_ratio_interval(n - 1)[1]
+    assert tf.pilot_sources_for_sd(1.40, level=0.80) < n
+    with pytest.raises(ValueError, match="above 1"):
+        tf.pilot_sources_for_sd(1.0)
+
+
+def test_the_effect_scenarios_cover_the_approved_smallest_effects():
+    names = [s["metric"] for s in tf.EFFECT_SCENARIOS]
+    assert names == [
+        "recall at matched alert budget",
+        "AUPRC",
+        "AUROC",
+        "false-positive burden",
+        "cost",
+    ]
+    by = {s["metric"]: s for s in tf.EFFECT_SCENARIOS}
+    assert (
+        by["AUROC"]["delta"] == 0.02
+        and by["AUPRC"]["delta"] == 0.05
+        and by["recall at matched alert budget"]["delta"] == 0.05
+    )
+    assert (
+        by["false-positive burden"]["relative_reduction"] == 0.20
+        and by["cost"]["relative_reduction"] == 0.20
+    )
+    table = tf.effect_requirements(sigmas=[0.02, 0.05, 0.10])
+    row = next(r for r in table if r["metric"] == "AUROC" and r["sigma"] == 0.02)
+    assert row["delta"] == 0.02 and row["sources_k1"] == tf.paired_sources(0.02, 0.02)
+    assert row["sources_holm_k6"] == tf.paired_sources(0.02, 0.02, comparisons=6)
+    rel = next(r for r in table if r["metric"] == "cost" and r["sigma"] == 0.10)
+    assert rel["delta"] == pytest.approx(0.22314, abs=1e-5) and rel["scale"] == "log ratio"
+    assert len(table) == 5 * 3
+
+
+def _attrs(groups):
+    return {
+        g: {"domain": d, "producer": g, "curator": "c", "schema_family": "s", "generating_system": g, "structure": {"C3": f}}  # noqa: E501
+        for g, d, f in groups
+    }  # fmt: skip
+
+
+def test_the_diversity_report_counts_domains_and_families_and_applies_the_approved_guardrails():
+    attributes = _attrs(
+        [
+            ("a", "d1", "f1"),
+            ("b", "d2", "f1"),
+            ("c", "d3", "f2"),
+            ("e", "d4", "f2"),
+            ("g", "d5", "f3"),
+        ]
+    )
+    out = tf.diversity_report(attributes, {"C3": ["a", "b", "c"]})
+    c3 = out["C3"]
+    assert c3 == {
+        "groups": 3, "target": 40, "gap": 37, "domains": 3, "families": 2,
+        "largest_family": "f1", "largest_family_share": round(2 / 3, 4),
+        "exploratory": True, "quota": False, "diversity": False,
+        "missing": ["groups: 3 of 40", "domains: 3 of 5", "families: 2 of 3"],
+    }  # fmt: skip
+    full = tf.diversity_report(attributes, {"C3": ["a", "b", "c", "e", "g"]}, targets={"C3": 5})
+    assert (
+        full["C3"]["quota"] is True
+        and full["C3"]["diversity"] is True
+        and full["C3"]["missing"] == []
+    )
+    assert full["C3"]["gap"] == 0
+    thin = tf.diversity_report(attributes, {"C3": ["a", "b"]})["C3"]
+    assert thin["exploratory"] is False  # two domains and one family
+
+
+def test_the_diversity_report_uses_the_per_category_family_minima_and_ignores_unlisted_categories():
+    attributes = _attrs(
+        [
+            ("a", "d1", "f1"),
+            ("b", "d2", "f2"),
+            ("c", "d3", "f3"),
+            ("e", "d4", "f4"),
+            ("g", "d5", "f5"),
+        ]
+    )
+    for g in attributes.values():
+        g["structure"]["C5"] = g["structure"]["C3"]
+    ready = {"C3": ["a", "b", "c", "e", "g"], "C5": ["a", "b", "c", "e", "g"]}
+    out = tf.diversity_report(attributes, ready, targets={"C3": 5, "C5": 5})
+    assert tf.MINIMA["C5"] == (5, 4) and tf.MINIMA["C3"] == (5, 3) and tf.MINIMA["C2b"] == (5, 4)
+    assert (
+        tf.MINIMA["C1"] == (5, 3)
+        and tf.MINIMA["C2a"] == (5, 3)
+        and tf.MINIMA["C4"] == (5, 3)
+        and tf.MINIMA["C6"] == (5, 4)
+    )
+    assert out["C3"]["diversity"] is True and out["C5"]["diversity"] is True
+    assert tf.TARGETS == {"C1": 36, "C2a": 30, "C2b": 30, "C3": 40, "C4": 28, "C5": 36, "C6": 30}
+    assert sum(tf.TARGETS.values()) == 230
+    assert tf.diversity_report(attributes, {}) == {}
+    with pytest.raises(KeyError):
+        tf.diversity_report(attributes, {"C4": ["a"]})  # the group has no C4 structure

@@ -239,3 +239,124 @@ def test_builder_output_contract(name, tmp_path, monkeypatch):
     first = _check(name, builder, root, out, views)
     for view in views:
         assert set(first[view]) >= {"files", "dropped", "pseudonymised", "source_snapshot"}
+
+
+# --- exact frames of the sequence and event views ------------------------------------------------
+
+
+def test_borg_instance_view_returns_every_field_in_order_and_keeps_the_source_order_of_ties():
+    lines = [
+        tev._instance_line(1, 1, 50, 6),
+        tev._instance_line(1, 0, 40, 3),
+        tev._instance_line(1, 1, 10, 0, machine=""),
+        tev._instance_line(
+            1, 1, 10, 4
+        ),  # same instance and time as the line above: source order stays
+    ]
+    out = ev.borg_instance_view(lines)
+    assert out.columns.tolist() == [
+        "collection_id", "instance_index", "time_us", "type", "collection_type", "priority",
+        "scheduling_class", "machine_id", "cpus", "memory",
+    ]  # fmt: skip
+    first = out.iloc[0].to_dict()
+    assert first["collection_id"] == 1 and first["instance_index"] == 0 and first["time_us"] == 40
+    assert first["type"] == 3 and first["collection_type"] == 0 and first["priority"] == 114
+    assert (
+        first["scheduling_class"] == 0
+        and first["machine_id"] == 9
+        and first["cpus"] == 0.5
+        and first["memory"] == 0.25
+    )
+    assert out["type"].tolist() == [3, 0, 4, 6]  # ties at (instance 1, time 10) keep 0 before 4
+    assert str(out["cpus"].dtype) == "float64" and str(out["time_us"].dtype) == "int64"
+
+
+def test_borg_collection_view_keeps_the_source_order_of_ties_and_every_field():
+    lines = [
+        tev._collection_line(1, 10, 3),
+        tev._collection_line(1, 10, 0),
+        tev._collection_line(1, 5, 7),
+    ]
+    out = ev.borg_collection_view(lines)
+    assert out["type"].tolist() == [7, 3, 0]
+    row = out.iloc[0].to_dict()
+    assert row == {"collection_id": 1, "time_us": 5, "type": 7, "collection_type": 0, "priority": 103,  # noqa: E501
+                   "scheduling_class": 1, "scheduler": 1, "vertical_scaling": 2}  # fmt: skip
+
+
+def test_xes_view_normalises_times_to_utc_types_numbers_and_reads_trace_level_numbers():
+    traces = [
+        {"case": "b", "attributes": {"amt": 9}, "events": [
+            {"concept:name": "A", "time:timestamp": "2020-01-01T12:00:00+02:00", "org:resource": "r"},  # noqa: E501
+            {"concept:name": "B", "time:timestamp": "2020-01-01T11:00:00.500+00:00", "amt": 2}]},
+        {"case": "a", "attributes": {}, "events": [{"concept:name": "C", "time:timestamp": "2020-01-02T00:00:00Z"}]},  # noqa: E501
+    ]  # fmt: skip
+    out = ev.xes_view(traces, modulo=1, numeric=["amt"])
+    assert out.columns.tolist() == [
+        "case_id",
+        "position",
+        "time",
+        "activity",
+        "transition",
+        "resource",
+        "amt",
+    ]
+    assert out["case_id"].tolist() == ["a", "b", "b"]
+    assert str(out["time"].dtype) == "datetime64[us, UTC]" or str(out["time"].dtype).endswith(
+        ", UTC]"
+    )
+    assert out["time"].tolist()[1] == pd.Timestamp(
+        "2020-01-01 10:00:00", tz="UTC"
+    )  # +02:00 converted
+    assert out["time"].tolist()[2] == pd.Timestamp("2020-01-01 11:00:00.5", tz="UTC")
+    assert str(out["amt"].dtype) == "float64"
+    assert (
+        out["amt"].iloc[1] == 9.0 and out["amt"].iloc[2] == 2.0
+    )  # event value wins, else the trace's
+    assert pd.isna(out["amt"].iloc[0]) and out["resource"].iloc[1] == ev.pseudonym("r")
+    empty = ev.xes_view([], modulo=1, numeric=["amt"])
+    assert len(empty) == 0 and empty.columns.tolist()[-1] == "amt"
+
+
+def test_table_sets_default_to_csv_members_quote_none_and_double_quote_stripping(
+    tmp_path, monkeypatch
+):
+    root = tmp_path / "acquired"
+    raw = root / "src" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    with zipfile.ZipFile(raw / "d.zip", "w") as z:
+        z.writestr("p/a.csv", 'k\tv\n"1"\t"x y"\n"2"\t"z"\n')
+        z.writestr("p/b.csv", "k\tw\n1\tq\n")
+    monkeypatch.setattr(ev, "TABLE_SETS", {"src": {
+        "archive": {"file": "d.zip", "prefix": "p/"}, "dropped": [],
+        "tables": {"a": {"keep": ["k", "v"]}, "b": {"keep": ["k", "w"], "strip": "q"}},
+        "relations": [["a", "k", "b", "k"]]}})  # fmt: skip
+    manifest = {}
+    ev._build_tables(root, tmp_path / "o" / "deep", manifest)
+    folder = tmp_path / "o" / "deep" / "src"
+    assert (
+        folder / "a.csv"
+    ).read_text() == "k,v\n1,x y\n2,z\n"  # tab separated, quotes stripped, .csv member
+    assert (folder / "b.csv").read_text() == "k,w\n1,\n"  # a custom strip set replaces the quote
+    assert manifest["src"]["relations"] == [{"child": "a.k", "parent": "b.k", "checked": 2, "orphans": 1, "share": 0.5}]  # fmt: skip  # noqa: E501
+
+
+def test_relations_with_an_absent_child_or_parent_are_dropped_when_the_table_is_optional(
+    tmp_path, monkeypatch
+):
+    root = tmp_path / "acquired"
+    raw = root / "src" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    with zipfile.ZipFile(raw / "d.zip", "w") as z:
+        z.writestr("a.txt", "k\n1\n")
+        z.writestr("b.txt", "k\n1\n")
+    monkeypatch.setattr(ev, "TABLE_SETS", {"src": {
+        "archive": {"file": "d.zip", "prefix": "", "ext": ".txt"}, "sep": ",", "quote_none": False, "dropped": [],  # noqa: E501
+        "tables": {"a": {"keep": ["k"]}, "b": {"keep": ["k"]}, "c": {"keep": ["k"], "optional": True}},  # noqa: E501
+        "relations": [["c", "k", "a", "k"], ["a", "k", "c", "k"], ["a", "k", "b", "k"]]}})  # fmt: skip  # noqa: E501
+    manifest = {}
+    ev._build_tables(root, tmp_path / "o" / "deep", manifest)
+    assert [r["child"] for r in manifest["src"]["relations"]] == [
+        "a.k"
+    ]  # only the relation between present tables
+    assert manifest["src"]["notes"].endswith("optional tables absent from the archive: c")
