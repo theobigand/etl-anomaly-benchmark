@@ -1952,6 +1952,13 @@
   },
   {
    "failed": null,
+   "group": "hm_land_registry",
+   "id": "hmlr_price_paid",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2137,6 +2144,7 @@
    "dgfip_dvf",
    "georgia_procurement",
    "german_paying_agency",
+   "hm_land_registry",
    "italian_road_fines",
    "lyft_bikeshare",
    "montreal_contracts",
@@ -2226,13 +2234,13 @@
    "structurally_valid": 12
   },
   "C2b": {
-   "acquired": 11,
-   "discovered": 17,
-   "experiment_ready": 11,
-   "protocol_ready": 11,
-   "rights_verified": 11,
-   "scientifically_eligible": 11,
-   "structurally_valid": 11
+   "acquired": 12,
+   "discovered": 18,
+   "experiment_ready": 12,
+   "protocol_ready": 12,
+   "rights_verified": 12,
+   "scientifically_eligible": 12,
+   "structurally_valid": 12
   },
   "C3": {
    "acquired": 16,

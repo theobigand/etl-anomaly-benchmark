@@ -311,6 +311,17 @@
    "C5": "timetable network"
   }
  },
+ "hm_land_registry": {
+  "curator": "gov.uk",
+  "domain": "real estate",
+  "generating_system": "England and Wales land register",
+  "note": "",
+  "producer": "HM Land Registry",
+  "schema_family": "property register csv",
+  "structure": {
+   "C2b": "property sale"
+  }
+ },
  "hospital_sepsis_nl": {
   "curator": "4tu",
   "domain": "hospital pathways",

@@ -1550,6 +1550,22 @@
    "units": 325127,
    "view": "gtfs_fr_transvilles"
   },
+  "hmlr_price_paid": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "fragment of one year in file order",
+    "sales with prices and property attributes",
+    "addresses dropped by the view"
+   ],
+   "first_party": true,
+   "independent_group": "hm_land_registry",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the date",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 180229,
+   "view": "hmlr_price_paid"
+  },
   "loghub:Android": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [

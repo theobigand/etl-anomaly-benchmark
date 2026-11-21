@@ -2310,6 +2310,28 @@
   ],
   "source_snapshot": "gtfs_fr_transvilles/2026-11-21"
  },
+ "hmlr_price_paid": {
+  "dropped": [
+   "street, house number, flat, locality, town and district",
+   "postcode unit"
+  ],
+  "files": {
+   "sales.csv": {
+    "rows": 180229,
+    "sha256": "11dd66aa38e514ec7efda4c244e0d0c98e6c65631f407f68a442a8bb5068b1a7"
+   }
+  },
+  "pseudonymised": [
+   "transaction"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "bytes_cut_partial_line": 135,
+   "method": "first bytes of the 2024 file (HTTP range from byte 0), file order, not random",
+   "rows": 180229
+  },
+  "source_snapshot": "hmlr_price_paid/2026-11-21 (fragment)"
+ },
  "loghub": {
   "dropped": [
    "Content",

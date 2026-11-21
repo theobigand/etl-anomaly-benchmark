@@ -646,12 +646,12 @@
    "licence": "portal licence field reads 'See Terms of Use'",
    "name": "Chicago taxi trips 2024",
    "next_step": "read the City of Chicago data terms literally",
-   "notes": "",
+   "notes": "terms read literally on 2026-11-21: no licence grant and a user indemnification clause; portal licence field 'See Terms of Use'; not acquired",
    "publisher": "City of Chicago",
    "reason": "real trip events with fares and tips",
    "size": null,
    "source_url": "https://data.cityofchicago.org/api/views/ajtu-isnz.json",
-   "status": "permission_pending"
+   "status": "unclear"
   },
   {
    "categories": [
@@ -1110,6 +1110,21 @@
    "reason": "real hospital relational tables",
    "size": null,
    "source_url": "https://physionet.org/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "hmlr:price-paid",
+   "licence": "OGL v3 on gov.uk",
+   "name": "HM Land Registry Price Paid Data",
+   "next_step": "other years are the same group",
+   "notes": "fragment of the 2024 file",
+   "publisher": "HM Land Registry",
+   "reason": "real property sales",
+   "size": null,
+   "source_url": "https://www.gov.uk/guidance/about-the-price-paid-data",
    "status": "experiment_ready"
   }
  ],

@@ -4390,6 +4390,26 @@
    "stratum": "C2a",
    "system": "uci:967",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "hmlr_price_paid",
+   "id": "hmlr_price_paid",
+   "licence_class": "open",
+   "protocols": "P-TAB on sale rows (price, date, type, tenure, duplicate and timestamp faults)",
+   "publisher": "hm_land_registry",
+   "reason": "HM Land Registry Price Paid Data: first 30 MiB of the 2024 file (180229 sales of England and Wales in file order, not random); addresses dropped and postcodes reduced to the district, transaction id salted. Same transaction family as the French register, a different national system and publisher",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Open Government Licence stated by HM Land Registry on gov.uk",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "hmlr_price_paid",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"
