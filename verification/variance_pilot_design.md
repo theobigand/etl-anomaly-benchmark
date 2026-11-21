@@ -188,3 +188,130 @@ is only a design guide.
 3. The 24-slot allocation or the 16-slot fallback, and the linked-set rule for the holdout.
 4. The family definitions F1 to F5 and the choice of the best learned family in F2.
 5. The prevalence standard for AUPRC per protocol.
+
+
+## 11. Final design after the owner decisions of 2026-11-21 (design only; nothing was run)
+
+### 11.1 Alert budget and detection units
+
+- **Primary budget:** 1 percent of the eligible test detection units of one source and one experimental problem; sensitivity at 0.5,
+  2 and 5 percent (all four are prespecified; only 1 percent is the confirmatory budget).
+- **Detection unit** per protocol: row (P-TAB), time window (P-TS), event sequence (P-SEQ), relationship (P-REL), nested path (P-NEST).
+  The eligible units of a contrast are the units that every detector of the contrast can score; they are identical for both detectors.
+- **Integer allowance:** k = floor(B x N) with N the number of eligible test units; the same k for both detectors of a pair.
+  If k is 0 the comparison is ineligible; there is no minimum-one-alert exception. A comparison is confirmatory only when the test
+  partition holds at least 20 positive units and k is at least 10; otherwise it is exploratory and reported as such (thresholds are
+  proposals for the owner).
+- **Ranking and ties:** units are ranked by detector score, descending; ties at the cut are broken by a fixed deterministic order (the
+  SHA-256 of the unit identifier, then the identifier), identical for every detector, so the top-k is reproducible and independent of
+  the detector. No label, threshold or hyperparameter is chosen from test labels.
+- **Detectors without a ranking score:** a binary detector is evaluated at its own alerts if they number at most k and at the first k of
+  its alerts in the tie-break order if they number more; fewer alerts than k are not padded. Its actual alert count and a matched-budget
+  flag are reported; a comparison in which a detector's alerts are fewer than k is not a matched-budget comparison and is exploratory.
+- **Relationship to prevalence:** the highest attainable recall is min(1, B / pi) with pi the anomaly prevalence of the test units; at
+  B = 1 percent and the reference prevalence pi = 1 percent it is 1, at 5 percent prevalence it is 0.2, so recall at a fixed budget
+  is comparable across sources only at comparable prevalence and is reported with pi, positives, negatives and k.
+- **Actual alert counts and false-positive burden** are always reported next to recall. Raw counts are never aggregated across different
+  detection units; only per-source rates are aggregated.
+
+### 11.2 Metrics and AUPRC prevalence standard
+
+- Recall at the matched budget is the primary outcome. Average precision (the step-wise sum used by scikit-learn) is reported as AP and
+  named as such; the trapezoidal PR-AUC is a different quantity and is not substituted. AUROC is a secondary, prevalence-free metric.
+- AP depends on prevalence and is never rescaled by a ratio of prevalences. Where a common-prevalence value is justified it is computed
+  from the operating characteristics: precision at a threshold under reference prevalence pi_ref is
+  pi_ref TPR / (pi_ref TPR + (1 - pi_ref) FPR), and AP_ref is the step-wise sum of the TPR increments times that precision.
+  The assumption is that the class-conditional score distributions of anomalous and normal units do not change with prevalence.
+  It fails when injection changes detector training or the normal population, and it needs enough negatives to resolve the FPR
+  region used. Rule proposed: report AP_ref only if the observed prevalence lies within a factor of 4 of the reference, there are at
+  least 30 positives and 1,000 negatives, and the detector was fitted without anomalies from the test mechanism; otherwise report raw AP
+  with the observed prevalence and exclude the source from the common-prevalence summary.
+- Reference prevalence 1 percent (a design assumption, not a measured rate) with sensitivity at 0.5 and 5 percent; raw AP, observed
+  prevalence and the numbers of positive and negative units are always kept. Protocols for which one injected prevalence cannot be set
+  (for example a sequence protocol whose units are whole cases) are reported on raw metrics only.
+
+### 11.3 Audit of F1 to F5
+
+Findings against the decisions above (the existing wording is in section 10.4; nothing was adopted silently):
+
+| Family | Scientific question | Primary outcome and unit | Finding | Proposal |
+|---|---|---|---|---|
+| F1 | RQ1 detector families | recall at 1 percent per protocol unit, pooled over applicable protocols | Pooling is coherent only if the per-source recall means the same thing; at pi_ref = B it is the share of injected faults found within the allowance, which is a shared quantity; heterogeneity across protocols must be reported | keep, k = 3, estimand fixed in 11.6 |
+| F2 | RQ2 per-mechanism profile | rule-based versus the best learned family inside each protocol | The best family cannot be chosen from test outcomes; five protocols each need enough groups where both detectors apply | reformulate (11.4), k = 5 only for protocols that reach the holdout condition, others exploratory |
+| F3 | RQ3 operating point and time | label-free budget versus training-prevalence threshold; chronological versus random split | The first contrast changes the alert count (not matched); the second changes the split design, not the detector contrast; neither fits the matched-budget estimand | move to exploratory sensitivity analyses (0.5, 2 and 5 percent budgets; chronological versus random) and remove from the confirmatory count |
+| F4 | RQ1 operational burden | false-positive burden of the three F1 contrasts | At a matched budget false positives equal k minus true positives, so the contrast is a rearrangement of recall (redundant) | drop as a confirmatory family; report burden descriptively; if a burden question is wanted, define alerts needed to reach a fixed recall (not redundant) |
+| F5 | RQ4 cost | fit plus score time and memory of the three F1 contrasts (log ratio) | Cost depends on data size and hardware, and is a property of dataset instances, not of independent sources | keep as a separate, hardware-fixed family with time per 1,000 units, k = 3, interpreted as cost conditional on the dataset sizes |
+
+Corrected proposal for owner review: confirmatory families F1 (k = 3), F2 (k = 5 at most), F5 (k = 3), with F3 and F4 exploratory: at most 11
+confirmatory comparisons instead of 16, adjusted by Holm within each family at familywise alpha 0.05. If F4 is replaced by alerts-to-recall
+the count is 14. Family boundaries are fixed before any confirmatory result and are not split afterwards.
+
+### 11.4 F2 without selection on confirmatory data
+
+An oracle best learned detector chosen on test performance is not allowed for any confirmatory claim. Two prespecified options:
+(A) a fixed representative learned detector per family, named in advance from the existing registry, with default hyperparameters fixed by the
+protocol; (B) a learned family chosen by a validation-only rule from a fixed candidate set, for example the family with the highest mean
+recall at the budget on the validation partition of the same source (a nested, source-aware selection: the rule is identical for every source;
+the validation fault realisations differ from the test realisations; the selected strategy is evaluated once on the held-out test partition).
+(B) needs an owner decision on whether injected faults in the validation partition may be used for selection. Recommendation: (A) for the
+confirmatory F2, (B) as an exploratory comparison. No selection is run during the freeze; the pinned libraries' model-selection utilities
+are to be read for their versions before implementation.
+
+### 11.5 Pairing and the unit of inference
+
+As in 10.2: the provenance group is the unit of inference; both detectors see the same observations, partitions, anomaly definitions,
+fault realisations, evaluation units and alert allowance; seeds and repeated injections are averaged inside a group. A detector that
+does not apply, or fails technically, removes the group from that contrast and is counted. Pooled estimates use source-level paired
+differences with random effects for domain and schema family; a domain-cluster bootstrap is the robustness check.
+
+### 11.6 Estimands, pooling and the conditions for confirmatory claims
+
+- **Pooled F1 estimand:** the mean over eligible holdout groups of the paired difference in recall at the 1 percent budget, each group
+  weighted equally after averaging its mechanisms and seeds, at the reference prevalence. Heterogeneity between categories and
+  protocols is estimated (between-group variance, interaction with category) and reported; a pooled claim is made only if the
+  heterogeneity is small relative to the planned difference (rule proposed for owner approval: the 95 percent interval of the
+  between-category standard deviation excludes values above the smallest effect of interest).
+- **Category-level confirmatory inference** requires all of: at least n_required holdout groups where both detectors apply (from
+  `paired_sources` with the pilot's upper SD limit and the Holm family size), effective independence at least n_required after the
+  estimated design effect, the domain and family minima inside the holdout, anomaly coverage of the protocols in the contrast, a sealed
+  holdout, and preregistered assumptions. Otherwise the category stays exploratory.
+- **Pooled inference** requires the same conditions over the pooled holdout, a shared estimand and a heterogeneity check; pooling of
+  incompatible units, mechanisms or questions to raise the sample size is not allowed.
+
+### 11.7 Pilot of 16 distinct provenance groups, and the 24-group alternative
+
+Rule (`plan_pilot`): every category gets at least 2 pilot groups, further slots go to the category with the most ready groups left,
+a group in several categories occupies one slot, groups of a domain not yet in the pilot are preferred (seeded, no detector output),
+the rest of the groups is the holdout. Seed 20261121 (the preregistration date; to be frozen by the owner). Result for 16 groups:
+16 distinct groups, 103 left as holdout. The groups are: airquality_italy, german_paying_agency, gtfs_fr_sankeo, loghub_collection, openalex, seoul_bike, uci:110, uci:146, uci:19, uci:22, uci:267, uci:292, uci:296, uci:464, uci:942, zambia_procurement. Pilot groups per category (pilot / holdout):
+
+| Plan | C1 | C2a | C2b | C3 | C4 | C5 | C6 | Groups in the pilot | Holdout |
+|---|---|---|---|---|---|---|---|---:|---:|
+| 16 distinct groups | 7 / 45 | 2 / 10 | 2 / 9 | 2 / 9 | 2 / 11 | 3 / 17 | 2 / 7 | 16 | 103 |
+| 24 distinct groups (sensitivity) | 15 / 37 | 2 / 10 | 2 / 9 | 2 / 9 | 2 / 11 | 3 / 17 | 2 / 7 | 24 | 95 |
+
+The extra 8 groups of the 24-group plan are all drawn from C1 (abundant and concentrated in one curator), so the larger pilot costs the scarce
+categories nothing in this inventory but also adds no information about them; it improves the pooled variance estimate only. Linked sets
+(shared generating system or shared source population) stay on one side of the split; no linked pair exists in the current readiness
+inventory beyond the group definitions already merged (creator-linked tables are one group, a 4TU organisation is one group), and the check is
+re-run when new groups are added. The 12 timetable feeds are independent networks of one schema family and are treated as a modelled cluster, not as a linked set.
+
+Holdout adequacy (16-group pilot): per category C1 45, C2a 10, C2b 9, C3 9, C4 11, C5 17, C6 7 groups; pooled 103 groups, about 38 effective
+groups if groups of one schema family are correlated at 0.2 and about 30 at 0.5 (hypothetical correlations). At sigma 0.10 the pooled holdout can
+detect about 0.047 to 0.053 with one comparison and 0.055 to 0.062 at Holm family size 3 (30 to 38 effective sources, power 0.80); a difference
+of 0.05 at sigma 0.10 needs 34 sources for one comparison, 45 for three and 51 for five, so no single category holdout (7 to 17 groups; C1's 45 is
+one curator and one schema family) meets the requirement and the pooled holdout meets it only for one comparison or for a larger smallest effect.
+With sigma 0.07 the requirement for three comparisons is 24 sources. These are hypothetical-parameter calculations.
+
+### 11.8 Unsupported claims and assumptions to validate
+
+- No category-level confirmatory claim is supported by the current holdouts; category analyses are exploratory.
+- A pooled confirmatory claim is conditional on the pilot's SD, the design effect (schema family and domain clusters), the
+  heterogeneity check, and the number of Holm comparisons; none is measured yet.
+- No claim about natural anomalies, about generalisation beyond the sampled domains, or about a detector ranking is supported; injected faults
+  are controlled faults, not natural ground truth.
+- To validate empirically in the pilot: between-source SD of the recall difference, domain and schema-family correlations, how often
+  each detector pair applies, the stability of the budget at 0.5 to 5 percent, the validity of the prevalence-shift assumption, and the
+  proportion of comparisons that are ineligible under the 20 positives and 10 alerts rule.
+- Decisions still needed: the seed and the freeze date, the F2 option (A or B), the heterogeneity rule, the replacement of F4,
+  the minimum positives and alerts, and whether the 24-group scenario is authorised.

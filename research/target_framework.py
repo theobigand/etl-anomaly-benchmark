@@ -197,7 +197,22 @@ def pilot_allocation(
     return quota
 
 
-def draw_pilot(members: dict[str, list[str]], quota: dict[str, int], seed: int) -> dict[str, Any]:
+def _crowding(
+    group: str, chosen: set[str], domains: dict[str, str] | None, rank: int
+) -> tuple[int, int]:
+    """Sort key: groups of a domain not yet in the pilot first, then the seeded order."""
+    if domains is None:
+        return (0, rank)
+    taken = sum(1 for g in chosen if domains.get(g) == domains.get(group))
+    return (taken, rank)
+
+
+def draw_pilot(
+    members: dict[str, list[str]],
+    quota: dict[str, int],
+    seed: int,
+    domains: dict[str, str] | None = None,
+) -> dict[str, Any]:
     """Seeded draw of pilot groups meeting each category quota; a group in several categories is
     drawn once and counts for all of them. The rest is the confirmatory holdout. No detector
     result is read: only provenance-group identifiers and the seed."""
@@ -207,11 +222,53 @@ def draw_pilot(members: dict[str, list[str]], quota: dict[str, int], seed: int) 
         pool = sorted(members.get(category, []))
         have = [g for g in pool if g in chosen]
         rest = [g for g in pool if g not in chosen]
-        order = list(rng.permutation(len(rest)))
-        for index in order[: max(0, min(quota[category], len(pool)) - len(have))]:
-            chosen.add(rest[int(index)])
+        order = [int(i) for i in rng.permutation(len(rest))]
+        for _ in range(max(0, min(quota[category], len(pool)) - len(have))):
+            pick = min(order, key=lambda i: _crowding(rest[i], chosen, domains, order.index(i)))
+            order.remove(pick)
+            chosen.add(rest[pick])
     every = {g for groups in members.values() for g in groups}
     return {"seed": seed, "pilot": sorted(chosen), "holdout": sorted(every - chosen)}
+
+
+def plan_pilot(
+    members: dict[str, list[str]],
+    total: int,
+    minimum: int,
+    seed: int,
+    domains: dict[str, str] | None = None,
+) -> dict[str, Any]:
+    """Seeded pilot of ``total`` distinct provenance groups: every category gets at least
+    ``minimum``, and further groups come from the category with most ready groups left.
+
+    A group in several categories occupies one slot. The holdout is every other group.
+    """
+    quotas = {c: minimum for c in sorted(members)}
+    every = {g for groups in members.values() for g in groups}
+    draw = draw_pilot(members, quotas, seed, domains)
+    while len(draw["pilot"]) < min(total, len(every)):
+        room = {c: len(set(members[c])) - quotas[c] for c in quotas}
+        category = max(sorted(room), key=lambda c: room[c])
+        if room[category] <= 0:
+            break
+        quotas[category] += 1
+        draw = draw_pilot(members, quotas, seed, domains)
+    pilot = set(draw["pilot"])
+    return {
+        "seed": seed,
+        "total": total,
+        "quotas": quotas,
+        "pilot": draw["pilot"],
+        "holdout": draw["holdout"],
+        "per_category": {
+            c: {
+                "ready": len(set(g)),
+                "pilot": len(pilot & set(g)),
+                "holdout": len(set(g) - pilot),
+            }
+            for c, g in sorted(members.items())
+        },
+    }
 
 
 #: provisional smallest effects of interest (owner decision E); illustrative, not validated

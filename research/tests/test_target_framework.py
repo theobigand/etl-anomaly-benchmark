@@ -827,3 +827,46 @@ def test_the_report_fixes_the_effect_and_pilot_grids():
     assert sorted({r["sigma"] for r in out["effect_requirements"]}) == [0.02, 0.05, 0.10]
     assert [(r["max_upper_ratio"], r["level"]) for r in out["pilot_sd_precision"]] == [
         (1.25, 0.8), (1.25, 0.95), (1.4, 0.8), (1.4, 0.95), (1.6, 0.8), (1.6, 0.95)]  # fmt: skip
+
+
+def test_plan_pilot_reaches_exactly_the_requested_number_of_distinct_groups_and_reports_holdouts():
+    members = {
+        "A": [f"a{i}" for i in range(8)] + ["x"],
+        "B": [f"b{i}" for i in range(6)] + ["x"],  # x serves both categories
+        "C": [f"c{i}" for i in range(4)],
+    }
+    plan = tf.plan_pilot(members, total=6, minimum=2, seed=1)
+    assert len(plan["pilot"]) == 6 and len(set(plan["pilot"])) == 6
+    for groups in members.values():
+        assert len(set(plan["pilot"]) & set(groups)) >= 2
+    assert set(plan["pilot"]).isdisjoint(plan["holdout"])
+    assert plan["per_category"]["A"] == {"ready": 9, "pilot": len(set(plan["pilot"]) & set(members["A"])),  # noqa: E501
+                                         "holdout": 9 - len(set(plan["pilot"]) & set(members["A"]))}  # fmt: skip  # noqa: E501
+    assert (
+        plan == tf.plan_pilot(members, total=6, minimum=2, seed=1)
+        and plan["seed"] == 1
+        and plan["total"] == 6
+    )
+    assert plan["quotas"]["A"] >= 2 and sum(plan["quotas"].values()) >= 6
+    bigger = tf.plan_pilot(members, total=9, minimum=2, seed=1)
+    assert len(bigger["pilot"]) == 9 and len(bigger["holdout"]) == 19 - 9  # 19 distinct groups
+    assert tf.plan_pilot({"A": ["a1", "a2"]}, total=5, minimum=1, seed=0)["pilot"] == [
+        "a1",
+        "a2",
+    ]  # cannot exceed
+
+
+def test_a_domain_map_makes_the_draw_prefer_domains_not_yet_in_the_pilot():
+    members = {"A": ["a1", "a2", "a3", "a4", "a5", "a6"]}
+    domains = {"a1": "x", "a2": "x", "a3": "x", "a4": "y", "a5": "y", "a6": "z"}
+    for seed in range(8):
+        pilot = tf.draw_pilot(members, {"A": 3}, seed=seed, domains=domains)["pilot"]
+        assert {domains[g] for g in pilot} == {
+            "x",
+            "y",
+            "z",
+        }  # one group of each domain whatever the seed
+    plain = {tf.draw_pilot(members, {"A": 3}, seed=s)["pilot"].__repr__() for s in range(8)}
+    assert len(plain) > 1  # without a domain map the draw only follows the seed
+    plan = tf.plan_pilot(members, total=4, minimum=1, seed=2, domains=domains)
+    assert len(plan["pilot"]) == 4 and {domains[g] for g in plan["pilot"]} == {"x", "y", "z"}
