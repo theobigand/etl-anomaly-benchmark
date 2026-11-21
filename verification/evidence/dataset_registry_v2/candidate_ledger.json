@@ -945,6 +945,21 @@
    "size": null,
    "source_url": "https://data.4tu.nl/articles/_/12706424",
    "status": "accessible_eligible"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "grouplens:movielens",
+   "licence": "non-commercial research licence in the archive README",
+   "name": "MovieLens ml-latest-small",
+   "next_step": "none",
+   "notes": "found while looking for relational research datasets",
+   "publisher": "GroupLens",
+   "reason": "four linked tables of a recommender service",
+   "size": null,
+   "source_url": "https://grouplens.org/datasets/movielens/",
+   "status": "experiment_ready"
   }
  ],
  "date": "2026-11-21",

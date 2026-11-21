@@ -817,6 +817,13 @@
   },
   {
    "failed": null,
+   "group": "grouplens",
+   "id": "grouplens_movielens",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -967,6 +974,7 @@
   "C5": [
    "3pfl",
    "georgia_procurement",
+   "grouplens",
    "openalex",
    "stackexchange",
    "zambia_procurement"
@@ -1011,13 +1019,13 @@
    "structurally_valid": 27
   },
   "C5": {
-   "acquired": 14,
-   "discovered": 14,
-   "experiment_ready": 14,
-   "protocol_ready": 14,
-   "rights_verified": 14,
-   "scientifically_eligible": 14,
-   "structurally_valid": 14
+   "acquired": 15,
+   "discovered": 15,
+   "experiment_ready": 15,
+   "protocol_ready": 15,
+   "rights_verified": 15,
+   "scientifically_eligible": 15,
+   "structurally_valid": 15
   },
   "C6": {
    "acquired": 8,

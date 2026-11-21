@@ -950,6 +950,10 @@ PANEL_SPECS: dict[str, dict[str, Any]] = {
 #: multi-table relational extracts: the columns kept per table and the relations to measure
 TABLE_SETS: dict[str, dict[str, Any]] = {
     "zen_3pfl": {
+        "dropped": [
+            "names, street addresses, phone numbers, free-text descriptions",
+            "patent information table (fields derived from PATSTAT)",
+        ],
         "tables": {
             "01_patent_contract": {
                 "keep": ["patent_contract_id", "piid", "patent", "contract", "grant"]
@@ -1010,7 +1014,28 @@ TABLE_SETS: dict[str, dict[str, Any]] = {
             ["06_grant_year", "piid", "05_grant_information", "piid"],
             ["03_procurement_year", "piid", "02_procurement_information", "piid"],
         ],
-    }
+    },
+    "grouplens_movielens": {
+        "archive": {"file": "ml-latest-small.zip", "prefix": "ml-latest-small/"},
+        "sep": ",",
+        "quote_none": False,
+        "dropped": [
+            "free-text tags",
+            "movie titles are kept; users are ids only (no demographics)",
+        ],
+        "tables": {
+            "movies": {"keep": ["movieId", "genres"]},
+            "ratings": {"keep": ["userId", "movieId", "rating", "timestamp"]},
+            "tags": {"keep": ["userId", "movieId", "timestamp"]},
+            "links": {"keep": ["movieId"]},
+        },
+        "relations": [
+            ["ratings", "movieId", "movies", "movieId"],
+            ["tags", "movieId", "movies", "movieId"],
+            ["links", "movieId", "movies", "movieId"],
+            ["tags", "userId", "ratings", "userId"],
+        ],
+    },
 }
 
 
@@ -1043,22 +1068,35 @@ def _build_panels(root: Path, out: Path, manifest: dict[str, Any]) -> None:
 
 def _build_tables(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     import csv
+    import sys
+    import tempfile
+
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from acquisition import extract_member
 
     for source, spec in TABLE_SETS.items():
         raw = root / source / SNAPSHOT / "raw"
         tables = {}
-        for name in spec["tables"]:
-            frame = pd.read_csv(
-                raw / f"{name}.csv",
-                sep="\t",
-                dtype=str,
-                quoting=csv.QUOTE_NONE,
-                on_bad_lines="skip",
-                low_memory=False,
-            )
-            frame.columns = [c.strip('"') for c in frame.columns]
-            chars = spec["tables"][name].get("strip", '"')
-            tables[name] = frame.apply(lambda col, chars=chars: col.str.strip(chars))
+        with tempfile.TemporaryDirectory() as scratch:
+            for name in spec["tables"]:
+                if "archive" in spec:  # tables are members of a zip archive
+                    member = f"{spec['archive']['prefix']}{name}.csv"
+                    path = extract_member(
+                        raw / spec["archive"]["file"], member, Path(scratch), 1 << 30, 200
+                    )["path"]
+                else:
+                    path = raw / f"{name}.csv"
+                frame = pd.read_csv(
+                    path,
+                    sep=spec.get("sep", "\t"),
+                    dtype=str,
+                    quoting=csv.QUOTE_NONE if spec.get("quote_none", True) else csv.QUOTE_MINIMAL,
+                    on_bad_lines="skip",
+                    low_memory=False,
+                )
+                frame.columns = [c.strip('"') for c in frame.columns]
+                chars = spec["tables"][name].get("strip", '"')
+                tables[name] = frame.apply(lambda col, chars=chars: col.str.strip(chars))
         views, relations = tables_view(tables, spec)
         folder = out / source
         folder.mkdir(parents=True, exist_ok=True)
@@ -1070,10 +1108,7 @@ def _build_tables(root: Path, out: Path, manifest: dict[str, Any]) -> None:
             manifest,
             source,
             files,
-            dropped=[
-                "names, street addresses, phone numbers, free-text descriptions",
-                "patent information table (fields derived from PATSTAT)",
-            ],
+            dropped=spec["dropped"],
             pseudonymised=[],
             relations=relations,
             notes="relations are the source's own keys; orphans are natural incompleteness of the published extract",  # noqa: E501

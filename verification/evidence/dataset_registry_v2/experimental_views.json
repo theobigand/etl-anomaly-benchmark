@@ -276,6 +276,63 @@
   "sampling": "prefix of one shard in file order (first 300000 lines of each fragment), not random",
   "source_snapshot": "google_cluster_2019a/2026-11-21"
  },
+ "grouplens_movielens": {
+  "dropped": [
+   "free-text tags",
+   "movie titles are kept; users are ids only (no demographics)"
+  ],
+  "files": {
+   "links.csv": {
+    "rows": 9742,
+    "sha256": "09191e038d901d6250a4aa461c5a62dba05521fdedfc3a9dc40c2b94d8d38fde"
+   },
+   "movies.csv": {
+    "rows": 9742,
+    "sha256": "8052ac2e656da2385a9a24f3258a437af00cc60bf051855e8f3100a7085d210e"
+   },
+   "ratings.csv": {
+    "rows": 100836,
+    "sha256": "80da8b3393dae325bbba5a31f291a6ba55d8d4f4396de3c456f2c1635b1b70e8"
+   },
+   "tags.csv": {
+    "rows": 3683,
+    "sha256": "394976194e15be50a667d33e232f696efa1adc974557e0549c38f1f39aaacaad"
+   }
+  },
+  "notes": "relations are the source's own keys; orphans are natural incompleteness of the published extract",
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 100836,
+    "child": "ratings.movieId",
+    "orphans": 0,
+    "parent": "movies.movieId",
+    "share": 0.0
+   },
+   {
+    "checked": 3683,
+    "child": "tags.movieId",
+    "orphans": 0,
+    "parent": "movies.movieId",
+    "share": 0.0
+   },
+   {
+    "checked": 9742,
+    "child": "links.movieId",
+    "orphans": 0,
+    "parent": "movies.movieId",
+    "share": 0.0
+   },
+   {
+    "checked": 3683,
+    "child": "tags.userId",
+    "orphans": 0,
+    "parent": "ratings.userId",
+    "share": 0.0
+   }
+  ],
+  "source_snapshot": "grouplens_movielens/2026-11-21"
+ },
  "loghub": {
   "dropped": [
    "Content",

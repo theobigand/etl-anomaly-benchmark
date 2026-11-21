@@ -217,6 +217,22 @@
    "units": 2000,
    "view": "crossref_works"
   },
+  "grouplens_movielens": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete referential integrity in the release (0 orphans)",
+    "users selected at random with at least 20 ratings",
+    "development snapshot of 2018, not a stable benchmark release"
+   ],
+   "first_party": true,
+   "independent_group": "grouplens",
+   "min_units": 1000,
+   "partitions": "hash of the user id 70/15/15, tables follow",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 100836,
+   "view": "grouplens_movielens"
+  },
   "loghub:Android": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [

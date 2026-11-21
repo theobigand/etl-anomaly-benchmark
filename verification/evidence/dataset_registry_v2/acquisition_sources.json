@@ -2103,6 +2103,34 @@
    "stratum": "C4",
    "upstream": "the organisation's log was published by its academic partners through 4TU; the record names the organisation; pseudonymised by the publisher",
    "upstream_verified": true
+  },
+  {
+   "attribution": "cite Harper and Konstan 2015, The MovieLens Datasets: History and Context, ACM TiiS 5(4)",
+   "files": [
+    {
+     "name": "ml-latest-small.zip",
+     "observed": "2018-09",
+     "url": "https://files.grouplens.org/datasets/movielens/ml-latest-small.zip"
+    }
+   ],
+   "hosts": [
+    "files.grouplens.org"
+   ],
+   "id": "grouplens_movielens",
+   "licence_class": "research_only",
+   "licence_location": "https://files.grouplens.org/datasets/movielens/ml-latest-small-README.html",
+   "licence_text": "README of the archive, 'Usage License': non-commercial use only without permission, acknowledgement and citation required, no endorsement, redistribution (including transformations) only under the same licence conditions",
+   "max_bytes": 104857600,
+   "method": "download of the official archive from files.grouplens.org",
+   "min_interval": 3.0,
+   "privacy": "user ids only, no demographics; free-text tags dropped",
+   "publisher": "GroupLens Research, University of Minnesota (MovieLens ml-latest-small)",
+   "rate_limit": "one download",
+   "redistribution": "same licence conditions only; raw files stay local and are not redistributed",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: GroupLens operates MovieLens and publishes the archive",
+   "upstream_verified": true
   }
  ]
 }

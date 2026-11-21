@@ -950,7 +950,9 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     )
     _w(root / "zen_t" / SNAP / "raw" / "a.csv", "k\tv\n1\t2\n")
     monkeypatch.setattr(
-        ev, "TABLE_SETS", {"zen_t": {"tables": {"a": {"keep": ["k"]}}, "relations": []}}
+        ev,
+        "TABLE_SETS",
+        {"zen_t": {"dropped": [], "tables": {"a": {"keep": ["k"]}}, "relations": []}},
     )
     import zipfile as _zf
 
@@ -2161,7 +2163,7 @@ def test_the_panel_and_relational_builders_write_views_and_record_relations(tmp_
     tables = root / "zen_3pfl" / SNAP / "raw"
     _w(tables / "01_links.csv", 'piid\tpatent\n"p1"\t"10"\n"p9"\t"12"\n')
     _w(tables / "02_orders.csv", 'piid\tvendor\ttitle\n"p1"\t"v1"\t"s"\n')
-    monkeypatch.setattr(ev, "TABLE_SETS", {"zen_3pfl": {
+    monkeypatch.setattr(ev, "TABLE_SETS", {"zen_3pfl": {"dropped": ["names"],
         "tables": {"01_links": {"keep": ["piid", "patent"]}, "02_orders": {"keep": ["piid", "vendor"]}},  # noqa: E501
         "relations": [["01_links", "piid", "02_orders", "piid"]]}})  # fmt: skip
     ev._build_tables(root, tmp_path / "o" / "deep", manifest)
@@ -2670,3 +2672,26 @@ def test_xes_logs_with_a_namespace_declaration_are_read_like_plain_ones():
     traces, closed = ev.read_xes(io.BytesIO(text.encode()))
     assert closed is True and [t["case"] for t in traces] == ["c1", "c2", "c3"]
     assert traces[0]["events"][0]["amount"] == 5.5 and traces[1]["events"][0]["amount"] == 7
+
+
+def test_table_sets_can_read_comma_separated_members_of_a_zip_archive(tmp_path, monkeypatch):
+    import zipfile
+
+    root = tmp_path / "acquired"
+    raw = root / "src_zip" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    with zipfile.ZipFile(raw / "d.zip", "w") as z:
+        z.writestr("d/movies.csv", 'movieId,title,genres\n1,"A, B",x\n2,C,y\n')
+        z.writestr("d/ratings.csv", "userId,movieId,rating\n1,1,5\n1,3,4\n")
+    monkeypatch.setattr(ev, "TABLE_SETS", {"src_zip": {
+        "archive": {"file": "d.zip", "prefix": "d/"}, "sep": ",", "quote_none": False, "dropped": ["title"],  # noqa: E501
+        "tables": {"movies": {"keep": ["movieId", "genres"]}, "ratings": {"keep": ["userId", "movieId"]}},  # noqa: E501
+        "relations": [["ratings", "movieId", "movies", "movieId"]]}})  # fmt: skip
+    manifest = {}
+    ev._build_tables(root, tmp_path / "o" / "deep", manifest)
+    folder = tmp_path / "o" / "deep" / "src_zip"
+    assert (folder / "movies.csv").read_text() == "movieId,genres\n1,x\n2,y\n"
+    assert (folder / "ratings.csv").read_text() == "userId,movieId\n1,1\n1,3\n"
+    view = manifest["src_zip"]
+    assert view["dropped"] == ["title"]
+    assert view["relations"] == [{"child": "ratings.movieId", "parent": "movies.movieId", "checked": 2, "orphans": 1, "share": 0.5}]  # fmt: skip  # noqa: E501

@@ -1790,6 +1790,26 @@
    "stratum": "C4",
    "system": "hospital_sepsis_nl",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "movielens",
+   "id": "grouplens_movielens",
+   "licence_class": "research_only",
+   "protocols": "P-REL",
+   "publisher": "grouplens",
+   "reason": "MovieLens ml-latest-small (GroupLens): four linked tables of movies, 100836 ratings, 3683 tag applications and external links; no naturally dangling keys (ratings, tags and links all resolve to movies; tag users appear in ratings); free-text tags and titles dropped; ids only, no demographics. A development dataset pinned by checksum; non-commercial research licence, no redistribution of the data",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "non-commercial research licence stated in the archive README by the operator",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "movielens",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"
