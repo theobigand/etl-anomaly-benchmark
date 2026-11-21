@@ -732,3 +732,98 @@ def test_the_pilot_draw_is_seeded_covers_each_category_once_per_group_and_leaves
     assert tf.draw_pilot({"A": ["a1"]}, {"A": 3}, seed=1)["pilot"] == [
         "a1"
     ]  # cannot exceed what exists
+
+
+def test_pilot_size_search_starts_at_three_sources_and_uses_an_inclusive_bound():
+    assert (
+        tf.pilot_sources_for_sd(100.0) == 3
+    )  # the first size already satisfies a very loose bound
+    n = tf.pilot_sources_for_sd(1.403)
+    assert tf.sd_ratio_interval(n)[1] <= 1.403 and tf.sd_ratio_interval(n - 1)[1] > 1.403
+    with pytest.raises(ValueError) as error:
+        tf.pilot_sources_for_sd(1.0)
+    assert str(error.value) == "the upper ratio must be above 1"
+    with pytest.raises(ValueError):
+        tf.pilot_sources_for_sd(0.9)
+
+
+def test_effective_sd_interval_defaults_to_no_clustering_and_passes_the_level_through():
+    assert tf.effective_sd_interval(24) == tf.sd_ratio_interval(24)
+    assert tf.effective_sd_interval(24, level=0.80) == tf.sd_ratio_interval(24, 0.80)
+    assert tf.effective_sd_interval(24, 1.0, 0.90) == tf.sd_ratio_interval(24, 0.90)
+    with pytest.raises(ValueError) as error:
+        tf.effective_sd_interval(24, design_effect=0.9)
+    assert str(error.value) == "the design effect must be at least 1"
+    assert tf.effective_sd_interval(24, design_effect=1.0) == tf.sd_ratio_interval(24)
+
+
+def test_pilot_allocation_never_trims_below_the_minimum_and_returns_the_untrimmed_quota():
+    ready = {"A": 5, "B": 5}
+    assert tf.pilot_allocation(ready, minimum=3, max_share=0.5, total_cap=4) == {"A": 3, "B": 3}
+    assert tf.pilot_allocation(ready, minimum=2, max_share=1.0, total_cap=6) == {
+        "A": 3,
+        "B": 3,
+    }  # 5 + 5 trimmed to 3 + 3
+    assert tf.pilot_allocation({"A": 4}, minimum=2, max_share=0.5, total_cap=1) == {"A": 2}
+
+
+def test_the_pilot_draw_ignores_unknown_categories_and_does_not_redraw_what_other_categories_covered():  # noqa: E501
+    members = {"A": ["a1", "x"], "B": ["b1", "x"]}
+    out = tf.draw_pilot(members, {"A": 2, "B": 1, "Z": 3}, seed=0)  # Z has no groups
+    assert out["pilot"] == ["a1", "x"] and out["holdout"] == [
+        "b1"
+    ]  # B is covered by x; Z has no groups
+    shared = tf.draw_pilot({"A": ["x"], "B": ["x", "b1"]}, {"A": 1, "B": 1}, seed=3)
+    assert shared["pilot"] == ["x"] and shared["holdout"] == [
+        "b1"
+    ]  # x covers both quotas, b1 is not drawn
+    again = tf.draw_pilot({"A": ["x", "a1"], "B": ["x"]}, {"A": 1, "B": 1}, seed=3)
+    assert len(again["pilot"]) == 1  # one group serves both categories
+    assert tf.draw_pilot({}, {"A": 2}, seed=1) == {"seed": 1, "pilot": [], "holdout": []}
+
+
+def test_the_diversity_report_requires_both_domains_and_families_and_handles_empty_categories():
+    attrs = {f"g{i}": {"domain": f"d{i}", "structure": {"C3": "f1"}} for i in range(6)}
+    out = tf.diversity_report(attrs, {"C3": [f"g{i}" for i in range(6)]}, targets={"C3": 6})["C3"]
+    assert (
+        out["domains"] == 6 and out["families"] == 1 and out["diversity"] is False
+    )  # enough domains, one family
+    assert out["missing"] == ["families: 1 of 3"]
+    few = tf.diversity_report({f"g{i}": {"domain": "d", "structure": {"C3": f"f{i}"}} for i in range(6)},  # noqa: E501
+                              {"C3": [f"g{i}" for i in range(6)]}, targets={"C3": 6})["C3"]  # fmt: skip  # noqa: E501
+    assert few["diversity"] is False and few["domains"] == 1 and few["families"] == 6
+    empty = tf.diversity_report(attrs, {"C3": []})["C3"]
+    assert empty["largest_family"] == "" and empty["largest_family_share"] == 0.0
+    assert (
+        empty["groups"] == 0
+        and empty["gap"] == 40
+        and empty["exploratory"] is False
+        and empty["quota"] is False
+    )
+    top = tf.diversity_report({"a": {"domain": "d1", "structure": {"C3": "x"}}, "b": {"domain": "d2", "structure": {"C3": "y"}},  # noqa: E501
+                               "c": {"domain": "d3", "structure": {"C3": "y"}}}, {"C3": ["a", "b", "c"]})["C3"]  # fmt: skip  # noqa: E501
+    assert top["largest_family"] == "y" and top["largest_family_share"] == round(2 / 3, 4)
+
+
+def test_main_without_a_reps_option_runs_the_documented_two_thousand_repetitions(tmp_path, capsys):
+    import json
+
+    attrs = {"a": {"domain": "d", "producer": "p", "curator": "c", "schema_family": "s", "generating_system": "g", "structure": {"C3": "f"}}}  # fmt: skip  # noqa: E501
+    (tmp_path / "source_attributes.json").write_text(json.dumps(attrs))
+    (tmp_path / "readiness.json").write_text(json.dumps({"ready_groups": {"C3": ["a"]}}))
+    assert tf.main(["--dir", str(tmp_path)]) == 0
+    out = json.loads((tmp_path / "target_framework.json").read_text())
+    assert (
+        out["simulation"][0]["null_rejection_source_level"] == 0.3595
+    )  # the golden rate of 2000 repetitions
+    with pytest.raises(SystemExit):
+        tf.main(["--help"])
+    assert "simulation repetitions" in capsys.readouterr().out.replace("\n", " ")
+
+
+def test_the_report_fixes_the_effect_and_pilot_grids():
+    attrs = {"a": {"domain": "d", "producer": "p", "curator": "c", "schema_family": "s", "generating_system": "g", "structure": {"C3": "f"}}}  # fmt: skip  # noqa: E501
+    out = tf.report(attrs, {"ready_groups": {"C3": ["a"]}}, reps=20)
+    assert sorted({r["sigma"] for r in out["effect_requirements"]}) == [0.02, 0.05, 0.10]
+    assert [(r["max_upper_ratio"], r["level"]) for r in out["pilot_sd_precision"]] == [
+        (1.25, 0.8), (1.25, 0.95), (1.4, 0.8), (1.4, 0.95), (1.6, 0.8), (1.6, 0.95)]  # fmt: skip
