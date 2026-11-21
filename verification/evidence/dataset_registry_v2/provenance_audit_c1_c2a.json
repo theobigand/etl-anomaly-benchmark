@@ -12,11 +12,10 @@
    "Computer Science",
    "Engineering",
    "Health and Medicine",
-   "Other",
    "Physics and Chemistry",
    "Social Science"
   ],
-  "domains": 9,
+  "domains": 8,
   "groups": 80,
   "guardrails": {
    "exploratory": true,
@@ -28,10 +27,9 @@
    "administrative or survey records",
    "clinical or biological records",
    "computational or derived features",
-   "instrument measurement",
-   "other"
+   "instrument measurement"
   ],
-  "mechanisms": 5,
+  "mechanisms": 4,
   "sources": 94,
   "tables": 115,
   "target": 36
@@ -43,11 +41,10 @@
    "Computer Science",
    "Games",
    "Health and Medicine",
-   "Other",
    "Physics and Chemistry",
    "Social Science"
   ],
-  "domains": 8,
+  "domains": 7,
   "groups": 40,
   "guardrails": {
    "exploratory": true,
@@ -59,10 +56,9 @@
    "administrative or survey records",
    "clinical or biological records",
    "computational or derived features",
-   "instrument measurement",
-   "other"
+   "instrument measurement"
   ],
-  "mechanisms": 5,
+  "mechanisms": 4,
   "sources": 40,
   "tables": 40,
   "target": 30

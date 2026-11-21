@@ -543,6 +543,10 @@
     "research/target_framework.py": {
       "level": "L3",
       "reason": "Design-only sample-size and coverage calculations decide which dataset counts are proposed as scientifically sufficient."
+    },
+    "research/provenance_audit.py": {
+      "level": "L3",
+      "reason": "The provenance grouping decides how many independent source groups the flat tabular and categorical strata are credited with."
     }
   }
 }

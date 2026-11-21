@@ -33,6 +33,8 @@ MECHANISMS = {
     "Economics": "administrative or survey records",
     "Computer Science": "computational or derived features",
 }
+#: area labels that do not name a domain and are not counted as one
+UNINFORMATIVE = {"Other", "unknown"}
 API = "https://archive.ics.uci.edu/api/dataset?id={}"
 
 
@@ -98,8 +100,10 @@ def audit(rows: list[dict[str, Any]], metadata: dict[str, dict[str, Any]]) -> di
             continue
         sources = {r["source"] for r in rs}
         made = {groups[s] for s in sources}
-        areas = sorted({metadata.get(s, {}).get("area") or "unknown" for s in sources})
-        mechs = sorted({mechanism(metadata.get(s, {}).get("area")) for s in sources})
+        areas = sorted(
+            {metadata.get(s, {}).get("area") or "unknown" for s in sources} - UNINFORMATIVE
+        )
+        mechs = sorted({mechanism(metadata.get(s, {}).get("area")) for s in sources} - {"other"})
         sizes = [sum(1 for s in sources if groups[s] == g) for g in made]
         out[name] = {
             "tables": len(rs),

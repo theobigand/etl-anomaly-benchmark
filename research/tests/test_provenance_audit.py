@@ -149,3 +149,12 @@ def test_run_fetches_only_uci_sources_that_are_not_time_series_and_adds_guardrai
         "mechanisms: 1 of 3",
     ]
     assert out["C1"]["guardrails"]["exploratory"] is False
+
+
+def test_unclassified_areas_are_not_counted_as_domains_or_mechanisms():
+    rows = [{"id": f"uci:{i}", "source": f"uci:{i}", "schema_kind": "numeric"} for i in (1, 2, 3)]
+    meta = {"uci:1": {"creators": ["A"], "area": "Other"}, "uci:2": {"creators": ["B"], "area": None},  # noqa: E501
+            "uci:3": {"creators": ["C"], "area": "Biology"}}  # fmt: skip
+    out = pa.audit(rows, meta)["C1"]
+    assert out["domains"] == 1 and out["domain_list"] == ["Biology"]
+    assert out["mechanisms"] == 1 and out["mechanism_list"] == ["clinical or biological records"]
