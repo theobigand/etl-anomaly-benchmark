@@ -3074,3 +3074,40 @@ def test_the_retail_builder_reads_the_pinned_table_and_records_what_it_dropped(t
         "rows_without_customer": 1,
     }
     assert view["source_snapshot"] == "uci:352 (repository file pinned by checksum)"
+
+
+def test_retail_view_turns_unreadable_prices_customers_and_dates_into_missing_values():
+    raw = _retail_frame()
+    raw.loc[0, "UnitPrice"] = "n/a"
+    raw.loc[2, "CustomerID"] = "unknown"
+    raw.loc[3, "InvoiceDate"] = "not a date"
+    out = ev.retail_view(raw)
+    assert out["timestamp"].isna().sum() == 1 and out["timestamp"].iloc[-1] is pd.NaT
+    assert out["unit_price"].isna().sum() == 1 and out["line_value"].isna().sum() >= 1
+    assert out["customer"].isna().sum() == 2  # the missing id and the unreadable one
+    ok = ev.retail_view(
+        pd.DataFrame({**_retail_frame().to_dict("list"), "InvoiceDate": ["13/01/2010 9:00"] * 4})
+    )
+    assert ok["timestamp"].isna().all()  # the declared month-first layout rejects a day-first date
+
+
+def test_retail_view_reads_dates_in_the_declared_month_first_layout():
+    raw = _retail_frame()
+    raw["InvoiceDate"] = ["12/1/2010 8:28", "1/12/2011 9:41", "12/13/2010 8:26", "2/3/2011 8:26"]
+    out = ev.retail_view(raw)
+    assert sorted(out["timestamp"].dt.month) == [1, 2, 12, 12]
+    assert out["timestamp"].min() == pd.Timestamp("2010-12-01 08:28")
+
+
+def test_the_retail_builder_keeps_codes_with_leading_zeros_as_text(tmp_path):
+    root = tmp_path / "acquired"
+    (tmp_path / "uci_wave2").mkdir()
+    frame = _retail_frame()
+    frame["StockCode"] = ["00123", "0042", "85123", "0007"]
+    frame.to_csv(tmp_path / "uci_wave2" / "352.csv", index=False)
+    ev._build_retail(root, tmp_path / "o", {})
+    out = pd.read_csv(tmp_path / "o" / "uci_online_retail" / "lines.csv", dtype=str)
+    assert sorted(out["stock_code"]) == ["0007", "00123", "0042", "85123"]
+    assert (
+        out["quantity"].tolist().count("6.0") == 2
+    )  # numbers were parsed by the view, not the reader
