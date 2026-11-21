@@ -1,0 +1,855 @@
+{
+ "1": {
+  "area": "Biology",
+  "creators": [
+   "Warwick Nash",
+   "Tracy Sellers",
+   "Simon Talbot",
+   "Andrew Cawthorn",
+   "Wes Ford"
+  ]
+ },
+ "101": {
+  "area": "Games",
+  "creators": [
+   "David Aha"
+  ]
+ },
+ "102": {
+  "area": "Health and Medicine",
+  "creators": [
+   "Ross Quinlan"
+  ]
+ },
+ "105": {
+  "area": "Social Science",
+  "creators": []
+ },
+ "107": {
+  "area": "Physics and Chemistry",
+  "creators": [
+   "L. Breiman",
+   "C.J. Stone"
+  ]
+ },
+ "109": {
+  "area": "Physics and Chemistry",
+  "creators": [
+   "Stefan Aeberhard",
+   "M. Forina"
+  ]
+ },
+ "110": {
+  "area": "Biology",
+  "creators": [
+   "Kenta Nakai"
+  ]
+ },
+ "117": {
+  "area": "Social Science",
+  "creators": []
+ },
+ "12": {
+  "area": "Social Science",
+  "creators": [
+   "R. Siegler"
+  ]
+ },
+ "130": {
+  "area": "Computer Science",
+  "creators": [
+   "Salvatore Stolfo",
+   "Wei Fan",
+   "Wenke Lee",
+   "Andreas Prodromidis",
+   "Philip Chan"
+  ]
+ },
+ "143": {
+  "area": "Business",
+  "creators": [
+   "Ross Quinlan"
+  ]
+ },
+ "144": {
+  "area": "Social Science",
+  "creators": [
+   "Hans Hofmann"
+  ]
+ },
+ "146": {
+  "area": "Climate and Environment",
+  "creators": [
+   "Ashwin Srinivasan"
+  ]
+ },
+ "148": {
+  "area": "Physics and Chemistry",
+  "creators": []
+ },
+ "149": {
+  "area": "Other",
+  "creators": [
+   "Pete Mowforth",
+   "Barry Shepherd"
+  ]
+ },
+ "15": {
+  "area": "Health and Medicine",
+  "creators": [
+   "WIlliam Wolberg"
+  ]
+ },
+ "159": {
+  "area": "Physics and Chemistry",
+  "creators": [
+   "R. Bock"
+  ]
+ },
+ "16": {
+  "area": "Health and Medicine",
+  "creators": [
+   "William Wolberg",
+   "W. Street",
+   "Olvi Mangasarian"
+  ]
+ },
+ "161": {
+  "area": "Health and Medicine",
+  "creators": [
+   "Matthias Elter"
+  ]
+ },
+ "162": {
+  "area": "Climate and Environment",
+  "creators": [
+   "Paulo Cortez",
+   "Anbal Morais"
+  ]
+ },
+ "165": {
+  "area": "Physics and Chemistry",
+  "creators": [
+   "I-Cheng Yeh"
+  ]
+ },
+ "17": {
+  "area": "Health and Medicine",
+  "creators": [
+   "William Wolberg",
+   "Olvi Mangasarian",
+   "Nick Street",
+   "W. Street"
+  ]
+ },
+ "176": {
+  "area": "Business",
+  "creators": [
+   "I-Cheng Yeh"
+  ]
+ },
+ "183": {
+  "area": "Social Science",
+  "creators": [
+   "Michael Redmond"
+  ]
+ },
+ "186": {
+  "area": "Business",
+  "creators": [
+   "Paulo Cortez",
+   "A. Cerdeira",
+   "F. Almeida",
+   "T. Matos",
+   "J. Reis"
+  ]
+ },
+ "189": {
+  "area": "Health and Medicine",
+  "creators": [
+   "Athanasios Tsanas",
+   "Max Little"
+  ]
+ },
+ "19": {
+  "area": "Other",
+  "creators": [
+   "Marko Bohanec"
+  ]
+ },
+ "193": {
+  "area": "Health and Medicine",
+  "creators": [
+   "D. Campos",
+   "J. Bernardes"
+  ]
+ },
+ "198": {
+  "area": "Physics and Chemistry",
+  "creators": [
+   "M Buscema",
+   "S Terzi",
+   "W Tastle"
+  ]
+ },
+ "2": {
+  "area": "Social Science",
+  "creators": [
+   "Barry Becker",
+   "Ronny Kohavi"
+  ]
+ },
+ "212": {
+  "area": "Health and Medicine",
+  "creators": [
+   "Guilherme Barreto",
+   "Ajalmar Neto"
+  ]
+ },
+ "22": {
+  "area": "Games",
+  "creators": [
+   "Alen Shapiro"
+  ]
+ },
+ "222": {
+  "area": "Business",
+  "creators": [
+   "S. Moro",
+   "P. Rita",
+   "P. Cortez"
+  ]
+ },
+ "225": {
+  "area": "Health and Medicine",
+  "creators": [
+   "Bendi Ramana",
+   "N. Venkateswarlu"
+  ]
+ },
+ "229": {
+  "area": "Computer Science",
+  "creators": [
+   "Rajen Bhatt",
+   "Abhinav Dhall"
+  ]
+ },
+ "242": {
+  "area": "Computer Science",
+  "creators": [
+   "Athanasios Tsanas",
+   "Angeliki Xifara"
+  ]
+ },
+ "247": {
+  "area": "Business",
+  "creators": [
+   "Oguz Akbilgic"
+  ]
+ },
+ "257": {
+  "area": "Computer Science",
+  "creators": [
+   "Hamdi Kahraman",
+   "Ilhami Colak",
+   "Seref Sagiroglu"
+  ]
+ },
+ "26": {
+  "area": "Games",
+  "creators": [
+   "John Tromp"
+  ]
+ },
+ "264": {
+  "area": "Health and Medicine",
+  "creators": [
+   "Oliver Roesler"
+  ]
+ },
+ "267": {
+  "area": "Computer Science",
+  "creators": [
+   "Volker Lohweg"
+  ]
+ },
+ "27": {
+  "area": "Business",
+  "creators": [
+   "J. R. Quinlan"
+  ]
+ },
+ "270": {
+  "area": "Computer Science",
+  "creators": [
+   "Alexander Vergara"
+  ]
+ },
+ "277": {
+  "area": "Health and Medicine",
+  "creators": [
+   "Marek Lubicz",
+   "Konrad Pawelczyk",
+   "Adam Rzechonek",
+   "Jerzy Kolodziej"
+  ]
+ },
+ "285": {
+  "area": "Biology",
+  "creators": [
+   "Brian Johnson"
+  ]
+ },
+ "291": {
+  "area": "Physics and Chemistry",
+  "creators": [
+   "Thomas Brooks",
+   "D. Pope",
+   "Michael Marcolini"
+  ]
+ },
+ "292": {
+  "area": "Business",
+  "creators": [
+   "Margarida Cardoso"
+  ]
+ },
+ "294": {
+  "area": "Computer Science",
+  "creators": [
+   "Pnar Tfekci",
+   "Heysem Kaya"
+  ]
+ },
+ "296": {
+  "area": "Health and Medicine",
+  "creators": [
+   "John Clore",
+   "Krzysztof Cios",
+   "Jon DeShazo",
+   "Beata Strack"
+  ]
+ },
+ "3": {
+  "area": "Physics and Chemistry",
+  "creators": []
+ },
+ "30": {
+  "area": "Health and Medicine",
+  "creators": [
+   "Tjen-Sien Lim"
+  ]
+ },
+ "31": {
+  "area": "Biology",
+  "creators": [
+   "Jock Blackard"
+  ]
+ },
+ "312": {
+  "area": "Business",
+  "creators": [
+   "Michael Brown"
+  ]
+ },
+ "32": {
+  "area": "Physics and Chemistry",
+  "creators": [
+   "Bob Evans"
+  ]
+ },
+ "320": {
+  "area": "Social Science",
+  "creators": [
+   "Paulo Cortez"
+  ]
+ },
+ "327": {
+  "area": "Computer Science",
+  "creators": [
+   "Rami Mohammad",
+   "Lee McCluskey"
+  ]
+ },
+ "329": {
+  "area": "Health and Medicine",
+  "creators": [
+   "Balint Antal",
+   "Andras Hajdu"
+  ]
+ },
+ "33": {
+  "area": "Health and Medicine",
+  "creators": [
+   "Nilsel Ilter",
+   "H. Guvenir"
+  ]
+ },
+ "332": {
+  "area": "Business",
+  "creators": [
+   "Kelwin Fernandes",
+   "Pedro Vinagre",
+   "Paulo Cortez",
+   "Pedro Sernadela"
+  ]
+ },
+ "336": {
+  "area": "Other",
+  "creators": [
+   "L. Rubini",
+   "P. Soundarapandian",
+   "P. Eswaran"
+  ]
+ },
+ "342": {
+  "area": "Biology",
+  "creators": [
+   "Clara Higuera",
+   "Katheleen Gardiner",
+   "Krzysztof Cios"
+  ]
+ },
+ "350": {
+  "area": "Business",
+  "creators": [
+   "I-Cheng Yeh"
+  ]
+ },
+ "365": {
+  "area": "Business",
+  "creators": [
+   "Sebastian Tomczak"
+  ]
+ },
+ "368": {
+  "area": "Business",
+  "creators": [
+   "Srgio Moro",
+   "Paulo Rita",
+   "Bernardo Vala"
+  ]
+ },
+ "372": {
+  "area": "Physics and Chemistry",
+  "creators": [
+   "Robert Lyon"
+  ]
+ },
+ "373": {
+  "area": "Social Science",
+  "creators": [
+   "Elaine Fehrman",
+   "Vincent Egan",
+   "Evgeny Mirkes"
+  ]
+ },
+ "379": {
+  "area": "Computer Science",
+  "creators": [
+   "Neda Abdelhamid"
+  ]
+ },
+ "381": {
+  "area": "Climate and Environment",
+  "creators": [
+   "Song Chen"
+  ]
+ },
+ "383": {
+  "area": "Health and Medicine",
+  "creators": [
+   "Kelwin Fernandes",
+   "Jaime Cardoso",
+   "Jessica Fernandes"
+  ]
+ },
+ "39": {
+  "area": "Biology",
+  "creators": [
+   "Kenta Nakai"
+  ]
+ },
+ "390": {
+  "area": "Business",
+  "creators": [
+   "I-Cheng Yeh"
+  ]
+ },
+ "396": {
+  "area": "Business",
+  "creators": [
+   "James Tan"
+  ]
+ },
+ "42": {
+  "area": "Physics and Chemistry",
+  "creators": [
+   "B. German"
+  ]
+ },
+ "426": {
+  "area": "Social Science",
+  "creators": [
+   "Fadi Thabtah"
+  ]
+ },
+ "445": {
+  "area": "Business",
+  "creators": [
+   "Andrea Martiniano",
+   "Ricardo Ferreira"
+  ]
+ },
+ "45": {
+  "area": "Health and Medicine",
+  "creators": [
+   "Andras Janosi",
+   "William Steinbrunn",
+   "Matthias Pfisterer",
+   "Robert Detrano"
+  ]
+ },
+ "46": {
+  "area": "Health and Medicine",
+  "creators": []
+ },
+ "464": {
+  "area": "Physics and Chemistry",
+  "creators": [
+   "Kam Hamidieh"
+  ]
+ },
+ "47": {
+  "area": "Biology",
+  "creators": [
+   "Mary McLeish",
+   "Matt Cecile"
+  ]
+ },
+ "477": {
+  "area": "Business",
+  "creators": [
+   "I-Cheng Yeh"
+  ]
+ },
+ "50": {
+  "area": "Other",
+  "creators": []
+ },
+ "503": {
+  "area": "Health and Medicine",
+  "creators": [
+   "Sanaa Kamal",
+   "Mohamed ElEleimy",
+   "Doaa Hegazy",
+   "Mahmoud Nasr"
+  ]
+ },
+ "51": {
+  "area": "Computer Science",
+  "creators": [
+   "Nicholas Kushmerick"
+  ]
+ },
+ "52": {
+  "area": "Physics and Chemistry",
+  "creators": [
+   "V. Sigillito",
+   "S. Wing",
+   "L. Hutton",
+   "K. Baker"
+  ]
+ },
+ "529": {
+  "area": "Computer Science",
+  "creators": []
+ },
+ "536": {
+  "area": "Computer Science",
+  "creators": []
+ },
+ "544": {
+  "area": "Health and Medicine",
+  "creators": []
+ },
+ "545": {
+  "area": "Biology",
+  "creators": []
+ },
+ "551": {
+  "area": "Computer Science",
+  "creators": []
+ },
+ "555": {
+  "area": "Business",
+  "creators": []
+ },
+ "563": {
+  "area": "Business",
+  "creators": []
+ },
+ "571": {
+  "area": "Health and Medicine",
+  "creators": [
+   "Ralf Lichtinghagen",
+   "Frank Klawonn",
+   "Georg Hoffmann"
+  ]
+ },
+ "572": {
+  "area": "Business",
+  "creators": []
+ },
+ "579": {
+  "area": "Health and Medicine",
+  "creators": [
+   "S.E. Golovenkin",
+   "V.A. Shulman",
+   "D.A. Rossiev",
+   "P.A. Shesternya",
+   "S.Yu. Nikulina",
+   "Yu.V. Orlova",
+   "V.F. Voino-Yasenetsky"
+  ]
+ },
+ "582": {
+  "area": "Computer Science",
+  "creators": []
+ },
+ "59": {
+  "area": "Computer Science",
+  "creators": [
+   "David Slate"
+  ]
+ },
+ "597": {
+  "area": "Business",
+  "creators": []
+ },
+ "60": {
+  "area": "Health and Medicine",
+  "creators": []
+ },
+ "601": {
+  "area": "Computer Science",
+  "creators": []
+ },
+ "602": {
+  "area": "Biology",
+  "creators": []
+ },
+ "603": {
+  "area": "Business",
+  "creators": []
+ },
+ "63": {
+  "area": "Health and Medicine",
+  "creators": [
+   "M. Zwitter",
+   "M. Soklic"
+  ]
+ },
+ "69": {
+  "area": "Biology",
+  "creators": []
+ },
+ "697": {
+  "area": "Social Science",
+  "creators": [
+   "Valentim Realinho",
+   "M\u00f3nica Vieira Martins",
+   "Jorge Machado",
+   "Lu\u00eds Baptista"
+  ]
+ },
+ "70": {
+  "area": "Other",
+  "creators": [
+   "J. Wnek"
+  ]
+ },
+ "722": {
+  "area": "Computer Science",
+  "creators": [
+   "Akshay Mathur"
+  ]
+ },
+ "73": {
+  "area": "Biology",
+  "creators": []
+ },
+ "75": {
+  "area": "Physics and Chemistry",
+  "creators": [
+   "David Chapman",
+   "Ajay Jain"
+  ]
+ },
+ "755": {
+  "area": "Computer Science",
+  "creators": [
+   "Abdullah AlSahly"
+  ]
+ },
+ "759": {
+  "area": "Health and Medicine",
+  "creators": [
+   "Erdal Tasci",
+   "Kevin Camphausen",
+   "Andra Valentina Krauze",
+   "Ying Zhuge"
+  ]
+ },
+ "76": {
+  "area": "Social Science",
+  "creators": [
+   "Vladislav Rajkovic"
+  ]
+ },
+ "760": {
+  "area": "Health and Medicine",
+  "creators": [
+   "Nathaniel Helwig",
+   "Elizabeth Hsiao-Wecksler"
+  ]
+ },
+ "78": {
+  "area": "Computer Science",
+  "creators": [
+   "Donato Malerba"
+  ]
+ },
+ "80": {
+  "area": "Computer Science",
+  "creators": [
+   "E. Alpaydin",
+   "C. Kaynak"
+  ]
+ },
+ "81": {
+  "area": "Computer Science",
+  "creators": [
+   "E. Alpaydin",
+   "Fevzi. Alimoglu"
+  ]
+ },
+ "83": {
+  "area": "Health and Medicine",
+  "creators": [
+   "M. Zwitter",
+   "M. Soklic"
+  ]
+ },
+ "848": {
+  "area": "Biology",
+  "creators": [
+   "Dennis Wagner",
+   "D. Heider",
+   "Georges Hattab"
+  ]
+ },
+ "850": {
+  "area": "Biology",
+  "creators": [
+   "\u0130\u0307lkay \u00c7inar",
+   "Murat Koklu",
+   "Sakir Tasdemir"
+  ]
+ },
+ "863": {
+  "area": "Health and Medicine",
+  "creators": [
+   "Marzia Ahmed"
+  ]
+ },
+ "864": {
+  "area": "Computer Science",
+  "creators": [
+   "Adarsh Pal Singh",
+   "Sachin Chaudhari"
+  ]
+ },
+ "878": {
+  "area": "Health and Medicine",
+  "creators": [
+   "E. Dickson",
+   "P. Grambsch",
+   "T. Fleming",
+   "L. Fisher",
+   "A. Langworthy"
+  ]
+ },
+ "887": {
+  "area": "Health and Medicine",
+  "creators": [
+   "NA NA"
+  ]
+ },
+ "89": {
+  "area": "Physics and Chemistry",
+  "creators": []
+ },
+ "9": {
+  "area": "Other",
+  "creators": [
+   "R. Quinlan"
+  ]
+ },
+ "90": {
+  "area": "Biology",
+  "creators": [
+   "R.S. Michalski",
+   "R.L. Chilausky"
+  ]
+ },
+ "911": {
+  "area": "Computer Science",
+  "creators": [
+   "Amir Ali",
+   "Stanislaw  Matuszewski",
+   "Jacek Czupyt"
+  ]
+ },
+ "913": {
+  "area": "Other",
+  "creators": [
+   "Bruno  Rodrigues de Oliveira",
+   "Alan  Mario Zuffo"
+  ]
+ },
+ "915": {
+  "area": "Health and Medicine",
+  "creators": [
+   "Shiva Borzooei",
+   "Aidin Tarokhian"
+  ]
+ },
+ "936": {
+  "area": "Health and Medicine",
+  "creators": []
+ },
+ "94": {
+  "area": "Computer Science",
+  "creators": [
+   "Mark Hopkins",
+   "Erik Reeber",
+   "George Forman",
+   "Jaap Suermondt"
+  ]
+ },
+ "942": {
+  "area": "Engineering",
+  "creators": [
+   "B. S.",
+   "Rohini Nagapadma"
+  ]
+ },
+ "967": {
+  "area": "Computer Science",
+  "creators": [
+   "Arvind Prasad",
+   "Shalini Chandra"
+  ]
+ }
+}
