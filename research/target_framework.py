@@ -170,6 +170,50 @@ def pilot_sources_for_sd(max_upper_ratio: float, level: float = 0.95) -> int:
     return n
 
 
+def effective_sd_interval(
+    n: int, design_effect: float = 1.0, level: float = 0.95
+) -> tuple[float, float]:
+    """SD interval with n sources reduced to n / design_effect effective sources (at least two).
+
+    A rough planning device: it assumes the effective number behaves like independent normal
+    sources, which clustering and heterogeneity only approximately justify.
+    """
+    if design_effect < 1.0:
+        raise ValueError("the design effect must be at least 1")
+    return sd_ratio_interval(max(2, math.floor(n / design_effect)), level)
+
+
+def pilot_allocation(
+    ready: dict[str, int], minimum: int, max_share: float, total_cap: int
+) -> dict[str, int]:
+    """Pilot groups per category: ``max_share`` of the ready groups, at least ``minimum`` (never
+    more than are ready), trimmed from the largest quota while the total exceeds ``total_cap``."""
+    quota = {c: min(n, max(minimum, math.floor(n * max_share))) for c, n in sorted(ready.items())}
+    while sum(quota.values()) > total_cap:
+        largest = max(quota, key=lambda c: (quota[c], c))
+        if quota[largest] <= min(minimum, ready[largest]):
+            break
+        quota[largest] -= 1
+    return quota
+
+
+def draw_pilot(members: dict[str, list[str]], quota: dict[str, int], seed: int) -> dict[str, Any]:
+    """Seeded draw of pilot groups meeting each category quota; a group in several categories is
+    drawn once and counts for all of them. The rest is the confirmatory holdout. No detector
+    result is read: only provenance-group identifiers and the seed."""
+    rng = np.random.default_rng(seed)
+    chosen: set[str] = set()
+    for category in sorted(quota):
+        pool = sorted(members.get(category, []))
+        have = [g for g in pool if g in chosen]
+        rest = [g for g in pool if g not in chosen]
+        order = list(rng.permutation(len(rest)))
+        for index in order[: max(0, min(quota[category], len(pool)) - len(have))]:
+            chosen.add(rest[int(index)])
+    every = {g for groups in members.values() for g in groups}
+    return {"seed": seed, "pilot": sorted(chosen), "holdout": sorted(every - chosen)}
+
+
 #: provisional smallest effects of interest (owner decision E); illustrative, not validated
 EFFECT_SCENARIOS: list[dict[str, Any]] = [
     {"metric": "recall at matched alert budget", "delta": 0.05},

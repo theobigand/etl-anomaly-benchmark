@@ -667,3 +667,68 @@ def test_unclassified_domains_and_families_are_not_counted_but_the_groups_are_re
         and out["largest_family_share"] == 0.25
     )
     assert {"Other", "unknown", "other"} == tf.UNCLASSIFIED
+
+
+def test_the_sd_interval_widens_when_clustering_reduces_the_effective_number_of_sources():
+    plain = tf.sd_ratio_interval(24)
+    same = tf.effective_sd_interval(24, design_effect=1.0)
+    assert same == plain
+    clustered = tf.effective_sd_interval(24, design_effect=1.6)  # 15 effective sources
+    assert clustered == tf.sd_ratio_interval(15) and clustered[1] > plain[1]
+    assert tf.effective_sd_interval(24, design_effect=100.0) == tf.sd_ratio_interval(
+        2
+    )  # never fewer than two
+    with pytest.raises(ValueError, match="at least 1"):
+        tf.effective_sd_interval(24, design_effect=0.5)
+
+
+def test_pilot_allocation_caps_each_category_at_a_share_of_its_ready_groups_and_a_minimum():
+    ready = {"A": 20, "B": 10, "C": 6}
+    out = tf.pilot_allocation(ready, minimum=2, max_share=0.25, total_cap=10)
+    assert out == {
+        "A": 5,
+        "B": 2,
+        "C": 2,
+    }  # 25 percent of 20 is 5; 2.5 and 1.5 round down to the minimum of 2
+    assert tf.pilot_allocation(ready, minimum=3, max_share=0.25, total_cap=10) == {
+        "A": 4,
+        "B": 3,
+        "C": 3,
+    }
+    assert tf.pilot_allocation(ready, minimum=3, max_share=0.25, total_cap=11) == {
+        "A": 5,
+        "B": 3,
+        "C": 3,
+    }
+    capped = tf.pilot_allocation(ready, minimum=2, max_share=0.5, total_cap=9)
+    assert (
+        sum(capped.values()) == 9 and capped["A"] >= 2 and capped["C"] >= 2
+    )  # the largest quota is trimmed first
+    assert tf.pilot_allocation({"A": 2}, minimum=3, max_share=0.5, total_cap=5) == {
+        "A": 2
+    }  # never more than ready
+    assert tf.pilot_allocation({}, minimum=2, max_share=0.5, total_cap=5) == {}
+
+
+def test_the_pilot_draw_is_seeded_covers_each_category_once_per_group_and_leaves_a_disjoint_holdout():  # noqa: E501
+    members = {
+        "A": ["a1", "a2", "a3", "a4", "a5", "x"],
+        "B": ["b1", "b2", "b3", "x"],  # x belongs to two categories and counts once
+        "C": ["c1", "c2", "c3"],
+    }
+    quota = {"A": 2, "B": 2, "C": 2}
+    first = tf.draw_pilot(members, quota, seed=5)
+    again = tf.draw_pilot(members, quota, seed=5)
+    assert first == again
+    pilot = set(first["pilot"])
+    assert len(first["pilot"]) == len(pilot)  # a group is drawn once
+    for category, groups in members.items():
+        assert len(pilot & set(groups)) >= quota[category]
+    assert pilot.isdisjoint(first["holdout"]) and pilot | set(first["holdout"]) == {
+        g for v in members.values() for g in v
+    }
+    assert first["holdout"] == sorted(first["holdout"]) and first["pilot"] == sorted(first["pilot"])
+    assert first["seed"] == 5
+    assert tf.draw_pilot({"A": ["a1"]}, {"A": 3}, seed=1)["pilot"] == [
+        "a1"
+    ]  # cannot exceed what exists
