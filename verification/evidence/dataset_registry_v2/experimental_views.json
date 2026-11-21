@@ -91,6 +91,52 @@
   },
   "source_snapshot": "4tu_bpic19/2026-11-21"
  },
+ "4tu_bpic20_domestic": {
+  "dropped": [
+   "all trace and event attributes except activity, time, transition, resource and listed numbers"
+  ],
+  "files": {
+   "events.csv": {
+    "rows": 56437,
+    "sha256": "2aa7ee09978c15ef2da6d9c5d644cbd3500eadf9047e303b0df2d353e43d3955"
+   }
+  },
+  "pseudonymised": [
+   "resource"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "cases_kept": 10500,
+   "cases_read": 10500,
+   "modulo": 1,
+   "source_fragment": false,
+   "stream_complete": true
+  },
+  "source_snapshot": "4tu_bpic20_domestic/2026-11-21"
+ },
+ "4tu_bpic20_international": {
+  "dropped": [
+   "all trace and event attributes except activity, time, transition, resource and listed numbers"
+  ],
+  "files": {
+   "events.csv": {
+    "rows": 72151,
+    "sha256": "041ec0ddc810c7fad017bcd6fe6275a199a7ca617f4700a08cbd89358635d4eb"
+   }
+  },
+  "pseudonymised": [
+   "resource"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "cases_kept": 6449,
+   "cases_read": 6449,
+   "modulo": 1,
+   "source_fragment": false,
+   "stream_complete": true
+  },
+  "source_snapshot": "4tu_bpic20_international/2026-11-21"
+ },
  "4tu_road_fines": {
   "dropped": [
    "all trace and event attributes except activity, time, transition, resource and listed numbers"
@@ -113,6 +159,29 @@
    "stream_complete": true
   },
   "source_snapshot": "4tu_road_fines/2026-11-21"
+ },
+ "4tu_sepsis": {
+  "dropped": [
+   "all trace and event attributes except activity, time, transition, resource and listed numbers"
+  ],
+  "files": {
+   "events.csv": {
+    "rows": 15214,
+    "sha256": "64f80868f6bc5146e521960243b4c101233161ffc19f14978880fe701a448e65"
+   }
+  },
+  "pseudonymised": [
+   "resource"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "cases_kept": 1050,
+   "cases_read": 1050,
+   "modulo": 1,
+   "source_fragment": false,
+   "stream_complete": true
+  },
+  "source_snapshot": "4tu_sepsis/2026-11-21"
  },
  "bikeshare_capital": {
   "dropped": [

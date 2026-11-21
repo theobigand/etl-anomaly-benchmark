@@ -76,6 +76,35 @@
    "units": 144920,
    "view": "4tu_bpic19"
   },
+  "4tu_bpic20_domestic": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "claim approval workflow with rejections (natural rework)",
+    "claim amount is a case attribute and is not kept"
+   ],
+   "first_party": false,
+   "independent_group": "tue_travel_claims",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15, whole cases",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 10500,
+   "view": "4tu_bpic20_domestic"
+  },
+  "4tu_bpic20_international": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "same producer as the domestic log"
+   ],
+   "first_party": false,
+   "independent_group": "tue_travel_claims",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15, whole cases",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 6449,
+   "view": "4tu_bpic20_international"
+  },
   "4tu_road_fines": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -105,6 +134,21 @@
    "protocol_id": "P-TAB",
    "units": 561470,
    "view": "4tu_road_fines"
+  },
+  "4tu_sepsis": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "1050 cases, 15214 events; small",
+    "clinical pathway data of patients, pseudonymised by the publisher; only activity, time and resource are kept"
+   ],
+   "first_party": false,
+   "independent_group": "hospital_sepsis_nl",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15, whole cases",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 1050,
+   "view": "4tu_sepsis"
   },
   "bikeshare_capital": {
    "anomaly_origin": "controlled_injection",

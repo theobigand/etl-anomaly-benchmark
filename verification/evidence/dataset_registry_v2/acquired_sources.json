@@ -1730,6 +1730,66 @@
    "stratum": "C2b",
    "system": "coatings_multinational",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "4tu_bpic20_domestic",
+   "id": "4tu_bpic20_domestic",
+   "licence_class": "research_only",
+   "protocols": "P-SEQ on case event sequences; natural rework is a baseline",
+   "publisher": "tue_travel_claims",
+   "reason": "BPI Challenge 2020 domestic travel expense declarations of a Dutch university, 2017 to 2018: 56437 events in 10500 cases; resources salted",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY-NC 4.0 on the 4TU record",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "tue_travel_claims",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "4tu_bpic20_international",
+   "id": "4tu_bpic20_international",
+   "licence_class": "research_only",
+   "protocols": "P-SEQ on case event sequences; natural rework is a baseline",
+   "publisher": "tue_travel_claims",
+   "reason": "BPI Challenge 2020 international travel expense declarations of the same university (same group as the domestic log): 72151 events in 6449 cases; resources salted",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY-NC 4.0 on the 4TU record",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "tue_travel_claims",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "4tu_sepsis",
+   "id": "4tu_sepsis",
+   "licence_class": "open",
+   "protocols": "P-SEQ on case event sequences; natural rework is a baseline",
+   "publisher": "hospital_sepsis_nl",
+   "reason": "Sepsis cases of a Dutch hospital ERP: one case is one patient pathway: 15214 events in 1050 cases; resources salted",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "4TU terms (CC0)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "hospital_sepsis_nl",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

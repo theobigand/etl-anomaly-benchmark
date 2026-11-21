@@ -796,6 +796,27 @@
   },
   {
    "failed": null,
+   "group": "tue_travel_claims",
+   "id": "4tu_bpic20_domestic",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "tue_travel_claims",
+   "id": "4tu_bpic20_international",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "hospital_sepsis_nl",
+   "id": "4tu_sepsis",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -936,9 +957,11 @@
    "dutch_municipalities",
    "fin_institute_nl",
    "fugaku_riken",
+   "hospital_sepsis_nl",
    "italian_road_fines",
    "loghub_collection",
    "surf_lisa_slurm",
+   "tue_travel_claims",
    "volvo_it"
   ],
   "C5": [
@@ -979,13 +1002,13 @@
    "structurally_valid": 13
   },
   "C4": {
-   "acquired": 25,
-   "discovered": 26,
-   "experiment_ready": 24,
-   "protocol_ready": 24,
-   "rights_verified": 25,
-   "scientifically_eligible": 24,
-   "structurally_valid": 24
+   "acquired": 28,
+   "discovered": 29,
+   "experiment_ready": 27,
+   "protocol_ready": 27,
+   "rights_verified": 28,
+   "scientifically_eligible": 27,
+   "structurally_valid": 27
   },
   "C5": {
    "acquired": 14,

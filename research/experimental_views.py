@@ -1703,6 +1703,9 @@ XES_SPECS: dict[str, dict[str, Any]] = {
     "4tu_bpic13_incidents": {"file": "BPI_Challenge_2013_incidents.xes.gz", "modulo": 1, "numeric": [], "partial": False},  # noqa: E501
     "4tu_bpic15_m5": {"file": "BPIC15_5.xes", "modulo": 1, "numeric": [], "partial": False},
     "4tu_road_fines": {"file": "Road_Traffic_Fine_Management_Process.xes.gz", "modulo": 1, "numeric": ["amount", "paymentAmount", "expense"], "partial": False},  # noqa: E501
+    "4tu_bpic20_domestic": {"file": "DomesticDeclarations.xes.gz", "modulo": 1, "numeric": [], "partial": False},  # noqa: E501
+    "4tu_bpic20_international": {"file": "InternationalDeclarations.xes.gz", "modulo": 1, "numeric": [], "partial": False},  # noqa: E501
+    "4tu_sepsis": {"file": "Sepsis_Cases_-_Event_Log.xes.gz", "modulo": 1, "numeric": [], "partial": False},  # noqa: E501
     "4tu_bpic19": {"file": "BPI_Challenge_2019_head.xes", "modulo": 1, "numeric": ["Cumulative net worth (EUR)"], "partial": True},  # noqa: E501
 }  # fmt: skip
 

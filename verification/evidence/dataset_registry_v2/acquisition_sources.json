@@ -2019,6 +2019,90 @@
    "stratum": "C4",
    "upstream": "the organisations' logs were published by the data owners' academic partners through 4TU; the record names the organisation; pseudonymised by the publisher",
    "upstream_verified": true
+  },
+  {
+   "attribution": "cite the 4TU record, DOI 10.4121/uuid:3f422315-ed9d-4882-891f-e180b5b4feb5",
+   "files": [
+    {
+     "name": "DomesticDeclarations.xes.gz",
+     "observed": "2020-03-26",
+     "url": "https://data.4tu.nl/file/6a0a26d2-82d0-4018-b1cd-89afb0e8627f/6eeb0328-f991-48c7-95f2-35033504036e"
+    }
+   ],
+   "hosts": [
+    "data.4tu.nl"
+   ],
+   "id": "4tu_bpic20_domestic",
+   "licence_class": "research_only",
+   "licence_location": "https://data.4tu.nl/v2/articles/12692543",
+   "licence_text": "CC BY-NC 4.0 stated on the 4TU record (non-commercial research use)",
+   "max_bytes": 104857600,
+   "method": "official 4TU.ResearchData API file download",
+   "min_interval": 3.0,
+   "privacy": "resource and case identifiers pseudonymised by the publisher; resources are further salted in the view",
+   "publisher": "4TU.ResearchData record 12692543: travel expense claims of a Dutch university, domestic declarations (BPI Challenge 2020)",
+   "rate_limit": "sequential downloads, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "the organisation's log was published by its academic partners through 4TU; the record names the organisation; pseudonymised by the publisher",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "cite the 4TU record, DOI 10.4121/uuid:2bbf8f6a-fc50-48eb-aa9e-c4ea5ef7e8c5",
+   "files": [
+    {
+     "name": "InternationalDeclarations.xes.gz",
+     "observed": "2020-03-26",
+     "url": "https://data.4tu.nl/file/91fd1fa8-4df4-4b1a-9a3f-0116c412378f/d45ee7dc-952c-4885-b950-4579a91ef426"
+    }
+   ],
+   "hosts": [
+    "data.4tu.nl"
+   ],
+   "id": "4tu_bpic20_international",
+   "licence_class": "research_only",
+   "licence_location": "https://data.4tu.nl/v2/articles/12687374",
+   "licence_text": "CC BY-NC 4.0 stated on the 4TU record (non-commercial research use)",
+   "max_bytes": 104857600,
+   "method": "official 4TU.ResearchData API file download",
+   "min_interval": 3.0,
+   "privacy": "resource and case identifiers pseudonymised by the publisher; resources are further salted in the view",
+   "publisher": "4TU.ResearchData record 12687374: travel expense claims of a Dutch university, international declarations (BPI Challenge 2020)",
+   "rate_limit": "sequential downloads, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "the organisation's log was published by its academic partners through 4TU; the record names the organisation; pseudonymised by the publisher",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "cite the 4TU record, DOI 10.4121/uuid:915d2bfb-7e84-49ad-a286-dc35f063a460",
+   "files": [
+    {
+     "name": "Sepsis_Cases_-_Event_Log.xes.gz",
+     "observed": "2016-12-07",
+     "url": "https://data.4tu.nl/file/33632f3c-5c48-40cf-8d8f-2db57f5a6ce7/643dccf2-985a-459e-835c-a82bce1c0339"
+    }
+   ],
+   "hosts": [
+    "data.4tu.nl"
+   ],
+   "id": "4tu_sepsis",
+   "licence_class": "open",
+   "licence_location": "https://data.4tu.nl/v2/articles/12707639",
+   "licence_text": "4TU General Terms of Use: the terms resource of 4TU.Centre for Research Data states licence CC0 for datasets where no other licence is given (read at doi.org/10.4121/resource:terms_of_use)",
+   "max_bytes": 104857600,
+   "method": "official 4TU.ResearchData API file download",
+   "min_interval": 3.0,
+   "privacy": "resource and case identifiers pseudonymised by the publisher; resources are further salted in the view",
+   "publisher": "4TU.ResearchData record 12707639: sepsis patient pathways of a Dutch hospital ERP",
+   "rate_limit": "sequential downloads, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "the organisation's log was published by its academic partners through 4TU; the record names the organisation; pseudonymised by the publisher",
+   "upstream_verified": true
   }
  ]
 }

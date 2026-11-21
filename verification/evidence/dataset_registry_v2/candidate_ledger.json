@@ -884,6 +884,67 @@
    "size": null,
    "source_url": "https://data.4tu.nl/",
    "status": "accessible_eligible"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "4tu:bpic20",
+   "licence": "CC BY-NC 4.0 (research_only)",
+   "name": "BPI Challenge 2020 travel expense logs (domestic and international)",
+   "next_step": "prepaid costs, request for payment and permit logs are the same group",
+   "notes": "one group",
+   "publisher": "4TU.ResearchData",
+   "reason": "real event logs of one university",
+   "size": null,
+   "source_url": "https://data.4tu.nl/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "4tu:sepsis",
+   "licence": "4TU terms (CC0)",
+   "name": "Sepsis Cases Event Log",
+   "next_step": "none",
+   "notes": "1050 cases",
+   "publisher": "4TU.ResearchData",
+   "reason": "real hospital pathways",
+   "size": null,
+   "source_url": "https://data.4tu.nl/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4",
+    "C2b"
+   ],
+   "id": "4tu:bpic18",
+   "licence": "CC0 on the record",
+   "name": "BPI Challenge 2018 (EU agricultural subsidies)",
+   "next_step": "gzip prefix decoding to bytes then XES parse (needs a gunzip-prefix-to-bytes helper)",
+   "notes": "",
+   "publisher": "4TU.ResearchData",
+   "reason": "158 MB gzip XES; direct payments of the Common Agricultural Policy",
+   "size": null,
+   "source_url": "https://data.4tu.nl/articles/_/12688355",
+   "status": "needs_bounded_extraction"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "4tu:bpic14",
+   "licence": "4TU terms (CC0)",
+   "name": "BPI Challenge 2014 (Rabobank ICT incidents)",
+   "next_step": "CSV event-log reader",
+   "notes": "",
+   "publisher": "4TU.ResearchData",
+   "reason": "CSV activity log of 39 MB",
+   "size": null,
+   "source_url": "https://data.4tu.nl/articles/_/12706424",
+   "status": "accessible_eligible"
   }
  ],
  "date": "2026-11-21",
