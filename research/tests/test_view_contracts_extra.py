@@ -237,3 +237,171 @@ def test_builders_pass_their_documented_size_limits_to_the_readers(tmp_path, mon
         1 << 31,
         1 << 31,
     ]  # two Borg fragments and the Open Library prefix
+
+
+def test_surf_builder_ignores_parquet_members_that_are_not_parts_of_the_table(
+    tmp_path, monkeypatch
+):
+    monkeypatch.setattr(ev, "SURF_STRIDE", 1)
+    raw = tmp_path / "acquired" / "zen_surf_lisa_slurm" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    decoy, part = tmp_path / "decoy.parquet", tmp_path / "part.parquet"
+    pq.write_table(pa.Table.from_pandas(tev._surf_frame().iloc[:1], preserve_index=False), decoy)
+    pq.write_table(pa.Table.from_pandas(tev._surf_frame(), preserve_index=False), part)
+    with zipfile.ZipFile(raw / "slurm_table_cleaned.zip", "w") as z:
+        z.write(decoy, "slurm_table_cleaned.parquet/readme.parquet")  # not a part file
+        z.write(part, "slurm_table_cleaned.parquet/part-00001-x.snappy.parquet")
+        z.writestr(
+            "slurm_table_cleaned.parquet/part-00002.txt", "x"
+        )  # a part-like name that is not Parquet
+    manifest: dict = {}
+    ev._build_surf(tmp_path / "acquired", tmp_path / "o", manifest)
+    assert manifest["zen_surf_lisa_slurm"]["files"]["jobs.csv"]["rows"] == 3
+
+
+def test_met_builder_counts_every_unreadable_file_and_writes_sorted_keys(tmp_path):
+    raw = tmp_path / "acquired" / "met_museum_objects" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    (raw / "obj_1.json").write_text('{"title": "b", "objectID": 1, "a": {"z": 1, "y": 2}}')
+    (raw / "obj_2.json").write_text("not json")
+    (raw / "obj_3.json").write_text("{broken")
+    manifest: dict = {}
+    ev._build_met(tmp_path / "acquired", tmp_path / "o", manifest)
+    assert manifest["met_museum_objects"]["sampling"]["unreadable"] == 2
+    line = (tmp_path / "o" / "met_museum_objects" / "objects.jsonl").read_text().strip()
+    assert line == '{"a": {"y": 2, "z": 1}, "objectID": 1, "title": "b"}'
+
+
+def test_dvf_view_keeps_numbers_in_area_and_room_columns_and_their_types():
+    out = ev.dvf_view(tev._dvf_frame())
+    row = out[out["mutation"] == ev.pseudonym("2024-1")].iloc[0]
+    assert row["built_area_m2"] == 50.0 and row["rooms"] == 2.0 and row["value_eur"] == 346.5
+    assert out["built_area_m2"].notna().sum() >= 2 and out["rooms"].notna().sum() >= 2
+
+
+def test_the_xes_builder_passes_the_trace_limit_and_the_case_modulo_from_the_spec(
+    tmp_path, monkeypatch
+):
+    root = tmp_path / "acquired"
+    folder = root / "4tu_m" / SNAP / "raw"
+    folder.mkdir(parents=True)
+    traces = "".join(
+        f'<trace><string key="concept:name" value="c{i}"/><event><string key="concept:name" value="A"/>'  # noqa: E501
+        f'<date key="time:timestamp" value="2020-01-01T00:00:00Z"/></event></trace>'
+        for i in range(12)
+    )
+    (folder / "log.xes").write_text(f"<log>{traces}</log>")
+    monkeypatch.setattr(
+        ev,
+        "XES_SPECS",
+        {
+            "4tu_m": {
+                "file": "log.xes",
+                "modulo": 1,
+                "numeric": [],
+                "partial": False,
+                "max_traces": 5,
+            }
+        },
+    )
+    manifest: dict = {}
+    ev._build_xes(root, tmp_path / "o", manifest)
+    sampling = manifest["4tu_m"]["sampling"]
+    assert (
+        sampling["stop"] == "trace_limit"
+        and sampling["cases_kept"] == 5
+        and sampling["stream_complete"] is False
+    )
+    monkeypatch.setattr(
+        ev,
+        "XES_SPECS",
+        {"4tu_m": {"file": "log.xes", "modulo": 1, "numeric": [], "partial": False}},
+    )
+    full: dict = {}
+    ev._build_xes(root, tmp_path / "o2", full)
+    assert (
+        full["4tu_m"]["sampling"]["cases_kept"] == 12
+        and full["4tu_m"]["sampling"]["stop"] == "log_closed"
+    )
+
+
+def test_csv_events_use_the_declared_time_format_even_when_another_reading_is_possible():
+    frame = pd.DataFrame(
+        {
+            "c": ["a", "a"],
+            "t": ["01-02-2020 10:00:00", "03-02-2020 10:00:00"],
+            "act": ["x", "y"],
+            "n": ["1", "2"],
+            "r": ["u", "u"],
+        }
+    )
+    spec = {
+        "case": "c",
+        "activity": "act",
+        "time": "t",
+        "format": "%d-%m-%Y %H:%M:%S",
+        "order": "n",
+        "resource": "r",
+        "modulo": 1,
+    }
+    out, info = ev.csv_event_view(frame, spec)
+    assert out["time"].dt.month.tolist() == [2, 2] and out["time"].dt.day.tolist() == [
+        1,
+        3,
+    ]  # day first, as declared
+    assert str(out["time"].dtype).endswith("UTC]") and info["rows_without_time"] == 0
+
+
+def test_clue_times_are_utc_aware():
+    out = ev.clue_events_view([tev._clue(1), tev._clue(2)])
+    assert str(out["time"].dtype).endswith("UTC]")
+
+
+def test_table_sets_keep_a_present_optional_table_and_read_tab_files_with_embedded_separators_strictly(  # noqa: E501
+    tmp_path, monkeypatch
+):
+    root = tmp_path / "acquired"
+    raw = root / "src" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    with zipfile.ZipFile(raw / "d.zip", "w") as z:
+        z.writestr(
+            "p/a.csv", '"k"\t"v"\n"1"\t"x"\n"2"\t"has\ttab"\n"3"\t"z"\n'
+        )  # the second row has an extra field
+        z.writestr("p/opt.csv", '"k"\n"1"\n')
+    monkeypatch.setattr(ev, "TABLE_SETS", {"src": {
+        "archive": {"file": "d.zip", "prefix": "p/"}, "dropped": [],
+        "tables": {"a": {"keep": ["k", "v"], "pseudonymise": ["k"]}, "opt": {"keep": ["k"], "optional": True}},  # noqa: E501
+        "relations": []}})  # fmt: skip
+    seen = []
+    real = aq.extract_member
+    monkeypatch.setattr(aq, "extract_member", lambda *a: seen.append(a[3:]) or real(*a))
+    manifest: dict = {}
+    ev._build_tables(root, tmp_path / "o", manifest)
+    folder = tmp_path / "o" / "src"
+    table = pd.read_csv(folder / "a.csv", dtype=str)
+    assert table["v"].tolist() == [
+        "x",
+        "z",
+    ]  # the malformed row is skipped, the quotes are stripped
+    assert table["k"].tolist() == [ev.pseudonym("1"), ev.pseudonym("3")] and list(
+        table.columns
+    ) == ["k", "v"]
+    assert (folder / "opt.csv").exists() and "optional tables absent" not in manifest["src"][
+        "notes"
+    ]
+    assert seen == [(1 << 30, 200), (1 << 30, 200)]
+
+
+def test_pseudonymisation_leaves_blank_and_missing_values_as_they_are(tmp_path, monkeypatch):
+    root = tmp_path / "acquired"
+    raw = root / "src" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    (raw / "t.csv").write_text("k,v\n1,a\n,b\n3,c\n")
+    monkeypatch.setattr(ev, "TABLE_SETS", {"src": {"sep": ",", "quote_none": False, "dropped": [],
+        "tables": {"t": {"keep": ["k", "v"], "pseudonymise": ["k"]}}, "relations": []}})  # fmt: skip  # noqa: E501
+    ev._build_tables(root, tmp_path / "o", {})
+    table = pd.read_csv(tmp_path / "o" / "src" / "t.csv", dtype=str, keep_default_na=False)
+    assert table["k"].tolist() == [ev.pseudonym("1"), "nan", ev.pseudonym("3")] or table[
+        "k"
+    ].tolist()[1] in ("", "nan")
+    assert table["k"].iloc[0] != "1" and table["k"].iloc[2] != "3"
