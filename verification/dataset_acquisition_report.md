@@ -797,3 +797,55 @@ files and manifests score lower, because their tests assert the data and the che
 `_gtfs_spec` had no direct test when measured (104 survivors) and has one now, not remeasured. The module is below the
 threshold and is not certified. The full-module measurement (56922 mutants) was started and stopped as impractical in
 this session; the figures above come from a function-restricted run. No full `make verify-deep` was run.
+
+
+## Update 12: approved target framework, provenance audit of C1 and C2a, clinical relational sources (2026-11-21)
+
+**Decisions implemented** (owner decisions A to E, details in `dataset_target_methodology.md` section 10): three-tier targets;
+provisional quotas C1 36, C2a 30, C2b 30, C3 40, C4 28, C5 36, C6 30 (sum 230 category participations); Holm at familywise
+alpha 0.05 for prespecified families; provisional smallest effects (0.05, 0.05, 0.02, and 20 percent relative on the log
+ratio); diversity guardrails of 3 domains and 2 families (exploratory) and 5 domains and 3 or 4 families (generalisation planning). The
+variance pilot is designed in `variance_pilot_design.md` and not executed; the experimental freeze is unchanged.
+
+**C1 and C2a re-audit** (`research/provenance_audit.py`, evidence `provenance_audit_c1_c2a.json`): historical tables are grouped by
+shared creators (transitive closure; twins share a source). C1: 115 tables, 94 sources, 80 provenance groups, 8 domains,
+4 mechanism families. C2a: 40 tables, 40 sources, 40 groups, 7 domains, 4 families. These are candidate groups, not ready groups:
+they have not been run through the v2 readiness contract and many C2a tables are small or toy tables (T437), so they do not
+count as experiment-ready.
+
+**New acquisitions.** MIMIC-IV Clinical Database Demo and eICU Collaborative Research Database Demo (PhysioNet, ODbL v1.0 stated
+on the project pages; open access): two hospital systems as separate C5 groups (6 and 5 key relations with 0 natural orphans, subject
+ids re-salted, free text dropped). The table builder gained gzip tables by extension and per-column pseudonymisation recorded in the manifest.
+Not acquired: the USGS earthquake catalogue (its copyright page refused automated access; the records are shallow).
+
+**Coverage now** (readiness contract; groups per category, distinct domains and structural families of the approved criteria):
+
+| Category | Ready groups | Quota | Gap | Domains | Families | Largest family (share) |
+|---|---|---|---|---|---|---|
+| C2b | 10 | 30 | 20 | 7 | 7 | contract award (0.3) |
+| C3 | 11 | 40 | 29 | 11 | 10 | urban mobility counts (0.1818) |
+| C4 | 13 | 28 | 15 | 10 | 4 | business process execution (0.5385) |
+| C5 | 20 | 36 | 16 | 7 | 7 | timetable network (0.6) |
+| C6 | 9 | 30 | 21 | 7 | 6 | procurement release (0.3333) |
+
+54 distinct provenance groups, 35 domains, 20 curators and 26 schema families. All five audited categories pass the exploratory
+tier and the domain and family minima of the generalisation tier; none meets its quota. Concentration is reported, not hidden: 12 of 20 C5 groups
+are timetable feeds and 7 of 13 C4 groups are business-process logs.
+
+**Mutation status (focused measurements; threshold 95 percent; not release certification).**
+
+| Module | Killed / total | Raw score | Met |
+|---|---:|---:|---|
+| `acquisition.py` (whole module) | 836 / 862 | 97.0 percent | yes |
+| `xes_stream.py` | 267 / 281 | 95.0 percent | yes |
+| `parquet_reader.py` | 152 / 154 | 98.7 percent | yes |
+| `target_framework.py` | 739 / 789 | 93.7 percent (43 survived, 7 timeouts) | no |
+| `provenance_audit.py` | 390 / 420 | 92.9 percent (29 survived, 1 timeout) | no |
+| `experimental_views.py`, 33 new functions | 2431 / 2697 | 90.1 percent (257 survived, 9 suspicious) | no |
+
+The `experimental_views.py` survivors: about 20 percent are string literals of file paths whose upper-case variants are not detected
+because the development file system is case-insensitive, about 10 percent are `sys.path` manipulations that the tests make irrelevant,
+the rest are manifest texts and numeric limits; none is approved as equivalent. `target_framework.py` timeouts are infinite loops in
+mutated search loops. Thresholds, classifications and exclusions are unchanged; the three modules below 95 percent are open work.
+The `experimental_views.py` figure was measured before the clinical table additions; a first `target_framework.py` rerun crashed in the harness
+(child exit -10) and was repeated.
