@@ -1,0 +1,174 @@
+{
+ "attribution": "cite Loghub (Zhu et al., ISSRE 2023, arXiv 2008.06448) and, for Loghub-2.0, Jiang et al. ISSTA 2024",
+ "commit": "dd61d0952749ee7963bde24220d1be5ede023033",
+ "licence_class": "research_only",
+ "licence_location": "https://github.com/logpai/loghub#-license (README); same wording on Zenodo records 3227177 and 8275861",
+ "licence_text": "The datasets are freely available for research or academic work. For any usage or distribution of the datasets, please refer to the loghub repository URL https://github.com/logpai/loghub and cite the loghub paper where applicable.",
+ "privacy": "logs are described as not sanitised; hostnames and IPs may appear; no personal-data review done",
+ "redistribution": "not stated: raw files are not committed (data/loghub is gitignored); acquisition by pinned URL and checksum",
+ "scope": "2k-line annotated samples only (structured CSV); the large Loghub-2.0 corpora not fetched",
+ "source": "Loghub (logpai/loghub)",
+ "tables": [
+  {
+   "distinct_times": 1315,
+   "id": "loghub:Android",
+   "rows": 2000,
+   "sha256": "80d58d6c79249c9f4891fbe0c2eaeaade30f933c69b7d030af190a10d73d96e5",
+   "span_days": 0.0,
+   "system": "Android",
+   "time_parsed_share": 1.0,
+   "url": "https://raw.githubusercontent.com/logpai/loghub/dd61d0952749ee7963bde24220d1be5ede023033/Android/Android_2k.log_structured.csv"
+  },
+  {
+   "distinct_times": 759,
+   "id": "loghub:Apache",
+   "rows": 2000,
+   "sha256": "54331d12eedf513f2127f4d89f0284c8b15fddfa5471103abf9db2c73d737778",
+   "span_days": 1.0,
+   "system": "Apache",
+   "time_parsed_share": 1.0,
+   "url": "https://raw.githubusercontent.com/logpai/loghub/dd61d0952749ee7963bde24220d1be5ede023033/Apache/Apache_2k.log_structured.csv"
+  },
+  {
+   "distinct_times": 0,
+   "id": "loghub:BGL",
+   "rows": 2000,
+   "sha256": "3fe74103c0b02a28514534e2a47257a3f770135ca61afd425bbd3b9d6a31fe26",
+   "span_days": 0.0,
+   "system": "BGL",
+   "time_parsed_share": 0.0,
+   "url": "https://raw.githubusercontent.com/logpai/loghub/dd61d0952749ee7963bde24220d1be5ede023033/BGL/BGL_2k.log_structured.csv"
+  },
+  {
+   "distinct_times": 768,
+   "id": "loghub:HDFS",
+   "rows": 2000,
+   "sha256": "729df59774e3dde934044028546d2a55d5e3d4370b9d12fcebbe4c087b2bf7b4",
+   "span_days": 21842.0,
+   "system": "HDFS",
+   "time_parsed_share": 0.413,
+   "url": "https://raw.githubusercontent.com/logpai/loghub/dd61d0952749ee7963bde24220d1be5ede023033/HDFS/HDFS_2k.log_structured.csv"
+  },
+  {
+   "distinct_times": 0,
+   "id": "loghub:HPC",
+   "rows": 2000,
+   "sha256": "0787df9cfab7e9495669548315ea8a9a51b02029c0dcfa28944707ad755a8c86",
+   "span_days": 0.0,
+   "system": "HPC",
+   "time_parsed_share": 0.0,
+   "url": "https://raw.githubusercontent.com/logpai/loghub/dd61d0952749ee7963bde24220d1be5ede023033/HPC/HPC_2k.log_structured.csv"
+  },
+  {
+   "distinct_times": 1112,
+   "id": "loghub:Hadoop",
+   "rows": 2000,
+   "sha256": "e88e5bf99d7f23f482517cc79290ad75b90d914af5d6114176e8bbf0f8ae0fad",
+   "span_days": 0.0,
+   "system": "Hadoop",
+   "time_parsed_share": 1.0,
+   "url": "https://raw.githubusercontent.com/logpai/loghub/dd61d0952749ee7963bde24220d1be5ede023033/Hadoop/Hadoop_2k.log_structured.csv"
+  },
+  {
+   "distinct_times": 0,
+   "id": "loghub:HealthApp",
+   "rows": 2000,
+   "sha256": "11831c70cc8851cb74486153149ae3136453fccca708fcb6826d8dcb0edbc6cb",
+   "span_days": 0.0,
+   "system": "HealthApp",
+   "time_parsed_share": 0.0,
+   "url": "https://raw.githubusercontent.com/logpai/loghub/dd61d0952749ee7963bde24220d1be5ede023033/HealthApp/HealthApp_2k.log_structured.csv"
+  },
+  {
+   "distinct_times": 586,
+   "id": "loghub:Linux",
+   "rows": 2000,
+   "sha256": "7c86d7b0ecb961a25f00d9475a154df97613b9974f31ce142a146caa2017c71e",
+   "span_days": 0.0,
+   "system": "Linux",
+   "time_parsed_share": 1.0,
+   "url": "https://raw.githubusercontent.com/logpai/loghub/dd61d0952749ee7963bde24220d1be5ede023033/Linux/Linux_2k.log_structured.csv"
+  },
+  {
+   "distinct_times": 1520,
+   "id": "loghub:Mac",
+   "rows": 2000,
+   "sha256": "c8d5d74e0dcd923675ee944ea592abaf0eae91ef492435330694ce5008267c8d",
+   "span_days": 0.0,
+   "system": "Mac",
+   "time_parsed_share": 1.0,
+   "url": "https://raw.githubusercontent.com/logpai/loghub/dd61d0952749ee7963bde24220d1be5ede023033/Mac/Mac_2k.log_structured.csv"
+  },
+  {
+   "distinct_times": 812,
+   "id": "loghub:OpenSSH",
+   "rows": 2000,
+   "sha256": "c0996a11545f4b94b435993760afa441a9e373f7bfc9e787afdb8e62f65acb4f",
+   "span_days": 0.0,
+   "system": "OpenSSH",
+   "time_parsed_share": 1.0,
+   "url": "https://raw.githubusercontent.com/logpai/loghub/dd61d0952749ee7963bde24220d1be5ede023033/OpenSSH/OpenSSH_2k.log_structured.csv"
+  },
+  {
+   "distinct_times": 1933,
+   "id": "loghub:OpenStack",
+   "rows": 2000,
+   "sha256": "ecc88e7909777181824260e9bdacd1469bd24d55131d6fc14e9c8c17edc49ff0",
+   "span_days": 0.0,
+   "system": "OpenStack",
+   "time_parsed_share": 1.0,
+   "url": "https://raw.githubusercontent.com/logpai/loghub/dd61d0952749ee7963bde24220d1be5ede023033/OpenStack/OpenStack_2k.log_structured.csv"
+  },
+  {
+   "distinct_times": 1232,
+   "id": "loghub:Proxifier",
+   "rows": 2000,
+   "sha256": "5aa88821bb217d82c3a964cbe9fdb0d67f235b0538ac164ef0a87e0ced4f2715",
+   "span_days": 3.0,
+   "system": "Proxifier",
+   "time_parsed_share": 1.0,
+   "url": "https://raw.githubusercontent.com/logpai/loghub/dd61d0952749ee7963bde24220d1be5ede023033/Proxifier/Proxifier_2k.log_structured.csv"
+  },
+  {
+   "distinct_times": 20,
+   "id": "loghub:Spark",
+   "rows": 2000,
+   "sha256": "d7df75f6839b6bcf98ff020b6b0b6e2ee89d8cc53ee3d08d441bd42fd84a2cb5",
+   "span_days": 0.0,
+   "system": "Spark",
+   "time_parsed_share": 1.0,
+   "url": "https://raw.githubusercontent.com/logpai/loghub/dd61d0952749ee7963bde24220d1be5ede023033/Spark/Spark_2k.log_structured.csv"
+  },
+  {
+   "distinct_times": 719,
+   "id": "loghub:Thunderbird",
+   "rows": 2000,
+   "sha256": "c62196d8a3449de765501bbf58c2093452e9d1add439053301d29fdad8a06809",
+   "span_days": 0.0,
+   "system": "Thunderbird",
+   "time_parsed_share": 1.0,
+   "url": "https://raw.githubusercontent.com/logpai/loghub/dd61d0952749ee7963bde24220d1be5ede023033/Thunderbird/Thunderbird_2k.log_structured.csv"
+  },
+  {
+   "distinct_times": 76,
+   "id": "loghub:Windows",
+   "rows": 2000,
+   "sha256": "caa98dd6c1291ba0470d5c171df8514616b35669d724652bd7aa973df0dee881",
+   "span_days": 0.0,
+   "system": "Windows",
+   "time_parsed_share": 1.0,
+   "url": "https://raw.githubusercontent.com/logpai/loghub/dd61d0952749ee7963bde24220d1be5ede023033/Windows/Windows_2k.log_structured.csv"
+  },
+  {
+   "distinct_times": 1943,
+   "id": "loghub:Zookeeper",
+   "rows": 2000,
+   "sha256": "e4a450c67595828103cfab049d971f54eee778fdded061222ba6581bed2a210a",
+   "span_days": 0.0,
+   "system": "Zookeeper",
+   "time_parsed_share": 1.0,
+   "url": "https://raw.githubusercontent.com/logpai/loghub/dd61d0952749ee7963bde24220d1be5ede023033/Zookeeper/Zookeeper_2k.log_structured.csv"
+  }
+ ],
+ "upstream": "logs produced in the Loghub authors' labs or released by earlier studies; upstream terms not separately stated"
+}

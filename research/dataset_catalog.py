@@ -207,6 +207,30 @@ def stratum_rows(
     return rows
 
 
+#: licence-classified manifests (path, stratum): one entry per independent system or database
+LICENCE_MANIFESTS = [(GAP_DIR / "loghub_manifest.json", "C4")]
+
+
+def licence_rows(manifests: list[tuple[Path, str]]) -> list[dict[str, Any]]:
+    """Rows of manifests that carry a licence class (open or research_only) and an explicit stratum."""
+    rows: list[dict[str, Any]] = []
+    for path, stratum in manifests:
+        if not path.exists():
+            continue
+        manifest = json.loads(path.read_text())
+        for t in manifest["tables"]:
+            rows.append(
+                {
+                    "id": t["id"],
+                    "source": t["id"],
+                    "stratum": stratum,
+                    "licence_class": manifest["licence_class"],
+                    "origin": "licence_manifest",
+                }
+            )
+    return rows
+
+
 def gap_report(rows: list[dict[str, Any]]) -> dict[str, Any]:
     """Independent source families per stratum against the targets (once per stratum)."""
     seen: dict[str, set[str]] = {k: set() for k in STRATA}
@@ -228,7 +252,11 @@ def gap_report(rows: list[dict[str, Any]]) -> dict[str, Any]:
             "missing_to_minimum": max(0, low - n),
             "missing_to_recommended": max(0, rec - n),
         }
+    classes: dict[str, set[str]] = {}
+    for r in rows:
+        classes.setdefault(r.get("licence_class", "open"), set()).add(r["source"])
     return {
+        "licence_classes": {k: len(v) for k, v in sorted(classes.items())},
         "strata": table,
         "time_candidates_not_yet_verified": sorted(candidates),
         "total_sources": len(set().union(*seen.values())),
@@ -249,6 +277,10 @@ def render_gap(report: dict[str, Any]) -> str:
         )
     lines += [
         "",
+        "Licence classes (sources): "
+        + ", ".join(f"{k} {v}" for k, v in report["licence_classes"].items())
+        + ".",
+        "",
         f"Distinct source families: {report['total_sources']}. Wave-2 tables with a time-column "
         f"candidate that is not yet verified as a single chronological series: "
         f"{len(report['time_candidates_not_yet_verified'])}.",
@@ -264,7 +296,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("command", choices=("gap",))
     parser.add_argument("--out", type=Path, default=GAP_DIR)
     args = parser.parse_args(argv)
-    report = gap_report(stratum_rows())
+    report = gap_report([*stratum_rows(), *licence_rows(LICENCE_MANIFESTS)])
     args.out.mkdir(parents=True, exist_ok=True)
     (args.out / "stratum_gap.json").write_text(json.dumps(report, indent=1, sort_keys=True) + "\n")
     (args.out / "stratum_gap.md").write_text(render_gap(report))

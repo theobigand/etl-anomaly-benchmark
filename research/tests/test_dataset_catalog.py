@@ -156,3 +156,26 @@ def test_the_rows_read_the_three_evidence_sources_and_skip_retired_tables(tmp_pa
     assert (
         rows[0]["time_verified"] and rows[1]["time_candidate"] and rows[2]["source"] == "natural:g"
     )
+
+
+def test_licence_classified_manifests_become_explicit_stratum_rows_and_a_class_breakdown(tmp_path):
+    import json
+
+    manifest = {
+        "licence_class": "research_only",
+        "tables": [
+            {"id": "loghub:Apache", "system": "Apache"},
+            {"id": "loghub:HDFS", "system": "HDFS"},
+        ],
+    }
+    path = tmp_path / "loghub.json"
+    path.write_text(json.dumps(manifest))
+    rows = dc.licence_rows([(path, "C4")])
+    assert [(r["id"], r["stratum"], r["licence_class"]) for r in rows] == [
+        ("loghub:Apache", "C4", "research_only"),
+        ("loghub:HDFS", "C4", "research_only"),
+    ]
+    assert rows[0]["source"] == "loghub:Apache" and dc.stratum_of(rows[0]) == "C4"
+    report = dc.gap_report([*rows, {"id": "u", "source": "u", "schema_kind": "numeric"}])
+    assert report["strata"]["C4"]["sources"] == 2
+    assert report["licence_classes"] == {"open": 1, "research_only": 2}
