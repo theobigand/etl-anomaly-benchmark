@@ -261,3 +261,16 @@ def test_adbench_arrays_are_recorded_as_numeric_without_schema_not_as_unaudited(
     audit = dc.transactional_audit(rows, lambda r: None)
     assert audit["numeric_arrays_without_schema"] == ["adbench:cardio"]
     assert audit["not_audited"] == [] and audit["counts"]["numeric_arrays_without_schema"] == 1
+
+
+def test_c2b_is_a_stratum_and_audited_transactional_tables_are_its_rows(tmp_path):
+    import json
+
+    assert "C2b" in dc.STRATA and "C2b" in dc.TARGETS
+    path = tmp_path / "audit.json"
+    path.write_text(json.dumps({"transactional": {"uci:352": {"keys": ["k"]}}}))
+    rows = dc.transactional_rows(path)
+    assert rows == [{"id": "uci:352", "source": "uci:352", "stratum": "C2b", "origin": "audit"}]
+    assert dc.transactional_rows(tmp_path / "none.json") == []
+    report = dc.gap_report(rows)
+    assert report["strata"]["C2b"]["sources"] == 1

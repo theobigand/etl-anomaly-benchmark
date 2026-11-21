@@ -247,3 +247,65 @@ recorded as unresolved where no authoritative licence text was found, not as acc
 Not decided. The evidence so far: C1 and C2 counts overstate coverage; C5 and C6 availability of
 public sources with clear terms is low; the 15-family milestone is a planning step. Any change needs a
 methodological argument that has not yet been written, so none is proposed here.
+
+# Update 4 (2026-11-21): transactional sources, privacy views, protocol conformance
+
+## Transactional sources (C2b)
+
+| Source | Decision | Evidence |
+|---|---|---|
+| UK public spending, MHRA | accepted, experiment-ready | OGL v3 on the data.gov.uk record; 1330 transactions, 193 suppliers, 24 returns (2020-2024, not contiguous) |
+| UK public spending, NHSBSA | accepted, experiment-ready | OGL v3; 3477 transactions, 154 suppliers, 24 monthly returns (2024-08 to 2026-09); 35 percent of rows share a transaction number with another line (multi-line payments, a baseline) |
+| Charity Commission | rejected for now | 45 usable rows |
+| NICE, Ofsted | deferred | spreadsheets saved as CSV; banner layout; a per-file reader is not justified yet |
+| Tate | rejected | TLS certificate chain does not verify; certificate checking was not disabled |
+| Instacart 2017 | not downloaded | the dataset terms (third-party copy of the May 2017 text) say access is not a licence grant; the original page was not retrievable |
+| NYC TLC trip records | discovered, not collected | NYC Open Data law says no use restrictions; the TLC page returned 403 to automated access and the dataset metadata has no licence field; terms unread |
+| Open Contracting registry | discovered | OCDS recommends CC0 or CC BY but each publication has its own licence; none read; UK Find a Tender is OGL according to its API documentation |
+
+Independence: MHRA and NHSBSA are separate organisations with separate ledgers; they report on one
+government template, so the shared template is a documented dependence, not shared observations.
+Months of one organisation count once. C2b now has three families: Online Retail (UCI 352) and the two
+ledgers, two of them experiment-ready; the target stays 30.
+
+## Privacy views (Stack Exchange, Open Food Facts, UK spending)
+
+- Stack Exchange: titles, bodies, comment text, display names, locations and profiles dropped; every
+  user reference goes through one salted pseudonym mapping, so links resolve exactly as in the source.
+  All 10 sites reach experiment-ready. Natural orphans (votes of deleted posts) remain and are a baseline.
+- Open Food Facts: 18 contributor keys dropped at every depth, structure kept; a scan finds none left.
+- UK spending: supplier names pseudonymised (sole traders can be individuals); descriptions, postcodes,
+  VAT numbers and contract codes dropped.
+- Pseudonymisation is not anonymisation. Derived views of CC BY-SA and ODbL data stay local.
+
+## Protocol conformance (no detector, no metric)
+
+`python research/fault_protocols.py` injects one controlled fault per protocol into the real views and
+checks invariants: determinism, unaffected data unchanged, truth equal to the changed units, faults only in
+the allowed partition, no change outside the named path, time order and sequence length. All five
+protocols pass (`protocol_conformance.json`). For relational data the 2219 natural orphan references of
+the Stack Exchange coffee site are reported as a baseline, never selected and never labelled. These are
+mechanics checks on fixtures and small samples, not results.
+
+## Counts by stage (independent groups)
+
+| Stratum | Acquired | Experiment-ready groups | Target |
+|---|---:|---:|---:|
+| C2b | 3 families (Online Retail, 2 ledgers) | 2 | 30 |
+| C3 | 41 families (21 Monash records) | 1 | 40 |
+| C4 | 16 systems, 1 curator | 1 | 28 |
+| C5 | 2 families (11 systems) | 2 | 36 |
+| C6 | 4 families | 3 | 30 |
+
+Online Retail itself has no experimental view yet.
+
+## Remaining gaps, in order
+
+1. C2b: 2 ready of 30. More ledgers need a per-organisation reader; NYC TLC and Open Contracting need
+   their terms read where the publisher allows it. Instacart is closed without a licence.
+2. C4: no independent log producer with documented terms found in this pass.
+3. C5: RelBench and CTU terms still unread; OCDS publications could give relational and nested records.
+4. C3: 13 Monash families' upstream terms.
+5. C6: another independent nested producer beyond FDA, OpenAlex and Open Food Facts.
+6. Claims: effective sample size for any claim equals the number of independent groups of its stratum
+   (today 1 to 3), so no per-stratum statistical claim is supportable yet.

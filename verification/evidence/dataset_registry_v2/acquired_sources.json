@@ -730,6 +730,119 @@
    },
    "stratum": "C6",
    "system": "openfoodfacts"
+  },
+  {
+   "eligible": true,
+   "family": "ukspend_mhra",
+   "id": "ukspend_mhra",
+   "licence_class": "open",
+   "protocols": "P-TAB transactional: duplicate transactions, amount outliers, supplier-behaviour changes, invalid expense codes, date faults by controlled injection; no natural labels",
+   "publisher": "uk:mhra",
+   "reason": "1330 transactions over 24 returns (2020-2024, not contiguous); 193 suppliers; ledger of one regulator; credit notes (1.7 percent negative) and repeated transaction numbers (6 percent) are natural properties",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "OGL v3 (data.gov.uk licence field uk-ogl)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "ukspend_mhra"
+  },
+  {
+   "eligible": true,
+   "family": "ukspend_nhsbsa",
+   "id": "ukspend_nhsbsa",
+   "licence_class": "open",
+   "protocols": "P-TAB transactional: duplicate transactions, amount outliers, supplier-behaviour changes, invalid expense codes, date faults by controlled injection; no natural labels",
+   "publisher": "uk:nhsbsa",
+   "reason": "3477 transactions over 24 monthly returns (2024-08 to 2026-09); 154 suppliers; 35 percent of rows share a transaction number with another line (multi-line payments): a baseline, not a fault",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "OGL v3 (data.gov.uk licence field uk-ogl)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "ukspend_nhsbsa"
+  },
+  {
+   "eligible": false,
+   "family": "ukspend_charity_commission",
+   "id": "ukspend_charity_commission",
+   "licence_class": "open",
+   "protocols": "P-TAB transactional: duplicate transactions, amount outliers, supplier-behaviour changes, invalid expense codes, date faults by controlled injection; no natural labels",
+   "publisher": "uk:charity_commission",
+   "reason": "45 usable rows in 6 of 8 returns: below the minimum number of detection units; two returns have another layout",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "OGL v3 (data.gov.uk licence field uk-ogl)",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2b",
+   "system": "ukspend_charity_commission"
+  },
+  {
+   "eligible": false,
+   "family": "ukspend_nice",
+   "id": "ukspend_nice",
+   "licence_class": "open",
+   "protocols": "P-TAB transactional: duplicate transactions, amount outliers, supplier-behaviour changes, invalid expense codes, date faults by controlled injection; no natural labels",
+   "publisher": "uk:nice",
+   "reason": "returns are spreadsheets saved with a .csv name; reading them needs a spreadsheet reader that is not a project dependency; deferred",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "OGL v3 (data.gov.uk licence field uk-ogl)",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2b",
+   "system": "ukspend_nice"
+  },
+  {
+   "eligible": false,
+   "family": "ukspend_ofsted",
+   "id": "ukspend_ofsted",
+   "licence_class": "open",
+   "protocols": "P-TAB transactional: duplicate transactions, amount outliers, supplier-behaviour changes, invalid expense codes, date faults by controlled injection; no natural labels",
+   "publisher": "uk:ofsted",
+   "reason": "returns have a banner layout without a supplier-named header; deferred until a per-file reader is justified",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "OGL v3 (data.gov.uk licence field uk-ogl)",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2b",
+   "system": "ukspend_ofsted"
+  },
+  {
+   "eligible": false,
+   "family": "ukspend_tate",
+   "id": "rejected:tate",
+   "licence_class": "open",
+   "publisher": "uk:tate",
+   "reason": "the host's TLS certificate chain does not verify; certificate checking was not disabled",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": false,
+    "discovered": true,
+    "licence_verified": "OGL v3 (uk-ogl)",
+    "ready_for_experiments": false,
+    "structural_validation": false
+   },
+   "stratum": "C2b",
+   "system": "ukspend_tate"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

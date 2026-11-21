@@ -1,3 +1,4 @@
+import json
 import sys
 from pathlib import Path
 
@@ -124,3 +125,141 @@ def test_log_views_keep_only_the_listed_columns_that_exist_and_never_node_names(
         }
     )
     assert list(ev.loghub_view(frame).columns) == ["LineId", "Label", "Timestamp", "EventId"]
+
+
+def test_spend_views_share_one_schema_pseudonymise_suppliers_and_drop_free_text():
+    raw = pd.DataFrame(
+        {
+            "﻿Department family": ["D", "D", None],
+            "Entity": ["E", "E", "E"],
+            "Paid Date": ["01/02/2024", "03/02/2024", None],
+            "Expense type": ["Fees", "Fees", "x"],
+            "Expense area": ["A", "A", "A"],
+            "Supplier": ["Acme Ltd", "Acme Ltd", "J Smith"],
+            "Transaction No": ["1", "2", "3"],
+            "Amount": ["£1,200.50", "30", "bad"],
+            "Description": ["john smith consulting", "x", "y"],
+            "Post Code": ["AB1", "AB1", "CD2"],
+        }
+    )
+    out = ev.spend_view(raw, "org")
+    assert list(out.columns) == list(ev.SPEND_COLUMNS)
+    assert len(out) == 2  # the row without a readable amount or date is dropped
+    assert out["amount"].tolist() == [1200.5, 30.0]
+    assert out["supplier_id"].nunique() == 1 and "Acme" not in out["supplier_id"].iloc[0]
+    assert (out["organisation"] == "org").all()
+    assert pd.api.types.is_datetime64_any_dtype(out["date"])
+
+
+def test_spend_views_report_a_file_that_is_not_a_table_instead_of_guessing():
+    import pytest
+
+    with pytest.raises(ev.ViewError, match="columns"):
+        ev.spend_view(pd.DataFrame({"x": [1]}), "org")
+
+
+def test_read_spend_skips_banner_rows_and_refuses_spreadsheets_saved_as_csv():
+    import pytest
+
+    text = "Consolidated spend for May\n\nSupplier,Amount,Date,Transaction No\nA,1,01/01/2024,9\n"
+    frame = ev.read_spend(text.encode("latin-1"))
+    assert (
+        list(frame.columns) == ["Supplier", "Amount", "Date", "Transaction No"] and len(frame) == 1
+    )
+    with pytest.raises(ev.ViewError, match="spreadsheet"):
+        ev.read_spend(b"PK\x03\x04binary")
+    with pytest.raises(ev.ViewError, match="header"):
+        ev.read_spend(b"a,b\n1,2\n")
+
+
+def test_food_views_drop_contributor_fields_at_every_depth_and_keep_the_structure():
+    records = [
+        {
+            "_id": "2",
+            "creator": "bob",
+            "editors_tags": ["a"],
+            "images": {"1": {"uploader": "bob", "sizes": {"100": {"h": 1}}}},
+            "nutriments": {"fat": 1.0},
+            "ingredients": [{"id": "x", "owner": "o"}, {"id": "y"}],
+        },
+        {"_id": "1", "last_editor": "al", "owner": "o"},
+    ]
+    out = ev.off_view(records)
+    assert [r["_id"] for r in out] == ["1", "2"]
+    text = json.dumps(out)
+    for name in ("creator", "editors_tags", "uploader", "owner", "last_editor", "bob", "al"):
+        assert name not in text
+    assert out[1]["images"]["1"]["sizes"]["100"]["h"] == 1  # the nested structure stays
+    assert out[1]["ingredients"] == [{"id": "x"}, {"id": "y"}]
+    assert records[0]["creator"] == "bob"  # the input is not modified
+
+
+def test_stack_views_drop_text_and_names_pseudonymise_users_and_keep_every_link():
+    tables = {
+        "Users": [
+            {
+                "Id": "5",
+                "DisplayName": "Ann",
+                "Location": "Paris",
+                "AboutMe": "hi",
+                "Reputation": "10",
+                "CreationDate": "2020-01-01",
+                "Views": "2",
+                "UpVotes": "1",
+                "DownVotes": "0",
+            }
+        ],
+        "Posts": [
+            {
+                "Id": "1",
+                "PostTypeId": "1",
+                "OwnerUserId": "5",
+                "Title": "t",
+                "Body": "b",
+                "Score": "3",
+                "CreationDate": "2020-01-02",
+                "AcceptedAnswerId": "2",
+                "Tags": "|a|",
+            },
+            {
+                "Id": "2",
+                "PostTypeId": "2",
+                "ParentId": "1",
+                "OwnerUserId": "99",
+                "Body": "c",
+                "Score": "1",
+                "CreationDate": "2020-01-03",
+            },
+        ],
+        "Comments": [
+            {
+                "Id": "7",
+                "PostId": "1",
+                "UserId": "5",
+                "Text": "secret",
+                "Score": "0",
+                "CreationDate": "x",
+                "UserDisplayName": "Ann",
+            }
+        ],
+        "Votes": [{"Id": "8", "PostId": "1", "VoteTypeId": "2", "CreationDate": "2020-01-04"}],
+        "Badges": [{"Id": "9", "UserId": "5", "Name": "Teacher", "Date": "d", "Class": "3"}],
+        "PostLinks": [
+            {"Id": "3", "PostId": "1", "RelatedPostId": "2", "LinkTypeId": "1", "CreationDate": "d"}
+        ],
+    }
+    views = ev.stack_views(tables, salt="s")
+    text = "".join(f.to_csv() for f in views.values())
+    for word in ("Ann", "Paris", "secret", "hi,", "Title"):
+        assert word not in text
+    assert "Body" not in views["Posts"].columns and "Text" not in views["Comments"].columns
+    users = set(views["Users"]["user_id"])
+    assert views["Posts"].loc[0, "owner_user_id"] in users  # a resolvable owner keeps its link
+    assert (
+        views["Comments"].loc[0, "user_id"] in users and views["Badges"].loc[0, "user_id"] in users
+    )
+    assert views["Posts"].loc[1, "owner_user_id"] == ev.pseudonym(
+        "99", "s"
+    )  # same mapping, orphan kept
+    assert list(views["Votes"].columns) == ["vote_id", "post_id", "vote_type_id", "creation_date"]
+    assert views["PostLinks"].loc[0, "related_post_id"] == "2"

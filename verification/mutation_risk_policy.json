@@ -516,6 +516,10 @@
       "level": "L3",
       "reason": "Licence-class gating, host allow-list, size bounds, snapshot immutability and checksums decide which external data enters the corpus."
     },
+    "research/fault_protocols.py": {
+      "level": "L3",
+      "reason": "Injection preconditions, ground-truth generation and matching rules define the labels of every later fault experiment."
+    },
     "research/readiness.py": {
       "level": "L3",
       "reason": "The status contract decides which acquired datasets may be reported as eligible or experiment-ready."

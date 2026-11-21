@@ -137,6 +137,163 @@ def loghub_view(frame: pd.DataFrame) -> pd.DataFrame:
     return frame[keep].copy()
 
 
+SPEND_COLUMNS = (
+    "organisation",
+    "date",
+    "expense_type",
+    "expense_area",
+    "supplier_id",
+    "transaction_no",
+    "amount",
+)
+_SPEND_NAMES = {
+    "date": ("date",),
+    "expense_type": ("expense type",),
+    "expense_area": ("expense area",),
+    "supplier": ("supplier",),
+    "transaction_no": ("transaction no", "transaction number"),
+    "amount": ("amount",),
+}
+
+
+class ViewError(Exception):
+    pass
+
+
+def _find(columns: list[str], names: tuple[str, ...]) -> str | None:
+    cleaned = {c: re.sub(r"[^a-z ]", "", c.lower().replace("\ufeff", "")).strip() for c in columns}
+    for name in names:
+        for original, clean in cleaned.items():
+            if name in clean:
+                return original
+    return None
+
+
+def spend_view(raw: pd.DataFrame, organisation: str, salt: str = SALT) -> pd.DataFrame:
+    """Public-spending transactions on one schema: suppliers pseudonymised, free text dropped."""
+    columns = list(raw.columns)
+    found = {k: _find(columns, v) for k, v in _SPEND_NAMES.items()}
+    if not all(found[k] for k in ("date", "supplier", "amount", "transaction_no")):
+        raise ViewError(f"required columns not found in {columns[:6]}")
+    amount = pd.to_numeric(
+        raw[found["amount"]].astype(str).str.replace(r"[£,\s]", "", regex=True), errors="coerce"
+    )
+    date = pd.to_datetime(raw[found["date"]], errors="coerce", dayfirst=True, format="mixed")
+    frame = pd.DataFrame(
+        {
+            "organisation": organisation,
+            "date": date,
+            "expense_type": raw[found["expense_type"]] if found["expense_type"] else None,
+            "expense_area": raw[found["expense_area"]] if found["expense_area"] else None,
+            "supplier_id": raw[found["supplier"]].map(
+                lambda v: pseudonym(str(v).strip().lower(), salt) if pd.notna(v) else None
+            ),
+            "transaction_no": raw[found["transaction_no"]].astype(str),
+            "amount": amount,
+        }
+    )
+    return frame[amount.notna() & date.notna()].reset_index(drop=True)
+
+
+def read_spend(blob: bytes) -> pd.DataFrame:
+    """A spending CSV whose header is the first line mentioning a supplier (banners are skipped)."""
+    import io
+
+    if blob[:2] == b"PK":
+        raise ViewError("a spreadsheet saved with a .csv name")
+    try:
+        text = blob.decode("utf-8-sig")
+    except UnicodeDecodeError:
+        text = blob.decode("latin-1")
+    lines = text.splitlines()
+    start = next((i for i, line in enumerate(lines[:15]) if "supplier" in line.lower()), None)
+    if start is None:
+        raise ViewError("no header line with a supplier column in the first 15 lines")
+    return pd.read_csv(io.StringIO("\n".join(lines[start:])), dtype=str, on_bad_lines="skip")
+
+
+#: contributor keys of Open Food Facts records, dropped at every depth
+OFF_DROP = frozenset(
+    [
+        "creator",
+        "last_editor",
+        "editors",
+        "editors_tags",
+        "correctors",
+        "correctors_tags",
+        "checkers",
+        "checkers_tags",
+        "photographers",
+        "photographers_tags",
+        "informers",
+        "informers_tags",
+        "owner",
+        "owners_tags",
+        "owner_fields",
+        "owner_imported",
+        "uploader",
+    ]
+)
+
+
+def _strip(value: Any, drop: frozenset[str]) -> Any:
+    if isinstance(value, dict):
+        return {k: _strip(v, drop) for k, v in value.items() if k not in drop}
+    if isinstance(value, list):
+        return [_strip(v, drop) for v in value]
+    return value
+
+
+def off_view(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Product records without contributor fields, nested structure kept, in a fixed order."""
+    return sorted((_strip(r, OFF_DROP) for r in records), key=lambda r: str(r["_id"]))
+
+
+_STACK = {
+    "Users": ("user_id", ["Id", "Reputation", "CreationDate", "Views", "UpVotes", "DownVotes"]),
+    "Posts": (
+        "post_id",
+        ["Id", "PostTypeId", "ParentId", "AcceptedAnswerId", "CreationDate", "Score", "ViewCount"]
+        + ["AnswerCount", "CommentCount", "Tags", "OwnerUserId"],
+    ),
+    "Comments": ("comment_id", ["Id", "PostId", "UserId", "Score", "CreationDate"]),
+    "Votes": ("vote_id", ["Id", "PostId", "VoteTypeId", "CreationDate"]),
+    "Badges": ("badge_id", ["Id", "UserId", "Name", "Date", "Class"]),
+    "PostLinks": ("link_id", ["Id", "PostId", "RelatedPostId", "LinkTypeId", "CreationDate"]),
+}
+
+
+def _snake(name: str) -> str:
+    return re.sub(r"(?<!^)(?=[A-Z])", "_", name).lower()
+
+
+def stack_views(
+    tables: dict[str, list[dict[str, str]]], salt: str = SALT
+) -> dict[str, pd.DataFrame]:
+    """Stack Exchange tables without titles, bodies, comment text, names, locations or profiles.
+
+    Every user reference (user ids, post owners, comment authors, badge holders) goes through one
+    pseudonym mapping, so links resolve exactly as in the source: a missing user stays missing.
+    """
+    out = {}
+    for table, (key, columns) in _STACK.items():
+        rows = []
+        for row in tables.get(table, []):
+            kept = {}
+            for column in columns:
+                value = row.get(column)
+                user_ref = (table == "Users" and column == "Id") or column in (
+                    "OwnerUserId",
+                    "UserId",
+                )
+                kept[_snake(column)] = pseudonym(value, salt) if user_ref else value
+            rows.append(kept)
+        frame = pd.DataFrame(rows, columns=[_snake(c) for c in columns])
+        frame = frame.rename(columns={"id": key})
+        out[table] = frame
+    return out
+
+
 def digest(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -239,6 +396,91 @@ def build(root: Path, out: Path) -> dict[str, Any]:
         dropped=["Content", "EventTemplate"],
         pseudonymised=[],
         source_snapshot="loghub@dd61d09",
+    )
+    import gzip
+
+    path = next((root / "openfoodfacts_products" / snap / "raw").glob("*.gz"))
+    with gzip.open(path, "rt", encoding="utf-8") as handle:
+        products = off_view([json.loads(line) for line in handle if line.strip()])
+    folder = out / "openfoodfacts"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "products.jsonl"
+    target.write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in products))
+    record(
+        "openfoodfacts",
+        {"products.jsonl": (target, len(products))},
+        dropped=sorted(OFF_DROP),
+        pseudonymised=[],
+        source_snapshot=f"openfoodfacts_products/{snap}",
+    )
+
+    import subprocess
+    import tempfile
+    import xml.etree.ElementTree as ET
+
+    files = {}
+    for archive in sorted((root / "stackexchange_dump" / snap / "raw").glob("*.7z")):
+        site = archive.name.split(".")[0]
+        with tempfile.TemporaryDirectory() as tmp:
+            subprocess.run(["bsdtar", "-xf", str(archive), "-C", tmp], check=True)  # noqa: S603, S607
+            tables = {
+                p.stem: [dict(e.attrib) for e in ET.parse(p).getroot()]
+                for p in Path(tmp).glob("*.xml")
+            }
+        folder = out / "stackexchange" / site
+        folder.mkdir(parents=True, exist_ok=True)
+        for name, frame in stack_views(tables).items():
+            target = folder / f"{name}.csv"
+            frame.to_csv(target, index=False)
+            files[f"{site}/{name}.csv"] = (target, len(frame))
+    record(
+        "stackexchange",
+        files,
+        dropped=[
+            "Title",
+            "Body",
+            "Text",
+            "DisplayName",
+            "Location",
+            "AboutMe",
+            "WebsiteUrl",
+            "profile fields",
+        ],
+        pseudonymised=["user_id", "owner_user_id"],
+        salt_label=SALT,
+        source_snapshot=f"stackexchange_dump/{snap}",
+        notes="CC BY-SA: a redistributed derived database needs attribution and the same licence",
+    )
+
+    folder = out / "ukspend"
+    folder.mkdir(parents=True, exist_ok=True)
+    files, skipped = {}, {}
+    for org in ("mhra", "nhsbsa", "charity_commission", "ofsted", "nice"):
+        frames = []
+        for path in sorted((root / f"ukspend_{org}" / snap / "raw").glob("*.csv")):
+            try:
+                frames.append(spend_view(read_spend(path.read_bytes()), org))
+            except ViewError as error:
+                skipped.setdefault(org, []).append(f"{path.name}: {error}")
+        if frames:
+            table = pd.concat(frames).sort_values(["date", "transaction_no", "supplier_id"])
+            target = folder / f"{org}.csv"
+            table.to_csv(target, index=False)
+            files[f"{org}.csv"] = (target, len(table))
+    record(
+        "ukspend",
+        files,
+        dropped=[
+            "Description",
+            "post code",
+            "supplier type",
+            "VAT number",
+            "contract and project codes",
+        ],
+        pseudonymised=["supplier_id"],
+        salt_label=SALT,
+        source_snapshot=f"ukspend_*/{snap}",
+        skipped=skipped,
     )
     return manifest
 

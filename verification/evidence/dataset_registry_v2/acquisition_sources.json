@@ -429,6 +429,476 @@
    "retries": 2,
    "stratum": "C6",
    "upstream": "crowd-sourced contributions and manufacturer data published under ODbL/DbCL; contributor identifiers appear in the records"
+  },
+  {
+   "attribution": "Contains public sector information licensed under the Open Government Licence v3.0",
+   "files": [
+    {
+     "name": "00.csv",
+     "observed": "MHRA spending over \u00a325,000 data for March 2024",
+     "url": "https://assets.publishing.service.gov.uk/media/666c2381a471d1f120195a54/MHRA_spending_over__25_000_data_for_March_2024.csv"
+    },
+    {
+     "name": "01.csv",
+     "observed": "MHRA spending over \u00a325,000 data for February 2024",
+     "url": "https://assets.publishing.service.gov.uk/media/661cf91a08c3be25cfbd3d92/MHRA_spending_over__25_000_data_for_February_2024.csv"
+    },
+    {
+     "name": "02.csv",
+     "observed": "MHRA spending over \u00a325,000 data for January 2024",
+     "url": "https://assets.publishing.service.gov.uk/media/661cf908c8225636d5bd3d93/MHRA_spending_over__25_000_data_for_January_2024.csv"
+    },
+    {
+     "name": "03.csv",
+     "observed": "MHRA spending over \u00a325,000 data for December 2023",
+     "url": "https://assets.publishing.service.gov.uk/media/661cf8f808c3be25cfbd3d91/MHRA_spending_over__25_000_data_for_December_2023.csv"
+    },
+    {
+     "name": "04.csv",
+     "observed": "MHRA spending over \u00a325,000 data for November 2023",
+     "url": "https://assets.publishing.service.gov.uk/media/661cf8e508c3be25cfbd3d90/MHRA_spending_over__25_000_data_for_November_2023.csv"
+    },
+    {
+     "name": "05.csv",
+     "observed": "MHRA spending over \u00a325,000 data for October 2023",
+     "url": "https://assets.publishing.service.gov.uk/media/660451a691a320001182b138/07_MHRA_spending_over__25_000_data_for_October_2023.csv"
+    },
+    {
+     "name": "06.csv",
+     "observed": "MHRA spending over \u00a325,000 data for September 2023",
+     "url": "https://assets.publishing.service.gov.uk/media/660451c2f9ab41001aeea436/06_MHRA_spending_over__25_000_data_for_September_2023.csv"
+    },
+    {
+     "name": "07.csv",
+     "observed": "MHRA spending over \u00a325,000 data for August 2023",
+     "url": "https://assets.publishing.service.gov.uk/media/660451d2f9ab41001aeea437/05_MHRA_spending_over__25_000_data_for_August_2023.csv"
+    },
+    {
+     "name": "08.csv",
+     "observed": "MHRA spending over \u00a325,000 data for July 2023",
+     "url": "https://assets.publishing.service.gov.uk/media/660451dff9ab410011eea43a/04_MHRA_spending_over__25_000_data_for_July_2023.csv"
+    },
+    {
+     "name": "09.csv",
+     "observed": "MHRA spending over \u00a325,000 data for June 2023",
+     "url": "https://assets.publishing.service.gov.uk/media/660451f4e8c442001a2203f4/03_MHRA_spending_over__25_000_data_for_June_2023.csv"
+    },
+    {
+     "name": "10.csv",
+     "observed": "MHRA spending over \u00a325,000 data for May 2023",
+     "url": "https://assets.publishing.service.gov.uk/media/66045170e8c44200112203e1/02_MHRA_spending_over__25_000_data_for_May_2023.csv"
+    },
+    {
+     "name": "11.csv",
+     "observed": "August 2022",
+     "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1112455/05_MHRA_spending_over__25_000_data_for_August_2022.csv"
+    },
+    {
+     "name": "12.csv",
+     "observed": "July 2022",
+     "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1112454/04_MHRA_spending_over__25_000_data_for_July_2022.csv"
+    },
+    {
+     "name": "13.csv",
+     "observed": "June 2022",
+     "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1112453/03_MHRA_spending_over__25_000_data_for_June_2022.csv"
+    },
+    {
+     "name": "14.csv",
+     "observed": "May 2022",
+     "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1112452/02_MHRA_spending_over__25_000_data_for_May_2022.csv"
+    },
+    {
+     "name": "15.csv",
+     "observed": "April 2022",
+     "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1112449/01_MHRA_spending_over__25_000_data_for_April_2022.csv"
+    },
+    {
+     "name": "16.csv",
+     "observed": "March 2022",
+     "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1112445/12_MHRA_spending_over__25_000_data_for_March_2022.csv"
+    },
+    {
+     "name": "17.csv",
+     "observed": "February 2022",
+     "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1067305/11_MHRA_spending_over__25_000_data_for_February_2022.csv"
+    },
+    {
+     "name": "18.csv",
+     "observed": "January 2022",
+     "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1067304/10_MHRA_spending_over__25_000_data_for_January_2022.csv"
+    },
+    {
+     "name": "19.csv",
+     "observed": "December 2021",
+     "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1067302/09_MHRA_spending_over__25_000_data_for_December_2021.csv"
+    },
+    {
+     "name": "20.csv",
+     "observed": "November 2021",
+     "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1067301/08_MHRA_spending_over__25_000_data_for_November_2021.csv"
+    },
+    {
+     "name": "21.csv",
+     "observed": "October 2021",
+     "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1067299/07_MHRA_spending_over__25_000_data_for_October_2021.csv"
+    },
+    {
+     "name": "22.csv",
+     "observed": "October 2020",
+     "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/944784/2020-21_P07_25k_Transactions.csv"
+    },
+    {
+     "name": "23.csv",
+     "observed": "September 2020",
+     "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/944782/2020-21_P06_25k_Transactions.csv"
+    }
+   ],
+   "hosts": [
+    "assets.publishing.service.gov.uk"
+   ],
+   "id": "ukspend_mhra",
+   "licence_class": "open",
+   "licence_location": "https://ckan.publishing.service.gov.uk/dataset/financial-transactions-data-mhra (licence field) and https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+   "licence_text": "Listed on data.gov.uk with licence id uk-ogl (Open Government Licence v3.0): use, adapt and redistribute, including commercially, with attribution and the publisher's notice",
+   "max_bytes": 52428800,
+   "method": "documented public download endpoints listed on the publisher's data.gov.uk record; the 24 most recent returns with a direct file",
+   "min_interval": 1.5,
+   "privacy": "supplier names can identify sole traders or individuals; supplier and any payee name fields are pseudonymised in the experimental view",
+   "publisher": "Medicines and Healthcare products Regulatory Agency",
+   "rate_limit": "sequential downloads, 1.5 s apart",
+   "redistribution": "OGL permits it with attribution; raw files not committed",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "the publisher is the original producer of its own ledger extract; rows may contain third-party supplier names (organisations)"
+  },
+  {
+   "attribution": "Contains public sector information licensed under the Open Government Licence v3.0",
+   "files": [
+    {
+     "name": "00.csv",
+     "observed": "June 2023 Return",
+     "url": "https://www.nice.org.uk/Media/Default/About/Who-we-are/Corporate-publications/Transparency-of-spend/transparency-of-spend-over-25k-june-23.xlsx"
+    },
+    {
+     "name": "01.csv",
+     "observed": "May 2023 Return",
+     "url": "https://www.nice.org.uk/Media/Default/About/Who-we-are/Corporate-publications/Transparency-of-spend/transparency-of-spend-over-25k-may-23.xlsx"
+    },
+    {
+     "name": "02.csv",
+     "observed": "January 2023 Return",
+     "url": "https://www.nice.org.uk/Media/Default/About/Who-we-are/Corporate-publications/Transparency-of-spend/transparency-of-spend-over-25k-january-23.xlsx"
+    },
+    {
+     "name": "03.csv",
+     "observed": "December 2022 Return",
+     "url": "https://www.nice.org.uk/Media/Default/About/Who-we-are/Corporate-publications/Transparency-of-spend/transparency-of-spend-over-25k-december-22.xlsx"
+    },
+    {
+     "name": "04.csv",
+     "observed": "November 2022 Return",
+     "url": "https://www.nice.org.uk/Media/Default/About/Who-we-are/Corporate-publications/Transparency-of-spend/transparency-of-spend-over-25k-november-22.xlsx"
+    },
+    {
+     "name": "05.csv",
+     "observed": "October 2022 Return",
+     "url": "https://www.nice.org.uk/Media/Default/About/Who-we-are/Corporate-publications/Transparency-of-spend/transparency-of-spend-over-25k-october-22.xlsx"
+    },
+    {
+     "name": "06.csv",
+     "observed": "July 2022 Return",
+     "url": "https://www.nice.org.uk/Media/Default/About/Who-we-are/Corporate-publications/Transparency-of-spend/transparency-of-spend-over-25k-june-22.xlsx"
+    },
+    {
+     "name": "07.csv",
+     "observed": "June 2022 Return",
+     "url": "https://www.nice.org.uk/Media/Default/About/Who-we-are/Corporate-publications/Transparency-of-spend/transparency-of-spend-over-25k-june-22.xlsx"
+    }
+   ],
+   "hosts": [
+    "www.nice.org.uk"
+   ],
+   "id": "ukspend_nice",
+   "licence_class": "open",
+   "licence_location": "https://ckan.publishing.service.gov.uk/dataset/financial-transactions-data-nice (licence field) and https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+   "licence_text": "Listed on data.gov.uk with licence id uk-ogl (Open Government Licence v3.0): use, adapt and redistribute, including commercially, with attribution and the publisher's notice",
+   "max_bytes": 52428800,
+   "method": "documented public download endpoints listed on the publisher's data.gov.uk record; 8 monthly returns",
+   "min_interval": 1.5,
+   "privacy": "supplier names can identify sole traders or individuals; supplier and any payee name fields are pseudonymised in the experimental view",
+   "publisher": "National Institute for Health and Care Excellence",
+   "rate_limit": "sequential downloads, 1.5 s apart",
+   "redistribution": "OGL permits it with attribution; raw files not committed",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "the publisher is the original producer of its own ledger extract; rows may contain third-party supplier names (organisations)"
+  },
+  {
+   "attribution": "Contains public sector information licensed under the Open Government Licence v3.0",
+   "files": [
+    {
+     "name": "00.csv",
+     "observed": null,
+     "url": "https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/428999/mar15.csv"
+    },
+    {
+     "name": "01.csv",
+     "observed": null,
+     "url": "https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/413020/feb15.csv"
+    },
+    {
+     "name": "02.csv",
+     "observed": null,
+     "url": "https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/402267/GPC_jan15.csv/"
+    },
+    {
+     "name": "03.csv",
+     "observed": null,
+     "url": "https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/402265/GPC_dec14.csv"
+    },
+    {
+     "name": "04.csv",
+     "observed": null,
+     "url": "https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/383415/nov14.csv"
+    },
+    {
+     "name": "05.csv",
+     "observed": null,
+     "url": "https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/378310/oct14.csv"
+    },
+    {
+     "name": "06.csv",
+     "observed": null,
+     "url": "https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/378306/sep14.csv"
+    },
+    {
+     "name": "07.csv",
+     "observed": null,
+     "url": "https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/356376/aug14.CSV"
+    }
+   ],
+   "hosts": [
+    "www.gov.uk"
+   ],
+   "id": "ukspend_charity_commission",
+   "licence_class": "open",
+   "licence_location": "https://ckan.publishing.service.gov.uk/dataset/financial-transactions-data-charity-commission (licence field) and https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+   "licence_text": "Listed on data.gov.uk with licence id uk-ogl (Open Government Licence v3.0): use, adapt and redistribute, including commercially, with attribution and the publisher's notice",
+   "max_bytes": 52428800,
+   "method": "documented public download endpoints listed on the publisher's data.gov.uk record; 8 monthly returns",
+   "min_interval": 1.5,
+   "privacy": "supplier names can identify sole traders or individuals; supplier and any payee name fields are pseudonymised in the experimental view",
+   "publisher": "Charity Commission for England and Wales",
+   "rate_limit": "sequential downloads, 1.5 s apart",
+   "redistribution": "OGL permits it with attribution; raw files not committed",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "the publisher is the original producer of its own ledger extract; rows may contain third-party supplier names (organisations)"
+  },
+  {
+   "attribution": "Contains public sector information licensed under the Open Government Licence v3.0",
+   "files": [
+    {
+     "name": "00.csv",
+     "observed": "2019 March return",
+     "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/800517/Ofsted_March_Transparency_Report_25K_spend.csv"
+    },
+    {
+     "name": "01.csv",
+     "observed": "2019 February return",
+     "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/788733/Ofsted_February_2019_25k_spend_.csv"
+    },
+    {
+     "name": "02.csv",
+     "observed": "2019 January return",
+     "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/780092/January_25k_spend.csv"
+    },
+    {
+     "name": "03.csv",
+     "observed": "2018 December return",
+     "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/773374/Ofsted_December_2018_25k_spend.csv"
+    },
+    {
+     "name": "04.csv",
+     "observed": "2018 November return",
+     "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/769131/Ofsted_November_25k_spend.csv"
+    },
+    {
+     "name": "05.csv",
+     "observed": null,
+     "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/762536/2018_10_31_-_October_Transparency_report.csv"
+    },
+    {
+     "name": "06.csv",
+     "observed": null,
+     "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/750945/2018_10_16_-_Transparency_Report_Spend_over_25k_-September-2018.csv"
+    },
+    {
+     "name": "07.csv",
+     "observed": null,
+     "url": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/741346/Ofsted_transparency_spend_data_over_25k_-_August_2018.csv"
+    }
+   ],
+   "hosts": [
+    "assets.publishing.service.gov.uk"
+   ],
+   "id": "ukspend_ofsted",
+   "licence_class": "open",
+   "licence_location": "https://ckan.publishing.service.gov.uk/dataset/ofsted-spend-data (licence field) and https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+   "licence_text": "Listed on data.gov.uk with licence id uk-ogl (Open Government Licence v3.0): use, adapt and redistribute, including commercially, with attribution and the publisher's notice",
+   "max_bytes": 52428800,
+   "method": "documented public download endpoints listed on the publisher's data.gov.uk record; 8 monthly returns",
+   "min_interval": 1.5,
+   "privacy": "supplier names can identify sole traders or individuals; supplier and any payee name fields are pseudonymised in the experimental view",
+   "publisher": "Ofsted",
+   "rate_limit": "sequential downloads, 1.5 s apart",
+   "redistribution": "OGL permits it with attribution; raw files not committed",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "the publisher is the original producer of its own ledger extract; rows may contain third-party supplier names (organisations)"
+  },
+  {
+   "attribution": "Contains public sector information licensed under the Open Government Licence v3.0",
+   "files": [
+    {
+     "name": "00.csv",
+     "observed": "Spend for September 2026",
+     "url": "https://www.nhsbsa.nhs.uk/sites/default/files/2026-10/06%20-%20September.csv"
+    },
+    {
+     "name": "01.csv",
+     "observed": "Spend for August 2026",
+     "url": "https://www.nhsbsa.nhs.uk/sites/default/files/2026-09/05%20-%20August.csv"
+    },
+    {
+     "name": "02.csv",
+     "observed": "Spend for July 2026",
+     "url": "https://www.nhsbsa.nhs.uk/sites/default/files/2026-08/04%20-%20July.csv"
+    },
+    {
+     "name": "03.csv",
+     "observed": "Spend for April 2026",
+     "url": "https://www.nhsbsa.nhs.uk/sites/default/files/2026-06/2026-01-april_0.csv"
+    },
+    {
+     "name": "04.csv",
+     "observed": "Spend for March 2026",
+     "url": "https://www.nhsbsa.nhs.uk/sites/default/files/2026-04/12%20-%20March.csv"
+    },
+    {
+     "name": "05.csv",
+     "observed": "Spend for February 2026",
+     "url": "https://www.nhsbsa.nhs.uk/sites/default/files/2026-03/11%20-%20February.csv"
+    },
+    {
+     "name": "06.csv",
+     "observed": "Spend for January 2026",
+     "url": "https://www.nhsbsa.nhs.uk/sites/default/files/2026-02/10%20-%20January.csv"
+    },
+    {
+     "name": "07.csv",
+     "observed": "Spend for December 2025",
+     "url": "https://www.nhsbsa.nhs.uk/sites/default/files/2026-01/09%20-%20December.csv"
+    },
+    {
+     "name": "08.csv",
+     "observed": "Spend for November 2025",
+     "url": "https://www.nhsbsa.nhs.uk/sites/default/files/2025-12/08%20-%20November.csv"
+    },
+    {
+     "name": "09.csv",
+     "observed": "Spend for October 2025",
+     "url": "https://www.nhsbsa.nhs.uk/sites/default/files/2025-11/07%20-%20October.csv"
+    },
+    {
+     "name": "10.csv",
+     "observed": "Spend for September 2025",
+     "url": "https://www.nhsbsa.nhs.uk/sites/default/files/2026-06/2025-06-september.csv"
+    },
+    {
+     "name": "11.csv",
+     "observed": "Spend for August 2025",
+     "url": "https://www.nhsbsa.nhs.uk/sites/default/files/2026-06/2025-05-august.csv"
+    },
+    {
+     "name": "12.csv",
+     "observed": "Spend for July 2025",
+     "url": "https://www.nhsbsa.nhs.uk/sites/default/files/2025-08/04%20-%20July.csv"
+    },
+    {
+     "name": "13.csv",
+     "observed": "Spend for June 2025",
+     "url": "https://www.nhsbsa.nhs.uk/sites/default/files/2025-07/03%20-%20June.csv"
+    },
+    {
+     "name": "14.csv",
+     "observed": "Spend for May 2025",
+     "url": "https://www.nhsbsa.nhs.uk/sites/default/files/2025-06/02%20-%20May.csv"
+    },
+    {
+     "name": "15.csv",
+     "observed": "Spend for April 2025",
+     "url": "https://www.nhsbsa.nhs.uk/sites/default/files/2026-06/01%20-%20April%202025.csv"
+    },
+    {
+     "name": "16.csv",
+     "observed": "Spend for March 2025",
+     "url": "https://www.nhsbsa.nhs.uk/sites/default/files/2025-04/12%20-%20March.csv"
+    },
+    {
+     "name": "17.csv",
+     "observed": "Spend for February 2025",
+     "url": "https://www.nhsbsa.nhs.uk/sites/default/files/2025-03/11%20-%20February.csv"
+    },
+    {
+     "name": "18.csv",
+     "observed": "Spend for January 2025",
+     "url": "https://www.nhsbsa.nhs.uk/sites/default/files/2026-06/10%20-%20January%202025.csv"
+    },
+    {
+     "name": "19.csv",
+     "observed": "Spend for December 2024",
+     "url": "https://www.nhsbsa.nhs.uk/sites/default/files/2025-01/09%20-%20December_0.csv"
+    },
+    {
+     "name": "20.csv",
+     "observed": "Spend for November 2024",
+     "url": "https://www.nhsbsa.nhs.uk/sites/default/files/2026-06/08%20-%20November%202024.csv"
+    },
+    {
+     "name": "21.csv",
+     "observed": "Spend for Otober 2024",
+     "url": "https://www.nhsbsa.nhs.uk/sites/default/files/2024-11/07%20-%20October.csv"
+    },
+    {
+     "name": "22.csv",
+     "observed": "Spend for September 2024",
+     "url": "https://www.nhsbsa.nhs.uk/sites/default/files/2026-06/06%20-%20September%202024.csv"
+    },
+    {
+     "name": "23.csv",
+     "observed": "Spend for August 2024",
+     "url": "https://www.nhsbsa.nhs.uk/sites/default/files/2024-10/05%20-%20August.csv"
+    }
+   ],
+   "hosts": [
+    "www.nhsbsa.nhs.uk"
+   ],
+   "id": "ukspend_nhsbsa",
+   "licence_class": "open",
+   "licence_location": "https://ckan.publishing.service.gov.uk/dataset/financial-transactions-data-nhsbsa (licence field) and https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+   "licence_text": "Listed on data.gov.uk with licence id uk-ogl (Open Government Licence v3.0): use, adapt and redistribute, including commercially, with attribution and the publisher's notice",
+   "max_bytes": 52428800,
+   "method": "documented public download endpoints listed on the publisher's data.gov.uk record; the 24 most recent returns with a direct file",
+   "min_interval": 1.5,
+   "privacy": "supplier names can identify sole traders or individuals; supplier and any payee name fields are pseudonymised in the experimental view",
+   "publisher": "NHS Business Services Authority",
+   "rate_limit": "sequential downloads, 1.5 s apart",
+   "redistribution": "OGL permits it with attribution; raw files not committed",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "the publisher is the original producer of its own ledger extract; rows may contain third-party supplier names (organisations)"
   }
  ]
 }

@@ -114,7 +114,8 @@ def independent_source_count(pool_sources: set[str], catalog: Path = CATALOG) ->
 # (minimum, recommended, ambitious) independent source families per stratum.
 STRATA = {
     "C1": "flat tabular",
-    "C2": "transactional and categorical",
+    "C2": "transactional and categorical (historical)",
+    "C2b": "transactional events",
     "C3": "time series",
     "C4": "logs and event sequences",
     "C5": "relational",
@@ -123,6 +124,7 @@ STRATA = {
 TARGETS = {
     "C1": (15, 36, 50),
     "C2": (15, 30, 45),
+    "C2b": (15, 30, 45),
     "C3": (15, 40, 55),
     "C4": (15, 28, 40),
     "C5": (15, 36, 55),
@@ -326,6 +328,19 @@ def _read_row(row: dict[str, Any]) -> Any:
     return pd.read_csv(path, low_memory=False)
 
 
+AUDIT = GAP_DIR / "transactional_audit.json"
+
+
+def transactional_rows(path: Path = AUDIT) -> list[dict[str, Any]]:
+    """Tables the T437 audit found transactional; each is also still counted in its old stratum."""
+    if not path.exists():
+        return []
+    return [
+        {"id": i, "source": i, "stratum": "C2b", "origin": "audit"}
+        for i in json.loads(path.read_text())["transactional"]
+    ]
+
+
 ACQUIRED = GAP_DIR / "acquired_sources.json"
 
 
@@ -431,7 +446,9 @@ def main(argv: list[str] | None = None) -> int:
         )
         print(audit["counts"])
         return 0
-    report = gap_report([*stratum_rows(), *licence_rows(LICENCE_MANIFESTS), *acquired_rows()])
+    report = gap_report(
+        [*stratum_rows(), *licence_rows(LICENCE_MANIFESTS), *acquired_rows(), *transactional_rows()]
+    )
     args.out.mkdir(parents=True, exist_ok=True)
     (args.out / "stratum_gap.json").write_text(json.dumps(report, indent=1, sort_keys=True) + "\n")
     (args.out / "stratum_gap.md").write_text(render_gap(report))

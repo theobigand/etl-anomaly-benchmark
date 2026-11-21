@@ -20,23 +20,30 @@ their checksums are in `experimental_views.json`. Pseudonyms are salted hashes t
 working. They do not make the data anonymous, and the data protection obligations of the original
 data remain.
 
-## Result (2026-11-21)
+## Result (2026-11-21, second update)
 
-Experiment-ready: Melbourne pedestrian counts (C3), 16 Loghub systems (C4, one curator), OpenAlex
-(C5 and C6, one source), openFDA adverse-event reports (C6). Details per dataset:
-`verification/evidence/dataset_registry_v2/readiness.json`.
+Experiment-ready, by independent source group: transactional (C2b) two UK public ledgers (MHRA,
+NHSBSA); time series (C3) Melbourne pedestrian counts; logs (C4) the Loghub collection (one curator);
+relational (C5) OpenAlex and Stack Exchange (10 sites, one group); nested (C6) OpenAlex, openFDA events
+and Open Food Facts. Per dataset: `verification/evidence/dataset_registry_v2/readiness.json`.
 
-Stopped before the end, on purpose:
+Not ready, and why:
 
 | Dataset | Stops at | Reason |
 |---|---|---|
-| Stack Exchange, 10 sites | structurally_valid | user text and display names not yet removed (privacy unreviewed), no view |
-| Open Food Facts | structurally_valid | contributor names present, no view |
-| 15 Monash families | acquired | upstream terms not read |
-| Monash sunspot | rights_verified blocked | CC BY-NC 4.0 upstream: allowed as `research_only`, not yet assessed further |
+| 13 Monash families | acquired | upstream terms not read or unresolved (AEMO, FRED, Saugeen, US births) |
+| Monash sunspot | not assessed | CC BY-NC 4.0 upstream, no protocol facts declared |
+| Charity Commission ledger | rejected | 45 usable rows, below the minimum number of detection units |
+| NICE, Ofsted ledgers | deferred | spreadsheets saved as CSV; banner layout |
+| Tate ledger | rejected | the host's TLS certificate chain does not verify; checking was not disabled |
+| Instacart 2017 | not downloaded | the dataset terms state that access is not a licence grant |
+| NYC TLC trip records | discovered | official open data without use restrictions by city law, but the agency terms page refused automated access and was not read; not collected |
+| Open Contracting registry | discovered | licence is per publication; none read yet |
 | Vehicle trips, Bitcoin | rejected | upstream terms unclear |
 
-Limits of the four ready datasets are part of their record: the openFDA sample covers two receipt
-dates, so its split is by hash of the report id and not chronological; the OpenAlex sample is one
-snapshot of 1000 works; Loghub samples have 2000 lines and no native labels; the pedestrian series
-come from one city.
+Limits that stay on the ready datasets: the openFDA sample covers two receipt dates; the OpenAlex
+sample is one snapshot of 1000 works; Loghub samples have 2000 lines and one curator; the pedestrian
+series are from one city; the UK ledgers are two organisations that publish on the same government
+template (their ledger systems are treated as independent but the template is shared); MHRA returns are
+not contiguous months; Stack Exchange and Open Food Facts views are derived databases under share-alike
+licences, so they stay local.

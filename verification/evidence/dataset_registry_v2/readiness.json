@@ -252,123 +252,73 @@
    "stratum": "C3"
   },
   {
-   "failed": {
-    "reasons": [
-     "personal-data handling not reviewed"
-    ],
-    "status": "scientifically_eligible"
-   },
+   "failed": null,
    "group": "stackexchange",
    "id": "stackexchange:3dprinting",
-   "status": "structurally_valid",
+   "status": "experiment_ready",
    "stratum": "C5"
   },
   {
-   "failed": {
-    "reasons": [
-     "personal-data handling not reviewed"
-    ],
-    "status": "scientifically_eligible"
-   },
+   "failed": null,
    "group": "stackexchange",
    "id": "stackexchange:astronomy",
-   "status": "structurally_valid",
+   "status": "experiment_ready",
    "stratum": "C5"
   },
   {
-   "failed": {
-    "reasons": [
-     "personal-data handling not reviewed"
-    ],
-    "status": "scientifically_eligible"
-   },
+   "failed": null,
    "group": "stackexchange",
    "id": "stackexchange:beer",
-   "status": "structurally_valid",
+   "status": "experiment_ready",
    "stratum": "C5"
   },
   {
-   "failed": {
-    "reasons": [
-     "personal-data handling not reviewed"
-    ],
-    "status": "scientifically_eligible"
-   },
+   "failed": null,
    "group": "stackexchange",
    "id": "stackexchange:coffee",
-   "status": "structurally_valid",
+   "status": "experiment_ready",
    "stratum": "C5"
   },
   {
-   "failed": {
-    "reasons": [
-     "personal-data handling not reviewed"
-    ],
-    "status": "scientifically_eligible"
-   },
+   "failed": null,
    "group": "stackexchange",
    "id": "stackexchange:earthscience",
-   "status": "structurally_valid",
+   "status": "experiment_ready",
    "stratum": "C5"
   },
   {
-   "failed": {
-    "reasons": [
-     "personal-data handling not reviewed"
-    ],
-    "status": "scientifically_eligible"
-   },
+   "failed": null,
    "group": "stackexchange",
    "id": "stackexchange:economics",
-   "status": "structurally_valid",
+   "status": "experiment_ready",
    "stratum": "C5"
   },
   {
-   "failed": {
-    "reasons": [
-     "personal-data handling not reviewed"
-    ],
-    "status": "scientifically_eligible"
-   },
+   "failed": null,
    "group": "stackexchange",
    "id": "stackexchange:fitness",
-   "status": "structurally_valid",
+   "status": "experiment_ready",
    "stratum": "C5"
   },
   {
-   "failed": {
-    "reasons": [
-     "personal-data handling not reviewed"
-    ],
-    "status": "scientifically_eligible"
-   },
+   "failed": null,
    "group": "stackexchange",
    "id": "stackexchange:gardening",
-   "status": "structurally_valid",
+   "status": "experiment_ready",
    "stratum": "C5"
   },
   {
-   "failed": {
-    "reasons": [
-     "personal-data handling not reviewed"
-    ],
-    "status": "scientifically_eligible"
-   },
+   "failed": null,
    "group": "stackexchange",
    "id": "stackexchange:ham",
-   "status": "structurally_valid",
+   "status": "experiment_ready",
    "stratum": "C5"
   },
   {
-   "failed": {
-    "reasons": [
-     "personal-data handling not reviewed"
-    ],
-    "status": "scientifically_eligible"
-   },
+   "failed": null,
    "group": "stackexchange",
    "id": "stackexchange:health",
-   "status": "structurally_valid",
+   "status": "experiment_ready",
    "stratum": "C5"
   },
   {
@@ -417,16 +367,73 @@
    "stratum": "C6"
   },
   {
-   "failed": {
-    "reasons": [
-     "personal-data handling not reviewed"
-    ],
-    "status": "scientifically_eligible"
-   },
+   "failed": null,
    "group": "openfoodfacts",
    "id": "openfoodfacts_products",
-   "status": "structurally_valid",
+   "status": "experiment_ready",
    "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "uk_ledger_mhra",
+   "id": "ukspend_mhra",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "uk_ledger_nhsbsa",
+   "id": "ukspend_nhsbsa",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "ukspend_charity_commission",
+   "status": "discovered",
+   "stratum": "C2b"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "ukspend_nice",
+   "status": "discovered",
+   "stratum": "C2b"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "ukspend_ofsted",
+   "status": "discovered",
+   "stratum": "C2b"
+  },
+  {
+   "failed": {
+    "reasons": [
+     "upstream terms not verified at the original publisher"
+    ],
+    "status": "rights_verified"
+   },
+   "group": null,
+   "id": "rejected:tate",
+   "status": "discovered",
+   "stratum": "C2b"
   },
   {
    "failed": null,
@@ -542,6 +549,10 @@
   }
  ],
  "ready_groups": {
+  "C2b": [
+   "uk_ledger_mhra",
+   "uk_ledger_nhsbsa"
+  ],
   "C3": [
    "melbourne_pedestrian"
   ],
@@ -549,14 +560,25 @@
    "loghub_collection"
   ],
   "C5": [
-   "openalex"
+   "openalex",
+   "stackexchange"
   ],
   "C6": [
    "openalex",
-   "openfda_faers"
+   "openfda_faers",
+   "openfoodfacts"
   ]
  },
  "summary": {
+  "C2b": {
+   "acquired": 2,
+   "discovered": 6,
+   "experiment_ready": 2,
+   "protocol_ready": 2,
+   "rights_verified": 2,
+   "scientifically_eligible": 2,
+   "structurally_valid": 2
+  },
   "C3": {
    "acquired": 2,
    "discovered": 21,
@@ -578,19 +600,19 @@
   "C5": {
    "acquired": 11,
    "discovered": 11,
-   "experiment_ready": 1,
-   "protocol_ready": 1,
+   "experiment_ready": 11,
+   "protocol_ready": 11,
    "rights_verified": 11,
-   "scientifically_eligible": 1,
+   "scientifically_eligible": 11,
    "structurally_valid": 11
   },
   "C6": {
    "acquired": 3,
    "discovered": 5,
-   "experiment_ready": 2,
-   "protocol_ready": 2,
+   "experiment_ready": 3,
+   "protocol_ready": 3,
    "rights_verified": 3,
-   "scientifically_eligible": 2,
+   "scientifically_eligible": 3,
    "structurally_valid": 3
   }
  }

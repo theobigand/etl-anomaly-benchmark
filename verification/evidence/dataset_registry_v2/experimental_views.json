@@ -132,5 +132,349 @@
   },
   "pseudonymised": [],
   "source_snapshot": "openfda_drug_event/2026-11-21"
+ },
+ "openfoodfacts": {
+  "dropped": [
+   "checkers",
+   "checkers_tags",
+   "correctors",
+   "correctors_tags",
+   "creator",
+   "editors",
+   "editors_tags",
+   "informers",
+   "informers_tags",
+   "last_editor",
+   "owner",
+   "owner_fields",
+   "owner_imported",
+   "owners_tags",
+   "photographers",
+   "photographers_tags",
+   "uploader"
+  ],
+  "files": {
+   "products.jsonl": {
+    "rows": 9688,
+    "sha256": "3aa28af86fb12040d9c9c0e7982753dcd8470f2dfcb04480638094851a3628ec"
+   }
+  },
+  "pseudonymised": [],
+  "source_snapshot": "openfoodfacts_products/2026-11-21"
+ },
+ "stackexchange": {
+  "dropped": [
+   "Title",
+   "Body",
+   "Text",
+   "DisplayName",
+   "Location",
+   "AboutMe",
+   "WebsiteUrl",
+   "profile fields"
+  ],
+  "files": {
+   "3dprinting/Badges.csv": {
+    "rows": 34000,
+    "sha256": "208d9e3152d39991afa7ca6a3bb276fe204cb7aef45a19435568f254733017ac"
+   },
+   "3dprinting/Comments.csv": {
+    "rows": 25514,
+    "sha256": "d7958b81cb1123511843abe65190345d3b78a255c1a3220746ddb7ea21b8f3ef"
+   },
+   "3dprinting/PostLinks.csv": {
+    "rows": 1581,
+    "sha256": "3c06b8116797f854b9707621d4aff435387dc69822988e2bbfa77f92ef3255d7"
+   },
+   "3dprinting/Posts.csv": {
+    "rows": 15283,
+    "sha256": "33818b92574af1fd3077a780247385228e4a0a0aec545ae41a0e13b074af5c29"
+   },
+   "3dprinting/Users.csv": {
+    "rows": 33730,
+    "sha256": "883e98be92f537a9b81369f6d725ffff67ba91f1cae285526be5618ea2359de0"
+   },
+   "3dprinting/Votes.csv": {
+    "rows": 56355,
+    "sha256": "7f6d8b5b60d201c94494951603b96510fa26fc6489228656396556da86fae28b"
+   },
+   "astronomy/Badges.csv": {
+    "rows": 64722,
+    "sha256": "76e43ec6abebb84b4f481fc9a1160d13f44f5c7cde2e33b12120f40a0b487187"
+   },
+   "astronomy/Comments.csv": {
+    "rows": 80598,
+    "sha256": "965a35207ebd1a7af8eb409935561583359c1e36bc746cda79ed1e0fc01ab4d6"
+   },
+   "astronomy/PostLinks.csv": {
+    "rows": 6552,
+    "sha256": "7e300884a213c08fbd5602ae0fc9e00e9601f721dd914aa892d23bbd34d57e13"
+   },
+   "astronomy/Posts.csv": {
+    "rows": 35836,
+    "sha256": "b7f68e517065e37a4ab182dfe95916753bc575d742359a9fb01eb3e5423542e7"
+   },
+   "astronomy/Users.csv": {
+    "rows": 39348,
+    "sha256": "6f5bf0b25f1a81d0a85b194a38acdc6cbf4a7f4e6a05444a8fc54c784a16746f"
+   },
+   "astronomy/Votes.csv": {
+    "rows": 237730,
+    "sha256": "8f1a7421fcd579baaeae57c45ae98c313870bc0a98cab6dbda30c0f8bc10a9ff"
+   },
+   "beer/Badges.csv": {
+    "rows": 12901,
+    "sha256": "419f9ff30212de85649c34326d11be0edb2cda28eb2c16cdff2a4afefcdc1ac7"
+   },
+   "beer/Comments.csv": {
+    "rows": 4007,
+    "sha256": "584ea501ed263bf5884b63965b3e24811f4224b724dfd85c9ed49bcfcfc82e57"
+   },
+   "beer/PostLinks.csv": {
+    "rows": 152,
+    "sha256": "afe5eb625d674b6f0050e394d27203872d9981ddfad33b5c9bb851838f9fc234"
+   },
+   "beer/Posts.csv": {
+    "rows": 3924,
+    "sha256": "73a52bbb74ce3d8a37d8825419dcc55d8f61f7f04c011696b22fc25b0cfd270a"
+   },
+   "beer/Users.csv": {
+    "rows": 10168,
+    "sha256": "55570ac211a015fe526694a555838acb471c1e3d51e4ec850d9b29f5cb63e059"
+   },
+   "beer/Votes.csv": {
+    "rows": 20765,
+    "sha256": "1e74aeb232d844e74fa728041c98ebc3d864367534a5460e27bfca4cabfa0d0a"
+   },
+   "coffee/Badges.csv": {
+    "rows": 14615,
+    "sha256": "ff7095f1078cb221ea2bfd6b56a2267c8f9825edb393b8ddf20c8f5fdc459a3d"
+   },
+   "coffee/Comments.csv": {
+    "rows": 4985,
+    "sha256": "10ac65adc2f0796aaeff6438ca1c7c43cc7d5872ddf39351ceadd8ca265df463"
+   },
+   "coffee/PostLinks.csv": {
+    "rows": 622,
+    "sha256": "8de28c2dca9443930c08e1b1a42ff3809ada9d869177b6d9f78f05c667be9eb5"
+   },
+   "coffee/Posts.csv": {
+    "rows": 4525,
+    "sha256": "12bbde40e408256b3432d1586f5114cd30ff50134fc7925653fba6c2650cbfac"
+   },
+   "coffee/Users.csv": {
+    "rows": 11594,
+    "sha256": "29745890523c0786c1898e32ca7d44b4acb4bdff9828650b740559e881af53b6"
+   },
+   "coffee/Votes.csv": {
+    "rows": 22128,
+    "sha256": "add80869511cab7db174d657eb67b855f0677fb2a61c1ce9a6e14728bba7f58c"
+   },
+   "earthscience/Badges.csv": {
+    "rows": 34759,
+    "sha256": "88160d775ff49cea81ed45533dc63df30d02320853d3720b95b24424865d6f42"
+   },
+   "earthscience/Comments.csv": {
+    "rows": 32655,
+    "sha256": "f234e1c53cf419a2aeb8a9d7ee23f9474666c82108ff530edce35dc8e9165302"
+   },
+   "earthscience/PostLinks.csv": {
+    "rows": 1464,
+    "sha256": "0385534bf1583dd15925528a83254e551ee5b2ddff944ca4ba5a61e841d280fa"
+   },
+   "earthscience/Posts.csv": {
+    "rows": 16348,
+    "sha256": "847b41a5790a5cfa714d152a55eeea8bc8d7da1f199968eec39f85a14f16e7c0"
+   },
+   "earthscience/Users.csv": {
+    "rows": 21435,
+    "sha256": "016d9b4f43f1bd9cda12bf7d1ce8ccb18df427defc4f66ebb0c33b1b6ee940fb"
+   },
+   "earthscience/Votes.csv": {
+    "rows": 105723,
+    "sha256": "0d2ef90e4e6ad26eb0db138b1778cd7265f74c231061be6f435bee86faacd967"
+   },
+   "economics/Badges.csv": {
+    "rows": 43498,
+    "sha256": "82f8f4d8b57b383140691a100a18422c749ee3b934821fdf85fee22424c3e622"
+   },
+   "economics/Comments.csv": {
+    "rows": 56560,
+    "sha256": "16e2c566f68fe6602f0330538dc7d2b9642459dc6456d0b685f8c48dbd98eae7"
+   },
+   "economics/PostLinks.csv": {
+    "rows": 1806,
+    "sha256": "e37077d8dbd87fcbc616d8eb63acd7002017721abdc60bc0f223fbbc239c8a15"
+   },
+   "economics/Posts.csv": {
+    "rows": 34771,
+    "sha256": "8806b2bce02b3f2bbc8aef46914e82368be266b77264505acbc1006ed5bfa969"
+   },
+   "economics/Users.csv": {
+    "rows": 32767,
+    "sha256": "de5dfc2d3171032c127b8aaa00f38bfb93d5d7e686ca42396f003f25e883ac79"
+   },
+   "economics/Votes.csv": {
+    "rows": 113168,
+    "sha256": "3d018edb5ea3a3da1d62260528268f46e08a6c78f18165e6eab3f2a5fc700ae4"
+   },
+   "fitness/Badges.csv": {
+    "rows": 48426,
+    "sha256": "1dc8e1f66e71914ce1a512f766b24456bcd07fe5510693f42d8ba87d3acfdd43"
+   },
+   "fitness/Comments.csv": {
+    "rows": 44707,
+    "sha256": "9f13eee08dcc0935d52e24e1fa10b667f9eb6cdeb09647ab6b31d72a58da36ee"
+   },
+   "fitness/PostLinks.csv": {
+    "rows": 3357,
+    "sha256": "671f284f2ec6a6ac7d30b02e5ec20cfb52d98758c90431949f0e65e316655654"
+   },
+   "fitness/Posts.csv": {
+    "rows": 29704,
+    "sha256": "2f4ad48bc20722b24b83d9f0a3e5d9f546f133dd42e4fc1c0b6433789c9daf11"
+   },
+   "fitness/Users.csv": {
+    "rows": 28890,
+    "sha256": "d9170b9a1ff1cfafccb95c71125b876d4e0723bd9110cce74e72a675cc6c15a8"
+   },
+   "fitness/Votes.csv": {
+    "rows": 116840,
+    "sha256": "996c875f242348b3ba2b0277087ed5263980d2529c4206a5ae6443c66ea095fb"
+   },
+   "gardening/Badges.csv": {
+    "rows": 57924,
+    "sha256": "aaec2f768f79802b90f20bf1c99cb82f7a0c773516b0056a5294e18f57bb7a8a"
+   },
+   "gardening/Comments.csv": {
+    "rows": 60624,
+    "sha256": "f8e5bd026c0b11bbb032a56de69283054727ed7d2ed48b1d1eee0daf1cc22f30"
+   },
+   "gardening/PostLinks.csv": {
+    "rows": 2390,
+    "sha256": "acbbd51cf397948f2d9182614a70b00a141da7d60553bf96e963c22148080c57"
+   },
+   "gardening/Posts.csv": {
+    "rows": 44155,
+    "sha256": "4e05833aa4b1258b33de963dba83ee827dff0305601dccf73b10c831a44cad51"
+   },
+   "gardening/Users.csv": {
+    "rows": 29094,
+    "sha256": "17f90848f70e4f6cb9ed603c4971787138d6946a2e32c1a3c62fd857c514f8f0"
+   },
+   "gardening/Votes.csv": {
+    "rows": 181160,
+    "sha256": "d13fcbf9f7d1f4af92e204e5d9813fe99e80e30fc77520cb66eacc29fb069d48"
+   },
+   "ham/Badges.csv": {
+    "rows": 23882,
+    "sha256": "0b5f87bde2e3b29ed3c9a0468b9f2e09d5826b3dba1f2a8a12c04d4bd10d99f2"
+   },
+   "ham/Comments.csv": {
+    "rows": 24896,
+    "sha256": "d14ba143807b7507a42b5b05d4e4248be2be53d8e72dbe3d2c01f81c76b34851"
+   },
+   "ham/PostLinks.csv": {
+    "rows": 1274,
+    "sha256": "ef2a9ce04e66b574143b4dcf50b7dceeb077b17b90b1fe63e64797cbc8671c10"
+   },
+   "ham/Posts.csv": {
+    "rows": 14084,
+    "sha256": "ab93872a1d6d475e345227c03e55f48053295971762c003b5089674fbbcdd08d"
+   },
+   "ham/Users.csv": {
+    "rows": 20512,
+    "sha256": "5fe116c7ffdfc79891d8c3fc1843cc52c7ca661ae634e2ca09e3f0a08fc8f49b"
+   },
+   "ham/Votes.csv": {
+    "rows": 58889,
+    "sha256": "0fc6f388c183b242cc9b8fc3589ed3185b825f6dd0a08c4c301beeba5bc03277"
+   },
+   "health/Badges.csv": {
+    "rows": 32409,
+    "sha256": "f002ce452780c882ca46b18548410c0d3419155d575bbb5e3d69e5232df83d2c"
+   },
+   "health/Comments.csv": {
+    "rows": 26143,
+    "sha256": "4b58ba4ddd0f7fd5bd091aa623ff789c5d293e2f500c4bfb731b8921037f2bba"
+   },
+   "health/PostLinks.csv": {
+    "rows": 900,
+    "sha256": "3211ccc2143d47bc6a78abd3874d8a246633c0a65a8c521fb88ae99d945f9688"
+   },
+   "health/Posts.csv": {
+    "rows": 15049,
+    "sha256": "56c6f87a8f88f952dc2de638d10141ef28ca7b47fdafac2d329ffd0cb3f12ddb"
+   },
+   "health/Users.csv": {
+    "rows": 21249,
+    "sha256": "3d015e7f54887eaaf9e2dab8c076635f1f4a5859328681827796e1813b776f19"
+   },
+   "health/Votes.csv": {
+    "rows": 80414,
+    "sha256": "e9568349ed84c0e31bfbacc5e0ccbe92ac6f3f48bd84a140be8a707d4bec52af"
+   }
+  },
+  "notes": "CC BY-SA: a redistributed derived database must carry attribution and the same licence",
+  "pseudonymised": [
+   "user_id",
+   "owner_user_id"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "source_snapshot": "stackexchange_dump/2026-11-21"
+ },
+ "ukspend": {
+  "dropped": [
+   "Description",
+   "post code",
+   "supplier type",
+   "VAT number",
+   "contract and project codes"
+  ],
+  "files": {
+   "charity_commission.csv": {
+    "rows": 45,
+    "sha256": "668258f5c3aa85ff6aa0b6bc22700c55fe0116c404add200ee5deea3ed367292"
+   },
+   "mhra.csv": {
+    "rows": 1330,
+    "sha256": "28ebf6f1a97e272e9e41db01af433e0d34c4345ca52da28723fc2c4532f3910b"
+   },
+   "nhsbsa.csv": {
+    "rows": 3477,
+    "sha256": "4a39834f034805aea917445d1688b0e85687ee55d01423a55db91cdb8bf576a6"
+   }
+  },
+  "pseudonymised": [
+   "supplier_id"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "skipped": {
+   "charity_commission": [
+    "02.csv: no header line with a supplier column in the first 15 lines",
+    "03.csv: no header line with a supplier column in the first 15 lines"
+   ],
+   "nice": [
+    "00.csv: a spreadsheet saved with a .csv name",
+    "01.csv: a spreadsheet saved with a .csv name",
+    "02.csv: a spreadsheet saved with a .csv name",
+    "03.csv: a spreadsheet saved with a .csv name",
+    "04.csv: a spreadsheet saved with a .csv name",
+    "05.csv: a spreadsheet saved with a .csv name",
+    "06.csv: a spreadsheet saved with a .csv name",
+    "07.csv: a spreadsheet saved with a .csv name"
+   ],
+   "ofsted": [
+    "00.csv: required columns not found in ['Department', 'Entity', 'Date', 'Expense Type', 'Expense Area', 'Supplier']",
+    "01.csv: required columns not found in ['Department', 'Entity', 'Date', 'Expense Type', 'Expense Area', 'Supplier']",
+    "02.csv: required columns not found in ['Department', 'Entity', 'Date', 'Expense Type', 'Expense Area', 'Supplier']",
+    "03.csv: required columns not found in ['Department', 'Entity', 'Date', 'Expense Type', 'Expense Area', 'Supplier']",
+    "04.csv: required columns not found in ['Department', 'Entity', 'Date', 'Expense Type', 'Expense Area', 'Supplier']",
+    "05.csv: required columns not found in ['Department', 'Entity', 'Date', 'Expense area ', 'Expense Area', 'Supplier']",
+    "06.csv: required columns not found in ['Department', 'Entity', 'Date', 'Expense Type', 'Expense Area', 'Supplier']",
+    "07.csv: required columns not found in ['Department', 'Entity', 'Date', 'Expense Type', 'Expense Area', 'Supplier']"
+   ]
+  },
+  "source_snapshot": "ukspend_*/2026-11-21"
  }
 }

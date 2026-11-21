@@ -345,172 +345,214 @@
    "first_party": true,
    "independent_group": "openfoodfacts",
    "min_units": 1000,
-   "notes": "contributor names present; no view built yet",
+   "notes": "contributor fields dropped at every depth; ODbL share-alike applies to a derived database; products are not persons",
    "partitions": "hash of product code 70/15/15",
-   "privacy": "unreviewed",
+   "privacy": "handled",
    "protocol_id": "P-NEST",
    "units": 9688,
-   "view": null
+   "view": "openfoodfacts"
   },
   "stackexchange:3dprinting": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
     "votes pointing to deleted posts (5-29 percent)",
-    "links to posts on other sites"
+    "PostLinks to posts on other sites",
+    "post and comment text removed, so text-based faults are out of scope"
    ],
    "first_party": true,
    "independent_group": "stackexchange",
    "min_units": 1000,
-   "notes": "user names and free text must be dropped; no view built yet",
+   "notes": "user text, names and profiles dropped; user ids pseudonymised; CC BY-SA share-alike applies to a redistributed derived database",
    "partitions": "posts split by hash of post id, 70/15/15",
-   "privacy": "unreviewed",
+   "privacy": "handled",
    "protocol_id": "P-REL",
-   "units": 10000,
-   "view": null
+   "units": 15283,
+   "view": "stackexchange"
   },
   "stackexchange:astronomy": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
     "votes pointing to deleted posts (5-29 percent)",
-    "links to posts on other sites"
+    "PostLinks to posts on other sites",
+    "post and comment text removed, so text-based faults are out of scope"
    ],
    "first_party": true,
    "independent_group": "stackexchange",
    "min_units": 1000,
-   "notes": "user names and free text must be dropped; no view built yet",
+   "notes": "user text, names and profiles dropped; user ids pseudonymised; CC BY-SA share-alike applies to a redistributed derived database",
    "partitions": "posts split by hash of post id, 70/15/15",
-   "privacy": "unreviewed",
+   "privacy": "handled",
    "protocol_id": "P-REL",
-   "units": 10000,
-   "view": null
+   "units": 35836,
+   "view": "stackexchange"
   },
   "stackexchange:beer": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
     "votes pointing to deleted posts (5-29 percent)",
-    "links to posts on other sites"
+    "PostLinks to posts on other sites",
+    "post and comment text removed, so text-based faults are out of scope"
    ],
    "first_party": true,
    "independent_group": "stackexchange",
    "min_units": 1000,
-   "notes": "user names and free text must be dropped; no view built yet",
+   "notes": "user text, names and profiles dropped; user ids pseudonymised; CC BY-SA share-alike applies to a redistributed derived database",
    "partitions": "posts split by hash of post id, 70/15/15",
-   "privacy": "unreviewed",
+   "privacy": "handled",
    "protocol_id": "P-REL",
-   "units": 10000,
-   "view": null
+   "units": 3924,
+   "view": "stackexchange"
   },
   "stackexchange:coffee": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
     "votes pointing to deleted posts (5-29 percent)",
-    "links to posts on other sites"
+    "PostLinks to posts on other sites",
+    "post and comment text removed, so text-based faults are out of scope"
    ],
    "first_party": true,
    "independent_group": "stackexchange",
    "min_units": 1000,
-   "notes": "user names and free text must be dropped; no view built yet",
+   "notes": "user text, names and profiles dropped; user ids pseudonymised; CC BY-SA share-alike applies to a redistributed derived database",
    "partitions": "posts split by hash of post id, 70/15/15",
-   "privacy": "unreviewed",
+   "privacy": "handled",
    "protocol_id": "P-REL",
-   "units": 10000,
-   "view": null
+   "units": 4525,
+   "view": "stackexchange"
   },
   "stackexchange:earthscience": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
     "votes pointing to deleted posts (5-29 percent)",
-    "links to posts on other sites"
+    "PostLinks to posts on other sites",
+    "post and comment text removed, so text-based faults are out of scope"
    ],
    "first_party": true,
    "independent_group": "stackexchange",
    "min_units": 1000,
-   "notes": "user names and free text must be dropped; no view built yet",
+   "notes": "user text, names and profiles dropped; user ids pseudonymised; CC BY-SA share-alike applies to a redistributed derived database",
    "partitions": "posts split by hash of post id, 70/15/15",
-   "privacy": "unreviewed",
+   "privacy": "handled",
    "protocol_id": "P-REL",
-   "units": 10000,
-   "view": null
+   "units": 16348,
+   "view": "stackexchange"
   },
   "stackexchange:economics": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
     "votes pointing to deleted posts (5-29 percent)",
-    "links to posts on other sites"
+    "PostLinks to posts on other sites",
+    "post and comment text removed, so text-based faults are out of scope"
    ],
    "first_party": true,
    "independent_group": "stackexchange",
    "min_units": 1000,
-   "notes": "user names and free text must be dropped; no view built yet",
+   "notes": "user text, names and profiles dropped; user ids pseudonymised; CC BY-SA share-alike applies to a redistributed derived database",
    "partitions": "posts split by hash of post id, 70/15/15",
-   "privacy": "unreviewed",
+   "privacy": "handled",
    "protocol_id": "P-REL",
-   "units": 10000,
-   "view": null
+   "units": 34771,
+   "view": "stackexchange"
   },
   "stackexchange:fitness": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
     "votes pointing to deleted posts (5-29 percent)",
-    "links to posts on other sites"
+    "PostLinks to posts on other sites",
+    "post and comment text removed, so text-based faults are out of scope"
    ],
    "first_party": true,
    "independent_group": "stackexchange",
    "min_units": 1000,
-   "notes": "user names and free text must be dropped; no view built yet",
+   "notes": "user text, names and profiles dropped; user ids pseudonymised; CC BY-SA share-alike applies to a redistributed derived database",
    "partitions": "posts split by hash of post id, 70/15/15",
-   "privacy": "unreviewed",
+   "privacy": "handled",
    "protocol_id": "P-REL",
-   "units": 10000,
-   "view": null
+   "units": 29704,
+   "view": "stackexchange"
   },
   "stackexchange:gardening": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
     "votes pointing to deleted posts (5-29 percent)",
-    "links to posts on other sites"
+    "PostLinks to posts on other sites",
+    "post and comment text removed, so text-based faults are out of scope"
    ],
    "first_party": true,
    "independent_group": "stackexchange",
    "min_units": 1000,
-   "notes": "user names and free text must be dropped; no view built yet",
+   "notes": "user text, names and profiles dropped; user ids pseudonymised; CC BY-SA share-alike applies to a redistributed derived database",
    "partitions": "posts split by hash of post id, 70/15/15",
-   "privacy": "unreviewed",
+   "privacy": "handled",
    "protocol_id": "P-REL",
-   "units": 10000,
-   "view": null
+   "units": 44155,
+   "view": "stackexchange"
   },
   "stackexchange:ham": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
     "votes pointing to deleted posts (5-29 percent)",
-    "links to posts on other sites"
+    "PostLinks to posts on other sites",
+    "post and comment text removed, so text-based faults are out of scope"
    ],
    "first_party": true,
    "independent_group": "stackexchange",
    "min_units": 1000,
-   "notes": "user names and free text must be dropped; no view built yet",
+   "notes": "user text, names and profiles dropped; user ids pseudonymised; CC BY-SA share-alike applies to a redistributed derived database",
    "partitions": "posts split by hash of post id, 70/15/15",
-   "privacy": "unreviewed",
+   "privacy": "handled",
    "protocol_id": "P-REL",
-   "units": 10000,
-   "view": null
+   "units": 14084,
+   "view": "stackexchange"
   },
   "stackexchange:health": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
     "votes pointing to deleted posts (5-29 percent)",
-    "links to posts on other sites"
+    "PostLinks to posts on other sites",
+    "post and comment text removed, so text-based faults are out of scope"
    ],
    "first_party": true,
    "independent_group": "stackexchange",
    "min_units": 1000,
-   "notes": "user names and free text must be dropped; no view built yet",
+   "notes": "user text, names and profiles dropped; user ids pseudonymised; CC BY-SA share-alike applies to a redistributed derived database",
    "partitions": "posts split by hash of post id, 70/15/15",
-   "privacy": "unreviewed",
+   "privacy": "handled",
    "protocol_id": "P-REL",
-   "units": 10000,
-   "view": null
+   "units": 15049,
+   "view": "stackexchange"
+  },
+  "ukspend_mhra": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "credit notes (negative amounts)",
+    "repeated transaction numbers across lines",
+    "non-contiguous returns"
+   ],
+   "first_party": true,
+   "independent_group": "uk_ledger_mhra",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on payment date",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1330,
+   "view": "ukspend"
+  },
+  "ukspend_nhsbsa": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "credit notes (negative amounts)",
+    "repeated transaction numbers across lines",
+    "multi-line payments"
+   ],
+   "first_party": true,
+   "independent_group": "uk_ledger_nhsbsa",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on payment date",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 3477,
+   "view": "ukspend"
   }
  }
 }
