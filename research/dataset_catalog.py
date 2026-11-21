@@ -212,7 +212,7 @@ LICENCE_MANIFESTS = [(GAP_DIR / "loghub_manifest.json", "C4")]
 
 
 def licence_rows(manifests: list[tuple[Path, str]]) -> list[dict[str, Any]]:
-    """Rows of manifests that carry a licence class (open or research_only) and an explicit stratum."""
+    """Rows of manifests with a licence class (open or research_only) and an explicit stratum."""
     rows: list[dict[str, Any]] = []
     for path, stratum in manifests:
         if not path.exists():
