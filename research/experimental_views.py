@@ -1620,6 +1620,126 @@ def _build_clue(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+def _local(tag: str) -> str:
+    return tag.rpartition("}")[2]
+
+
+def read_xes(stream: Any) -> tuple[list[dict[str, Any]], bool]:
+    """Complete traces of an XES log: each has its case name and events as attribute dicts.
+
+    Typed attributes (string, date, int, float, boolean) are read at event level; a file that is
+    cut off keeps every trace that closed before the cut. The flag says whether the log closed.
+    """
+    import xml.etree.ElementTree as ET  # noqa: S405 - local files from named publishers
+
+    tags = {"string", "date", "int", "float", "boolean", "id"}
+    converters = {"int": int, "float": float, "boolean": lambda v: v == "true"}
+    traces: list[dict[str, Any]] = []
+    case, events, closed, seen = None, [], False, False
+    try:
+        for kind, node in ET.iterparse(stream, events=("start", "end")):
+            seen = True
+            name = node.tag.rpartition("}")[2]  # logs with an xmlns declaration prefix every tag
+            if kind == "start":
+                if name == "trace":
+                    case, events = None, []
+                continue
+            if name == "event":
+                events.append(
+                    {
+                        c.get("key"): converters.get(_local(c.tag), str)(c.get("value"))
+                        for c in node
+                        if _local(c.tag) in tags
+                    }
+                )
+                node.clear()
+            elif name in tags and case is None and node.get("key") == "concept:name":
+                case = node.get("value")
+            elif name == "trace":
+                traces.append({"case": case, "events": events})
+                node.clear()
+            elif name == "log":
+                closed = True
+    except ET.ParseError as error:
+        if not seen:
+            raise ViewError(f"not XML ({error})") from error
+    return traces, closed
+
+
+def xes_view(traces: list[dict[str, Any]], modulo: int, numeric: list[str]) -> pd.DataFrame:
+    """One row per event: case, position, UTC time, activity, transition, salted resource, numbers.
+
+    A case is kept when the hash of its name is divisible by ``modulo``; cases are ordered by
+    name and events keep their log order.
+    """
+    rows = []
+    for trace in sorted(traces, key=lambda t: str(t["case"])):
+        if int(hashlib.sha256(str(trace["case"]).encode()).hexdigest(), 16) % modulo:
+            continue
+        for position, e in enumerate(trace["events"]):
+            resource = e.get("org:resource")
+            rows.append(
+                {
+                    "case_id": trace["case"],
+                    "position": position,
+                    "time": e.get("time:timestamp"),
+                    "activity": e.get("concept:name"),
+                    "transition": e.get("lifecycle:transition"),
+                    "resource": pseudonym(resource) if resource is not None else None,
+                    **{n: e.get(n) for n in numeric},
+                }
+            )
+    columns = ["case_id", "position", "time", "activity", "transition", "resource", *numeric]
+    frame = pd.DataFrame(rows, columns=columns)
+    frame["time"] = pd.to_datetime(frame["time"], utc=True, format="ISO8601")
+    for n in numeric:
+        frame[n] = pd.to_numeric(frame[n], errors="coerce").astype("float64")
+    return frame
+
+
+#: process-mining logs: the raw file, how many cases to keep (one in ``modulo``) and the numeric fields  # noqa: E501
+XES_SPECS: dict[str, dict[str, Any]] = {
+    "4tu_bpic12": {"file": "BPI_Challenge_2012.xes.gz", "modulo": 1, "numeric": [], "partial": False},  # noqa: E501
+    "4tu_bpic13_incidents": {"file": "BPI_Challenge_2013_incidents.xes.gz", "modulo": 1, "numeric": [], "partial": False},  # noqa: E501
+    "4tu_bpic15_m5": {"file": "BPIC15_5.xes", "modulo": 1, "numeric": [], "partial": False},
+    "4tu_road_fines": {"file": "Road_Traffic_Fine_Management_Process.xes.gz", "modulo": 1, "numeric": ["amount", "paymentAmount", "expense"], "partial": False},  # noqa: E501
+    "4tu_bpic19": {"file": "BPI_Challenge_2019_head.xes", "modulo": 1, "numeric": ["Cumulative net worth (EUR)"], "partial": True},  # noqa: E501
+}  # fmt: skip
+
+
+def _build_xes(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import gzip
+
+    for source, spec in XES_SPECS.items():
+        path = root / source / SNAPSHOT / "raw" / spec["file"]
+        opener = gzip.open if path.suffix == ".gz" else open
+        with opener(path, "rb") as stream:
+            traces, closed = read_xes(stream)
+        view = xes_view(traces, spec["modulo"], spec["numeric"])
+        folder = out / source
+        folder.mkdir(parents=True, exist_ok=True)
+        target = folder / "events.csv"
+        view.to_csv(target, index=False)
+        _record(
+            manifest,
+            source,
+            {"events.csv": (target, len(view))},
+            dropped=[
+                "all trace and event attributes except activity, time, transition, resource and listed numbers"  # noqa: E501
+            ],
+            pseudonymised=["resource"],
+            sampling={
+                "cases_read": len(traces),
+                "cases_kept": int(view["case_id"].nunique()),
+                "modulo": spec["modulo"],
+                "stream_complete": closed,
+                "source_fragment": spec["partial"],
+            },
+            salt_label=SALT,
+            source_snapshot=f"{source}/{SNAPSHOT}",
+        )
+
+
 SLURM_MODULO = 20
 SLURM_COLUMNS = (
     "jobid",
@@ -1713,6 +1833,7 @@ BUILD_STEPS = (
     _build_openlibrary,
     _build_aegis,
     _build_clue,
+    _build_xes,
     _build_series,
     _build_ukspend,
 )

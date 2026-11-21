@@ -1877,6 +1877,148 @@
    "stratum": "C4",
    "upstream": "first party release by the AIT authors of logs from a partner's cloud storage; the operator's own permission is not separately stated",
    "upstream_verified": false
+  },
+  {
+   "attribution": "cite the 4TU record, DOI 10.4121/uuid:3926db30-f712-4394-aebc-75976070e91f",
+   "files": [
+    {
+     "name": "BPI_Challenge_2012.xes.gz",
+     "observed": "2012-04-23",
+     "url": "https://data.4tu.nl/file/533f66a4-8911-4ac7-8612-1235d65d1f37/3276db7f-8bee-4f2b-88ee-92dbffb5a893"
+    }
+   ],
+   "hosts": [
+    "data.4tu.nl"
+   ],
+   "id": "4tu_bpic12",
+   "licence_class": "open",
+   "licence_location": "https://data.4tu.nl/v2/articles/12689204",
+   "licence_text": "4TU General Terms of Use: the terms resource of 4TU.Centre for Research Data states licence CC0 for datasets where no other licence is given (read at doi.org/10.4121/resource:terms_of_use)",
+   "max_bytes": 104857600,
+   "method": "official 4TU.ResearchData API file download",
+   "min_interval": 3.0,
+   "privacy": "resource and case identifiers pseudonymised by the publisher; resources are further salted in the view",
+   "publisher": "4TU.ResearchData record 12689204: loan applications of a Dutch financial institution (BPI Challenge 2012)",
+   "rate_limit": "sequential downloads, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "the organisations' logs were published by the data owners' academic partners through 4TU; the record names the organisation; pseudonymised by the publisher",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "cite the 4TU record, DOI 10.4121/uuid:500573e6-accc-4b0c-9576-aa5468b10cee",
+   "files": [
+    {
+     "name": "BPI_Challenge_2013_incidents.xes.gz",
+     "observed": "2013-04-12",
+     "url": "https://data.4tu.nl/file/0fc5c579-e544-4fab-9143-fab1f5192432/aa51ffbb-25fd-4b5a-b0b8-9aba659b7e8c"
+    }
+   ],
+   "hosts": [
+    "data.4tu.nl"
+   ],
+   "id": "4tu_bpic13_incidents",
+   "licence_class": "open",
+   "licence_location": "https://data.4tu.nl/v2/articles/12693914",
+   "licence_text": "4TU General Terms of Use: the terms resource of 4TU.Centre for Research Data states licence CC0 for datasets where no other licence is given (read at doi.org/10.4121/resource:terms_of_use)",
+   "max_bytes": 104857600,
+   "method": "official 4TU.ResearchData API file download",
+   "min_interval": 3.0,
+   "privacy": "resource and case identifiers pseudonymised by the publisher; resources are further salted in the view",
+   "publisher": "4TU.ResearchData record 12693914: Volvo IT incident management (BPI Challenge 2013)",
+   "rate_limit": "sequential downloads, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "the organisations' logs were published by the data owners' academic partners through 4TU; the record names the organisation; pseudonymised by the publisher",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "cite the 4TU record, DOI 10.4121/uuid:b32c6fe5-f212-4286-9774-58dd53511cf8",
+   "files": [
+    {
+     "name": "BPIC15_5.xes",
+     "observed": "2015-05-01",
+     "url": "https://data.4tu.nl/file/32b70553-0765-4808-b155-aa5319802c8a/d39e1365-e4b8-4cb8-83d3-0b01cbf6f8c2"
+    }
+   ],
+   "hosts": [
+    "data.4tu.nl"
+   ],
+   "id": "4tu_bpic15_m5",
+   "licence_class": "open",
+   "licence_location": "https://data.4tu.nl/v2/articles/12713285",
+   "licence_text": "4TU General Terms of Use: the terms resource of 4TU.Centre for Research Data states licence CC0 for datasets where no other licence is given (read at doi.org/10.4121/resource:terms_of_use)",
+   "max_bytes": 104857600,
+   "method": "official 4TU.ResearchData API file download",
+   "min_interval": 3.0,
+   "privacy": "resource and case identifiers pseudonymised by the publisher; resources are further salted in the view",
+   "publisher": "4TU.ResearchData record 12713285: building permit applications of Dutch municipality 5 (BPI Challenge 2015)",
+   "rate_limit": "sequential downloads, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "the organisations' logs were published by the data owners' academic partners through 4TU; the record names the organisation; pseudonymised by the publisher",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "cite the 4TU record, DOI 10.4121/uuid:270fd440-1057-4fb9-89a9-b699b47990f5",
+   "files": [
+    {
+     "name": "Road_Traffic_Fine_Management_Process.xes.gz",
+     "observed": "2015-02-10",
+     "url": "https://data.4tu.nl/file/806acd1a-2bf2-4e39-be21-69b8cad10909/b234b06c-4d4f-4055-9f14-6218e3906d82"
+    }
+   ],
+   "hosts": [
+    "data.4tu.nl"
+   ],
+   "id": "4tu_road_fines",
+   "licence_class": "open",
+   "licence_location": "https://data.4tu.nl/v2/articles/12683249",
+   "licence_text": "4TU General Terms of Use: the terms resource of 4TU.Centre for Research Data states licence CC0 for datasets where no other licence is given (read at doi.org/10.4121/resource:terms_of_use)",
+   "max_bytes": 104857600,
+   "method": "official 4TU.ResearchData API file download",
+   "min_interval": 3.0,
+   "privacy": "resource and case identifiers pseudonymised by the publisher; resources are further salted in the view",
+   "publisher": "4TU.ResearchData record 12683249: Italian road traffic fine management (Road Traffic Fine Management Process)",
+   "rate_limit": "sequential downloads, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "the organisations' logs were published by the data owners' academic partners through 4TU; the record names the organisation; pseudonymised by the publisher",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "cite the 4TU record, DOI 10.4121/uuid:d06aff4b-79f0-45e6-8ec8-e19730c248f1",
+   "hosts": [
+    "data.4tu.nl"
+   ],
+   "id": "4tu_bpic19",
+   "licence_class": "open",
+   "licence_location": "https://data.4tu.nl/v2/articles/12715853",
+   "licence_text": "CC BY 4.0 stated on the 4TU record",
+   "max_bytes": 104857600,
+   "method": "official 4TU.ResearchData API file download",
+   "min_interval": 3.0,
+   "privacy": "resource and case identifiers pseudonymised by the publisher; resources are further salted in the view",
+   "publisher": "4TU.ResearchData record 12715853: purchase order handling of a multinational coatings company (BPI Challenge 2019)",
+   "ranges": [
+    {
+     "length": 62914560,
+     "name": "BPI_Challenge_2019_head.xes",
+     "observed": "2019-01-31",
+     "start": 0,
+     "url": "https://data.4tu.nl/file/35ed7122-966a-484e-a0e1-749b64e3366d/864493d1-3a58-47f6-ad6f-27f95f995828"
+    }
+   ],
+   "rate_limit": "sequential downloads, 3 s apart",
+   "redistribution": "as the licence states; raw files stay local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "the organisations' logs were published by the data owners' academic partners through 4TU; the record names the organisation; pseudonymised by the publisher",
+   "upstream_verified": true
   }
  ]
 }

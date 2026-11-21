@@ -791,6 +791,99 @@
    "size": null,
    "source_url": "",
    "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "4tu:bpic12",
+   "licence": "4TU terms of use state CC0 unless another licence is given",
+   "name": "BPI Challenge 2012",
+   "next_step": "none",
+   "notes": "found by identifier on 4TU after searching its API",
+   "publisher": "4TU.ResearchData",
+   "reason": "real event log of an organisation",
+   "size": null,
+   "source_url": "https://data.4tu.nl/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "4tu:bpic13",
+   "licence": "4TU terms of use state CC0 unless another licence is given",
+   "name": "BPI Challenge 2013 incidents",
+   "next_step": "none",
+   "notes": "found by identifier on 4TU after searching its API",
+   "publisher": "4TU.ResearchData",
+   "reason": "real event log of an organisation",
+   "size": null,
+   "source_url": "https://data.4tu.nl/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "4tu:bpic15",
+   "licence": "4TU terms of use state CC0 unless another licence is given",
+   "name": "BPI Challenge 2015 municipality 5",
+   "next_step": "none",
+   "notes": "found by identifier on 4TU after searching its API",
+   "publisher": "4TU.ResearchData",
+   "reason": "real event log of an organisation",
+   "size": null,
+   "source_url": "https://data.4tu.nl/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4",
+    "C2b"
+   ],
+   "id": "4tu:road-fines",
+   "licence": "4TU terms of use state CC0 unless another licence is given",
+   "name": "Road Traffic Fine Management",
+   "next_step": "none",
+   "notes": "found by identifier on 4TU after searching its API",
+   "publisher": "4TU.ResearchData",
+   "reason": "real event log of an organisation",
+   "size": null,
+   "source_url": "https://data.4tu.nl/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4",
+    "C2b"
+   ],
+   "id": "4tu:bpic19",
+   "licence": "CC BY 4.0 on the record",
+   "name": "BPI Challenge 2019",
+   "next_step": "none",
+   "notes": "found by identifier on 4TU after searching its API",
+   "publisher": "4TU.ResearchData",
+   "reason": "real event log of an organisation",
+   "size": null,
+   "source_url": "https://data.4tu.nl/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4",
+    "C2b"
+   ],
+   "id": "4tu:more-bpic",
+   "licence": "4TU terms (CC0) or per record",
+   "name": "BPIC 2014, 2016, 2017, 2018, 2020 and other 4TU event logs",
+   "next_step": "locate the 4TU ids of BPIC 2014, 2018 and 2020 and the Rabobank logs; one group per organisation",
+   "notes": "",
+   "publisher": "4TU.ResearchData",
+   "reason": "same repository; BPIC17 shares the provenance of BPIC12; BPIC16 is CSV; 2018 and 2020 ids not yet located",
+   "size": null,
+   "source_url": "https://data.4tu.nl/",
+   "status": "accessible_eligible"
   }
  ],
  "date": "2026-11-21",

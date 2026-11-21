@@ -1590,6 +1590,146 @@
    "stratum": "C4",
    "system": "clue_cloud_storage",
    "upstream_status": "unverified"
+  },
+  {
+   "eligible": true,
+   "family": "4tu_bpic12",
+   "id": "4tu_bpic12",
+   "licence_class": "open",
+   "protocols": "P-SEQ on case event sequences (order, duplicate, missing-step and timestamp faults); natural rework and anomalies are baselines",
+   "publisher": "fin_institute_nl",
+   "reason": "BPI Challenge 2012: loan applications of a Dutch financial institution, Oct 2011 to Mar 2012: 262200 events in 13087 cases; resources salted; attributes other than activity, time, transition and listed numbers dropped",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "4TU terms (CC0)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "fin_institute_nl",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "4tu_bpic13_incidents",
+   "id": "4tu_bpic13_incidents",
+   "licence_class": "open",
+   "protocols": "P-SEQ on case event sequences (order, duplicate, missing-step and timestamp faults); natural rework and anomalies are baselines",
+   "publisher": "volvo_it",
+   "reason": "BPI Challenge 2013: Volvo IT Belgium incident management: 65533 events in 7554 cases; resources salted; attributes other than activity, time, transition and listed numbers dropped",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "4TU terms (CC0)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "volvo_it",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "4tu_bpic15_m5",
+   "id": "4tu_bpic15_m5",
+   "licence_class": "open",
+   "protocols": "P-SEQ on case event sequences (order, duplicate, missing-step and timestamp faults); natural rework and anomalies are baselines",
+   "publisher": "dutch_municipalities",
+   "reason": "BPI Challenge 2015: building permit applications of Dutch municipality 5 (the other four municipalities share the provenance and are not counted): 59083 events in 1156 cases; resources salted; attributes other than activity, time, transition and listed numbers dropped",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "4TU terms (CC0)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "dutch_municipalities",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "4tu_road_fines",
+   "id": "4tu_road_fines",
+   "licence_class": "open",
+   "protocols": "P-SEQ on case event sequences (order, duplicate, missing-step and timestamp faults); natural rework and anomalies are baselines",
+   "publisher": "italian_road_fines",
+   "reason": "Road Traffic Fine Management Process: fines of an Italian police information system: 561470 events in 150370 cases; resources salted; attributes other than activity, time, transition and listed numbers dropped",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "4TU terms (CC0)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "italian_road_fines",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "4tu_bpic19",
+   "id": "4tu_bpic19",
+   "licence_class": "open",
+   "protocols": "P-SEQ on case event sequences (order, duplicate, missing-step and timestamp faults); natural rework and anomalies are baselines",
+   "publisher": "coatings_multinational",
+   "reason": "BPI Challenge 2019: purchase order items of a multinational coatings company, first 19484 complete cases of a 60 MiB prefix of the XES file: 144920 events in 19484 cases; resources salted; attributes other than activity, time, transition and listed numbers dropped",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 on the 4TU record",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "coatings_multinational",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "4tu_road_fines",
+   "id": "4tu_road_fines:transactions",
+   "licence_class": "open",
+   "protocols": "P-TAB on event rows with amounts (amount, duplicate, timestamp faults)",
+   "publisher": "italian_road_fines",
+   "reason": "transactional participation of the same source: fine amounts, payment amounts and expenses of an Italian police information system (230230 events with an amount); same provenance group as the C4 entry, not an extra source",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "as the C4 entry",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "italian_road_fines",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "4tu_bpic19",
+   "id": "4tu_bpic19:transactions",
+   "licence_class": "open",
+   "protocols": "P-TAB on event rows with amounts (amount, duplicate, timestamp faults)",
+   "publisher": "coatings_multinational",
+   "reason": "transactional participation of the same source: purchase order items with cumulative net worth in EUR; same provenance group as the C4 entry, not an extra source",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "as the C4 entry",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "coatings_multinational",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

@@ -1,5 +1,111 @@
 {
  "facts": {
+  "4tu_bpic12": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "file times and resources pseudonymised by the publisher",
+    "case-level requested amount not kept"
+   ],
+   "first_party": false,
+   "independent_group": "fin_institute_nl",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15, whole cases",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 13087,
+   "view": "4tu_bpic12"
+  },
+  "4tu_bpic13_incidents": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "support-ticket process with reassignments and loops (natural rework)"
+   ],
+   "first_party": false,
+   "independent_group": "volvo_it",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15, whole cases",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 7554,
+   "view": "4tu_bpic13_incidents"
+  },
+  "4tu_bpic15_m5": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "permit process with long case durations",
+    "one of five municipalities"
+   ],
+   "first_party": false,
+   "independent_group": "dutch_municipalities",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15, whole cases",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 1156,
+   "view": "4tu_bpic15_m5"
+  },
+  "4tu_bpic19": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "XES prefix, not random",
+    "some event timestamps are impossible (earliest 1948), a natural data-entry irregularity kept as baseline",
+    "item-level traces up to 923 events"
+   ],
+   "first_party": false,
+   "independent_group": "coatings_multinational",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15, whole cases",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 19484,
+   "view": "4tu_bpic19"
+  },
+  "4tu_bpic19:transactions": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "XES prefix, not random",
+    "some event timestamps are impossible (earliest 1948), a natural data-entry irregularity kept as baseline",
+    "item-level traces up to 923 events"
+   ],
+   "first_party": false,
+   "independent_group": "coatings_multinational",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 144920,
+   "view": "4tu_bpic19"
+  },
+  "4tu_road_fines": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "event times from 1999-12-31 to 2013-06-17",
+    "payments and penalties are natural events"
+   ],
+   "first_party": false,
+   "independent_group": "italian_road_fines",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15, whole cases",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 150370,
+   "view": "4tu_road_fines"
+  },
+  "4tu_road_fines:transactions": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "event times from 1999-12-31 to 2013-06-17",
+    "payments and penalties are natural events"
+   ],
+   "first_party": false,
+   "independent_group": "italian_road_fines",
+   "min_units": 1000,
+   "partitions": "hash of the case id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 561470,
+   "view": "4tu_road_fines"
+  },
   "bikeshare_capital": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [

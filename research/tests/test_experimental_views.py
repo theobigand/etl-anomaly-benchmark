@@ -992,6 +992,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     cl.mkdir(parents=True)
     with _zc.ZipFile(cl / "clue_head.zip", "w", _zc.ZIP_DEFLATED) as _c:
         _c.writestr("clue.json", _clue(1) + "\n")
+    monkeypatch.setattr(ev, "XES_SPECS", {})
     out = tmp_path / "out"
     manifest = ev.build(root, out)
     assert list(manifest) == [
@@ -2549,3 +2550,123 @@ def test_the_clue_builder_reads_the_zip_prefix_caps_the_events_and_records_the_c
     )
     assert view["dropped"] == ["params (paths, groups)", "location", "uidType"]
     assert view["pseudonymised"] == ["user"]
+
+
+# --- XES event logs (process-mining logs of real organisations) -----------------------------------
+
+XES = """<?xml version="1.0" encoding="UTF-8"?>
+<log xes.version="1.0">
+ <trace><string key="concept:name" value="c1"/>
+  <event><string key="concept:name" value="A"/>
+   <date key="time:timestamp" value="2012-01-01T10:00:00.000+01:00"/>
+   <string key="lifecycle:transition" value="START"/><string key="org:resource" value="r1"/>
+   <float key="amount" value="5.5"/></event>
+  <event><string key="concept:name" value="B"/>
+   <date key="time:timestamp" value="2012-01-01T11:00:00.000+01:00"/></event>
+ </trace>
+ <trace><string key="concept:name" value="c2"/>
+  <event><string key="concept:name" value="A"/>
+   <date key="time:timestamp" value="2012-01-02T10:00:00.000+01:00"/>
+   <int key="amount" value="7"/></event>
+ </trace>
+ <trace><string key="concept:name" value="c3"/>
+  <event><string key="concept:name" value="C"/>
+   <date key="time:timestamp" value="2012-01-03T10:00:00.000+01:00"/></event>
+</log>
+"""
+
+
+def test_xes_traces_are_read_with_event_attributes_and_a_cut_file_keeps_complete_traces_only():
+    import io
+
+    traces, complete = ev.read_xes(io.BytesIO(XES.encode()))
+    assert complete is False  # the last trace and the log are not closed in this fixture
+    assert [t["case"] for t in traces] == ["c1", "c2"]
+    first = traces[0]["events"][0]
+    assert first == {"concept:name": "A", "time:timestamp": "2012-01-01T10:00:00.000+01:00", "lifecycle:transition": "START", "org:resource": "r1", "amount": 5.5}  # fmt: skip  # noqa: E501
+    assert traces[1]["events"][0]["amount"] == 7
+    whole, ok = ev.read_xes(
+        io.BytesIO(XES.replace("</event>\n</log>", "</event></trace></log>").encode())
+    )
+    assert ok is True and [t["case"] for t in whole] == ["c1", "c2", "c3"]
+    none, flag = ev.read_xes(io.BytesIO(b"<log><trace><string key='concept:name' value='x'/>"))
+    assert none == [] and flag is False
+    with pytest.raises(ev.ViewError, match="not XML"):
+        ev.read_xes(io.BytesIO(b"plain text, no tags at all"))
+
+
+def test_the_xes_view_flattens_events_orders_cases_by_hash_pseudonymises_resources_and_keeps_listed_numbers():  # noqa: E501
+    import io
+
+    fixed = XES.replace("</event>\n</log>", "</event></trace></log>")
+    traces, _ = ev.read_xes(io.BytesIO(fixed.encode()))
+    out = ev.xes_view(traces, modulo=1, numeric=["amount"])
+    assert list(out.columns) == [
+        "case_id",
+        "position",
+        "time",
+        "activity",
+        "transition",
+        "resource",
+        "amount",
+    ]
+    assert out["case_id"].tolist() == ["c1", "c1", "c2", "c3"] and out["position"].tolist() == [
+        0,
+        1,
+        0,
+        0,
+    ]
+    assert out["activity"].tolist() == ["A", "B", "A", "C"]
+    assert out["time"].iloc[0] == pd.Timestamp("2012-01-01 09:00:00", tz="UTC")  # normalised to UTC
+    assert out["resource"].iloc[0] == ev.pseudonym("r1") and pd.isna(out["resource"].iloc[1])
+    assert out["transition"].iloc[0] == "START" and pd.isna(out["transition"].iloc[2])
+    assert (
+        out["amount"].tolist()[0] == 5.5
+        and pd.isna(out["amount"].iloc[1])
+        and out["amount"].iloc[2] == 7.0
+    )
+    import hashlib as _h
+
+    some = ev.xes_view(traces, modulo=2, numeric=[])
+    want = [c for c in ("c1", "c2", "c3") if int(_h.sha256(c.encode()).hexdigest(), 16) % 2 == 0]
+    assert sorted(some["case_id"].unique().tolist()) == want and "amount" not in some
+
+
+def test_the_xes_builder_reads_gz_and_plain_files_and_records_cut_and_sampling(
+    tmp_path, monkeypatch
+):
+    import gzip
+
+    root = tmp_path / "acquired"
+    for name, raw_name, data in (
+        (
+            "4tu_a",
+            "log.xes.gz",
+            gzip.compress(XES.replace("</event>\n</log>", "</event></trace></log>").encode()),
+        ),
+        ("4tu_b", "head.xes", XES.encode()),
+    ):
+        folder = root / name / SNAP / "raw"
+        folder.mkdir(parents=True)
+        (folder / raw_name).write_bytes(data)
+    monkeypatch.setattr(ev, "XES_SPECS", {
+        "4tu_a": {"file": "log.xes.gz", "modulo": 1, "numeric": ["amount"], "partial": False},
+        "4tu_b": {"file": "head.xes", "modulo": 1, "numeric": [], "partial": True}})  # fmt: skip
+    manifest = {}
+    ev._build_xes(root, tmp_path / "o" / "deep", manifest)
+    a, b = manifest["4tu_a"], manifest["4tu_b"]
+    assert a["files"]["events.csv"]["rows"] == 4 and a["sampling"] == {"cases_read": 3, "cases_kept": 3, "modulo": 1, "stream_complete": True, "source_fragment": False}  # fmt: skip  # noqa: E501
+    assert b["files"]["events.csv"]["rows"] == 3 and b["sampling"]["cases_read"] == 2
+    assert b["sampling"]["stream_complete"] is False and b["sampling"]["source_fragment"] is True
+    assert a["pseudonymised"] == ["resource"] and a["dropped"] == ["all trace and event attributes except activity, time, transition, resource and listed numbers"]  # fmt: skip  # noqa: E501
+
+
+def test_xes_logs_with_a_namespace_declaration_are_read_like_plain_ones():
+    import io
+
+    text = XES.replace("</event>\n</log>", "</event></trace></log>").replace(
+        '<log xes.version="1.0">', '<log xes.version="1.0" xmlns="http://www.xes-standard.org/">'
+    )
+    traces, closed = ev.read_xes(io.BytesIO(text.encode()))
+    assert closed is True and [t["case"] for t in traces] == ["c1", "c2", "c3"]
+    assert traces[0]["events"][0]["amount"] == 5.5 and traces[1]["events"][0]["amount"] == 7

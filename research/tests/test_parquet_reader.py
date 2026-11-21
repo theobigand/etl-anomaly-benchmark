@@ -134,3 +134,83 @@ def test_row_group_statistics_expose_the_time_range_of_each_group(table_file):
     assert pr.row_group_ranges(table_file, "label") == [("r0", "r3"), ("r4", "r7"), ("r8", "r9")]
     with pytest.raises(pr.ParquetError, match="column 'zzz'"):
         pr.row_group_ranges(table_file, "zzz")
+
+
+def test_statistics_are_required_and_the_error_names_the_row_group(tmp_path):
+    path = tmp_path / "nostats.parquet"
+    pq.write_table(pa.table({"x": pa.array([1, 2, 3])}), path, write_statistics=False)
+    with pytest.raises(pr.ParquetError) as error:
+        pr.row_group_ranges(path, "x")
+    assert str(error.value) == "row group 0: no statistics for column 'x'"
+
+
+def test_error_messages_are_exact(table_file):
+    with pytest.raises(pr.ParquetError) as error:
+        pr.read_sample(table_file, columns=["id"], max_rows=0)
+    assert str(error.value) == "max_rows, stride and batch_rows must be positive"
+    with pytest.raises(pr.ParquetError) as error:
+        pr.read_sample(table_file, columns=["id"], row_groups=[7], max_rows=5)
+    assert str(error.value) == "row group 7 not in the file (3 groups)"
+    with pytest.raises(pr.ParquetError) as error:
+        pr.read_sample(table_file, columns=["nope"], max_rows=5)
+    assert str(error.value) == "column 'nope' not in the file"
+
+
+def test_truncation_is_reported_exactly_at_the_boundaries(table_file):
+    exact, rec = pr.read_sample(table_file, columns=["id"], max_rows=10, batch_rows=5)
+    assert len(exact) == 10 and rec["truncated"] is False  # the limit equals the rows available
+    on_batch, rec = pr.read_sample(table_file, columns=["id"], max_rows=4, batch_rows=2)
+    assert on_batch["id"].tolist() == [0, 1, 2, 3] and rec["truncated"] is True
+    assert rec["rows_read"] == 4  # reading stops at the batch that fills the limit
+    cut, rec = pr.read_sample(table_file, columns=["id"], max_rows=3, batch_rows=2)
+    assert cut["id"].tolist() == [0, 1, 2] and rec["truncated"] is True
+
+
+def test_the_batch_size_limit_allows_a_batch_of_exactly_that_size(table_file):
+    batch = next(pq.ParquetFile(table_file).iter_batches(batch_size=4, columns=["id"]))
+    size = batch.nbytes
+    frame, _ = pr.read_sample(
+        table_file, columns=["id"], max_rows=100, batch_rows=4, max_batch_bytes=size
+    )
+    assert len(frame) == 10
+    with pytest.raises(pr.ParquetError):
+        pr.read_sample(
+            table_file, columns=["id"], max_rows=100, batch_rows=4, max_batch_bytes=size - 1
+        )
+
+
+def test_batches_are_concatenated_with_a_clean_index_and_an_empty_file_gives_an_empty_frame(
+    tmp_path, table_file
+):
+    frame, _ = pr.read_sample(table_file, columns=["id"], max_rows=100, batch_rows=3)
+    assert frame.index.tolist() == list(range(10))
+    empty = tmp_path / "empty.parquet"
+    pq.write_table(pa.table({"id": pa.array([], type=pa.int32())}), empty)
+    out, rec = pr.read_sample(empty, columns=["id"], max_rows=5)
+    assert (
+        len(out) == 0
+        and list(out.columns) == ["id"]
+        and rec["rows_read"] == 0
+        and rec["truncated"] is False
+    )
+    assert rec["row_groups"] == [0] or rec["row_groups"] == []
+
+
+def test_corrupted_data_pages_raise_the_module_error_with_the_path(tmp_path):
+    path = tmp_path / "c.parquet"
+    pq.write_table(
+        pa.table({"s": pa.array([f"value-{i}" for i in range(2000)])}), path, compression="snappy"
+    )
+    blob = bytearray(path.read_bytes())
+    for i in range(40, len(blob) - 200, 3):
+        blob[i] = 0xFF
+    path.write_bytes(bytes(blob))
+    with pytest.raises(pr.ParquetError) as error:
+        pr.read_sample(path, columns=["s"], max_rows=10**6)
+    assert str(error.value).startswith(f"{path}: not a readable Parquet file (")
+
+
+def test_stride_truncation_counts_rows_by_global_position(table_file):
+    frame, rec = pr.read_sample(table_file, columns=["id"], max_rows=2, stride=4, batch_rows=3)
+    assert frame["id"].tolist() == [0, 4] and rec["truncated"] is True
+    assert rec["rows_kept"] == 2 and rec["stride"] == 4

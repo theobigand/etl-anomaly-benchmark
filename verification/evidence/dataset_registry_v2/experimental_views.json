@@ -1,4 +1,119 @@
 {
+ "4tu_bpic12": {
+  "dropped": [
+   "all trace and event attributes except activity, time, transition, resource and listed numbers"
+  ],
+  "files": {
+   "events.csv": {
+    "rows": 262200,
+    "sha256": "d63129e1c51a5350b13f977d99a24d10806828830832f8a1e865810a65eb2695"
+   }
+  },
+  "pseudonymised": [
+   "resource"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "cases_kept": 13087,
+   "cases_read": 13087,
+   "modulo": 1,
+   "source_fragment": false,
+   "stream_complete": true
+  },
+  "source_snapshot": "4tu_bpic12/2026-11-21"
+ },
+ "4tu_bpic13_incidents": {
+  "dropped": [
+   "all trace and event attributes except activity, time, transition, resource and listed numbers"
+  ],
+  "files": {
+   "events.csv": {
+    "rows": 65533,
+    "sha256": "ac5abdfbf05fb436d88a210a78e939c1703e0c28d179dd35401b3867cb5ede18"
+   }
+  },
+  "pseudonymised": [
+   "resource"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "cases_kept": 7554,
+   "cases_read": 7554,
+   "modulo": 1,
+   "source_fragment": false,
+   "stream_complete": true
+  },
+  "source_snapshot": "4tu_bpic13_incidents/2026-11-21"
+ },
+ "4tu_bpic15_m5": {
+  "dropped": [
+   "all trace and event attributes except activity, time, transition, resource and listed numbers"
+  ],
+  "files": {
+   "events.csv": {
+    "rows": 59083,
+    "sha256": "a60ec7df3fec2cf0c1ad2b8292c0c18aa8443b4b17e331407b8d2fc6d4bf7b1b"
+   }
+  },
+  "pseudonymised": [
+   "resource"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "cases_kept": 1156,
+   "cases_read": 1156,
+   "modulo": 1,
+   "source_fragment": false,
+   "stream_complete": true
+  },
+  "source_snapshot": "4tu_bpic15_m5/2026-11-21"
+ },
+ "4tu_bpic19": {
+  "dropped": [
+   "all trace and event attributes except activity, time, transition, resource and listed numbers"
+  ],
+  "files": {
+   "events.csv": {
+    "rows": 144920,
+    "sha256": "2d5cdb21e80f1294cfcee8f887bbee97c6fe513e6c4bf1e2df1d9365248fdcc1"
+   }
+  },
+  "pseudonymised": [
+   "resource"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "cases_kept": 19484,
+   "cases_read": 19484,
+   "modulo": 1,
+   "source_fragment": true,
+   "stream_complete": false
+  },
+  "source_snapshot": "4tu_bpic19/2026-11-21"
+ },
+ "4tu_road_fines": {
+  "dropped": [
+   "all trace and event attributes except activity, time, transition, resource and listed numbers"
+  ],
+  "files": {
+   "events.csv": {
+    "rows": 561470,
+    "sha256": "a689ebad28bc4f970b704b1677b7eb7f84e244da72c5e21a12d4159dc7d2e1f1"
+   }
+  },
+  "pseudonymised": [
+   "resource"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "cases_kept": 150370,
+   "cases_read": 150370,
+   "modulo": 1,
+   "source_fragment": false,
+   "stream_complete": true
+  },
+  "source_snapshot": "4tu_road_fines/2026-11-21"
+ },
  "bikeshare_capital": {
   "dropped": [
    "station names",
