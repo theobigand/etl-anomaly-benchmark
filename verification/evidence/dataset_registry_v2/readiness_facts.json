@@ -2537,6 +2537,22 @@
    "units": 116977,
    "view": "zen_fdata_fugaku"
   },
+  "zen_kelmarsh": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "2016 only: the first months of the farm, several signals absent in about a third of the rows",
+    "constant ten-minute spacing within each turbine",
+    "six turbines of one farm are one generating system, not six sources"
+   ],
+   "first_party": true,
+   "independent_group": "cubico_kelmarsh",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the timestamp",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "units": 314496,
+   "view": "zen_kelmarsh"
+  },
   "zen_metropt2": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [

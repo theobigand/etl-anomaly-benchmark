@@ -4450,6 +4450,26 @@
    "stratum": "C2a",
    "system": "zen_pbdb",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "kelmarsh",
+   "id": "zen_kelmarsh",
+   "licence_class": "open",
+   "protocols": "P-TS by controlled injection on ten-minute SCADA signals; no labelled failures are used",
+   "publisher": "cubico_kelmarsh",
+   "reason": "Kelmarsh wind farm SCADA 2016 (Cubico Sustainable Investments, released by the operator under CC BY 4.0): 314496 ten-minute rows of six Senvion MM92 turbines, 16 signals (wind, power, bearing, oil and generator temperatures, speeds, voltage, current); about a third of some signals missing naturally before full operation; later years not fetched. Wind-energy generation, a domain absent from the corpus",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 stated in the Zenodo record by the operator that released the data",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "kelmarsh_wind_farm",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

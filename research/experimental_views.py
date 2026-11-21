@@ -2210,6 +2210,99 @@ def _build_ppd(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+KELMARSH_SIGNALS = {
+    "Wind speed (m/s)": "wind_speed",
+    "Wind direction (°)": "wind_direction",
+    "Nacelle position (°)": "nacelle_position",
+    "Power (kW)": "power_kw",
+    "Reactive power (kvar)": "reactive_power",
+    "Front bearing temperature (°C)": "front_bearing_temp",
+    "Rear bearing temperature (°C)": "rear_bearing_temp",
+    "Nacelle ambient temperature (°C)": "nacelle_ambient_temp",
+    "Nacelle temperature (°C)": "nacelle_temp",
+    "Gear oil temperature (°C)": "gear_oil_temp",
+    "Generator bearing front temperature (°C)": "generator_front_temp",
+    "Generator bearing rear temperature (°C)": "generator_rear_temp",
+    "Rotor speed (RPM)": "rotor_rpm",
+    "Generator RPM (RPM)": "generator_rpm",
+    "Voltage L1 / U (V)": "voltage_l1",
+    "Current L1 / U (A)": "current_l1",
+}
+KELMARSH_COLUMNS = ("timestamp", "turbine", *KELMARSH_SIGNALS.values())
+
+
+def kelmarsh_view(raw: pd.DataFrame, turbine: str) -> pd.DataFrame:
+    """Ten-minute SCADA signals of one wind turbine in time order.
+
+    The export marks missing and erroneous values as NaN; they stay missing. Signals that a period
+    lacks (the farm began operating in April 2016) are natural gaps and are kept as such.
+    """
+    need = ["Date and time", *KELMARSH_SIGNALS]
+    missing = [c for c in need if c not in raw.columns]
+    if missing:
+        raise ViewError(f"columns not found: {missing}")
+    out = pd.DataFrame({"timestamp": pd.to_datetime(raw["Date and time"], errors="coerce")})
+    out["turbine"] = turbine
+    for source, name in KELMARSH_SIGNALS.items():
+        out[name] = pd.to_numeric(raw[source], errors="coerce")
+    out = out[out["timestamp"].notna()]
+    return out.sort_values("timestamp", kind="stable").reset_index(drop=True)
+
+
+def _kelmarsh_header(lines: list[str]) -> tuple[int, list[str]]:
+    import csv
+
+    for index, line in enumerate(lines):
+        if line.startswith("# Date and time"):
+            return index, next(csv.reader([line[2:]]))
+    raise ViewError("column header line not found")
+
+
+def _build_kelmarsh(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import re
+    import tempfile
+
+    from acquisition import extract_member, zip_members
+
+    raw = root / "zen_kelmarsh" / SNAPSHOT / "raw" / "Kelmarsh_SCADA_2016_3082.zip"
+    members = sorted(
+        m["name"] for m in zip_members(raw) if re.match(r"Turbine_Data_Kelmarsh_\d+_", m["name"])
+    )
+    if not members:
+        raise ViewError("no turbine data file in the archive")
+    frames = []
+    with tempfile.TemporaryDirectory() as scratch:
+        for name in members:
+            got = extract_member(raw, name, Path(scratch), max_bytes=1 << 30, max_ratio=200)
+            with open(got["path"], encoding="utf-8") as handle:
+                head = [handle.readline().rstrip("\n") for _ in range(30)]
+            skip, header = _kelmarsh_header(head)
+            wanted = ["Date and time", *KELMARSH_SIGNALS]
+            frame = pd.read_csv(
+                got["path"], skiprows=skip + 1, names=header, usecols=wanted, na_values=["NaN"]
+            )
+            frames.append(kelmarsh_view(frame, "T" + re.search(r"Kelmarsh_(\d+)_", name).group(1)))
+            Path(got["path"]).unlink()
+    view = pd.concat(frames, ignore_index=True)
+    folder = out / "zen_kelmarsh"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "series.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "zen_kelmarsh",
+        {"series.csv": (target, len(view))},
+        dropped=["about 280 other SCADA columns", "status and event files"],
+        pseudonymised=[],
+        sampling={
+            "method": "all ten-minute rows of the 2016 SCADA archive for the six turbines; later years were not fetched",  # noqa: E501
+            "turbines": len(members),
+            "rows_in": len(view),
+        },
+        source_snapshot=f"zen_kelmarsh/{SNAPSHOT}",
+    )
+
+
 PBDB_STRIDE = 10
 PBDB_TEXT = (
     "accepted_rank", "phylum", "class", "order", "family", "early_interval", "late_interval", "cc",
@@ -2461,6 +2554,7 @@ BUILD_STEPS = (
     _build_ppd,
     _build_retail,
     _build_pbdb,
+    _build_kelmarsh,
     _build_flat,
     _build_series,
     _build_ukspend,

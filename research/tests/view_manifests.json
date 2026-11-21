@@ -199,6 +199,29 @@
    "source_snapshot": "zen_fdata_fugaku/2026-11-21"
   }
  },
+ "kelmarsh": {
+  "zen_kelmarsh": {
+   "dropped": [
+    "about 280 other SCADA columns",
+    "status and event files"
+   ],
+   "files": {
+    "series.csv": {
+     "rows": 4
+    }
+   },
+   "heads": {
+    "series.csv": "timestamp,turbine,wind_speed,wind_direction,nacelle_position,power_kw,reactive_power,front_bearing_temp,rear_bearing_tem"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "all ten-minute rows of the 2016 SCADA archive for the six turbines; later years were not fetched",
+    "rows_in": 4,
+    "turbines": 2
+   },
+   "source_snapshot": "zen_kelmarsh/2026-11-21"
+  }
+ },
  "met": {
   "met_museum_objects": {
    "dropped": [

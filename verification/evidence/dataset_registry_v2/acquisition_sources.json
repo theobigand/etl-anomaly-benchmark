@@ -7831,6 +7831,39 @@
    "stratum": "C2a",
    "upstream": "first party: the licence statement was read at the PBDB data service, the original producer of the records",
    "upstream_verified": true
+  },
+  {
+   "attribution": "cite the Kelmarsh wind farm data (Plumley, Cubico Sustainable Investments) and the Zenodo record 16807551",
+   "files": [
+    {
+     "name": "Kelmarsh_SCADA_2016_3082.zip",
+     "observed": "2016",
+     "url": "https://zenodo.org/records/16807551/files/Kelmarsh_SCADA_2016_3082.zip?download=1"
+    },
+    {
+     "name": "Kelmarsh_WT_static.csv",
+     "observed": "2016",
+     "url": "https://zenodo.org/records/16807551/files/Kelmarsh_WT_static.csv?download=1"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_kelmarsh",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/16807551",
+   "licence_text": "Zenodo record 16807551: license cc-by-4.0, access_right open; the description states that the dataset was released by Cubico Sustainable Investments Ltd under CC-BY-4.0 'as is'",
+   "max_bytes": 209715200,
+   "method": "official Zenodo record download of the 2016 SCADA archive (smallest year, six turbines) and the turbine static table; the other years are not fetched",
+   "min_interval": 3.0,
+   "privacy": "turbine operating data of a wind farm; no personal data",
+   "publisher": "Cubico Sustainable Investments (Kelmarsh wind farm, Greenbyte secondary SCADA)",
+   "rate_limit": "two sequential downloads",
+   "redistribution": "CC BY 4.0 permits it; raw files stay local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party: released by the operator and owner of the wind farm itself",
+   "upstream_verified": true
   }
  ]
 }

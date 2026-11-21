@@ -1126,6 +1126,21 @@
    "size": null,
    "source_url": "https://www.gov.uk/guidance/about-the-price-paid-data",
    "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:16807551",
+   "licence": "CC BY 4.0 released by the operator Cubico",
+   "name": "Kelmarsh wind farm SCADA",
+   "next_step": "none",
+   "notes": "2016 archive only; 2017 to 2024 and the Penmanshiel farm of the same operator would be the same provenance group",
+   "publisher": "Cubico Sustainable Investments",
+   "reason": "ten-minute turbine signals from an operating wind farm",
+   "size": null,
+   "source_url": "https://zenodo.org/records/16807551",
+   "status": "experiment_ready"
   }
  ],
  "date": "2026-11-21",

@@ -1018,6 +1018,9 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     )
     with _zc.ZipFile(pb / "pbdb_parquet.zip", "w") as _p:
         _p.write(tmp_path / "pb.parquet", "pbdb_occs.parquet")
+    km = root / "zen_kelmarsh" / SNAP / "raw"
+    km.mkdir(parents=True)
+    _kelmarsh_zip(km / "Kelmarsh_SCADA_2016_3082.zip")
     monkeypatch.setattr(ev, "EA_STATIONS", ["s"])
     _w(
         root / "ea_hydrology_flow" / SNAP / "raw" / "flow_s.csv",
@@ -1028,7 +1031,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_kelmarsh", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -3152,3 +3155,102 @@ def test_pbdb_view_keeps_the_named_columns_trims_text_and_turns_unreadable_numbe
     assert "enterer" not in out and "collection_aka" not in out
     with pytest.raises(ev.ViewError, match="columns not found: .*'lat'"):
         ev.pbdb_occurrence_view(_pbdb_frame().drop(columns=["lat"]))
+
+
+# --- Kelmarsh wind farm SCADA ------------------------------------------------------------------------  # noqa: E501
+
+
+def _kelmarsh_text(turbine=1, rows=None, extra="Lost Production (kWh)"):
+    """A file in the exported layout: comment lines, a commented column header, then data lines."""
+    names = ["Date and time", *ev.KELMARSH_SIGNALS, extra]
+    rows = rows if rows is not None else [
+        ["2016-01-03 00:10:00"] + ["2.5"] * len(ev.KELMARSH_SIGNALS) + ["9"],
+        ["2016-01-03 00:00:00"] + ["NaN"] * len(ev.KELMARSH_SIGNALS) + ["9"],
+    ]  # fmt: skip
+    head = f"# This file was exported by a tool.\n#\n# Turbine: Kelmarsh {turbine}\n#\n"
+    header = "# " + ",".join(f'"{n}"' if "," in n else n for n in names)
+    return head + header + "\n" + "\n".join(",".join(r) for r in rows) + "\n"
+
+
+def _kelmarsh_zip(path, turbines=(1, 2), text=None):
+    import zipfile as _zk
+
+    with _zk.ZipFile(path, "w") as z:
+        for t in turbines:
+            z.writestr(
+                f"Turbine_Data_Kelmarsh_{t}_2016-01-03_-_2017-01-01_22{t}.csv",
+                text or _kelmarsh_text(t),
+            )
+            z.writestr(f"Status_Kelmarsh_{t}_2016-01-03_-_2017-01-01_22{t}.csv", "# status\n")
+
+
+def test_kelmarsh_view_renames_signals_keeps_missing_values_and_sorts_by_time():
+    names = ["Date and time", *ev.KELMARSH_SIGNALS]
+    raw = pd.DataFrame(
+        [["2016-01-03 00:10:00"] + [2.5] * len(ev.KELMARSH_SIGNALS),
+         ["2016-01-03 00:00:00"] + [None] * len(ev.KELMARSH_SIGNALS),
+         ["bad"] + [1.0] * len(ev.KELMARSH_SIGNALS)],
+        columns=names,
+    )  # fmt: skip
+    out = ev.kelmarsh_view(raw, "T3")
+    assert list(out.columns) == list(ev.KELMARSH_COLUMNS) and ev.KELMARSH_COLUMNS[:2] == (
+        "timestamp",
+        "turbine",
+    )
+    assert len(out) == 2 and out["turbine"].tolist() == [
+        "T3",
+        "T3",
+    ]  # the unreadable time is dropped
+    assert out["timestamp"].is_monotonic_increasing and out["wind_speed"].isna().tolist() == [
+        True,
+        False,
+    ]
+    assert out["power_kw"].iloc[1] == 2.5 and out["generator_rpm"].dtype == "float64"
+    with pytest.raises(ev.ViewError, match="columns not found: .*Power"):
+        ev.kelmarsh_view(raw.drop(columns=["Power (kW)"]), "T3")
+
+
+def test_kelmarsh_header_is_found_in_the_comment_block_and_a_missing_one_is_an_error():
+    lines = _kelmarsh_text().split("\n")
+    index, header = ev._kelmarsh_header(lines)
+    assert index == 4 and header[0] == "Date and time" and header[-1] == "Lost Production (kWh)"
+    assert "Wind speed, Standard deviation (m/s)" not in header
+    with pytest.raises(ev.ViewError, match="column header line not found"):
+        ev._kelmarsh_header(["# nothing", "1,2"])
+
+
+def test_the_kelmarsh_builder_stacks_the_turbines_reads_nan_as_missing_and_records_sampling(
+    tmp_path,
+):
+    raw = tmp_path / "acquired" / "zen_kelmarsh" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    _kelmarsh_zip(raw / "Kelmarsh_SCADA_2016_3082.zip")
+    manifest: dict = {}
+    ev._build_kelmarsh(tmp_path / "acquired", tmp_path / "o", manifest)
+    out = pd.read_csv(tmp_path / "o" / "zen_kelmarsh" / "series.csv")
+    assert out["turbine"].tolist() == ["T1", "T1", "T2", "T2"]
+    assert out["timestamp"].iloc[:2].tolist() == ["2016-01-03 00:00:00", "2016-01-03 00:10:00"]
+    assert (
+        out["wind_speed"].isna().tolist() == [True, False, True, False]
+        and out["power_kw"].iloc[1] == 2.5
+    )
+    view = manifest["zen_kelmarsh"]
+    assert view["sampling"] == {"method": view["sampling"]["method"], "turbines": 2, "rows_in": 4}
+    assert (
+        "2016" in view["sampling"]["method"] and view["source_snapshot"] == f"zen_kelmarsh/{SNAP}"
+    )
+    assert view["files"]["series.csv"]["rows"] == 4 and view["pseudonymised"] == []
+
+
+def test_the_kelmarsh_builder_refuses_an_archive_without_turbine_files_or_header(tmp_path):
+    import zipfile as _zk
+
+    raw = tmp_path / "acquired" / "zen_kelmarsh" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    with _zk.ZipFile(raw / "Kelmarsh_SCADA_2016_3082.zip", "w") as z:
+        z.writestr("Status_Kelmarsh_1_x.csv", "# status\n")
+    with pytest.raises(ev.ViewError, match="no turbine data file in the archive"):
+        ev._build_kelmarsh(tmp_path / "acquired", tmp_path / "o", {})
+    _kelmarsh_zip(raw / "Kelmarsh_SCADA_2016_3082.zip", text="no header here\n1,2\n")
+    with pytest.raises(ev.ViewError, match="column header line not found"):
+        ev._build_kelmarsh(tmp_path / "acquired", tmp_path / "o", {})

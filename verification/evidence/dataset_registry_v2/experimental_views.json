@@ -3376,6 +3376,25 @@
   },
   "source_snapshot": "zen_fdata_fugaku/2026-11-21"
  },
+ "zen_kelmarsh": {
+  "dropped": [
+   "about 280 other SCADA columns",
+   "status and event files"
+  ],
+  "files": {
+   "series.csv": {
+    "rows": 314496,
+    "sha256": "52d1ee35121e82df5bdf66b85c63c3138bdacd4feb02932509652911ef161f79"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "all ten-minute rows of the 2016 SCADA archive for the six turbines; later years were not fetched",
+   "rows_in": 314496,
+   "turbines": 6
+  },
+  "source_snapshot": "zen_kelmarsh/2026-11-21"
+ },
  "zen_metropt2": {
   "dropped": [
    "GPS position, speed and quality columns"

@@ -222,9 +222,16 @@ def _pbdb(root, tmp):
         z.write(tmp / "o.parquet", "pbdb_occs.parquet")
 
 
+def _kelmarsh(root, tmp):
+    raw = root / "zen_kelmarsh" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    tev._kelmarsh_zip(raw / "Kelmarsh_SCADA_2016_3082.zip")
+
+
 CASES = {
     "surf": (_surf, ev._build_surf, ["zen_surf_lisa_slurm"], {}),
     "pbdb": (_pbdb, ev._build_pbdb, ["zen_pbdb"], {"PBDB_STRIDE": 2}),
+    "kelmarsh": (_kelmarsh, ev._build_kelmarsh, ["zen_kelmarsh"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),
     "metropt": (_metropt, ev._build_metropt, ["zen_metropt2"], {}),
     "openlibrary": (_openlibrary, ev._build_openlibrary, ["openlibrary_dump"], {"OPENLIBRARY_MODULO": 1}),  # noqa: E501

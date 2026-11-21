@@ -1973,6 +1973,13 @@
   },
   {
    "failed": null,
+   "group": "cubico_kelmarsh",
+   "id": "zen_kelmarsh",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2171,6 +2178,7 @@
   "C3": [
    "airquality_italy",
    "candanedo_umons",
+   "cubico_kelmarsh",
    "ea_hydrology",
    "elder_home",
    "melbourne_pedestrian",
@@ -2259,13 +2267,13 @@
    "structurally_valid": 13
   },
   "C3": {
-   "acquired": 16,
-   "discovered": 37,
-   "experiment_ready": 13,
-   "protocol_ready": 13,
-   "rights_verified": 16,
-   "scientifically_eligible": 13,
-   "structurally_valid": 14
+   "acquired": 17,
+   "discovered": 38,
+   "experiment_ready": 14,
+   "protocol_ready": 14,
+   "rights_verified": 17,
+   "scientifically_eligible": 14,
+   "structurally_valid": 15
   },
   "C4": {
    "acquired": 30,
