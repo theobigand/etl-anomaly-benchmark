@@ -911,7 +911,8 @@ def tables_view(
         if where:
             rows = rows[rows[where[0]] == where[1]]
         values = rows[child_col].dropna()
-        known = set(out[parent][parent_col].dropna())
+        values = values[values != ""]  # a blank key is a missing key, not a dangling one
+        known = set(out[parent][parent_col].dropna()) - {""}
         bad = int((~values.isin(known)).sum())
         relations.append(
             {
@@ -974,6 +975,7 @@ TABLE_SETS: dict[str, dict[str, Any]] = {
                 "keep": [
                     "piid",
                     "maj_agency_cat",
+                    "duns_no",
                     "assistance_type",
                     "start_date",
                     "end_date",
@@ -981,18 +983,11 @@ TABLE_SETS: dict[str, dict[str, Any]] = {
                 ],
                 "strip": '"; ',
             },
-            "08_patent_information": {
-                "keep": [
-                    "patent",
-                    "filing_date",
-                    "grant_date",
-                    "tot_ipc4",
-                    "claims",
-                    "independent_claims",
-                    "family_size",
-                    "bwd_citation",
-                    "fwd_cit_5",
-                ]  # noqa: E501
+            "06_grant_year": {
+                "keep": ["piid", "fiscal_year", "total_amount", "non_federal", "nr_of_transactions"]
+            },
+            "07_grantee_information": {
+                "keep": ["dunsnumber", "recipient_state_code", "recip_cat_type", "receive_contract"]
             },
         },
         "relations": [
@@ -1010,8 +1005,9 @@ TABLE_SETS: dict[str, dict[str, Any]] = {
                 "piid",
                 {"where": ["grant", "1"]},
             ],
-            ["01_patent_contract", "patent", "08_patent_information", "patent"],
             ["02_procurement_information", "dunsnumber", "04_vendor_information", "dunsnumber"],
+            ["05_grant_information", "duns_no", "07_grantee_information", "dunsnumber"],
+            ["06_grant_year", "piid", "05_grant_information", "piid"],
             ["03_procurement_year", "piid", "02_procurement_information", "piid"],
         ],
     }
@@ -1074,7 +1070,10 @@ def _build_tables(root: Path, out: Path, manifest: dict[str, Any]) -> None:
             manifest,
             source,
             files,
-            dropped=["names, street addresses, phone numbers, free-text descriptions"],
+            dropped=[
+                "names, street addresses, phone numbers, free-text descriptions",
+                "patent information table (fields derived from PATSTAT)",
+            ],
             pseudonymised=[],
             relations=relations,
             notes="relations are the source's own keys; orphans are natural incompleteness of the published extract",  # noqa: E501

@@ -461,12 +461,12 @@
    "licence": "cc-by-4.0",
    "name": "3PFL patents and publications with public-funding linkage",
    "next_step": "acquire, measure foreign keys",
-   "notes": "acquired; views and orphans measured; upstream terms pending",
+   "notes": "C5 via seven federal tables; PATSTAT-derived patent table excluded; orphans measured",
    "publisher": "Zenodo authors",
    "reason": "multi-table CSV (38 MB), procurement links; relation completeness unknown",
    "size": null,
    "source_url": "",
-   "status": "acquired_rights_pending"
+   "status": "experiment_ready"
   },
   {
    "categories": [

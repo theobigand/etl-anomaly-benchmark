@@ -912,7 +912,9 @@
   "zen_3pfl": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
-    "natural orphans: 3 of 14282 contract links, 2 of 35989 grant links, 19 of 50271 patent links"
+    "natural orphans: 3 of 14282 contract links, 2 of 35989 grant links, 143 of 11457 grant-to-grantee keys, 3 of 87093 yearly rows",
+    "blank keys are missing, not dangling",
+    "patent information table excluded (PATSTAT-derived)"
    ],
    "first_party": false,
    "independent_group": "3pfl",

@@ -656,15 +656,10 @@
    "stratum": "C4"
   },
   {
-   "failed": {
-    "reasons": [
-     "upstream terms not verified at the original publisher"
-    ],
-    "status": "rights_verified"
-   },
+   "failed": null,
    "group": "3pfl",
    "id": "zen_3pfl",
-   "status": "discovered",
+   "status": "experiment_ready",
    "stratum": "C5"
   },
   {
@@ -883,6 +878,7 @@
    "surf_lisa_slurm"
   ],
   "C5": [
+   "3pfl",
    "georgia_procurement",
    "openalex",
    "stackexchange",
@@ -928,13 +924,13 @@
    "structurally_valid": 19
   },
   "C5": {
-   "acquired": 13,
+   "acquired": 14,
    "discovered": 14,
-   "experiment_ready": 13,
-   "protocol_ready": 13,
-   "rights_verified": 13,
-   "scientifically_eligible": 13,
-   "structurally_valid": 13
+   "experiment_ready": 14,
+   "protocol_ready": 14,
+   "rights_verified": 14,
+   "scientifically_eligible": 14,
+   "structurally_valid": 14
   },
   "C6": {
    "acquired": 8,

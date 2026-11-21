@@ -786,7 +786,8 @@
  },
  "zen_3pfl": {
   "dropped": [
-   "names, street addresses, phone numbers, free-text descriptions"
+   "names, street addresses, phone numbers, free-text descriptions",
+   "patent information table (fields derived from PATSTAT)"
   ],
   "files": {
    "01_patent_contract.csv": {
@@ -807,11 +808,15 @@
    },
    "05_grant_information.csv": {
     "rows": 16400,
-    "sha256": "49331d4dfbfa7e92b8ea595b500f9fe5be8fe62d19e0ea3c75acfe9500c0293d"
+    "sha256": "b55733934eee2cd92056ed6399d74c5afc21a78bf7b08e530f9a2521225e0167"
    },
-   "08_patent_information.csv": {
-    "rows": 37910,
-    "sha256": "9b4b9ae5deac649215f132c4a31e6e49a404429828f761bd324024e9b6e53d06"
+   "06_grant_year.csv": {
+    "rows": 73220,
+    "sha256": "50ca21f924f399537b22aa4fbedab6dfc2b02978200770565cf76803eba62bbf"
+   },
+   "07_grantee_information.csv": {
+    "rows": 1347,
+    "sha256": "f9d47816552d33610ed6a2691088106d56c0868bd1470422692b199c2ecccab4"
    }
   },
   "notes": "relations are the source's own keys; orphans are natural incompleteness of the published extract",
@@ -832,18 +837,25 @@
     "share": 5.557253605268276e-05
    },
    {
-    "checked": 50271,
-    "child": "01_patent_contract.patent",
-    "orphans": 19,
-    "parent": "08_patent_information.patent",
-    "share": 0.00037795150285452843
-   },
-   {
     "checked": 3824,
     "child": "02_procurement_information.dunsnumber",
     "orphans": 0,
     "parent": "04_vendor_information.dunsnumber",
     "share": 0.0
+   },
+   {
+    "checked": 11457,
+    "child": "05_grant_information.duns_no",
+    "orphans": 143,
+    "parent": "07_grantee_information.dunsnumber",
+    "share": 0.012481452387186873
+   },
+   {
+    "checked": 73220,
+    "child": "06_grant_year.piid",
+    "orphans": 2,
+    "parent": "05_grant_information.piid",
+    "share": 2.7314941272876262e-05
    },
    {
     "checked": 13873,

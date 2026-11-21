@@ -2400,3 +2400,18 @@ def test_the_open_library_builder_reads_the_gzip_prefix_and_records_the_cut(tmp_
         "gzip prefix of the editions dump in key-text order"
     )
     assert view["dropped"] == ["notes", "description", "first_sentence", "table_of_contents"]
+
+
+def test_blank_keys_are_missing_not_orphans_in_relation_checks():
+    tables = {
+        "a": pd.DataFrame({"k": ["1", "", "9", None]}),
+        "b": pd.DataFrame({"k": ["1", ""]}),
+    }
+    spec = {
+        "tables": {"a": {"keep": ["k"]}, "b": {"keep": ["k"]}},
+        "relations": [["a", "k", "b", "k"]],
+    }
+    _, relations = ev.tables_view(tables, spec)
+    assert relations == [
+        {"child": "a.k", "parent": "b.k", "checked": 2, "orphans": 1, "share": 0.5}
+    ]

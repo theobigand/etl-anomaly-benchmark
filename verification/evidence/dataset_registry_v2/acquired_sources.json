@@ -1398,18 +1398,18 @@
    "licence_class": "open",
    "protocols": "P-REL",
    "publisher": "3pfl_authors",
-   "reason": "Nine linked tables of US federal contracts, grants, vendors, patents and papers (de Rassenfosse and Raiteri); natural key orphans: contract links 3 of 14282, grant links 2 of 35989, patent links 19 of 50271. Upstream sources (federal spending data, patent office, Web of Science identifiers) not yet read at their publishers",
+   "reason": "seven linked tables of US federal contracts, grants, vendors and grantees (3PFL, de Rassenfosse and Raiteri): 50271 contract and grant links, 3824 contracts, 16400 grants; natural key orphans after treating blank keys as missing: contract links 3 of 14282, grant links 2 of 35989, grant to grantee 143 of 11457, yearly rows 3 of 87093; the patent table is excluded for its PATSTAT-derived fields; vendor names, addresses and phones dropped",
    "stages": {
     "collection_implemented": true,
     "data_acquired": true,
     "discovered": true,
-    "licence_verified": "CC BY 4.0 on the Zenodo record; upstream terms pending",
+    "licence_verified": "CC BY 4.0 on the Zenodo record; the view keeps only federal procurement and grant tables (US federal government works, not protected by copyright in the US per usa.gov 'Copyrighted government works', Copyright Law sections 101 and 105); the patent information table, which the record says draws on PATSTAT, is excluded",
     "ready_for_experiments": false,
     "structural_validation": true
    },
    "stratum": "C5",
    "system": "3pfl",
-   "upstream_status": "unverified"
+   "upstream_status": "verified"
   },
   {
    "eligible": false,
