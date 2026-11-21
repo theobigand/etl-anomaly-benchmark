@@ -1047,3 +1047,122 @@ def test_the_default_openers_are_bound_to_the_listed_and_redirect_hosts(tmp_path
     snap = aq.Snapshot(tmp_path, spec, "r", sleep=lambda s: None)
     snap.fetch("https://example.org/a", "a.bin", None)
     assert sorted(seen["hosts"]) == ["cdn.example.net", "example.org"]
+
+
+# --- opener construction, host binding and decompression bounds ---------------------------------
+
+
+def test_the_opener_is_bound_to_the_given_hosts_or_to_the_host_of_the_url():
+    default = aq._opener(None, "https://data.example.org/path")
+    handler = next(h for h in default.handlers if isinstance(h, aq.GuardedRedirect))
+    assert handler.hosts == ["data.example.org"]  # no list given: only the request's own host
+    given = aq._opener(["a.org", "b.org"], "https://data.example.org/path")
+    assert next(h for h in given.handlers if isinstance(h, aq.GuardedRedirect)).hosts == [
+        "a.org",
+        "b.org",
+    ]
+    empty = aq._opener(None, "not a url")
+    assert next(h for h in empty.handlers if isinstance(h, aq.GuardedRedirect)).hosts == [""]
+    assert (
+        sum(isinstance(h, aq.urllib.request.HTTPRedirectHandler) for h in given.handlers) == 1
+    )  # replaced, not added
+
+
+def test_the_url_and_range_openers_pass_their_hosts_and_url_to_the_opener_factory(monkeypatch):
+    calls = []
+
+    class Reply:
+        status = 206
+        headers = {"Content-Range": "bytes 0-1/9"}
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc):
+            return False
+
+        def read(self, n):
+            return b"ab"
+
+    monkeypatch.setattr(
+        aq,
+        "_opener",
+        lambda hosts, url: (
+            calls.append((hosts, url)) or types.SimpleNamespace(open=lambda r, timeout: Reply())
+        ),
+    )
+    aq.open_url("https://h.org/a", 10, hosts=["h.org", "c.org"])
+    aq.open_range("https://h.org/b", 0, 2, hosts=["h.org"])
+    assert calls == [(["h.org", "c.org"], "https://h.org/a"), (["h.org"], "https://h.org/b")]
+    request_seen = []
+    monkeypatch.setattr(
+        aq,
+        "_opener",
+        lambda hosts, url: types.SimpleNamespace(
+            open=lambda r, timeout: request_seen.append(r) or Reply()
+        ),
+    )
+    aq.open_range("https://h.org/b", 5, 3)
+    assert request_seen[0].get_header("Range") == "bytes=5-7"  # the last byte is start + length - 1
+
+
+def test_the_default_range_opener_receives_the_listed_and_redirect_hosts(tmp_path, monkeypatch):
+    seen = {}
+
+    def fake_range(url, start, length, hosts=None):
+        seen["hosts"] = hosts
+        return {
+            "status": 206,
+            "content_range": f"bytes {start}-{start + length - 1}/50",
+            "body": b"x" * length,
+        }
+
+    monkeypatch.setattr(aq, "open_range", fake_range)
+    spec = {**RANGE_SPEC, "hosts": ["example.org"], "redirect_hosts": ["cdn.example.net"]}
+    aq.Snapshot(tmp_path, spec, "r", sleep=lambda s: None).fetch_range(
+        "https://example.org/f", "f", start=0, length=3, observed=None
+    )
+    assert seen["hosts"] == ["example.org", "cdn.example.net"]
+
+
+def test_decompression_never_produces_more_than_the_output_limit_plus_one_byte(monkeypatch):
+    import gzip
+    import zlib
+
+    produced = []
+    real = zlib.decompressobj
+
+    class Spy:
+        def __init__(self, wbits):
+            self.inner = real(wbits=wbits)
+
+        def decompress(self, data, max_length=0):
+            out = self.inner.decompress(data, max_length)
+            produced.append(len(out))
+            return out
+
+        def __getattr__(self, name):
+            return getattr(self.inner, name)
+
+    monkeypatch.setattr(zlib, "decompressobj", lambda wbits: Spy(wbits))
+    bomb = gzip.compress(b"0" * 5_000_000)  # a few KB that expand to 5 MB
+    result = aq.gzip_prefix_lines(bomb, max_output=1000)
+    assert sum(produced) == 1001 and result["output_bytes"] == 1000 and result["complete"] is False
+
+
+def test_a_zip_member_with_an_extra_field_is_read_from_the_right_offset():
+    import io
+    import zipfile
+
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer, "w", zipfile.ZIP_DEFLATED) as archive:
+        info = zipfile.ZipInfo("data.jsonl")
+        info.extra = b"\xfe\xca\x04\x00abcd"  # an unknown extra record of four bytes
+        info.compress_type = zipfile.ZIP_DEFLATED
+        archive.writestr(info, b"line one\nline two\n")
+    out = aq.zip_prefix_lines(buffer.getvalue(), max_output=1000)
+    assert (
+        out["lines"] == ["line one", "line two"]
+        and out["member"] == "data.jsonl"
+        and out["complete"] is True
+    )

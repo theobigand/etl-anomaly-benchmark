@@ -288,3 +288,78 @@ def test_coverage_summary_handles_an_empty_category_and_uses_the_largest_family_
     assert out["C1"] == {"groups": 0, "domains": 0, "producers": 0, "curators": 0, "schema_families": 0,  # noqa: E501
                          "largest_schema_family_share": 0.0, "effective_groups": 0.0}  # fmt: skip
     assert out["C3"]["largest_schema_family_share"] == 1.0 and out["ALL"]["groups"] == 1
+
+
+def test_ci_sources_start_from_two_and_step_by_one():
+    assert tf.ci_sources(0.01, 1.0) == 2  # a tiny sigma needs only two sources
+    assert (
+        tf.ci_sources(0.10, 0.04) == 27 and tf.ci_sources(0.2, 0.07) == 34
+    )  # odd and even results
+
+
+def test_the_grid_applies_the_number_of_comparisons_to_the_normal_approximation_too():
+    grid = tf.sensitivity_grid(sigmas=[0.10], deltas=[0.05], comparisons=[1, 3])
+    assert grid[1]["z_sources"] == pytest.approx(tf.z_sources(0.10, 0.05, comparisons=3), abs=1e-9)
+    assert grid[1]["z_sources"] > grid[0]["z_sources"]
+
+
+def test_the_report_pins_its_simulation_and_minimum_detectable_grids():
+    attributes = {
+        "a": {
+            "domain": "d",
+            "producer": "p",
+            "curator": "c",
+            "schema_family": "s",
+            "generating_system": "g",
+        }
+    }
+    out = tf.report(attributes, {"ready_groups": {"C3": ["a"]}})
+    rows = [(r["domains"], r["per_domain"], r["sigma_domain"], r["null_rejection_source_level"], r["null_rejection_domain_level"]) for r in out["simulation"]]  # fmt: skip  # noqa: E501
+    assert rows == [
+        (6, 5, 0.08, 0.3595, 0.048),
+        (10, 3, 0.08, 0.219, 0.0525),
+        (10, 3, 0.02, 0.085, 0.0505),
+    ]
+    assert [r["sources"] for r in out["minimum_detectable_delta"]][::3] == [10, 18, 25, 34, 49, 73]
+    by = {(r["sources"], r["sigma"]): r["delta"] for r in out["minimum_detectable_delta"]}
+    assert (
+        by[(25, 0.05)] == 0.0293
+        and by[(25, 0.15)] == 0.0877
+        and by[(49, 0.05)] == 0.0205
+        and by[(49, 0.15)] == 0.0613
+    )
+    assert (
+        len(out["minimum_detectable_delta"]) == 18
+        and out["coverage"]["0.2"]["C3"]["effective_groups"] == 1.0
+    )
+
+
+def test_main_without_arguments_uses_the_evidence_folder_next_to_the_package_and_describes_itself(
+    tmp_path, monkeypatch, capsys
+):
+    import json
+
+    folder = tmp_path / "verification" / "evidence" / "dataset_registry_v2"
+    folder.mkdir(parents=True)
+    (folder / "source_attributes.json").write_text(
+        json.dumps(
+            {
+                "a": {
+                    "domain": "d",
+                    "producer": "p",
+                    "curator": "c",
+                    "schema_family": "s",
+                    "generating_system": "g",
+                }
+            }
+        )
+    )
+    (folder / "readiness.json").write_text(json.dumps({"ready_groups": {"C3": ["a"]}}))
+    (tmp_path / "research").mkdir()
+    monkeypatch.setattr(tf, "__file__", str(tmp_path / "research" / "target_framework.py"))
+    assert tf.main([]) == 0
+    assert (folder / "target_framework.json").exists()
+    with pytest.raises(SystemExit):
+        tf.main(["--help"])
+    help_text = capsys.readouterr().out
+    assert "Design-only calculations" in help_text and "--dir DIR" in help_text
