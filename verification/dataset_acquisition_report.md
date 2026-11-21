@@ -725,3 +725,9 @@ CC-IN2P3: three producers), P-TS on a metro compressor and a vehicle signal set.
 HPC operations, public health surveillance, industrial maintenance, automotive, hospital pathways, public
 administration processes, police fines, purchasing, travel expenses, recommender data, library catalogues.
 The targets are unchanged and not met.
+
+**Mutation status of Update 10 (focused, keyword-narrowed tests, development feedback).** `parquet_reader.py`: 152
+killed, 2 survived (98.7 percent). Range, gzip, zip prefix and extraction code in `acquisition.py`: 319 killed of
+384 generated for these functions (83.1 percent; 63 survived, 2 suspicious), below the L3 threshold of 95
+percent, so that code is not mutation-certified; closing the survivors is open work. The new views and builders in
+`experimental_views.py` have exact tests but no isolated mutation figure yet. No certification is claimed.
