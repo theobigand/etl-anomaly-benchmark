@@ -2016,6 +2016,51 @@
    "size": "2,000 alerts",
    "source_url": "https://api.weather.gov/alerts?limit=500",
    "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "zenodo:17275425-noumea",
+   "licence": "CC BY 4.0",
+   "name": "Port of Noumea Vessel Stopovers 2005-2013",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as zen_port_noumea (7,335 rows x 26 cols; shipping_agent/vessel_operator/vessel_name dropped, vessel_imo pseudonymised)",
+   "publisher": "Autonomous Port of Noumea (Zenodo 17275425)",
+   "reason": "Independent non-UCI mixed categorical/coordinate maritime dataset",
+   "size": "7,335 rows",
+   "source_url": "https://zenodo.org/api/records/17275425",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "zenodo:19047350-kanto",
+   "licence": "CC BY 4.0",
+   "name": "1923 Kanto Earthquake Landslide Dataset",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as zen_kanto_landslides (21,814 rows x 8 cols; sparse Note dropped)",
+   "publisher": "Kanto Earthquake Landslide Survey Authors (Zenodo 19047350)",
+   "reason": "Independent non-UCI earth science mixed categorical/morphometric dataset",
+   "size": "21,814 rows",
+   "source_url": "https://zenodo.org/api/records/19047350",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "zenodo:22213249-nhif",
+   "licence": "CC BY 4.0",
+   "name": "NHIF Inpatient Hospitalisation Cases (Bulgaria)",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as zen_nhif_hospital_cases (43,503 stride-75 rows x 13 cols; facility_name pseudonymised, 22.5% natural secondary-diagnosis missingness)",
+   "publisher": "Bulgarian NHIF Compilation (Zenodo 22213249)",
+   "reason": "Independent non-UCI clinical pathway/ICD-10 mixed administrative table",
+   "size": "3.26M total / 43,503 view rows",
+   "source_url": "https://zenodo.org/api/records/22213249",
+   "status": "acquired"
   }
  ],
  "date": "2026-11-21",

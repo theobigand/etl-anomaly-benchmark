@@ -4620,6 +4620,22 @@
   },
   "source_snapshot": "zen_japan_buildings/2026-11-22"
  },
+ "zen_kanto_landslides": {
+  "dropped": [
+   "Note"
+  ],
+  "files": {
+   "landslides.csv": {
+    "rows": 21814,
+    "sha256": "14a742284bde99ca90aa814cc83b0e9cbe7018ade477dabe781572fd4c807c65"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "complete 1923 Kanto earthquake landslide CSV attribute table"
+  },
+  "source_snapshot": "zen_kanto_landslides/2026-11-22"
+ },
  "zen_kelmarsh": {
   "dropped": [
    "about 280 other SCADA columns",
@@ -4656,6 +4672,26 @@
    "rows_dropped": 0
   },
   "source_snapshot": "zen_metropt2/2026-11-21 (fragment)"
+ },
+ "zen_nhif_hospital_cases": {
+  "dropped": [],
+  "files": {
+   "hospital_cases.csv": {
+    "rows": 43503,
+    "sha256": "c428e15bccf0ddadb6461941e5fbd411e3040df427e22fd8f4822c95bbd2d78d"
+   }
+  },
+  "pseudonymised": [
+   "facility_name"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "facilities": 465,
+   "method": "every 75th record across the sorted NHIF hospitalisation table",
+   "stride": 75,
+   "total_records": 3262662
+  },
+  "source_snapshot": "zen_nhif_hospital_cases/2026-11-22"
  },
  "zen_pbdb": {
   "dropped": [
@@ -4722,6 +4758,28 @@
    "taxa_in_source": 526570
   },
   "source_snapshot": "zen_pbdb/2026-11-21"
+ },
+ "zen_port_noumea": {
+  "dropped": [
+   "shipping_agent",
+   "vessel_operator",
+   "vessel_name"
+  ],
+  "files": {
+   "stopovers.csv": {
+    "rows": 7335,
+    "sha256": "a99eae902c9e08395d6f552a4655168181cb3e88dc85b4aa04df801f1c88217d"
+   }
+  },
+  "pseudonymised": [
+   "vessel_imo"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "method": "complete New Caledonia international port stopover table",
+   "vessels": 1066
+  },
+  "source_snapshot": "zen_port_noumea/2026-11-22"
  },
  "zen_queensland_petrol": {
   "dropped": [

@@ -571,6 +571,17 @@
    "C5": "season, round, session, entry, lap and pit-stop tables"
   }
  },
+ "kanto_landslides": {
+  "curator": "Zenodo",
+  "domain": "earth science geomorphology",
+  "generating_system": "1923 Kanto Earthquake Kanagawa digitized landslide inventory",
+  "note": "Historical earthquake-triggered landslide inventory with categorical lithology/watershed and quantitative geometry",
+  "producer": "Kanto Earthquake Landslide Survey Authors",
+  "schema_family": "geomorphological landslide hazard inventory",
+  "structure": {
+   "C2a": "mixed geological classification and morphometric slope/area/volume table"
+  }
+ },
  "loghub_collection": {
   "curator": "loghub (one curator)",
   "domain": "system logs (16 systems)",
@@ -661,6 +672,17 @@
   "structure": {
    "C2b": "contract award",
    "C6": "procurement release"
+  }
+ },
+ "nhif_hospital_cases": {
+  "curator": "Zenodo",
+  "domain": "public healthcare inpatient billing",
+  "generating_system": "Bulgarian National Health Insurance Fund inpatient clinical pathway claims aggregation",
+  "note": "Aggregated facility-month inpatient pathway and ICD-10 diagnosis pairs with natural secondary-diagnosis missingness",
+  "producer": "National Health Insurance Fund (NHIF, Bulgaria)",
+  "schema_family": "clinical pathway icd10 billing table",
+  "structure": {
+   "C2a": "mixed administrative healthcare region/ICD-10 coding and case-count table"
   }
  },
  "nist_nvd": {
@@ -822,6 +844,17 @@
   "schema_family": "battery meter readings in elapsed time",
   "structure": {
    "C3": "battery storage meter readings"
+  }
+ },
+ "port_noumea_stopovers": {
+  "curator": "Zenodo",
+  "domain": "maritime port logistics",
+  "generating_system": "Autonomous Port of Noumea harbour master vessel stopover register",
+  "note": "Mixed maritime port call and routing table with vessel codes and natural port coordinate missingness",
+  "producer": "Autonomous Port of Noumea / New Caledonia",
+  "schema_family": "maritime port call stopover log",
+  "structure": {
+   "C2a": "mixed categorical vessel/route table with tonnage and origin-destination coordinates"
   }
  },
  "queensland_petroleum_production": {

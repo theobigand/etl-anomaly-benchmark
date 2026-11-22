@@ -3185,6 +3185,22 @@
    "units": 1014,
    "view": "zen_japan_buildings"
   },
+  "zen_kanto_landslides": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "21,814 mapped 1923 Kanto earthquake landslide records from Kanagawa Prefecture",
+    "5 categorical/id columns (7.0% Watershed missingness) and 3 continuous morphometric columns (Area, Inferred volume, Mean slope)",
+    "sparse free-text Note column dropped"
+   ],
+   "first_party": true,
+   "independent_group": "kanto_landslides",
+   "min_units": 1000,
+   "partitions": "hash of id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 21814,
+   "view": "zen_kanto_landslides"
+  },
   "zen_kelmarsh": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -3216,6 +3232,22 @@
    "protocol_id": "P-TS",
    "units": 373470,
    "view": "zen_metropt2"
+  },
+  "zen_nhif_hospital_cases": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "43,503 deterministic stride-75 records from 3,262,662 Bulgarian NHIF hospitalisation rows across 2024-2026",
+    "9 categorical/ICD-10/period columns (22.5% natural diagnosis_secondary missingness) and 4 integer count/date columns",
+    "no patient identifiers in source; facility_name pseudonymised with salted SHA-256"
+   ],
+   "first_party": true,
+   "independent_group": "nhif_hospital_cases",
+   "min_units": 1000,
+   "partitions": "hash of facility_id 70/15/15 so facility coding practices stay grouped",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 43503,
+   "view": "zen_nhif_hospital_cases"
   },
   "zen_pbdb": {
    "anomaly_origin": "controlled_injection",
@@ -3249,6 +3281,22 @@
    "protocol_id": "P-REL",
    "units": 201107,
    "view": "zen_pbdb_relational"
+  },
+  "zen_port_noumea": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "7,335 Port of Noumea international vessel stopovers across 2005-2013",
+    "19 string/categorical fields (vessel codes with preserved leading zeroes, origin/destination countries) and 7 numeric tonnage/coordinate columns",
+    "shipping_agent, vessel_operator and vessel_name dropped; vessel_imo pseudonymised with salted SHA-256"
+   ],
+   "first_party": true,
+   "independent_group": "port_noumea_stopovers",
+   "min_units": 500,
+   "partitions": "hash of vessel_imo_id 70/15/15 so vessel visits do not split across partitions",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 7335,
+   "view": "zen_port_noumea"
   },
   "zen_queensland_petrol": {
    "anomaly_origin": "controlled_injection",

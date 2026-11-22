@@ -376,6 +376,18 @@ def _nws(root, tmp):
     tev._nws_snapshot(root)
 
 
+def _noumea(root, tmp):
+    tev._noumea_snapshot(root)
+
+
+def _kanto(root, tmp):
+    tev._kanto_snapshot(root)
+
+
+def _nhif(root, tmp):
+    tev._nhif_snapshot(root)
+
+
 def _tlc(root, tmp):
     tev._tlc_page(
         [{}, {"tpep_pickup_datetime": "2023-03-07T07:00:00.000", "total_amount": "0.0"}]
@@ -422,6 +434,9 @@ CASES = {
     "ror": (_ror, ev._build_ror, ["ror_organizations"], {}),
     "rcsb": (_rcsb, ev._build_rcsb_pdb, ["rcsb_pdb_entries"], {}),
     "nws": (_nws, ev._build_nws_alerts, ["nws_weather_alerts"], {}),
+    "noumea": (_noumea, ev._build_port_noumea, ["zen_port_noumea"], {}),
+    "kanto": (_kanto, ev._build_kanto_landslides, ["zen_kanto_landslides"], {}),
+    "nhif": (_nhif, ev._build_nhif_cases, ["zen_nhif_hospital_cases"], {}),
     "tlc": (_tlc, ev._build_tlc, ["nyc_tlc_yellow"], {}),
     "maude": (_maude_case, ev._build_maude, ["openfda_device_event"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),

@@ -1057,6 +1057,9 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _ror_snapshot(root)
     _rcsb_snapshot(root)
     _nws_snapshot(root)
+    _noumea_snapshot(root)
+    _kanto_snapshot(root)
+    _nhif_snapshot(root)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
@@ -1072,7 +1075,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -6527,3 +6530,432 @@ def test_nws_alerts_view_and_builder(tmp_path):
         "files": ["alerts_p1.json", "alerts_p2.json"],
     }
     assert view["source_snapshot"] == f"nws_weather_alerts/{ev.NWS_SNAPSHOT}"
+
+
+def _noumea_snapshot(root):
+    raw = root / "zen_port_noumea" / ev.NOUMEA_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    cols = [
+        "id",
+        "year",
+        "voyage_number",
+        "voyage_date",
+        "traffic_type",
+        "shipping_agent",
+        "vessel_operator",
+        "vessel_imo",
+        "vessel_name",
+        "vessel_type",
+        "vessel_type_code",
+        "vessel_flag",
+        "vessel_region",
+        "vessel_tonnage",
+        "nc_port_of_touch",
+        "origin_city_code",
+        "origin_city",
+        "latitude_origine",
+        "longitude_origine",
+        "origin_country_code",
+        "origin_country",
+        "origin_region",
+        "destination_city_code",
+        "destination_city",
+        "latitude_destination",
+        "longitude_destination",
+        "destination_country_code",
+        "destination_country",
+        "destination_region",
+    ]
+    r1 = [
+        "002",
+        "2005",
+        "2",
+        "20050102",
+        "Outside",
+        "AGENT_B",
+        "OP_B",
+        "8024026",
+        "SHIP B",
+        "Passenger",
+        "006",
+        "FRA",
+        "EUROPE",
+        "21617",
+        "NOUMÉA",
+        "BNE",
+        "BRISBANE",
+        "-27.5",
+        "153.0",
+        "800",
+        "AUSTRALIE",
+        "OCEANIE",
+        "AKL",
+        "",
+        "bad",
+        "-174.7",
+        "804",
+        "NZ",
+        "OCEANIE",
+    ]
+    r2 = [
+        "001",
+        "2005",
+        "1",
+        "20050101",
+        "Outside",
+        "AGENT_A",
+        "OP_A",
+        "",
+        "SHIP A",
+        "Cargo",
+        "001",
+        "AUS",
+        "OCEANIE",
+        "1532",
+        "NOUMÉA",
+        "SYD",
+        "",
+        "1.5",
+        "2.5",
+        "800",
+        "AUSTRALIE",
+        "OCEANIE",
+        "NOUM",
+        "NOUMÉA",
+        "-22.2",
+        "166.4",
+        "540",
+        "NC",
+        "OCEANIE",
+    ]
+    r3 = [
+        "003",
+        "2005",
+        "3",
+        "20050102",
+        "Inside",
+        "AGENT_A",
+        "OP_A",
+        "8024026",
+        "SHIP A",
+        "Cargo",
+        "002",
+        "AUS",
+        "OCEANIE",
+        "900",
+        "PINS",
+        "AKL",
+        "AUCKLAND",
+        "3.0",
+        "4.0",
+        "804",
+        "NZ",
+        "OCEANIE",
+        "SYD",
+        "SYDNEY",
+        "-33.8",
+        "151.2",
+        "800",
+        "AU",
+        "OCEANIE",
+    ]
+    text = "\n".join([",".join(cols), ",".join(r1), ",".join(r2), ",".join(r3)]) + "\n"
+    (raw / "stopover_nc_2002_2017.csv").write_bytes(text.encode("latin-1"))
+
+
+def _kanto_snapshot(root):
+    import zipfile
+
+    raw = root / "zen_kanto_landslides" / ev.KANTO_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    cols = [
+        "id",
+        "Watershed",
+        "Mountain",
+        "Area (m2)",
+        "Inferred volume (m3)",
+        "Symbol code",
+        "Lithology category",
+        "Mean slope (degree)",
+        "Note",
+    ]
+    rows = [
+        ["002", "", "Mt B", "200.5", "300.0", "S2", "Litho B", "25.0", " "],
+        ["001", "WS1", "Mt A", "bad", "100.0", "S1", "Litho A", "18.5", "secret note"],
+        ["003", "WS2", "Mt B", "150.0", "250.0", "S3", "Litho A", "20.0", " "],
+    ]
+    csv_text = "\n".join([",".join(cols), *[",".join(r) for r in rows]]) + "\n"
+    with zipfile.ZipFile(raw / "kanto_landslides.zip", "w") as zf:
+        zf.writestr("shape.shp", "ignored")
+        zf.writestr("Landslide.csv", csv_text)
+
+
+def _nhif_snapshot(root):
+    import gzip
+
+    raw = root / "zen_nhif_hospital_cases" / ev.NHIF_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    cols = [
+        "region_num",
+        "region_name",
+        "facility_name",
+        "pathway_code",
+        "diagnosis_primary",
+        "diagnosis_secondary",
+        "n_cases",
+        "n_insured",
+        "period",
+        "period_start",
+        "period_end",
+        "year",
+        "month",
+    ]
+    rows = [
+        [
+            "02",
+            "burgas",
+            "Hospital B",
+            "A19",
+            "H25.1",
+            "",
+            "2",
+            "1",
+            "2024-02-01",
+            "2024-02-01",
+            "2024-02-29",
+            "2024",
+            "2",
+        ],
+        [
+            "01",
+            "blago",
+            "Hospital A",
+            "A10",
+            "J10.0",
+            "Z00",
+            "5",
+            "bad",
+            "2024-01-01",
+            "2024-01-01",
+            "2024-01-31",
+            "2024",
+            "1",
+        ],
+    ]
+    csv_text = "\n".join([",".join(cols), *[",".join(r) for r in rows]]) + "\n"
+    with gzip.open(raw / "nhif_hospital_cases.csv.gz", "wt", encoding="utf-8") as fh:
+        fh.write(csv_text)
+
+
+def test_port_noumea_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no Port of Noumea stopover CSV in the snapshot$"):
+        ev._build_port_noumea(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _noumea_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_port_noumea(root, out, manifest)
+    ev._build_port_noumea(root, out, manifest)
+    target = out / "zen_port_noumea" / "stopovers.csv"
+    df = pd.read_csv(target, dtype={c: str for c in ev.NOUMEA_TEXT_COLS} | {"vessel_imo_id": str})
+    expected_cols = [
+        "id",
+        "year",
+        "voyage_number",
+        "voyage_date",
+        "traffic_type",
+        "vessel_imo_id",
+        "vessel_type",
+        "vessel_type_code",
+        "vessel_flag",
+        "vessel_region",
+        "vessel_tonnage",
+        "nc_port_of_touch",
+        "origin_city_code",
+        "origin_city",
+        "latitude_origine",
+        "longitude_origine",
+        "origin_country_code",
+        "origin_country",
+        "origin_region",
+        "destination_city_code",
+        "destination_city",
+        "latitude_destination",
+        "longitude_destination",
+        "destination_country_code",
+        "destination_country",
+        "destination_region",
+    ]
+    assert df.columns.tolist() == expected_cols
+    assert df["id"].tolist() == ["001", "002", "003"]
+    assert df["vessel_type_code"].tolist() == ["001", "006", "002"]
+    assert df["nc_port_of_touch"].tolist() == ["NOUMÉA", "NOUMÉA", "PINS"]
+    assert df["vessel_imo_id"].fillna("").tolist() == [
+        "",
+        ev.pseudonym("8024026"),
+        ev.pseudonym("8024026"),
+    ]
+    assert pd.isna(df.loc[0, "origin_city"]) and pd.isna(df.loc[1, "latitude_destination"])
+    assert df["vessel_tonnage"].tolist() == [1532, 21617, 900]
+    assert pd.api.types.is_numeric_dtype(df["latitude_origine"])
+    view = manifest["zen_port_noumea"]
+    assert view["dropped"] == ["shipping_agent", "vessel_operator", "vessel_name"]
+    assert view["pseudonymised"] == ["vessel_imo"] and view["salt_label"] == ev.SALT
+    assert view["files"]["stopovers.csv"]["rows"] == 3
+    assert view["sampling"] == {
+        "method": "complete New Caledonia international port stopover table",
+        "vessels": 2,
+    }
+    assert view["source_snapshot"] == f"zen_port_noumea/{ev.NOUMEA_SNAPSHOT}"
+    # Raw input immutability & None IMO edge case
+    sample_df = pd.read_csv(
+        root / "zen_port_noumea" / ev.NOUMEA_SNAPSHOT / "raw" / "stopover_nc_2002_2017.csv",
+        dtype=str,
+        encoding="latin-1",
+    )
+    sample_df.loc[0, "vessel_imo"] = None
+    copy_before = sample_df.copy(deep=True)
+    viewed = ev.port_noumea_view(sample_df)
+    pd.testing.assert_frame_equal(sample_df, copy_before)
+    assert "" in viewed["vessel_imo_id"].tolist()
+
+
+def test_kanto_landslides_view_and_builder(tmp_path):
+    import zipfile
+
+    with pytest.raises(ev.ViewError, match=r"^no Kanto landslide zip archive in the snapshot$"):
+        ev._build_kanto_landslides(tmp_path / "empty", tmp_path / "err", {})
+    no_csv = tmp_path / "no_csv"
+    no_csv_raw = no_csv / "zen_kanto_landslides" / ev.KANTO_SNAPSHOT / "raw"
+    no_csv_raw.mkdir(parents=True)
+    with zipfile.ZipFile(no_csv_raw / "kanto_landslides.zip", "w") as zf:
+        zf.writestr("a.shp", "bin")
+    with pytest.raises(ev.ViewError, match=r"^no Kanto landslide CSV in the archive$"):
+        ev._build_kanto_landslides(no_csv, tmp_path / "err2", {})
+    root = tmp_path / "acq"
+    _kanto_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_kanto_landslides(root, out, manifest)
+    ev._build_kanto_landslides(root, out, manifest)
+    df = pd.read_csv(
+        out / "zen_kanto_landslides" / "landslides.csv", dtype={c: str for c in ev.KANTO_TEXT_COLS}
+    )
+    assert df.columns.tolist() == [*ev.KANTO_TEXT_COLS, *ev.KANTO_NUM_COLS]
+    assert df["id"].tolist() == ["001", "003", "002"]
+    assert pd.isna(df.loc[2, "Watershed"]) and df["Mountain"].tolist() == ["Mt A", "Mt B", "Mt B"]
+    assert df["Lithology category"].tolist() == ["Litho A", "Litho A", "Litho B"]
+    assert pd.isna(df.loc[0, "Area (m2)"]) and df.loc[1, "Inferred volume (m3)"] == 250.0
+    assert df["Mean slope (degree)"].tolist() == [18.5, 20.0, 25.0]
+    view = manifest["zen_kanto_landslides"]
+    assert view["dropped"] == ["Note"] and view["pseudonymised"] == []
+    assert view["files"]["landslides.csv"]["rows"] == 3
+    assert view["sampling"] == {
+        "method": "complete 1923 Kanto earthquake landslide CSV attribute table"
+    }
+    assert view["source_snapshot"] == f"zen_kanto_landslides/{ev.KANTO_SNAPSHOT}"
+
+
+def test_nhif_cases_view_and_builder(tmp_path):
+    with pytest.raises(
+        ev.ViewError, match=r"^no NHIF hospital cases gzip archive in the snapshot$"
+    ):
+        ev._build_nhif_cases(tmp_path / "empty", tmp_path / "err", {})
+    raw_df = pd.DataFrame(
+        [
+            {
+                "region_num": "01",
+                "region_name": "r1",
+                "facility_name": "H2",
+                "pathway_code": "P2",
+                "diagnosis_primary": "B",
+                "diagnosis_secondary": None,
+                "n_cases": "2",
+                "n_insured": "2",
+                "period": "2024-02",
+                "period_start": "2024-02-01",
+                "period_end": "2024-02-29",
+                "year": "2024",
+                "month": "2",
+            },
+            {
+                "region_num": "01",
+                "region_name": "r1",
+                "facility_name": "H1",
+                "pathway_code": "P1",
+                "diagnosis_primary": "A",
+                "diagnosis_secondary": "C",
+                "n_cases": "1",
+                "n_insured": "1",
+                "period": "2024-01",
+                "period_start": "2024-01-01",
+                "period_end": "2024-01-31",
+                "year": "2024",
+                "month": "1",
+            },
+            {
+                "region_num": "01",
+                "region_name": "r1",
+                "facility_name": None,
+                "pathway_code": "P1",
+                "diagnosis_primary": "A0",
+                "diagnosis_secondary": None,
+                "n_cases": "3",
+                "n_insured": "bad",
+                "period": "2024-01",
+                "period_start": "2024-01-01",
+                "period_end": "2024-01-31",
+                "year": "2024",
+                "month": "1",
+            },
+        ]
+    )
+    copy_before = raw_df.copy(deep=True)
+    step2 = ev.nhif_cases_view(raw_df, stride=2)
+    pd.testing.assert_frame_equal(raw_df, copy_before)
+    assert step2["facility_id"].tolist() == ["", ev.pseudonym("H2")]
+    assert step2["diagnosis_primary"].tolist() == ["A0", "B"]
+    assert pd.isna(step2.iloc[0]["diagnosis_secondary"]) and pd.isna(step2.iloc[0]["n_insured"])
+    step_default = ev.nhif_cases_view(raw_df)
+    assert step_default["facility_id"].tolist() == [ev.pseudonym("H2")]
+
+    root = tmp_path / "acq"
+    _nhif_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_nhif_cases(root, out, manifest)
+    ev._build_nhif_cases(root, out, manifest)
+    df = pd.read_csv(
+        out / "zen_nhif_hospital_cases" / "hospital_cases.csv",
+        dtype={c: str for c in ev.NHIF_TEXT_COLS} | {"facility_id": str},
+    )
+    assert df.columns.tolist() == [
+        "region_num",
+        "region_name",
+        "facility_id",
+        "pathway_code",
+        "diagnosis_primary",
+        "diagnosis_secondary",
+        "n_cases",
+        "n_insured",
+        "period",
+        "period_start",
+        "period_end",
+        "year",
+        "month",
+    ]
+    assert df["region_num"].tolist() == ["02"] and df["facility_id"].tolist() == [
+        ev.pseudonym("Hospital B")
+    ]
+    assert pd.isna(df.loc[0, "diagnosis_secondary"]) and df["n_cases"].tolist() == [2]
+    assert df["year"].tolist() == [2024] and df["month"].tolist() == [2]
+    view = manifest["zen_nhif_hospital_cases"]
+    assert view["dropped"] == [] and view["pseudonymised"] == ["facility_name"]
+    assert view["salt_label"] == ev.SALT and view["files"]["hospital_cases.csv"]["rows"] == 1
+    assert view["sampling"] == {
+        "method": "every 75th record across the sorted NHIF hospitalisation table",
+        "total_records": 2,
+        "stride": ev.NHIF_STRIDE,
+        "facilities": 1,
+    }
+    assert view["source_snapshot"] == f"zen_nhif_hospital_cases/{ev.NHIF_SNAPSHOT}"

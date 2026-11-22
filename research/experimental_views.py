@@ -5039,6 +5039,220 @@ def _build_nws_alerts(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+NOUMEA_SNAPSHOT = "2026-11-22"
+NOUMEA_DROP = ("shipping_agent", "vessel_operator", "vessel_name")
+NOUMEA_TEXT_COLS = (
+    "id",
+    "voyage_date",
+    "traffic_type",
+    "vessel_type",
+    "vessel_type_code",
+    "vessel_flag",
+    "vessel_region",
+    "nc_port_of_touch",
+    "origin_city_code",
+    "origin_city",
+    "origin_country_code",
+    "origin_country",
+    "origin_region",
+    "destination_city_code",
+    "destination_city",
+    "destination_country_code",
+    "destination_country",
+    "destination_region",
+)
+NOUMEA_NUM_COLS = (
+    "year",
+    "voyage_number",
+    "vessel_tonnage",
+    "latitude_origine",
+    "longitude_origine",
+    "latitude_destination",
+    "longitude_destination",
+)
+
+
+def port_noumea_view(raw: pd.DataFrame) -> pd.DataFrame:
+    """Port of Noumea vessel stopover records with operator/ship names dropped and IMO pseudonymised."""  # noqa: E501
+    data: dict[str, Any] = {col: raw[col] for col in NOUMEA_TEXT_COLS}
+    data["vessel_imo_id"] = [
+        pseudonym(str(v)) if pd.notna(v) and str(v) else "" for v in raw["vessel_imo"]
+    ]
+    for col in NOUMEA_NUM_COLS:
+        data[col] = pd.to_numeric(raw[col], errors="coerce")
+    cols = [
+        "id",
+        "year",
+        "voyage_number",
+        "voyage_date",
+        "traffic_type",
+        "vessel_imo_id",
+        "vessel_type",
+        "vessel_type_code",
+        "vessel_flag",
+        "vessel_region",
+        "vessel_tonnage",
+        "nc_port_of_touch",
+        "origin_city_code",
+        "origin_city",
+        "latitude_origine",
+        "longitude_origine",
+        "origin_country_code",
+        "origin_country",
+        "origin_region",
+        "destination_city_code",
+        "destination_city",
+        "latitude_destination",
+        "longitude_destination",
+        "destination_country_code",
+        "destination_country",
+        "destination_region",
+    ]
+    return pd.DataFrame(data)[cols].sort_values(["voyage_date", "id"])
+
+
+def _build_port_noumea(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    source = root / "zen_port_noumea" / NOUMEA_SNAPSHOT / "raw" / "stopover_nc_2002_2017.csv"
+    if not source.exists():
+        raise ViewError("no Port of Noumea stopover CSV in the snapshot")
+    raw = pd.read_csv(source, dtype=str, encoding="latin-1")
+    view = port_noumea_view(raw)
+    folder = out / "zen_port_noumea"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "stopovers.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "zen_port_noumea",
+        {"stopovers.csv": (target, len(view))},
+        dropped=list(NOUMEA_DROP),
+        pseudonymised=["vessel_imo"],
+        salt_label=SALT,
+        sampling={
+            "method": "complete New Caledonia international port stopover table",
+            "vessels": int(view["vessel_imo_id"].nunique()),
+        },
+        source_snapshot=f"zen_port_noumea/{NOUMEA_SNAPSHOT}",
+    )
+
+
+KANTO_SNAPSHOT = "2026-11-22"
+KANTO_TEXT_COLS = ("id", "Watershed", "Mountain", "Symbol code", "Lithology category")
+KANTO_NUM_COLS = ("Area (m2)", "Inferred volume (m3)", "Mean slope (degree)")
+
+
+def kanto_landslides_view(raw: pd.DataFrame) -> pd.DataFrame:
+    """1923 Kanto earthquake landslide polygons without free-text notes, sorted deterministically."""  # noqa: E501
+    data: dict[str, Any] = {col: raw[col] for col in KANTO_TEXT_COLS}
+    for col in KANTO_NUM_COLS:
+        data[col] = pd.to_numeric(raw[col], errors="coerce")
+    return pd.DataFrame(data).sort_values(["Mountain", "Lithology category", "id"])
+
+
+def _build_kanto_landslides(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import zipfile
+
+    archive = root / "zen_kanto_landslides" / KANTO_SNAPSHOT / "raw" / "kanto_landslides.zip"
+    if not archive.exists():
+        raise ViewError("no Kanto landslide zip archive in the snapshot")
+    with zipfile.ZipFile(archive) as zf:
+        members = sorted(n for n in zf.namelist() if n.endswith(".csv"))
+        if not members:
+            raise ViewError("no Kanto landslide CSV in the archive")
+        with zf.open(members[0]) as fh:
+            raw = pd.read_csv(fh, dtype=str)
+    view = kanto_landslides_view(raw)
+    folder = out / "zen_kanto_landslides"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "landslides.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "zen_kanto_landslides",
+        {"landslides.csv": (target, len(view))},
+        dropped=["Note"],
+        pseudonymised=[],
+        sampling={"method": "complete 1923 Kanto earthquake landslide CSV attribute table"},
+        source_snapshot=f"zen_kanto_landslides/{KANTO_SNAPSHOT}",
+    )
+
+
+NHIF_SNAPSHOT = "2026-11-22"
+NHIF_STRIDE = 75
+NHIF_TEXT_COLS = (
+    "region_num",
+    "region_name",
+    "pathway_code",
+    "diagnosis_primary",
+    "diagnosis_secondary",
+    "period",
+    "period_start",
+    "period_end",
+)
+NHIF_NUM_COLS = ("n_cases", "n_insured", "year", "month")
+
+
+def nhif_cases_view(raw: pd.DataFrame, stride: int = NHIF_STRIDE) -> pd.DataFrame:
+    """Every ``stride``-th Bulgarian NHIF inpatient claim row with facility pseudonymised."""
+    sampled = raw.iloc[::stride]
+    data: dict[str, Any] = {col: sampled[col] for col in NHIF_TEXT_COLS}
+    data["facility_id"] = [
+        pseudonym(str(v)) if pd.notna(v) and str(v) else "" for v in sampled["facility_name"]
+    ]
+    for col in NHIF_NUM_COLS:
+        data[col] = pd.to_numeric(sampled[col], errors="coerce")
+    cols = [
+        "region_num",
+        "region_name",
+        "facility_id",
+        "pathway_code",
+        "diagnosis_primary",
+        "diagnosis_secondary",
+        "n_cases",
+        "n_insured",
+        "period",
+        "period_start",
+        "period_end",
+        "year",
+        "month",
+    ]
+    return pd.DataFrame(data)[cols].sort_values(
+        ["period", "region_num", "facility_id", "pathway_code", "diagnosis_primary"]
+    )
+
+
+def _build_nhif_cases(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import gzip
+
+    archive = (
+        root / "zen_nhif_hospital_cases" / NHIF_SNAPSHOT / "raw" / "nhif_hospital_cases.csv.gz"
+    )
+    if not archive.exists():
+        raise ViewError("no NHIF hospital cases gzip archive in the snapshot")
+    with gzip.open(archive, "rt", encoding="utf-8") as fh:
+        raw = pd.read_csv(fh, dtype=str)
+    view = nhif_cases_view(raw)
+    folder = out / "zen_nhif_hospital_cases"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "hospital_cases.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "zen_nhif_hospital_cases",
+        {"hospital_cases.csv": (target, len(view))},
+        dropped=[],
+        pseudonymised=["facility_name"],
+        salt_label=SALT,
+        sampling={
+            "method": "every 75th record across the sorted NHIF hospitalisation table",
+            "total_records": len(raw),
+            "stride": NHIF_STRIDE,
+            "facilities": int(view["facility_id"].nunique()),
+        },
+        source_snapshot=f"zen_nhif_hospital_cases/{NHIF_SNAPSHOT}",
+    )
+
+
 BUILD_STEPS = (
     _build_openalex,
     _build_monash,
@@ -5103,6 +5317,9 @@ BUILD_STEPS = (
     _build_ror,
     _build_rcsb_pdb,
     _build_nws_alerts,
+    _build_port_noumea,
+    _build_kanto_landslides,
+    _build_nhif_cases,
     _build_flat,
     _build_series,
     _build_ukspend,

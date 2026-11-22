@@ -5230,6 +5230,66 @@
    "stratum": "C6",
    "system": "noaa_nws_cap_weather_alert_system",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "port_noumea_stopovers",
+   "id": "zen_port_noumea",
+   "licence_class": "open",
+   "protocols": "P-TAB on mixed maritime vessel stopover records with natural origin/destination coordinate missingness",
+   "publisher": "port_noumea",
+   "reason": "Port of Noumea vessel stopover ledger (Zenodo 17275425, CC BY 4.0, 7,335 rows): 18 categorical/code columns + 7 numeric tonnage/coordinate columns; operators/agents/ship names dropped and IMO pseudonymised; maritime transport domain absent from C2a",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Zenodo 17275425 API metadata (read 2026-11-22): CC BY 4.0",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "port_noumea_harbour_stopover_register",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "kanto_landslides",
+   "id": "zen_kanto_landslides",
+   "licence_class": "open",
+   "protocols": "P-TAB on mixed geomorphological landslide attributes (watershed, lithology, area, volume, slope)",
+   "publisher": "kanto_landslides_research",
+   "reason": "1923 Kanto Earthquake Landslide Inventory (Zenodo 19047350, CC BY 4.0, 21,814 rows): mixed geological classifications with 7.0% Watershed missingness and 3 continuous morphometric measurements; free-text Note dropped; geomorphology domain absent from C2a",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Zenodo 19047350 API metadata (read 2026-11-22): CC BY 4.0",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "kanto_1923_landslide_inventory",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "nhif_hospital_cases",
+   "id": "zen_nhif_hospital_cases",
+   "licence_class": "open",
+   "protocols": "P-TAB on mixed healthcare billing categories and ICD-10 diagnosis pairs with natural secondary-diagnosis missingness",
+   "publisher": "nhif_bulgaria",
+   "reason": "Bulgarian NHIF inpatient hospitalisation case counts (Zenodo 22213249, CC BY 4.0, 43,503 deterministic stride-75 rows from 3.26M records, 2024-2026): 9 categorical/date/ICD-10 columns with 22.5% secondary-diagnosis missingness + 4 numeric count/date fields; facility_name pseudonymised; clinical billing domain absent from C2a",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Zenodo 22213249 API metadata (read 2026-11-22): CC BY 4.0",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "nhif_bulgaria_inpatient_billing",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

@@ -2241,6 +2241,27 @@
   },
   {
    "failed": null,
+   "group": "port_noumea_stopovers",
+   "id": "zen_port_noumea",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "kanto_landslides",
+   "id": "zen_kanto_landslides",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "nhif_hospital_cases",
+   "id": "zen_nhif_hospital_cases",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2411,7 +2432,10 @@
    "ademe_dpe",
    "dft_stats19",
    "dgal_alimconfiance",
+   "kanto_landslides",
+   "nhif_hospital_cases",
    "paleobiology_database",
+   "port_noumea_stopovers",
    "uci:101",
    "uci:19",
    "uci:22",
@@ -2549,13 +2573,13 @@
    "structurally_valid": 52
   },
   "C2a": {
-   "acquired": 42,
-   "discovered": 42,
-   "experiment_ready": 16,
-   "protocol_ready": 16,
-   "rights_verified": 42,
-   "scientifically_eligible": 16,
-   "structurally_valid": 16
+   "acquired": 45,
+   "discovered": 45,
+   "experiment_ready": 19,
+   "protocol_ready": 19,
+   "rights_verified": 45,
+   "scientifically_eligible": 19,
+   "structurally_valid": 19
   },
   "C2b": {
    "acquired": 18,

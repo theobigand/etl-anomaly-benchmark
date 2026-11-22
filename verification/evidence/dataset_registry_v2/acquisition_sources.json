@@ -9868,6 +9868,90 @@
    "stratum": "C6",
    "upstream": "first party: NOAA National Weather Service publishes operational CAP alerts directly at api.weather.gov",
    "upstream_verified": true
+  },
+  {
+   "attribution": "Autonomous Port of Noumea / Government of New Caledonia maritime stopovers 2005-2013 (Zenodo 17275425, CC BY 4.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "stopover_nc_2002_2017.csv",
+     "observed": "2005-2013",
+     "url": "https://zenodo.org/api/records/17275425/files/stopover_nc_2002_2017.csv/content"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_port_noumea",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/17275425",
+   "licence_text": "Zenodo record 17275425 API metadata (read 2026-11-22): license id 'cc-by-4.0' (Creative Commons Attribution 4.0 International)",
+   "max_bytes": 16777216,
+   "method": "complete New Caledonia international vessel stopover table decoded as Latin-1",
+   "min_interval": 1.0,
+   "privacy": "shipping_agent, vessel_operator and vessel_name dropped; vessel_imo pseudonymised via salted SHA-256",
+   "publisher": "Autonomous Port of Noumea / New Caledonia (via Zenodo 17275425)",
+   "rate_limit": "single CSV download, descriptive user agent",
+   "redistribution": "CC BY 4.0; raw file stays local",
+   "retries": 2,
+   "stratum": "C2a",
+   "upstream": "researchers deposited institutional Port of Noumea harbour master statistics under CC BY 4.0",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "1923 Kanto Earthquake Kanagawa Landslide Inventory (Zenodo 19047350, CC BY 4.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "kanto_landslides.zip",
+     "observed": "1923",
+     "url": "https://zenodo.org/api/records/19047350/files/1923KantoEQ_Landslide_dataset.zip/content"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_kanto_landslides",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/19047350",
+   "licence_text": "Zenodo record 19047350 API metadata (read 2026-11-22): license id 'cc-by-4.0' (Creative Commons Attribution 4.0 International)",
+   "max_bytes": 16777216,
+   "method": "complete Landslide.csv attribute ledger extracted from 1923KantoEQ_Landslide_dataset.zip",
+   "min_interval": 1.0,
+   "privacy": "historical geological landslide morphology features only; sparse Note text dropped; no personal data",
+   "publisher": "Kanto Earthquake Landslide Research Team (via Zenodo 19047350)",
+   "rate_limit": "single archive download, descriptive user agent",
+   "redistribution": "CC BY 4.0; raw archive stays local",
+   "retries": 2,
+   "stratum": "C2a",
+   "upstream": "first party: authors published the digitized 1923 Kanto landslide inventory directly on Zenodo under CC BY 4.0",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Bulgarian NHIF Inpatient Hospitalisation Cases 2024-2026 (Zenodo 22213249, CC BY 4.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "nhif_hospital_cases.csv.gz",
+     "observed": "2024-2026",
+     "url": "https://zenodo.org/api/records/22213249/files/nhif-hospital-cases.csv.gz/content"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_nhif_hospital_cases",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/22213249",
+   "licence_text": "Zenodo record 22213249 API metadata (read 2026-11-22): license id 'cc-by-4.0' (Creative Commons Attribution 4.0 International)",
+   "max_bytes": 67108864,
+   "method": "every 75th row deterministically sampled across 3,262,662 facility-month inpatient pathway/diagnosis rows (43,503 view rows)",
+   "min_interval": 1.0,
+   "privacy": "aggregated hospital case counts without patient identifiers; facility_name pseudonymised via salted SHA-256",
+   "publisher": "National Health Insurance Fund Bulgaria compilation (via Zenodo 22213249)",
+   "rate_limit": "single compressed CSV download, descriptive user agent",
+   "redistribution": "CC BY 4.0; raw file stays local",
+   "retries": 2,
+   "stratum": "C2a",
+   "upstream": "derived from public Bulgarian NHIF monthly hospitalisation reports under CC BY 4.0",
+   "upstream_verified": true
   }
  ]
 }

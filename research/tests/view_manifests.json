@@ -812,6 +812,26 @@
    "source_snapshot": "zen_japan_buildings/2026-11-22"
   }
  },
+ "kanto": {
+  "zen_kanto_landslides": {
+   "dropped": [
+    "Note"
+   ],
+   "files": {
+    "landslides.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "landslides.csv": "id,Watershed,Mountain,Symbol code,Lithology category,Area (m2),Inferred volume (m3),Mean slope (degree)"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "complete 1923 Kanto earthquake landslide CSV attribute table"
+   },
+   "source_snapshot": "zen_kanto_landslides/2026-11-22"
+  }
+ },
  "kelmarsh": {
   "zen_kelmarsh": {
    "dropped": [
@@ -913,6 +933,56 @@
     "rows_dropped": 0
    },
    "source_snapshot": "zen_metropt2/2026-11-21 (fragment)"
+  }
+ },
+ "nhif": {
+  "zen_nhif_hospital_cases": {
+   "dropped": [],
+   "files": {
+    "hospital_cases.csv": {
+     "rows": 1
+    }
+   },
+   "heads": {
+    "hospital_cases.csv": "region_num,region_name,facility_id,pathway_code,diagnosis_primary,diagnosis_secondary,n_cases,n_insured,period,period_st"
+   },
+   "pseudonymised": [
+    "facility_name"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "facilities": 1,
+    "method": "every 75th record across the sorted NHIF hospitalisation table",
+    "stride": 75,
+    "total_records": 2
+   },
+   "source_snapshot": "zen_nhif_hospital_cases/2026-11-22"
+  }
+ },
+ "noumea": {
+  "zen_port_noumea": {
+   "dropped": [
+    "shipping_agent",
+    "vessel_operator",
+    "vessel_name"
+   ],
+   "files": {
+    "stopovers.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "stopovers.csv": "id,year,voyage_number,voyage_date,traffic_type,vessel_imo_id,vessel_type,vessel_type_code,vessel_flag,vessel_region,vess"
+   },
+   "pseudonymised": [
+    "vessel_imo"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "method": "complete New Caledonia international port stopover table",
+    "vessels": 2
+   },
+   "source_snapshot": "zen_port_noumea/2026-11-22"
   }
  },
  "nvd": {
