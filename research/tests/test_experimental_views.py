@@ -4429,14 +4429,20 @@ def test_aqs_view_is_in_utc_order_per_monitor_keeps_flags_and_counts_unreadable_
     chunk = _aqs_rows(
         [
             {"Time GMT": "09:00", "Qualifier": "IA"},
-            {"Time GMT": "08:00", "Sample Measurement": "x"},
+            {
+                "Time GMT": "08:00",
+                "Sample Measurement": "x",
+                "MDL": "x",
+                "Latitude": "99",
+            },
             {"Site Num": "0020", "Time GMT": "07:00"},
+            {"Date GMT": "03/01/2022", "Time GMT": "07:00"},
             {"Time GMT": "bad"},
             {"Site Num": "9999"},
         ]
     )
     view, places = ev.aqs_hourly_view(
-        [chunk.iloc[:2], chunk.iloc[2:]], ["01-003-0010-1", "01-003-0020-1"]
+        [chunk.iloc[:1], chunk.iloc[1:]], ["01-003-0010-1", "01-003-0020-1"]
     )
     assert list(view.columns) == [
         "monitor", "timestamp", "ozone_ppm", "mdl_ppm", "method_code", "qualifier"
@@ -4449,18 +4455,39 @@ def test_aqs_view_is_in_utc_order_per_monitor_keeps_flags_and_counts_unreadable_
     ]
     assert view["qualifier"].tolist() == [pd.NA, "IA", pd.NA]
     assert view["ozone_ppm"].isna().tolist() == [True, False, False]
-    assert view["mdl_ppm"].tolist() == [0.005] * 3
+    assert pd.isna(view["mdl_ppm"].iloc[0]) and view["mdl_ppm"].tolist()[1:] == [0.005, 0.005]
     assert view["method_code"].tolist() == ["087"] * 3
-    assert view.attrs["rows_dropped"] == 1
+    assert view.attrs["rows_dropped"] == 2
     assert places["monitor"].tolist() == ["01-003-0010-1", "01-003-0020-1"]
     assert list(places.columns) == ["monitor", "latitude", "longitude"]
 
 
 def test_aqs_view_refuses_another_unit():
-    with pytest.raises(ev.ViewError, match="unit"):
+    with pytest.raises(ev.ViewError) as exc_info:
         ev.aqs_hourly_view(
             [_aqs_rows([{"Units of Measure": "Parts per billion"}])], ["01-003-0010-1"]
         )
+    assert str(exc_info.value) == "unexpected unit of measure"
+
+
+def test_aqs_chunks_passes_exact_columns_and_chunksize(tmp_path, monkeypatch):
+    import zipfile
+
+    zpath = tmp_path / "aqs.zip"
+    with zipfile.ZipFile(zpath, "w") as z:
+        z.writestr("aqs.csv", _aqs_rows([{}]).to_csv(index=False))
+    seen = {}
+    real_read_csv = pd.read_csv
+
+    def spy(handle, *args, **kwargs):
+        seen.update(kwargs)
+        return real_read_csv(handle, *args, **kwargs)
+
+    monkeypatch.setattr(pd, "read_csv", spy)
+    chunks = list(ev._aqs_chunks(zpath, ev.AQS_COLUMNS[:4]))
+    assert len(chunks) == 1
+    assert seen["usecols"] == list(ev.AQS_COLUMNS[:4])
+    assert seen["chunksize"] == 500_000
 
 
 def _aqs_snapshot(root):
@@ -4500,6 +4527,27 @@ def test_aqs_builder_selects_monitors_present_in_both_years_and_records_the_samp
     assert sampling["years"] == [2022, 2023] and sampling["rows_dropped"] == 0
     assert sampling["missing_value_share"] == 0.0 and sampling["flagged_share"] == 0.0
     assert view["source_snapshot"] == f"epa_aqs_ozone_hourly/{ev.AQS_SNAPSHOT}"
+
+
+def test_aqs_builder_rounds_shares_and_uses_first_four_columns_for_ids(tmp_path, monkeypatch):
+    import zipfile
+
+    root = tmp_path / "acq"
+    raw = root / "epa_aqs_ozone_hourly" / ev.AQS_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    for year in ev.AQS_YEARS:
+        rows = [
+            {"Date GMT": f"{year}-03-01", "Sample Measurement": "bad", "Qualifier": "IA"},
+            {"Date GMT": f"{year}-03-01", "Time GMT": "08:00"},
+            {"Date GMT": f"{year}-03-01", "Time GMT": "09:00"},
+        ]
+        with zipfile.ZipFile(raw / f"hourly_44201_{year}.zip", "w") as z:
+            z.writestr(f"hourly_44201_{year}.csv", _aqs_rows(rows).to_csv(index=False))
+    monkeypatch.setattr(ev, "AQS_MONITORS", 1)
+    manifest: dict = {}
+    ev._build_aqs(root, tmp_path / "out", manifest)
+    assert manifest["epa_aqs_ozone_hourly"]["sampling"]["missing_value_share"] == 0.3333
+    assert manifest["epa_aqs_ozone_hourly"]["sampling"]["flagged_share"] == 0.3333
 
 
 def _usgs_page(rows):
@@ -4551,9 +4599,19 @@ def test_usgs_view_is_in_utc_order_deduplicates_and_keeps_status_and_qualifier()
     assert view.attrs["duplicates"] == 1
 
 
-def test_usgs_view_refuses_another_unit():
-    with pytest.raises(ev.ViewError, match="unit"):
+def test_usgs_view_refuses_another_unit_and_handles_empty_pages():
+    with pytest.raises(ev.ViewError) as exc_info:
         ev.usgs_continuous_view([_usgs_page([{"unit_of_measure": "m^3/s"}])])
+    assert str(exc_info.value) == "unexpected unit of measure"
+    empty = ev.usgs_continuous_view([{"features": []}])
+    assert list(empty.columns) == [
+        "monitor",
+        "timestamp",
+        "discharge_cfs",
+        "approval_status",
+        "qualifier",
+    ]
+    assert len(empty) == 0
 
 
 def _usgs_snapshot(root):
@@ -4577,8 +4635,33 @@ def test_usgs_builder_reads_every_page_and_records_cadence_and_status(tmp_path):
     assert sampling["median_step_minutes"] == {"USGS-1": 15.0}
     assert sampling["provisional_share"] == 0.0 and sampling["duplicates"] == 0
     assert sampling["first_by_monitor"] == {"USGS-1": "2022-01-01 00:00:00"}
-    with pytest.raises(ev.ViewError, match="no discharge page"):
+    with pytest.raises(ev.ViewError) as exc_info:
         ev._build_usgs(tmp_path / "none", tmp_path / "out", {})
+    assert str(exc_info.value) == "no discharge page in the snapshot"
+
+
+def test_usgs_builder_rounds_missing_and_provisional_shares(tmp_path):
+    raw = tmp_path / "acq" / "usgs_continuous_discharge" / ev.USGS_SNAPSHOT / "raw"
+    _w(
+        raw / "discharge_1_p0.json",
+        json.dumps(
+            _usgs_page(
+                [
+                    {},
+                    {
+                        "time": "2022-01-01T00:15:00+00:00",
+                        "value": "bad",
+                        "approval_status": "Provisional",
+                    },
+                    {"time": "2022-01-01T00:30:00+00:00"},
+                ]
+            )
+        ),
+    )
+    manifest: dict = {}
+    ev._build_usgs(tmp_path / "acq", tmp_path / "out", manifest)
+    sampling = manifest["usgs_continuous_discharge"]["sampling"]
+    assert sampling["missing_value_share"] == 0.3333 and sampling["provisional_share"] == 0.3333
 
 
 # --- Wikimedia stub history ---------------------------------------------------------------------
@@ -4609,65 +4692,89 @@ def _wiki_lines(*pages):
 
 def test_wiki_view_hashes_contributors_drops_names_and_keeps_revision_facts():
     revisions = [
-        _wiki_revision(10, extra="<comment>edit summary</comment>"),
+        _wiki_revision(10, extra="<comment>edit summary</comment>", ts="2003-03-27T11:24:48+02:00"),
         _wiki_revision(
             11, parent=10, who="<ip>10.0.0.1</ip>", extra="<minor />", ts="2003-04-01T00:00:00Z"
         ),
-        _wiki_revision(12, parent=11, who='<username deleted="deleted" />'),
+        _wiki_revision(12, parent=11, who='<username deleted="deleted" />', ts="bad"),
+        "    <revision><id>13</id><parentid>bad</parentid><timestamp>2003-04-02T00:00:00Z</timestamp></revision>",  # noqa: E501
     ]
     view = ev.wiki_revision_view(
         _wiki_lines((1, 0, revisions, True), (2, 4, [_wiki_revision(20)], True))
     )
     assert list(view.columns) == list(ev.WIKI_COLUMNS)
-    assert view["page_id"].tolist() == [1, 1, 1, 2]
-    assert view["namespace"].tolist() == [0, 0, 0, 4]
-    assert view["revision_id"].tolist() == [10, 11, 12, 20]
-    assert view["parent_id"].isna().tolist() == [True, False, False, True]
+    assert view["page_id"].tolist() == [1, 1, 1, 1, 2]
+    assert view["namespace"].tolist() == [0, 0, 0, 0, 4]
+    assert view["revision_id"].tolist() == [10, 11, 12, 13, 20]
+    assert view["parent_id"].isna().tolist() == [True, False, False, True, True]
     assert view["timestamp"].astype(str).tolist()[:2] == [
         "2003-03-27 09:24:48",
         "2003-04-01 00:00:00",
     ]
-    assert view["editor_kind"].tolist() == ["registered", "anonymous", "unknown", "registered"]
-    assert view["editor"].tolist()[0] == ev.pseudonym("user:7") == view["editor"].tolist()[3]
+    assert pd.isna(view["timestamp"].iloc[2])
+    assert view["editor_kind"].tolist() == [
+        "registered",
+        "anonymous",
+        "unknown",
+        "unknown",
+        "registered",
+    ]
+    assert view["editor"].tolist()[0] == ev.pseudonym("user:7") == view["editor"].tolist()[4]
     assert view["editor"].tolist()[1] == ev.pseudonym("ip:10.0.0.1") and pd.isna(
         view["editor"].tolist()[2]
     )
-    assert view["minor"].tolist() == [False, True, False, False]
-    assert view["has_comment"].tolist() == [True, False, False, False]
-    assert view["text_bytes"].tolist() == [724] * 4
+    assert view["minor"].tolist() == [False, True, False, False, False]
+    assert view["has_comment"].tolist() == [True, False, False, False, False]
+    assert view["text_bytes"].tolist()[:3] == [724, 724, 724]
+    assert pd.isna(view["text_bytes"].iloc[3])
+    assert str(view["parent_id"].dtype) == "Int64"
     assert (
         "Ann" not in view.to_csv()
         and "10.0.0.1" not in view.to_csv()
         and "Secret" not in view.to_csv()
     )
     assert view.attrs["incomplete_pages"] == 0
+    empty_view = ev.wiki_revision_view(_wiki_lines((1, 0, [], True)))
+    assert list(empty_view.columns) == list(ev.WIKI_COLUMNS) and len(empty_view) == 0
 
 
 def test_wiki_view_drops_the_unclosed_last_page_and_counts_it():
-    lines = _wiki_lines((1, 0, [_wiki_revision(10)], True), (2, 0, [_wiki_revision(20)], False))
+    lines = _wiki_lines(
+        (1, 0, [_wiki_revision(10)], True),
+        (2, 0, [_wiki_revision(20)], True),
+        (3, 0, [_wiki_revision(30)], False),
+    )
     view = ev.wiki_revision_view(lines)
-    assert view["page_id"].tolist() == [1] and view.attrs["incomplete_pages"] == 1
+    assert view["page_id"].tolist() == [1, 2] and view.attrs["incomplete_pages"] == 1
+    no_tail = ev.wiki_revision_view(["<mediawiki>", "  <page>", "  </page>"])
+    assert no_tail.attrs["incomplete_pages"] == 0 and len(no_tail) == 0
 
 
 def test_wiki_view_refuses_a_stream_without_a_closed_page_and_a_doctype():
-    with pytest.raises(ev.ViewError, match="no complete page"):
+    with pytest.raises(ev.ViewError) as exc_empty:
         ev.wiki_revision_view(_wiki_lines((1, 0, [_wiki_revision(10)], False)))
+    assert str(exc_empty.value) == "no complete page in the stub history"
     lines = _wiki_lines((1, 0, [_wiki_revision(10)], True))
-    with pytest.raises(ev.ViewError, match="document type"):
-        ev.wiki_revision_view(["<!DOCTYPE x [<!ENTITY a 'b'>]>", *lines])
+    for decl in ("<!DOCTYPE x>", "<!ENTITY a 'b'>"):
+        with pytest.raises(ev.ViewError) as exc_decl:
+            ev.wiki_revision_view([decl, *lines])
+        assert str(exc_decl.value) == "document type declarations are refused"
 
 
 def test_gzip_members_lines_reads_every_member_and_drops_a_torn_line():
     import gzip
 
-    blob = gzip.compress(b"a\nb\n") + gzip.compress(b"c\nd")
-    assert ev.gzip_members_lines(blob) == (["a", "b", "c", "d"], True)
+    assert ev.gzip_members_lines(b"") == ([], True)
+    blob = gzip.compress(b"a 1\nb 2\n") + gzip.compress(b"c\nd")
+    assert ev.gzip_members_lines(blob) == (["a 1", "b 2", "c", "d"], True)
     import zlib
 
     packer = zlib.compressobj(wbits=31)
     second = packer.compress(b"c\nd1\nd2") + packer.flush(zlib.Z_FULL_FLUSH)
     lines, complete = ev.gzip_members_lines(gzip.compress(b"a\nb\n") + second)
     assert lines == ["a", "b", "c", "d1"] and complete is False
+    with pytest.raises(zlib.error):
+        ev.gzip_members_lines(zlib.compress(b"plain zlib"))
 
 
 def _wiki_snapshot(root):
@@ -4697,3 +4804,24 @@ def test_wiki_builder_reads_a_multi_member_stream_and_records_the_sampling(tmp_p
         sampling["first_revision"] == "2003-03-27 09:24:48" and sampling["anonymous_share"] == 0.0
     )
     assert view["salt_label"] == ev.SALT
+
+
+def test_wiki_builder_rounds_anonymous_share(tmp_path):
+    import gzip
+
+    raw = tmp_path / "acq" / "wikimedia_simplewiki_edits" / ev.WIKI_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    lines = _wiki_lines(
+        (
+            1,
+            0,
+            [_wiki_revision(10), _wiki_revision(11, who="<ip>10.0.0.2</ip>"), _wiki_revision(12)],
+            True,
+        )
+    )
+    (raw / "stub_meta_history_head.xml.gz").write_bytes(
+        gzip.compress(("\n".join(lines) + "\n").encode())
+    )
+    manifest: dict = {}
+    ev._build_wiki(tmp_path / "acq", tmp_path / "out", manifest)
+    assert manifest["wikimedia_simplewiki_edits"]["sampling"]["anonymous_share"] == 0.3333

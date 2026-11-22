@@ -3393,10 +3393,10 @@ def aqs_hourly_view(
         )
         places.append(chunk[["monitor", "Latitude", "Longitude"]].drop_duplicates())
     table = pd.concat(parts)
-    kept = table[table["timestamp"].notna()].sort_values(["monitor", "timestamp"], kind="stable")
+    kept = table[table["timestamp"].notna()].sort_values(["monitor", "timestamp"])
     kept = kept.reset_index(drop=True)
     kept.attrs = {"rows_dropped": int(len(table) - len(kept))}
-    sites = pd.concat(places).drop_duplicates("monitor").sort_values("monitor", kind="stable")
+    sites = pd.concat(places).drop_duplicates("monitor").sort_values("monitor")
     sites = sites.rename(columns={"Latitude": "latitude", "Longitude": "longitude"})
     return kept, sites.reset_index(drop=True)
 
@@ -3422,9 +3422,9 @@ def _build_aqs(root: Path, out: Path, manifest: dict[str, Any]) -> None:
         frame, place = aqs_hourly_view(_aqs_chunks(path, AQS_COLUMNS), chosen)
         frames.append(frame)
         sites.append(place)
-    view = pd.concat(frames).sort_values(["monitor", "timestamp"], kind="stable")
+    view = pd.concat(frames).sort_values(["monitor", "timestamp"])
     view = view.reset_index(drop=True)
-    places = pd.concat(sites).drop_duplicates("monitor").sort_values("monitor", kind="stable")
+    places = pd.concat(sites).drop_duplicates("monitor").sort_values("monitor")
     folder = out / "epa_aqs_ozone_hourly"
     folder.mkdir(parents=True, exist_ok=True)
     series, monitors = folder / "ozone.csv", folder / "monitors.csv"
@@ -3479,9 +3479,11 @@ def usgs_continuous_view(pages: list[dict[str, Any]]) -> pd.DataFrame:
     frame = frame.rename(columns={"monitoring_location_id": "monitor"})
     frame = frame[frame["timestamp"].notna()]
     unique = frame.drop_duplicates(["monitor", "timestamp"])
-    ordered = unique.sort_values(["monitor", "timestamp"], kind="stable").reset_index(drop=True)
+    ordered = unique.sort_values(["monitor", "timestamp"])
+    ordered = ordered[["monitor", "timestamp", "discharge_cfs", "approval_status", "qualifier"]]
+    ordered = ordered.reset_index(drop=True)
     ordered.attrs = {"duplicates": int(len(frame) - len(unique))}
-    return ordered[["monitor", "timestamp", "discharge_cfs", "approval_status", "qualifier"]]
+    return ordered
 
 
 def _build_usgs(root: Path, out: Path, manifest: dict[str, Any]) -> None:
@@ -3603,7 +3605,7 @@ def gzip_members_lines(blob: bytes) -> tuple[list[str], bool]:
         out += decoder.decompress(blob)
         complete = decoder.eof
         blob = decoder.unused_data
-    lines = out.decode("utf-8").split("\n")
+    lines = out.decode().split("\n")
     tail = lines.pop()
     if complete and tail:
         lines.append(tail)
