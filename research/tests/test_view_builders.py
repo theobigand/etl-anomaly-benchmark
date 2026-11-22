@@ -464,6 +464,18 @@ def _paris_trees(root, tmp):
     tev._paris_trees_snapshot(root)
 
 
+def _moodle_events(root, tmp):
+    tev._moodle_snapshot(root)
+
+
+def _norp_solar_bursts(root, tmp):
+    tev._norp_snapshot(root)
+
+
+def _blazar_flares(root, tmp):
+    tev._blazar_snapshot(root)
+
+
 def _tlc(root, tmp):
     tev._tlc_page(
         [{}, {"tpep_pickup_datetime": "2023-03-07T07:00:00.000", "total_amount": "0.0"}]
@@ -532,6 +544,9 @@ CASES = {
     "florida_bridges": (_florida_bridges, ev._build_florida_bridges, ["zen_florida_bridges"], {}),
     "wri_power_plants": (_wri_power_plants, ev._build_wri_power_plants, ["wri_power_plants"], {}),
     "paris_trees": (_paris_trees, ev._build_paris_trees, ["paris_urban_trees"], {}),
+    "moodle_events": (_moodle_events, ev._build_moodle_events, ["zen_moodle_events"], {}),
+    "norp_solar_bursts": (_norp_solar_bursts, ev._build_norp_solar_bursts, ["zen_norp_solar_bursts"], {}),  # noqa: E501
+    "blazar_flares": (_blazar_flares, ev._build_blazar_flares, ["zen_blazar_flares"], {}),
     "tlc": (_tlc, ev._build_tlc, ["nyc_tlc_yellow"], {}),
     "maude": (_maude_case, ev._build_maude, ["openfda_device_event"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),

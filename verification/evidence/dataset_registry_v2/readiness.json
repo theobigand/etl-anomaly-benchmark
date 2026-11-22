@@ -2395,6 +2395,27 @@
   },
   {
    "failed": null,
+   "group": "moodle_lms_events",
+   "id": "zen_moodle_events",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "naoj_norp_solar_bursts",
+   "id": "zen_norp_solar_bursts",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "fermi_blazar_flares",
+   "id": "zen_blazar_flares",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2644,6 +2665,7 @@
    "ccin2p3_slurm",
    "coatings_multinational",
    "dutch_municipalities",
+   "fermi_blazar_flares",
    "fin_institute_nl",
    "fugaku_riken",
    "german_paying_agency",
@@ -2653,6 +2675,8 @@
    "italian_road_fines",
    "loghub_collection",
    "microsoft_azure_compute",
+   "moodle_lms_events",
+   "naoj_norp_solar_bursts",
    "rabobank_ict",
    "surf_lisa_slurm",
    "tue_travel_claims",
@@ -2752,13 +2776,13 @@
    "structurally_valid": 32
   },
   "C4": {
-   "acquired": 36,
-   "discovered": 37,
-   "experiment_ready": 35,
-   "protocol_ready": 35,
-   "rights_verified": 36,
-   "scientifically_eligible": 35,
-   "structurally_valid": 35
+   "acquired": 39,
+   "discovered": 40,
+   "experiment_ready": 38,
+   "protocol_ready": 38,
+   "rights_verified": 39,
+   "scientifically_eligible": 38,
+   "structurally_valid": 38
   },
   "C5": {
    "acquired": 36,

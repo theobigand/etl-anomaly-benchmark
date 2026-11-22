@@ -10543,6 +10543,95 @@
    "stratum": "C2a",
    "upstream": "first party: Ville de Paris publishes municipal street and park tree asset inventories under ODbL on opendata.paris.fr",
    "upstream_verified": true
+  },
+  {
+   "attribution": "Moodle LMS Clickstream Event Log with English Activity Mapping (Zenodo record 21410580, CC BY 4.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "dataset-anon.csv",
+     "observed": "complete Moodle LMS clickstream log",
+     "url": "https://zenodo.org/api/records/21410580/files/dataset-anon.csv/content"
+    },
+    {
+     "name": "moodle_activity_mapping_EN.json",
+     "observed": "activity vocabulary mapping",
+     "url": "https://zenodo.org/api/records/21410580/files/moodle_activity_mapping_EN.json/content"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_moodle_events",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/21410580",
+   "licence_text": "Zenodo API metadata for record 21410580 (read 2026-11-22): license cc-by-4.0 (CC BY 4.0)",
+   "max_bytes": 16777216,
+   "method": "complete Zenodo 21410580 dataset-anon.csv and moodle_activity_mapping_EN.json release",
+   "min_interval": 1.0,
+   "privacy": "upstream pre-anonymised Moodle interaction log; userid further pseudonymised via salted SHA-256 in view",
+   "publisher": "Zenodo 21410580 Authors",
+   "rate_limit": "2 Zenodo file downloads at min_interval=1.0s with descriptive User-Agent",
+   "redistribution": "CC BY 4.0; raw CSV/JSON files stay local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "first party: anonymised Moodle LMS student activity clickstream event log deposited on Zenodo 21410580 under CC BY 4.0",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "NAOJ Nobeyama Radio Polarimeters (NoRP), Solar Radio Burst Event List 1988-2025 (Zenodo record 21300266, CC BY 4.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "myNoRP_Event_List_1988-2025.csv",
+     "observed": "1988-2025",
+     "url": "https://zenodo.org/api/records/21300266/files/myNoRP_Event_List_1988-2025.csv/content"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_norp_solar_bursts",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/21300266",
+   "licence_text": "Zenodo API metadata for record 21300266 (read 2026-11-22): license cc-by-4.0 (CC BY 4.0)",
+   "max_bytes": 8388608,
+   "method": "complete 1988-2025 Nobeyama Radio Polarimeters solar radio burst event catalog",
+   "min_interval": 1.0,
+   "privacy": "astrophysical solar radio flare burst timings and multi-frequency flux densities only; no personal data",
+   "publisher": "National Astronomical Observatory of Japan (NAOJ) / Nobeyama Radio Polarimeters (Zenodo 21300266)",
+   "rate_limit": "single Zenodo file download with descriptive User-Agent",
+   "redistribution": "CC BY 4.0; raw CSV stays local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "first party: Nobeyama Solar Radio Observatory / Zenodo 21300266 authors published curated NoRP solar burst event catalog under CC BY 4.0",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Fermi-LAT Blazar Gamma-Ray Flare Point-Process Catalog (Zenodo record 23039054, CC BY 4.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "flareCatalog.csv",
+     "observed": "Fermi-LAT 4FGL multi-year mission catalog",
+     "url": "https://zenodo.org/api/records/23039054/files/flareCatalog.csv/content"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_blazar_flares",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/23039054",
+   "licence_text": "Zenodo API metadata for record 23039054 (read 2026-11-22): license cc-by-4.0 (CC BY 4.0)",
+   "max_bytes": 8388608,
+   "method": "complete flareCatalog.csv astrophysical gamma-ray flare event catalog",
+   "min_interval": 1.0,
+   "privacy": "extragalactic blazar gamma-ray flare timings, waiting times and spectral flux measurements only; no personal data",
+   "publisher": "Zenodo 23039054 Authors (Fermi-LAT Blazar Flare Catalog)",
+   "rate_limit": "single Zenodo CSV download with descriptive User-Agent",
+   "redistribution": "CC BY 4.0; raw CSV stays local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "first party: astrophysics authors deposited complete Fermi-LAT gamma-ray blazar flare catalog on Zenodo 23039054 under CC BY 4.0",
+   "upstream_verified": true
   }
  ]
 }

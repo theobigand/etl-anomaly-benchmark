@@ -369,6 +369,17 @@
    "C6": "federal rulemaking notice and regulation json"
   }
  },
+ "fermi_blazar_flares": {
+  "curator": "zenodo",
+  "domain": "high-energy gamma-ray astrophysics",
+  "generating_system": "Fermi-LAT blazar gamma-ray light-curve Bayesian-block flare segmentation catalog",
+  "note": "Extragalactic blazar flare point-process catalog with waiting times and fluence asymmetry; distinct mechanism and time regime from NAOJ solar bursts and INGV seismic events",
+  "producer": "Zenodo 23039054 Authors (Fermi-LAT Blazar Catalog)",
+  "schema_family": "astrophysical flare point-process catalog",
+  "structure": {
+   "C4": "blazar gamma-ray flare point-process sequences"
+  }
+ },
  "fin_institute_nl": {
   "curator": "4tu",
   "domain": "banking process",
@@ -818,6 +829,28 @@
   "structure": {
    "C2b": "contract award",
    "C6": "procurement release"
+  }
+ },
+ "moodle_lms_events": {
+  "curator": "zenodo",
+  "domain": "educational software clickstreams",
+  "generating_system": "Moodle learning management system user event logger",
+  "note": "Educational LMS user interaction sequences; non-BP mechanism distinct from ERP/BPEL workflows",
+  "producer": "Zenodo 21410580 Authors",
+  "schema_family": "lms user interaction event log",
+  "structure": {
+   "C4": "student platform clickstream event log"
+  }
+ },
+ "naoj_norp_solar_bursts": {
+  "curator": "zenodo",
+  "domain": "solar radio astrophysics",
+  "generating_system": "NAOJ Nobeyama Radio Polarimeters solar radio flare detection system",
+  "note": "Astrophysical microwave solar radio burst event sequence across six frequency bands (1-35 GHz); non-BP",
+  "producer": "National Astronomical Observatory of Japan (NAOJ)",
+  "schema_family": "solar radio burst event catalog",
+  "structure": {
+   "C4": "chromospheric solar radio burst event catalog"
   }
  },
  "nhif_hospital_cases": {

@@ -4902,6 +4902,28 @@
   },
   "source_snapshot": "zen_bess/2026-11-21"
  },
+ "zen_blazar_flares": {
+  "dropped": [
+   "HIndex",
+   "CapToStemR",
+   "CapToStemRUnc",
+   "NumberExtremeEvt",
+   "ClusterMinSize",
+   "ClusterMaxSize"
+  ],
+  "files": {
+   "blazar_flares.csv": {
+    "rows": 3598,
+    "sha256": "d117147319e2e04ec549e1c798154a77488bd38142ee3be76228a14a979e6396"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "complete Fermi-LAT multi-year blazar gamma-ray flare catalog",
+   "sources": 565
+  },
+  "source_snapshot": "zen_blazar_flares/2026-11-22"
+ },
  "zen_care_wind_a": {
   "dropped": [
    "minimum, maximum and standard-deviation columns of every sensor"
@@ -5289,6 +5311,26 @@
   },
   "source_snapshot": "zen_metropt2/2026-11-21 (fragment)"
  },
+ "zen_moodle_events": {
+  "dropped": [],
+  "files": {
+   "moodle_events.csv": {
+    "rows": 182114,
+    "sha256": "d6043c243dee6edbe25ca283429ff2a0a187c79b56c6c730e73ce306a88b8942"
+   }
+  },
+  "pseudonymised": [
+   "userid"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "activities": 54,
+   "method": "complete Moodle LMS anonymised clickstream log with English activity labels",
+   "user_days": 8940,
+   "users": 147
+  },
+  "source_snapshot": "zen_moodle_events/2026-11-22"
+ },
  "zen_nhif_hospital_cases": {
   "dropped": [],
   "files": {
@@ -5308,6 +5350,25 @@
    "total_records": 3262662
   },
   "source_snapshot": "zen_nhif_hospital_cases/2026-11-22"
+ },
+ "zen_norp_solar_bursts": {
+  "dropped": [
+   "units_row"
+  ],
+  "files": {
+   "solar_bursts.csv": {
+    "rows": 4239,
+    "sha256": "7b20eeb17a441c80412f40425ef0869ca47c1f3ef1763998d6176d83fdffefbf"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "first_start": "1988-01-15 00:07:58+00:00",
+   "last_start": "2025-12-31 01:29:30+00:00",
+   "method": "complete 1988-2025 NAOJ Nobeyama solar radio burst catalog",
+   "year_months": 326
+  },
+  "source_snapshot": "zen_norp_solar_bursts/2026-11-22"
  },
  "zen_pbdb": {
   "dropped": [

@@ -1,6 +1,6 @@
 {
  "licence_classes": {
-  "open": 264,
+  "open": 267,
   "research_only": 22
  },
  "strata": {
@@ -64,11 +64,11 @@
    "minimum": 15,
    "missing_to_minimum": 0,
    "missing_to_recommended": 0,
-   "publishers": 20,
+   "publishers": 23,
    "recommended": 28,
-   "sources": 36,
+   "sources": 39,
    "stratum": "logs and event sequences",
-   "systems": 35
+   "systems": 38
   },
   "C5": {
    "ambitious": 55,
@@ -98,5 +98,5 @@
   "uci:755",
   "uci:760"
  ],
- "total_sources": 286
+ "total_sources": 289
 }

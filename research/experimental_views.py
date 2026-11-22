@@ -6579,6 +6579,183 @@ def _build_paris_trees(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+def moodle_events_view(raw: pd.DataFrame, mapping: dict[str, str]) -> pd.DataFrame:
+    """Moodle LMS clickstream events with English labels, UTC timestamps and salted user ids."""  # noqa: E501
+    epochs = pd.to_numeric(raw["timecreated"], errors="coerce")
+    frame = pd.DataFrame(
+        {
+            "user_id": raw["userid"].map(pseudonym),
+            "timestamp": pd.to_datetime(epochs, unit="s", utc=True),
+            "activity": raw["eventname"].map(lambda k: mapping.get(k, k)),
+            "event_code": raw["eventname"],
+        }
+    )
+    return (
+        frame[frame["timestamp"].notna()]
+        .sort_values(["user_id", "timestamp", "event_code"])
+        .reset_index(drop=True)
+    )
+
+
+def _build_moodle_events(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw_dir = root / "zen_moodle_events" / WAVE24_SNAPSHOT / "raw"
+    csv_p = raw_dir / "dataset-anon.csv"
+    map_p = raw_dir / "moodle_activity_mapping_EN.json"
+    if not csv_p.exists() or not map_p.exists():
+        raise ViewError("no Moodle event log files in the snapshot")
+    view = moodle_events_view(pd.read_csv(csv_p, dtype=str), json.loads(map_p.read_text()))
+    folder = out / "zen_moodle_events"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "moodle_events.csv"
+    view.to_csv(target, index=False)
+    user_days = int(
+        view.assign(d=view["timestamp"].dt.strftime("%Y-%m-%d")).groupby(["user_id", "d"]).ngroups
+    )
+    _record(
+        manifest,
+        "zen_moodle_events",
+        {"moodle_events.csv": (target, len(view))},
+        dropped=[],
+        pseudonymised=["userid"],
+        salt_label=SALT,
+        sampling={
+            "activities": int(view["activity"].nunique()),
+            "method": "complete Moodle LMS anonymised clickstream log with English activity labels",
+            "user_days": user_days,
+            "users": int(view["user_id"].nunique()),
+        },
+        source_snapshot=f"zen_moodle_events/{WAVE24_SNAPSHOT}",
+    )
+
+
+NORP_FLUX_COLS: tuple[tuple[str, str], ...] = (
+    ("flux_1g", "F1G"),
+    ("flux_2g", "F2G"),
+    ("flux_3_75g", "F3.75G"),
+    ("flux_9_4g", "F9.4G"),
+    ("flux_17g", "F17G"),
+    ("flux_35g", "F35G"),
+)
+
+
+def norp_solar_bursts_view(raw: pd.DataFrame) -> pd.DataFrame:
+    """NAOJ Nobeyama Radio Polarimeters solar radio burst events ordered chronologically UTC."""  # noqa: E501
+    clean = raw.rename(columns=str.strip).apply(lambda s: s.str.strip())
+    start_ts, max_ts, end_ts = (
+        pd.to_datetime(
+            clean["Date"] + " " + clean[col],
+            format="%Y-%m-%d %H:%M:%S",
+            utc=True,
+            errors="coerce",
+        )
+        for col in ("Start", "Max", "End")
+    )
+    max_ts = max_ts.where(max_ts >= start_ts, max_ts + pd.Timedelta(days=1))
+    end_ts = end_ts.where(end_ts >= start_ts, end_ts + pd.Timedelta(days=1))
+    data: dict[str, Any] = {
+        "event_id": clean["EventID"],
+        "year_month": clean["Date"].str[:7],
+        "start_time": start_ts,
+        "max_time": max_ts,
+        "end_time": end_ts,
+        "duration_s": (end_ts - start_ts).dt.total_seconds(),
+        "goes_class": clean["GOES"].replace("", pd.NA),
+        "rhessi_id": clean["RHESSI"].replace("", pd.NA),
+    }
+    for out_c, src_c in NORP_FLUX_COLS:
+        data[out_c] = pd.to_numeric(clean[src_c], errors="coerce")
+    frame = pd.DataFrame(data)
+    return (
+        frame[frame["start_time"].notna()]
+        .sort_values(["start_time", "event_id"])
+        .reset_index(drop=True)
+    )
+
+
+def _build_norp_solar_bursts(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    source = (
+        root / "zen_norp_solar_bursts" / WAVE24_SNAPSHOT / "raw" / "myNoRP_Event_List_1988-2025.csv"
+    )
+    if not source.exists():
+        raise ViewError("no NoRP solar burst CSV in the snapshot")
+    view = norp_solar_bursts_view(pd.read_csv(source, skiprows=[1], dtype=str))
+    folder = out / "zen_norp_solar_bursts"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "solar_bursts.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "zen_norp_solar_bursts",
+        {"solar_bursts.csv": (target, len(view))},
+        dropped=["units_row"],
+        pseudonymised=[],
+        sampling={
+            "first_start": str(view["start_time"].min()),
+            "last_start": str(view["start_time"].max()),
+            "method": "complete 1988-2025 NAOJ Nobeyama solar radio burst catalog",
+            "year_months": int(view["year_month"].nunique()),
+        },
+        source_snapshot=f"zen_norp_solar_bursts/{WAVE24_SNAPSHOT}",
+    )
+
+
+BLAZAR_NUM_COLS: tuple[tuple[str, str], ...] = (
+    ("redshift", "Redshift"),
+    ("flare_order", "Order"),
+    ("start_met", "Start"),
+    ("stop_met", "Stop"),
+    ("duration_s", "Duration"),
+    ("waiting_time_s", "WT"),
+    ("quality", "Quality"),
+    ("fluence", "Fluence"),
+    ("fluence_unc", "FluenceUnc"),
+    ("asymmetry_p", "AsymmetryP"),
+    ("num_sub_flr_7d", "NumSubFlr7dayB"),
+    ("num_sub_flr_3d", "NumSubFlr3dayB"),
+    ("multi_scale", "MultiScale"),
+    ("pe", "PE"),
+    ("gpe", "GPE"),
+)
+
+
+def blazar_flares_view(raw: pd.DataFrame) -> pd.DataFrame:
+    """Fermi-LAT blazar gamma-ray flare point-process events ordered by source_id and start_met."""  # noqa: E501
+    data: dict[str, Any] = {"source_id": raw["Name"], "subclass": raw["Subclass"]}
+    for out_c, src_c in BLAZAR_NUM_COLS:
+        data[out_c] = pd.to_numeric(raw[src_c], errors="coerce")
+    return pd.DataFrame(data).sort_values(["source_id", "start_met"]).reset_index(drop=True)
+
+
+def _build_blazar_flares(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    source = root / "zen_blazar_flares" / WAVE24_SNAPSHOT / "raw" / "flareCatalog.csv"
+    if not source.exists():
+        raise ViewError("no blazar flare catalog CSV in the snapshot")
+    view = blazar_flares_view(pd.read_csv(source, na_values=["-"], dtype=str))
+    folder = out / "zen_blazar_flares"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "blazar_flares.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "zen_blazar_flares",
+        {"blazar_flares.csv": (target, len(view))},
+        dropped=[
+            "HIndex",
+            "CapToStemR",
+            "CapToStemRUnc",
+            "NumberExtremeEvt",
+            "ClusterMinSize",
+            "ClusterMaxSize",
+        ],
+        pseudonymised=[],
+        sampling={
+            "method": "complete Fermi-LAT multi-year blazar gamma-ray flare catalog",
+            "sources": int(view["source_id"].nunique()),
+        },
+        source_snapshot=f"zen_blazar_flares/{WAVE24_SNAPSHOT}",
+    )
+
+
 BUILD_STEPS = (
     _build_openalex,
     _build_monash,
@@ -6665,6 +6842,9 @@ BUILD_STEPS = (
     _build_florida_bridges,
     _build_wri_power_plants,
     _build_paris_trees,
+    _build_moodle_events,
+    _build_norp_solar_bursts,
+    _build_blazar_flares,
     _build_flat,
     _build_series,
     _build_ukspend,

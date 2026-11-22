@@ -5670,6 +5670,66 @@
    "stratum": "C2a",
    "system": "paris_municipal_tree_asset_inventory",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "moodle_lms_events",
+   "id": "zen_moodle_events",
+   "licence_class": "open",
+   "protocols": "P-SEQ on Moodle LMS student interaction clickstream sequences (order, transition and gap faults)",
+   "publisher": "zenodo_21410580_authors",
+   "reason": "Zenodo 21410580 Moodle LMS event log (CC BY 4.0): 182114 events across 8940 user-day sequences and 54 English-mapped actions; software clickstream mechanism distinct from BP execution",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Zenodo API metadata for record 21410580 (read 2026-11-22): CC BY 4.0",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "moodle_lms_clickstream_recorder",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "naoj_norp_solar_bursts",
+   "id": "zen_norp_solar_bursts",
+   "licence_class": "open",
+   "protocols": "P-SEQ on chronological solar radio burst event sequences and multi-frequency flux transitions",
+   "publisher": "naoj_norp",
+   "reason": "NAOJ Nobeyama Radio Polarimeters solar burst catalog 1988-2025 (Zenodo 21300266, CC BY 4.0): 4239 radio bursts across 326 active months with midnight-rollover UTC durations; solar astrophysics event mechanism",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Zenodo API metadata for record 21300266 (read 2026-11-22): CC BY 4.0",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "naoj_nobeyama_solar_radio_polarimeters",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "fermi_blazar_flares",
+   "id": "zen_blazar_flares",
+   "licence_class": "open",
+   "protocols": "P-SEQ on per-blazar Fermi-LAT gamma-ray flare event sequences (order, waiting time, fluence transitions)",
+   "publisher": "zenodo_23039054_authors",
+   "reason": "Zenodo 23039054 Fermi-LAT blazar flare catalog (CC BY 4.0): 3598 gamma-ray flares across 565 extragalactic blazars; high-energy astrophysical point-process mechanism",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Zenodo API metadata for record 23039054 (read 2026-11-22): CC BY 4.0",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "fermi_lat_blazar_flare_pipeline",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

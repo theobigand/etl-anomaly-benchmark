@@ -238,6 +238,32 @@
    "source_snapshot": "zen_bess/2026-11-21"
   }
  },
+ "blazar_flares": {
+  "zen_blazar_flares": {
+   "dropped": [
+    "HIndex",
+    "CapToStemR",
+    "CapToStemRUnc",
+    "NumberExtremeEvt",
+    "ClusterMinSize",
+    "ClusterMaxSize"
+   ],
+   "files": {
+    "blazar_flares.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "blazar_flares.csv": "source_id,subclass,redshift,flare_order,start_met,stop_met,duration_s,waiting_time_s,quality,fluence,fluence_unc,asymmet"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "complete Fermi-LAT multi-year blazar gamma-ray flare catalog",
+    "sources": 2
+   },
+   "source_snapshot": "zen_blazar_flares/2026-11-22"
+  }
+ },
  "borg": {
   "google_cluster_2019a": {
    "dropped": [
@@ -1346,6 +1372,30 @@
    "source_snapshot": "zen_metropt2/2026-11-21 (fragment)"
   }
  },
+ "moodle_events": {
+  "zen_moodle_events": {
+   "dropped": [],
+   "files": {
+    "moodle_events.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "moodle_events.csv": "user_id,timestamp,activity,event_code"
+   },
+   "pseudonymised": [
+    "userid"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "activities": 2,
+    "method": "complete Moodle LMS anonymised clickstream log with English activity labels",
+    "user_days": 1,
+    "users": 1
+   },
+   "source_snapshot": "zen_moodle_events/2026-11-22"
+  }
+ },
  "nhif": {
   "zen_nhif_hospital_cases": {
    "dropped": [],
@@ -1368,6 +1418,29 @@
     "total_records": 2
    },
    "source_snapshot": "zen_nhif_hospital_cases/2026-11-22"
+  }
+ },
+ "norp_solar_bursts": {
+  "zen_norp_solar_bursts": {
+   "dropped": [
+    "units_row"
+   ],
+   "files": {
+    "solar_bursts.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "solar_bursts.csv": "event_id,year_month,start_time,max_time,end_time,duration_s,goes_class,rhessi_id,flux_1g,flux_2g,flux_3_75g,flux_9_4g,fl"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "first_start": "2025-12-28 01:00:00+00:00",
+    "last_start": "2025-12-28 23:58:00+00:00",
+    "method": "complete 1988-2025 NAOJ Nobeyama solar radio burst catalog",
+    "year_months": 1
+   },
+   "source_snapshot": "zen_norp_solar_bursts/2026-11-22"
   }
  },
  "noumea": {

@@ -3264,6 +3264,21 @@
    "units": 1452814,
    "view": "zen_bess"
   },
+  "zen_blazar_flares": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete Fermi-LAT blazar flare catalog: 3598 gamma-ray flare events across 565 blazar sources; '-' sentinels parsed as NaN preserving Order-1 missing waiting times",
+    "astrophysical point-process event sequences ordered by (source_id, start_met); high-missingness auxiliary columns (>50% missing) omitted"
+   ],
+   "first_party": true,
+   "independent_group": "fermi_blazar_flares",
+   "min_units": 1000,
+   "partitions": "hash of source_id 70/15/15 so multi-flare histories of each blazar stay together",
+   "privacy": "not_needed",
+   "protocol_id": "P-SEQ",
+   "units": 3598,
+   "view": "zen_blazar_flares"
+  },
   "zen_care_wind_a": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -3511,6 +3526,21 @@
    "units": 373470,
    "view": "zen_metropt2"
   },
+  "zen_moodle_events": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete Moodle LMS anonymised clickstream log: 182114 interaction events across 8940 user-day sessions (147 users, 54 English-mapped activity classes); non-BP software clickstream",
+    "userid pseudonymised via salted SHA-256 and timecreated Unix epochs normalised to UTC"
+   ],
+   "first_party": true,
+   "independent_group": "moodle_lms_events",
+   "min_units": 1000,
+   "partitions": "hash of user_id 70/15/15 so individual student histories do not split across partitions",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 8940,
+   "view": "zen_moodle_events"
+  },
   "zen_nhif_hospital_cases": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -3526,6 +3556,21 @@
    "protocol_id": "P-TAB",
    "units": 43503,
    "view": "zen_nhif_hospital_cases"
+  },
+  "zen_norp_solar_bursts": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 1988-2025 NAOJ Nobeyama Radio Polarimeters catalog: 4239 solar radio burst events across 326 active months; solar cycle activity variations drive natural rate shifts",
+    "124 midnight-crossing bursts adjusted +1 day on End time so duration_s stays non-negative; units header row skipped cleanly"
+   ],
+   "first_party": true,
+   "independent_group": "naoj_norp_solar_bursts",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on start_time",
+   "privacy": "not_needed",
+   "protocol_id": "P-SEQ",
+   "units": 4239,
+   "view": "zen_norp_solar_bursts"
   },
   "zen_pbdb": {
    "anomaly_origin": "controlled_injection",

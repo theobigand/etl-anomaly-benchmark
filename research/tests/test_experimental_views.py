@@ -1079,6 +1079,9 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _florida_bridges_snapshot(root)
     _wri_power_plants_snapshot(root)
     _paris_trees_snapshot(root)
+    _moodle_snapshot(root)
+    _norp_snapshot(root)
+    _blazar_snapshot(root)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
@@ -1094,7 +1097,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "zen_telecom_kpis", "zen_dk_district_heating", "zen_water_demand", "zen_dmsp_auroral", "us_treasury_dts", "fdic_bank_financials", "sncf_tgv_regularite", "dgccrf_fuel_prices", "us_federal_register", "datacite_dois", "gbif_cc0_occurrences", "chembl_molecules", "zen_florida_bridges", "wri_power_plants", "paris_urban_trees", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "zen_telecom_kpis", "zen_dk_district_heating", "zen_water_demand", "zen_dmsp_auroral", "us_treasury_dts", "fdic_bank_financials", "sncf_tgv_regularite", "dgccrf_fuel_prices", "us_federal_register", "datacite_dois", "gbif_cc0_occurrences", "chembl_molecules", "zen_florida_bridges", "wri_power_plants", "paris_urban_trees", "zen_moodle_events", "zen_norp_solar_bursts", "zen_blazar_flares", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -8793,3 +8796,200 @@ def test_paris_trees_view_and_builder(tmp_path):
         "method": "first 25,000 trees ordered ascending by idbase",
     }
     assert view["source_snapshot"] == f"paris_urban_trees/{ev.WAVE24_SNAPSHOT}"
+
+
+def _moodle_snapshot(root):
+    raw = root / "zen_moodle_events" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    pd.DataFrame(
+        [
+            {
+                "eventname": "\\core\\event\\course_viewed",
+                "userid": "001",
+                "timecreated": "1707343710",
+            },  # noqa: E501
+            {
+                "eventname": "\\core\\event\\custom_event",
+                "userid": "001",
+                "timecreated": "1707343700",
+            },  # noqa: E501
+            {"eventname": "\\core\\event\\course_viewed", "userid": "002", "timecreated": "bad"},
+        ]
+    ).to_csv(raw / "dataset-anon.csv", index=False)
+    (raw / "moodle_activity_mapping_EN.json").write_text(
+        json.dumps({"\\core\\event\\course_viewed": "Course viewed"})
+    )
+
+
+def _norp_snapshot(root):
+    raw = root / "zen_norp_solar_bursts" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    lines = [
+        "EventID, Date, Start, Max, End, F1G, F2G, F3.75G, F9.4G, F17G, F35G, GOES, RHESSI",
+        "u,2025-12-28,00:00:00,(UT),(UT),(SFU),(SFU),(SFU),(SFU),(SFU),(SFU),,",
+        " 20251228_2358 , 2025-12-28 , 23:58:00 , 00:01:00 , 00:05:00 , 5 , 6 , 7 , 8 , 9 , 1 , M1.0 ,007",  # noqa: E501
+        " 20251228_0100 , 2025-12-28 , 01:00:00 , 01:00:00 , 01:00:00 , bad , bad , bad , bad , bad , bad , ,",  # noqa: E501
+        " bad_row , bad , 00:00:00 , 00:00:00 , 00:00:00 , 0 , 0 , 0 , 0 , 0 , 0 , ,",
+    ]
+    (raw / "myNoRP_Event_List_1988-2025.csv").write_text("\n".join(lines) + "\n")
+
+
+def _blazar_snapshot(root):
+    raw = root / "zen_blazar_flares" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    cols = [
+        "Name",
+        "Subclass",
+        "HIndex",
+        "CapToStemR",
+        "CapToStemRUnc",
+        "NumberExtremeEvt",
+        "ClusterMinSize",
+        "ClusterMaxSize",
+        *[src for _, src in ev.BLAZAR_NUM_COLS],
+    ]
+    r1 = (
+        {
+            "Name": "J0002",
+            "Subclass": "001",
+            "HIndex": "1",
+            "CapToStemR": "0",
+            "CapToStemRUnc": "-",
+            "NumberExtremeEvt": "0",
+            "ClusterMinSize": "2",
+            "ClusterMaxSize": "5",
+        }  # noqa: E501
+        | {src: "2.5" for _, src in ev.BLAZAR_NUM_COLS}
+        | {"Start": "200.0"}
+    )
+    r2 = (
+        {
+            "Name": "J0001",
+            "Subclass": "002",
+            "HIndex": "-",
+            "CapToStemR": "0",
+            "CapToStemRUnc": "-",
+            "NumberExtremeEvt": "-",
+            "ClusterMinSize": "-",
+            "ClusterMaxSize": "-",
+        }  # noqa: E501
+        | {src: "-" for _, src in ev.BLAZAR_NUM_COLS}
+        | {"Start": "100.0"}
+    )
+    pd.DataFrame([r1, r2], columns=cols).to_csv(raw / "flareCatalog.csv", index=False)
+
+
+def test_moodle_events_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no Moodle event log files in the snapshot$"):
+        ev._build_moodle_events(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _moodle_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_moodle_events(root, out, manifest)
+    ev._build_moodle_events(root, out, manifest)
+    written = pd.read_csv(out / "zen_moodle_events" / "moodle_events.csv", dtype=str)
+    assert written.columns.tolist() == ["user_id", "timestamp", "activity", "event_code"]
+    assert len(written) == 2
+    assert written["user_id"].tolist() == [ev.pseudonym("001"), ev.pseudonym("001")]
+    assert written["activity"].tolist() == ["\\core\\event\\custom_event", "Course viewed"]
+    assert written["timestamp"].tolist() == [
+        "2024-02-07 22:08:20+00:00",
+        "2024-02-07 22:08:30+00:00",
+    ]
+    direct = ev.moodle_events_view(
+        pd.DataFrame([{"eventname": "x", "userid": "1", "timecreated": "1707343700"}]),
+        {"x": "X"},
+    )
+    assert direct.loc[0, "timestamp"] == pd.Timestamp("2024-02-07 22:08:20", tz="UTC")
+    view = manifest["zen_moodle_events"]
+    assert view["pseudonymised"] == ["userid"] and view["salt_label"] == ev.SALT
+    assert view["sampling"] == {
+        "activities": 2,
+        "method": "complete Moodle LMS anonymised clickstream log with English activity labels",
+        "user_days": 1,
+        "users": 1,
+    }
+    assert view["source_snapshot"] == f"zen_moodle_events/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_norp_solar_bursts_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no NoRP solar burst CSV in the snapshot$"):
+        ev._build_norp_solar_bursts(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _norp_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_norp_solar_bursts(root, out, manifest)
+    ev._build_norp_solar_bursts(root, out, manifest)
+    written = pd.read_csv(
+        out / "zen_norp_solar_bursts" / "solar_bursts.csv", dtype={"rhessi_id": str}
+    )
+    assert len(written) == 2
+    assert written["event_id"].tolist() == ["20251228_0100", "20251228_2358"]
+    assert written["year_month"].tolist() == ["2025-12", "2025-12"]
+    assert written["duration_s"].tolist() == [0.0, 420.0]
+    assert written.loc[0, "max_time"] == "2025-12-28 01:00:00+00:00"
+    assert written.loc[0, "end_time"] == "2025-12-28 01:00:00+00:00"
+    assert written.loc[1, "max_time"] == "2025-12-29 00:01:00+00:00"
+    assert written.loc[1, "end_time"] == "2025-12-29 00:05:00+00:00"
+    assert written.loc[1, "goes_class"] == "M1.0" and written.loc[1, "rhessi_id"] == "007"
+    assert pd.isna(written.loc[0, "goes_class"]) and pd.isna(written.loc[0, "rhessi_id"])
+    assert [written.loc[1, c] for c, _ in ev.NORP_FLUX_COLS] == [5.0, 6.0, 7.0, 8.0, 9.0, 1.0]
+    assert all(pd.isna(written.loc[0, c]) for c, _ in ev.NORP_FLUX_COLS)
+    direct = ev.norp_solar_bursts_view(
+        pd.DataFrame(
+            [
+                {
+                    " EventID ": " e1 ",
+                    "Date": "2025-12-28",
+                    "Start": "01:00:00",
+                    "Max": "01:00:00",
+                    "End": "01:00:00",
+                    "F1G": "1",
+                    "F2G": "2",
+                    "F3.75G": "3",
+                    "F9.4G": "4",
+                    "F17G": "5",
+                    "F35G": "6",
+                    "GOES": "",
+                    "RHESSI": "",
+                }
+            ]
+        )
+    )
+    assert pd.isna(direct.loc[0, "goes_class"]) and pd.isna(direct.loc[0, "rhessi_id"])
+    assert direct.loc[0, "duration_s"] == 0.0
+    view = manifest["zen_norp_solar_bursts"]
+    assert view["dropped"] == ["units_row"] and view["sampling"]["year_months"] == 1
+    assert view["source_snapshot"] == f"zen_norp_solar_bursts/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_blazar_flares_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no blazar flare catalog CSV in the snapshot$"):
+        ev._build_blazar_flares(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _blazar_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_blazar_flares(root, out, manifest)
+    ev._build_blazar_flares(root, out, manifest)
+    written = pd.read_csv(out / "zen_blazar_flares" / "blazar_flares.csv", dtype={"subclass": str})
+    assert written.columns.tolist() == [
+        "source_id",
+        "subclass",
+        *[c for c, _ in ev.BLAZAR_NUM_COLS],
+    ]
+    assert "HIndex" not in written and written["source_id"].tolist() == ["J0001", "J0002"]
+    assert written["subclass"].tolist() == ["002", "001"]
+    assert written.loc[0, "start_met"] == 100.0
+    assert all(pd.isna(written.loc[0, c]) for c, _ in ev.BLAZAR_NUM_COLS if c != "start_met")
+    assert all(
+        written.loc[1, c] == (200.0 if c == "start_met" else 2.5) for c, _ in ev.BLAZAR_NUM_COLS
+    )
+    view = manifest["zen_blazar_flares"]
+    assert view["sampling"] == {
+        "method": "complete Fermi-LAT multi-year blazar gamma-ray flare catalog",
+        "sources": 2,
+    }
+    assert view["source_snapshot"] == f"zen_blazar_flares/{ev.WAVE24_SNAPSHOT}"
