@@ -4440,5 +4440,160 @@
    "users": 267
   },
   "source_snapshot": "zen_ev_charging/2026-11-22"
+ },
+ "uk_charity_register": {
+  "dropped": [
+   "charity_name",
+   "charity_contact_*",
+   "charity_activities",
+   "reason",
+   "assoc_charity_name",
+   "trustee table (not downloaded)"
+  ],
+  "files": {
+   "annual_return_history.csv": {
+    "rows": 62876,
+    "sha256": "44acc63a1c8a24c98dc3b1a8e29dd3b9fc1ec900e579bd56857df30a38699db8"
+   },
+   "area_of_operation.csv": {
+    "rows": 28016,
+    "sha256": "b7a0a456b3f4cd27df3f96f0daee54bb3c1deda324704fa3cfe502d809089f45"
+   },
+   "charity.csv": {
+    "rows": 19952,
+    "sha256": "6dc9724f9ae3f3b81a4d40b624f2bb9433b493aff4273c6cbf3df0886c7fe973"
+   },
+   "classification.csv": {
+    "rows": 88446,
+    "sha256": "c6566a8b5e6d479df3b3d4b28444c5abbe2098cdca171cf884955be4f475c549"
+   },
+   "event_history.csv": {
+    "rows": 35242,
+    "sha256": "e09315cbcd9399a153123d6ac9a9378c06ae3a3255b06a58c12e7a88b45da702"
+   }
+  },
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 62876,
+    "child": "annual_return_history.organisation_number",
+    "orphans": 0,
+    "parent": "charity.organisation_number",
+    "share": 0.0
+   },
+   {
+    "checked": 28016,
+    "child": "area_of_operation.organisation_number",
+    "orphans": 0,
+    "parent": "charity.organisation_number",
+    "share": 0.0
+   },
+   {
+    "checked": 88446,
+    "child": "classification.organisation_number",
+    "orphans": 0,
+    "parent": "charity.organisation_number",
+    "share": 0.0
+   },
+   {
+    "checked": 35242,
+    "child": "event_history.organisation_number",
+    "orphans": 0,
+    "parent": "charity.organisation_number",
+    "share": 0.0
+   }
+  ],
+  "sampling": {
+   "method": "deterministic 1-in-20 slice on organisation_number across 5 non-trustee extracts",
+   "modulo": 20
+  },
+  "source_snapshot": "uk_charity_register/2026-11-22"
+ },
+ "zen_japan_buildings": {
+  "dropped": [
+   "designer personal/company names, affiliations and URLs",
+   "source authors, titles and URLs",
+   "site street addresses and postal codes",
+   "free-text notes"
+  ],
+  "files": {
+   "archaeological_evidence_sites.csv": {
+    "rows": 397,
+    "sha256": "7c6002a9792f617471e0762615c12728f5d182f50e63a8b0f74cb77b9ef960be"
+   },
+   "building_designers.csv": {
+    "rows": 1151,
+    "sha256": "2a67dfaa814b3ff0b25092a758b288c8d28fb4215570827ecffaf07ae5523ca1"
+   },
+   "buildings.csv": {
+    "rows": 1014,
+    "sha256": "1bcf51168b03ca5679cc399ecd50b2db25165db721a9e6fd9649dd546aadef90"
+   },
+   "designers.csv": {
+    "rows": 279,
+    "sha256": "d4559c21452d7a80c0aa4154329d3a0901284ffdb48f87a8f55a6f1cd7703baa"
+   },
+   "site_sources.csv": {
+    "rows": 814,
+    "sha256": "818180df2c4df268881b9dde662281972da0cc526a561fb4d2aca994e18ca68d"
+   },
+   "sites.csv": {
+    "rows": 346,
+    "sha256": "6f39a0b1b28406e549b6ef1b9cc0aa001a108325edef8451579fa3b23ad3ded5"
+   },
+   "sources.csv": {
+    "rows": 708,
+    "sha256": "39b560b3a83b3a31a02db16dd1e9505992e5035ab0e2c7a37f815b3ec575b7be"
+   }
+  },
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 1014,
+    "child": "buildings.site_id",
+    "orphans": 0,
+    "parent": "sites.site_id",
+    "share": 0.0
+   },
+   {
+    "checked": 88,
+    "child": "buildings.archaeological_evidence_site_id",
+    "orphans": 0,
+    "parent": "archaeological_evidence_sites.archaeological_evidence_site_id",
+    "share": 0.0
+   },
+   {
+    "checked": 1151,
+    "child": "building_designers.building_id",
+    "orphans": 0,
+    "parent": "buildings.building_id",
+    "share": 0.0
+   },
+   {
+    "checked": 1151,
+    "child": "building_designers.designer_id",
+    "orphans": 0,
+    "parent": "designers.designer_id",
+    "share": 0.0
+   },
+   {
+    "checked": 814,
+    "child": "site_sources.site_id",
+    "orphans": 0,
+    "parent": "sites.site_id",
+    "share": 0.0
+   },
+   {
+    "checked": 814,
+    "child": "site_sources.source_id",
+    "orphans": 0,
+    "parent": "sources.source_id",
+    "share": 0.0
+   }
+  ],
+  "sampling": {
+   "method": "complete core 7-table relational schema (no row sampling)"
+  },
+  "source_snapshot": "zen_japan_buildings/2026-11-22"
  }
 }

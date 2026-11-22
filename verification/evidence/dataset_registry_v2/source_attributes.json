@@ -521,6 +521,20 @@
    "C4": "business process execution"
   }
  },
+ "japan_reconstructed_buildings": {
+  "curator": "zenodo",
+  "descriptors": {
+   "relational_topology": "seven-table schema (buildings, building_designers, designers, sites, archaeological_evidence_sites, site_sources, sources), 6 foreign-key relations, 0 orphans"
+  },
+  "domain": "architectural heritage and archaeology",
+  "generating_system": "Japanese reconstructed archaeological buildings inventory (Zenodo 23166842)",
+  "note": "non-timetable cultural heritage relational database",
+  "producer": "Zenodo record 23166842 authors",
+  "schema_family": "archaeological heritage database",
+  "structure": {
+   "C5": "archaeological site, building and bibliography relational tables"
+  }
+ },
  "jolpica_f1": {
   "curator": "jolpica",
   "descriptors": {
@@ -1571,6 +1585,20 @@
   "schema_family": "uci flat table",
   "structure": {
    "C2a": "computational or derived features"
+  }
+ },
+ "uk_charity_commission": {
+  "curator": "ccew",
+  "descriptors": {
+   "relational_topology": "five non-trustee extracts (charity, annual_return_history, area_of_operation, classification, event_history), 4 foreign-key relations, 0 orphans in 1-in-20 organisation_number slice"
+  },
+  "domain": "charitable sector regulation",
+  "generating_system": "Charity Commission for England and Wales public charity register",
+  "note": "non-timetable statutory administrative relational extract; charity_trustee excluded",
+  "producer": "Charity Commission for England and Wales",
+  "schema_family": "charity register relational tables",
+  "structure": {
+   "C5": "charity register and statutory return tables"
   }
  },
  "uk_ledger_mhra": {

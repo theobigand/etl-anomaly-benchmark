@@ -332,6 +332,14 @@ def _aoe(root, tmp):
     tev._aoe_snapshot(root)
 
 
+def _charity(root, tmp):
+    tev._charity_snapshot(root)
+
+
+def _japan(root, tmp):
+    tev._japan_snapshot(root)
+
+
 def _tlc(root, tmp):
     tev._tlc_page(
         [{}, {"tpep_pickup_datetime": "2023-03-07T07:00:00.000", "total_amount": "0.0"}]
@@ -367,6 +375,8 @@ CASES = {
     "ev": (_ev, ev._build_ev_charging, ["zen_ev_charging"], {}),
     "azure": (_azure, ev._build_azure_packing, ["azure_packing_2020"], {}),
     "aoe": (_aoe, ev._build_aoe, ["zen_aoe_interactions"], {}),
+    "charity": (_charity, ev._build_charity_register, ["uk_charity_register"], {}),
+    "japan": (_japan, ev._build_japan_buildings, ["zen_japan_buildings"], {}),
     "tlc": (_tlc, ev._build_tlc, ["nyc_tlc_yellow"], {}),
     "maude": (_maude_case, ev._build_maude, ["openfda_device_event"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),

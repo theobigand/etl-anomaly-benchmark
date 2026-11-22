@@ -8,9 +8,9 @@
 | C2b transactional events | 14 | 16 | 14 | 15 | 30 | 45 | 16 |
 | C3 time series | 54 | 56 | 48 | 15 | 40 | 55 | 0 |
 | C4 logs and event sequences | 34 | 33 | 18 | 15 | 28 | 40 | 0 |
-| C5 relational | 12 | 32 | 23 | 15 | 36 | 55 | 24 |
+| C5 relational | 14 | 34 | 25 | 15 | 36 | 55 | 22 |
 | C6 nested | 16 | 16 | 15 | 15 | 30 | 45 | 14 |
 
-Licence classes (sources): open 231, research_only 22.
+Licence classes (sources): open 233, research_only 22.
 
-Distinct source families: 253. Wave-2 tables with a time-column candidate that is not yet verified as a single chronological series: 3.
+Distinct source families: 255. Wave-2 tables with a time-column candidate that is not yet verified as a single chronological series: 3.

@@ -5010,6 +5010,46 @@
    "stratum": "C4",
    "system": "aoe_rts_gameplay_interaction_log",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uk_charity_commission",
+   "id": "uk_charity_register",
+   "licence_class": "open",
+   "protocols": "P-REL on 5-table statutory charity register (0 orphans across 214,580 child rows; not GTFS)",
+   "publisher": "ccew",
+   "reason": "Charity Commission for England and Wales 5-table register (1-in-20 slice on organisation_number): 19,952 charities, 62,876 annual returns, 28,016 areas of operation, 88,446 classifications, 35,242 event histories; 0 orphans across all 4 FK relations; charity_trustee excluded and names/contacts/activities dropped; non-timetable administrative relational database",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CCEW register-of-charities full download page (Wayback 20241010120240id_), GOV.UK Charity Commission page and data.gov.uk metadata (read 2026-11-22): UK Open Government Licence v3.0",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "ccew_charity_register_relational_extract",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "japan_reconstructed_buildings",
+   "id": "zen_japan_buildings",
+   "licence_class": "open",
+   "protocols": "P-REL on 7-table archaeological building and bibliography schema (0 orphans across 6 FKs; not GTFS)",
+   "publisher": "japan_buildings_authors",
+   "reason": "Reconstructed Prehistoric and Ancient Buildings in Japan (Zenodo 23166842): complete 7-table relational schema (1,014 buildings, 346 sites, 397 archaeological evidence sites, 279 designers, 1,151 building-designer links, 814 site-source links, 708 sources); 0 orphans across all 6 FK relations; personal/author names and addresses removed",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Zenodo record 23166842 metadata (read 2026-11-22): CC BY 4.0",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "japan_reconstructed_buildings_inventory",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

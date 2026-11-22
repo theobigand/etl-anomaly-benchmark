@@ -1806,6 +1806,36 @@
    "size": "4.0 MiB range (29.8 MB view)",
    "source_url": "https://zenodo.org/api/records/11060884",
    "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "uk_charity_register",
+   "licence": "UK Open Government Licence v3.0",
+   "name": "UK Charity Commission Public Register (5 non-trustee tables)",
+   "next_step": "none",
+   "notes": "1-in-20 organisation_number slice: 19,952 charities + 214,580 linked child rows, 0 orphans across 4 FKs; trustee extract excluded",
+   "publisher": "Charity Commission for England and Wales",
+   "reason": "non-timetable statutory 5-table relational database with 0 FK orphans",
+   "size": "91.7 MB zips (23 MB views)",
+   "source_url": "https://www.gov.uk/government/organisations/charity-commission",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "zen_japan_buildings",
+   "licence": "CC BY 4.0",
+   "name": "Reconstructed Prehistoric and Ancient Buildings in Japan (Zenodo 23166842)",
+   "next_step": "none",
+   "notes": "complete 7-table schema: 1,014 buildings, 0 orphans across 6 FKs; designer/source names and addresses removed",
+   "publisher": "Zenodo record 23166842 authors",
+   "reason": "non-timetable 7-table archaeological relational database with 0 FK orphans",
+   "size": "2.3 MB zip (0.4 MB views)",
+   "source_url": "https://zenodo.org/api/records/23166842",
+   "status": "experiment_ready"
   }
  ],
  "date": "2026-11-21",

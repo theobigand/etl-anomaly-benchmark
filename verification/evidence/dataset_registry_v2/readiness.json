@@ -2164,6 +2164,20 @@
   },
   {
    "failed": null,
+   "group": "uk_charity_commission",
+   "id": "uk_charity_register",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "japan_reconstructed_buildings",
+   "id": "zen_japan_buildings",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2424,11 +2438,13 @@
    "gtfs_fr_sibra",
    "gtfs_fr_tango",
    "gtfs_fr_transvilles",
+   "japan_reconstructed_buildings",
    "jolpica_f1",
    "mimic_iv_bidmc",
    "openalex",
    "paleobiology_database",
    "stackexchange",
+   "uk_charity_commission",
    "usda_fdc",
    "zambia_procurement"
   ],
@@ -2497,13 +2513,13 @@
    "structurally_valid": 33
   },
   "C5": {
-   "acquired": 32,
-   "discovered": 32,
-   "experiment_ready": 32,
-   "protocol_ready": 32,
-   "rights_verified": 32,
-   "scientifically_eligible": 32,
-   "structurally_valid": 32
+   "acquired": 34,
+   "discovered": 34,
+   "experiment_ready": 34,
+   "protocol_ready": 34,
+   "rights_verified": 34,
+   "scientifically_eligible": 34,
+   "structurally_valid": 34
   },
   "C6": {
    "acquired": 15,

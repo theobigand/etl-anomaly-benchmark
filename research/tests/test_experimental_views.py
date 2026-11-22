@@ -1046,6 +1046,8 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _ev_snapshot(root)
     _azure_snapshot(root)
     _aoe_snapshot(root)
+    _charity_snapshot(root)
+    _japan_snapshot(root)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
@@ -1061,7 +1063,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -5667,3 +5669,193 @@ def test_aoe_builder_decodes_zip_prefix_writes_csv_and_errors_when_missing(tmp_p
         },
         "traces": 2,
     }
+
+
+def _charity_raw_tables():
+    tables = {}
+    for name, rule in ev.CHARITY_SPEC["tables"].items():
+        cols = rule["keep"]
+        r1 = {c: f"1_{c}" for c in cols}
+        r2 = {c: f"2_{c}" for c in cols}
+        r1["organisation_number"] = "20"
+        r2["organisation_number"] = "21"
+        rows = [r2, r1]
+        if name != "charity":
+            r3 = {c: f"3_{c}" for c in cols}
+            r3["organisation_number"] = "40"
+            r4 = {c: f"4_{c}" for c in cols}
+            r4["organisation_number"] = "bad"
+            rows = [r2, r3, r1, r4]
+        else:
+            r1["charity_name"] = "Hidden"
+            r1["charity_activities"] = "a," * 30 + 'say "unbalanced'
+            r2["charity_name"] = "Odd"
+            r2["charity_activities"] = "plain"
+        tables[name] = pd.DataFrame(rows)
+    return tables
+
+
+def _charity_snapshot(root):
+    import zipfile as _z
+
+    raw = root / "uk_charity_register" / ev.CHARITY_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    for name, frame in _charity_raw_tables().items():
+        zname = ev.CHARITY_FILES[name]
+        lines = ["\t".join(frame.columns)]
+        for row in frame.to_dict(orient="records"):
+            lines.append("\t".join(str(row[c]) for c in frame.columns))
+        with _z.ZipFile(raw / zname, "w") as z:
+            z.writestr(f"publicextract.{name}.txt", "\n".join(lines) + "\n")
+
+
+def _japan_raw_tables():
+    tables = {}
+    for name, rule in ev.JAPAN_SPEC["tables"].items():
+        cols = rule["keep"]
+        r1 = {c: "010" for c in cols}
+        r2 = {c: "20" for c in cols}
+        if name == "designers":
+            r1["name_ja"] = "Person Name"
+            r2["name_ja"] = "Corp Name"
+        elif name == "sources":
+            r1["authors"] = "Author Name"
+            r2["authors"] = "Editor Name"
+        elif name == "buildings":
+            r1["archaeological_evidence_site_id"] = "010"
+            r2["archaeological_evidence_site_id"] = None
+            r1["rebuild_notes"] = "note"
+            r2["rebuild_notes"] = "note2"
+        tables[name] = pd.DataFrame([r2, r1])
+    return tables
+
+
+def _japan_snapshot(root):
+    import zipfile as _z
+
+    raw = root / "zen_japan_buildings" / ev.JAPAN_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    with _z.ZipFile(raw / "reconstructed_buildings_japan_v1.1.zip", "w") as z:
+        for name, frame in _japan_raw_tables().items():
+            z.writestr(f"{ev.JAPAN_PREFIX}{name}.csv", frame.to_csv(index=False))
+
+
+def test_charity_register_view_filters_modulo_drops_pii_sorts_and_counts_orphans():
+    tables = _charity_raw_tables()
+    views, rels = ev.charity_register_view(tables, modulo=20)
+    assert set(views) == set(ev.CHARITY_FILES)
+    assert list(views["charity"].columns) == ev.CHARITY_SPEC["tables"]["charity"]["keep"]
+    assert views["charity"].index.tolist() == [0]
+    assert "charity_name" not in views["charity"]
+    assert "charity_activities" not in views["charity"]
+    assert views["charity"]["organisation_number"].tolist() == ["20"]
+    assert views["classification"]["organisation_number"].tolist() == ["20", "40"]
+    assert rels == [
+        {
+            "child": "annual_return_history.organisation_number",
+            "parent": "charity.organisation_number",
+            "checked": 2,
+            "orphans": 1,
+            "share": 0.5,
+        },
+        {
+            "child": "area_of_operation.organisation_number",
+            "parent": "charity.organisation_number",
+            "checked": 2,
+            "orphans": 1,
+            "share": 0.5,
+        },
+        {
+            "child": "classification.organisation_number",
+            "parent": "charity.organisation_number",
+            "checked": 2,
+            "orphans": 1,
+            "share": 0.5,
+        },
+        {
+            "child": "event_history.organisation_number",
+            "parent": "charity.organisation_number",
+            "checked": 2,
+            "orphans": 1,
+            "share": 0.5,
+        },
+    ]
+
+
+def test_charity_register_builder_reads_zips_writes_csvs_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no UK charity zip "):
+        ev._build_charity_register(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _charity_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_charity_register(root, out, manifest)
+    ev._build_charity_register(root, out, manifest)
+    view = manifest["uk_charity_register"]
+    assert view["files"]["charity.csv"]["rows"] == 1
+    assert view["files"]["classification.csv"]["rows"] == 2
+    assert (out / "uk_charity_register" / "charity.csv").read_text().splitlines()[0] == ",".join(
+        ev.CHARITY_SPEC["tables"]["charity"]["keep"]
+    )
+    assert view["pseudonymised"] == []
+    assert view["dropped"] == [
+        "charity_name",
+        "charity_contact_*",
+        "charity_activities",
+        "reason",
+        "assoc_charity_name",
+        "trustee table (not downloaded)",
+    ]
+    assert view["source_snapshot"] == f"uk_charity_register/{ev.CHARITY_SNAPSHOT}"
+    assert view["sampling"] == {
+        "method": f"deterministic 1-in-{ev.CHARITY_MODULO} slice on organisation_number across 5 non-trustee extracts",  # noqa: E501
+        "modulo": ev.CHARITY_MODULO,
+    }
+    assert len(view["relations"]) == 4 and all(r["orphans"] == 1 for r in view["relations"])
+
+
+def test_japan_buildings_view_drops_pii_sorts_and_audits_six_relations():
+    tables = _japan_raw_tables()
+    tables["building_designers"] = pd.concat(
+        [tables["building_designers"], pd.DataFrame([{"building_id": "010", "designer_id": "999"}])]
+    )
+    views, rels = ev.japan_buildings_view(tables)
+    assert set(views) == set(ev.JAPAN_SPEC["tables"])
+    assert list(views["buildings"].columns) == ev.JAPAN_SPEC["tables"]["buildings"]["keep"]
+    assert views["buildings"].index.tolist() == [0, 1]
+    assert "name_ja" not in views["designers"] and "authors" not in views["sources"]
+    assert "rebuild_notes" not in views["buildings"]
+    assert views["buildings"]["building_id"].tolist() == ["010", "20"]
+    by_child = {r["child"]: r for r in rels}
+    assert by_child["buildings.archaeological_evidence_site_id"]["checked"] == 1
+    assert by_child["buildings.archaeological_evidence_site_id"]["orphans"] == 0
+    assert by_child["building_designers.designer_id"]["checked"] == 3
+    assert by_child["building_designers.designer_id"]["orphans"] == 1
+
+
+def test_japan_buildings_builder_reads_zip_writes_csvs_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no Japan buildings zip archive in the snapshot$"):
+        ev._build_japan_buildings(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _japan_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_japan_buildings(root, out, manifest)
+    ev._build_japan_buildings(root, out, manifest)
+    view = manifest["zen_japan_buildings"]
+    assert len(view["files"]) == 7 and view["files"]["buildings.csv"]["rows"] == 2
+    lines = (out / "zen_japan_buildings" / "designers.csv").read_text().splitlines()
+    assert lines[0] == "designer_id,is_individual,primary_designer_type_id"
+    assert lines[1].startswith("010,")
+    assert view["pseudonymised"] == []
+    assert view["dropped"] == [
+        "designer personal/company names, affiliations and URLs",
+        "source authors, titles and URLs",
+        "site street addresses and postal codes",
+        "free-text notes",
+    ]
+    assert view["source_snapshot"] == f"zen_japan_buildings/{ev.JAPAN_SNAPSHOT}"
+    assert view["sampling"] == {
+        "method": "complete core 7-table relational schema (no row sampling)"
+    }
+    assert len(view["relations"]) == 6 and all(r["orphans"] == 0 for r in view["relations"])

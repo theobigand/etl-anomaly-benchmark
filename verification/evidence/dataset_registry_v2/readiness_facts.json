@@ -3134,6 +3134,38 @@
    "protocol_id": "P-TAB",
    "units": 35377,
    "view": "zen_ev_charging"
+  },
+  "uk_charity_register": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "deterministic 1-in-20 slice on organisation_number across five non-trustee tables (19,952 charities and 214,580 linked child rows)",
+    "read with QUOTE_NONE to avoid unescaped-quote line swallowing; 0 orphans across all 4 foreign keys",
+    "charity_trustee extract excluded; names, contacts, addresses, websites and free-text activities dropped"
+   ],
+   "first_party": true,
+   "independent_group": "uk_charity_commission",
+   "min_units": 1000,
+   "partitions": "hash of organisation_number 70/15/15 keeping linked annual returns, areas, classifications and events with their charity",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 19952,
+   "view": "uk_charity_register"
+  },
+  "zen_japan_buildings": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete seven-table archaeological building relational database (1,014 buildings, 346 sites, 279 designers, 708 sources)",
+    "0 orphans across all 6 foreign-key relations (optional archaeological_evidence_site_id has 88 populated references)",
+    "individual designer names/affiliations, source author strings, addresses and free-text notes dropped"
+   ],
+   "first_party": true,
+   "independent_group": "japan_reconstructed_buildings",
+   "min_units": 1000,
+   "partitions": "hash of building_id 70/15/15 preserving referenced sites, designers and sources",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 1014,
+   "view": "zen_japan_buildings"
   }
  }
 }

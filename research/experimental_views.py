@@ -4229,6 +4229,292 @@ def _build_aoe(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+CHARITY_SNAPSHOT = "2026-11-22"
+CHARITY_MODULO = 20
+CHARITY_FILES: dict[str, str] = {
+    "charity": "publicextract.charity.zip",
+    "annual_return_history": "publicextract.charity_annual_return_history.zip",
+    "area_of_operation": "publicextract.charity_area_of_operation.zip",
+    "classification": "publicextract.charity_classification.zip",
+    "event_history": "publicextract.charity_event_history.zip",
+}
+CHARITY_SPEC: dict[str, Any] = {
+    "tables": {
+        "charity": {
+            "keep": [
+                "organisation_number",
+                "registered_charity_number",
+                "linked_charity_number",
+                "charity_type",
+                "charity_registration_status",
+                "date_of_registration",
+                "date_of_removal",
+                "charity_reporting_status",
+                "latest_acc_fin_period_start_date",
+                "latest_acc_fin_period_end_date",
+                "latest_income",
+                "latest_expenditure",
+                "charity_insolvent",
+                "charity_in_administration",
+                "charity_previously_excepted",
+                "charity_is_cdf_or_cif",
+                "charity_is_cio",
+                "cio_is_dissolved",
+                "charity_gift_aid",
+                "charity_has_land",
+            ]
+        },
+        "annual_return_history": {
+            "keep": [
+                "organisation_number",
+                "registered_charity_number",
+                "fin_period_start_date",
+                "fin_period_end_date",
+                "ar_cycle_reference",
+                "reporting_due_date",
+                "date_annual_return_received",
+                "date_accounts_received",
+                "total_gross_income",
+                "total_gross_expenditure",
+                "accounts_qualified",
+                "suppression_ind",
+                "suppression_type",
+            ]
+        },
+        "area_of_operation": {
+            "keep": [
+                "organisation_number",
+                "registered_charity_number",
+                "linked_charity_number",
+                "geographic_area_type",
+                "geographic_area_description",
+                "parent_geographic_area_type",
+                "parent_geographic_area_description",
+                "welsh_ind",
+            ]
+        },
+        "classification": {
+            "keep": [
+                "organisation_number",
+                "registered_charity_number",
+                "linked_charity_number",
+                "classification_code",
+                "classification_type",
+                "classification_description",
+            ]
+        },
+        "event_history": {
+            "keep": [
+                "organisation_number",
+                "registered_charity_number",
+                "linked_charity_number",
+                "charity_event_order",
+                "event_type",
+                "date_of_event",
+                "assoc_organisation_number",
+                "assoc_registered_charity_number",
+            ]
+        },
+    },
+    "relations": [
+        ["annual_return_history", "organisation_number", "charity", "organisation_number"],
+        ["area_of_operation", "organisation_number", "charity", "organisation_number"],
+        ["classification", "organisation_number", "charity", "organisation_number"],
+        ["event_history", "organisation_number", "charity", "organisation_number"],
+    ],
+}
+
+
+def charity_register_view(
+    tables: dict[str, pd.DataFrame], modulo: int = CHARITY_MODULO
+) -> tuple[dict[str, pd.DataFrame], list[dict[str, Any]]]:
+    """Non-identifying Charity Commission register tables sliced by organisation number."""
+    projected, _ = tables_view(tables, CHARITY_SPEC)
+    filtered: dict[str, pd.DataFrame] = {}
+    for name, frame in projected.items():
+        nums = pd.to_numeric(frame["organisation_number"], errors="coerce")
+        sub = frame[nums % modulo == 0]
+        filtered[name] = sub.sort_values(list(sub.columns))
+    views, relations = tables_view(filtered, CHARITY_SPEC)
+    return {name: frame.reset_index(drop=True) for name, frame in views.items()}, relations
+
+
+def _build_charity_register(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import csv
+    import zipfile
+
+    raw = root / "uk_charity_register" / CHARITY_SNAPSHOT / "raw"
+    tables: dict[str, pd.DataFrame] = {}
+    for name, zname in CHARITY_FILES.items():
+        archive_path = raw / zname
+        if not archive_path.exists():
+            raise ViewError(f"no UK charity zip {zname} in the snapshot")
+        with zipfile.ZipFile(archive_path) as zf, zf.open(zf.namelist()[0]) as handle:
+            tables[name] = pd.read_csv(handle, sep="\t", dtype=str, quoting=csv.QUOTE_NONE)
+    views, relations = charity_register_view(tables)
+    folder = out / "uk_charity_register"
+    folder.mkdir(parents=True, exist_ok=True)
+    files: dict[str, tuple[Path, int]] = {}
+    for name, frame in views.items():
+        target = folder / f"{name}.csv"
+        frame.to_csv(target, index=False)
+        files[f"{name}.csv"] = (target, len(frame))
+    _record(
+        manifest,
+        "uk_charity_register",
+        files,
+        dropped=[
+            "charity_name",
+            "charity_contact_*",
+            "charity_activities",
+            "reason",
+            "assoc_charity_name",
+            "trustee table (not downloaded)",
+        ],
+        pseudonymised=[],
+        relations=relations,
+        sampling={
+            "method": f"deterministic 1-in-{CHARITY_MODULO} slice on organisation_number across 5 non-trustee extracts",  # noqa: E501
+            "modulo": CHARITY_MODULO,
+        },
+        source_snapshot=f"uk_charity_register/{CHARITY_SNAPSHOT}",
+    )
+
+
+JAPAN_SNAPSHOT = "2026-11-22"
+JAPAN_PREFIX = "reconstructed_buildings_japan_v1.1/csv/"
+JAPAN_SPEC: dict[str, Any] = {
+    "tables": {
+        "buildings": {
+            "keep": [
+                "building_id",
+                "site_id",
+                "period_id",
+                "building_type_id",
+                "archaeological_basis_relation_id",
+                "archaeological_evidence_site_id",
+                "is_above_archaeological_feature",
+                "designer_status_id",
+                "date_status_id",
+                "location_status_id",
+                "is_standing",
+                "is_rebuilt",
+                "built_year",
+                "frame_material_id",
+                "roof_material_id",
+                "roof_shape_id",
+                "plan_layout_id",
+                "pillar_count",
+                "floor_length_m",
+                "floor_width_m",
+                "floor_diameter_m",
+                "floor_area_m2",
+                "latitude",
+                "longitude",
+            ]
+        },
+        "building_designers": {"keep": ["building_id", "designer_id"]},
+        "designers": {"keep": ["designer_id", "is_individual", "primary_designer_type_id"]},
+        "sites": {
+            "keep": [
+                "site_id",
+                "prefecture_code",
+                "municipality_code",
+                "district_code",
+                "ward_code",
+                "designation_id",
+                "designation_date",
+                "latitude",
+                "longitude",
+            ]
+        },
+        "archaeological_evidence_sites": {
+            "keep": ["archaeological_evidence_site_id", "site_name_en", "display_site_id"]
+        },
+        "site_sources": {"keep": ["site_id", "source_id"]},
+        "sources": {
+            "keep": [
+                "source_id",
+                "year",
+                "source_type_id",
+                "source_kind_id",
+                "building_info_status_id",
+                "ncid",
+                "naid",
+                "crid",
+            ]
+        },
+    },
+    "relations": [
+        ["buildings", "site_id", "sites", "site_id"],
+        [
+            "buildings",
+            "archaeological_evidence_site_id",
+            "archaeological_evidence_sites",
+            "archaeological_evidence_site_id",
+        ],
+        ["building_designers", "building_id", "buildings", "building_id"],
+        ["building_designers", "designer_id", "designers", "designer_id"],
+        ["site_sources", "site_id", "sites", "site_id"],
+        ["site_sources", "source_id", "sources", "source_id"],
+    ],
+}
+
+
+def japan_buildings_view(
+    tables: dict[str, pd.DataFrame],
+) -> tuple[dict[str, pd.DataFrame], list[dict[str, Any]]]:
+    """De-identified seven-table Japan reconstructed buildings relational slice."""
+    views, relations = tables_view(tables, JAPAN_SPEC)
+    ordered = {
+        name: frame.sort_values(list(frame.columns)).reset_index(drop=True)
+        for name, frame in views.items()
+    }
+    return ordered, relations
+
+
+def _build_japan_buildings(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import zipfile
+
+    archive = (
+        root
+        / "zen_japan_buildings"
+        / JAPAN_SNAPSHOT
+        / "raw"
+        / "reconstructed_buildings_japan_v1.1.zip"  # noqa: E501
+    )
+    if not archive.exists():
+        raise ViewError("no Japan buildings zip archive in the snapshot")
+    tables: dict[str, pd.DataFrame] = {}
+    with zipfile.ZipFile(archive) as zf:
+        for name in JAPAN_SPEC["tables"]:
+            with zf.open(f"{JAPAN_PREFIX}{name}.csv") as handle:
+                tables[name] = pd.read_csv(handle, dtype=str)
+    views, relations = japan_buildings_view(tables)
+    folder = out / "zen_japan_buildings"
+    folder.mkdir(parents=True, exist_ok=True)
+    files: dict[str, tuple[Path, int]] = {}
+    for name, frame in views.items():
+        target = folder / f"{name}.csv"
+        frame.to_csv(target, index=False)
+        files[f"{name}.csv"] = (target, len(frame))
+    _record(
+        manifest,
+        "zen_japan_buildings",
+        files,
+        dropped=[
+            "designer personal/company names, affiliations and URLs",
+            "source authors, titles and URLs",
+            "site street addresses and postal codes",
+            "free-text notes",
+        ],
+        pseudonymised=[],
+        relations=relations,
+        sampling={"method": "complete core 7-table relational schema (no row sampling)"},
+        source_snapshot=f"zen_japan_buildings/{JAPAN_SNAPSHOT}",
+    )
+
+
 BUILD_STEPS = (
     _build_openalex,
     _build_monash,
@@ -4282,6 +4568,8 @@ BUILD_STEPS = (
     _build_ev_charging,
     _build_azure_packing,
     _build_aoe,
+    _build_charity_register,
+    _build_japan_buildings,
     _build_flat,
     _build_series,
     _build_ukspend,

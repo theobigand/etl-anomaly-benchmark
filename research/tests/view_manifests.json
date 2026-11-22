@@ -552,6 +552,169 @@
    "source_snapshot": "gfz_kp_index/2026-11-22"
   }
  },
+ "charity": {
+  "uk_charity_register": {
+   "dropped": [
+    "charity_name",
+    "charity_contact_*",
+    "charity_activities",
+    "reason",
+    "assoc_charity_name",
+    "trustee table (not downloaded)"
+   ],
+   "files": {
+    "annual_return_history.csv": {
+     "rows": 2
+    },
+    "area_of_operation.csv": {
+     "rows": 2
+    },
+    "charity.csv": {
+     "rows": 1
+    },
+    "classification.csv": {
+     "rows": 2
+    },
+    "event_history.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "annual_return_history.csv": "organisation_number,registered_charity_number,fin_period_start_date,fin_period_end_date,ar_cycle_reference,reporting_due",
+    "area_of_operation.csv": "organisation_number,registered_charity_number,linked_charity_number,geographic_area_type,geographic_area_description,par",
+    "charity.csv": "organisation_number,registered_charity_number,linked_charity_number,charity_type,charity_registration_status,date_of_reg",
+    "classification.csv": "organisation_number,registered_charity_number,linked_charity_number,classification_code,classification_type,classificati",
+    "event_history.csv": "organisation_number,registered_charity_number,linked_charity_number,charity_event_order,event_type,date_of_event,assoc_o"
+   },
+   "pseudonymised": [],
+   "relations": [
+    {
+     "checked": 2,
+     "child": "annual_return_history.organisation_number",
+     "orphans": 1,
+     "parent": "charity.organisation_number",
+     "share": 0.5
+    },
+    {
+     "checked": 2,
+     "child": "area_of_operation.organisation_number",
+     "orphans": 1,
+     "parent": "charity.organisation_number",
+     "share": 0.5
+    },
+    {
+     "checked": 2,
+     "child": "classification.organisation_number",
+     "orphans": 1,
+     "parent": "charity.organisation_number",
+     "share": 0.5
+    },
+    {
+     "checked": 2,
+     "child": "event_history.organisation_number",
+     "orphans": 1,
+     "parent": "charity.organisation_number",
+     "share": 0.5
+    }
+   ],
+   "sampling": {
+    "method": "deterministic 1-in-20 slice on organisation_number across 5 non-trustee extracts",
+    "modulo": 20
+   },
+   "source_snapshot": "uk_charity_register/2026-11-22"
+  }
+ },
+ "japan": {
+  "zen_japan_buildings": {
+   "dropped": [
+    "designer personal/company names, affiliations and URLs",
+    "source authors, titles and URLs",
+    "site street addresses and postal codes",
+    "free-text notes"
+   ],
+   "files": {
+    "archaeological_evidence_sites.csv": {
+     "rows": 2
+    },
+    "building_designers.csv": {
+     "rows": 2
+    },
+    "buildings.csv": {
+     "rows": 2
+    },
+    "designers.csv": {
+     "rows": 2
+    },
+    "site_sources.csv": {
+     "rows": 2
+    },
+    "sites.csv": {
+     "rows": 2
+    },
+    "sources.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "archaeological_evidence_sites.csv": "archaeological_evidence_site_id,site_name_en,display_site_id",
+    "building_designers.csv": "building_id,designer_id",
+    "buildings.csv": "building_id,site_id,period_id,building_type_id,archaeological_basis_relation_id,archaeological_evidence_site_id,is_above",
+    "designers.csv": "designer_id,is_individual,primary_designer_type_id",
+    "site_sources.csv": "site_id,source_id",
+    "sites.csv": "site_id,prefecture_code,municipality_code,district_code,ward_code,designation_id,designation_date,latitude,longitude",
+    "sources.csv": "source_id,year,source_type_id,source_kind_id,building_info_status_id,ncid,naid,crid"
+   },
+   "pseudonymised": [],
+   "relations": [
+    {
+     "checked": 2,
+     "child": "buildings.site_id",
+     "orphans": 0,
+     "parent": "sites.site_id",
+     "share": 0.0
+    },
+    {
+     "checked": 1,
+     "child": "buildings.archaeological_evidence_site_id",
+     "orphans": 0,
+     "parent": "archaeological_evidence_sites.archaeological_evidence_site_id",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "building_designers.building_id",
+     "orphans": 0,
+     "parent": "buildings.building_id",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "building_designers.designer_id",
+     "orphans": 0,
+     "parent": "designers.designer_id",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "site_sources.site_id",
+     "orphans": 0,
+     "parent": "sites.site_id",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "site_sources.source_id",
+     "orphans": 0,
+     "parent": "sources.source_id",
+     "share": 0.0
+    }
+   ],
+   "sampling": {
+    "method": "complete core 7-table relational schema (no row sampling)"
+   },
+   "source_snapshot": "zen_japan_buildings/2026-11-22"
+  }
+ },
  "kelmarsh": {
   "zen_kelmarsh": {
    "dropped": [
