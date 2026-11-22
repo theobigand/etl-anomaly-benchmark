@@ -122,3 +122,11 @@ data give the same truth; a fault whose precondition fails raises instead of sil
 interaction columns above are checked against the natural-property baseline of each dataset before the
 injection set is frozen. Reusable mechanisms live in `research/fault_protocols.py` by structure, not
 per dataset.
+
+## Temporal coverage restrictions of P-TS sources
+
+Row count does not establish temporal coverage. A P-TS source states its observation span and the fault mechanisms that span can support
+(`temporal_span`, `supported_fault_mechanisms`, `unsupported_fault_mechanisms` in `readiness_facts.json`); an experiment may use a source only for the mechanisms it lists.
+The St. Gallen smart-factory sensor log has 139,901 ten-hertz messages but only 36 minutes: it supports window-local mechanisms (point, collective, level shift, missing interval,
+delayed arrival and ordering faults, local drift) and does not support seasonal deviation, slow distribution shift, long-duration degradation or contextual faults that need weeks of history.
+Sources of one year at ten-minute spacing (wind farms) support seasonal-scale mechanisms within that year only. The readiness status is unchanged; the restriction is part of the protocol applicability record.

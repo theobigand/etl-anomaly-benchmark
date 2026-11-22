@@ -2730,6 +2730,7 @@
     "tutorial processes such as invoice and review invoice share the engine with the factory processes",
     "no deliberately introduced faults are documented; activity names and states are not fault labels"
    ],
+   "event_generation": "workflow-engine (Camunda) process execution on an instrumented testbed; the same mechanism family as business-process logs",
    "evidence_class": "instrumented_research_testbed",
    "first_party": true,
    "independent_group": "unisg_smart_factory",
@@ -2754,7 +2755,22 @@
    "partitions": "chronological 70/15/15 on the timestamp",
    "privacy": "not_needed",
    "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and collective anomalies in a window",
+    "level shift",
+    "missing interval",
+    "delayed arrival and timestamp ordering",
+    "local drift and discontinuity within the window",
+    "prevalence change inside the window"
+   ],
+   "temporal_span": "36 minutes of ten-hertz messages on one day",
    "units": 139901,
+   "unsupported_fault_mechanisms": [
+    "seasonal deviation",
+    "slow distribution shift over days or longer",
+    "long-duration degradation",
+    "contextual faults that need weeks of history"
+   ],
    "view": "zen_unisg_factory"
   }
  }

@@ -1402,6 +1402,7 @@
  "unisg_smart_factory": {
   "curator": "zenodo",
   "descriptors": {
+   "c4_note": "workflow-engine events: counted in the business-process family; it adds a new generating system, domain and testbed evidence class, not a new event-generation mechanism",
    "event_generation": "workflow engine (Camunda) process execution, a business-process mechanism",
    "evidence_class": "instrumented research testbed, not production",
    "supported_temporal_scales": "sub-second to tens of minutes; no seasonality or long-horizon drift",
@@ -1414,7 +1415,7 @@
   "schema_family": "smart factory iot and workflow logs",
   "structure": {
    "C3": "ten-hertz station sensor messages",
-   "C4": "workflow-engine activity instances of a testbed"
+   "C4": "business process execution"
   }
  },
  "vif_aegis": {

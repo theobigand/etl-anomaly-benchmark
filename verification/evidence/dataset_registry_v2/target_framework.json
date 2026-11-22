@@ -290,11 +290,11 @@
    "diversity": true,
    "domains": 11,
    "exploratory": true,
-   "families": 5,
+   "families": 4,
    "gap": 14,
    "groups": 14,
    "largest_family": "business process execution",
-   "largest_family_share": 0.5,
+   "largest_family_share": 0.5714,
    "missing": [
     "groups: 14 of 28"
    ],
