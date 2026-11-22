@@ -283,6 +283,7 @@ def test_the_strata_and_targets_are_the_documented_ones():
     assert dc.STRATA == {
         "C1": "flat tabular",
         "C2": "transactional and categorical (historical)",
+        "C2a": "categorical and mixed tables",
         "C2b": "transactional events",
         "C3": "time series",
         "C4": "logs and event sequences",
@@ -292,6 +293,7 @@ def test_the_strata_and_targets_are_the_documented_ones():
     assert dc.TARGETS == {
         "C1": (15, 36, 50),
         "C2": (15, 30, 45),
+        "C2a": (15, 30, 45),
         "C2b": (15, 30, 45),
         "C3": (15, 40, 55),
         "C4": (15, 28, 40),
@@ -781,16 +783,73 @@ def test_the_gap_report_renders_exactly():
     assert lines[5].startswith(
         "| C2 transactional and categorical (historical) | 0 | 0 | 0 | 15 | 30 | 45 | 30 |"
     )
-    assert lines[10] == "| C6 nested | 0 | 0 | 0 | 15 | 30 | 45 | 30 |"
-    assert lines[11] == ""
-    assert lines[12] == "Licence classes (sources): open 3, research_only 1."
-    assert lines[13] == ""
-    assert lines[14] == (
+    assert lines[6] == "| C2a categorical and mixed tables | 0 | 0 | 0 | 15 | 30 | 45 | 30 |"
+    assert lines[11] == "| C6 nested | 0 | 0 | 0 | 15 | 30 | 45 | 30 |"
+    assert lines[12] == ""
+    assert lines[13] == "Licence classes (sources): open 3, research_only 1."
+    assert lines[14] == ""
+    assert lines[15] == (
         "Distinct source families: 4. Wave-2 tables with a time-column candidate that is not yet "
         "verified as a single chronological series: 1."
     )
-    assert text.endswith("\n") and len(lines) == 16 and lines[15] == ""
-    assert len([line for line in lines if line.startswith("| C")]) == 7
+    assert text.endswith("\n") and len(lines) == 17 and lines[16] == ""
+    assert len([line for line in lines if line.startswith("| C")]) == 8
+
+
+def test_c2a_acquired_entries_count_in_the_gap_report_without_error(tmp_path, monkeypatch):
+    rows = [
+        {
+            "id": "flat:uci:19:C2a",
+            "source": "uci:19",
+            "system": "uci:19",
+            "publisher": "uci:19",
+            "stratum": "C2a",
+            "licence_class": "open",
+            "origin": "acquired",
+        },
+        {
+            "id": "dft_stats19_2023",
+            "source": "dft_stats19",
+            "system": "gb_police_collision_reporting",
+            "publisher": "uk_dft_road_safety",
+            "stratum": "C2a",
+            "licence_class": "open",
+            "origin": "acquired",
+        },
+        {
+            "id": "dft_stats19_2024",
+            "source": "dft_stats19",
+            "system": "gb_police_collision_reporting_2024",
+            "publisher": "uk_dft_road_safety_alt",
+            "stratum": "C2a",
+            "licence_class": "open",
+            "origin": "acquired",
+        },
+    ]
+    report = dc.gap_report(rows)
+    c2a = report["strata"]["C2a"]
+    assert c2a == {
+        "stratum": "categorical and mixed tables",
+        "sources": 2,
+        "systems": 3,
+        "publishers": 3,
+        "minimum": 15,
+        "recommended": 30,
+        "ambitious": 45,
+        "missing_to_minimum": 13,
+        "missing_to_recommended": 28,
+    }
+    assert "| C2a categorical and mixed tables | 2 | 3 | 3 | 15 | 30 | 45 | 28 |" in dc.render_gap(
+        report
+    )
+    monkeypatch.setattr(dc, "stratum_rows", lambda: [])
+    monkeypatch.setattr(dc, "licence_rows", lambda manifests: [])
+    monkeypatch.setattr(dc, "acquired_rows", lambda: rows)
+    monkeypatch.setattr(dc, "transactional_rows", lambda: [])
+    out = tmp_path / "gap_c2a"
+    assert dc.main(["gap", "--out", str(out)]) == 0
+    written = json.loads((out / "stratum_gap.json").read_text())
+    assert written["strata"]["C2a"]["sources"] == 2
 
 
 def test_main_writes_the_gap_report_and_the_audit_and_prints_them(tmp_path, monkeypatch, capsys):

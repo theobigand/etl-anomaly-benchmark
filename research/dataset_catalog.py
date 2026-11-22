@@ -116,6 +116,7 @@ def independent_source_count(pool_sources: set[str], catalog: Path = CATALOG) ->
 STRATA = {
     "C1": "flat tabular",
     "C2": "transactional and categorical (historical)",
+    "C2a": "categorical and mixed tables",
     "C2b": "transactional events",
     "C3": "time series",
     "C4": "logs and event sequences",
@@ -125,6 +126,7 @@ STRATA = {
 TARGETS = {
     "C1": (15, 36, 50),
     "C2": (15, 30, 45),
+    "C2a": (15, 30, 45),
     "C2b": (15, 30, 45),
     "C3": (15, 40, 55),
     "C4": (15, 28, 40),
