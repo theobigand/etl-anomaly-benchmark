@@ -1041,6 +1041,8 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _gfz_snapshot(root)
     _dwd_snapshot(root)
     _rte_snapshot(root)
+    _ademe_snapshot(root)
+    _alim_snapshot(root)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
@@ -1056,7 +1058,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -5222,4 +5224,134 @@ def test_rte_builder_writes_csv_manifest_and_errors_when_missing(tmp_path):
         "method": "half-hourly definitive RTE eco2mix national grid series for 2020-2023",
         "quarter_hour_rows_dropped": 1,
         "unreadable_timestamps": 1,
+    }
+
+
+def _ademe_row(dpe_id="d1", date="2024-03-15", ges="25.5"):
+    return {
+        "numero_dpe": dpe_id,
+        "date_etablissement_dpe": date,
+        "etiquette_dpe": "C",
+        "annee_construction": "1995",
+        "surface_habitable_logement": "72.0",
+        "conso_5_usages_par_m2_ep": "140",
+        "emission_ges_5_usages par_m2": ges,
+        "qualite_isolation_plancher bas": "bonne",
+    }
+
+
+def _ademe_snapshot(root):
+    raw = root / "ademe_dpe_existant" / ev.ADEME_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    pd.DataFrame([_ademe_row("d2", "2024-06-14", "bad")]).to_csv(
+        raw / "dpe_2024_06_14.csv", index=False
+    )
+    pd.DataFrame([_ademe_row("d1", "2024-03-15", "20.5"), _ademe_row("d1", "2024-09-01")]).to_csv(
+        raw / "dpe_2024_03_15.csv", index=False
+    )
+    (raw / "other.csv").write_text("ignored\n")
+
+
+def _alim_row(ins_id="i1", date="2024-05-01"):
+    row = {col: f"v_{col}" for col in ev.ALIM_KEEP}
+    row["numero_inspection"] = ins_id
+    row["date_inspection"] = date
+    row["enseigne"] = "Secret Cafe"
+    row["siret"] = "12345678900012"
+    return row
+
+
+def _alim_snapshot(root):
+    raw = root / "dgal_alimconfiance" / ev.ALIM_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    pd.DataFrame(
+        [
+            _alim_row("i2", "2024-06-01"),
+            _alim_row("i1", "2024-04-01"),
+            _alim_row("i1", "2024-09-01"),
+        ]
+    ).to_csv(raw / "export_alimconfiance.csv", sep=";", index=False)
+
+
+def test_ademe_dpe_view_normalises_spaces_pseudonymises_dedupes_and_coerces():
+    f1 = pd.DataFrame([_ademe_row("d2", "2024-06-14", "bad")])
+    f2 = pd.DataFrame([_ademe_row("d1", "2024-03-15", "18.5"), _ademe_row("d1", "2024-09-01")])
+    out = ev.ademe_dpe_view([f1, f2])
+    assert "emission_ges_5_usages_par_m2" in out and "qualite_isolation_plancher_bas" in out
+    assert "emission_ges_5_usages par_m2" not in out
+    assert out["numero_dpe"].tolist() == [ev.pseudonym("d1"), ev.pseudonym("d2")]
+    assert out["date_etablissement_dpe"].tolist() == ["2024-03-15", "2024-06-14"]
+    assert out["emission_ges_5_usages_par_m2"].iloc[0] == 18.5
+    assert pd.isna(out["emission_ges_5_usages_par_m2"].iloc[1])
+    assert out["surface_habitable_logement"].iloc[0] == 72.0
+    assert out.attrs == {"duplicates": 1}
+
+
+def test_ademe_dpe_builder_writes_csv_manifest_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no ADEME DPE file in the snapshot$"):
+        ev._build_ademe_dpe(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _ademe_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_ademe_dpe(root, out, manifest)
+    ev._build_ademe_dpe(root, out, manifest)
+    target = out / "ademe_dpe_existant" / "dpe.csv"
+    header = target.read_text().splitlines()[0]
+    assert "emission_ges_5_usages_par_m2" in header and "qualite_isolation_plancher_bas" in header
+    view = manifest["ademe_dpe_existant"]
+    assert view["files"]["dpe.csv"]["rows"] == 2 and view["pseudonymised"] == ["numero_dpe"]
+    assert view["salt_label"] == ev.SALT
+    assert view["dropped"] == ["addresses", "ban_identifiers", "rnb_identifiers", "coordinates"]
+    assert view["source_snapshot"] == f"ademe_dpe_existant/{ev.ADEME_SNAPSHOT}"
+    assert view["sampling"] == {
+        "duplicates_dropped": 1,
+        "files": ["dpe_2024_03_15.csv", "dpe_2024_06_14.csv"],
+        "method": "five fixed 2024 dates (10,000 rows per date) with coded attributes only",
+    }
+
+
+def test_alimconfiance_view_projects_columns_pseudonymises_dedupes_and_sorts():
+    df = pd.DataFrame(
+        [
+            _alim_row("i2", "2024-06-01"),
+            _alim_row("i1", "2024-04-01"),
+            _alim_row("i1", "2024-09-01"),
+        ]
+    )
+    out = ev.alimconfiance_view(df)
+    assert out.columns.tolist() == list(ev.ALIM_KEEP)
+    assert "enseigne" not in out and "siret" not in out
+    assert out["date_inspection"].tolist() == ["2024-04-01", "2024-06-01"]
+    assert out["numero_inspection"].tolist() == [ev.pseudonym("i1"), ev.pseudonym("i2")]
+    assert out.attrs == {"duplicates": 1}
+
+
+def test_alimconfiance_builder_writes_csv_manifest_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no DGAL AlimConfiance file in the snapshot$"):
+        ev._build_alimconfiance(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _alim_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_alimconfiance(root, out, manifest)
+    ev._build_alimconfiance(root, out, manifest)
+    target = out / "dgal_alimconfiance" / "inspections.csv"
+    assert target.read_text().splitlines()[0] == ",".join(ev.ALIM_KEEP)
+    view = manifest["dgal_alimconfiance"]
+    assert view["files"]["inspections.csv"]["rows"] == 2
+    assert view["pseudonymised"] == ["numero_inspection"]
+    assert view["salt_label"] == ev.SALT
+    assert view["dropped"] == [
+        "establishment_names",
+        "siret",
+        "agrement",
+        "addresses",
+        "communes",
+        "geo",
+    ]
+    assert view["source_snapshot"] == f"dgal_alimconfiance/{ev.ALIM_SNAPSHOT}"
+    assert view["sampling"] == {
+        "duplicates_dropped": 1,
+        "method": "complete Alim'Confiance register projected to coded non-identifying attributes",
     }

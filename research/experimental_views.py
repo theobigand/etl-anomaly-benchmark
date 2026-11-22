@@ -3914,6 +3914,113 @@ def _build_rte(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+ADEME_SNAPSHOT = "2026-11-22"
+ADEME_NUMERIC = (
+    "annee_construction",
+    "surface_habitable_logement",
+    "conso_5_usages_par_m2_ep",
+    "emission_ges_5_usages_par_m2",
+)
+
+
+def ademe_dpe_view(frames: list[pd.DataFrame]) -> pd.DataFrame:
+    """Deduplicated French residential EPC (DPE) records with pseudonymised certificate ids."""
+    renamed = []
+    for frame in frames:
+        copy = frame.copy()
+        copy.columns = [c.replace(" ", "_") for c in copy.columns]
+        renamed.append(copy)
+    merged = pd.concat(renamed)
+    merged["numero_dpe"] = merged["numero_dpe"].map(pseudonym)
+    unique = merged.drop_duplicates("numero_dpe").copy()
+    for col in ADEME_NUMERIC:
+        unique[col] = pd.to_numeric(unique[col], errors="coerce")
+    ordered = unique.sort_values(["date_etablissement_dpe", "numero_dpe"]).reset_index(drop=True)
+    ordered.attrs = {"duplicates": int(len(merged) - len(unique))}
+    return ordered
+
+
+def _build_ademe_dpe(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "ademe_dpe_existant" / ADEME_SNAPSHOT / "raw"
+    files = sorted(raw.glob("dpe_*.csv"))
+    if not files:
+        raise ViewError("no ADEME DPE file in the snapshot")
+    view = ademe_dpe_view([pd.read_csv(p, dtype=str) for p in files])
+    folder = out / "ademe_dpe_existant"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "dpe.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "ademe_dpe_existant",
+        {"dpe.csv": (target, len(view))},
+        dropped=["addresses", "ban_identifiers", "rnb_identifiers", "coordinates"],
+        pseudonymised=["numero_dpe"],
+        salt_label=SALT,
+        sampling={
+            "duplicates_dropped": view.attrs["duplicates"],
+            "files": [p.name for p in files],
+            "method": "five fixed 2024 dates (10,000 rows per date) with coded attributes only",
+        },
+        source_snapshot=f"ademe_dpe_existant/{ADEME_SNAPSHOT}",
+    )
+
+
+ALIM_SNAPSHOT = "2026-11-22"
+ALIM_KEEP = (
+    "numero_inspection",
+    "date_inspection",
+    "synthese_eval_sanit",
+    "app_code_synthese_eval_sanit",
+    "evaluation_globale",
+    "contexte_inpection",
+    "secteur_activite",
+    "ods_type_activite",
+    "type_activite",
+    "app_libelle_activite_etablissement",
+    "app_id_regroupement_etablissement",
+    "app_libelle_regroupement_etablissement",
+    "filtre",
+    "type_suite",
+    "reg_code",
+    "dep_code",
+)
+
+
+def alimconfiance_view(frame: pd.DataFrame) -> pd.DataFrame:
+    """De-identified sanitary inspection records sorted by date and pseudonymised id."""
+    kept = frame[list(ALIM_KEEP)].copy()
+    kept["numero_inspection"] = kept["numero_inspection"].map(pseudonym)
+    unique = kept.drop_duplicates("numero_inspection")
+    ordered = unique.sort_values(["date_inspection", "numero_inspection"]).reset_index(drop=True)
+    ordered.attrs = {"duplicates": int(len(kept) - len(unique))}
+    return ordered
+
+
+def _build_alimconfiance(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    source = root / "dgal_alimconfiance" / ALIM_SNAPSHOT / "raw" / "export_alimconfiance.csv"
+    if not source.exists():
+        raise ViewError("no DGAL AlimConfiance file in the snapshot")
+    view = alimconfiance_view(pd.read_csv(source, sep=";", dtype=str))
+    folder = out / "dgal_alimconfiance"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "inspections.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "dgal_alimconfiance",
+        {"inspections.csv": (target, len(view))},
+        dropped=["establishment_names", "siret", "agrement", "addresses", "communes", "geo"],
+        pseudonymised=["numero_inspection"],
+        salt_label=SALT,
+        sampling={
+            "duplicates_dropped": view.attrs["duplicates"],
+            "method": "complete Alim'Confiance register projected to coded non-identifying attributes",  # noqa: E501
+        },
+        source_snapshot=f"dgal_alimconfiance/{ALIM_SNAPSHOT}",
+    )
+
+
 BUILD_STEPS = (
     _build_openalex,
     _build_monash,
@@ -3962,6 +4069,8 @@ BUILD_STEPS = (
     _build_gfz_kp,
     _build_dwd,
     _build_rte,
+    _build_ademe_dpe,
+    _build_alimconfiance,
     _build_flat,
     _build_series,
     _build_ukspend,

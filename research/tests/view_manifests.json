@@ -1,4 +1,35 @@
 {
+ "ademe": {
+  "ademe_dpe_existant": {
+   "dropped": [
+    "addresses",
+    "ban_identifiers",
+    "rnb_identifiers",
+    "coordinates"
+   ],
+   "files": {
+    "dpe.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "dpe.csv": "numero_dpe,date_etablissement_dpe,etiquette_dpe,annee_construction,surface_habitable_logement,conso_5_usages_par_m2_ep,e"
+   },
+   "pseudonymised": [
+    "numero_dpe"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "duplicates_dropped": 1,
+    "files": [
+     "dpe_2024_03_15.csv",
+     "dpe_2024_06_14.csv"
+    ],
+    "method": "five fixed 2024 dates (10,000 rows per date) with coded attributes only"
+   },
+   "source_snapshot": "ademe_dpe_existant/2026-11-22"
+  }
+ },
  "aegis": {
   "zen_aegis_vehicle": {
    "dropped": [
@@ -20,6 +51,35 @@
    "notes": "one driver and one vehicle (35 trips); relative time inside each trip only",
    "pseudonymised": [],
    "source_snapshot": "zen_aegis_vehicle/2026-11-21"
+  }
+ },
+ "alim": {
+  "dgal_alimconfiance": {
+   "dropped": [
+    "establishment_names",
+    "siret",
+    "agrement",
+    "addresses",
+    "communes",
+    "geo"
+   ],
+   "files": {
+    "inspections.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "inspections.csv": "numero_inspection,date_inspection,synthese_eval_sanit,app_code_synthese_eval_sanit,evaluation_globale,contexte_inpection"
+   },
+   "pseudonymised": [
+    "numero_inspection"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "duplicates_dropped": 1,
+    "method": "complete Alim'Confiance register projected to coded non-identifying attributes"
+   },
+   "source_snapshot": "dgal_alimconfiance/2026-11-22"
   }
  },
  "aqs": {

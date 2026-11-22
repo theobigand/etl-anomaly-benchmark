@@ -2129,6 +2129,20 @@
   },
   {
    "failed": null,
+   "group": "ademe_dpe",
+   "id": "ademe_dpe_existant",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "dgal_alimconfiance",
+   "id": "dgal_alimconfiance",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2296,7 +2310,9 @@
    "uci:942"
   ],
   "C2a": [
+   "ademe_dpe",
    "dft_stats19",
+   "dgal_alimconfiance",
    "paleobiology_database",
    "uci:101",
    "uci:19",
@@ -2421,13 +2437,13 @@
    "structurally_valid": 52
   },
   "C2a": {
-   "acquired": 40,
-   "discovered": 40,
-   "experiment_ready": 14,
-   "protocol_ready": 14,
-   "rights_verified": 40,
-   "scientifically_eligible": 14,
-   "structurally_valid": 14
+   "acquired": 42,
+   "discovered": 42,
+   "experiment_ready": 16,
+   "protocol_ready": 16,
+   "rights_verified": 42,
+   "scientifically_eligible": 16,
+   "structurally_valid": 16
   },
   "C2b": {
    "acquired": 14,

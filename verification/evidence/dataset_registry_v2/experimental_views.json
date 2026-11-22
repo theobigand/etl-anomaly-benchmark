@@ -4312,5 +4312,60 @@
    "unreadable_timestamps": 0
   },
   "source_snapshot": "rte_eco2mix_national/2026-11-22"
+ },
+ "ademe_dpe_existant": {
+  "dropped": [
+   "addresses",
+   "ban_identifiers",
+   "rnb_identifiers",
+   "coordinates"
+  ],
+  "files": {
+   "dpe.csv": {
+    "rows": 50000,
+    "sha256": "cb71f5c003233d1ee818d9cc91cc6c2c3e8518266d0d739fbd85c5e07ea7bffe"
+   }
+  },
+  "pseudonymised": [
+   "numero_dpe"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "duplicates_dropped": 0,
+   "files": [
+    "dpe_2024_01_19.csv",
+    "dpe_2024_03_15.csv",
+    "dpe_2024_06_14.csv",
+    "dpe_2024_09_16.csv",
+    "dpe_2024_11_15.csv"
+   ],
+   "method": "five fixed 2024 dates (10,000 rows per date) with coded attributes only"
+  },
+  "source_snapshot": "ademe_dpe_existant/2026-11-22"
+ },
+ "dgal_alimconfiance": {
+  "dropped": [
+   "establishment_names",
+   "siret",
+   "agrement",
+   "addresses",
+   "communes",
+   "geo"
+  ],
+  "files": {
+   "inspections.csv": {
+    "rows": 71228,
+    "sha256": "cc691781fdc1a437f0bf31ec0824dfa6b434464db40f42d02a8257032128cf9f"
+   }
+  },
+  "pseudonymised": [
+   "numero_inspection"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "duplicates_dropped": 0,
+   "method": "complete Alim'Confiance register projected to coded non-identifying attributes"
+  },
+  "source_snapshot": "dgal_alimconfiance/2026-11-22"
  }
 }

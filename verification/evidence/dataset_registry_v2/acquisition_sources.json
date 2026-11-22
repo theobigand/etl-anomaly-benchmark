@@ -9057,6 +9057,82 @@
    "stratum": "C3",
    "upstream": "first party: RTE operates the French high-voltage transmission grid and publishes eco2mix definitive figures",
    "upstream_verified": true
+  },
+  {
+   "attribution": "ADEME (Agence de la Transition Ecologique), DPE Logements existants (depuis juillet 2021) via data.ademe.fr (Licence Ouverte v2.0), five fixed 2024 dates; accessed 2026-11-22",
+   "files": [
+    {
+     "name": "dpe_2024_01_19.csv",
+     "observed": "2024-01-19",
+     "url": "https://data.ademe.fr/data-fair/api/v1/datasets/dpe03existant/lines?size=10000&format=csv&qs=date_etablissement_dpe:2024-01-19&select=numero_dpe,date_etablissement_dpe,etiquette_dpe,etiquette_ges,type_batiment,periode_construction,annee_construction,surface_habitable_logement,classe_inertie_batiment,zone_climatique,conso_5_usages_par_m2_ep,emission_ges_5_usages_par_m2,type_installation_chauffage,type_energie_principale_chauffage,qualite_isolation_enveloppe,qualite_isolation_murs,qualite_isolation_menuiseries,qualite_isolation_plancher_bas,type_ventilation,code_departement_ban,code_region_ban"
+    },
+    {
+     "name": "dpe_2024_03_15.csv",
+     "observed": "2024-03-15",
+     "url": "https://data.ademe.fr/data-fair/api/v1/datasets/dpe03existant/lines?size=10000&format=csv&qs=date_etablissement_dpe:2024-03-15&select=numero_dpe,date_etablissement_dpe,etiquette_dpe,etiquette_ges,type_batiment,periode_construction,annee_construction,surface_habitable_logement,classe_inertie_batiment,zone_climatique,conso_5_usages_par_m2_ep,emission_ges_5_usages_par_m2,type_installation_chauffage,type_energie_principale_chauffage,qualite_isolation_enveloppe,qualite_isolation_murs,qualite_isolation_menuiseries,qualite_isolation_plancher_bas,type_ventilation,code_departement_ban,code_region_ban"
+    },
+    {
+     "name": "dpe_2024_06_14.csv",
+     "observed": "2024-06-14",
+     "url": "https://data.ademe.fr/data-fair/api/v1/datasets/dpe03existant/lines?size=10000&format=csv&qs=date_etablissement_dpe:2024-06-14&select=numero_dpe,date_etablissement_dpe,etiquette_dpe,etiquette_ges,type_batiment,periode_construction,annee_construction,surface_habitable_logement,classe_inertie_batiment,zone_climatique,conso_5_usages_par_m2_ep,emission_ges_5_usages_par_m2,type_installation_chauffage,type_energie_principale_chauffage,qualite_isolation_enveloppe,qualite_isolation_murs,qualite_isolation_menuiseries,qualite_isolation_plancher_bas,type_ventilation,code_departement_ban,code_region_ban"
+    },
+    {
+     "name": "dpe_2024_09_16.csv",
+     "observed": "2024-09-16",
+     "url": "https://data.ademe.fr/data-fair/api/v1/datasets/dpe03existant/lines?size=10000&format=csv&qs=date_etablissement_dpe:2024-09-16&select=numero_dpe,date_etablissement_dpe,etiquette_dpe,etiquette_ges,type_batiment,periode_construction,annee_construction,surface_habitable_logement,classe_inertie_batiment,zone_climatique,conso_5_usages_par_m2_ep,emission_ges_5_usages_par_m2,type_installation_chauffage,type_energie_principale_chauffage,qualite_isolation_enveloppe,qualite_isolation_murs,qualite_isolation_menuiseries,qualite_isolation_plancher_bas,type_ventilation,code_departement_ban,code_region_ban"
+    },
+    {
+     "name": "dpe_2024_11_15.csv",
+     "observed": "2024-11-15",
+     "url": "https://data.ademe.fr/data-fair/api/v1/datasets/dpe03existant/lines?size=10000&format=csv&qs=date_etablissement_dpe:2024-11-15&select=numero_dpe,date_etablissement_dpe,etiquette_dpe,etiquette_ges,type_batiment,periode_construction,annee_construction,surface_habitable_logement,classe_inertie_batiment,zone_climatique,conso_5_usages_par_m2_ep,emission_ges_5_usages_par_m2,type_installation_chauffage,type_energie_principale_chauffage,qualite_isolation_enveloppe,qualite_isolation_murs,qualite_isolation_menuiseries,qualite_isolation_plancher_bas,type_ventilation,code_departement_ban,code_region_ban"
+    }
+   ],
+   "hosts": [
+    "data.ademe.fr"
+   ],
+   "id": "ademe_dpe_existant",
+   "licence_class": "open",
+   "licence_location": "https://data.ademe.fr/data-fair/api/v1/datasets/dpe03existant",
+   "licence_text": "ADEME Data-Fair official dataset metadata (read 2026-11-22): license title 'Licence Ouverte / Open Licence version 2.0' (https://www.etalab.gouv.fr/licence-ouverte-open-licence)",
+   "max_bytes": 20971520,
+   "method": "official ADEME Data-Fair CSV query across five fixed non-holiday 2024 certification dates (up to 10,000 rows per date), selecting coded building-energy attributes only",
+   "min_interval": 2.0,
+   "privacy": "addresses, BAN/RNB/cadastre identifiers and coordinates are excluded by the API select clause; numero_dpe is replaced by a salted hash in the view",
+   "publisher": "ADEME",
+   "rate_limit": "five requests two seconds apart, descriptive user agent",
+   "redistribution": "Licence Ouverte v2.0; raw files stay local",
+   "retries": 2,
+   "stratum": "C2a",
+   "upstream": "first party: ADEME collects statutory French building energy performance certificates (DPE) and publishes the national observatory register",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Ministere de l'Agriculture et de la Souverainete alimentaire (DGAL), Alim'Confiance sanitary inspection records (Licence Ouverte Etalab); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "export_alimconfiance.csv",
+     "observed": "2024-2026",
+     "url": "https://dgal.opendatasoft.com/api/explore/v2.1/catalog/datasets/export_alimconfiance/exports/csv"
+    }
+   ],
+   "hosts": [
+    "dgal.opendatasoft.com"
+   ],
+   "id": "dgal_alimconfiance",
+   "licence_class": "open",
+   "licence_location": "https://dgal.opendatasoft.com/api/explore/v2.1/catalog/datasets/export_alimconfiance",
+   "licence_text": "DGAL OpenDatasoft official dataset metadata (read 2026-11-22): license 'Licence Ouverte (Etalab)' (https://www.etalab.gouv.fr/wp-content/uploads/2014/05/Licence_Ouverte.pdf)",
+   "max_bytes": 62914560,
+   "method": "official OpenDatasoft v2.1 complete CSV export of published official food-safety sanitary inspection records",
+   "min_interval": 2.0,
+   "privacy": "establishment names, SIRET, approval numbers, street addresses, postal codes, communes and coordinates are dropped in the view; numero_inspection is replaced by a salted hash",
+   "publisher": "DGAL (Ministere de l'Agriculture, France)",
+   "rate_limit": "single bulk CSV export, descriptive user agent",
+   "redistribution": "Licence Ouverte Etalab; raw file stays local",
+   "retries": 2,
+   "stratum": "C2a",
+   "upstream": "first party: DGAL records official food-hygiene inspections and publishes the Alim'Confiance open register",
+   "upstream_verified": true
   }
  ]
 }

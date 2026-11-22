@@ -1731,6 +1731,36 @@
    "size": "32.1 MB CSV (12.8 MB view)",
    "source_url": "https://odre.opendatasoft.com/api/explore/v2.1/catalog/datasets/eco2mix-national-cons-def",
    "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "ademe_dpe_existant",
+   "licence": "Licence Ouverte / Open Licence v2.0",
+   "name": "ADEME DPE existing residential dwellings (5 fixed 2024 dates)",
+   "next_step": "none",
+   "notes": "50,000 rows x 21 coded/numeric cols (3.74% missing, 0% dupes); addresses excluded and numero_dpe pseudonymised",
+   "publisher": "ADEME",
+   "reason": "non-UCI mixed categorical and numeric French energy performance certificate register",
+   "size": "8.6 MB CSV (8.5 MB view)",
+   "source_url": "https://data.ademe.fr/data-fair/api/v1/datasets/dpe03existant",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "dgal_alimconfiance",
+   "licence": "Licence Ouverte (Etalab)",
+   "name": "DGAL Alim'Confiance food-safety inspections",
+   "next_step": "none",
+   "notes": "71,228 rows x 16 coded cols (2.92% missing); establishment names/SIRET/addresses/geo dropped, numero_inspection pseudonymised",
+   "publisher": "DGAL (Ministere de l'Agriculture, France)",
+   "reason": "non-UCI administrative food-hygiene inspection register",
+   "size": "28.9 MB CSV (12.8 MB view)",
+   "source_url": "https://dgal.opendatasoft.com/api/explore/v2.1/catalog/datasets/export_alimconfiance",
+   "status": "experiment_ready"
   }
  ],
  "date": "2026-11-21",

@@ -3054,6 +3054,38 @@
     "sub-half-hourly grid frequency transients"
    ],
    "view": "rte_eco2mix_national"
+  },
+  "ademe_dpe_existant": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "50,000 DPE certificates across five fixed 2024 dates (10,000 per date), 21 mixed categorical and numeric columns",
+    "missing year of construction (42.2 percent) and heating installation type (27.1 percent) are published registry states",
+    "BAN/RNB/address fields omitted at fetch and numero_dpe replaced by a salted hash"
+   ],
+   "first_party": true,
+   "independent_group": "ademe_dpe",
+   "min_units": 500,
+   "partitions": "hash of numero_dpe 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 50000,
+   "view": "ademe_dpe_existant"
+  },
+  "dgal_alimconfiance": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete published Alim'Confiance export of 71,228 sanitary inspections across 16 coded/numeric columns",
+    "missing follow-up action type_suite (29.4 percent) reflects inspections without enforcement follow-up",
+    "establishment names, SIRET, approval numbers, addresses and coordinates dropped; numero_inspection pseudonymised"
+   ],
+   "first_party": true,
+   "independent_group": "dgal_alimconfiance",
+   "min_units": 500,
+   "partitions": "hash of numero_inspection 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 71228,
+   "view": "dgal_alimconfiance"
   }
  }
 }

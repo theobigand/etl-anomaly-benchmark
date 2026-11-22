@@ -312,6 +312,14 @@ def _rte(root, tmp):
     tev._rte_snapshot(root)
 
 
+def _ademe(root, tmp):
+    tev._ademe_snapshot(root)
+
+
+def _alim(root, tmp):
+    tev._alim_snapshot(root)
+
+
 def _tlc(root, tmp):
     tev._tlc_page(
         [{}, {"tpep_pickup_datetime": "2023-03-07T07:00:00.000", "total_amount": "0.0"}]
@@ -342,6 +350,8 @@ CASES = {
     "gfz": (_gfz, ev._build_gfz_kp, ["gfz_kp_index"], {}),
     "dwd": (_dwd, ev._build_dwd, ["dwd_hourly_climate"], {}),
     "rte": (_rte, ev._build_rte, ["rte_eco2mix_national"], {}),
+    "ademe": (_ademe, ev._build_ademe_dpe, ["ademe_dpe_existant"], {}),
+    "alim": (_alim, ev._build_alimconfiance, ["dgal_alimconfiance"], {}),
     "tlc": (_tlc, ev._build_tlc, ["nyc_tlc_yellow"], {}),
     "maude": (_maude_case, ev._build_maude, ["openfda_device_event"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),

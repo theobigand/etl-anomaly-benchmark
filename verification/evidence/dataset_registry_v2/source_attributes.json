@@ -10,6 +10,17 @@
    "C5": "contract-grant-patent linkage"
   }
  },
+ "ademe_dpe": {
+  "curator": "data.ademe.fr",
+  "domain": "building energy certification",
+  "generating_system": "French statutory DPE residential energy performance certificate registry",
+  "note": "non-UCI administrative coded/numeric register",
+  "producer": "ADEME and certified EPC diagnosticians",
+  "schema_family": "building energy certificate csv",
+  "structure": {
+   "C2a": "mixed categorical and numeric energy performance certificate table"
+  }
+ },
  "airquality_italy": {
   "curator": "uci",
   "domain": "environmental monitoring",
@@ -119,6 +130,17 @@
   "schema_family": "crossref works json",
   "structure": {
    "C6": "scholarly work metadata with references, funders, licenses and links"
+  }
+ },
+ "dgal_alimconfiance": {
+  "curator": "dgal.opendatasoft.com",
+  "domain": "food safety inspection",
+  "generating_system": "French official sanitary food-hygiene inspection registry",
+  "note": "non-UCI administrative coded inspection register",
+  "producer": "DGAL (Ministere de l'Agriculture, France)",
+  "schema_family": "food safety inspection register",
+  "structure": {
+   "C2a": "coded categorical official food-safety inspection records"
   }
  },
  "dgfip_dvf": {

@@ -4910,6 +4910,46 @@
    "stratum": "C3",
    "system": "rte_french_transmission_grid_telemetry",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "ademe_dpe",
+   "id": "ademe_dpe_existant",
+   "licence_class": "open",
+   "protocols": "P-TAB on mixed categorical and numeric residential EPC certification records",
+   "publisher": "ademe",
+   "reason": "ADEME French residential Energy Performance Certificate (DPE) register across five fixed 2024 certification dates: 50,000 unique records, 21 coded/numeric attributes (5 numeric, 16 categorical with >=3 levels), 3.74 percent missing cells; BAN/RNB addresses excluded by query and numero_dpe pseudonymised; non-UCI European administrative registry",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "ADEME Data-Fair metadata (read 2026-11-22): Licence Ouverte / Open Licence version 2.0",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "ademe_dpe_observatory_register",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "dgal_alimconfiance",
+   "id": "dgal_alimconfiance",
+   "licence_class": "open",
+   "protocols": "P-TAB on official food-safety sanitary inspection categorical records",
+   "publisher": "dgal",
+   "reason": "French Ministry of Agriculture (DGAL) Alim'Confiance food-hygiene inspection register: 71,228 unique inspections across 16 coded non-identifying attributes (12 categorical columns with >=3 levels), 2.92 percent missing cells; establishment names, SIRET, approvals, addresses and geo coordinates dropped and numero_inspection pseudonymised; non-UCI European regulatory registry",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "DGAL OpenDatasoft metadata (read 2026-11-22): Licence Ouverte (Etalab)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "dgal_alimconfiance_inspection_register",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"
