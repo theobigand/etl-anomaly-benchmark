@@ -82,6 +82,41 @@
    "source_snapshot": "dgal_alimconfiance/2026-11-22"
   }
  },
+ "aoe": {
+  "zen_aoe_interactions": {
+   "dropped": [],
+   "files": {
+    "events.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "events.csv": "case_id,position,time,action,amount,win,player_id,match_id,strategy,map_type,civilization,civilization_category,elo"
+   },
+   "pseudonymised": [
+    "case_id",
+    "player_id",
+    "match_id"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "member": "aoe_interaction_log_1_of_10.xes",
+    "method": "4 MiB compressed zip-prefix of Age of Empires interaction log decoded via xes_stream",
+    "status": {
+     "bytes_in": 866,
+     "bytes_out": 866,
+     "modulo": 1,
+     "stop": "log_closed",
+     "stream_complete": true,
+     "traces_kept": 2,
+     "traces_seen": 2,
+     "traces_without_case": 0
+    },
+    "traces": 2
+   },
+   "source_snapshot": "zen_aoe_interactions/2026-11-22"
+  }
+ },
  "aqs": {
   "epa_aqs_ozone_hourly": {
    "dropped": [
@@ -125,6 +160,30 @@
     ]
    },
    "source_snapshot": "epa_aqs_ozone_hourly/2026-11-22"
+  }
+ },
+ "azure": {
+  "azure_packing_2020": {
+   "dropped": [
+    "vmType hardware dimensions",
+    "single-VM tenants"
+   ],
+   "files": {
+    "allocations.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "allocations.csv": "tenant_id,position,starttime,endtime,vm_id,vm_type_id,priority"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "deterministic 1-in-100 tenant slice (tenantId % 100 == 0) limited to multi-VM tenants ordered by relative starttime",
+    "modulo": 100,
+    "single_vm_rows_dropped": 1,
+    "tenants": 1
+   },
+   "source_snapshot": "azure_packing_2020/2026-11-22"
   }
  },
  "backblaze": {
@@ -412,6 +471,32 @@
     "stations": 2
    },
    "source_snapshot": "ea_hydrology_flow/2026-11-21"
+  }
+ },
+ "ev": {
+  "zen_ev_charging": {
+   "dropped": [],
+   "files": {
+    "sessions.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "sessions.csv": "session_id,user_id,location,plugin_time,plugout_time,connection_hours,energy_kwh"
+   },
+   "pseudonymised": [
+    "session_id",
+    "user_id"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "duplicates_dropped": 1,
+    "locations": 1,
+    "method": "complete Dataset1_charging_reports session log across 12 residential sites",
+    "unreadable_timestamps": 1,
+    "users": 1
+   },
+   "source_snapshot": "zen_ev_charging/2026-11-22"
   }
  },
  "fugaku": {

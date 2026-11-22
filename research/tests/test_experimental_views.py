@@ -1043,6 +1043,9 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _rte_snapshot(root)
     _ademe_snapshot(root)
     _alim_snapshot(root)
+    _ev_snapshot(root)
+    _azure_snapshot(root)
+    _aoe_snapshot(root)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
@@ -1058,7 +1061,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -5354,4 +5357,313 @@ def test_alimconfiance_builder_writes_csv_manifest_and_errors_when_missing(tmp_p
     assert view["sampling"] == {
         "duplicates_dropped": 1,
         "method": "complete Alim'Confiance register projected to coded non-identifying attributes",
+    }
+
+
+def _ev_snapshot(root):
+    raw = root / "zen_ev_charging" / ev.EV_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    text = (
+        '"location";"user_id";"session_id";"plugin_time";"plugout_time";"connection_time";"energy_session"\n'
+        '"ASK";"u1";"s2";2020-01-02 08:00:00;2020-01-02 10:00:00;2,5;10,25\n'
+        '"ASK";"u1";"s1";2020-01-01 07:00:00;;;\n'
+        '"ASK";"u2";"s1";2020-01-03 07:00:00;2020-01-03 08:00:00;1,0;5,0\n'
+        '"ASK";"u1";"s3";bad;2020-01-03 08:00:00;1,0;5,0\n'
+    )
+    (raw / "Dataset1_charging_reports.csv").write_text(text)
+
+
+def _azure_snapshot(root):
+    import sqlite3
+    import tempfile
+    import zipfile as _z
+
+    raw = root / "azure_packing_2020" / ev.AZURE_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    with tempfile.TemporaryDirectory() as tmp:
+        db = Path(tmp) / "packing_trace_zone_a_v1.sqlite"
+        con = sqlite3.connect(db)
+        con.execute(
+            "CREATE TABLE vm (vmId INT, tenantId INT, vmTypeId INT, "
+            "priority INT, starttime REAL, endtime REAL)"
+        )
+        con.executemany(
+            "INSERT INTO vm VALUES (?, ?, ?, ?, ?, ?)",
+            [
+                (2, 100, 8, 1, 2.0, 5.0),
+                (1, 100, 4, 0, 1.0, None),
+                (3, 101, 4, 0, 1.0, 2.0),
+                (4, 200, 9, 0, 0.5, 3.0),
+            ],
+        )
+        con.commit()
+        con.close()
+        with _z.ZipFile(raw / "AzurePackingTraceV1.zip", "w") as z:
+            z.write(db, "packing_trace_zone_a_v1.sqlite")
+            z.writestr("readme.txt", "ignored")
+
+
+def _aoe_snapshot(root):
+    import zipfile as _z
+
+    raw = root / "zen_aoe_interactions" / ev.AOE_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    xes = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<log xes.version="1.0">\n'
+        "  <trace>\n"
+        '    <string key="concept:name" value="t2"/>\n'
+        '    <string key="player_id" value="p1"/>\n'
+        '    <string key="match_id" value="m1"/>\n'
+        '    <string key="strategy" value="Rush"/>\n'
+        '    <string key="map_type" value="Arabia"/>\n'
+        '    <string key="civilization" value="Franks"/>\n'
+        '    <string key="civilization_category" value="Cavalry"/>\n'
+        '    <float key="elo" value="1250.5"/>\n'
+        "    <event>\n"
+        '      <string key="concept:name" value="Build"/>\n'
+        '      <date key="time:timestamp" value="2023-01-01T02:00:00+02:00"/>\n'
+        '      <int key="amount" value="2"/>\n'
+        '      <int key="win" value="1"/>\n'
+        "    </event>\n"
+        "  </trace>\n"
+        "  <trace>\n"
+        '    <string key="concept:name" value="t1"/>\n'
+        "    <event>\n"
+        '      <string key="concept:name" value="Queue"/>\n'
+        '      <date key="time:timestamp" value="2023-01-01T00:01:00+00:00"/>\n'
+        "    </event>\n"
+        "  </trace>\n"
+        "</log>\n"
+    )
+    with _z.ZipFile(raw / "aoe_xes_head.zip", "w", _z.ZIP_DEFLATED) as z:
+        z.writestr("aoe_interaction_log_1_of_10.xes", xes)
+
+
+def test_ev_charging_view_parses_comma_decimals_pseudonymises_dedupes_and_sorts():
+    df = pd.DataFrame(
+        {
+            "location": ["ASK", "ASK", "ASK", "ASK"],
+            "user_id": ["u1", "u1", "u2", "u1"],
+            "session_id": ["s2", "s1", "s1", "s3"],
+            "plugin_time": [
+                "2020-01-02 08:00:00",
+                "2020-01-01 07:00:00",
+                "2020-01-03 07:00:00",
+                "bad",
+            ],  # noqa: E501
+            "plugout_time": ["2020-01-02 10:00:00", None, "2020-01-03 08:00:00", None],
+            "connection_time": ["2,5", None, "bad", "1,0"],
+            "energy_session": ["10,25", "bad", "5,0", "1,0"],
+        }
+    )
+    out = ev.ev_charging_view(df)
+    assert out.columns.tolist() == [
+        "session_id",
+        "user_id",
+        "location",
+        "plugin_time",
+        "plugout_time",
+        "connection_hours",
+        "energy_kwh",
+    ]
+    assert out["session_id"].tolist() == [ev.pseudonym("s1"), ev.pseudonym("s2")]
+    assert out["user_id"].tolist() == [ev.pseudonym("u1"), ev.pseudonym("u1")]
+    assert out["location"].tolist() == ["ASK", "ASK"]
+    assert out["plugin_time"].tolist() == [
+        pd.Timestamp("2020-01-01 07:00:00"),
+        pd.Timestamp("2020-01-02 08:00:00"),
+    ]
+    assert out["plugout_time"].iloc[1] == pd.Timestamp("2020-01-02 10:00:00")
+    assert pd.isna(out["connection_hours"].iloc[0]) and out["connection_hours"].iloc[1] == 2.5
+    assert pd.isna(out["energy_kwh"].iloc[0]) and out["energy_kwh"].iloc[1] == 10.25
+    assert pd.isna(out["plugout_time"].iloc[0])
+    assert out.attrs == {"duplicates": 1, "unreadable_timestamps": 1}
+
+
+def test_ev_charging_builder_writes_csv_manifest_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no EV charging file in the snapshot$"):
+        ev._build_ev_charging(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _ev_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_ev_charging(root, out, manifest)
+    ev._build_ev_charging(root, out, manifest)
+    target = out / "zen_ev_charging" / "sessions.csv"
+    lines = target.read_text().splitlines()
+    assert lines[0] == (
+        "session_id,user_id,location,plugin_time,plugout_time,connection_hours,energy_kwh"
+    )
+    assert len(lines) == 3
+    view = manifest["zen_ev_charging"]
+    assert view["files"]["sessions.csv"]["rows"] == 2 and view["dropped"] == []
+    assert view["pseudonymised"] == ["session_id", "user_id"] and view["salt_label"] == ev.SALT
+    assert view["source_snapshot"] == f"zen_ev_charging/{ev.EV_SNAPSHOT}"
+    assert view["sampling"] == {
+        "duplicates_dropped": 1,
+        "locations": 1,
+        "method": "complete Dataset1_charging_reports session log across 12 residential sites",
+        "unreadable_timestamps": 1,
+        "users": 1,
+    }
+
+
+def test_azure_packing_view_filters_multi_vm_tenants_orders_and_numbers_positions():
+    df = pd.DataFrame(
+        {
+            "vmId": [20, 10, 30, 5],
+            "tenantId": [100, 100, 200, 100],
+            "vmTypeId": [8, 4, 9, 4],
+            "priority": [1, 0, 0, 1],
+            "starttime": [2.0, 2.0, 1.0, 1.0],
+            "endtime": [5.0, 6.0, 3.0, None],
+        }
+    )
+    out = ev.azure_packing_view(df)
+    assert out.columns.tolist() == [
+        "tenant_id",
+        "position",
+        "starttime",
+        "endtime",
+        "vm_id",
+        "vm_type_id",
+        "priority",
+    ]
+    assert out["tenant_id"].tolist() == [100, 100, 100]
+    assert out["starttime"].tolist() == [1.0, 2.0, 2.0]
+    assert pd.isna(out["endtime"].iloc[0]) and out["endtime"].iloc[1:].tolist() == [6.0, 5.0]
+    assert out["vm_id"].tolist() == [5, 10, 20]
+    assert out["vm_type_id"].tolist() == [4, 4, 8]
+    assert out["priority"].tolist() == [1, 0, 1]
+    assert out["position"].tolist() == [0, 1, 2]
+    assert out.attrs == {"single_vm_rows_dropped": 1}
+
+
+def test_azure_packing_builder_reads_sqlite_zip_and_errors_when_missing(tmp_path, monkeypatch):
+    with pytest.raises(ev.ViewError, match=r"^no Azure packing zip archive in the snapshot$"):
+        ev._build_azure_packing(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _azure_snapshot(root)
+    cwd = tmp_path / "cwd"
+    cwd.mkdir()
+    monkeypatch.chdir(cwd)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_azure_packing(root, out, manifest)
+    ev._build_azure_packing(root, out, manifest)
+    assert list(cwd.iterdir()) == []
+    target = out / "azure_packing_2020" / "allocations.csv"
+    lines = target.read_text().splitlines()
+    assert lines[0] == "tenant_id,position,starttime,endtime,vm_id,vm_type_id,priority"
+    assert len(lines) == 3
+    view = manifest["azure_packing_2020"]
+    assert view["files"]["allocations.csv"]["rows"] == 2
+    assert view["dropped"] == ["vmType hardware dimensions", "single-VM tenants"]
+    assert view["pseudonymised"] == []
+    assert view["source_snapshot"] == f"azure_packing_2020/{ev.AZURE_SNAPSHOT}"
+    assert view["sampling"] == {
+        "method": "deterministic 1-in-100 tenant slice (tenantId % 100 == 0) limited to multi-VM tenants ordered by relative starttime",  # noqa: E501
+        "modulo": ev.AZURE_MODULO,
+        "single_vm_rows_dropped": 1,
+        "tenants": 1,
+    }
+
+
+def test_aoe_interactions_view_pseudonymises_parses_utc_and_coerces_numbers():
+    traces = [
+        {
+            "case": "t2",
+            "attributes": {
+                "player_id": "p1",
+                "match_id": "m1",
+                "strategy": "Rush",
+                "map_type": "Arabia",
+                "civilization": "Franks",
+                "civilization_category": "Cavalry",
+                "elo": "1250.5",
+            },
+            "events": [
+                {
+                    "concept:name": "Build",
+                    "time:timestamp": "2023-01-01T02:00:00+02:00",
+                    "amount": "2",
+                    "win": "1",
+                },
+                {
+                    "concept:name": "Bad",
+                    "time:timestamp": "not-a-date",
+                    "amount": "bad",
+                    "win": "bad",
+                },
+            ],
+        },
+        {
+            "case": "t1",
+            "attributes": {"elo": "bad"},
+            "events": [
+                {
+                    "concept:name": "Queue",
+                    "time:timestamp": "2023-01-01T00:01:00+00:00",
+                }
+            ],
+        },
+    ]
+    out = ev.aoe_interactions_view(traces)
+    assert out.columns.tolist() == list(ev.AOE_COLUMNS)
+    assert out["case_id"].tolist() == sorted(
+        [ev.pseudonym("t1"), ev.pseudonym("t2"), ev.pseudonym("t2")]
+    )
+    t2_rows = out[out["case_id"] == ev.pseudonym("t2")]
+    assert t2_rows["position"].tolist() == [0, 1]
+    assert t2_rows["time"].iloc[0] == pd.Timestamp("2023-01-01 00:00:00")
+    assert pd.isna(t2_rows["time"].iloc[1]) and pd.isna(t2_rows["amount"].iloc[1])
+    assert pd.isna(t2_rows["win"].iloc[1])
+    assert t2_rows["action"].tolist() == ["Build", "Bad"]
+    assert t2_rows["amount"].iloc[0] == 2.0 and t2_rows["win"].iloc[0] == 1.0
+    assert t2_rows["elo"].iloc[0] == 1250.5
+    assert t2_rows["strategy"].tolist() == ["Rush", "Rush"]
+    assert t2_rows["map_type"].tolist() == ["Arabia", "Arabia"]
+    assert t2_rows["civilization"].tolist() == ["Franks", "Franks"]
+    assert t2_rows["civilization_category"].tolist() == ["Cavalry", "Cavalry"]
+    assert t2_rows["player_id"].iloc[0] == ev.pseudonym("p1")
+    assert t2_rows["match_id"].iloc[0] == ev.pseudonym("m1")
+    t1_row = out[out["case_id"] == ev.pseudonym("t1")].iloc[0]
+    assert pd.isna(t1_row["player_id"]) and pd.isna(t1_row["match_id"]) and pd.isna(t1_row["elo"])
+    assert pd.isna(t1_row["win"]) and pd.isna(t1_row["strategy"]) and pd.isna(t1_row["map_type"])
+    assert pd.isna(t1_row["civilization"]) and pd.isna(t1_row["civilization_category"])
+    assert t1_row["action"] == "Queue" and t1_row["position"] == 0
+
+
+def test_aoe_builder_decodes_zip_prefix_writes_csv_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no AoE XES prefix archive in the snapshot$"):
+        ev._build_aoe(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _aoe_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_aoe(root, out, manifest)
+    ev._build_aoe(root, out, manifest)
+    target = out / "zen_aoe_interactions" / "events.csv"
+    lines = target.read_text().splitlines()
+    assert lines[0] == ",".join(ev.AOE_COLUMNS) and len(lines) == 3
+    view = manifest["zen_aoe_interactions"]
+    assert view["files"]["events.csv"]["rows"] == 2
+    assert view["dropped"] == [] and view["salt_label"] == ev.SALT
+    assert view["pseudonymised"] == ["case_id", "player_id", "match_id"]
+    assert view["source_snapshot"] == f"zen_aoe_interactions/{ev.AOE_SNAPSHOT}"
+    assert view["sampling"] == {
+        "member": "aoe_interaction_log_1_of_10.xes",
+        "method": "4 MiB compressed zip-prefix of Age of Empires interaction log decoded via xes_stream",  # noqa: E501
+        "status": {
+            "bytes_in": 866,
+            "bytes_out": 866,
+            "modulo": 1,
+            "stop": "log_closed",
+            "stream_complete": True,
+            "traces_kept": 2,
+            "traces_seen": 2,
+            "traces_without_case": 0,
+        },
+        "traces": 2,
     }

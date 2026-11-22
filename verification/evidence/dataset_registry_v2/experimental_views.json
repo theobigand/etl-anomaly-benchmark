@@ -4367,5 +4367,78 @@
    "method": "complete Alim'Confiance register projected to coded non-identifying attributes"
   },
   "source_snapshot": "dgal_alimconfiance/2026-11-22"
+ },
+ "azure_packing_2020": {
+  "dropped": [
+   "vmType hardware dimensions",
+   "single-VM tenants"
+  ],
+  "files": {
+   "allocations.csv": {
+    "rows": 38995,
+    "sha256": "91a1ca241794870e725c5d94688672b07d1bb458894c0f047642840870c873e8"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "deterministic 1-in-100 tenant slice (tenantId % 100 == 0) limited to multi-VM tenants ordered by relative starttime",
+   "modulo": 100,
+   "single_vm_rows_dropped": 12926,
+   "tenants": 6086
+  },
+  "source_snapshot": "azure_packing_2020/2026-11-22"
+ },
+ "zen_aoe_interactions": {
+  "dropped": [],
+  "files": {
+   "events.csv": {
+    "rows": 290046,
+    "sha256": "711d56219bcb39868063a590752983c89681568375c68ce1087d341be85222bb"
+   }
+  },
+  "pseudonymised": [
+   "case_id",
+   "player_id",
+   "match_id"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "member": "aoe_interation_logs_in_XES_format/aoe_interaction_log_1_of_10.xes",
+   "method": "4 MiB compressed zip-prefix of Age of Empires interaction log decoded via xes_stream",
+   "status": {
+    "bytes_in": 86445740,
+    "bytes_out": 86445740,
+    "modulo": 1,
+    "stop": "input_ended_before_log_closed",
+    "stream_complete": false,
+    "traces_kept": 2881,
+    "traces_seen": 2881,
+    "traces_without_case": 0
+   },
+   "traces": 2881
+  },
+  "source_snapshot": "zen_aoe_interactions/2026-11-22"
+ },
+ "zen_ev_charging": {
+  "dropped": [],
+  "files": {
+   "sessions.csv": {
+    "rows": 35377,
+    "sha256": "67fc46e22d1de7cabe53e59536eebac13d2524f6835b77508ef3afb814e35923"
+   }
+  },
+  "pseudonymised": [
+   "session_id",
+   "user_id"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "duplicates_dropped": 0,
+   "locations": 12,
+   "method": "complete Dataset1_charging_reports session log across 12 residential sites",
+   "unreadable_timestamps": 0,
+   "users": 267
+  },
+  "source_snapshot": "zen_ev_charging/2026-11-22"
  }
 }

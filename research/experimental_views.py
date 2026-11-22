@@ -4021,6 +4021,214 @@ def _build_alimconfiance(root: Path, out: Path, manifest: dict[str, Any]) -> Non
     )
 
 
+EV_SNAPSHOT = "2026-11-22"
+
+
+def ev_charging_view(frame: pd.DataFrame) -> pd.DataFrame:
+    """Residential EV charging sessions in UTC with pseudonymised user and session ids."""
+    out = pd.DataFrame(
+        {
+            "session_id": frame["session_id"].map(pseudonym),
+            "user_id": frame["user_id"].map(pseudonym),
+            "location": frame["location"].astype("string"),
+            "plugin_time": pd.to_datetime(
+                frame["plugin_time"], format="%Y-%m-%d %H:%M:%S", errors="coerce"
+            ),
+            "plugout_time": pd.to_datetime(
+                frame["plugout_time"], format="%Y-%m-%d %H:%M:%S", errors="coerce"
+            ),
+            "connection_hours": pd.to_numeric(
+                frame["connection_time"].astype(str).str.replace(",", "."), errors="coerce"
+            ),
+            "energy_kwh": pd.to_numeric(
+                frame["energy_session"].astype(str).str.replace(",", "."), errors="coerce"
+            ),
+        }
+    )
+    valid = out[out["plugin_time"].notna()]
+    unique = valid.drop_duplicates("session_id")
+    ordered = unique.sort_values(["plugin_time", "session_id"]).reset_index(drop=True)
+    ordered.attrs = {
+        "duplicates": int(len(valid) - len(unique)),
+        "unreadable_timestamps": int(len(out) - len(valid)),
+    }
+    return ordered
+
+
+def _build_ev_charging(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    source = root / "zen_ev_charging" / EV_SNAPSHOT / "raw" / "Dataset1_charging_reports.csv"
+    if not source.exists():
+        raise ViewError("no EV charging file in the snapshot")
+    view = ev_charging_view(pd.read_csv(source, sep=";", dtype=str))
+    folder = out / "zen_ev_charging"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "sessions.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "zen_ev_charging",
+        {"sessions.csv": (target, len(view))},
+        dropped=[],
+        pseudonymised=["session_id", "user_id"],
+        salt_label=SALT,
+        sampling={
+            "duplicates_dropped": view.attrs["duplicates"],
+            "locations": int(view["location"].nunique()),
+            "method": "complete Dataset1_charging_reports session log across 12 residential sites",
+            "unreadable_timestamps": view.attrs["unreadable_timestamps"],
+            "users": int(view["user_id"].nunique()),
+        },
+        source_snapshot=f"zen_ev_charging/{EV_SNAPSHOT}",
+    )
+
+
+AZURE_SNAPSHOT = "2026-11-22"
+AZURE_MODULO = 100
+
+
+def azure_packing_view(frame: pd.DataFrame) -> pd.DataFrame:
+    """Ordered cloud VM allocation sequences for tenants with at least two requests."""
+    counts = frame.groupby("tenantId")["vmId"].transform("count")
+    ordered = frame[counts >= 2].sort_values(["tenantId", "starttime", "vmId"])
+    ordered["position"] = ordered.groupby("tenantId").cumcount()
+    out = ordered.rename(
+        columns={"tenantId": "tenant_id", "vmId": "vm_id", "vmTypeId": "vm_type_id"}
+    )[
+        ["tenant_id", "position", "starttime", "endtime", "vm_id", "vm_type_id", "priority"]
+    ].reset_index(drop=True)
+    out.attrs = {"single_vm_rows_dropped": int((counts < 2).sum())}
+    return out
+
+
+def _build_azure_packing(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import sqlite3
+    import tempfile
+    import zipfile
+
+    archive = root / "azure_packing_2020" / AZURE_SNAPSHOT / "raw" / "AzurePackingTraceV1.zip"
+    if not archive.exists():
+        raise ViewError("no Azure packing zip archive in the snapshot")
+    with zipfile.ZipFile(archive) as zf, tempfile.TemporaryDirectory() as tmp:
+        members = sorted(n for n in zf.namelist() if n.endswith(".sqlite"))
+        db_path = Path(zf.extract(members[0], tmp))
+        con = sqlite3.connect(db_path)
+        try:
+            frame = pd.read_sql_query(
+                "SELECT vmId, tenantId, vmTypeId, priority, starttime, endtime "
+                "FROM vm WHERE tenantId % ? = 0",
+                con,
+                params=(AZURE_MODULO,),
+            )
+        finally:
+            con.close()
+    view = azure_packing_view(frame)
+    folder = out / "azure_packing_2020"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "allocations.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "azure_packing_2020",
+        {"allocations.csv": (target, len(view))},
+        dropped=["vmType hardware dimensions", "single-VM tenants"],
+        pseudonymised=[],
+        sampling={
+            "method": "deterministic 1-in-100 tenant slice (tenantId % 100 == 0) limited to multi-VM tenants ordered by relative starttime",  # noqa: E501
+            "modulo": AZURE_MODULO,
+            "single_vm_rows_dropped": view.attrs["single_vm_rows_dropped"],
+            "tenants": int(view["tenant_id"].nunique()),
+        },
+        source_snapshot=f"azure_packing_2020/{AZURE_SNAPSHOT}",
+    )
+
+
+AOE_SNAPSHOT = "2026-11-22"
+AOE_MAX_BYTES = 128 << 20
+AOE_COLUMNS = (
+    "case_id",
+    "position",
+    "time",
+    "action",
+    "amount",
+    "win",
+    "player_id",
+    "match_id",
+    "strategy",
+    "map_type",
+    "civilization",
+    "civilization_category",
+    "elo",
+)
+
+
+def aoe_interactions_view(traces: list[dict[str, Any]]) -> pd.DataFrame:
+    """Real-time strategy gameplay event sequences with pseudonymised match and player ids."""
+    rows: list[dict[str, Any]] = []
+    for trace in traces:
+        attrs = trace["attributes"]
+        case_id = pseudonym(trace["case"])
+        player = attrs.get("player_id")
+        match = attrs.get("match_id")
+        shared = {
+            "case_id": case_id,
+            "player_id": None if player is None else pseudonym(str(player)),
+            "match_id": None if match is None else pseudonym(str(match)),
+            "strategy": attrs.get("strategy"),
+            "map_type": attrs.get("map_type"),
+            "civilization": attrs.get("civilization"),
+            "civilization_category": attrs.get("civilization_category"),
+            "elo": attrs.get("elo"),
+        }
+        for pos, event in enumerate(trace["events"]):
+            rows.append(
+                {
+                    **shared,
+                    "position": pos,
+                    "time": event.get("time:timestamp"),
+                    "action": event.get("concept:name"),
+                    "amount": event.get("amount"),
+                    "win": event.get("win"),
+                }
+            )
+    frame = pd.DataFrame(rows, columns=list(AOE_COLUMNS))
+    frame["time"] = pd.to_datetime(frame["time"], utc=True, errors="coerce").dt.tz_localize(None)
+    for col in ("amount", "win", "elo"):
+        frame[col] = pd.to_numeric(frame[col], errors="coerce")
+    return frame.sort_values(["case_id", "position"]).reset_index(drop=True)
+
+
+def _build_aoe(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import acquisition
+    import xes_stream
+
+    archive = root / "zen_aoe_interactions" / AOE_SNAPSHOT / "raw" / "aoe_xes_head.zip"
+    if not archive.exists():
+        raise ViewError("no AoE XES prefix archive in the snapshot")
+    prefix = acquisition.zip_prefix_lines(archive.read_bytes(), AOE_MAX_BYTES)
+    stream = io.BytesIO(("\n".join(prefix["lines"]) + "\n").encode())
+    parsed = xes_stream.read_traces(stream, compressed=False, modulo=1)
+    view = aoe_interactions_view(parsed.traces)
+    folder = out / "zen_aoe_interactions"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "events.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "zen_aoe_interactions",
+        {"events.csv": (target, len(view))},
+        dropped=[],
+        pseudonymised=["case_id", "player_id", "match_id"],
+        salt_label=SALT,
+        sampling={
+            "member": prefix["member"],
+            "method": "4 MiB compressed zip-prefix of Age of Empires interaction log decoded via xes_stream",  # noqa: E501
+            "status": parsed.status,
+            "traces": len(parsed.traces),
+        },
+        source_snapshot=f"zen_aoe_interactions/{AOE_SNAPSHOT}",
+    )
+
+
 BUILD_STEPS = (
     _build_openalex,
     _build_monash,
@@ -4071,6 +4279,9 @@ BUILD_STEPS = (
     _build_rte,
     _build_ademe_dpe,
     _build_alimconfiance,
+    _build_ev_charging,
+    _build_azure_packing,
+    _build_aoe,
     _build_flat,
     _build_series,
     _build_ukspend,

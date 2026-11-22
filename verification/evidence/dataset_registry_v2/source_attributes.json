@@ -32,6 +32,20 @@
    "C3": "environmental sensing"
   }
  },
+ "aoe_gameplay": {
+  "curator": "zenodo",
+  "descriptors": {
+   "event_generation": "real-time strategy gameplay action sequences, not business-process execution"
+  },
+  "domain": "Games",
+  "generating_system": "Age of Empires competitive online gameplay interaction log",
+  "note": "real-time game action log, distinct mechanism from business-process execution logs",
+  "producer": "Zenodo record 11060884 authors",
+  "schema_family": "xes gameplay interaction log",
+  "structure": {
+   "C4": "real-time strategy gameplay event sequences"
+  }
+ },
  "backblaze": {
   "curator": "backblaze",
   "descriptors": {
@@ -587,6 +601,20 @@
    "C5": "clinical record graph"
   }
  },
+ "microsoft_azure_compute": {
+  "curator": "github",
+  "descriptors": {
+   "event_generation": "cloud data-centre VM allocation requests, not business-process execution"
+  },
+  "domain": "cloud compute infrastructure",
+  "generating_system": "Microsoft Azure Protean VM allocator (Zone A packing trace)",
+  "note": "multi-VM request traces per cloud tenant, non-business-process C4 sequence mechanism",
+  "producer": "Microsoft Azure",
+  "schema_family": "azure vm packing trace",
+  "structure": {
+   "C4": "cloud VM allocation and packing trace"
+  }
+ },
  "montreal_contracts": {
   "curator": "ocds registry",
   "domain": "public procurement",
@@ -611,6 +639,17 @@
   "schema_family": "nvd cve json",
   "structure": {
    "C6": "vulnerability records with configurations, metrics and references"
+  }
+ },
+ "ntnu_ev_charging": {
+  "curator": "zenodo",
+  "domain": "electric vehicle charging",
+  "generating_system": "residential EV charging stations across 12 Norwegian apartment complexes",
+  "note": "",
+  "producer": "Sorensen et al. (NTNU / SINTEF)",
+  "schema_family": "ev charging session records",
+  "structure": {
+   "C2b": "residential electric vehicle charging sessions"
   }
  },
  "nyc_tlc": {

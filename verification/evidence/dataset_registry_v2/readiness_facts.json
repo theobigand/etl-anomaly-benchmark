@@ -3086,6 +3086,54 @@
    "protocol_id": "P-TAB",
    "units": 71228,
    "view": "dgal_alimconfiance"
+  },
+  "azure_packing_2020": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "deterministic 1-in-100 tenant slice (tenantId % 100 == 0) limited to multi-VM tenants (6,086 tenants, 38,995 requests)",
+    "fractional relative starttime/endtime (NULL endtime indicates active or post-horizon VMs; negative starttime indicates pre-window VMs)",
+    "publisher anonymised all tenant and VM identifiers"
+   ],
+   "first_party": true,
+   "independent_group": "microsoft_azure_compute",
+   "min_units": 1000,
+   "partitions": "hash of tenant_id 70/15/15",
+   "privacy": "not_needed",
+   "protocol_id": "P-SEQ",
+   "units": 6086,
+   "view": "azure_packing_2020"
+  },
+  "zen_aoe_interactions": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "4 MiB compressed zip prefix containing 2,881 complete gameplay action sequences (290,046 events)",
+    "case_id, player_id and match_id replaced by salted hashes in the view",
+    "online real-time strategy game interaction log (distinct from business-process execution)"
+   ],
+   "first_party": true,
+   "independent_group": "aoe_gameplay",
+   "min_units": 1000,
+   "partitions": "hash of case_id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2881,
+   "view": "zen_aoe_interactions"
+  },
+  "zen_ev_charging": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete Dataset1_charging_reports log (35,377 sessions across 267 users at 12 residential sites)",
+    "38 open sessions without plugout_time or connection_hours are natural incomplete records",
+    "user_id and session_id replaced by salted hashes in the view"
+   ],
+   "first_party": true,
+   "independent_group": "ntnu_ev_charging",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on plugin_time",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 35377,
+   "view": "zen_ev_charging"
   }
  }
 }

@@ -1761,6 +1761,51 @@
    "size": "28.9 MB CSV (12.8 MB view)",
    "source_url": "https://dgal.opendatasoft.com/api/explore/v2.1/catalog/datasets/export_alimconfiance",
    "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "zen_ev_charging",
+   "licence": "CC BY 4.0",
+   "name": "Norwegian residential EV charging reports (Zenodo 13896176)",
+   "next_step": "none",
+   "notes": "35,377 charging session events across 267 pseudonymised users and 12 sites; comma decimals normalised",
+   "publisher": "Sorensen et al. (NTNU / SINTEF)",
+   "reason": "transactional electric vehicle charging session event log",
+   "size": "3.1 MB CSV (2.9 MB view)",
+   "source_url": "https://zenodo.org/api/records/13896176",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "azure_packing_2020",
+   "licence": "CC BY 4.0",
+   "name": "Microsoft Azure VM Allocation Packing Trace 2020",
+   "next_step": "none",
+   "notes": "tenantId % 100 == 0 multi-VM slice yields 6,086 tenants and 38,995 VM allocation sequence steps",
+   "publisher": "Microsoft Azure",
+   "reason": "cloud compute VM allocation sequence (non-business-process mechanism)",
+   "size": "53.4 MB zip (1.7 MB view)",
+   "source_url": "https://github.com/Azure/AzurePublicDataset/blob/master/AzureTracesForPacking2020.md",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "zen_aoe_interactions",
+   "licence": "CC BY 4.0",
+   "name": "Age of Empires gameplay interaction event log (Zenodo 11060884)",
+   "next_step": "none",
+   "notes": "4 MiB compressed zip prefix yields 2,881 complete traces and 290,046 gameplay actions; non-business-process mechanism",
+   "publisher": "Zenodo record 11060884 authors",
+   "reason": "real-time strategy game interaction trace (non-business-process mechanism)",
+   "size": "4.0 MiB range (29.8 MB view)",
+   "source_url": "https://zenodo.org/api/records/11060884",
+   "status": "experiment_ready"
   }
  ],
  "date": "2026-11-21",

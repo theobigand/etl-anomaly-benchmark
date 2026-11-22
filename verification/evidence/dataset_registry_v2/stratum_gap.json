@@ -1,6 +1,6 @@
 {
  "licence_classes": {
-  "open": 228,
+  "open": 231,
   "research_only": 22
  },
  "strata": {
@@ -40,13 +40,13 @@
   "C2b": {
    "ambitious": 45,
    "minimum": 15,
-   "missing_to_minimum": 2,
-   "missing_to_recommended": 17,
-   "publishers": 13,
+   "missing_to_minimum": 1,
+   "missing_to_recommended": 16,
+   "publishers": 14,
    "recommended": 30,
-   "sources": 13,
+   "sources": 14,
    "stratum": "transactional events",
-   "systems": 15
+   "systems": 16
   },
   "C3": {
    "ambitious": 55,
@@ -64,11 +64,11 @@
    "minimum": 15,
    "missing_to_minimum": 0,
    "missing_to_recommended": 0,
-   "publishers": 16,
+   "publishers": 18,
    "recommended": 28,
-   "sources": 32,
+   "sources": 34,
    "stratum": "logs and event sequences",
-   "systems": 31
+   "systems": 33
   },
   "C5": {
    "ambitious": 55,
@@ -98,5 +98,5 @@
   "uci:755",
   "uci:760"
  ],
- "total_sources": 250
+ "total_sources": 253
 }

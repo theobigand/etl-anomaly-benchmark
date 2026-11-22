@@ -4950,6 +4950,66 @@
    "stratum": "C2a",
    "system": "dgal_alimconfiance_inspection_register",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "ntnu_ev_charging",
+   "id": "zen_ev_charging",
+   "licence_class": "open",
+   "protocols": "P-TAB on residential EV charging session transactions ordered by plugin_time",
+   "publisher": "ntnu_sintef_ev",
+   "reason": "Norwegian residential EV charging reports across 12 apartment sites (Zenodo 13896176 Dataset1): 35,377 unique sessions, 267 users, session energy and connection duration with 38 open incomplete plugout sessions preserved as NaN/NaT",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Zenodo record 13896176 metadata (read 2026-11-22): CC BY 4.0",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "norwegian_residential_ev_charging_reports",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "microsoft_azure_compute",
+   "id": "azure_packing_2020",
+   "licence_class": "open",
+   "protocols": "P-SEQ on per-tenant ordered VM allocation request sequences (not business-process execution)",
+   "publisher": "microsoft_azure",
+   "reason": "Microsoft Azure Packing Trace 2020 (OSDI 2020 Protean SQLite trace): 1-in-100 tenant modulo slice filtered to multi-VM tenants yields 38,995 allocation requests across 6,086 tenants ordered by relative starttime; cloud compute workload rather than business-process workflow",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "AzurePublicDataset AzureTracesForPacking2020.md and LICENSE (read 2026-11-22): CC BY 4.0",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "azure_compute_vm_allocation_trace",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "aoe_gameplay",
+   "id": "zen_aoe_interactions",
+   "licence_class": "open",
+   "protocols": "P-SEQ on player match interaction sequences (not business-process execution)",
+   "publisher": "aoe_interactions",
+   "reason": "Age of Empires real-time strategy gameplay interaction log (Zenodo 11060884, 4 MiB zip prefix decoded via zip_prefix_lines): 2,881 complete gameplay traces and 290,046 timestamped actions with ELO, strategy and civilization context; online game telemetry mechanism",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Zenodo record 11060884 metadata (read 2026-11-22): CC BY 4.0",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "aoe_rts_gameplay_interaction_log",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

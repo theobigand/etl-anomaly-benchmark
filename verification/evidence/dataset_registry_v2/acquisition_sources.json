@@ -9133,6 +9133,173 @@
    "stratum": "C2a",
    "upstream": "first party: DGAL records official food-hygiene inspections and publishes the Alim'Confiance open register",
    "upstream_verified": true
+  },
+  {
+   "attribution": "Sorensen, A.L., Lindberg, K.B., Sartori, I. and Andresen, I., Electric vehicle charging dataset with 35,000 charging sessions from 12 residential locations in Norway, Zenodo record 13896176 (CC BY 4.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "Dataset1_charging_reports.csv",
+     "observed": "2018-2020",
+     "url": "https://zenodo.org/api/records/13896176/files/Dataset1_charging_reports.csv/content"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_ev_charging",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/13896176",
+   "licence_text": "Zenodo API metadata for record 13896176 (read 2026-11-22): license cc-by-4.0 (CC BY 4.0); authors Sorensen et al. (NTNU / SINTEF)",
+   "max_bytes": 10485760,
+   "method": "Dataset1_charging_reports.csv only (observed residential EV charging session events across 12 Norwegian apartment complexes)",
+   "min_interval": 2.0,
+   "privacy": "user_id and session_id are replaced by salted hashes in the view",
+   "publisher": "Sorensen et al. (NTNU / SINTEF) via Zenodo",
+   "rate_limit": "single file download, descriptive user agent",
+   "redistribution": "CC BY 4.0; raw file stays local",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "first party: authors collected and published real residential EV charging session logs on Zenodo",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Microsoft Azure, Azure Traces for Packing 2020 (OSDI 2020 Protean trace), GitHub release dataset-packing-2020 (CC BY 4.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "AzurePackingTraceV1.zip",
+     "observed": "2020",
+     "url": "https://github.com/Azure/AzurePublicDataset/releases/download/dataset-packing-2020/azurevmallocation_dataset2020_AzurePackingTraceV1.zip"
+    }
+   ],
+   "hosts": [
+    "github.com"
+   ],
+   "id": "azure_packing_2020",
+   "licence_class": "open",
+   "licence_location": "https://raw.githubusercontent.com/Azure/AzurePublicDataset/master/AzureTracesForPacking2020.md",
+   "licence_text": "AzurePublicDataset AzureTracesForPacking2020.md and repository LICENSE (read 2026-11-22): 'The data is made available and licensed under a CC-BY Attribution License' (Creative Commons Attribution 4.0 International)",
+   "max_bytes": 67108864,
+   "method": "official SQLite release archive AzurePackingTraceV1.zip containing VM allocation request sequences and VM type resource definitions",
+   "min_interval": 2.0,
+   "privacy": "publisher states all vmId and tenantId identifiers are anonymized and timestamps are capped relative days",
+   "publisher": "Microsoft Azure",
+   "rate_limit": "single release archive download, descriptive user agent",
+   "redirect_hosts": [
+    "release-assets.githubusercontent.com",
+    "objects.githubusercontent.com"
+   ],
+   "redistribution": "CC BY 4.0; raw file stays local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "first party: Microsoft Azure Compute collected and published the production VM allocation trace",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Game Data Event Log from Age of Empire Interactions, Zenodo record 11060884 (CC BY 4.0), compressed prefix range request; accessed 2026-11-22",
+   "files": [],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_aoe_interactions",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/11060884",
+   "licence_text": "Zenodo API metadata for record 11060884 (read 2026-11-22): license cc-by-4.0 (CC BY 4.0)",
+   "max_bytes": 10485760,
+   "method": "HTTP byte-range prefix (4 MiB) of aoe_interaction_logs_in_XES_format.zip containing real-time strategy gameplay event traces in XES format",
+   "min_interval": 2.0,
+   "privacy": "any player or match identifiers are replaced by salted hashes and personal labels dropped in the view",
+   "publisher": "Zenodo record 11060884 authors",
+   "rate_limit": "single range request, descriptive user agent",
+   "ranges": [
+    {
+     "length": 4194304,
+     "name": "aoe_xes_head.zip",
+     "observed": "2024",
+     "start": 0,
+     "url": "https://zenodo.org/api/records/11060884/files/aoe_interaction_logs_in_XES_format.zip/content"
+    }
+   ],
+   "redistribution": "CC BY 4.0; raw file stays local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "first party: Zenodo record 11060884 publishes the Age of Empires gameplay event log",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Charity Commission for England and Wales (CCEW), Public Register of Charities bulk data extracts (UK Open Government Licence v3.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "publicextract.charity.zip",
+     "observed": "2026-11-22",
+     "url": "https://ccewuksprdoneregsadata1.blob.core.windows.net/data/txt/publicextract.charity.zip"
+    },
+    {
+     "name": "publicextract.charity_annual_return_history.zip",
+     "observed": "2026-11-22",
+     "url": "https://ccewuksprdoneregsadata1.blob.core.windows.net/data/txt/publicextract.charity_annual_return_history.zip"
+    },
+    {
+     "name": "publicextract.charity_classification.zip",
+     "observed": "2026-11-22",
+     "url": "https://ccewuksprdoneregsadata1.blob.core.windows.net/data/txt/publicextract.charity_classification.zip"
+    },
+    {
+     "name": "publicextract.charity_area_of_operation.zip",
+     "observed": "2026-11-22",
+     "url": "https://ccewuksprdoneregsadata1.blob.core.windows.net/data/txt/publicextract.charity_area_of_operation.zip"
+    },
+    {
+     "name": "publicextract.charity_event_history.zip",
+     "observed": "2026-11-22",
+     "url": "https://ccewuksprdoneregsadata1.blob.core.windows.net/data/txt/publicextract.charity_event_history.zip"
+    }
+   ],
+   "hosts": [
+    "ccewuksprdoneregsadata1.blob.core.windows.net"
+   ],
+   "id": "uk_charity_register",
+   "licence_class": "open",
+   "licence_location": "https://www.gov.uk/government/organisations/charity-commission",
+   "licence_text": "CCEW register-of-charities full download page (Wayback 20241010120240id_) and GOV.UK Charity Commission page (read 2026-11-22): 'All content is available under the Open Government Licence v3.0, except where otherwise stated © Crown copyright'; data.gov.uk register-of-charities metadata specifies license_id uk-ogl",
+   "max_bytes": 62914560,
+   "method": "five non-personal bulk tab-separated extract archives from CCEW (charity, annual_return_history, classification, area_of_operation, event_history); charity_trustee is strictly excluded",
+   "min_interval": 2.0,
+   "privacy": "trustee extract is not downloaded; charity names, contact details, addresses, websites and free-text activities are dropped in the view",
+   "publisher": "Charity Commission for England and Wales",
+   "rate_limit": "five archive downloads, two seconds apart, descriptive user agent",
+   "redistribution": "OGL v3.0; raw files stay local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: the Charity Commission for England and Wales maintains the statutory Register of Charities",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "A National Relational Dataset of Reconstructed Prehistoric and Ancient Buildings in Japan, Zenodo record 23166842 (CC BY 4.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "reconstructed_buildings_japan_v1.1.zip",
+     "observed": "2026",
+     "url": "https://zenodo.org/api/records/23166842/files/reconstructed_buildings_japan_v1.1.zip/content"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_japan_buildings",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/23166842",
+   "licence_text": "Zenodo API metadata for record 23166842 (read 2026-11-22): license cc-by-4.0 (CC BY 4.0)",
+   "max_bytes": 10485760,
+   "method": "complete seven-table CSV relational archive of reconstructed archaeological buildings in Japan",
+   "min_interval": 2.0,
+   "privacy": "designer and source creator names checked and handled cleanly in the view while preserving relational foreign keys",
+   "publisher": "Zenodo record 23166842 authors",
+   "rate_limit": "single archive download, descriptive user agent",
+   "redistribution": "CC BY 4.0; raw file stays local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: dataset authors compiled and published the relational inventory on Zenodo",
+   "upstream_verified": true
   }
  ]
 }

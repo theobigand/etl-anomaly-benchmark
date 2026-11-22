@@ -320,6 +320,18 @@ def _alim(root, tmp):
     tev._alim_snapshot(root)
 
 
+def _ev(root, tmp):
+    tev._ev_snapshot(root)
+
+
+def _azure(root, tmp):
+    tev._azure_snapshot(root)
+
+
+def _aoe(root, tmp):
+    tev._aoe_snapshot(root)
+
+
 def _tlc(root, tmp):
     tev._tlc_page(
         [{}, {"tpep_pickup_datetime": "2023-03-07T07:00:00.000", "total_amount": "0.0"}]
@@ -352,6 +364,9 @@ CASES = {
     "rte": (_rte, ev._build_rte, ["rte_eco2mix_national"], {}),
     "ademe": (_ademe, ev._build_ademe_dpe, ["ademe_dpe_existant"], {}),
     "alim": (_alim, ev._build_alimconfiance, ["dgal_alimconfiance"], {}),
+    "ev": (_ev, ev._build_ev_charging, ["zen_ev_charging"], {}),
+    "azure": (_azure, ev._build_azure_packing, ["azure_packing_2020"], {}),
+    "aoe": (_aoe, ev._build_aoe, ["zen_aoe_interactions"], {}),
     "tlc": (_tlc, ev._build_tlc, ["nyc_tlc_yellow"], {}),
     "maude": (_maude_case, ev._build_maude, ["openfda_device_event"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),

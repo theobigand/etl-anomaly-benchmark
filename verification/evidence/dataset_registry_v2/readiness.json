@@ -2143,6 +2143,27 @@
   },
   {
    "failed": null,
+   "group": "ntnu_ev_charging",
+   "id": "zen_ev_charging",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "microsoft_azure_compute",
+   "id": "azure_packing_2020",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "aoe_gameplay",
+   "id": "zen_aoe_interactions",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2336,6 +2357,7 @@
    "italian_road_fines",
    "lyft_bikeshare",
    "montreal_contracts",
+   "ntnu_ev_charging",
    "nyc_tlc",
    "uci:352",
    "uk_ledger_mhra",
@@ -2367,6 +2389,7 @@
    "vif_aegis"
   ],
   "C4": [
+   "aoe_gameplay",
    "ccin2p3_slurm",
    "coatings_multinational",
    "dutch_municipalities",
@@ -2376,6 +2399,7 @@
    "hospital_sepsis_nl",
    "italian_road_fines",
    "loghub_collection",
+   "microsoft_azure_compute",
    "rabobank_ict",
    "surf_lisa_slurm",
    "tue_travel_claims",
@@ -2446,13 +2470,13 @@
    "structurally_valid": 16
   },
   "C2b": {
-   "acquired": 14,
-   "discovered": 20,
-   "experiment_ready": 14,
-   "protocol_ready": 14,
-   "rights_verified": 14,
-   "scientifically_eligible": 14,
-   "structurally_valid": 14
+   "acquired": 15,
+   "discovered": 21,
+   "experiment_ready": 15,
+   "protocol_ready": 15,
+   "rights_verified": 15,
+   "scientifically_eligible": 15,
+   "structurally_valid": 15
   },
   "C3": {
    "acquired": 27,
@@ -2464,13 +2488,13 @@
    "structurally_valid": 25
   },
   "C4": {
-   "acquired": 32,
-   "discovered": 33,
-   "experiment_ready": 31,
-   "protocol_ready": 31,
-   "rights_verified": 32,
-   "scientifically_eligible": 31,
-   "structurally_valid": 31
+   "acquired": 34,
+   "discovered": 35,
+   "experiment_ready": 33,
+   "protocol_ready": 33,
+   "rights_verified": 34,
+   "scientifically_eligible": 33,
+   "structurally_valid": 33
   },
   "C5": {
    "acquired": 32,
