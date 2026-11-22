@@ -4750,6 +4750,66 @@
    "stratum": "C2a",
    "system": "gb_police_collision_reporting",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "usgs_water",
+   "id": "usgs_continuous_discharge",
+   "licence_class": "open",
+   "protocols": "P-TS by controlled injection on 15- and 30-minute instrument values with approval status and qualifier flags kept as published",
+   "publisher": "usgs",
+   "reason": "USGS continuous discharge (parameter 00060) at four fixed gauges, 2022-01-01 to 2023-12-31: 243,474 instrument values at 15 minutes (30 minutes at St. Louis), 0 missing values, 100 percent approved, 428 values with a qualifier (mostly ESTIMATED); 0.01 to 2.4 percent of the expected steps absent; a different agency, instrument and regime (regulated, tidal, large river) from the Environment Agency daily means; the four gauges are one network and count once",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "USGS Copyrights and Credits (read 2026-11-22): USGS-authored or produced data are in the U.S. Public Domain",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "usgs_streamgage_network",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "epa_aqs",
+   "id": "epa_aqs_ozone_hourly",
+   "licence_class": "open",
+   "protocols": "P-TS by controlled injection on hourly instrument values with qualifier flags and method codes kept as published",
+   "publisher": "us_epa",
+   "reason": "EPA AQS hourly ozone 2022 and 2023: 162,829 UV-photometer hourly values (ppm) at 12 monitors in 12 states chosen by an even stride over the 1,245 monitors that report in both years; 6 monitors run all year and 6 only seven to nine months of the ozone season (gaps of up to 5,006 hours are published states); 10.4 percent of values carry a qualifier flag, 20 values are slightly negative as published; the monitors are federal reference or equivalent method instruments run by state and local agencies under one EPA programme and count once; a different measurement system from the Italian chemical multisensor in the corpus",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "EPA AirData FAQ (read 2026-11-22): the ambient monitoring data in the Air Quality System are public domain and may be used without a request",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "epa_aqs_ambient_monitoring_network",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "wikimedia_simplewiki",
+   "id": "wikimedia_simplewiki_edits",
+   "licence_class": "open",
+   "protocols": "P-SEQ on per-page revision sequences (order, missing parent, duplicate event, rare editor pattern); no activity vocabulary beyond creation, minor and ordinary edit",
+   "publisher": "wikimedia",
+   "reason": "Simple English Wikipedia revision metadata (dump of 2026-11-01, first 24 MB of the compressed stub history): 296,916 revisions of the 1,416 complete pages with the lowest page ids, 2001-09 to 2026-11, with parent-revision links (0 dangling), minor flags, namespace, text size and a salted-hash editor; 27.5 percent anonymous editors; an operational activity log of a collaborative editing platform, a mechanism that is not business-process execution; shares the publisher and the MediaWiki platform with the Wikidata group (a recorded dependence, a different wiki and event mechanism)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Wikimedia dumps licence page (read 2026-11-22): information on Wikimedia projects may be freely shared, copied, remixed and used for any purpose; text CC BY-SA 4.0 and GFDL; the controlling terms are the Wikimedia Terms of Use",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "mediawiki_simple_english_wikipedia_edit_log",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

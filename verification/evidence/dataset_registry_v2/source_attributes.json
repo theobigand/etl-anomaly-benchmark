@@ -177,6 +177,17 @@
    "C3": "ambient living sensors"
   }
  },
+ "epa_aqs": {
+  "curator": "aqs.epa.gov",
+  "domain": "environmental monitoring",
+  "generating_system": "EPA Air Quality System ambient monitoring network",
+  "note": "12 monitors of one federal programme, one group; same domain as the Italian air quality sensor group, a different instrument class and operator",
+  "producer": "U.S. Environmental Protection Agency (state and local monitoring agencies)",
+  "schema_family": "hourly monitor long-format records",
+  "structure": {
+   "C3": "hourly ambient ozone instrument values with qualifier and method codes"
+  }
+ },
  "fda_maude": {
   "curator": "openfda",
   "descriptors": {
@@ -1483,6 +1494,17 @@
    "C5": "food, nutrient measurement, derivation and portion tables"
   }
  },
+ "usgs_water": {
+  "curator": "api.waterdata.usgs.gov",
+  "domain": "hydrology",
+  "generating_system": "USGS streamgage network",
+  "note": "four gauges, one group; the same domain and schema family as the Environment Agency gauges, a different agency and instrumentation",
+  "producer": "U.S. Geological Survey",
+  "schema_family": "gauging time series",
+  "structure": {
+   "C3": "continuous river discharge at 15 and 30 minutes with approval and qualifier flags"
+  }
+ },
  "vif_aegis": {
   "curator": "zenodo",
   "domain": "automotive",
@@ -1503,6 +1525,17 @@
   "schema_family": "xes event log",
   "structure": {
    "C4": "IT service incident log"
+  }
+ },
+ "wikimedia_simplewiki": {
+  "curator": "wikimedia",
+  "domain": "collaborative editing activity",
+  "generating_system": "MediaWiki revision log of Simple English Wikipedia",
+  "note": "shares publisher and software platform with wikimedia_wikidata; separate wiki, community and event mechanism",
+  "producer": "Simple English Wikipedia contributors (Wikimedia Foundation)",
+  "schema_family": "mediawiki revision metadata",
+  "structure": {
+   "C4": "per-page revision event sequences with editor, minor flag and parent link"
   }
  },
  "wikimedia_wikidata": {

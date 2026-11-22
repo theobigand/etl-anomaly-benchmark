@@ -1560,7 +1560,7 @@
    "licence": "not verified: the NHTSA page returns Access Denied to headless access (not bypassed) and the data.gov metadata query failed",
    "name": "NHTSA Fatality Analysis Reporting System",
    "next_step": "read the NHTSA data statement in a browser or data.gov metadata, then acquire the National CSV zip (about 35 MB per year; static.nhtsa.gov answers HEAD requests)",
-   "notes": "real police crash reports with many categorical codes and high-cardinality state, county and vehicle fields: a strong C2a candidate",
+   "notes": "real police crash reports with many categorical codes and high-cardinality state, county and vehicle fields: a strong C2a candidate; 2026-11-22: www.nhtsa.gov answers 403 to automated clients (not bypassed) and the data.gov records give conflicting rights metadata (public domain mark, CC0, one 'other restrictions' and one 'non-public'); the primary NHTSA statement was not read",
    "publisher": "NHTSA",
    "reason": "categorical mixed-schema operational records",
    "size": null,
@@ -1581,6 +1581,81 @@
    "size": "52 MB",
    "source_url": "https://www.gov.uk/government/statistical-data-sets/road-safety-open-data",
    "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "usgs:continuous-discharge",
+   "licence": "U.S. public domain (USGS)",
+   "name": "USGS continuous discharge, four gauges, 2022-2023",
+   "next_step": "none; other gauges and parameters are the same provenance group",
+   "notes": "no API key requested; 7 requests",
+   "publisher": "U.S. Geological Survey",
+   "reason": "instrument time series with quality flags",
+   "size": "about 100 MB JSON",
+   "source_url": "https://api.waterdata.usgs.gov/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "epa:aqs-hourly-ozone",
+   "licence": "public domain (EPA AirData FAQ)",
+   "name": "EPA AQS hourly ozone 2022-2023",
+   "next_step": "none; other pollutants and years are the same provenance group",
+   "notes": "pre-generated files, no API key",
+   "publisher": "U.S. EPA",
+   "reason": "instrument time series with quality flags",
+   "size": "138 MB compressed",
+   "source_url": "https://aqs.epa.gov/aqsweb/airdata/download_files.html",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "wikimedia:simplewiki-stub-history",
+   "licence": "free licences (CC BY-SA 4.0 and GFDL; Wikimedia Terms of Use)",
+   "name": "Simple English Wikipedia revision metadata (stub history prefix)",
+   "next_step": "none; other wikis share the platform and publisher",
+   "notes": "the live recent-changes stream was not used: a short live capture would be an artificial history",
+   "publisher": "Wikimedia Foundation",
+   "reason": "operational edit event log",
+   "size": "24 MB range",
+   "source_url": "https://dumps.wikimedia.org/simplewiki/20261101/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "lbl:nasa-http-1995",
+   "licence": "traces may be freely redistributed; the page asks for no analysis beyond general traffic patterns",
+   "name": "NASA Kennedy Space Center HTTP logs, July-August 1995",
+   "next_step": "owner decision: whether anomaly-fault injection and detection on the request log stays within 'general traffic patterns'; the logs preserve originating hosts",
+   "notes": "web-server access log, 3.46 million requests; not downloaded",
+   "publisher": "Internet Traffic Archive (Arlitt and Williamson)",
+   "reason": "analysis restriction and host identifiers",
+   "size": "42 MB compressed",
+   "source_url": "https://ita.ee.lbl.gov/html/contrib/NASA-HTTP.html",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "ncei:ghcnh",
+   "licence": "no explicit licence found; the metadata record carries a liability disclaimer only",
+   "name": "NOAA GHCN-hourly",
+   "next_step": "read the NCEI use statement in a browser; GHCNh integrates many national upstream sources, so independence and international terms need a per-source check",
+   "notes": "files are reachable (PSV, parquet); not downloaded",
+   "publisher": "NOAA NCEI",
+   "reason": "rights not established and compiled from many upstream sources",
+   "size": null,
+   "source_url": "https://www.ncei.noaa.gov/products/global-historical-climatology-network-hourly",
+   "status": "permission_pending"
   }
  ],
  "date": "2026-11-21",

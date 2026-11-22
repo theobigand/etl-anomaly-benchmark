@@ -424,6 +424,77 @@
   },
   "source_snapshot": "ea_hydrology_flow/2026-11-21"
  },
+ "epa_aqs_ozone_hourly": {
+  "dropped": [
+   "state and county names, datum, date of last change, local time"
+  ],
+  "files": {
+   "monitors.csv": {
+    "rows": 12,
+    "sha256": "75d43ab590c250d6d2069a78200a9c39c1cd52cc3a077e16ab9e256aae4df344"
+   },
+   "ozone.csv": {
+    "rows": 162829,
+    "sha256": "7a6d3f58248c5145961b37be1c8b4c09acee0bfee70c85c0c7a4be6384fd85dc"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "first_by_monitor": {
+    "01-003-0010-1": "2022-03-01 07:00:00",
+    "06-027-0002-1": "2022-01-01 08:00:00",
+    "06-087-0007-1": "2022-01-01 08:00:00",
+    "12-011-2003-1": "2022-01-01 06:00:00",
+    "17-143-0024-1": "2022-03-01 19:00:00",
+    "21-229-9991-1": "2022-01-01 05:00:00",
+    "26-163-0019-2": "2022-03-01 05:00:00",
+    "32-031-0025-1": "2022-01-01 08:00:00",
+    "37-087-0036-1": "2022-03-01 05:00:00",
+    "41-047-0041-1": "2022-05-01 08:00:00",
+    "47-187-0106-1": "2022-03-01 06:00:00",
+    "49-053-0007-1": "2022-01-01 07:00:00"
+   },
+   "flagged_share": 0.104,
+   "hours_by_monitor": {
+    "01-003-0010-1": 10747,
+    "06-027-0002-1": 15272,
+    "06-087-0007-1": 17334,
+    "12-011-2003-1": 16575,
+    "17-143-0024-1": 11329,
+    "21-229-9991-1": 16569,
+    "26-163-0019-2": 11033,
+    "32-031-0025-1": 17406,
+    "37-087-0036-1": 11113,
+    "41-047-0041-1": 7319,
+    "47-187-0106-1": 11119,
+    "49-053-0007-1": 17013
+   },
+   "last_by_monitor": {
+    "01-003-0010-1": "2023-10-28 05:00:00",
+    "06-027-0002-1": "2024-01-01 07:00:00",
+    "06-087-0007-1": "2024-01-01 07:00:00",
+    "12-011-2003-1": "2024-01-01 04:00:00",
+    "17-143-0024-1": "2023-11-01 05:00:00",
+    "21-229-9991-1": "2024-01-01 04:00:00",
+    "26-163-0019-2": "2023-11-01 04:00:00",
+    "32-031-0025-1": "2024-01-01 07:00:00",
+    "37-087-0036-1": "2023-11-01 16:00:00",
+    "41-047-0041-1": "2023-10-01 07:00:00",
+    "47-187-0106-1": "2023-11-01 04:00:00",
+    "49-053-0007-1": "2023-12-29 18:00:00"
+   },
+   "method": "an even stride over the sorted ids of the monitors that report in both years",
+   "missing_value_share": 0.0,
+   "monitors": 12,
+   "monitors_in_both_years": 1245,
+   "rows_dropped": 0,
+   "years": [
+    2022,
+    2023
+   ]
+  },
+  "source_snapshot": "epa_aqs_ozone_hourly/2026-11-22"
+ },
  "flat_uci_101_C2a": {
   "dropped": [],
   "files": {
@@ -3640,6 +3711,55 @@
   ],
   "source_snapshot": "usda_fdc_sr_legacy/2026-11-22"
  },
+ "usgs_continuous_discharge": {
+  "dropped": [
+   "geometry",
+   "row and time series identifiers",
+   "last_modified",
+   "method_category"
+  ],
+  "files": {
+   "discharge.csv": {
+    "rows": 243474,
+    "sha256": "332a414c8378a98c547aa27200309945f980b33c64ca364ca9eaeb6dcb477990"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "duplicates": 0,
+   "first_by_monitor": {
+    "USGS-01646500": "2022-01-01 00:00:00",
+    "USGS-07010000": "2022-01-01 00:00:00",
+    "USGS-09380000": "2022-01-01 00:00:00",
+    "USGS-11447650": "2022-01-01 00:00:00"
+   },
+   "last_by_monitor": {
+    "USGS-01646500": "2023-12-31 23:45:00",
+    "USGS-07010000": "2023-12-31 23:30:00",
+    "USGS-09380000": "2023-12-31 23:45:00",
+    "USGS-11447650": "2023-12-31 23:45:00"
+   },
+   "median_step_minutes": {
+    "USGS-01646500": 15.0,
+    "USGS-07010000": 30.0,
+    "USGS-09380000": 15.0,
+    "USGS-11447650": 15.0
+   },
+   "method": "four fixed monitoring locations, 2022-01-01 to 2023-12-31, pages of 50,000 values",
+   "missing_value_share": 0.0,
+   "pages": [
+    "discharge_01646500_p0.json",
+    "discharge_01646500_p1.json",
+    "discharge_07010000_p0.json",
+    "discharge_09380000_p0.json",
+    "discharge_09380000_p1.json",
+    "discharge_11447650_p0.json",
+    "discharge_11447650_p1.json"
+   ],
+   "provisional_share": 0.0
+  },
+  "source_snapshot": "usgs_continuous_discharge/2026-11-22"
+ },
  "wikidata_entities": {
   "dropped": [
    "items that are instances of human"
@@ -3658,6 +3778,36 @@
    "request_files": 40
   },
   "source_snapshot": "wikidata_entities/2026-11-21"
+ },
+ "wikimedia_simplewiki_edits": {
+  "dropped": [
+   "user names",
+   "page titles",
+   "edit summaries",
+   "text locations and hashes"
+  ],
+  "files": {
+   "revisions.csv": {
+    "rows": 296916,
+    "sha256": "4a8d7232f44c8e5b757211ef396b36f7aa17eed7180f0df17b7383f053a2be95"
+   }
+  },
+  "pseudonymised": [
+   "editor"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "anonymous_share": 0.2752,
+   "first_revision": "2001-09-19 05:30:25",
+   "incomplete_pages": 1,
+   "last_revision": "2026-11-01 21:46:07",
+   "method": "gzip prefix of the stub history in page-id order: complete revision histories of the lowest page ids",
+   "pages": 1416,
+   "parents_outside_view": 0,
+   "stream_complete": false,
+   "unreadable_timestamps": 0
+  },
+  "source_snapshot": "wikimedia_simplewiki_edits/2026-11-22 (dump of 2026-11-01)"
  },
  "zen_3pfl": {
   "dropped": [

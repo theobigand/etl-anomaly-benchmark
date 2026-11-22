@@ -8,6 +8,7 @@ salted hashes: they keep joins working, they do not make the data anonymous. Vie
 from __future__ import annotations
 
 import hashlib
+import io
 import json
 import re
 import sys
@@ -3332,6 +3333,317 @@ def _build_slurm(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+AQS_SNAPSHOT = "2026-11-22"
+AQS_YEARS = (2022, 2023)
+AQS_MONITORS = 12
+AQS_COLUMNS = (
+    "State Code", "County Code", "Site Num", "POC", "Latitude", "Longitude", "Date GMT",
+    "Time GMT", "Sample Measurement", "Units of Measure", "MDL", "Qualifier", "Method Code",
+)  # fmt: skip
+AQS_UNITS = "Parts per million"
+
+
+def _aqs_id(chunk: pd.DataFrame) -> pd.Series:
+    return (
+        chunk["State Code"]
+        + "-"
+        + chunk["County Code"]
+        + "-"
+        + chunk["Site Num"]
+        + "-"
+        + chunk["POC"]
+    )
+
+
+def aqs_pick(monitors: list[str], count: int) -> list[str]:
+    """An even stride over the sorted monitor list, never a choice by value."""
+    ordered = sorted(monitors)
+    return ordered[:: max(1, len(ordered) // count)][:count]
+
+
+def aqs_hourly_view(
+    chunks: list[pd.DataFrame], monitors: list[str]
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Hourly ozone of the chosen monitors in UTC, by monitor then time, and the monitor table.
+
+    The measurement, its detection limit, the method code and the qualifier flag are kept as
+    published; the unit must be parts per million. Rows with an unreadable time are dropped and
+    counted (``attrs["rows_dropped"]``), never guessed.
+    """
+    parts, places = [], []
+    for chunk in chunks:
+        if set(chunk["Units of Measure"].dropna()) - {AQS_UNITS}:
+            raise ViewError("unexpected unit of measure")
+        chunk = chunk.assign(monitor=_aqs_id(chunk))
+        chunk = chunk[chunk["monitor"].isin(monitors)]
+        stamps = pd.to_datetime(
+            chunk["Date GMT"] + " " + chunk["Time GMT"], format="%Y-%m-%d %H:%M", errors="coerce"
+        )
+        parts.append(
+            pd.DataFrame(
+                {
+                    "monitor": chunk["monitor"],
+                    "timestamp": stamps,
+                    "ozone_ppm": pd.to_numeric(chunk["Sample Measurement"], errors="coerce"),
+                    "mdl_ppm": pd.to_numeric(chunk["MDL"], errors="coerce"),
+                    "method_code": chunk["Method Code"].astype("string"),
+                    "qualifier": chunk["Qualifier"].astype("string"),
+                }
+            )
+        )
+        places.append(chunk[["monitor", "Latitude", "Longitude"]].drop_duplicates())
+    table = pd.concat(parts)
+    kept = table[table["timestamp"].notna()].sort_values(["monitor", "timestamp"], kind="stable")
+    kept = kept.reset_index(drop=True)
+    kept.attrs = {"rows_dropped": int(len(table) - len(kept))}
+    sites = pd.concat(places).drop_duplicates("monitor").sort_values("monitor", kind="stable")
+    sites = sites.rename(columns={"Latitude": "latitude", "Longitude": "longitude"})
+    return kept, sites.reset_index(drop=True)
+
+
+def _aqs_chunks(path: Path, columns: tuple[str, ...]) -> Any:
+    import zipfile
+
+    with zipfile.ZipFile(path) as archive, archive.open(archive.namelist()[0]) as member:
+        yield from pd.read_csv(member, usecols=list(columns), dtype=str, chunksize=500_000)
+
+
+def _build_aqs(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "epa_aqs_ozone_hourly" / AQS_SNAPSHOT / "raw"
+    paths = [raw / f"hourly_44201_{year}.zip" for year in AQS_YEARS]
+    id_columns = AQS_COLUMNS[:4]
+    present = [
+        set().union(*(set(_aqs_id(c)) for c in _aqs_chunks(path, id_columns))) for path in paths
+    ]
+    common = sorted(set.intersection(*present))
+    chosen = aqs_pick(common, AQS_MONITORS)
+    frames, sites = [], []
+    for path in paths:
+        frame, place = aqs_hourly_view(_aqs_chunks(path, AQS_COLUMNS), chosen)
+        frames.append(frame)
+        sites.append(place)
+    view = pd.concat(frames).sort_values(["monitor", "timestamp"], kind="stable")
+    view = view.reset_index(drop=True)
+    places = pd.concat(sites).drop_duplicates("monitor").sort_values("monitor", kind="stable")
+    folder = out / "epa_aqs_ozone_hourly"
+    folder.mkdir(parents=True, exist_ok=True)
+    series, monitors = folder / "ozone.csv", folder / "monitors.csv"
+    view.to_csv(series, index=False)
+    places.to_csv(monitors, index=False)
+    per = view.groupby("monitor")["timestamp"].agg(["min", "max", "count"])
+    _record(
+        manifest,
+        "epa_aqs_ozone_hourly",
+        {"ozone.csv": (series, len(view)), "monitors.csv": (monitors, len(places))},
+        dropped=["state and county names, datum, date of last change, local time"],
+        pseudonymised=[],
+        sampling={
+            "method": "an even stride over the sorted ids of the monitors that report in both years",  # noqa: E501
+            "monitors_in_both_years": len(common),
+            "monitors": len(chosen),
+            "years": list(AQS_YEARS),
+            "rows_dropped": int(sum(f.attrs["rows_dropped"] for f in frames)),
+            "missing_value_share": round(float(view["ozone_ppm"].isna().mean()), 4),
+            "flagged_share": round(float(view["qualifier"].notna().mean()), 4),
+            "first_by_monitor": {m: str(v) for m, v in per["min"].items()},
+            "last_by_monitor": {m: str(v) for m, v in per["max"].items()},
+            "hours_by_monitor": {m: int(v) for m, v in per["count"].items()},
+        },
+        source_snapshot=f"epa_aqs_ozone_hourly/{AQS_SNAPSHOT}",
+    )
+
+
+USGS_SNAPSHOT = "2026-11-22"
+USGS_COLUMNS = ("monitoring_location_id", "time", "value", "approval_status", "qualifier")
+
+
+def usgs_continuous_view(pages: list[dict[str, Any]]) -> pd.DataFrame:
+    """Continuous discharge values in UTC by monitoring location then time.
+
+    Geometry, row identifiers, the series identifier and the publisher's revision time are
+    dropped; the value, the approval status and the qualifier stay as published. Repeated
+    (location, time) pairs are kept once and counted (``attrs["duplicates"]``), the unit must be
+    cubic feet per second.
+    """
+    rows = []
+    for page in pages:
+        for feature in page["features"]:
+            props = feature["properties"]
+            if props["unit_of_measure"] != "ft^3/s":
+                raise ViewError("unexpected unit of measure")
+            rows.append({c: props[c] for c in USGS_COLUMNS})
+    frame = pd.DataFrame(rows, columns=list(USGS_COLUMNS))
+    frame["timestamp"] = pd.to_datetime(frame.pop("time"), utc=True, errors="coerce")
+    frame["timestamp"] = frame["timestamp"].dt.tz_localize(None)
+    frame["discharge_cfs"] = pd.to_numeric(frame.pop("value"), errors="coerce")
+    frame = frame.rename(columns={"monitoring_location_id": "monitor"})
+    frame = frame[frame["timestamp"].notna()]
+    unique = frame.drop_duplicates(["monitor", "timestamp"])
+    ordered = unique.sort_values(["monitor", "timestamp"], kind="stable").reset_index(drop=True)
+    ordered.attrs = {"duplicates": int(len(frame) - len(unique))}
+    return ordered[["monitor", "timestamp", "discharge_cfs", "approval_status", "qualifier"]]
+
+
+def _build_usgs(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "usgs_continuous_discharge" / USGS_SNAPSHOT / "raw"
+    files = sorted(raw.glob("discharge_*_p*.json"))
+    if not files:
+        raise ViewError("no discharge page in the snapshot")
+    view = usgs_continuous_view([json.loads(p.read_text()) for p in files])
+    folder = out / "usgs_continuous_discharge"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "discharge.csv"
+    view.to_csv(target, index=False)
+    per = view.groupby("monitor")["timestamp"]
+    step = per.apply(lambda s: s.diff().dt.total_seconds().div(60).median())
+    _record(
+        manifest,
+        "usgs_continuous_discharge",
+        {"discharge.csv": (target, len(view))},
+        dropped=["geometry", "row and time series identifiers", "last_modified", "method_category"],
+        pseudonymised=[],
+        sampling={
+            "method": "four fixed monitoring locations, 2022-01-01 to 2023-12-31, pages of 50,000 values",  # noqa: E501
+            "pages": [p.name for p in files],
+            "duplicates": view.attrs["duplicates"],
+            "missing_value_share": round(float(view["discharge_cfs"].isna().mean()), 4),
+            "provisional_share": round(float((view["approval_status"] != "Approved").mean()), 4),
+            "median_step_minutes": {m: float(v) for m, v in step.items()},
+            "first_by_monitor": {m: str(v) for m, v in per.min().items()},
+            "last_by_monitor": {m: str(v) for m, v in per.max().items()},
+        },
+        source_snapshot=f"usgs_continuous_discharge/{USGS_SNAPSHOT}",
+    )
+
+
+WIKI_SNAPSHOT = "2026-11-22"
+WIKI_COLUMNS = (
+    "page_id", "namespace", "revision_id", "parent_id", "timestamp", "editor", "editor_kind",
+    "minor", "has_comment", "text_bytes",
+)  # fmt: skip
+
+
+def wiki_revision_view(lines: list[str]) -> pd.DataFrame:
+    """Revisions of the complete pages of a stub history, in page then file order.
+
+    A registered contributor is identified by the numeric id and an anonymous one by the IP
+    address, both replaced by a salted hash; user names, page titles and edit summaries are not
+    kept (only whether a summary exists). Pages after the last closed page are dropped and counted
+    (``attrs["incomplete_pages"]``). A document type declaration is refused.
+    """
+    import xml.etree.ElementTree as ET  # noqa: S405 - DOCTYPE and ENTITY declarations are refused
+
+    closed = [i for i, line in enumerate(lines) if line.strip() == "</page>"]
+    if not closed:
+        raise ViewError("no complete page in the stub history")
+    text = "\n".join(lines[: closed[-1] + 1]) + "\n</mediawiki>"
+    if "<!DOCTYPE" in text or "<!ENTITY" in text:
+        raise ViewError("document type declarations are refused")
+    incomplete = sum(1 for line in lines[closed[-1] + 1 :] if line.strip() == "<page>")
+    rows = []
+    for _, element in ET.iterparse(io.StringIO(text)):
+        if element.tag.rpartition("}")[2] != "page":
+            continue
+        page = {c.tag.rpartition("}")[2]: c for c in element}
+        for rev in (c for c in element if c.tag.rpartition("}")[2] == "revision"):
+            fields = {c.tag.rpartition("}")[2]: c for c in rev}
+            rows.append(_wiki_row(page, fields))
+        element.clear()
+    frame = pd.DataFrame(rows, columns=list(WIKI_COLUMNS))
+    frame["timestamp"] = pd.to_datetime(frame["timestamp"], utc=True, errors="coerce")
+    frame["timestamp"] = frame["timestamp"].dt.tz_localize(None)
+    for column in ("page_id", "namespace", "revision_id", "parent_id", "text_bytes"):
+        frame[column] = pd.to_numeric(frame[column], errors="coerce").astype("Int64")
+    frame.attrs = {"incomplete_pages": incomplete}
+    return frame
+
+
+def _wiki_row(page: dict[str, Any], rev: dict[str, Any]) -> dict[str, Any]:
+    def value(node: Any) -> str | None:
+        return None if node is None else node.text
+
+    who = (
+        {c.tag.rpartition("}")[2]: c.text for c in rev["contributor"]}
+        if "contributor" in rev
+        else {}
+    )
+    if who.get("id"):
+        editor, kind = pseudonym(f"user:{who['id']}"), "registered"
+    elif who.get("ip"):
+        editor, kind = pseudonym(f"ip:{who['ip']}"), "anonymous"
+    else:
+        editor, kind = None, "unknown"
+    text = rev.get("text")
+    return {
+        "page_id": value(page.get("id")),
+        "namespace": value(page.get("ns")),
+        "revision_id": value(rev.get("id")),
+        "parent_id": value(rev.get("parentid")),
+        "timestamp": value(rev.get("timestamp")),
+        "editor": editor,
+        "editor_kind": kind,
+        "minor": "minor" in rev,
+        "has_comment": "comment" in rev,
+        "text_bytes": None if text is None else text.get("bytes"),
+    }
+
+
+def gzip_members_lines(blob: bytes) -> tuple[list[str], bool]:
+    """Complete text lines of a gzip file made of several members that may be cut off.
+
+    Members are read one after the other; a torn last line is dropped. The flag says whether the
+    last member ended inside ``blob``.
+    """
+    import zlib
+
+    out = bytearray()
+    complete = True
+    while blob:
+        decoder = zlib.decompressobj(wbits=31)
+        out += decoder.decompress(blob)
+        complete = decoder.eof
+        blob = decoder.unused_data
+    lines = out.decode("utf-8").split("\n")
+    tail = lines.pop()
+    if complete and tail:
+        lines.append(tail)
+    return lines, complete
+
+
+def _build_wiki(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "wikimedia_simplewiki_edits" / WIKI_SNAPSHOT / "raw"
+    lines, stream_complete = gzip_members_lines(
+        (raw / "stub_meta_history_head.xml.gz").read_bytes()
+    )
+    view = wiki_revision_view(lines)
+    folder = out / "wikimedia_simplewiki_edits"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "revisions.csv"
+    view.to_csv(target, index=False)
+    known = set(view["revision_id"].dropna())
+    linked = view["parent_id"].dropna()
+    _record(
+        manifest,
+        "wikimedia_simplewiki_edits",
+        {"revisions.csv": (target, len(view))},
+        dropped=["user names", "page titles", "edit summaries", "text locations and hashes"],
+        pseudonymised=["editor"],
+        salt_label=SALT,
+        sampling={
+            "method": "gzip prefix of the stub history in page-id order: complete revision histories of the lowest page ids",  # noqa: E501
+            "pages": int(view["page_id"].nunique()),
+            "incomplete_pages": view.attrs["incomplete_pages"],
+            "stream_complete": stream_complete,
+            "first_revision": str(view["timestamp"].min()),
+            "last_revision": str(view["timestamp"].max()),
+            "unreadable_timestamps": int(view["timestamp"].isna().sum()),
+            "parents_outside_view": int((~linked.isin(known)).sum()),
+            "anonymous_share": round(float((view["editor_kind"] == "anonymous").mean()), 4),
+        },
+        source_snapshot=f"wikimedia_simplewiki_edits/{WIKI_SNAPSHOT} (dump of 2026-11-01)",
+    )
+
+
 BUILD_STEPS = (
     _build_openalex,
     _build_monash,
@@ -3372,6 +3684,9 @@ BUILD_STEPS = (
     _build_backblaze,
     _build_tlc,
     _build_maude,
+    _build_aqs,
+    _build_usgs,
+    _build_wiki,
     _build_flat,
     _build_series,
     _build_ukspend,

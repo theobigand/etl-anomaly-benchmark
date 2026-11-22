@@ -8695,6 +8695,133 @@
    "stratum": "C2a",
    "upstream": "first party for the compilation: the police forces of Great Britain record collisions through STATS19 and the DfT publishes the national return",
    "upstream_verified": true
+  },
+  {
+   "attribution": "U.S. Environmental Protection Agency, Air Quality System (AQS) AirData pre-generated files, hourly ozone (parameter 44201) 2022 and 2023 and the monitor description file; accessed 2026-11-22",
+   "files": [
+    {
+     "name": "hourly_44201_2022.zip",
+     "observed": "2022",
+     "url": "https://aqs.epa.gov/aqsweb/airdata/hourly_44201_2022.zip"
+    },
+    {
+     "name": "hourly_44201_2023.zip",
+     "observed": "2023",
+     "url": "https://aqs.epa.gov/aqsweb/airdata/hourly_44201_2023.zip"
+    },
+    {
+     "name": "aqs_monitors.zip",
+     "observed": "2026-06",
+     "url": "https://aqs.epa.gov/aqsweb/airdata/aqs_monitors.zip"
+    }
+   ],
+   "hosts": [
+    "aqs.epa.gov"
+   ],
+   "id": "epa_aqs_ozone_hourly",
+   "licence_class": "open",
+   "licence_location": "https://www.epa.gov/outdoor-air-quality-data/do-i-need-request-permission-use-monitoring-data-and-graphics-airdata",
+   "licence_text": "EPA AirData FAQ (read 2026-11-22): 'The ambient monitoring data in EPA's Air Quality System (AQS) are public domain. You are welcome to download the data and use freely, without submitting a request.'",
+   "max_bytes": 83886080,
+   "method": "the two official pre-generated yearly hourly ozone files (annual refresh, as of 2026-06-25) and the monitor file; no API key is used",
+   "min_interval": 3.0,
+   "privacy": "ambient monitor measurements at sites; no personal data",
+   "publisher": "U.S. EPA (data submitted by state, local and tribal monitoring agencies)",
+   "rate_limit": "three downloads, three seconds apart, descriptive user agent",
+   "redistribution": "public domain; raw files stay local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party for the repository: EPA hosts AQS, whose observations are measured and submitted by the state, local and tribal agencies that operate the monitors; all monitors share the federal reference and equivalent method rules, so the network counts once",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "U.S. Geological Survey, USGS Water Data APIs (OGC API), continuous values of discharge (parameter 00060) at four monitoring locations, 2022-01-01 to 2023-12-31; accessed 2026-11-22",
+   "files": [
+    {
+     "name": "discharge_01646500_p0.json",
+     "observed": "2022-2023",
+     "url": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/continuous/items?f=json&limit=50000&monitoring_location_id=USGS-01646500&parameter_code=00060&time=2022-01-01T00:00:00Z/2023-12-31T23:59:59Z&offset=0"
+    },
+    {
+     "name": "discharge_01646500_p1.json",
+     "observed": "2022-2023",
+     "url": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/continuous/items?f=json&limit=50000&monitoring_location_id=USGS-01646500&parameter_code=00060&time=2022-01-01T00:00:00Z/2023-12-31T23:59:59Z&offset=50000"
+    },
+    {
+     "name": "discharge_09380000_p0.json",
+     "observed": "2022-2023",
+     "url": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/continuous/items?f=json&limit=50000&monitoring_location_id=USGS-09380000&parameter_code=00060&time=2022-01-01T00:00:00Z/2023-12-31T23:59:59Z&offset=0"
+    },
+    {
+     "name": "discharge_09380000_p1.json",
+     "observed": "2022-2023",
+     "url": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/continuous/items?f=json&limit=50000&monitoring_location_id=USGS-09380000&parameter_code=00060&time=2022-01-01T00:00:00Z/2023-12-31T23:59:59Z&offset=50000"
+    },
+    {
+     "name": "discharge_07010000_p0.json",
+     "observed": "2022-2023",
+     "url": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/continuous/items?f=json&limit=50000&monitoring_location_id=USGS-07010000&parameter_code=00060&time=2022-01-01T00:00:00Z/2023-12-31T23:59:59Z&offset=0"
+    },
+    {
+     "name": "discharge_11447650_p0.json",
+     "observed": "2022-2023",
+     "url": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/continuous/items?f=json&limit=50000&monitoring_location_id=USGS-11447650&parameter_code=00060&time=2022-01-01T00:00:00Z/2023-12-31T23:59:59Z&offset=0"
+    },
+    {
+     "name": "discharge_11447650_p1.json",
+     "observed": "2022-2023",
+     "url": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/continuous/items?f=json&limit=50000&monitoring_location_id=USGS-11447650&parameter_code=00060&time=2022-01-01T00:00:00Z/2023-12-31T23:59:59Z&offset=50000"
+    }
+   ],
+   "hosts": [
+    "api.waterdata.usgs.gov"
+   ],
+   "id": "usgs_continuous_discharge",
+   "licence_class": "open",
+   "licence_location": "https://www.usgs.gov/information-policies-and-instructions/copyrights-and-credits",
+   "licence_text": "USGS Copyrights and Credits (read 2026-11-22): 'USGS-authored or produced data and information are considered to be in the U.S. Public Domain'; the API documentation offers an optional key that raises rate limits, which needs an e-mail address and was not requested",
+   "max_bytes": 52428800,
+   "method": "the official continuous-values collection for four fixed monitoring locations chosen in advance for different regimes (Potomac River near Washington, Colorado River at Lees Ferry below a dam, Mississippi River at St. Louis, Sacramento River at Freeport), pages of 50,000 values by offset, no key",
+   "min_interval": 5.0,
+   "privacy": "river gauge measurements; no personal data",
+   "publisher": "U.S. Geological Survey (National Water Information System)",
+   "rate_limit": "seven requests five seconds apart, no API key, descriptive user agent",
+   "redistribution": "public domain; raw files stay local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party: USGS operates the gauges and publishes the values",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Wikimedia Foundation, Simple English Wikipedia stub meta history dump of 2026-11-01 (revision metadata), first 24 MB of the compressed file; accessed 2026-11-22",
+   "files": [],
+   "hosts": [
+    "dumps.wikimedia.org"
+   ],
+   "id": "wikimedia_simplewiki_edits",
+   "licence_class": "open",
+   "licence_location": "https://dumps.wikimedia.org/legal.html",
+   "licence_text": "Wikimedia dumps licence page (read 2026-11-22): 'all information on Wikimedia projects may be freely shared, copied, remixed, and used for any purpose'; text is CC BY-SA 4.0 and GFDL, the controlling terms are the Wikimedia Terms of Use; the stub file holds revision metadata only, without page text",
+   "max_bytes": 31457280,
+   "method": "one HTTP range request for the first 24 MB of the compressed stub history; the dump is sorted by page id, so the prefix holds the complete revision histories of the lowest page ids",
+   "min_interval": 3.0,
+   "privacy": "contributor user names and IP addresses of anonymous editors are personal data: they are replaced by salted hashes in the view; edit summaries (free text) are dropped",
+   "publisher": "Wikimedia Foundation",
+   "ranges": [
+    {
+     "length": 25165824,
+     "name": "stub_meta_history_head.xml.gz",
+     "observed": "2003-2026",
+     "start": 0,
+     "url": "https://dumps.wikimedia.org/simplewiki/20261101/simplewiki-20261101-stub-meta-history.xml.gz"
+    }
+   ],
+   "rate_limit": "one range request, descriptive user agent",
+   "redistribution": "free licences with attribution and share-alike; raw files stay local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "first party: the MediaWiki software of Simple English Wikipedia records every revision and the Foundation publishes the dump",
+   "upstream_verified": true
   }
  ]
 }

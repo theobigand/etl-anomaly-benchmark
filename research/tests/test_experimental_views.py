@@ -1033,6 +1033,9 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _care_snapshot(root, ids=(1,))
     _maude_snapshot(root)
     _tlc_page([{}]).to_csv(_tlc_dir(root), index=False)
+    _aqs_snapshot(root)
+    _usgs_snapshot(root)
+    _wiki_snapshot(root)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
@@ -1048,7 +1051,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -4389,3 +4392,308 @@ def test_stats19_spec_keeps_the_join_key_and_drops_police_references_and_home_ar
         ["vehicle", "collision_index", "collision", "collision_index"],
         ["casualty", "collision_index", "collision", "collision_index"],
     ]
+
+
+# --- EPA AQS hourly ozone and USGS continuous discharge --------------------------------------
+
+
+def _aqs_rows(rows):
+    base = {c: "1" for c in ev.AQS_COLUMNS}
+    base.update(
+        {
+            "State Code": "01",
+            "County Code": "003",
+            "Site Num": "0010",
+            "POC": "1",
+            "Date GMT": "2022-03-01",
+            "Time GMT": "07:00",
+            "Sample Measurement": "0.040",
+            "Units of Measure": ev.AQS_UNITS,
+            "MDL": "0.005",
+            "Qualifier": None,
+            "Method Code": "087",
+        }
+    )
+    return pd.DataFrame([{**base, **r} for r in rows], columns=list(ev.AQS_COLUMNS))
+
+
+def test_aqs_pick_takes_an_even_stride_of_the_sorted_list_and_never_more_than_asked():
+    ids = [f"m{n:02d}" for n in range(10)]
+    assert ev.aqs_pick(list(reversed(ids)), 5) == ["m00", "m02", "m04", "m06", "m08"]
+    assert ev.aqs_pick(ids, 3) == ["m00", "m03", "m06"]
+    assert ev.aqs_pick(ids[:2], 5) == ["m00", "m01"]
+    assert ev.aqs_pick(ids, 10) == ids
+
+
+def test_aqs_view_is_in_utc_order_per_monitor_keeps_flags_and_counts_unreadable_times():
+    chunk = _aqs_rows(
+        [
+            {"Time GMT": "09:00", "Qualifier": "IA"},
+            {"Time GMT": "08:00", "Sample Measurement": "x"},
+            {"Site Num": "0020", "Time GMT": "07:00"},
+            {"Time GMT": "bad"},
+            {"Site Num": "9999"},
+        ]
+    )
+    view, places = ev.aqs_hourly_view(
+        [chunk.iloc[:2], chunk.iloc[2:]], ["01-003-0010-1", "01-003-0020-1"]
+    )
+    assert list(view.columns) == [
+        "monitor", "timestamp", "ozone_ppm", "mdl_ppm", "method_code", "qualifier"
+    ]  # fmt: skip
+    assert view["monitor"].tolist() == ["01-003-0010-1", "01-003-0010-1", "01-003-0020-1"]
+    assert view["timestamp"].astype(str).tolist() == [
+        "2022-03-01 08:00:00",
+        "2022-03-01 09:00:00",
+        "2022-03-01 07:00:00",
+    ]
+    assert view["qualifier"].tolist() == [pd.NA, "IA", pd.NA]
+    assert view["ozone_ppm"].isna().tolist() == [True, False, False]
+    assert view["mdl_ppm"].tolist() == [0.005] * 3
+    assert view["method_code"].tolist() == ["087"] * 3
+    assert view.attrs["rows_dropped"] == 1
+    assert places["monitor"].tolist() == ["01-003-0010-1", "01-003-0020-1"]
+    assert list(places.columns) == ["monitor", "latitude", "longitude"]
+
+
+def test_aqs_view_refuses_another_unit():
+    with pytest.raises(ev.ViewError, match="unit"):
+        ev.aqs_hourly_view(
+            [_aqs_rows([{"Units of Measure": "Parts per billion"}])], ["01-003-0010-1"]
+        )
+
+
+def _aqs_snapshot(root):
+    import zipfile
+
+    raw = root / "epa_aqs_ozone_hourly" / ev.AQS_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    for year in ev.AQS_YEARS:
+        frame = _aqs_rows(
+            [
+                {"Date GMT": f"{year}-03-01"},
+                {"Date GMT": f"{year}-03-01", "Site Num": "0020"},
+                {"Date GMT": f"{year}-03-01", "Site Num": "0030"},
+            ]
+        )
+        if year == ev.AQS_YEARS[0]:
+            extra = frame.iloc[[0]].copy()
+            extra["Site Num"] = "0099"
+            frame = pd.concat([frame, extra], ignore_index=True)
+        with zipfile.ZipFile(raw / f"hourly_44201_{year}.zip", "w") as z:
+            z.writestr(f"hourly_44201_{year}.csv", frame.to_csv(index=False))
+
+
+def test_aqs_builder_selects_monitors_present_in_both_years_and_records_the_sampling(
+    tmp_path, monkeypatch
+):
+    root = tmp_path / "acq"
+    _aqs_snapshot(root)
+    monkeypatch.setattr(ev, "AQS_MONITORS", 2)
+    manifest = {}
+    ev._build_aqs(root, tmp_path / "out", manifest)
+    view = manifest["epa_aqs_ozone_hourly"]
+    assert view["files"]["ozone.csv"]["rows"] == 4 and view["files"]["monitors.csv"]["rows"] == 2
+    sampling = view["sampling"]
+    assert sampling["monitors_in_both_years"] == 3 and sampling["monitors"] == 2
+    assert sampling["hours_by_monitor"] == {"01-003-0010-1": 2, "01-003-0020-1": 2}
+    assert sampling["years"] == [2022, 2023] and sampling["rows_dropped"] == 0
+    assert sampling["missing_value_share"] == 0.0 and sampling["flagged_share"] == 0.0
+    assert view["source_snapshot"] == f"epa_aqs_ozone_hourly/{ev.AQS_SNAPSHOT}"
+
+
+def _usgs_page(rows):
+    features = [
+        {
+            "properties": {
+                "monitoring_location_id": "USGS-1",
+                "time": "2022-01-01T00:00:00+00:00",
+                "value": "10",
+                "unit_of_measure": "ft^3/s",
+                "approval_status": "Approved",
+                "qualifier": None,
+                **row,
+            }
+        }
+        for row in rows
+    ]
+    return {"features": features}
+
+
+def test_usgs_view_is_in_utc_order_deduplicates_and_keeps_status_and_qualifier():
+    page_a = _usgs_page(
+        [
+            {"time": "2022-01-01T00:30:00+00:00", "value": "x", "approval_status": "Provisional"},
+            {"time": "2022-01-01T00:15:00+00:00", "qualifier": "ICE"},
+            {"monitoring_location_id": "USGS-0", "time": "2022-01-01T05:00:00+01:00"},
+        ]
+    )
+    page_b = _usgs_page([{"time": "2022-01-01T00:15:00+00:00", "value": "99"}, {"time": "bad"}])
+    view = ev.usgs_continuous_view([page_a, page_b])
+    assert list(view.columns) == [
+        "monitor",
+        "timestamp",
+        "discharge_cfs",
+        "approval_status",
+        "qualifier",
+    ]
+    assert view["monitor"].tolist() == ["USGS-0", "USGS-1", "USGS-1"]
+    assert view["timestamp"].astype(str).tolist() == [
+        "2022-01-01 04:00:00",
+        "2022-01-01 00:15:00",
+        "2022-01-01 00:30:00",
+    ]
+    assert view["discharge_cfs"].isna().tolist() == [False, False, True]
+    assert view["discharge_cfs"].tolist()[:2] == [10.0, 10.0]
+    assert view["qualifier"].isna().tolist() == [True, False, True]
+    assert view["qualifier"].iloc[1] == "ICE"
+    assert view["approval_status"].tolist() == ["Approved", "Approved", "Provisional"]
+    assert view.attrs["duplicates"] == 1
+
+
+def test_usgs_view_refuses_another_unit():
+    with pytest.raises(ev.ViewError, match="unit"):
+        ev.usgs_continuous_view([_usgs_page([{"unit_of_measure": "m^3/s"}])])
+
+
+def _usgs_snapshot(root):
+    raw = root / "usgs_continuous_discharge" / ev.USGS_SNAPSHOT / "raw"
+    _w(
+        raw / "discharge_1_p0.json",
+        json.dumps(_usgs_page([{}, {"time": "2022-01-01T00:15:00+00:00"}])),
+    )
+    _w(raw / "discharge_1_p1.json", json.dumps(_usgs_page([{"time": "2022-01-01T00:30:00+00:00"}])))
+
+
+def test_usgs_builder_reads_every_page_and_records_cadence_and_status(tmp_path):
+    root = tmp_path / "acq"
+    _usgs_snapshot(root)
+    manifest = {}
+    ev._build_usgs(root, tmp_path / "out", manifest)
+    view = manifest["usgs_continuous_discharge"]
+    assert view["files"]["discharge.csv"]["rows"] == 3
+    sampling = view["sampling"]
+    assert sampling["pages"] == ["discharge_1_p0.json", "discharge_1_p1.json"]
+    assert sampling["median_step_minutes"] == {"USGS-1": 15.0}
+    assert sampling["provisional_share"] == 0.0 and sampling["duplicates"] == 0
+    assert sampling["first_by_monitor"] == {"USGS-1": "2022-01-01 00:00:00"}
+    with pytest.raises(ev.ViewError, match="no discharge page"):
+        ev._build_usgs(tmp_path / "none", tmp_path / "out", {})
+
+
+# --- Wikimedia stub history ---------------------------------------------------------------------
+
+
+def _wiki_revision(rid, parent=None, who="<username>Ann</username><id>7</id>", extra="", ts=None):
+    return (
+        f"    <revision><id>{rid}</id>"
+        + (f"<parentid>{parent}</parentid>" if parent else "")
+        + f"<timestamp>{ts or '2003-03-27T09:24:48Z'}</timestamp>"
+        + f"<contributor>{who}</contributor>{extra}"
+        + '<text bytes="724" sha1="x" /></revision>'
+    )
+
+
+def _wiki_lines(*pages):
+    lines = ['<mediawiki xmlns="http://www.mediawiki.org/xml/export-0.11/">', "  <siteinfo />"]
+    for pid, ns, revisions, closed in pages:
+        lines += [
+            "  <page>",
+            "    <title>Secret</title>",
+            f"    <ns>{ns}</ns>",
+            f"    <id>{pid}</id>",
+        ]
+        lines += revisions + (["  </page>"] if closed else [])
+    return lines
+
+
+def test_wiki_view_hashes_contributors_drops_names_and_keeps_revision_facts():
+    revisions = [
+        _wiki_revision(10, extra="<comment>edit summary</comment>"),
+        _wiki_revision(
+            11, parent=10, who="<ip>10.0.0.1</ip>", extra="<minor />", ts="2003-04-01T00:00:00Z"
+        ),
+        _wiki_revision(12, parent=11, who='<username deleted="deleted" />'),
+    ]
+    view = ev.wiki_revision_view(
+        _wiki_lines((1, 0, revisions, True), (2, 4, [_wiki_revision(20)], True))
+    )
+    assert list(view.columns) == list(ev.WIKI_COLUMNS)
+    assert view["page_id"].tolist() == [1, 1, 1, 2]
+    assert view["namespace"].tolist() == [0, 0, 0, 4]
+    assert view["revision_id"].tolist() == [10, 11, 12, 20]
+    assert view["parent_id"].isna().tolist() == [True, False, False, True]
+    assert view["timestamp"].astype(str).tolist()[:2] == [
+        "2003-03-27 09:24:48",
+        "2003-04-01 00:00:00",
+    ]
+    assert view["editor_kind"].tolist() == ["registered", "anonymous", "unknown", "registered"]
+    assert view["editor"].tolist()[0] == ev.pseudonym("user:7") == view["editor"].tolist()[3]
+    assert view["editor"].tolist()[1] == ev.pseudonym("ip:10.0.0.1") and pd.isna(
+        view["editor"].tolist()[2]
+    )
+    assert view["minor"].tolist() == [False, True, False, False]
+    assert view["has_comment"].tolist() == [True, False, False, False]
+    assert view["text_bytes"].tolist() == [724] * 4
+    assert (
+        "Ann" not in view.to_csv()
+        and "10.0.0.1" not in view.to_csv()
+        and "Secret" not in view.to_csv()
+    )
+    assert view.attrs["incomplete_pages"] == 0
+
+
+def test_wiki_view_drops_the_unclosed_last_page_and_counts_it():
+    lines = _wiki_lines((1, 0, [_wiki_revision(10)], True), (2, 0, [_wiki_revision(20)], False))
+    view = ev.wiki_revision_view(lines)
+    assert view["page_id"].tolist() == [1] and view.attrs["incomplete_pages"] == 1
+
+
+def test_wiki_view_refuses_a_stream_without_a_closed_page_and_a_doctype():
+    with pytest.raises(ev.ViewError, match="no complete page"):
+        ev.wiki_revision_view(_wiki_lines((1, 0, [_wiki_revision(10)], False)))
+    lines = _wiki_lines((1, 0, [_wiki_revision(10)], True))
+    with pytest.raises(ev.ViewError, match="document type"):
+        ev.wiki_revision_view(["<!DOCTYPE x [<!ENTITY a 'b'>]>", *lines])
+
+
+def test_gzip_members_lines_reads_every_member_and_drops_a_torn_line():
+    import gzip
+
+    blob = gzip.compress(b"a\nb\n") + gzip.compress(b"c\nd")
+    assert ev.gzip_members_lines(blob) == (["a", "b", "c", "d"], True)
+    import zlib
+
+    packer = zlib.compressobj(wbits=31)
+    second = packer.compress(b"c\nd1\nd2") + packer.flush(zlib.Z_FULL_FLUSH)
+    lines, complete = ev.gzip_members_lines(gzip.compress(b"a\nb\n") + second)
+    assert lines == ["a", "b", "c", "d1"] and complete is False
+
+
+def _wiki_snapshot(root):
+    import gzip
+
+    raw = root / "wikimedia_simplewiki_edits" / ev.WIKI_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    lines = _wiki_lines((1, 0, [_wiki_revision(10), _wiki_revision(11, parent=10)], True))
+    text = "\n".join(lines) + "\n"
+    head, tail = text.split("  <page>", 1)
+    (raw / "stub_meta_history_head.xml.gz").write_bytes(
+        gzip.compress(head.encode()) + gzip.compress(("  <page>" + tail).encode())
+    )
+
+
+def test_wiki_builder_reads_a_multi_member_stream_and_records_the_sampling(tmp_path):
+    root = tmp_path / "acq"
+    _wiki_snapshot(root)
+    manifest = {}
+    ev._build_wiki(root, tmp_path / "out", manifest)
+    view = manifest["wikimedia_simplewiki_edits"]
+    assert view["files"]["revisions.csv"]["rows"] == 2 and view["pseudonymised"] == ["editor"]
+    sampling = view["sampling"]
+    assert sampling["pages"] == 1 and sampling["stream_complete"] is True
+    assert sampling["parents_outside_view"] == 0 and sampling["incomplete_pages"] == 0
+    assert (
+        sampling["first_revision"] == "2003-03-27 09:24:48" and sampling["anonymous_share"] == 0.0
+    )
+    assert view["salt_label"] == ev.SALT

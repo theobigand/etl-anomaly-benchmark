@@ -341,6 +341,35 @@
    "units": 70128,
    "view": "ea_hydrology_flow"
   },
+  "epa_aqs_ozone_hourly": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "12 monitors chosen by a fixed stride over sorted ids, not by value; one pollutant (ozone) and two calendar years",
+    "six monitors report all year, six only seven to nine months (March to November in most): the off-season gap is a published state, not a fault",
+    "10.4 percent of values carry a qualifier code (for example 1, 2, IT, 6, RF, IF) and two instrument methods occur; both are kept",
+    "values are instrument readings, not model output; 20 values are below zero as published"
+   ],
+   "first_party": true,
+   "independent_group": "epa_aqs",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 per monitor",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point, contextual and collective anomalies",
+    "level shift and drift over weeks to months",
+    "missing interval and delayed arrival",
+    "prevalence change",
+    "seasonal deviation limited to two annual cycles"
+   ],
+   "temporal_span": "two calendar years of hourly values (2022 to 2023), 12 monitors",
+   "units": 162829,
+   "unsupported_fault_mechanisms": [
+    "multi-year trend or degradation",
+    "statements about the stability of seasonality over years"
+   ],
+   "view": "epa_aqs_ozone_hourly"
+  },
   "flat:uci:101:C2a": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -2604,6 +2633,35 @@
    "units": 644125,
    "view": "usda_fdc_sr_legacy"
   },
+  "usgs_continuous_discharge": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "four gauges chosen in advance for different regimes, not by value",
+    "two annual cycles only: yearly seasonality can be checked for presence but not for stability",
+    "regulated (Lees Ferry) and tidal (Sacramento at Freeport, negative discharge at times) gauges carry non-natural dynamics that are part of the baseline",
+    "gaps of up to 5 hours at the 15- and 30-minute spacing are published states; approval status is Approved for every value"
+   ],
+   "first_party": true,
+   "independent_group": "usgs_water",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 per gauge",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point, contextual and collective anomalies",
+    "level shift and drift over weeks to months",
+    "missing interval and delayed arrival",
+    "prevalence change",
+    "seasonal deviation limited to two annual cycles"
+   ],
+   "temporal_span": "two years at 15 or 30 minute spacing (2022 to 2023)",
+   "units": 243474,
+   "unsupported_fault_mechanisms": [
+    "multi-year trend or degradation",
+    "statements about the stability of seasonality over years"
+   ],
+   "view": "usgs_continuous_discharge"
+  },
   "wikidata_entities": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -2619,6 +2677,24 @@
    "protocol_id": "P-NEST",
    "units": 1611,
    "view": "wikidata_entities"
+  },
+  "wikimedia_simplewiki_edits": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "prefix of the page-id ordered dump: complete histories of the lowest page ids, dominated by main-namespace articles (80 percent) and project pages (18 percent), not a random sample of the wiki",
+    "event type is limited to page creation (no parent), minor and ordinary edit; edit summaries and titles are dropped",
+    "1.1 percent of pages contain a revision timestamp earlier than its predecessor (imported or migrated history): a natural order irregularity, not an injected fault",
+    "editor identifiers are salted hashes of user ids and IP addresses; 175 revisions have a hidden contributor"
+   ],
+   "first_party": true,
+   "independent_group": "wikimedia_simplewiki",
+   "min_units": 1000,
+   "natural_labels": "none; bot, revert and vandalism labels are not part of the stub file and were not derived",
+   "partitions": "hash of the page id 70/15/15 so a page history stays together",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 1416,
+   "view": "wikimedia_simplewiki_edits"
   },
   "zen_3pfl": {
    "anomaly_origin": "controlled_injection",

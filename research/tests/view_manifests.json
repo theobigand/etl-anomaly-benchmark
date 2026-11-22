@@ -22,6 +22,51 @@
    "source_snapshot": "zen_aegis_vehicle/2026-11-21"
   }
  },
+ "aqs": {
+  "epa_aqs_ozone_hourly": {
+   "dropped": [
+    "state and county names, datum, date of last change, local time"
+   ],
+   "files": {
+    "monitors.csv": {
+     "rows": 2
+    },
+    "ozone.csv": {
+     "rows": 4
+    }
+   },
+   "heads": {
+    "monitors.csv": "monitor,latitude,longitude",
+    "ozone.csv": "monitor,timestamp,ozone_ppm,mdl_ppm,method_code,qualifier"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "first_by_monitor": {
+     "01-003-0010-1": "2022-03-01 07:00:00",
+     "01-003-0020-1": "2022-03-01 07:00:00"
+    },
+    "flagged_share": 0.0,
+    "hours_by_monitor": {
+     "01-003-0010-1": 2,
+     "01-003-0020-1": 2
+    },
+    "last_by_monitor": {
+     "01-003-0010-1": "2023-03-01 07:00:00",
+     "01-003-0020-1": "2023-03-01 07:00:00"
+    },
+    "method": "an even stride over the sorted ids of the monitors that report in both years",
+    "missing_value_share": 0.0,
+    "monitors": 2,
+    "monitors_in_both_years": 3,
+    "rows_dropped": 0,
+    "years": [
+     2022,
+     2023
+    ]
+   },
+   "source_snapshot": "epa_aqs_ozone_hourly/2026-11-22"
+  }
+ },
  "backblaze": {
   "backblaze_drive_stats": {
    "dropped": [
@@ -674,6 +719,79 @@
     "unreadable_lines": 1
    },
    "source_snapshot": "zen_unisg_factory/2026-11-22"
+  }
+ },
+ "usgs": {
+  "usgs_continuous_discharge": {
+   "dropped": [
+    "geometry",
+    "row and time series identifiers",
+    "last_modified",
+    "method_category"
+   ],
+   "files": {
+    "discharge.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "discharge.csv": "monitor,timestamp,discharge_cfs,approval_status,qualifier"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "duplicates": 0,
+    "first_by_monitor": {
+     "USGS-1": "2022-01-01 00:00:00"
+    },
+    "last_by_monitor": {
+     "USGS-1": "2022-01-01 00:30:00"
+    },
+    "median_step_minutes": {
+     "USGS-1": 15.0
+    },
+    "method": "four fixed monitoring locations, 2022-01-01 to 2023-12-31, pages of 50,000 values",
+    "missing_value_share": 0.0,
+    "pages": [
+     "discharge_1_p0.json",
+     "discharge_1_p1.json"
+    ],
+    "provisional_share": 0.0
+   },
+   "source_snapshot": "usgs_continuous_discharge/2026-11-22"
+  }
+ },
+ "wiki": {
+  "wikimedia_simplewiki_edits": {
+   "dropped": [
+    "user names",
+    "page titles",
+    "edit summaries",
+    "text locations and hashes"
+   ],
+   "files": {
+    "revisions.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "revisions.csv": "page_id,namespace,revision_id,parent_id,timestamp,editor,editor_kind,minor,has_comment,text_bytes"
+   },
+   "pseudonymised": [
+    "editor"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "anonymous_share": 0.0,
+    "first_revision": "2003-03-27 09:24:48",
+    "incomplete_pages": 0,
+    "last_revision": "2003-03-27 09:24:48",
+    "method": "gzip prefix of the stub history in page-id order: complete revision histories of the lowest page ids",
+    "pages": 1,
+    "parents_outside_view": 0,
+    "stream_complete": true,
+    "unreadable_timestamps": 0
+   },
+   "source_snapshot": "wikimedia_simplewiki_edits/2026-11-22 (dump of 2026-11-01)"
   }
  },
  "wikidata": {

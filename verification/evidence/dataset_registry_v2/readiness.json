@@ -2078,6 +2078,27 @@
   },
   {
    "failed": null,
+   "group": "usgs_water",
+   "id": "usgs_continuous_discharge",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "epa_aqs",
+   "id": "epa_aqs_ozone_hourly",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "wikimedia_simplewiki",
+   "id": "wikimedia_simplewiki_edits",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2283,6 +2304,7 @@
    "ea_hydrology",
    "edp_wind_farm_portugal",
    "elder_home",
+   "epa_aqs",
    "fraunhofer_iee_care_wind_b",
    "melbourne_pedestrian",
    "metropt_porto",
@@ -2292,6 +2314,7 @@
    "steel_korea",
    "tetouan_power",
    "unisg_smart_factory",
+   "usgs_water",
    "vif_aegis"
   ],
   "C4": [
@@ -2308,7 +2331,8 @@
    "surf_lisa_slurm",
    "tue_travel_claims",
    "unisg_smart_factory",
-   "volvo_it"
+   "volvo_it",
+   "wikimedia_simplewiki"
   ],
   "C5": [
    "3pfl",
@@ -2379,22 +2403,22 @@
    "structurally_valid": 14
   },
   "C3": {
-   "acquired": 22,
-   "discovered": 43,
-   "experiment_ready": 19,
-   "protocol_ready": 19,
-   "rights_verified": 22,
-   "scientifically_eligible": 19,
-   "structurally_valid": 20
+   "acquired": 24,
+   "discovered": 45,
+   "experiment_ready": 21,
+   "protocol_ready": 21,
+   "rights_verified": 24,
+   "scientifically_eligible": 21,
+   "structurally_valid": 22
   },
   "C4": {
-   "acquired": 31,
-   "discovered": 32,
-   "experiment_ready": 30,
-   "protocol_ready": 30,
-   "rights_verified": 31,
-   "scientifically_eligible": 30,
-   "structurally_valid": 30
+   "acquired": 32,
+   "discovered": 33,
+   "experiment_ready": 31,
+   "protocol_ready": 31,
+   "rights_verified": 32,
+   "scientifically_eligible": 31,
+   "structurally_valid": 31
   },
   "C5": {
    "acquired": 32,
