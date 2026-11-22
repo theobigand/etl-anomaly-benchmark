@@ -334,6 +334,39 @@
    "source_snapshot": "zen_kelmarsh/2026-11-21"
   }
  },
+ "maude": {
+  "openfda_device_event": {
+   "dropped": [
+    "manufacturer contact person fields",
+    "free-text narratives (mdr_text)"
+   ],
+   "files": {
+    "reports.jsonl": {
+     "rows": 4
+    }
+   },
+   "heads": {
+    "reports.jsonl": "{\"device\": [{\"brand_name\": \"B\", \"openfda\": {\"device_class\": \"2\"}}], \"event_type\": \"Malfunction\", \"patient\": [{\"patient_p"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "dropped_keys": [
+     "manufacturer_contact_f_name",
+     "manufacturer_contact_l_name",
+     "manufacturer_contact_phone_number",
+     "mdr_text"
+    ],
+    "method": "every report received on one day (2023-03-01), sorted by report number, pages of 500",
+    "pages": [
+     "maude_20230301_s00000.json",
+     "maude_20230301_s00500.json"
+    ],
+    "repeated_reports": 0,
+    "reports": 4
+   },
+   "source_snapshot": "openfda_device_event/2026-11-22"
+  }
+ },
  "met": {
   "met_museum_objects": {
    "dropped": [

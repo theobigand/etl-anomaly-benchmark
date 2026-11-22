@@ -1031,6 +1031,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     bs.mkdir(parents=True)
     _fe2.write_feather(_pa.Table.from_pandas(_bess_frame(), preserve_index=False), bs / "S.feather")
     _care_snapshot(root, ids=(1,))
+    _maude_snapshot(root)
     _tlc_page([{}]).to_csv(_tlc_dir(root), index=False)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
@@ -1047,7 +1048,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -4231,3 +4232,98 @@ def _tlc_dir(root):
     raw = root / "nyc_tlc_yellow" / ev.TLC_SNAPSHOT / "raw"
     raw.mkdir(parents=True)
     return raw / "yellow_2023-03-07_p0.csv"
+
+
+# --- openFDA device adverse event reports -----------------------------------------------------------------  # noqa: E501
+
+
+def _maude(number, **extra):
+    return {
+        "report_number": number,
+        "event_type": "Malfunction",
+        "manufacturer_contact_f_name": "A",
+        "manufacturer_contact_phone_number": "1",
+        "mdr_text": [{"text": "free text", "mdr_text_key": "k"}],
+        "device": [
+            {
+                "brand_name": "B",
+                "manufacturer_contact_l_name": "nested",
+                "openfda": {"device_class": "2"},
+            }
+        ],
+        "patient": [{"patient_sex": "Unknown", "patient_problems": ["p"]}],
+        **extra,
+    }  # noqa: E501
+
+
+def test_maude_view_drops_contact_persons_and_narratives_at_every_depth_and_orders_by_report_number():  # noqa: E501
+    first = {"results": [_maude("B-2"), _maude("A-1", date_received="20230301")]}
+    second = {"results": [_maude("B-2", event_type="Death"), _maude("C-3")]}
+    view, repeated, dropped = ev.maude_view([first, second])
+    assert [r["report_number"] for r in view] == ["A-1", "B-2", "C-3"] and repeated == 1
+    assert view[1]["event_type"] == "Malfunction"  # the first of a repeated report is kept
+    assert dropped == [
+        "manufacturer_contact_f_name",
+        "manufacturer_contact_l_name",
+        "manufacturer_contact_phone_number",
+        "mdr_text",
+    ]
+    for record in view:
+        assert (
+            not any(k.startswith("manufacturer_contact_") for k in record)
+            and "mdr_text" not in record
+        )
+        assert (
+            "manufacturer_contact_l_name" not in record["device"][0]
+        )  # not even inside the device array
+        assert record["device"][0]["openfda"] == {"device_class": "2"} and record["patient"][0][
+            "patient_problems"
+        ] == ["p"]
+    assert ev.maude_view([{"results": []}]) == ([], 0, ["mdr_text"])
+
+
+def _maude_snapshot(root, pages=2):
+    raw = root / "openfda_device_event" / ev.MAUDE_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    for k in range(pages):
+        (raw / f"maude_20230301_s{k * 500:05d}.json").write_text(
+            json.dumps({"results": [_maude(f"R-{k}-{i}") for i in range(2)]}), encoding="utf-8"
+        )
+
+
+def test_the_maude_builder_writes_sorted_json_lines_and_records_what_it_dropped(tmp_path):
+    raw_root = tmp_path / "acquired"
+    (raw_root / "openfda_device_event" / ev.MAUDE_SNAPSHOT / "raw").mkdir(parents=True)
+    with pytest.raises(ev.ViewError, match="^no report page in the snapshot$"):
+        ev._build_maude(raw_root, tmp_path / "o0", {})
+    import shutil
+
+    shutil.rmtree(raw_root)
+    _maude_snapshot(raw_root)
+    manifest: dict = {}
+    ev._build_maude(raw_root, tmp_path / "o", manifest)
+    lines = (tmp_path / "o" / "openfda_device_event" / "reports.jsonl").read_text().splitlines()
+    assert [json.loads(line)["report_number"] for line in lines] == [
+        "R-0-0",
+        "R-0-1",
+        "R-1-0",
+        "R-1-1",
+    ]
+    assert lines[0].startswith('{"device"') and "free text" not in lines[0]
+    view = manifest["openfda_device_event"]
+    assert (
+        view["sampling"]["reports"] == 4
+        and view["sampling"]["repeated_reports"] == 0
+        and view["sampling"]["pages"]
+        == ["maude_20230301_s00000.json", "maude_20230301_s00500.json"]
+    )
+    assert view["sampling"]["dropped_keys"] == [
+        "manufacturer_contact_f_name",
+        "manufacturer_contact_l_name",
+        "manufacturer_contact_phone_number",
+        "mdr_text",
+    ]
+    assert (
+        view["files"]["reports.jsonl"]["rows"] == 4
+        and view["source_snapshot"] == f"openfda_device_event/{ev.MAUDE_SNAPSHOT}"
+    )

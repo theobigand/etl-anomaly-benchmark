@@ -2057,6 +2057,13 @@
   },
   {
    "failed": null,
+   "group": "fda_maude",
+   "id": "openfda_device_event",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2314,6 +2321,7 @@
   ],
   "C6": [
    "clinicaltrials_gov",
+   "fda_maude",
    "georgia_procurement",
    "met_museum",
    "montreal_contracts",
@@ -2382,13 +2390,13 @@
    "structurally_valid": 31
   },
   "C6": {
-   "acquired": 11,
-   "discovered": 15,
-   "experiment_ready": 11,
-   "protocol_ready": 11,
-   "rights_verified": 11,
-   "scientifically_eligible": 11,
-   "structurally_valid": 11
+   "acquired": 12,
+   "discovered": 16,
+   "experiment_ready": 12,
+   "protocol_ready": 12,
+   "rights_verified": 12,
+   "scientifically_eligible": 12,
+   "structurally_valid": 12
   }
  }
 }

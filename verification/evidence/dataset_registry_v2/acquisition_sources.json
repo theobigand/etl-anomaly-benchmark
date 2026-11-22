@@ -8525,6 +8525,104 @@
    "stratum": "C2b",
    "upstream": "the data are the City's own public record; the TLC-specific page was not readable, so a TLC-only extra condition cannot be excluded and is recorded",
    "upstream_verified": true
+  },
+  {
+   "attribution": "Data provided by the U.S. Food and Drug Administration (https://open.fda.gov); device adverse event reports (MAUDE) received on 2023-03-01; accessed 2026-11-22",
+   "files": [
+    {
+     "name": "maude_20230301_s00000.json",
+     "observed": "2023-03-01",
+     "url": "https://api.fda.gov/device/event.json?search=date_received:[20230301+TO+20230301]&sort=report_number.exact:asc&limit=500&skip=0"
+    },
+    {
+     "name": "maude_20230301_s00500.json",
+     "observed": "2023-03-01",
+     "url": "https://api.fda.gov/device/event.json?search=date_received:[20230301+TO+20230301]&sort=report_number.exact:asc&limit=500&skip=500"
+    },
+    {
+     "name": "maude_20230301_s01000.json",
+     "observed": "2023-03-01",
+     "url": "https://api.fda.gov/device/event.json?search=date_received:[20230301+TO+20230301]&sort=report_number.exact:asc&limit=500&skip=1000"
+    },
+    {
+     "name": "maude_20230301_s01500.json",
+     "observed": "2023-03-01",
+     "url": "https://api.fda.gov/device/event.json?search=date_received:[20230301+TO+20230301]&sort=report_number.exact:asc&limit=500&skip=1500"
+    },
+    {
+     "name": "maude_20230301_s02000.json",
+     "observed": "2023-03-01",
+     "url": "https://api.fda.gov/device/event.json?search=date_received:[20230301+TO+20230301]&sort=report_number.exact:asc&limit=500&skip=2000"
+    },
+    {
+     "name": "maude_20230301_s02500.json",
+     "observed": "2023-03-01",
+     "url": "https://api.fda.gov/device/event.json?search=date_received:[20230301+TO+20230301]&sort=report_number.exact:asc&limit=500&skip=2500"
+    },
+    {
+     "name": "maude_20230301_s03000.json",
+     "observed": "2023-03-01",
+     "url": "https://api.fda.gov/device/event.json?search=date_received:[20230301+TO+20230301]&sort=report_number.exact:asc&limit=500&skip=3000"
+    },
+    {
+     "name": "maude_20230301_s03500.json",
+     "observed": "2023-03-01",
+     "url": "https://api.fda.gov/device/event.json?search=date_received:[20230301+TO+20230301]&sort=report_number.exact:asc&limit=500&skip=3500"
+    },
+    {
+     "name": "maude_20230301_s04000.json",
+     "observed": "2023-03-01",
+     "url": "https://api.fda.gov/device/event.json?search=date_received:[20230301+TO+20230301]&sort=report_number.exact:asc&limit=500&skip=4000"
+    },
+    {
+     "name": "maude_20230301_s04500.json",
+     "observed": "2023-03-01",
+     "url": "https://api.fda.gov/device/event.json?search=date_received:[20230301+TO+20230301]&sort=report_number.exact:asc&limit=500&skip=4500"
+    },
+    {
+     "name": "maude_20230301_s05000.json",
+     "observed": "2023-03-01",
+     "url": "https://api.fda.gov/device/event.json?search=date_received:[20230301+TO+20230301]&sort=report_number.exact:asc&limit=500&skip=5000"
+    },
+    {
+     "name": "maude_20230301_s05500.json",
+     "observed": "2023-03-01",
+     "url": "https://api.fda.gov/device/event.json?search=date_received:[20230301+TO+20230301]&sort=report_number.exact:asc&limit=500&skip=5500"
+    },
+    {
+     "name": "maude_20230301_s06000.json",
+     "observed": "2023-03-01",
+     "url": "https://api.fda.gov/device/event.json?search=date_received:[20230301+TO+20230301]&sort=report_number.exact:asc&limit=500&skip=6000"
+    },
+    {
+     "name": "maude_20230301_s06500.json",
+     "observed": "2023-03-01",
+     "url": "https://api.fda.gov/device/event.json?search=date_received:[20230301+TO+20230301]&sort=report_number.exact:asc&limit=500&skip=6500"
+    },
+    {
+     "name": "maude_20230301_s07000.json",
+     "observed": "2023-03-01",
+     "url": "https://api.fda.gov/device/event.json?search=date_received:[20230301+TO+20230301]&sort=report_number.exact:asc&limit=500&skip=7000"
+    }
+   ],
+   "hosts": [
+    "api.fda.gov"
+   ],
+   "id": "openfda_device_event",
+   "licence_class": "open",
+   "licence_location": "https://open.fda.gov/terms/",
+   "licence_text": "openFDA Terms of Service (read in a browser on 2026-11-22): unless otherwise noted the data are public domain under a CC0 1.0 dedication; works not covered are marked in the relevant documentation; attribution is requested, not required; access limits apply; use of the service constitutes acceptance of the terms, which contain no signature, indemnity or account. The GMDN-licensed fields (term code, name, definition) are excluded; the device event endpoint carries none",
+   "max_bytes": 10485760,
+   "method": "openFDA device/event API, every report received on 2023-03-01 (7,355 reports), sorted by the unique report number, fifteen pages of at most 500 (larger pages need an API key, which was not requested)",
+   "min_interval": 3.0,
+   "privacy": "manufacturer contact persons' names, telephone numbers and addresses and the free-text narratives are dropped in the view",
+   "publisher": "U.S. Food and Drug Administration (MAUDE device adverse event reports)",
+   "rate_limit": "fifteen requests, three seconds apart, descriptive user agent, no API key",
+   "redistribution": "CC0 for FDA data; raw files stay local",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "first party: FDA publishes the records it receives from manufacturers, importers, user facilities and the public; submitted narratives are dropped",
+   "upstream_verified": true
   }
  ]
 }

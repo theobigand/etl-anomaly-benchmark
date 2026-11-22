@@ -1475,6 +1475,52 @@
    "size": null,
    "source_url": "https://github.com/logpai/loghub",
    "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "openfda:device-event",
+   "licence": "openFDA Terms of Service: CC0 1.0 unless marked; attribution requested",
+   "name": "openFDA device adverse events (MAUDE)",
+   "next_step": "none; other days are the same group",
+   "notes": "limit above 500 per request needs an API key (not requested); the food and drug enforcement endpoints are shallower (depth 2) and the UDI endpoint carries GMDN fields (excluded)",
+   "publisher": "FDA",
+   "reason": "nested device reports",
+   "size": null,
+   "source_url": "https://open.fda.gov/apis/device/event/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C4",
+    "C6"
+   ],
+   "id": "lanl:cyber1",
+   "licence": "LANL waived all copyright and related rights (CC0-style statement on csr.lanl.gov/data/cyber1/); approved for public release LA-UR-15-23810",
+   "name": "LANL Comprehensive Multi-Source Cyber-Security Events",
+   "next_step": "owner action: the official download interface requires an email address and an intended-use statement; I will not submit personal details; once the owner provides the files or authorises the form, acquire complete time windows of auth, proc, dns and flows and keep redteam labels separate",
+   "notes": "58 days, 1.65 billion events, 12 GB compressed; real enterprise authentication, process, DNS and flow events; red-team labels are cybersecurity events, not ETL faults; the five files are one generating system",
+   "publisher": "Los Alamos National Laboratory",
+   "reason": "real enterprise event logs outside business-process mining",
+   "size": null,
+   "source_url": "https://csr.lanl.gov/data/cyber1/",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "lanl:unified-2017",
+   "licence": "LANL waived all copyright and related rights (statement on csr.lanl.gov/data/2017/); approved for public release LA-UR-17-20763",
+   "name": "LANL Unified Host and Network Data Set",
+   "next_step": "same access form as cyber1 (email and intended use); one provenance group with cyber1 (the same enterprise network); host events are flat JSON lines, so no C6 claim",
+   "notes": "about 90 days of Windows host events and network flows, deidentified",
+   "publisher": "Los Alamos National Laboratory",
+   "reason": "enterprise host and network events",
+   "size": null,
+   "source_url": "https://csr.lanl.gov/data/2017/",
+   "status": "permission_pending"
   }
  ],
  "date": "2026-11-21",

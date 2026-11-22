@@ -4690,6 +4690,26 @@
    "stratum": "C2b",
    "system": "nyc_yellow_taxi_fares",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "fda_maude",
+   "id": "openfda_device_event",
+   "licence_class": "open",
+   "protocols": "P-NEST on device adverse event reports (type, optional-path and structure faults)",
+   "publisher": "fda_maude",
+   "reason": "openFDA device adverse event reports (MAUDE): every one of the 7,355 reports received on 2023-03-01; depth 5, 71 keys of which 8 are optional, arrays of devices (22 reports with two), patients and product problems, a nested openfda annotation; manufacturer contact persons and free-text narratives dropped. Medical-device incident reporting by manufacturers, importers, user facilities and the public (FDA CDRH), a different reporting system from the drug adverse event database already represented, sharing only the publisher and the openFDA platform",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "openFDA Terms of Service: public domain, CC0 1.0 dedication unless otherwise marked; no GMDN fields in the device event endpoint; read in a browser on 2026-11-22",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "fda_maude_device_reports",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

@@ -166,6 +166,20 @@
    "C3": "ambient living sensors"
   }
  },
+ "fda_maude": {
+  "curator": "openfda",
+  "descriptors": {
+   "nesting": "depth 5, arrays of devices and patients, optional keys"
+  },
+  "domain": "medical device safety reporting",
+  "generating_system": "FDA MAUDE medical device adverse event reporting",
+  "note": "shares the publisher and the openFDA platform with the FAERS group; counted separately because the reporting program, reporters and schema differ",
+  "producer": "FDA CDRH with device manufacturers, importers and user facilities",
+  "schema_family": "openfda device event json",
+  "structure": {
+   "C6": "device report with device, patient and problem arrays"
+  }
+ },
  "fin_institute_nl": {
   "curator": "4tu",
   "domain": "banking process",

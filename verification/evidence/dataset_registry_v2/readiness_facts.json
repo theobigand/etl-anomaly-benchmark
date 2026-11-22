@@ -2105,6 +2105,23 @@
    "units": 4477,
    "view": "openalex"
   },
+  "openfda_device_event": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "one complete day of receipt (2023-03-01), not random",
+    "event types Malfunction (62 percent), Injury (37 percent) and Death (61 reports); a few reports with an empty event type are published states",
+    "optional fields: 8 of 71 keys are missing in some reports",
+    "reports can be revised later; the snapshot is dated 2026-11-22"
+   ],
+   "first_party": true,
+   "independent_group": "fda_maude",
+   "min_units": 1000,
+   "partitions": "hash of the report number 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 7355,
+   "view": "openfda_device_event"
+  },
   "openfda_drug_event": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [

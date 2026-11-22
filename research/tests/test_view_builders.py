@@ -286,6 +286,10 @@ def _tlc(root, tmp):
     ).to_csv(tev._tlc_dir(root), index=False)
 
 
+def _maude_case(root, tmp):
+    tev._maude_snapshot(root)
+
+
 CASES = {
     "surf": (_surf, ev._build_surf, ["zen_surf_lisa_slurm"], {}),
     "pbdb": (_pbdb, ev._build_pbdb, ["zen_pbdb"], {"PBDB_STRIDE": 2}),
@@ -299,6 +303,7 @@ CASES = {
     "pbdb_relational": (_pbdb_relational, ev._build_pbdb_relational, ["zen_pbdb_relational"], {"PBDB_STRIDE": 1}),  # noqa: E501
     "backblaze": (_backblaze, ev._build_backblaze, ["backblaze_drive_stats"], {"BACKBLAZE_DAYS": 2}),  # noqa: E501
     "tlc": (_tlc, ev._build_tlc, ["nyc_tlc_yellow"], {}),
+    "maude": (_maude_case, ev._build_maude, ["openfda_device_event"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),
     "metropt": (_metropt, ev._build_metropt, ["zen_metropt2"], {}),
     "openlibrary": (_openlibrary, ev._build_openlibrary, ["openlibrary_dump"], {"OPENLIBRARY_MODULO": 1}),  # noqa: E501

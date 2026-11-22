@@ -2447,6 +2447,75 @@ def _build_tlc(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+MAUDE_SNAPSHOT = "2026-11-22"
+MAUDE_DROP_PREFIX = "manufacturer_contact_"
+MAUDE_DROP = frozenset({"mdr_text"})
+
+
+def _keys(node: Any) -> set[str]:
+    """Every dictionary key at any depth of a nested record."""
+    if isinstance(node, dict):
+        return set(node) | {k for v in node.values() for k in _keys(v)}
+    if isinstance(node, list):
+        return {k for v in node for k in _keys(v)}
+    return set()
+
+
+def maude_view(pages: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], int, list[str]]:
+    """Device adverse event reports in report-number order, one per number, as nested records.
+
+    The manufacturer contact person's fields (every key that starts with ``manufacturer_contact_``)
+    and the free-text narratives (``mdr_text``) are removed at every depth. Returns the records,
+    the number of repeated report numbers that were skipped and the dropped key names.
+    """
+    unique: dict[str, dict[str, Any]] = {}
+    repeated = 0
+    for page in pages:
+        for record in page["results"]:
+            number = record["report_number"]
+            if number in unique:
+                repeated += 1
+            else:
+                unique[number] = record
+    contact = {
+        key
+        for record in unique.values()
+        for key in _keys(record)
+        if key.startswith(MAUDE_DROP_PREFIX)
+    }
+    drop = frozenset(contact) | MAUDE_DROP
+    view = nested_view(list(unique.values()), drop, lambda r: r["report_number"])
+    return view, repeated, sorted(drop)
+
+
+def _build_maude(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "openfda_device_event" / MAUDE_SNAPSHOT / "raw"
+    files = sorted(raw.glob("maude_*.json"))
+    if not files:
+        raise ViewError("no report page in the snapshot")
+    pages = [json.loads(path.read_text(encoding="utf-8")) for path in files]
+    view, repeated, dropped = maude_view(pages)
+    folder = out / "openfda_device_event"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "reports.jsonl"
+    target.write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in view))
+    _record(
+        manifest,
+        "openfda_device_event",
+        {"reports.jsonl": (target, len(view))},
+        dropped=["manufacturer contact person fields", "free-text narratives (mdr_text)"],
+        pseudonymised=[],
+        sampling={
+            "method": "every report received on one day (2023-03-01), sorted by report number, pages of 500",  # noqa: E501
+            "pages": [p.name for p in files],
+            "reports": len(view),
+            "repeated_reports": repeated,
+            "dropped_keys": dropped,
+        },
+        source_snapshot=f"openfda_device_event/{MAUDE_SNAPSHOT}",
+    )
+
+
 UNISG_SNAPSHOT = "2026-11-22"
 UNISG_LOG = "training_tenhertz_log_20230411-095748.txt"
 UNISG_HEAD = (
@@ -3253,6 +3322,7 @@ BUILD_STEPS = (
     _build_unisg,
     _build_backblaze,
     _build_tlc,
+    _build_maude,
     _build_flat,
     _build_series,
     _build_ukspend,

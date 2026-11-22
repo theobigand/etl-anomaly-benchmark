@@ -2803,6 +2803,63 @@
   "salt_label": "etl-benchmark-views-v1",
   "source_snapshot": "openalex_works/2026-11-21"
  },
+ "openfda_device_event": {
+  "dropped": [
+   "manufacturer contact person fields",
+   "free-text narratives (mdr_text)"
+  ],
+  "files": {
+   "reports.jsonl": {
+    "rows": 7355,
+    "sha256": "ffc0cb58f2c2eecff0a1a9e084377112b6ba243b0958e547ce2c2edddc691d42"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "dropped_keys": [
+    "manufacturer_contact_address_1",
+    "manufacturer_contact_address_2",
+    "manufacturer_contact_area_code",
+    "manufacturer_contact_city",
+    "manufacturer_contact_country",
+    "manufacturer_contact_exchange",
+    "manufacturer_contact_extension",
+    "manufacturer_contact_f_name",
+    "manufacturer_contact_l_name",
+    "manufacturer_contact_pcity",
+    "manufacturer_contact_pcountry",
+    "manufacturer_contact_phone_number",
+    "manufacturer_contact_plocal",
+    "manufacturer_contact_postal_code",
+    "manufacturer_contact_state",
+    "manufacturer_contact_t_name",
+    "manufacturer_contact_zip_code",
+    "manufacturer_contact_zip_ext",
+    "mdr_text"
+   ],
+   "method": "every report received on one day (2023-03-01), sorted by report number, pages of 500",
+   "pages": [
+    "maude_20230301_s00000.json",
+    "maude_20230301_s00500.json",
+    "maude_20230301_s01000.json",
+    "maude_20230301_s01500.json",
+    "maude_20230301_s02000.json",
+    "maude_20230301_s02500.json",
+    "maude_20230301_s03000.json",
+    "maude_20230301_s03500.json",
+    "maude_20230301_s04000.json",
+    "maude_20230301_s04500.json",
+    "maude_20230301_s05000.json",
+    "maude_20230301_s05500.json",
+    "maude_20230301_s06000.json",
+    "maude_20230301_s06500.json",
+    "maude_20230301_s07000.json"
+   ],
+   "repeated_reports": 0,
+   "reports": 7355
+  },
+  "source_snapshot": "openfda_device_event/2026-11-22"
+ },
  "openfda_drug_event": {
   "dropped": [
    "companynumb",
