@@ -987,3 +987,22 @@ Retail functions (`retail_view`, `_build_retail`): 194 of 202 = 96.0 percent. Ne
 not met for this block. The 42 non-killed mutants are keyword arguments without effect on the output (`kind` of single-key or tie-free sorts, `index`, `ignore_index`, `low_memory`-like
 settings, `encoding` on a UTF-8 system, `skiprows` and `na_values` whose effect is absorbed by the later dropping of unreadable timestamps and the NaN default) and one string replacement; none is approved
 as equivalent. Closing the gap needs either owner-reviewed equivalence decisions or restructuring these arguments away, and was not done in this round.
+
+## Update 17: mutation refactoring, CARE to Compare and the status of four requested candidates (2026-11-22)
+
+**Mutation.** The eight-kill deficit of the ten view functions was closed by behaviour-preserving refactoring and tests, with no change to policy or scope. Arguments without effect were removed:
+`na_values=["NaN"]` (a pandas default), `ignore_index` on concatenations whose index is never written, the `kind` argument of the multi-key sort in `bess_view` (pandas ignores it), the redundant `index` of a
+constructor, and a `replace("", NA)` that became a `mask`. The Kelmarsh header is now read as bytes and decoded as UTF-8, so it no longer depends on the locale. Tests were added for the header
+and the data rows passed to the view (skip rows, wanted columns), tie order of single-key sorts above the small-input threshold, the extraction limits, unreadable numbers, blank codes, human detection and read limits.
+Result on the case-sensitive volume, each function group run separately: 654 killed of 667 (98.1 percent) for the ten functions (the earlier denominator was 686 because removed arguments removed mutants);
+13 not killed: 10 survived, 2 suspicious, 1 timeout. The survivors are `index=None` of `to_csv` (equal to False), `kind="STABLE"` (pandas accepts any case), `rstrip(None)` and the 30 versus 31 header lines of the header scan, a string case of a
+folder name and a glob. None was approved as equivalent. Retail functions: 194 of 202 (96.0 percent). New CARE functions (`zip_local_member`, `care_series_view`, `_build_care`): 263 of 273 (96.3 percent). This is development evidence, not certification.
+
+**CARE to Compare (record 15846963, Fraunhofer IEE, CC BY-SA 4.0).** The record named in the request (14004425) is an enzyme-classification benchmark with protein and reaction tables and was rejected as irrelevant. The wind-turbine benchmark is 15846963: 95 datasets of ten-minute SCADA
+from 36 turbines of three farms; farm A is EDP open data (terms unreadable, not used); farms B and C are anonymised German offshore farms released by the authors. Five of the 15 datasets of farm B were fetched by HTTP range requests of their zip members (the server answers 206):
+279,733 rows, 63 average sensors, turbine status and the publisher's training and prediction phases; three of the five datasets lead to a labelled equipment fault (transformer cell temperature or bearing damage) and two are normal. The publisher's event file is kept as `events.csv`, apart from
+the series. These are real equipment-fault annotations from the operator's records; they are not ETL or source-data faults and are not used as injection labels. Group `fraunhofer_iee_care_wind_b` (C3). Provenance groups are now 125.
+
+**Candidate status.** NVD: the API works and returns deeply nested records, but the terms pages could not be read, so no rights were verified and nothing was acquired. OpenSky: the licence is a binding agreement (Swiss law, indemnity, publication copy to OpenSky, anonymisation of aircraft identifiers, deletion on completion);
+accepting it is an owner decision; the data are flight records and support C2a, not C2b or C4. St. Gallen smart factory: three records, one physical testbed and one provenance group, accessible and eligible as an instrumented testbed (not acquired in this round). DataCenter-Traces: aggregated views of the Alibaba, Google and Azure traces, not a new
+generating system, no event continuity. PBDB taxa: a second participation of the PBDB group (C5), not built.

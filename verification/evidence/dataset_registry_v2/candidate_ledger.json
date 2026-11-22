@@ -188,13 +188,13 @@
    "id": "zenodo:14564935",
    "licence": "cc-by-4.0 (Zenodo record)",
    "name": "DataCenter-Traces-Datasets (VM CPU readings)",
-   "next_step": "acquire, read provenance of the traces, build a series view",
-   "notes": "acquired; likely aggregates of other producers' public cloud traces (file names); not independent",
+   "next_step": "keep as derived views only if the originals are acquired under their own terms",
+   "notes": "aggregated 300 s views of the Alibaba 2018, Google 2019 and Azure traces; the lineage is the original traces, so it is not a new generating system; no event continuity",
    "publisher": "Zenodo depositor",
    "reason": "small (1 MB) data-centre VM telemetry",
    "size": null,
    "source_url": "",
-   "status": "acquired_rights_pending"
+   "status": "derived_aggregates"
   },
   {
    "categories": [
@@ -1180,7 +1180,7 @@
    "licence": "not read: the NVD terms pages are rendered client-side and returned no text to a plain request",
    "name": "NVD CVE records (API 2.0)",
    "next_step": "read the NVD and MITRE CVE terms literally in a browser, then acquire dated windows",
-   "notes": "the API works and returns deeply nested records",
+   "notes": "the API 2.0 works (994 records for 15 days of March 2022, 4.9 MB, nested descriptions, metrics, weaknesses, configurations, references); the NVD and CVE terms pages return no text to a plain request (client-side rendering); no literal terms were read, so nothing was acquired",
    "publisher": "NIST",
    "reason": "security vulnerability records with arrays and optional paths",
    "size": null,
@@ -1225,7 +1225,7 @@
    "licence": "cc-by-sa-4.0 (Fraunhofer IEE); Wind Farm A derives from EDP open data whose terms were unreadable",
    "name": "CARE to Compare, Wind Farm B",
    "next_step": "Wind Farm C (58 datasets, 79 to 99 MB each) is the same provenance group; Wind Farm A needs the EDP open data terms",
-   "notes": "record 14004425 named in the mission is the enzyme CARE benchmark, unrelated; the wind-turbine benchmark is 15846963",
+   "notes": "record 14004425 named in the mission is the enzyme CARE benchmark, unrelated; Wind Farm B only; Wind Farm C (58 datasets) is the same provenance group; Wind Farm A derives from EDP open data whose terms were unreadable (JavaScript page)",
    "publisher": "Fraunhofer IEE",
    "reason": "real equipment-fault labelled turbine SCADA",
    "size": null,
@@ -1246,6 +1246,38 @@
    "size": null,
    "source_url": "https://zenodo.org/records/14004425",
    "status": "structurally_unsuitable"
+  },
+  {
+   "categories": [
+    "C3",
+    "C4"
+   ],
+   "id": "unisg:smart-factory",
+   "licence": "cc-by-4.0 on three Zenodo records (7440490, 14441997, 14998532), all by R. Seiger at the University of St.Gallen",
+   "name": "Fischertechnik smart factory model, University of St.Gallen",
+   "next_step": "acquire 14441997 (10 Hz station messages as JSON lines, 175 MB; Camunda activities 1.4 MB) and build a station-state view; designate as an instrumented testbed, not production",
+   "notes": "the three records are one physical model factory and one provenance group; no deliberately introduced faults are documented; labels are activity annotations, not faults",
+   "publisher": "University of St.Gallen",
+   "reason": "actuator and sensor streams with workflow-engine events",
+   "size": null,
+   "source_url": "https://zenodo.org/records/14441997",
+   "status": "accessible_eligible"
+  },
+  {
+   "categories": [
+    "C2a",
+    "C3"
+   ],
+   "id": "opensky:flightlist-2020",
+   "licence": "research_only: the OpenSky Data License Agreement (LICENSE.txt in Zenodo record 7923702) grants a limited licence for non-profit research and education",
+   "name": "OpenSky Network flight lists 2019 to 2022",
+   "next_step": "owner decision: the agreement is binding under Swiss law, contains an indemnity, requires a copy of any publication to be sent to OpenSky, anonymisation of aircraft identifiers in disclosures and deletion of the data when the research ends; accept it, or leave the source out",
+   "notes": "flight records, not financial transactions or event sequences: C2a (high-cardinality categorical and times) is the supportable category; aircraft identifiers would be pseudonymised",
+   "publisher": "OpenSky Network association",
+   "reason": "ADS-B network flight list",
+   "size": null,
+   "source_url": "https://zenodo.org/records/7923702",
+   "status": "permission_pending"
   }
  ],
  "date": "2026-11-21",
