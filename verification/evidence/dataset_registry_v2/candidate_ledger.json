@@ -2100,7 +2100,7 @@
    "licence": "CC BY 4.0",
    "name": "World Atlas of Language Structures (WALS CLDF v2020.3)",
    "next_step": "acquired and ready under P-REL",
-   "notes": "Integrated as wals_cldf (7 tables, 7 FKs; 6 relations 0 orphans, languages.Country_ID 290/2,652 natural orphans; contributors omitted)",
+   "notes": "Integrated as wals_cldf (8 tables, 9 scalar FKs via normalized language_countries junction table and languages.Parent_ID -> languages.ID, 0 orphans across 162,796 checked references; read with keep_default_na=False to preserve ISO-2 Namibia code NA; contributors omitted)",
    "publisher": "Max Planck Institute for Evolutionary Anthropology",
    "reason": "Independent CC BY 4.0 non-GTFS linguistic typology relational schema",
    "size": "3,573 languages / 76,475 feature values across 7 tables",
@@ -2121,8 +2121,518 @@
    "size": "24,419 projects / 151,382 participations across 6 tables",
    "source_url": "https://cordis.europa.eu/data/cordis-HORIZONprojects-csv.zip",
    "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:8147768-telecom-kpis",
+   "licence": "CC BY 4.0",
+   "name": "Real Network Operator KPIs Time-Series Dataset (Zenodo 8147768)",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as zen_telecom_kpis (150,332 5-min KPI rows across 14 real operator series in data_real/; synthetic data_series/ excluded)",
+   "publisher": "Telecom Operator KPI Authors (Zenodo 8147768)",
+   "reason": "Independent CC BY 4.0 telecommunications network operator KPI telemetry",
+   "size": "150,332 rows across 14 series",
+   "source_url": "https://zenodo.org/api/records/8147768",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:17398331-dk-heating",
+   "licence": "CC BY 4.0",
+   "name": "Danish District Heating Smart-Meter DMA Time Series (Zenodo 17398331)",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as zen_dk_district_heating (105,192 hourly UTC rows across 3 Danish DMAs, 2016-2019, 10 joined meter/weather variables)",
+   "publisher": "Aalborg District Heating Utility / Zenodo 17398331 Authors",
+   "reason": "Independent CC BY 4.0 thermal district-heating distribution telemetry",
+   "size": "105,192 hourly rows across 3 DMAs",
+   "source_url": "https://zenodo.org/api/records/17398331",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:11045013-water-demand",
+   "licence": "CC BY 4.0",
+   "name": "Southern Germany Municipal Water Demand & Meteorology (Zenodo 11045013)",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as zen_water_demand (46,026 raw un-imputed hourly rows 2016-2021 preserving natural sensor NaNs; 5 spring-DST invalid local-hour rows dropped)",
+   "publisher": "Southern Germany Municipal Water Utility / Zenodo 11045013 Authors",
+   "reason": "Independent CC BY 4.0 potable water utility SCADA inflow telemetry",
+   "size": "46,026 hourly rows",
+   "source_url": "https://zenodo.org/api/records/11045013",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:3373812-dmsp-auroral",
+   "licence": "CC BY 4.0",
+   "name": "DMSP SSJ Auroral Boundary & Energy Flux Catalog 2010-2014 (Zenodo 3373812)",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as zen_dmsp_auroral (68,034 polar-pass events across 4,594 daily CSVs from DMSP F16, F17 and F18 spacecraft, 2010-2014)",
+   "publisher": "DMSP SSJ Auroral Boundary Authors (Zenodo 3373812)",
+   "reason": "Independent CC BY 4.0 space-instrument particle spectrometer time series",
+   "size": "68,034 orbital pass rows",
+   "source_url": "https://zenodo.org/api/records/3373812",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "ustreasury:dts-operating-cash",
+   "licence": "U.S. Federal Public Domain (17 U.S.C. 105)",
+   "name": "U.S. Treasury Daily Treasury Statement (Deposits & Withdrawals of Operating Cash)",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as us_treasury_dts (91,119 daily federal cash transaction lines across 2024-2025 from 19 API pages)",
+   "publisher": "U.S. Department of the Treasury / Fiscal Data",
+   "reason": "Independent public-domain sovereign cash-ledger numeric records",
+   "size": "91,119 rows",
+   "source_url": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/dts/deposits_withdrawals_operating_cash",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "fdic:bank-financials",
+   "licence": "U.S. Federal Public Domain (17 U.S.C. 105)",
+   "name": "FDIC Call Report Quarterly Bank Financials (2022-2025 Year-End)",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as fdic_bank_financials (18,402 balance-sheet and income filings across 4,798 salted-pseudonymised institutions, 2022-2025 Q4)",
+   "publisher": "Federal Deposit Insurance Corporation (FDIC)",
+   "reason": "Independent public-domain banking prudential call-report numeric records",
+   "size": "18,402 rows across 4,798 banks",
+   "source_url": "https://api.fdic.gov/banks/financials",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "sncf:tgv-regularite",
+   "licence": "ODbL 1.0 (SNCF Open Data; raw & view kept local)",
+   "name": "SNCF Monthly High-Speed TGV Route Regularity & Delay Causes (2018-2026)",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as sncf_tgv_regularite (12,907 station-pair month rows 2018-01..2026-09 x 18 cols; commentaire* dropped; stays local under ODbL)",
+   "publisher": "SNCF Voyageurs",
+   "reason": "Independent rail operations numeric traffic, delay-volume and delay-cause share records",
+   "size": "12,907 route-month rows",
+   "source_url": "https://ressources.data.sncf.com/api/explore/v2.1/catalog/datasets/regularite-mensuelle-tgv-aqst/exports/csv",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "dgccrf:fuel-prices",
+   "licence": "Licence Ouverte / Open Licence v2.0 (Etalab)",
+   "name": "DGCCRF French Retail Motor-Fuel Station Price Ledger",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as dgccrf_fuel_prices (32,699 melted active fuel price postings across 9,593 salted-pseudonymised stations and 6 fuel types; addresses and coordinates dropped)",
+   "publisher": "French Ministry of Economy / DGCCRF",
+   "reason": "Independent retail energy pricing transactional ledger",
+   "size": "32,699 active fuel price postings",
+   "source_url": "https://donnees.roulez-eco.fr/opendata/instantane",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "nara:federal-register",
+   "licence": "U.S. Federal Public Domain (17 U.S.C. 105 / 44 U.S.C. 1507)",
+   "name": "U.S. Federal Register 2025 Documents JSON Archive",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as us_federal_register (2,000 2025 regulatory documents across 20 pages, depth 6, 1,145 paths, 1,120 optional paths, redact_emails applied, 0 emails)",
+   "publisher": "Office of the Federal Register (NARA) & GPO",
+   "reason": "Independent public-domain multi-agency regulatory document nested JSON",
+   "size": "2,000 documents",
+   "source_url": "https://www.federalregister.gov/api/v1/documents.json",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "datacite:dataset-dois",
+   "licence": "CC0 1.0 Universal (DataCite Metadata Policy)",
+   "name": "DataCite 2025 Dataset DOI Registration Metadata JSON",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as datacite_dois (1,000 2025 dataset DOIs across 10 pages, depth 8, 91 paths, 45 optional paths; creators, contributors and descriptions stripped; shares domain scholarly metadata with Crossref/OpenAlex)",
+   "publisher": "DataCite e.V.",
+   "reason": "Independent CC0 research dataset identifier registration nested JSON",
+   "size": "1,000 dataset DOIs",
+   "source_url": "https://api.datacite.org/dois",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "gbif:cc0-occurrences",
+   "licence": "CC0 1.0 Universal (per-record license filter verified)",
+   "name": "GBIF CC0-Licensed Biodiversity Occurrence Records (2024)",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as gbif_cc0_occurrences (1,500 2024 CC0 records across 5 pages, depth 6, 189 paths, 85 optional paths; recordedBy/identifiedBy/verbatimLocality/media-creator PII stripped; 0 emails)",
+   "publisher": "Global Biodiversity Information Facility (GBIF)",
+   "reason": "Independent CC0 Darwin Core biodiversity occurrence nested JSON with extensions",
+   "size": "1,500 occurrence records",
+   "source_url": "https://api.gbif.org/v1/occurrence/search",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "ebi:chembl-molecules",
+   "licence": "CC BY-SA 3.0 (EMBL-EBI ChEMBL; raw & view kept local)",
+   "name": "EMBL-EBI ChEMBL_37 Bioactive Small-Molecule Hierarchy JSON",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as chembl_molecules (1,000 molecules across 10 pages, depth 5, 71 paths, 26 optional paths; 0 emails; stays local under CC BY-SA 3.0)",
+   "publisher": "EMBL-EBI ChEMBL Group",
+   "reason": "Independent chemical biology small-molecule hierarchy nested JSON",
+   "size": "1,000 molecules",
+   "source_url": "https://www.ebi.ac.uk/chembl/api/data/molecule.json",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "zenodo:18142339-florida-bridges",
+   "licence": "CC BY 4.0 & U.S. Federal Public Domain (FHWA NBI)",
+   "name": "Florida National Bridge Inventory Structural Inspection Records (Zenodo 18142339)",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as zen_florida_bridges (12,986 bridges x 33 cols; FHWA N not-applicable codes preserved as categorical tokens; bridge_id salted-pseudonymised; flat_readiness C2a=[])",
+   "publisher": "FHWA / Florida DOT (Zenodo 18142339)",
+   "reason": "Independent civil-infrastructure coded structural inspection mixed table",
+   "size": "12,986 bridges x 33 columns",
+   "source_url": "https://zenodo.org/api/records/18142339",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "wri:global-power-plants",
+   "licence": "CC BY 4.0",
+   "name": "World Resources Institute Global Power Plant Database v1.3.0",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as wri_power_plants (34,936 plants across 167 countries x 16 cols; name/owner/url/wepp_id and >50%-missing secondary-fuel/year cols dropped; flat_readiness C2a=[])",
+   "publisher": "World Resources Institute (WRI)",
+   "reason": "Independent global energy generation infrastructure mixed categorical/numeric registry",
+   "size": "34,936 power plants x 16 columns",
+   "source_url": "https://raw.githubusercontent.com/wri/global-power-plant-database/master/output_database/global_power_plant_database.csv",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "paris:urban-trees",
+   "licence": "ODbL 1.0 (Ville de Paris Open Data; raw & view kept local)",
+   "name": "City of Paris Municipal Urban Tree Inventory (Les arbres)",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as paris_urban_trees (25,000 idbase-ordered prefix rows of 220,279 municipal trees x 10 cols across 150 genera; addresses/coordinates/>50%-missing cols dropped; flat_readiness C2a=[]; approved replacement for stalled data.nasa.gov endpoint)",
+   "publisher": "Ville de Paris \u2014 Direction des Espaces Verts et de l Environnement (DEVE)",
+   "reason": "Independent municipal forestry mixed taxonomic/dendrometric inventory",
+   "size": "25,000 trees x 10 columns",
+   "source_url": "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/les-arbres/exports/csv",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "zenodo:21410580-moodle-events",
+   "licence": "CC BY 4.0",
+   "name": "Moodle Learning Management System Anonymised Clickstream Event Log (Zenodo 21410580)",
+   "next_step": "acquired and ready under P-SEQ",
+   "notes": "Integrated as zen_moodle_events (182,114 events across 8,940 user-day sessions, 147 salted-pseudonymised users and 54 English-mapped activity types; non-BP)",
+   "publisher": "Zenodo 21410580 Authors",
+   "reason": "Independent CC BY 4.0 educational LMS clickstream event sequences (non-BP)",
+   "size": "182,114 events / 8,940 user-day sessions",
+   "source_url": "https://zenodo.org/api/records/21410580",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "zenodo:21300266-norp-solar-bursts",
+   "licence": "CC BY 4.0",
+   "name": "NAOJ Nobeyama Radio Polarimeters Solar Radio Burst Catalog 1988-2025 (Zenodo 21300266)",
+   "next_step": "acquired and ready under P-SEQ",
+   "notes": "Integrated as zen_norp_solar_bursts (4,239 solar radio bursts across 326 active year-months 1988-2025; 124 UTC midnight-rollover bursts adjusted +1 day; non-BP)",
+   "publisher": "National Astronomical Observatory of Japan (NAOJ) / Zenodo 21300266",
+   "reason": "Independent CC BY 4.0 multi-frequency solar radio observatory burst event stream (non-BP)",
+   "size": "4,239 burst events / 326 year-months",
+   "source_url": "https://zenodo.org/api/records/21300266",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "zenodo:23039054-blazar-flares",
+   "licence": "CC BY 4.0",
+   "name": "Fermi-LAT Blazar Gamma-Ray Flare Point-Process Catalog (Zenodo 23039054)",
+   "next_step": "acquired and ready under P-SEQ",
+   "notes": "Integrated as zen_blazar_flares (3,598 gamma-ray flares across 565 blazar sources ordered by source_id and start_met; - parsed as NaN; non-BP)",
+   "publisher": "Fermi-LAT Blazar Flare Catalog Authors (Zenodo 23039054)",
+   "reason": "Independent CC BY 4.0 space-telescope extragalactic gamma-ray flare event sequences (non-BP)",
+   "size": "3,598 flare events / 565 blazar sources",
+   "source_url": "https://zenodo.org/api/records/23039054",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "zenodo:23399966-wind-fragility",
+   "licence": "CC BY 4.0",
+   "name": "Wind Fragility Database for Power Infrastructure Assets v2026.10 (Zenodo 23399966)",
+   "next_step": "acquired and ready under P-REL",
+   "notes": "Integrated as zen_wind_fragility (5 relational tables: 507 curves, 507 discretized curves, 1,988 parameters, 45,608 points, 52 sources = 48,662 rows; 0 orphans across all 5 FKs; author names/titles/notes dropped; non-GTFS)",
+   "publisher": "Wind Fragility Database Consortium (Zenodo 23399966)",
+   "reason": "Independent CC BY 4.0 structural engineering fragility curve relational schema (non-GTFS)",
+   "size": "48,662 rows across 5 tables",
+   "source_url": "https://zenodo.org/api/records/23399966",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "zenodo:22059347-terralore-chronicle",
+   "licence": "CC BY 4.0",
+   "name": "TerraLore Historical Chronicle Events and Sources Relational Archive v1.0.0 (Zenodo 22059347)",
+   "next_step": "acquired and ready under P-REL",
+   "notes": "Integrated as zen_terralore_chronicle (3 relational tables: 4,564 events, 3,922 sources, 8,268 event_sources junction rows = 16,754 rows; 0 orphans across 2 FKs; read with keep_default_na=False; summaries/titles/URLs dropped; non-GTFS)",
+   "publisher": "TerraLore Historical Chronicle Project (Zenodo 22059347)",
+   "reason": "Independent CC BY 4.0 historical chronicle event-source relational schema (non-GTFS)",
+   "size": "16,754 rows across 3 tables",
+   "source_url": "https://zenodo.org/api/records/22059347",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "noaa:ncei-storm-events-2024",
+   "licence": "U.S. Federal Public Domain (17 U.S.C. 105)",
+   "name": "NOAA NCEI Storm Events Database 2024 Relational Release (c20261119)",
+   "next_step": "acquired and ready under P-REL",
+   "notes": "Integrated as ncei_storm_events_2024 (3 relational tables: 69,802 details, 40,258 locations, 1,142 fatalities = 111,202 rows; 0 orphans across 3 FKs; narratives and fatality age/sex dropped; non-GTFS)",
+   "publisher": "NOAA National Centers for Environmental Information (NCEI)",
+   "reason": "Independent public-domain severe weather episode-event-location-fatality relational schema (non-GTFS)",
+   "size": "111,202 rows across 3 tables",
+   "source_url": "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "zenodo:23927968-ntsb-scrape",
+   "licence": "CC BY 4.0 wrapper over third-party scrape",
+   "name": "Aviation Safety Records Scrape (Zenodo 23927968)",
+   "next_step": "skip",
+   "notes": "Excluded: third-party compilation scraping NTSB/Wiki/FAA sources without clean first-party relational provenance",
+   "publisher": "Third-party compiler (Zenodo 23927968)",
+   "reason": "Third-party multi-source scrape",
+   "size": "unknown",
+   "source_url": "https://zenodo.org/api/records/23927968",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "zenodo:23936968-acai",
+   "licence": "CC BY 4.0",
+   "name": "ACAI Relational Benchmark (Zenodo 23936968)",
+   "next_step": "skip",
+   "notes": "Excluded: 1.54 GB archive exceeds bounded reproducible acquisition budget",
+   "publisher": "Zenodo 23936968 Authors",
+   "reason": "Archive size 1.54 GB exceeds acquisition budget",
+   "size": "1.54 GB",
+   "source_url": "https://zenodo.org/api/records/23936968",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:20818296-polish-electricity",
+   "licence": "CC BY 4.0",
+   "name": "Polish Household Electricity Series (Zenodo 20818296)",
+   "next_step": "skip",
+   "notes": "Excluded: single-column 300-row series below minimum experimental richness and unit count",
+   "publisher": "Zenodo 20818296 Authors",
+   "reason": "Too small (300 rows, 1 column)",
+   "size": "300 rows",
+   "source_url": "https://zenodo.org/api/records/20818296",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:24080064-aemo-nem",
+   "licence": "CC BY 4.0 wrapper over AEMO NEM market data",
+   "name": "AEMO NEM Electricity Market Compilation (Zenodo 24080064)",
+   "next_step": "skip",
+   "notes": "Excluded: third-party redistribution without verified upstream AEMO copyright waiver",
+   "publisher": "Third-party compiler (Zenodo 24080064)",
+   "reason": "Upstream AEMO licence terms not verified",
+   "size": "unknown",
+   "source_url": "https://zenodo.org/api/records/24080064",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "sec:edgar-financial-statements",
+   "licence": "U.S. Federal Public Domain",
+   "name": "SEC EDGAR Financial Statement Data Sets",
+   "next_step": "skip",
+   "notes": "Excluded: www.sec.gov returns HTTP 403 Forbidden to automated requests without bespoke registered User-Agent bypass",
+   "publisher": "U.S. Securities and Exchange Commission",
+   "reason": "HTTP 403 access block",
+   "size": "unknown",
+   "source_url": "https://www.sec.gov/dera/data/financial-statement-data-sets",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "fda:drugsatfda",
+   "licence": "U.S. Federal Public Domain",
+   "name": "FDA Drugs@FDA Relational Tables",
+   "next_step": "skip",
+   "notes": "Excluded: shares FDA CDER agency/platform lineage with already-integrated openfda_faers and fda_maude",
+   "publisher": "U.S. Food and Drug Administration",
+   "reason": "Shared producer/agency lineage with existing FDA groups",
+   "size": "unknown",
+   "source_url": "https://www.fda.gov/drugs/drug-approvals-and-databases/drugsfda-data-files",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "eurostat:sdmx",
+   "licence": "CC BY 4.0 (Eurostat copyright notice)",
+   "name": "Eurostat SDMX Energy & Economic Series",
+   "next_step": "skip",
+   "notes": "Excluded: low-frequency monthly/quarterly macroeconomic aggregates rather than high-cadence operational or physical telemetry",
+   "publisher": "Eurostat",
+   "reason": "Low-frequency aggregate series",
+   "size": "unknown",
+   "source_url": "https://ec.europa.eu/eurostat",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "energinet:dk",
+   "licence": "Energinet Open Data terms",
+   "name": "Energinet Energi Data Service API",
+   "next_step": "skip",
+   "notes": "Excluded: transmission-grid electricity series overlapping existing RTE eco2mix grid telemetry family",
+   "publisher": "Energinet",
+   "reason": "Mechanism overlap with existing electricity grid telemetry",
+   "size": "unknown",
+   "source_url": "https://api.energidataservice.dk",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "artic:chicago",
+   "licence": "CC0 1.0 (Art Institute of Chicago API)",
+   "name": "Art Institute of Chicago Artworks API",
+   "next_step": "skip",
+   "notes": "Excluded: museum collection JSON schema family already represented by met_museum_objects",
+   "publisher": "Art Institute of Chicago",
+   "reason": "Museum collection schema family already represented by Met Museum",
+   "size": "unknown",
+   "source_url": "https://api.artic.edu/api/v1/artworks",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "musicbrainz:api",
+   "licence": "CC0 1.0 (MusicBrainz core data)",
+   "name": "MusicBrainz REST API",
+   "next_step": "skip",
+   "notes": "Excluded: strict 1 req/sec rate limit and artist personal birth/death/alias fields",
+   "publisher": "MetaBrainz Foundation",
+   "reason": "Strict rate limit and living-person biographical fields",
+   "size": "unknown",
+   "source_url": "https://musicbrainz.org/ws/2/",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "nasa:donki",
+   "licence": "U.S. Federal Public Domain",
+   "name": "NASA DONKI Space Weather Notifications",
+   "next_step": "skip",
+   "notes": "Excluded: space/solar burst mechanism covered with higher completeness and 37-year span by NAOJ NoRP (zen_norp_solar_bursts)",
+   "publisher": "NASA CCMC",
+   "reason": "Covered by NAOJ NoRP 1988-2025 solar burst catalog",
+   "size": "unknown",
+   "source_url": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "zenodo:22028206-openrail",
+   "licence": "CC BY 4.0",
+   "name": "OpenRail Europe Network Dataset (Zenodo 22028206)",
+   "next_step": "skip",
+   "notes": "Excluded: single flat GeoPackage/CSV layer without multi-table foreign-key relationships required for C5",
+   "publisher": "Zenodo 22028206 Authors",
+   "reason": "Single table (does not satisfy C5 multi-table FK contract)",
+   "size": "unknown",
+   "source_url": "https://zenodo.org/api/records/22028206",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "nasa:meteorite-landings",
+   "licence": "U.S. Federal Public Domain",
+   "name": "NASA Meteorite Landings (data.nasa.gov gh4g-9sfh)",
+   "next_step": "skip",
+   "notes": "Excluded: data.nasa.gov Socrata endpoint stalled >3 minutes without response across two acquisition attempts; replaced by City of Paris Urban Tree Inventory (paris_urban_trees)",
+   "publisher": "NASA / The Meteoritical Society",
+   "reason": "Upstream endpoint hung >3 minutes twice during acquisition",
+   "size": "45,716 rows",
+   "source_url": "https://data.nasa.gov/resource/gh4g-9sfh.csv",
+   "status": "excluded"
   }
  ],
- "date": "2026-11-21",
+ "date": "2026-11-22",
  "note": "candidates discovered by Zenodo keyword search (queries recorded in the report) and by publisher probes; discovery is not acquisition; counts per status are in the report"
 }
