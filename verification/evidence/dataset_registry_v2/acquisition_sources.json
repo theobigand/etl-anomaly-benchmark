@@ -8687,7 +8687,7 @@
    "max_bytes": 41943040,
    "method": "the three official yearly extracts of 2023 (final annual data) and the publisher's data guide that decodes the coded values",
    "min_interval": 3.0,
-   "privacy": "police-recorded personal-injury collisions without names, registrations or addresses; casualty and driver age bands, sex and coarse location only",
+   "privacy": "Retained in published DfT OGL v3.0 form: collision_index, collision_year, collision date and minute-level time, public road coordinates/OSGR/accident LSOA, local authority and road/weather/severity codes, published integer age_of_driver and age_of_casualty alongside age bands, sex, IMD deciles, distance bandings, and generic_make_model (DfT itself omits names, vehicle registration marks, addresses, and withholds contributory factors). Removed by experimental view: collision_ref_no (police reference numbers), lsoa_of_driver, and lsoa_of_casualty (home-area LSOAs). Pseudonymised: none. Transformed or generalised by view: none. Residual privacy considerations: public date/time, accident coordinates/LSOA, vehicle attributes, and published integer ages/sex retain residual linkage risk against contemporaneous police or news reports.",
    "publisher": "UK Department for Transport (road safety statistics team)",
    "rate_limit": "four downloads, three seconds apart, descriptive user agent",
    "redistribution": "OGL v3.0 with attribution; raw files stay local",
@@ -8811,7 +8811,7 @@
     {
      "length": 25165824,
      "name": "stub_meta_history_head.xml.gz",
-     "observed": "2003-2026",
+     "observed": "2001-2026",
      "start": 0,
      "url": "https://dumps.wikimedia.org/simplewiki/20261101/simplewiki-20261101-stub-meta-history.xml.gz"
     }
@@ -9209,7 +9209,6 @@
    "min_interval": 2.0,
    "privacy": "any player or match identifiers are replaced by salted hashes and personal labels dropped in the view",
    "publisher": "Zenodo record 11060884 authors",
-   "rate_limit": "single range request, descriptive user agent",
    "ranges": [
     {
      "length": 4194304,
@@ -9219,6 +9218,7 @@
      "url": "https://zenodo.org/api/records/11060884/files/aoe_interaction_logs_in_XES_format.zip/content"
     }
    ],
+   "rate_limit": "single range request, descriptive user agent",
    "redistribution": "CC BY 4.0; raw file stays local",
    "retries": 2,
    "stratum": "C4",
@@ -9260,7 +9260,7 @@
    "id": "uk_charity_register",
    "licence_class": "open",
    "licence_location": "https://www.gov.uk/government/organisations/charity-commission",
-   "licence_text": "CCEW register-of-charities full download page (Wayback 20241010120240id_) and GOV.UK Charity Commission page (read 2026-11-22): 'All content is available under the Open Government Licence v3.0, except where otherwise stated © Crown copyright'; data.gov.uk register-of-charities metadata specifies license_id uk-ogl",
+   "licence_text": "CCEW register-of-charities full download page (Wayback 20241010120240id_) and GOV.UK Charity Commission page (read 2026-11-22): 'All content is available under the Open Government Licence v3.0, except where otherwise stated \u00a9 Crown copyright'; data.gov.uk register-of-charities metadata specifies license_id uk-ogl",
    "max_bytes": 62914560,
    "method": "five non-personal bulk tab-separated extract archives from CCEW (charity, annual_return_history, classification, area_of_operation, event_history); charity_trustee is strictly excluded",
    "min_interval": 2.0,

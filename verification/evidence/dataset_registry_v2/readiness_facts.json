@@ -195,6 +195,38 @@
    "units": 1050,
    "view": "4tu_sepsis"
   },
+  "ademe_dpe_existant": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "50,000 DPE certificates across five fixed 2024 dates (10,000 per date), 21 mixed categorical and numeric columns",
+    "missing year of construction (42.2 percent) and heating installation type (27.1 percent) are published registry states",
+    "BAN/RNB/address fields omitted at fetch and numero_dpe replaced by a salted hash"
+   ],
+   "first_party": true,
+   "independent_group": "ademe_dpe",
+   "min_units": 500,
+   "partitions": "hash of numero_dpe 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 50000,
+   "view": "ademe_dpe_existant"
+  },
+  "azure_packing_2020": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "deterministic 1-in-100 tenant slice (tenantId % 100 == 0) limited to multi-VM tenants (6,086 tenants, 38,995 requests)",
+    "fractional relative starttime/endtime (NULL endtime indicates active or post-horizon VMs; negative starttime indicates pre-window VMs)",
+    "publisher anonymised all tenant and VM identifiers"
+   ],
+   "first_party": true,
+   "independent_group": "microsoft_azure_compute",
+   "min_units": 1000,
+   "partitions": "hash of tenant_id 70/15/15",
+   "privacy": "not_needed",
+   "protocol_id": "P-SEQ",
+   "units": 6086,
+   "view": "azure_packing_2020"
+  },
   "backblaze_drive_stats": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -298,7 +330,8 @@
     "complete official 2023 release, no sampling; contributory factors are withheld by the publisher",
     "official -1 codes (data missing or out of range) are published states and cover 6.1 percent of collision, 8.7 percent of vehicle and 7.4 percent of casualty cells",
     "severity adjustment variables are model-derived by the publisher and are part of the baseline",
-    "collisions, vehicles and casualties are one generating system and count once"
+    "collisions, vehicles and casualties are one generating system and count once",
+    "experimental view drops collision_ref_no, lsoa_of_driver and lsoa_of_casualty while retaining published accident coordinates/OSGR/LSOA and integer driver/casualty ages verbatim without pseudonymisation"
    ],
    "first_party": true,
    "independent_group": "dft_stats19",
@@ -308,6 +341,22 @@
    "protocol_id": "P-TAB",
    "units": 104258,
    "view": "dft_stats19_2023"
+  },
+  "dgal_alimconfiance": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete published Alim'Confiance export of 71,228 sanitary inspections across 16 coded/numeric columns",
+    "missing follow-up action type_suite (29.4 percent) reflects inspections without enforcement follow-up",
+    "establishment names, SIRET, approval numbers, addresses and coordinates dropped; numero_inspection pseudonymised"
+   ],
+   "first_party": true,
+   "independent_group": "dgal_alimconfiance",
+   "min_units": 500,
+   "partitions": "hash of numero_inspection 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 71228,
+   "view": "dgal_alimconfiance"
   },
   "dgfip_dvf": {
    "anomaly_origin": "controlled_injection",
@@ -324,6 +373,32 @@
    "protocol_id": "P-TAB",
    "units": 75985,
    "view": "dgfip_dvf"
+  },
+  "dwd_hourly_climate": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "twelve strided active German synoptic stations ending 2025-12-31 filtered to eight years (2018-2025)",
+    "-999 missing sentinels replaced by NaN (1,679 temperature and 1,978 relative humidity readings); quality codes kept",
+    "synoptic diurnal and annual temperature cycles are baseline dynamics"
+   ],
+   "first_party": true,
+   "independent_group": "dwd_germany",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 per station",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point, contextual and collective anomalies",
+    "level shift, sensor drift and trend over weeks to years",
+    "missing interval and delayed arrival",
+    "seasonal deviation and inter-annual shift across eight annual cycles"
+   ],
+   "temporal_span": "eight years hourly (2018-01-01 to 2025-12-31)",
+   "units": 838605,
+   "unsupported_fault_mechanisms": [
+    "sub-hourly high-frequency oscillations"
+   ],
+   "view": "dwd_hourly_climate"
   },
   "ea_hydrology_flow": {
    "anomaly_origin": "controlled_injection",
@@ -1394,6 +1469,32 @@
    "units": 235795,
    "view": "flat_uci_967_C2a"
   },
+  "gfz_kp_index": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete published three-hourly geomagnetic Kp and ap series (1932-01-01 to 2026-11-21), strictly monotonic 3-hour steps",
+    "geomagnetic storms and 11-year solar-cycle extremes are physical baseline dynamics, not injected faults",
+    "recent tail contains 168 preliminary rows (D=0) alongside 277,104 definitive rows (D=1)"
+   ],
+   "first_party": true,
+   "independent_group": "gfz_potsdam_kp",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on UTC timestamp",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point, contextual and collective anomalies",
+    "level shift, secular drift and multi-decade regime shift",
+    "missing interval and timestamp permutation",
+    "solar-cycle seasonality and variance change"
+   ],
+   "temporal_span": "94 years three-hourly (1932-01-01 to 2026-11-21)",
+   "units": 277272,
+   "unsupported_fault_mechanisms": [
+    "sub-three-hour transient glitches"
+   ],
+   "view": "gfz_kp_index"
+  },
   "grouplens_movielens": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -2217,6 +2318,22 @@
    "units": 19269,
    "view": "openlibrary_dump"
   },
+  "osv_go_advisories": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "all 4,820 GO-* entries in Go/all.zip (non-GO prefixes excluded for clear CC BY 4.0 provenance)",
+    "depth 9 with 37 paths and 23 optional paths (database_specific, severity, withdrawn, related, ecosystems)",
+    "credits field dropped and strings scanned to redact e-mail addresses"
+   ],
+   "first_party": true,
+   "independent_group": "osv_go",
+   "min_units": 1000,
+   "partitions": "hash of GO advisory id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 4820,
+   "view": "osv_go_advisories"
+  },
   "physionet_eicu_demo": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -2278,6 +2395,31 @@
    "protocol_id": "P-TS",
    "units": 343682,
    "view": "panels"
+  },
+  "rte_eco2mix_national": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "four complete calendar years (2020-2023) of French definitive half-hourly transmission grid telemetry",
+    "forecast-only quarter-hour rows without generation/consumption measurements dropped; eight spring-DST duplicate UTC pairs deduplicated",
+    "COVID-19 2020 lockdown demand dip and 2022 nuclear availability deficit are real historical baseline regimes"
+   ],
+   "first_party": true,
+   "independent_group": "rte_france_grid",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on UTC timestamp",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point, contextual and collective anomalies across 32 correlated generation/load/exchange series",
+    "level shift, seasonal deviation across four annual cycles and missing interval",
+    "cross-channel physical inconsistency and unit/sign corruption"
+   ],
+   "temporal_span": "four years half-hourly (2020-01-01 to 2023-12-31)",
+   "units": 70120,
+   "unsupported_fault_mechanisms": [
+    "sub-half-hourly grid frequency transients"
+   ],
+   "view": "rte_eco2mix_national"
   },
   "slurm_ccin2p3": {
    "anomaly_origin": "controlled_injection",
@@ -2585,6 +2727,22 @@
    "units": 541909,
    "view": "uci_online_retail"
   },
+  "uk_charity_register": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "deterministic 1-in-20 slice on organisation_number across five non-trustee tables (19,952 charities and 214,580 linked child rows)",
+    "read with QUOTE_NONE to avoid unescaped-quote line swallowing; 0 orphans across all 4 foreign keys",
+    "charity_trustee extract excluded; names, contacts, addresses, websites and free-text activities dropped"
+   ],
+   "first_party": true,
+   "independent_group": "uk_charity_commission",
+   "min_units": 1000,
+   "partitions": "hash of organisation_number 70/15/15 keeping linked annual returns, areas, classifications and events with their charity",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 19952,
+   "view": "uk_charity_register"
+  },
   "ukspend_mhra": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -2616,6 +2774,22 @@
    "protocol_id": "P-TAB",
    "units": 3477,
    "view": "ukspend"
+  },
+  "uniprot_kb_reviewed": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "250 reviewed Swiss-Prot entries per organism across six model organisms (1,500 unique accessions)",
+    "depth 11 with 408 distinct paths and 370 optional paths (comments, features, geneLocations, cross-references)",
+    "literature references and raw sequence object dropped in the view"
+   ],
+   "first_party": true,
+   "independent_group": "uniprot_kb",
+   "min_units": 1000,
+   "partitions": "hash of primaryAccession 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 1500,
+   "view": "uniprot_kb_reviewed"
   },
   "usda_fdc_sr_legacy": {
    "anomaly_origin": "controlled_injection",
@@ -2728,6 +2902,22 @@
    "units": 45141,
    "view": "zen_aegis_vehicle"
   },
+  "zen_aoe_interactions": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "4 MiB compressed zip prefix containing 2,881 complete gameplay action sequences (290,046 events)",
+    "case_id, player_id and match_id replaced by salted hashes in the view",
+    "online real-time strategy game interaction log (distinct from business-process execution)"
+   ],
+   "first_party": true,
+   "independent_group": "aoe_gameplay",
+   "min_units": 1000,
+   "partitions": "hash of case_id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 2881,
+   "view": "zen_aoe_interactions"
+  },
   "zen_bess": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -2797,6 +2987,22 @@
    "units": 1000000,
    "view": "zen_clue_lds"
   },
+  "zen_ev_charging": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete Dataset1_charging_reports log (35,377 sessions across 267 users at 12 residential sites)",
+    "38 open sessions without plugout_time or connection_hours are natural incomplete records",
+    "user_id and session_id replaced by salted hashes in the view"
+   ],
+   "first_party": true,
+   "independent_group": "ntnu_ev_charging",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on plugin_time",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 35377,
+   "view": "zen_ev_charging"
+  },
   "zen_fdata_fugaku": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -2812,6 +3018,22 @@
    "protocol_id": "P-TAB",
    "units": 116977,
    "view": "zen_fdata_fugaku"
+  },
+  "zen_japan_buildings": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete seven-table archaeological building relational database (1,014 buildings, 346 sites, 279 designers, 708 sources)",
+    "0 orphans across all 6 foreign-key relations (optional archaeological_evidence_site_id has 88 populated references)",
+    "individual designer names/affiliations, source author strings, addresses and free-text notes dropped"
+   ],
+   "first_party": true,
+   "independent_group": "japan_reconstructed_buildings",
+   "min_units": 1000,
+   "partitions": "hash of building_id 70/15/15 preserving referenced sites, designers and sources",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 1014,
+   "view": "zen_japan_buildings"
   },
   "zen_kelmarsh": {
    "anomaly_origin": "controlled_injection",
@@ -2945,227 +3167,6 @@
     "contextual faults that need weeks of history"
    ],
    "view": "zen_unisg_factory"
-  },
-  "osv_go_advisories": {
-   "anomaly_origin": "controlled_injection",
-   "baseline_properties": [
-    "all 4,820 GO-* entries in Go/all.zip (non-GO prefixes excluded for clear CC BY 4.0 provenance)",
-    "depth 9 with 37 paths and 23 optional paths (database_specific, severity, withdrawn, related, ecosystems)",
-    "credits field dropped and strings scanned to redact e-mail addresses"
-   ],
-   "first_party": true,
-   "independent_group": "osv_go",
-   "min_units": 1000,
-   "partitions": "hash of GO advisory id 70/15/15",
-   "privacy": "handled",
-   "protocol_id": "P-NEST",
-   "units": 4820,
-   "view": "osv_go_advisories"
-  },
-  "uniprot_kb_reviewed": {
-   "anomaly_origin": "controlled_injection",
-   "baseline_properties": [
-    "250 reviewed Swiss-Prot entries per organism across six model organisms (1,500 unique accessions)",
-    "depth 11 with 408 distinct paths and 370 optional paths (comments, features, geneLocations, cross-references)",
-    "literature references and raw sequence object dropped in the view"
-   ],
-   "first_party": true,
-   "independent_group": "uniprot_kb",
-   "min_units": 1000,
-   "partitions": "hash of primaryAccession 70/15/15",
-   "privacy": "handled",
-   "protocol_id": "P-NEST",
-   "units": 1500,
-   "view": "uniprot_kb_reviewed"
-  },
-  "dwd_hourly_climate": {
-   "anomaly_origin": "controlled_injection",
-   "baseline_properties": [
-    "twelve strided active German synoptic stations ending 2025-12-31 filtered to eight years (2018-2025)",
-    "-999 missing sentinels replaced by NaN (1,679 temperature and 1,978 relative humidity readings); quality codes kept",
-    "synoptic diurnal and annual temperature cycles are baseline dynamics"
-   ],
-   "first_party": true,
-   "independent_group": "dwd_germany",
-   "min_units": 1000,
-   "partitions": "chronological 70/15/15 per station",
-   "privacy": "not_needed",
-   "protocol_id": "P-TS",
-   "supported_fault_mechanisms": [
-    "point, contextual and collective anomalies",
-    "level shift, sensor drift and trend over weeks to years",
-    "missing interval and delayed arrival",
-    "seasonal deviation and inter-annual shift across eight annual cycles"
-   ],
-   "temporal_span": "eight years hourly (2018-01-01 to 2025-12-31)",
-   "units": 838605,
-   "unsupported_fault_mechanisms": [
-    "sub-hourly high-frequency oscillations"
-   ],
-   "view": "dwd_hourly_climate"
-  },
-  "gfz_kp_index": {
-   "anomaly_origin": "controlled_injection",
-   "baseline_properties": [
-    "complete published three-hourly geomagnetic Kp and ap series (1932-01-01 to 2026-11-21), strictly monotonic 3-hour steps",
-    "geomagnetic storms and 11-year solar-cycle extremes are physical baseline dynamics, not injected faults",
-    "recent tail contains 168 preliminary rows (D=0) alongside 277,104 definitive rows (D=1)"
-   ],
-   "first_party": true,
-   "independent_group": "gfz_potsdam_kp",
-   "min_units": 1000,
-   "partitions": "chronological 70/15/15 on UTC timestamp",
-   "privacy": "not_needed",
-   "protocol_id": "P-TS",
-   "supported_fault_mechanisms": [
-    "point, contextual and collective anomalies",
-    "level shift, secular drift and multi-decade regime shift",
-    "missing interval and timestamp permutation",
-    "solar-cycle seasonality and variance change"
-   ],
-   "temporal_span": "94 years three-hourly (1932-01-01 to 2026-11-21)",
-   "units": 277272,
-   "unsupported_fault_mechanisms": [
-    "sub-three-hour transient glitches"
-   ],
-   "view": "gfz_kp_index"
-  },
-  "rte_eco2mix_national": {
-   "anomaly_origin": "controlled_injection",
-   "baseline_properties": [
-    "four complete calendar years (2020-2023) of French definitive half-hourly transmission grid telemetry",
-    "forecast-only quarter-hour rows without generation/consumption measurements dropped; eight spring-DST duplicate UTC pairs deduplicated",
-    "COVID-19 2020 lockdown demand dip and 2022 nuclear availability deficit are real historical baseline regimes"
-   ],
-   "first_party": true,
-   "independent_group": "rte_france_grid",
-   "min_units": 1000,
-   "partitions": "chronological 70/15/15 on UTC timestamp",
-   "privacy": "not_needed",
-   "protocol_id": "P-TS",
-   "supported_fault_mechanisms": [
-    "point, contextual and collective anomalies across 32 correlated generation/load/exchange series",
-    "level shift, seasonal deviation across four annual cycles and missing interval",
-    "cross-channel physical inconsistency and unit/sign corruption"
-   ],
-   "temporal_span": "four years half-hourly (2020-01-01 to 2023-12-31)",
-   "units": 70120,
-   "unsupported_fault_mechanisms": [
-    "sub-half-hourly grid frequency transients"
-   ],
-   "view": "rte_eco2mix_national"
-  },
-  "ademe_dpe_existant": {
-   "anomaly_origin": "controlled_injection",
-   "baseline_properties": [
-    "50,000 DPE certificates across five fixed 2024 dates (10,000 per date), 21 mixed categorical and numeric columns",
-    "missing year of construction (42.2 percent) and heating installation type (27.1 percent) are published registry states",
-    "BAN/RNB/address fields omitted at fetch and numero_dpe replaced by a salted hash"
-   ],
-   "first_party": true,
-   "independent_group": "ademe_dpe",
-   "min_units": 500,
-   "partitions": "hash of numero_dpe 70/15/15",
-   "privacy": "handled",
-   "protocol_id": "P-TAB",
-   "units": 50000,
-   "view": "ademe_dpe_existant"
-  },
-  "dgal_alimconfiance": {
-   "anomaly_origin": "controlled_injection",
-   "baseline_properties": [
-    "complete published Alim'Confiance export of 71,228 sanitary inspections across 16 coded/numeric columns",
-    "missing follow-up action type_suite (29.4 percent) reflects inspections without enforcement follow-up",
-    "establishment names, SIRET, approval numbers, addresses and coordinates dropped; numero_inspection pseudonymised"
-   ],
-   "first_party": true,
-   "independent_group": "dgal_alimconfiance",
-   "min_units": 500,
-   "partitions": "hash of numero_inspection 70/15/15",
-   "privacy": "handled",
-   "protocol_id": "P-TAB",
-   "units": 71228,
-   "view": "dgal_alimconfiance"
-  },
-  "azure_packing_2020": {
-   "anomaly_origin": "controlled_injection",
-   "baseline_properties": [
-    "deterministic 1-in-100 tenant slice (tenantId % 100 == 0) limited to multi-VM tenants (6,086 tenants, 38,995 requests)",
-    "fractional relative starttime/endtime (NULL endtime indicates active or post-horizon VMs; negative starttime indicates pre-window VMs)",
-    "publisher anonymised all tenant and VM identifiers"
-   ],
-   "first_party": true,
-   "independent_group": "microsoft_azure_compute",
-   "min_units": 1000,
-   "partitions": "hash of tenant_id 70/15/15",
-   "privacy": "not_needed",
-   "protocol_id": "P-SEQ",
-   "units": 6086,
-   "view": "azure_packing_2020"
-  },
-  "zen_aoe_interactions": {
-   "anomaly_origin": "controlled_injection",
-   "baseline_properties": [
-    "4 MiB compressed zip prefix containing 2,881 complete gameplay action sequences (290,046 events)",
-    "case_id, player_id and match_id replaced by salted hashes in the view",
-    "online real-time strategy game interaction log (distinct from business-process execution)"
-   ],
-   "first_party": true,
-   "independent_group": "aoe_gameplay",
-   "min_units": 1000,
-   "partitions": "hash of case_id 70/15/15",
-   "privacy": "handled",
-   "protocol_id": "P-SEQ",
-   "units": 2881,
-   "view": "zen_aoe_interactions"
-  },
-  "zen_ev_charging": {
-   "anomaly_origin": "controlled_injection",
-   "baseline_properties": [
-    "complete Dataset1_charging_reports log (35,377 sessions across 267 users at 12 residential sites)",
-    "38 open sessions without plugout_time or connection_hours are natural incomplete records",
-    "user_id and session_id replaced by salted hashes in the view"
-   ],
-   "first_party": true,
-   "independent_group": "ntnu_ev_charging",
-   "min_units": 1000,
-   "partitions": "chronological 70/15/15 on plugin_time",
-   "privacy": "handled",
-   "protocol_id": "P-TAB",
-   "units": 35377,
-   "view": "zen_ev_charging"
-  },
-  "uk_charity_register": {
-   "anomaly_origin": "controlled_injection",
-   "baseline_properties": [
-    "deterministic 1-in-20 slice on organisation_number across five non-trustee tables (19,952 charities and 214,580 linked child rows)",
-    "read with QUOTE_NONE to avoid unescaped-quote line swallowing; 0 orphans across all 4 foreign keys",
-    "charity_trustee extract excluded; names, contacts, addresses, websites and free-text activities dropped"
-   ],
-   "first_party": true,
-   "independent_group": "uk_charity_commission",
-   "min_units": 1000,
-   "partitions": "hash of organisation_number 70/15/15 keeping linked annual returns, areas, classifications and events with their charity",
-   "privacy": "handled",
-   "protocol_id": "P-REL",
-   "units": 19952,
-   "view": "uk_charity_register"
-  },
-  "zen_japan_buildings": {
-   "anomaly_origin": "controlled_injection",
-   "baseline_properties": [
-    "complete seven-table archaeological building relational database (1,014 buildings, 346 sites, 279 designers, 708 sources)",
-    "0 orphans across all 6 foreign-key relations (optional archaeological_evidence_site_id has 88 populated references)",
-    "individual designer names/affiliations, source author strings, addresses and free-text notes dropped"
-   ],
-   "first_party": true,
-   "independent_group": "japan_reconstructed_buildings",
-   "min_units": 1000,
-   "partitions": "hash of building_id 70/15/15 preserving referenced sites, designers and sources",
-   "privacy": "handled",
-   "protocol_id": "P-REL",
-   "units": 1014,
-   "view": "zen_japan_buildings"
   }
  }
 }
