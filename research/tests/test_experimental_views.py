@@ -4327,3 +4327,24 @@ def test_the_maude_builder_writes_sorted_json_lines_and_records_what_it_dropped(
         view["files"]["reports.jsonl"]["rows"] == 4
         and view["source_snapshot"] == f"openfda_device_event/{ev.MAUDE_SNAPSHOT}"
     )
+
+
+def test_usda_spec_declares_keys_for_every_relation_and_uses_its_own_snapshot():
+    spec = ev.TABLE_SETS["usda_fdc_sr_legacy"]
+    assert spec["snapshot"] == "2026-11-22" and spec["archive"]["prefix"].endswith(
+        "sr_legacy_food_csv_2018-04/"
+    )
+    for child, child_key, parent, parent_key in spec["relations"]:
+        assert (
+            child_key in spec["tables"][child]["keep"]
+            and parent_key in spec["tables"][parent]["keep"]
+        )
+    assert set(spec["tables"]) == {
+        "food",
+        "food_category",
+        "food_nutrient",
+        "nutrient",
+        "food_nutrient_derivation",
+        "food_portion",
+        "measure_unit",
+    }

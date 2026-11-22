@@ -1458,6 +1458,20 @@
    "C4": "business process execution"
   }
  },
+ "usda_fdc": {
+  "curator": "usda ars",
+  "descriptors": {
+   "relational_topology": "measurement fact table joining foods and nutrients with derivation and portion dimensions; 6 relations, 0 orphans, complete release"
+  },
+  "domain": "food composition and nutrition",
+  "generating_system": "USDA Nutrient Data Laboratory analyses and compilation (SR Legacy)",
+  "note": "distinct from Open Food Facts (crowdsourced labels) and from procurement data",
+  "producer": "USDA Agricultural Research Service",
+  "schema_family": "nutrient measurement fact tables",
+  "structure": {
+   "C5": "food, nutrient measurement, derivation and portion tables"
+  }
+ },
  "vif_aegis": {
   "curator": "zenodo",
   "domain": "automotive",

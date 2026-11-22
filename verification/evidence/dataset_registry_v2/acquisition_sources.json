@@ -8623,6 +8623,34 @@
    "stratum": "C6",
    "upstream": "first party: FDA publishes the records it receives from manufacturers, importers, user facilities and the public; submitted narratives are dropped",
    "upstream_verified": true
+  },
+  {
+   "attribution": "U.S. Department of Agriculture, Agricultural Research Service, Beltsville Human Nutrition Research Center. FoodData Central, SR Legacy (April 2018 release). https://fdc.nal.usda.gov/",
+   "files": [
+    {
+     "name": "sr_legacy_food_csv_2018-04.zip",
+     "observed": "2018-04",
+     "url": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+    }
+   ],
+   "hosts": [
+    "fdc.nal.usda.gov"
+   ],
+   "id": "usda_fdc_sr_legacy",
+   "licence_class": "open",
+   "licence_location": "https://fdc.nal.usda.gov/",
+   "licence_text": "FoodData Central home page, Licensing (read in a browser on 2026-11-22): 'USDA FoodData Central data are in the public domain and they are not copyrighted. They are published under CC0 1.0 Universal'; no permission is needed; the source is requested to be listed",
+   "max_bytes": 20971520,
+   "method": "the frozen SR Legacy CSV release of April 2018 (6.7 MB archive)",
+   "min_interval": 3.0,
+   "privacy": "laboratory food composition data; no personal data",
+   "publisher": "USDA Agricultural Research Service, Beltsville Human Nutrition Research Center (FoodData Central)",
+   "rate_limit": "one download",
+   "redistribution": "CC0; raw files stay local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: USDA ARS publishes the data it compiles and analyses",
+   "upstream_verified": true
   }
  ]
 }

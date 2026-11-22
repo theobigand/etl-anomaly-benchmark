@@ -3518,6 +3518,89 @@
   },
   "source_snapshot": "ukspend_*/2026-11-21"
  },
+ "usda_fdc_sr_legacy": {
+  "dropped": [
+   "update logs, conversion factors and attribute tables",
+   "footnotes and acquisition years"
+  ],
+  "files": {
+   "food.csv": {
+    "rows": 7793,
+    "sha256": "2237379eb23cea564aeda2d451df5acaf497cc3439c1d0b08036c41ae2e6ae1e"
+   },
+   "food_category.csv": {
+    "rows": 28,
+    "sha256": "a305fdbab43d5a3dc5f7757ae957adbda4f1a8d4f3ae21aa94b1e16c6b5a472d"
+   },
+   "food_nutrient.csv": {
+    "rows": 644125,
+    "sha256": "954746d069f543e41b84bf2f9f83a305c7586e4c46a163af8133db3a4c13c8c2"
+   },
+   "food_nutrient_derivation.csv": {
+    "rows": 64,
+    "sha256": "94cf29d9cdd960f4e463387eada91fabab09bde78bae3a6a7a1331cf4a73e053"
+   },
+   "food_portion.csv": {
+    "rows": 14449,
+    "sha256": "d3f8d95de045266c547f3b6e74015f0eab3ec542d88c11f00dbd2bdacf75b013"
+   },
+   "measure_unit.csv": {
+    "rows": 122,
+    "sha256": "220a0eaa9c9e9a8bf7fa93126a0d484e6706e464feb474f3c59ee2cb061c3b4d"
+   },
+   "nutrient.csv": {
+    "rows": 474,
+    "sha256": "a5e7b5fe13d2040af9e7f0c607b5a0fceb6e6189bcd354c14b3c450f2865f8ff"
+   }
+  },
+  "notes": "relations are the source's own keys; orphans are natural incompleteness of the published extract",
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 7793,
+    "child": "food.food_category_id",
+    "orphans": 0,
+    "parent": "food_category.id",
+    "share": 0.0
+   },
+   {
+    "checked": 644125,
+    "child": "food_nutrient.fdc_id",
+    "orphans": 0,
+    "parent": "food.fdc_id",
+    "share": 0.0
+   },
+   {
+    "checked": 644125,
+    "child": "food_nutrient.nutrient_id",
+    "orphans": 0,
+    "parent": "nutrient.id",
+    "share": 0.0
+   },
+   {
+    "checked": 462382,
+    "child": "food_nutrient.derivation_id",
+    "orphans": 0,
+    "parent": "food_nutrient_derivation.id",
+    "share": 0.0
+   },
+   {
+    "checked": 14449,
+    "child": "food_portion.fdc_id",
+    "orphans": 0,
+    "parent": "food.fdc_id",
+    "share": 0.0
+   },
+   {
+    "checked": 14449,
+    "child": "food_portion.measure_unit_id",
+    "orphans": 0,
+    "parent": "measure_unit.id",
+    "share": 0.0
+   }
+  ],
+  "source_snapshot": "usda_fdc_sr_legacy/2026-11-22"
+ },
  "wikidata_entities": {
   "dropped": [
    "items that are instances of human"

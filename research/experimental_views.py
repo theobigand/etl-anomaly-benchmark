@@ -1194,6 +1194,35 @@ JOLPICA_TABLE_SETS: dict[str, dict[str, Any]] = {
 }  # fmt: skip
 TABLE_SETS.update(JOLPICA_TABLE_SETS)
 
+#: USDA FoodData Central SR Legacy (CC0): laboratory food composition tables
+USDA_TABLE_SETS: dict[str, dict[str, Any]] = {
+    "usda_fdc_sr_legacy": {
+        "snapshot": "2026-11-22",
+        "archive": {"file": "sr_legacy_food_csv_2018-04.zip", "prefix": "FoodData_Central_sr_legacy_food_csv_2018-04/"},  # noqa: E501
+        "sep": ",",
+        "quote_none": False,
+        "dropped": ["update logs, conversion factors and attribute tables", "footnotes and acquisition years"],  # noqa: E501
+        "tables": {
+            "food": {"keep": ["fdc_id", "data_type", "description", "food_category_id", "publication_date"]},  # noqa: E501
+            "food_category": {"keep": ["id", "code", "description"]},
+            "food_nutrient": {"keep": ["id", "fdc_id", "nutrient_id", "amount", "data_points", "derivation_id", "min", "max", "median"]},  # noqa: E501
+            "nutrient": {"keep": ["id", "name", "unit_name", "nutrient_nbr", "rank"]},
+            "food_nutrient_derivation": {"keep": ["id", "code", "description"]},
+            "food_portion": {"keep": ["id", "fdc_id", "seq_num", "amount", "measure_unit_id", "gram_weight", "data_points"]},  # noqa: E501
+            "measure_unit": {"keep": ["id", "name"]},
+        },
+        "relations": [
+            ["food", "food_category_id", "food_category", "id"],
+            ["food_nutrient", "fdc_id", "food", "fdc_id"],
+            ["food_nutrient", "nutrient_id", "nutrient", "id"],
+            ["food_nutrient", "derivation_id", "food_nutrient_derivation", "id"],
+            ["food_portion", "fdc_id", "food", "fdc_id"],
+            ["food_portion", "measure_unit_id", "measure_unit", "id"],
+        ],
+    },
+}  # fmt: skip
+TABLE_SETS.update(USDA_TABLE_SETS)
+
 
 def _build_panels(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     folder = out / "panels"

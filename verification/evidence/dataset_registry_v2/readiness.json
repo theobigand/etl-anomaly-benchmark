@@ -2064,6 +2064,13 @@
   },
   {
    "failed": null,
+   "group": "usda_fdc",
+   "id": "usda_fdc_sr_legacy",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2317,6 +2324,7 @@
    "openalex",
    "paleobiology_database",
    "stackexchange",
+   "usda_fdc",
    "zambia_procurement"
   ],
   "C6": [
@@ -2381,13 +2389,13 @@
    "structurally_valid": 30
   },
   "C5": {
-   "acquired": 31,
-   "discovered": 31,
-   "experiment_ready": 31,
-   "protocol_ready": 31,
-   "rights_verified": 31,
-   "scientifically_eligible": 31,
-   "structurally_valid": 31
+   "acquired": 32,
+   "discovered": 32,
+   "experiment_ready": 32,
+   "protocol_ready": 32,
+   "rights_verified": 32,
+   "scientifically_eligible": 32,
+   "structurally_valid": 32
   },
   "C6": {
    "acquired": 12,

@@ -1521,6 +1521,36 @@
    "size": null,
    "source_url": "https://csr.lanl.gov/data/2017/",
    "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "usda:fdc-sr-legacy",
+   "licence": "CC0 1.0 (USDA FoodData Central)",
+   "name": "USDA FoodData Central SR Legacy",
+   "next_step": "none; Foundation Foods and Branded releases are the same provenance family",
+   "notes": "the branded food release is 3 GB and would add a C2a view of labels, not acquired",
+   "publisher": "USDA ARS",
+   "reason": "laboratory food composition database",
+   "size": null,
+   "source_url": "https://fdc.nal.usda.gov/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "openfoodfacts:product",
+   "licence": "ODbL (Open Food Facts)",
+   "name": "Open Food Facts",
+   "next_step": "none: already represented by the group openfoodfacts (C6)",
+   "notes": "checked against readiness 2026-11-22; not re-acquired",
+   "publisher": "Open Food Facts association",
+   "reason": "already represented",
+   "size": null,
+   "source_url": "https://world.openfoodfacts.org/",
+   "status": "experiment_ready"
   }
  ],
  "date": "2026-11-21",

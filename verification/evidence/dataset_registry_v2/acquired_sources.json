@@ -4710,6 +4710,26 @@
    "stratum": "C6",
    "system": "fda_maude_device_reports",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "usda_fdc",
+   "id": "usda_fdc_sr_legacy",
+   "licence_class": "open",
+   "protocols": "P-REL on food, nutrient measurement and portion references",
+   "publisher": "usda_fdc",
+   "reason": "USDA FoodData Central SR Legacy (April 2018, CC0 stated by USDA): 7 tables, 6 foreign-key relations with no orphan, 7,793 foods, 644,125 laboratory nutrient measurements with derivation codes, 14,449 household portions; a measurement-fact topology (food x nutrient with derivation and portion dimensions) unlike timetable or competition tables",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "USDA FoodData Central licensing statement (public domain, CC0 1.0 Universal), read on 2026-11-22",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "usda_nutrient_laboratory_database",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

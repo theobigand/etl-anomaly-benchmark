@@ -2571,6 +2571,22 @@
    "units": 3477,
    "view": "ukspend"
   },
+  "usda_fdc_sr_legacy": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete frozen release (April 2018), no sampling: every relation resolves (0 orphans of 6)",
+    "some nutrient measurements have no min, max or median and some derivations are literature-based; these are published states",
+    "data_points and derivation codes document analytical provenance"
+   ],
+   "first_party": true,
+   "independent_group": "usda_fdc",
+   "min_units": 1000,
+   "partitions": "hash of the food identifier 70/15/15 so a food and its measurements and portions stay together",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "units": 644125,
+   "view": "usda_fdc_sr_legacy"
+  },
   "wikidata_entities": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
