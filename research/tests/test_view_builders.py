@@ -364,6 +364,18 @@ def _inpi(root, tmp):
     tev._inpi_snapshot(root)
 
 
+def _ror(root, tmp):
+    tev._ror_snapshot(root)
+
+
+def _rcsb(root, tmp):
+    tev._rcsb_snapshot(root)
+
+
+def _nws(root, tmp):
+    tev._nws_snapshot(root)
+
+
 def _tlc(root, tmp):
     tev._tlc_page(
         [{}, {"tpep_pickup_datetime": "2023-03-07T07:00:00.000", "total_amount": "0.0"}]
@@ -407,6 +419,9 @@ CASES = {
     "wb": (_wb, ev._build_wb_projects, ["wb_lending_projects"], {}),
     "qld": (_qld, ev._build_queensland_petrol, ["zen_queensland_petrol"], {}),
     "inpi": (_inpi, ev._build_inpi_ratios, ["inpi_bce_ratios"], {}),
+    "ror": (_ror, ev._build_ror, ["ror_organizations"], {}),
+    "rcsb": (_rcsb, ev._build_rcsb_pdb, ["rcsb_pdb_entries"], {}),
+    "nws": (_nws, ev._build_nws_alerts, ["nws_weather_alerts"], {}),
     "tlc": (_tlc, ev._build_tlc, ["nyc_tlc_yellow"], {}),
     "maude": (_maude_case, ev._build_maude, ["openfda_device_event"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),

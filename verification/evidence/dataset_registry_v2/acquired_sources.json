@@ -5170,6 +5170,66 @@
    "stratum": "C2b",
    "system": "french_inpi_statutory_corporate_accounts",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "ror",
+   "id": "ror_organizations",
+   "licence_class": "open",
+   "protocols": "P-NEST on ROR v2 organization registry JSON records (type, optional-path and structure faults)",
+   "publisher": "ror",
+   "reason": "ROR v2.16 global research organization registry (Zenodo 24378467, CC0 1.0): 10,154 records (1-in-15 deterministic stride across 152,297 organizations sorted by ROR id), depth 5, 35 paths and 8 optional paths (external_ids, links, relationships); institutional registry domain distinct from OpenAlex",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Zenodo 24378467 API metadata (read 2026-11-22): CC0 1.0 Universal",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "research_organization_registry_v2",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "rcsb_pdb",
+   "id": "rcsb_pdb_entries",
+   "licence_class": "open",
+   "protocols": "P-NEST on RCSB PDB macromolecular entry JSON documents (type, optional-path and structure faults)",
+   "publisher": "rcsb_pdb",
+   "reason": "RCSB PDB GraphQL macromolecular structure archive (CC0 1.0): 1,000 released entries across 2024-2026, depth 6, 38 paths and 15 optional paths (method-dependent unit cell, refinement and symmetry subtrees); audit_author and citation authors omitted; structural biology domain absent from C6",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "RCSB PDB Usage Policies page (read 2026-11-22): CC0 1.0 Universal",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "wwpdb_macromolecular_structure_archive",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "nws_alerts",
+   "id": "nws_weather_alerts",
+   "licence_class": "open",
+   "protocols": "P-NEST on NWS CAP GeoJSON weather alert features (type, optional-path and structure faults)",
+   "publisher": "noaa_nws",
+   "reason": "NOAA National Weather Service CAP GeoJSON alert stream (U.S. Public Domain): 2,000 unique weather alerts across 4 cursor pages, depth 5, 62 paths and 25 optional paths (optional polygon geometry, hazard-specific CAP parameters and alert references); sender stripped and emails redacted",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "NWS Disclaimer page (read 2026-11-22): U.S. Federal Public Domain (17 U.S.C. 105)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "noaa_nws_cap_weather_alert_system",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

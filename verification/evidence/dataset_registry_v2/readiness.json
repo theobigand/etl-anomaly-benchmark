@@ -2220,6 +2220,27 @@
   },
   {
    "failed": null,
+   "group": "ror",
+   "id": "ror_organizations",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "rcsb_pdb",
+   "id": "rcsb_pdb_entries",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "nws_alerts",
+   "id": "nws_weather_alerts",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2504,11 +2525,14 @@
    "met_museum",
    "montreal_contracts",
    "nist_nvd",
+   "nws_alerts",
    "openalex",
    "openfda_faers",
    "openfoodfacts",
    "openlibrary",
    "osv_go",
+   "rcsb_pdb",
+   "ror",
    "uniprot_kb",
    "wikimedia_wikidata",
    "zambia_procurement"
@@ -2570,13 +2594,13 @@
    "structurally_valid": 34
   },
   "C6": {
-   "acquired": 15,
-   "discovered": 18,
-   "experiment_ready": 15,
-   "protocol_ready": 15,
-   "rights_verified": 15,
-   "scientifically_eligible": 15,
-   "structurally_valid": 15
+   "acquired": 18,
+   "discovered": 21,
+   "experiment_ready": 18,
+   "protocol_ready": 18,
+   "rights_verified": 18,
+   "scientifically_eligible": 18,
+   "structurally_valid": 18
   }
  }
 }

@@ -710,6 +710,20 @@
    "C2b": "residential electric vehicle charging sessions"
   }
  },
+ "nws_alerts": {
+  "curator": "api.weather.gov",
+  "descriptors": {
+   "nesting": "depth 5, 62 distinct paths, 25 optional paths, optional CAP polygon geometry, dynamic parameter maps and alert references"
+  },
+  "domain": "operational weather hazard alerting",
+  "generating_system": "NOAA National Weather Service Common Alerting Protocol (CAP) dissemination feed",
+  "note": "Operational weather hazard alert stream under CAP GeoJSON; independent generating system, domain, curator and schema family from NOAA CO-OPS tide gauges and NOAA GML Mauna Loa observatory",
+  "producer": "NOAA National Weather Service",
+  "schema_family": "geojson cap weather alerts",
+  "structure": {
+   "C6": "GeoJSON CAP weather alert features with variable hazard parameter objects and replacement references"
+  }
+ },
  "nyc_tlc": {
   "curator": "nyc open data",
   "domain": "urban taxi fares",
@@ -832,6 +846,20 @@
    "C4": "IT service incident log"
   }
  },
+ "rcsb_pdb": {
+  "curator": "RCSB PDB",
+  "descriptors": {
+   "nesting": "depth 6, 38 distinct paths, 15 optional paths, method-specific crystal cell/refinement/symmetry subtrees and polymer entity arrays"
+  },
+  "domain": "structural biology",
+  "generating_system": "Worldwide Protein Data Bank (wwPDB) macromolecular experimental structure archive",
+  "note": "Macromolecular crystallography, cryo-EM and NMR archive; independent domain, producer, curator and schema family from UniProt sequence entries",
+  "producer": "Worldwide Protein Data Bank (wwPDB)",
+  "schema_family": "mmcif pdbx graphql schema",
+  "structure": {
+   "C6": "macromolecular experimental structure JSON documents with optional crystallographic refinement subtrees"
+  }
+ },
  "rki_surveillance": {
   "curator": "zenodo",
   "domain": "public health surveillance",
@@ -841,6 +869,20 @@
   "schema_family": "surveillance panels",
   "structure": {
    "C3": "public health surveillance"
+  }
+ },
+ "ror": {
+  "curator": "Zenodo",
+  "descriptors": {
+   "nesting": "depth 5, 35 distinct paths, 8 optional paths, arrays of names, external_ids, links, locations and relationships"
+  },
+  "domain": "research institution registries",
+  "generating_system": "Research Organization Registry global persistent identifier directory (v2.16)",
+  "note": "Dedicated persistent identifier directory for research organizations; distinct producer, curator, generating system and schema family from OpenAlex",
+  "producer": "Research Organization Registry (ROR)",
+  "schema_family": "ror organization schema v2",
+  "structure": {
+   "C6": "hierarchical organization directory records with variable external identifiers and relationship edges"
   }
  },
  "rte_france_grid": {

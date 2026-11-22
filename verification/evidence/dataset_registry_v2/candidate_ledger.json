@@ -1971,6 +1971,51 @@
    "size": "140 KB zip",
    "source_url": "https://zenodo.org/api/records/11259259",
    "status": "redundant"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "zenodo:24378467-ror",
+   "licence": "CC0 1.0 Universal",
+   "name": "ROR Data Dump v2.16",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as ror_organizations (10,154 deterministic stride-15 records sorted by ROR id, depth 5, 35 paths, 8 optional paths)",
+   "publisher": "Research Organization Registry (Zenodo 24378467)",
+   "reason": "Independent CC0 v2 organization identifier registry JSON",
+   "size": "152,297 total / 10,154 view rows",
+   "source_url": "https://zenodo.org/api/records/24378467",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "rcsb:pdb-entries",
+   "licence": "CC0 1.0 Universal",
+   "name": "RCSB PDB Macromolecular Entries (2024-2026)",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as rcsb_pdb_entries (1,000 entries across 2024-2026, depth 6, 38 paths, 15 optional paths)",
+   "publisher": "RCSB PDB / wwPDB",
+   "reason": "Independent CC0 structural biology JSON archive with optional method-specific subtrees",
+   "size": "1,000 entries",
+   "source_url": "https://www.rcsb.org/pages/usage-policy",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "noaa:nws-alerts",
+   "licence": "U.S. Federal Public Domain (17 U.S.C. 105)",
+   "name": "NOAA NWS CAP Weather Alerts GeoJSON",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as nws_weather_alerts (2,000 unique CAP alerts, depth 5, 62 paths, 25 optional paths, sender dropped & emails redacted)",
+   "publisher": "NOAA National Weather Service",
+   "reason": "Independent operational weather hazard CAP GeoJSON feed",
+   "size": "2,000 alerts",
+   "source_url": "https://api.weather.gov/alerts?limit=500",
+   "status": "acquired"
   }
  ],
  "date": "2026-11-21",

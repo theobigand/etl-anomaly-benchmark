@@ -2925,6 +2925,30 @@
   },
   "source_snapshot": "nvd_cve/2026-11-22"
  },
+ "nws_weather_alerts": {
+  "dropped": [
+   "sender"
+  ],
+  "files": {
+   "alerts.jsonl": {
+    "rows": 2000,
+    "sha256": "e606783e43145fc9ac90e7b4b26d580b30c325fd002ff7eba09e5a24a457d7cf"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "features_in": 2000,
+   "files": [
+    "alerts_p1.json",
+    "alerts_p2.json",
+    "alerts_p3.json",
+    "alerts_p4.json"
+   ],
+   "method": "four consecutive 500-alert cursor pages from NWS alerts API",
+   "unique_alerts": 2000
+  },
+  "source_snapshot": "nws_weather_alerts/2026-11-22"
+ },
  "nyc_tlc_yellow": {
   "dropped": [],
   "files": {
@@ -3407,6 +3431,63 @@
   ],
   "salt_label": "etl-benchmark-views-v1",
   "source_snapshot": "physionet_mimic_iv_demo/2026-11-21"
+ },
+ "rcsb_pdb_entries": {
+  "dropped": [
+   "audit_author (omitted in GraphQL query)",
+   "citation authors (omitted in GraphQL query)"
+  ],
+  "files": {
+   "entries.jsonl": {
+    "rows": 1000,
+    "sha256": "7add048cf9c96db240d812cffabbe79eed4e1e6fb2b4b1afda990bb3ff658cdc"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "entries_in": 1000,
+   "files": [
+    "entries_b00.json",
+    "entries_b01.json",
+    "entries_b02.json",
+    "entries_b03.json",
+    "entries_b04.json",
+    "entries_b05.json",
+    "entries_b06.json",
+    "entries_b07.json",
+    "entries_b08.json",
+    "entries_b09.json",
+    "entries_b10.json",
+    "entries_b11.json",
+    "entries_b12.json",
+    "entries_b13.json",
+    "entries_b14.json",
+    "entries_b15.json",
+    "entries_b16.json",
+    "entries_b17.json",
+    "entries_b18.json",
+    "entries_b19.json"
+   ],
+   "method": "earliest released structures per calendar year ordered by initial_release_date and rcsb_id (2024:350, 2025:350, 2026:300)"
+  },
+  "source_snapshot": "rcsb_pdb_entries/2026-11-22"
+ },
+ "ror_organizations": {
+  "dropped": [],
+  "files": {
+   "organizations.jsonl": {
+    "rows": 10154,
+    "sha256": "51105d278151875c6ed0378fbcf9a36d16b54034e28ecc7c3141bbe52367820a"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "kept": 10154,
+   "method": "every 15th ROR v2 organization record in canonical id order across all statuses",
+   "stride": 15,
+   "total_records": 152297
+  },
+  "source_snapshot": "ror_organizations/2026-11-22"
  },
  "rte_eco2mix_national": {
   "dropped": [

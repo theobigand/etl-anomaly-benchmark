@@ -4912,6 +4912,133 @@ def _build_inpi_ratios(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+def _write_jsonl(folder: Path, filename: str, rows: list[dict[str, Any]]) -> Path:
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / filename
+    target.write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in rows))
+    return target
+
+
+ROR_SNAPSHOT = "2026-11-22"
+ROR_STRIDE = 15
+
+
+def ror_view(records: list[dict[str, Any]], stride: int = ROR_STRIDE) -> list[dict[str, Any]]:
+    """Every ``stride``-th unique ROR organization in canonical ``id`` order, e-mails redacted."""
+    unique: dict[str, dict[str, Any]] = {}
+    for record in records:
+        unique.setdefault(record["id"], record)
+    sliced = nested_view(list(unique.values()), frozenset(), lambda r: r["id"])[::stride]
+    return redact_emails(sliced)
+
+
+def _build_ror(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import zipfile
+
+    archive = root / "ror_organizations" / ROR_SNAPSHOT / "raw" / "ror_data.zip"
+    if not archive.exists():
+        raise ViewError("no ROR zip archive in the snapshot")
+    with zipfile.ZipFile(archive) as zf:
+        members = sorted(n for n in zf.namelist() if n.endswith(".json"))
+        if not members:
+            raise ViewError("no ROR JSON member in the archive")
+        records = json.loads(zf.read(members[0]))
+    view = ror_view(records)
+    target = _write_jsonl(out / "ror_organizations", "organizations.jsonl", view)
+    _record(
+        manifest,
+        "ror_organizations",
+        {"organizations.jsonl": (target, len(view))},
+        dropped=[],
+        pseudonymised=[],
+        sampling={
+            "method": "every 15th ROR v2 organization record in canonical id order across all statuses",  # noqa: E501
+            "total_records": len(records),
+            "stride": ROR_STRIDE,
+            "kept": len(view),
+        },
+        source_snapshot=f"ror_organizations/{ROR_SNAPSHOT}",
+    )
+
+
+RCSB_SNAPSHOT = "2026-11-22"
+
+
+def rcsb_pdb_view(entries: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Unique RCSB PDB macromolecular entries ordered by ``rcsb_id``, e-mails redacted."""
+    unique: dict[str, dict[str, Any]] = {}
+    for entry in entries:
+        unique.setdefault(entry["rcsb_id"], entry)
+    return redact_emails(nested_view(list(unique.values()), frozenset(), lambda r: r["rcsb_id"]))
+
+
+def _build_rcsb_pdb(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "rcsb_pdb_entries" / RCSB_SNAPSHOT / "raw"
+    files = sorted(raw.glob("entries_b*.json"))
+    if not files:
+        raise ViewError("no RCSB PDB entry files in the snapshot")
+    entries: list[dict[str, Any]] = []
+    for path in files:
+        entries += json.loads(path.read_text())["data"]["entries"]
+    view = rcsb_pdb_view(entries)
+    target = _write_jsonl(out / "rcsb_pdb_entries", "entries.jsonl", view)
+    _record(
+        manifest,
+        "rcsb_pdb_entries",
+        {"entries.jsonl": (target, len(view))},
+        dropped=[
+            "audit_author (omitted in GraphQL query)",
+            "citation authors (omitted in GraphQL query)",
+        ],
+        pseudonymised=[],
+        sampling={
+            "method": "earliest released structures per calendar year ordered by initial_release_date and rcsb_id (2024:350, 2025:350, 2026:300)",  # noqa: E501
+            "entries_in": len(entries),
+            "files": [p.name for p in files],
+        },
+        source_snapshot=f"rcsb_pdb_entries/{RCSB_SNAPSHOT}",
+    )
+
+
+NWS_SNAPSHOT = "2026-11-22"
+NWS_DROP = frozenset({"sender"})
+
+
+def nws_alerts_view(features: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Unique NWS CAP alert GeoJSON features ordered by alert id, sender removed and e-mails redacted."""  # noqa: E501
+    unique: dict[str, dict[str, Any]] = {}
+    for feature in features:
+        unique.setdefault(feature["properties"]["id"], feature)
+    cleaned = nested_view(list(unique.values()), NWS_DROP, lambda r: r["properties"]["id"])
+    return redact_emails(cleaned)
+
+
+def _build_nws_alerts(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "nws_weather_alerts" / NWS_SNAPSHOT / "raw"
+    files = sorted(raw.glob("alerts_p*.json"))
+    if not files:
+        raise ViewError("no NWS alerts JSON in the snapshot")
+    features: list[dict[str, Any]] = []
+    for path in files:
+        features += json.loads(path.read_text())["features"]
+    view = nws_alerts_view(features)
+    target = _write_jsonl(out / "nws_weather_alerts", "alerts.jsonl", view)
+    _record(
+        manifest,
+        "nws_weather_alerts",
+        {"alerts.jsonl": (target, len(view))},
+        dropped=sorted(NWS_DROP),
+        pseudonymised=[],
+        sampling={
+            "method": "four consecutive 500-alert cursor pages from NWS alerts API",
+            "features_in": len(features),
+            "unique_alerts": len(view),
+            "files": [p.name for p in files],
+        },
+        source_snapshot=f"nws_weather_alerts/{NWS_SNAPSHOT}",
+    )
+
+
 BUILD_STEPS = (
     _build_openalex,
     _build_monash,
@@ -4973,6 +5100,9 @@ BUILD_STEPS = (
     _build_wb_projects,
     _build_queensland_petrol,
     _build_inpi_ratios,
+    _build_ror,
+    _build_rcsb_pdb,
+    _build_nws_alerts,
     _build_flat,
     _build_series,
     _build_ukspend,

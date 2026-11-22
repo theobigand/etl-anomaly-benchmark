@@ -2145,6 +2145,22 @@
    "units": 4194,
    "view": "nvd_cve"
   },
+  "nws_weather_alerts": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "2,000 unique severe-weather CAP alert features across 4 sequential 500-alert cursor pages",
+    "depth 5 with 62 distinct paths and 25 optional paths (optional polygon geometry, hazard parameters, references, replacedAt)",
+    "CAP sender field dropped at every depth and description/headline/instruction strings redacted for emails"
+   ],
+   "first_party": true,
+   "independent_group": "nws_alerts",
+   "min_units": 1000,
+   "partitions": "hash of properties.id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 2000,
+   "view": "nws_weather_alerts"
+  },
   "nyc_tlc_yellow": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -2429,6 +2445,22 @@
    "units": 107727,
    "view": "physionet_mimic_iv_demo"
   },
+  "rcsb_pdb_entries": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "1,000 macromolecular entries sampled across 2024 (350), 2025 (350) and 2026 (300) sorted by initial_release_date and rcsb_id",
+    "depth 6 with 38 distinct paths and 15 optional paths (crystallographic cell, refine and symmetry subtrees absent in non-diffraction entries)",
+    "audit_author and citation author lists omitted in GraphQL query; redact_emails applied"
+   ],
+   "first_party": true,
+   "independent_group": "rcsb_pdb",
+   "min_units": 500,
+   "partitions": "hash of rcsb_id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 1000,
+   "view": "rcsb_pdb_entries"
+  },
   "rki_hospitalisation": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -2458,6 +2490,22 @@
    "protocol_id": "P-TS",
    "units": 343682,
    "view": "panels"
+  },
+  "ror_organizations": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "10,154 ROR v2.16 records sampled deterministically with stride 15 from all 152,297 organizations sorted by ROR id",
+    "depth 5 with 35 distinct paths and 8 optional paths (external_ids, links, relationships)",
+    "0 emails in raw dump; redact_emails applied in view"
+   ],
+   "first_party": true,
+   "independent_group": "ror",
+   "min_units": 1000,
+   "partitions": "hash of ROR id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 10154,
+   "view": "ror_organizations"
   },
   "rte_eco2mix_national": {
    "anomaly_origin": "controlled_injection",

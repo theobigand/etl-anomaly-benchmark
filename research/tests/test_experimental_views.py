@@ -1054,6 +1054,9 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _wb_snapshot(root)
     _qld_snapshot(root)
     _inpi_snapshot(root)
+    _ror_snapshot(root)
+    _rcsb_snapshot(root)
+    _nws_snapshot(root)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
@@ -1069,7 +1072,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -6288,3 +6291,239 @@ def test_inpi_ratios_view_and_builder(tmp_path):
         )
     )
     assert blank["siren_id"].tolist() == [""]
+
+
+def _ror_snapshot(root):
+    import zipfile
+
+    raw = root / "ror_organizations" / ev.ROR_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    records = [
+        {"id": "https://ror.org/02", "names": [{"value": "Uni B"}], "contact": "a@uni.org"},
+        {"id": "https://ror.org/01", "names": [{"value": "Uni A"}]},
+        {"id": "https://ror.org/01", "names": [{"value": "Uni A dup"}]},
+    ]
+    with zipfile.ZipFile(raw / "ror_data.zip", "w") as zf:
+        zf.writestr("notes.txt", "ignore")
+        zf.writestr("v2-ror.json", json.dumps(records))
+
+
+def _rcsb_snapshot(root):
+    raw = root / "rcsb_pdb_entries" / ev.RCSB_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "entries_b01.json").write_text(
+        json.dumps(
+            {
+                "data": {
+                    "entries": [
+                        {"rcsb_id": "8CMX", "struct": {"title": "Mail x@y.org"}, "b": 1, "a": 2},
+                        {"rcsb_id": "7YBF", "struct": {"title": "Dup entry"}},
+                    ]
+                }
+            }
+        )
+    )
+    (raw / "entries_b00.json").write_text(
+        json.dumps(
+            {
+                "data": {
+                    "entries": [
+                        {"rcsb_id": "7YBF", "struct": {"title": "First entry"}},
+                    ]
+                }
+            }
+        )
+    )
+
+
+def _nws_snapshot(root):
+    raw = root / "nws_weather_alerts" / ev.NWS_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "alerts_p2.json").write_text(
+        json.dumps(
+            {
+                "features": [
+                    {
+                        "id": "u2",
+                        "properties": {
+                            "id": "NWS-2",
+                            "sender": "w-nws.webmaster@noaa.gov",
+                            "description": "Ask ops@noaa.gov",
+                            "references": [{"id": "ref1", "sender": "sub@noaa.gov"}],
+                        },
+                    },
+                    {"id": "u1", "properties": {"id": "NWS-1", "event": "Second"}},
+                ]
+            }
+        )
+    )
+    (raw / "alerts_p1.json").write_text(
+        json.dumps(
+            {
+                "features": [
+                    {
+                        "id": "u1",
+                        "properties": {"id": "NWS-1", "sender": "drop@noaa.gov", "event": "First"},
+                    }
+                ]
+            }
+        )
+    )
+
+
+def test_ror_view_and_builder(tmp_path):
+    import zipfile
+
+    with pytest.raises(ev.ViewError, match=r"^no ROR zip archive in the snapshot$"):
+        ev._build_ror(tmp_path / "empty", tmp_path / "err", {})
+    no_json_root = tmp_path / "no_json"
+    no_json_raw = no_json_root / "ror_organizations" / ev.ROR_SNAPSHOT / "raw"
+    no_json_raw.mkdir(parents=True)
+    with zipfile.ZipFile(no_json_raw / "ror_data.zip", "w") as zf:
+        zf.writestr("readme.txt", "text")
+    with pytest.raises(ev.ViewError, match=r"^no ROR JSON member in the archive$"):
+        ev._build_ror(no_json_root, tmp_path / "err2", {})
+
+    raw_recs = [
+        {"id": "https://ror.org/03", "note": "c@ex.org"},
+        {"id": "https://ror.org/01", "note": "first"},
+        {"id": "https://ror.org/01", "note": "dup"},
+        {"id": "https://ror.org/02", "note": "mid"},
+    ]
+    raw_copy = json.loads(json.dumps(raw_recs))
+    assert [r["id"] for r in ev.ror_view(raw_recs, stride=2)] == [
+        "https://ror.org/01",
+        "https://ror.org/03",
+    ]
+    assert raw_recs == raw_copy
+    default_out = ev.ror_view(raw_recs)
+    assert [r["id"] for r in default_out] == ["https://ror.org/01"] and default_out[0][
+        "note"
+    ] == "first"
+
+    root = tmp_path / "acq"
+    _ror_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_ror(root, out, manifest)
+    ev._build_ror(root, out, manifest)
+    target = out / "ror_organizations" / "organizations.jsonl"
+    raw_txt = target.read_text()
+    assert raw_txt.endswith("\n") and raw_txt.splitlines() == [
+        json.dumps({"id": "https://ror.org/01", "names": [{"value": "Uni A"}]}, sort_keys=True)
+    ]
+    view = manifest["ror_organizations"]
+    assert view["dropped"] == [] and view["pseudonymised"] == []
+    assert view["files"]["organizations.jsonl"]["rows"] == 1
+    assert view["sampling"] == {
+        "method": "every 15th ROR v2 organization record in canonical id order across all statuses",
+        "total_records": 3,
+        "stride": ev.ROR_STRIDE,
+        "kept": 1,
+    }
+    assert view["source_snapshot"] == f"ror_organizations/{ev.ROR_SNAPSHOT}"
+
+
+def test_rcsb_pdb_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no RCSB PDB entry files in the snapshot$"):
+        ev._build_rcsb_pdb(tmp_path / "empty", tmp_path / "err", {})
+    raw_entries = [
+        {"rcsb_id": "8CMX", "note": "mail a@pdb.org"},
+        {"rcsb_id": "7YBF", "title": "keep"},
+        {"rcsb_id": "7YBF", "title": "dup"},
+    ]
+    raw_copy = json.loads(json.dumps(raw_entries))
+    viewed = ev.rcsb_pdb_view(raw_entries)
+    assert raw_entries == raw_copy
+    assert [e["rcsb_id"] for e in viewed] == ["7YBF", "8CMX"]
+    assert viewed[0]["title"] == "keep" and viewed[1]["note"] == "mail [email]"
+
+    root = tmp_path / "acq"
+    _rcsb_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_rcsb_pdb(root, out, manifest)
+    ev._build_rcsb_pdb(root, out, manifest)
+    target = out / "rcsb_pdb_entries" / "entries.jsonl"
+    raw_txt = target.read_text()
+    lines = raw_txt.splitlines()
+    assert raw_txt.endswith("\n") and lines == [
+        json.dumps({"rcsb_id": "7YBF", "struct": {"title": "First entry"}}, sort_keys=True),
+        json.dumps(
+            {"a": 2, "b": 1, "rcsb_id": "8CMX", "struct": {"title": "Mail [email]"}}, sort_keys=True
+        ),
+    ]
+    view = manifest["rcsb_pdb_entries"]
+    assert view["dropped"] == [
+        "audit_author (omitted in GraphQL query)",
+        "citation authors (omitted in GraphQL query)",
+    ]
+    assert view["pseudonymised"] == [] and view["files"]["entries.jsonl"]["rows"] == 2
+    assert view["sampling"] == {
+        "method": (
+            "earliest released structures per calendar year ordered by initial_release_date "
+            "and rcsb_id (2024:350, 2025:350, 2026:300)"
+        ),
+        "entries_in": 3,
+        "files": ["entries_b00.json", "entries_b01.json"],
+    }
+    assert view["source_snapshot"] == f"rcsb_pdb_entries/{ev.RCSB_SNAPSHOT}"
+
+
+def test_nws_alerts_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no NWS alerts JSON in the snapshot$"):
+        ev._build_nws_alerts(tmp_path / "empty", tmp_path / "err", {})
+    raw_features = [
+        {
+            "properties": {
+                "id": "A2",
+                "sender": "drop@noaa.gov",
+                "note": "u@noaa.gov",
+                "references": [{"sender": "x@y.z"}],
+            }
+        },
+        {"properties": {"id": "A1", "event": "keep"}},
+        {"properties": {"id": "A1", "event": "dup"}},
+    ]
+    raw_copy = json.loads(json.dumps(raw_features))
+    viewed = ev.nws_alerts_view(raw_features)
+    assert raw_features == raw_copy
+    assert [f["properties"]["id"] for f in viewed] == ["A1", "A2"]
+    assert viewed[0]["properties"]["event"] == "keep"
+    assert "sender" not in viewed[1]["properties"]
+    assert "sender" not in viewed[1]["properties"]["references"][0]
+    assert viewed[1]["properties"]["note"] == "[email]"
+
+    root = tmp_path / "acq"
+    _nws_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_nws_alerts(root, out, manifest)
+    ev._build_nws_alerts(root, out, manifest)
+    target = out / "nws_weather_alerts" / "alerts.jsonl"
+    raw_txt = target.read_text()
+    lines = raw_txt.splitlines()
+    assert raw_txt.endswith("\n") and lines == [
+        json.dumps({"id": "u1", "properties": {"event": "First", "id": "NWS-1"}}, sort_keys=True),
+        json.dumps(
+            {
+                "id": "u2",
+                "properties": {
+                    "description": "Ask [email]",
+                    "id": "NWS-2",
+                    "references": [{"id": "ref1"}],
+                },
+            },
+            sort_keys=True,
+        ),
+    ]
+    view = manifest["nws_weather_alerts"]
+    assert view["dropped"] == ["sender"] and view["pseudonymised"] == []
+    assert view["files"]["alerts.jsonl"]["rows"] == 2
+    assert view["sampling"] == {
+        "method": "four consecutive 500-alert cursor pages from NWS alerts API",
+        "features_in": 3,
+        "unique_alerts": 2,
+        "files": ["alerts_p1.json", "alerts_p2.json"],
+    }
+    assert view["source_snapshot"] == f"nws_weather_alerts/{ev.NWS_SNAPSHOT}"

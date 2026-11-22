@@ -9658,6 +9658,216 @@
    "stratum": "C2b",
    "upstream": "first party: INPI compiles statutory company accounts published on the French Ministry of Economy portal",
    "upstream_verified": true
+  },
+  {
+   "attribution": "Research Organization Registry (ROR) Data Dump v2.16 (Zenodo 24378467, CC0 1.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "ror_data.zip",
+     "observed": "2009-2026",
+     "url": "https://zenodo.org/api/records/24378467/files/v2.16-2026-11-19-ror-data.zip/content"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "ror_organizations",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/24378467",
+   "licence_text": "Zenodo record 24378467 API metadata (read 2026-11-22): license id 'cc-zero' (CC0 1.0 Universal Public Domain Dedication)",
+   "max_bytes": 67108864,
+   "method": "complete ROR v2.16 JSON release archive (152,297 organizations) deterministically sampled every 15th record sorted by ROR id (10,154 records)",
+   "min_interval": 1.0,
+   "privacy": "research institution registry metadata only (organizations, locations, external_ids, relationships); 0 emails detected and redact_emails enforced",
+   "publisher": "Research Organization Registry (ROR) via Zenodo 24378467",
+   "rate_limit": "single bulk zip download, descriptive user agent",
+   "redistribution": "CC0 1.0 Universal; raw file stays local",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "first party: ROR publishes official versioned community registry dumps directly on Zenodo",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Worldwide Protein Data Bank (wwPDB) / RCSB PDB GraphQL & Search API (CC0 1.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "search_2024.json",
+     "observed": "2024",
+     "url": "https://search.rcsb.org/rcsbsearch/v2/query?json=%7B%22query%22%3A%7B%22type%22%3A%22group%22%2C%22logical_operator%22%3A%22and%22%2C%22nodes%22%3A%5B%7B%22type%22%3A%22terminal%22%2C%22service%22%3A%22text%22%2C%22parameters%22%3A%7B%22attribute%22%3A%22rcsb_accession_info.initial_release_date%22%2C%22operator%22%3A%22greater_or_equal%22%2C%22value%22%3A%222024-01-01%22%7D%7D%2C%7B%22type%22%3A%22terminal%22%2C%22service%22%3A%22text%22%2C%22parameters%22%3A%7B%22attribute%22%3A%22rcsb_accession_info.initial_release_date%22%2C%22operator%22%3A%22less%22%2C%22value%22%3A%222025-01-01%22%7D%7D%5D%7D%2C%22request_options%22%3A%7B%22paginate%22%3A%7B%22start%22%3A0%2C%22rows%22%3A350%7D%2C%22sort%22%3A%5B%7B%22sort_by%22%3A%22rcsb_accession_info.initial_release_date%22%2C%22direction%22%3A%22asc%22%7D%2C%7B%22sort_by%22%3A%22rcsb_id%22%2C%22direction%22%3A%22asc%22%7D%5D%7D%2C%22return_type%22%3A%22entry%22%7D"
+    },
+    {
+     "name": "search_2025.json",
+     "observed": "2025",
+     "url": "https://search.rcsb.org/rcsbsearch/v2/query?json=%7B%22query%22%3A%7B%22type%22%3A%22group%22%2C%22logical_operator%22%3A%22and%22%2C%22nodes%22%3A%5B%7B%22type%22%3A%22terminal%22%2C%22service%22%3A%22text%22%2C%22parameters%22%3A%7B%22attribute%22%3A%22rcsb_accession_info.initial_release_date%22%2C%22operator%22%3A%22greater_or_equal%22%2C%22value%22%3A%222025-01-01%22%7D%7D%2C%7B%22type%22%3A%22terminal%22%2C%22service%22%3A%22text%22%2C%22parameters%22%3A%7B%22attribute%22%3A%22rcsb_accession_info.initial_release_date%22%2C%22operator%22%3A%22less%22%2C%22value%22%3A%222026-01-01%22%7D%7D%5D%7D%2C%22request_options%22%3A%7B%22paginate%22%3A%7B%22start%22%3A0%2C%22rows%22%3A350%7D%2C%22sort%22%3A%5B%7B%22sort_by%22%3A%22rcsb_accession_info.initial_release_date%22%2C%22direction%22%3A%22asc%22%7D%2C%7B%22sort_by%22%3A%22rcsb_id%22%2C%22direction%22%3A%22asc%22%7D%5D%7D%2C%22return_type%22%3A%22entry%22%7D"
+    },
+    {
+     "name": "search_2026.json",
+     "observed": "2026",
+     "url": "https://search.rcsb.org/rcsbsearch/v2/query?json=%7B%22query%22%3A%7B%22type%22%3A%22group%22%2C%22logical_operator%22%3A%22and%22%2C%22nodes%22%3A%5B%7B%22type%22%3A%22terminal%22%2C%22service%22%3A%22text%22%2C%22parameters%22%3A%7B%22attribute%22%3A%22rcsb_accession_info.initial_release_date%22%2C%22operator%22%3A%22greater_or_equal%22%2C%22value%22%3A%222026-01-01%22%7D%7D%2C%7B%22type%22%3A%22terminal%22%2C%22service%22%3A%22text%22%2C%22parameters%22%3A%7B%22attribute%22%3A%22rcsb_accession_info.initial_release_date%22%2C%22operator%22%3A%22less%22%2C%22value%22%3A%222027-01-01%22%7D%7D%5D%7D%2C%22request_options%22%3A%7B%22paginate%22%3A%7B%22start%22%3A0%2C%22rows%22%3A300%7D%2C%22sort%22%3A%5B%7B%22sort_by%22%3A%22rcsb_accession_info.initial_release_date%22%2C%22direction%22%3A%22asc%22%7D%2C%7B%22sort_by%22%3A%22rcsb_id%22%2C%22direction%22%3A%22asc%22%7D%5D%7D%2C%22return_type%22%3A%22entry%22%7D"
+    },
+    {
+     "name": "entries_b00.json",
+     "observed": "2024-2026",
+     "url": "https://data.rcsb.org/graphql?query=%7Bentries%28entry_ids%3A%5B%227YBF%22%2C%20%227YMF%22%2C%20%227YQ8%22%2C%20%228CMX%22%2C%20%228CO7%22%2C%20%228COE%22%2C%20%228COH%22%2C%20%228EE4%22%2C%20%228EE7%22%2C%20%228FO2%22%2C%20%228FO8%22%2C%20%228FO9%22%2C%20%228FRL%22%2C%20%228FRM%22%2C%20%228FRN%22%2C%20%228FRO%22%2C%20%228FRP%22%2C%20%228FVU%22%2C%20%228FVZ%22%2C%20%228FW2%22%2C%20%228FW9%22%2C%20%228G4Z%22%2C%20%228G50%22%2C%20%228G9C%22%2C%20%228G9D%22%2C%20%228G9E%22%2C%20%228GCM%22%2C%20%228GCP%22%2C%20%228H92%22%2C%20%228HBI%22%2C%20%228HDE%22%2C%20%228HDI%22%2C%20%228HS6%22%2C%20%228HVT%22%2C%20%228HW3%22%2C%20%228HWI%22%2C%20%228HWJ%22%2C%20%228HWK%22%2C%20%228HXQ%22%2C%20%228HXR%22%2C%20%228I5J%22%2C%20%228I5K%22%2C%20%228IFG%22%2C%20%228IHO%22%2C%20%228IJ3%22%2C%20%228IJA%22%2C%20%228IJB%22%2C%20%228IJD%22%2C%20%228IME%22%2C%20%228IMF%22%5D%29%7Brcsb_id%20struct%7Btitle%20pdbx_descriptor%7D%20exptl%7Bmethod%7D%20refine%7Bls_d_res_high%20ls_R_factor_R_work%20ls_R_factor_R_free%7D%20cell%7Blength_a%20length_b%20length_c%20angle_alpha%20angle_beta%20angle_gamma%7D%20symmetry%7Bspace_group_name_H_M%7D%20rcsb_entry_info%7Bmolecular_weight%20deposited_atom_count%20polymer_entity_count%20nonpolymer_entity_count%20experimental_method%20resolution_combined%7D%20rcsb_accession_info%7Binitial_release_date%20deposit_date%20revision_date%7D%20rcsb_primary_citation%7Bjournal_abbrev%20year%20pdbx_database_id_DOI%7D%20polymer_entities%7Brcsb_id%20entity_poly%7Btype%20nstd_linkage%20rcsb_sample_sequence_length%7D%20rcsb_entity_source_organism%7Bscientific_name%20ncbi_taxonomy_id%7D%7D%7D%7D"
+    },
+    {
+     "name": "entries_b01.json",
+     "observed": "2024-2026",
+     "url": "https://data.rcsb.org/graphql?query=%7Bentries%28entry_ids%3A%5B%228IMG%22%2C%20%228IPI%22%2C%20%228IPK%22%2C%20%228IPL%22%2C%20%228IPM%22%2C%20%228IYA%22%2C%20%228J4U%22%2C%20%228JOU%22%2C%20%228JP0%22%2C%20%228JQE%22%2C%20%228JQF%22%2C%20%228JWW%22%2C%20%228JWX%22%2C%20%228JX7%22%2C%20%228JXQ%22%2C%20%228JXU%22%2C%20%228JY4%22%2C%20%228JY5%22%2C%20%228JYK%22%2C%20%228JYM%22%2C%20%228JYN%22%2C%20%228JYO%22%2C%20%228JYP%22%2C%20%228K5N%22%2C%20%228KAE%22%2C%20%228KFA%22%2C%20%228P94%22%2C%20%228PJN%22%2C%20%228PK3%22%2C%20%228PMQ%22%2C%20%228PYH%22%2C%20%228PZK%22%2C%20%228Q4K%22%2C%20%228SGE%22%2C%20%228SGF%22%2C%20%228SH2%22%2C%20%228SMC%22%2C%20%228SQF%22%2C%20%228SQG%22%2C%20%228T5C%22%2C%20%228U0Q%22%2C%20%228U1D%22%2C%20%228U7W%22%2C%20%228U7X%22%2C%20%228UFG%22%2C%20%228UFH%22%2C%20%228UHE%22%2C%20%228UHI%22%2C%20%228W8Q%22%2C%20%228W8R%22%5D%29%7Brcsb_id%20struct%7Btitle%20pdbx_descriptor%7D%20exptl%7Bmethod%7D%20refine%7Bls_d_res_high%20ls_R_factor_R_work%20ls_R_factor_R_free%7D%20cell%7Blength_a%20length_b%20length_c%20angle_alpha%20angle_beta%20angle_gamma%7D%20symmetry%7Bspace_group_name_H_M%7D%20rcsb_entry_info%7Bmolecular_weight%20deposited_atom_count%20polymer_entity_count%20nonpolymer_entity_count%20experimental_method%20resolution_combined%7D%20rcsb_accession_info%7Binitial_release_date%20deposit_date%20revision_date%7D%20rcsb_primary_citation%7Bjournal_abbrev%20year%20pdbx_database_id_DOI%7D%20polymer_entities%7Brcsb_id%20entity_poly%7Btype%20nstd_linkage%20rcsb_sample_sequence_length%7D%20rcsb_entity_source_organism%7Bscientific_name%20ncbi_taxonomy_id%7D%7D%7D%7D"
+    },
+    {
+     "name": "entries_b02.json",
+     "observed": "2024-2026",
+     "url": "https://data.rcsb.org/graphql?query=%7Bentries%28entry_ids%3A%5B%228W8S%22%2C%20%228WIU%22%2C%20%228WWU%22%2C%20%228WWV%22%2C%20%228X6Z%22%2C%20%229A3Q%22%2C%20%229A3U%22%2C%20%229A3W%22%2C%20%228A6X%22%2C%20%228A7F%22%2C%20%228A7H%22%2C%20%228AI1%22%2C%20%228AI2%22%2C%20%228AI3%22%2C%20%228AI4%22%2C%20%228AI5%22%2C%20%228AI6%22%2C%20%228AWT%22%2C%20%228AZ0%22%2C%20%228AZ1%22%2C%20%228AZ2%22%2C%20%228AZ3%22%2C%20%228AZ4%22%2C%20%228AZ5%22%2C%20%228AZ6%22%2C%20%228AZ7%22%2C%20%228B68%22%2C%20%228BN3%22%2C%20%228BY8%22%2C%20%228C14%22%2C%20%228C15%22%2C%20%228C1D%22%2C%20%228C1E%22%2C%20%228C1F%22%2C%20%228C1G%22%2C%20%228C1H%22%2C%20%228C1I%22%2C%20%228C1J%22%2C%20%228C1K%22%2C%20%228C1L%22%2C%20%228C1M%22%2C%20%228C1T%22%2C%20%228C1X%22%2C%20%228C27%22%2C%20%228C28%22%2C%20%228C2Y%22%2C%20%228C30%22%2C%20%228C39%22%2C%20%228C3A%22%2C%20%228C3B%22%5D%29%7Brcsb_id%20struct%7Btitle%20pdbx_descriptor%7D%20exptl%7Bmethod%7D%20refine%7Bls_d_res_high%20ls_R_factor_R_work%20ls_R_factor_R_free%7D%20cell%7Blength_a%20length_b%20length_c%20angle_alpha%20angle_beta%20angle_gamma%7D%20symmetry%7Bspace_group_name_H_M%7D%20rcsb_entry_info%7Bmolecular_weight%20deposited_atom_count%20polymer_entity_count%20nonpolymer_entity_count%20experimental_method%20resolution_combined%7D%20rcsb_accession_info%7Binitial_release_date%20deposit_date%20revision_date%7D%20rcsb_primary_citation%7Bjournal_abbrev%20year%20pdbx_database_id_DOI%7D%20polymer_entities%7Brcsb_id%20entity_poly%7Btype%20nstd_linkage%20rcsb_sample_sequence_length%7D%20rcsb_entity_source_organism%7Bscientific_name%20ncbi_taxonomy_id%7D%7D%7D%7D"
+    },
+    {
+     "name": "entries_b03.json",
+     "observed": "2024-2026",
+     "url": "https://data.rcsb.org/graphql?query=%7Bentries%28entry_ids%3A%5B%228C3G%22%2C%20%228C3I%22%2C%20%228C3K%22%2C%20%228C3Q%22%2C%20%228C3R%22%2C%20%228C3T%22%2C%20%228C41%22%2C%20%228C5L%22%2C%20%228C89%22%2C%20%228CJI%22%2C%20%228CJJ%22%2C%20%228CJK%22%2C%20%228CJL%22%2C%20%228CJM%22%2C%20%228CJN%22%2C%20%228CJO%22%2C%20%228CN2%22%2C%20%228CN4%22%2C%20%228CN5%22%2C%20%228CN7%22%2C%20%228CN8%22%2C%20%228CNE%22%2C%20%228CNG%22%2C%20%228COU%22%2C%20%228COV%22%2C%20%228CPK%22%2C%20%228CQI%22%2C%20%228DYD%22%2C%20%228DYE%22%2C%20%228FL5%22%2C%20%228FMC%22%2C%20%228FMD%22%2C%20%228FME%22%2C%20%228FML%22%2C%20%228FO1%22%2C%20%228FOQ%22%2C%20%228FOR%22%2C%20%228FOS%22%2C%20%228FTD%22%2C%20%228G5I%22%2C%20%228G5J%22%2C%20%228G5K%22%2C%20%228G5L%22%2C%20%228G5M%22%2C%20%228G5N%22%2C%20%228G5O%22%2C%20%228G5P%22%2C%20%228G6D%22%2C%20%228GD9%22%2C%20%228GDA%22%5D%29%7Brcsb_id%20struct%7Btitle%20pdbx_descriptor%7D%20exptl%7Bmethod%7D%20refine%7Bls_d_res_high%20ls_R_factor_R_work%20ls_R_factor_R_free%7D%20cell%7Blength_a%20length_b%20length_c%20angle_alpha%20angle_beta%20angle_gamma%7D%20symmetry%7Bspace_group_name_H_M%7D%20rcsb_entry_info%7Bmolecular_weight%20deposited_atom_count%20polymer_entity_count%20nonpolymer_entity_count%20experimental_method%20resolution_combined%7D%20rcsb_accession_info%7Binitial_release_date%20deposit_date%20revision_date%7D%20rcsb_primary_citation%7Bjournal_abbrev%20year%20pdbx_database_id_DOI%7D%20polymer_entities%7Brcsb_id%20entity_poly%7Btype%20nstd_linkage%20rcsb_sample_sequence_length%7D%20rcsb_entity_source_organism%7Bscientific_name%20ncbi_taxonomy_id%7D%7D%7D%7D"
+    },
+    {
+     "name": "entries_b04.json",
+     "observed": "2024-2026",
+     "url": "https://data.rcsb.org/graphql?query=%7Bentries%28entry_ids%3A%5B%228GDB%22%2C%20%228GDC%22%2C%20%228GJG%22%2C%20%228GJI%22%2C%20%228GMH%22%2C%20%228H93%22%2C%20%228H94%22%2C%20%228H95%22%2C%20%228H96%22%2C%20%228HPZ%22%2C%20%228HQ9%22%2C%20%228HQA%22%2C%20%228HWA%22%2C%20%228HWB%22%2C%20%228HWC%22%2C%20%228HWD%22%2C%20%228HWE%22%2C%20%228HWF%22%2C%20%228HWG%22%2C%20%228HWH%22%2C%20%228HWY%22%2C%20%228HXJ%22%2C%20%228HXK%22%2C%20%228HY8%22%2C%20%228HY9%22%2C%20%228HYN%22%2C%20%228HZ4%22%2C%20%228HZ5%22%2C%20%228HZB%22%2C%20%228HZC%22%2C%20%228HZS%22%2C%20%228I52%22%2C%20%228I80%22%2C%20%228I82%22%2C%20%228I84%22%2C%20%228I85%22%2C%20%228I86%22%2C%20%228I89%22%2C%20%228I8G%22%2C%20%228I8H%22%2C%20%228ILD%22%2C%20%228ILE%22%2C%20%228ILH%22%2C%20%228ILI%22%2C%20%228ILJ%22%2C%20%228J4H%22%2C%20%228J4J%22%2C%20%228J5D%22%2C%20%228J6J%22%2C%20%228JGB%22%5D%29%7Brcsb_id%20struct%7Btitle%20pdbx_descriptor%7D%20exptl%7Bmethod%7D%20refine%7Bls_d_res_high%20ls_R_factor_R_work%20ls_R_factor_R_free%7D%20cell%7Blength_a%20length_b%20length_c%20angle_alpha%20angle_beta%20angle_gamma%7D%20symmetry%7Bspace_group_name_H_M%7D%20rcsb_entry_info%7Bmolecular_weight%20deposited_atom_count%20polymer_entity_count%20nonpolymer_entity_count%20experimental_method%20resolution_combined%7D%20rcsb_accession_info%7Binitial_release_date%20deposit_date%20revision_date%7D%20rcsb_primary_citation%7Bjournal_abbrev%20year%20pdbx_database_id_DOI%7D%20polymer_entities%7Brcsb_id%20entity_poly%7Btype%20nstd_linkage%20rcsb_sample_sequence_length%7D%20rcsb_entity_source_organism%7Bscientific_name%20ncbi_taxonomy_id%7D%7D%7D%7D"
+    },
+    {
+     "name": "entries_b05.json",
+     "observed": "2024-2026",
+     "url": "https://data.rcsb.org/graphql?query=%7Bentries%28entry_ids%3A%5B%228JGF%22%2C%20%228JGG%22%2C%20%228JHQ%22%2C%20%228JHR%22%2C%20%228JJV%22%2C%20%228JLY%22%2C%20%228OGX%22%2C%20%228OHQ%22%2C%20%228OHR%22%2C%20%228OHT%22%2C%20%228OHU%22%2C%20%228OHV%22%2C%20%228OHW%22%2C%20%228OHX%22%2C%20%228OKU%22%2C%20%228OM2%22%2C%20%228OM3%22%2C%20%228OM4%22%2C%20%228OMI%22%2C%20%228OMK%22%2C%20%228OVY%22%2C%20%228PD1%22%2C%20%228PFZ%22%2C%20%228PQN%22%2C%20%228PSZ%22%2C%20%228PT4%22%2C%20%228PTE%22%2C%20%228PV8%22%2C%20%228PWL%22%2C%20%228Q0N%22%2C%20%228Q7Y%22%2C%20%228QCF%22%2C%20%228QER%22%2C%20%228QM1%22%2C%20%228QMO%22%2C%20%228QTG%22%2C%20%228QTH%22%2C%20%228QTJ%22%2C%20%228R5I%22%2C%20%228RFH%22%2C%20%228RI0%22%2C%20%228SUX%22%2C%20%228SXT%22%2C%20%228SXU%22%2C%20%228T29%22%2C%20%228T2A%22%2C%20%228T2B%22%2C%20%228T2O%22%2C%20%228T5E%22%2C%20%228T5F%22%5D%29%7Brcsb_id%20struct%7Btitle%20pdbx_descriptor%7D%20exptl%7Bmethod%7D%20refine%7Bls_d_res_high%20ls_R_factor_R_work%20ls_R_factor_R_free%7D%20cell%7Blength_a%20length_b%20length_c%20angle_alpha%20angle_beta%20angle_gamma%7D%20symmetry%7Bspace_group_name_H_M%7D%20rcsb_entry_info%7Bmolecular_weight%20deposited_atom_count%20polymer_entity_count%20nonpolymer_entity_count%20experimental_method%20resolution_combined%7D%20rcsb_accession_info%7Binitial_release_date%20deposit_date%20revision_date%7D%20rcsb_primary_citation%7Bjournal_abbrev%20year%20pdbx_database_id_DOI%7D%20polymer_entities%7Brcsb_id%20entity_poly%7Btype%20nstd_linkage%20rcsb_sample_sequence_length%7D%20rcsb_entity_source_organism%7Bscientific_name%20ncbi_taxonomy_id%7D%7D%7D%7D"
+    },
+    {
+     "name": "entries_b06.json",
+     "observed": "2024-2026",
+     "url": "https://data.rcsb.org/graphql?query=%7Bentries%28entry_ids%3A%5B%228T5G%22%2C%20%228T5M%22%2C%20%228T5R%22%2C%20%228T64%22%2C%20%228T65%22%2C%20%228T66%22%2C%20%228T7E%22%2C%20%228TAF%22%2C%20%228TBW%22%2C%20%228TF2%22%2C%20%228TF3%22%2C%20%228TF4%22%2C%20%228TIB%22%2C%20%228TIF%22%2C%20%228TWD%22%2C%20%228TXY%22%2C%20%228U2M%22%2C%20%228U3N%22%2C%20%228U89%22%2C%20%228U9G%22%2C%20%228UC9%22%2C%20%228UF2%22%2C%20%228UH0%22%2C%20%228UHB%22%2C%20%228UKZ%22%2C%20%228UPT%22%2C%20%228UR3%22%2C%20%228UR6%22%2C%20%228UZD%22%2C%20%228V8B%22%2C%20%228VC1%22%2C%20%228VC2%22%2C%20%228VD4%22%2C%20%228VD5%22%2C%20%228VD8%22%2C%20%228VDC%22%2C%20%228VDE%22%2C%20%228W7P%22%2C%20%228WO7%22%2C%20%228XEQ%22%2C%20%227Y52%22%2C%20%227YAX%22%2C%20%227YW5%22%2C%20%227Z64%22%2C%20%227Z65%22%2C%20%228ACF%22%2C%20%228ACI%22%2C%20%228ACX%22%2C%20%228AP5%22%2C%20%228AQ9%22%5D%29%7Brcsb_id%20struct%7Btitle%20pdbx_descriptor%7D%20exptl%7Bmethod%7D%20refine%7Bls_d_res_high%20ls_R_factor_R_work%20ls_R_factor_R_free%7D%20cell%7Blength_a%20length_b%20length_c%20angle_alpha%20angle_beta%20angle_gamma%7D%20symmetry%7Bspace_group_name_H_M%7D%20rcsb_entry_info%7Bmolecular_weight%20deposited_atom_count%20polymer_entity_count%20nonpolymer_entity_count%20experimental_method%20resolution_combined%7D%20rcsb_accession_info%7Binitial_release_date%20deposit_date%20revision_date%7D%20rcsb_primary_citation%7Bjournal_abbrev%20year%20pdbx_database_id_DOI%7D%20polymer_entities%7Brcsb_id%20entity_poly%7Btype%20nstd_linkage%20rcsb_sample_sequence_length%7D%20rcsb_entity_source_organism%7Bscientific_name%20ncbi_taxonomy_id%7D%7D%7D%7D"
+    },
+    {
+     "name": "entries_b07.json",
+     "observed": "2024-2026",
+     "url": "https://data.rcsb.org/graphql?query=%7Bentries%28entry_ids%3A%5B%228IXN%22%2C%20%228IXO%22%2C%20%228QIE%22%2C%20%228REH%22%2C%20%228REN%22%2C%20%228REO%22%2C%20%228REP%22%2C%20%228REQ%22%2C%20%228RER%22%2C%20%228REY%22%2C%20%228REZ%22%2C%20%228RF1%22%2C%20%228RF7%22%2C%20%228RG3%22%2C%20%228RG4%22%2C%20%228RG5%22%2C%20%228RG7%22%2C%20%228RGA%22%2C%20%228RGJ%22%2C%20%228RGM%22%2C%20%228RGN%22%2C%20%228RH5%22%2C%20%228RHO%22%2C%20%228RHP%22%2C%20%228RI4%22%2C%20%228RI6%22%2C%20%228RI7%22%2C%20%228RI8%22%2C%20%228RIA%22%2C%20%228RIF%22%2C%20%228RIG%22%2C%20%228RIO%22%2C%20%228RIP%22%2C%20%228RIS%22%2C%20%228RIX%22%2C%20%228RJ5%22%2C%20%228RJ8%22%2C%20%228RJH%22%2C%20%228RJI%22%2C%20%228RYD%22%2C%20%228RYE%22%2C%20%228RYF%22%2C%20%228RYG%22%2C%20%228UDM%22%2C%20%228UDO%22%2C%20%228UDP%22%2C%20%228UDX%22%2C%20%228UEA%22%2C%20%228UEB%22%2C%20%228UEF%22%5D%29%7Brcsb_id%20struct%7Btitle%20pdbx_descriptor%7D%20exptl%7Bmethod%7D%20refine%7Bls_d_res_high%20ls_R_factor_R_work%20ls_R_factor_R_free%7D%20cell%7Blength_a%20length_b%20length_c%20angle_alpha%20angle_beta%20angle_gamma%7D%20symmetry%7Bspace_group_name_H_M%7D%20rcsb_entry_info%7Bmolecular_weight%20deposited_atom_count%20polymer_entity_count%20nonpolymer_entity_count%20experimental_method%20resolution_combined%7D%20rcsb_accession_info%7Binitial_release_date%20deposit_date%20revision_date%7D%20rcsb_primary_citation%7Bjournal_abbrev%20year%20pdbx_database_id_DOI%7D%20polymer_entities%7Brcsb_id%20entity_poly%7Btype%20nstd_linkage%20rcsb_sample_sequence_length%7D%20rcsb_entity_source_organism%7Bscientific_name%20ncbi_taxonomy_id%7D%7D%7D%7D"
+    },
+    {
+     "name": "entries_b08.json",
+     "observed": "2024-2026",
+     "url": "https://data.rcsb.org/graphql?query=%7Bentries%28entry_ids%3A%5B%228UEG%22%2C%20%228UEH%22%2C%20%228UEI%22%2C%20%228W2X%22%2C%20%228W30%22%2C%20%228W38%22%2C%20%228W3B%22%2C%20%228W3D%22%2C%20%228WON%22%2C%20%228XHV%22%2C%20%228XJX%22%2C%20%228XK3%22%2C%20%228XK4%22%2C%20%228XKP%22%2C%20%228XKT%22%2C%20%228XLW%22%2C%20%228XLX%22%2C%20%228XLY%22%2C%20%228XMK%22%2C%20%228XML%22%2C%20%228XMP%22%2C%20%228XMQ%22%2C%20%228XMW%22%2C%20%228XNE%22%2C%20%228XO1%22%2C%20%228XO2%22%2C%20%228XO3%22%2C%20%228XO4%22%2C%20%228XO5%22%2C%20%228XO6%22%2C%20%228XO7%22%2C%20%228XO8%22%2C%20%228XOD%22%2C%20%228XUB%22%2C%20%228XYF%22%2C%20%228Y03%22%2C%20%228Y04%22%2C%20%228Y05%22%2C%20%228Y06%22%2C%20%228Y07%22%2C%20%228Y08%22%2C%20%228Y09%22%2C%20%228Y0A%22%2C%20%228Y0B%22%2C%20%228Y0C%22%2C%20%228Y0D%22%2C%20%228Y64%22%2C%20%228YEP%22%2C%20%228YES%22%2C%20%228YEV%22%5D%29%7Brcsb_id%20struct%7Btitle%20pdbx_descriptor%7D%20exptl%7Bmethod%7D%20refine%7Bls_d_res_high%20ls_R_factor_R_work%20ls_R_factor_R_free%7D%20cell%7Blength_a%20length_b%20length_c%20angle_alpha%20angle_beta%20angle_gamma%7D%20symmetry%7Bspace_group_name_H_M%7D%20rcsb_entry_info%7Bmolecular_weight%20deposited_atom_count%20polymer_entity_count%20nonpolymer_entity_count%20experimental_method%20resolution_combined%7D%20rcsb_accession_info%7Binitial_release_date%20deposit_date%20revision_date%7D%20rcsb_primary_citation%7Bjournal_abbrev%20year%20pdbx_database_id_DOI%7D%20polymer_entities%7Brcsb_id%20entity_poly%7Btype%20nstd_linkage%20rcsb_sample_sequence_length%7D%20rcsb_entity_source_organism%7Bscientific_name%20ncbi_taxonomy_id%7D%7D%7D%7D"
+    },
+    {
+     "name": "entries_b09.json",
+     "observed": "2024-2026",
+     "url": "https://data.rcsb.org/graphql?query=%7Bentries%28entry_ids%3A%5B%228YK8%22%2C%20%228YKC%22%2C%20%228YR0%22%2C%20%228YX6%22%2C%20%228YX7%22%2C%20%228YX8%22%2C%20%228Z2L%22%2C%20%228Z2Q%22%2C%20%228Z2R%22%2C%20%228Z2S%22%2C%20%228Z2T%22%2C%20%228Z2U%22%2C%20%228Z43%22%2C%20%228Z47%22%2C%20%228Z48%22%2C%20%228Z4V%22%2C%20%228Z8Z%22%2C%20%228ZDS%22%2C%20%228ZDT%22%2C%20%228ZDU%22%2C%20%228ZO4%22%2C%20%228ZOX%22%2C%20%228ZPE%22%2C%20%228ZPF%22%2C%20%228ZPG%22%2C%20%228ZPH%22%2C%20%228ZQD%22%2C%20%228ZQG%22%2C%20%228ZR4%22%2C%20%228ZYV%22%2C%20%228ZYW%22%2C%20%228ZYZ%22%2C%20%228ZZ0%22%2C%20%229AZG%22%2C%20%229AZH%22%2C%20%229B01%22%2C%20%229B02%22%2C%20%229BCX%22%2C%20%229BOI%22%2C%20%229C6R%22%2C%20%229C6S%22%2C%20%229CCB%22%2C%20%229DI6%22%2C%20%229DIK%22%2C%20%229DIZ%22%2C%20%229DKQ%22%2C%20%229DKY%22%2C%20%229DLK%22%2C%20%229DLY%22%2C%20%229E8M%22%5D%29%7Brcsb_id%20struct%7Btitle%20pdbx_descriptor%7D%20exptl%7Bmethod%7D%20refine%7Bls_d_res_high%20ls_R_factor_R_work%20ls_R_factor_R_free%7D%20cell%7Blength_a%20length_b%20length_c%20angle_alpha%20angle_beta%20angle_gamma%7D%20symmetry%7Bspace_group_name_H_M%7D%20rcsb_entry_info%7Bmolecular_weight%20deposited_atom_count%20polymer_entity_count%20nonpolymer_entity_count%20experimental_method%20resolution_combined%7D%20rcsb_accession_info%7Binitial_release_date%20deposit_date%20revision_date%7D%20rcsb_primary_citation%7Bjournal_abbrev%20year%20pdbx_database_id_DOI%7D%20polymer_entities%7Brcsb_id%20entity_poly%7Btype%20nstd_linkage%20rcsb_sample_sequence_length%7D%20rcsb_entity_source_organism%7Bscientific_name%20ncbi_taxonomy_id%7D%7D%7D%7D"
+    },
+    {
+     "name": "entries_b10.json",
+     "observed": "2024-2026",
+     "url": "https://data.rcsb.org/graphql?query=%7Bentries%28entry_ids%3A%5B%229ELX%22%2C%20%229FQO%22%2C%20%229H76%22%2C%20%229IJM%22%2C%20%229IS9%22%2C%20%229ISC%22%2C%20%229ISE%22%2C%20%229ISL%22%2C%20%229ISR%22%2C%20%229IT3%22%2C%20%229IT6%22%2C%20%229ITA%22%2C%20%229ITD%22%2C%20%229IUO%22%2C%20%229IW3%22%2C%20%229IX4%22%2C%20%229IXM%22%2C%20%229IY8%22%2C%20%229IYA%22%2C%20%229IZF%22%2C%20%229IZG%22%2C%20%229IZH%22%2C%20%229J46%22%2C%20%229J8P%22%2C%20%229JB5%22%2C%20%229JDB%22%2C%20%229JDC%22%2C%20%229JHA%22%2C%20%229JOA%22%2C%20%229JOB%22%2C%20%229JT7%22%2C%20%229L1S%22%2C%20%229MDC%22%2C%20%229MDD%22%2C%20%229MFE%22%2C%20%229MHB%22%2C%20%228R0T%22%2C%20%228R44%22%2C%20%228R45%22%2C%20%228RDE%22%2C%20%228RR1%22%2C%20%228RR3%22%2C%20%228RR4%22%2C%20%228RVW%22%2C%20%228RW0%22%2C%20%228RW4%22%2C%20%228RW7%22%2C%20%228RWC%22%2C%20%228RWD%22%2C%20%228RWE%22%5D%29%7Brcsb_id%20struct%7Btitle%20pdbx_descriptor%7D%20exptl%7Bmethod%7D%20refine%7Bls_d_res_high%20ls_R_factor_R_work%20ls_R_factor_R_free%7D%20cell%7Blength_a%20length_b%20length_c%20angle_alpha%20angle_beta%20angle_gamma%7D%20symmetry%7Bspace_group_name_H_M%7D%20rcsb_entry_info%7Bmolecular_weight%20deposited_atom_count%20polymer_entity_count%20nonpolymer_entity_count%20experimental_method%20resolution_combined%7D%20rcsb_accession_info%7Binitial_release_date%20deposit_date%20revision_date%7D%20rcsb_primary_citation%7Bjournal_abbrev%20year%20pdbx_database_id_DOI%7D%20polymer_entities%7Brcsb_id%20entity_poly%7Btype%20nstd_linkage%20rcsb_sample_sequence_length%7D%20rcsb_entity_source_organism%7Bscientific_name%20ncbi_taxonomy_id%7D%7D%7D%7D"
+    },
+    {
+     "name": "entries_b11.json",
+     "observed": "2024-2026",
+     "url": "https://data.rcsb.org/graphql?query=%7Bentries%28entry_ids%3A%5B%228RWH%22%2C%20%228RWI%22%2C%20%228RWX%22%2C%20%228S59%22%2C%20%228V23%22%2C%20%228V4W%22%2C%20%228VGY%22%2C%20%228VSQ%22%2C%20%228VXK%22%2C%20%228VXL%22%2C%20%228Y4D%22%2C%20%228Y4E%22%2C%20%228Y4F%22%2C%20%228Y4G%22%2C%20%228Y4H%22%2C%20%228YO8%22%2C%20%228YOQ%22%2C%20%228YOX%22%2C%20%228Z7R%22%2C%20%228Z7S%22%2C%20%228Z7T%22%2C%20%228Z7U%22%2C%20%228Z7V%22%2C%20%228Z7W%22%2C%20%228Z7X%22%2C%20%228Z7Y%22%2C%20%228Z7Z%22%2C%20%228Z80%22%2C%20%228ZHQ%22%2C%20%229B2Z%22%2C%20%229B6C%22%2C%20%229BCH%22%2C%20%229BCJ%22%2C%20%229BXH%22%2C%20%229BXJ%22%2C%20%229BXK%22%2C%20%229BXL%22%2C%20%229BXM%22%2C%20%229BXN%22%2C%20%229C0L%22%2C%20%229C0M%22%2C%20%229C0N%22%2C%20%229C7Y%22%2C%20%229CHT%22%2C%20%229CJH%22%2C%20%229CJI%22%2C%20%229CJJ%22%2C%20%229CL1%22%2C%20%229CL2%22%2C%20%229CL3%22%5D%29%7Brcsb_id%20struct%7Btitle%20pdbx_descriptor%7D%20exptl%7Bmethod%7D%20refine%7Bls_d_res_high%20ls_R_factor_R_work%20ls_R_factor_R_free%7D%20cell%7Blength_a%20length_b%20length_c%20angle_alpha%20angle_beta%20angle_gamma%7D%20symmetry%7Bspace_group_name_H_M%7D%20rcsb_entry_info%7Bmolecular_weight%20deposited_atom_count%20polymer_entity_count%20nonpolymer_entity_count%20experimental_method%20resolution_combined%7D%20rcsb_accession_info%7Binitial_release_date%20deposit_date%20revision_date%7D%20rcsb_primary_citation%7Bjournal_abbrev%20year%20pdbx_database_id_DOI%7D%20polymer_entities%7Brcsb_id%20entity_poly%7Btype%20nstd_linkage%20rcsb_sample_sequence_length%7D%20rcsb_entity_source_organism%7Bscientific_name%20ncbi_taxonomy_id%7D%7D%7D%7D"
+    },
+    {
+     "name": "entries_b12.json",
+     "observed": "2024-2026",
+     "url": "https://data.rcsb.org/graphql?query=%7Bentries%28entry_ids%3A%5B%229CL4%22%2C%20%229CL5%22%2C%20%229CL6%22%2C%20%229COR%22%2C%20%229COS%22%2C%20%229COT%22%2C%20%229COU%22%2C%20%229COV%22%2C%20%229COW%22%2C%20%229COX%22%2C%20%229COY%22%2C%20%229CR3%22%2C%20%229CR4%22%2C%20%229CRA%22%2C%20%229CU4%22%2C%20%229DWU%22%2C%20%229DYJ%22%2C%20%229DYK%22%2C%20%229DYL%22%2C%20%229DYM%22%2C%20%229DYN%22%2C%20%229E3V%22%2C%20%229E3W%22%2C%20%229E3X%22%2C%20%229E3Y%22%2C%20%229E3Z%22%2C%20%229EDV%22%2C%20%229EDW%22%2C%20%229EDX%22%2C%20%229EDY%22%2C%20%229EK1%22%2C%20%229EK2%22%2C%20%229EK3%22%2C%20%229ER4%22%2C%20%229F32%22%2C%20%229F4I%22%2C%20%229F81%22%2C%20%229F9V%22%2C%20%229FTF%22%2C%20%229FUX%22%2C%20%229G69%22%2C%20%229GG2%22%2C%20%229GNG%22%2C%20%229GRC%22%2C%20%229GVK%22%2C%20%229HHW%22%2C%20%229IJN%22%2C%20%229IKM%22%2C%20%229IMB%22%2C%20%229J1J%22%5D%29%7Brcsb_id%20struct%7Btitle%20pdbx_descriptor%7D%20exptl%7Bmethod%7D%20refine%7Bls_d_res_high%20ls_R_factor_R_work%20ls_R_factor_R_free%7D%20cell%7Blength_a%20length_b%20length_c%20angle_alpha%20angle_beta%20angle_gamma%7D%20symmetry%7Bspace_group_name_H_M%7D%20rcsb_entry_info%7Bmolecular_weight%20deposited_atom_count%20polymer_entity_count%20nonpolymer_entity_count%20experimental_method%20resolution_combined%7D%20rcsb_accession_info%7Binitial_release_date%20deposit_date%20revision_date%7D%20rcsb_primary_citation%7Bjournal_abbrev%20year%20pdbx_database_id_DOI%7D%20polymer_entities%7Brcsb_id%20entity_poly%7Btype%20nstd_linkage%20rcsb_sample_sequence_length%7D%20rcsb_entity_source_organism%7Bscientific_name%20ncbi_taxonomy_id%7D%7D%7D%7D"
+    },
+    {
+     "name": "entries_b13.json",
+     "observed": "2024-2026",
+     "url": "https://data.rcsb.org/graphql?query=%7Bentries%28entry_ids%3A%5B%229J1K%22%2C%20%229J1L%22%2C%20%229MML%22%2C%20%227HUC%22%2C%20%227HUD%22%2C%20%227HUE%22%2C%20%228JZP%22%2C%20%228K0Y%22%2C%20%228K1E%22%2C%20%228K2Z%22%2C%20%228K30%22%2C%20%228PIN%22%2C%20%228PIO%22%2C%20%228PIR%22%2C%20%228PIS%22%2C%20%228PKN%22%2C%20%228PNG%22%2C%20%228PNS%22%2C%20%228PPX%22%2C%20%228Q2F%22%2C%20%228QM4%22%2C%20%228QM5%22%2C%20%228QM6%22%2C%20%228QM7%22%2C%20%228QM8%22%2C%20%228QM9%22%2C%20%228R13%22%2C%20%228RJ0%22%2C%20%228RJ1%22%2C%20%228RKY%22%2C%20%228RKZ%22%2C%20%228RL0%22%2C%20%228RL2%22%2C%20%228RL5%22%2C%20%228RL6%22%2C%20%228RL7%22%2C%20%228RL8%22%2C%20%228RL9%22%2C%20%228RLA%22%2C%20%228RLB%22%2C%20%228RLC%22%2C%20%228RLD%22%2C%20%228RLE%22%2C%20%228RLO%22%2C%20%228RLP%22%2C%20%228RLQ%22%2C%20%228RLX%22%2C%20%228RM2%22%2C%20%228RMB%22%2C%20%228RMH%22%5D%29%7Brcsb_id%20struct%7Btitle%20pdbx_descriptor%7D%20exptl%7Bmethod%7D%20refine%7Bls_d_res_high%20ls_R_factor_R_work%20ls_R_factor_R_free%7D%20cell%7Blength_a%20length_b%20length_c%20angle_alpha%20angle_beta%20angle_gamma%7D%20symmetry%7Bspace_group_name_H_M%7D%20rcsb_entry_info%7Bmolecular_weight%20deposited_atom_count%20polymer_entity_count%20nonpolymer_entity_count%20experimental_method%20resolution_combined%7D%20rcsb_accession_info%7Binitial_release_date%20deposit_date%20revision_date%7D%20rcsb_primary_citation%7Bjournal_abbrev%20year%20pdbx_database_id_DOI%7D%20polymer_entities%7Brcsb_id%20entity_poly%7Btype%20nstd_linkage%20rcsb_sample_sequence_length%7D%20rcsb_entity_source_organism%7Bscientific_name%20ncbi_taxonomy_id%7D%7D%7D%7D"
+    },
+    {
+     "name": "entries_b14.json",
+     "observed": "2024-2026",
+     "url": "https://data.rcsb.org/graphql?query=%7Bentries%28entry_ids%3A%5B%2221BK%22%2C%20%228Y71%22%2C%20%229EBT%22%2C%20%229EH9%22%2C%20%229EHA%22%2C%20%229EHD%22%2C%20%229EIC%22%2C%20%229EIK%22%2C%20%229EKA%22%2C%20%229K6J%22%2C%20%229L52%22%2C%20%229L62%22%2C%20%229L63%22%2C%20%229L64%22%2C%20%229L65%22%2C%20%229L6E%22%2C%20%229L76%22%2C%20%229L7R%22%2C%20%229L7S%22%2C%20%229L7T%22%2C%20%229L7U%22%2C%20%229L7V%22%2C%20%229L9G%22%2C%20%229LA6%22%2C%20%229LA8%22%2C%20%229LAA%22%2C%20%229LAB%22%2C%20%229LAC%22%2C%20%229LAH%22%2C%20%229LBW%22%2C%20%229LBY%22%2C%20%229LC9%22%2C%20%229LCO%22%2C%20%229LCP%22%2C%20%229LCQ%22%2C%20%229LJA%22%2C%20%229LJB%22%2C%20%229LJC%22%2C%20%229LS3%22%2C%20%229LW1%22%2C%20%229LYT%22%2C%20%229M3K%22%2C%20%229MS3%22%2C%20%229MU7%22%2C%20%229MUQ%22%2C%20%229N2K%22%2C%20%229NIR%22%2C%20%229NR3%22%2C%20%229O95%22%2C%20%229O96%22%5D%29%7Brcsb_id%20struct%7Btitle%20pdbx_descriptor%7D%20exptl%7Bmethod%7D%20refine%7Bls_d_res_high%20ls_R_factor_R_work%20ls_R_factor_R_free%7D%20cell%7Blength_a%20length_b%20length_c%20angle_alpha%20angle_beta%20angle_gamma%7D%20symmetry%7Bspace_group_name_H_M%7D%20rcsb_entry_info%7Bmolecular_weight%20deposited_atom_count%20polymer_entity_count%20nonpolymer_entity_count%20experimental_method%20resolution_combined%7D%20rcsb_accession_info%7Binitial_release_date%20deposit_date%20revision_date%7D%20rcsb_primary_citation%7Bjournal_abbrev%20year%20pdbx_database_id_DOI%7D%20polymer_entities%7Brcsb_id%20entity_poly%7Btype%20nstd_linkage%20rcsb_sample_sequence_length%7D%20rcsb_entity_source_organism%7Bscientific_name%20ncbi_taxonomy_id%7D%7D%7D%7D"
+    },
+    {
+     "name": "entries_b15.json",
+     "observed": "2024-2026",
+     "url": "https://data.rcsb.org/graphql?query=%7Bentries%28entry_ids%3A%5B%229O97%22%2C%20%229O98%22%2C%20%229OC3%22%2C%20%229ODJ%22%2C%20%229ODK%22%2C%20%229ODL%22%2C%20%229OXP%22%2C%20%229P0C%22%2C%20%229P0D%22%2C%20%229P3N%22%2C%20%229P3O%22%2C%20%229P3P%22%2C%20%229P3Q%22%2C%20%229P3R%22%2C%20%229P3S%22%2C%20%229P3T%22%2C%20%229P3U%22%2C%20%229P3V%22%2C%20%229P3W%22%2C%20%229PKU%22%2C%20%229PKW%22%2C%20%229PKX%22%2C%20%229PKY%22%2C%20%229PKZ%22%2C%20%229PXZ%22%2C%20%229PY0%22%2C%20%229PY1%22%2C%20%229PZM%22%2C%20%229Q63%22%2C%20%229Q6E%22%2C%20%229UA5%22%2C%20%229UEP%22%2C%20%229UGU%22%2C%20%229UGX%22%2C%20%229UGY%22%2C%20%229UOW%22%2C%20%229UP9%22%2C%20%229UVH%22%2C%20%229V85%22%2C%20%229VDY%22%2C%20%229VDZ%22%2C%20%229VE0%22%2C%20%229VHL%22%2C%20%229VLG%22%2C%20%229W54%22%2C%20%229W55%22%2C%20%229W56%22%2C%20%229W57%22%2C%20%229W58%22%2C%20%229W7S%22%5D%29%7Brcsb_id%20struct%7Btitle%20pdbx_descriptor%7D%20exptl%7Bmethod%7D%20refine%7Bls_d_res_high%20ls_R_factor_R_work%20ls_R_factor_R_free%7D%20cell%7Blength_a%20length_b%20length_c%20angle_alpha%20angle_beta%20angle_gamma%7D%20symmetry%7Bspace_group_name_H_M%7D%20rcsb_entry_info%7Bmolecular_weight%20deposited_atom_count%20polymer_entity_count%20nonpolymer_entity_count%20experimental_method%20resolution_combined%7D%20rcsb_accession_info%7Binitial_release_date%20deposit_date%20revision_date%7D%20rcsb_primary_citation%7Bjournal_abbrev%20year%20pdbx_database_id_DOI%7D%20polymer_entities%7Brcsb_id%20entity_poly%7Btype%20nstd_linkage%20rcsb_sample_sequence_length%7D%20rcsb_entity_source_organism%7Bscientific_name%20ncbi_taxonomy_id%7D%7D%7D%7D"
+    },
+    {
+     "name": "entries_b16.json",
+     "observed": "2024-2026",
+     "url": "https://data.rcsb.org/graphql?query=%7Bentries%28entry_ids%3A%5B%229W7W%22%2C%20%229WS8%22%2C%20%229WT2%22%2C%20%229WYP%22%2C%20%229X3M%22%2C%20%229X8X%22%2C%20%229X95%22%2C%20%229X97%22%2C%20%229XQB%22%2C%20%229XVH%22%2C%20%229XVW%22%2C%20%229Y5X%22%2C%20%229YLZ%22%2C%20%229YM0%22%2C%20%229YM1%22%2C%20%229YM2%22%2C%20%229YM3%22%2C%20%229YM4%22%2C%20%229YM5%22%2C%20%229YM6%22%2C%20%229YM7%22%2C%20%229YV5%22%2C%20%229YVV%22%2C%20%229Z28%22%2C%20%229Z29%22%2C%20%229Z2A%22%2C%20%229Z2B%22%2C%20%229Z2C%22%2C%20%229Z70%22%2C%20%229ZM0%22%2C%20%2221WE%22%2C%20%2221WJ%22%2C%20%227I7Y%22%2C%20%227I7Z%22%2C%20%227I80%22%2C%20%227I81%22%2C%20%227I82%22%2C%20%227I83%22%2C%20%227I84%22%2C%20%227I85%22%2C%20%227I86%22%2C%20%227I87%22%2C%20%227I88%22%2C%20%227I89%22%2C%20%227I8A%22%2C%20%227I8B%22%2C%20%227I8C%22%2C%20%227I8D%22%2C%20%227I8E%22%2C%20%227I8F%22%5D%29%7Brcsb_id%20struct%7Btitle%20pdbx_descriptor%7D%20exptl%7Bmethod%7D%20refine%7Bls_d_res_high%20ls_R_factor_R_work%20ls_R_factor_R_free%7D%20cell%7Blength_a%20length_b%20length_c%20angle_alpha%20angle_beta%20angle_gamma%7D%20symmetry%7Bspace_group_name_H_M%7D%20rcsb_entry_info%7Bmolecular_weight%20deposited_atom_count%20polymer_entity_count%20nonpolymer_entity_count%20experimental_method%20resolution_combined%7D%20rcsb_accession_info%7Binitial_release_date%20deposit_date%20revision_date%7D%20rcsb_primary_citation%7Bjournal_abbrev%20year%20pdbx_database_id_DOI%7D%20polymer_entities%7Brcsb_id%20entity_poly%7Btype%20nstd_linkage%20rcsb_sample_sequence_length%7D%20rcsb_entity_source_organism%7Bscientific_name%20ncbi_taxonomy_id%7D%7D%7D%7D"
+    },
+    {
+     "name": "entries_b17.json",
+     "observed": "2024-2026",
+     "url": "https://data.rcsb.org/graphql?query=%7Bentries%28entry_ids%3A%5B%227I8G%22%2C%20%227I8H%22%2C%20%227I8I%22%2C%20%227I8J%22%2C%20%227I8K%22%2C%20%227I8L%22%2C%20%227I8M%22%2C%20%227I8N%22%2C%20%227I8O%22%2C%20%227I8P%22%2C%20%227I8Q%22%2C%20%227I8R%22%2C%20%227IPL%22%2C%20%227IPM%22%2C%20%227IPN%22%2C%20%227IPO%22%2C%20%227IPP%22%2C%20%227IPQ%22%2C%20%227IPR%22%2C%20%227IPS%22%2C%20%227IPT%22%2C%20%227IPU%22%2C%20%227IPV%22%2C%20%227IPW%22%2C%20%227IPX%22%2C%20%227IPY%22%2C%20%227IPZ%22%2C%20%227IQ0%22%2C%20%227IQ1%22%2C%20%227IQ2%22%2C%20%227IQ3%22%2C%20%227IQ4%22%2C%20%227IQ5%22%2C%20%227IQ6%22%2C%20%227IQ7%22%2C%20%227IQ8%22%2C%20%227IQ9%22%2C%20%227IQA%22%2C%20%227IQB%22%2C%20%227IQC%22%2C%20%227IQD%22%2C%20%227IQE%22%2C%20%227IQF%22%2C%20%227IQG%22%2C%20%227IQH%22%2C%20%227IQI%22%2C%20%227IQJ%22%2C%20%227IQK%22%2C%20%227IQL%22%2C%20%227IQM%22%5D%29%7Brcsb_id%20struct%7Btitle%20pdbx_descriptor%7D%20exptl%7Bmethod%7D%20refine%7Bls_d_res_high%20ls_R_factor_R_work%20ls_R_factor_R_free%7D%20cell%7Blength_a%20length_b%20length_c%20angle_alpha%20angle_beta%20angle_gamma%7D%20symmetry%7Bspace_group_name_H_M%7D%20rcsb_entry_info%7Bmolecular_weight%20deposited_atom_count%20polymer_entity_count%20nonpolymer_entity_count%20experimental_method%20resolution_combined%7D%20rcsb_accession_info%7Binitial_release_date%20deposit_date%20revision_date%7D%20rcsb_primary_citation%7Bjournal_abbrev%20year%20pdbx_database_id_DOI%7D%20polymer_entities%7Brcsb_id%20entity_poly%7Btype%20nstd_linkage%20rcsb_sample_sequence_length%7D%20rcsb_entity_source_organism%7Bscientific_name%20ncbi_taxonomy_id%7D%7D%7D%7D"
+    },
+    {
+     "name": "entries_b18.json",
+     "observed": "2024-2026",
+     "url": "https://data.rcsb.org/graphql?query=%7Bentries%28entry_ids%3A%5B%227IQN%22%2C%20%227IQO%22%2C%20%227IQP%22%2C%20%227IQQ%22%2C%20%227IQR%22%2C%20%227IQS%22%2C%20%227IQT%22%2C%20%227IQU%22%2C%20%227IQV%22%2C%20%227IQW%22%2C%20%227IQX%22%2C%20%227IQY%22%2C%20%227IQZ%22%2C%20%227IR0%22%2C%20%227IR1%22%2C%20%227IR2%22%2C%20%227IR3%22%2C%20%227IR4%22%2C%20%227IR5%22%2C%20%227IR6%22%2C%20%227IR7%22%2C%20%227IR8%22%2C%20%227IR9%22%2C%20%227IRA%22%2C%20%227IRB%22%2C%20%227IRC%22%2C%20%227IRD%22%2C%20%227IRE%22%2C%20%227IRF%22%2C%20%227IRG%22%2C%20%227IRH%22%2C%20%227IRI%22%2C%20%227IRJ%22%2C%20%227IRK%22%2C%20%227IRL%22%2C%20%227IRM%22%2C%20%227IRN%22%2C%20%227IRO%22%2C%20%227IRP%22%2C%20%227IRQ%22%2C%20%227IRR%22%2C%20%227IRS%22%2C%20%227IRT%22%2C%20%227IRU%22%2C%20%227IRV%22%2C%20%227IRW%22%2C%20%227IRX%22%2C%20%227IRY%22%2C%20%227IRZ%22%2C%20%227IS0%22%5D%29%7Brcsb_id%20struct%7Btitle%20pdbx_descriptor%7D%20exptl%7Bmethod%7D%20refine%7Bls_d_res_high%20ls_R_factor_R_work%20ls_R_factor_R_free%7D%20cell%7Blength_a%20length_b%20length_c%20angle_alpha%20angle_beta%20angle_gamma%7D%20symmetry%7Bspace_group_name_H_M%7D%20rcsb_entry_info%7Bmolecular_weight%20deposited_atom_count%20polymer_entity_count%20nonpolymer_entity_count%20experimental_method%20resolution_combined%7D%20rcsb_accession_info%7Binitial_release_date%20deposit_date%20revision_date%7D%20rcsb_primary_citation%7Bjournal_abbrev%20year%20pdbx_database_id_DOI%7D%20polymer_entities%7Brcsb_id%20entity_poly%7Btype%20nstd_linkage%20rcsb_sample_sequence_length%7D%20rcsb_entity_source_organism%7Bscientific_name%20ncbi_taxonomy_id%7D%7D%7D%7D"
+    },
+    {
+     "name": "entries_b19.json",
+     "observed": "2024-2026",
+     "url": "https://data.rcsb.org/graphql?query=%7Bentries%28entry_ids%3A%5B%227IS1%22%2C%20%227IS2%22%2C%20%227IS3%22%2C%20%227IS4%22%2C%20%227IS5%22%2C%20%227IS6%22%2C%20%227IS7%22%2C%20%227IS8%22%2C%20%227IS9%22%2C%20%227ISA%22%2C%20%227ISB%22%2C%20%227ISC%22%2C%20%227ISD%22%2C%20%227ISE%22%2C%20%227ISF%22%2C%20%227ISG%22%2C%20%227ISH%22%2C%20%227ISI%22%2C%20%227ISJ%22%2C%20%227ISK%22%2C%20%227ISL%22%2C%20%227ISM%22%2C%20%227ISN%22%2C%20%227ISO%22%2C%20%227ISP%22%2C%20%227ISQ%22%2C%20%227ISR%22%2C%20%227ISS%22%2C%20%227IST%22%2C%20%227ISU%22%2C%20%227ISV%22%2C%20%227ISW%22%2C%20%227ISX%22%2C%20%227ISY%22%2C%20%227ISZ%22%2C%20%227IT0%22%2C%20%227IT1%22%2C%20%227IT2%22%2C%20%227IT3%22%2C%20%227IT4%22%2C%20%227IT5%22%2C%20%227IT6%22%2C%20%227IT7%22%2C%20%227IT8%22%2C%20%227IT9%22%2C%20%227ITA%22%2C%20%227ITB%22%2C%20%227ITC%22%2C%20%227ITD%22%2C%20%227ITE%22%5D%29%7Brcsb_id%20struct%7Btitle%20pdbx_descriptor%7D%20exptl%7Bmethod%7D%20refine%7Bls_d_res_high%20ls_R_factor_R_work%20ls_R_factor_R_free%7D%20cell%7Blength_a%20length_b%20length_c%20angle_alpha%20angle_beta%20angle_gamma%7D%20symmetry%7Bspace_group_name_H_M%7D%20rcsb_entry_info%7Bmolecular_weight%20deposited_atom_count%20polymer_entity_count%20nonpolymer_entity_count%20experimental_method%20resolution_combined%7D%20rcsb_accession_info%7Binitial_release_date%20deposit_date%20revision_date%7D%20rcsb_primary_citation%7Bjournal_abbrev%20year%20pdbx_database_id_DOI%7D%20polymer_entities%7Brcsb_id%20entity_poly%7Btype%20nstd_linkage%20rcsb_sample_sequence_length%7D%20rcsb_entity_source_organism%7Bscientific_name%20ncbi_taxonomy_id%7D%7D%7D%7D"
+    }
+   ],
+   "hosts": [
+    "search.rcsb.org",
+    "data.rcsb.org"
+   ],
+   "id": "rcsb_pdb_entries",
+   "licence_class": "open",
+   "licence_location": "https://www.rcsb.org/pages/usage-policy",
+   "licence_text": "RCSB PDB Usage Policies page (read 2026-11-22): PDB archive files and RCSB PDB programmatic API data available under CC0 1.0 Universal Public Domain Dedication",
+   "max_bytes": 16777216,
+   "method": "1,000 earliest released macromolecular structures across 2024 (350), 2025 (350) and 2026 (300) sorted by initial_release_date and rcsb_id, fetched in 20 GraphQL batches of 50",
+   "min_interval": 0.5,
+   "privacy": "macromolecular experimental structure metadata only; audit_author and citation author lists omitted in GraphQL field selection and redact_emails enforced",
+   "publisher": "RCSB Protein Data Bank / Worldwide Protein Data Bank (wwPDB)",
+   "rate_limit": "23 GET requests at 0.5 s minimum interval, descriptive user agent",
+   "redistribution": "CC0 1.0 Universal; raw files stay local",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "first party: RCSB PDB is the U.S. wwPDB data center operating rcsb.org APIs",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "NOAA National Weather Service CAP Alerts API (api.weather.gov, U.S. Federal Public Domain); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "alerts_p1.json",
+     "observed": "2026-11",
+     "url": "https://api.weather.gov/alerts?limit=500"
+    },
+    {
+     "name": "alerts_p2.json",
+     "observed": "2026-11",
+     "url": "https://api.weather.gov/alerts?limit=500&cursor=eyJ0IjoxNzk1MzIyOTQwLCJpIjoidXJuOm9pZDoyLjQ5LjAuMS44NDAuMC45YzU0YTRjYjdjZDdiMjFkMTM5OGNhOGFjMmVjZGUzMjAwY2RiZGI3LjAwMS4xIn0%3D"
+    },
+    {
+     "name": "alerts_p3.json",
+     "observed": "2026-11",
+     "url": "https://api.weather.gov/alerts?limit=500&cursor=eyJ0IjoxNzk1MjkwOTAwLCJpIjoidXJuOm9pZDoyLjQ5LjAuMS44NDAuMC5jNDA3MTE0ZmY2MjMzZmI3NjgxMTc1ZWZlZmVjNDYyZTdmNGNlZjQ5LjAwMy4yIn0%3D"
+    },
+    {
+     "name": "alerts_p4.json",
+     "observed": "2026-11",
+     "url": "https://api.weather.gov/alerts?limit=500&cursor=eyJ0IjoxNzk1MjUyOTIwLCJpIjoidXJuOm9pZDoyLjQ5LjAuMS44NDAuMC43YWRhNTdmNDVhZDcxYjIzN2JiOWI5NjkwN2JiYmVkYTZiNmVmZThmLjAwMi4xIn0%3D"
+    }
+   ],
+   "hosts": [
+    "api.weather.gov"
+   ],
+   "id": "nws_weather_alerts",
+   "licence_class": "open",
+   "licence_location": "https://www.weather.gov/disclaimer",
+   "licence_text": "NWS Disclaimer page (read 2026-11-22): National Weather Service information and CAP alert products are in the public domain (17 U.S.C. 105)",
+   "max_bytes": 16777216,
+   "method": "four consecutive 500-alert GeoJSON cursor pages from api.weather.gov/alerts (2,000 unique severe-weather advisories)",
+   "min_interval": 1.0,
+   "privacy": "public NWS operational weather advisories; CAP sender email addresses stripped at every depth via NWS_DROP={'sender'} and text redacted via redact_emails",
+   "publisher": "NOAA National Weather Service (api.weather.gov)",
+   "rate_limit": "4 cursor GET requests at 1.0 s minimum interval, descriptive user agent",
+   "redistribution": "U.S. Federal Government work (17 U.S.C. 105); raw files stay local",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "first party: NOAA National Weather Service publishes operational CAP alerts directly at api.weather.gov",
+   "upstream_verified": true
   }
  ]
 }

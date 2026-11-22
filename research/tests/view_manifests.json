@@ -941,6 +941,32 @@
    "source_snapshot": "nvd_cve/2026-11-22"
   }
  },
+ "nws": {
+  "nws_weather_alerts": {
+   "dropped": [
+    "sender"
+   ],
+   "files": {
+    "alerts.jsonl": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "alerts.jsonl": "{\"id\": \"u1\", \"properties\": {\"event\": \"First\", \"id\": \"NWS-1\"}}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "features_in": 3,
+    "files": [
+     "alerts_p1.json",
+     "alerts_p2.json"
+    ],
+    "method": "four consecutive 500-alert cursor pages from NWS alerts API",
+    "unique_alerts": 2
+   },
+   "source_snapshot": "nws_weather_alerts/2026-11-22"
+  }
+ },
  "openlibrary": {
   "openlibrary_dump": {
    "dropped": [
@@ -1103,6 +1129,53 @@
     "method": "complete 2026-09-04 Queensland petroleum and gas field release"
    },
    "source_snapshot": "zen_queensland_petrol/2026-11-22"
+  }
+ },
+ "rcsb": {
+  "rcsb_pdb_entries": {
+   "dropped": [
+    "audit_author (omitted in GraphQL query)",
+    "citation authors (omitted in GraphQL query)"
+   ],
+   "files": {
+    "entries.jsonl": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "entries.jsonl": "{\"rcsb_id\": \"7YBF\", \"struct\": {\"title\": \"First entry\"}}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "entries_in": 3,
+    "files": [
+     "entries_b00.json",
+     "entries_b01.json"
+    ],
+    "method": "earliest released structures per calendar year ordered by initial_release_date and rcsb_id (2024:350, 2025:350, 2026:300)"
+   },
+   "source_snapshot": "rcsb_pdb_entries/2026-11-22"
+  }
+ },
+ "ror": {
+  "ror_organizations": {
+   "dropped": [],
+   "files": {
+    "organizations.jsonl": {
+     "rows": 1
+    }
+   },
+   "heads": {
+    "organizations.jsonl": "{\"id\": \"https://ror.org/01\", \"names\": [{\"value\": \"Uni A\"}]}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "kept": 1,
+    "method": "every 15th ROR v2 organization record in canonical id order across all statuses",
+    "stride": 15,
+    "total_records": 3
+   },
+   "source_snapshot": "ror_organizations/2026-11-22"
   }
  },
  "rte": {
