@@ -1551,6 +1551,21 @@
    "size": null,
    "source_url": "https://world.openfoodfacts.org/",
    "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "nhtsa:fars",
+   "licence": "not verified: the NHTSA page returns Access Denied to headless access (not bypassed) and the data.gov metadata query failed",
+   "name": "NHTSA Fatality Analysis Reporting System",
+   "next_step": "read the NHTSA data statement in a browser or data.gov metadata, then acquire the National CSV zip (about 35 MB per year; static.nhtsa.gov answers HEAD requests)",
+   "notes": "real police crash reports with many categorical codes and high-cardinality state, county and vehicle fields: a strong C2a candidate",
+   "publisher": "NHTSA",
+   "reason": "categorical mixed-schema operational records",
+   "size": null,
+   "source_url": "https://www.nhtsa.gov/research-data/fatality-analysis-reporting-system-fars",
+   "status": "permission_pending"
   }
  ],
  "date": "2026-11-21",

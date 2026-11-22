@@ -1040,3 +1040,21 @@ Loghub: the existing group already holds the 16 systems and Loghub-2.0 re-annota
 **Counts (machine-derived).** C1 52, C2a 13, C2b 12, C3 17, C4 14, C5 22, C6 11 (gaps 0, 17, 18, 23, 14, 14, 19); 130 distinct provenance groups, 129 generating systems, 130 producers, 25 curators, 54 domains, 37 schema families, 141 category participations; the largest schema family holds 49 percent of the groups.
 
 **Focused mutation.** Backblaze functions 190 of 196 (96.9 percent); `_build_tables` after the per-source snapshot change 218 of 227 (96.0 percent); earlier scopes unchanged. No equivalence was approved.
+
+## Update 20: NYC taxi fares, openFDA device reports, USDA food composition and the LANL access blocker (2026-11-22)
+
+**Rights decisions.** NYC TLC was reassessed with the sources supplied by the owner and read in a browser: the NYC Open Data Technical Standards Manual quotes Local Law 11 of 2012 (data available without registration, licence requirement or usage restrictions) and the portal Terms of Use bind the user to the nyc.gov terms, give no warranty and ask republishers to identify source, version and modifications; the dataset's metadata declares no extra TLC terms. The TLC page itself still denies automated access and was not read, so a TLC-only condition cannot be excluded; this is recorded. The
+download used the NYC Open Data API with TLS verification against the macOS system root store (the Python bundle lacks the GlobalSign R46 root); verification was never disabled. openFDA: the Terms of Service read in a browser state CC0 1.0 unless marked, with no signature, indemnity or account; large pages need an API key, which was not requested. USDA FoodData Central: CC0 1.0 stated by USDA.
+LANL: both datasets carry a statement that LANL waived all copyright and related rights and an approval for public release, but the official download interface requires an email address and an intended-use statement; I did not submit personal details, so nothing was acquired (owner action).
+
+| Group | Category | Structure | Counts as |
+|---|---|---|---|
+| `nyc_tlc` | C2b | three complete pickup days of March 2023, 320,320 yellow taxi trips with fare, extras, tax, tip, tolls, surcharges, total and payment type; 2,917 trips with zero or negative totals kept as published; no trip identifier, taxi-zone ids only | new group; transport-fare mechanism |
+| `fda_maude` | C6 | every device adverse event report received on 2023-03-01 (7,355), depth 5, 71 keys with 8 optional, arrays of devices and patients; manufacturer contact persons and narratives dropped | new group, shares only the publisher and platform with the FAERS group (recorded as a dependence) |
+| `usda_fdc` | C5 | SR Legacy April 2018: 7 tables, 6 relations with no orphan, 7,793 foods, 644,125 laboratory nutrient measurements, 14,449 portions | new group; measurement-fact topology |
+
+Open Food Facts and OpenAlex were already represented (C6 and C5/C6) and were not re-acquired. LANL's host-event JSON lines are flat, so no C6 claim would be made for them; both LANL datasets are one enterprise and one group. NHTSA FARS (a strong C2a candidate) and the rest of the C2a backlog remain without verified rights.
+
+**Counts (machine-derived).** C1 52, C2a 13, C2b 13, C3 17, C4 14, C5 23, C6 12 (gaps 0, 17, 17, 23, 14, 13, 18); 133 distinct provenance groups, 132 generating systems, 133 producers, 27 curators, 57 domains, 40 schema families, 144 category participations; the largest schema family holds 48 percent of the groups; C4 remains 57 percent business-process execution.
+
+**Focused mutation.** TLC functions 153 of 159 (96.2 percent); MAUDE functions 114 of 117 (97.4 percent); no equivalence approved.
