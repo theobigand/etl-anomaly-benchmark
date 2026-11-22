@@ -1216,6 +1216,36 @@
    "size": null,
    "source_url": "https://zenodo.org/records/13254389",
    "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:15846963",
+   "licence": "cc-by-sa-4.0 (Fraunhofer IEE); Wind Farm A derives from EDP open data whose terms were unreadable",
+   "name": "CARE to Compare, Wind Farm B",
+   "next_step": "Wind Farm C (58 datasets, 79 to 99 MB each) is the same provenance group; Wind Farm A needs the EDP open data terms",
+   "notes": "record 14004425 named in the mission is the enzyme CARE benchmark, unrelated; the wind-turbine benchmark is 15846963",
+   "publisher": "Fraunhofer IEE",
+   "reason": "real equipment-fault labelled turbine SCADA",
+   "size": null,
+   "source_url": "https://zenodo.org/records/15846963",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:14004425",
+   "licence": "cc-by-4.0",
+   "name": "CARE (enzyme classification) datasets",
+   "next_step": "none",
+   "notes": "protein and reaction tables for enzyme classification; not time series, not wind turbines; unrelated to CARE to Compare",
+   "publisher": "Yang et al.",
+   "reason": "not relevant to the thesis categories",
+   "size": null,
+   "source_url": "https://zenodo.org/records/14004425",
+   "status": "structurally_unsuitable"
   }
  ],
  "date": "2026-11-21",

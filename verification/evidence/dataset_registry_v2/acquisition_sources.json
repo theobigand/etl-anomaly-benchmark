@@ -8120,6 +8120,115 @@
    "stratum": "C3",
    "upstream": "first party: the data collectors released the datasets; host utilities' confidential system specifications are withheld by the release itself",
    "upstream_verified": true
+  },
+  {
+   "attribution": "cite Gueck et al., CARE to Compare: A real-world dataset for anomaly detection in wind turbine data (Data 2024) and the Zenodo record 15846963 (Fraunhofer IEE)",
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_care_wind_b",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/15846963",
+   "licence_text": "Zenodo record 15846963: license cc-by-sa-4.0 (share alike), access_right open; creators from Fraunhofer IEE, who published the data of the offshore wind farms B and C (anonymised); Wind Farm A derives from the EDP open data platform, whose terms could not be read, so Wind Farm A is not used",
+   "max_bytes": 104857600,
+   "members": {
+    "19.csv": {
+     "compressed": 26451047,
+     "member": "CARE_To_Compare/Wind Farm B/datasets/19.csv",
+     "method": 8
+    },
+    "2.csv": {
+     "compressed": 25630956,
+     "member": "CARE_To_Compare/Wind Farm B/datasets/2.csv",
+     "method": 8
+    },
+    "21.csv": {
+     "compressed": 25042319,
+     "member": "CARE_To_Compare/Wind Farm B/datasets/21.csv",
+     "method": 8
+    },
+    "34.csv": {
+     "compressed": 25708202,
+     "member": "CARE_To_Compare/Wind Farm B/datasets/34.csv",
+     "method": 8
+    },
+    "53.csv": {
+     "compressed": 27254332,
+     "member": "CARE_To_Compare/Wind Farm B/datasets/53.csv",
+     "method": 8
+    },
+    "event_info.csv": {
+     "compressed": 495,
+     "member": "CARE_To_Compare/Wind Farm B/event_info.csv",
+     "method": 8
+    },
+    "feature_description.csv": {
+     "compressed": 985,
+     "member": "CARE_To_Compare/Wind Farm B/feature_description.csv",
+     "method": 8
+    }
+   },
+   "method": "HTTP range requests for seven members of the 5.5 GB zip (server answers 206): event information, feature description and five of the 15 datasets of Wind Farm B; each file is the local zip header followed by the member's deflate stream, decoded by the view builder",
+   "min_interval": 3.0,
+   "privacy": "anonymised offshore wind farm: asset ids and timestamps are anonymised by the publisher; no personal data",
+   "publisher": "Fraunhofer IEE (CARE to Compare, Wind Farm B)",
+   "ranges": [
+    {
+     "length": 695,
+     "name": "event_info.csv",
+     "observed": "2023",
+     "start": 557876745,
+     "url": "https://zenodo.org/records/15846963/files/CARE_To_Compare.zip?download=1"
+    },
+    {
+     "length": 1194,
+     "name": "feature_description.csv",
+     "observed": "2023",
+     "start": 557877312,
+     "url": "https://zenodo.org/records/15846963/files/CARE_To_Compare.zip?download=1"
+    },
+    {
+     "length": 26451248,
+     "name": "19.csv",
+     "observed": "2023",
+     "start": 157962291,
+     "url": "https://zenodo.org/records/15846963/files/CARE_To_Compare.zip?download=1"
+    },
+    {
+     "length": 25708403,
+     "name": "34.csv",
+     "observed": "2023",
+     "start": 288887220,
+     "url": "https://zenodo.org/records/15846963/files/CARE_To_Compare.zip?download=1"
+    },
+    {
+     "length": 27254533,
+     "name": "53.csv",
+     "observed": "2023",
+     "start": 339732528,
+     "url": "https://zenodo.org/records/15846963/files/CARE_To_Compare.zip?download=1"
+    },
+    {
+     "length": 25631156,
+     "name": "2.csv",
+     "observed": "2023",
+     "start": 184413411,
+     "url": "https://zenodo.org/records/15846963/files/CARE_To_Compare.zip?download=1"
+    },
+    {
+     "length": 25042520,
+     "name": "21.csv",
+     "observed": "2023",
+     "start": 210044439,
+     "url": "https://zenodo.org/records/15846963/files/CARE_To_Compare.zip?download=1"
+    }
+   ],
+   "rate_limit": "seven range requests",
+   "redistribution": "CC BY-SA 4.0 requires share alike for adaptations; raw files and views stay local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party for Wind Farm B: released by the authors who hold the operator data, with the operator's confidentiality handled by anonymisation",
+   "upstream_verified": true
   }
  ]
 }

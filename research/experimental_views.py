@@ -2264,6 +2264,104 @@ def _build_wikidata(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+CARE_SNAPSHOT = "2026-11-22"
+CARE_MAX_BYTES = 256 << 20
+CARE_META = ("event_id", "asset_id", "time_stamp", "row_id", "train_test", "status_type")
+
+
+def zip_local_member(blob: bytes, max_out: int = CARE_MAX_BYTES) -> bytes:
+    """The content of one zip member given its local header and stored or deflate data.
+
+    The data may be followed by other bytes (the next header). A deflate stream that does not end
+    inside ``blob`` or that exceeds ``max_out`` bytes is an error.
+    """
+    import struct
+    import zlib
+
+    if len(blob) < 30 or blob[:4] != b"PK\x03\x04":
+        raise ViewError("not a zip local header")
+    method, name_len, extra_len = (
+        struct.unpack("<H", blob[8:10])[0],
+        *struct.unpack("<HH", blob[26:30]),
+    )
+    data = blob[30 + name_len + extra_len :]
+    if method != 8:
+        raise ViewError(f"unsupported zip method {method}")
+    stream = zlib.decompressobj(-15)
+    content = stream.decompress(data, max_out + 1)
+    if len(content) > max_out:
+        raise ViewError("member larger than the limit")
+    if not stream.eof:
+        raise ViewError("deflate stream incomplete")
+    return content
+
+
+def care_series_view(raw: pd.DataFrame, event_id: int) -> pd.DataFrame:
+    """Ten-minute average sensor values of one wind turbine dataset with its phase and status.
+
+    The publisher anonymised the timestamps and asset ids. ``train_test`` and the turbine status are
+    kept as published; the event label is not part of the series (see ``events.csv``).
+    """
+    need = ["time_stamp", "asset_id", "id", "train_test", "status_type_id"]
+    missing = [c for c in need if c not in raw.columns]
+    if missing:
+        raise ViewError(f"columns not found: {missing}")
+    averages = [c for c in raw.columns if c.endswith("_avg")]
+    if not averages:
+        raise ViewError("no average sensor columns")
+    out = pd.DataFrame(
+        {
+            "event_id": event_id,
+            "asset_id": pd.to_numeric(raw["asset_id"], errors="coerce"),
+            "time_stamp": pd.to_datetime(raw["time_stamp"], errors="coerce"),
+            "row_id": pd.to_numeric(raw["id"], errors="coerce"),
+            "train_test": raw["train_test"].astype("string"),
+            "status_type": pd.to_numeric(raw["status_type_id"], errors="coerce"),
+        }
+    )
+    for column in averages:
+        out[column] = pd.to_numeric(raw[column], errors="coerce")
+    out = out[out["time_stamp"].notna()]
+    return out.sort_values("time_stamp", kind="stable").reset_index(drop=True)
+
+
+def _build_care(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import io
+
+    raw = root / "zen_care_wind_b" / CARE_SNAPSHOT / "raw"
+    info = pd.read_csv(io.BytesIO(zip_local_member((raw / "event_info.csv").read_bytes())), sep=";")
+    ids = sorted(int(p.stem) for p in raw.glob("*.csv") if p.stem.isdigit())
+    if not ids:
+        raise ViewError("no dataset in the snapshot")
+    frames = []
+    for event_id in ids:
+        content = zip_local_member((raw / f"{event_id}.csv").read_bytes())
+        frames.append(care_series_view(pd.read_csv(io.BytesIO(content), sep=";"), event_id))
+    view = pd.concat(frames)
+    info["in_view"] = info["event_id"].isin(ids)
+    folder = out / "zen_care_wind_b"
+    folder.mkdir(parents=True, exist_ok=True)
+    series, events = folder / "series.csv", folder / "events.csv"
+    view.to_csv(series, index=False)
+    info.sort_values("event_id").to_csv(events, index=False)
+    _record(
+        manifest,
+        "zen_care_wind_b",
+        {"series.csv": (series, len(view)), "events.csv": (events, len(info))},
+        dropped=["minimum, maximum and standard-deviation columns of every sensor"],
+        pseudonymised=[],
+        sampling={
+            "method": "five of the fifteen datasets of Wind Farm B (three with a labelled anomaly event, two normal); Wind Farm A and C and ten datasets of B were not fetched",  # noqa: E501
+            "datasets": ids,
+            "anomaly_datasets_in_view": int(
+                info.loc[info["in_view"] & (info["event_label"] == "anomaly"), "event_id"].count()
+            ),  # noqa: E501
+            "rows_in": len(view),
+        },
+        source_snapshot=f"zen_care_wind_b/{CARE_SNAPSHOT}",
+    )
+
+
 BESS_NUMBERS = {
     "HoursElapsed": "hours_elapsed",
     "DayNumber": "day_number",
@@ -2679,6 +2777,7 @@ BUILD_STEPS = (
     _build_kelmarsh,
     _build_wikidata,
     _build_bess,
+    _build_care,
     _build_flat,
     _build_series,
     _build_ukspend,

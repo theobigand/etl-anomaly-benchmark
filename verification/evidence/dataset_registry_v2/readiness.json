@@ -1994,6 +1994,13 @@
   },
   {
    "failed": null,
+   "group": "fraunhofer_iee_care_wind_b",
+   "id": "zen_care_wind_b",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2195,6 +2202,7 @@
    "cubico_kelmarsh",
    "ea_hydrology",
    "elder_home",
+   "fraunhofer_iee_care_wind_b",
    "melbourne_pedestrian",
    "metropt_porto",
    "pnnl_epri_bess",
@@ -2283,13 +2291,13 @@
    "structurally_valid": 13
   },
   "C3": {
-   "acquired": 18,
-   "discovered": 39,
-   "experiment_ready": 15,
-   "protocol_ready": 15,
-   "rights_verified": 18,
-   "scientifically_eligible": 15,
-   "structurally_valid": 16
+   "acquired": 19,
+   "discovered": 40,
+   "experiment_ready": 16,
+   "protocol_ready": 16,
+   "rights_verified": 19,
+   "scientifically_eligible": 16,
+   "structurally_valid": 17
   },
   "C4": {
    "acquired": 30,

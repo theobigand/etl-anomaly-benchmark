@@ -254,12 +254,17 @@ def _bess(root, tmp):
     )
 
 
+def _care(root, tmp):
+    tev._care_snapshot(root)
+
+
 CASES = {
     "surf": (_surf, ev._build_surf, ["zen_surf_lisa_slurm"], {}),
     "pbdb": (_pbdb, ev._build_pbdb, ["zen_pbdb"], {"PBDB_STRIDE": 2}),
     "kelmarsh": (_kelmarsh, ev._build_kelmarsh, ["zen_kelmarsh"], {}),
     "wikidata": (_wikidata, ev._build_wikidata, ["wikidata_entities"], {}),
     "bess": (_bess, ev._build_bess, ["zen_bess"], {}),
+    "care": (_care, ev._build_care, ["zen_care_wind_b"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),
     "metropt": (_metropt, ev._build_metropt, ["zen_metropt2"], {}),
     "openlibrary": (_openlibrary, ev._build_openlibrary, ["openlibrary_dump"], {"OPENLIBRARY_MODULO": 1}),  # noqa: E501

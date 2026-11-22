@@ -2538,6 +2538,24 @@
    "units": 1452814,
    "view": "zen_bess"
   },
+  "zen_care_wind_b": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "timestamps and asset ids anonymised by the publisher",
+    "each dataset is one turbine with a training and a prediction phase",
+    "status types 0 to 5 as published; non-operational statuses are part of the baseline",
+    "five of fifteen datasets of one farm are one generating system"
+   ],
+   "first_party": true,
+   "independent_group": "fraunhofer_iee_care_wind_b",
+   "min_units": 1000,
+   "natural_labels": "publisher equipment-fault events (anomaly or normal) per dataset; real equipment faults and fault descriptions, not verified ETL or source-data faults; kept in events.csv, separate from injections",
+   "partitions": "chronological 70/15/15 on the anonymised time stamp within each dataset",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "units": 279733,
+   "view": "zen_care_wind_b"
+  },
   "zen_clue_lds": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [

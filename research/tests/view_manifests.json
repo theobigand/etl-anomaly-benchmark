@@ -80,6 +80,36 @@
    "source_snapshot": "google_cluster_2019a/2026-11-21"
   }
  },
+ "care": {
+  "zen_care_wind_b": {
+   "dropped": [
+    "minimum, maximum and standard-deviation columns of every sensor"
+   ],
+   "files": {
+    "events.csv": {
+     "rows": 3
+    },
+    "series.csv": {
+     "rows": 6
+    }
+   },
+   "heads": {
+    "events.csv": "asset_id,event_id,event_label,event_start,event_start_id,event_end,event_end_id,event_description,in_view",
+    "series.csv": "event_id,asset_id,time_stamp,row_id,train_test,status_type,sensor_0_avg,sensor_1_avg"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "anomaly_datasets_in_view": 1,
+    "datasets": [
+     2,
+     5
+    ],
+    "method": "five of the fifteen datasets of Wind Farm B (three with a labelled anomaly event, two normal); Wind Farm A and C and ten datasets of B were not fetched",
+    "rows_in": 6
+   },
+   "source_snapshot": "zen_care_wind_b/2026-11-22"
+  }
+ },
  "clue": {
   "zen_clue_lds": {
    "dropped": [

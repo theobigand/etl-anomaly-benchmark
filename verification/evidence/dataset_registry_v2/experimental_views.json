@@ -3367,6 +3367,35 @@
   },
   "source_snapshot": "zen_bess/2026-11-21"
  },
+ "zen_care_wind_b": {
+  "dropped": [
+   "minimum, maximum and standard-deviation columns of every sensor"
+  ],
+  "files": {
+   "events.csv": {
+    "rows": 15,
+    "sha256": "43da7895367bd352445ab034d8f6cc33b2208ab24d75e9d96e5a8f88f2bf7c32"
+   },
+   "series.csv": {
+    "rows": 279733,
+    "sha256": "af8cb112fbb799eb38f34164b13cde79937e472abd3e6ccc9f5b5dfc98ff1186"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "anomaly_datasets_in_view": 3,
+   "datasets": [
+    2,
+    19,
+    21,
+    34,
+    53
+   ],
+   "method": "five of the fifteen datasets of Wind Farm B (three with a labelled anomaly event, two normal); Wind Farm A and C and ten datasets of B were not fetched",
+   "rows_in": 279733
+  },
+  "source_snapshot": "zen_care_wind_b/2026-11-22"
+ },
  "zen_clue_lds": {
   "dropped": [
    "params (paths, groups)",

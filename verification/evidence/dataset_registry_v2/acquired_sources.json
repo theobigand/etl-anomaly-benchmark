@@ -4510,6 +4510,26 @@
    "stratum": "C3",
    "system": "grid_scale_bess",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "care_wind",
+   "id": "zen_care_wind_b",
+   "licence_class": "open",
+   "protocols": "P-TS by controlled injection on ten-minute average sensors; the publisher's equipment-fault events are kept apart as natural labels of a narrower task",
+   "publisher": "fraunhofer_iee_care_wind_b",
+   "reason": "CARE to Compare, Wind Farm B (anonymised German offshore farm, Fraunhofer IEE, CC BY-SA 4.0): 5 of 15 datasets, 279,733 ten-minute rows with 63 average sensors, status and train/prediction phase; 3 datasets lead to a labelled equipment fault (transformer cell temperature, bearing damage) and 2 are normal. Wind Farm A (EDP open data, terms unread) and C were not used. Real equipment-fault labels, not ETL faults",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "cc-by-sa-4.0 on the Zenodo record of the data authors, Fraunhofer IEE",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "offshore_wind_farm_b",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

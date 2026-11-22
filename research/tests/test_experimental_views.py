@@ -1030,6 +1030,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     bs = root / "zen_bess" / SNAP / "raw"
     bs.mkdir(parents=True)
     _fe2.write_feather(_pa.Table.from_pandas(_bess_frame(), preserve_index=False), bs / "S.feather")
+    _care_snapshot(root, ids=(1,))
     monkeypatch.setattr(ev, "EA_STATIONS", ["s"])
     _w(
         root / "ea_hydrology_flow" / SNAP / "raw" / "flow_s.csv",
@@ -1040,7 +1041,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_kelmarsh", "wikidata_entities", "zen_bess", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -3425,3 +3426,130 @@ def test_the_bess_builder_stacks_the_system_files_and_refuses_an_empty_snapshot(
     assert (
         view["files"]["readings.csv"]["rows"] == 6 and view["source_snapshot"] == f"zen_bess/{SNAP}"
     )
+
+
+# --- CARE to Compare, Wind Farm B -------------------------------------------------------------------  # noqa: E501
+
+
+def _zip_local(name, content, method=8):
+    import struct as _st
+    import zlib as _zl
+
+    if method == 8:
+        packer = _zl.compressobj(wbits=-15)
+        body = packer.compress(content) + packer.flush()
+    else:
+        body = content
+    header = b"PK\x03\x04" + _st.pack(
+        "<HHHHHIIIHH", 20, 0, method, 0, 0, 0, len(body), len(content), len(name), 0
+    )
+    return header + name.encode() + body
+
+
+def _care_frame(rows=3):
+    data = {
+        "time_stamp": ["2023-01-01 00:20:00", "2023-01-01 00:00:00", "2023-01-01 00:10:00"][:rows],
+        "asset_id": [7] * rows, "id": [3, 1, 2][:rows], "train_test": ["train", "train", "prediction"][:rows],  # noqa: E501
+        "status_type_id": [0, 2, 4][:rows], "sensor_0_avg": [1.5, None, 3.0][:rows], "sensor_0_max": [9.0] * rows,  # noqa: E501
+        "sensor_1_avg": ["x", "2", "3"][:rows], "sensor_1_std": [0.1] * rows,
+    }  # fmt: skip
+    return pd.DataFrame(data)
+
+
+def test_zip_local_member_reads_a_deflated_member_and_refuses_damaged_or_unsupported_ones():
+    content = b"a;b\n1;2\n" * 50
+    assert ev.zip_local_member(_zip_local("m.csv", content) + b"PK\x03\x04next") == content
+    with pytest.raises(ev.ViewError, match="^unsupported zip method 0$"):
+        ev.zip_local_member(_zip_local("m.csv", b"x", method=0))
+    with pytest.raises(ev.ViewError, match="^not a zip local header$"):
+        ev.zip_local_member(b"PK\x01\x02" + b"\0" * 40)
+    with pytest.raises(ev.ViewError, match="^not a zip local header$"):
+        ev.zip_local_member(b"PK\x03\x04")
+    cut = _zip_local("m.csv", content)[:-8]
+    with pytest.raises(ev.ViewError, match="^deflate stream incomplete$"):
+        ev.zip_local_member(cut)
+    with pytest.raises(ev.ViewError, match="^member larger than the limit$"):
+        ev.zip_local_member(_zip_local("m.csv", content), max_out=10)
+    assert (
+        ev.zip_local_member(_zip_local("m.csv", b"x" * 10), max_out=10) == b"x" * 10
+    )  # exactly at the limit
+
+
+def test_care_view_keeps_the_average_sensors_status_and_phase_and_orders_by_time():
+    out = ev.care_series_view(_care_frame(), 34)
+    assert list(out.columns) == [*ev.CARE_META, "sensor_0_avg", "sensor_1_avg"]
+    assert out["event_id"].tolist() == [34, 34, 34] and out["row_id"].tolist() == [1, 2, 3]
+    assert out["train_test"].tolist() == ["train", "prediction", "train"] and out[
+        "status_type"
+    ].tolist() == [2, 4, 0]
+    assert out["sensor_0_avg"].isna().tolist() == [True, False, False]
+    assert out["sensor_1_avg"].iloc[:2].tolist() == [2.0, 3.0] and pd.isna(
+        out["sensor_1_avg"].iloc[2]
+    )  # "x" is unreadable
+    assert out["asset_id"].tolist() == [7, 7, 7] and out["time_stamp"].is_monotonic_increasing
+    for gone in ("sensor_0_max", "sensor_1_std"):
+        assert gone not in out
+    with pytest.raises(ev.ViewError, match="^columns not found: \\['status_type_id'\\]$"):
+        ev.care_series_view(_care_frame().drop(columns=["status_type_id"]), 1)
+    with pytest.raises(ev.ViewError, match="^no average sensor columns$"):
+        ev.care_series_view(
+            _care_frame()[["time_stamp", "asset_id", "id", "train_test", "status_type_id"]], 1
+        )
+    bad = _care_frame()
+    bad.loc[0, "time_stamp"] = "not a time"
+    assert len(ev.care_series_view(bad, 1)) == 2  # a row without a readable time is dropped
+
+
+def _care_snapshot(root, ids=(5, 2)):
+    raw = root / "zen_care_wind_b" / ev.CARE_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    info = "asset_id;event_id;event_label;event_start;event_start_id;event_end;event_end_id;event_description\n"  # noqa: E501
+    info += "7;5;anomaly;2023-01-01 00:00:00;1;2023-01-02 00:00:00;2;high temperature\n"
+    info += "8;2;normal;2023-01-01 00:00:00;1;2023-01-02 00:00:00;2;\n"
+    info += "9;9;normal;2023-01-01 00:00:00;1;2023-01-02 00:00:00;2;\n"
+    (raw / "event_info.csv").write_bytes(_zip_local("info", info.encode()))
+    for event_id in ids:
+        csv_text = _care_frame().assign(asset_id=event_id).to_csv(sep=";", index=False)
+        (raw / f"{event_id}.csv").write_bytes(_zip_local(f"{event_id}.csv", csv_text.encode()))
+
+
+def test_the_care_builder_stacks_the_datasets_and_keeps_the_natural_labels_in_a_separate_file(
+    tmp_path,
+):
+    _care_snapshot(tmp_path / "acquired")
+    (
+        tmp_path
+        / "acquired"
+        / "zen_care_wind_b"
+        / ev.CARE_SNAPSHOT
+        / "raw"
+        / "feature_description.csv"
+    ).write_bytes(b"x")
+    manifest: dict = {}
+    ev._build_care(tmp_path / "acquired", tmp_path / "o", manifest)
+    folder = tmp_path / "o" / "zen_care_wind_b"
+    series = pd.read_csv(folder / "series.csv")
+    assert series["event_id"].tolist() == [2] * 3 + [5] * 3  # datasets in identifier order
+    assert "event_label" not in series and "event_description" not in series
+    events = pd.read_csv(folder / "events.csv")
+    assert events["event_id"].tolist() == [2, 5, 9] and events["in_view"].tolist() == [
+        True,
+        True,
+        False,
+    ]
+    assert events["event_label"].tolist() == ["normal", "anomaly", "normal"]
+    view = manifest["zen_care_wind_b"]
+    assert (
+        view["sampling"]["datasets"] == [2, 5] and view["sampling"]["anomaly_datasets_in_view"] == 1
+    )
+    assert view["sampling"]["rows_in"] == 6 and view["files"]["events.csv"]["rows"] == 3
+    assert (
+        view["source_snapshot"] == f"zen_care_wind_b/{ev.CARE_SNAPSHOT}"
+        and view["pseudonymised"] == []
+    )
+
+
+def test_the_care_builder_refuses_a_snapshot_without_datasets(tmp_path):
+    _care_snapshot(tmp_path / "acquired", ids=())
+    with pytest.raises(ev.ViewError, match="^no dataset in the snapshot$"):
+        ev._build_care(tmp_path / "acquired", tmp_path / "o", {})
