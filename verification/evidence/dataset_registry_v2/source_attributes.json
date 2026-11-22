@@ -66,6 +66,21 @@
    "C4": "business process execution"
   }
  },
+ "cubico_kelmarsh": {
+  "curator": "zenodo",
+  "descriptors": {
+   "supported_temporal_scales": "ten-minute to seasonal within one year; no multi-year drift",
+   "temporal_span": "one year (2016), ten-minute spacing"
+  },
+  "domain": "wind energy generation",
+  "generating_system": "Kelmarsh onshore wind farm (six turbines, Greenbyte SCADA)",
+  "note": "",
+  "producer": "Cubico Sustainable Investments",
+  "schema_family": "wind turbine scada",
+  "structure": {
+   "C3": "wind turbine ten-minute SCADA"
+  }
+ },
  "dgfip_dvf": {
   "curator": "data.gouv.fr",
   "domain": "real estate",
@@ -99,6 +114,21 @@
    "C3": "hydrological gauging"
   }
  },
+ "edp_wind_farm_portugal": {
+  "curator": "zenodo",
+  "descriptors": {
+   "natural_labels": "real equipment-fault events kept apart from injections",
+   "temporal_span": "about a year per dataset, ten-minute spacing, anonymised times"
+  },
+  "domain": "wind energy generation",
+  "generating_system": "EDP onshore wind farm 1 in Portugal",
+  "note": "",
+  "producer": "EDP",
+  "schema_family": "care wind turbine datasets",
+  "structure": {
+   "C3": "wind turbine SCADA with logbook fault events"
+  }
+ },
  "eicu_philips": {
   "curator": "physionet",
   "domain": "intensive care",
@@ -130,6 +160,21 @@
   "schema_family": "xes event log",
   "structure": {
    "C4": "business process execution"
+  }
+ },
+ "fraunhofer_iee_care_wind_b": {
+  "curator": "zenodo",
+  "descriptors": {
+   "natural_labels": "real equipment-fault events kept apart from injections",
+   "temporal_span": "about a year per dataset, ten-minute spacing, anonymised times"
+  },
+  "domain": "wind energy generation",
+  "generating_system": "anonymised German offshore wind farm B",
+  "note": "",
+  "producer": "Fraunhofer IEE with the operators",
+  "schema_family": "care wind turbine datasets",
+  "structure": {
+   "C3": "wind turbine SCADA with equipment-fault events"
   }
  },
  "fugaku_riken": {
@@ -345,6 +390,20 @@
    "C4": "business process execution"
   }
  },
+ "jolpica_f1": {
+  "curator": "jolpica",
+  "descriptors": {
+   "relational_topology": "11 tables, 13 foreign-key relations, hierarchy season to round to session to entry to lap; complete extract, 0 orphans"
+  },
+  "domain": "motorsport competition records",
+  "generating_system": "Formula One World Championship results as curated by the Jolpica project",
+  "note": "",
+  "producer": "Jolpica volunteers (Ergast lineage) from FIA race records",
+  "schema_family": "competition results database",
+  "structure": {
+   "C5": "season, round, session, entry, lap and pit-stop tables"
+  }
+ },
  "loghub_collection": {
   "curator": "loghub (one curator)",
   "domain": "system logs (16 systems)",
@@ -423,6 +482,20 @@
    "C6": "procurement release"
   }
  },
+ "nist_nvd": {
+  "curator": "nist",
+  "descriptors": {
+   "nesting": "depth 9, optional weaknesses and configurations, five scoring generations"
+  },
+  "domain": "cybersecurity vulnerability records",
+  "generating_system": "NVD enrichment of CVE records",
+  "note": "",
+  "producer": "NIST NVD with CVE Numbering Authorities (MITRE)",
+  "schema_family": "nvd cve json",
+  "structure": {
+   "C6": "vulnerability records with configurations, metrics and references"
+  }
+ },
  "openalex": {
   "curator": "openalex",
   "domain": "scholarly metadata",
@@ -466,6 +539,36 @@
   "schema_family": "catalogue records json",
   "structure": {
    "C6": "library catalogue record"
+  }
+ },
+ "paleobiology_database": {
+  "curator": "zenodo",
+  "descriptors": {
+   "relational_topology": "two tables: many-to-one occurrence to taxon plus a self-referencing taxon tree; closure sampling, no sampling orphans"
+  },
+  "domain": "palaeontology",
+  "generating_system": "Paleobiology Database community registry",
+  "note": "",
+  "producer": "PBDB contributors",
+  "schema_family": "paleobiology occurrence and taxon tables",
+  "structure": {
+   "C2a": "fossil occurrences with high-cardinality taxonomy and geology",
+   "C5": "occurrence-to-taxon references and taxon parent hierarchy"
+  }
+ },
+ "pnnl_epri_bess": {
+  "curator": "zenodo",
+  "descriptors": {
+   "supported_temporal_scales": "minute to months of elapsed time; no calendar seasonality",
+   "temporal_span": "about 262 days of elapsed time, no calendar dates"
+  },
+  "domain": "grid-scale energy storage",
+  "generating_system": "two utility battery energy storage systems",
+  "note": "",
+  "producer": "PNNL and EPRI",
+  "schema_family": "battery meter readings in elapsed time",
+  "structure": {
+   "C3": "battery storage meter readings"
   }
  },
  "rabobank_ict": {
@@ -908,6 +1011,20 @@
    "C1": "clinical or biological records"
   }
  },
+ "uci:352": {
+  "curator": "uci",
+  "descriptors": {
+   "transaction_semantics": "sales invoice lines and cancellations, not payments"
+  },
+  "domain": "retail commerce",
+  "generating_system": "one UK online gift retailer's invoicing system",
+  "note": "",
+  "producer": "Daqing Chen (South Bank University) with the retailer",
+  "schema_family": "uci transactional invoices",
+  "structure": {
+   "C2b": "e-commerce invoice lines"
+  }
+ },
  "uci:365": {
   "curator": "uci",
   "domain": "Business",
@@ -1282,6 +1399,24 @@
    "C2b": "expenditure ledger"
   }
  },
+ "unisg_smart_factory": {
+  "curator": "zenodo",
+  "descriptors": {
+   "event_generation": "workflow engine (Camunda) process execution, a business-process mechanism",
+   "evidence_class": "instrumented research testbed, not production",
+   "supported_temporal_scales": "sub-second to tens of minutes; no seasonality or long-horizon drift",
+   "temporal_span": "36 minutes of ten-hertz messages; workflow log 2022-09 to 2023-04"
+  },
+  "domain": "industrial automation testbed",
+  "generating_system": "Fischertechnik smart factory model of the University of St.Gallen with a Camunda workflow engine",
+  "note": "",
+  "producer": "University of St.Gallen",
+  "schema_family": "smart factory iot and workflow logs",
+  "structure": {
+   "C3": "ten-hertz station sensor messages",
+   "C4": "workflow-engine activity instances of a testbed"
+  }
+ },
  "vif_aegis": {
   "curator": "zenodo",
   "domain": "automotive",
@@ -1302,6 +1437,20 @@
   "schema_family": "xes event log",
   "structure": {
    "C4": "IT service incident log"
+  }
+ },
+ "wikimedia_wikidata": {
+  "curator": "wikimedia",
+  "descriptors": {
+   "nesting": "depth up to 11, optional claims, arrays of statements"
+  },
+  "domain": "open knowledge base",
+  "generating_system": "Wikidata community knowledge base",
+  "note": "",
+  "producer": "Wikimedia Foundation and Wikidata editors",
+  "schema_family": "wikidata entity json",
+  "structure": {
+   "C6": "entity documents with claims, qualifiers, references and sitelinks"
   }
  },
  "zambia_procurement": {
