@@ -2001,6 +2001,13 @@
   },
   {
    "failed": null,
+   "group": "nist_nvd",
+   "id": "nvd_cve",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2254,6 +2261,7 @@
    "georgia_procurement",
    "met_museum",
    "montreal_contracts",
+   "nist_nvd",
    "openalex",
    "openfda_faers",
    "openfoodfacts",
@@ -2318,13 +2326,13 @@
    "structurally_valid": 29
   },
   "C6": {
-   "acquired": 10,
-   "discovered": 14,
-   "experiment_ready": 10,
-   "protocol_ready": 10,
-   "rights_verified": 10,
-   "scientifically_eligible": 10,
-   "structurally_valid": 10
+   "acquired": 11,
+   "discovered": 15,
+   "experiment_ready": 11,
+   "protocol_ready": 11,
+   "rights_verified": 11,
+   "scientifically_eligible": 11,
+   "structurally_valid": 11
   }
  }
 }

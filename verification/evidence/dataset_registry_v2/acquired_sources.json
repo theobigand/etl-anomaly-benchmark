@@ -4530,6 +4530,26 @@
    "stratum": "C3",
    "system": "offshore_wind_farm_b",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "nvd",
+   "id": "nvd_cve",
+   "licence_class": "open",
+   "protocols": "P-NEST on CVE records (type, optional-path and structure faults)",
+   "publisher": "nist_nvd",
+   "reason": "NVD CVE records (NIST National Vulnerability Database API 2.0): 4,194 records published in the first fifteen days of March 2018, 2020, 2022 and 2024, all four pages complete; depth 9, optional weaknesses, configurations and CISA fields, metrics in five scoring generations (CVSS v2, v3.0, v3.1, v4.0, SSVC) showing schema evolution; statuses Modified, Analyzed, Deferred, Rejected. Security vulnerability records, a domain absent from the nested category",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "NVD Terms of Use and FAQ (NIST content public domain, attribution notice) and CVE Terms of Use (MITRE licence with copyright notice), read in a browser on 2026-11-22",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "nvd_cve",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

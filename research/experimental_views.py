@@ -2264,6 +2264,63 @@ def _build_wikidata(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+NVD_SNAPSHOT = "2026-11-22"
+NVD_NOTICE = (
+    "This product uses data from the NVD API but is not endorsed or certified by the NVD. "
+    "CVE content: Copyright The MITRE Corporation, used under the CVE Usage license "
+    "(https://www.cve.org/Legal/TermsOfUse)."
+)
+
+
+def nvd_view(pages: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], int]:
+    """CVE records of NVD API 2.0 pages in identifier order, one per identifier.
+
+    Returns the records and the number of repeated identifiers that were skipped (the first
+    occurrence is kept). The records are kept as published, including every optional part.
+    """
+    unique: dict[str, dict[str, Any]] = {}
+    repeated = 0
+    for page in pages:
+        for item in page["vulnerabilities"]:
+            record = item["cve"]
+            if record["id"] in unique:
+                repeated += 1
+            else:
+                unique[record["id"]] = record
+    return nested_view(list(unique.values()), frozenset(), lambda r: r["id"]), repeated
+
+
+def _build_nvd(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "nvd_cve" / NVD_SNAPSHOT / "raw"
+    files = sorted(raw.glob("cves_*.json"))
+    if not files:
+        raise ViewError("no NVD page in the snapshot")
+    pages = [json.loads(path.read_text()) for path in files]
+    view, repeated = nvd_view(pages)
+    folder = out / "nvd_cve"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "cves.jsonl"
+    target.write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in view))
+    (folder / "NOTICE.txt").write_text(NVD_NOTICE + "\n")
+    _record(
+        manifest,
+        "nvd_cve",
+        {"cves.jsonl": (target, len(view))},
+        dropped=[],
+        pseudonymised=[],
+        sampling={
+            "method": "CVEs published in the first fifteen days of March of four years, one API page each",  # noqa: E501
+            "pages": [p.name for p in files],
+            "total_results": [page["totalResults"] for page in pages],
+            "complete_pages": all(
+                page["totalResults"] == len(page["vulnerabilities"]) for page in pages
+            ),  # noqa: E501
+            "repeated_ids": repeated,
+        },
+        source_snapshot=f"nvd_cve/{NVD_SNAPSHOT}",
+    )
+
+
 CARE_SNAPSHOT = "2026-11-22"
 CARE_MAX_BYTES = 256 << 20
 CARE_META = ("event_id", "asset_id", "time_stamp", "row_id", "train_test", "status_type")
@@ -2778,6 +2835,7 @@ BUILD_STEPS = (
     _build_wikidata,
     _build_bess,
     _build_care,
+    _build_nvd,
     _build_flat,
     _build_series,
     _build_ukspend,

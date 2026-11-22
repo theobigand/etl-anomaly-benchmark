@@ -1177,15 +1177,15 @@
     "C6"
    ],
    "id": "nvd:cve",
-   "licence": "not read: the NVD terms pages are rendered client-side and returned no text to a plain request",
+   "licence": "NVD Terms of Use and FAQ (public domain, attribution notice); CVE Terms of Use (MITRE licence, notice must accompany copies)",
    "name": "NVD CVE records (API 2.0)",
-   "next_step": "read the NVD and MITRE CVE terms literally in a browser, then acquire dated windows",
-   "notes": "the API 2.0 works (994 records for 15 days of March 2022, 4.9 MB, nested descriptions, metrics, weaknesses, configurations, references); the NVD and CVE terms pages return no text to a plain request (client-side rendering); no literal terms were read, so nothing was acquired",
+   "next_step": "none",
+   "notes": "read in a headless browser on 2026-11-22; 4,194 records in four windows; CVE content is MITRE and CNA text, NIST enrichment is public domain",
    "publisher": "NIST",
    "reason": "security vulnerability records with arrays and optional paths",
    "size": null,
    "source_url": "https://nvd.nist.gov/developers/vulnerabilities",
-   "status": "permission_pending"
+   "status": "experiment_ready"
   },
   {
    "categories": [
@@ -1269,10 +1269,10 @@
     "C3"
    ],
    "id": "opensky:flightlist-2020",
-   "licence": "research_only: the OpenSky Data License Agreement (LICENSE.txt in Zenodo record 7923702) grants a limited licence for non-profit research and education",
+   "licence": "research_only; owner-contractual-acceptance blocker",
    "name": "OpenSky Network flight lists 2019 to 2022",
-   "next_step": "owner decision: the agreement is binding under Swiss law, contains an indemnity, requires a copy of any publication to be sent to OpenSky, anonymisation of aircraft identifiers in disclosures and deletion of the data when the research ends; accept it, or leave the source out",
-   "notes": "flight records, not financial transactions or event sequences: C2a (high-cardinality categorical and times) is the supportable category; aircraft identifiers would be pseudonymised",
+   "next_step": "blocked by an owner decision: the thesis owner declined to accept the OpenSky Data License Agreement; do not acquire, create an account or accept terms",
+   "notes": "owner decision of 2026-11-22: not accepted at this stage; kept in the ledger as research_only with a contractual-acceptance blocker; not promotable",
    "publisher": "OpenSky Network association",
    "reason": "ADS-B network flight list",
    "size": null,

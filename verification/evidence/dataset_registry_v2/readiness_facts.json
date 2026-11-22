@@ -1871,6 +1871,23 @@
    "units": 98723,
    "view": "monash_pedestrian"
   },
+  "nvd_cve": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "four fifteen-day publication windows, not random",
+    "records are revised after publication; the snapshot is dated 2026-11-22",
+    "rejected and deferred entries and records without enrichment are natural source states",
+    "optional parts: weaknesses, configurations, affected, CISA fields; metrics vary by scoring generation"
+   ],
+   "first_party": true,
+   "independent_group": "nist_nvd",
+   "min_units": 1000,
+   "partitions": "hash of the CVE identifier 70/15/15",
+   "privacy": "not_needed",
+   "protocol_id": "P-NEST",
+   "units": 4194,
+   "view": "nvd_cve"
+  },
   "ocds_georgia": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [

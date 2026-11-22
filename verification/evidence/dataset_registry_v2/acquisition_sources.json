@@ -8229,6 +8229,49 @@
    "stratum": "C3",
    "upstream": "first party for Wind Farm B: released by the authors who hold the operator data, with the operator's confidentiality handled by anonymisation",
    "upstream_verified": true
+  },
+  {
+   "attribution": "This product uses data from the NVD API but is not endorsed or certified by the NVD. CVE content: Copyright The MITRE Corporation; the CVE Usage license accompanies copies (https://www.cve.org/Legal/TermsOfUse)",
+   "files": [
+    {
+     "name": "cves_2018_03_01_15.json",
+     "observed": "2018-03",
+     "url": "https://services.nvd.nist.gov/rest/json/cves/2.0?pubStartDate=2018-03-01T00:00:00.000&pubEndDate=2018-03-15T23:59:59.999&resultsPerPage=2000"
+    },
+    {
+     "name": "cves_2020_03_01_15.json",
+     "observed": "2020-03",
+     "url": "https://services.nvd.nist.gov/rest/json/cves/2.0?pubStartDate=2020-03-01T00:00:00.000&pubEndDate=2020-03-15T23:59:59.999&resultsPerPage=2000"
+    },
+    {
+     "name": "cves_2022_03_01_15.json",
+     "observed": "2022-03",
+     "url": "https://services.nvd.nist.gov/rest/json/cves/2.0?pubStartDate=2022-03-01T00:00:00.000&pubEndDate=2022-03-15T23:59:59.999&resultsPerPage=2000"
+    },
+    {
+     "name": "cves_2024_03_01_15.json",
+     "observed": "2024-03",
+     "url": "https://services.nvd.nist.gov/rest/json/cves/2.0?pubStartDate=2024-03-01T00:00:00.000&pubEndDate=2024-03-15T23:59:59.999&resultsPerPage=2000"
+    }
+   ],
+   "hosts": [
+    "services.nvd.nist.gov"
+   ],
+   "id": "nvd_cve",
+   "licence_class": "open",
+   "licence_location": "https://nvd.nist.gov/developers/terms-of-use",
+   "licence_text": "NVD Terms of Use (read in a browser on 2026-11-22): the API is a public service for retrieving and analysing NVD data; attribution notice requested; modified content may not be attributed to the NVD; public rate limits apply. NVD FAQ: 'All NIST publications are available in the public domain'. CVE Terms of Use: MITRE grants a perpetual, worldwide, non-exclusive, royalty-free, irrevocable copyright licence to reproduce, prepare derivative works of, publicly display and distribute CVE, provided MITRE's copyright designation and the licence accompany copies",
+   "max_bytes": 31457280,
+   "method": "NVD API 2.0, four requests for the CVEs published in the first fifteen days of March 2018, 2020, 2022 and 2024 (resultsPerPage 2000, one page each)",
+   "min_interval": 8.0,
+   "privacy": "public vulnerability records; contact addresses are organisational (cve@mitre.org style source identifiers)",
+   "publisher": "NIST National Vulnerability Database (CVE content by MITRE and CVE Numbering Authorities)",
+   "rate_limit": "four requests, eight seconds apart (public limit: five requests per thirty seconds without a key)",
+   "redistribution": "public domain for NIST content; CVE copies must carry MITRE's copyright and licence; raw files stay local",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "first party for the NIST enrichment; CVE descriptions come from CVE Numbering Authorities under the MITRE licence above; referenced third-party pages are links only and are not fetched",
+   "upstream_verified": true
   }
  ]
 }

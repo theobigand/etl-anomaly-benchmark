@@ -322,6 +322,32 @@
    "source_snapshot": "zen_metropt2/2026-11-21 (fragment)"
   }
  },
+ "nvd": {
+  "nvd_cve": {
+   "dropped": [],
+   "files": {
+    "cves.jsonl": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "cves.jsonl": "{\"descriptions\": [{\"lang\": \"en\", \"value\": \"CVE-2018-1\"}], \"id\": \"CVE-2018-1\"}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "complete_pages": true,
+    "method": "CVEs published in the first fifteen days of March of four years, one API page each",
+    "pages": [
+     "cves_a.json"
+    ],
+    "repeated_ids": 0,
+    "total_results": [
+     2
+    ]
+   },
+   "source_snapshot": "nvd_cve/2026-11-22"
+  }
+ },
  "openlibrary": {
   "openlibrary_dump": {
    "dropped": [

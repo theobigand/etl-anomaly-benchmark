@@ -2438,6 +2438,34 @@
   "pseudonymised": [],
   "source_snapshot": "monash_zenodo/2026-11-21"
  },
+ "nvd_cve": {
+  "dropped": [],
+  "files": {
+   "cves.jsonl": {
+    "rows": 4194,
+    "sha256": "6d9460f0a8ad438208e563a34285aac379a6fc688b0bfb40f1cc959721ee93cf"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "complete_pages": true,
+   "method": "CVEs published in the first fifteen days of March of four years, one API page each",
+   "pages": [
+    "cves_2018_03_01_15.json",
+    "cves_2020_03_01_15.json",
+    "cves_2022_03_01_15.json",
+    "cves_2024_03_01_15.json"
+   ],
+   "repeated_ids": 0,
+   "total_results": [
+    750,
+    939,
+    994,
+    1511
+   ]
+  },
+  "source_snapshot": "nvd_cve/2026-11-22"
+ },
  "ocds_georgia": {
   "dropped": [
    "address",

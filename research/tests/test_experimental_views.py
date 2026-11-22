@@ -1031,6 +1031,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     bs.mkdir(parents=True)
     _fe2.write_feather(_pa.Table.from_pandas(_bess_frame(), preserve_index=False), bs / "S.feather")
     _care_snapshot(root, ids=(1,))
+    _w(root / "nvd_cve" / ev.NVD_SNAPSHOT / "raw" / "cves_a.json", json.dumps(_nvd_page(["CVE-1"])))
     monkeypatch.setattr(ev, "EA_STATIONS", ["s"])
     _w(
         root / "ea_hydrology_flow" / SNAP / "raw" / "flow_s.csv",
@@ -1041,7 +1042,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "nvd_cve", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -3595,3 +3596,59 @@ def test_care_view_turns_unreadable_ids_and_status_into_missing_and_orders_equal
         }
     )
     assert ev.care_series_view(tied, 1)["row_id"].tolist() == list(range(n))
+
+
+# --- NVD CVE records ---------------------------------------------------------------------------------  # noqa: E501
+
+
+def _nvd_page(ids, total=None, **extra):
+    records = [
+        {"cve": {"id": i, "descriptions": [{"lang": "en", "value": i}], **extra}} for i in ids
+    ]
+    return {"totalResults": len(records) if total is None else total, "vulnerabilities": records}
+
+
+def test_nvd_view_orders_by_identifier_keeps_the_first_of_a_repeated_identifier_and_counts_repeats():  # noqa: E501
+    first = _nvd_page(["CVE-2022-0002", "CVE-2018-0001"], extra_tag="first")
+    second = _nvd_page(["CVE-2022-0002", "CVE-2020-0003"], extra_tag="second")
+    view, repeated = ev.nvd_view([first, second])
+    assert [r["id"] for r in view] == [
+        "CVE-2018-0001",
+        "CVE-2020-0003",
+        "CVE-2022-0002",
+    ] and repeated == 1
+    assert view[2]["extra_tag"] == "first" and view[0]["descriptions"][0]["lang"] == "en"
+    assert ev.nvd_view([]) == ([], 0)
+
+
+def test_the_nvd_builder_records_completeness_writes_the_required_notice_and_refuses_an_empty_snapshot(  # noqa: E501
+    tmp_path,
+):
+    raw = tmp_path / "acquired" / "nvd_cve" / ev.NVD_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    with pytest.raises(ev.ViewError, match="^no NVD page in the snapshot$"):
+        ev._build_nvd(tmp_path / "acquired", tmp_path / "o", {})
+    (raw / "cves_b.json").write_text(json.dumps(_nvd_page(["CVE-2020-1"], total=5)))
+    (raw / "cves_a.json").write_text(json.dumps(_nvd_page(["CVE-2018-1", "CVE-2018-2"])))
+    manifest: dict = {}
+    ev._build_nvd(tmp_path / "acquired", tmp_path / "o", manifest)
+    folder = tmp_path / "o" / "nvd_cve"
+    lines = (folder / "cves.jsonl").read_text().splitlines()
+    assert [json.loads(line)["id"] for line in lines] == ["CVE-2018-1", "CVE-2018-2", "CVE-2020-1"]
+    assert lines[0].startswith('{"descriptions"')  # keys sorted
+    notice = (folder / "NOTICE.txt").read_text()
+    assert (
+        notice == ev.NVD_NOTICE + "\n"
+        and "MITRE" in notice
+        and "not endorsed or certified by the NVD" in notice
+    )
+    sampling = manifest["nvd_cve"]["sampling"]
+    assert sampling["pages"] == ["cves_a.json", "cves_b.json"] and sampling["total_results"] == [
+        2,
+        5,
+    ]
+    assert sampling["complete_pages"] is False and sampling["repeated_ids"] == 0
+    assert (
+        manifest["nvd_cve"]["files"]["cves.jsonl"]["rows"] == 3
+        and manifest["nvd_cve"]["source_snapshot"] == f"nvd_cve/{ev.NVD_SNAPSHOT}"
+    )
