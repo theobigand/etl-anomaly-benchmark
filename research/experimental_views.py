@@ -7577,11 +7577,11 @@ WAVE27_SNAPSHOT = "2026-11-22"
 
 def ecb_fx_view(text: str) -> pd.DataFrame:
     """Daily euro reference rates, one column per currency; the publisher's N/A becomes NaN."""
-    raw = pd.read_csv(io.StringIO(text), dtype=str, keep_default_na=False)
+    raw = pd.read_csv(io.StringIO(text), dtype=str)
     raw = raw.loc[:, [c for c in raw.columns if not c.startswith("Unnamed")]]
     data: dict[str, Any] = {"timestamp": pd.to_datetime(raw["Date"], errors="coerce")}
     for column in raw.columns.drop("Date"):
-        data[column] = pd.to_numeric(raw[column].str.strip().replace("N/A", ""), errors="coerce")
+        data[column] = pd.to_numeric(raw[column], errors="coerce")  # the publisher's N/A -> NaN
     frame = pd.DataFrame(data)
     return frame[frame["timestamp"].notna()].sort_values("timestamp").reset_index(drop=True)
 
@@ -7650,8 +7650,12 @@ def _build_fremont(root: Path, out: Path, manifest: dict[str, Any]) -> None:
 
 
 def _sea_ice_hemisphere(text: str, prefix: str) -> pd.DataFrame:
-    raw = pd.read_csv(io.StringIO(text), skiprows=[1], skipinitialspace=True, usecols=range(5))
-    raw.columns = [str(c).strip() for c in raw.columns]
+    raw = pd.read_csv(
+        io.StringIO(text),
+        skiprows=2,
+        header=None,
+        names=["Year", "Month", "Day", "Extent", "Missing", "Source"],
+    )
     return pd.DataFrame(
         {
             "timestamp": pd.to_datetime(raw[["Year", "Month", "Day"]], errors="coerce"),
@@ -7663,10 +7667,12 @@ def _sea_ice_hemisphere(text: str, prefix: str) -> pd.DataFrame:
 
 def sea_ice_view(north: str, south: str) -> pd.DataFrame:
     """Daily Sea Ice Index extent of both hemispheres joined on the observation date."""
-    joined = _sea_ice_hemisphere(north, "north").merge(
-        _sea_ice_hemisphere(south, "south"), on="timestamp", how="outer"
+    north_frame = _sea_ice_hemisphere(north, "north").set_index("timestamp")
+    joined = north_frame.join(
+        _sea_ice_hemisphere(south, "south").set_index("timestamp"), how="outer"
     )
-    return joined[joined["timestamp"].notna()].sort_values("timestamp").reset_index(drop=True)
+    joined = joined[joined.index.notna()].sort_index()
+    return joined.rename_axis("timestamp").reset_index()
 
 
 def _build_sea_ice(root: Path, out: Path, manifest: dict[str, Any]) -> None:

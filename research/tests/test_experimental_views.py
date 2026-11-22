@@ -9809,6 +9809,7 @@ FREMONT_CSV = (
     '"2020-03-01T01:00:00.000","7","3","4"\n'
     '"2020-03-01T00:00:00.000","","",""\n'
     '"garbage","1","1","0"\n'
+    '"2020-03-01T02:00:00.000","oops","2","1"\n'
 )
 
 
@@ -9823,8 +9824,10 @@ def test_fremont_view_keeps_blank_counts_missing_and_sorts_by_time():
     assert view["timestamp"].dt.strftime("%Y-%m-%d %H:%M").tolist() == [
         "2020-03-01 00:00",
         "2020-03-01 01:00",
+        "2020-03-01 02:00",
     ]
-    assert view["fremont_bridge"].isna().tolist() == [True, False]
+    assert view["fremont_bridge"].isna().tolist() == [True, False, True]  # blank and unreadable
+    assert view["fremont_bridge_nb"].tolist() == [pd.NA, 3, 2]
     assert view["fremont_bridge"].dtype == "Int64"
     assert view.loc[1, ["fremont_bridge", "fremont_bridge_nb", "fremont_bridge_sb"]].tolist() == [
         7,
@@ -9847,14 +9850,15 @@ def test_fremont_builder_writes_csv_manifest_and_errors_when_missing(tmp_path):
         "timestamp,fremont_bridge,fremont_bridge_nb,fremont_bridge_sb",
         "2020-03-01 00:00:00,,,",
         "2020-03-01 01:00:00,7,3,4",
+        "2020-03-01 02:00:00,,2,1",
     ]
     view = manifest["seattle_fremont_bridge"]
-    assert view["files"]["counts.csv"]["rows"] == 2
+    assert view["files"]["counts.csv"]["rows"] == 3
     assert view["sampling"] == {
         "first_timestamp": "2020-03-01 00:00:00",
-        "last_timestamp": "2020-03-01 01:00:00",
+        "last_timestamp": "2020-03-01 02:00:00",
         "method": "complete hourly counter export; timestamps are local wall-clock time",
-        "missing_count_rows": 1,
+        "missing_count_rows": 2,
     }
     assert view["source_snapshot"] == f"seattle_fremont_bridge/{ev.WAVE27_SNAPSHOT}"
 
@@ -9866,6 +9870,8 @@ SEA_ICE_HEAD = (
 SEA_ICE_NORTH = SEA_ICE_HEAD + (
     "1978,    10,  28,     10.420,      0.000, ['/a/b.bin']\n"
     "1978,    10,  26,     10.231,      0.500, ['/a/c.bin']\n"
+    "1978,    10,  27,        n/a,      0.000,\"['/a/d.bin', '/a/e.bin']\"\n"
+    "1978,    13,  40,     10.000,      0.000, ['/a/f.bin']\n"
 )
 SEA_ICE_SOUTH = SEA_ICE_HEAD + (
     "1978,    10,  26,     17.624,      0.000, ['/a/d.bin']\n"
@@ -9880,6 +9886,16 @@ def _sea_ice_snapshot(root):
     (raw / "S_seaice_extent_daily_v4.0.csv").write_text(SEA_ICE_SOUTH)
 
 
+def test_sea_ice_hemisphere_skips_both_header_rows_and_coerces_unreadable_cells():
+    frame = ev._sea_ice_hemisphere(SEA_ICE_NORTH, "north")
+    assert frame.columns.tolist() == ["timestamp", "north_extent_mkm2", "north_missing_mkm2"]
+    assert len(frame) == 4  # the units row is not data; the quoted source list stays one field
+    assert frame["timestamp"].isna().tolist() == [False, False, False, True]  # month 13 is no date
+    assert frame["north_extent_mkm2"].iloc[:3].tolist()[0:2] == [10.420, 10.231]
+    assert pd.isna(frame["north_extent_mkm2"].iloc[2])  # the publisher's n/a text
+    assert frame["north_missing_mkm2"].tolist() == [0.0, 0.5, 0.0, 0.0]
+
+
 def test_sea_ice_view_joins_hemispheres_on_date_and_keeps_unmatched_days():
     view = ev.sea_ice_view(SEA_ICE_NORTH, SEA_ICE_SOUTH)
     assert view.columns.tolist() == [
@@ -9891,13 +9907,16 @@ def test_sea_ice_view_joins_hemispheres_on_date_and_keeps_unmatched_days():
     ]
     assert view["timestamp"].dt.strftime("%Y-%m-%d").tolist() == [
         "1978-10-26",
+        "1978-10-27",
         "1978-10-28",
         "1978-10-30",
     ]
     assert view["north_extent_mkm2"].iloc[0] == 10.231 and view["north_missing_mkm2"].iloc[0] == 0.5
     assert view["south_extent_mkm2"].iloc[0] == 17.624
-    assert pd.isna(view["south_extent_mkm2"].iloc[1]) and pd.isna(view["north_extent_mkm2"].iloc[2])
-    assert view["south_missing_mkm2"].iloc[2] == 0.1
+    assert view["north_extent_mkm2"].isna().tolist() == [False, True, False, True]
+    assert view["south_extent_mkm2"].isna().tolist() == [False, True, True, False]
+    assert view["south_missing_mkm2"].iloc[3] == 0.1
+    assert view.index.tolist() == [0, 1, 2, 3]
 
 
 def test_sea_ice_builder_writes_csv_manifest_and_errors_when_a_file_is_missing(tmp_path):
@@ -9918,10 +9937,13 @@ def test_sea_ice_builder_writes_csv_manifest_and_errors_when_a_file_is_missing(t
     ev._build_sea_ice(root, out, manifest)
     ev._build_sea_ice(root, out, manifest)
     lines = (out / "nsidc_sea_ice_index" / "extent.csv").read_text().splitlines()
+    assert lines[0] == (
+        "timestamp,north_extent_mkm2,north_missing_mkm2,south_extent_mkm2,south_missing_mkm2"
+    )
     assert lines[1] == "1978-10-26,10.231,0.5,17.624,0.0"
     view = manifest["nsidc_sea_ice_index"]
-    assert view["files"]["extent.csv"]["rows"] == 3
+    assert view["files"]["extent.csv"]["rows"] == 4
     assert view["dropped"] == ["source_data_file_paths"]
-    assert view["sampling"]["missing_extent_rows"] == 2
+    assert view["sampling"]["missing_extent_rows"] == 3
     assert view["sampling"]["last_timestamp"] == "1978-10-30 00:00:00"
     assert view["source_snapshot"] == f"nsidc_sea_ice_index/{ev.WAVE27_SNAPSHOT}"
