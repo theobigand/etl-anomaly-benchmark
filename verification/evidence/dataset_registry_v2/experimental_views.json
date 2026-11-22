@@ -255,6 +255,32 @@
   },
   "source_snapshot": "4tu_sepsis/2026-11-21"
  },
+ "backblaze_drive_stats": {
+  "dropped": [
+   "serial numbers (replaced by a salted pseudonym)"
+  ],
+  "files": {
+   "drive_days.csv": {
+    "rows": 206941,
+    "sha256": "4892d556ff017259ba3344b5dac9640425bd8763d15ab9a54fde4ed0fd753195"
+   }
+  },
+  "pseudonymised": [
+   "drive"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "day_files": 60,
+   "days": [
+    "2014/2014-01-01.csv",
+    "2014/2014-03-01.csv"
+   ],
+   "drives": 3749,
+   "failures": 31,
+   "method": "the first 60 daily files of the 2014 archive, one drive in 8 chosen by the salted hash of the serial number, whole series kept"
+  },
+  "source_snapshot": "backblaze_drive_stats/2026-11-22"
+ },
  "bikeshare_capital": {
   "dropped": [
    "station names",

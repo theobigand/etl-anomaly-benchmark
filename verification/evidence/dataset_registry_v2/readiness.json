@@ -2043,6 +2043,13 @@
   },
   {
    "failed": null,
+   "group": "backblaze",
+   "id": "backblaze_drive_stats",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2240,6 +2247,7 @@
   ],
   "C3": [
    "airquality_italy",
+   "backblaze",
    "candanedo_umons",
    "cubico_kelmarsh",
    "ea_hydrology",
@@ -2339,13 +2347,13 @@
    "structurally_valid": 13
   },
   "C3": {
-   "acquired": 21,
-   "discovered": 42,
-   "experiment_ready": 18,
-   "protocol_ready": 18,
-   "rights_verified": 21,
-   "scientifically_eligible": 18,
-   "structurally_valid": 19
+   "acquired": 22,
+   "discovered": 43,
+   "experiment_ready": 19,
+   "protocol_ready": 19,
+   "rights_verified": 22,
+   "scientifically_eligible": 19,
+   "structurally_valid": 20
   },
   "C4": {
    "acquired": 31,

@@ -8434,6 +8434,34 @@
    "stratum": "C5",
    "upstream": "first party: the curators publish the licence for their database; the underlying race results are public sporting records",
    "upstream_verified": true
+  },
+  {
+   "attribution": "cite Backblaze as the source of the Drive Stats data",
+   "files": [
+    {
+     "name": "data_2014.zip",
+     "observed": "2014",
+     "url": "https://f001.backblazeb2.com/file/Backblaze-Hard-Drive-Data/data_2014.zip"
+    }
+   ],
+   "hosts": [
+    "f001.backblazeb2.com"
+   ],
+   "id": "backblaze_drive_stats",
+   "licence_class": "open",
+   "licence_location": "https://www.backblaze.com/cloud-storage/resources/hard-drive-test-data",
+   "licence_text": "Backblaze Drive Stats page (read in a browser on 2026-11-22): the dataset is open source and free; users must cite Backblaze as the source, accept sole responsibility for their use, may sell derivative works but may not sell the data itself",
+   "max_bytes": 734003200,
+   "method": "the 2014 annual Drive Stats archive (587,751,755 bytes; the server ignores range requests); the view uses a contiguous block of daily files",
+   "min_interval": 3.0,
+   "privacy": "hard drive serial numbers are pseudonymised in the view; no personal data",
+   "publisher": "Backblaze (data centre hard drive daily SMART snapshots)",
+   "rate_limit": "one download",
+   "redistribution": "free to use with citation; the data itself may not be sold; raw files stay local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party: Backblaze operates the drives and publishes the data",
+   "upstream_verified": true
   }
  ]
 }

@@ -276,6 +276,10 @@ def _care_a(root, tmp):
     tev._care_a_snapshot(root)
 
 
+def _backblaze(root, tmp):
+    tev._bb_zip(root)
+
+
 CASES = {
     "surf": (_surf, ev._build_surf, ["zen_surf_lisa_slurm"], {}),
     "pbdb": (_pbdb, ev._build_pbdb, ["zen_pbdb"], {"PBDB_STRIDE": 2}),
@@ -287,6 +291,7 @@ CASES = {
     "unisg": (_unisg, ev._build_unisg, ["zen_unisg_factory"], {}),
     "care_a": (_care_a, ev._build_care_a, ["zen_care_wind_a"], {}),
     "pbdb_relational": (_pbdb_relational, ev._build_pbdb_relational, ["zen_pbdb_relational"], {"PBDB_STRIDE": 1}),  # noqa: E501
+    "backblaze": (_backblaze, ev._build_backblaze, ["backblaze_drive_stats"], {"BACKBLAZE_DAYS": 2}),  # noqa: E501
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),
     "metropt": (_metropt, ev._build_metropt, ["zen_metropt2"], {}),
     "openlibrary": (_openlibrary, ev._build_openlibrary, ["openlibrary_dump"], {"OPENLIBRARY_MODULO": 1}),  # noqa: E501

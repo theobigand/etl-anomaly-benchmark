@@ -21,6 +21,21 @@
    "C3": "environmental sensing"
   }
  },
+ "backblaze": {
+  "curator": "backblaze",
+  "descriptors": {
+   "natural_labels": "drive failures (equipment)",
+   "temporal_span": "60 days, daily"
+  },
+  "domain": "data-centre storage hardware",
+  "generating_system": "Backblaze data-centre hard drive fleet (daily SMART collection)",
+  "note": "",
+  "producer": "Backblaze",
+  "schema_family": "drive smart snapshots",
+  "structure": {
+   "C3": "daily SMART series per drive with natural failure flag"
+  }
+ },
  "candanedo_umons": {
   "curator": "uci",
   "domain": "building energy and occupancy",

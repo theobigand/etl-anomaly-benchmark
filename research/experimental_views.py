@@ -2305,6 +2305,79 @@ def _build_wikidata(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+BACKBLAZE_SNAPSHOT = "2026-11-22"
+BACKBLAZE_DAYS = 60
+BACKBLAZE_MODULO = 8
+BACKBLAZE_ID = ("date", "serial_number", "model", "capacity_bytes", "failure")
+
+
+def backblaze_view(frames: list[pd.DataFrame]) -> pd.DataFrame:
+    """Daily SMART snapshots of a deterministic subset of drives, one row per drive and day.
+
+    A drive is kept for every day if the salted hash of its serial number falls in the sample
+    (one in ``BACKBLAZE_MODULO``), so each kept drive keeps its whole series. The serial number is
+    replaced by its pseudonym. ``failure`` is the publisher's flag that the drive failed that day.
+    Attributes that a drive does not report stay missing.
+    """
+    frame = pd.concat(frames, ignore_index=True)
+    missing = [c for c in BACKBLAZE_ID if c not in frame.columns]
+    if missing:
+        raise ViewError(f"columns not found: {missing}")
+    frame = frame.assign(drive=frame["serial_number"].astype(str).map(pseudonym))
+    frame = frame[frame["drive"].map(lambda d: int(d, 16) % BACKBLAZE_MODULO == 0)]
+    frame["date"] = pd.to_datetime(frame["date"], errors="coerce")
+    frame = frame[frame["date"].notna()]
+    smart = sorted(c for c in frame.columns if c.startswith("smart_"))
+    for column in ("capacity_bytes", "failure", *smart):
+        frame[column] = pd.to_numeric(frame[column], errors="coerce")
+    ordered = frame[["date", "drive", "model", "capacity_bytes", "failure", *smart]]
+    return ordered.sort_values(["drive", "date"]).reset_index(drop=True)
+
+
+def _build_backblaze(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import re
+    import tempfile
+
+    from acquisition import extract_member, zip_members
+
+    raw = root / "backblaze_drive_stats" / BACKBLAZE_SNAPSHOT / "raw" / "data_2014.zip"
+    days = sorted(
+        m["name"]
+        for m in zip_members(raw)
+        if re.fullmatch(r"\d{4}/\d{4}-\d\d-\d\d\.csv", m["name"])
+    )
+    if not days:
+        raise ViewError("no daily file in the archive")
+    chosen = days[:BACKBLAZE_DAYS]
+    frames = []
+    with tempfile.TemporaryDirectory() as scratch:
+        for name in chosen:
+            got = extract_member(raw, name, Path(scratch), max_bytes=1 << 28, max_ratio=100)
+            frames.append(pd.read_csv(got["path"], dtype=str))
+            Path(got["path"]).unlink()
+    view = backblaze_view(frames)
+    folder = out / "backblaze_drive_stats"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "drive_days.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "backblaze_drive_stats",
+        {"drive_days.csv": (target, len(view))},
+        dropped=["serial numbers (replaced by a salted pseudonym)"],
+        pseudonymised=["drive"],
+        sampling={
+            "method": f"the first {BACKBLAZE_DAYS} daily files of the 2014 archive, one drive in {BACKBLAZE_MODULO} chosen by the salted hash of the serial number, whole series kept",  # noqa: E501
+            "days": [chosen[0], chosen[-1]],
+            "day_files": len(chosen),
+            "drives": int(view["drive"].nunique()),
+            "failures": int(view["failure"].sum()),
+        },
+        salt_label=SALT,
+        source_snapshot=f"backblaze_drive_stats/{BACKBLAZE_SNAPSHOT}",
+    )
+
+
 UNISG_SNAPSHOT = "2026-11-22"
 UNISG_LOG = "training_tenhertz_log_20230411-095748.txt"
 UNISG_HEAD = (
@@ -3109,6 +3182,7 @@ BUILD_STEPS = (
     _build_care_a,
     _build_nvd,
     _build_unisg,
+    _build_backblaze,
     _build_flat,
     _build_series,
     _build_ukspend,

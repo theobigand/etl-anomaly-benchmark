@@ -1293,6 +1293,21 @@
    "size": null,
    "source_url": "https://github.com/jolpica/jolpica-f1",
    "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "backblaze:drive-stats",
+   "licence": "free with citation (Backblaze Drive Stats page)",
+   "name": "Backblaze Drive Stats",
+   "next_step": "none; later years are the same provenance group",
+   "notes": "2014 archive; the server ignores range requests so the whole 588 MB archive is stored locally",
+   "publisher": "Backblaze",
+   "reason": "production data-centre drive telemetry with real failures",
+   "size": null,
+   "source_url": "https://www.backblaze.com/cloud-storage/resources/hard-drive-test-data",
+   "status": "experiment_ready"
   }
  ],
  "date": "2026-11-21",

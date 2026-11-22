@@ -22,6 +22,36 @@
    "source_snapshot": "zen_aegis_vehicle/2026-11-21"
   }
  },
+ "backblaze": {
+  "backblaze_drive_stats": {
+   "dropped": [
+    "serial numbers (replaced by a salted pseudonym)"
+   ],
+   "files": {
+    "drive_days.csv": {
+     "rows": 4
+    }
+   },
+   "heads": {
+    "drive_days.csv": "date,drive,model,capacity_bytes,failure,smart_1_normalized,smart_9_raw"
+   },
+   "pseudonymised": [
+    "drive"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "day_files": 2,
+    "days": [
+     "2014/2014-01-01.csv",
+     "2014/2014-01-02.csv"
+    ],
+    "drives": 2,
+    "failures": 1,
+    "method": "the first 2 daily files of the 2014 archive, one drive in 8 chosen by the salted hash of the serial number, whole series kept"
+   },
+   "source_snapshot": "backblaze_drive_stats/2026-11-22"
+  }
+ },
  "bess": {
   "zen_bess": {
    "dropped": [],

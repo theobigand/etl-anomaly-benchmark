@@ -195,6 +195,36 @@
    "units": 1050,
    "view": "4tu_sepsis"
   },
+  "backblaze_drive_stats": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "sixty consecutive daily snapshots of 2014 (January to March), one drive in eight by hash, whole series kept",
+    "drives that fail stop reporting after the failure day; drives appear and leave the fleet",
+    "SMART attributes differ by model so many columns are missing by design",
+    "31 failures in 3,749 drives: a low natural failure prevalence"
+   ],
+   "first_party": true,
+   "independent_group": "backblaze",
+   "min_units": 1000,
+   "natural_labels": "the publisher's failure flag marks the day a drive was recorded as failed: a real equipment failure, not an ETL or source-data fault; kept in the failure column, separate from injections",
+   "partitions": "chronological 70/15/15 on the date",
+   "privacy": "handled",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and collective anomalies",
+    "level shift and drift over weeks",
+    "missing interval and delayed arrival",
+    "prevalence change within the window"
+   ],
+   "temporal_span": "60 days at daily spacing",
+   "units": 206941,
+   "unsupported_fault_mechanisms": [
+    "seasonal deviation",
+    "multi-month or yearly degradation",
+    "contextual faults that need long history"
+   ],
+   "view": "backblaze_drive_stats"
+  },
   "bikeshare_capital": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [

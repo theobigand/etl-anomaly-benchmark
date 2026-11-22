@@ -1031,6 +1031,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     bs.mkdir(parents=True)
     _fe2.write_feather(_pa.Table.from_pandas(_bess_frame(), preserve_index=False), bs / "S.feather")
     _care_snapshot(root, ids=(1,))
+    _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
     _w(root / "nvd_cve" / ev.NVD_SNAPSHOT / "raw" / "cves_a.json", json.dumps(_nvd_page(["CVE-1"])))
@@ -1045,7 +1046,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -3984,3 +3985,123 @@ def test_a_table_set_with_its_own_snapshot_is_read_from_that_snapshot_and_record
         manifest["src"]["source_snapshot"] == "src/2030-01-01"
         and manifest["src"]["files"]["t.csv"]["rows"] == 2
     )
+
+
+# --- Backblaze Drive Stats ---------------------------------------------------------------------------  # noqa: E501
+
+
+def _serials():
+    kept = [
+        s
+        for s in (f"S{i}" for i in range(200))
+        if int(ev.pseudonym(s), 16) % ev.BACKBLAZE_MODULO == 0
+    ]
+    skipped = [
+        s
+        for s in (f"S{i}" for i in range(200))
+        if int(ev.pseudonym(s), 16) % ev.BACKBLAZE_MODULO != 0
+    ]
+    return kept, skipped
+
+
+def _bb_day(day, serials, failed=()):
+    rows = [
+        {
+            "date": day,
+            "serial_number": s,
+            "model": "M1",
+            "capacity_bytes": "3000",
+            "failure": "1" if s in failed else "0",
+            "smart_9_raw": "15",
+            "smart_1_normalized": "bad" if s == serials[0] else "100",
+        }
+        for s in serials
+    ]  # noqa: E501
+    return pd.DataFrame(rows)
+
+
+def test_backblaze_view_keeps_one_drive_in_eight_with_its_whole_series_pseudonymised():
+    kept, skipped = _serials()
+    frames = [
+        _bb_day("2014-01-02", [kept[0], kept[1], skipped[0]], failed={kept[1]}),
+        _bb_day("2014-01-01", [kept[0], kept[1], skipped[1]]),
+    ]
+    out = ev.backblaze_view(frames)
+    assert list(out.columns) == [
+        "date",
+        "drive",
+        "model",
+        "capacity_bytes",
+        "failure",
+        "smart_1_normalized",
+        "smart_9_raw",
+    ]
+    assert len(out) == 4 and set(out["drive"]) == {ev.pseudonym(kept[0]), ev.pseudonym(kept[1])}
+    assert (
+        out["date"].is_monotonic_increasing is False
+        and out.groupby("drive")["date"].apply(lambda d: d.is_monotonic_increasing).all()
+    )
+    assert (
+        out["failure"].sum() == 1
+        and out["failure"].dtype.kind in "if"
+        and out["capacity_bytes"].iloc[0] == 3000
+    )
+    assert (
+        out["smart_1_normalized"].isna().sum() == 2 and "serial_number" not in out
+    )  # the unreadable value is missing
+    with pytest.raises(ev.ViewError, match="^columns not found: \\['failure'\\]$"):
+        ev.backblaze_view([_bb_day("2014-01-01", kept[:1]).drop(columns=["failure"])])
+    bad = _bb_day("not a date", kept[:1])
+    assert ev.backblaze_view([bad]).empty
+
+
+def _bb_zip(root, days=3):
+    import zipfile as _z
+
+    kept, skipped = _serials()
+    raw = root / "backblaze_drive_stats" / ev.BACKBLAZE_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    with _z.ZipFile(raw / "data_2014.zip", "w") as z:
+        for d in range(days, 0, -1):
+            day = f"2014-01-0{d}"
+            z.writestr(
+                f"2014/{day}.csv",
+                _bb_day(
+                    day, [kept[0], kept[1], skipped[0]], failed={kept[1]} if d == 2 else ()
+                ).to_csv(index=False),
+            )
+        z.writestr("__MACOSX/2014/._2014-01-01.csv", "x")
+        z.writestr("2014/readme.txt", "x")
+
+
+def test_the_backblaze_builder_uses_the_first_daily_files_and_records_failures(
+    tmp_path, monkeypatch
+):
+    monkeypatch.setattr(ev, "BACKBLAZE_DAYS", 2)
+    _bb_zip(tmp_path / "acquired")
+    manifest: dict = {}
+    ev._build_backblaze(tmp_path / "acquired", tmp_path / "o", manifest)
+    out = pd.read_csv(tmp_path / "o" / "backblaze_drive_stats" / "drive_days.csv")
+    assert sorted(set(out["date"])) == ["2014-01-01", "2014-01-02"] and len(out) == 4
+    view = manifest["backblaze_drive_stats"]
+    assert (
+        view["sampling"]["days"] == ["2014/2014-01-01.csv", "2014/2014-01-02.csv"]
+        and view["sampling"]["day_files"] == 2
+    )
+    assert view["sampling"]["drives"] == 2 and view["sampling"]["failures"] == 1
+    assert view["pseudonymised"] == ["drive"] and view["salt_label"] == ev.SALT
+    assert (
+        view["source_snapshot"] == f"backblaze_drive_stats/{ev.BACKBLAZE_SNAPSHOT}"
+        and view["files"]["drive_days.csv"]["rows"] == 4
+    )
+
+
+def test_the_backblaze_builder_refuses_an_archive_without_daily_files(tmp_path):
+    import zipfile as _z
+
+    raw = tmp_path / "acquired" / "backblaze_drive_stats" / ev.BACKBLAZE_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    with _z.ZipFile(raw / "data_2014.zip", "w") as z:
+        z.writestr("2014/readme.txt", "x")
+    with pytest.raises(ev.ViewError, match="^no daily file in the archive$"):
+        ev._build_backblaze(tmp_path / "acquired", tmp_path / "o", {})

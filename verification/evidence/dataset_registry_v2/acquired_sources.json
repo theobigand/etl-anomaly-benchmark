@@ -4650,6 +4650,26 @@
    "stratum": "C5",
    "system": "formula_one_results",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "backblaze",
+   "id": "backblaze_drive_stats",
+   "licence_class": "open",
+   "protocols": "P-TS by controlled injection on daily SMART series per drive; the publisher's drive-failure flag is a natural equipment label kept as a column",
+   "publisher": "backblaze",
+   "reason": "Backblaze Drive Stats 2014 (free with citation, read on the publisher's page on 2026-11-22): 60 daily files, one drive in eight chosen by a salted hash of the serial number with its whole series kept, 3,749 drives, 206,941 drive-days, 31 observed drive failures; SMART attributes missing by drive model. Data-centre storage hardware, a domain absent from the corpus",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Backblaze Drive Stats page: free to use, cite Backblaze, the data itself may not be sold",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "backblaze_data_centre_drives",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"
