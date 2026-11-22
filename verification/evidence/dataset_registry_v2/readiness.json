@@ -2036,6 +2036,13 @@
   },
   {
    "failed": null,
+   "group": "jolpica_f1",
+   "id": "jolpica_f1",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2282,6 +2289,7 @@
    "gtfs_fr_sibra",
    "gtfs_fr_tango",
    "gtfs_fr_transvilles",
+   "jolpica_f1",
    "mimic_iv_bidmc",
    "openalex",
    "paleobiology_database",
@@ -2349,13 +2357,13 @@
    "structurally_valid": 30
   },
   "C5": {
-   "acquired": 30,
-   "discovered": 30,
-   "experiment_ready": 30,
-   "protocol_ready": 30,
-   "rights_verified": 30,
-   "scientifically_eligible": 30,
-   "structurally_valid": 30
+   "acquired": 31,
+   "discovered": 31,
+   "experiment_ready": 31,
+   "protocol_ready": 31,
+   "rights_verified": 31,
+   "scientifically_eligible": 31,
+   "structurally_valid": 31
   },
   "C6": {
    "acquired": 11,

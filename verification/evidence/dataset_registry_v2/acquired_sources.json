@@ -4630,6 +4630,26 @@
    "stratum": "C5",
    "system": "zen_pbdb",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "jolpica_f1",
+   "id": "jolpica_f1",
+   "licence_class": "research_only",
+   "protocols": "P-REL on the race database (cross-table reference and key faults)",
+   "publisher": "jolpica_f1",
+   "reason": "Formula One race database of the Jolpica project (successor of the Ergast API, CC BY-NC-SA 4.0 stated in the project's terms; free delayed dump of 2026-11-07, sha256 verified): 11 tables, 13 foreign-key relations with no orphan, 745,127 laps, 52,234 session entries, 13,145 pit stops, 1,173 rounds of 77 seasons; driver names, birth dates and nationalities are dropped. A sports-competition relational topology (season, round, session, entry, lap) unlike timetable feeds",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY-NC-SA 4.0 in the project's TERMS.md; non-commercial academic use",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "formula_one_results",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

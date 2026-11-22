@@ -1566,6 +1566,23 @@
    "units": 180229,
    "view": "hmlr_price_paid"
   },
+  "jolpica_f1": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete published extract, no sampling: every relation resolves (0 orphans of 13 checked)",
+    "laps exist only for sessions with time data, so lap tables cover recent seasons",
+    "some sessions have no entries or no laps by history, not by sampling",
+    "driver names and birth dates removed; identifiers kept"
+   ],
+   "first_party": true,
+   "independent_group": "jolpica_f1",
+   "min_units": 1000,
+   "partitions": "hash of the season identifier 70/15/15 so a season and its rounds, entries and laps stay together",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 52234,
+   "view": "jolpica_f1"
+  },
   "loghub:Android": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [

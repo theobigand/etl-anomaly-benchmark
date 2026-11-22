@@ -8403,6 +8403,37 @@
    "stratum": "C3",
    "upstream": "verified at the original publisher: EDP states CC BY-SA 4.0 on its dataset page; the original platform asks for a registration to download the files (the CARE record is the open redistribution)",
    "upstream_verified": true
+  },
+  {
+   "attribution": "cite Jolpica F1 (database dump of 2026-11-07, CC BY-NC-SA 4.0), the successor of the Ergast Motor Racing Developer API",
+   "files": [
+    {
+     "name": "jolpica-f1-csv.zip",
+     "observed": "2026-11-07",
+     "url": "https://api.jolpi.ca/data/dumps/download/delayed/?dump_type=csv"
+    }
+   ],
+   "hosts": [
+    "api.jolpi.ca"
+   ],
+   "id": "jolpica_f1",
+   "licence_class": "research_only",
+   "licence_location": "https://github.com/jolpica/jolpica-f1/blob/main/TERMS.md",
+   "licence_text": "Jolpica-F1 Terms of Use (last updated 2025-08-27): the API and its database dumps are free for non-commercial use; 'The data is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)'; commercial use needs the maintainers' agreement. The free delayed dump needs no authentication",
+   "max_bytes": 52428800,
+   "method": "the free delayed CSV database dump listed at https://api.jolpi.ca/data/dumps/download/ (uploaded 2026-11-07, 14,764,904 bytes, sha256 517a98cb6c81eb501143b13b53db09547fab6d2babb5b1ba2e4e27aad7d70af7); the download redirects to the project's S3 bucket",
+   "min_interval": 3.0,
+   "privacy": "driver and team principals are public persons; names, birth dates and nationalities are dropped from the view and driver references stay as stable identifiers",
+   "publisher": "Jolpica F1 volunteer project (successor of the Ergast API); race data of the FIA Formula One World Championship",
+   "rate_limit": "one download",
+   "redirect_hosts": [
+    "jolpica-f1-database-dumps.s3.amazonaws.com"
+   ],
+   "redistribution": "CC BY-NC-SA 4.0: non-commercial, share alike; raw files and views stay local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: the curators publish the licence for their database; the underlying race results are public sporting records",
+   "upstream_verified": true
   }
  ]
 }

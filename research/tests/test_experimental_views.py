@@ -3948,3 +3948,39 @@ def _pbdb_rel_snapshot_extra(root, tmp):
     _pq.write_table(_pa.Table.from_pandas(taxa, preserve_index=False), tmp / "taxa_extra.parquet")
     with zipfile.ZipFile(root / "zen_pbdb" / SNAP / "raw" / "pbdb_taxa_parquet.zip", "w") as z:
         z.write(tmp / "taxa_extra.parquet", "taxa.parquet")
+
+
+def test_jolpica_spec_declares_tables_keys_and_a_snapshot_and_hides_persons():
+    spec = ev.TABLE_SETS["jolpica_f1"]
+    assert spec["snapshot"] == "2026-11-22" and spec["archive"]["file"] == "jolpica-f1-csv.zip"
+    for child, child_key, parent, parent_key in spec["relations"]:
+        assert (
+            child_key in spec["tables"][child]["keep"]
+            and parent_key in spec["tables"][parent]["keep"]
+        )
+    kept = {c for t in spec["tables"].values() for c in t["keep"]}
+    assert not kept & {
+        "forename",
+        "surname",
+        "date_of_birth",
+        "nationality_driver",
+        "wikipedia",
+        "api_id",
+    }
+    assert spec["tables"]["formula_one_driver"]["keep"] == ["id", "permanent_car_number"]
+
+
+def test_a_table_set_with_its_own_snapshot_is_read_from_that_snapshot_and_recorded(
+    tmp_path, monkeypatch
+):
+    root = tmp_path / "acquired"
+    raw = root / "src" / "2030-01-01" / "raw"
+    raw.mkdir(parents=True)
+    _w(raw / "t.csv", "k,v\n1,a\n2,b\n")
+    monkeypatch.setattr(ev, "TABLE_SETS", {"src": {"snapshot": "2030-01-01", "sep": ",", "quote_none": False, "dropped": [], "tables": {"t": {"keep": ["k", "v"]}}, "relations": []}})  # fmt: skip  # noqa: E501
+    manifest: dict = {}
+    ev._build_tables(root, tmp_path / "o", manifest)
+    assert (
+        manifest["src"]["source_snapshot"] == "src/2030-01-01"
+        and manifest["src"]["files"]["t.csv"]["rows"] == 2
+    )

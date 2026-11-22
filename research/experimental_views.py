@@ -1154,6 +1154,46 @@ CLINICAL_TABLE_SETS: dict[str, dict[str, Any]] = {
 }  # fmt: skip
 TABLE_SETS.update(CLINICAL_TABLE_SETS)
 
+#: Formula One race database (Jolpica, CC BY-NC-SA 4.0): public persons are reduced to identifiers
+JOLPICA_TABLE_SETS: dict[str, dict[str, Any]] = {
+    "jolpica_f1": {
+        "snapshot": "2026-11-22",
+        "archive": {"file": "jolpica-f1-csv.zip", "prefix": ""},
+        "sep": ",",
+        "quote_none": False,
+        "dropped": ["driver names, birth dates, nationalities and wikipedia links", "wikipedia links and api identifiers of every table"],  # noqa: E501
+        "tables": {
+            "formula_one_driver": {"keep": ["id", "permanent_car_number"]},
+            "formula_one_circuit": {"keep": ["id", "altitude", "country_code", "latitude", "longitude"]},  # noqa: E501
+            "formula_one_season": {"keep": ["id", "championship_system_id", "year"]},
+            "formula_one_round": {"keep": ["id", "circuit_id", "date", "is_cancelled", "number", "race_number", "season_id"]},  # noqa: E501
+            "formula_one_session": {"keep": ["id", "completed_laps", "has_time_data", "is_cancelled", "number", "point_system_id", "round_id", "scheduled_laps", "timestamp", "type"]},  # noqa: E501
+            "formula_one_team": {"keep": ["id", "base_team_id", "country_code", "name", "nationality"]},  # noqa: E501
+            "formula_one_teamdriver": {"keep": ["id", "driver_id", "role", "season_id", "team_id"]},
+            "formula_one_roundentry": {"keep": ["id", "car_number", "round_id", "team_driver_id"]},
+            "formula_one_sessionentry": {"keep": ["id", "detail", "fastest_lap_rank", "grid", "is_classified", "is_eligible_for_points", "laps_completed", "points", "position", "round_entry_id", "session_id", "status", "time"]},  # noqa: E501
+            "formula_one_lap": {"keep": ["id", "average_speed", "is_deleted", "is_entry_fastest_lap", "number", "position", "session_entry_id", "time"]},  # noqa: E501
+            "formula_one_pitstop": {"keep": ["id", "duration", "lap_id", "local_timestamp", "number", "session_entry_id"]},  # noqa: E501
+        },
+        "relations": [
+            ["formula_one_round", "season_id", "formula_one_season", "id"],
+            ["formula_one_round", "circuit_id", "formula_one_circuit", "id"],
+            ["formula_one_session", "round_id", "formula_one_round", "id"],
+            ["formula_one_teamdriver", "driver_id", "formula_one_driver", "id"],
+            ["formula_one_teamdriver", "team_id", "formula_one_team", "id"],
+            ["formula_one_teamdriver", "season_id", "formula_one_season", "id"],
+            ["formula_one_roundentry", "round_id", "formula_one_round", "id"],
+            ["formula_one_roundentry", "team_driver_id", "formula_one_teamdriver", "id"],
+            ["formula_one_sessionentry", "session_id", "formula_one_session", "id"],
+            ["formula_one_sessionentry", "round_entry_id", "formula_one_roundentry", "id"],
+            ["formula_one_lap", "session_entry_id", "formula_one_sessionentry", "id"],
+            ["formula_one_pitstop", "session_entry_id", "formula_one_sessionentry", "id"],
+            ["formula_one_pitstop", "lap_id", "formula_one_lap", "id"],
+        ],
+    },
+}  # fmt: skip
+TABLE_SETS.update(JOLPICA_TABLE_SETS)
+
 
 def _build_panels(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     folder = out / "panels"
@@ -1189,7 +1229,8 @@ def _build_tables(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     from acquisition import extract_member, zip_members
 
     for source, spec in TABLE_SETS.items():
-        raw = root / source / SNAPSHOT / "raw"
+        snapshot = spec.get("snapshot", SNAPSHOT)
+        raw = root / source / snapshot / "raw"
         tables, absent, pseudonymised = {}, [], []
         with tempfile.TemporaryDirectory() as scratch:
             members = (
@@ -1252,7 +1293,7 @@ def _build_tables(root: Path, out: Path, manifest: dict[str, Any]) -> None:
             relations=relations,
             notes=notes,
             **({"salt_label": SALT} if pseudonymised else {}),
-            source_snapshot=f"{source}/{SNAPSHOT}",
+            source_snapshot=f"{source}/{snapshot}",
         )
 
 
