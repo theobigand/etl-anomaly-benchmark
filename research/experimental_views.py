@@ -2295,14 +2295,14 @@ def bess_view(raw: pd.DataFrame, system: str) -> pd.DataFrame:
     missing = [c for c in need if c not in raw.columns]
     if missing:
         raise ViewError(f"columns not found: {missing}")
-    out = pd.DataFrame({"system": system, "meter": raw["Meter"].astype("string")}, index=raw.index)
+    out = pd.DataFrame({"system": system, "meter": raw["Meter"].astype("string")})
     for source, name in BESS_NUMBERS.items():
         out[name] = pd.to_numeric(raw[source], errors="coerce")
     out["quality_flag"] = raw["QualityFlag"].astype(bool)
     out["cycle_index"] = raw["CycleIndex"].astype("string")
     out["use"] = raw["Use"].astype(bool)
     out = out[out["hours_elapsed"].notna()]
-    return out.sort_values(["hours_elapsed", "meter"], kind="stable").reset_index(drop=True)
+    return out.sort_values(["hours_elapsed", "meter"]).reset_index(drop=True)
 
 
 def _build_bess(root: Path, out: Path, manifest: dict[str, Any]) -> None:
@@ -2313,7 +2313,7 @@ def _build_bess(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     if not files:
         raise ViewError("no feather file in the snapshot")
     frames = [bess_view(feather.read_table(f).to_pandas(), f.stem) for f in files]
-    view = pd.concat(frames, ignore_index=True)
+    view = pd.concat(frames)
     folder = out / "zen_bess"
     folder.mkdir(parents=True, exist_ok=True)
     target = folder / "readings.csv"
@@ -2397,16 +2397,14 @@ def _build_kelmarsh(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     with tempfile.TemporaryDirectory() as scratch:
         for name in members:
             got = extract_member(raw, name, Path(scratch), max_bytes=1 << 30, max_ratio=200)
-            with open(got["path"], encoding="utf-8") as handle:
-                head = [handle.readline().rstrip("\n") for _ in range(30)]
+            with open(got["path"], "rb") as handle:
+                head = [handle.readline().decode("utf-8").rstrip("\n") for _ in range(30)]
             skip, header = _kelmarsh_header(head)
             wanted = ["Date and time", *KELMARSH_SIGNALS]
-            frame = pd.read_csv(
-                got["path"], skiprows=skip + 1, names=header, usecols=wanted, na_values=["NaN"]
-            )
+            frame = pd.read_csv(got["path"], skiprows=skip + 1, names=header, usecols=wanted)
             frames.append(kelmarsh_view(frame, "T" + re.search(r"Kelmarsh_(\d+)_", name).group(1)))
             Path(got["path"]).unlink()
-    view = pd.concat(frames, ignore_index=True)
+    view = pd.concat(frames)
     folder = out / "zen_kelmarsh"
     folder.mkdir(parents=True, exist_ok=True)
     target = folder / "series.csv"
@@ -2451,7 +2449,8 @@ def pbdb_occurrence_view(raw: pd.DataFrame) -> pd.DataFrame:
         raise ViewError(f"columns not found: {missing}")
     out = pd.DataFrame({"occurrence_no": pd.to_numeric(raw["occurrence_no"], errors="coerce")})
     for column in PBDB_TEXT:
-        out[column] = raw[column].astype("string").str.strip().replace("", pd.NA)
+        text = raw[column].astype("string").str.strip()
+        out[column] = text.mask(text == "")
     for column in PBDB_NUMBER:
         out[column] = pd.to_numeric(raw[column], errors="coerce")
     return out.sort_values("occurrence_no", kind="stable").reset_index(drop=True)

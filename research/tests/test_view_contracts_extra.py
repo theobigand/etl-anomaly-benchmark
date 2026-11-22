@@ -554,3 +554,58 @@ def test_kelmarsh_reads_a_last_header_column_that_is_a_wanted_signal(tmp_path):
     ev._build_kelmarsh(tmp_path / "acquired", tmp_path / "o", {})
     out = pd.read_csv(tmp_path / "o" / "zen_kelmarsh" / "series.csv")
     assert len(out) == 1 and out["current_l1"].iloc[0] == 2.5  # the last signal of the file
+
+
+def test_kelmarsh_builder_hands_the_view_only_data_rows_and_the_wanted_columns(
+    tmp_path, monkeypatch
+):
+    seen = []
+    real = ev.kelmarsh_view
+    monkeypatch.setattr(
+        ev, "kelmarsh_view", lambda raw, turbine: seen.append(raw) or real(raw, turbine)
+    )
+    raw = tmp_path / "acquired" / "zen_kelmarsh" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    tev._kelmarsh_zip(raw / "Kelmarsh_SCADA_2016_3082.zip", turbines=(1,))
+    ev._build_kelmarsh(tmp_path / "acquired", tmp_path / "o", {})
+    frame = seen[0]
+    assert list(frame.columns) == [
+        "Date and time",
+        *ev.KELMARSH_SIGNALS,
+    ]  # the extra column is not read
+    assert len(frame) == 2 and frame["Date and time"].tolist() == [
+        "2016-01-03 00:10:00",
+        "2016-01-03 00:00:00",
+    ]
+    assert str(frame["Power (kW)"].dtype) == "float64" and frame["Power (kW)"].isna().tolist() == [
+        False,
+        True,
+    ]
+
+
+def test_kelmarsh_header_is_decoded_as_utf8_whatever_the_locale(tmp_path):
+    text = tev._kelmarsh_text()
+    assert "°" in text
+    raw = tmp_path / "acquired" / "zen_kelmarsh" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    with zipfile.ZipFile(raw / "Kelmarsh_SCADA_2016_3082.zip", "w") as z:
+        z.writestr("Turbine_Data_Kelmarsh_1_x.csv", text.encode("utf-8"))
+    ev._build_kelmarsh(tmp_path / "acquired", tmp_path / "o", {})
+    assert len(pd.read_csv(tmp_path / "o" / "zen_kelmarsh" / "series.csv")) == 2
+
+
+def test_single_key_sorts_keep_the_file_order_of_equal_keys_beyond_a_small_input():
+    n = 40
+    frame = pd.DataFrame(
+        {
+            "Date and time": ["2016-01-03 00:00:00"] * n,
+            **{c: [float(i) for i in range(n)] for c in ev.KELMARSH_SIGNALS},
+        }
+    )
+    out = ev.kelmarsh_view(frame, "T1")
+    assert out["power_kw"].tolist() == [float(i) for i in range(n)]
+    occ = tev._pbdb_frame().iloc[:1]
+    big = pd.concat([occ] * n, ignore_index=True)
+    big["occurrence_no"] = "7"
+    big["max_ma"] = [str(i) for i in range(n)]
+    assert ev.pbdb_occurrence_view(big)["max_ma"].tolist() == [float(i) for i in range(n)]
