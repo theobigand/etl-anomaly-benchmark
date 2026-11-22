@@ -318,6 +318,17 @@
    "C3": "hydrological gauging"
   }
  },
+ "ecb_euro_fx_reference_rates": {
+  "curator": "ecb",
+  "domain": "foreign exchange reference rates",
+  "generating_system": "ECB daily euro foreign exchange reference rate procedure (ESCB concertation)",
+  "note": "complete history, one row per TARGET business day; rates are fixings published by the ECB, not an exchange tape",
+  "producer": "European Central Bank (ECB)",
+  "schema_family": "daily multi-currency rate panel",
+  "structure": {
+   "C3": "daily euro reference rates for 41 currencies with natural missingness where a currency did not exist or was withdrawn"
+  }
+ },
  "edp_wind_farm_portugal": {
   "curator": "zenodo",
   "descriptors": {
@@ -966,6 +977,17 @@
    "C5": "meteorological episode-event-location-fatality hierarchy"
   }
  },
+ "nsidc_sea_ice_index": {
+  "curator": "nsidc",
+  "domain": "cryosphere sea ice extent",
+  "generating_system": "NOAA at NSIDC passive-microwave Sea Ice Index (SMMR, SSM/I, SSMIS)",
+  "note": "daily hemispheric sea ice extent derived from satellite brightness temperatures; sampling is irregular until 1987-08-20",
+  "producer": "NOAA at the National Snow and Ice Data Center (NSIDC)",
+  "schema_family": "satellite-derived hemispheric daily index",
+  "structure": {
+   "C3": "daily Arctic and Antarctic sea ice extent and missing area with an irregular early sampling interval"
+  }
+ },
  "ntnu_ev_charging": {
   "curator": "zenodo",
   "domain": "electric vehicle charging",
@@ -1198,6 +1220,17 @@
   "schema_family": "national electricity grid telemetry",
   "structure": {
    "C3": "half-hourly load, generation by fuel, CO2 rate and cross-border flows"
+  }
+ },
+ "seattle_fremont_bridge_counter": {
+  "curator": "data.seattle.gov",
+  "domain": "urban cycling infrastructure counting",
+  "generating_system": "Seattle DOT Fremont Bridge inductive-loop bicycle and scooter counter",
+  "note": "one fixed counter, hourly counts per pathway; local wall-clock timestamps",
+  "producer": "Seattle Department of Transportation (City of Seattle)",
+  "schema_family": "single-site hourly counter series",
+  "structure": {
+   "C3": "hourly bicycle and scooter counts for the east and west pathways of one bridge with natural blank hours"
   }
  },
  "seoul_bike": {

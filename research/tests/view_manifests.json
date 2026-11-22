@@ -930,6 +930,30 @@
    "source_snapshot": "ea_hydrology_flow/2026-11-21"
   }
  },
+ "ecb_fx": {
+  "ecb_fx_reference_rates": {
+   "dropped": [
+    "empty_trailing_column"
+   ],
+   "files": {
+    "rates.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "rates.csv": "timestamp,USD,JPY,BGN,CYP"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "currencies": 4,
+    "first_timestamp": "1999-01-05 00:00:00",
+    "last_timestamp": "2024-01-03 00:00:00",
+    "method": "complete history of the daily euro foreign exchange reference rates",
+    "missing_cells": 2
+   },
+   "source_snapshot": "ecb_fx_reference_rates/2026-11-22"
+  }
+ },
  "ev": {
   "zen_ev_charging": {
    "dropped": [],
@@ -1030,6 +1054,27 @@
     "method": "complete Florida bridge structural inspection v1.0 release"
    },
    "source_snapshot": "zen_florida_bridges/2026-11-22"
+  }
+ },
+ "fremont": {
+  "seattle_fremont_bridge": {
+   "dropped": [],
+   "files": {
+    "counts.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "counts.csv": "timestamp,fremont_bridge,fremont_bridge_nb,fremont_bridge_sb"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "first_timestamp": "2020-03-01 00:00:00",
+    "last_timestamp": "2020-03-01 01:00:00",
+    "method": "complete hourly counter export; timestamps are local wall-clock time",
+    "missing_count_rows": 1
+   },
+   "source_snapshot": "seattle_fremont_bridge/2026-11-22"
   }
  },
  "fugaku": {
@@ -2093,6 +2138,29 @@
     "unreadable_timestamps": 1
    },
    "source_snapshot": "rte_eco2mix_national/2026-11-22"
+  }
+ },
+ "sea_ice": {
+  "nsidc_sea_ice_index": {
+   "dropped": [
+    "source_data_file_paths"
+   ],
+   "files": {
+    "extent.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "extent.csv": "timestamp,north_extent_mkm2,north_missing_mkm2,south_extent_mkm2,south_missing_mkm2"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "first_timestamp": "1978-10-26 00:00:00",
+    "last_timestamp": "1978-10-30 00:00:00",
+    "method": "complete daily files of both hemispheres; every second day until 1987-08-20",
+    "missing_extent_rows": 2
+   },
+   "source_snapshot": "nsidc_sea_ice_index/2026-11-22"
   }
  },
  "sncf_tgv": {

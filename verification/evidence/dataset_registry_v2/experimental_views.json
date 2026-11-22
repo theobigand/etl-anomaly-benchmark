@@ -744,6 +744,26 @@
   },
   "source_snapshot": "ea_hydrology_flow/2026-11-21"
  },
+ "ecb_fx_reference_rates": {
+  "dropped": [
+   "empty_trailing_column"
+  ],
+  "files": {
+   "rates.csv": {
+    "rows": 7141,
+    "sha256": "d20e8921bf0d33b80fc1187b0ea33932af9cc45d93e66b3d9b034f34a39c370c"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "currencies": 41,
+   "first_timestamp": "1999-01-04 00:00:00",
+   "last_timestamp": "2026-11-20 00:00:00",
+   "method": "complete history of the daily euro foreign exchange reference rates",
+   "missing_cells": 70644
+  },
+  "source_snapshot": "ecb_fx_reference_rates/2026-11-22"
+ },
  "epa_aqs_ozone_hourly": {
   "dropped": [
    "state and county names, datum, date of last change, local time"
@@ -3305,6 +3325,25 @@
   },
   "source_snapshot": "noaa_gml_co2_weekly/2026-11-22"
  },
+ "nsidc_sea_ice_index": {
+  "dropped": [
+   "source_data_file_paths"
+  ],
+  "files": {
+   "extent.csv": {
+    "rows": 15908,
+    "sha256": "b4b9ba6eba43405a28003bcc33606e3dcceb07b26bfe30df5017767c0f03d734"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "first_timestamp": "1978-10-26 00:00:00",
+   "last_timestamp": "2026-11-21 00:00:00",
+   "method": "complete daily files of both hemispheres; every second day until 1987-08-20",
+   "missing_extent_rows": 0
+  },
+  "source_snapshot": "nsidc_sea_ice_index/2026-11-22"
+ },
  "nvd_cve": {
   "dropped": [],
   "files": {
@@ -4068,6 +4107,23 @@
    "unreadable_timestamps": 0
   },
   "source_snapshot": "rte_eco2mix_national/2026-11-22"
+ },
+ "seattle_fremont_bridge": {
+  "dropped": [],
+  "files": {
+   "counts.csv": {
+    "rows": 122675,
+    "sha256": "581a3fe945eba460de686d4e6cc1a196382ed6bbc1a85ae2b2a530e21111ab77"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "first_timestamp": "2012-10-02 13:00:00",
+   "last_timestamp": "2026-09-30 23:00:00",
+   "method": "complete hourly counter export; timestamps are local wall-clock time",
+   "missing_count_rows": 30
+  },
+  "source_snapshot": "seattle_fremont_bridge/2026-11-22"
  },
  "series": {
   "dropped": [],

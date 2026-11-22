@@ -12,6 +12,7 @@ import io
 import json
 import re
 import sys
+import zipfile
 from pathlib import Path
 from typing import Any
 
@@ -7571,6 +7572,131 @@ def _build_nih_reporter(root: Path, out: Path, manifest: dict[str, Any]) -> None
     )
 
 
+WAVE27_SNAPSHOT = "2026-11-22"
+
+
+def ecb_fx_view(text: str) -> pd.DataFrame:
+    """Daily euro reference rates, one column per currency; the publisher's N/A becomes NaN."""
+    raw = pd.read_csv(io.StringIO(text), dtype=str, keep_default_na=False)
+    raw = raw.loc[:, [c for c in raw.columns if not c.startswith("Unnamed")]]
+    data: dict[str, Any] = {"timestamp": pd.to_datetime(raw["Date"], errors="coerce")}
+    for column in raw.columns.drop("Date"):
+        data[column] = pd.to_numeric(raw[column].str.strip().replace("N/A", ""), errors="coerce")
+    frame = pd.DataFrame(data)
+    return frame[frame["timestamp"].notna()].sort_values("timestamp").reset_index(drop=True)
+
+
+def _build_ecb_fx(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    source = root / "ecb_fx_reference_rates" / WAVE27_SNAPSHOT / "raw" / "eurofxref-hist.zip"
+    if not source.exists():
+        raise ViewError("no ECB reference rate file in the snapshot")
+    with zipfile.ZipFile(source) as archive:
+        view = ecb_fx_view(archive.read("eurofxref-hist.csv").decode())
+    folder = out / "ecb_fx_reference_rates"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "rates.csv"
+    view.to_csv(target, index=False)
+    currencies = view.columns.drop("timestamp")
+    _record(
+        manifest,
+        "ecb_fx_reference_rates",
+        {"rates.csv": (target, len(view))},
+        dropped=["empty_trailing_column"],
+        pseudonymised=[],
+        sampling={
+            "currencies": int(len(currencies)),
+            "first_timestamp": str(view["timestamp"].min()),
+            "last_timestamp": str(view["timestamp"].max()),
+            "method": "complete history of the daily euro foreign exchange reference rates",
+            "missing_cells": int(view[currencies].isna().sum().sum()),
+        },
+        source_snapshot=f"ecb_fx_reference_rates/{WAVE27_SNAPSHOT}",
+    )
+
+
+def fremont_view(text: str) -> pd.DataFrame:
+    """Hourly Fremont Bridge counts with local timestamps; blank counts stay missing."""
+    raw = pd.read_csv(io.StringIO(text))
+    data: dict[str, Any] = {"timestamp": pd.to_datetime(raw["date"], errors="coerce")}
+    for column in ("fremont_bridge", "fremont_bridge_nb", "fremont_bridge_sb"):
+        data[column] = pd.to_numeric(raw[column], errors="coerce").astype("Int64")
+    frame = pd.DataFrame(data)
+    return frame[frame["timestamp"].notna()].sort_values("timestamp").reset_index(drop=True)
+
+
+def _build_fremont(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    source = root / "seattle_fremont_bridge" / WAVE27_SNAPSHOT / "raw" / "fremont_bridge_hourly.csv"
+    if not source.exists():
+        raise ViewError("no Fremont Bridge counter file in the snapshot")
+    view = fremont_view(source.read_text())
+    folder = out / "seattle_fremont_bridge"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "counts.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "seattle_fremont_bridge",
+        {"counts.csv": (target, len(view))},
+        dropped=[],
+        pseudonymised=[],
+        sampling={
+            "first_timestamp": str(view["timestamp"].min()),
+            "last_timestamp": str(view["timestamp"].max()),
+            "method": "complete hourly counter export; timestamps are local wall-clock time",
+            "missing_count_rows": int(view["fremont_bridge"].isna().sum()),
+        },
+        source_snapshot=f"seattle_fremont_bridge/{WAVE27_SNAPSHOT}",
+    )
+
+
+def _sea_ice_hemisphere(text: str, prefix: str) -> pd.DataFrame:
+    raw = pd.read_csv(io.StringIO(text), skiprows=[1], skipinitialspace=True, usecols=range(5))
+    raw.columns = [str(c).strip() for c in raw.columns]
+    return pd.DataFrame(
+        {
+            "timestamp": pd.to_datetime(raw[["Year", "Month", "Day"]], errors="coerce"),
+            f"{prefix}_extent_mkm2": pd.to_numeric(raw["Extent"], errors="coerce"),
+            f"{prefix}_missing_mkm2": pd.to_numeric(raw["Missing"], errors="coerce"),
+        }
+    )
+
+
+def sea_ice_view(north: str, south: str) -> pd.DataFrame:
+    """Daily Sea Ice Index extent of both hemispheres joined on the observation date."""
+    joined = _sea_ice_hemisphere(north, "north").merge(
+        _sea_ice_hemisphere(south, "south"), on="timestamp", how="outer"
+    )
+    return joined[joined["timestamp"].notna()].sort_values("timestamp").reset_index(drop=True)
+
+
+def _build_sea_ice(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "nsidc_sea_ice_index" / WAVE27_SNAPSHOT / "raw"
+    north, south = raw / "N_seaice_extent_daily_v4.0.csv", raw / "S_seaice_extent_daily_v4.0.csv"
+    if not (north.exists() and south.exists()):
+        raise ViewError("no NSIDC Sea Ice Index files in the snapshot")
+    view = sea_ice_view(north.read_text(), south.read_text())
+    folder = out / "nsidc_sea_ice_index"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "extent.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "nsidc_sea_ice_index",
+        {"extent.csv": (target, len(view))},
+        dropped=["source_data_file_paths"],
+        pseudonymised=[],
+        sampling={
+            "first_timestamp": str(view["timestamp"].min()),
+            "last_timestamp": str(view["timestamp"].max()),
+            "method": "complete daily files of both hemispheres; every second day until 1987-08-20",
+            "missing_extent_rows": int(
+                view[["north_extent_mkm2", "south_extent_mkm2"]].isna().any(axis=1).sum()
+            ),
+        },
+        source_snapshot=f"nsidc_sea_ice_index/{WAVE27_SNAPSHOT}",
+    )
+
+
 BUILD_STEPS = (
     _build_openalex,
     _build_monash,
@@ -7669,6 +7795,9 @@ BUILD_STEPS = (
     _build_daylight_events,
     _build_cpsc_recalls,
     _build_nih_reporter,
+    _build_ecb_fx,
+    _build_fremont,
+    _build_sea_ice,
     _build_flat,
     _build_series,
     _build_ukspend,

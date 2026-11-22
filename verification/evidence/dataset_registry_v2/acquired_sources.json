@@ -5910,6 +5910,66 @@
    "stratum": "C2a",
    "system": "nih_grant_award_administration",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "ecb_euro_fx_reference_rates",
+   "id": "ecb_fx_reference_rates",
+   "licence_class": "open",
+   "protocols": "P-TS",
+   "publisher": "ecb",
+   "reason": "ECB euro foreign exchange reference rates, complete daily history: 7,141 business-day rows from 1999-01-04 to 2026-11-20 for 41 currencies, the publisher's N/A (currency not yet introduced or discontinued) kept as NaN; central-bank rate-fixing mechanism absent from the other time-series groups",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "ECB disclaimer and copyright page read 2026-11-22: free use of website information with accurate reproduction, ECB cited as source and user modifications stated",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "ecb_euro_fx_reference_rate_fixing",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "seattle_fremont_bridge_counter",
+   "id": "seattle_fremont_bridge",
+   "licence_class": "open",
+   "protocols": "P-TS",
+   "publisher": "city_of_seattle",
+   "reason": "Seattle Department of Transportation Fremont Bridge counter, complete hourly export: 122,675 contiguous hourly rows from 2012-10-02 to 2026-09-30, east and west pathway counts and their total, 30 blank hours kept missing; inductive-loop urban cycling counts, a mechanism absent from the other C3 groups",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Socrata view metadata read 2026-11-22: license Public Domain (PUBLIC_DOMAIN), publisher City of Seattle",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "seattle_fremont_bridge_inductive_loop_counter",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "nsidc_sea_ice_index",
+   "id": "nsidc_sea_ice_index",
+   "licence_class": "open",
+   "protocols": "P-TS",
+   "publisher": "noaa_nsidc",
+   "reason": "NOAA at NSIDC Sea Ice Index version 4, complete daily extent files of both hemispheres joined on date: 15,908 rows from 1978-10-26 to 2026-11-21 (every second day until 1987-08-20, one 42-day gap ending 1988-01-13); passive-microwave satellite cryosphere mechanism absent from the other C3 groups",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "NSIDC citation policies read 2026-11-22: site data may be downloaded and used unless limitations are stated, with NSIDC credit and a data citation as a condition of use; no limitation stated for the Sea Ice Index",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "noaa_nsidc_passive_microwave_sea_ice_index",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

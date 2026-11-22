@@ -1,6 +1,7 @@
 import io
 import json
 import sys
+import zipfile
 from pathlib import Path
 
 import pandas as pd
@@ -1092,6 +1093,9 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _daylight_snapshot(root)
     _cpsc_snapshot(root)
     _nih_snapshot(root)
+    _ecb_snapshot(root)
+    _fremont_snapshot(root)
+    _sea_ice_snapshot(root)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
@@ -1107,7 +1111,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "zen_telecom_kpis", "zen_dk_district_heating", "zen_water_demand", "zen_dmsp_auroral", "us_treasury_dts", "fdic_bank_financials", "sncf_tgv_regularite", "dgccrf_fuel_prices", "us_federal_register", "datacite_dois", "gbif_cc0_occurrences", "chembl_molecules", "zen_florida_bridges", "wri_power_plants", "paris_urban_trees", "zen_moodle_events", "zen_norp_solar_bursts", "zen_blazar_flares", "zen_wind_fragility", "zen_terralore_chronicle", "ncei_storm_events_2024", "ourairports_db", "cftc_cot_disaggregated", "ndbc_buoys_2023", "zen_daylight_events", "cpsc_recalls", "nih_reporter_projects_fy2024", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "zen_telecom_kpis", "zen_dk_district_heating", "zen_water_demand", "zen_dmsp_auroral", "us_treasury_dts", "fdic_bank_financials", "sncf_tgv_regularite", "dgccrf_fuel_prices", "us_federal_register", "datacite_dois", "gbif_cc0_occurrences", "chembl_molecules", "zen_florida_bridges", "wri_power_plants", "paris_urban_trees", "zen_moodle_events", "zen_norp_solar_bursts", "zen_blazar_flares", "zen_wind_fragility", "zen_terralore_chronicle", "ncei_storm_events_2024", "ourairports_db", "cftc_cot_disaggregated", "ndbc_buoys_2023", "zen_daylight_events", "cpsc_recalls", "nih_reporter_projects_fy2024", "ecb_fx_reference_rates", "seattle_fremont_bridge", "nsidc_sea_ice_index", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -9750,3 +9754,174 @@ def test_nih_reporter_builder_reads_zip_writes_csv_manifest_and_errors_when_miss
     assert "investigator_names_and_ids" in view["dropped"]
     assert view["sampling"]["duplicates_dropped"] == 1
     assert view["source_snapshot"] == f"nih_reporter_projects_fy2024/{ev.WAVE26_SNAPSHOT}"
+
+
+ECB_CSV = (
+    "Date,USD,JPY,BGN,CYP,\n"
+    "2024-01-03,1.09,157.0,1.9558,N/A,\n"
+    "1999-01-05,1.179,130.96,N/A,0.5823,\n"
+    "not a date,1.0,1.0,1.0,1.0,\n"
+)
+
+
+def _ecb_snapshot(root):
+    raw = root / "ecb_fx_reference_rates" / ev.WAVE27_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    with zipfile.ZipFile(raw / "eurofxref-hist.zip", "w") as archive:
+        archive.writestr("eurofxref-hist.csv", ECB_CSV)
+
+
+def test_ecb_fx_view_masks_publisher_na_drops_the_empty_column_and_sorts_by_date():
+    view = ev.ecb_fx_view(ECB_CSV)
+    assert view.columns.tolist() == ["timestamp", "USD", "JPY", "BGN", "CYP"]
+    assert view["timestamp"].dt.strftime("%Y-%m-%d").tolist() == ["1999-01-05", "2024-01-03"]
+    assert view["USD"].tolist() == [1.179, 1.09]
+    assert pd.isna(view["BGN"].iloc[0]) and pd.isna(view["CYP"].iloc[1])
+    assert view["CYP"].iloc[0] == 0.5823
+
+
+def test_ecb_fx_builder_reads_zip_writes_csv_manifest_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no ECB reference rate file in the snapshot$"):
+        ev._build_ecb_fx(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _ecb_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_ecb_fx(root, out, manifest)
+    ev._build_ecb_fx(root, out, manifest)
+    written = pd.read_csv(out / "ecb_fx_reference_rates" / "rates.csv")
+    assert written["timestamp"].tolist() == ["1999-01-05", "2024-01-03"]
+    view = manifest["ecb_fx_reference_rates"]
+    assert view["files"]["rates.csv"]["rows"] == 2
+    assert view["dropped"] == ["empty_trailing_column"]
+    assert view["sampling"] == {
+        "currencies": 4,
+        "first_timestamp": "1999-01-05 00:00:00",
+        "last_timestamp": "2024-01-03 00:00:00",
+        "method": "complete history of the daily euro foreign exchange reference rates",
+        "missing_cells": 2,
+    }
+    assert view["source_snapshot"] == f"ecb_fx_reference_rates/{ev.WAVE27_SNAPSHOT}"
+
+
+FREMONT_CSV = (
+    '"date","fremont_bridge","fremont_bridge_nb","fremont_bridge_sb"\n'
+    '"2020-03-01T01:00:00.000","7","3","4"\n'
+    '"2020-03-01T00:00:00.000","","",""\n'
+    '"garbage","1","1","0"\n'
+)
+
+
+def _fremont_snapshot(root):
+    raw = root / "seattle_fremont_bridge" / ev.WAVE27_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "fremont_bridge_hourly.csv").write_text(FREMONT_CSV)
+
+
+def test_fremont_view_keeps_blank_counts_missing_and_sorts_by_time():
+    view = ev.fremont_view(FREMONT_CSV)
+    assert view["timestamp"].dt.strftime("%Y-%m-%d %H:%M").tolist() == [
+        "2020-03-01 00:00",
+        "2020-03-01 01:00",
+    ]
+    assert view["fremont_bridge"].isna().tolist() == [True, False]
+    assert view["fremont_bridge"].dtype == "Int64"
+    assert view.loc[1, ["fremont_bridge", "fremont_bridge_nb", "fremont_bridge_sb"]].tolist() == [
+        7,
+        3,
+        4,
+    ]
+
+
+def test_fremont_builder_writes_csv_manifest_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no Fremont Bridge counter file in the snapshot$"):
+        ev._build_fremont(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _fremont_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_fremont(root, out, manifest)
+    ev._build_fremont(root, out, manifest)
+    lines = (out / "seattle_fremont_bridge" / "counts.csv").read_text().splitlines()
+    assert lines == [
+        "timestamp,fremont_bridge,fremont_bridge_nb,fremont_bridge_sb",
+        "2020-03-01 00:00:00,,,",
+        "2020-03-01 01:00:00,7,3,4",
+    ]
+    view = manifest["seattle_fremont_bridge"]
+    assert view["files"]["counts.csv"]["rows"] == 2
+    assert view["sampling"] == {
+        "first_timestamp": "2020-03-01 00:00:00",
+        "last_timestamp": "2020-03-01 01:00:00",
+        "method": "complete hourly counter export; timestamps are local wall-clock time",
+        "missing_count_rows": 1,
+    }
+    assert view["source_snapshot"] == f"seattle_fremont_bridge/{ev.WAVE27_SNAPSHOT}"
+
+
+SEA_ICE_HEAD = (
+    "Year, Month, Day,     Extent,    Missing, Source Data\n"
+    "YYYY,    MM,  DD, 10^6 sq km, 10^6 sq km, Source\n"
+)
+SEA_ICE_NORTH = SEA_ICE_HEAD + (
+    "1978,    10,  28,     10.420,      0.000, ['/a/b.bin']\n"
+    "1978,    10,  26,     10.231,      0.500, ['/a/c.bin']\n"
+)
+SEA_ICE_SOUTH = SEA_ICE_HEAD + (
+    "1978,    10,  26,     17.624,      0.000, ['/a/d.bin']\n"
+    "1978,    10,  30,     17.900,      0.100, ['/a/e.bin']\n"
+)
+
+
+def _sea_ice_snapshot(root):
+    raw = root / "nsidc_sea_ice_index" / ev.WAVE27_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "N_seaice_extent_daily_v4.0.csv").write_text(SEA_ICE_NORTH)
+    (raw / "S_seaice_extent_daily_v4.0.csv").write_text(SEA_ICE_SOUTH)
+
+
+def test_sea_ice_view_joins_hemispheres_on_date_and_keeps_unmatched_days():
+    view = ev.sea_ice_view(SEA_ICE_NORTH, SEA_ICE_SOUTH)
+    assert view.columns.tolist() == [
+        "timestamp",
+        "north_extent_mkm2",
+        "north_missing_mkm2",
+        "south_extent_mkm2",
+        "south_missing_mkm2",
+    ]
+    assert view["timestamp"].dt.strftime("%Y-%m-%d").tolist() == [
+        "1978-10-26",
+        "1978-10-28",
+        "1978-10-30",
+    ]
+    assert view["north_extent_mkm2"].iloc[0] == 10.231 and view["north_missing_mkm2"].iloc[0] == 0.5
+    assert view["south_extent_mkm2"].iloc[0] == 17.624
+    assert pd.isna(view["south_extent_mkm2"].iloc[1]) and pd.isna(view["north_extent_mkm2"].iloc[2])
+    assert view["south_missing_mkm2"].iloc[2] == 0.1
+
+
+def test_sea_ice_builder_writes_csv_manifest_and_errors_when_a_file_is_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no NSIDC Sea Ice Index files in the snapshot$"):
+        ev._build_sea_ice(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _sea_ice_snapshot(root)
+    (
+        root / "nsidc_sea_ice_index" / ev.WAVE27_SNAPSHOT / "raw" / "S_seaice_extent_daily_v4.0.csv"
+    ).unlink()
+    with pytest.raises(ev.ViewError, match=r"^no NSIDC Sea Ice Index files in the snapshot$"):
+        ev._build_sea_ice(root, tmp_path / "err", {})
+    (
+        root / "nsidc_sea_ice_index" / ev.WAVE27_SNAPSHOT / "raw" / "S_seaice_extent_daily_v4.0.csv"
+    ).write_text(SEA_ICE_SOUTH)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_sea_ice(root, out, manifest)
+    ev._build_sea_ice(root, out, manifest)
+    lines = (out / "nsidc_sea_ice_index" / "extent.csv").read_text().splitlines()
+    assert lines[1] == "1978-10-26,10.231,0.5,17.624,0.0"
+    view = manifest["nsidc_sea_ice_index"]
+    assert view["files"]["extent.csv"]["rows"] == 3
+    assert view["dropped"] == ["source_data_file_paths"]
+    assert view["sampling"]["missing_extent_rows"] == 2
+    assert view["sampling"]["last_timestamp"] == "1978-10-30 00:00:00"
+    assert view["source_snapshot"] == f"nsidc_sea_ice_index/{ev.WAVE27_SNAPSHOT}"

@@ -2479,6 +2479,27 @@
   },
   {
    "failed": null,
+   "group": "ecb_euro_fx_reference_rates",
+   "id": "ecb_fx_reference_rates",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "seattle_fremont_bridge_counter",
+   "id": "seattle_fremont_bridge",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "nsidc_sea_ice_index",
+   "id": "nsidc_sea_ice_index",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2704,6 +2725,7 @@
    "dmsp_ssj_auroral",
    "dwd_germany",
    "ea_hydrology",
+   "ecb_euro_fx_reference_rates",
    "edp_wind_farm_portugal",
    "elder_home",
    "epa_aqs",
@@ -2715,9 +2737,11 @@
    "ndbc_moored_buoys",
    "noaa_coops",
    "noaa_gml_co2",
+   "nsidc_sea_ice_index",
    "pnnl_epri_bess",
    "rki_surveillance",
    "rte_france_grid",
+   "seattle_fremont_bridge_counter",
    "seoul_bike",
    "steel_korea",
    "telecom_operator_kpis",
@@ -2839,13 +2863,13 @@
    "structurally_valid": 23
   },
   "C3": {
-   "acquired": 35,
-   "discovered": 56,
-   "experiment_ready": 32,
-   "protocol_ready": 32,
-   "rights_verified": 35,
-   "scientifically_eligible": 32,
-   "structurally_valid": 33
+   "acquired": 38,
+   "discovered": 59,
+   "experiment_ready": 35,
+   "protocol_ready": 35,
+   "rights_verified": 38,
+   "scientifically_eligible": 35,
+   "structurally_valid": 36
   },
   "C4": {
    "acquired": 40,

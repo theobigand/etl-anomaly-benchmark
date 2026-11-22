@@ -2781,6 +2781,51 @@
    "size": "83,314 award records (67 MB zip)",
    "source_url": "https://reporter.nih.gov/exporter/projects/download/2024",
    "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "ecb:euro-fx-reference-rates",
+   "licence": "ECB copyright page: free use with source citation and statement of modifications",
+   "name": "ECB euro foreign exchange reference rates, daily history",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as ecb_fx_reference_rates (complete history, N/A kept as NaN, empty trailing column dropped)",
+   "publisher": "European Central Bank",
+   "reason": "Central-bank daily rate-fixing mechanism, financial but not transactional, absent from the other C3 groups",
+   "size": "7,141 daily rows, 41 currencies",
+   "source_url": "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist.zip",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "seattle:fremont-bridge",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "Seattle Fremont Bridge bicycle and scooter counter, hourly",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as seattle_fremont_bridge (complete export; blank hours kept missing)",
+   "publisher": "City of Seattle (Seattle Department of Transportation)",
+   "reason": "Inductive-loop urban cycling counts, distinct from the Melbourne pedestrian sensor series",
+   "size": "122,675 hourly rows",
+   "source_url": "https://data.seattle.gov/resource/65db-xm6k",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "nsidc:sea-ice-index-v4",
+   "licence": "NSIDC citation policies: free use with NSIDC credit and data citation",
+   "name": "NOAA at NSIDC Sea Ice Index v4, daily extent",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as nsidc_sea_ice_index (both hemispheres joined on date; source file paths dropped)",
+   "publisher": "NOAA at NSIDC",
+   "reason": "Satellite passive-microwave cryosphere series, distinct from in-situ and atmospheric C3 groups",
+   "size": "15,908 daily rows",
+   "source_url": "https://noaadata.apps.nsidc.org/NOAA/G02135/",
+   "status": "acquired"
   }
  ],
  "date": "2026-11-22",

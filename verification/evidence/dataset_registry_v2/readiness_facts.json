@@ -509,6 +509,30 @@
    "units": 70128,
    "view": "ea_hydrology_flow"
   },
+  "ecb_fx_reference_rates": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete daily history of the ECB euro foreign exchange reference rates: 7,141 TARGET business days, 41 currency columns, 1999-01-04 to 2026-11-20",
+    "publisher N/A (currency introduced after 1999, withdrawn at euro adoption or suspended) kept as NaN: 70,644 of 292,781 cells; business-day calendar gaps (weekends, TARGET holidays) preserved",
+    "market jumps, regime changes and currency discontinuities are baseline dynamics, not injected faults"
+   ],
+   "first_party": true,
+   "independent_group": "ecb_euro_fx_reference_rates",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on date",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and contextual anomalies on rate levels and day-to-day returns",
+    "level shift, volatility change, stale values and missing intervals"
+   ],
+   "temporal_span": "27 years of daily business-day fixings (1999-01-04 to 2026-11-20)",
+   "units": 7141,
+   "unsupported_fault_mechanisms": [
+    "intraday quotation behaviour"
+   ],
+   "view": "ecb_fx_reference_rates"
+  },
   "epa_aqs_ozone_hourly": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -2317,6 +2341,30 @@
    ],
    "view": "noaa_gml_co2_weekly"
   },
+  "nsidc_sea_ice_index": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete Sea Ice Index v4 daily extent for the Arctic and the Antarctic: 15,908 dates, 1978-10-26 to 2026-11-21, every second day until 1987-08-20 and daily afterwards, one 42-day gap ending 1988-01-13",
+    "extent and missing-area columns for each hemisphere in 10^6 square kilometres; the source-data file path column is dropped",
+    "strong annual cycle, the long-term decline and sensor transitions (SMMR, SSM/I, SSMIS) are baseline dynamics, not injected faults"
+   ],
+   "first_party": true,
+   "independent_group": "nsidc_sea_ice_index",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on date",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and contextual anomalies against the annual cycle",
+    "level shift, seasonal amplitude change, drift and missing intervals"
+   ],
+   "temporal_span": "48 years (1978-10-26 to 2026-11-21), irregular sampling before 1987-08-21",
+   "units": 15908,
+   "unsupported_fault_mechanisms": [
+    "sub-daily variation and regional ice extent"
+   ],
+   "view": "nsidc_sea_ice_index"
+  },
   "nvd_cve": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -2751,6 +2799,30 @@
     "sub-half-hourly grid frequency transients"
    ],
    "view": "rte_eco2mix_national"
+  },
+  "seattle_fremont_bridge": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete hourly export of the Fremont Bridge counter: 122,675 hourly rows, 2012-10-02 13:00 to 2026-09-30 23:00 local time, no missing timestamps",
+    "30 hours with blank counts (all three count columns) kept as missing; the total column equals the sum of the two pathway columns",
+    "daily and weekly commuting cycles, seasonal weather dependence, event days and the 2020 pandemic level change are baseline dynamics, not injected faults"
+   ],
+   "first_party": true,
+   "independent_group": "seattle_fremont_bridge_counter",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on timestamp",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and contextual anomalies against hourly and weekly profiles",
+    "level shift, seasonal amplitude change, counter outage and missing intervals"
+   ],
+   "temporal_span": "14 years hourly (2012-10-02 to 2026-09-30)",
+   "units": 122675,
+   "unsupported_fault_mechanisms": [
+    "sub-hourly crossing times and direction of travel"
+   ],
+   "view": "seattle_fremont_bridge"
   },
   "slurm_ccin2p3": {
    "anomaly_origin": "controlled_injection",
