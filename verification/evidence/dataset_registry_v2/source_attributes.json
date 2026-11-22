@@ -94,6 +94,17 @@
    "C6": "regulatory registry record"
   }
  },
+ "cnc_five_axis_milling": {
+  "curator": "zenodo",
+  "domain": "industrial CNC machining",
+  "generating_system": "Five-axis CNC milling machine controller across 13 production setups",
+  "note": "",
+  "producer": "Series production 5-axis CNC dataset authors (Zenodo 10853254)",
+  "schema_family": "five-axis cnc production telemetry",
+  "structure": {
+   "C3": "industrial CNC controller high-frequency time series"
+  }
+ },
  "coatings_multinational": {
   "curator": "4tu",
   "domain": "purchasing (ERP)",
@@ -653,6 +664,28 @@
   "schema_family": "nvd cve json",
   "structure": {
    "C6": "vulnerability records with configurations, metrics and references"
+  }
+ },
+ "noaa_coops": {
+  "curator": "noaa",
+  "domain": "oceanography and coastal tides",
+  "generating_system": "NOAA CO-OPS National Water Level Observation Network (6 coastal stations)",
+  "note": "Shares federal NOAA parent agency curator with noaa_gml_co2; distinct observation network, sensors and domain",
+  "producer": "NOAA Center for Operational Oceanographic Products and Services (CO-OPS)",
+  "schema_family": "noaa co-ops tidal water level",
+  "structure": {
+   "C3": "hourly coastal sea-level and astronomical tide telemetry with quality flags"
+  }
+ },
+ "noaa_gml_co2": {
+  "curator": "noaa",
+  "domain": "atmospheric greenhouse-gas spectroscopy",
+  "generating_system": "NOAA GML Mauna Loa Observatory weekly infrared CO2 analyzer",
+  "note": "Shares federal NOAA parent agency curator with noaa_coops; distinct observatory, instrumentation and domain",
+  "producer": "NOAA Global Monitoring Laboratory (GML)",
+  "schema_family": "noaa gml weekly mole fraction",
+  "structure": {
+   "C3": "weekly atmospheric CO2 mole fraction time series"
   }
  },
  "ntnu_ev_charging": {

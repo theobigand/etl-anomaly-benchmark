@@ -1048,6 +1048,9 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _aoe_snapshot(root)
     _charity_snapshot(root)
     _japan_snapshot(root)
+    _coops_snapshot(root)
+    _gml_co2_snapshot(root)
+    _cnc_snapshot(root)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
@@ -1063,7 +1066,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -5859,3 +5862,174 @@ def test_japan_buildings_builder_reads_zip_writes_csvs_and_errors_when_missing(t
         "method": "complete core 7-table relational schema (no row sampling)"
     }
     assert len(view["relations"]) == 6 and all(r["orphans"] == 0 for r in view["relations"])
+
+
+def _coops_snapshot(root):
+    raw = root / "noaa_coops_tides" / ev.COOPS_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "coops_8518750_2022.json").write_text(
+        json.dumps(
+            {
+                "metadata": {"id": "8518750"},
+                "data": [
+                    {"t": "2022-01-01 01:00", "v": "0.80", "s": "0.02", "f": "1,1"},
+                    {"t": "2022-01-01 00:00", "v": "0.50", "s": "0.01", "f": "0,0"},
+                    {"t": "2022-01-01 00:00", "v": "9.99", "s": "0.01", "f": "0,0"},
+                    {"t": "bad-time", "v": "0.10", "s": "0.01", "f": "0,0"},
+                ],
+            }
+        )
+    )
+    (raw / "coops_9414290_2022.json").write_text(
+        json.dumps(
+            {
+                "metadata": {"id": "9414290"},
+                "data": [{"t": "2022-01-01 00:00", "v": "", "s": "0.0", "f": "1,0"}],
+            }
+        )
+    )
+
+
+def _gml_co2_snapshot(root):
+    raw = root / "noaa_gml_co2_weekly" / ev.GML_CO2_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "co2_weekly_mlo.csv").write_text(
+        "# comment header\n"
+        "year,month,day,decimal,average,ndays,1 year ago,10 years ago,increase since 1800\n"
+        "2020,1,12,2020.0301,-999.99,0,-999.99,-999.99,-999.99\n"
+        "2020,1,5,2020.0110,413.5,6,410.1,390.2,135.4\n"
+        "bad,1,1,2020.0,400.0,1,400.0,400.0,100.0\n"
+    )
+
+
+def _cnc_snapshot(root):
+    raw = root / "zen_cnc_milling" / ev.CNC_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    base = {c: 1.0 for c in ev.CNC_SIGNALS}
+    r1 = {"Unnamed: 0": 0, "DateTime": "2022-04-05 13:06:13", **base, "ToolNumber": 2.0, "Phase": 7}
+    r2 = {"Unnamed: 0": 1, "DateTime": "2022-04-05 13:06:11", **base, "ToolNumber": 1.0, "Phase": 7}
+    r_dup = {
+        "Unnamed: 0": 2,
+        "DateTime": "2022-04-05 13:06:11",
+        **base,
+        "ToolNumber": 9.0,
+        "Phase": 7,
+    }
+    r_bad = {"Unnamed: 0": 3, "DateTime": "bad", **base, "ToolNumber": 3.0, "Phase": 7}
+    pd.DataFrame([r1, r2, r_dup, r_bad]).to_csv(raw / "Data_from_2022-04.csv", index=False)
+    r3 = {"DateTime": "2021-11-26 07:15:36", **base, "ToolNumber": "bad", "PocketTable": 5}
+    pd.DataFrame([r3]).to_csv(raw / "Data_from_2021-11-26.csv", index=False)
+
+
+def test_coops_tides_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no NOAA CO-OPS JSON files in the snapshot$"):
+        ev._build_coops_tides(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _coops_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_coops_tides(root, out, manifest)
+    ev._build_coops_tides(root, out, manifest)
+    df = pd.read_csv(out / "noaa_coops_tides" / "tides.csv", dtype={"station_id": str})
+    assert df.columns.tolist() == ["station_id", "timestamp", "water_level_m", "sigma_m", "flags"]
+    assert df["station_id"].tolist() == ["8518750", "8518750", "9414290"]
+    assert df["water_level_m"].iloc[0] == 0.5
+    assert df["sigma_m"].tolist() == [0.01, 0.02, 0.0]
+    assert pd.isna(df["water_level_m"].iloc[2])
+    empty, dups0 = ev.coops_tides_view([])
+    assert len(empty) == 0 and dups0 == 0
+    assert empty.columns.tolist() == [
+        "station_id",
+        "timestamp",
+        "water_level_m",
+        "sigma_m",
+        "flags",
+    ]
+    bad, _ = ev.coops_tides_view(
+        [
+            {"station_id": "1", "t": "2022/01/01 00:00", "v": "1.0", "s": "0.1", "f": "0,0"},
+            {"station_id": "1", "t": "2022-01-01 00:00", "v": "bad", "s": "bad", "f": "0,0"},
+        ]
+    )
+    assert len(bad) == 1
+    assert pd.isna(bad["water_level_m"].iloc[0]) and pd.isna(bad["sigma_m"].iloc[0])
+    nodata_root = tmp_path / "nodata_acq"
+    _coops_snapshot(nodata_root)
+    (nodata_root / "noaa_coops_tides" / ev.COOPS_SNAPSHOT / "raw" / "coops_0_2022.json").write_text(
+        json.dumps({"metadata": {"id": "0"}})
+    )
+    m_nodata: dict = {}
+    ev._build_coops_tides(nodata_root, tmp_path / "nodata_out", m_nodata)
+    assert m_nodata["noaa_coops_tides"]["files"]["tides.csv"]["rows"] == 3
+    view = manifest["noaa_coops_tides"]
+    assert view["dropped"] == [] and view["pseudonymised"] == []
+    assert view["source_snapshot"] == f"noaa_coops_tides/{ev.COOPS_SNAPSHOT}"
+    assert view["sampling"] == {
+        "duplicates_dropped": 1,
+        "first_timestamp": "2022-01-01 00:00:00",
+        "flagged_rows": 2,
+        "last_timestamp": "2022-01-01 01:00:00",
+        "method": "six US coastal stations hourly water level (2022-2024 GMT)",
+        "missing_value_rows": 1,
+        "stations": 2,
+    }
+
+
+def test_gml_co2_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no NOAA GML CO2 file in the snapshot$"):
+        ev._build_gml_co2(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _gml_co2_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_gml_co2(root, out, manifest)
+    ev._build_gml_co2(root, out, manifest)
+    df = pd.read_csv(out / "noaa_gml_co2_weekly" / "co2_weekly.csv")
+    assert df.columns.tolist() == [
+        "timestamp",
+        "decimal_year",
+        "co2_ppm",
+        "one_year_ago_ppm",
+        "ten_years_ago_ppm",
+        "increase_since_1800_ppm",
+        "ndays",
+    ]
+    assert df["timestamp"].tolist() == ["2020-01-05", "2020-01-12"]
+    assert df["co2_ppm"].iloc[0] == 413.5 and df["ndays"].tolist() == [6, 0]
+    for col in ("co2_ppm", "one_year_ago_ppm", "ten_years_ago_ppm", "increase_since_1800_ppm"):
+        assert pd.isna(df[col].iloc[1])
+    view = manifest["noaa_gml_co2_weekly"]
+    assert view["source_snapshot"] == f"noaa_gml_co2_weekly/{ev.GML_CO2_SNAPSHOT}"
+    assert view["sampling"] == {
+        "first_timestamp": "2020-01-05 00:00:00",
+        "last_timestamp": "2020-01-12 00:00:00",
+        "method": "complete weekly Mauna Loa atmospheric CO2 record (1974-2026)",
+        "missing_co2_rows": 1,
+    }
+
+
+def test_cnc_milling_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no CNC milling CSV files in the snapshot$"):
+        ev._build_cnc_milling(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _cnc_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_cnc_milling(root, out, manifest)
+    ev._build_cnc_milling(root, out, manifest)
+    df = pd.read_csv(out / "zen_cnc_milling" / "cnc_milling.csv", dtype={"series_id": str})
+    assert df.columns.tolist() == ["series_id", "timestamp", *ev.CNC_SIGNALS]
+    assert df["series_id"].tolist() == ["2021-11-26", "2022-04", "2022-04"]
+    assert df["ToolNumber"].iloc[1] == 1.0 and pd.isna(df["ToolNumber"].iloc[0])
+    view = manifest["zen_cnc_milling"]
+    assert view["dropped"] == ["Unnamed: 0", "Phase", "Phase_compressed", "PocketTable"]
+    assert view["pseudonymised"] == []
+    assert view["source_snapshot"] == f"zen_cnc_milling/{ev.CNC_SNAPSHOT}"
+    assert view["sampling"] == {
+        "duplicates_dropped": 1,
+        "first_timestamp": "2021-11-26 07:15:36",
+        "last_timestamp": "2022-04-05 13:06:13",
+        "method": "complete 13-file five-axis CNC production series telemetry (Nov 2021 - Apr 2022)",  # noqa: E501
+        "series_count": 2,
+        "series_files": 2,
+    }

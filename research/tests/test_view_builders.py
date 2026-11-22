@@ -340,6 +340,18 @@ def _japan(root, tmp):
     tev._japan_snapshot(root)
 
 
+def _coops(root, tmp):
+    tev._coops_snapshot(root)
+
+
+def _gml_co2(root, tmp):
+    tev._gml_co2_snapshot(root)
+
+
+def _cnc(root, tmp):
+    tev._cnc_snapshot(root)
+
+
 def _tlc(root, tmp):
     tev._tlc_page(
         [{}, {"tpep_pickup_datetime": "2023-03-07T07:00:00.000", "total_amount": "0.0"}]
@@ -377,6 +389,9 @@ CASES = {
     "aoe": (_aoe, ev._build_aoe, ["zen_aoe_interactions"], {}),
     "charity": (_charity, ev._build_charity_register, ["uk_charity_register"], {}),
     "japan": (_japan, ev._build_japan_buildings, ["zen_japan_buildings"], {}),
+    "coops": (_coops, ev._build_coops_tides, ["noaa_coops_tides"], {}),
+    "gml_co2": (_gml_co2, ev._build_gml_co2, ["noaa_gml_co2_weekly"], {}),
+    "cnc": (_cnc, ev._build_cnc_milling, ["zen_cnc_milling"], {}),
     "tlc": (_tlc, ev._build_tlc, ["nyc_tlc_yellow"], {}),
     "maude": (_maude_case, ev._build_maude, ["openfda_device_event"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),

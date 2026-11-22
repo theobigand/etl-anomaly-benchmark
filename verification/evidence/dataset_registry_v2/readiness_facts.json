@@ -2065,6 +2065,54 @@
    "units": 98723,
    "view": "monash_pedestrian"
   },
+  "noaa_coops_tides": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "six fixed US coastal tide-gauge stations (8518750, 9414290, 8724580, 9447130, 1612340, 8410140) sampled hourly in GMT from 2022-01-01 to 2024-12-31",
+    "astronomical tidal harmonics and storm-surge peaks are natural baseline dynamics, not injected faults",
+    "preserves 4,943 missing water-level observations and 5,417 publisher quality-flagged rows (0 duplicates)"
+   ],
+   "first_party": true,
+   "independent_group": "noaa_coops",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 per station series",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point, contextual and collective anomalies",
+    "level shift, drift and missing intervals",
+    "tidal seasonality and variance shifts across three full annual cycles"
+   ],
+   "temporal_span": "3 years hourly across 6 coastal stations (2022-01-01 to 2024-12-31)",
+   "units": 157823,
+   "unsupported_fault_mechanisms": [
+    "sub-hourly coastal seiches"
+   ],
+   "view": "noaa_coops_tides"
+  },
+  "noaa_gml_co2_weekly": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete weekly Mauna Loa atmospheric CO2 series from 1974-05-19 to 2026-11-15 with -999.99 sentinels masked to NaN (20 missing weeks)",
+    "secular upward trend, annual seasonal biospheric cycle, and the 2022-2023 Mauna Loa eruption site relocation are baseline dynamics, not injected faults"
+   ],
+   "first_party": true,
+   "independent_group": "noaa_gml_co2",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on UTC date",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and contextual anomalies",
+    "level shift, drift, seasonal amplitude checks and missing intervals"
+   ],
+   "temporal_span": "52 years weekly (1974-05-19 to 2026-11-15)",
+   "units": 2740,
+   "unsupported_fault_mechanisms": [
+    "daily or sub-daily atmospheric synoptic shifts"
+   ],
+   "view": "noaa_gml_co2_weekly"
+  },
   "nvd_cve": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -2986,6 +3034,30 @@
    "protocol_id": "P-SEQ",
    "units": 1000000,
    "view": "zen_clue_lds"
+  },
+  "zen_cnc_milling": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "13 machine-control production runs spanning 2021-11-26 to 2022-04-08 at ~2s cadence across 20 common numeric controller signals",
+    "setup changeovers, tool changes, spindle warmup and idle phases are normal operational baseline regimes",
+    "957 exact-second duplicate polls removed during canonical timestamp normalization; partial Phase/PocketTable columns dropped"
+   ],
+   "first_party": true,
+   "independent_group": "cnc_five_axis_milling",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 within production series",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point, contextual and collective faults",
+    "step/regime shifts, drift and variance changes across setups"
+   ],
+   "temporal_span": "13 production runs over 4.4 months (Nov 2021 - Apr 2022); no annual cycle coverage",
+   "units": 189089,
+   "unsupported_fault_mechanisms": [
+    "annual seasonality"
+   ],
+   "view": "zen_cnc_milling"
   },
   "zen_ev_charging": {
    "anomaly_origin": "controlled_injection",

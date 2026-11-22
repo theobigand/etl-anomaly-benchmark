@@ -5050,6 +5050,66 @@
    "stratum": "C5",
    "system": "japan_reconstructed_buildings_inventory",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "noaa_coops",
+   "id": "noaa_coops_tides",
+   "licence_class": "open",
+   "protocols": "P-TS on multi-station hourly UTC coastal water levels relative to MLLW with quality flags",
+   "publisher": "noaa_coops",
+   "reason": "NOAA CO-OPS six US coastal tide gauges (2022-2024 hourly GMT): 157,823 rows with 4,943 missing observations and 5,417 flagged rows; oceanography and coastal tides domain absent from C3",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "NOAA CO-OPS disclaimers page (read 2026-11-22): information on government servers is in the public domain under 17 U.S.C. 403 attribution",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "noaa_national_water_level_observation_network",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "noaa_gml_co2",
+   "id": "noaa_gml_co2_weekly",
+   "licence_class": "open",
+   "protocols": "P-TS on weekly Mauna Loa atmospheric CO2 mole fraction time series",
+   "publisher": "noaa_gml",
+   "reason": "NOAA GML weekly Mauna Loa CO2 spectroscopy series (1974-05-19 to 2026-11-15): 2,740 weekly observations across 52 annual cycles with 20 masked missing weeks; atmospheric greenhouse-gas spectroscopy domain absent from C3",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "NOAA GML disclaimer page and CSV header (read 2026-11-22): U.S. Government public domain data",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "noaa_gml_mauna_loa_co2_analyzer",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "cnc_five_axis_milling",
+   "id": "zen_cnc_milling",
+   "licence_class": "open",
+   "protocols": "P-TS on multi-series five-axis CNC machine controller signals",
+   "publisher": "zenodo_10853254_authors",
+   "reason": "Zenodo 10853254 complete 13-series five-axis CNC milling telemetry (Nov 2021 - Apr 2022): 189,089 rows across 20 common controller signals after dropping 957 duplicate polls; industrial machining mechanism absent from C3",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Zenodo API metadata for record 10853254 (read 2026-11-22): CC BY 4.0",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "five_axis_cnc_milling_controller",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

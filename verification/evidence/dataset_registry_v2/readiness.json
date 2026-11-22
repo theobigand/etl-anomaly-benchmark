@@ -2178,6 +2178,27 @@
   },
   {
    "failed": null,
+   "group": "noaa_coops",
+   "id": "noaa_coops_tides",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "noaa_gml_co2",
+   "id": "noaa_gml_co2_weekly",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "cnc_five_axis_milling",
+   "id": "zen_cnc_milling",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2382,6 +2403,7 @@
    "airquality_italy",
    "backblaze",
    "candanedo_umons",
+   "cnc_five_axis_milling",
    "cubico_kelmarsh",
    "dwd_germany",
    "ea_hydrology",
@@ -2392,6 +2414,8 @@
    "gfz_potsdam_kp",
    "melbourne_pedestrian",
    "metropt_porto",
+   "noaa_coops",
+   "noaa_gml_co2",
    "pnnl_epri_bess",
    "rki_surveillance",
    "rte_france_grid",
@@ -2495,13 +2519,13 @@
    "structurally_valid": 15
   },
   "C3": {
-   "acquired": 27,
-   "discovered": 48,
-   "experiment_ready": 24,
-   "protocol_ready": 24,
-   "rights_verified": 27,
-   "scientifically_eligible": 24,
-   "structurally_valid": 25
+   "acquired": 30,
+   "discovered": 51,
+   "experiment_ready": 27,
+   "protocol_ready": 27,
+   "rights_verified": 30,
+   "scientifically_eligible": 27,
+   "structurally_valid": 28
   },
   "C4": {
    "acquired": 34,

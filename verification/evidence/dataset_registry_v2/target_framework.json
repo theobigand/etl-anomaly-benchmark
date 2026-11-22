@@ -2,13 +2,13 @@
  "coverage": {
   "0.2": {
    "ALL": {
-    "curators": 39,
-    "domains": 69,
-    "effective_groups": 71.9321,
-    "groups": 150,
-    "largest_schema_family_share": 0.4267,
-    "producers": 150,
-    "schema_families": 56
+    "curators": 40,
+    "domains": 72,
+    "effective_groups": 74.9321,
+    "groups": 153,
+    "largest_schema_family_share": 0.4183,
+    "producers": 153,
+    "schema_families": 59
    },
    "C1": {
     "curators": 1,
@@ -38,13 +38,13 @@
     "schema_families": 8
    },
    "C3": {
-    "curators": 10,
-    "domains": 18,
-    "effective_groups": 18.3333,
-    "groups": 22,
-    "largest_schema_family_share": 0.2727,
-    "producers": 22,
-    "schema_families": 15
+    "curators": 11,
+    "domains": 21,
+    "effective_groups": 21.3333,
+    "groups": 25,
+    "largest_schema_family_share": 0.24,
+    "producers": 25,
+    "schema_families": 18
    },
    "C4": {
     "curators": 5,
@@ -76,13 +76,13 @@
   },
   "0.5": {
    "ALL": {
-    "curators": 39,
-    "domains": 69,
-    "effective_groups": 61.8074,
-    "groups": 150,
-    "largest_schema_family_share": 0.4267,
-    "producers": 150,
-    "schema_families": 56
+    "curators": 40,
+    "domains": 72,
+    "effective_groups": 64.8074,
+    "groups": 153,
+    "largest_schema_family_share": 0.4183,
+    "producers": 153,
+    "schema_families": 59
    },
    "C1": {
     "curators": 1,
@@ -112,13 +112,13 @@
     "schema_families": 8
    },
    "C3": {
-    "curators": 10,
-    "domains": 18,
-    "effective_groups": 16.381,
-    "groups": 22,
-    "largest_schema_family_share": 0.2727,
-    "producers": 22,
-    "schema_families": 15
+    "curators": 11,
+    "domains": 21,
+    "effective_groups": 19.381,
+    "groups": 25,
+    "largest_schema_family_share": 0.24,
+    "producers": 25,
+    "schema_families": 18
    },
    "C4": {
     "curators": 5,
@@ -272,15 +272,15 @@
   },
   "C3": {
    "diversity": true,
-   "domains": 18,
+   "domains": 21,
    "exploratory": true,
-   "families": 21,
-   "gap": 18,
-   "groups": 22,
+   "families": 24,
+   "gap": 15,
+   "groups": 25,
    "largest_family": "urban mobility counts",
-   "largest_family_share": 0.0909,
+   "largest_family_share": 0.08,
    "missing": [
-    "groups: 22 of 40"
+    "groups: 25 of 40"
    ],
    "quota": false,
    "target": 40,

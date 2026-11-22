@@ -334,6 +334,78 @@
    "source_snapshot": "zen_care_wind_a/2026-11-22"
   }
  },
+ "charity": {
+  "uk_charity_register": {
+   "dropped": [
+    "charity_name",
+    "charity_contact_*",
+    "charity_activities",
+    "reason",
+    "assoc_charity_name",
+    "trustee table (not downloaded)"
+   ],
+   "files": {
+    "annual_return_history.csv": {
+     "rows": 2
+    },
+    "area_of_operation.csv": {
+     "rows": 2
+    },
+    "charity.csv": {
+     "rows": 1
+    },
+    "classification.csv": {
+     "rows": 2
+    },
+    "event_history.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "annual_return_history.csv": "organisation_number,registered_charity_number,fin_period_start_date,fin_period_end_date,ar_cycle_reference,reporting_due",
+    "area_of_operation.csv": "organisation_number,registered_charity_number,linked_charity_number,geographic_area_type,geographic_area_description,par",
+    "charity.csv": "organisation_number,registered_charity_number,linked_charity_number,charity_type,charity_registration_status,date_of_reg",
+    "classification.csv": "organisation_number,registered_charity_number,linked_charity_number,classification_code,classification_type,classificati",
+    "event_history.csv": "organisation_number,registered_charity_number,linked_charity_number,charity_event_order,event_type,date_of_event,assoc_o"
+   },
+   "pseudonymised": [],
+   "relations": [
+    {
+     "checked": 2,
+     "child": "annual_return_history.organisation_number",
+     "orphans": 1,
+     "parent": "charity.organisation_number",
+     "share": 0.5
+    },
+    {
+     "checked": 2,
+     "child": "area_of_operation.organisation_number",
+     "orphans": 1,
+     "parent": "charity.organisation_number",
+     "share": 0.5
+    },
+    {
+     "checked": 2,
+     "child": "classification.organisation_number",
+     "orphans": 1,
+     "parent": "charity.organisation_number",
+     "share": 0.5
+    },
+    {
+     "checked": 2,
+     "child": "event_history.organisation_number",
+     "orphans": 1,
+     "parent": "charity.organisation_number",
+     "share": 0.5
+    }
+   ],
+   "sampling": {
+    "method": "deterministic 1-in-20 slice on organisation_number across 5 non-trustee extracts",
+    "modulo": 20
+   },
+   "source_snapshot": "uk_charity_register/2026-11-22"
+  }
+ },
  "clue": {
   "zen_clue_lds": {
    "dropped": [
@@ -360,6 +432,58 @@
     "stream_complete": false
    },
    "source_snapshot": "zen_clue_lds/2026-11-21 (fragment)"
+  }
+ },
+ "cnc": {
+  "zen_cnc_milling": {
+   "dropped": [
+    "Unnamed: 0",
+    "Phase",
+    "Phase_compressed",
+    "PocketTable"
+   ],
+   "files": {
+    "cnc_milling.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "cnc_milling.csv": "series_id,timestamp,CoolantFlow,ProgramStatus,ProgramDetail,ToolNumber,DriveStatus,DoorStatusMain,DoorStatusTooling,Cabi"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "duplicates_dropped": 1,
+    "first_timestamp": "2021-11-26 07:15:36",
+    "last_timestamp": "2022-04-05 13:06:13",
+    "method": "complete 13-file five-axis CNC production series telemetry (Nov 2021 - Apr 2022)",
+    "series_count": 2,
+    "series_files": 2
+   },
+   "source_snapshot": "zen_cnc_milling/2026-11-22"
+  }
+ },
+ "coops": {
+  "noaa_coops_tides": {
+   "dropped": [],
+   "files": {
+    "tides.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "tides.csv": "station_id,timestamp,water_level_m,sigma_m,flags"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "duplicates_dropped": 1,
+    "first_timestamp": "2022-01-01 00:00:00",
+    "flagged_rows": 2,
+    "last_timestamp": "2022-01-01 01:00:00",
+    "method": "six US coastal stations hourly water level (2022-2024 GMT)",
+    "missing_value_rows": 1,
+    "stations": 2
+   },
+   "source_snapshot": "noaa_coops_tides/2026-11-22"
   }
  },
  "csv_events": {
@@ -552,76 +676,25 @@
    "source_snapshot": "gfz_kp_index/2026-11-22"
   }
  },
- "charity": {
-  "uk_charity_register": {
-   "dropped": [
-    "charity_name",
-    "charity_contact_*",
-    "charity_activities",
-    "reason",
-    "assoc_charity_name",
-    "trustee table (not downloaded)"
-   ],
+ "gml_co2": {
+  "noaa_gml_co2_weekly": {
+   "dropped": [],
    "files": {
-    "annual_return_history.csv": {
-     "rows": 2
-    },
-    "area_of_operation.csv": {
-     "rows": 2
-    },
-    "charity.csv": {
-     "rows": 1
-    },
-    "classification.csv": {
-     "rows": 2
-    },
-    "event_history.csv": {
+    "co2_weekly.csv": {
      "rows": 2
     }
    },
    "heads": {
-    "annual_return_history.csv": "organisation_number,registered_charity_number,fin_period_start_date,fin_period_end_date,ar_cycle_reference,reporting_due",
-    "area_of_operation.csv": "organisation_number,registered_charity_number,linked_charity_number,geographic_area_type,geographic_area_description,par",
-    "charity.csv": "organisation_number,registered_charity_number,linked_charity_number,charity_type,charity_registration_status,date_of_reg",
-    "classification.csv": "organisation_number,registered_charity_number,linked_charity_number,classification_code,classification_type,classificati",
-    "event_history.csv": "organisation_number,registered_charity_number,linked_charity_number,charity_event_order,event_type,date_of_event,assoc_o"
+    "co2_weekly.csv": "timestamp,decimal_year,co2_ppm,one_year_ago_ppm,ten_years_ago_ppm,increase_since_1800_ppm,ndays"
    },
    "pseudonymised": [],
-   "relations": [
-    {
-     "checked": 2,
-     "child": "annual_return_history.organisation_number",
-     "orphans": 1,
-     "parent": "charity.organisation_number",
-     "share": 0.5
-    },
-    {
-     "checked": 2,
-     "child": "area_of_operation.organisation_number",
-     "orphans": 1,
-     "parent": "charity.organisation_number",
-     "share": 0.5
-    },
-    {
-     "checked": 2,
-     "child": "classification.organisation_number",
-     "orphans": 1,
-     "parent": "charity.organisation_number",
-     "share": 0.5
-    },
-    {
-     "checked": 2,
-     "child": "event_history.organisation_number",
-     "orphans": 1,
-     "parent": "charity.organisation_number",
-     "share": 0.5
-    }
-   ],
    "sampling": {
-    "method": "deterministic 1-in-20 slice on organisation_number across 5 non-trustee extracts",
-    "modulo": 20
+    "first_timestamp": "2020-01-05 00:00:00",
+    "last_timestamp": "2020-01-12 00:00:00",
+    "method": "complete weekly Mauna Loa atmospheric CO2 record (1974-2026)",
+    "missing_co2_rows": 1
    },
-   "source_snapshot": "uk_charity_register/2026-11-22"
+   "source_snapshot": "noaa_gml_co2_weekly/2026-11-22"
   }
  },
  "japan": {
@@ -871,24 +944,6 @@
    "source_snapshot": "openlibrary_dump/2026-11-21 (dump of 2026-10-31, fragment)"
   }
  },
- "panels": {
-  "panels": {
-   "dropped": [],
-   "files": {
-    "p.csv": {
-     "rows": 2
-    }
-   },
-   "heads": {
-    "p.csv": "timestamp,syndrome,n"
-   },
-   "pseudonymised": [],
-   "rows_dropped": {
-    "p": 1
-   },
-   "source_snapshot": "zen_rki_* records of 2026-11-21 (the series are revised by the publisher)"
-  }
- },
  "osv": {
   "osv_go_advisories": {
    "dropped": [
@@ -909,6 +964,24 @@
     "method": "all GO-* Go Vulnerability Database advisories from Go/all.zip (non-GO prefixes excluded to stay under CC BY 4.0)"
    },
    "source_snapshot": "osv_go_advisories/2026-11-22"
+  }
+ },
+ "panels": {
+  "panels": {
+   "dropped": [],
+   "files": {
+    "p.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "p.csv": "timestamp,syndrome,n"
+   },
+   "pseudonymised": [],
+   "rows_dropped": {
+    "p": 1
+   },
+   "source_snapshot": "zen_rki_* records of 2026-11-21 (the series are revised by the publisher)"
   }
  },
  "pbdb": {
@@ -1100,6 +1173,32 @@
    "source_snapshot": "nyc_tlc_yellow/2026-11-22"
   }
  },
+ "uniprot": {
+  "uniprot_kb_reviewed": {
+   "dropped": [
+    "references",
+    "sequence"
+   ],
+   "files": {
+    "entries.jsonl": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "entries.jsonl": "{\"entryType\": \"UniProtKB reviewed (Swiss-Prot)\", \"primaryAccession\": \"P10000\"}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "entries_in": 3,
+    "files": [
+     "uniprot_human_9606.json",
+     "uniprot_mouse_10090.json"
+    ],
+    "method": "250 reviewed Swiss-Prot entries per organism across six model organisms"
+   },
+   "source_snapshot": "uniprot_kb_reviewed/2026-11-22"
+  }
+ },
  "unisg": {
   "zen_unisg_factory": {
    "dropped": [
@@ -1131,32 +1230,6 @@
     "unreadable_lines": 1
    },
    "source_snapshot": "zen_unisg_factory/2026-11-22"
-  }
- },
- "uniprot": {
-  "uniprot_kb_reviewed": {
-   "dropped": [
-    "references",
-    "sequence"
-   ],
-   "files": {
-    "entries.jsonl": {
-     "rows": 2
-    }
-   },
-   "heads": {
-    "entries.jsonl": "{\"entryType\": \"UniProtKB reviewed (Swiss-Prot)\", \"primaryAccession\": \"P10000\"}"
-   },
-   "pseudonymised": [],
-   "sampling": {
-    "entries_in": 3,
-    "files": [
-     "uniprot_human_9606.json",
-     "uniprot_mouse_10090.json"
-    ],
-    "method": "250 reviewed Swiss-Prot entries per organism across six model organisms"
-   },
-   "source_snapshot": "uniprot_kb_reviewed/2026-11-22"
   }
  },
  "usgs": {

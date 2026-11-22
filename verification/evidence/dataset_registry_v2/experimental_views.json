@@ -255,6 +255,56 @@
   },
   "source_snapshot": "4tu_sepsis/2026-11-21"
  },
+ "ademe_dpe_existant": {
+  "dropped": [
+   "addresses",
+   "ban_identifiers",
+   "rnb_identifiers",
+   "coordinates"
+  ],
+  "files": {
+   "dpe.csv": {
+    "rows": 50000,
+    "sha256": "cb71f5c003233d1ee818d9cc91cc6c2c3e8518266d0d739fbd85c5e07ea7bffe"
+   }
+  },
+  "pseudonymised": [
+   "numero_dpe"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "duplicates_dropped": 0,
+   "files": [
+    "dpe_2024_01_19.csv",
+    "dpe_2024_03_15.csv",
+    "dpe_2024_06_14.csv",
+    "dpe_2024_09_16.csv",
+    "dpe_2024_11_15.csv"
+   ],
+   "method": "five fixed 2024 dates (10,000 rows per date) with coded attributes only"
+  },
+  "source_snapshot": "ademe_dpe_existant/2026-11-22"
+ },
+ "azure_packing_2020": {
+  "dropped": [
+   "vmType hardware dimensions",
+   "single-VM tenants"
+  ],
+  "files": {
+   "allocations.csv": {
+    "rows": 38995,
+    "sha256": "91a1ca241794870e725c5d94688672b07d1bb458894c0f047642840870c873e8"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "deterministic 1-in-100 tenant slice (tenantId % 100 == 0) limited to multi-VM tenants ordered by relative starttime",
+   "modulo": 100,
+   "single_vm_rows_dropped": 12926,
+   "tenants": 6086
+  },
+  "source_snapshot": "azure_packing_2020/2026-11-22"
+ },
  "backblaze_drive_stats": {
   "dropped": [
    "serial numbers (replaced by a salted pseudonym)"
@@ -381,6 +431,31 @@
   ],
   "source_snapshot": "dft_stats19_2023/2026-11-22"
  },
+ "dgal_alimconfiance": {
+  "dropped": [
+   "establishment_names",
+   "siret",
+   "agrement",
+   "addresses",
+   "communes",
+   "geo"
+  ],
+  "files": {
+   "inspections.csv": {
+    "rows": 71228,
+    "sha256": "cc691781fdc1a437f0bf31ec0824dfa6b434464db40f42d02a8257032128cf9f"
+   }
+  },
+  "pseudonymised": [
+   "numero_inspection"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "duplicates_dropped": 0,
+   "method": "complete Alim'Confiance register projected to coded non-identifying attributes"
+  },
+  "source_snapshot": "dgal_alimconfiance/2026-11-22"
+ },
  "dgfip_dvf": {
   "dropped": [
    "address, street code, parcel ids, volume and lot numbers, coordinates"
@@ -401,6 +476,27 @@
    "scope": "department 69 (Rhone), transactions of 2024 only"
   },
   "source_snapshot": "dgfip_dvf/2026-11-21"
+ },
+ "dwd_hourly_climate": {
+  "dropped": [
+   "eor_marker"
+  ],
+  "files": {
+   "air_temperature.csv": {
+    "rows": 838605,
+    "sha256": "11315ad3f543074abe64f4c279a73680c7136f85c6c6f31ea4026ef90ee3a542"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "archives": 12,
+   "duplicates_dropped": 0,
+   "first_timestamp": "2018-01-01 00:00:00",
+   "last_timestamp": "2025-12-31 23:00:00",
+   "method": "12 strided DWD hourly TU stations filtered from 2018-01-01 onward",
+   "stations": 12
+  },
+  "source_snapshot": "dwd_hourly_climate/2026-11-22"
  },
  "ea_hydrology_flow": {
   "dropped": [
@@ -1673,6 +1769,28 @@
   "stratum": "C2a",
   "table": "uci:967"
  },
+ "gfz_kp_index": {
+  "dropped": [
+   "half_hour_midpoint",
+   "days_since_1932",
+   "midpoint_days"
+  ],
+  "files": {
+   "kp_ap.csv": {
+    "rows": 277272,
+    "sha256": "e95c4cc8f39345376e0a774b81104bfbc85c71dc462bee26f88831831a01d816"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "definitive_rows": 277104,
+   "first_timestamp": "1932-01-01 00:00:00",
+   "last_timestamp": "2026-11-21 21:00:00",
+   "method": "complete GFZ Niemegk 3-hourly Kp/ap time series",
+   "missing_kp_rows": 0
+  },
+  "source_snapshot": "gfz_kp_index/2026-11-22"
+ },
  "google_cluster_2019a": {
   "dropped": [
    "user",
@@ -2722,6 +2840,43 @@
   "pseudonymised": [],
   "source_snapshot": "monash_zenodo/2026-11-21"
  },
+ "noaa_coops_tides": {
+  "dropped": [],
+  "files": {
+   "tides.csv": {
+    "rows": 157823,
+    "sha256": "5846ec15bf51ca71680f1675aed0e1ded9aebc19f8a3b45464ea71d76e6d1e15"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "duplicates_dropped": 0,
+   "first_timestamp": "2022-01-01 00:00:00",
+   "flagged_rows": 5417,
+   "last_timestamp": "2024-12-31 23:00:00",
+   "method": "six US coastal stations hourly water level (2022-2024 GMT)",
+   "missing_value_rows": 4943,
+   "stations": 6
+  },
+  "source_snapshot": "noaa_coops_tides/2026-11-22"
+ },
+ "noaa_gml_co2_weekly": {
+  "dropped": [],
+  "files": {
+   "co2_weekly.csv": {
+    "rows": 2740,
+    "sha256": "866dcd0f2d3a5dbcef84b69f52f4959e17fd88195cb3976fd6dde4026ba1c0f0"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "first_timestamp": "1974-05-19 00:00:00",
+   "last_timestamp": "2026-11-15 00:00:00",
+   "method": "complete weekly Mauna Loa atmospheric CO2 record (1974-2026)",
+   "missing_co2_rows": 20
+  },
+  "source_snapshot": "noaa_gml_co2_weekly/2026-11-22"
+ },
  "nvd_cve": {
   "dropped": [],
   "files": {
@@ -3036,6 +3191,24 @@
   },
   "source_snapshot": "openlibrary_dump/2026-11-21 (dump of 2026-10-31, fragment)"
  },
+ "osv_go_advisories": {
+  "dropped": [
+   "credits"
+  ],
+  "files": {
+   "advisories.jsonl": {
+    "rows": 4820,
+    "sha256": "d3f2c476408f3c930f5a79c0ddd9d9d2d9c89e54f642ce9b4eae0bbedac9985b"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "archive_records": 9989,
+   "go_records": 4820,
+   "method": "all GO-* Go Vulnerability Database advisories from Go/all.zip (non-GO prefixes excluded to stay under CC BY 4.0)"
+  },
+  "source_snapshot": "osv_go_advisories/2026-11-22"
+ },
  "panels": {
   "dropped": [],
   "files": {
@@ -3214,6 +3387,36 @@
   ],
   "salt_label": "etl-benchmark-views-v1",
   "source_snapshot": "physionet_mimic_iv_demo/2026-11-21"
+ },
+ "rte_eco2mix_national": {
+  "dropped": [
+   "perimetre",
+   "nature",
+   "date",
+   "heure"
+  ],
+  "files": {
+   "eco2mix.csv": {
+    "rows": 70120,
+    "sha256": "4345ad70c11eec3208239456794649c2750f2b519295f12f35c4a98cee7acdb2"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "duplicates_dropped": 8,
+   "files": [
+    "eco2mix_national_2020.csv",
+    "eco2mix_national_2021.csv",
+    "eco2mix_national_2022.csv",
+    "eco2mix_national_2023.csv"
+   ],
+   "first_timestamp": "2020-01-01 00:00:00",
+   "last_timestamp": "2023-12-31 23:30:00",
+   "method": "half-hourly definitive RTE eco2mix national grid series for 2020-2023",
+   "quarter_hour_rows_dropped": 70128,
+   "unreadable_timestamps": 0
+  },
+  "source_snapshot": "rte_eco2mix_national/2026-11-22"
  },
  "series": {
   "dropped": [],
@@ -3574,6 +3777,74 @@
   },
   "source_snapshot": "uci:352 (repository file pinned by checksum)"
  },
+ "uk_charity_register": {
+  "dropped": [
+   "charity_name",
+   "charity_contact_*",
+   "charity_activities",
+   "reason",
+   "assoc_charity_name",
+   "trustee table (not downloaded)"
+  ],
+  "files": {
+   "annual_return_history.csv": {
+    "rows": 62876,
+    "sha256": "44acc63a1c8a24c98dc3b1a8e29dd3b9fc1ec900e579bd56857df30a38699db8"
+   },
+   "area_of_operation.csv": {
+    "rows": 28016,
+    "sha256": "b7a0a456b3f4cd27df3f96f0daee54bb3c1deda324704fa3cfe502d809089f45"
+   },
+   "charity.csv": {
+    "rows": 19952,
+    "sha256": "6dc9724f9ae3f3b81a4d40b624f2bb9433b493aff4273c6cbf3df0886c7fe973"
+   },
+   "classification.csv": {
+    "rows": 88446,
+    "sha256": "c6566a8b5e6d479df3b3d4b28444c5abbe2098cdca171cf884955be4f475c549"
+   },
+   "event_history.csv": {
+    "rows": 35242,
+    "sha256": "e09315cbcd9399a153123d6ac9a9378c06ae3a3255b06a58c12e7a88b45da702"
+   }
+  },
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 62876,
+    "child": "annual_return_history.organisation_number",
+    "orphans": 0,
+    "parent": "charity.organisation_number",
+    "share": 0.0
+   },
+   {
+    "checked": 28016,
+    "child": "area_of_operation.organisation_number",
+    "orphans": 0,
+    "parent": "charity.organisation_number",
+    "share": 0.0
+   },
+   {
+    "checked": 88446,
+    "child": "classification.organisation_number",
+    "orphans": 0,
+    "parent": "charity.organisation_number",
+    "share": 0.0
+   },
+   {
+    "checked": 35242,
+    "child": "event_history.organisation_number",
+    "orphans": 0,
+    "parent": "charity.organisation_number",
+    "share": 0.0
+   }
+  ],
+  "sampling": {
+   "method": "deterministic 1-in-20 slice on organisation_number across 5 non-trustee extracts",
+   "modulo": 20
+  },
+  "source_snapshot": "uk_charity_register/2026-11-22"
+ },
  "ukspend": {
   "dropped": [
    "Description",
@@ -3627,6 +3898,32 @@
    ]
   },
   "source_snapshot": "ukspend_*/2026-11-21"
+ },
+ "uniprot_kb_reviewed": {
+  "dropped": [
+   "references",
+   "sequence"
+  ],
+  "files": {
+   "entries.jsonl": {
+    "rows": 1500,
+    "sha256": "aa444050a322165ab2d475485d28aa825e21520275a1086f53b0993805c68e4b"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "entries_in": 1500,
+   "files": [
+    "uniprot_arabidopsis_3702.json",
+    "uniprot_drosophila_7227.json",
+    "uniprot_ecoli_83333.json",
+    "uniprot_human_9606.json",
+    "uniprot_mouse_10090.json",
+    "uniprot_yeast_559292.json"
+   ],
+   "method": "250 reviewed Swiss-Prot entries per organism across six model organisms"
+  },
+  "source_snapshot": "uniprot_kb_reviewed/2026-11-22"
  },
  "usda_fdc_sr_legacy": {
   "dropped": [
@@ -3911,6 +4208,37 @@
   "pseudonymised": [],
   "source_snapshot": "zen_aegis_vehicle/2026-11-21"
  },
+ "zen_aoe_interactions": {
+  "dropped": [],
+  "files": {
+   "events.csv": {
+    "rows": 290046,
+    "sha256": "711d56219bcb39868063a590752983c89681568375c68ce1087d341be85222bb"
+   }
+  },
+  "pseudonymised": [
+   "case_id",
+   "player_id",
+   "match_id"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "member": "aoe_interation_logs_in_XES_format/aoe_interaction_log_1_of_10.xes",
+   "method": "4 MiB compressed zip-prefix of Age of Empires interaction log decoded via xes_stream",
+   "status": {
+    "bytes_in": 86445740,
+    "bytes_out": 86445740,
+    "modulo": 1,
+    "stop": "input_ended_before_log_closed",
+    "stream_complete": false,
+    "traces_kept": 2881,
+    "traces_seen": 2881,
+    "traces_without_case": 0
+   },
+   "traces": 2881
+  },
+  "source_snapshot": "zen_aoe_interactions/2026-11-22"
+ },
  "zen_bess": {
   "dropped": [],
   "files": {
@@ -4015,6 +4343,52 @@
   },
   "source_snapshot": "zen_clue_lds/2026-11-21 (fragment)"
  },
+ "zen_cnc_milling": {
+  "dropped": [
+   "Unnamed: 0",
+   "Phase",
+   "Phase_compressed",
+   "PocketTable"
+  ],
+  "files": {
+   "cnc_milling.csv": {
+    "rows": 189089,
+    "sha256": "3be9e0c804a6b5c0a90105e3ec2de062d7dc2fcc66700aa13ffa7f321e4b90c9"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "duplicates_dropped": 957,
+   "first_timestamp": "2021-11-26 07:15:36",
+   "last_timestamp": "2022-04-08 09:59:10",
+   "method": "complete 13-file five-axis CNC production series telemetry (Nov 2021 - Apr 2022)",
+   "series_count": 13,
+   "series_files": 13
+  },
+  "source_snapshot": "zen_cnc_milling/2026-11-22"
+ },
+ "zen_ev_charging": {
+  "dropped": [],
+  "files": {
+   "sessions.csv": {
+    "rows": 35377,
+    "sha256": "67fc46e22d1de7cabe53e59536eebac13d2524f6835b77508ef3afb814e35923"
+   }
+  },
+  "pseudonymised": [
+   "session_id",
+   "user_id"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "duplicates_dropped": 0,
+   "locations": 12,
+   "method": "complete Dataset1_charging_reports session log across 12 residential sites",
+   "unreadable_timestamps": 0,
+   "users": 267
+  },
+  "source_snapshot": "zen_ev_charging/2026-11-22"
+ },
  "zen_fdata_fugaku": {
   "dropped": [
    "user",
@@ -4037,6 +4411,93 @@
    "truncated": false
   },
   "source_snapshot": "zen_fdata_fugaku/2026-11-21"
+ },
+ "zen_japan_buildings": {
+  "dropped": [
+   "designer personal/company names, affiliations and URLs",
+   "source authors, titles and URLs",
+   "site street addresses and postal codes",
+   "free-text notes"
+  ],
+  "files": {
+   "archaeological_evidence_sites.csv": {
+    "rows": 397,
+    "sha256": "7c6002a9792f617471e0762615c12728f5d182f50e63a8b0f74cb77b9ef960be"
+   },
+   "building_designers.csv": {
+    "rows": 1151,
+    "sha256": "2a67dfaa814b3ff0b25092a758b288c8d28fb4215570827ecffaf07ae5523ca1"
+   },
+   "buildings.csv": {
+    "rows": 1014,
+    "sha256": "1bcf51168b03ca5679cc399ecd50b2db25165db721a9e6fd9649dd546aadef90"
+   },
+   "designers.csv": {
+    "rows": 279,
+    "sha256": "d4559c21452d7a80c0aa4154329d3a0901284ffdb48f87a8f55a6f1cd7703baa"
+   },
+   "site_sources.csv": {
+    "rows": 814,
+    "sha256": "818180df2c4df268881b9dde662281972da0cc526a561fb4d2aca994e18ca68d"
+   },
+   "sites.csv": {
+    "rows": 346,
+    "sha256": "6f39a0b1b28406e549b6ef1b9cc0aa001a108325edef8451579fa3b23ad3ded5"
+   },
+   "sources.csv": {
+    "rows": 708,
+    "sha256": "39b560b3a83b3a31a02db16dd1e9505992e5035ab0e2c7a37f815b3ec575b7be"
+   }
+  },
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 1014,
+    "child": "buildings.site_id",
+    "orphans": 0,
+    "parent": "sites.site_id",
+    "share": 0.0
+   },
+   {
+    "checked": 88,
+    "child": "buildings.archaeological_evidence_site_id",
+    "orphans": 0,
+    "parent": "archaeological_evidence_sites.archaeological_evidence_site_id",
+    "share": 0.0
+   },
+   {
+    "checked": 1151,
+    "child": "building_designers.building_id",
+    "orphans": 0,
+    "parent": "buildings.building_id",
+    "share": 0.0
+   },
+   {
+    "checked": 1151,
+    "child": "building_designers.designer_id",
+    "orphans": 0,
+    "parent": "designers.designer_id",
+    "share": 0.0
+   },
+   {
+    "checked": 814,
+    "child": "site_sources.site_id",
+    "orphans": 0,
+    "parent": "sites.site_id",
+    "share": 0.0
+   },
+   {
+    "checked": 814,
+    "child": "site_sources.source_id",
+    "orphans": 0,
+    "parent": "sources.source_id",
+    "share": 0.0
+   }
+  ],
+  "sampling": {
+   "method": "complete core 7-table relational schema (no row sampling)"
+  },
+  "source_snapshot": "zen_japan_buildings/2026-11-22"
  },
  "zen_kelmarsh": {
   "dropped": [
@@ -4195,405 +4656,5 @@
    "unreadable_lines": 0
   },
   "source_snapshot": "zen_unisg_factory/2026-11-22"
- },
- "osv_go_advisories": {
-  "dropped": [
-   "credits"
-  ],
-  "files": {
-   "advisories.jsonl": {
-    "rows": 4820,
-    "sha256": "d3f2c476408f3c930f5a79c0ddd9d9d2d9c89e54f642ce9b4eae0bbedac9985b"
-   }
-  },
-  "pseudonymised": [],
-  "sampling": {
-   "archive_records": 9989,
-   "go_records": 4820,
-   "method": "all GO-* Go Vulnerability Database advisories from Go/all.zip (non-GO prefixes excluded to stay under CC BY 4.0)"
-  },
-  "source_snapshot": "osv_go_advisories/2026-11-22"
- },
- "uniprot_kb_reviewed": {
-  "dropped": [
-   "references",
-   "sequence"
-  ],
-  "files": {
-   "entries.jsonl": {
-    "rows": 1500,
-    "sha256": "aa444050a322165ab2d475485d28aa825e21520275a1086f53b0993805c68e4b"
-   }
-  },
-  "pseudonymised": [],
-  "sampling": {
-   "entries_in": 1500,
-   "files": [
-    "uniprot_arabidopsis_3702.json",
-    "uniprot_drosophila_7227.json",
-    "uniprot_ecoli_83333.json",
-    "uniprot_human_9606.json",
-    "uniprot_mouse_10090.json",
-    "uniprot_yeast_559292.json"
-   ],
-   "method": "250 reviewed Swiss-Prot entries per organism across six model organisms"
-  },
-  "source_snapshot": "uniprot_kb_reviewed/2026-11-22"
- },
- "dwd_hourly_climate": {
-  "dropped": [
-   "eor_marker"
-  ],
-  "files": {
-   "air_temperature.csv": {
-    "rows": 838605,
-    "sha256": "11315ad3f543074abe64f4c279a73680c7136f85c6c6f31ea4026ef90ee3a542"
-   }
-  },
-  "pseudonymised": [],
-  "sampling": {
-   "archives": 12,
-   "duplicates_dropped": 0,
-   "first_timestamp": "2018-01-01 00:00:00",
-   "last_timestamp": "2025-12-31 23:00:00",
-   "method": "12 strided DWD hourly TU stations filtered from 2018-01-01 onward",
-   "stations": 12
-  },
-  "source_snapshot": "dwd_hourly_climate/2026-11-22"
- },
- "gfz_kp_index": {
-  "dropped": [
-   "half_hour_midpoint",
-   "days_since_1932",
-   "midpoint_days"
-  ],
-  "files": {
-   "kp_ap.csv": {
-    "rows": 277272,
-    "sha256": "e95c4cc8f39345376e0a774b81104bfbc85c71dc462bee26f88831831a01d816"
-   }
-  },
-  "pseudonymised": [],
-  "sampling": {
-   "definitive_rows": 277104,
-   "first_timestamp": "1932-01-01 00:00:00",
-   "last_timestamp": "2026-11-21 21:00:00",
-   "method": "complete GFZ Niemegk 3-hourly Kp/ap time series",
-   "missing_kp_rows": 0
-  },
-  "source_snapshot": "gfz_kp_index/2026-11-22"
- },
- "rte_eco2mix_national": {
-  "dropped": [
-   "perimetre",
-   "nature",
-   "date",
-   "heure"
-  ],
-  "files": {
-   "eco2mix.csv": {
-    "rows": 70120,
-    "sha256": "4345ad70c11eec3208239456794649c2750f2b519295f12f35c4a98cee7acdb2"
-   }
-  },
-  "pseudonymised": [],
-  "sampling": {
-   "duplicates_dropped": 8,
-   "files": [
-    "eco2mix_national_2020.csv",
-    "eco2mix_national_2021.csv",
-    "eco2mix_national_2022.csv",
-    "eco2mix_national_2023.csv"
-   ],
-   "first_timestamp": "2020-01-01 00:00:00",
-   "last_timestamp": "2023-12-31 23:30:00",
-   "method": "half-hourly definitive RTE eco2mix national grid series for 2020-2023",
-   "quarter_hour_rows_dropped": 70128,
-   "unreadable_timestamps": 0
-  },
-  "source_snapshot": "rte_eco2mix_national/2026-11-22"
- },
- "ademe_dpe_existant": {
-  "dropped": [
-   "addresses",
-   "ban_identifiers",
-   "rnb_identifiers",
-   "coordinates"
-  ],
-  "files": {
-   "dpe.csv": {
-    "rows": 50000,
-    "sha256": "cb71f5c003233d1ee818d9cc91cc6c2c3e8518266d0d739fbd85c5e07ea7bffe"
-   }
-  },
-  "pseudonymised": [
-   "numero_dpe"
-  ],
-  "salt_label": "etl-benchmark-views-v1",
-  "sampling": {
-   "duplicates_dropped": 0,
-   "files": [
-    "dpe_2024_01_19.csv",
-    "dpe_2024_03_15.csv",
-    "dpe_2024_06_14.csv",
-    "dpe_2024_09_16.csv",
-    "dpe_2024_11_15.csv"
-   ],
-   "method": "five fixed 2024 dates (10,000 rows per date) with coded attributes only"
-  },
-  "source_snapshot": "ademe_dpe_existant/2026-11-22"
- },
- "dgal_alimconfiance": {
-  "dropped": [
-   "establishment_names",
-   "siret",
-   "agrement",
-   "addresses",
-   "communes",
-   "geo"
-  ],
-  "files": {
-   "inspections.csv": {
-    "rows": 71228,
-    "sha256": "cc691781fdc1a437f0bf31ec0824dfa6b434464db40f42d02a8257032128cf9f"
-   }
-  },
-  "pseudonymised": [
-   "numero_inspection"
-  ],
-  "salt_label": "etl-benchmark-views-v1",
-  "sampling": {
-   "duplicates_dropped": 0,
-   "method": "complete Alim'Confiance register projected to coded non-identifying attributes"
-  },
-  "source_snapshot": "dgal_alimconfiance/2026-11-22"
- },
- "azure_packing_2020": {
-  "dropped": [
-   "vmType hardware dimensions",
-   "single-VM tenants"
-  ],
-  "files": {
-   "allocations.csv": {
-    "rows": 38995,
-    "sha256": "91a1ca241794870e725c5d94688672b07d1bb458894c0f047642840870c873e8"
-   }
-  },
-  "pseudonymised": [],
-  "sampling": {
-   "method": "deterministic 1-in-100 tenant slice (tenantId % 100 == 0) limited to multi-VM tenants ordered by relative starttime",
-   "modulo": 100,
-   "single_vm_rows_dropped": 12926,
-   "tenants": 6086
-  },
-  "source_snapshot": "azure_packing_2020/2026-11-22"
- },
- "zen_aoe_interactions": {
-  "dropped": [],
-  "files": {
-   "events.csv": {
-    "rows": 290046,
-    "sha256": "711d56219bcb39868063a590752983c89681568375c68ce1087d341be85222bb"
-   }
-  },
-  "pseudonymised": [
-   "case_id",
-   "player_id",
-   "match_id"
-  ],
-  "salt_label": "etl-benchmark-views-v1",
-  "sampling": {
-   "member": "aoe_interation_logs_in_XES_format/aoe_interaction_log_1_of_10.xes",
-   "method": "4 MiB compressed zip-prefix of Age of Empires interaction log decoded via xes_stream",
-   "status": {
-    "bytes_in": 86445740,
-    "bytes_out": 86445740,
-    "modulo": 1,
-    "stop": "input_ended_before_log_closed",
-    "stream_complete": false,
-    "traces_kept": 2881,
-    "traces_seen": 2881,
-    "traces_without_case": 0
-   },
-   "traces": 2881
-  },
-  "source_snapshot": "zen_aoe_interactions/2026-11-22"
- },
- "zen_ev_charging": {
-  "dropped": [],
-  "files": {
-   "sessions.csv": {
-    "rows": 35377,
-    "sha256": "67fc46e22d1de7cabe53e59536eebac13d2524f6835b77508ef3afb814e35923"
-   }
-  },
-  "pseudonymised": [
-   "session_id",
-   "user_id"
-  ],
-  "salt_label": "etl-benchmark-views-v1",
-  "sampling": {
-   "duplicates_dropped": 0,
-   "locations": 12,
-   "method": "complete Dataset1_charging_reports session log across 12 residential sites",
-   "unreadable_timestamps": 0,
-   "users": 267
-  },
-  "source_snapshot": "zen_ev_charging/2026-11-22"
- },
- "uk_charity_register": {
-  "dropped": [
-   "charity_name",
-   "charity_contact_*",
-   "charity_activities",
-   "reason",
-   "assoc_charity_name",
-   "trustee table (not downloaded)"
-  ],
-  "files": {
-   "annual_return_history.csv": {
-    "rows": 62876,
-    "sha256": "44acc63a1c8a24c98dc3b1a8e29dd3b9fc1ec900e579bd56857df30a38699db8"
-   },
-   "area_of_operation.csv": {
-    "rows": 28016,
-    "sha256": "b7a0a456b3f4cd27df3f96f0daee54bb3c1deda324704fa3cfe502d809089f45"
-   },
-   "charity.csv": {
-    "rows": 19952,
-    "sha256": "6dc9724f9ae3f3b81a4d40b624f2bb9433b493aff4273c6cbf3df0886c7fe973"
-   },
-   "classification.csv": {
-    "rows": 88446,
-    "sha256": "c6566a8b5e6d479df3b3d4b28444c5abbe2098cdca171cf884955be4f475c549"
-   },
-   "event_history.csv": {
-    "rows": 35242,
-    "sha256": "e09315cbcd9399a153123d6ac9a9378c06ae3a3255b06a58c12e7a88b45da702"
-   }
-  },
-  "pseudonymised": [],
-  "relations": [
-   {
-    "checked": 62876,
-    "child": "annual_return_history.organisation_number",
-    "orphans": 0,
-    "parent": "charity.organisation_number",
-    "share": 0.0
-   },
-   {
-    "checked": 28016,
-    "child": "area_of_operation.organisation_number",
-    "orphans": 0,
-    "parent": "charity.organisation_number",
-    "share": 0.0
-   },
-   {
-    "checked": 88446,
-    "child": "classification.organisation_number",
-    "orphans": 0,
-    "parent": "charity.organisation_number",
-    "share": 0.0
-   },
-   {
-    "checked": 35242,
-    "child": "event_history.organisation_number",
-    "orphans": 0,
-    "parent": "charity.organisation_number",
-    "share": 0.0
-   }
-  ],
-  "sampling": {
-   "method": "deterministic 1-in-20 slice on organisation_number across 5 non-trustee extracts",
-   "modulo": 20
-  },
-  "source_snapshot": "uk_charity_register/2026-11-22"
- },
- "zen_japan_buildings": {
-  "dropped": [
-   "designer personal/company names, affiliations and URLs",
-   "source authors, titles and URLs",
-   "site street addresses and postal codes",
-   "free-text notes"
-  ],
-  "files": {
-   "archaeological_evidence_sites.csv": {
-    "rows": 397,
-    "sha256": "7c6002a9792f617471e0762615c12728f5d182f50e63a8b0f74cb77b9ef960be"
-   },
-   "building_designers.csv": {
-    "rows": 1151,
-    "sha256": "2a67dfaa814b3ff0b25092a758b288c8d28fb4215570827ecffaf07ae5523ca1"
-   },
-   "buildings.csv": {
-    "rows": 1014,
-    "sha256": "1bcf51168b03ca5679cc399ecd50b2db25165db721a9e6fd9649dd546aadef90"
-   },
-   "designers.csv": {
-    "rows": 279,
-    "sha256": "d4559c21452d7a80c0aa4154329d3a0901284ffdb48f87a8f55a6f1cd7703baa"
-   },
-   "site_sources.csv": {
-    "rows": 814,
-    "sha256": "818180df2c4df268881b9dde662281972da0cc526a561fb4d2aca994e18ca68d"
-   },
-   "sites.csv": {
-    "rows": 346,
-    "sha256": "6f39a0b1b28406e549b6ef1b9cc0aa001a108325edef8451579fa3b23ad3ded5"
-   },
-   "sources.csv": {
-    "rows": 708,
-    "sha256": "39b560b3a83b3a31a02db16dd1e9505992e5035ab0e2c7a37f815b3ec575b7be"
-   }
-  },
-  "pseudonymised": [],
-  "relations": [
-   {
-    "checked": 1014,
-    "child": "buildings.site_id",
-    "orphans": 0,
-    "parent": "sites.site_id",
-    "share": 0.0
-   },
-   {
-    "checked": 88,
-    "child": "buildings.archaeological_evidence_site_id",
-    "orphans": 0,
-    "parent": "archaeological_evidence_sites.archaeological_evidence_site_id",
-    "share": 0.0
-   },
-   {
-    "checked": 1151,
-    "child": "building_designers.building_id",
-    "orphans": 0,
-    "parent": "buildings.building_id",
-    "share": 0.0
-   },
-   {
-    "checked": 1151,
-    "child": "building_designers.designer_id",
-    "orphans": 0,
-    "parent": "designers.designer_id",
-    "share": 0.0
-   },
-   {
-    "checked": 814,
-    "child": "site_sources.site_id",
-    "orphans": 0,
-    "parent": "sites.site_id",
-    "share": 0.0
-   },
-   {
-    "checked": 814,
-    "child": "site_sources.source_id",
-    "orphans": 0,
-    "parent": "sources.source_id",
-    "share": 0.0
-   }
-  ],
-  "sampling": {
-   "method": "complete core 7-table relational schema (no row sampling)"
-  },
-  "source_snapshot": "zen_japan_buildings/2026-11-22"
  }
 }

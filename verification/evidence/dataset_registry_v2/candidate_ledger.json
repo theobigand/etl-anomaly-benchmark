@@ -1836,6 +1836,51 @@
    "size": "2.3 MB zip (0.4 MB views)",
    "source_url": "https://zenodo.org/api/records/23166842",
    "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "noaa_coops_tides",
+   "licence": "U.S. Public Domain (17 U.S.C. 403 attribution)",
+   "name": "NOAA CO-OPS hourly coastal water levels (6 stations, 2022-2024)",
+   "next_step": "none",
+   "notes": "157,823 hourly GMT water levels with quality flags across three full annual cycles",
+   "publisher": "NOAA CO-OPS",
+   "reason": "Hourly tidal sea-level physics and storm-surge domain absent from C3",
+   "size": "157,823 rows (~8 MB raw)",
+   "source_url": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "noaa_gml_co2_weekly",
+   "licence": "U.S. Public Domain (17 U.S.C. 403 attribution)",
+   "name": "NOAA GML Mauna Loa weekly atmospheric CO2 record (1974-2026)",
+   "next_step": "none",
+   "notes": "2,740 weekly observations over 52+ years; 20 masked missing weeks",
+   "publisher": "NOAA Global Monitoring Laboratory",
+   "reason": "Long-horizon atmospheric CO2 spectroscopy time series absent from C3",
+   "size": "137 KB raw CSV",
+   "source_url": "https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_weekly_mlo.csv",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zen_cnc_milling",
+   "licence": "CC BY 4.0",
+   "name": "Series production data set for 5-axis CNC milling (Zenodo 10853254)",
+   "next_step": "none",
+   "notes": "189,089 rows across 13 setups (20 common controller signals); 957 duplicate polls dropped",
+   "publisher": "Zenodo record 10853254 authors",
+   "reason": "Industrial CNC machine-control telemetry absent from C3",
+   "size": "21.16 MB across 13 CSVs",
+   "source_url": "https://zenodo.org/api/records/10853254",
+   "status": "experiment_ready"
   }
  ],
  "date": "2026-11-21",

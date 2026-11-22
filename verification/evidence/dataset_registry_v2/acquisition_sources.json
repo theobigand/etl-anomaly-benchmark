@@ -9300,6 +9300,235 @@
    "stratum": "C5",
    "upstream": "first party: dataset authors compiled and published the relational inventory on Zenodo",
    "upstream_verified": true
+  },
+  {
+   "attribution": "NOAA National Ocean Service CO-OPS hourly water level observations (U.S. Public Domain); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "coops_8518750_2022.json",
+     "observed": "2022",
+     "url": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20220101&end_date=20221231&station=8518750&product=hourly_height&datum=MLLW&time_zone=gmt&units=metric&format=json"
+    },
+    {
+     "name": "coops_8518750_2023.json",
+     "observed": "2023",
+     "url": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20230101&end_date=20231231&station=8518750&product=hourly_height&datum=MLLW&time_zone=gmt&units=metric&format=json"
+    },
+    {
+     "name": "coops_8518750_2024.json",
+     "observed": "2024",
+     "url": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20240101&end_date=20241231&station=8518750&product=hourly_height&datum=MLLW&time_zone=gmt&units=metric&format=json"
+    },
+    {
+     "name": "coops_9414290_2022.json",
+     "observed": "2022",
+     "url": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20220101&end_date=20221231&station=9414290&product=hourly_height&datum=MLLW&time_zone=gmt&units=metric&format=json"
+    },
+    {
+     "name": "coops_9414290_2023.json",
+     "observed": "2023",
+     "url": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20230101&end_date=20231231&station=9414290&product=hourly_height&datum=MLLW&time_zone=gmt&units=metric&format=json"
+    },
+    {
+     "name": "coops_9414290_2024.json",
+     "observed": "2024",
+     "url": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20240101&end_date=20241231&station=9414290&product=hourly_height&datum=MLLW&time_zone=gmt&units=metric&format=json"
+    },
+    {
+     "name": "coops_8724580_2022.json",
+     "observed": "2022",
+     "url": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20220101&end_date=20221231&station=8724580&product=hourly_height&datum=MLLW&time_zone=gmt&units=metric&format=json"
+    },
+    {
+     "name": "coops_8724580_2023.json",
+     "observed": "2023",
+     "url": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20230101&end_date=20231231&station=8724580&product=hourly_height&datum=MLLW&time_zone=gmt&units=metric&format=json"
+    },
+    {
+     "name": "coops_8724580_2024.json",
+     "observed": "2024",
+     "url": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20240101&end_date=20241231&station=8724580&product=hourly_height&datum=MLLW&time_zone=gmt&units=metric&format=json"
+    },
+    {
+     "name": "coops_9447130_2022.json",
+     "observed": "2022",
+     "url": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20220101&end_date=20221231&station=9447130&product=hourly_height&datum=MLLW&time_zone=gmt&units=metric&format=json"
+    },
+    {
+     "name": "coops_9447130_2023.json",
+     "observed": "2023",
+     "url": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20230101&end_date=20231231&station=9447130&product=hourly_height&datum=MLLW&time_zone=gmt&units=metric&format=json"
+    },
+    {
+     "name": "coops_9447130_2024.json",
+     "observed": "2024",
+     "url": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20240101&end_date=20241231&station=9447130&product=hourly_height&datum=MLLW&time_zone=gmt&units=metric&format=json"
+    },
+    {
+     "name": "coops_1612340_2022.json",
+     "observed": "2022",
+     "url": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20220101&end_date=20221231&station=1612340&product=hourly_height&datum=MLLW&time_zone=gmt&units=metric&format=json"
+    },
+    {
+     "name": "coops_1612340_2023.json",
+     "observed": "2023",
+     "url": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20230101&end_date=20231231&station=1612340&product=hourly_height&datum=MLLW&time_zone=gmt&units=metric&format=json"
+    },
+    {
+     "name": "coops_1612340_2024.json",
+     "observed": "2024",
+     "url": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20240101&end_date=20241231&station=1612340&product=hourly_height&datum=MLLW&time_zone=gmt&units=metric&format=json"
+    },
+    {
+     "name": "coops_8410140_2022.json",
+     "observed": "2022",
+     "url": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20220101&end_date=20221231&station=8410140&product=hourly_height&datum=MLLW&time_zone=gmt&units=metric&format=json"
+    },
+    {
+     "name": "coops_8410140_2023.json",
+     "observed": "2023",
+     "url": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20230101&end_date=20231231&station=8410140&product=hourly_height&datum=MLLW&time_zone=gmt&units=metric&format=json"
+    },
+    {
+     "name": "coops_8410140_2024.json",
+     "observed": "2024",
+     "url": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20240101&end_date=20241231&station=8410140&product=hourly_height&datum=MLLW&time_zone=gmt&units=metric&format=json"
+    }
+   ],
+   "hosts": [
+    "api.tidesandcurrents.noaa.gov"
+   ],
+   "id": "noaa_coops_tides",
+   "licence_class": "open",
+   "licence_location": "https://tidesandcurrents.noaa.gov/disclaimers.html",
+   "licence_text": "NOAA CO-OPS disclaimers page (read 2026-11-22): The information on government servers are in the public domain, unless specifically annotated otherwise, and may be used freely by the public; 17 U.S.C. 403 attribution applies",
+   "max_bytes": 4194304,
+   "method": "six fixed US coastal tide-gauge stations across 2022-2024 (hourly_height relative to MLLW in metric units, GMT)",
+   "min_interval": 1.0,
+   "privacy": "physical tide-gauge water level telemetry only; no personal data",
+   "publisher": "NOAA Center for Operational Oceanographic Products and Services (CO-OPS)",
+   "rate_limit": "18 annual station requests, one second apart, descriptive user agent",
+   "redistribution": "U.S. Public Domain; raw files stay local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party: NOAA CO-OPS operates the National Water Level Observation Network",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "NOAA Global Monitoring Laboratory (GML), Mauna Loa weekly atmospheric CO2 record (U.S. Public Domain); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "co2_weekly_mlo.csv",
+     "observed": "1974-2026",
+     "url": "https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_weekly_mlo.csv"
+    }
+   ],
+   "hosts": [
+    "gml.noaa.gov"
+   ],
+   "id": "noaa_gml_co2_weekly",
+   "licence_class": "open",
+   "licence_location": "https://gml.noaa.gov/about/disclaimer.html",
+   "licence_text": "NOAA GML Disclaimer page (read 2026-11-22): The information on government servers are in the public domain, unless specifically annotated otherwise, and may be used freely by the public; 17 U.S.C. 403 attribution",
+   "max_bytes": 1048576,
+   "method": "complete weekly Mauna Loa atmospheric CO2 mole fraction record (1974-2026)",
+   "min_interval": 1.0,
+   "privacy": "atmospheric gas measurement time series only; no personal data",
+   "publisher": "NOAA Global Monitoring Laboratory (Earth System Research Laboratories)",
+   "rate_limit": "single file download, descriptive user agent",
+   "redistribution": "U.S. Public Domain; raw file stays local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party: NOAA GML operates the Mauna Loa Observatory analyzer",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Series production data set for 5-axis CNC milling, Zenodo record 10853254 (CC BY 4.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "Data_from_2021-11-26.csv",
+     "observed": "2021-2022",
+     "url": "https://zenodo.org/api/records/10853254/files/Data_from_2021-11-26.csv/content"
+    },
+    {
+     "name": "Data_from_2021-12-07.csv",
+     "observed": "2021-2022",
+     "url": "https://zenodo.org/api/records/10853254/files/Data_from_2021-12-07.csv/content"
+    },
+    {
+     "name": "Data_from_2021-12-17.csv",
+     "observed": "2021-2022",
+     "url": "https://zenodo.org/api/records/10853254/files/Data_from_2021-12-17.csv/content"
+    },
+    {
+     "name": "Data_from_2022-01-20.csv",
+     "observed": "2021-2022",
+     "url": "https://zenodo.org/api/records/10853254/files/Data_from_2022-01-20.csv/content"
+    },
+    {
+     "name": "Data_from_2022-01-21.csv",
+     "observed": "2021-2022",
+     "url": "https://zenodo.org/api/records/10853254/files/Data_from_2022-01-21.csv/content"
+    },
+    {
+     "name": "Data_from_2022-02-14.csv",
+     "observed": "2021-2022",
+     "url": "https://zenodo.org/api/records/10853254/files/Data_from_2022-02-14.csv/content"
+    },
+    {
+     "name": "Data_from_2022-02-16.csv",
+     "observed": "2021-2022",
+     "url": "https://zenodo.org/api/records/10853254/files/Data_from_2022-02-16.csv/content"
+    },
+    {
+     "name": "Data_from_2022-02-18.csv",
+     "observed": "2021-2022",
+     "url": "https://zenodo.org/api/records/10853254/files/Data_from_2022-02-18.csv/content"
+    },
+    {
+     "name": "Data_from_2022-02-22.csv",
+     "observed": "2021-2022",
+     "url": "https://zenodo.org/api/records/10853254/files/Data_from_2022-02-22.csv/content"
+    },
+    {
+     "name": "Data_from_2022-03-02.csv",
+     "observed": "2021-2022",
+     "url": "https://zenodo.org/api/records/10853254/files/Data_from_2022-03-02.csv/content"
+    },
+    {
+     "name": "Data_from_2022-03-15.csv",
+     "observed": "2021-2022",
+     "url": "https://zenodo.org/api/records/10853254/files/Data_from_2022-03-15.csv/content"
+    },
+    {
+     "name": "Data_from_2022-04-05.csv",
+     "observed": "2021-2022",
+     "url": "https://zenodo.org/api/records/10853254/files/Data_from_2022-04-05.csv/content"
+    },
+    {
+     "name": "Data_from_2022-04.csv",
+     "observed": "2021-2022",
+     "url": "https://zenodo.org/api/records/10853254/files/Data_from_2022-04.csv/content"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_cnc_milling",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/10853254",
+   "licence_text": "Zenodo API metadata for record 10853254 (read 2026-11-22): license cc-by-4.0 (CC BY 4.0)",
+   "max_bytes": 10485760,
+   "method": "complete 13-file production series collection from a five-axis CNC milling machine control (Nov 2021 - Apr 2022)",
+   "min_interval": 1.0,
+   "privacy": "industrial machine-controller signals only; no personal data",
+   "publisher": "Zenodo record 10853254 authors",
+   "rate_limit": "13 CSV downloads, one second apart, descriptive user agent",
+   "redistribution": "CC BY 4.0; raw files stay local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party: experimental authors recorded the CNC controller telemetry and published it under CC BY 4.0",
+   "upstream_verified": true
   }
  ]
 }

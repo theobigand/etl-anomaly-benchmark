@@ -4515,6 +4515,184 @@ def _build_japan_buildings(root: Path, out: Path, manifest: dict[str, Any]) -> N
     )
 
 
+COOPS_SNAPSHOT = "2026-11-22"
+
+
+def coops_tides_view(records: list[dict[str, Any]]) -> tuple[pd.DataFrame, int]:
+    """Hourly coastal water levels, sigma and quality flags ordered by station and UTC time."""
+    raw = pd.DataFrame(records, columns=["station_id", "t", "v", "s", "f"])
+    out = pd.DataFrame(
+        {
+            "station_id": raw["station_id"].astype(str),
+            "timestamp": pd.to_datetime(raw["t"], format="%Y-%m-%d %H:%M", errors="coerce"),
+            "water_level_m": pd.to_numeric(raw["v"], errors="coerce"),
+            "sigma_m": pd.to_numeric(raw["s"], errors="coerce"),
+            "flags": raw["f"].astype(str),
+        }
+    )
+    out = out[out["timestamp"].notna()].sort_values(["station_id", "timestamp"])
+    dups = int(out.duplicated(["station_id", "timestamp"]).sum())
+    deduped = out.drop_duplicates(["station_id", "timestamp"], keep="first").reset_index(drop=True)
+    return deduped, dups
+
+
+def _build_coops_tides(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    files = sorted((root / "noaa_coops_tides" / COOPS_SNAPSHOT / "raw").glob("coops_*.json"))
+    if not files:
+        raise ViewError("no NOAA CO-OPS JSON files in the snapshot")
+    records: list[dict[str, Any]] = []
+    for path in files:
+        payload = json.loads(path.read_text())
+        station_id = payload["metadata"]["id"]
+        for item in payload.get("data", []):
+            records.append({"station_id": station_id, **item})
+    view, dups = coops_tides_view(records)
+    folder = out / "noaa_coops_tides"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "tides.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "noaa_coops_tides",
+        {"tides.csv": (target, len(view))},
+        dropped=[],
+        pseudonymised=[],
+        sampling={
+            "duplicates_dropped": dups,
+            "first_timestamp": str(view["timestamp"].min()),
+            "flagged_rows": int((view["flags"] != "0,0").sum()),
+            "last_timestamp": str(view["timestamp"].max()),
+            "method": "six US coastal stations hourly water level (2022-2024 GMT)",
+            "missing_value_rows": int(view["water_level_m"].isna().sum()),
+            "stations": int(view["station_id"].nunique()),
+        },
+        source_snapshot=f"noaa_coops_tides/{COOPS_SNAPSHOT}",
+    )
+
+
+GML_CO2_SNAPSHOT = "2026-11-22"
+
+
+def gml_co2_view(text: str) -> pd.DataFrame:
+    """Weekly Mauna Loa atmospheric CO2 series with -999.99 sentinels masked to NaN."""
+    raw = pd.read_csv(io.StringIO(text), comment="#")
+    ts = pd.to_datetime(raw[["year", "month", "day"]], errors="coerce")
+    cols = {
+        "decimal_year": "decimal",
+        "co2_ppm": "average",
+        "one_year_ago_ppm": "1 year ago",
+        "ten_years_ago_ppm": "10 years ago",
+        "increase_since_1800_ppm": "increase since 1800",
+    }
+    data: dict[str, Any] = {"timestamp": ts}
+    for out_col, src_col in cols.items():
+        vals = pd.to_numeric(raw[src_col], errors="coerce")
+        data[out_col] = vals.mask(vals == -999.99)
+    data["ndays"] = pd.to_numeric(raw["ndays"], errors="coerce").astype("Int64")
+    out = pd.DataFrame(data)
+    return out[out["timestamp"].notna()].sort_values("timestamp").reset_index(drop=True)
+
+
+def _build_gml_co2(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    source = root / "noaa_gml_co2_weekly" / GML_CO2_SNAPSHOT / "raw" / "co2_weekly_mlo.csv"
+    if not source.exists():
+        raise ViewError("no NOAA GML CO2 file in the snapshot")
+    view = gml_co2_view(source.read_text())
+    folder = out / "noaa_gml_co2_weekly"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "co2_weekly.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "noaa_gml_co2_weekly",
+        {"co2_weekly.csv": (target, len(view))},
+        dropped=[],
+        pseudonymised=[],
+        sampling={
+            "first_timestamp": str(view["timestamp"].min()),
+            "last_timestamp": str(view["timestamp"].max()),
+            "method": "complete weekly Mauna Loa atmospheric CO2 record (1974-2026)",
+            "missing_co2_rows": int(view["co2_ppm"].isna().sum()),
+        },
+        source_snapshot=f"noaa_gml_co2_weekly/{GML_CO2_SNAPSHOT}",
+    )
+
+
+CNC_SNAPSHOT = "2026-11-22"
+CNC_SIGNALS = (
+    "CoolantFlow",
+    "ProgramStatus",
+    "ProgramDetail",
+    "ToolNumber",
+    "DriveStatus",
+    "DoorStatusMain",
+    "DoorStatusTooling",
+    "CabinDoorLockFront",
+    "CabinDoorLockSide",
+    "DNCMode",
+    "SpindleCleaning",
+    "ChipCleaningGunStatus",
+    "OverrideSpindle",
+    "OverrideFeed",
+    "FeedRate",
+    "SpindleSpeed",
+    "SpindleApproval",
+    "RapidTraverseKey",
+    "Warmup",
+    "Production",
+)
+
+
+def cnc_milling_view(named_frames: list[tuple[str, pd.DataFrame]]) -> tuple[pd.DataFrame, int]:
+    """Five-axis CNC controller signals across production series ordered by series and time."""
+    parts = []
+    for series_id, raw in named_frames:
+        data: dict[str, Any] = {
+            "series_id": series_id,
+            "timestamp": pd.to_datetime(
+                raw["DateTime"], format="%Y-%m-%d %H:%M:%S", errors="coerce"
+            ),
+        }
+        for col in CNC_SIGNALS:
+            data[col] = pd.to_numeric(raw[col], errors="coerce")
+        parts.append(pd.DataFrame(data))
+    combined = pd.concat(parts, ignore_index=True)
+    combined = combined[combined["timestamp"].notna()].sort_values(["series_id", "timestamp"])
+    dups = int(combined.duplicated(["series_id", "timestamp"]).sum())
+    deduped = combined.drop_duplicates(["series_id", "timestamp"], keep="first").reset_index(
+        drop=True
+    )
+    return deduped, dups
+
+
+def _build_cnc_milling(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    files = sorted((root / "zen_cnc_milling" / CNC_SNAPSHOT / "raw").glob("Data_from_*.csv"))
+    if not files:
+        raise ViewError("no CNC milling CSV files in the snapshot")
+    named = [(p.stem.removeprefix("Data_from_"), pd.read_csv(p)) for p in files]
+    view, dups = cnc_milling_view(named)
+    folder = out / "zen_cnc_milling"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "cnc_milling.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "zen_cnc_milling",
+        {"cnc_milling.csv": (target, len(view))},
+        dropped=["Unnamed: 0", "Phase", "Phase_compressed", "PocketTable"],
+        pseudonymised=[],
+        sampling={
+            "duplicates_dropped": dups,
+            "first_timestamp": str(view["timestamp"].min()),
+            "last_timestamp": str(view["timestamp"].max()),
+            "method": "complete 13-file five-axis CNC production series telemetry (Nov 2021 - Apr 2022)",  # noqa: E501
+            "series_count": int(view["series_id"].nunique()),
+            "series_files": len(files),
+        },
+        source_snapshot=f"zen_cnc_milling/{CNC_SNAPSHOT}",
+    )
+
+
 BUILD_STEPS = (
     _build_openalex,
     _build_monash,
@@ -4570,6 +4748,9 @@ BUILD_STEPS = (
     _build_aoe,
     _build_charity_register,
     _build_japan_buildings,
+    _build_coops_tides,
+    _build_gml_co2,
+    _build_cnc_milling,
     _build_flat,
     _build_series,
     _build_ukspend,
