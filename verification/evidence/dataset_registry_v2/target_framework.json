@@ -2,13 +2,13 @@
  "coverage": {
   "0.2": {
    "ALL": {
-    "curators": 48,
-    "domains": 85,
-    "effective_groups": 87.9321,
+    "curators": 46,
+    "domains": 84,
+    "effective_groups": 87.4083,
     "groups": 166,
     "largest_schema_family_share": 0.3855,
     "producers": 166,
-    "schema_families": 72
+    "schema_families": 71
    },
    "C1": {
     "curators": 1,
@@ -20,7 +20,7 @@
     "schema_families": 1
    },
    "C2a": {
-    "curators": 6,
+    "curators": 5,
     "domains": 14,
     "effective_groups": 10.75,
     "groups": 19,
@@ -39,15 +39,15 @@
    },
    "C3": {
     "curators": 11,
-    "domains": 21,
-    "effective_groups": 21.3333,
+    "domains": 20,
+    "effective_groups": 20.8095,
     "groups": 25,
     "largest_schema_family_share": 0.24,
     "producers": 25,
-    "schema_families": 18
+    "schema_families": 17
    },
    "C4": {
-    "curators": 7,
+    "curators": 6,
     "domains": 16,
     "effective_groups": 14.0,
     "groups": 19,
@@ -76,13 +76,13 @@
   },
   "0.5": {
    "ALL": {
-    "curators": 48,
-    "domains": 85,
-    "effective_groups": 77.8074,
+    "curators": 46,
+    "domains": 84,
+    "effective_groups": 76.9741,
     "groups": 166,
     "largest_schema_family_share": 0.3855,
     "producers": 166,
-    "schema_families": 72
+    "schema_families": 71
    },
    "C1": {
     "curators": 1,
@@ -94,7 +94,7 @@
     "schema_families": 1
    },
    "C2a": {
-    "curators": 6,
+    "curators": 5,
     "domains": 14,
     "effective_groups": 8.8462,
     "groups": 19,
@@ -113,15 +113,15 @@
    },
    "C3": {
     "curators": 11,
-    "domains": 21,
-    "effective_groups": 19.381,
+    "domains": 20,
+    "effective_groups": 18.5476,
     "groups": 25,
     "largest_schema_family_share": 0.24,
     "producers": 25,
-    "schema_families": 18
+    "schema_families": 17
    },
    "C4": {
-    "curators": 7,
+    "curators": 6,
     "domains": 16,
     "effective_groups": 12.1111,
     "groups": 19,
@@ -272,7 +272,7 @@
   },
   "C3": {
    "diversity": true,
-   "domains": 21,
+   "domains": 20,
    "exploratory": true,
    "families": 24,
    "gap": 15,

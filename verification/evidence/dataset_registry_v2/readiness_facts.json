@@ -198,7 +198,7 @@
   "ademe_dpe_existant": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
-    "50,000 DPE certificates across five fixed 2024 dates (10,000 per date), 21 mixed categorical and numeric columns",
+    "date-restricted deterministic query across five fixed non-holiday 2024 dates (10,000 certificates per date, 50,000 total), 21 mixed categorical and numeric columns; not random",
     "missing year of construction (42.2 percent) and heating installation type (27.1 percent) are published registry states",
     "BAN/RNB/address fields omitted at fetch and numero_dpe replaced by a salted hash"
    ],
@@ -1762,7 +1762,7 @@
   "ingv_seismic_events": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
-    "17,755 INGV ISIDe seismic events across 1,096 UTC days (2022-2024) filtered at minmagnitude>=1.5",
+    "date-restricted and magnitude-filtered extract (17,755 INGV ISIDe seismic events across 1,096 UTC days, 2022-2024, minmagnitude>=1.5); complete within filter, not random",
     "non-BP physical event mechanism spanning earthquake, quarry blast, controlled explosion, explosion and landslide event types",
     "Author, MagAuthor and free-text EventLocationName dropped"
    ],
@@ -1779,7 +1779,7 @@
   "inpi_bce_ratios": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
-    "first 30,000 INPI corporate accounting rows sorted ascending by SIREN filtered strictly to confidentiality=Public (23,012 rows; 6,988 partial/confidential dropped); deterministic slice, not random",
+    "identifier-ordered prefix (first 30,000 INPI filings sorted ascending by SIREN, filtered strictly to confidentiality=Public -> 23,012 rows; 6,988 partial/confidential dropped); non-random prefix and filter bias toward lower SIRENs",
     "SIREN pseudonymised with salted SHA-256 so multi-year corporate filings join consistently"
    ],
    "first_party": true,
@@ -2181,7 +2181,7 @@
   "nws_weather_alerts": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
-    "2,000 unique severe-weather CAP alert features across 4 sequential 500-alert cursor pages",
+    "recency-ordered convenience time-slice of 2,000 CAP alert features across 4 sequential 500-alert API cursor pages at snapshot time; weather-regime dependent, not random",
     "depth 5 with 62 distinct paths and 25 optional paths (optional polygon geometry, hazard parameters, references, replacedAt)",
     "CAP sender field dropped at every depth and description/headline/instruction strings redacted for emails"
    ],
@@ -2481,7 +2481,7 @@
   "rcsb_pdb_entries": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
-    "1,000 macromolecular entries sampled across 2024 (350), 2025 (350) and 2026 (300) sorted by initial_release_date and rcsb_id",
+    "date-restricted earliest-released-per-year prefix (2024: 350, 2025: 350, 2026: 300 sorted by initial_release_date and rcsb_id); non-random intra-year prefix",
     "depth 6 with 38 distinct paths and 15 optional paths (crystallographic cell, refine and symmetry subtrees absent in non-diffraction entries)",
     "audit_author and citation author lists omitted in GraphQL query; redact_emails applied"
    ],
@@ -2527,7 +2527,7 @@
   "ror_organizations": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
-    "10,154 ROR v2.16 records sampled deterministically with stride 15 from all 152,297 organizations sorted by ROR id",
+    "deterministic stride-15 sample (10,154 of 152,297 ROR v2.16 records sorted canonically by ROR id); not random",
     "depth 5 with 35 distinct paths and 8 optional paths (external_ids, links, relationships)",
     "0 emails in raw dump; redact_emails applied in view"
    ],
@@ -2922,7 +2922,7 @@
   "uniprot_kb_reviewed": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
-    "250 reviewed Swiss-Prot entries per organism across six model organisms (1,500 unique accessions)",
+    "taxon-filtered API prefix sample of 250 reviewed Swiss-Prot entries per organism across six model taxa (1,500 unique accessions); not random",
     "depth 11 with 408 distinct paths and 370 optional paths (comments, features, geneLocations, cross-references)",
     "literature references and raw sequence object dropped in the view"
    ],
@@ -2983,8 +2983,8 @@
   "wals_cldf": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
-    "complete 7 core CLDF linguistic typology tables (3,573 languages, 192 parameters, 1,143 codes, 76,475 values, 152 chapters, 11 areas, 192 countries)",
-    "7 foreign-key relations verified: 0 orphans across 6 core typology links and 290/2,652 (10.94%) natural multi-country code orphans on languages.Country_ID preserved",
+    "complete 7 core CLDF linguistic typology tables (3,573 languages, 192 parameters, 1,143 codes, 76,475 values, 152 chapters, 11 areas, 192 countries including Namibia code NA preserved via keep_default_na=False) plus normalized language_countries junction table (3,023 pairs from CLDF space-separated Country_ID)",
+    "9 scalar foreign-key relations verified with 0 orphans across 162,796 checked references (values->languages/parameters/codes, codes->parameters, parameters->chapters->areas, languages.Parent_ID->languages, language_countries->languages/countries)",
     "contributors.csv and Contributor_ID / With_Contributor_ID / Contributor / Citation / Source / Comment / Description excluded"
    ],
    "first_party": true,
@@ -3301,7 +3301,7 @@
   "zen_nhif_hospital_cases": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
-    "43,503 deterministic stride-75 records from 3,262,662 Bulgarian NHIF hospitalisation rows across 2024-2026",
+    "deterministic stride-75 sample (43,503 of 3,262,662 sorted Bulgarian NHIF inpatient facility-month rows across 2024-2026); not random",
     "9 categorical/ICD-10/period columns (22.5% natural diagnosis_secondary missingness) and 4 integer count/date columns",
     "no patient identifiers in source; facility_name pseudonymised with salted SHA-256"
    ],

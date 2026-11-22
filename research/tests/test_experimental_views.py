@@ -7224,8 +7224,8 @@ def _wals_raw_tables():
                     "Family": "FamB",
                     "Subfamily": "",
                     "Genus": "GenB",
-                    "Country_ID": "FR;DE",
-                    "Parent_ID": "",
+                    "Country_ID": "NA 01 NA",
+                    "Parent_ID": "01",
                     "Source": "Author B",
                 },
                 {
@@ -7239,7 +7239,7 @@ def _wals_raw_tables():
                     "Family": "FamA",
                     "Subfamily": "SubA",
                     "Genus": "GenA",
-                    "Country_ID": "01",
+                    "Country_ID": "NA",
                     "Parent_ID": "",
                     "Source": "Author A",
                 },
@@ -7305,7 +7305,9 @@ def _wals_raw_tables():
             ]
         ),
         "areas": pd.DataFrame([{"ID": "01", "Name": "Phonology", "dbpedia_url": "drop"}]),
-        "countries": pd.DataFrame([{"ID": "01", "Name": "Testland"}]),
+        "countries": pd.DataFrame(
+            [{"ID": "NA", "Name": "Namibia"}, {"ID": "01", "Name": "Testland"}]
+        ),
     }
 
 
@@ -7456,6 +7458,13 @@ def test_wals_cldf_view_and_builder(tmp_path):
     with pytest.raises(ev.ViewError, match=r"^no WALS CLDF zip archive in the snapshot$"):
         ev._build_wals_cldf(tmp_path / "empty", tmp_path / "err", {})
     tables = _wals_raw_tables()
+    tables_none = {**tables, "languages": tables["languages"].copy()}
+    tables_none["languages"].loc[0, "Country_ID"] = None
+    views_none, _ = ev.wals_cldf_view(tables_none)
+    assert views_none["language_countries"].to_dict("records") == [
+        {"Language_ID": "01", "Country_ID": "NA"}
+    ]
+
     views, rels = ev.wals_cldf_view(tables)
     assert set(views) == set(ev.WALS_SPEC["tables"])
     for tbl, rule in ev.WALS_SPEC["tables"].items():
@@ -7463,6 +7472,11 @@ def test_wals_cldf_view_and_builder(tmp_path):
         assert views[tbl].index.tolist() == list(range(len(views[tbl])))
     assert views["languages"]["ID"].tolist() == ["01", "02"]
     assert views["values"]["ID"].tolist() == ["1A-01", "1A-02"]
+    assert views["language_countries"].to_dict("records") == [
+        {"Language_ID": "01", "Country_ID": "NA"},
+        {"Language_ID": "02", "Country_ID": "01"},
+        {"Language_ID": "02", "Country_ID": "NA"},
+    ]
     assert "Source" not in views["languages"] and "Contributor_ID" not in views["chapters"]
     by_child = {r["child"]: r for r in rels}
     assert (
@@ -7470,8 +7484,16 @@ def test_wals_cldf_view_and_builder(tmp_path):
         and by_child["values.Language_ID"]["orphans"] == 0
     )
     assert (
-        by_child["languages.Country_ID"]["checked"] == 2
-        and by_child["languages.Country_ID"]["orphans"] == 1
+        by_child["languages.Parent_ID"]["checked"] == 1
+        and by_child["languages.Parent_ID"]["orphans"] == 0
+    )
+    assert (
+        by_child["language_countries.Language_ID"]["checked"] == 3
+        and by_child["language_countries.Language_ID"]["orphans"] == 0
+    )
+    assert (
+        by_child["language_countries.Country_ID"]["checked"] == 3
+        and by_child["language_countries.Country_ID"]["orphans"] == 0
     )
     assert by_child["chapters.Area_ID"]["orphans"] == 0
 
@@ -7482,8 +7504,11 @@ def test_wals_cldf_view_and_builder(tmp_path):
     ev._build_wals_cldf(root, out, manifest)
     ev._build_wals_cldf(root, out, manifest)
     assert not (out / "wals_cldf" / "contributors.csv").exists()
-    lang_df = pd.read_csv(out / "wals_cldf" / "languages.csv", dtype=str)
+    lang_df = pd.read_csv(out / "wals_cldf" / "languages.csv", dtype=str, keep_default_na=False)
+    country_df = pd.read_csv(out / "wals_cldf" / "countries.csv", dtype=str, keep_default_na=False)
     assert lang_df["ID"].tolist() == ["01", "02"]
+    assert lang_df["Country_ID"].tolist() == ["NA", "NA 01 NA"]
+    assert country_df["ID"].tolist() == ["01", "NA"]
     view = manifest["wals_cldf"]
     assert view["dropped"] == [
         "contributors.csv",
@@ -7499,10 +7524,11 @@ def test_wals_cldf_view_and_builder(tmp_path):
         "genealogy.csv",
         "language_names.csv",
     ]
-    assert view["pseudonymised"] == [] and len(view["relations"]) == 7
+    assert view["pseudonymised"] == [] and len(view["relations"]) == 9
     assert view["files"]["languages.csv"]["rows"] == 2 and view["files"]["values.csv"]["rows"] == 2
+    assert view["files"]["language_countries.csv"]["rows"] == 3
     assert view["sampling"] == {
-        "method": "complete 7 core CLDF linguistic typology tables (no row sampling)"
+        "method": "complete 7 core CLDF linguistic typology tables plus normalized language_countries junction table (no row sampling)"  # noqa: E501
     }
     assert view["source_snapshot"] == f"wals_cldf/{ev.WALS_SNAPSHOT}"
 

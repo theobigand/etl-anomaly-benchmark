@@ -5393,6 +5393,15 @@ def _build_gha_workflows(root: Path, out: Path, manifest: dict[str, Any]) -> Non
 
 WALS_SNAPSHOT = "2026-11-22"
 WALS_PREFIX = "wals-2020.3/cldf/"
+WALS_RAW_TABLES = (
+    "languages",
+    "parameters",
+    "codes",
+    "values",
+    "chapters",
+    "areas",
+    "countries",
+)
 WALS_SPEC: dict[str, Any] = {
     "tables": {
         "languages": {
@@ -5417,6 +5426,7 @@ WALS_SPEC: dict[str, Any] = {
         "chapters": {"keep": ["ID", "Name", "Number", "Area_ID"]},
         "areas": {"keep": ["ID", "Name"]},
         "countries": {"keep": ["ID", "Name"]},
+        "language_countries": {"keep": ["Language_ID", "Country_ID"]},
     },
     "relations": [
         ["values", "Language_ID", "languages", "ID"],
@@ -5425,7 +5435,9 @@ WALS_SPEC: dict[str, Any] = {
         ["codes", "Parameter_ID", "parameters", "ID"],
         ["parameters", "Chapter_ID", "chapters", "ID"],
         ["chapters", "Area_ID", "areas", "ID"],
-        ["languages", "Country_ID", "countries", "ID"],
+        ["languages", "Parent_ID", "languages", "ID"],
+        ["language_countries", "Language_ID", "languages", "ID"],
+        ["language_countries", "Country_ID", "countries", "ID"],
     ],
 }
 
@@ -5433,8 +5445,15 @@ WALS_SPEC: dict[str, Any] = {
 def wals_cldf_view(
     tables: dict[str, pd.DataFrame],
 ) -> tuple[dict[str, pd.DataFrame], list[dict[str, Any]]]:
-    """Core seven-table WALS CLDF relational schema with contributor/author columns removed."""
-    views, relations = tables_view(tables, WALS_SPEC)
+    """Core WALS CLDF relational schema plus normalized language_countries junction table."""
+    langs = tables["languages"]
+    pairs = {
+        (str(lang_id), code)
+        for lang_id, raw_codes in langs[["ID", "Country_ID"]].fillna("").to_numpy()
+        for code in str(raw_codes).split()
+    }
+    junction = pd.DataFrame(list(pairs), columns=["Language_ID", "Country_ID"])
+    views, relations = tables_view({**tables, "language_countries": junction}, WALS_SPEC)
     ordered = {
         name: frame.sort_values(list(frame.columns)).reset_index(drop=True)
         for name, frame in views.items()
@@ -5450,9 +5469,9 @@ def _build_wals_cldf(root: Path, out: Path, manifest: dict[str, Any]) -> None:
         raise ViewError("no WALS CLDF zip archive in the snapshot")
     tables: dict[str, pd.DataFrame] = {}
     with zipfile.ZipFile(archive) as zf:
-        for name in WALS_SPEC["tables"]:
+        for name in WALS_RAW_TABLES:
             with zf.open(f"{WALS_PREFIX}{name}.csv") as handle:
-                tables[name] = pd.read_csv(handle, dtype=str)
+                tables[name] = pd.read_csv(handle, dtype=str, keep_default_na=False)
     views, relations = wals_cldf_view(tables)
     folder = out / "wals_cldf"
     folder.mkdir(parents=True, exist_ok=True)
@@ -5481,7 +5500,9 @@ def _build_wals_cldf(root: Path, out: Path, manifest: dict[str, Any]) -> None:
         ],
         pseudonymised=[],
         relations=relations,
-        sampling={"method": "complete 7 core CLDF linguistic typology tables (no row sampling)"},
+        sampling={
+            "method": "complete 7 core CLDF linguistic typology tables plus normalized language_countries junction table (no row sampling)"  # noqa: E501
+        },
         source_snapshot=f"wals_cldf/{WALS_SNAPSHOT}",
     )
 

@@ -5336,9 +5336,9 @@
    "family": "wals_cldf",
    "id": "wals_cldf",
    "licence_class": "open",
-   "protocols": "P-REL on 7-table CLDF linguistic typology star/hierarchy schema (languages, parameters, codes, values, chapters, areas, countries; not GTFS)",
+   "protocols": "P-REL on 8-table CLDF linguistic typology star/hierarchy schema (languages, parameters, codes, values, chapters, areas, countries, language_countries; not GTFS)",
    "publisher": "mpi_eva_wals",
-   "reason": "World Atlas of Language Structures CLDF v2020.3 (CC BY 4.0): 7 relational typology tables (3,573 languages, 192 parameters, 1,143 codes, 76,475 feature values, 152 chapters, 11 areas, 192 countries); 0 orphans on 6 relations and 290/2,652 (10.94%) natural multi-country orphans on languages.Country_ID; contributors/authors omitted",
+   "reason": "World Atlas of Language Structures CLDF v2020.3 (CC BY 4.0): 8 relational typology tables (3,573 languages, 192 parameters, 1,143 codes, 76,475 feature values, 152 chapters, 11 areas, 192 countries including Namibia NA, 3,023 language_countries links); 0 orphans across all 9 scalar FKs; contributors/authors omitted",
    "stages": {
     "collection_implemented": true,
     "data_acquired": true,

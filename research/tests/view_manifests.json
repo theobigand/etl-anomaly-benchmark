@@ -1642,7 +1642,10 @@
      "rows": 1
     },
     "countries.csv": {
-     "rows": 1
+     "rows": 2
+    },
+    "language_countries.csv": {
+     "rows": 3
     },
     "languages.csv": {
      "rows": 2
@@ -1659,6 +1662,7 @@
     "chapters.csv": "ID,Name,Number,Area_ID",
     "codes.csv": "ID,Parameter_ID,Name,Description,Number",
     "countries.csv": "ID,Name",
+    "language_countries.csv": "Language_ID,Country_ID",
     "languages.csv": "ID,Name,Macroarea,Latitude,Longitude,Glottocode,ISO639P3code,Family,Subfamily,Genus,Country_ID,Parent_ID",
     "parameters.csv": "ID,Name,Chapter_ID",
     "values.csv": "ID,Language_ID,Parameter_ID,Value,Code_ID"
@@ -1708,15 +1712,29 @@
      "share": 0.0
     },
     {
-     "checked": 2,
-     "child": "languages.Country_ID",
-     "orphans": 1,
+     "checked": 1,
+     "child": "languages.Parent_ID",
+     "orphans": 0,
+     "parent": "languages.ID",
+     "share": 0.0
+    },
+    {
+     "checked": 3,
+     "child": "language_countries.Language_ID",
+     "orphans": 0,
+     "parent": "languages.ID",
+     "share": 0.0
+    },
+    {
+     "checked": 3,
+     "child": "language_countries.Country_ID",
+     "orphans": 0,
      "parent": "countries.ID",
-     "share": 0.5
+     "share": 0.0
     }
    ],
    "sampling": {
-    "method": "complete 7 core CLDF linguistic typology tables (no row sampling)"
+    "method": "complete 7 core CLDF linguistic typology tables plus normalized language_countries junction table (no row sampling)"
    },
    "source_snapshot": "wals_cldf/2026-11-22"
   }

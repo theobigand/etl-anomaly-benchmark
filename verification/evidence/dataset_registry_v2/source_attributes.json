@@ -96,11 +96,11 @@
  },
  "cnc_five_axis_milling": {
   "curator": "zenodo",
-  "domain": "industrial CNC machining",
+  "domain": "industrial manufacturing",
   "generating_system": "Five-axis CNC milling machine controller across 13 production setups",
   "note": "",
   "producer": "Series production 5-axis CNC dataset authors (Zenodo 10853254)",
-  "schema_family": "five-axis cnc production telemetry",
+  "schema_family": "cnc machine controller telemetry",
   "structure": {
    "C3": "industrial CNC controller high-frequency time series"
   }
@@ -118,7 +118,7 @@
   }
  },
  "cordis_horizon_europe": {
-  "curator": "CORDIS EU",
+  "curator": "cordis eu",
   "descriptors": {
    "relational_topology": "six-table grant schema (project + organization, euroSciVoc, topics, legalBasis, policyPriorities), 5 foreign-key relations across 379,605 child rows, 0 orphans"
   },
@@ -126,7 +126,7 @@
   "generating_system": "European Commission CORDIS Horizon Europe research project and beneficiary registry",
   "note": "Non-timetable European research grant relational database; independent producer, curator, continent, domain and schema from public procurement datasets",
   "producer": "European Commission (CORDIS)",
-  "schema_family": "eu cordis horizon grant schema",
+  "schema_family": "research grant project tables",
   "structure": {
    "C5": "EU funded project, beneficiary organization, scientific vocabulary and policy priority tables"
   }
@@ -370,7 +370,7 @@
   }
  },
  "github_actions_workflows": {
-  "curator": "Zenodo",
+  "curator": "zenodo",
   "domain": "software CI/CD workflow evolution",
   "generating_system": "GitHub Actions CI/CD workflow file commit history",
   "note": "Software engineering CI/CD configuration event sequences per repository; non-BP mechanism",
@@ -546,7 +546,7 @@
   }
  },
  "ingv_seismic": {
-  "curator": "INGV FDSNWS",
+  "curator": "ingv fdsnws",
   "domain": "geophysical seismology",
   "generating_system": "INGV ISIDe national seismic sensor detection and event catalog",
   "note": "Real-time geophysical seismic event sequence grouped by UTC date; non-BP natural physical event mechanism",
@@ -608,7 +608,7 @@
   }
  },
  "kanto_landslides": {
-  "curator": "Zenodo",
+  "curator": "zenodo",
   "domain": "earth science geomorphology",
   "generating_system": "1923 Kanto Earthquake Kanagawa digitized landslide inventory",
   "note": "Historical earthquake-triggered landslide inventory with categorical lithology/watershed and quantitative geometry",
@@ -711,7 +711,7 @@
   }
  },
  "nhif_hospital_cases": {
-  "curator": "Zenodo",
+  "curator": "zenodo",
   "domain": "public healthcare inpatient billing",
   "generating_system": "Bulgarian National Health Insurance Fund inpatient clinical pathway claims aggregation",
   "note": "Aggregated facility-month inpatient pathway and ICD-10 diagnosis pairs with natural secondary-diagnosis missingness",
@@ -741,18 +741,18 @@
   "generating_system": "NOAA CO-OPS National Water Level Observation Network (6 coastal stations)",
   "note": "Shares federal NOAA parent agency curator with noaa_gml_co2; distinct observation network, sensors and domain",
   "producer": "NOAA Center for Operational Oceanographic Products and Services (CO-OPS)",
-  "schema_family": "noaa co-ops tidal water level",
+  "schema_family": "gauging time series",
   "structure": {
    "C3": "hourly coastal sea-level and astronomical tide telemetry with quality flags"
   }
  },
  "noaa_gml_co2": {
   "curator": "noaa",
-  "domain": "atmospheric greenhouse-gas spectroscopy",
+  "domain": "environmental monitoring",
   "generating_system": "NOAA GML Mauna Loa Observatory weekly infrared CO2 analyzer",
   "note": "Shares federal NOAA parent agency curator with noaa_coops; distinct observatory, instrumentation and domain",
   "producer": "NOAA Global Monitoring Laboratory (GML)",
-  "schema_family": "noaa gml weekly mole fraction",
+  "schema_family": "atmospheric gas concentration time series",
   "structure": {
    "C3": "weekly atmospheric CO2 mole fraction time series"
   }
@@ -883,7 +883,7 @@
   }
  },
  "port_noumea_stopovers": {
-  "curator": "Zenodo",
+  "curator": "zenodo",
   "domain": "maritime port logistics",
   "generating_system": "Autonomous Port of Noumea harbour master vessel stopover register",
   "note": "Mixed maritime port call and routing table with vessel codes and natural port coordinate missingness",
@@ -916,7 +916,7 @@
   }
  },
  "rcsb_pdb": {
-  "curator": "RCSB PDB",
+  "curator": "rcsb pdb",
   "descriptors": {
    "nesting": "depth 6, 38 distinct paths, 15 optional paths, method-specific crystal cell/refinement/symmetry subtrees and polymer entity arrays"
   },
@@ -924,7 +924,7 @@
   "generating_system": "Worldwide Protein Data Bank (wwPDB) macromolecular experimental structure archive",
   "note": "Macromolecular crystallography, cryo-EM and NMR archive; independent domain, producer, curator and schema family from UniProt sequence entries",
   "producer": "Worldwide Protein Data Bank (wwPDB)",
-  "schema_family": "mmcif pdbx graphql schema",
+  "schema_family": "mmcif pdbx structure json",
   "structure": {
    "C6": "macromolecular experimental structure JSON documents with optional crystallographic refinement subtrees"
   }
@@ -941,7 +941,7 @@
   }
  },
  "ror": {
-  "curator": "Zenodo",
+  "curator": "zenodo",
   "descriptors": {
    "nesting": "depth 5, 35 distinct paths, 8 optional paths, arrays of names, external_ids, links, locations and relationships"
   },
@@ -949,7 +949,7 @@
   "generating_system": "Research Organization Registry global persistent identifier directory (v2.16)",
   "note": "Dedicated persistent identifier directory for research organizations; distinct producer, curator, generating system and schema family from OpenAlex",
   "producer": "Research Organization Registry (ROR)",
-  "schema_family": "ror organization schema v2",
+  "schema_family": "organization registry json",
   "structure": {
    "C6": "hierarchical organization directory records with variable external identifiers and relationship edges"
   }
@@ -1870,17 +1870,17 @@
   }
  },
  "wals_cldf": {
-  "curator": "Zenodo / CLDF",
+  "curator": "github",
   "descriptors": {
-   "relational_topology": "seven-table hierarchy/star schema (values -> languages, parameters, codes; codes -> parameters; parameters -> chapters -> areas; languages -> countries), 7 foreign-key relations, 290/2,652 (10.94%) natural orphans in languages.Country_ID and 0 orphans on 6 relations"
+   "relational_topology": "eight-table hierarchy/star schema (values -> languages, parameters, codes; codes -> parameters; parameters -> chapters -> areas; languages.Parent_ID -> languages; language_countries -> languages, countries), 9 scalar foreign-key relations across 162,796 checked references with 0 orphans"
   },
   "domain": "linguistic typology",
   "generating_system": "World Atlas of Language Structures (WALS) CLDF cross-linguistic typology database",
-  "note": "Non-timetable linguistic typology relational schema; natural multi-country orphan links preserved without filtering",
+  "note": "Non-timetable linguistic typology relational schema; normalized language_countries junction resolves CLDF space-separated Country_ID list and keep_default_na=False preserves Namibia ISO code NA (0 orphans across all 9 scalar FKs)",
   "producer": "Max Planck Institute for Evolutionary Anthropology (WALS Editors)",
   "schema_family": "cldf linguistic typology",
   "structure": {
-   "C5": "language feature values, codes, chapters, areas and countries relational tables"
+   "C5": "language feature values, codes, chapters, areas, countries and language_countries relational tables"
   }
  },
  "wikimedia_simplewiki": {
@@ -1914,7 +1914,7 @@
   "generating_system": "World Bank Projects & Operations lending commitment registry",
   "note": "",
   "producer": "The World Bank Group",
-  "schema_family": "world bank project commitments",
+  "schema_family": "sovereign development lending records",
   "structure": {
    "C2b": "multilateral sovereign lending commitment records"
   }

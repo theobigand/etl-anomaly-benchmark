@@ -4300,15 +4300,19 @@
    },
    "codes.csv": {
     "rows": 1143,
-    "sha256": "a797ffc55782e406fe2bc3be34b5a83d5535e67e32a8c17517ec3a0a12f4a9b4"
+    "sha256": "2b4c44e97d22fe82ff22c5710de64734bb27ab852bf47b71fb1f6eb4f420351c"
    },
    "countries.csv": {
     "rows": 192,
-    "sha256": "242eb73b5b340b40f4b494fce30b1501562cd0db4daedc4df6e564de74b286ad"
+    "sha256": "c05eef3cde5155e6862b1964d0d2e47371e6ac2e20e379985568ac748631e9b9"
+   },
+   "language_countries.csv": {
+    "rows": 3023,
+    "sha256": "063da20688201ad894c4ea1f0c53015e53d6122c6c8288f322a04801a3c0c778"
    },
    "languages.csv": {
     "rows": 3573,
-    "sha256": "138a0b3bee74b3379d7190f6d1b78211de0f94b9cb4f984a8757e8328e04abcf"
+    "sha256": "b9d8e3ab69c263253a93c39a13fbfa7f7664c05290897109260e5b2b9a81f28f"
    },
    "parameters.csv": {
     "rows": 192,
@@ -4316,13 +4320,13 @@
    },
    "values.csv": {
     "rows": 76475,
-    "sha256": "361ddabef3b6eabd403c12a787a5c22cb2e1e6c067fdfcbb2b274f4fcb5ca2a8"
+    "sha256": "62d186f5f6842dba2049b45c3e65b49a1d3fadb1d96b805ef9cb0f38e78c42e4"
    }
   },
   "pseudonymised": [],
   "relations": [
    {
-    "checked": 76401,
+    "checked": 76475,
     "child": "values.Language_ID",
     "orphans": 0,
     "parent": "languages.ID",
@@ -4364,15 +4368,29 @@
     "share": 0.0
    },
    {
-    "checked": 2652,
-    "child": "languages.Country_ID",
-    "orphans": 290,
+    "checked": 3319,
+    "child": "languages.Parent_ID",
+    "orphans": 0,
+    "parent": "languages.ID",
+    "share": 0.0
+   },
+   {
+    "checked": 3023,
+    "child": "language_countries.Language_ID",
+    "orphans": 0,
+    "parent": "languages.ID",
+    "share": 0.0
+   },
+   {
+    "checked": 3023,
+    "child": "language_countries.Country_ID",
+    "orphans": 0,
     "parent": "countries.ID",
-    "share": 0.10935143288084465
+    "share": 0.0
    }
   ],
   "sampling": {
-   "method": "complete 7 core CLDF linguistic typology tables (no row sampling)"
+   "method": "complete 7 core CLDF linguistic typology tables plus normalized language_countries junction table (no row sampling)"
   },
   "source_snapshot": "wals_cldf/2026-11-22"
  },
