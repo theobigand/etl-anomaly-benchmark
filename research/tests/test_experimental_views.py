@@ -4105,3 +4105,23 @@ def test_the_backblaze_builder_refuses_an_archive_without_daily_files(tmp_path):
         z.writestr("2014/readme.txt", "x")
     with pytest.raises(ev.ViewError, match="^no daily file in the archive$"):
         ev._build_backblaze(tmp_path / "acquired", tmp_path / "o", {})
+
+
+def test_the_backblaze_builder_reports_the_last_chosen_day_and_passes_the_extraction_limits(
+    tmp_path, monkeypatch
+):
+    import acquisition as _aq
+
+    seen = []
+    real = _aq.extract_member
+    monkeypatch.setattr(_aq, "extract_member", lambda *a, **k: seen.append(k) or real(*a, **k))
+    monkeypatch.setattr(ev, "BACKBLAZE_DAYS", 3)
+    _bb_zip(tmp_path / "acquired")
+    manifest: dict = {}
+    ev._build_backblaze(tmp_path / "acquired", tmp_path / "o", manifest)
+    assert manifest["backblaze_drive_stats"]["sampling"]["days"] == [
+        "2014/2014-01-01.csv",
+        "2014/2014-01-03.csv",
+    ]
+    assert manifest["backblaze_drive_stats"]["sampling"]["day_files"] == 3
+    assert seen == [{"max_bytes": 1 << 28, "max_ratio": 100}] * 3
