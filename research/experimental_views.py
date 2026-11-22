@@ -2804,11 +2804,11 @@ PBDB_REL_RELATIONS = (
 
 
 def taxon_closure(taxa: pd.DataFrame, needed: set[int]) -> tuple[pd.DataFrame, int]:
-    """The taxa named by the needed identifiers, with every ancestor reachable through ``parent_no``.
+    """The taxa named by the needed identifiers and every ancestor reachable by ``parent_no``.
 
     Returns the taxa in identifier order and the number of ancestors that the full table itself does
     not contain (identifiers that are absent from the source, not from the sample). A taxon is
-    followed once, so a cycle in the source ends the walk.
+    followed once, so a cycle in the source ends the walk. ``taxon_no`` must be unique.
     """
     parent = taxa.set_index("taxon_no")["parent_no"]
     known = set(parent.index)
@@ -2820,7 +2820,7 @@ def taxon_closure(taxa: pd.DataFrame, needed: set[int]) -> tuple[pd.DataFrame, i
         step = {int(x) for x in parent.reindex(sorted(frontier)).dropna()}
         missing |= step - known
         frontier = (step & known) - seen
-    kept = taxa[taxa["taxon_no"].isin(seen)].sort_values("taxon_no", kind="stable")
+    kept = taxa[taxa["taxon_no"].isin(seen)].sort_values("taxon_no")
     return kept.reset_index(drop=True), len(missing)
 
 
@@ -2862,7 +2862,7 @@ def _build_pbdb_relational(root: Path, out: Path, manifest: dict[str, Any]) -> N
         occ[column] = pd.to_numeric(occ[column], errors="coerce")
     for column in ("taxon_no", "orig_no", "accepted_no", "parent_no", "n_occs", "reference_no"):
         taxa[column] = pd.to_numeric(taxa[column], errors="coerce")
-    occ = occ.sort_values("occurrence_no", kind="stable").reset_index(drop=True)
+    occ = occ.sort_values("occurrence_no").reset_index(drop=True)
     needed = {int(n) for n in occ["accepted_no"].dropna()}
     kept, absent_parents = taxon_closure(taxa, needed)
     folder = out / "zen_pbdb_relational"

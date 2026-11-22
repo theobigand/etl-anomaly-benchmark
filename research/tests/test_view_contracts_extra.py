@@ -609,3 +609,97 @@ def test_single_key_sorts_keep_the_file_order_of_equal_keys_beyond_a_small_input
     big["occurrence_no"] = "7"
     big["max_ma"] = [str(i) for i in range(n)]
     assert ev.pbdb_occurrence_view(big)["max_ma"].tolist() == [float(i) for i in range(n)]
+
+
+def _rel_zip(tmp_path, occ_overrides=None, taxa_overrides=None, occ_members=("occ.parquet",)):
+    raw = tmp_path / "acquired" / "zen_pbdb" / SNAP / "raw"
+    raw.mkdir(parents=True, exist_ok=True)
+    occ = pd.DataFrame({c: [None] * 3 for c in ev.PBDB_REL_OCC})
+    occ["occurrence_no"] = [3, 2, 1]
+    occ["accepted_no"] = [30, 31, 30]
+    occ.update(pd.DataFrame(occ_overrides or {}))
+    taxa = pd.DataFrame({c: [None] * 2 for c in ev.PBDB_REL_TAXA})
+    taxa["taxon_no"] = [30, 20]
+    taxa["parent_no"] = [20, None]
+    for name, frame, zip_name, members in (
+        ("o", occ, "pbdb_parquet.zip", occ_members),
+        ("t", taxa, "pbdb_taxa_parquet.zip", ("taxa.parquet",)),
+    ):
+        pq.write_table(
+            pa.Table.from_pandas(frame, preserve_index=False), tmp_path / f"{name}.parquet"
+        )
+        with zipfile.ZipFile(raw / zip_name, "w") as z:
+            for member in members:
+                z.write(tmp_path / f"{name}.parquet", member)
+    return tmp_path / "acquired"
+
+
+def test_the_relational_builder_passes_limits_stride_and_exact_messages_and_counts_unknown_taxa(
+    tmp_path, monkeypatch
+):
+    seen_extract, seen_read = [], []
+    real_extract, real_read = aq.extract_member, pr.read_sample
+    monkeypatch.setattr(
+        aq, "extract_member", lambda *a, **k: seen_extract.append(k) or real_extract(*a, **k)
+    )
+    monkeypatch.setattr(
+        pr, "read_sample", lambda *a, **k: seen_read.append(k) or real_read(*a, **k)
+    )
+    monkeypatch.setattr(ev, "PBDB_STRIDE", 1)
+    root = _rel_zip(tmp_path)
+    manifest: dict = {}
+    ev._build_pbdb_relational(root, tmp_path / "o", manifest)
+    assert seen_extract == [{"max_bytes": 1 << 30, "max_ratio": 200}] * 2
+    assert [(k["max_rows"], k["stride"]) for k in seen_read] == [(10**7, 1), (10**7, 1)]
+    sampling = manifest["zen_pbdb_relational"]["sampling"]
+    assert (
+        sampling["occurrences_with_unknown_taxon"] == 1
+        and sampling["ancestors_absent_from_source"] == 0
+    )
+    with pytest.raises(ev.ViewError, match=r"^expected one Parquet member, found 2$"):
+        ev._build_pbdb_relational(
+            _rel_zip(tmp_path, occ_members=("a.parquet", "b.parquet")), tmp_path / "o2", {}
+        )
+    raw = tmp_path / "acquired" / "zen_pbdb" / SNAP / "raw"
+    pq.write_table(
+        pa.Table.from_pandas(pd.DataFrame({"occurrence_no": [1]}), preserve_index=False),
+        tmp_path / "x.parquet",
+    )
+    with zipfile.ZipFile(raw / "pbdb_parquet.zip", "w") as z:
+        z.write(tmp_path / "x.parquet", "x.parquet")
+    with pytest.raises(ev.ViewError, match=r"^columns not found: \['collection_no', .*'min_ma'\]$"):
+        ev._build_pbdb_relational(tmp_path / "acquired", tmp_path / "o3", {})
+
+
+def test_the_relational_builder_coerces_unreadable_numbers_and_orders_by_occurrence_number(
+    tmp_path, monkeypatch
+):
+    monkeypatch.setattr(ev, "PBDB_STRIDE", 1)
+    n = 40
+    root = _rel_zip(tmp_path)
+    raw = root / "zen_pbdb" / SNAP / "raw"
+    occ = pd.DataFrame({c: ["x"] * n for c in ev.PBDB_REL_OCC})
+    occ["occurrence_no"] = "7"
+    occ["accepted_no"] = "30"
+    occ["collection_no"] = [str(i) for i in range(n)]
+    occ.loc[0, "max_ma"] = "n/a"
+    pq.write_table(pa.Table.from_pandas(occ, preserve_index=False), tmp_path / "big.parquet")
+    with zipfile.ZipFile(raw / "pbdb_parquet.zip", "w") as z:
+        z.write(tmp_path / "big.parquet", "big.parquet")
+    taxa = pd.DataFrame({c: [None] * 2 for c in ev.PBDB_REL_TAXA})
+    taxa["taxon_no"] = ["30", "bad"]
+    taxa["parent_no"] = ["20", None]
+    pq.write_table(pa.Table.from_pandas(taxa, preserve_index=False), tmp_path / "t2.parquet")
+    with zipfile.ZipFile(raw / "pbdb_taxa_parquet.zip", "w") as z:
+        z.write(tmp_path / "t2.parquet", "t2.parquet")
+    ev._build_pbdb_relational(root, tmp_path / "o", {})
+    out = pd.read_csv(tmp_path / "o" / "zen_pbdb_relational" / "occurrences.csv")
+    assert out["collection_no"].tolist() == list(range(n)) and out["max_ma"].isna().iloc[0]
+    kept = pd.read_csv(tmp_path / "o" / "zen_pbdb_relational" / "taxa.csv")
+    assert kept["taxon_no"].tolist() == [30]
+
+
+def test_taxon_closure_refuses_a_table_with_repeated_taxon_numbers():
+    taxa = pd.DataFrame({"taxon_no": [1, 1], "parent_no": [None, None]})
+    with pytest.raises(ValueError, match="duplicate labels"):
+        ev.taxon_closure(taxa, {1})
