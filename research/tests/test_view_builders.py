@@ -264,6 +264,10 @@ def _nvd(root, tmp):
     (raw / "cves_a.json").write_text(json.dumps(tev._nvd_page(["CVE-2020-2", "CVE-2018-1"])))
 
 
+def _unisg(root, tmp):
+    tev._unisg_snapshot(root)
+
+
 CASES = {
     "surf": (_surf, ev._build_surf, ["zen_surf_lisa_slurm"], {}),
     "pbdb": (_pbdb, ev._build_pbdb, ["zen_pbdb"], {"PBDB_STRIDE": 2}),
@@ -272,6 +276,7 @@ CASES = {
     "bess": (_bess, ev._build_bess, ["zen_bess"], {}),
     "care": (_care, ev._build_care, ["zen_care_wind_b"], {}),
     "nvd": (_nvd, ev._build_nvd, ["nvd_cve"], {}),
+    "unisg": (_unisg, ev._build_unisg, ["zen_unisg_factory"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),
     "metropt": (_metropt, ev._build_metropt, ["zen_metropt2"], {}),
     "openlibrary": (_openlibrary, ev._build_openlibrary, ["openlibrary_dump"], {"OPENLIBRARY_MODULO": 1}),  # noqa: E501

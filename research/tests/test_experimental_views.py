@@ -1032,6 +1032,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _fe2.write_feather(_pa.Table.from_pandas(_bess_frame(), preserve_index=False), bs / "S.feather")
     _care_snapshot(root, ids=(1,))
     _w(root / "nvd_cve" / ev.NVD_SNAPSHOT / "raw" / "cves_a.json", json.dumps(_nvd_page(["CVE-1"])))
+    _unisg_snapshot(root)
     monkeypatch.setattr(ev, "EA_STATIONS", ["s"])
     _w(
         root / "ea_hydrology_flow" / SNAP / "raw" / "flow_s.csv",
@@ -1042,7 +1043,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "nvd_cve", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "nvd_cve", "zen_unisg_factory", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -3651,4 +3652,114 @@ def test_the_nvd_builder_records_completeness_writes_the_required_notice_and_ref
     assert (
         manifest["nvd_cve"]["files"]["cves.jsonl"]["rows"] == 3
         and manifest["nvd_cve"]["source_snapshot"] == f"nvd_cve/{ev.NVD_SNAPSHOT}"
+    )
+
+
+# --- St. Gallen smart factory ------------------------------------------------------------------------  # noqa: E501
+
+
+def _unisg_messages():
+    base = {
+        "current_state": "ready",
+        "current_task": "",
+        "current_task_duration": 0.0,
+        "current_sub_task": "",
+    }
+    return [
+        {"id": "u3", "station": "VGR_1", "timestamp": "2023-04-11 09:57:48.75", "i1_pos": 1, **base},  # noqa: E501
+        {"id": "u1", "station": "MM_1", "timestamp": "2023-04-11 09:57:48.72", "m1_speed": 0, **base},  # noqa: E501
+        {"id": "u2", "station": "EC_1", "timestamp": "2023-04-11 09:57:48.72", "i3_photo": "x", **base, "current_task_duration": "n/a"},  # noqa: E501
+        {"id": "u4", "station": "MM_1", "timestamp": "bad", "m1_speed": 5, **base},
+    ]  # fmt: skip
+
+
+def _unisg_activities():
+    def act(i, pi, name, start, canceled=False):
+        return {
+            "processInstanceId": pi,
+            "processDefinitionKey": "storage",
+            "activityName": name,
+            "activityType": "serviceTask",
+            "startTime": start,
+            "endTime": start,
+            "durationInMillis": i,
+            "canceled": canceled,
+        }  # noqa: E501
+
+    return [
+        act(5, "p2", "B", "2023-04-11T10:00:05.000+0200"),
+        act(1, "p1", "A", "2023-04-11T10:00:01.000+0200", True),
+        act(2, "p9", "C", "2023-04-11T10:00:05.000+0200"),
+    ]  # noqa: E501
+
+
+def test_unisg_sensor_view_keeps_station_columns_drops_ids_and_orders_by_time_and_station():
+    out = ev.unisg_sensor_view(_unisg_messages())
+    assert list(out.columns) == [*ev.UNISG_HEAD, "i1_pos", "i3_photo", "m1_speed"]
+    assert (
+        out["station"].tolist() == ["EC_1", "MM_1", "VGR_1"] and len(out) == 3
+    )  # the unreadable time is dropped
+    assert out["m1_speed"].isna().tolist() == [True, False, True] and out[
+        "i1_pos"
+    ].isna().tolist() == [True, True, False]
+    assert out["i3_photo"].isna().all() and pd.isna(out["current_task_duration"].iloc[0])
+    assert "id" not in out and out["timestamp"].is_monotonic_increasing
+    with pytest.raises(ev.ViewError, match="^column 'current_state' not found$"):
+        ev.unisg_sensor_view([{"station": "A", "timestamp": "2023-04-11 09:57:48.72"}])
+
+
+def test_unisg_activity_view_joins_the_process_state_and_orders_by_start_then_instance():
+    out = ev.unisg_activity_view(
+        _unisg_activities(),
+        [{"id": "p1", "state": "COMPLETED"}, {"id": "p2", "state": "EXTERNALLY_TERMINATED"}],
+    )
+    assert list(out.columns) == list(ev.UNISG_ACTIVITY_COLUMNS)
+    assert out["process_instance"].tolist() == ["p1", "p2", "p9"]
+    assert out["process_state"].tolist()[:2] == ["COMPLETED", "EXTERNALLY_TERMINATED"] and pd.isna(
+        out["process_state"].iloc[2]
+    )
+    assert out["canceled"].tolist() == [True, False, False] and out["canceled"].dtype == bool
+    assert out["start_time"].is_monotonic_increasing and str(out["start_time"].dtype).endswith(
+        "UTC]"
+    )
+    assert out["duration_ms"].tolist() == [1, 5, 2] and out["activity_name"].tolist() == [
+        "A",
+        "B",
+        "C",
+    ]
+    assert list(ev.unisg_activity_view([], []).columns) == list(ev.UNISG_ACTIVITY_COLUMNS)
+
+
+def _unisg_snapshot(root):
+    raw = root / "zen_unisg_factory" / ev.UNISG_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    lines = [json.dumps(m) for m in _unisg_messages()] + ["{broken"]
+    (raw / ev.UNISG_LOG).write_text("\n".join(lines) + "\n", encoding="utf-8")
+    (raw / "camunda-activity.json").write_text(json.dumps(_unisg_activities()), encoding="utf-8")
+    (raw / "camunda-process.json").write_text(
+        json.dumps([{"id": "p1", "state": "COMPLETED"}]), encoding="utf-8"
+    )
+
+
+def test_the_unisg_builder_writes_both_views_and_records_what_it_read(tmp_path):
+    _unisg_snapshot(tmp_path / "acquired")
+    manifest: dict = {}
+    ev._build_unisg(tmp_path / "acquired", tmp_path / "o", manifest)
+    folder = tmp_path / "o" / "zen_unisg_factory"
+    assert (
+        len(pd.read_csv(folder / "sensors.csv")) == 3
+        and len(pd.read_csv(folder / "activities.csv")) == 3
+    )
+    view = manifest["zen_unisg_factory"]
+    assert view["sampling"]["messages"] == 4 and view["sampling"]["unreadable_lines"] == 1
+    assert view["sampling"]["stations"] == ["EC_1", "MM_1", "VGR_1"]
+    assert (
+        view["sampling"]["activity_instances"] == 3 and view["sampling"]["process_instances"] == 1
+    )
+    assert (
+        view["files"]["sensors.csv"]["rows"] == 3 and view["files"]["activities.csv"]["rows"] == 3
+    )
+    assert (
+        view["dropped"] == ["message identifiers"]
+        and view["source_snapshot"] == f"zen_unisg_factory/{ev.UNISG_SNAPSHOT}"
     )

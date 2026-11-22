@@ -479,6 +479,39 @@
    "source_snapshot": "src_zip/2026-11-21"
   }
  },
+ "unisg": {
+  "zen_unisg_factory": {
+   "dropped": [
+    "message identifiers"
+   ],
+   "files": {
+    "activities.csv": {
+     "rows": 3
+    },
+    "sensors.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "activities.csv": "process_instance,process_key,process_state,activity_name,activity_type,start_time,end_time,duration_ms,canceled",
+    "sensors.csv": "timestamp,station,current_state,current_task,current_task_duration,current_sub_task,i1_pos,i3_photo,m1_speed"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "activity_instances": 3,
+    "messages": 4,
+    "method": "the 36-minute 10 Hz training log of 2023-04-11 and the whole Camunda activity and process logs of 2022-09 to 2023-04; the test log was not fetched",
+    "process_instances": 1,
+    "stations": [
+     "EC_1",
+     "MM_1",
+     "VGR_1"
+    ],
+    "unreadable_lines": 1
+   },
+   "source_snapshot": "zen_unisg_factory/2026-11-22"
+  }
+ },
  "wikidata": {
   "wikidata_entities": {
    "dropped": [

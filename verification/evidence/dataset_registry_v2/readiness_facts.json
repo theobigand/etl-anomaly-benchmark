@@ -2669,6 +2669,41 @@
    "protocol_id": "P-TAB",
    "units": 199621,
    "view": "zen_surf_lisa_slurm"
+  },
+  "zen_unisg_factory": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "instrumented research testbed, not an industrial production log",
+    "process instances still ACTIVE at the end of the export are unfinished, not anomalies",
+    "tutorial processes such as invoice and review invoice share the engine with the factory processes",
+    "no deliberately introduced faults are documented; activity names and states are not fault labels"
+   ],
+   "evidence_class": "instrumented_research_testbed",
+   "first_party": true,
+   "independent_group": "unisg_smart_factory",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the activity start time",
+   "privacy": "not_needed",
+   "protocol_id": "P-SEQ",
+   "units": 1727,
+   "view": "zen_unisg_factory"
+  },
+  "zen_unisg_factory:C3": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "36 minutes of 10 Hz messages on one day",
+    "seven stations with disjoint sensor sets",
+    "state not ready is normal operation"
+   ],
+   "evidence_class": "instrumented_research_testbed",
+   "first_party": true,
+   "independent_group": "unisg_smart_factory",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the timestamp",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "units": 139901,
+   "view": "zen_unisg_factory"
   }
  }
 }

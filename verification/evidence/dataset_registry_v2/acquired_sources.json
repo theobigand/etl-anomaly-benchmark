@@ -4550,6 +4550,46 @@
    "stratum": "C6",
    "system": "nvd_cve",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "unisg_smart_factory",
+   "id": "zen_unisg_factory",
+   "licence_class": "open",
+   "protocols": "P-SEQ on Camunda activity instances ordered by start time within process instances",
+   "publisher": "unisg_smart_factory",
+   "reason": "University of St.Gallen Fischertechnik smart factory model, Camunda workflow engine ground-truth log (instrumented research testbed, not production): 1,727 activity instances of 176 process instances, 13 process definitions over 2022-09 to 2023-04, 1,615 completed and 112 active (unfinished) process-instance states. Records 7440490 and 14998532 are the same installation",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 on the Zenodo record released by the testbed's operators at the University of St.Gallen",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "fischertechnik_smart_factory",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "unisg_smart_factory",
+   "id": "zen_unisg_factory:C3",
+   "licence_class": "open",
+   "protocols": "P-TS by controlled injection on 10 Hz station messages",
+   "publisher": "unisg_smart_factory",
+   "reason": "same testbed: the 36-minute 10 Hz training log, 139,901 station messages from seven stations with station-specific sensors (missing by design), states ready and not ready; no faults are documented, so the log is a baseline",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY 4.0 on the Zenodo record released by the testbed's operators at the University of St.Gallen",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "fischertechnik_smart_factory",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

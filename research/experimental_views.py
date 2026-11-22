@@ -2264,6 +2264,112 @@ def _build_wikidata(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+UNISG_SNAPSHOT = "2026-11-22"
+UNISG_LOG = "training_tenhertz_log_20230411-095748.txt"
+UNISG_HEAD = (
+    "timestamp",
+    "station",
+    "current_state",
+    "current_task",
+    "current_task_duration",
+    "current_sub_task",
+)
+UNISG_ACTIVITY_COLUMNS = (
+    "process_instance", "process_key", "process_state", "activity_name", "activity_type",
+    "start_time", "end_time", "duration_ms", "canceled",
+)  # fmt: skip
+
+
+def unisg_sensor_view(messages: list[dict[str, Any]]) -> pd.DataFrame:
+    """Ten-hertz station messages of the smart factory model, one row per message, in time order.
+
+    Every station reports its own sensors, so the columns of other stations are missing by design.
+    The message identifier is dropped; times and numbers that cannot be read become missing and
+    messages without a readable time are dropped.
+    """
+    frame = pd.DataFrame(messages)
+    for column in UNISG_HEAD:
+        if column not in frame.columns:
+            raise ViewError(f"column {column!r} not found")
+    frame = frame.drop(columns=[c for c in ("id",) if c in frame.columns])
+    frame["timestamp"] = pd.to_datetime(frame["timestamp"], errors="coerce")
+    frame = frame[frame["timestamp"].notna()]
+    numeric = sorted(set(frame.columns) - set(UNISG_HEAD))
+    for column in numeric:
+        frame[column] = pd.to_numeric(frame[column], errors="coerce")
+    frame["current_task_duration"] = pd.to_numeric(frame["current_task_duration"], errors="coerce")
+    ordered = frame[[*UNISG_HEAD, *numeric]]
+    return ordered.sort_values(["timestamp", "station"], kind="stable").reset_index(drop=True)
+
+
+def unisg_activity_view(
+    activities: list[dict[str, Any]], processes: list[dict[str, Any]]
+) -> pd.DataFrame:
+    """Activity instances of the workflow engine with the final state of their process instance.
+
+    Rows are kept in the order of the start time. An activity whose process instance is not in the
+    process file keeps a missing process state.
+    """
+    states = {p["id"]: p.get("state") for p in processes}
+    rows = [
+        {
+            "process_instance": a["processInstanceId"],
+            "process_key": a["processDefinitionKey"],
+            "process_state": states.get(a["processInstanceId"]),
+            "activity_name": a["activityName"],
+            "activity_type": a["activityType"],
+            "start_time": a["startTime"],
+            "end_time": a["endTime"],
+            "duration_ms": a["durationInMillis"],
+            "canceled": a["canceled"],
+        }
+        for a in activities
+    ]
+    frame = pd.DataFrame(rows, columns=list(UNISG_ACTIVITY_COLUMNS))
+    frame["start_time"] = pd.to_datetime(frame["start_time"], errors="coerce", utc=True)
+    frame["end_time"] = pd.to_datetime(frame["end_time"], errors="coerce", utc=True)
+    frame["duration_ms"] = pd.to_numeric(frame["duration_ms"], errors="coerce")
+    frame["canceled"] = frame["canceled"].astype(bool)
+    return frame.sort_values(["start_time", "process_instance"], kind="stable").reset_index(
+        drop=True
+    )
+
+
+def _build_unisg(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "zen_unisg_factory" / UNISG_SNAPSHOT / "raw"
+    messages, bad = [], 0
+    for line in (raw / UNISG_LOG).read_text(encoding="utf-8").splitlines():
+        try:
+            messages.append(json.loads(line))
+        except ValueError:
+            bad += 1
+    activities = json.loads((raw / "camunda-activity.json").read_text(encoding="utf-8"))
+    processes = json.loads((raw / "camunda-process.json").read_text(encoding="utf-8"))
+    sensors = unisg_sensor_view(messages)
+    events = unisg_activity_view(activities, processes)
+    folder = out / "zen_unisg_factory"
+    folder.mkdir(parents=True, exist_ok=True)
+    sensor_file, event_file = folder / "sensors.csv", folder / "activities.csv"
+    sensors.to_csv(sensor_file, index=False)
+    events.to_csv(event_file, index=False)
+    _record(
+        manifest,
+        "zen_unisg_factory",
+        {"sensors.csv": (sensor_file, len(sensors)), "activities.csv": (event_file, len(events))},
+        dropped=["message identifiers"],
+        pseudonymised=[],
+        sampling={
+            "method": "the 36-minute 10 Hz training log of 2023-04-11 and the whole Camunda activity and process logs of 2022-09 to 2023-04; the test log was not fetched",  # noqa: E501
+            "messages": len(messages),
+            "unreadable_lines": bad,
+            "stations": sorted(set(sensors["station"])),
+            "activity_instances": len(events),
+            "process_instances": len(processes),
+        },
+        source_snapshot=f"zen_unisg_factory/{UNISG_SNAPSHOT}",
+    )
+
+
 NVD_SNAPSHOT = "2026-11-22"
 NVD_NOTICE = (
     "This product uses data from the NVD API but is not endorsed or certified by the NVD. "
@@ -2836,6 +2942,7 @@ BUILD_STEPS = (
     _build_bess,
     _build_care,
     _build_nvd,
+    _build_unisg,
     _build_flat,
     _build_series,
     _build_ukspend,

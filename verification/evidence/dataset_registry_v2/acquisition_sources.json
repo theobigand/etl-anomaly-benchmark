@@ -8272,6 +8272,44 @@
    "stratum": "C6",
    "upstream": "first party for the NIST enrichment; CVE descriptions come from CVE Numbering Authorities under the MITRE licence above; referenced third-party pages are links only and are not fetched",
    "upstream_verified": true
+  },
+  {
+   "attribution": "cite Garcia-Banuelos et al., A Semi-automated Approach to Detecting Process-level Activities from Sensor Data (EDI40 2025) and the Zenodo record 14441997 (University of St.Gallen)",
+   "files": [
+    {
+     "name": "training_tenhertz_log_20230411-095748.txt",
+     "observed": "2023-04-11",
+     "url": "https://zenodo.org/records/14441997/files/training_tenhertz_log_20230411-095748.txt?download=1"
+    },
+    {
+     "name": "camunda-activity.json",
+     "observed": "2022-09 to 2023-04",
+     "url": "https://zenodo.org/records/14441997/files/camunda-activity.json?download=1"
+    },
+    {
+     "name": "camunda-process.json",
+     "observed": "2022-09 to 2023-04",
+     "url": "https://zenodo.org/records/14441997/files/camunda-process.json?download=1"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_unisg_factory",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/14441997",
+   "licence_text": "Zenodo record 14441997: license cc-by-4.0, access_right open; the record is the data release of the testbed's operators at the University of St.Gallen (Seiger); records 7440490 and 14998532 are the same installation",
+   "max_bytes": 104857600,
+   "method": "official Zenodo record download of the 10 Hz training log and the two Camunda ground-truth event logs; the 115 MB test log was not fetched",
+   "min_interval": 3.0,
+   "privacy": "instrumented research testbed; no personal data; Camunda startUserId and assignee are null",
+   "publisher": "University of St.Gallen (Fischertechnik smart factory model, Camunda workflow engine)",
+   "rate_limit": "three sequential downloads",
+   "redistribution": "CC BY 4.0 permits it; raw files stay local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "first party: released by the testbed's research group; an instrumented research testbed, not an industrial production system",
+   "upstream_verified": true
   }
  ]
 }

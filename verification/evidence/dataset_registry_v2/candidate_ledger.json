@@ -1255,13 +1255,13 @@
    "id": "unisg:smart-factory",
    "licence": "cc-by-4.0 on three Zenodo records (7440490, 14441997, 14998532), all by R. Seiger at the University of St.Gallen",
    "name": "Fischertechnik smart factory model, University of St.Gallen",
-   "next_step": "acquire 14441997 (10 Hz station messages as JSON lines, 175 MB; Camunda activities 1.4 MB) and build a station-state view; designate as an instrumented testbed, not production",
-   "notes": "the three records are one physical model factory and one provenance group; no deliberately introduced faults are documented; labels are activity annotations, not faults",
+   "next_step": "none",
+   "notes": "record 14441997: 10 Hz training log and Camunda logs; records 7440490 (UTF-16 line-protocol logs) and 14998532 are the same installation and were not used; instrumented testbed",
    "publisher": "University of St.Gallen",
    "reason": "actuator and sensor streams with workflow-engine events",
    "size": null,
    "source_url": "https://zenodo.org/records/14441997",
-   "status": "accessible_eligible"
+   "status": "experiment_ready"
   },
   {
    "categories": [

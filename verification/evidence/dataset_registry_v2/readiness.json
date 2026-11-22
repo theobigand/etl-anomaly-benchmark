@@ -2008,6 +2008,20 @@
   },
   {
    "failed": null,
+   "group": "unisg_smart_factory",
+   "id": "zen_unisg_factory",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "unisg_smart_factory",
+   "id": "zen_unisg_factory:C3",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2217,6 +2231,7 @@
    "seoul_bike",
    "steel_korea",
    "tetouan_power",
+   "unisg_smart_factory",
    "vif_aegis"
   ],
   "C4": [
@@ -2232,6 +2247,7 @@
    "rabobank_ict",
    "surf_lisa_slurm",
    "tue_travel_claims",
+   "unisg_smart_factory",
    "volvo_it"
   ],
   "C5": [
@@ -2299,22 +2315,22 @@
    "structurally_valid": 13
   },
   "C3": {
-   "acquired": 19,
-   "discovered": 40,
-   "experiment_ready": 16,
-   "protocol_ready": 16,
-   "rights_verified": 19,
-   "scientifically_eligible": 16,
-   "structurally_valid": 17
+   "acquired": 20,
+   "discovered": 41,
+   "experiment_ready": 17,
+   "protocol_ready": 17,
+   "rights_verified": 20,
+   "scientifically_eligible": 17,
+   "structurally_valid": 18
   },
   "C4": {
-   "acquired": 30,
-   "discovered": 31,
-   "experiment_ready": 29,
-   "protocol_ready": 29,
-   "rights_verified": 30,
-   "scientifically_eligible": 29,
-   "structurally_valid": 29
+   "acquired": 31,
+   "discovered": 32,
+   "experiment_ready": 30,
+   "protocol_ready": 30,
+   "rights_verified": 31,
+   "scientifically_eligible": 30,
+   "structurally_valid": 30
   },
   "C5": {
    "acquired": 29,
