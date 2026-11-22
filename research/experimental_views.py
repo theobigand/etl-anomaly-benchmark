@@ -2424,7 +2424,7 @@ def taxi_trip_view(pages: list[pd.DataFrame]) -> pd.DataFrame:
     baseline properties of the source and are not removed. Codes stay integers, amounts stay
     numbers, and unreadable values become missing. Rows with an unreadable pickup time are dropped.
     """
-    frame = pd.concat(pages, ignore_index=True)
+    frame = pd.concat(pages)
     missing = [c for c in TLC_COLUMNS if c not in frame.columns]
     if missing:
         raise ViewError(f"columns not found: {missing}")

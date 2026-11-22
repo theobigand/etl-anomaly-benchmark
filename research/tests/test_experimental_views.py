@@ -4348,3 +4348,27 @@ def test_usda_spec_declares_keys_for_every_relation_and_uses_its_own_snapshot():
         "food_portion",
         "measure_unit",
     }
+
+
+def test_taxi_view_keeps_the_file_order_of_trips_with_the_same_pickup_time_beyond_a_small_input():
+    rows = [
+        {"tpep_pickup_datetime": "2023-03-07T08:00:00.000", "total_amount": str(i)}
+        for i in range(40)
+    ]
+    out = ev.taxi_trip_view([_tlc_page(rows[:25]), _tlc_page(rows[25:])])
+    assert out["total_amount"].tolist() == [
+        float(i) for i in range(40)
+    ] and out.index.tolist() == list(range(40))
+
+
+def test_the_tlc_builder_counts_a_total_of_exactly_one_dollar_or_less_as_zero_or_negative_only_up_to_zero(  # noqa: E501
+    tmp_path,
+):
+    raw = tmp_path / "acquired" / "nyc_tlc_yellow" / ev.TLC_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    _tlc_page([{"total_amount": "0.5"}, {"total_amount": "1.0"}, {"total_amount": "0.0"}]).to_csv(
+        raw / "yellow_2023-03-07_p0.csv", index=False
+    )
+    manifest: dict = {}
+    ev._build_tlc(tmp_path / "acquired", tmp_path / "o", manifest)
+    assert manifest["nyc_tlc_yellow"]["sampling"]["zero_or_negative_totals"] == 1
