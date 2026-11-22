@@ -9529,6 +9529,135 @@
    "stratum": "C3",
    "upstream": "first party: experimental authors recorded the CNC controller telemetry and published it under CC BY 4.0",
    "upstream_verified": true
+  },
+  {
+   "attribution": "World Bank Group, Projects and Operations Lending API (CC BY 4.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "wb_projects_p0.json",
+     "observed": "1947-2026",
+     "url": "https://search.worldbank.org/api/v2/projects?format=json&rows=500&os=0"
+    },
+    {
+     "name": "wb_projects_p1.json",
+     "observed": "1947-2026",
+     "url": "https://search.worldbank.org/api/v2/projects?format=json&rows=500&os=500"
+    },
+    {
+     "name": "wb_projects_p2.json",
+     "observed": "1947-2026",
+     "url": "https://search.worldbank.org/api/v2/projects?format=json&rows=500&os=1000"
+    },
+    {
+     "name": "wb_projects_p3.json",
+     "observed": "1947-2026",
+     "url": "https://search.worldbank.org/api/v2/projects?format=json&rows=500&os=1500"
+    },
+    {
+     "name": "wb_projects_p4.json",
+     "observed": "1947-2026",
+     "url": "https://search.worldbank.org/api/v2/projects?format=json&rows=500&os=2000"
+    },
+    {
+     "name": "wb_projects_p5.json",
+     "observed": "1947-2026",
+     "url": "https://search.worldbank.org/api/v2/projects?format=json&rows=500&os=2500"
+    },
+    {
+     "name": "wb_projects_p6.json",
+     "observed": "1947-2026",
+     "url": "https://search.worldbank.org/api/v2/projects?format=json&rows=500&os=3000"
+    },
+    {
+     "name": "wb_projects_p7.json",
+     "observed": "1947-2026",
+     "url": "https://search.worldbank.org/api/v2/projects?format=json&rows=500&os=3500"
+    },
+    {
+     "name": "wb_projects_p8.json",
+     "observed": "1947-2026",
+     "url": "https://search.worldbank.org/api/v2/projects?format=json&rows=500&os=4000"
+    },
+    {
+     "name": "wb_projects_p9.json",
+     "observed": "1947-2026",
+     "url": "https://search.worldbank.org/api/v2/projects?format=json&rows=500&os=4500"
+    }
+   ],
+   "hosts": [
+    "search.worldbank.org"
+   ],
+   "id": "wb_lending_projects",
+   "licence_class": "open",
+   "licence_location": "https://datacatalog.worldbank.org/public-licenses",
+   "licence_text": "World Bank Public Licenses page (read 2026-11-22): World Bank Group makes data publicly available under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+   "max_bytes": 10485760,
+   "method": "first 10 deterministic pagination slices (5,000 projects, 500 rows per offset 0..4500 in API default descending order)",
+   "min_interval": 1.0,
+   "privacy": "sovereign institutional project financing commitments only; no personal data; free-text project titles/docs dropped",
+   "publisher": "The World Bank Group",
+   "rate_limit": "10 API pages, one second apart, descriptive user agent",
+   "redistribution": "CC BY 4.0; raw files stay local",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "first party: World Bank Group maintains and publishes official IBRD/IDA project commitments",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Department of Natural Resources and Mines, Manufacturing and Regional and Rural Development (Queensland Government), Petroleum and gas production by field (CC BY 4.0 via publicdata.au / Zenodo 23122560); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "data.csv",
+     "observed": "1960-2026",
+     "url": "https://zenodo.org/api/records/23122560/files/data.csv/content"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_queensland_petrol",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/23122560",
+   "licence_text": "Zenodo API and embedded publicdata.json metadata for 23122560 (read 2026-11-22): Queensland Department of Natural Resources upstream licence CC BY 4.0",
+   "max_bytes": 4194304,
+   "method": "complete half-yearly Queensland petroleum and gas field production table (2026-09-04 release)",
+   "min_interval": 1.0,
+   "privacy": "hydrocarbon field production ledger only; authorized_holder company names and remarks dropped; no personal data",
+   "publisher": "Queensland Department of Natural Resources (mirrored verbatim via publicdata.au / Zenodo 23122560)",
+   "rate_limit": "single CSV download, descriptive user agent",
+   "redistribution": "CC BY 4.0; raw file stays local",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "verified via publicdata.json attribution to data.qld.gov.au CC BY 4.0",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "INPI / Registre National du Commerce et des Societes via data.economie.gouv.fr ratios_inpi_bce (Licence Ouverte v2.0 Etalab); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "ratios_inpi_bce_30k.csv",
+     "observed": "2017-2025",
+     "url": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/ratios_inpi_bce/exports/csv?limit=30000&order_by=siren%20ASC"
+    }
+   ],
+   "hosts": [
+    "data.economie.gouv.fr"
+   ],
+   "id": "inpi_bce_ratios",
+   "licence_class": "open",
+   "licence_location": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/ratios_inpi_bce",
+   "licence_text": "data.economie.gouv.fr API metadata (read 2026-11-22): Licence Ouverte v2.0 (Etalab)",
+   "max_bytes": 33554432,
+   "method": "deterministic first 30,000 corporate annual accounting filings ordered by SIREN ascending",
+   "min_interval": 1.0,
+   "privacy": "statutory public corporate accounting ratios only (confidential filings dropped in view); SIREN pseudonymised via salted SHA-256",
+   "publisher": "Ministere de l Economie et des Finances / INPI (France)",
+   "rate_limit": "single CSV export, descriptive user agent",
+   "redistribution": "Licence Ouverte v2.0; raw file stays local",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "first party: INPI compiles statutory company accounts published on the French Ministry of Economy portal",
+   "upstream_verified": true
   }
  ]
 }

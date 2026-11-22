@@ -2586,6 +2586,26 @@
   },
   "source_snapshot": "hmlr_price_paid/2026-11-21 (fragment)"
  },
+ "inpi_bce_ratios": {
+  "dropped": [
+   "confidentiality"
+  ],
+  "files": {
+   "ratios.csv": {
+    "rows": 23012,
+    "sha256": "2f92bbcc21280eb66057bb0cc5511350c3ec5fb3d3386b16dfd33bde62565fe9"
+   }
+  },
+  "pseudonymised": [
+   "siren"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "method": "first 30,000 filings ordered by SIREN ascending filtered to confidentiality=Public",
+   "non_public_dropped": 6988
+  },
+  "source_snapshot": "inpi_bce_ratios/2026-11-22"
+ },
  "jolpica_f1": {
   "dropped": [
    "driver names, birth dates, nationalities and wikipedia links",
@@ -4057,6 +4077,26 @@
   },
   "source_snapshot": "usgs_continuous_discharge/2026-11-22"
  },
+ "wb_lending_projects": {
+  "dropped": [
+   "teamleadname",
+   "project_name",
+   "projectdocs",
+   "url"
+  ],
+  "files": {
+   "projects.csv": {
+    "rows": 5000,
+    "sha256": "31f0d296db10c3f058b524bd795502eaf0f85379aa49e9daaffa047207c4f2c3"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "first 10 deterministic pagination pages (500 rows per offset 0..4500 in API default order)",
+   "pages": 10
+  },
+  "source_snapshot": "wb_lending_projects/2026-11-22"
+ },
  "wikidata_entities": {
   "dropped": [
    "items that are instances of human"
@@ -4601,6 +4641,25 @@
    "taxa_in_source": 526570
   },
   "source_snapshot": "zen_pbdb/2026-11-21"
+ },
+ "zen_queensland_petrol": {
+  "dropped": [
+   "authorized_holder",
+   "remark",
+   "secondary_strat_unit_name",
+   "field_name_prod_corr"
+  ],
+  "files": {
+   "production.csv": {
+    "rows": 1028,
+    "sha256": "0eb64cd047decd8c708dda83bf6370bea855ea62fde5afcc7fcd7a2b42c06e72"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "complete 2026-09-04 Queensland petroleum and gas field release"
+  },
+  "source_snapshot": "zen_queensland_petrol/2026-11-22"
  },
  "zen_surf_lisa_slurm": {
   "dropped": [

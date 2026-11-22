@@ -697,6 +697,30 @@
    "source_snapshot": "noaa_gml_co2_weekly/2026-11-22"
   }
  },
+ "inpi": {
+  "inpi_bce_ratios": {
+   "dropped": [
+    "confidentiality"
+   ],
+   "files": {
+    "ratios.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "ratios.csv": "siren_id,date_cloture_exercice,type_bilan,chiffre_d_affaires,marge_brute,ebe,ebit,resultat_net,taux_d_endettement,ratio_"
+   },
+   "pseudonymised": [
+    "siren"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "method": "first 30,000 filings ordered by SIREN ascending filtered to confidentiality=Public",
+    "non_public_dropped": 1
+   },
+   "source_snapshot": "inpi_bce_ratios/2026-11-22"
+  }
+ },
  "japan": {
   "zen_japan_buildings": {
    "dropped": [
@@ -1058,6 +1082,29 @@
    "source_snapshot": "zen_pbdb/2026-11-21"
   }
  },
+ "qld": {
+  "zen_queensland_petrol": {
+   "dropped": [
+    "authorized_holder",
+    "remark",
+    "secondary_strat_unit_name",
+    "field_name_prod_corr"
+   ],
+   "files": {
+    "production.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "production.csv": "reporting_period,production_type,permit_number,basin,reservoir_unit_name,strat_unit_name,field_name,gas_cum_volume_mm3,g"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "complete 2026-09-04 Queensland petroleum and gas field release"
+   },
+   "source_snapshot": "zen_queensland_petrol/2026-11-22"
+  }
+ },
  "rte": {
   "rte_eco2mix_national": {
    "dropped": [
@@ -1269,6 +1316,30 @@
     "provisional_share": 0.0
    },
    "source_snapshot": "usgs_continuous_discharge/2026-11-22"
+  }
+ },
+ "wb": {
+  "wb_lending_projects": {
+   "dropped": [
+    "teamleadname",
+    "project_name",
+    "projectdocs",
+    "url"
+   ],
+   "files": {
+    "projects.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "projects.csv": "project_id,board_approval_date,closing_date,approval_fy,country_code,region_name,lending_instrument,lending_instrument_t"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "first 10 deterministic pagination pages (500 rows per offset 0..4500 in API default order)",
+    "pages": 2
+   },
+   "source_snapshot": "wb_lending_projects/2026-11-22"
   }
  },
  "wiki": {

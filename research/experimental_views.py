@@ -4693,6 +4693,225 @@ def _build_cnc_milling(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+WB_SNAPSHOT = "2026-11-22"
+WB_MONEY_COLS = (
+    ("curr_total_commitment", "curr_total_commitment"),
+    ("curr_ibrd_commitment", "curr_ibrd_commitment"),
+    ("curr_ida_commitment", "curr_ida_commitment"),
+    ("grant_amt", "grantamt"),
+    ("lend_project_cost", "lendprojectcost"),
+)
+
+
+def _num_clean(series: pd.Series) -> pd.Series:
+    return pd.to_numeric(series.astype(str).str.replace(",", ""), errors="coerce")
+
+
+def wb_projects_view(records: list[dict[str, Any]]) -> pd.DataFrame:
+    """World Bank IBRD/IDA project lending commitments sorted by project_id."""
+    cols = [
+        "project_id",
+        "board_approval_date",
+        "closing_date",
+        "approval_fy",
+        "country_code",
+        "region_name",
+        "lending_instrument",
+        "lending_instrument_type",
+        "prodline",
+        "status",
+        *[c for c, _ in WB_MONEY_COLS],
+        "sector1_name",
+        "sector1_percent",
+    ]
+    rows = []
+    for rec in records:
+        cc = rec.get("countrycode")
+        sec = rec.get("sector1") if isinstance(rec.get("sector1"), dict) else {}
+        row: dict[str, Any] = {
+            "project_id": rec.get("id"),
+            "board_approval_date": rec.get("boardapprovaldate"),
+            "closing_date": rec.get("closingdate"),
+            "approval_fy": rec.get("approvalfy"),
+            "country_code": cc[0] if isinstance(cc, list) and cc else None,
+            "region_name": rec.get("regionname"),
+            "lending_instrument": rec.get("lendinginstr"),
+            "lending_instrument_type": rec.get("lendinginstrtype"),
+            "prodline": rec.get("prodline"),
+            "status": rec.get("status"),
+            "sector1_name": sec.get("Name") or None,
+            "sector1_percent": sec.get("Percent"),
+        }
+        for out_c, src_c in WB_MONEY_COLS:
+            row[out_c] = rec.get(src_c)
+        rows.append(row)
+    frame = pd.DataFrame(rows, columns=cols)
+    frame["approval_fy"] = pd.to_numeric(frame["approval_fy"], errors="coerce").astype("Int64")
+    frame["sector1_percent"] = pd.to_numeric(frame["sector1_percent"], errors="coerce")
+    for out_c, _ in WB_MONEY_COLS:
+        frame[out_c] = _num_clean(frame[out_c])
+    return (
+        frame[frame["project_id"].notna()]
+        .drop_duplicates("project_id", keep="first")
+        .sort_values("project_id")
+        .reset_index(drop=True)
+    )
+
+
+def _build_wb_projects(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    files = sorted((root / "wb_lending_projects" / WB_SNAPSHOT / "raw").glob("wb_projects_*.json"))
+    if not files:
+        raise ViewError("no World Bank project JSON files in the snapshot")
+    records: list[dict[str, Any]] = []
+    for path in files:
+        records.extend(json.loads(path.read_text()).get("projects", {}).values())
+    view = wb_projects_view(records)
+    folder = out / "wb_lending_projects"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "projects.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "wb_lending_projects",
+        {"projects.csv": (target, len(view))},
+        dropped=["teamleadname", "project_name", "projectdocs", "url"],
+        pseudonymised=[],
+        sampling={
+            "method": "first 10 deterministic pagination pages (500 rows per offset 0..4500 in API default order)",  # noqa: E501
+            "pages": len(files),
+        },
+        source_snapshot=f"wb_lending_projects/{WB_SNAPSHOT}",
+    )
+
+
+QLD_PETROL_SNAPSHOT = "2026-11-22"
+QLD_TEXT_COLS = (
+    "reporting_period",
+    "production_type",
+    "permit_number",
+    "basin",
+    "reservoir_unit_name",
+    "strat_unit_name",
+    "field_name",
+)
+QLD_NUM_COLS = (
+    "gas_cum_volume_mm3",
+    "gas_flared_vented_cum_volume_mm3",
+    "gas_vented_cum_volume_mm3",
+    "gas_flared_cum_volume_mm3",
+    "gas_used_cum_volume_mm3",
+    "oil_cum_volume_mmbbl",
+    "oil_used_cum_volume_mmbbl",
+    "lpg_cum_volume_kt",
+    "lpg_used_cum_volume_kt",
+    "condensate_cum_volume_mmbbl",
+    "condensate_used_cum_volume_mmbbl",
+    "water_cum_volume_ml",
+    "water_total_volume_ml",
+    "wells_on_prod",
+)
+
+
+def queensland_petrol_view(raw: pd.DataFrame) -> pd.DataFrame:
+    """Queensland half-yearly petroleum and gas production ledger sorted deterministically."""
+    data: dict[str, Any] = {col: raw[col].astype(str) for col in QLD_TEXT_COLS}
+    for col in QLD_NUM_COLS:
+        data[col] = pd.to_numeric(raw[col], errors="coerce")
+    frame = pd.DataFrame(data)
+    return frame.sort_values(
+        ["reporting_period", "permit_number", "field_name", "reservoir_unit_name"]
+    ).reset_index(drop=True)
+
+
+def _build_queensland_petrol(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    source = root / "zen_queensland_petrol" / QLD_PETROL_SNAPSHOT / "raw" / "data.csv"
+    if not source.exists():
+        raise ViewError("no Queensland petroleum CSV in the snapshot")
+    view = queensland_petrol_view(pd.read_csv(source, dtype=str))
+    folder = out / "zen_queensland_petrol"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "production.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "zen_queensland_petrol",
+        {"production.csv": (target, len(view))},
+        dropped=[
+            "authorized_holder",
+            "remark",
+            "secondary_strat_unit_name",
+            "field_name_prod_corr",
+        ],
+        pseudonymised=[],
+        sampling={"method": "complete 2026-09-04 Queensland petroleum and gas field release"},
+        source_snapshot=f"zen_queensland_petrol/{QLD_PETROL_SNAPSHOT}",
+    )
+
+
+INPI_SNAPSHOT = "2026-11-22"
+INPI_NUM_COLS = (
+    "chiffre_d_affaires",
+    "marge_brute",
+    "ebe",
+    "ebit",
+    "resultat_net",
+    "taux_d_endettement",
+    "ratio_de_liquidite",
+    "ratio_de_vetuste",
+    "autonomie_financiere",
+    "poids_bfr_exploitation_sur_ca",
+    "couverture_des_interets",
+    "caf_sur_ca",
+    "capacite_de_remboursement",
+    "marge_ebe",
+    "resultat_courant_avant_impots_sur_ca",
+    "poids_bfr_exploitation_sur_ca_jours",
+    "rotation_des_stocks_jours",
+    "credit_clients_jours",
+    "credit_fournisseurs_jours",
+)
+
+
+def inpi_ratios_view(raw: pd.DataFrame) -> tuple[pd.DataFrame, int]:
+    """Public INPI corporate annual filings with salted pseudonymised SIREN identifiers."""
+    public = raw[raw["confidentiality"] == "Public"]
+    dropped_conf = len(raw) - len(public)
+    data: dict[str, Any] = {
+        "siren_id": public["siren"].fillna("").map(lambda s: pseudonym(str(s)) if s else ""),
+        "date_cloture_exercice": public["date_cloture_exercice"].astype(str),
+        "type_bilan": public["type_bilan"].astype(str),
+    }
+    for col in INPI_NUM_COLS:
+        data[col] = pd.to_numeric(public[col], errors="coerce")
+    frame = pd.DataFrame(data)
+    ordered = frame.sort_values(["siren_id", "date_cloture_exercice"]).reset_index(drop=True)
+    return ordered, dropped_conf
+
+
+def _build_inpi_ratios(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    source = root / "inpi_bce_ratios" / INPI_SNAPSHOT / "raw" / "ratios_inpi_bce_30k.csv"
+    if not source.exists():
+        raise ViewError("no INPI BCE ratios CSV in the snapshot")
+    view, dropped_conf = inpi_ratios_view(pd.read_csv(source, sep=";", dtype=str))
+    folder = out / "inpi_bce_ratios"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "ratios.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "inpi_bce_ratios",
+        {"ratios.csv": (target, len(view))},
+        dropped=["confidentiality"],
+        pseudonymised=["siren"],
+        salt_label=SALT,
+        sampling={
+            "method": "first 30,000 filings ordered by SIREN ascending filtered to confidentiality=Public",  # noqa: E501
+            "non_public_dropped": dropped_conf,
+        },
+        source_snapshot=f"inpi_bce_ratios/{INPI_SNAPSHOT}",
+    )
+
+
 BUILD_STEPS = (
     _build_openalex,
     _build_monash,
@@ -4751,6 +4970,9 @@ BUILD_STEPS = (
     _build_coops_tides,
     _build_gml_co2,
     _build_cnc_milling,
+    _build_wb_projects,
+    _build_queensland_petrol,
+    _build_inpi_ratios,
     _build_flat,
     _build_series,
     _build_ukspend,

@@ -1881,6 +1881,96 @@
    "size": "21.16 MB across 13 CSVs",
    "source_url": "https://zenodo.org/api/records/10853254",
    "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "wb_lending_projects",
+   "licence": "CC BY 4.0",
+   "name": "World Bank Projects & Operations Lending API",
+   "next_step": "none",
+   "notes": "5,000 projects across 10 pagination pages; teamleadname/projectdocs dropped",
+   "publisher": "The World Bank Group",
+   "reason": "Sovereign lending commitment mechanism absent from C2b",
+   "size": "5,000 rows",
+   "source_url": "https://search.worldbank.org/api/v2/projects",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "zen_queensland_petrol",
+   "licence": "CC BY 4.0 (Queensland Government upstream)",
+   "name": "Petroleum and gas production by field, Queensland (Zenodo 23122560)",
+   "next_step": "none",
+   "notes": "1,028 rows x 21 kept cols (14 numeric extraction volumes); authorized_holder/remark dropped",
+   "publisher": "Queensland Department of Natural Resources",
+   "reason": "Resource extraction production ledger mechanism absent from C2b",
+   "size": "300 KB CSV",
+   "source_url": "https://zenodo.org/api/records/23122560",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "inpi_bce_ratios",
+   "licence": "Licence Ouverte v2.0 (Etalab)",
+   "name": "INPI / BCE corporate financial ratios (data.economie.gouv.fr)",
+   "next_step": "none",
+   "notes": "23,012 Public corporate filings (6,988 partial/confidential dropped); SIREN pseudonymised",
+   "publisher": "INPI / Ministere de l Economie (France)",
+   "reason": "Corporate statutory accounting mechanism absent from C2b",
+   "size": "23,012 rows",
+   "source_url": "https://data.economie.gouv.fr/explore/dataset/ratios_inpi_bce/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "openfema:nfip-v3",
+   "licence": "Contractual OpenFEMA Terms & Conditions (HTTP 403 on terms endpoint; revocable access clause noted)",
+   "name": "OpenFEMA NFIP Redacted Claims v3",
+   "next_step": "skip",
+   "notes": "Excluded during rights screening: Terms & Conditions impose contractual re-identification and revocation clauses and terms URL returned HTTP 403",
+   "publisher": "U.S. FEMA",
+   "reason": "Excluded during rights screening",
+   "size": "2.73M rows",
+   "source_url": "https://www.fema.gov/api/open/v3/NfipClaims",
+   "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "chicago:vendor-payments",
+   "licence": "SEE_TERMS_OF_USE (no explicit open licence verified on Socrata metadata)",
+   "name": "City of Chicago Vendor Payments (s4vu-giwb)",
+   "next_step": "skip",
+   "notes": "Excluded: dataset metadata specifies SEE_TERMS_OF_USE rather than an explicit open licence and exposes individual payees",
+   "publisher": "City of Chicago",
+   "reason": "Excluded during rights screening",
+   "size": "unknown",
+   "source_url": "https://data.cityofchicago.org/resource/s4vu-giwb.json",
+   "status": "unclear"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "zenodo:11259259-auctions",
+   "licence": "Zenodo cc-by-4.0 wrapper over historical eBay auction scrapes with raw bidder usernames",
+   "name": "Online Auctions Dataset (Zenodo 11259259)",
+   "next_step": "skip",
+   "notes": "Excluded: contains unverified third-party eBay scrapes with raw bidder usernames",
+   "publisher": "Third-party compiler (Zenodo 11259259)",
+   "reason": "Upstream rights and raw usernames not verified",
+   "size": "140 KB zip",
+   "source_url": "https://zenodo.org/api/records/11259259",
+   "status": "redundant"
   }
  ],
  "date": "2026-11-21",

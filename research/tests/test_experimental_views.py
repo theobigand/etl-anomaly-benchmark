@@ -1051,6 +1051,9 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _coops_snapshot(root)
     _gml_co2_snapshot(root)
     _cnc_snapshot(root)
+    _wb_snapshot(root)
+    _qld_snapshot(root)
+    _inpi_snapshot(root)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
@@ -1066,7 +1069,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -6033,3 +6036,255 @@ def test_cnc_milling_view_and_builder(tmp_path):
         "series_count": 2,
         "series_files": 2,
     }
+
+
+def _wb_snapshot(root):
+    raw = root / "wb_lending_projects" / ev.WB_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "wb_projects_p0.json").write_text(
+        json.dumps(
+            {
+                "projects": {
+                    "P2": {
+                        "id": "P2",
+                        "boardapprovaldate": "2024-01-01T00:00:00Z",
+                        "closingdate": None,
+                        "approvalfy": "2024",
+                        "countrycode": ["FR"],
+                        "regionname": "ECA",
+                        "lendinginstr": "IPF",
+                        "lendinginstrtype": "IN",
+                        "prodline": "PE",
+                        "status": "Active",
+                        "curr_total_commitment": "1,500",
+                        "curr_ibrd_commitment": "1000",
+                        "curr_ida_commitment": "500",
+                        "grantamt": None,
+                        "lendprojectcost": "2,000,000",
+                        "sector1": {"Name": "Energy", "Percent": 100},
+                        "teamleadname": "Alice Doe",
+                        "project_name": "Grid",
+                    },
+                    "P1": {
+                        "id": "P1",
+                        "approvalfy": "bad",
+                        "countrycode": [],
+                        "sector1": "bad",
+                    },
+                    "P_DUP": {"id": "P2", "approvalfy": "2020"},
+                    "P_NONE": {"approvalfy": "2020"},
+                }
+            }
+        )
+    )
+    (raw / "wb_projects_p1.json").write_text(json.dumps({}))
+
+
+def _qld_snapshot(root):
+    raw = root / "zen_queensland_petrol" / ev.QLD_PETROL_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    base = {c: "1.5" for c in ev.QLD_NUM_COLS}
+    r1 = {
+        "reporting_period": "2025-12-31",
+        "production_type": "GAS",
+        "authorized_holder": "Corp B",
+        "permit_number": "PL 2",
+        "basin": "BOWEN",
+        "reservoir_unit_name": "U2",
+        "strat_unit_name": "S2",
+        "secondary_strat_unit_name": "",
+        "field_name": "F2",
+        "remark": "note",
+        "field_name_prod_corr": "F2",
+        **base,
+    }
+    r2 = {**r1, "reporting_period": "2025-06-30", "permit_number": "PL 1", "wells_on_prod": "bad"}
+    pd.DataFrame([r1, r2]).to_csv(raw / "data.csv", index=False)
+
+
+def _inpi_snapshot(root):
+    raw = root / "inpi_bce_ratios" / ev.INPI_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    nums = {c: "10.5" for c in ev.INPI_NUM_COLS}
+    r_pub1 = {
+        "siren": "222222222",
+        "date_cloture_exercice": "2024-12-31",
+        "type_bilan": "C",
+        "confidentiality": "Public",
+        **nums,
+    }
+    r_pub2 = {
+        "siren": "111111111",
+        "date_cloture_exercice": "2023-12-31",
+        "type_bilan": "S",
+        "confidentiality": "Public",
+        **nums,
+        "ratio_de_vetuste": "bad",
+    }
+    r_priv = {
+        "siren": "333333333",
+        "date_cloture_exercice": "2024-12-31",
+        "type_bilan": "C",
+        "confidentiality": "Partiellement confidentiel",
+        **nums,
+    }
+    pd.DataFrame([r_pub1, r_priv, r_pub2]).to_csv(
+        raw / "ratios_inpi_bce_30k.csv", sep=";", index=False
+    )
+
+
+def test_wb_projects_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no World Bank project JSON files in the snapshot$"):
+        ev._build_wb_projects(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _wb_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_wb_projects(root, out, manifest)
+    ev._build_wb_projects(root, out, manifest)
+    df = pd.read_csv(out / "wb_lending_projects" / "projects.csv")
+    assert df["project_id"].tolist() == ["P1", "P2"]
+    assert df.columns.tolist() == [
+        "project_id",
+        "board_approval_date",
+        "closing_date",
+        "approval_fy",
+        "country_code",
+        "region_name",
+        "lending_instrument",
+        "lending_instrument_type",
+        "prodline",
+        "status",
+        "curr_total_commitment",
+        "curr_ibrd_commitment",
+        "curr_ida_commitment",
+        "grant_amt",
+        "lend_project_cost",
+        "sector1_name",
+        "sector1_percent",
+    ]
+    assert "teamleadname" not in df and "project_name" not in df
+    row2 = df.iloc[1]
+    assert row2["board_approval_date"] == "2024-01-01T00:00:00Z"
+    assert pd.isna(row2["closing_date"]) and row2["approval_fy"] == 2024
+    assert row2["country_code"] == "FR" and row2["region_name"] == "ECA"
+    assert row2["lending_instrument"] == "IPF" and row2["lending_instrument_type"] == "IN"
+    assert row2["prodline"] == "PE" and row2["status"] == "Active"
+    assert row2["curr_ibrd_commitment"] == 1000.0 and row2["curr_ida_commitment"] == 500.0
+    assert pd.isna(row2["grant_amt"])
+    assert pd.isna(df["country_code"].iloc[0])
+    assert df["lend_project_cost"].iloc[1] == 2000000.0
+    assert df["curr_total_commitment"].iloc[1] == 1500.0
+    assert df["sector1_name"].iloc[1] == "Energy" and df["sector1_percent"].iloc[1] == 100.0
+    assert pd.isna(df["sector1_name"].iloc[0]) and pd.isna(df["approval_fy"].iloc[0])
+    assert pd.isna(ev._num_clean(pd.Series(["bad"])).iloc[0])
+    assert ev.wb_projects_view([]).empty
+    view = manifest["wb_lending_projects"]
+    assert view["dropped"] == ["teamleadname", "project_name", "projectdocs", "url"]
+    assert view["pseudonymised"] == []
+    assert view["sampling"]["pages"] == 2
+    assert view["source_snapshot"] == f"wb_lending_projects/{ev.WB_SNAPSHOT}"
+
+
+def test_queensland_petrol_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no Queensland petroleum CSV in the snapshot$"):
+        ev._build_queensland_petrol(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _qld_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_queensland_petrol(root, out, manifest)
+    ev._build_queensland_petrol(root, out, manifest)
+    df = pd.read_csv(out / "zen_queensland_petrol" / "production.csv")
+    assert df.columns.tolist() == [*ev.QLD_TEXT_COLS, *ev.QLD_NUM_COLS]
+    assert df["reporting_period"].tolist() == ["2025-06-30", "2025-12-31"]
+    assert pd.isna(df["wells_on_prod"].iloc[0]) and df["wells_on_prod"].iloc[1] == 1.5
+    assert "authorized_holder" not in df and "remark" not in df
+    lead_root = tmp_path / "lead_acq"
+    lead_raw = lead_root / "zen_queensland_petrol" / ev.QLD_PETROL_SNAPSHOT / "raw"
+    lead_raw.mkdir(parents=True)
+    pd.DataFrame(
+        [
+            {
+                **{c: "007" for c in ev.QLD_TEXT_COLS},
+                **{c: "1.0" for c in ev.QLD_NUM_COLS},
+                "authorized_holder": "X",
+            }
+        ]
+    ).to_csv(lead_raw / "data.csv", index=False)
+    ev._build_queensland_petrol(lead_root, tmp_path / "lead_out", {})
+    assert (
+        (tmp_path / "lead_out" / "zen_queensland_petrol" / "production.csv")
+        .read_text()
+        .splitlines()[1]
+        .startswith("007,007,007,")
+    )
+    view = manifest["zen_queensland_petrol"]
+    assert view["dropped"] == [
+        "authorized_holder",
+        "remark",
+        "secondary_strat_unit_name",
+        "field_name_prod_corr",
+    ]
+    assert view["source_snapshot"] == f"zen_queensland_petrol/{ev.QLD_PETROL_SNAPSHOT}"
+
+
+def test_inpi_ratios_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no INPI BCE ratios CSV in the snapshot$"):
+        ev._build_inpi_ratios(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _inpi_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_inpi_ratios(root, out, manifest)
+    ev._build_inpi_ratios(root, out, manifest)
+    df = pd.read_csv(out / "inpi_bce_ratios" / "ratios.csv")
+    assert df.columns.tolist() == [
+        "siren_id",
+        "date_cloture_exercice",
+        "type_bilan",
+        *ev.INPI_NUM_COLS,
+    ]
+    expected_ids = sorted([ev.pseudonym("111111111"), ev.pseudonym("222222222")])
+    assert df["siren_id"].tolist() == expected_ids
+    assert sorted(df["date_cloture_exercice"].tolist()) == ["2023-12-31", "2024-12-31"]
+    assert sorted(df["type_bilan"].tolist()) == ["C", "S"]
+    assert ev.pseudonym("333333333") not in df["siren_id"].tolist()
+    assert pd.isna(df["ratio_de_vetuste"]).sum() == 1
+    view = manifest["inpi_bce_ratios"]
+    assert view["dropped"] == ["confidentiality"] and view["pseudonymised"] == ["siren"]
+    assert view["salt_label"] == ev.SALT and view["sampling"]["non_public_dropped"] == 1
+    assert view["source_snapshot"] == f"inpi_bce_ratios/{ev.INPI_SNAPSHOT}"
+    edge_root = tmp_path / "edge_acq"
+    edge_raw = edge_root / "inpi_bce_ratios" / ev.INPI_SNAPSHOT / "raw"
+    edge_raw.mkdir(parents=True)
+    nums = {c: "1" for c in ev.INPI_NUM_COLS}
+    cols = ["siren", "date_cloture_exercice", "type_bilan", "confidentiality", *ev.INPI_NUM_COLS]
+    row_a = {
+        "siren": "001",
+        "date_cloture_exercice": "2024-12-31",
+        "type_bilan": "," * 30,
+        "confidentiality": "Public",
+        **nums,
+    }
+    (edge_raw / "ratios_inpi_bce_30k.csv").write_text(
+        ";".join(cols) + "\n" + ";".join(row_a[c] for c in cols) + "\n"
+    )
+    ev._build_inpi_ratios(edge_root, tmp_path / "edge_out", {})
+    assert pd.read_csv(tmp_path / "edge_out" / "inpi_bce_ratios" / "ratios.csv")["siren_id"].iloc[
+        0
+    ] == ev.pseudonym("001")
+    blank, _ = ev.inpi_ratios_view(
+        pd.DataFrame(
+            [
+                {
+                    "siren": None,
+                    "date_cloture_exercice": "2024",
+                    "type_bilan": "C",
+                    "confidentiality": "Public",
+                    **{c: "1" for c in ev.INPI_NUM_COLS},
+                }
+            ]
+        )
+    )
+    assert blank["siren_id"].tolist() == [""]

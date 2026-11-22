@@ -5110,6 +5110,66 @@
    "stratum": "C3",
    "system": "five_axis_cnc_milling_controller",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "world_bank_projects",
+   "id": "wb_lending_projects",
+   "licence_class": "open",
+   "protocols": "P-TAB on institutional sovereign lending commitment transactions",
+   "publisher": "world_bank",
+   "reason": "World Bank IBRD/IDA project lending commitments (5,000 most recent projects across 10 pagination pages, CC BY 4.0): numeric commitments, grants and project cost with sovereign instrument and sector classifications; teamleadname and free-text project titles/docs dropped",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "World Bank Public Licenses page (read 2026-11-22): CC BY 4.0",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "world_bank_projects_operations_system",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "queensland_petroleum_production",
+   "id": "zen_queensland_petrol",
+   "licence_class": "open",
+   "protocols": "P-TAB on half-yearly field hydrocarbon production volumes and well counts",
+   "publisher": "queensland_dnrm",
+   "reason": "Queensland Department of Natural Resources half-yearly petroleum and gas production ledger (Zenodo 23122560 mirror, 2026-09-04 release, 1,028 rows, upstream CC BY 4.0): 14 numeric hydrocarbon and water production volume/well columns across basins, reservoirs and permits; resource extraction mechanism absent from C2b",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Embedded publicdata.json and Zenodo 23122560 (read 2026-11-22): CC BY 4.0",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "queensland_petroleum_reserve_reporting",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "inpi_bce_ratios",
+   "id": "inpi_bce_ratios",
+   "licence_class": "open",
+   "protocols": "P-TAB on statutory corporate annual accounting statements and ratios",
+   "publisher": "france_economie_inpi",
+   "reason": "French INPI / BCE statutory corporate annual accounting ratios (data.economie.gouv.fr, Licence Ouverte v2.0 Etalab): 23,012 public annual filings from first 30,000 SIREN-ordered rows after dropping 6,988 partial/confidential records, with salted pseudonymised SIREN; corporate financial statement mechanism absent from C2b",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "data.economie.gouv.fr catalog API (read 2026-11-22): Licence Ouverte v2.0 (Etalab)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "french_inpi_statutory_corporate_accounts",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

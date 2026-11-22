@@ -2199,6 +2199,27 @@
   },
   {
    "failed": null,
+   "group": "world_bank_projects",
+   "id": "wb_lending_projects",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "queensland_petroleum_production",
+   "id": "zen_queensland_petrol",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "inpi_bce_ratios",
+   "id": "inpi_bce_ratios",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2389,14 +2410,17 @@
    "georgia_procurement",
    "german_paying_agency",
    "hm_land_registry",
+   "inpi_bce_ratios",
    "italian_road_fines",
    "lyft_bikeshare",
    "montreal_contracts",
    "ntnu_ev_charging",
    "nyc_tlc",
+   "queensland_petroleum_production",
    "uci:352",
    "uk_ledger_mhra",
    "uk_ledger_nhsbsa",
+   "world_bank_projects",
    "zambia_procurement"
   ],
   "C3": [
@@ -2510,13 +2534,13 @@
    "structurally_valid": 16
   },
   "C2b": {
-   "acquired": 15,
-   "discovered": 21,
-   "experiment_ready": 15,
-   "protocol_ready": 15,
-   "rights_verified": 15,
-   "scientifically_eligible": 15,
-   "structurally_valid": 15
+   "acquired": 18,
+   "discovered": 24,
+   "experiment_ready": 18,
+   "protocol_ready": 18,
+   "rights_verified": 18,
+   "scientifically_eligible": 18,
+   "structurally_valid": 18
   },
   "C3": {
    "acquired": 30,

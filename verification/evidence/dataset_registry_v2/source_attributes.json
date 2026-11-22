@@ -520,6 +520,17 @@
    "C4": "business process execution"
   }
  },
+ "inpi_bce_ratios": {
+  "curator": "data economie gouv fr",
+  "domain": "corporate financial reporting",
+  "generating_system": "French INPI National Trade Register corporate annual financial statements",
+  "note": "Distinct French agency, portal and corporate domain from dgfip_dvf property transfers",
+  "producer": "Institut National de la Propriete Industrielle (INPI, France)",
+  "schema_family": "corporate financial filings",
+  "structure": {
+   "C2b": "annual corporate accounting statements and financial ratios"
+  }
+ },
  "italian_road_fines": {
   "curator": "4tu",
   "domain": "police fines",
@@ -797,6 +808,17 @@
   "schema_family": "battery meter readings in elapsed time",
   "structure": {
    "C3": "battery storage meter readings"
+  }
+ },
+ "queensland_petroleum_production": {
+  "curator": "zenodo",
+  "domain": "hydrocarbon resource extraction",
+  "generating_system": "Queensland Department of Natural Resources statutory petroleum and gas production ledger",
+  "note": "",
+  "producer": "Queensland Department of Natural Resources, Manufacturing and Regional and Rural Development",
+  "schema_family": "field production ledger",
+  "structure": {
+   "C2b": "half-yearly field hydrocarbon and water extraction ledger"
   }
  },
  "rabobank_ict": {
@@ -1759,6 +1781,17 @@
   "schema_family": "wikidata entity json",
   "structure": {
    "C6": "entity documents with claims, qualifiers, references and sitelinks"
+  }
+ },
+ "world_bank_projects": {
+  "curator": "world bank",
+  "domain": "sovereign development finance",
+  "generating_system": "World Bank Projects & Operations lending commitment registry",
+  "note": "",
+  "producer": "The World Bank Group",
+  "schema_family": "world bank project commitments",
+  "structure": {
+   "C2b": "multilateral sovereign lending commitment records"
   }
  },
  "zambia_procurement": {

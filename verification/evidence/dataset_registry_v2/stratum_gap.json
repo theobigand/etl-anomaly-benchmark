@@ -1,6 +1,6 @@
 {
  "licence_classes": {
-  "open": 236,
+  "open": 239,
   "research_only": 22
  },
  "strata": {
@@ -40,13 +40,13 @@
   "C2b": {
    "ambitious": 45,
    "minimum": 15,
-   "missing_to_minimum": 1,
-   "missing_to_recommended": 16,
-   "publishers": 14,
+   "missing_to_minimum": 0,
+   "missing_to_recommended": 13,
+   "publishers": 17,
    "recommended": 30,
-   "sources": 14,
+   "sources": 17,
    "stratum": "transactional events",
-   "systems": 16
+   "systems": 19
   },
   "C3": {
    "ambitious": 55,
@@ -98,5 +98,5 @@
   "uci:755",
   "uci:760"
  ],
- "total_sources": 258
+ "total_sources": 261
 }

@@ -1743,6 +1743,21 @@
    "units": 180229,
    "view": "hmlr_price_paid"
   },
+  "inpi_bce_ratios": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "first 30,000 INPI corporate accounting rows sorted ascending by SIREN filtered strictly to confidentiality=Public (23,012 rows; 6,988 partial/confidential dropped); deterministic slice, not random",
+    "SIREN pseudonymised with salted SHA-256 so multi-year corporate filings join consistently"
+   ],
+   "first_party": true,
+   "independent_group": "inpi_bce_ratios",
+   "min_units": 500,
+   "partitions": "hash of siren_id 70/15/15 so multi-year corporate filings stay together",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 23012,
+   "view": "inpi_bce_ratios"
+  },
   "jolpica_f1": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -2884,6 +2899,21 @@
    ],
    "view": "usgs_continuous_discharge"
   },
+  "wb_lending_projects": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "deterministic 5,000-project pagination prefix (offsets 0..4500 in API default descending order); not a random sample",
+    "teamleadname, project_name, projectdocs and url are dropped; zero personal data"
+   ],
+   "first_party": true,
+   "independent_group": "world_bank_projects",
+   "min_units": 500,
+   "partitions": "hash of project_id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 5000,
+   "view": "wb_lending_projects"
+  },
   "wikidata_entities": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -3171,6 +3201,21 @@
    "protocol_id": "P-REL",
    "units": 201107,
    "view": "zen_pbdb_relational"
+  },
+  "zen_queensland_petrol": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 2026-09-04 half-yearly Queensland petroleum and gas production ledger (1,028 field-permit-period records)",
+    "authorized_holder, remark, secondary_strat_unit_name and field_name_prod_corr dropped"
+   ],
+   "first_party": true,
+   "independent_group": "queensland_petroleum_production",
+   "min_units": 500,
+   "partitions": "hash of composite (permit_number, field_name) 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 1028,
+   "view": "zen_queensland_petrol"
   },
   "zen_surf_lisa_slurm": {
    "anomaly_origin": "controlled_injection",

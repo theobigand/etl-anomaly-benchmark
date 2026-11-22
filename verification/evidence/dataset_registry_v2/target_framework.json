@@ -2,13 +2,13 @@
  "coverage": {
   "0.2": {
    "ALL": {
-    "curators": 40,
-    "domains": 72,
-    "effective_groups": 74.9321,
-    "groups": 153,
-    "largest_schema_family_share": 0.4183,
-    "producers": 153,
-    "schema_families": 59
+    "curators": 42,
+    "domains": 75,
+    "effective_groups": 77.9321,
+    "groups": 156,
+    "largest_schema_family_share": 0.4103,
+    "producers": 156,
+    "schema_families": 62
    },
    "C1": {
     "curators": 1,
@@ -29,13 +29,13 @@
     "schema_families": 5
    },
    "C2b": {
-    "curators": 9,
-    "domains": 10,
-    "effective_groups": 11.619,
-    "groups": 14,
-    "largest_schema_family_share": 0.2143,
-    "producers": 14,
-    "schema_families": 8
+    "curators": 11,
+    "domains": 13,
+    "effective_groups": 14.619,
+    "groups": 17,
+    "largest_schema_family_share": 0.1765,
+    "producers": 17,
+    "schema_families": 11
    },
    "C3": {
     "curators": 11,
@@ -76,13 +76,13 @@
   },
   "0.5": {
    "ALL": {
-    "curators": 40,
-    "domains": 72,
-    "effective_groups": 64.8074,
-    "groups": 153,
-    "largest_schema_family_share": 0.4183,
-    "producers": 153,
-    "schema_families": 59
+    "curators": 42,
+    "domains": 75,
+    "effective_groups": 67.8074,
+    "groups": 156,
+    "largest_schema_family_share": 0.4103,
+    "producers": 156,
+    "schema_families": 62
    },
    "C1": {
     "curators": 1,
@@ -103,13 +103,13 @@
     "schema_families": 5
    },
    "C2b": {
-    "curators": 9,
-    "domains": 10,
-    "effective_groups": 9.6667,
-    "groups": 14,
-    "largest_schema_family_share": 0.2143,
-    "producers": 14,
-    "schema_families": 8
+    "curators": 11,
+    "domains": 13,
+    "effective_groups": 12.6667,
+    "groups": 17,
+    "largest_schema_family_share": 0.1765,
+    "producers": 17,
+    "schema_families": 11
    },
    "C3": {
     "curators": 11,
@@ -256,15 +256,15 @@
   },
   "C2b": {
    "diversity": true,
-   "domains": 10,
+   "domains": 13,
    "exploratory": true,
-   "families": 10,
-   "gap": 16,
-   "groups": 14,
+   "families": 13,
+   "gap": 13,
+   "groups": 17,
    "largest_family": "contract award",
-   "largest_family_share": 0.2143,
+   "largest_family_share": 0.1765,
    "missing": [
-    "groups: 14 of 30"
+    "groups: 17 of 30"
    ],
    "quota": false,
    "target": 30,
