@@ -524,6 +524,10 @@ def _sea_ice(root, tmp):
     tev._sea_ice_snapshot(root)
 
 
+def _omni(root, tmp):
+    tev._omni_snapshot(root)
+
+
 def _tlc(root, tmp):
     tev._tlc_page(
         [{}, {"tpep_pickup_datetime": "2023-03-07T07:00:00.000", "total_amount": "0.0"}]
@@ -532,6 +536,13 @@ def _tlc(root, tmp):
 
 def _maude_case(root, tmp):
     tev._maude_snapshot(root)
+
+
+def _socrata(view):
+    def make(root, tmp):
+        tev._socrata_snapshots_one(root, view)
+
+    return make
 
 
 CASES = {
@@ -607,6 +618,7 @@ CASES = {
     "ecb_fx": (_ecb_fx, ev._build_ecb_fx, ["ecb_fx_reference_rates"], {}),
     "fremont": (_fremont, ev._build_fremont, ["seattle_fremont_bridge"], {}),
     "sea_ice": (_sea_ice, ev._build_sea_ice, ["nsidc_sea_ice_index"], {}),
+    "omni": (_omni, ev._build_omni, ["nasa_omni_solar_wind"], {}),
     "tlc": (_tlc, ev._build_tlc, ["nyc_tlc_yellow"], {}),
     "maude": (_maude_case, ev._build_maude, ["openfda_device_event"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),
@@ -629,6 +641,12 @@ CASES = {
                    "calendar": {"keep": ["x"], "optional": True}},
         "relations": [["ratings", "movieId", "movies", "movieId"]]}}}),
 }  # fmt: skip
+CASES.update(
+    {
+        f"socrata_{view}": (_socrata(view), step, [view], {})
+        for view, step in zip(ev.SOCRATA_TABLES, ev.SOCRATA_STEPS, strict=True)
+    }
+)
 
 
 @pytest.mark.parametrize("name", sorted(CASES))

@@ -1096,6 +1096,8 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _ecb_snapshot(root)
     _fremont_snapshot(root)
     _sea_ice_snapshot(root)
+    _omni_snapshot(root)
+    _socrata_snapshots(root)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
@@ -1111,7 +1113,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "zen_telecom_kpis", "zen_dk_district_heating", "zen_water_demand", "zen_dmsp_auroral", "us_treasury_dts", "fdic_bank_financials", "sncf_tgv_regularite", "dgccrf_fuel_prices", "us_federal_register", "datacite_dois", "gbif_cc0_occurrences", "chembl_molecules", "zen_florida_bridges", "wri_power_plants", "paris_urban_trees", "zen_moodle_events", "zen_norp_solar_bursts", "zen_blazar_flares", "zen_wind_fragility", "zen_terralore_chronicle", "ncei_storm_events_2024", "ourairports_db", "cftc_cot_disaggregated", "ndbc_buoys_2023", "zen_daylight_events", "cpsc_recalls", "nih_reporter_projects_fy2024", "ecb_fx_reference_rates", "seattle_fremont_bridge", "nsidc_sea_ice_index", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "zen_telecom_kpis", "zen_dk_district_heating", "zen_water_demand", "zen_dmsp_auroral", "us_treasury_dts", "fdic_bank_financials", "sncf_tgv_regularite", "dgccrf_fuel_prices", "us_federal_register", "datacite_dois", "gbif_cc0_occurrences", "chembl_molecules", "zen_florida_bridges", "wri_power_plants", "paris_urban_trees", "zen_moodle_events", "zen_norp_solar_bursts", "zen_blazar_flares", "zen_wind_fragility", "zen_terralore_chronicle", "ncei_storm_events_2024", "ourairports_db", "cftc_cot_disaggregated", "ndbc_buoys_2023", "zen_daylight_events", "cpsc_recalls", "nih_reporter_projects_fy2024", "ecb_fx_reference_rates", "seattle_fremont_bridge", "nsidc_sea_ice_index", "nasa_omni_solar_wind", "sffd_fire_incidents", "colorado_storage_tanks", "colorado_dam_safety", "wa_ev_population", "tx_hhsc_child_care", "austin_water_quality", "wa_ghg_reporting", "sfo_air_traffic", "tx_hotel_occupancy_tax", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -9947,3 +9949,198 @@ def test_sea_ice_builder_writes_csv_manifest_and_errors_when_a_file_is_missing(t
     assert view["sampling"]["missing_extent_rows"] == 3
     assert view["sampling"]["last_timestamp"] == "1978-10-30 00:00:00"
     assert view["source_snapshot"] == f"nsidc_sea_ice_index/{ev.WAVE27_SNAPSHOT}"
+
+
+OMNI_ROW_A = (
+    "2023   1  1 2583 51 52  55  29   5.6   5.0  -8.4 112.8  -1.9   4.6  -0.7   4.6   0.4"
+    "   0.1   2.3   1.4   0.7   1.7  111138.   2.4  603.  -1.3  -0.9 0.038  1.68   20295."
+    "   0.2   18.   1.6   2.1 0.004  -0.24   0.76   8.3 23 108   -23  132"
+)
+OMNI_FILL = (
+    "99 99 999 999 "
+    + " ".join(["999.9"] * 14)
+    + " 9999999. 999.9 9999. 999.9 999.9 9.999 99.99 9999999."
+)
+OMNI_ROW_FILL = f"2023   1  0 2583 {OMNI_FILL} 99 999 999999.99"
+OMNI_TEXT = OMNI_ROW_A + "\n" + OMNI_ROW_FILL + "\nnot an omni row\n"
+
+
+def _omni_snapshot(root):
+    raw = root / "nasa_omni_solar_wind" / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "omni2_2023.dat").write_text(OMNI_TEXT)
+    (raw / "omni2_2022.dat").write_text(OMNI_ROW_A.replace("2023", "2022") + "\n")
+
+
+def test_omni_view_stamps_hours_and_masks_the_fill_values_of_every_field():
+    view = ev.omni_view(OMNI_TEXT)
+    assert view.columns.tolist() == ["timestamp"] + [name for name, _ in ev.OMNI_FIELDS]
+    assert view["timestamp"].dt.strftime("%Y-%m-%d %H").tolist() == [
+        "2023-01-01 01",
+        "2023-01-01 00",
+    ]
+    hour = view.iloc[0]
+    assert hour["imf_spacecraft_id"] == 51 and hour["plasma_points"] == 29
+    assert hour["b_magnitude_nt"] == 5.6 and hour["bz_gsm_nt"] == 0.4
+    assert hour["proton_temperature_k"] == 111138.0 and hour["flow_speed_kms"] == 603.0
+    assert hour["alpha_proton_ratio"] == 0.038 and hour["flow_pressure_npa"] == 1.68
+    assert hour["sigma_temperature_k"] == 20295.0
+    gap = view.iloc[1]
+    assert gap.drop("timestamp").isna().all()
+    assert str(view["imf_points"].dtype) == "Int64"
+
+
+def test_omni_view_counts_days_from_the_start_of_the_year_and_needs_thirty_fields():
+    thirty = " ".join(OMNI_ROW_A.split()[:30])
+    short = " ".join(OMNI_ROW_A.split()[:29])
+    late = thirty.replace("2023   1  1", "2024  40  5").replace("2023 1 1", "2024 40 5")
+    assert late.split()[:3] == ["2024", "40", "5"]
+    view = ev.omni_view(late + "\n" + short + "\n")
+    assert view["timestamp"].tolist() == [pd.Timestamp("2024-02-09 05:00:00")]
+    assert view["flow_pressure_npa"].iloc[0] == 1.68
+    bad_year = ev.omni_view(thirty.replace("2023", "abc", 1))
+    assert bad_year["timestamp"].isna().tolist() == [True]
+    odd = thirty.split()
+    odd[8] = "abc"
+    assert pd.isna(ev.omni_view(" ".join(odd))["b_magnitude_nt"].iloc[0])
+
+
+def test_omni_view_keeps_values_that_only_resemble_a_fill_value():
+    near = OMNI_ROW_A.replace("   5.6   5.0", " 999.8  99.99")
+    view = ev.omni_view(near)
+    assert (
+        view["b_magnitude_nt"].iloc[0] == 999.8 and view["b_vector_magnitude_nt"].iloc[0] == 99.99
+    )
+
+
+def test_omni_builder_concatenates_years_in_time_order_writes_csv_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no OMNI2 files in the snapshot$"):
+        ev._build_omni(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _omni_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_omni(root, out, manifest)
+    ev._build_omni(root, out, manifest)
+    written = pd.read_csv(out / "nasa_omni_solar_wind" / "solar_wind.csv")
+    assert written["timestamp"].tolist() == [
+        "2022-01-01 01:00:00",
+        "2023-01-01 00:00:00",
+        "2023-01-01 01:00:00",
+    ]
+    view = manifest["nasa_omni_solar_wind"]
+    assert view["files"]["solar_wind.csv"]["rows"] == 3
+    assert view["dropped"] == [
+        "bartels_rotation",
+        "geomagnetic_and_solar_indices",
+        "energetic_proton_fluxes",
+    ]
+    assert view["sampling"] == {
+        "files": 2,
+        "first_timestamp": "2022-01-01 01:00:00",
+        "last_timestamp": "2023-01-01 01:00:00",
+        "method": "complete calendar-year files of the hourly OMNI2 data",
+        "all_missing_hours": 1,
+    }
+    assert view["source_snapshot"] == f"nasa_omni_solar_wind/{ev.WAVE28_SNAPSHOT}"
+
+
+def _socrata_csv(spec, rows=2):
+    """A synthetic export with the columns of the spec: one typed row and one fully blank row."""
+    header = ",".join(spec["columns"])
+    typed = []
+    for column in spec["columns"]:
+        if column in spec["numbers"]:
+            typed.append("1.5")
+        elif column in spec["dates"]:
+            typed.append("2023-05-06T07:08:09.000")
+        else:
+            typed.append(f"{column}-x")
+    lines = [header, ",".join(typed), ",".join([""] * len(spec["columns"]))]
+    return "\n".join(lines[: rows + 1]) + "\n"
+
+
+def _socrata_snapshots_one(root, view):
+    spec = ev.SOCRATA_TABLES[view]
+    raw = root / view / ev.WAVE28_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / spec["file"]).write_text(_socrata_csv(spec))
+
+
+def _socrata_snapshots(root):
+    for view in ev.SOCRATA_TABLES:
+        _socrata_snapshots_one(root, view)
+
+
+SOCRATA_SPEC = {
+    "label": "demo",
+    "columns": ["key", "when", "amount", "kind", "secret", "code"],
+    "numbers": ["amount"],
+    "dates": ["when"],
+    "drop": ["secret"],
+    "pseudonymise": ["key"],
+}
+SOCRATA_DEMO = (
+    "key,when,amount,kind,secret,code,extra\n"
+    "a1,2023-05-06T07:08:09.000,2.5,NA,s1,007,e1\n"
+    ",not a date,n/a,,s2,12,e2\n"
+)
+
+
+def test_socrata_table_types_columns_hashes_identifiers_and_keeps_blanks_missing():
+    view = ev.socrata_table(SOCRATA_DEMO, SOCRATA_SPEC)
+    assert view.columns.tolist() == ["key", "when", "amount", "kind", "code"]  # no drop or extra
+    assert view["key"].iloc[0] == ev.pseudonym("a1") and pd.isna(view["key"].iloc[1])
+    assert view["when"].iloc[0] == pd.Timestamp("2023-05-06 07:08:09") and pd.isna(
+        view["when"].iloc[1]
+    )
+    assert view["amount"].iloc[0] == 2.5 and pd.isna(view["amount"].iloc[1])
+    assert view["kind"].iloc[0] == "NA" and pd.isna(view["kind"].iloc[1])  # NA is a value
+    assert view["code"].iloc[0] == "007"  # identifiers keep their leading zeros
+    assert pd.api.types.is_numeric_dtype(view["amount"])
+
+
+def test_socrata_table_names_the_missing_columns_of_a_changed_export():
+    with pytest.raises(ev.ViewError, match=r"^demo export lacks the columns \['amount'\]$"):
+        ev.socrata_table("key,when,kind,secret,code\na,b,c,d,e\n", SOCRATA_SPEC)
+
+
+def test_socrata_table_reads_a_number_with_a_decimal_comma_free_of_text():
+    view = ev.socrata_table(
+        "key,when,amount,kind,secret,code\na,2023-01-01,10,k,s,c\n", SOCRATA_SPEC
+    )
+    assert view["amount"].tolist() == [10.0]
+
+
+@pytest.mark.parametrize("view", sorted(ev.SOCRATA_TABLES))
+def test_socrata_builder_writes_the_documented_view_and_manifest(view, tmp_path):
+    spec = ev.SOCRATA_TABLES[view]
+    step = ev.SOCRATA_STEPS[list(ev.SOCRATA_TABLES).index(view)]
+    with pytest.raises(ev.ViewError, match=rf"^no {spec['label']} file in the snapshot$"):
+        step(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _socrata_snapshots(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    step(root, out, manifest)
+    step(root, out, manifest)
+    written = pd.read_csv(out / view / spec["table"])
+    expected = [c for c in spec["columns"] if c not in spec["drop"]]
+    assert written.columns.tolist() == expected
+    assert len(written) == 2 and written.iloc[1].isna().all()
+    entry = manifest[view]
+    assert entry["files"][spec["table"]]["rows"] == 2
+    assert entry["dropped"] == spec["drop"] and entry["pseudonymised"] == spec["pseudonymise"]
+    assert ("salt_label" in entry) == bool(spec["pseudonymise"])
+    assert entry["source_snapshot"] == f"{view}/{ev.WAVE28_SNAPSHOT}"
+    assert entry["sampling"]["method"] == spec["method"] and entry["sampling"]["columns"] == len(
+        expected
+    )
+    for column in spec["pseudonymise"]:
+        assert written[column].iloc[0] == ev.pseudonym(f"{column}-x")
+    window = spec.get("window")
+    if window:
+        assert entry["sampling"][f"first_{window}"] == "2023-05-06 07:08:09"
+        assert entry["sampling"][f"last_{window}"] == "2023-05-06 07:08:09"
+    else:
+        assert not any(k.startswith("first_") for k in entry["sampling"])

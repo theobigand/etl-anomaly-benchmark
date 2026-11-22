@@ -1339,3 +1339,31 @@ No natural anomaly label is claimed (`controlled_injection`); the three groups c
 **6. Counts (machine-derived).** Category participations `207` (was `204`); remaining deficits `39` (was `42`): `C3` 33/40 (7, was 10); other categories unchanged (`C1` 52/36, `C2a` 23/30, `C2b` 22/30, `C4` 23/28, `C5` 31/36, `C6` 23/30). `196` independent groups, `196` producers, `61` curators, `113` domains, `101` schema families; largest schema family `32.65%` (was `33.16%`); C4 business-process execution `34.78%` and C5 timetable network `38.71%` unchanged. Effective groups `117.4083` (design effect `0.2`) and `106.9741` (`0.5`). Catalog: `301` distinct source families (`279` open, `22` research_only).
 
 **7. Verification.** Focused mutation at the L3 threshold (`95%`) on the changed builders, after a first run (`85.2%` on the ECB view, `78.8%` on the sea-ice parser) led to removing redundant read arguments and adding tests for unreadable cells and the header rows; the survivors are not approved: the `index=None` mutant of each builder (pandas-equivalent), `dtype`, `errors` and `header`/`names` mutants of the readers that the fixtures cannot distinguish.  In the conda environment the full `research/tests` suite passes; readiness (`experiment_ready` for the three views), target-framework and stratum-gap reports were regenerated; each new snapshot verified with no mismatch and each rebuilt view digest equals the registered one. Mutation runs use `OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES` scoped to the single `mutmut` process: `mutmut` 3.8 forks without a start-method option, so no safer in-tool strategy exists; the variable disables a macOS safety check and is not evidence that arbitrary fork-after-initialisation is safe. No detector experiment ran under the active freeze; T424 is not authorised; certification stays pending. The manuscript and slides do not cite interim acquisition counts and are unchanged (`no-change` outcome recorded).
+
+
+## Update 28 — Wave 28 batch A (+10 groups: C3 +1, C2a +5, C2b +4)
+
+**1. Scope.** First internal batch of the final acquisition campaign. Snapshot `2026-11-23`; one builder per source in the canonical conda environment; no historical view rebuilt (all 10 new digests were recomputed after the last code change and match the manifest).
+
+**2. New groups.**
+
+| Group (`view`) | Cat. | Producer and licence evidence | Slice and privacy facts |
+|---|---|---|---|
+| `nasa_omni_near_earth_solar_wind` (`nasa_omni_solar_wind`) | C3 | NASA SPDF OMNI2; open distribution, acknowledgement requested (`omni2.text`) | 15 complete years 2010-2024, `131,496` hourly rows, fill values masked (`246` empty hours); Kp, Dst and sunspot columns dropped (other institutions) |
+| `sffd_fire_incidents` | C2a | San Francisco Fire Department via DataSF; ODC PDDL (portal metadata) | calendar year 2023 window, `37,906` exposure rows; addresses and call numbers dropped, incident number hashed |
+| `colorado_regulated_storage_tanks` (`colorado_storage_tanks`) | C2a | Colorado Division of Oil and Public Safety; Public Domain (portal metadata) | complete registry, `52,111` tank rows; names and addresses dropped, facility id hashed |
+| `colorado_dam_safety_registry` (`colorado_dam_safety`) | C2a | Colorado Division of Water Resources; Public Domain | complete registry, `2,737` dams; names, coordinates and staff names dropped |
+| `wa_ev_population` | C2a | Washington Department of Licensing; ODbL | identifier-ordered prefix of `30,000` of `304,258` vehicles (possible registration-order bias); VIN prefix and location fields dropped |
+| `tx_hhsc_child_care_operations` (`tx_hhsc_child_care`) | C2a | Texas HHSC Child Care Regulation; CC0 1.0 (portal metadata) | complete register, `14,966` operations; names, addresses, contacts dropped, id hashed |
+| `austin_surface_water_quality` (`austin_water_quality`) | C2b | City of Austin Watershed Protection; Public Domain | calendar year 2023 window, `22,887` laboratory results with units and qualifiers |
+| `wa_ecology_ghg_reports` (`wa_ghg_reporting`) | C2b | Washington Department of Ecology; Public Domain | complete export, `2,521` facility-year reports in tonnes CO2e |
+| `sfo_passenger_statistics` (`sfo_air_traffic`) | C2b | San Francisco International Airport via DataSF; ODC PDDL | complete monthly series, `40,803` rows, aggregates only |
+| `tx_hotel_occupancy_tax_revenue` (`tx_hotel_occupancy_tax`) | C2b | Texas Comptroller of Public Accounts; Public Domain | complete export, `2,395` government-year rows, aggregates only |
+
+Columns more than 50 percent empty are dropped from the C2a views (the convention of the Paris trees view). Two San Francisco departments (Fire, Airport) and two Texas agencies (HHSC, Comptroller) publish through one portal each; they are separate producers and generating systems, and the portal is recorded as curator. No natural anomaly label is claimed (`controlled_injection`).
+
+**3. Counts (machine-derived).** Independent groups `206` (was `196`); `C2a` 28/30 (2 remaining), `C2b` 26/30 (4), `C3` 34/40 (6), `C4` 23/28 (5), `C5` 31/36 (5), `C6` 23/30 (7), `C1` 52/36; remaining deficit `29` (was `39`). Effective groups `127.4083` (design effect `0.2`) and `116.9741` (`0.5`); largest schema-family share `31.07%`.
+
+**4. Verification.** Full `research/tests` run in the conda environment: no failure. Ruff check and format pass. Focused mutation (L3, `95%`) on the new code: `omni_view` `98.2%`, `_build_omni` `96.0%`, `socrata_table` `98.1%`, `_build_socrata` `98.7%`; the survivors are not approved. A first run (`78.7%`, `90.7%`) led to boundary, day-of-year, `NA`-string and leading-zero tests and to removing pandas-equivalent arguments. The Socrata builders are one spec-driven function (`SOCRATA_TABLES`) whose `columns` list also refuses an export with a changed schema.
+
+**5. Next within Wave 28.** Vetted but not yet integrated: French BAAC road-accident tables (C5, Licence Ouverte), MITRE ATT&CK STIX bundle (C6), Seattle Fire 911 calls (C4, Public Domain). No detector experiment ran; the freeze and T424 status are unchanged; the manuscript and slides cite no interim counts (`no-change`).

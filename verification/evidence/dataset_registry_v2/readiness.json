@@ -2500,6 +2500,76 @@
   },
   {
    "failed": null,
+   "group": "nasa_omni_near_earth_solar_wind",
+   "id": "nasa_omni_solar_wind",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "austin_surface_water_quality",
+   "id": "austin_water_quality",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "colorado_dam_safety_registry",
+   "id": "colorado_dam_safety",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "colorado_regulated_storage_tanks",
+   "id": "colorado_storage_tanks",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "sffd_fire_incidents",
+   "id": "sffd_fire_incidents",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "sfo_passenger_statistics",
+   "id": "sfo_air_traffic",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "tx_hhsc_child_care_operations",
+   "id": "tx_hhsc_child_care",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "tx_hotel_occupancy_tax_revenue",
+   "id": "tx_hotel_occupancy_tax",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "wa_ev_population",
+   "id": "wa_ev_population",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "wa_ecology_ghg_reports",
+   "id": "wa_ghg_reporting",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2668,6 +2738,8 @@
   ],
   "C2a": [
    "ademe_dpe",
+   "colorado_dam_safety_registry",
+   "colorado_regulated_storage_tanks",
    "dft_stats19",
    "dgal_alimconfiance",
    "florida_bridge_inspections",
@@ -2677,6 +2749,8 @@
    "paleobiology_database",
    "paris_urban_trees",
    "port_noumea_stopovers",
+   "sffd_fire_incidents",
+   "tx_hhsc_child_care_operations",
    "uci:101",
    "uci:19",
    "uci:22",
@@ -2689,9 +2763,11 @@
    "uci:76",
    "uci:911",
    "uci:967",
+   "wa_ev_population",
    "wri_global_power_plants"
   ],
   "C2b": [
+   "austin_surface_water_quality",
    "cftc_cot_disaggregated",
    "coatings_multinational",
    "dgccrf_fuel_prices",
@@ -2707,11 +2783,14 @@
    "ntnu_ev_charging",
    "nyc_tlc",
    "queensland_petroleum_production",
+   "sfo_passenger_statistics",
    "sncf_tgv_regularite",
+   "tx_hotel_occupancy_tax_revenue",
    "uci:352",
    "uk_ledger_mhra",
    "uk_ledger_nhsbsa",
    "us_treasury_dts",
+   "wa_ecology_ghg_reports",
    "world_bank_projects",
    "zambia_procurement"
   ],
@@ -2734,6 +2813,7 @@
    "gfz_potsdam_kp",
    "melbourne_pedestrian",
    "metropt_porto",
+   "nasa_omni_near_earth_solar_wind",
    "ndbc_moored_buoys",
    "noaa_coops",
    "noaa_gml_co2",
@@ -2845,31 +2925,31 @@
    "structurally_valid": 52
   },
   "C2a": {
-   "acquired": 49,
-   "discovered": 49,
-   "experiment_ready": 23,
-   "protocol_ready": 23,
-   "rights_verified": 49,
-   "scientifically_eligible": 23,
-   "structurally_valid": 23
+   "acquired": 54,
+   "discovered": 54,
+   "experiment_ready": 28,
+   "protocol_ready": 28,
+   "rights_verified": 54,
+   "scientifically_eligible": 28,
+   "structurally_valid": 28
   },
   "C2b": {
-   "acquired": 23,
-   "discovered": 29,
-   "experiment_ready": 23,
-   "protocol_ready": 23,
-   "rights_verified": 23,
-   "scientifically_eligible": 23,
-   "structurally_valid": 23
+   "acquired": 27,
+   "discovered": 33,
+   "experiment_ready": 27,
+   "protocol_ready": 27,
+   "rights_verified": 27,
+   "scientifically_eligible": 27,
+   "structurally_valid": 27
   },
   "C3": {
-   "acquired": 38,
-   "discovered": 59,
-   "experiment_ready": 35,
-   "protocol_ready": 35,
-   "rights_verified": 38,
-   "scientifically_eligible": 35,
-   "structurally_valid": 36
+   "acquired": 39,
+   "discovered": 60,
+   "experiment_ready": 36,
+   "protocol_ready": 36,
+   "rights_verified": 39,
+   "scientifically_eligible": 36,
+   "structurally_valid": 37
   },
   "C4": {
    "acquired": 40,

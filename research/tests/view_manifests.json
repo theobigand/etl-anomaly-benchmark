@@ -1748,6 +1748,32 @@
    "source_snapshot": "nws_weather_alerts/2026-11-22"
   }
  },
+ "omni": {
+  "nasa_omni_solar_wind": {
+   "dropped": [
+    "bartels_rotation",
+    "geomagnetic_and_solar_indices",
+    "energetic_proton_fluxes"
+   ],
+   "files": {
+    "solar_wind.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "solar_wind.csv": "timestamp,imf_spacecraft_id,plasma_spacecraft_id,imf_points,plasma_points,b_magnitude_nt,b_vector_magnitude_nt,b_lat_ang"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "all_missing_hours": 1,
+    "files": 2,
+    "first_timestamp": "2022-01-01 01:00:00",
+    "last_timestamp": "2023-01-01 01:00:00",
+    "method": "complete calendar-year files of the hourly OMNI2 data"
+   },
+   "source_snapshot": "nasa_omni_solar_wind/2026-11-23"
+  }
+ },
  "openlibrary": {
   "openlibrary_dump": {
    "dropped": [
@@ -2185,6 +2211,307 @@
     "method": "complete monthly SNCF TGV route punctuality and delay-cause ledger"
    },
    "source_snapshot": "sncf_tgv_regularite/2026-11-22"
+  }
+ },
+ "socrata_austin_water_quality": {
+  "austin_water_quality": {
+   "dropped": [
+    "ref_no",
+    "qc_flag",
+    "collecting_group"
+   ],
+   "files": {
+    "results.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "results.csv": "sample_ref_no,project,watershed,site_type,sample_site_no,site_name,lat_dd_wgs84,lon_dd_wgs84,sample_date,time_null,sampl"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "columns": 21,
+    "first_sample_date": "2023-05-06 07:08:09",
+    "last_sample_date": "2023-05-06 07:08:09",
+    "method": "water quality results sampled in calendar year 2023 ordered by reference number"
+   },
+   "source_snapshot": "austin_water_quality/2026-11-23"
+  }
+ },
+ "socrata_colorado_dam_safety": {
+  "colorado_dam_safety": {
+   "dropped": [
+    "dam_name",
+    "other_dam_names",
+    "nid_id",
+    "wdid",
+    "utm_x",
+    "utm_y",
+    "latdecdeg",
+    "longdecdeg",
+    "location",
+    "more_information",
+    "inspector",
+    "assigned_to",
+    "primary_name",
+    "primary_contact",
+    "stream",
+    "downstream_town",
+    "outlet_inspection",
+    "eap_date",
+    "inundation_map_date"
+   ],
+   "files": {
+    "dams.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "dams.csv": "damid,physical_status,div,wd,county,pm,township,range,section,q160,q40,location_accuracy,town_distance,year_completed,pu"
+   },
+   "pseudonymised": [
+    "damid"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "columns": 34,
+    "method": "complete jurisdictional dam registry ordered by dam identifier"
+   },
+   "source_snapshot": "colorado_dam_safety/2026-11-23"
+  }
+ },
+ "socrata_colorado_storage_tanks": {
+  "colorado_storage_tanks": {
+   "dropped": [
+    "facility_name",
+    "address",
+    "tank_name",
+    "tank_tag",
+    "tank_wall_type",
+    "overfill_prevention",
+    "tank_release_detection_method_primary_",
+    "tank_release_detection_method_secondary_",
+    "tank_corrosion_protection_method",
+    "piping_system",
+    "piping_release_detection_method_primary_",
+    "piping_release_detection_method_secondary_",
+    "piping_corrosion_protection",
+    "piping_corrosion_protection_at_tank",
+    "piping_corrosion_protection_at_dispenser",
+    "line_leak_detector_type"
+   ],
+   "files": {
+    "tanks.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "tanks.csv": "facility_id,city,county,zip_code,facility_type,facility_category,tank_type,tank_status,installation_date,closure_date,pr"
+   },
+   "pseudonymised": [
+    "facility_id"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "columns": 16,
+    "method": "complete regulated storage tank registry ordered by facility and tank"
+   },
+   "source_snapshot": "colorado_storage_tanks/2026-11-23"
+  }
+ },
+ "socrata_sffd_fire_incidents": {
+  "sffd_fire_incidents": {
+   "dropped": [
+    "id",
+    "call_number",
+    "address",
+    "point",
+    "data_as_of",
+    "data_loaded_at",
+    "first_unit_on_scene",
+    "estimated_property_loss",
+    "estimated_contents_loss",
+    "action_taken_secondary",
+    "action_taken_other",
+    "detector_alerted_occupants",
+    "area_of_fire_origin",
+    "ignition_cause",
+    "ignition_factor_primary",
+    "ignition_factor_secondary",
+    "heat_source",
+    "item_first_ignited",
+    "human_factors_associated_with_ignition",
+    "structure_type",
+    "structure_status",
+    "floor_of_fire_origin",
+    "fire_spread",
+    "number_of_floors_with_minimum_damage",
+    "number_of_floors_with_significant_damage",
+    "number_of_floors_with_heavy_damage",
+    "number_of_floors_with_extreme_damage",
+    "detectors_present",
+    "detector_type",
+    "detector_operation",
+    "detector_effectiveness",
+    "detector_failure_reason",
+    "automatic_extinguishing_system_present",
+    "automatic_extinguishing_sytem_type",
+    "automatic_extinguishing_sytem_perfomance",
+    "automatic_extinguishing_sytem_failure_reason",
+    "number_of_sprinkler_heads_operating"
+   ],
+   "files": {
+    "incidents.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "incidents.csv": "incident_number,exposure_number,incident_date,alarm_dttm,arrival_dttm,close_dttm,city,zipcode,battalion,station_area,box"
+   },
+   "pseudonymised": [
+    "incident_number"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "columns": 29,
+    "first_incident_date": "2023-05-06 07:08:09",
+    "last_incident_date": "2023-05-06 07:08:09",
+    "method": "fire incidents of calendar year 2023 ordered by incident and exposure number"
+   },
+   "source_snapshot": "sffd_fire_incidents/2026-11-23"
+  }
+ },
+ "socrata_sfo_air_traffic": {
+  "sfo_air_traffic": {
+   "dropped": [
+    "data_as_of",
+    "data_loaded_at"
+   ],
+   "files": {
+    "passengers.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "passengers.csv": "activity_period,activity_period_start_date,operating_airline,operating_airline_iata_code,published_airline,published_air"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "columns": 13,
+    "method": "complete export of the monthly passenger statistics"
+   },
+   "source_snapshot": "sfo_air_traffic/2026-11-23"
+  }
+ },
+ "socrata_tx_hhsc_child_care": {
+  "tx_hhsc_child_care": {
+   "dropped": [
+    "operation_name",
+    "operation_number",
+    "location_address",
+    "mailing_address",
+    "phone_number",
+    "website_address",
+    "administrator_director_name",
+    "email_address",
+    "location_address_geo",
+    "address_line",
+    "zipcode",
+    "hours_of_operation",
+    "other_schedule_information",
+    "programmatic_services",
+    "treatment_services"
+   ],
+   "files": {
+    "operations.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "operations.csv": "operation_id,operation_type,programs_provided,county,type_of_issuance,issuance_date,conditions_on_permit,accepts_child_c"
+   },
+   "pseudonymised": [
+    "operation_id"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "columns": 29,
+    "method": "complete child-care operation register ordered by operation identifier"
+   },
+   "source_snapshot": "tx_hhsc_child_care/2026-11-23"
+  }
+ },
+ "socrata_tx_hotel_occupancy_tax": {
+  "tx_hotel_occupancy_tax": {
+   "dropped": [
+    "www"
+   ],
+   "files": {
+    "revenue.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "revenue.csv": "fy,local_government_type,muni_name,_351_rate,_351_revenue,_1_info_revenue,_1_info__percentage,_2_reg_revenue,_2_reg__per"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "columns": 19,
+    "method": "complete local hotel occupancy tax revenue by government and fiscal year"
+   },
+   "source_snapshot": "tx_hotel_occupancy_tax/2026-11-23"
+  }
+ },
+ "socrata_wa_ev_population": {
+  "wa_ev_population": {
+   "dropped": [
+    "vin_1_10",
+    "city",
+    "zip_code",
+    "geocoded_column",
+    "_2020_census_tract"
+   ],
+   "files": {
+    "vehicles.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "vehicles.csv": "county,state,model_year,make,model,ev_type,cafv_type,electric_range,legislative_district,dol_vehicle_id,electric_utility"
+   },
+   "pseudonymised": [
+    "dol_vehicle_id"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "columns": 11,
+    "method": "first 30,000 registered electric vehicles ordered by dol_vehicle_id"
+   },
+   "source_snapshot": "wa_ev_population/2026-11-23"
+  }
+ },
+ "socrata_wa_ghg_reporting": {
+  "wa_ghg_reporting": {
+   "dropped": [
+    "location",
+    "geocoded_column",
+    "notes",
+    "point_size"
+   ],
+   "files": {
+    "emissions.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "emissions.csv": "facility,year,sector,subsector,primary_naics_code,naics_definition,parent_company,city,county,jurisdiction,reported_emis"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "columns": 22,
+    "method": "complete facility greenhouse gas reports ordered by year and facility"
+   },
+   "source_snapshot": "wa_ghg_reporting/2026-11-23"
   }
  },
  "surf": {

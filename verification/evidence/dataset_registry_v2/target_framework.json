@@ -2,13 +2,13 @@
  "coverage": {
   "0.2": {
    "ALL": {
-    "curators": 61,
-    "domains": 113,
-    "effective_groups": 117.4083,
-    "groups": 196,
-    "largest_schema_family_share": 0.3265,
-    "producers": 196,
-    "schema_families": 101
+    "curators": 67,
+    "domains": 123,
+    "effective_groups": 127.4083,
+    "groups": 206,
+    "largest_schema_family_share": 0.3107,
+    "producers": 206,
+    "schema_families": 111
    },
    "C1": {
     "curators": 1,
@@ -20,31 +20,31 @@
     "schema_families": 1
    },
    "C2a": {
-    "curators": 8,
-    "domains": 18,
-    "effective_groups": 14.75,
-    "groups": 23,
-    "largest_schema_family_share": 0.5217,
-    "producers": 23,
-    "schema_families": 12
+    "curators": 12,
+    "domains": 23,
+    "effective_groups": 19.75,
+    "groups": 28,
+    "largest_schema_family_share": 0.4286,
+    "producers": 28,
+    "schema_families": 17
    },
    "C2b": {
-    "curators": 15,
-    "domains": 18,
-    "effective_groups": 19.619,
-    "groups": 22,
-    "largest_schema_family_share": 0.1364,
-    "producers": 22,
-    "schema_families": 16
+    "curators": 19,
+    "domains": 22,
+    "effective_groups": 23.619,
+    "groups": 26,
+    "largest_schema_family_share": 0.1154,
+    "producers": 26,
+    "schema_families": 20
    },
    "C3": {
-    "curators": 14,
-    "domains": 28,
-    "effective_groups": 28.8095,
-    "groups": 33,
-    "largest_schema_family_share": 0.1818,
-    "producers": 33,
-    "schema_families": 25
+    "curators": 15,
+    "domains": 29,
+    "effective_groups": 29.8095,
+    "groups": 34,
+    "largest_schema_family_share": 0.1765,
+    "producers": 34,
+    "schema_families": 26
    },
    "C4": {
     "curators": 6,
@@ -76,13 +76,13 @@
   },
   "0.5": {
    "ALL": {
-    "curators": 61,
-    "domains": 113,
-    "effective_groups": 106.9741,
-    "groups": 196,
-    "largest_schema_family_share": 0.3265,
-    "producers": 196,
-    "schema_families": 101
+    "curators": 67,
+    "domains": 123,
+    "effective_groups": 116.9741,
+    "groups": 206,
+    "largest_schema_family_share": 0.3107,
+    "producers": 206,
+    "schema_families": 111
    },
    "C1": {
     "curators": 1,
@@ -94,31 +94,31 @@
     "schema_families": 1
    },
    "C2a": {
-    "curators": 8,
-    "domains": 18,
-    "effective_groups": 12.8462,
-    "groups": 23,
-    "largest_schema_family_share": 0.5217,
-    "producers": 23,
-    "schema_families": 12
+    "curators": 12,
+    "domains": 23,
+    "effective_groups": 17.8462,
+    "groups": 28,
+    "largest_schema_family_share": 0.4286,
+    "producers": 28,
+    "schema_families": 17
    },
    "C2b": {
-    "curators": 15,
-    "domains": 18,
-    "effective_groups": 17.6667,
-    "groups": 22,
-    "largest_schema_family_share": 0.1364,
-    "producers": 22,
-    "schema_families": 16
+    "curators": 19,
+    "domains": 22,
+    "effective_groups": 21.6667,
+    "groups": 26,
+    "largest_schema_family_share": 0.1154,
+    "producers": 26,
+    "schema_families": 20
    },
    "C3": {
-    "curators": 14,
-    "domains": 28,
-    "effective_groups": 26.5476,
-    "groups": 33,
-    "largest_schema_family_share": 0.1818,
-    "producers": 33,
-    "schema_families": 25
+    "curators": 15,
+    "domains": 29,
+    "effective_groups": 27.5476,
+    "groups": 34,
+    "largest_schema_family_share": 0.1765,
+    "producers": 34,
+    "schema_families": 26
    },
    "C4": {
     "curators": 6,
@@ -240,15 +240,15 @@
   },
   "C2a": {
    "diversity": true,
-   "domains": 17,
+   "domains": 22,
    "exploratory": true,
-   "families": 15,
-   "gap": 7,
-   "groups": 23,
+   "families": 20,
+   "gap": 2,
+   "groups": 28,
    "largest_family": "administrative or survey records",
-   "largest_family_share": 0.1304,
+   "largest_family_share": 0.1071,
    "missing": [
-    "groups: 23 of 30"
+    "groups: 28 of 30"
    ],
    "quota": false,
    "target": 30,
@@ -256,15 +256,15 @@
   },
   "C2b": {
    "diversity": true,
-   "domains": 18,
+   "domains": 22,
    "exploratory": true,
-   "families": 18,
-   "gap": 8,
-   "groups": 22,
+   "families": 22,
+   "gap": 4,
+   "groups": 26,
    "largest_family": "contract award",
-   "largest_family_share": 0.1364,
+   "largest_family_share": 0.1154,
    "missing": [
-    "groups: 22 of 30"
+    "groups: 26 of 30"
    ],
    "quota": false,
    "target": 30,
@@ -272,15 +272,15 @@
   },
   "C3": {
    "diversity": true,
-   "domains": 28,
+   "domains": 29,
    "exploratory": true,
-   "families": 32,
-   "gap": 7,
-   "groups": 33,
+   "families": 33,
+   "gap": 6,
+   "groups": 34,
    "largest_family": "urban mobility counts",
-   "largest_family_share": 0.0606,
+   "largest_family_share": 0.0588,
    "missing": [
-    "groups: 33 of 40"
+    "groups: 34 of 40"
    ],
    "quota": false,
    "target": 40,

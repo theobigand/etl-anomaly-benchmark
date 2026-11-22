@@ -285,6 +285,27 @@
   },
   "source_snapshot": "ademe_dpe_existant/2026-11-22"
  },
+ "austin_water_quality": {
+  "dropped": [
+   "ref_no",
+   "qc_flag",
+   "collecting_group"
+  ],
+  "files": {
+   "results.csv": {
+    "rows": 22887,
+    "sha256": "ddef9eddb8e80eebd51b99080bbeb6423f954754afd8b25e5e3a15deb5c98c9b"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "columns": 21,
+   "first_sample_date": "2023-01-03 00:00:00",
+   "last_sample_date": "2023-12-19 11:42:00",
+   "method": "water quality results sampled in calendar year 2023 ordered by reference number"
+  },
+  "source_snapshot": "austin_water_quality/2026-11-23"
+ },
  "azure_packing_2020": {
   "dropped": [
    "vmType hardware dimensions",
@@ -425,6 +446,79 @@
   },
   "pseudonymised": [],
   "source_snapshot": "clinicaltrials_v2/2026-11-21"
+ },
+ "colorado_dam_safety": {
+  "dropped": [
+   "dam_name",
+   "other_dam_names",
+   "nid_id",
+   "wdid",
+   "utm_x",
+   "utm_y",
+   "latdecdeg",
+   "longdecdeg",
+   "location",
+   "more_information",
+   "inspector",
+   "assigned_to",
+   "primary_name",
+   "primary_contact",
+   "stream",
+   "downstream_town",
+   "outlet_inspection",
+   "eap_date",
+   "inundation_map_date"
+  ],
+  "files": {
+   "dams.csv": {
+    "rows": 2737,
+    "sha256": "f3cd5776d651b68477ccee46dac9709be0f6e04dff8077246f89e67f4dc0e911"
+   }
+  },
+  "pseudonymised": [
+   "damid"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "columns": 34,
+   "method": "complete jurisdictional dam registry ordered by dam identifier"
+  },
+  "source_snapshot": "colorado_dam_safety/2026-11-23"
+ },
+ "colorado_storage_tanks": {
+  "dropped": [
+   "facility_name",
+   "address",
+   "tank_name",
+   "tank_tag",
+   "tank_wall_type",
+   "overfill_prevention",
+   "tank_release_detection_method_primary_",
+   "tank_release_detection_method_secondary_",
+   "tank_corrosion_protection_method",
+   "piping_system",
+   "piping_release_detection_method_primary_",
+   "piping_release_detection_method_secondary_",
+   "piping_corrosion_protection",
+   "piping_corrosion_protection_at_tank",
+   "piping_corrosion_protection_at_dispenser",
+   "line_leak_detector_type"
+  ],
+  "files": {
+   "tanks.csv": {
+    "rows": 52111,
+    "sha256": "fa87bf0e4593e7b11e83cb782ddbb693728139cae4c93f017fc4e3955f315311"
+   }
+  },
+  "pseudonymised": [
+   "facility_id"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "columns": 16,
+   "method": "complete regulated storage tank registry ordered by facility and tank"
+  },
+  "source_snapshot": "colorado_storage_tanks/2026-11-23"
  },
  "cordis_horizon_europe": {
   "dropped": [
@@ -3190,6 +3284,28 @@
   "pseudonymised": [],
   "source_snapshot": "monash_zenodo/2026-11-21"
  },
+ "nasa_omni_solar_wind": {
+  "dropped": [
+   "bartels_rotation",
+   "geomagnetic_and_solar_indices",
+   "energetic_proton_fluxes"
+  ],
+  "files": {
+   "solar_wind.csv": {
+    "rows": 131496,
+    "sha256": "5816643887ef732b8c9e577a898ad9216265474e471a0765f54f994f1acf816a"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "all_missing_hours": 246,
+   "files": 15,
+   "first_timestamp": "2010-01-01 00:00:00",
+   "last_timestamp": "2024-12-31 23:00:00",
+   "method": "complete calendar-year files of the hourly OMNI2 data"
+  },
+  "source_snapshot": "nasa_omni_solar_wind/2026-11-23"
+ },
  "ncei_storm_events_2024": {
   "dropped": [
    "details.EPISODE_NARRATIVE",
@@ -4179,6 +4295,82 @@
   },
   "source_snapshot": "data/pool and data/uci_wave2 tables, pinned by the pool manifests"
  },
+ "sffd_fire_incidents": {
+  "dropped": [
+   "id",
+   "call_number",
+   "address",
+   "point",
+   "data_as_of",
+   "data_loaded_at",
+   "first_unit_on_scene",
+   "estimated_property_loss",
+   "estimated_contents_loss",
+   "action_taken_secondary",
+   "action_taken_other",
+   "detector_alerted_occupants",
+   "area_of_fire_origin",
+   "ignition_cause",
+   "ignition_factor_primary",
+   "ignition_factor_secondary",
+   "heat_source",
+   "item_first_ignited",
+   "human_factors_associated_with_ignition",
+   "structure_type",
+   "structure_status",
+   "floor_of_fire_origin",
+   "fire_spread",
+   "number_of_floors_with_minimum_damage",
+   "number_of_floors_with_significant_damage",
+   "number_of_floors_with_heavy_damage",
+   "number_of_floors_with_extreme_damage",
+   "detectors_present",
+   "detector_type",
+   "detector_operation",
+   "detector_effectiveness",
+   "detector_failure_reason",
+   "automatic_extinguishing_system_present",
+   "automatic_extinguishing_sytem_type",
+   "automatic_extinguishing_sytem_perfomance",
+   "automatic_extinguishing_sytem_failure_reason",
+   "number_of_sprinkler_heads_operating"
+  ],
+  "files": {
+   "incidents.csv": {
+    "rows": 37906,
+    "sha256": "923e364e927e95457f8b177ef7645b4447805a642844371f372a1f5e6ca6ba03"
+   }
+  },
+  "pseudonymised": [
+   "incident_number"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "columns": 29,
+   "first_incident_date": "2023-01-01 00:00:00",
+   "last_incident_date": "2023-12-31 00:00:00",
+   "method": "fire incidents of calendar year 2023 ordered by incident and exposure number"
+  },
+  "source_snapshot": "sffd_fire_incidents/2026-11-23"
+ },
+ "sfo_air_traffic": {
+  "dropped": [
+   "data_as_of",
+   "data_loaded_at"
+  ],
+  "files": {
+   "passengers.csv": {
+    "rows": 40803,
+    "sha256": "417e9c2b3cf83c2aee2860ec89b7b651509498a30afc51fbaf3dbb7c57560c38"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "columns": 13,
+   "method": "complete export of the monthly passenger statistics"
+  },
+  "source_snapshot": "sfo_air_traffic/2026-11-23"
+ },
  "slurm_ccin2p3": {
   "dropped": [
    "hostnames",
@@ -4481,6 +4673,57 @@
   ],
   "salt_label": "etl-benchmark-views-v1",
   "source_snapshot": "stackexchange_dump/2026-11-21"
+ },
+ "tx_hhsc_child_care": {
+  "dropped": [
+   "operation_name",
+   "operation_number",
+   "location_address",
+   "mailing_address",
+   "phone_number",
+   "website_address",
+   "administrator_director_name",
+   "email_address",
+   "location_address_geo",
+   "address_line",
+   "zipcode",
+   "hours_of_operation",
+   "other_schedule_information",
+   "programmatic_services",
+   "treatment_services"
+  ],
+  "files": {
+   "operations.csv": {
+    "rows": 14966,
+    "sha256": "0d07ce63f24bb289eb8d38f068106d024ff97004eb8dbb2fac579e6a95aa4d36"
+   }
+  },
+  "pseudonymised": [
+   "operation_id"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "columns": 29,
+   "method": "complete child-care operation register ordered by operation identifier"
+  },
+  "source_snapshot": "tx_hhsc_child_care/2026-11-23"
+ },
+ "tx_hotel_occupancy_tax": {
+  "dropped": [
+   "www"
+  ],
+  "files": {
+   "revenue.csv": {
+    "rows": 2395,
+    "sha256": "ab42812797b83e5ab9417a9108eb4b71cae9b003d8e5303bd63f6f8768ec7f89"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "columns": 19,
+   "method": "complete local hotel occupancy tax revenue by government and fiscal year"
+  },
+  "source_snapshot": "tx_hotel_occupancy_tax/2026-11-23"
  },
  "uci_online_retail": {
   "dropped": [
@@ -4846,6 +5089,50 @@
    "provisional_share": 0.0
   },
   "source_snapshot": "usgs_continuous_discharge/2026-11-22"
+ },
+ "wa_ev_population": {
+  "dropped": [
+   "vin_1_10",
+   "city",
+   "zip_code",
+   "geocoded_column",
+   "_2020_census_tract"
+  ],
+  "files": {
+   "vehicles.csv": {
+    "rows": 30000,
+    "sha256": "1c462adf68ed4218d9cafb886c76e702f0660ad5a165b4e341f9213c9900317a"
+   }
+  },
+  "pseudonymised": [
+   "dol_vehicle_id"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "columns": 11,
+   "method": "first 30,000 registered electric vehicles ordered by dol_vehicle_id"
+  },
+  "source_snapshot": "wa_ev_population/2026-11-23"
+ },
+ "wa_ghg_reporting": {
+  "dropped": [
+   "location",
+   "geocoded_column",
+   "notes",
+   "point_size"
+  ],
+  "files": {
+   "emissions.csv": {
+    "rows": 2521,
+    "sha256": "1ea90e44bd5f2741471041fd873327de7b6864e697af8c6945baea472c334825"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "columns": 22,
+   "method": "complete facility greenhouse gas reports ordered by year and facility"
+  },
+  "source_snapshot": "wa_ghg_reporting/2026-11-23"
  },
  "wals_cldf": {
   "dropped": [

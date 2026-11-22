@@ -11042,6 +11042,356 @@
    "stratum": "C3",
    "upstream": "first party: NOAA at NSIDC computes the extent from passive-microwave brightness temperatures of the SMMR, SSM/I and SSMIS sensors and publishes the index",
    "upstream_verified": true
+  },
+  {
+   "attribution": "NASA Space Physics Data Facility (SPDF), OMNI2 low-resolution hourly near-Earth solar wind data set (omni2_YYYY.dat, 2010-2024); accessed 2026-11-23",
+   "files": [
+    {
+     "name": "omni2_2010.dat",
+     "observed": "2010-01-01 to 2010-12-31",
+     "url": "https://spdf.gsfc.nasa.gov/pub/data/omni/low_res_omni/omni2_2010.dat"
+    },
+    {
+     "name": "omni2_2011.dat",
+     "observed": "2011-01-01 to 2011-12-31",
+     "url": "https://spdf.gsfc.nasa.gov/pub/data/omni/low_res_omni/omni2_2011.dat"
+    },
+    {
+     "name": "omni2_2012.dat",
+     "observed": "2012-01-01 to 2012-12-31",
+     "url": "https://spdf.gsfc.nasa.gov/pub/data/omni/low_res_omni/omni2_2012.dat"
+    },
+    {
+     "name": "omni2_2013.dat",
+     "observed": "2013-01-01 to 2013-12-31",
+     "url": "https://spdf.gsfc.nasa.gov/pub/data/omni/low_res_omni/omni2_2013.dat"
+    },
+    {
+     "name": "omni2_2014.dat",
+     "observed": "2014-01-01 to 2014-12-31",
+     "url": "https://spdf.gsfc.nasa.gov/pub/data/omni/low_res_omni/omni2_2014.dat"
+    },
+    {
+     "name": "omni2_2015.dat",
+     "observed": "2015-01-01 to 2015-12-31",
+     "url": "https://spdf.gsfc.nasa.gov/pub/data/omni/low_res_omni/omni2_2015.dat"
+    },
+    {
+     "name": "omni2_2016.dat",
+     "observed": "2016-01-01 to 2016-12-31",
+     "url": "https://spdf.gsfc.nasa.gov/pub/data/omni/low_res_omni/omni2_2016.dat"
+    },
+    {
+     "name": "omni2_2017.dat",
+     "observed": "2017-01-01 to 2017-12-31",
+     "url": "https://spdf.gsfc.nasa.gov/pub/data/omni/low_res_omni/omni2_2017.dat"
+    },
+    {
+     "name": "omni2_2018.dat",
+     "observed": "2018-01-01 to 2018-12-31",
+     "url": "https://spdf.gsfc.nasa.gov/pub/data/omni/low_res_omni/omni2_2018.dat"
+    },
+    {
+     "name": "omni2_2019.dat",
+     "observed": "2019-01-01 to 2019-12-31",
+     "url": "https://spdf.gsfc.nasa.gov/pub/data/omni/low_res_omni/omni2_2019.dat"
+    },
+    {
+     "name": "omni2_2020.dat",
+     "observed": "2020-01-01 to 2020-12-31",
+     "url": "https://spdf.gsfc.nasa.gov/pub/data/omni/low_res_omni/omni2_2020.dat"
+    },
+    {
+     "name": "omni2_2021.dat",
+     "observed": "2021-01-01 to 2021-12-31",
+     "url": "https://spdf.gsfc.nasa.gov/pub/data/omni/low_res_omni/omni2_2021.dat"
+    },
+    {
+     "name": "omni2_2022.dat",
+     "observed": "2022-01-01 to 2022-12-31",
+     "url": "https://spdf.gsfc.nasa.gov/pub/data/omni/low_res_omni/omni2_2022.dat"
+    },
+    {
+     "name": "omni2_2023.dat",
+     "observed": "2023-01-01 to 2023-12-31",
+     "url": "https://spdf.gsfc.nasa.gov/pub/data/omni/low_res_omni/omni2_2023.dat"
+    },
+    {
+     "name": "omni2_2024.dat",
+     "observed": "2024-01-01 to 2024-12-31",
+     "url": "https://spdf.gsfc.nasa.gov/pub/data/omni/low_res_omni/omni2_2024.dat"
+    }
+   ],
+   "hosts": [
+    "spdf.gsfc.nasa.gov"
+   ],
+   "id": "nasa_omni_solar_wind",
+   "licence_class": "open",
+   "licence_location": "https://spdf.gsfc.nasa.gov/pub/data/omni/low_res_omni/omni2.text",
+   "licence_text": "OMNI2 data set description (omni2.text, read 2026-11-23): the files are distributed openly from the SPDF archive with no use restriction stated; the only condition is the request that publications acknowledge the Space Physics Data Facility (SPDF) and the OMNIWeb service. Data gaps are filled with the character 9 and are masked as missing in the view",
+   "max_bytes": 4194304,
+   "method": "fifteen complete calendar-year files of the OMNI2 hourly data (2010-2024), each downloaded once",
+   "min_interval": 1.0,
+   "privacy": "near-Earth interplanetary magnetic field and solar wind plasma measurements; no personal data",
+   "publisher": "NASA Goddard Space Flight Center, Space Physics Data Facility (SPDF)",
+   "rate_limit": "one download per file with a descriptive User-Agent",
+   "redistribution": "open archive with acknowledgement requested; the raw files stay local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "compiler of first-party spacecraft measurements: SPDF cross-normalises hourly averages of the solar wind and magnetic field instruments on ACE, Wind and earlier near-Earth spacecraft; the geomagnetic and solar index columns of the same file, which other institutions produce, are dropped",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "City of Austin, Texas, data.austintexas.gov dataset 5tye-7ray; accessed 2026-11-23",
+   "files": [
+    {
+     "name": "water_quality_2023.csv",
+     "observed": "see licence and view metadata",
+     "url": "https://datahub.austintexas.gov/resource/5tye-7ray.csv?%24where=sample_date%20between%20%272023-01-01T00%3A00%3A00%27%20and%20%272023-12-31T23%3A59%3A59%27&%24order=ref_no&%24limit=60000"
+    }
+   ],
+   "hosts": [
+    "datahub.austintexas.gov"
+   ],
+   "id": "austin_water_quality",
+   "licence_class": "open",
+   "licence_location": "https://datahub.austintexas.gov/api/views/5tye-7ray.json",
+   "licence_text": "Socrata view metadata for dataset 5tye-7ray (read 2026-11-23): license 'Public Domain (Socrata view metadata)'; City of Austin, Texas, data.austintexas.gov dataset 5tye-7ray",
+   "max_bytes": 33554432,
+   "method": "one export of the water quality results sampled in calendar year 2023 ordered by reference number",
+   "min_interval": 1.0,
+   "privacy": "laboratory results of surface water samples (parameter, result, unit, qualifier); sampling site names and coordinates are kept as public monitoring locations; no personal data",
+   "publisher": "City of Austin Watershed Protection Department",
+   "rate_limit": "one request with a descriptive User-Agent",
+   "redistribution": "Public Domain (Socrata view metadata) per the publisher metadata; the raw CSV stays local",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "first party: the City of Austin samples and analyses its creeks and lakes",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "DNR - Division of Water Resources, data.colorado.gov dataset mgjv-xmr5; accessed 2026-11-23",
+   "files": [
+    {
+     "name": "jurisdictional_dams.csv",
+     "observed": "see licence and view metadata",
+     "url": "https://data.colorado.gov/resource/mgjv-xmr5.csv?%24order=damid&%24limit=10000"
+    }
+   ],
+   "hosts": [
+    "data.colorado.gov"
+   ],
+   "id": "colorado_dam_safety",
+   "licence_class": "open",
+   "licence_location": "https://data.colorado.gov/api/views/mgjv-xmr5.json",
+   "licence_text": "Socrata view metadata for dataset mgjv-xmr5 (read 2026-11-23): license 'Public Domain (Socrata view metadata)'; DNR - Division of Water Resources, data.colorado.gov dataset mgjv-xmr5",
+   "max_bytes": 33554432,
+   "method": "one complete export of the jurisdictional dam registry ordered by dam identifier",
+   "min_interval": 1.0,
+   "privacy": "state dam safety registry (structural, hazard and inspection fields); dam names and coordinates are dropped in the view; no personal data",
+   "publisher": "State of Colorado, Division of Water Resources (DNR)",
+   "rate_limit": "one request with a descriptive User-Agent",
+   "redistribution": "Public Domain (Socrata view metadata) per the publisher metadata; the raw CSV stays local",
+   "retries": 2,
+   "stratum": "C2a",
+   "upstream": "first party: the Division of Water Resources regulates dam safety and keeps the registry",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "CDLE - Division of Oil and Public Safety, data.colorado.gov dataset qszy-xfii; accessed 2026-11-23",
+   "files": [
+    {
+     "name": "storage_tanks.csv",
+     "observed": "see licence and view metadata",
+     "url": "https://data.colorado.gov/resource/qszy-xfii.csv?%24order=facility_id%2Ctank_name&%24limit=60000"
+    }
+   ],
+   "hosts": [
+    "data.colorado.gov"
+   ],
+   "id": "colorado_storage_tanks",
+   "licence_class": "open",
+   "licence_location": "https://data.colorado.gov/api/views/qszy-xfii.json",
+   "licence_text": "Socrata view metadata for dataset qszy-xfii (read 2026-11-23): license 'Public Domain (Socrata view metadata)'; CDLE - Division of Oil and Public Safety, data.colorado.gov dataset qszy-xfii",
+   "max_bytes": 33554432,
+   "method": "one complete export of the regulated storage tank registry ordered by facility and tank",
+   "min_interval": 1.0,
+   "privacy": "regulated storage tank facility registry; facility names and street addresses are dropped in the view; no personal data",
+   "publisher": "State of Colorado, Division of Oil and Public Safety (CDLE)",
+   "rate_limit": "one request with a descriptive User-Agent",
+   "redistribution": "Public Domain (Socrata view metadata) per the publisher metadata; the raw CSV stays local",
+   "retries": 2,
+   "stratum": "C2a",
+   "upstream": "first party: the Division of Oil and Public Safety regulates the tanks and keeps the registry",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "San Francisco Fire Department via DataSF (data.sf.gov dataset wr8u-xric); accessed 2026-11-23",
+   "files": [
+    {
+     "name": "fire_incidents_2023.csv",
+     "observed": "see licence and view metadata",
+     "url": "https://data.sf.gov/resource/wr8u-xric.csv?%24where=incident_date%20between%20%272023-01-01T00%3A00%3A00%27%20and%20%272023-12-31T23%3A59%3A59%27&%24order=incident_number%2Cexposure_number&%24limit=60000"
+    }
+   ],
+   "hosts": [
+    "data.sf.gov"
+   ],
+   "id": "sffd_fire_incidents",
+   "licence_class": "open",
+   "licence_location": "https://data.sf.gov/api/views/wr8u-xric.json",
+   "licence_text": "Socrata view metadata for dataset wr8u-xric (read 2026-11-23): license 'Open Data Commons Public Domain Dedication and License (PDDL)'; San Francisco Fire Department via DataSF (data.sf.gov dataset wr8u-xric)",
+   "max_bytes": 33554432,
+   "method": "one export of the fire incidents of calendar year 2023 ordered by incident and exposure number",
+   "min_interval": 1.0,
+   "privacy": "incident records of a fire department (situation, action codes, units, losses); street addresses and call numbers are dropped in the view; no personal names",
+   "publisher": "City and County of San Francisco, San Francisco Fire Department",
+   "rate_limit": "one request with a descriptive User-Agent",
+   "redistribution": "Open Data Commons Public Domain Dedication and License (PDDL) per the publisher metadata; the raw CSV stays local",
+   "retries": 2,
+   "stratum": "C2a",
+   "upstream": "first party: the San Francisco Fire Department records its incidents in the National Fire Incident Reporting System format and publishes them through DataSF",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "San Francisco International Airport (SFO) via DataSF (data.sf.gov dataset rkru-6vcg); accessed 2026-11-23",
+   "files": [
+    {
+     "name": "passenger_statistics.csv",
+     "observed": "see licence and view metadata",
+     "url": "https://data.sf.gov/resource/rkru-6vcg.csv?%24order=activity_period%2Coperating_airline_iata_code%2Cterminal%2Cboarding_area%2Cactivity_type_code%2Cprice_category_code%2Cgeo_summary%2Cgeo_region&%24limit=60000"
+    }
+   ],
+   "hosts": [
+    "data.sf.gov"
+   ],
+   "id": "sfo_air_traffic",
+   "licence_class": "open",
+   "licence_location": "https://data.sf.gov/api/views/rkru-6vcg.json",
+   "licence_text": "Socrata view metadata for dataset rkru-6vcg (read 2026-11-23): license 'Open Data Commons Public Domain Dedication and License (PDDL)'; San Francisco International Airport (SFO) via DataSF (data.sf.gov dataset rkru-6vcg)",
+   "max_bytes": 33554432,
+   "method": "one complete export of the monthly passenger statistics",
+   "min_interval": 1.0,
+   "privacy": "monthly passenger counts of an airport by airline, terminal, region and activity; aggregates only; no personal data",
+   "publisher": "City and County of San Francisco, San Francisco International Airport",
+   "rate_limit": "one request with a descriptive User-Agent",
+   "redistribution": "Open Data Commons Public Domain Dedication and License (PDDL) per the publisher metadata; the raw CSV stays local",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "first party: the airport counts passengers and publishes the statistics",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Texas Health and Human Services Commission, Child Care Regulation, data.texas.gov dataset bc5r-88dy; accessed 2026-11-23",
+   "files": [
+    {
+     "name": "child_care_operations.csv",
+     "observed": "see licence and view metadata",
+     "url": "https://data.texas.gov/resource/bc5r-88dy.csv?%24order=operation_id&%24limit=20000"
+    }
+   ],
+   "hosts": [
+    "data.texas.gov"
+   ],
+   "id": "tx_hhsc_child_care",
+   "licence_class": "open",
+   "licence_location": "https://data.texas.gov/api/views/bc5r-88dy.json",
+   "licence_text": "Socrata view metadata for dataset bc5r-88dy (read 2026-11-23): license 'Creative Commons 1.0 Universal (CC0, Socrata view metadata)'; Texas Health and Human Services Commission, Child Care Regulation, data.texas.gov dataset bc5r-88dy",
+   "max_bytes": 33554432,
+   "method": "one complete export of the daycare and residential child-care operations ordered by operation identifier",
+   "min_interval": 1.0,
+   "privacy": "licensed operations with type, capacity, programmes and deficiency counts; operation names, addresses, phone numbers, websites and administrator names are dropped in the view",
+   "publisher": "Texas Health and Human Services Commission (Child Care Regulation)",
+   "rate_limit": "one request with a descriptive User-Agent",
+   "redistribution": "Creative Commons 1.0 Universal (CC0, Socrata view metadata) per the publisher metadata; the raw CSV stays local",
+   "retries": 2,
+   "stratum": "C2a",
+   "upstream": "first party: the Commission licenses and inspects the operations",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Texas Comptroller of Public Accounts, data.texas.gov dataset vmy5-jctb; accessed 2026-11-23",
+   "files": [
+    {
+     "name": "hot_revenue.csv",
+     "observed": "see licence and view metadata",
+     "url": "https://data.texas.gov/resource/vmy5-jctb.csv?%24order=fy%2Cmuni_name&%24limit=10000"
+    }
+   ],
+   "hosts": [
+    "data.texas.gov"
+   ],
+   "id": "tx_hotel_occupancy_tax",
+   "licence_class": "open",
+   "licence_location": "https://data.texas.gov/api/views/vmy5-jctb.json",
+   "licence_text": "Socrata view metadata for dataset vmy5-jctb (read 2026-11-23): license 'Public Domain (Socrata view metadata)'; Texas Comptroller of Public Accounts, data.texas.gov dataset vmy5-jctb",
+   "max_bytes": 33554432,
+   "method": "one complete export of the local hotel occupancy tax revenue by local government and fiscal year",
+   "min_interval": 1.0,
+   "privacy": "local hotel occupancy tax revenue by use category for cities and counties; aggregates only; no personal data",
+   "publisher": "Texas Comptroller of Public Accounts",
+   "rate_limit": "one request with a descriptive User-Agent",
+   "redistribution": "Public Domain (Socrata view metadata) per the publisher metadata; the raw CSV stays local",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "first party: the Comptroller receives the reports of local governments and publishes them",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Washington State Department of Licensing, data.wa.gov dataset f6w7-q2d2; accessed 2026-11-23",
+   "files": [
+    {
+     "name": "ev_population_prefix.csv",
+     "observed": "see licence and view metadata",
+     "url": "https://data.wa.gov/resource/f6w7-q2d2.csv?%24order=dol_vehicle_id&%24limit=30000"
+    }
+   ],
+   "hosts": [
+    "data.wa.gov"
+   ],
+   "id": "wa_ev_population",
+   "licence_class": "open",
+   "licence_location": "https://data.wa.gov/api/views/f6w7-q2d2.json",
+   "licence_text": "Socrata view metadata for dataset f6w7-q2d2 (read 2026-11-23): license 'Open Data Commons Open Database License (ODbL, Socrata view metadata)'; Washington State Department of Licensing, data.wa.gov dataset f6w7-q2d2",
+   "max_bytes": 33554432,
+   "method": "first 30,000 registered battery-electric and plug-in hybrid vehicles ordered by dol_vehicle_id",
+   "min_interval": 1.0,
+   "privacy": "registered electric vehicles with make, model, type, range and county; no owner data; the vehicle identifier and the location fields are dropped or pseudonymised in the view",
+   "publisher": "Washington State Department of Licensing",
+   "rate_limit": "one request with a descriptive User-Agent",
+   "redistribution": "Open Data Commons Open Database License (ODbL, Socrata view metadata) per the publisher metadata; the raw CSV stays local",
+   "retries": 2,
+   "stratum": "C2a",
+   "upstream": "first party: the Department of Licensing records vehicle registrations",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Washington State Department of Ecology, data.wa.gov dataset idhm-59de; accessed 2026-11-23",
+   "files": [
+    {
+     "name": "ghg_facility_emissions.csv",
+     "observed": "see licence and view metadata",
+     "url": "https://data.wa.gov/resource/idhm-59de.csv?%24order=year%2Cfacility&%24limit=10000"
+    }
+   ],
+   "hosts": [
+    "data.wa.gov"
+   ],
+   "id": "wa_ghg_reporting",
+   "licence_class": "open",
+   "licence_location": "https://data.wa.gov/api/views/idhm-59de.json",
+   "licence_text": "Socrata view metadata for dataset idhm-59de (read 2026-11-23): license 'Public Domain (Socrata view metadata)'; Washington State Department of Ecology, data.wa.gov dataset idhm-59de",
+   "max_bytes": 33554432,
+   "method": "one complete export of the facility greenhouse gas reports ordered by year and facility",
+   "min_interval": 1.0,
+   "privacy": "annual greenhouse gas emissions of reporting facilities and suppliers in tonnes of CO2 equivalent; facility and parent company names are corporate entities and are kept as reported",
+   "publisher": "Washington State Department of Ecology",
+   "rate_limit": "one request with a descriptive User-Agent",
+   "redistribution": "Public Domain (Socrata view metadata) per the publisher metadata; the raw CSV stays local",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "first party: Ecology collects the mandatory greenhouse gas reports",
+   "upstream_verified": true
   }
  ]
 }

@@ -5970,6 +5970,206 @@
    "stratum": "C3",
    "system": "noaa_nsidc_passive_microwave_sea_ice_index",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "nasa_omni_near_earth_solar_wind",
+   "id": "nasa_omni_solar_wind",
+   "licence_class": "open",
+   "protocols": "P-TS",
+   "publisher": "nasa_spdf",
+   "reason": "NASA SPDF OMNI2 hourly near-Earth solar wind and interplanetary magnetic field data, fifteen complete years: 131,496 contiguous hourly rows from 2010-01-01 to 2024-12-31, 26 field columns (field strength and components, proton temperature, density, speed, flow angles, alpha ratio, pressure and their standard deviations), the publisher's fill values kept as missing (246 hours with no value at all); in-situ spacecraft plasma physics mechanism absent from the other time-series groups",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "OMNI2 data set description (omni2.text) read 2026-11-23: openly distributed, no use restriction stated, acknowledgement of SPDF requested",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "nasa_omni2_near_earth_solar_wind_compilation",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "austin_surface_water_quality",
+   "id": "austin_water_quality",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "city_of_austin",
+   "reason": "City of Austin water quality results sampled in calendar year 2023: 22,887 result rows of 21 columns (watershed, site type and number, sample date, medium, parameter, qualifier, numeric result, unit and method), blank qualifiers and depths kept missing",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Socrata view metadata read 2026-11-23: license Public Domain, attribution City of Austin, Texas - data.austintexas.gov",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "city_of_austin_water_quality_sampling",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "colorado_dam_safety_registry",
+   "id": "colorado_dam_safety",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "state_of_colorado_dwr",
+   "reason": "Colorado jurisdictional dam registry, complete export: 2,737 dams of 34 columns (physical status, dam type, purposes, hazard class, height, length, storage and spillway capacity, inspection and emergency action plan fields), fields more than 50 percent empty dropped",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Socrata view metadata read 2026-11-23: license Public Domain, attribution DNR - Division of Water Resources",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "colorado_dwr_dam_safety_inventory",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "colorado_regulated_storage_tanks",
+   "id": "colorado_storage_tanks",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "state_of_colorado_dops",
+   "reason": "Colorado regulated storage tank registry, complete export: 52,111 tank rows of 16 columns (facility category, tank type and status, product, capacity, materials, release-detection and corrosion-protection methods), fields more than 50 percent empty dropped",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Socrata view metadata read 2026-11-23: license Public Domain, attribution CDLE - Division of Oil and Public Safety",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "colorado_oil_public_safety_tank_registry",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "sffd_fire_incidents",
+   "id": "sffd_fire_incidents",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "datasf_sffd",
+   "reason": "San Francisco Fire Department incidents of calendar year 2023: 37,906 exposure rows of 29 columns (response times, unit and personnel counts, situation, action and property-use codes, ignition fields), fields more than 50 percent empty dropped",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "DataSF view metadata read 2026-11-23: license Open Data Commons Public Domain Dedication and License (PDDL)",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "sffd_nfirs_incident_reporting",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "sfo_passenger_statistics",
+   "id": "sfo_air_traffic",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "datasf_sfo",
+   "reason": "San Francisco International Airport passenger statistics, complete export: 40,803 monthly rows of 13 columns (activity period, operating and published airline, region, activity type, price category, terminal, boarding area and passenger count)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "DataSF view metadata read 2026-11-23: license Open Data Commons Public Domain Dedication and License (PDDL)",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "sfo_airport_passenger_counting",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "tx_hhsc_child_care_operations",
+   "id": "tx_hhsc_child_care",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "texas_hhsc",
+   "reason": "Texas HHSC licensed child-care operations, complete export: 14,966 operations of 29 columns (operation type, issuance, subsidy acceptance, capacity, ages served, county, deficiency counts by weight, inspection and report counts)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Socrata view metadata read 2026-11-23: license Creative Commons 1.0 Universal (Public Domain Dedication), attribution HHSC",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "tx_hhsc_child_care_licensing_register",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "tx_hotel_occupancy_tax_revenue",
+   "id": "tx_hotel_occupancy_tax",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "texas_comptroller",
+   "reason": "Texas local hotel occupancy tax revenue, complete export: 2,395 government-year rows of 19 columns (government type and name, tax rates, revenue by statutory use category and its share)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Socrata view metadata read 2026-11-23: license Public Domain, attribution Texas Comptroller of Public Accounts",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "texas_comptroller_hotel_occupancy_tax_reports",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "wa_ev_population",
+   "id": "wa_ev_population",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "wa_department_of_licensing",
+   "reason": "Washington State registered electric vehicles, prefix of 30,000 rows of 11 columns (make, model, model year, vehicle type, eligibility class, electric range, county, legislative district and electric utility)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Socrata view metadata read 2026-11-23: license Open Data Commons Open Database License (ODbL), attribution Washington State Department of Licensing",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "wa_dol_electric_vehicle_registry",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "wa_ecology_ghg_reports",
+   "id": "wa_ghg_reporting",
+   "licence_class": "open",
+   "protocols": "P-TAB",
+   "publisher": "wa_department_of_ecology",
+   "reason": "Washington Ecology greenhouse gas reporting, complete export: 2,521 facility-year reports of 22 columns (sector, subsector, NAICS, parent company, county and reported emissions by gas in tonnes of CO2 equivalent)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Socrata view metadata read 2026-11-23: license Public Domain, attribution Washington State Department of Ecology",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "wa_ecology_mandatory_ghg_reporting",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

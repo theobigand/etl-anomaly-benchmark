@@ -2826,6 +2826,156 @@
    "size": "15,908 daily rows",
    "source_url": "https://noaadata.apps.nsidc.org/NOAA/G02135/",
    "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "nasa:omni2-hourly",
+   "licence": "SPDF OMNI2 description: open distribution, acknowledgement of SPDF requested",
+   "name": "NASA SPDF OMNI2 hourly near-Earth solar wind, 2010-2024",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as nasa_omni_solar_wind (fifteen complete yearly files; fill values masked; geomagnetic, solar and proton-flux columns dropped)",
+   "publisher": "NASA Goddard Space Flight Center, Space Physics Data Facility",
+   "reason": "In-situ spacecraft solar wind plasma physics, distinct from the ground-based geomagnetic index and the auroral particle series",
+   "size": "131,496 hourly rows",
+   "source_url": "https://spdf.gsfc.nasa.gov/pub/data/omni/low_res_omni/",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "austin:water-quality",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "City of Austin water quality sampling results, 2023",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as austin_water_quality (Socrata export; identifying and free-text columns dropped)",
+   "publisher": "City of Austin Watershed Protection Department",
+   "reason": "Scientific water chemistry measurement records with units and censoring qualifiers",
+   "size": "22,887 rows",
+   "source_url": "https://data.austintexas.gov/resource/5tye-7ray",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "co:dam-safety",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "Colorado jurisdictional dam safety registry",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as colorado_dam_safety (Socrata export; identifying and free-text columns dropped)",
+   "publisher": "Colorado Division of Water Resources (DNR)",
+   "reason": "Regulated civil water infrastructure inventory with hazard classes and structural dimensions",
+   "size": "2,737 rows",
+   "source_url": "https://data.colorado.gov/resource/mgjv-xmr5",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "co:storage-tanks",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "Colorado regulated storage tank registry",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as colorado_storage_tanks (Socrata export; identifying and free-text columns dropped)",
+   "publisher": "Colorado Division of Oil and Public Safety (CDLE)",
+   "reason": "Environmental regulation registry of fuel storage tanks, categorical and mixed",
+   "size": "52,111 rows",
+   "source_url": "https://data.colorado.gov/resource/qszy-xfii",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "sf:fire-incidents",
+   "licence": "ODC PDDL (DataSF view metadata)",
+   "name": "San Francisco Fire Department incidents, 2023",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as sffd_fire_incidents (Socrata export; identifying and free-text columns dropped)",
+   "publisher": "San Francisco Fire Department (City and County of San Francisco)",
+   "reason": "Municipal fire and rescue operations, coded categorical incident records absent from C2a",
+   "size": "37,906 rows",
+   "source_url": "https://data.sf.gov/resource/wr8u-xric",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "sf:sfo-passengers",
+   "licence": "ODC PDDL (DataSF view metadata)",
+   "name": "San Francisco International Airport passenger statistics",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as sfo_air_traffic (Socrata export; identifying and free-text columns dropped)",
+   "publisher": "San Francisco International Airport (City and County of San Francisco)",
+   "reason": "Airport traffic counting with airline and terminal dimensions",
+   "size": "40,803 rows",
+   "source_url": "https://data.sf.gov/resource/rkru-6vcg",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "tx:hhsc-child-care",
+   "licence": "CC0 1.0 (Socrata view metadata)",
+   "name": "Texas HHSC child care operations",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as tx_hhsc_child_care (Socrata export; identifying and free-text columns dropped)",
+   "publisher": "Texas Health and Human Services Commission (Child Care Regulation)",
+   "reason": "Social-care licensing register with regulator inspection and deficiency counts",
+   "size": "14,966 rows",
+   "source_url": "https://data.texas.gov/resource/bc5r-88dy",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "tx:hot-revenue",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "Texas local hotel occupancy tax revenue",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as tx_hotel_occupancy_tax (Socrata export; identifying and free-text columns dropped)",
+   "publisher": "Texas Comptroller of Public Accounts",
+   "reason": "Public revenue ledger by tax use category, numeric",
+   "size": "2,395 rows",
+   "source_url": "https://data.texas.gov/resource/vmy5-jctb",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "wa:ev-population",
+   "licence": "ODbL (Socrata view metadata)",
+   "name": "Washington electric vehicle population",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as wa_ev_population (Socrata export; identifying and free-text columns dropped)",
+   "publisher": "Washington State Department of Licensing",
+   "reason": "Vehicle registration records, categorical and mixed, distinct from the EV charging sessions",
+   "size": "30,000 rows",
+   "source_url": "https://data.wa.gov/resource/f6w7-q2d2",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "wa:ghg-reporting",
+   "licence": "Public Domain (Socrata view metadata)",
+   "name": "Washington Ecology greenhouse gas reporting program",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as wa_ghg_reporting (Socrata export; identifying and free-text columns dropped)",
+   "publisher": "Washington State Department of Ecology",
+   "reason": "Industrial operations emissions accounting in tonnes of CO2 equivalent",
+   "size": "2,521 rows",
+   "source_url": "https://data.wa.gov/resource/idhm-59de",
+   "status": "acquired"
   }
  ],
  "date": "2026-11-22",

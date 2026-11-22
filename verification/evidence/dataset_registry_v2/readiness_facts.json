@@ -211,6 +211,21 @@
    "units": 50000,
    "view": "ademe_dpe_existant"
   },
+  "austin_water_quality": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "calendar year 2023 slice of the Austin water quality table (1,522,960 rows in all): a contiguous sampling-date window, 22,887 result rows over about 250 sites and 1,049 parameters",
+    "results are laboratory measurements with units and censoring qualifiers kept as published; the row id and empty flag columns are dropped; the sampling sites are public monitoring locations"
+   ],
+   "first_party": true,
+   "independent_group": "austin_surface_water_quality",
+   "min_units": 500,
+   "partitions": "hash of sample_ref_no so the parameters of one sample stay together 70/15/15",
+   "privacy": "not_needed",
+   "protocol_id": "P-TAB",
+   "units": 22887,
+   "view": "austin_water_quality"
+  },
   "azure_packing_2020": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -338,6 +353,36 @@
    "protocol_id": "P-NEST",
    "units": 12000,
    "view": "clinicaltrials_v2"
+  },
+  "colorado_dam_safety": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete export of the state dam safety inventory, 2,737 dams; publisher blanks preserved (for example 33 percent without an inspection date)",
+    "dam names, identifiers of other systems, coordinates, inspector and staff names, stream and town names dropped, damid pseudonymised; columns more than 50 percent missing dropped"
+   ],
+   "first_party": true,
+   "independent_group": "colorado_dam_safety_registry",
+   "min_units": 500,
+   "partitions": "hash of damid 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 2737,
+   "view": "colorado_dam_safety"
+  },
+  "colorado_storage_tanks": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete registry export (52,111 tank rows over 16,979 facilities); installation and closure dates kept as published, 52,111 rows",
+    "facility names, street addresses, tank names and tags dropped, facility_id pseudonymised; columns more than 50 percent missing dropped; 16.5 percent of rows duplicate another row because identical tanks of one facility are listed separately"
+   ],
+   "first_party": true,
+   "independent_group": "colorado_regulated_storage_tanks",
+   "min_units": 500,
+   "partitions": "hash of facility_id so the tanks of one facility stay together 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 52111,
+   "view": "colorado_storage_tanks"
   },
   "cordis_horizon_europe": {
    "anomaly_origin": "controlled_injection",
@@ -2245,6 +2290,30 @@
    "units": 98723,
    "view": "monash_pedestrian"
   },
+  "nasa_omni_solar_wind": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "fifteen complete years of hourly OMNI2 rows: 131,496 contiguous hours, 2010-01-01 00:00 to 2024-12-31 23:00 UT, 26 measurement and metadata columns",
+    "publisher fill values (the character 9 in each field) masked as missing: 246 hours have no value in any field, the flow speed is missing in 0.5 percent of hours and the alpha-to-proton ratio in 6.4 percent",
+    "the 11-year solar cycle, coronal mass ejection and stream-interaction storms, spacecraft handovers (ACE 96 percent of hours, Wind 2 percent, 2 percent no plasma instrument) and averaging-point counts are baseline dynamics, not injected faults"
+   ],
+   "first_party": false,
+   "independent_group": "nasa_omni_near_earth_solar_wind",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on timestamp",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point and contextual anomalies on field strength, speed, density and temperature",
+    "level shift, variance change, drift and missing intervals"
+   ],
+   "temporal_span": "15 years of hourly averages (2010-01-01 to 2024-12-31)",
+   "units": 131496,
+   "unsupported_fault_mechanisms": [
+    "sub-hourly structure of the solar wind"
+   ],
+   "view": "nasa_omni_solar_wind"
+  },
   "ncei_storm_events_2024": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -2824,6 +2893,36 @@
    ],
    "view": "seattle_fremont_bridge"
   },
+  "sffd_fire_incidents": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "calendar year 2023 slice of the DataSF fire incident table (733,061 rows since 2003): a contiguous time window, not a random sample; 37,906 incident-exposure rows",
+    "street addresses, call numbers, row ids and coordinates dropped, incident_number pseudonymised; columns more than 50 percent missing dropped; codes follow the national incident reporting scheme"
+   ],
+   "first_party": true,
+   "independent_group": "sffd_fire_incidents",
+   "min_units": 500,
+   "partitions": "hash of incident_number so the exposures of one incident stay together 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 37906,
+   "view": "sffd_fire_incidents"
+  },
+  "sfo_air_traffic": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete monthly series of airline activity counts, 40,803 rows over 326 months; aggregate counts only",
+    "the load-time columns of the portal are dropped; counts are airport-reported passenger movements"
+   ],
+   "first_party": true,
+   "independent_group": "sfo_passenger_statistics",
+   "min_units": 500,
+   "partitions": "hash of operating_airline so the months of one airline stay together 70/15/15",
+   "privacy": "not_needed",
+   "protocol_id": "P-TAB",
+   "units": 40803,
+   "view": "sfo_air_traffic"
+  },
   "slurm_ccin2p3": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -3025,6 +3124,36 @@
    "protocol_id": "P-REL",
    "units": 15049,
    "view": "stackexchange"
+  },
+  "tx_hhsc_child_care": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete export of the licensing register, 14,966 operations; deficiency counts and inspection totals are regulator-assigned",
+    "operation names and numbers, addresses, phones, websites, e-mails and administrator names dropped, operation_id pseudonymised; columns more than 50 percent missing dropped"
+   ],
+   "first_party": true,
+   "independent_group": "tx_hhsc_child_care_operations",
+   "min_units": 500,
+   "partitions": "hash of operation_id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 14966,
+   "view": "tx_hhsc_child_care"
+  },
+  "tx_hotel_occupancy_tax": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete export, 2,395 government-year rows over about 900 local governments and seven fiscal years; blank use categories kept missing (many governments do not spend on every category)",
+    "aggregate public revenue figures; the website column dropped"
+   ],
+   "first_party": true,
+   "independent_group": "tx_hotel_occupancy_tax_revenue",
+   "min_units": 500,
+   "partitions": "hash of muni_name so the years of one government stay together 70/15/15",
+   "privacy": "not_needed",
+   "protocol_id": "P-TAB",
+   "units": 2395,
+   "view": "tx_hotel_occupancy_tax"
   },
   "uci:357": {
    "anomaly_origin": "controlled_injection",
@@ -3284,6 +3413,36 @@
     "statements about the stability of seasonality over years"
    ],
    "view": "usgs_continuous_discharge"
+  },
+  "wa_ev_population": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "first 30,000 of 304,258 registered vehicles ordered ascending by dol_vehicle_id: an identifier-ordered prefix with a possible registration-order bias",
+    "VIN prefix, city, zip code, census tract and coordinates dropped, dol_vehicle_id pseudonymised; the registry holds no owner data"
+   ],
+   "first_party": true,
+   "independent_group": "wa_ev_population",
+   "min_units": 500,
+   "partitions": "hash of dol_vehicle_id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 30000,
+   "view": "wa_ev_population"
+  },
+  "wa_ghg_reporting": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete export of the reporting programme publication, 2,521 facility-year reports over 315 facilities; per-gas blanks kept as published",
+    "facilities and parent companies are corporate entities kept as reported; location, geocode, free-text notes and point size dropped"
+   ],
+   "first_party": true,
+   "independent_group": "wa_ecology_ghg_reports",
+   "min_units": 500,
+   "partitions": "hash of facility so the years of one facility stay together 70/15/15",
+   "privacy": "not_needed",
+   "protocol_id": "P-TAB",
+   "units": 2521,
+   "view": "wa_ghg_reporting"
   },
   "wals_cldf": {
    "anomaly_origin": "controlled_injection",

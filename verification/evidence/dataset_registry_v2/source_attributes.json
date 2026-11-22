@@ -57,6 +57,17 @@
    "C4": "real-time strategy gameplay event sequences"
   }
  },
+ "austin_surface_water_quality": {
+  "curator": "datahub.austintexas.gov",
+  "domain": "surface water quality sampling",
+  "generating_system": "city of austin water quality sampling",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "City of Austin Watershed Protection Department",
+  "schema_family": "long-format laboratory results",
+  "structure": {
+   "C2b": "water sample results with watershed, site type, medium, parameter, qualifier, numeric result and unit"
+  }
+ },
  "backblaze": {
   "curator": "backblaze",
   "descriptors": {
@@ -148,6 +159,28 @@
   "structure": {
    "C2b": "purchase order process",
    "C4": "business process execution"
+  }
+ },
+ "colorado_dam_safety_registry": {
+  "curator": "data.colorado.gov",
+  "domain": "dam safety regulation",
+  "generating_system": "colorado dwr dam safety inventory",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "Colorado Division of Water Resources (DNR)",
+  "schema_family": "regulatory structure inventory",
+  "structure": {
+   "C2a": "jurisdictional dam rows with status, type, purpose, hazard class, dimensions, capacities and inspection fields"
+  }
+ },
+ "colorado_regulated_storage_tanks": {
+  "curator": "data.colorado.gov",
+  "domain": "petroleum storage tank regulation",
+  "generating_system": "colorado oil public safety tank registry",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "Colorado Division of Oil and Public Safety (CDLE)",
+  "schema_family": "facility and tank registry",
+  "structure": {
+   "C2a": "regulated storage tank rows with facility category, tank type, status, product, capacity, materials and leak-detection methods"
   }
  },
  "cordis_horizon_europe": {
@@ -897,6 +930,17 @@
    "C4": "chromospheric solar radio burst event catalog"
   }
  },
+ "nasa_omni_near_earth_solar_wind": {
+  "curator": "nasa_spdf",
+  "domain": "heliospheric space physics",
+  "generating_system": "NASA SPDF OMNI2 near-Earth solar wind compilation (ACE, Wind and earlier L1 spacecraft)",
+  "note": "hourly averages cross-normalised by SPDF from spacecraft instruments; the geomagnetic and solar index columns of the same files come from other institutions and are not retained",
+  "producer": "NASA Goddard Space Flight Center, Space Physics Data Facility (OMNI2)",
+  "schema_family": "hourly fixed-format spacecraft compilation",
+  "structure": {
+   "C3": "hourly interplanetary magnetic field and solar wind plasma measurements with publisher fill values and spacecraft identifiers"
+  }
+ },
  "ndbc_moored_buoys": {
   "curator": "noaa",
   "domain": "marine surface meteorology and sea state",
@@ -1244,6 +1288,28 @@
    "C3": "urban mobility counts"
   }
  },
+ "sffd_fire_incidents": {
+  "curator": "datasf",
+  "domain": "municipal fire and rescue operations",
+  "generating_system": "sffd nfirs incident reporting",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "San Francisco Fire Department (City and County of San Francisco)",
+  "schema_family": "NFIRS-style incident register",
+  "structure": {
+   "C2a": "fire and rescue incident records with situation, action, property-use and ignition codes and unit counts"
+  }
+ },
+ "sfo_passenger_statistics": {
+  "curator": "datasf",
+  "domain": "airport passenger traffic",
+  "generating_system": "sfo airport passenger counting",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "San Francisco International Airport (City and County of San Francisco)",
+  "schema_family": "monthly airline activity counts",
+  "structure": {
+   "C2b": "monthly passenger counts by operating airline, terminal, boarding area, region and activity type"
+  }
+ },
  "sncf_tgv_regularite": {
   "curator": "ressources.data.sncf.com",
   "domain": "intercity rail operations",
@@ -1330,6 +1396,28 @@
   "schema_family": "xes event log",
   "structure": {
    "C4": "business process execution"
+  }
+ },
+ "tx_hhsc_child_care_operations": {
+  "curator": "data.texas.gov",
+  "domain": "child care licensing and inspection",
+  "generating_system": "tx hhsc child care licensing register",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "Texas Health and Human Services Commission (Child Care Regulation)",
+  "schema_family": "licensed operation register",
+  "structure": {
+   "C2a": "licensed child-care operations with type, issuance, subsidy acceptance, capacity, ages served, county and deficiency and inspection counts"
+  }
+ },
+ "tx_hotel_occupancy_tax_revenue": {
+  "curator": "data.texas.gov",
+  "domain": "local tourism tax revenue",
+  "generating_system": "texas comptroller hotel occupancy tax reports",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "Texas Comptroller of Public Accounts",
+  "schema_family": "government-year revenue ledger",
+  "structure": {
+   "C2b": "local government hotel occupancy tax rate and revenue by statutory use category and fiscal year"
   }
  },
  "uci:101": {
@@ -2175,6 +2263,28 @@
   "schema_family": "xes event log",
   "structure": {
    "C4": "IT service incident log"
+  }
+ },
+ "wa_ecology_ghg_reports": {
+  "curator": "data.wa.gov",
+  "domain": "industrial greenhouse gas reporting",
+  "generating_system": "wa ecology mandatory ghg reporting",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "Washington State Department of Ecology",
+  "schema_family": "facility-year emissions ledger",
+  "structure": {
+   "C2b": "facility-year greenhouse gas reports with sector, NAICS industry, parent company, county and emissions by gas in tonnes of CO2 equivalent"
+  }
+ },
+ "wa_ev_population": {
+  "curator": "data.wa.gov",
+  "domain": "vehicle registration",
+  "generating_system": "wa dol electric vehicle registry",
+  "note": "one portal export; publisher blanks preserved; see the view manifest for dropped columns",
+  "producer": "Washington State Department of Licensing",
+  "schema_family": "vehicle registry",
+  "structure": {
+   "C2a": "registered electric vehicles with make, model, model year, vehicle type, clean alternative fuel eligibility, range, county, legislative district and utility"
   }
  },
  "wals_cldf": {
