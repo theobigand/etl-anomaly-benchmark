@@ -3500,13 +3500,14 @@ def test_care_view_keeps_the_average_sensors_status_and_phase_and_orders_by_time
     assert len(ev.care_series_view(bad, 1)) == 2  # a row without a readable time is dropped
 
 
-def _care_snapshot(root, ids=(5, 2)):
+def _care_snapshot(root, ids=(5, 2, 3)):
     raw = root / "zen_care_wind_b" / ev.CARE_SNAPSHOT / "raw"
     raw.mkdir(parents=True)
     info = "asset_id;event_id;event_label;event_start;event_start_id;event_end;event_end_id;event_description\n"  # noqa: E501
     info += "7;5;anomaly;2023-01-01 00:00:00;1;2023-01-02 00:00:00;2;high temperature\n"
     info += "8;2;normal;2023-01-01 00:00:00;1;2023-01-02 00:00:00;2;\n"
     info += "9;9;normal;2023-01-01 00:00:00;1;2023-01-02 00:00:00;2;\n"
+    info += "8;3;normal;2023-01-01 00:00:00;1;2023-01-02 00:00:00;2;\n"
     (raw / "event_info.csv").write_bytes(_zip_local("info", info.encode()))
     for event_id in ids:
         csv_text = _care_frame().assign(asset_id=event_id).to_csv(sep=";", index=False)
@@ -3529,20 +3530,20 @@ def test_the_care_builder_stacks_the_datasets_and_keeps_the_natural_labels_in_a_
     ev._build_care(tmp_path / "acquired", tmp_path / "o", manifest)
     folder = tmp_path / "o" / "zen_care_wind_b"
     series = pd.read_csv(folder / "series.csv")
-    assert series["event_id"].tolist() == [2] * 3 + [5] * 3  # datasets in identifier order
+    assert (
+        series["event_id"].tolist() == [2] * 3 + [3] * 3 + [5] * 3
+    )  # datasets in identifier order
     assert "event_label" not in series and "event_description" not in series
     events = pd.read_csv(folder / "events.csv")
-    assert events["event_id"].tolist() == [2, 5, 9] and events["in_view"].tolist() == [
-        True,
-        True,
-        False,
-    ]
-    assert events["event_label"].tolist() == ["normal", "anomaly", "normal"]
+    assert events["event_id"].tolist() == [2, 3, 5, 9]
+    assert events["in_view"].tolist() == [True, True, True, False]
+    assert events["event_label"].tolist() == ["normal", "normal", "anomaly", "normal"]
     view = manifest["zen_care_wind_b"]
     assert (
-        view["sampling"]["datasets"] == [2, 5] and view["sampling"]["anomaly_datasets_in_view"] == 1
+        view["sampling"]["datasets"] == [2, 3, 5]
+        and view["sampling"]["anomaly_datasets_in_view"] == 1
     )
-    assert view["sampling"]["rows_in"] == 6 and view["files"]["events.csv"]["rows"] == 3
+    assert view["sampling"]["rows_in"] == 9 and view["files"]["events.csv"]["rows"] == 4
     assert (
         view["source_snapshot"] == f"zen_care_wind_b/{ev.CARE_SNAPSHOT}"
         and view["pseudonymised"] == []
@@ -3553,3 +3554,44 @@ def test_the_care_builder_refuses_a_snapshot_without_datasets(tmp_path):
     _care_snapshot(tmp_path / "acquired", ids=())
     with pytest.raises(ev.ViewError, match="^no dataset in the snapshot$"):
         ev._build_care(tmp_path / "acquired", tmp_path / "o", {})
+
+
+def test_zip_local_member_header_boundaries_extra_field_and_wide_name_lengths():
+    import struct as _st
+
+    bare = b"PK\x03\x04" + b"\0" * 26  # exactly 30 bytes: a header with nothing after it
+    assert len(bare) == 30
+    with pytest.raises(ev.ViewError, match="^unsupported zip method 0$"):
+        ev.zip_local_member(bare)
+    deflate_header = bytearray(bare)
+    deflate_header[8:10] = _st.pack("<H", 8)
+    with pytest.raises(ev.ViewError, match="^deflate stream incomplete$"):
+        ev.zip_local_member(bytes(deflate_header))
+    body = _zip_local("n.csv", b"data;1\n")
+    head, rest = body[:30], body[30:]
+    wide = bytearray(head)
+    wide[28:30] = _st.pack("<H", 6)  # extra field of six bytes between name and data
+    padded = bytes(wide) + rest[:5] + b"ABCDEF" + rest[5:]
+    assert ev.zip_local_member(padded) == b"data;1\n"
+    long_name = "n" * 40000  # above the signed 16-bit range
+    assert ev.zip_local_member(_zip_local(long_name, b"abc")) == b"abc"
+
+
+def test_care_view_turns_unreadable_ids_and_status_into_missing_and_orders_equal_times_by_file_order():  # noqa: E501
+    raw = _care_frame().astype({"asset_id": object, "id": object, "status_type_id": object})
+    raw.loc[0, ["asset_id", "id", "status_type_id"]] = ["x", "y", "z"]
+    out = ev.care_series_view(raw, 1)
+    last = out.iloc[-1]
+    assert pd.isna(last["asset_id"]) and pd.isna(last["row_id"]) and pd.isna(last["status_type"])
+    n = 40
+    tied = pd.DataFrame(
+        {
+            "time_stamp": ["2023-01-01 00:00:00"] * n,
+            "asset_id": 1,
+            "id": range(n),
+            "train_test": "train",
+            "status_type_id": 0,
+            "s_avg": range(n),
+        }
+    )
+    assert ev.care_series_view(tied, 1)["row_id"].tolist() == list(range(n))
