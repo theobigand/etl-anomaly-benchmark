@@ -2061,6 +2061,36 @@
    "size": "3.26M total / 43,503 view rows",
    "source_url": "https://zenodo.org/api/records/22213249",
    "status": "acquired"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "ingv:iside-seismic",
+   "licence": "CC BY 4.0",
+   "name": "INGV ISIDe Seismic Catalog (2022-2024)",
+   "next_step": "acquired and ready under P-SEQ",
+   "notes": "Integrated as ingv_seismic_events (17,755 events across 1,096 UTC days, minmagnitude>=1.5; non-BP natural geophysical event sequences)",
+   "publisher": "INGV",
+   "reason": "Independent CC BY 4.0 non-BP geophysical monitoring event stream",
+   "size": "17,755 events / 1,096 daily sequences",
+   "source_url": "https://terremoti.ingv.it/en/iside",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "zenodo:20340547-gha",
+   "licence": "CC BY 4.0",
+   "name": "GitHub Actions Workflows Change History",
+   "next_step": "acquired and ready under P-SEQ",
+   "notes": "Integrated as zen_gha_workflows (6 MB gzip prefix = 85,430 events across 1,272 complete repos, trailing partial dropped, author/committer stripped)",
+   "publisher": "Zenodo 20340547 Authors",
+   "reason": "Independent CC BY 4.0 software CI/CD event sequences (non-BP)",
+   "size": "85,430 kept events / 1,272 complete repos",
+   "source_url": "https://zenodo.org/api/records/20340547",
+   "status": "acquired"
   }
  ],
  "date": "2026-11-21",

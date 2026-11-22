@@ -355,6 +355,17 @@
    "C3": "planetary geomagnetic Kp and ap activity time series"
   }
  },
+ "github_actions_workflows": {
+  "curator": "Zenodo",
+  "domain": "software CI/CD workflow evolution",
+  "generating_system": "GitHub Actions CI/CD workflow file commit history",
+  "note": "Software engineering CI/CD configuration event sequences per repository; non-BP mechanism",
+  "producer": "GitHub Open-Source Repositories (Zenodo 20340547)",
+  "schema_family": "git ci workflow change history",
+  "structure": {
+   "C4": "per-repository workflow edit events with git_change_type, YAML validity flags and file content hashes"
+  }
+ },
  "grouplens": {
   "curator": "grouplens",
   "domain": "recommender service",
@@ -518,6 +529,17 @@
   "schema_family": "xes event log",
   "structure": {
    "C4": "business process execution"
+  }
+ },
+ "ingv_seismic": {
+  "curator": "INGV FDSNWS",
+  "domain": "geophysical seismology",
+  "generating_system": "INGV ISIDe national seismic sensor detection and event catalog",
+  "note": "Real-time geophysical seismic event sequence grouped by UTC date; non-BP natural physical event mechanism",
+  "producer": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+  "schema_family": "fdsnws seismic event catalog",
+  "structure": {
+   "C4": "chronological seismic detection sequences with UTC timestamps, depth, magnitude scale and event type"
   }
  },
  "inpi_bce_ratios": {

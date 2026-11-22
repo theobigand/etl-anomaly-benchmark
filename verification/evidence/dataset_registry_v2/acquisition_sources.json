@@ -9952,6 +9952,75 @@
    "stratum": "C2a",
    "upstream": "derived from public Bulgarian NHIF monthly hospitalisation reports under CC BY 4.0",
    "upstream_verified": true
+  },
+  {
+   "attribution": "Istituto Nazionale di Geofisica e Vulcanologia (INGV), ISIDe FDSNWS Event Web Service 2022-2024 (CC BY 4.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "ingv_2022.txt",
+     "observed": "2022",
+     "url": "https://webservices.ingv.it/fdsnws/event/1/query?starttime=2022-01-01T00:00:00&endtime=2023-01-01T00:00:00&minmagnitude=1.5&format=text"
+    },
+    {
+     "name": "ingv_2023.txt",
+     "observed": "2023",
+     "url": "https://webservices.ingv.it/fdsnws/event/1/query?starttime=2023-01-01T00:00:00&endtime=2024-01-01T00:00:00&minmagnitude=1.5&format=text"
+    },
+    {
+     "name": "ingv_2024.txt",
+     "observed": "2024",
+     "url": "https://webservices.ingv.it/fdsnws/event/1/query?starttime=2024-01-01T00:00:00&endtime=2025-01-01T00:00:00&minmagnitude=1.5&format=text"
+    }
+   ],
+   "hosts": [
+    "webservices.ingv.it"
+   ],
+   "id": "ingv_seismic_events",
+   "licence_class": "open",
+   "licence_location": "https://terremoti.ingv.it/en/iside",
+   "licence_text": "INGV ISIDe portal (read 2026-11-22): INGV seismic catalog data published under Creative Commons Attribution 4.0 International (CC BY 4.0)",
+   "max_bytes": 16777216,
+   "method": "three annual FDSNWS text catalog exports for 2022, 2023 and 2024 filtered at minmagnitude=1.5",
+   "min_interval": 1.0,
+   "privacy": "public geophysical seismic detections only; Author, MagAuthor and EventLocationName dropped in view",
+   "publisher": "Istituto Nazionale di Geofisica e Vulcanologia (INGV)",
+   "rate_limit": "3 annual text GET queries at 1.0 s minimum interval",
+   "redistribution": "CC BY 4.0; raw files stay local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "first party: INGV operates the Italian national seismic monitoring network and FDSNWS API",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "GitHub Actions Workflows Change History Dataset (Zenodo 20340547, CC BY 4.0), first 6 MB gzip prefix; accessed 2026-11-22",
+   "files": [],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_gha_workflows",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/20340547",
+   "licence_text": "Zenodo record 20340547 API metadata (read 2026-11-22): license id 'cc-by-4.0' (Creative Commons Attribution 4.0 International)",
+   "max_bytes": 16777216,
+   "method": "one deterministic 6 MB HTTP range request of workflows.csv.gz ordered by repository, dropping the trailing incomplete repository",
+   "min_interval": 1.0,
+   "privacy": "author_name, author_email, committer_name, committer_email, commit_hash and uid dropped; repository pseudonymised with salted SHA-256",
+   "publisher": "Zenodo 20340547 GitHub Actions Benchmark Authors",
+   "ranges": [
+    {
+     "length": 6291456,
+     "name": "workflows_prefix.csv.gz",
+     "observed": "2019-2026",
+     "start": 0,
+     "url": "https://zenodo.org/api/records/20340547/files/workflows.csv.gz/content"
+    }
+   ],
+   "rate_limit": "single 6 MB HTTP range request, descriptive user agent",
+   "redistribution": "CC BY 4.0; raw prefix stays local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "compiled open-source GitHub repository CI/CD workflow histories published under CC BY 4.0",
+   "upstream_verified": true
   }
  ]
 }

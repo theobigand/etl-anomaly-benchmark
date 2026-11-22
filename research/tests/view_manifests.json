@@ -676,6 +676,37 @@
    "source_snapshot": "gfz_kp_index/2026-11-22"
   }
  },
+ "gha": {
+  "zen_gha_workflows": {
+   "dropped": [
+    "author_email",
+    "author_name",
+    "commit_hash",
+    "committer_email",
+    "committer_name",
+    "uid"
+   ],
+   "files": {
+    "workflows.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "workflows.csv": "repo_id,committed_date,authored_date,file_path,previous_file_path,file_hash,previous_file_hash,git_change_type,valid_yam"
+   },
+   "pseudonymised": [
+    "repository"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "method": "6 MB gzip prefix of Zenodo 20340547 workflows.csv.gz sorted by repository with trailing partial repository dropped when stream truncated",
+    "partial_repo_rows_dropped": 0,
+    "repos": 2,
+    "stream_complete": true
+   },
+   "source_snapshot": "zen_gha_workflows/2026-11-22"
+  }
+ },
  "gml_co2": {
   "noaa_gml_co2_weekly": {
    "dropped": [],
@@ -695,6 +726,36 @@
     "missing_co2_rows": 1
    },
    "source_snapshot": "noaa_gml_co2_weekly/2026-11-22"
+  }
+ },
+ "ingv": {
+  "ingv_seismic_events": {
+   "dropped": [
+    "Author",
+    "Catalog",
+    "Contributor",
+    "ContributorID",
+    "EventLocationName",
+    "MagAuthor"
+   ],
+   "files": {
+    "events.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "events.csv": "event_id,time,event_date,latitude,longitude,depth_km,mag_type,magnitude,event_type"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "days": 2,
+    "files": [
+     "ingv_2022.txt",
+     "ingv_2023.txt"
+    ],
+    "method": "complete INGV ISIDe FDSNWS catalog queries with minmagnitude>=1.5 across 2022-2024"
+   },
+   "source_snapshot": "ingv_seismic_events/2026-11-22"
   }
  },
  "inpi": {

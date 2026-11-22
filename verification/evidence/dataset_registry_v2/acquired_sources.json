@@ -5290,6 +5290,46 @@
    "stratum": "C2a",
    "system": "nhif_bulgaria_inpatient_billing",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "ingv_seismic",
+   "id": "ingv_seismic_events",
+   "licence_class": "open",
+   "protocols": "P-SEQ on daily UTC geophysical seismic event sequences (event timestamps, magnitudes, depths, event types)",
+   "publisher": "ingv_italy",
+   "reason": "INGV ISIDe FDSNWS seismic catalog 2022-2024 (CC BY 4.0, 17,755 events across 1,096 UTC days, minmagnitude>=1.5): natural geophysical monitoring event stream covering earthquake, quarry blast, controlled explosion, explosion and landslide classes; mechanism unrelated to business-process execution",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "INGV ISIDe portal (read 2026-11-22): CC BY 4.0",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "ingv_iside_seismic_monitoring_network",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "github_actions_workflows",
+   "id": "zen_gha_workflows",
+   "licence_class": "open",
+   "protocols": "P-SEQ on per-repository GitHub Actions CI/CD workflow change histories (order, missing edits, invalid YAML transitions)",
+   "publisher": "zen_20340547_authors",
+   "reason": "GitHub Actions workflow commit histories (Zenodo 20340547, CC BY 4.0, 6 MB prefix): 85,430 workflow change events across 1,272 complete open-source repositories (1 trailing partial repository dropped), 2019-2026; author/committer names, emails and commit hashes dropped; repository pseudonymised; software CI/CD evolution mechanism, not business-process execution",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Zenodo 20340547 API metadata (read 2026-11-22): CC BY 4.0",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "github_actions_ci_workflow_repository_log",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

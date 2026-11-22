@@ -1060,6 +1060,8 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _noumea_snapshot(root)
     _kanto_snapshot(root)
     _nhif_snapshot(root)
+    _ingv_snapshot(root)
+    _gha_snapshot(root)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
@@ -1075,7 +1077,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -6959,3 +6961,247 @@ def test_nhif_cases_view_and_builder(tmp_path):
         "facilities": 1,
     }
     assert view["source_snapshot"] == f"zen_nhif_hospital_cases/{ev.NHIF_SNAPSHOT}"
+
+
+def _ingv_snapshot(root):
+    raw = root / "ingv_seismic_events" / ev.INGV_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    header = (
+        "#EventID|Time|Latitude|Longitude|Depth/Km|Author|Catalog|Contributor|"
+        "ContributorID|MagType|Magnitude|MagAuthor|EventLocationName|EventType"
+    )
+    (raw / "ingv_2023.txt").write_text(
+        "\n".join(
+            [
+                header,
+                "003|2023-01-01T12:00:00.000000|42.5|13.2|10.0|AUTH||C||ML|2.1|--|Loc A|earthquake",
+                "002|2022-05-01T01:00:00.000000|41.0|14.0|8.0|AUTH||C||Mw|3.0|--|Dup|quarry blast",
+            ]
+        )
+        + "\n"
+    )
+    (raw / "ingv_2022.txt").write_text(
+        "\n".join(
+            [
+                header,
+                "002|2022-05-01T01:00:00.000000|41.5|14.1|7.5|AUTH||C||ML|2.8|--|Keep|earthquake",
+                "001|2022-05-01T01:00:00.000000|bad|12.0|5.0|AUTH||C||Md|1.9|--|First|explosion",
+            ]
+        )
+        + "\n"
+    )
+
+
+def _gha_snapshot(root):
+    import gzip
+
+    raw = root / "zen_gha_workflows" / ev.GHA_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    header = (
+        "repository,commit_hash,author_name,author_email,committer_name,committer_email,"
+        "committed_date,authored_date,file_path,previous_file_path,file_hash,"
+        "previous_file_hash,git_change_type,valid_yaml,probably_workflow,valid_workflow,uid"
+    )
+    r1 = (
+        "org/alpha,c1,Alice,a@ex.org,Alice,a@ex.org,1700000002,1700000001,"
+        ".github/workflows/ci.yml,.github/workflows/ci.yml,h2,h1,M,True,True,True,u1"
+    )
+    r2 = (
+        "org/alpha,c0,Bob,b@ex.org,Bob,b@ex.org,1700000000,1700000000,"
+        ".github/workflows/ci.yml,.github/workflows/ci.yml,h1,,A,True,True,True,u0"
+    )
+    r3 = (
+        ",c2,Carol,c@ex.org,Carol,c@ex.org,1700000005,1700000005,"
+        ".github/workflows/r.yml,,h3,,A,False,True,False,u2"
+    )
+    csv_blob = "\n".join([header, r1, r2, r3]) + "\n"
+    with gzip.open(raw / "workflows_prefix.csv.gz", "wt", encoding="utf-8") as fh:
+        fh.write(csv_blob)
+
+
+def test_ingv_seismic_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no INGV seismic text files in the snapshot$"):
+        ev._build_ingv_seismic(tmp_path / "empty", tmp_path / "err", {})
+    raw = pd.DataFrame(
+        [
+            {
+                "#EventID": "002",
+                "Time": "2022-05-01T01:00:00",
+                "Latitude": "41.5",
+                "Longitude": "14.1",
+                "Depth/Km": "7.5",
+                "Author": "A",
+                "Catalog": "",
+                "Contributor": "",
+                "ContributorID": "",
+                "MagType": "ML",
+                "Magnitude": "2.8",
+                "MagAuthor": "--",
+                "EventLocationName": "L1",
+                "EventType": "earthquake",
+            },
+            {
+                "#EventID": "002",
+                "Time": "2022-05-01T01:00:00",
+                "Latitude": "99.0",
+                "Longitude": "99.0",
+                "Depth/Km": "99.0",
+                "Author": "A",
+                "Catalog": "",
+                "Contributor": "",
+                "ContributorID": "",
+                "MagType": "Mw",
+                "Magnitude": "9.0",
+                "MagAuthor": "--",
+                "EventLocationName": "Dup",
+                "EventType": "blast",
+            },
+            {
+                "#EventID": "001",
+                "Time": "2022-05-01T01:00:00",
+                "Latitude": "bad",
+                "Longitude": "12.0",
+                "Depth/Km": "bad",
+                "Author": "A",
+                "Catalog": "",
+                "Contributor": "",
+                "ContributorID": "",
+                "MagType": "Md",
+                "Magnitude": "bad",
+                "MagAuthor": "--",
+                "EventLocationName": "L0",
+                "EventType": "explosion",
+            },
+        ]
+    )
+    copy_before = raw.copy(deep=True)
+    viewed = ev.ingv_seismic_view(raw)
+    pd.testing.assert_frame_equal(raw, copy_before)
+    assert viewed.columns.tolist() == [
+        "event_id",
+        "time",
+        "event_date",
+        "latitude",
+        "longitude",
+        "depth_km",
+        "mag_type",
+        "magnitude",
+        "event_type",
+    ]
+    assert viewed["event_id"].tolist() == ["001", "002"]
+    assert viewed["event_date"].tolist() == ["2022-05-01", "2022-05-01"]
+    assert viewed["magnitude"].iloc[1] == 2.8 and pd.isna(viewed["magnitude"].iloc[0])
+    assert pd.isna(viewed["latitude"].iloc[0]) and pd.isna(viewed["depth_km"].iloc[0])
+
+    root = tmp_path / "acq"
+    _ingv_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_ingv_seismic(root, out, manifest)
+    ev._build_ingv_seismic(root, out, manifest)
+    df = pd.read_csv(out / "ingv_seismic_events" / "events.csv", dtype={"event_id": str})
+    assert df["event_id"].tolist() == ["001", "002", "003"]
+    assert df["event_date"].tolist() == ["2022-05-01", "2022-05-01", "2023-01-01"]
+    assert df["mag_type"].tolist() == ["Md", "ML", "ML"]
+    assert df["event_type"].tolist() == ["explosion", "earthquake", "earthquake"]
+    assert pd.isna(df.loc[0, "latitude"]) and df["longitude"].tolist() == [12.0, 14.1, 13.2]
+    assert df["depth_km"].tolist() == [5.0, 7.5, 10.0]
+    view = manifest["ingv_seismic_events"]
+    assert view["dropped"] == [
+        "Author",
+        "Catalog",
+        "Contributor",
+        "ContributorID",
+        "EventLocationName",
+        "MagAuthor",
+    ]
+    assert view["pseudonymised"] == [] and view["files"]["events.csv"]["rows"] == 3
+    assert view["sampling"] == {
+        "method": (
+            "complete INGV ISIDe FDSNWS catalog queries with minmagnitude>=1.5 across 2022-2024"
+        ),
+        "files": ["ingv_2022.txt", "ingv_2023.txt"],
+        "days": 2,
+    }
+    assert view["source_snapshot"] == f"ingv_seismic_events/{ev.INGV_SNAPSHOT}"
+
+
+def test_gha_workflows_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no GHA workflows gzip prefix in the snapshot$"):
+        ev._build_gha_workflows(tmp_path / "empty", tmp_path / "err", {})
+    empty_df, dropped0 = ev.gha_workflows_view(
+        [
+            "repository,committed_date,authored_date,file_path,previous_file_path,"
+            "file_hash,previous_file_hash,git_change_type,valid_yaml,probably_workflow,"
+            "valid_workflow"
+        ],
+        complete=False,
+    )
+    assert empty_df.empty and empty_df.columns.tolist() == list(ev.GHA_COLS) and dropped0 == 0
+    hdr = (
+        "repository,commit_hash,author_name,author_email,committer_name,committer_email,"
+        "committed_date,authored_date,file_path,previous_file_path,file_hash,"
+        "previous_file_hash,git_change_type,valid_yaml,probably_workflow,valid_workflow,uid"
+    )
+    sample_lines = [
+        hdr,
+        "a/b,c1,A,a@x,A,a@x,10,bad,.github/workflows/b.yml,,hb,,M,True,True,True,u1",
+        "a/b,c0,A,a@x,A,a@x,10,9,.github/workflows/b.yml,,ha,,A,True,True,True,u0",
+        ",c2,A,a@x,A,a@x,5,5,.github/workflows/z.yml,,hz,,A,False,False,False,u2",
+        "partial/repo,c3,A,a@x,A,a@x,20,20,.github/workflows/p.yml,,hp,,D,True,True,True,u3",
+    ]
+    trunc_df, dropped_partial = ev.gha_workflows_view(sample_lines)
+    assert dropped_partial == 1 and len(trunc_df) == 3
+    assert trunc_df["repo_id"].fillna("").tolist() == ["", ev.pseudonym("a/b"), ev.pseudonym("a/b")]
+    assert trunc_df["file_hash"].tolist() == ["hz", "ha", "hb"]
+    assert pd.isna(trunc_df.iloc[2]["authored_date"])
+    full_df, dropped_full = ev.gha_workflows_view(sample_lines, complete=True)
+    assert (
+        dropped_full == 0
+        and len(full_df) == 4
+        and ev.pseudonym("partial/repo") in full_df["repo_id"].tolist()
+    )
+
+    root = tmp_path / "acq"
+    _gha_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_gha_workflows(root, out, manifest)
+    ev._build_gha_workflows(root, out, manifest)
+    df = pd.read_csv(
+        out / "zen_gha_workflows" / "workflows.csv",
+        dtype={"previous_file_hash": str, "previous_file_path": str},
+    )
+    assert df.columns.tolist() == list(ev.GHA_COLS) and len(df) == 3
+    assert df["committed_date"].tolist() == [1700000005, 1700000000, 1700000002]
+    assert df["authored_date"].tolist() == [1700000005, 1700000000, 1700000001]
+    assert df["file_path"].tolist() == [
+        ".github/workflows/r.yml",
+        ".github/workflows/ci.yml",
+        ".github/workflows/ci.yml",
+    ]
+    assert df["previous_file_path"].fillna("").tolist() == [
+        "",
+        ".github/workflows/ci.yml",
+        ".github/workflows/ci.yml",
+    ]
+    assert df["previous_file_hash"].fillna("").tolist() == ["", "", "h1"]
+    assert df["git_change_type"].tolist() == ["A", "A", "M"]
+    assert df["valid_yaml"].tolist() == [False, True, True]
+    assert df["probably_workflow"].tolist() == [True, True, True]
+    assert df["valid_workflow"].tolist() == [False, True, True]
+    assert "@" not in (out / "zen_gha_workflows" / "workflows.csv").read_text()
+    view = manifest["zen_gha_workflows"]
+    assert view["dropped"] == list(ev.GHA_DROP)
+    assert view["pseudonymised"] == ["repository"] and view["salt_label"] == ev.SALT
+    assert view["files"]["workflows.csv"]["rows"] == 3
+    assert view["sampling"] == {
+        "method": (
+            "6 MB gzip prefix of Zenodo 20340547 workflows.csv.gz sorted by repository "
+            "with trailing partial repository dropped when stream truncated"
+        ),
+        "stream_complete": True,
+        "partial_repo_rows_dropped": 0,
+        "repos": 2,
+    }
+    assert view["source_snapshot"] == f"zen_gha_workflows/{ev.GHA_SNAPSHOT}"

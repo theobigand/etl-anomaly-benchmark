@@ -1743,6 +1743,23 @@
    "units": 180229,
    "view": "hmlr_price_paid"
   },
+  "ingv_seismic_events": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "17,755 INGV ISIDe seismic events across 1,096 UTC days (2022-2024) filtered at minmagnitude>=1.5",
+    "non-BP physical event mechanism spanning earthquake, quarry blast, controlled explosion, explosion and landslide event types",
+    "Author, MagAuthor and free-text EventLocationName dropped"
+   ],
+   "first_party": true,
+   "independent_group": "ingv_seismic",
+   "min_units": 1000,
+   "natural_labels": "none; physical EventType distinguishes natural earthquakes from quarry blasts rather than ETL faults",
+   "partitions": "hash of event_date 70/15/15 so daily seismic sequences stay together",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 1096,
+   "view": "ingv_seismic_events"
+  },
   "inpi_bce_ratios": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -3168,6 +3185,22 @@
    "protocol_id": "P-TAB",
    "units": 116977,
    "view": "zen_fdata_fugaku"
+  },
+  "zen_gha_workflows": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "prefix of repository-ordered workflows.csv.gz: 85,430 workflow edit events across 1,272 complete repositories after dropping 1 trailing partial repository (13 rows), not a random repository sample",
+    "non-BP CI/CD workflow mechanism recording git_change_type (A/M/D/R) and valid_yaml / valid_workflow state transitions",
+    "author/committer names, emails, commit_hash and uid dropped; repository pseudonymised with salted SHA-256 and 0 emails verified"
+   ],
+   "first_party": true,
+   "independent_group": "github_actions_workflows",
+   "min_units": 1000,
+   "partitions": "hash of repo_id 70/15/15 so repository workflow histories do not split across splits",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 1272,
+   "view": "zen_gha_workflows"
   },
   "zen_japan_buildings": {
    "anomaly_origin": "controlled_injection",

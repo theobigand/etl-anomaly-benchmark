@@ -388,6 +388,14 @@ def _nhif(root, tmp):
     tev._nhif_snapshot(root)
 
 
+def _ingv(root, tmp):
+    tev._ingv_snapshot(root)
+
+
+def _gha(root, tmp):
+    tev._gha_snapshot(root)
+
+
 def _tlc(root, tmp):
     tev._tlc_page(
         [{}, {"tpep_pickup_datetime": "2023-03-07T07:00:00.000", "total_amount": "0.0"}]
@@ -437,6 +445,8 @@ CASES = {
     "noumea": (_noumea, ev._build_port_noumea, ["zen_port_noumea"], {}),
     "kanto": (_kanto, ev._build_kanto_landslides, ["zen_kanto_landslides"], {}),
     "nhif": (_nhif, ev._build_nhif_cases, ["zen_nhif_hospital_cases"], {}),
+    "ingv": (_ingv, ev._build_ingv_seismic, ["ingv_seismic_events"], {}),
+    "gha": (_gha, ev._build_gha_workflows, ["zen_gha_workflows"], {}),
     "tlc": (_tlc, ev._build_tlc, ["nyc_tlc_yellow"], {}),
     "maude": (_maude_case, ev._build_maude, ["openfda_device_event"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),

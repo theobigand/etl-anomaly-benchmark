@@ -2262,6 +2262,20 @@
   },
   {
    "failed": null,
+   "group": "ingv_seismic",
+   "id": "ingv_seismic_events",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "github_actions_workflows",
+   "id": "zen_gha_workflows",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2503,7 +2517,9 @@
    "fin_institute_nl",
    "fugaku_riken",
    "german_paying_agency",
+   "github_actions_workflows",
    "hospital_sepsis_nl",
+   "ingv_seismic",
    "italian_road_fines",
    "loghub_collection",
    "microsoft_azure_compute",
@@ -2600,13 +2616,13 @@
    "structurally_valid": 28
   },
   "C4": {
-   "acquired": 34,
-   "discovered": 35,
-   "experiment_ready": 33,
-   "protocol_ready": 33,
-   "rights_verified": 34,
-   "scientifically_eligible": 33,
-   "structurally_valid": 33
+   "acquired": 36,
+   "discovered": 37,
+   "experiment_ready": 35,
+   "protocol_ready": 35,
+   "rights_verified": 36,
+   "scientifically_eligible": 35,
+   "structurally_valid": 35
   },
   "C5": {
    "acquired": 34,

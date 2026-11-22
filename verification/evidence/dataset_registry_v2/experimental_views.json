@@ -2586,6 +2586,33 @@
   },
   "source_snapshot": "hmlr_price_paid/2026-11-21 (fragment)"
  },
+ "ingv_seismic_events": {
+  "dropped": [
+   "Author",
+   "Catalog",
+   "Contributor",
+   "ContributorID",
+   "EventLocationName",
+   "MagAuthor"
+  ],
+  "files": {
+   "events.csv": {
+    "rows": 17755,
+    "sha256": "39c3d3d67d14778300e0e8d9701da2b024e5c1b6f8abac954183de67fb1004c5"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "days": 1096,
+   "files": [
+    "ingv_2022.txt",
+    "ingv_2023.txt",
+    "ingv_2024.txt"
+   ],
+   "method": "complete INGV ISIDe FDSNWS catalog queries with minmagnitude>=1.5 across 2022-2024"
+  },
+  "source_snapshot": "ingv_seismic_events/2026-11-22"
+ },
  "inpi_bce_ratios": {
   "dropped": [
    "confidentiality"
@@ -4532,6 +4559,33 @@
    "truncated": false
   },
   "source_snapshot": "zen_fdata_fugaku/2026-11-21"
+ },
+ "zen_gha_workflows": {
+  "dropped": [
+   "author_email",
+   "author_name",
+   "commit_hash",
+   "committer_email",
+   "committer_name",
+   "uid"
+  ],
+  "files": {
+   "workflows.csv": {
+    "rows": 85430,
+    "sha256": "2a706e025b8b2d8025d4ab0eb4010703afc3e795635f5ee470ffeb723f117ea7"
+   }
+  },
+  "pseudonymised": [
+   "repository"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "method": "6 MB gzip prefix of Zenodo 20340547 workflows.csv.gz sorted by repository with trailing partial repository dropped when stream truncated",
+   "partial_repo_rows_dropped": 13,
+   "repos": 1272,
+   "stream_complete": false
+  },
+  "source_snapshot": "zen_gha_workflows/2026-11-22"
  },
  "zen_japan_buildings": {
   "dropped": [

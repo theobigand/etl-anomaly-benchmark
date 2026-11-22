@@ -5253,6 +5253,144 @@ def _build_nhif_cases(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+INGV_SNAPSHOT = "2026-11-22"
+INGV_DROP = ("Author", "Catalog", "Contributor", "ContributorID", "EventLocationName", "MagAuthor")
+
+
+def ingv_seismic_view(raw: pd.DataFrame) -> pd.DataFrame:
+    """Unique INGV ISIDe seismic catalog events with UTC date key sorted chronologically."""
+    dedup = raw.drop_duplicates(subset=["#EventID"])
+    frame = pd.DataFrame(
+        {
+            "event_id": dedup["#EventID"],
+            "time": dedup["Time"],
+            "event_date": dedup["Time"].str.slice(0, 10),
+            "latitude": pd.to_numeric(dedup["Latitude"], errors="coerce"),
+            "longitude": pd.to_numeric(dedup["Longitude"], errors="coerce"),
+            "depth_km": pd.to_numeric(dedup["Depth/Km"], errors="coerce"),
+            "mag_type": dedup["MagType"],
+            "magnitude": pd.to_numeric(dedup["Magnitude"], errors="coerce"),
+            "event_type": dedup["EventType"],
+        }
+    )
+    return frame.sort_values(["time", "event_id"])
+
+
+def _build_ingv_seismic(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw_dir = root / "ingv_seismic_events" / INGV_SNAPSHOT / "raw"
+    files = sorted(raw_dir.glob("ingv_*.txt"))
+    if not files:
+        raise ViewError("no INGV seismic text files in the snapshot")
+    raw = pd.concat([pd.read_csv(path, sep="|", dtype=str) for path in files], ignore_index=True)
+    view = ingv_seismic_view(raw)
+    folder = out / "ingv_seismic_events"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "events.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "ingv_seismic_events",
+        {"events.csv": (target, len(view))},
+        dropped=sorted(INGV_DROP),
+        pseudonymised=[],
+        sampling={
+            "method": "complete INGV ISIDe FDSNWS catalog queries with minmagnitude>=1.5 across 2022-2024",  # noqa: E501
+            "files": [p.name for p in files],
+            "days": int(view["event_date"].nunique()),
+        },
+        source_snapshot=f"ingv_seismic_events/{INGV_SNAPSHOT}",
+    )
+
+
+GHA_SNAPSHOT = "2026-11-22"
+GHA_DROP = (
+    "author_email",
+    "author_name",
+    "commit_hash",
+    "committer_email",
+    "committer_name",
+    "uid",
+)
+GHA_COLS = (
+    "repo_id",
+    "committed_date",
+    "authored_date",
+    "file_path",
+    "previous_file_path",
+    "file_hash",
+    "previous_file_hash",
+    "git_change_type",
+    "valid_yaml",
+    "probably_workflow",
+    "valid_workflow",
+)
+
+
+def gha_workflows_view(lines: list[str], complete: bool = False) -> tuple[pd.DataFrame, int]:
+    """Per-repository GitHub Actions workflow change events without author/committer identities."""
+    import csv
+
+    rows = list(csv.DictReader(lines))
+    dropped_partial = 0
+    if not complete and rows:
+        trailing = rows[-1]["repository"]
+        kept = [row for row in rows if row["repository"] != trailing]
+        dropped_partial = len(rows) - len(kept)
+        rows = kept
+    frame = pd.DataFrame(
+        [
+            {
+                "repo_id": pseudonym(r["repository"]) if r.get("repository") else "",
+                "committed_date": r["committed_date"],
+                "authored_date": r["authored_date"],
+                "file_path": r["file_path"],
+                "previous_file_path": r["previous_file_path"],
+                "file_hash": r["file_hash"],
+                "previous_file_hash": r["previous_file_hash"],
+                "git_change_type": r["git_change_type"],
+                "valid_yaml": r["valid_yaml"],
+                "probably_workflow": r["probably_workflow"],
+                "valid_workflow": r["valid_workflow"],
+            }
+            for r in rows
+        ],
+        columns=GHA_COLS,
+    )
+    for col in ("committed_date", "authored_date"):
+        frame[col] = pd.to_numeric(frame[col], errors="coerce")
+    return (
+        frame.sort_values(["repo_id", "committed_date", "file_path", "file_hash"]),
+        dropped_partial,
+    )
+
+
+def _build_gha_workflows(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    archive = root / "zen_gha_workflows" / GHA_SNAPSHOT / "raw" / "workflows_prefix.csv.gz"
+    if not archive.exists():
+        raise ViewError("no GHA workflows gzip prefix in the snapshot")
+    lines, complete = gzip_members_lines(archive.read_bytes())
+    view, dropped_partial = gha_workflows_view(lines, complete)
+    folder = out / "zen_gha_workflows"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "workflows.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "zen_gha_workflows",
+        {"workflows.csv": (target, len(view))},
+        dropped=list(GHA_DROP),
+        pseudonymised=["repository"],
+        salt_label=SALT,
+        sampling={
+            "method": "6 MB gzip prefix of Zenodo 20340547 workflows.csv.gz sorted by repository with trailing partial repository dropped when stream truncated",  # noqa: E501
+            "stream_complete": complete,
+            "partial_repo_rows_dropped": dropped_partial,
+            "repos": int(view["repo_id"].nunique()),
+        },
+        source_snapshot=f"zen_gha_workflows/{GHA_SNAPSHOT}",
+    )
+
+
 BUILD_STEPS = (
     _build_openalex,
     _build_monash,
@@ -5320,6 +5458,8 @@ BUILD_STEPS = (
     _build_port_noumea,
     _build_kanto_landslides,
     _build_nhif_cases,
+    _build_ingv_seismic,
+    _build_gha_workflows,
     _build_flat,
     _build_series,
     _build_ukspend,
