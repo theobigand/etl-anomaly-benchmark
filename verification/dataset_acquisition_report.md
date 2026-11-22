@@ -1022,3 +1022,21 @@ Machine-derived counts after this update: C1 52, C2a 13, C2b 12, C3 16, C4 14, C
 PNNL/EPRI battery storage, CARE wind farm B, NVD, EDP wind farm A and the St. Gallen testbed are new groups; the retail table and the PBDB relational view are promotions or participations, not new systems.
 
 Focused mutation (development evidence, case-sensitive volume, each group run separately): NVD functions 118 of 119; St. Gallen functions 267 of 278 (96.0 percent); CARE farm functions 143 of 147; PBDB relational functions 252 of 255 (98.8 percent); earlier scopes as in Update 17. No equivalence was approved.
+
+## Update 19: C4 and C3 corrections, the Formula One database, Backblaze drive telemetry and candidate decisions (2026-11-22)
+
+**Corrections.** The St. Gallen workflow log is Camunda process execution: it is counted in the business-process family (C4 largest family now 8 of 14 = 57 percent) and adds a new generating system, domain and evidence class (instrumented
+testbed), not a new event-generation mechanism. The 36-minute ten-hertz sensor log keeps its C3 readiness with recorded restrictions (`temporal_span`, `supported_fault_mechanisms`, `unsupported_fault_mechanisms`): window-local mechanisms only,
+no seasonal, slow-shift or long-history mechanisms (`anomaly_protocols.md`). The same fields were added for the new Backblaze source. Readiness rules were not changed.
+
+**New original generating systems.** (1) *Jolpica Formula One database* (C5): CC BY-NC-SA 4.0 in the project's terms (non-commercial academic use), the free delayed dump of 2026-11-07 verified against its published SHA-256; 11 tables, 13 foreign-key relations with no orphan, 745,127 laps;
+driver names, birth dates and nationalities dropped. A season-round-session-entry-lap topology unlike timetable feeds. (2) *Backblaze Drive Stats 2014* (C3): free with citation (publisher's page read in a browser); 60 daily files, one drive in eight by salted hash with whole series, 3,749 drives, 206,941 drive-days, 31
+real drive failures kept as a column (equipment failures, not ETL faults); the server ignores range requests so the 588 MB archive is stored locally.
+
+**Candidate decisions.** NYC TLC: the TLC terms page denies automated access (not bypassed) and the NYC Open Data mirror carries no licence field; blocked until the owner reads the terms or the TLC confirms. OpenAlex: already ready as C5 and C6 under one group, no new group. RelBench: rel-f1 is the Ergast lineage of the Jolpica group, rel-stack and rel-trial derive from groups already present,
+rel-salt (SAP SALT, CC BY-NC-SA 4.0 on a gated Hugging Face dataset) needs an account and acceptance (blocked, not bypassed through the mirror), rel-avito, rel-event and rel-hm are Kaggle competition data (account and acceptance), rel-amazon and rel-ratebeer unverified. CTU: unchanged, each database needs its own origin check.
+Loghub: the existing group already holds the 16 systems and Loghub-2.0 re-annotates the same logs. The INESC TEC and NBG sources remain permission pending.
+
+**Counts (machine-derived).** C1 52, C2a 13, C2b 12, C3 17, C4 14, C5 22, C6 11 (gaps 0, 17, 18, 23, 14, 14, 19); 130 distinct provenance groups, 129 generating systems, 130 producers, 25 curators, 54 domains, 37 schema families, 141 category participations; the largest schema family holds 49 percent of the groups.
+
+**Focused mutation.** Backblaze functions 190 of 196 (96.9 percent); `_build_tables` after the per-source snapshot change 218 of 227 (96.0 percent); earlier scopes unchanged. No equivalence was approved.
