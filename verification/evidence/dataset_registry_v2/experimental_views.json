@@ -3395,6 +3395,38 @@
   },
   "source_snapshot": "zen_bess/2026-11-21"
  },
+ "zen_care_wind_a": {
+  "dropped": [
+   "minimum, maximum and standard-deviation columns of every sensor"
+  ],
+  "files": {
+   "events.csv": {
+    "rows": 22,
+    "sha256": "b6c90aa3a328a66a543d43963e4ca6efc9e8202fe2c7dcb010be71e26b212e7c"
+   },
+   "series.csv": {
+    "rows": 437750,
+    "sha256": "73d50d174b964ae43935b23c9b78aed8f52df9b4dcc0324f007a205ff6434b57"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "anomaly_datasets_in_view": 4,
+   "datasets": [
+    0,
+    3,
+    13,
+    22,
+    24,
+    25,
+    40,
+    68
+   ],
+   "method": "eight of the 22 datasets of Wind Farm A (four with a labelled fault event, four normal); Wind Farm B and C and fourteen datasets of A were not fetched",
+   "rows_in": 437750
+  },
+  "source_snapshot": "zen_care_wind_a/2026-11-22"
+ },
  "zen_care_wind_b": {
   "dropped": [
    "minimum, maximum and standard-deviation columns of every sensor"

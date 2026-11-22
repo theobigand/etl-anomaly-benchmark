@@ -2022,6 +2022,13 @@
   },
   {
    "failed": null,
+   "group": "edp_wind_farm_portugal",
+   "id": "zen_care_wind_a",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2222,6 +2229,7 @@
    "candanedo_umons",
    "cubico_kelmarsh",
    "ea_hydrology",
+   "edp_wind_farm_portugal",
    "elder_home",
    "fraunhofer_iee_care_wind_b",
    "melbourne_pedestrian",
@@ -2315,13 +2323,13 @@
    "structurally_valid": 13
   },
   "C3": {
-   "acquired": 20,
-   "discovered": 41,
-   "experiment_ready": 17,
-   "protocol_ready": 17,
-   "rights_verified": 20,
-   "scientifically_eligible": 17,
-   "structurally_valid": 18
+   "acquired": 21,
+   "discovered": 42,
+   "experiment_ready": 18,
+   "protocol_ready": 18,
+   "rights_verified": 21,
+   "scientifically_eligible": 18,
+   "structurally_valid": 19
   },
   "C4": {
    "acquired": 31,

@@ -268,6 +268,10 @@ def _unisg(root, tmp):
     tev._unisg_snapshot(root)
 
 
+def _care_a(root, tmp):
+    tev._care_a_snapshot(root)
+
+
 CASES = {
     "surf": (_surf, ev._build_surf, ["zen_surf_lisa_slurm"], {}),
     "pbdb": (_pbdb, ev._build_pbdb, ["zen_pbdb"], {"PBDB_STRIDE": 2}),
@@ -277,6 +281,7 @@ CASES = {
     "care": (_care, ev._build_care, ["zen_care_wind_b"], {}),
     "nvd": (_nvd, ev._build_nvd, ["nvd_cve"], {}),
     "unisg": (_unisg, ev._build_unisg, ["zen_unisg_factory"], {}),
+    "care_a": (_care_a, ev._build_care_a, ["zen_care_wind_a"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),
     "metropt": (_metropt, ev._build_metropt, ["zen_metropt2"], {}),
     "openlibrary": (_openlibrary, ev._build_openlibrary, ["openlibrary_dump"], {"OPENLIBRARY_MODULO": 1}),  # noqa: E501

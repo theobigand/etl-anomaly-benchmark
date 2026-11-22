@@ -2338,13 +2338,13 @@ def unisg_activity_view(
 def _build_unisg(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     raw = root / "zen_unisg_factory" / UNISG_SNAPSHOT / "raw"
     messages, bad = [], 0
-    for line in (raw / UNISG_LOG).read_text(encoding="utf-8").splitlines():
+    for line in (raw / UNISG_LOG).read_bytes().decode("utf-8").splitlines():
         try:
             messages.append(json.loads(line))
         except ValueError:
             bad += 1
-    activities = json.loads((raw / "camunda-activity.json").read_text(encoding="utf-8"))
-    processes = json.loads((raw / "camunda-process.json").read_text(encoding="utf-8"))
+    activities = json.loads((raw / "camunda-activity.json").read_bytes())
+    processes = json.loads((raw / "camunda-process.json").read_bytes())
     sensors = unisg_sensor_view(messages)
     events = unisg_activity_view(activities, processes)
     folder = out / "zen_unisg_factory"
@@ -2488,10 +2488,12 @@ def care_series_view(raw: pd.DataFrame, event_id: int) -> pd.DataFrame:
     return out.sort_values("time_stamp", kind="stable").reset_index(drop=True)
 
 
-def _build_care(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+def _build_care_farm(
+    root: Path, out: Path, manifest: dict[str, Any], source: str, method: str
+) -> None:
     import io
 
-    raw = root / "zen_care_wind_b" / CARE_SNAPSHOT / "raw"
+    raw = root / source / CARE_SNAPSHOT / "raw"
     info = pd.read_csv(io.BytesIO(zip_local_member((raw / "event_info.csv").read_bytes())), sep=";")
     ids = sorted(int(p.stem) for p in raw.glob("*.csv") if p.stem.isdigit())
     if not ids:
@@ -2502,26 +2504,46 @@ def _build_care(root: Path, out: Path, manifest: dict[str, Any]) -> None:
         frames.append(care_series_view(pd.read_csv(io.BytesIO(content), sep=";"), event_id))
     view = pd.concat(frames)
     info["in_view"] = info["event_id"].isin(ids)
-    folder = out / "zen_care_wind_b"
+    folder = out / source
     folder.mkdir(parents=True, exist_ok=True)
     series, events = folder / "series.csv", folder / "events.csv"
     view.to_csv(series, index=False)
     info.sort_values("event_id").to_csv(events, index=False)
     _record(
         manifest,
-        "zen_care_wind_b",
+        source,
         {"series.csv": (series, len(view)), "events.csv": (events, len(info))},
         dropped=["minimum, maximum and standard-deviation columns of every sensor"],
         pseudonymised=[],
         sampling={
-            "method": "five of the fifteen datasets of Wind Farm B (three with a labelled anomaly event, two normal); Wind Farm A and C and ten datasets of B were not fetched",  # noqa: E501
+            "method": method,
             "datasets": ids,
             "anomaly_datasets_in_view": int(
                 info.loc[info["in_view"] & (info["event_label"] == "anomaly"), "event_id"].count()
             ),  # noqa: E501
             "rows_in": len(view),
         },
-        source_snapshot=f"zen_care_wind_b/{CARE_SNAPSHOT}",
+        source_snapshot=f"{source}/{CARE_SNAPSHOT}",
+    )
+
+
+def _build_care(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    _build_care_farm(
+        root,
+        out,
+        manifest,
+        "zen_care_wind_b",
+        "five of the fifteen datasets of Wind Farm B (three with a labelled anomaly event, two normal); Wind Farm A and C and ten datasets of B were not fetched",  # noqa: E501
+    )
+
+
+def _build_care_a(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    _build_care_farm(
+        root,
+        out,
+        manifest,
+        "zen_care_wind_a",
+        "eight of the 22 datasets of Wind Farm A (four with a labelled fault event, four normal); Wind Farm B and C and fourteen datasets of A were not fetched",  # noqa: E501
     )
 
 
@@ -2941,6 +2963,7 @@ BUILD_STEPS = (
     _build_wikidata,
     _build_bess,
     _build_care,
+    _build_care_a,
     _build_nvd,
     _build_unisg,
     _build_flat,

@@ -4590,6 +4590,26 @@
    "stratum": "C3",
    "system": "fischertechnik_smart_factory",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "care_wind",
+   "id": "zen_care_wind_a",
+   "licence_class": "open",
+   "protocols": "P-TS by controlled injection on ten-minute average sensors; the equipment-fault events of the logbook are kept apart as natural labels of a narrower task",
+   "publisher": "edp_wind_farm_portugal",
+   "reason": "CARE to Compare, Wind Farm A: EDP Renewables onshore wind farm in Portugal (EDP open data, CC BY-SA 4.0 stated by EDP), 8 of 22 datasets, 437,750 ten-minute rows, 45 average sensors; four datasets lead to a logbook fault (transformer, hydraulic group, gearbox, generator bearing) and four are normal. A different operator, country and turbine family from Kelmarsh and from wind farm B",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC BY-SA 4.0 on EDP's own dataset page (read in a browser on 2026-11-22) and on the CARE record",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "edp_onshore_wind_farm",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

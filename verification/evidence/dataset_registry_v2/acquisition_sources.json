@@ -8310,6 +8310,99 @@
    "stratum": "C4",
    "upstream": "first party: released by the testbed's research group; an instrumented research testbed, not an industrial production system",
    "upstream_verified": true
+  },
+  {
+   "attribution": "cite the EDP Open Data wind farm data (CC BY-SA 4.0, EDP Renewables Portugal) as processed in CARE to Compare (Gueck et al., Data 2024; Zenodo record 15846963, Fraunhofer IEE)",
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_care_wind_a",
+   "licence_class": "open",
+   "licence_location": "https://edp.com/en/wind-farm-1-wind-turbine-scada-signals-2017",
+   "licence_text": "EDP's own dataset page (read in a browser on 2026-11-22): 'License: CC BY-SA. This dataset is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.' The CARE record 15846963 is cc-by-sa-4.0 and states that wind farm A is based on the EDP open data platform",
+   "max_bytes": 104857600,
+   "method": "HTTP range requests for ten members of the 5.5 GB zip (server answers 206): event information, feature description and eight of the 22 datasets of Wind Farm A (four with a labelled fault, four normal); each file is the local zip header followed by the member's deflate stream",
+   "min_interval": 3.0,
+   "privacy": "onshore wind farm in Portugal; asset ids and time stamps are anonymised by the CARE publication; no personal data",
+   "publisher": "EDP (wind farm 1 open data) via Fraunhofer IEE (CARE to Compare)",
+   "ranges": [
+    {
+     "length": 809,
+     "name": "event_info.csv",
+     "observed": "2023",
+     "start": 157960521,
+     "url": "https://zenodo.org/records/15846963/files/CARE_To_Compare.zip?download=1"
+    },
+    {
+     "length": 1092,
+     "name": "feature_description.csv",
+     "observed": "2023",
+     "start": 157961202,
+     "url": "https://zenodo.org/records/15846963/files/CARE_To_Compare.zip?download=1"
+    },
+    {
+     "length": 7167759,
+     "name": "68.csv",
+     "observed": "2023",
+     "start": 107791483,
+     "url": "https://zenodo.org/records/15846963/files/CARE_To_Compare.zip?download=1"
+    },
+    {
+     "length": 6877877,
+     "name": "22.csv",
+     "observed": "2023",
+     "start": 35862023,
+     "url": "https://zenodo.org/records/15846963/files/CARE_To_Compare.zip?download=1"
+    },
+    {
+     "length": 7227679,
+     "name": "0.csv",
+     "observed": "2023",
+     "start": 4066,
+     "url": "https://zenodo.org/records/15846963/files/CARE_To_Compare.zip?download=1"
+    },
+    {
+     "length": 7298434,
+     "name": "40.csv",
+     "observed": "2023",
+     "start": 79036620,
+     "url": "https://zenodo.org/records/15846963/files/CARE_To_Compare.zip?download=1"
+    },
+    {
+     "length": 7210896,
+     "name": "25.csv",
+     "observed": "2023",
+     "start": 50017753,
+     "url": "https://zenodo.org/records/15846963/files/CARE_To_Compare.zip?download=1"
+    },
+    {
+     "length": 7033514,
+     "name": "13.csv",
+     "observed": "2023",
+     "start": 14275838,
+     "url": "https://zenodo.org/records/15846963/files/CARE_To_Compare.zip?download=1"
+    },
+    {
+     "length": 7278109,
+     "name": "24.csv",
+     "observed": "2023",
+     "start": 42739772,
+     "url": "https://zenodo.org/records/15846963/files/CARE_To_Compare.zip?download=1"
+    },
+    {
+     "length": 7288845,
+     "name": "3.csv",
+     "observed": "2023",
+     "start": 64275835,
+     "url": "https://zenodo.org/records/15846963/files/CARE_To_Compare.zip?download=1"
+    }
+   ],
+   "rate_limit": "ten range requests",
+   "redistribution": "CC BY-SA 4.0 requires share alike for adaptations; raw files and views stay local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "verified at the original publisher: EDP states CC BY-SA 4.0 on its dataset page; the original platform asks for a registration to download the files (the CARE record is the open redistribution)",
+   "upstream_verified": true
   }
  ]
 }

@@ -111,6 +111,35 @@
    "source_snapshot": "zen_care_wind_b/2026-11-22"
   }
  },
+ "care_a": {
+  "zen_care_wind_a": {
+   "dropped": [
+    "minimum, maximum and standard-deviation columns of every sensor"
+   ],
+   "files": {
+    "events.csv": {
+     "rows": 1
+    },
+    "series.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "events.csv": "asset,event_id,event_label,event_start,event_start_id,event_end,event_end_id,event_description,in_view",
+    "series.csv": "event_id,asset_id,time_stamp,row_id,train_test,status_type,sensor_0_avg,sensor_1_avg"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "anomaly_datasets_in_view": 1,
+    "datasets": [
+     5
+    ],
+    "method": "eight of the 22 datasets of Wind Farm A (four with a labelled fault event, four normal); Wind Farm B and C and fourteen datasets of A were not fetched",
+    "rows_in": 3
+   },
+   "source_snapshot": "zen_care_wind_a/2026-11-22"
+  }
+ },
  "clue": {
   "zen_clue_lds": {
    "dropped": [

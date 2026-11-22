@@ -1031,6 +1031,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     bs.mkdir(parents=True)
     _fe2.write_feather(_pa.Table.from_pandas(_bess_frame(), preserve_index=False), bs / "S.feather")
     _care_snapshot(root, ids=(1,))
+    _care_a_snapshot(root)
     _w(root / "nvd_cve" / ev.NVD_SNAPSHOT / "raw" / "cves_a.json", json.dumps(_nvd_page(["CVE-1"])))
     _unisg_snapshot(root)
     monkeypatch.setattr(ev, "EA_STATIONS", ["s"])
@@ -1043,7 +1044,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "nvd_cve", "zen_unisg_factory", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -3763,3 +3764,93 @@ def test_the_unisg_builder_writes_both_views_and_records_what_it_read(tmp_path):
         view["dropped"] == ["message identifiers"]
         and view["source_snapshot"] == f"zen_unisg_factory/{ev.UNISG_SNAPSHOT}"
     )
+
+
+def test_unisg_views_keep_every_value_and_coerce_unreadable_ones():
+    out = ev.unisg_sensor_view(
+        _unisg_messages()
+        + [
+            {
+                "station": "WT_1",
+                "timestamp": "2023-04-11 09:57:49.00",
+                "current_state": "ready",
+                "current_task": "t",
+                "current_task_duration": 2.5,
+                "current_sub_task": "",
+            }
+        ]
+    )
+    assert (
+        out["current_task_duration"].dtype == "float64"
+        and out["current_task_duration"].iloc[-1] == 2.5
+    )
+    assert out["current_task_duration"].isna().tolist() == [
+        True,
+        False,
+        False,
+        False,
+    ]  # only the unreadable text
+    acts = _unisg_activities()
+    acts[1]["endTime"] = "not a time"
+    acts[2]["durationInMillis"] = "slow"
+    out = ev.unisg_activity_view(acts, [{"id": "p1", "state": "COMPLETED"}])
+    assert (
+        out["process_key"].tolist() == ["storage"] * 3
+        and out["activity_type"].tolist() == ["serviceTask"] * 3
+    )
+    assert out["end_time"].isna().tolist() == [True, False, False] and str(
+        out["end_time"].dtype
+    ).endswith("UTC]")
+    assert out["duration_ms"].isna().tolist() == [False, False, True]
+    assert out["end_time"].iloc[1].tzinfo is not None
+    bad_start = _unisg_activities()
+    bad_start[0]["startTime"] = "never"
+    assert ev.unisg_activity_view(bad_start, [])["start_time"].isna().sum() == 1
+
+
+def test_the_unisg_builder_counts_every_unreadable_line_and_reads_utf8_whatever_the_locale(
+    tmp_path,
+):
+    _unisg_snapshot(tmp_path / "acquired")
+    raw = tmp_path / "acquired" / "zen_unisg_factory" / ev.UNISG_SNAPSHOT / "raw"
+    acts = _unisg_activities()
+    acts[0]["activityName"] = "Pr\u00e9parer \u00b0C"
+    (raw / "camunda-activity.json").write_bytes(
+        json.dumps(acts, ensure_ascii=False).encode("utf-8")
+    )
+    log = (raw / ev.UNISG_LOG).read_bytes().decode("utf-8")
+    (raw / ev.UNISG_LOG).write_bytes((log + "{also broken\n").encode("utf-8"))
+    manifest: dict = {}
+    ev._build_unisg(tmp_path / "acquired", tmp_path / "o", manifest)
+    assert manifest["zen_unisg_factory"]["sampling"]["unreadable_lines"] == 2
+    names = pd.read_csv(tmp_path / "o" / "zen_unisg_factory" / "activities.csv")[
+        "activity_name"
+    ].tolist()
+    assert "Pr\u00e9parer \u00b0C" in names
+
+
+def _care_a_snapshot(root):
+    raw = root / "zen_care_wind_a" / ev.CARE_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    info = "asset;event_id;event_label;event_start;event_start_id;event_end;event_end_id;event_description\n"  # noqa: E501
+    info += "7;5;anomaly;2023-01-01 00:00:00;1;2023-01-02 00:00:00;2;Gearbox failure\n"
+    (raw / "event_info.csv").write_bytes(_zip_local("info", info.encode()))
+    frame = _care_frame().assign(asset_id=7)
+    (raw / "5.csv").write_bytes(_zip_local("5.csv", frame.to_csv(sep=";", index=False).encode()))
+
+
+def test_the_care_farm_a_builder_uses_its_own_folder_name_and_method(tmp_path):
+    _care_a_snapshot(tmp_path / "acquired")
+    manifest: dict = {}
+    ev._build_care_a(tmp_path / "acquired", tmp_path / "o", manifest)
+    assert (
+        list(manifest) == ["zen_care_wind_a"]
+        and (tmp_path / "o" / "zen_care_wind_a" / "series.csv").exists()
+    )
+    view = manifest["zen_care_wind_a"]
+    assert view["sampling"]["method"].startswith("eight of the 22 datasets of Wind Farm A")
+    assert view["sampling"]["anomaly_datasets_in_view"] == 1
+    assert view["source_snapshot"] == f"zen_care_wind_a/{ev.CARE_SNAPSHOT}"
+    assert pd.read_csv(tmp_path / "o" / "zen_care_wind_a" / "events.csv")["in_view"].tolist() == [
+        True
+    ]

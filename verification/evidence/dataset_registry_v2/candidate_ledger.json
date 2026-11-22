@@ -1225,7 +1225,7 @@
    "licence": "cc-by-sa-4.0 (Fraunhofer IEE); Wind Farm A derives from EDP open data whose terms were unreadable",
    "name": "CARE to Compare, Wind Farm B",
    "next_step": "Wind Farm C (58 datasets, 79 to 99 MB each) is the same provenance group; Wind Farm A needs the EDP open data terms",
-   "notes": "record 14004425 named in the mission is the enzyme CARE benchmark, unrelated; Wind Farm B only; Wind Farm C (58 datasets) is the same provenance group; Wind Farm A derives from EDP open data whose terms were unreadable (JavaScript page)",
+   "notes": "record 14004425 named in a request is the enzyme CARE benchmark, unrelated; wind farm B (Fraunhofer IEE, 5 datasets) and wind farm A (EDP, 8 datasets, rights verified at edp.com on 2026-11-22) are experiment-ready as separate provenance groups; wind farm C (58 datasets, German offshore) belongs with B's publisher and is not fetched",
    "publisher": "Fraunhofer IEE",
    "reason": "real equipment-fault labelled turbine SCADA",
    "size": null,

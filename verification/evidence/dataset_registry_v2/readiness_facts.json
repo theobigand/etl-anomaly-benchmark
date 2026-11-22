@@ -2555,6 +2555,24 @@
    "units": 1452814,
    "view": "zen_bess"
   },
+  "zen_care_wind_a": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "timestamps and asset ids anonymised by the CARE publication",
+    "each dataset is one turbine with a training and a prediction phase",
+    "status types 0, 3 and 4 as published; non-operational statuses are part of the baseline",
+    "eight of 22 datasets of one farm are one generating system"
+   ],
+   "first_party": true,
+   "independent_group": "edp_wind_farm_portugal",
+   "min_units": 1000,
+   "natural_labels": "equipment-fault events derived by the CARE authors from the operator's fault logbook (start timestamps of specified faults); real equipment faults, not ETL or source-data faults; kept in events.csv",
+   "partitions": "chronological 70/15/15 on the anonymised time stamp within each dataset",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "units": 437750,
+   "view": "zen_care_wind_a"
+  },
   "zen_care_wind_b": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
