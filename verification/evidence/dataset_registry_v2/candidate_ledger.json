@@ -1566,6 +1566,21 @@
    "size": null,
    "source_url": "https://www.nhtsa.gov/research-data/fatality-analysis-reporting-system-fars",
    "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "dft:stats19-2023",
+   "licence": "Open Government Licence v3.0",
+   "name": "UK DfT STATS19 road safety data 2023",
+   "next_step": "none; other years are the same provenance group",
+   "notes": "codebook (data guide) kept beside the files; an optional C5 participation was not claimed",
+   "publisher": "UK Department for Transport",
+   "reason": "police-reported injury collisions with coded categorical fields",
+   "size": "52 MB",
+   "source_url": "https://www.gov.uk/government/statistical-data-sets/road-safety-open-data",
+   "status": "experiment_ready"
   }
  ],
  "date": "2026-11-21",

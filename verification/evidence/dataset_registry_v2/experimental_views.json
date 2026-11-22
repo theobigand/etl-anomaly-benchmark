@@ -342,6 +342,45 @@
   "pseudonymised": [],
   "source_snapshot": "crossref_works/2026-11-21"
  },
+ "dft_stats19_2023": {
+  "dropped": [
+   "police collision reference numbers",
+   "home-area codes (LSOA) of drivers and casualties"
+  ],
+  "files": {
+   "casualty.csv": {
+    "rows": 132977,
+    "sha256": "84d86241d545597af3458ff55b3842e2ac912cc8bfc3cc2e6791364dcf61b1df"
+   },
+   "collision.csv": {
+    "rows": 104258,
+    "sha256": "d624778535f40c3270e0e19dfeb76a00601230ee2533dc625a2c38bba0cf5402"
+   },
+   "vehicle.csv": {
+    "rows": 189815,
+    "sha256": "948bb6bf2622b15de4e41b97b560ec60a0b8166ea7c6a1d5cf7d2c075382afd5"
+   }
+  },
+  "notes": "relations are the source's own keys; orphans are natural incompleteness of the published extract",
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 189815,
+    "child": "vehicle.collision_index",
+    "orphans": 0,
+    "parent": "collision.collision_index",
+    "share": 0.0
+   },
+   {
+    "checked": 132977,
+    "child": "casualty.collision_index",
+    "orphans": 0,
+    "parent": "collision.collision_index",
+    "share": 0.0
+   }
+  ],
+  "source_snapshot": "dft_stats19_2023/2026-11-22"
+ },
  "dgfip_dvf": {
   "dropped": [
    "address, street code, parcel ids, volume and lot numbers, coordinates"

@@ -8651,6 +8651,50 @@
    "stratum": "C5",
    "upstream": "first party: USDA ARS publishes the data it compiles and analyses",
    "upstream_verified": true
+  },
+  {
+   "attribution": "Department for Transport, Road Safety Data (STATS19), collisions, vehicles and casualties of 2023, published under the Open Government Licence v3.0; accessed 2026-11-22",
+   "files": [
+    {
+     "name": "collision.csv",
+     "observed": "2023",
+     "url": "https://data.dft.gov.uk/road-accidents-safety-data/dft-road-casualty-statistics-collision-2023.csv"
+    },
+    {
+     "name": "vehicle.csv",
+     "observed": "2023",
+     "url": "https://data.dft.gov.uk/road-accidents-safety-data/dft-road-casualty-statistics-vehicle-2023.csv"
+    },
+    {
+     "name": "casualty.csv",
+     "observed": "2023",
+     "url": "https://data.dft.gov.uk/road-accidents-safety-data/dft-road-casualty-statistics-casualty-2023.csv"
+    },
+    {
+     "name": "data_guide_2025.xlsx",
+     "observed": "2025",
+     "url": "https://assets.publishing.service.gov.uk/media/6ab2a71d997a4b2950cced58/dft-road-casualty-statistics-road-safety-open-dataset-data-guide-2025.xlsx"
+    }
+   ],
+   "hosts": [
+    "data.dft.gov.uk",
+    "assets.publishing.service.gov.uk"
+   ],
+   "id": "dft_stats19_2023",
+   "licence_class": "open",
+   "licence_location": "https://www.gov.uk/government/statistical-data-sets/road-safety-open-data",
+   "licence_text": "GOV.UK page of the Road Safety Open Data (read 2026-11-22): the page footer states 'All content is available under the Open Government Licence v3.0, except where otherwise stated'; no exception is stated for the data files; sensitive fields (contributory factors) are withheld by the publisher and were not requested",
+   "max_bytes": 41943040,
+   "method": "the three official yearly extracts of 2023 (final annual data) and the publisher's data guide that decodes the coded values",
+   "min_interval": 3.0,
+   "privacy": "police-recorded personal-injury collisions without names, registrations or addresses; casualty and driver age bands, sex and coarse location only",
+   "publisher": "UK Department for Transport (road safety statistics team)",
+   "rate_limit": "four downloads, three seconds apart, descriptive user agent",
+   "redistribution": "OGL v3.0 with attribution; raw files stay local",
+   "retries": 2,
+   "stratum": "C2a",
+   "upstream": "first party for the compilation: the police forces of Great Britain record collisions through STATS19 and the DfT publishes the national return",
+   "upstream_verified": true
   }
  ]
 }

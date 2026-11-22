@@ -3,12 +3,12 @@
   "0.2": {
    "ALL": {
     "curators": 27,
-    "domains": 57,
-    "effective_groups": 55.2654,
-    "groups": 133,
-    "largest_schema_family_share": 0.4812,
-    "producers": 133,
-    "schema_families": 40
+    "domains": 58,
+    "effective_groups": 56.2654,
+    "groups": 134,
+    "largest_schema_family_share": 0.4776,
+    "producers": 134,
+    "schema_families": 41
    },
    "C1": {
     "curators": 1,
@@ -20,13 +20,13 @@
     "schema_families": 1
    },
    "C2a": {
-    "curators": 2,
-    "domains": 8,
-    "effective_groups": 4.75,
-    "groups": 13,
-    "largest_schema_family_share": 0.9231,
-    "producers": 13,
-    "schema_families": 2
+    "curators": 3,
+    "domains": 9,
+    "effective_groups": 5.75,
+    "groups": 14,
+    "largest_schema_family_share": 0.8571,
+    "producers": 14,
+    "schema_families": 3
    },
    "C2b": {
     "curators": 8,
@@ -77,12 +77,12 @@
   "0.5": {
    "ALL": {
     "curators": 27,
-    "domains": 57,
-    "effective_groups": 45.4741,
-    "groups": 133,
-    "largest_schema_family_share": 0.4812,
-    "producers": 133,
-    "schema_families": 40
+    "domains": 58,
+    "effective_groups": 46.4741,
+    "groups": 134,
+    "largest_schema_family_share": 0.4776,
+    "producers": 134,
+    "schema_families": 41
    },
    "C1": {
     "curators": 1,
@@ -94,13 +94,13 @@
     "schema_families": 1
    },
    "C2a": {
-    "curators": 2,
-    "domains": 8,
-    "effective_groups": 2.8462,
-    "groups": 13,
-    "largest_schema_family_share": 0.9231,
-    "producers": 13,
-    "schema_families": 2
+    "curators": 3,
+    "domains": 9,
+    "effective_groups": 3.8462,
+    "groups": 14,
+    "largest_schema_family_share": 0.8571,
+    "producers": 14,
+    "schema_families": 3
    },
    "C2b": {
     "curators": 8,
@@ -240,15 +240,15 @@
   },
   "C2a": {
    "diversity": true,
-   "domains": 7,
+   "domains": 8,
    "exploratory": true,
-   "families": 5,
-   "gap": 17,
-   "groups": 13,
+   "families": 6,
+   "gap": 16,
+   "groups": 14,
    "largest_family": "administrative or survey records",
-   "largest_family_share": 0.2308,
+   "largest_family_share": 0.2143,
    "missing": [
-    "groups: 13 of 30"
+    "groups: 14 of 30"
    ],
    "quota": false,
    "target": 30,
@@ -986,22 +986,22 @@
  "simulation": [
   {
    "domains": 6,
-   "null_rejection_domain_level": 0.08,
-   "null_rejection_source_level": 0.36,
+   "null_rejection_domain_level": 0.048,
+   "null_rejection_source_level": 0.3595,
    "per_domain": 5,
    "sigma_domain": 0.08
   },
   {
    "domains": 10,
-   "null_rejection_domain_level": 0.045,
-   "null_rejection_source_level": 0.21,
+   "null_rejection_domain_level": 0.0525,
+   "null_rejection_source_level": 0.219,
    "per_domain": 3,
    "sigma_domain": 0.08
   },
   {
    "domains": 10,
-   "null_rejection_domain_level": 0.05,
-   "null_rejection_source_level": 0.075,
+   "null_rejection_domain_level": 0.0505,
+   "null_rejection_source_level": 0.085,
    "per_domain": 3,
    "sigma_domain": 0.02
   }

@@ -2071,6 +2071,13 @@
   },
   {
    "failed": null,
+   "group": "dft_stats19",
+   "id": "dft_stats19_2023",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2238,6 +2245,7 @@
    "uci:942"
   ],
   "C2a": [
+   "dft_stats19",
    "paleobiology_database",
    "uci:101",
    "uci:19",
@@ -2353,13 +2361,13 @@
    "structurally_valid": 52
   },
   "C2a": {
-   "acquired": 39,
-   "discovered": 39,
-   "experiment_ready": 13,
-   "protocol_ready": 13,
-   "rights_verified": 39,
-   "scientifically_eligible": 13,
-   "structurally_valid": 13
+   "acquired": 40,
+   "discovered": 40,
+   "experiment_ready": 14,
+   "protocol_ready": 14,
+   "rights_verified": 40,
+   "scientifically_eligible": 14,
+   "structurally_valid": 14
   },
   "C2b": {
    "acquired": 14,

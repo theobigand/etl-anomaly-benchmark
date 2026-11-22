@@ -292,6 +292,23 @@
    "units": 2000,
    "view": "crossref_works"
   },
+  "dft_stats19_2023": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete official 2023 release, no sampling; contributory factors are withheld by the publisher",
+    "official -1 codes (data missing or out of range) are published states and cover 6.1 percent of collision, 8.7 percent of vehicle and 7.4 percent of casualty cells",
+    "severity adjustment variables are model-derived by the publisher and are part of the baseline",
+    "collisions, vehicles and casualties are one generating system and count once"
+   ],
+   "first_party": true,
+   "independent_group": "dft_stats19",
+   "min_units": 500,
+   "partitions": "hash of the collision index 70/15/15 so a collision and its vehicles and casualties stay together",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 104258,
+   "view": "dft_stats19_2023"
+  },
   "dgfip_dvf": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [

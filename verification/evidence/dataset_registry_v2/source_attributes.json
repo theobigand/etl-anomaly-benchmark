@@ -96,6 +96,17 @@
    "C3": "wind turbine ten-minute SCADA"
   }
  },
+ "dft_stats19": {
+  "curator": "gov.uk",
+  "domain": "road safety",
+  "generating_system": "STATS19 police collision reporting of Great Britain",
+  "note": "collision, vehicle and casualty extracts are one generating system, one group",
+  "producer": "UK Department for Transport (police forces of Great Britain)",
+  "schema_family": "road collision coded tables",
+  "structure": {
+   "C2a": "coded categorical collision, vehicle and casualty records"
+  }
+ },
  "dgfip_dvf": {
   "curator": "data.gouv.fr",
   "domain": "real estate",

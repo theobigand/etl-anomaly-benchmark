@@ -1223,6 +1223,26 @@ USDA_TABLE_SETS: dict[str, dict[str, Any]] = {
 }  # fmt: skip
 TABLE_SETS.update(USDA_TABLE_SETS)
 
+#: UK DfT STATS19 road safety open data of 2023 (OGL v3.0): coded categorical records
+STATS19_TABLE_SETS: dict[str, dict[str, Any]] = {
+    "dft_stats19_2023": {
+        "snapshot": "2026-11-22",
+        "sep": ",",
+        "quote_none": False,
+        "dropped": ["police collision reference numbers", "home-area codes (LSOA) of drivers and casualties"],  # noqa: E501
+        "tables": {
+            "collision": {"keep": ["collision_index", "collision_year", "location_easting_osgr", "location_northing_osgr", "longitude", "latitude", "police_force", "collision_severity", "number_of_vehicles", "number_of_casualties", "date", "day_of_week", "time", "local_authority_district", "local_authority_ons_district", "local_authority_highway", "local_authority_highway_current", "first_road_class", "first_road_number", "road_type", "speed_limit", "junction_detail_historic", "junction_detail", "junction_control", "second_road_class", "second_road_number", "pedestrian_crossing_human_control_historic", "pedestrian_crossing_physical_facilities_historic", "pedestrian_crossing", "light_conditions", "weather_conditions", "road_surface_conditions", "special_conditions_at_site", "carriageway_hazards_historic", "carriageway_hazards", "urban_or_rural_area", "did_police_officer_attend_scene_of_accident", "trunk_road_flag", "lsoa_of_accident_location", "enhanced_severity_collision", "collision_injury_based", "collision_adjusted_severity_serious", "collision_adjusted_severity_slight"]},  # noqa: E501
+            "vehicle": {"keep": ["collision_index", "collision_year", "vehicle_reference", "vehicle_type", "towing_and_articulation", "vehicle_manoeuvre_historic", "vehicle_manoeuvre", "vehicle_direction_from", "vehicle_direction_to", "vehicle_location_restricted_lane_historic", "vehicle_location_restricted_lane", "junction_location", "skidding_and_overturning", "hit_object_in_carriageway", "vehicle_leaving_carriageway", "hit_object_off_carriageway", "first_point_of_impact", "vehicle_left_hand_drive", "journey_purpose_of_driver_historic", "journey_purpose_of_driver", "sex_of_driver", "age_of_driver", "age_band_of_driver", "engine_capacity_cc", "propulsion_code", "age_of_vehicle", "generic_make_model", "driver_imd_decile", "escooter_flag", "driver_distance_banding"]},  # noqa: E501
+            "casualty": {"keep": ["collision_index", "collision_year", "vehicle_reference", "casualty_reference", "casualty_class", "sex_of_casualty", "age_of_casualty", "age_band_of_casualty", "casualty_severity", "pedestrian_location", "pedestrian_movement", "car_passenger", "bus_or_coach_passenger", "pedestrian_road_maintenance_worker", "casualty_type", "casualty_imd_decile", "enhanced_casualty_severity", "casualty_injury_based", "casualty_adjusted_severity_serious", "casualty_adjusted_severity_slight", "casualty_distance_banding", "escooter_flag"]},  # noqa: E501
+        },
+        "relations": [
+            ["vehicle", "collision_index", "collision", "collision_index"],
+            ["casualty", "collision_index", "collision", "collision_index"],
+        ],
+    },
+}  # fmt: skip
+TABLE_SETS.update(STATS19_TABLE_SETS)
+
 
 def _build_panels(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     folder = out / "panels"

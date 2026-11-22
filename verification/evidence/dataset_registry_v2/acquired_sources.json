@@ -4730,6 +4730,26 @@
    "stratum": "C5",
    "system": "usda_nutrient_laboratory_database",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "dft_stats19",
+   "id": "dft_stats19_2023",
+   "licence_class": "open",
+   "protocols": "P-TAB on coded categorical rows (invalid category code, missing-code, duplicate and cross-field violations; the vehicle and casualty counts of a collision are a verified cross-field rule)",
+   "publisher": "uk_dft_road_safety",
+   "reason": "UK Department for Transport STATS19 road safety data of 2023 (OGL v3.0): 104,258 police-reported injury collisions, 189,815 vehicles and 132,977 casualties as three coded tables joined by collision_index (0 orphans); 69 of the 95 kept columns have at most 100 levels and are official numeric codes decoded by the publisher's data guide; number_of_vehicles and number_of_casualties equal the child row counts for every collision, the publisher's -1 means data missing or out of range; a road-safety registry, a domain absent from the corpus",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Open Government Licence v3.0 stated in the GOV.UK footer of the Road Safety Open Data page (read 2026-11-22), no exception for the data files",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "gb_police_collision_reporting",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

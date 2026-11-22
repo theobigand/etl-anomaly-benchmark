@@ -4372,3 +4372,20 @@ def test_the_tlc_builder_counts_a_total_of_exactly_one_dollar_or_less_as_zero_or
     manifest: dict = {}
     ev._build_tlc(tmp_path / "acquired", tmp_path / "o", manifest)
     assert manifest["nyc_tlc_yellow"]["sampling"]["zero_or_negative_totals"] == 1
+
+
+def test_stats19_spec_keeps_the_join_key_and_drops_police_references_and_home_areas():
+    spec = ev.TABLE_SETS["dft_stats19_2023"]
+    assert spec["snapshot"] == "2026-11-22" and set(spec["tables"]) == {
+        "collision",
+        "vehicle",
+        "casualty",
+    }
+    for rule in spec["tables"].values():
+        assert "collision_index" in rule["keep"] and "collision_ref_no" not in rule["keep"]
+    assert "lsoa_of_driver" not in spec["tables"]["vehicle"]["keep"]
+    assert "lsoa_of_casualty" not in spec["tables"]["casualty"]["keep"]
+    assert [r[:2] + r[2:] for r in spec["relations"]] == [
+        ["vehicle", "collision_index", "collision", "collision_index"],
+        ["casualty", "collision_index", "collision", "collision_index"],
+    ]
