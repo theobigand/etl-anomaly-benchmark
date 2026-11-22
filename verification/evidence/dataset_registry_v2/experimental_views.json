@@ -3565,6 +3565,47 @@
   },
   "source_snapshot": "zen_pbdb/2026-11-21"
  },
+ "zen_pbdb_relational": {
+  "dropped": [
+   "contributor names",
+   "free text",
+   "all other columns of both tables"
+  ],
+  "files": {
+   "occurrences.csv": {
+    "rows": 201107,
+    "sha256": "4a4ce3fa23dcf01e4580b5acaac9ba4117cd872682e38380c1eeb193311af42b"
+   },
+   "taxa.csv": {
+    "rows": 95846,
+    "sha256": "30b0ff30339ac4098cb6428be35ad0205ba7f3ac00e4a43efc382c4f18cc0b84"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "ancestors_absent_from_source": 1,
+   "method": "one occurrence in 10 in file order (the C2a sample) with the taxa they name and every ancestor of those taxa; the other taxa are not included",
+   "occurrences_rows_read": 2011062,
+   "occurrences_with_unknown_taxon": 0,
+   "occurrences_without_taxon": 5241,
+   "relations": [
+    [
+     "occurrences",
+     "accepted_no",
+     "taxa",
+     "taxon_no"
+    ],
+    [
+     "taxa",
+     "parent_no",
+     "taxa",
+     "taxon_no"
+    ]
+   ],
+   "taxa_in_source": 526570
+  },
+  "source_snapshot": "zen_pbdb/2026-11-21"
+ },
  "zen_surf_lisa_slurm": {
   "dropped": [
    "node host names"

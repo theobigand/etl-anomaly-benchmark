@@ -1031,6 +1031,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     bs.mkdir(parents=True)
     _fe2.write_feather(_pa.Table.from_pandas(_bess_frame(), preserve_index=False), bs / "S.feather")
     _care_snapshot(root, ids=(1,))
+    _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
     _w(root / "nvd_cve" / ev.NVD_SNAPSHOT / "raw" / "cves_a.json", json.dumps(_nvd_page(["CVE-1"])))
     _unisg_snapshot(root)
@@ -1044,7 +1045,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -3146,6 +3147,9 @@ def _pbdb_frame():
     base = {c: ["x", " Mammalia ", "", None] for c in ev.PBDB_TEXT}
     base.update({c: ["1.5", "bad", "3", None] for c in ev.PBDB_NUMBER})
     base["occurrence_no"] = ["30", "10", "20", "x"]
+    base["collection_no"] = ["1", "1", "2", "3"]
+    base["accepted_no"] = ["30", "30", "50", None]
+    base["reference_no"] = ["9", "9", "8", "7"]
     base["enterer"] = ["a person", "b", "c", "d"]  # contributor names must not reach the view
     base["collection_aka"] = ["free text"] * 4
     return pd.DataFrame(base)
@@ -3854,3 +3858,93 @@ def test_the_care_farm_a_builder_uses_its_own_folder_name_and_method(tmp_path):
     assert pd.read_csv(tmp_path / "o" / "zen_care_wind_a" / "events.csv")["in_view"].tolist() == [
         True
     ]
+
+
+# --- PBDB relational view ----------------------------------------------------------------------------  # noqa: E501
+
+
+def _taxa(rows):
+    return pd.DataFrame(rows, columns=["taxon_no", "parent_no"])
+
+
+def test_taxon_closure_follows_parents_once_and_counts_ancestors_missing_from_the_source():
+    taxa = _taxa([(1, None), (2, 1), (3, 2), (4, 2), (5, 99), (6, 7), (7, 6), (8, 1)])
+    kept, absent = ev.taxon_closure(taxa, {3, 5})
+    assert kept["taxon_no"].tolist() == [1, 2, 3, 5] and absent == 1  # 99 is not in the source
+    kept, absent = ev.taxon_closure(taxa, {6})
+    assert kept["taxon_no"].tolist() == [6, 7] and absent == 0  # a cycle ends the walk
+    kept, absent = ev.taxon_closure(taxa, {1000})
+    assert kept.empty and absent == 0  # an unknown needed identifier selects nothing
+    kept, _ = ev.taxon_closure(taxa, {4, 3})
+    assert kept["taxon_no"].tolist() == [1, 2, 3, 4] and kept.index.tolist() == [0, 1, 2, 3]
+
+
+def _pbdb_rel_snapshot(root, tmp):
+    import zipfile
+
+    import pyarrow as _pa
+    import pyarrow.parquet as _pq
+
+    raw = root / "zen_pbdb" / SNAP / "raw"
+    raw.mkdir(parents=True)
+    occ = pd.DataFrame({c: [None] * 4 for c in ev.PBDB_REL_OCC})
+    occ["occurrence_no"] = [4, 3, 2, 1]
+    occ["accepted_no"] = [30, 30, 50, None]
+    taxa = pd.DataFrame({c: [None] * 5 for c in ev.PBDB_REL_TAXA})
+    taxa["taxon_no"] = [30, 20, 10, 50, 60]
+    taxa["parent_no"] = [20, 10, 99, 10, 10]
+    for name, frame, zip_name in (
+        ("occ", occ, "pbdb_parquet.zip"),
+        ("taxa", taxa, "pbdb_taxa_parquet.zip"),
+    ):
+        _pq.write_table(_pa.Table.from_pandas(frame, preserve_index=False), tmp / f"{name}.parquet")
+        with zipfile.ZipFile(raw / zip_name, "w") as z:
+            z.write(tmp / f"{name}.parquet", f"{name}.parquet")
+
+
+def test_the_pbdb_relational_builder_keeps_the_referenced_taxa_and_records_the_relations(
+    tmp_path, monkeypatch
+):
+    monkeypatch.setattr(ev, "PBDB_STRIDE", 1)
+    _pbdb_rel_snapshot(tmp_path / "acquired", tmp_path)
+    manifest: dict = {}
+    ev._build_pbdb_relational(tmp_path / "acquired", tmp_path / "o", manifest)
+    folder = tmp_path / "o" / "zen_pbdb_relational"
+    occ = pd.read_csv(folder / "occurrences.csv")
+    taxa = pd.read_csv(folder / "taxa.csv")
+    assert occ["occurrence_no"].tolist() == [1, 2, 3, 4] and taxa["taxon_no"].tolist() == [
+        10,
+        20,
+        30,
+        50,
+    ]
+    assert (
+        60 not in taxa["taxon_no"].tolist()
+    )  # not named by a sampled occurrence and not an ancestor
+    view = manifest["zen_pbdb_relational"]
+    sampling = view["sampling"]
+    assert sampling["relations"] == [
+        ["occurrences", "accepted_no", "taxa", "taxon_no"],
+        ["taxa", "parent_no", "taxa", "taxon_no"],
+    ]
+    assert (
+        sampling["occurrences_without_taxon"] == 1
+        and sampling["occurrences_with_unknown_taxon"] == 0
+    )
+    assert sampling["ancestors_absent_from_source"] == 1 and sampling["taxa_in_source"] == 5
+    assert sampling["occurrences_rows_read"] == 4 and view["source_snapshot"] == f"zen_pbdb/{SNAP}"
+    assert view["files"]["occurrences.csv"]["rows"] == 4 and view["files"]["taxa.csv"]["rows"] == 4
+
+
+def _pbdb_rel_snapshot_extra(root, tmp):
+    import zipfile
+
+    import pyarrow as _pa
+    import pyarrow.parquet as _pq
+
+    taxa = pd.DataFrame({c: [None] * 3 for c in ev.PBDB_REL_TAXA})
+    taxa["taxon_no"] = [30, 20, 50]
+    taxa["parent_no"] = [20, 50, None]
+    _pq.write_table(_pa.Table.from_pandas(taxa, preserve_index=False), tmp / "taxa_extra.parquet")
+    with zipfile.ZipFile(root / "zen_pbdb" / SNAP / "raw" / "pbdb_taxa_parquet.zip", "w") as z:
+        z.write(tmp / "taxa_extra.parquet", "taxa.parquet")

@@ -2029,6 +2029,13 @@
   },
   {
    "failed": null,
+   "group": "paleobiology_database",
+   "id": "zen_pbdb_relational",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2277,6 +2284,7 @@
    "gtfs_fr_transvilles",
    "mimic_iv_bidmc",
    "openalex",
+   "paleobiology_database",
    "stackexchange",
    "zambia_procurement"
   ],
@@ -2341,13 +2349,13 @@
    "structurally_valid": 30
   },
   "C5": {
-   "acquired": 29,
-   "discovered": 29,
-   "experiment_ready": 29,
-   "protocol_ready": 29,
-   "rights_verified": 29,
-   "scientifically_eligible": 29,
-   "structurally_valid": 29
+   "acquired": 30,
+   "discovered": 30,
+   "experiment_ready": 30,
+   "protocol_ready": 30,
+   "rights_verified": 30,
+   "scientifically_eligible": 30,
+   "structurally_valid": 30
   },
   "C6": {
    "acquired": 11,

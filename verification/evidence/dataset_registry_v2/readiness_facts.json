@@ -2671,6 +2671,23 @@
    "units": 201107,
    "view": "zen_pbdb"
   },
+  "zen_pbdb_relational": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "occurrences are every tenth row in entry order, not random",
+    "the taxa are the referenced taxa plus all their ancestors, so no reference is missing because of sampling",
+    "5,241 occurrences without an accepted taxon and one ancestor id absent from the source are natural",
+    "a self-referencing parent hierarchy and a many-to-one occurrence-to-taxon relation"
+   ],
+   "first_party": true,
+   "independent_group": "paleobiology_database",
+   "min_units": 1000,
+   "partitions": "hash of the occurrence number 70/15/15 with the taxa referenced by the same occurrences kept together",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 201107,
+   "view": "zen_pbdb_relational"
+  },
   "zen_surf_lisa_slurm": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [

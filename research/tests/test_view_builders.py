@@ -212,6 +212,10 @@ def _tables_zip(root, tmp):
         z.writestr("d/ratings.csv", "userId,movieId,rating\n1,1,5\n1,3,4\n")
 
 
+def _pbdb_relational(root, tmp):
+    tev._pbdb_rel_snapshot(root, tmp)
+
+
 def _pbdb(root, tmp):
     raw = root / "zen_pbdb" / SNAP / "raw"
     raw.mkdir(parents=True)
@@ -282,6 +286,7 @@ CASES = {
     "nvd": (_nvd, ev._build_nvd, ["nvd_cve"], {}),
     "unisg": (_unisg, ev._build_unisg, ["zen_unisg_factory"], {}),
     "care_a": (_care_a, ev._build_care_a, ["zen_care_wind_a"], {}),
+    "pbdb_relational": (_pbdb_relational, ev._build_pbdb_relational, ["zen_pbdb_relational"], {"PBDB_STRIDE": 1}),  # noqa: E501
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),
     "metropt": (_metropt, ev._build_metropt, ["zen_metropt2"], {}),
     "openlibrary": (_openlibrary, ev._build_openlibrary, ["openlibrary_dump"], {"OPENLIBRARY_MODULO": 1}),  # noqa: E501

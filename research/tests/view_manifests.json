@@ -451,6 +451,51 @@
    "source_snapshot": "zen_pbdb/2026-11-21"
   }
  },
+ "pbdb_relational": {
+  "zen_pbdb_relational": {
+   "dropped": [
+    "contributor names",
+    "free text",
+    "all other columns of both tables"
+   ],
+   "files": {
+    "occurrences.csv": {
+     "rows": 4
+    },
+    "taxa.csv": {
+     "rows": 4
+    }
+   },
+   "heads": {
+    "occurrences.csv": "occurrence_no,collection_no,accepted_no,reference_no,accepted_rank,early_interval,max_ma,min_ma",
+    "taxa.csv": "taxon_no,orig_no,accepted_no,parent_no,taxon_rank,taxon_name,is_extant,n_occs,reference_no,firstapp_max_ma,firstapp_min_"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "ancestors_absent_from_source": 1,
+    "method": "one occurrence in 1 in file order (the C2a sample) with the taxa they name and every ancestor of those taxa; the other taxa are not included",
+    "occurrences_rows_read": 4,
+    "occurrences_with_unknown_taxon": 0,
+    "occurrences_without_taxon": 1,
+    "relations": [
+     [
+      "occurrences",
+      "accepted_no",
+      "taxa",
+      "taxon_no"
+     ],
+     [
+      "taxa",
+      "parent_no",
+      "taxa",
+      "taxon_no"
+     ]
+    ],
+    "taxa_in_source": 5
+   },
+   "source_snapshot": "zen_pbdb/2026-11-21"
+  }
+ },
  "surf": {
   "zen_surf_lisa_slurm": {
    "dropped": [

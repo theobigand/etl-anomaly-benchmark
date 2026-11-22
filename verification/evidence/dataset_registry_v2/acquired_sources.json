@@ -4610,6 +4610,26 @@
    "stratum": "C3",
    "system": "edp_onshore_wind_farm",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "pbdb",
+   "id": "zen_pbdb_relational",
+   "licence_class": "open",
+   "protocols": "P-REL on occurrence-to-taxon references and the taxon parent hierarchy",
+   "publisher": "paleobiology_database",
+   "reason": "Paleobiology Database as two linked tables (a second participation of the PBDB provenance group, not a new generating system): 201,107 sampled occurrences with accepted_no referencing 95,846 taxa that include every ancestor through parent_no; all referenced taxa exist in the source (0 unknown), 5,241 occurrences have no accepted taxon and 1 ancestor id is absent from the source itself (natural, not sampling)",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CC0 stated by the PBDB data service (original producer) and cc-by-4.0 on the archive record",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "zen_pbdb",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

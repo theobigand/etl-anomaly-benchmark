@@ -2789,6 +2789,107 @@ def _build_pbdb(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+PBDB_REL_OCC = (
+    "occurrence_no", "collection_no", "accepted_no", "reference_no", "accepted_rank",
+    "early_interval", "max_ma", "min_ma",
+)  # fmt: skip
+PBDB_REL_TAXA = (
+    "taxon_no", "orig_no", "accepted_no", "parent_no", "taxon_rank", "taxon_name", "is_extant",
+    "n_occs", "reference_no", "firstapp_max_ma", "firstapp_min_ma", "lastapp_max_ma", "lastapp_min_ma",  # noqa: E501
+)  # fmt: skip
+PBDB_REL_RELATIONS = (
+    ("occurrences", "accepted_no", "taxa", "taxon_no"),
+    ("taxa", "parent_no", "taxa", "taxon_no"),
+)
+
+
+def taxon_closure(taxa: pd.DataFrame, needed: set[int]) -> tuple[pd.DataFrame, int]:
+    """The taxa named by the needed identifiers, with every ancestor reachable through ``parent_no``.
+
+    Returns the taxa in identifier order and the number of ancestors that the full table itself does
+    not contain (identifiers that are absent from the source, not from the sample). A taxon is
+    followed once, so a cycle in the source ends the walk.
+    """
+    parent = taxa.set_index("taxon_no")["parent_no"]
+    known = set(parent.index)
+    seen: set[int] = set()
+    missing: set[int] = set()
+    frontier = {n for n in needed if n in known}
+    while frontier:
+        seen |= frontier
+        step = {int(x) for x in parent.reindex(sorted(frontier)).dropna()}
+        missing |= step - known
+        frontier = (step & known) - seen
+    kept = taxa[taxa["taxon_no"].isin(seen)].sort_values("taxon_no", kind="stable")
+    return kept.reset_index(drop=True), len(missing)
+
+
+def _pbdb_member(
+    raw: Path, scratch: Path, columns: tuple[str, ...], stride: int
+) -> tuple[pd.DataFrame, dict[str, Any]]:
+    import parquet_reader as pr
+    from acquisition import extract_member, zip_members
+
+    members = [m for m in zip_members(raw) if m["name"].endswith(".parquet")]
+    if len(members) != 1:
+        raise ViewError(f"expected one Parquet member, found {len(members)}")
+    got = extract_member(raw, members[0]["name"], scratch, max_bytes=1 << 30, max_ratio=200)
+    absent = [
+        c for c in columns if c not in [c["name"] for c in pr.inspect(got["path"])["columns"]]
+    ]
+    if absent:
+        raise ViewError(f"columns not found: {absent}")
+    return pr.read_sample(got["path"], columns=list(columns), max_rows=10**7, stride=stride)
+
+
+def _build_pbdb_relational(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import tempfile
+
+    base = root / "zen_pbdb" / SNAPSHOT / "raw"
+    with tempfile.TemporaryDirectory() as scratch:
+        occ, record = _pbdb_member(
+            base / "pbdb_parquet.zip", Path(scratch), PBDB_REL_OCC, PBDB_STRIDE
+        )
+        taxa, _ = _pbdb_member(base / "pbdb_taxa_parquet.zip", Path(scratch), PBDB_REL_TAXA, 1)
+    for column in (
+        "occurrence_no",
+        "collection_no",
+        "accepted_no",
+        "reference_no",
+        "max_ma",
+        "min_ma",
+    ):
+        occ[column] = pd.to_numeric(occ[column], errors="coerce")
+    for column in ("taxon_no", "orig_no", "accepted_no", "parent_no", "n_occs", "reference_no"):
+        taxa[column] = pd.to_numeric(taxa[column], errors="coerce")
+    occ = occ.sort_values("occurrence_no", kind="stable").reset_index(drop=True)
+    needed = {int(n) for n in occ["accepted_no"].dropna()}
+    kept, absent_parents = taxon_closure(taxa, needed)
+    folder = out / "zen_pbdb_relational"
+    folder.mkdir(parents=True, exist_ok=True)
+    occ_file, taxa_file = folder / "occurrences.csv", folder / "taxa.csv"
+    occ.to_csv(occ_file, index=False)
+    kept.to_csv(taxa_file, index=False)
+    known = set(taxa["taxon_no"].dropna().astype(int))
+    _record(
+        manifest,
+        "zen_pbdb_relational",
+        {"occurrences.csv": (occ_file, len(occ)), "taxa.csv": (taxa_file, len(kept))},
+        dropped=["contributor names", "free text", "all other columns of both tables"],
+        pseudonymised=[],
+        sampling={
+            "method": f"one occurrence in {PBDB_STRIDE} in file order (the C2a sample) with the taxa they name and every ancestor of those taxa; the other taxa are not included",  # noqa: E501
+            "relations": [list(r) for r in PBDB_REL_RELATIONS],
+            "occurrences_rows_read": record["rows_read"],
+            "occurrences_without_taxon": int(occ["accepted_no"].isna().sum()),
+            "occurrences_with_unknown_taxon": int(sum(1 for n in needed if n not in known)),
+            "ancestors_absent_from_source": absent_parents,
+            "taxa_in_source": len(taxa),
+        },
+        source_snapshot=f"zen_pbdb/{SNAPSHOT}",
+    )
+
+
 RETAIL_COLUMNS = (
     "timestamp", "invoice", "stock_code", "quantity", "unit_price", "line_value", "customer",
     "country", "cancellation",
@@ -2959,6 +3060,7 @@ BUILD_STEPS = (
     _build_ppd,
     _build_retail,
     _build_pbdb,
+    _build_pbdb_relational,
     _build_kelmarsh,
     _build_wikidata,
     _build_bess,
