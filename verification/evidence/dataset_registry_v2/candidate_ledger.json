@@ -2631,6 +2631,156 @@
    "size": "45,716 rows",
    "source_url": "https://data.nasa.gov/resource/gh4g-9sfh.csv",
    "status": "excluded"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "ourairports:database",
+   "licence": "Public Domain (Unlicense repository LICENSE; producer data page)",
+   "name": "OurAirports aviation infrastructure database (daily dump 2026-11-22)",
+   "next_step": "acquired and ready under P-REL",
+   "notes": "Integrated as ourairports_db (86,377 airports, 48,437 runways, 30,400 frequencies, 11,008 navaids, 249 countries, 3,987 regions; 0 orphans across 9 FKs; link and keyword text dropped; volunteer-curated, completeness varies by country)",
+   "publisher": "OurAirports",
+   "reason": "Aviation infrastructure relational schema outside timetable networks",
+   "size": "180,458 rows across 6 tables",
+   "source_url": "https://davidmegginson.github.io/ourairports-data/",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C2b"
+   ],
+   "id": "cftc:cot-disaggregated",
+   "licence": "U.S. Public Domain (CFTC web policy, Copyright)",
+   "name": "CFTC Commitments of Traders, Disaggregated Futures Only (2024-2025)",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "Integrated as cftc_cot_disaggregated (21 of 194 columns, 346 contract names, all-period positions only)",
+   "publisher": "U.S. Commodity Futures Trading Commission",
+   "reason": "Derivatives market positioning mechanism absent from C2b",
+   "size": "27,231 weekly contract rows",
+   "source_url": "https://publicreporting.cftc.gov/resource/72hh-3qpy.json",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "noaa:ndbc-stdmet-2023",
+   "licence": "U.S. Public Domain (NWS disclaimer; NDBC page unreachable)",
+   "name": "NOAA NDBC standard meteorological data, 7 moored buoys, 2023",
+   "next_step": "acquired and ready under P-TS",
+   "notes": "Integrated as ndbc_buoys_2023 (fixed-station selection of NDBC-operated buoys; publisher missing codes mapped to NaN; wave columns missing in about 68% of rows; VIS and TIDE empty and dropped)",
+   "publisher": "NOAA National Data Buoy Center",
+   "reason": "Open-ocean buoy meteorology and sea-state mechanism distinct from coastal tide gauges",
+   "size": "360,156 ten-minute rows",
+   "source_url": "https://www.ndbc.noaa.gov/data/historical/stdmet/",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "zenodo:24164071-daylight-events",
+   "licence": "CC BY 4.0",
+   "name": "A Day in Daylight 2025 contextual event logs (Zenodo 24164071)",
+   "next_step": "acquired and ready under P-SEQ",
+   "notes": "Integrated as zen_daylight_events (events.csv only; participant ids re-pseudonymised; short single-campaign convenience sample)",
+   "publisher": "TUM and TUMCREATE A Day in Daylight 2025 organisers",
+   "reason": "Participatory human-behaviour diary event mechanism, non-business-process",
+   "size": "1,763 event intervals, 47 participants",
+   "source_url": "https://zenodo.org/api/records/24164071",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "cpsc:recalls-2024-2025",
+   "licence": "U.S. Government work (17 U.S.C. 105); policy pages return HTTP 403 to automated clients",
+   "name": "CPSC Recall Retrieval API, 2024-2025 recall notices",
+   "next_step": "acquired and ready under P-NEST",
+   "notes": "Integrated as cpsc_recalls (depth 4, 12 optional paths, 13 object-array fields; contact line, images and page link dropped; rights rest on the statute because no licence text was retrievable)",
+   "publisher": "U.S. Consumer Product Safety Commission",
+   "reason": "Consumer product safety recall notices with array-of-object structure",
+   "size": "725 nested recall notices",
+   "source_url": "https://www.saferproducts.gov/RestWebServices/Recall?format=json",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "zenodo:19370391-jirau-hydro",
+   "licence": "CC BY 4.0",
+   "name": "Jirau hydroelectric generating-unit electro-thermal measurements and trip events (Zenodo 19370391)",
+   "next_step": "skip",
+   "notes": "Excluded: only seven event-centred windows of 130 to 769 rows (1.4 to 8 days each) with 10 events, so no chronological 70/15/15 split per series is meaningful; trip events dated 2026-06 after the 2026-04 publication date; raw data fetched and discarded",
+   "publisher": "SMARTUG project authors (Zenodo 19370391)",
+   "reason": "Event-centred excerpts too short and internally inconsistent for P-TS",
+   "size": "3,207 rows, 7 units, 10 events",
+   "source_url": "https://zenodo.org/api/records/19370391",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C2a"
+   ],
+   "id": "chicago:food-inspections",
+   "licence": "Portal licence field 'See Terms of Use'; terms page contains a disclaimer only",
+   "name": "City of Chicago Food Inspections (4ijn-s7e5)",
+   "next_step": "skip",
+   "notes": "Excluded: no explicit reuse grant in the portal terms, consistent with the other unclassified City of Chicago candidates; food inspection mechanism already covered by dgal_alimconfiance",
+   "publisher": "City of Chicago",
+   "reason": "Reuse rights not verifiable",
+   "size": "318,725 rows",
+   "source_url": "https://data.cityofchicago.org/resource/4ijn-s7e5.json",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C4"
+   ],
+   "id": "noaa:ibtracs",
+   "licence": "NOAA NCEI",
+   "name": "IBTrACS tropical cyclone best tracks",
+   "next_step": "skip",
+   "notes": "Excluded: merges track records of several agencies (JTWC, RSMC, national centres), so independence of the generating system is not established, as for GHCNh",
+   "publisher": "NOAA NCEI",
+   "reason": "Mixed upstream agencies",
+   "size": "about 20 MB per basin",
+   "source_url": "https://www.ncei.noaa.gov/products/international-best-track-archive",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "datagouv:catalogue-api",
+   "licence": "not verified",
+   "name": "data.gouv.fr dataset catalogue API",
+   "next_step": "skip",
+   "notes": "Excluded: terms-of-use page not retrievable by automated clients and no licence statement for catalogue metadata found; user objects in records carry personal names",
+   "publisher": "data.gouv.fr (Etalab)",
+   "reason": "Reuse rights not verifiable",
+   "size": "unknown",
+   "source_url": "https://www.data.gouv.fr/api/1/datasets/",
+   "status": "excluded"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "nih:reporter",
+   "licence": "U.S. Public Domain",
+   "name": "NIH RePORTER projects API",
+   "next_step": "skip",
+   "notes": "Excluded: search endpoint requires POST with a JSON body, which the acquisition framework does not support; extending the framework for one source was not justified",
+   "publisher": "U.S. National Institutes of Health",
+   "reason": "Acquisition framework supports GET only",
+   "size": "unknown",
+   "source_url": "https://api.reporter.nih.gov/v2/projects/search",
+   "status": "excluded"
   }
  ],
  "date": "2026-11-22",
