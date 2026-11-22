@@ -1,6 +1,6 @@
 {
  "licence_classes": {
-  "open": 257,
+  "open": 261,
   "research_only": 22
  },
  "strata": {
@@ -85,12 +85,12 @@
    "ambitious": 45,
    "minimum": 15,
    "missing_to_minimum": 0,
-   "missing_to_recommended": 11,
-   "publishers": 18,
+   "missing_to_recommended": 7,
+   "publishers": 22,
    "recommended": 30,
-   "sources": 19,
+   "sources": 23,
    "stratum": "nested",
-   "systems": 19
+   "systems": 23
   }
  },
  "time_candidates_not_yet_verified": [
@@ -98,5 +98,5 @@
   "uci:755",
   "uci:760"
  ],
- "total_sources": 279
+ "total_sources": 283
 }

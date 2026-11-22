@@ -436,6 +436,22 @@ def _dgccrf_fuel(root, tmp):
     tev._dgccrf_snapshot(root)
 
 
+def _federal_register(root, tmp):
+    tev._fr_snapshot(root)
+
+
+def _datacite_dois(root, tmp):
+    tev._datacite_snapshot(root)
+
+
+def _gbif_cc0(root, tmp):
+    tev._gbif_snapshot(root)
+
+
+def _chembl_molecules(root, tmp):
+    tev._chembl_snapshot(root)
+
+
 def _tlc(root, tmp):
     tev._tlc_page(
         [{}, {"tpep_pickup_datetime": "2023-03-07T07:00:00.000", "total_amount": "0.0"}]
@@ -497,6 +513,10 @@ CASES = {
     "fdic_financials": (_fdic_financials, ev._build_fdic_financials, ["fdic_bank_financials"], {}),
     "sncf_tgv": (_sncf_tgv, ev._build_sncf_tgv, ["sncf_tgv_regularite"], {}),
     "dgccrf_fuel": (_dgccrf_fuel, ev._build_dgccrf_fuel, ["dgccrf_fuel_prices"], {}),
+    "federal_register": (_federal_register, ev._build_federal_register, ["us_federal_register"], {}),  # noqa: E501
+    "datacite_dois": (_datacite_dois, ev._build_datacite_dois, ["datacite_dois"], {}),
+    "gbif_cc0": (_gbif_cc0, ev._build_gbif_cc0, ["gbif_cc0_occurrences"], {}),
+    "chembl_molecules": (_chembl_molecules, ev._build_chembl_molecules, ["chembl_molecules"], {}),
     "tlc": (_tlc, ev._build_tlc, ["nyc_tlc_yellow"], {}),
     "maude": (_maude_case, ev._build_maude, ["openfda_device_event"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),

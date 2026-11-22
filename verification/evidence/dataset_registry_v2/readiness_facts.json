@@ -291,6 +291,22 @@
    "units": 319159,
    "view": "bikeshare_jc"
   },
+  "chembl_molecules": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "identifier-ordered prefix sample (1000 molecules ordered by molecule_chembl_id from ChEMBL_37); bias toward early curated CHEMBL identifiers",
+    "depth 5 with 71 distinct paths and 26 optional paths (biotherapeutic subunits, calculated properties, structures, synonyms)",
+    "0 emails in raw extract; redact_emails applied recursively; kept local under CC BY-SA 3.0"
+   ],
+   "first_party": true,
+   "independent_group": "chembl_molecules",
+   "min_units": 500,
+   "partitions": "hash of molecule_chembl_id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 1000,
+   "view": "chembl_molecules"
+  },
   "clinicaltrials_v2": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -339,6 +355,22 @@
    "protocol_id": "P-NEST",
    "units": 2000,
    "view": "crossref_works"
+  },
+  "datacite_dois": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "created-ordered 2025 dataset DOI prefix sample (1000 records sorted by created timestamp); non-random early-2025 prefix",
+    "depth 8 with 91 distinct paths and 45 optional paths (funding references, related identifiers, geoLocations, subjects)",
+    "creators, contributors and free-text descriptions stripped; redact_emails applied recursively (0 emails)"
+   ],
+   "first_party": true,
+   "independent_group": "datacite_dois",
+   "min_units": 500,
+   "partitions": "hash of id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 1000,
+   "view": "datacite_dois"
   },
   "dft_stats19_2023": {
    "anomaly_origin": "controlled_injection",
@@ -1514,6 +1546,22 @@
    "protocol_id": "P-TAB",
    "units": 235795,
    "view": "flat_uci_967_C2a"
+  },
+  "gbif_cc0_occurrences": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "filtered offset prefix sample (year=2024, hasCoordinate=true, license=CC0_1_0; 1500 occurrences across 5 pages); non-random API-order and licence-filtered slice",
+    "depth 6 with 189 distinct paths and 85 optional paths (gadm administrative hierarchy, extensions, classifications, media)",
+    "collector, identifier, remark, verbatim locality, rightsHolder and media creator fields stripped at all depths; 0 emails"
+   ],
+   "first_party": true,
+   "independent_group": "gbif_occurrences",
+   "min_units": 500,
+   "partitions": "hash of key 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 1500,
+   "view": "gbif_cc0_occurrences"
   },
   "gfz_kp_index": {
    "anomaly_origin": "controlled_injection",
@@ -2979,6 +3027,22 @@
    "protocol_id": "P-NEST",
    "units": 1500,
    "view": "uniprot_kb_reviewed"
+  },
+  "us_federal_register": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "date-ordered 2025 prefix sample (oldest 20 pages x 100 = 2000 regulatory documents published from 2025-01-01 onward); non-random chronological prefix",
+    "depth 6 with 1145 distinct paths and 1120 optional paths (agency parent links, CFR references, dockets, RIN info)",
+    "redact_emails applied recursively across nested text fields; 0 emails remain"
+   ],
+   "first_party": true,
+   "independent_group": "federal_register",
+   "min_units": 500,
+   "partitions": "hash of document_number 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 2000,
+   "view": "us_federal_register"
   },
   "us_treasury_dts": {
    "anomaly_origin": "controlled_injection",

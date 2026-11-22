@@ -1072,6 +1072,10 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _fdic_snapshot(root)
     _sncf_snapshot(root)
     _dgccrf_snapshot(root)
+    _fr_snapshot(root)
+    _datacite_snapshot(root)
+    _gbif_snapshot(root)
+    _chembl_snapshot(root)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
@@ -1087,7 +1091,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "zen_telecom_kpis", "zen_dk_district_heating", "zen_water_demand", "zen_dmsp_auroral", "us_treasury_dts", "fdic_bank_financials", "sncf_tgv_regularite", "dgccrf_fuel_prices", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "zen_telecom_kpis", "zen_dk_district_heating", "zen_water_demand", "zen_dmsp_auroral", "us_treasury_dts", "fdic_bank_financials", "sncf_tgv_regularite", "dgccrf_fuel_prices", "us_federal_register", "datacite_dois", "gbif_cc0_occurrences", "chembl_molecules", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -8311,3 +8315,262 @@ def test_dgccrf_fuel_view_and_builder(tmp_path):
     assert view["pseudonymised"] == ["id"] and view["salt_label"] == ev.SALT
     assert view["sampling"]["stations"] == 2
     assert view["source_snapshot"] == f"dgccrf_fuel_prices/{ev.WAVE24_SNAPSHOT}"
+
+
+def _fr_snapshot(root):
+    raw = root / "us_federal_register" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "fr_2025_p01.json").write_text(
+        json.dumps({"results": [{"document_number": "2025-002", "title": "Rule B"}]})
+    )
+    (raw / "fr_2025_p00.json").write_text(
+        json.dumps(
+            {
+                "results": [
+                    {"document_number": "2025-001", "action": "Ask a@fr.gov"},
+                    {"document_number": "2025-001", "action": "dup"},
+                ]
+            }
+        )
+    )
+
+
+def _datacite_snapshot(root):
+    raw = root / "datacite_dois" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "datacite_2025_p01.json").write_text(
+        json.dumps({"data": [{"id": "10.1/b", "attributes": {"titles": [{"title": "B"}]}}]})
+    )
+    (raw / "datacite_2025_p00.json").write_text(
+        json.dumps(
+            {
+                "data": [
+                    {
+                        "id": "10.1/a",
+                        "attributes": {
+                            "creators": [{"name": "Ann"}],
+                            "contributors": [{"name": "Bob"}],
+                            "descriptions": [{"description": "text"}],
+                            "publisher": "Pub c@dc.org",
+                        },
+                    },
+                    {"id": "10.1/a", "attributes": {"publisher": "dup"}},
+                ]
+            }
+        )
+    )
+
+
+def _gbif_snapshot(root):
+    raw = root / "gbif_cc0_occurrences" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "gbif_cc0_2024_p01.json").write_text(
+        json.dumps(
+            {
+                "results": [
+                    {"key": 20, "license": ev.GBIF_LICENSE, "species": "Oak"},
+                    {"key": 30, "license": "http://creativecommons.org/licenses/by/4.0/legalcode"},
+                ]
+            }
+        )
+    )
+    (raw / "gbif_cc0_2024_p00.json").write_text(
+        json.dumps(
+            {
+                "results": [
+                    {
+                        "key": 10,
+                        "license": ev.GBIF_LICENSE,
+                        "recordedBy": "Alice",
+                        "identifiedBy": "Bob",
+                        "locality": "Paris",
+                        "media": [{"creator": "Cam", "rightsHolder": "Org"}],
+                        "note": "x@gbif.org",
+                    },
+                    {"key": 10, "license": ev.GBIF_LICENSE, "note": "dup"},
+                ]
+            }
+        )
+    )
+
+
+def _chembl_snapshot(root):
+    raw = root / "chembl_molecules" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    (raw / "chembl_mol_p01.json").write_text(
+        json.dumps({"molecules": [{"molecule_chembl_id": "CHEMBL2", "pref_name": "B"}]})
+    )
+    (raw / "chembl_mol_p00.json").write_text(
+        json.dumps(
+            {
+                "molecules": [
+                    {"molecule_chembl_id": "CHEMBL1", "pref_name": "mail x@ebi.ac.uk"},
+                    {"molecule_chembl_id": "CHEMBL1", "pref_name": "dup"},
+                ]
+            }
+        )
+    )
+
+
+def test_federal_register_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no Federal Register JSON in the snapshot$"):
+        ev._build_federal_register(tmp_path / "empty", tmp_path / "err", {})
+    raw_recs = [
+        {"document_number": "2025-2", "title": "x@fr.gov"},
+        {"document_number": "2025-1", "title": "keep"},
+        {"document_number": "2025-1", "title": "dup"},
+    ]
+    copy_before = json.loads(json.dumps(raw_recs))
+    viewed = ev.federal_register_view(raw_recs)
+    assert raw_recs == copy_before
+    assert [r["document_number"] for r in viewed] == ["2025-1", "2025-2"]
+    assert viewed[0]["title"] == "keep" and viewed[1]["title"] == "[email]"
+
+    root = tmp_path / "acq"
+    _fr_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_federal_register(root, out, manifest)
+    ev._build_federal_register(root, out, manifest)
+    text = (out / "us_federal_register" / "documents.jsonl").read_text()
+    assert text.endswith("\n") and text.splitlines() == [
+        json.dumps({"action": "Ask [email]", "document_number": "2025-001"}, sort_keys=True),
+        json.dumps({"document_number": "2025-002", "title": "Rule B"}, sort_keys=True),
+    ]
+    view = manifest["us_federal_register"]
+    assert view["dropped"] == [] and view["pseudonymised"] == []
+    assert view["files"]["documents.jsonl"]["rows"] == 2
+    assert view["sampling"] == {
+        "documents_in": 3,
+        "files": ["fr_2025_p00.json", "fr_2025_p01.json"],
+        "method": "oldest 20 pages x 100 published in 2025 from Federal Register API v1",
+        "unique_documents": 2,
+    }
+    assert view["source_snapshot"] == f"us_federal_register/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_datacite_dois_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no DataCite DOI JSON in the snapshot$"):
+        ev._build_datacite_dois(tmp_path / "empty", tmp_path / "err", {})
+    raw_recs = [
+        {
+            "id": "10.1/2",
+            "attributes": {
+                "creators": ["A"],
+                "contributors": ["B"],
+                "descriptions": ["D"],
+                "url": "u@d.org",
+            },  # noqa: E501
+        },
+        {"id": "10.1/1", "attributes": {"publisher": "keep"}},
+        {"id": "10.1/1", "attributes": {"publisher": "dup"}},
+    ]
+    copy_before = json.loads(json.dumps(raw_recs))
+    viewed = ev.datacite_dois_view(raw_recs)
+    assert raw_recs == copy_before
+    assert [r["id"] for r in viewed] == ["10.1/1", "10.1/2"]
+    assert viewed[0]["attributes"]["publisher"] == "keep"
+    assert viewed[1]["attributes"] == {"url": "[email]"}
+
+    root = tmp_path / "acq"
+    _datacite_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_datacite_dois(root, out, manifest)
+    ev._build_datacite_dois(root, out, manifest)
+    text = (out / "datacite_dois" / "dois.jsonl").read_text()
+    assert text.endswith("\n") and text.splitlines() == [
+        json.dumps({"attributes": {"publisher": "Pub [email]"}, "id": "10.1/a"}, sort_keys=True),
+        json.dumps({"attributes": {"titles": [{"title": "B"}]}, "id": "10.1/b"}, sort_keys=True),
+    ]
+    view = manifest["datacite_dois"]
+    assert view["dropped"] == ["contributors", "creators", "descriptions"]
+    assert view["pseudonymised"] == [] and view["files"]["dois.jsonl"]["rows"] == 2
+    assert view["sampling"] == {
+        "dois_in": 3,
+        "files": ["datacite_2025_p00.json", "datacite_2025_p01.json"],
+        "method": "created-ordered first 10 pages x 100 of published=2025 dataset DOIs",
+        "unique_dois": 2,
+    }
+    assert view["source_snapshot"] == f"datacite_dois/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_gbif_cc0_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no GBIF occurrence JSON in the snapshot$"):
+        ev._build_gbif_cc0(tmp_path / "empty", tmp_path / "err", {})
+    raw_recs = [
+        {"key": 9, "license": "cc-by"},
+        {
+            "key": 2,
+            "license": ev.GBIF_LICENSE,
+            "recordedBy": "A",
+            "media": [{"creator": "B"}],
+            "note": "u@g.org",
+        },  # noqa: E501
+        {"key": 1, "license": ev.GBIF_LICENSE, "species": "keep"},
+        {"key": 1, "license": ev.GBIF_LICENSE, "species": "dup"},
+    ]
+    copy_before = json.loads(json.dumps(raw_recs))
+    viewed = ev.gbif_cc0_view(raw_recs)
+    assert raw_recs == copy_before
+    assert [r["key"] for r in viewed] == [1, 2] and viewed[0]["species"] == "keep"
+    assert "recordedBy" not in viewed[1] and viewed[1]["media"] == [{}]
+    assert viewed[1]["note"] == "[email]"
+
+    root = tmp_path / "acq"
+    _gbif_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_gbif_cc0(root, out, manifest)
+    ev._build_gbif_cc0(root, out, manifest)
+    text = (out / "gbif_cc0_occurrences" / "occurrences.jsonl").read_text()
+    assert text.endswith("\n") and len(text.splitlines()) == 2
+    first = json.loads(text.splitlines()[0])
+    assert first == {"key": 10, "license": ev.GBIF_LICENSE, "media": [{}], "note": "[email]"}
+    view = manifest["gbif_cc0_occurrences"]
+    assert view["dropped"] == sorted(ev.GBIF_DROP) and view["pseudonymised"] == []
+    assert view["files"]["occurrences.jsonl"]["rows"] == 2
+    assert view["sampling"] == {
+        "files": ["gbif_cc0_2024_p00.json", "gbif_cc0_2024_p01.json"],
+        "method": "offset prefix 5 pages x 300 of 2024 georeferenced CC0_1_0 occurrences",
+        "records_in": 4,
+        "unique_occurrences": 2,
+    }
+    assert view["source_snapshot"] == f"gbif_cc0_occurrences/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_chembl_molecules_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no ChEMBL molecule JSON in the snapshot$"):
+        ev._build_chembl_molecules(tmp_path / "empty", tmp_path / "err", {})
+    raw_recs = [
+        {"molecule_chembl_id": "CHEMBL2", "pref_name": "c@ebi.ac.uk"},
+        {"molecule_chembl_id": "CHEMBL1", "pref_name": "keep"},
+        {"molecule_chembl_id": "CHEMBL1", "pref_name": "dup"},
+    ]
+    copy_before = json.loads(json.dumps(raw_recs))
+    viewed = ev.chembl_molecules_view(raw_recs)
+    assert raw_recs == copy_before
+    assert [r["molecule_chembl_id"] for r in viewed] == ["CHEMBL1", "CHEMBL2"]
+    assert viewed[0]["pref_name"] == "keep" and viewed[1]["pref_name"] == "[email]"
+
+    root = tmp_path / "acq"
+    _chembl_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_chembl_molecules(root, out, manifest)
+    ev._build_chembl_molecules(root, out, manifest)
+    text = (out / "chembl_molecules" / "molecules.jsonl").read_text()
+    assert text.endswith("\n") and text.splitlines() == [
+        json.dumps({"molecule_chembl_id": "CHEMBL1", "pref_name": "mail [email]"}, sort_keys=True),
+        json.dumps({"molecule_chembl_id": "CHEMBL2", "pref_name": "B"}, sort_keys=True),
+    ]
+    view = manifest["chembl_molecules"]
+    assert view["dropped"] == [] and view["pseudonymised"] == []
+    assert view["files"]["molecules.jsonl"]["rows"] == 2
+    assert view["sampling"] == {
+        "files": ["chembl_mol_p00.json", "chembl_mol_p01.json"],
+        "method": "identifier-ordered prefix 10 pages x 100 of ChEMBL_37 molecules",
+        "molecules_in": 3,
+        "unique_molecules": 2,
+    }
+    assert view["source_snapshot"] == f"chembl_molecules/{ev.WAVE24_SNAPSHOT}"

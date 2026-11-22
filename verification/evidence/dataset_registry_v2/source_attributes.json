@@ -83,6 +83,17 @@
    "C4": "operational job trace"
   }
  },
+ "chembl_molecules": {
+  "curator": "ebi.ac.uk",
+  "domain": "medicinal chemistry bioactivity",
+  "generating_system": "EMBL-EBI ChEMBL curated small-molecule bioactivity database",
+  "note": "Small-molecule chemical properties, SMILES/InChI structures and ATC classifications; distinct from rcsb_pdb macromolecular crystallography and uniprot_kb sequences; kept local under CC BY-SA 3.0",
+  "producer": "EMBL-EBI",
+  "schema_family": "small-molecule pharmacology json",
+  "structure": {
+   "C6": "medicinal chemistry molecule hierarchy json"
+  }
+ },
  "clinicaltrials_gov": {
   "curator": "clinicaltrials.gov",
   "domain": "clinical registry",
@@ -169,6 +180,17 @@
   "schema_family": "district thermal meter time series",
   "structure": {
    "C3": "hourly district heating thermal demand and active-meter time series"
+  }
+ },
+ "datacite_dois": {
+  "curator": "api.datacite.org",
+  "domain": "scholarly metadata",
+  "generating_system": "DataCite DOI metadata registration and dataset citation infrastructure",
+  "note": "Shares scholarly metadata domain with crossref and openalex; distinct DataCite JSON:API attributes schema and curator",
+  "producer": "DataCite",
+  "schema_family": "datacite metadata json",
+  "structure": {
+   "C6": "dataset doi registration metadata json"
   }
  },
  "dft_stats19": {
@@ -336,6 +358,17 @@
    "C2b": "insured bank quarterly financial statement cross-sections"
   }
  },
+ "federal_register": {
+  "curator": "federalregister.gov",
+  "domain": "federal regulatory rulemaking",
+  "generating_system": "Office of the Federal Register daily federal rulemaking document publication system",
+  "note": "Distinct regulatory JSON hierarchy (agencies, CFR, dockets, RIN) and US public-domain curator",
+  "producer": "Office of the Federal Register (NARA)",
+  "schema_family": "federal regulatory documents json",
+  "structure": {
+   "C6": "federal rulemaking notice and regulation json"
+  }
+ },
  "fin_institute_nl": {
   "curator": "4tu",
   "domain": "banking process",
@@ -371,6 +404,17 @@
   "schema_family": "fugaku job records",
   "structure": {
    "C4": "operational job trace"
+  }
+ },
+ "gbif_occurrences": {
+  "curator": "api.gbif.org",
+  "domain": "biodiversity species occurrences",
+  "generating_system": "GBIF Darwin Core primary biodiversity occurrence aggregation portal",
+  "note": "Distinct JSON nested taxonomy, GADM geospatial and extension structure from flat fossil paleobiology_database CSVs",
+  "producer": "Global Biodiversity Information Facility (GBIF)",
+  "schema_family": "darwin core occurrence json",
+  "structure": {
+   "C6": "georeferenced species occurrence json"
   }
  },
  "georgia_procurement": {

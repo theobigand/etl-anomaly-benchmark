@@ -5530,6 +5530,86 @@
    "stratum": "C2b",
    "system": "french_dgccrf_retail_fuel_pricing",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "federal_register",
+   "id": "us_federal_register",
+   "licence_class": "open",
+   "protocols": "P-NEST on Federal Register regulatory rulemaking JSON records (type, optional-path and structure faults)",
+   "publisher": "us_office_of_federal_register",
+   "reason": "Office of the Federal Register API v1 (2025, U.S. Public Domain): 2000 regulatory documents, depth 6, 1145 paths, 1120 optional paths; rulemaking domain absent from C6",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "U.S. Government Works (17 U.S.C. 105 Public Domain; 44 U.S.C. Ch. 15)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "us_federal_register_rulemaking_documents",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "datacite_dois",
+   "id": "datacite_dois",
+   "licence_class": "open",
+   "protocols": "P-NEST on DataCite dataset DOI metadata JSON records (type, optional-path and structure faults)",
+   "publisher": "datacite",
+   "reason": "DataCite REST API Metadata Store (published=2025 datasets, CC0 1.0): 1000 DOI records, depth 8, 91 paths, 45 optional paths; creators/contributors/descriptions stripped",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "DataCite Data File Use Policy (read 2026-11-22): CC0 1.0",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "datacite_doi_metadata_registry",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "gbif_occurrences",
+   "id": "gbif_cc0_occurrences",
+   "licence_class": "open",
+   "protocols": "P-NEST on CC0-filtered GBIF Darwin Core biodiversity occurrence JSON records",
+   "publisher": "gbif",
+   "reason": "GBIF Occurrence API v1 filtered strictly to CC0 1.0 (2024 georeferenced): 1500 occurrences, depth 6, 189 paths, 85 optional paths; collector/locality PII stripped",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Per-record GBIF metadata (read 2026-11-22): http://creativecommons.org/publicdomain/zero/1.0/legalcode",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "gbif_darwin_core_occurrence_store",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "chembl_molecules",
+   "id": "chembl_molecules",
+   "licence_class": "open",
+   "protocols": "P-NEST on ChEMBL small-molecule medicinal chemistry JSON records",
+   "publisher": "embl_ebi",
+   "reason": "EMBL-EBI ChEMBL_37 REST API (CC BY-SA 3.0, local only): 1000 molecules, depth 5, 71 paths, 26 optional paths; small-molecule bioactivity domain distinct from RCSB macromolecular structures",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "ftp.ebi.ac.uk/pub/databases/chembl/ChEMBLdb/latest/LICENSE (read 2026-11-22): CC BY-SA 3.0",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "embl_ebi_chembl_molecule_database",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

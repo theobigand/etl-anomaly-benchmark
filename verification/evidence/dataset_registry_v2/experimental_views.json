@@ -359,6 +359,34 @@
   "pseudonymised": [],
   "source_snapshot": "bikeshare_jc/2026-11-21"
  },
+ "chembl_molecules": {
+  "dropped": [],
+  "files": {
+   "molecules.jsonl": {
+    "rows": 1000,
+    "sha256": "4a14c32efb77046257a12f11273c807b58af1c6c289adf7c98164a51b4edbfc0"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "files": [
+    "chembl_mol_p00.json",
+    "chembl_mol_p01.json",
+    "chembl_mol_p02.json",
+    "chembl_mol_p03.json",
+    "chembl_mol_p04.json",
+    "chembl_mol_p05.json",
+    "chembl_mol_p06.json",
+    "chembl_mol_p07.json",
+    "chembl_mol_p08.json",
+    "chembl_mol_p09.json"
+   ],
+   "method": "identifier-ordered prefix 10 pages x 100 of ChEMBL_37 molecules",
+   "molecules_in": 1000,
+   "unique_molecules": 1000
+  },
+  "source_snapshot": "chembl_molecules/2026-11-22"
+ },
  "clinicaltrials_v2": {
   "dropped": [
    "centralContacts",
@@ -480,6 +508,38 @@
   "notes": "authors are replaced by their count; one record per DOI",
   "pseudonymised": [],
   "source_snapshot": "crossref_works/2026-11-21"
+ },
+ "datacite_dois": {
+  "dropped": [
+   "contributors",
+   "creators",
+   "descriptions"
+  ],
+  "files": {
+   "dois.jsonl": {
+    "rows": 1000,
+    "sha256": "6451b20d726799174973499a357d07cb6e4a9264d923a833b9a9bb1e47321ad3"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "dois_in": 1000,
+   "files": [
+    "datacite_2025_p00.json",
+    "datacite_2025_p01.json",
+    "datacite_2025_p02.json",
+    "datacite_2025_p03.json",
+    "datacite_2025_p04.json",
+    "datacite_2025_p05.json",
+    "datacite_2025_p06.json",
+    "datacite_2025_p07.json",
+    "datacite_2025_p08.json",
+    "datacite_2025_p09.json"
+   ],
+   "method": "created-ordered first 10 pages x 100 of published=2025 dataset DOIs",
+   "unique_dois": 1000
+  },
+  "source_snapshot": "datacite_dois/2026-11-22"
  },
  "dft_stats19_2023": {
   "dropped": [
@@ -1913,6 +1973,44 @@
   "source_snapshot": "uci:967 (repository file pinned by checksum)",
   "stratum": "C2a",
   "table": "uci:967"
+ },
+ "gbif_cc0_occurrences": {
+  "dropped": [
+   "creator",
+   "eventRemarks",
+   "fieldNotes",
+   "georeferencedBy",
+   "identifiedBy",
+   "identifiedByIDs",
+   "locality",
+   "occurrenceRemarks",
+   "preparations",
+   "recordedBy",
+   "recordedByIDs",
+   "rightsHolder",
+   "verbatimIdentification",
+   "verbatimLocality"
+  ],
+  "files": {
+   "occurrences.jsonl": {
+    "rows": 1500,
+    "sha256": "ca5670d606b0b8c43267a3cf0b352ddf43ba6778c7521173820924da571c5024"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "files": [
+    "gbif_cc0_2024_p00.json",
+    "gbif_cc0_2024_p01.json",
+    "gbif_cc0_2024_p02.json",
+    "gbif_cc0_2024_p03.json",
+    "gbif_cc0_2024_p04.json"
+   ],
+   "method": "offset prefix 5 pages x 300 of 2024 georeferenced CC0_1_0 occurrences",
+   "records_in": 1500,
+   "unique_occurrences": 1500
+  },
+  "source_snapshot": "gbif_cc0_occurrences/2026-11-22"
  },
  "gfz_kp_index": {
   "dropped": [
@@ -4217,6 +4315,44 @@
    "method": "250 reviewed Swiss-Prot entries per organism across six model organisms"
   },
   "source_snapshot": "uniprot_kb_reviewed/2026-11-22"
+ },
+ "us_federal_register": {
+  "dropped": [],
+  "files": {
+   "documents.jsonl": {
+    "rows": 2000,
+    "sha256": "189e3967e01cead0271ca0efbe453b325266d590515eeb5db4840cecd8f35415"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "documents_in": 2000,
+   "files": [
+    "fr_2025_p00.json",
+    "fr_2025_p01.json",
+    "fr_2025_p02.json",
+    "fr_2025_p03.json",
+    "fr_2025_p04.json",
+    "fr_2025_p05.json",
+    "fr_2025_p06.json",
+    "fr_2025_p07.json",
+    "fr_2025_p08.json",
+    "fr_2025_p09.json",
+    "fr_2025_p10.json",
+    "fr_2025_p11.json",
+    "fr_2025_p12.json",
+    "fr_2025_p13.json",
+    "fr_2025_p14.json",
+    "fr_2025_p15.json",
+    "fr_2025_p16.json",
+    "fr_2025_p17.json",
+    "fr_2025_p18.json",
+    "fr_2025_p19.json"
+   ],
+   "method": "oldest 20 pages x 100 published in 2025 from Federal Register API v1",
+   "unique_documents": 2000
+  },
+  "source_snapshot": "us_federal_register/2026-11-22"
  },
  "us_treasury_dts": {
   "dropped": [

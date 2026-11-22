@@ -2,13 +2,13 @@
  "coverage": {
   "0.2": {
    "ALL": {
-    "curators": 49,
-    "domains": 92,
-    "effective_groups": 95.4083,
-    "groups": 174,
-    "largest_schema_family_share": 0.3678,
-    "producers": 174,
-    "schema_families": 79
+    "curators": 53,
+    "domains": 95,
+    "effective_groups": 99.4083,
+    "groups": 178,
+    "largest_schema_family_share": 0.3596,
+    "producers": 178,
+    "schema_families": 83
    },
    "C1": {
     "curators": 1,
@@ -65,24 +65,24 @@
     "schema_families": 14
    },
    "C6": {
-    "curators": 15,
-    "domains": 14,
-    "effective_groups": 17.1429,
-    "groups": 18,
-    "largest_schema_family_share": 0.1667,
-    "producers": 18,
-    "schema_families": 16
+    "curators": 19,
+    "domains": 17,
+    "effective_groups": 21.1429,
+    "groups": 22,
+    "largest_schema_family_share": 0.1364,
+    "producers": 22,
+    "schema_families": 20
    }
   },
   "0.5": {
    "ALL": {
-    "curators": 49,
-    "domains": 92,
-    "effective_groups": 84.9741,
-    "groups": 174,
-    "largest_schema_family_share": 0.3678,
-    "producers": 174,
-    "schema_families": 79
+    "curators": 53,
+    "domains": 95,
+    "effective_groups": 88.9741,
+    "groups": 178,
+    "largest_schema_family_share": 0.3596,
+    "producers": 178,
+    "schema_families": 83
    },
    "C1": {
     "curators": 1,
@@ -139,13 +139,13 @@
     "schema_families": 14
    },
    "C6": {
-    "curators": 15,
-    "domains": 14,
-    "effective_groups": 16.5,
-    "groups": 18,
-    "largest_schema_family_share": 0.1667,
-    "producers": 18,
-    "schema_families": 16
+    "curators": 19,
+    "domains": 17,
+    "effective_groups": 20.5,
+    "groups": 22,
+    "largest_schema_family_share": 0.1364,
+    "producers": 22,
+    "schema_families": 20
    }
   }
  },
@@ -320,15 +320,15 @@
   },
   "C6": {
    "diversity": true,
-   "domains": 14,
+   "domains": 17,
    "exploratory": true,
-   "families": 15,
-   "gap": 12,
-   "groups": 18,
+   "families": 19,
+   "gap": 8,
+   "groups": 22,
    "largest_family": "procurement release",
-   "largest_family_share": 0.1667,
+   "largest_family_share": 0.1364,
    "missing": [
-    "groups: 18 of 30"
+    "groups: 22 of 30"
    ],
    "quota": false,
    "target": 30,

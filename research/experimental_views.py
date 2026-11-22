@@ -6213,6 +6213,173 @@ def _build_dgccrf_fuel(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+def federal_register_view(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Unique Federal Register regulatory documents ordered by document_number, e-mails redacted."""  # noqa: E501
+    unique: dict[str, dict[str, Any]] = {}
+    for record in records:
+        unique.setdefault(record["document_number"], record)
+    return redact_emails(
+        nested_view(list(unique.values()), frozenset(), lambda r: r["document_number"])
+    )
+
+
+def _build_federal_register(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "us_federal_register" / WAVE24_SNAPSHOT / "raw"
+    files = sorted(raw.glob("fr_2025_p*.json"))
+    if not files:
+        raise ViewError("no Federal Register JSON in the snapshot")
+    records: list[dict[str, Any]] = []
+    for path in files:
+        records += json.loads(path.read_text())["results"]
+    view = federal_register_view(records)
+    target = _write_jsonl(out / "us_federal_register", "documents.jsonl", view)
+    _record(
+        manifest,
+        "us_federal_register",
+        {"documents.jsonl": (target, len(view))},
+        dropped=[],
+        pseudonymised=[],
+        sampling={
+            "documents_in": len(records),
+            "files": [p.name for p in files],
+            "method": "oldest 20 pages x 100 published in 2025 from Federal Register API v1",
+            "unique_documents": len(view),
+        },
+        source_snapshot=f"us_federal_register/{WAVE24_SNAPSHOT}",
+    )
+
+
+DATACITE_DROP = frozenset({"creators", "contributors", "descriptions"})
+
+
+def datacite_dois_view(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Unique DataCite dataset DOIs without creator/contributor/description fields, e-mails redacted."""  # noqa: E501
+    unique: dict[str, dict[str, Any]] = {}
+    for record in records:
+        unique.setdefault(record["id"], record)
+    cleaned = nested_view(list(unique.values()), DATACITE_DROP, lambda r: r["id"])
+    return redact_emails(cleaned)
+
+
+def _build_datacite_dois(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "datacite_dois" / WAVE24_SNAPSHOT / "raw"
+    files = sorted(raw.glob("datacite_2025_p*.json"))
+    if not files:
+        raise ViewError("no DataCite DOI JSON in the snapshot")
+    records: list[dict[str, Any]] = []
+    for path in files:
+        records += json.loads(path.read_text())["data"]
+    view = datacite_dois_view(records)
+    target = _write_jsonl(out / "datacite_dois", "dois.jsonl", view)
+    _record(
+        manifest,
+        "datacite_dois",
+        {"dois.jsonl": (target, len(view))},
+        dropped=sorted(DATACITE_DROP),
+        pseudonymised=[],
+        sampling={
+            "dois_in": len(records),
+            "files": [p.name for p in files],
+            "method": "created-ordered first 10 pages x 100 of published=2025 dataset DOIs",
+            "unique_dois": len(view),
+        },
+        source_snapshot=f"datacite_dois/{WAVE24_SNAPSHOT}",
+    )
+
+
+GBIF_LICENSE = "http://creativecommons.org/publicdomain/zero/1.0/legalcode"
+GBIF_DROP = frozenset(
+    {
+        "recordedBy",
+        "identifiedBy",
+        "recordedByIDs",
+        "identifiedByIDs",
+        "georeferencedBy",
+        "verbatimIdentification",
+        "occurrenceRemarks",
+        "eventRemarks",
+        "locality",
+        "verbatimLocality",
+        "fieldNotes",
+        "rightsHolder",
+        "preparations",
+        "creator",
+    }
+)
+
+
+def gbif_cc0_view(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Unique CC0 GBIF occurrences without collector/locality/media-creator fields, e-mails redacted."""  # noqa: E501
+    unique: dict[int, dict[str, Any]] = {}
+    for record in records:
+        if record.get("license") == GBIF_LICENSE:
+            unique.setdefault(record["key"], record)
+    cleaned = nested_view(list(unique.values()), GBIF_DROP, lambda r: r["key"])
+    return redact_emails(cleaned)
+
+
+def _build_gbif_cc0(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "gbif_cc0_occurrences" / WAVE24_SNAPSHOT / "raw"
+    files = sorted(raw.glob("gbif_cc0_2024_p*.json"))
+    if not files:
+        raise ViewError("no GBIF occurrence JSON in the snapshot")
+    records: list[dict[str, Any]] = []
+    for path in files:
+        records += json.loads(path.read_text())["results"]
+    view = gbif_cc0_view(records)
+    target = _write_jsonl(out / "gbif_cc0_occurrences", "occurrences.jsonl", view)
+    _record(
+        manifest,
+        "gbif_cc0_occurrences",
+        {"occurrences.jsonl": (target, len(view))},
+        dropped=sorted(GBIF_DROP),
+        pseudonymised=[],
+        sampling={
+            "files": [p.name for p in files],
+            "method": "offset prefix 5 pages x 300 of 2024 georeferenced CC0_1_0 occurrences",
+            "records_in": len(records),
+            "unique_occurrences": len(view),
+        },
+        source_snapshot=f"gbif_cc0_occurrences/{WAVE24_SNAPSHOT}",
+    )
+
+
+def chembl_molecules_view(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Unique ChEMBL molecule JSON records ordered by molecule_chembl_id, e-mails redacted."""
+    unique: dict[str, dict[str, Any]] = {}
+    for record in records:
+        unique.setdefault(record["molecule_chembl_id"], record)
+    return redact_emails(
+        nested_view(list(unique.values()), frozenset(), lambda r: r["molecule_chembl_id"])
+    )
+
+
+def _build_chembl_molecules(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "chembl_molecules" / WAVE24_SNAPSHOT / "raw"
+    files = sorted(raw.glob("chembl_mol_p*.json"))
+    if not files:
+        raise ViewError("no ChEMBL molecule JSON in the snapshot")
+    records: list[dict[str, Any]] = []
+    for path in files:
+        records += json.loads(path.read_text())["molecules"]
+    view = chembl_molecules_view(records)
+    target = _write_jsonl(out / "chembl_molecules", "molecules.jsonl", view)
+    _record(
+        manifest,
+        "chembl_molecules",
+        {"molecules.jsonl": (target, len(view))},
+        dropped=[],
+        pseudonymised=[],
+        sampling={
+            "files": [p.name for p in files],
+            "method": "identifier-ordered prefix 10 pages x 100 of ChEMBL_37 molecules",
+            "molecules_in": len(records),
+            "unique_molecules": len(view),
+        },
+        source_snapshot=f"chembl_molecules/{WAVE24_SNAPSHOT}",
+    )
+
+
 BUILD_STEPS = (
     _build_openalex,
     _build_monash,
@@ -6292,6 +6459,10 @@ BUILD_STEPS = (
     _build_fdic_financials,
     _build_sncf_tgv,
     _build_dgccrf_fuel,
+    _build_federal_register,
+    _build_datacite_dois,
+    _build_gbif_cc0,
+    _build_chembl_molecules,
     _build_flat,
     _build_series,
     _build_ukspend,

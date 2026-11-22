@@ -10343,6 +10343,122 @@
    "stratum": "C2b",
    "upstream": "first party: DGCCRF publishes statutory retail fuel prices reported by French service stations on data.economie.gouv.fr",
    "upstream_verified": true
+  },
+  {
+   "attribution": "Office of the Federal Register (NARA), Federal Register API v1 Documents JSON (2025, U.S. Federal Public Domain); accessed 2026-11-22",
+   "files": [],
+   "hosts": [
+    "www.federalregister.gov"
+   ],
+   "id": "us_federal_register",
+   "licence_class": "open",
+   "licence_location": "https://www.federalregister.gov/api/v1/documents.json",
+   "licence_text": "U.S. Government Works (17 U.S.C. 105 Public Domain; 44 U.S.C. Ch. 15); official Federal Register publications are uncopyrighted federal public domain",
+   "max_bytes": 8388608,
+   "method": "date-ordered 2025 prefix sample (oldest first 20 pages x 100 = 2,000 regulatory documents from 2025-01-01 to 2025-12-31)",
+   "min_interval": 0.5,
+   "pages": {
+    "count": 20,
+    "name": "fr_2025_p{n:02d}.json",
+    "observed": "2025",
+    "size": 100,
+    "url": "https://www.federalregister.gov/api/v1/documents.json?conditions[publication_date][gte]=2025-01-01&conditions[publication_date][lte]=2025-12-31&order=oldest&per_page=100&page={n1}&fields[]=agencies&fields[]=cfr_references&fields[]=docket_ids&fields[]=dockets&fields[]=regulation_id_number_info&fields[]=topics&fields[]=dates&fields[]=effective_on&fields[]=comments_close_on&fields[]=significant&fields[]=page_length&fields[]=start_page&fields[]=end_page&fields[]=action&fields[]=citation&fields[]=type&fields[]=document_number&fields[]=publication_date&fields[]=title"
+   },
+   "privacy": "public regulatory document metadata, agency/CFR references, dockets and RIN blocks only; redact_emails applied recursively",
+   "publisher": "Office of the Federal Register (NARA) / U.S. Government Publishing Office",
+   "rate_limit": "20 sequential GET pages at min_interval=0.5s with descriptive User-Agent",
+   "redistribution": "U.S. Public Domain; API pages cached locally",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "first party: Office of the Federal Register publishes official U.S. federal rules, notices and presidential documents via federalregister.gov API v1",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "DataCite REST API Metadata Store (resource-type-id=dataset, published=2025, CC0 1.0 Public Domain Dedication); accessed 2026-11-22",
+   "files": [],
+   "hosts": [
+    "api.datacite.org"
+   ],
+   "id": "datacite_dois",
+   "licence_class": "open",
+   "licence_location": "https://support.datacite.org/docs/datacite-data-file-use-policy",
+   "licence_text": "DataCite Data File Use Policy (read 2026-11-22): metadata is dedicated to the public domain under CC0 1.0",
+   "max_bytes": 8388608,
+   "method": "created-timestamp-ordered prefix sample (first 10 pages x 100 = 1,000 published=2025 dataset DOIs sorted by created)",
+   "min_interval": 0.5,
+   "pages": {
+    "count": 10,
+    "name": "datacite_2025_p{n:02d}.json",
+    "observed": "2025",
+    "size": 100,
+    "url": "https://api.datacite.org/dois?resource-type-id=dataset&published=2025&sort=created&page[size]=100&page[number]={n1}"
+   },
+   "privacy": "creators, contributors and free-text descriptions stripped at attributes level in view; redact_emails applied recursively",
+   "publisher": "DataCite",
+   "rate_limit": "10 sequential GET pages at min_interval=0.5s with descriptive User-Agent",
+   "redistribution": "CC0 1.0; API pages stay local",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "first party: DataCite Metadata Store exposes dataset DOI metadata under CC0 1.0 via support.datacite.org/docs/datacite-data-file-use-policy",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "GBIF Occurrence Search API v1 filtered strictly to license=CC0_1_0 (2024 georeferenced records, CC0 1.0); accessed 2026-11-22",
+   "files": [],
+   "hosts": [
+    "api.gbif.org"
+   ],
+   "id": "gbif_cc0_occurrences",
+   "licence_class": "open",
+   "licence_location": "https://api.gbif.org/v1/occurrence/search?license=CC0_1_0&year=2024&hasCoordinate=true&limit=1",
+   "licence_text": "Per-record GBIF metadata (read 2026-11-22): license strictly equals http://creativecommons.org/publicdomain/zero/1.0/legalcode (CC0 1.0)",
+   "max_bytes": 16777216,
+   "method": "offset prefix sample of 2024 georeferenced CC0_1_0 occurrences (5 pages x 300 = 1,500 records in API key order)",
+   "min_interval": 0.5,
+   "pages": {
+    "count": 5,
+    "name": "gbif_cc0_2024_p{n:02d}.json",
+    "observed": "2024",
+    "size": 300,
+    "url": "https://api.gbif.org/v1/occurrence/search?license=CC0_1_0&year=2024&hasCoordinate=true&limit=300&offset={skip}"
+   },
+   "privacy": "recordedBy, identifiedBy, recordedByIDs, identifiedByIDs, georeferencedBy, verbatimIdentification, remarks, locality, fieldNotes, rightsHolder, preparations and media creator/rightsHolder stripped at all depths; redact_emails applied",
+   "publisher": "Global Biodiversity Information Facility (GBIF)",
+   "rate_limit": "5 sequential GET pages at min_interval=0.5s with descriptive User-Agent",
+   "redistribution": "CC0 1.0; API pages stay local",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "first party: GBIF aggregates publisher-declared occurrence records; query and view enforce per-record license=http://creativecommons.org/publicdomain/zero/1.0/legalcode",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "EMBL-EBI ChEMBL REST API Molecule Records (CC BY-SA 3.0); accessed 2026-11-22",
+   "files": [],
+   "hosts": [
+    "www.ebi.ac.uk"
+   ],
+   "id": "chembl_molecules",
+   "licence_class": "open",
+   "licence_location": "https://ftp.ebi.ac.uk/pub/databases/chembl/ChEMBLdb/latest/LICENSE",
+   "licence_text": "EMBL-EBI ChEMBL LICENSE file (read 2026-11-22): Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)",
+   "max_bytes": 8388608,
+   "method": "identifier-ordered prefix sample (first 10 pages x 100 = 1,000 molecules ordered by molecule_chembl_id)",
+   "min_interval": 0.5,
+   "pages": {
+    "count": 10,
+    "name": "chembl_mol_p{n:02d}.json",
+    "observed": "ChEMBL_37",
+    "size": 100,
+    "url": "https://www.ebi.ac.uk/chembl/api/data/molecule.json?limit=100&offset={skip}&order_by=molecule_chembl_id"
+   },
+   "privacy": "chemical structures, hierarchy, properties, clinical phase flags and cross-references only; redact_emails applied",
+   "publisher": "EMBL-EBI (European Bioinformatics Institute)",
+   "rate_limit": "10 sequential GET pages at min_interval=0.5s with descriptive User-Agent",
+   "redistribution": "CC BY-SA 3.0 (share-alike); raw JSON pages and view stay local",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "first party: EMBL-EBI publishes ChEMBL medicinal chemistry compound records under CC BY-SA 3.0 (ftp.ebi.ac.uk/pub/databases/chembl/ChEMBLdb/latest/LICENSE)",
+   "upstream_verified": true
   }
  ]
 }

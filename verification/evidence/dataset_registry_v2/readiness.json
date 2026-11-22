@@ -2346,6 +2346,34 @@
   },
   {
    "failed": null,
+   "group": "federal_register",
+   "id": "us_federal_register",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "datacite_dois",
+   "id": "datacite_dois",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "gbif_occurrences",
+   "id": "gbif_cc0_occurrences",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "chembl_molecules",
+   "id": "chembl_molecules",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2638,9 +2666,13 @@
    "zambia_procurement"
   ],
   "C6": [
+   "chembl_molecules",
    "clinicaltrials_gov",
    "crossref",
+   "datacite_dois",
    "fda_maude",
+   "federal_register",
+   "gbif_occurrences",
    "georgia_procurement",
    "met_museum",
    "montreal_contracts",
@@ -2714,13 +2746,13 @@
    "structurally_valid": 36
   },
   "C6": {
-   "acquired": 18,
-   "discovered": 21,
-   "experiment_ready": 18,
-   "protocol_ready": 18,
-   "rights_verified": 18,
-   "scientifically_eligible": 18,
-   "structurally_valid": 18
+   "acquired": 22,
+   "discovered": 25,
+   "experiment_ready": 22,
+   "protocol_ready": 22,
+   "rights_verified": 22,
+   "scientifically_eligible": 22,
+   "structurally_valid": 22
   }
  }
 }
