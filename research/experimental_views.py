@@ -3646,6 +3646,91 @@ def _build_wiki(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+UNIPROT_SNAPSHOT = "2026-11-22"
+UNIPROT_DROP = frozenset({"references", "sequence"})
+
+
+def uniprot_view(entries: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Unique UniProtKB entries ordered by primary accession, citations and sequence removed."""
+    unique: dict[str, dict[str, Any]] = {}
+    for entry in entries:
+        unique.setdefault(entry["primaryAccession"], entry)
+    return redact_emails(
+        nested_view(list(unique.values()), UNIPROT_DROP, lambda r: r["primaryAccession"])
+    )
+
+
+def _build_uniprot(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "uniprot_kb_reviewed" / UNIPROT_SNAPSHOT / "raw"
+    files = sorted(raw.glob("uniprot_*.json"))
+    if not files:
+        raise ViewError("no UniProt file in the snapshot")
+    entries: list[dict[str, Any]] = []
+    for path in files:
+        entries += json.loads(path.read_text())["results"]
+    view = uniprot_view(entries)
+    folder = out / "uniprot_kb_reviewed"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "entries.jsonl"
+    target.write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in view))
+    _record(
+        manifest,
+        "uniprot_kb_reviewed",
+        {"entries.jsonl": (target, len(view))},
+        dropped=["references", "sequence"],
+        pseudonymised=[],
+        sampling={
+            "entries_in": len(entries),
+            "files": [p.name for p in files],
+            "method": "250 reviewed Swiss-Prot entries per organism across six model organisms",
+        },
+        source_snapshot=f"uniprot_kb_reviewed/{UNIPROT_SNAPSHOT}",
+    )
+
+
+OSV_SNAPSHOT = "2026-11-22"
+OSV_DROP = frozenset({"credits"})
+
+
+def osv_go_view(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Unique GO-* Go Vulnerability Database advisories ordered by id, credits redacted."""
+    unique: dict[str, dict[str, Any]] = {}
+    for record in records:
+        advisory_id = record["id"]
+        if advisory_id.startswith("GO-"):
+            unique.setdefault(advisory_id, record)
+    return redact_emails(nested_view(list(unique.values()), OSV_DROP, lambda r: r["id"]))
+
+
+def _build_osv_go(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import zipfile
+
+    archive = root / "osv_go_advisories" / OSV_SNAPSHOT / "raw" / "osv_go_all.zip"
+    if not archive.exists():
+        raise ViewError("no OSV Go zip archive in the snapshot")
+    with zipfile.ZipFile(archive) as zf:
+        members = sorted(n for n in zf.namelist() if n.endswith(".json"))
+        records = [json.loads(zf.read(n)) for n in members]
+    view = osv_go_view(records)
+    folder = out / "osv_go_advisories"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "advisories.jsonl"
+    target.write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in view))
+    _record(
+        manifest,
+        "osv_go_advisories",
+        {"advisories.jsonl": (target, len(view))},
+        dropped=["credits"],
+        pseudonymised=[],
+        sampling={
+            "archive_records": len(records),
+            "go_records": len(view),
+            "method": "all GO-* Go Vulnerability Database advisories from Go/all.zip (non-GO prefixes excluded to stay under CC BY 4.0)",  # noqa: E501
+        },
+        source_snapshot=f"osv_go_advisories/{OSV_SNAPSHOT}",
+    )
+
+
 BUILD_STEPS = (
     _build_openalex,
     _build_monash,
@@ -3689,6 +3774,8 @@ BUILD_STEPS = (
     _build_aqs,
     _build_usgs,
     _build_wiki,
+    _build_uniprot,
+    _build_osv_go,
     _build_flat,
     _build_series,
     _build_ukspend,

@@ -292,6 +292,14 @@ def _wiki(root, tmp):
     tev._wiki_snapshot(root)
 
 
+def _uniprot(root, tmp):
+    tev._uniprot_snapshot(root)
+
+
+def _osv(root, tmp):
+    tev._osv_snapshot(root)
+
+
 def _tlc(root, tmp):
     tev._tlc_page(
         [{}, {"tpep_pickup_datetime": "2023-03-07T07:00:00.000", "total_amount": "0.0"}]
@@ -317,6 +325,8 @@ CASES = {
     "aqs": (_aqs, ev._build_aqs, ["epa_aqs_ozone_hourly"], {"AQS_MONITORS": 2}),
     "usgs": (_usgs, ev._build_usgs, ["usgs_continuous_discharge"], {}),
     "wiki": (_wiki, ev._build_wiki, ["wikimedia_simplewiki_edits"], {}),
+    "uniprot": (_uniprot, ev._build_uniprot, ["uniprot_kb_reviewed"], {}),
+    "osv": (_osv, ev._build_osv_go, ["osv_go_advisories"], {}),
     "tlc": (_tlc, ev._build_tlc, ["nyc_tlc_yellow"], {}),
     "maude": (_maude_case, ev._build_maude, ["openfda_device_event"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),

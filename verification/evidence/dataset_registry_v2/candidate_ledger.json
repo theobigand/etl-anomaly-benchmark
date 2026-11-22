@@ -20,15 +20,15 @@
     "C6"
    ],
    "id": "crossref_works",
-   "licence": "documented unrestricted metadata; literal quotation pending",
+   "licence": "Crossref REST API open metadata ('almost none of the metadata is subject to copyright, and you may use it for any purpose'; abstracts omitted)",
    "name": "Crossref works (random sample)",
-   "next_step": "quote the licence statement literally, then promote",
-   "notes": "",
+   "next_step": "none",
+   "notes": "literal REST API rights text verified 2026-11-22; 0 abstract keys confirmed in raw snapshot and view",
    "publisher": "Crossref",
    "reason": "depth 6 nested; references leave the sample",
    "size": null,
    "source_url": "https://api.crossref.org/works",
-   "status": "acquired_rights_pending"
+   "status": "experiment_ready"
   },
   {
    "categories": [
@@ -1656,6 +1656,36 @@
    "size": null,
    "source_url": "https://www.ncei.noaa.gov/products/global-historical-climatology-network-hourly",
    "status": "permission_pending"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "uniprot_kb_reviewed",
+   "licence": "CC BY 4.0",
+   "name": "UniProtKB/Swiss-Prot reviewed protein entries (6 model organisms)",
+   "next_step": "none",
+   "notes": "acquired via REST API 2026-11-22 (1,500 unique entries, depth 11, 370 optional paths); references and sequence dropped",
+   "publisher": "UniProt Consortium",
+   "reason": "deep curated protein annotations with diverse optional substructure",
+   "size": "57.2 MB JSON (42.9 MB view)",
+   "source_url": "https://rest.uniprot.org/uniprotkb/search",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C6"
+   ],
+   "id": "osv_go_advisories",
+   "licence": "CC BY 4.0",
+   "name": "Go Vulnerability Database (OSV JSON)",
+   "next_step": "none",
+   "notes": "acquired Go/all.zip 2026-11-22; filtered to 4,820 GO-* advisories under CC BY 4.0; credits dropped and emails redacted",
+   "publisher": "Go Security Team / OSV.dev",
+   "reason": "OSV vulnerability advisories with optional ranges, CWEs and ecosystem metadata",
+   "size": "13.0 MB zip (7.65 MB view)",
+   "source_url": "https://osv-vulnerabilities.storage.googleapis.com/Go/all.zip",
+   "status": "experiment_ready"
   }
  ],
  "date": "2026-11-21",

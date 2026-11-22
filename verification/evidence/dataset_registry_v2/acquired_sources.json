@@ -1144,14 +1144,14 @@
     "collection_implemented": true,
     "data_acquired": true,
     "discovered": true,
-    "licence_verified": "documented as unrestricted; literal quotation pending",
+    "licence_verified": "Crossref REST API documentation (read 2026-11-22): 'No sign-up is required to use the REST API, and almost none of the metadata is subject to copyright, and you may use it for any purpose. Some abstracts contained in the metadata may be subject to copyright by publishers or authors.' Abstracts are excluded from the select list (0 abstract keys)",
     "ready_for_experiments": false,
     "structural_validation": true
    },
    "stratum": "C6",
    "system": "crossref",
-   "upstream_licence": "Crossref's documentation states that metadata retrieved through the REST API can be reused and redistributed without restriction (facts, so no CC0 is needed; some abstracts may carry copyright); the literal page could not be quoted by this client, so the status stays not_verified",
-   "upstream_status": "not_verified"
+   "upstream_licence": "Crossref REST API documentation (read 2026-11-22): 'No sign-up is required to use the REST API, and almost none of the metadata is subject to copyright, and you may use it for any purpose. Some abstracts contained in the metadata may be subject to copyright by publishers or authors.'; abstracts are omitted via select",
+   "upstream_status": "verified"
   },
   {
    "eligible": true,
@@ -4809,6 +4809,46 @@
    },
    "stratum": "C4",
    "system": "mediawiki_simple_english_wikipedia_edit_log",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "uniprot_kb",
+   "id": "uniprot_kb_reviewed",
+   "licence_class": "open",
+   "protocols": "P-NEST on UniProtKB/Swiss-Prot reviewed protein entry JSON documents (type, optional-path and structure faults)",
+   "publisher": "uniprot_kb",
+   "reason": "UniProtKB/Swiss-Prot reviewed protein entries via official REST API: 1,500 unique accessions across six model organisms (human, mouse, yeast, E. coli, Arabidopsis, Drosophila; 250 each), depth 11, 408 distinct paths and 370 optional paths; citation references and amino-acid sequence strings removed and emails redacted",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "UniProt official license documentation and FTP LICENSE (read 2026-11-22): CC BY 4.0 applies to all copyrightable parts of UniProt databases",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "uniprotkb_swissprot_curation",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "osv_go",
+   "id": "osv_go_advisories",
+   "licence_class": "open",
+   "protocols": "P-NEST on OSV Go Vulnerability Database advisory JSON documents (type, optional-path and structure faults)",
+   "publisher": "osv_go",
+   "reason": "Go Vulnerability Database in OSV JSON format (Go/all.zip filtered strictly to GO-* prefixes so every entry stays under Go Vulnerability Database CC BY 4.0): 4,820 unique advisories, depth 9, 37 distinct paths and 23 optional paths; credits dropped and embedded emails redacted; shares vulnerability domain with NIST NVD, distinct producer, curator, schema and format",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "OSV.dev official data page (read 2026-11-22): Go Vulnerability Database (CC-BY 4.0)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "go_vulnerability_database",
    "upstream_status": "verified"
   }
  ],

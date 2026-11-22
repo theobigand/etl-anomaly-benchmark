@@ -1036,6 +1036,8 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _aqs_snapshot(root)
     _usgs_snapshot(root)
     _wiki_snapshot(root)
+    _uniprot_snapshot(root)
+    _osv_snapshot(root)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
@@ -1051,7 +1053,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -4825,3 +4827,165 @@ def test_wiki_builder_rounds_anonymous_share(tmp_path):
     manifest: dict = {}
     ev._build_wiki(tmp_path / "acq", tmp_path / "out", manifest)
     assert manifest["wikimedia_simplewiki_edits"]["sampling"]["anonymous_share"] == 0.3333
+
+
+def _uniprot_snapshot(root):
+    raw = root / "uniprot_kb_reviewed" / ev.UNIPROT_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    p1 = {
+        "results": [
+            {
+                "primaryAccession": "P20000",
+                "comments": [{"texts": [{"value": "Mail user@example.org"}]}],
+                "references": [{"citation": {"authors": ["Doe J."]}}],
+                "sequence": {"value": "MKT", "length": 3},
+            },
+            {
+                "primaryAccession": "P10000",
+                "entryType": "UniProtKB reviewed (Swiss-Prot)",
+                "references": [{"citation": {"authors": ["First"]}}],
+            },
+        ]
+    }
+    p2 = {
+        "results": [
+            {
+                "primaryAccession": "P10000",
+                "entryType": "DUPLICATE_SHOULD_NOT_WIN",
+            }
+        ]
+    }
+    (raw / "uniprot_mouse_10090.json").write_text(json.dumps(p2))
+    (raw / "uniprot_human_9606.json").write_text(json.dumps(p1))
+    (raw / "manifest.json").write_text("{}")
+
+
+def _osv_snapshot(root):
+    import zipfile as _z
+
+    raw = root / "osv_go_advisories" / ev.OSV_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    with _z.ZipFile(raw / "osv_go_all.zip", "w") as z:
+        z.writestr(
+            "GO-2024-0002.json",
+            json.dumps(
+                {
+                    "summary": "bug",
+                    "id": "GO-2024-0002",
+                    "credits": [{"name": "Alice"}],
+                    "details": "Report to sec@example.org",
+                }
+            ),
+        )
+        z.writestr(
+            "GO-2024-0001.json",
+            json.dumps({"id": "GO-2024-0001", "summary": "first"}),
+        )
+        z.writestr(
+            "sub/GO-2024-0001.json",
+            json.dumps({"id": "GO-2024-0001", "summary": "dup"}),
+        )
+        z.writestr(
+            "GHSA-1111-2222-3333.json",
+            json.dumps({"id": "GHSA-1111-2222-3333", "summary": "non-go"}),
+        )
+        z.writestr("README.txt", "ignored")
+
+
+def test_uniprot_view_drops_citations_sequence_redacts_emails_and_keeps_first_accession():
+    raw_entries = [
+        {
+            "sequence": {"value": "MK"},
+            "primaryAccession": "P2",
+            "references": [{"citation": "c"}],
+            "comments": [{"note": "ask ops@example.org"}],
+        },
+        {"primaryAccession": "P1", "annotationScore": 5.0},
+        {"primaryAccession": "P1", "annotationScore": 1.0},
+    ]
+    raw_copy = json.loads(json.dumps(raw_entries))
+    out = ev.uniprot_view(raw_entries)
+    assert raw_entries == raw_copy
+    assert [r["primaryAccession"] for r in out] == ["P1", "P2"]
+    assert out[0]["annotationScore"] == 5.0
+    assert "references" not in out[1] and "sequence" not in out[1]
+    assert out[1]["comments"][0]["note"] == "ask [email]"
+
+
+def test_uniprot_builder_writes_sorted_jsonl_manifest_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match="no UniProt file"):
+        ev._build_uniprot(tmp_path / "empty", tmp_path / "out_err", {})
+    root = tmp_path / "acq"
+    _uniprot_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_uniprot(root, out, manifest)
+    ev._build_uniprot(root, out, manifest)
+    target = out / "uniprot_kb_reviewed" / "entries.jsonl"
+    lines = target.read_text().splitlines()
+    assert len(lines) == 2 and target.read_text().endswith("\n")
+    assert lines[0] == json.dumps(
+        {"entryType": "UniProtKB reviewed (Swiss-Prot)", "primaryAccession": "P10000"},
+        sort_keys=True,
+    )
+    assert lines[1] == json.dumps(
+        {"comments": [{"texts": [{"value": "Mail [email]"}]}], "primaryAccession": "P20000"},
+        sort_keys=True,
+    )
+    view = manifest["uniprot_kb_reviewed"]
+    assert view["dropped"] == ["references", "sequence"]
+    assert view["pseudonymised"] == []
+    assert view["source_snapshot"] == f"uniprot_kb_reviewed/{ev.UNIPROT_SNAPSHOT}"
+    assert view["files"]["entries.jsonl"]["rows"] == 2
+    assert view["sampling"] == {
+        "entries_in": 3,
+        "files": ["uniprot_human_9606.json", "uniprot_mouse_10090.json"],
+        "method": "250 reviewed Swiss-Prot entries per organism across six model organisms",
+    }
+
+
+def test_osv_go_view_filters_non_go_prefixes_drops_credits_and_redacts_emails():
+    raw_records = [
+        {"id": "GHSA-xxxx", "summary": "skip"},
+        {
+            "summary": "two",
+            "id": "GO-2023-0002",
+            "credits": [{"name": "Bob"}],
+            "details": "b@ex.org",
+        },
+        {"id": "GO-2023-0001", "summary": "first"},
+        {"id": "GO-2023-0001", "summary": "second"},
+    ]
+    out = ev.osv_go_view(raw_records)
+    assert [r["id"] for r in out] == ["GO-2023-0001", "GO-2023-0002"]
+    assert out[0]["summary"] == "first"
+    assert "credits" not in out[1] and out[1]["details"] == "[email]"
+
+
+def test_osv_go_builder_writes_sorted_jsonl_manifest_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match="no OSV Go zip"):
+        ev._build_osv_go(tmp_path / "empty", tmp_path / "out_err", {})
+    root = tmp_path / "acq"
+    _osv_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_osv_go(root, out, manifest)
+    ev._build_osv_go(root, out, manifest)
+    target = out / "osv_go_advisories" / "advisories.jsonl"
+    lines = target.read_text().splitlines()
+    assert len(lines) == 2 and target.read_text().endswith("\n")
+    assert lines[0] == json.dumps({"id": "GO-2024-0001", "summary": "first"}, sort_keys=True)
+    assert lines[1] == json.dumps(
+        {"details": "Report to [email]", "id": "GO-2024-0002", "summary": "bug"},
+        sort_keys=True,
+    )
+    view = manifest["osv_go_advisories"]
+    assert view["dropped"] == ["credits"]
+    assert view["pseudonymised"] == []
+    assert view["source_snapshot"] == f"osv_go_advisories/{ev.OSV_SNAPSHOT}"
+    assert view["files"]["advisories.jsonl"]["rows"] == 2
+    assert view["sampling"] == {
+        "archive_records": 4,
+        "go_records": 2,
+        "method": "all GO-* Go Vulnerability Database advisories from Go/all.zip (non-GO prefixes excluded to stay under CC BY 4.0)",  # noqa: E501
+    }

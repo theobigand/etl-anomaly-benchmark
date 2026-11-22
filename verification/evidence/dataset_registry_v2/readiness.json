@@ -545,15 +545,10 @@
    "stratum": "C6"
   },
   {
-   "failed": {
-    "reasons": [
-     "upstream terms not verified at the original publisher"
-    ],
-    "status": "rights_verified"
-   },
+   "failed": null,
    "group": "crossref",
    "id": "crossref_works",
-   "status": "discovered",
+   "status": "experiment_ready",
    "stratum": "C6"
   },
   {
@@ -2099,6 +2094,20 @@
   },
   {
    "failed": null,
+   "group": "uniprot_kb",
+   "id": "uniprot_kb_reviewed",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
+   "group": "osv_go",
+   "id": "osv_go_advisories",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2361,6 +2370,7 @@
   ],
   "C6": [
    "clinicaltrials_gov",
+   "crossref",
    "fda_maude",
    "georgia_procurement",
    "met_museum",
@@ -2370,6 +2380,8 @@
    "openfda_faers",
    "openfoodfacts",
    "openlibrary",
+   "osv_go",
+   "uniprot_kb",
    "wikimedia_wikidata",
    "zambia_procurement"
   ]
@@ -2430,13 +2442,13 @@
    "structurally_valid": 32
   },
   "C6": {
-   "acquired": 12,
-   "discovered": 16,
-   "experiment_ready": 12,
-   "protocol_ready": 12,
-   "rights_verified": 12,
-   "scientifically_eligible": 12,
-   "structurally_valid": 12
+   "acquired": 15,
+   "discovered": 18,
+   "experiment_ready": 15,
+   "protocol_ready": 15,
+   "rights_verified": 15,
+   "scientifically_eligible": 15,
+   "structurally_valid": 15
   }
  }
 }

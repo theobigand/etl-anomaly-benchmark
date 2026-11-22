@@ -9,8 +9,8 @@
 | C3 time series | 51 | 53 | 45 | 15 | 40 | 55 | 0 |
 | C4 logs and event sequences | 32 | 31 | 16 | 15 | 28 | 40 | 0 |
 | C5 relational | 12 | 32 | 23 | 15 | 36 | 55 | 24 |
-| C6 nested | 14 | 14 | 13 | 15 | 30 | 45 | 16 |
+| C6 nested | 16 | 16 | 15 | 15 | 30 | 45 | 14 |
 
-Licence classes (sources): open 221, research_only 22.
+Licence classes (sources): open 223, research_only 22.
 
-Distinct source families: 243. Wave-2 tables with a time-column candidate that is not yet verified as a single chronological series: 3.
+Distinct source families: 245. Wave-2 tables with a time-column candidate that is not yet verified as a single chronological series: 3.

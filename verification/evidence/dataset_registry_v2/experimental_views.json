@@ -4195,5 +4195,49 @@
    "unreadable_lines": 0
   },
   "source_snapshot": "zen_unisg_factory/2026-11-22"
+ },
+ "osv_go_advisories": {
+  "dropped": [
+   "credits"
+  ],
+  "files": {
+   "advisories.jsonl": {
+    "rows": 4820,
+    "sha256": "d3f2c476408f3c930f5a79c0ddd9d9d2d9c89e54f642ce9b4eae0bbedac9985b"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "archive_records": 9989,
+   "go_records": 4820,
+   "method": "all GO-* Go Vulnerability Database advisories from Go/all.zip (non-GO prefixes excluded to stay under CC BY 4.0)"
+  },
+  "source_snapshot": "osv_go_advisories/2026-11-22"
+ },
+ "uniprot_kb_reviewed": {
+  "dropped": [
+   "references",
+   "sequence"
+  ],
+  "files": {
+   "entries.jsonl": {
+    "rows": 1500,
+    "sha256": "aa444050a322165ab2d475485d28aa825e21520275a1086f53b0993805c68e4b"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "entries_in": 1500,
+   "files": [
+    "uniprot_arabidopsis_3702.json",
+    "uniprot_drosophila_7227.json",
+    "uniprot_ecoli_83333.json",
+    "uniprot_human_9606.json",
+    "uniprot_mouse_10090.json",
+    "uniprot_yeast_559292.json"
+   ],
+   "method": "250 reviewed Swiss-Prot entries per organism across six model organisms"
+  },
+  "source_snapshot": "uniprot_kb_reviewed/2026-11-22"
  }
 }

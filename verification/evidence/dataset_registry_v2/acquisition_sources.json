@@ -1312,7 +1312,7 @@
    "id": "crossref_works",
    "licence_class": "open",
    "licence_location": "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
-   "licence_text": "Crossref documents the REST API metadata as freely reusable bibliographic facts deposited by its members; the retrievable licence page was not machine-readable, so the class rests on Crossref's open metadata policy and is marked pending a literal quotation",
+   "licence_text": "Crossref REST API documentation (read 2026-11-22): 'No sign-up is required to use the REST API, and almost none of the metadata is subject to copyright, and you may use it for any purpose. Some abstracts contained in the metadata may be subject to copyright by publishers or authors.' The request select list excludes abstracts (0 abstract keys in the snapshot or view)",
    "max_bytes": 52428800,
    "method": "official REST API, 20 random samples of 100 works (public pool, no contact address sent)",
    "min_interval": 2.0,
@@ -1322,8 +1322,8 @@
    "redistribution": "raw files stay local",
    "retries": 2,
    "stratum": "C6",
-   "upstream": "metadata deposited by publishers (members)",
-   "upstream_verified": false
+   "upstream": "first party for the Crossref DOI registration registry: member publishers deposit bibliographic metadata with Crossref for dissemination via the REST API",
+   "upstream_verified": true
   },
   {
    "attribution": "cite the Zenodo record 14564935 and its authors",
@@ -8821,6 +8821,87 @@
    "retries": 2,
    "stratum": "C4",
    "upstream": "first party: the MediaWiki software of Simple English Wikipedia records every revision and the Foundation publishes the dump",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "UniProt Consortium, UniProtKB/Swiss-Prot reviewed protein entries via the official REST API for six model organisms; accessed 2026-11-22",
+   "files": [
+    {
+     "name": "uniprot_human_9606.json",
+     "observed": "2026-11",
+     "url": "https://rest.uniprot.org/uniprotkb/search?query=reviewed:true+AND+organism_id:9606&format=json&size=250"
+    },
+    {
+     "name": "uniprot_mouse_10090.json",
+     "observed": "2026-11",
+     "url": "https://rest.uniprot.org/uniprotkb/search?query=reviewed:true+AND+organism_id:10090&format=json&size=250"
+    },
+    {
+     "name": "uniprot_yeast_559292.json",
+     "observed": "2026-11",
+     "url": "https://rest.uniprot.org/uniprotkb/search?query=reviewed:true+AND+organism_id:559292&format=json&size=250"
+    },
+    {
+     "name": "uniprot_ecoli_83333.json",
+     "observed": "2026-11",
+     "url": "https://rest.uniprot.org/uniprotkb/search?query=reviewed:true+AND+organism_id:83333&format=json&size=250"
+    },
+    {
+     "name": "uniprot_arabidopsis_3702.json",
+     "observed": "2026-11",
+     "url": "https://rest.uniprot.org/uniprotkb/search?query=reviewed:true+AND+organism_id:3702&format=json&size=250"
+    },
+    {
+     "name": "uniprot_drosophila_7227.json",
+     "observed": "2026-11",
+     "url": "https://rest.uniprot.org/uniprotkb/search?query=reviewed:true+AND+organism_id:7227&format=json&size=250"
+    }
+   ],
+   "hosts": [
+    "rest.uniprot.org"
+   ],
+   "id": "uniprot_kb_reviewed",
+   "licence_class": "open",
+   "licence_location": "https://rest.uniprot.org/help/license?format=json",
+   "licence_text": "UniProt official license documentation and FTP LICENSE (read 2026-11-22): 'We have chosen to apply the Creative Commons Attribution 4.0 International (CC BY 4.0) License (https://creativecommons.org/licenses/by/4.0/) to all copyrightable parts of our databases.'",
+   "max_bytes": 26214400,
+   "method": "official UniProt REST API search endpoint (format=json, size=250) on reviewed (Swiss-Prot) entries across six diverse reference organisms (taxids 9606, 10090, 559292, 83333, 3702, 7227)",
+   "min_interval": 2.0,
+   "privacy": "literature citations include author lists and submitters (references field is dropped in the view) and free-text comments or cross-references are scanned to redact any e-mail address",
+   "publisher": "UniProt Consortium (EMBL-EBI, SIB, PIR)",
+   "rate_limit": "six requests two seconds apart, descriptive user agent",
+   "redistribution": "CC BY 4.0; raw files stay local",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "first party: the UniProt Consortium curates and publishes UniProtKB/Swiss-Prot reviewed protein entries",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Go Security Team and OSV.dev, Go Vulnerability Database JSON archive (Go/all.zip); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "osv_go_all.zip",
+     "observed": "2026-11",
+     "url": "https://osv-vulnerabilities.storage.googleapis.com/Go/all.zip"
+    }
+   ],
+   "hosts": [
+    "osv-vulnerabilities.storage.googleapis.com"
+   ],
+   "id": "osv_go_advisories",
+   "licence_class": "open",
+   "licence_location": "https://google.github.io/osv.dev/data/",
+   "licence_text": "OSV.dev official data page (read 2026-11-22): 'The following ecosystems have vulnerabilities encoded in this format: ... Go Vulnerability Database (CC-BY 4.0)'",
+   "max_bytes": 26214400,
+   "method": "official OSV ecosystem bulk zip archive containing individual Go advisory JSON documents",
+   "min_interval": 2.0,
+   "privacy": "advisory credits list reporter names and contacts; credits are dropped and strings are scrubbed for e-mail addresses in the view",
+   "publisher": "Go Security Team / OSV.dev",
+   "rate_limit": "single bulk zip download, descriptive user agent",
+   "redistribution": "CC BY 4.0; raw files stay local",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "first party: Go Security Team maintains the Go Vulnerability Database published in OSV format via Google Cloud Storage",
    "upstream_verified": true
   }
  ]

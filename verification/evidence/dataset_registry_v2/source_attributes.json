@@ -107,6 +107,20 @@
    "C2a": "coded categorical collision, vehicle and casualty records"
   }
  },
+ "crossref": {
+  "curator": "crossref",
+  "descriptors": {
+   "nesting": "depth 6, 71 optional paths, arrays of funders, links, licenses and references"
+  },
+  "domain": "scholarly metadata",
+  "generating_system": "Crossref member DOI registration and metadata deposit",
+  "note": "promotes crossref_works after literal REST API reuse text was verified and zero abstracts confirmed; shares domain with OpenAlex, independent curator, producer, schema and API",
+  "producer": "Crossref member publishers",
+  "schema_family": "crossref works json",
+  "structure": {
+   "C6": "scholarly work metadata with references, funders, licenses and links"
+  }
+ },
  "dgfip_dvf": {
   "curator": "data.gouv.fr",
   "domain": "real estate",
@@ -601,6 +615,20 @@
   "schema_family": "catalogue records json",
   "structure": {
    "C6": "library catalogue record"
+  }
+ },
+ "osv_go": {
+  "curator": "osv.dev",
+  "descriptors": {
+   "nesting": "depth 9, 37 distinct paths, 23 optional paths, arrays of affected ranges, references and aliases"
+  },
+  "domain": "cybersecurity vulnerability records",
+  "generating_system": "Go Vulnerability Database (OSV format)",
+  "note": "shares the vulnerability domain with NIST NVD; independent producer, curator, schema family and ecosystem",
+  "producer": "Go Security Team",
+  "schema_family": "osv json",
+  "structure": {
+   "C6": "software vulnerability advisory with semver range events and CWE metadata"
   }
  },
  "paleobiology_database": {
@@ -1478,6 +1506,20 @@
   "structure": {
    "C3": "ten-hertz station sensor messages",
    "C4": "business process execution"
+  }
+ },
+ "uniprot_kb": {
+  "curator": "uniprot consortium",
+  "descriptors": {
+   "nesting": "depth 11, 408 distinct paths, 370 optional paths, nested protein annotations, features and cross-references"
+  },
+  "domain": "molecular biology",
+  "generating_system": "UniProtKB/Swiss-Prot reviewed protein curation",
+  "note": "",
+  "producer": "UniProt Consortium (EMBL-EBI, SIB, PIR)",
+  "schema_family": "uniprotkb protein entry json",
+  "structure": {
+   "C6": "curated protein entry document with annotations, features and database cross-references"
   }
  },
  "usda_fdc": {

@@ -2945,6 +2945,38 @@
     "contextual faults that need weeks of history"
    ],
    "view": "zen_unisg_factory"
+  },
+  "osv_go_advisories": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "all 4,820 GO-* entries in Go/all.zip (non-GO prefixes excluded for clear CC BY 4.0 provenance)",
+    "depth 9 with 37 paths and 23 optional paths (database_specific, severity, withdrawn, related, ecosystems)",
+    "credits field dropped and strings scanned to redact e-mail addresses"
+   ],
+   "first_party": true,
+   "independent_group": "osv_go",
+   "min_units": 1000,
+   "partitions": "hash of GO advisory id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 4820,
+   "view": "osv_go_advisories"
+  },
+  "uniprot_kb_reviewed": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "250 reviewed Swiss-Prot entries per organism across six model organisms (1,500 unique accessions)",
+    "depth 11 with 408 distinct paths and 370 optional paths (comments, features, geneLocations, cross-references)",
+    "literature references and raw sequence object dropped in the view"
+   ],
+   "first_party": true,
+   "independent_group": "uniprot_kb",
+   "min_units": 1000,
+   "partitions": "hash of primaryAccession 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 1500,
+   "view": "uniprot_kb_reviewed"
   }
  }
 }
