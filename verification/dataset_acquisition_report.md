@@ -1058,3 +1058,33 @@ Open Food Facts and OpenAlex were already represented (C6 and C5/C6) and were no
 **Counts (machine-derived).** C1 52, C2a 13, C2b 13, C3 17, C4 14, C5 23, C6 12 (gaps 0, 17, 17, 23, 14, 13, 18); 133 distinct provenance groups, 132 generating systems, 133 producers, 27 curators, 57 domains, 40 schema families, 144 category participations; the largest schema family holds 48 percent of the groups; C4 remains 57 percent business-process execution.
 
 **Focused mutation.** TLC functions 153 of 159 (96.2 percent); MAUDE functions 114 of 117 (97.4 percent); no equivalence approved.
+
+## Update 21: STATS19, EPA AQS, USGS water data and Wikimedia revision history; sources blocked or left to the owner (2026-11-22)
+
+Local work only: no detector run, no frozen result touched, nothing pushed. Raw files stay under the gitignored `data/acquired/`.
+
+| Group | Category | Rights evidence | Structure | Counts as |
+|---|---|---|---|---|
+| `dft_stats19` | C2a | Open Government Licence v3.0 (GOV.UK footer of the Road Safety Open Data page); contributory factors are withheld by the publisher and were not requested | 2023 complete release: 104,258 collisions, 189,815 vehicles, 132,977 casualties; 69 of 95 kept columns have at most 100 coded levels, published `-1` codes cover 6.1, 8.7 and 7.4 percent of cells; 0 orphans on `collision_index`; vehicle and casualty counts equal the child rows for every collision; the publisher's data guide is kept as the codebook; police reference numbers and home-area codes dropped | new group (road safety); the three tables are one generating system |
+| `epa_aqs` | C3 | EPA AirData FAQ: AQS ambient monitoring data are public domain | hourly ozone 2022 and 2023, 12 monitors in 12 states chosen by an even stride over the 1,245 monitors present in both years; 162,829 values, 10.4 percent with a qualifier, two instrument methods; six monitors run all year, six only seven to nine months | new group; two annual cycles only, so yearly seasonality can be checked for presence, not stability |
+| `usgs_water` | C3 | USGS Copyrights and Credits: USGS-produced data are in the U.S. public domain; no API key requested | discharge at four fixed gauges (Potomac, Colorado at Lees Ferry, Mississippi at St. Louis, Sacramento at Freeport), 2022 to 2023, 243,474 values at 15 or 30 minutes, 428 qualified, 0.01 to 2.4 percent of steps absent | new group; same domain and schema family as the Environment Agency gauges (not counted as new diversity), different agency and instruments |
+| `wikimedia_simplewiki` | C4 | Wikimedia dumps licence page (free reuse; CC BY-SA 4.0 and GFDL; Terms of Use control) | prefix of the 2026-11-01 stub history: 296,916 revisions of 1,416 complete pages, 2001 to 2026, parent links with 0 dangling, 27.5 percent anonymous editors (salted hashes), 1.1 percent of pages with an out-of-order timestamp (natural); a non-business-process event mechanism with a limited event vocabulary (creation, minor, ordinary edit) | new group; shares publisher and MediaWiki platform with the Wikidata group (recorded dependence); not a random sample of the wiki |
+
+No natural anomaly labels exist in any of the four; every fault will be a controlled injection.
+
+**Blocked or not acquired.**
+
+| Source | Reason |
+|---|---|
+| NHTSA FARS (C2a) | rights not verified: www.nhtsa.gov answers 403 to automated clients (not bypassed) and the data.gov records disagree (public-domain mark, CC0, "other restrictions", "non-public"); the primary NHTSA statement was not read. Owner or browser check needed |
+| NOAA GHCNh (C3) | the files are reachable but no licence was found (liability disclaimer only), and GHCNh integrates many national upstream sources, so independence and international terms need a per-source check |
+| NASA KSC HTTP logs 1995 (C4) | redistribution is free but the page asks for no analysis beyond general traffic patterns and the logs preserve originating hosts; whether fault injection and detection fit that wording is an owner decision, so nothing was downloaded |
+| LANL cybersecurity logs (C4) | unchanged: the download interface needs an email address and an intended-use statement, which were not submitted; the host-event JSON lines are flat and would not count for C6 |
+| Wikimedia live recent-changes stream (C4) | not used: a short live capture would be an artificial history; the dated dump gives 25 years of real history |
+| OpenAlex (C5, C6), ClinicalTrials.gov (C6) | already represented by the groups `openalex` and `clinicaltrials_gov`; not re-acquired |
+| USDA branded foods (C2a) | same provenance family as `usda_fdc`; not acquired |
+
+**Counts (machine-derived, `readiness.py` then `target_framework.py`).** C1 52, C2a 14, C2b 13, C3 19, C4 15, C5 23, C6 12 (gaps to the provisional quotas 0, 16, 17, 21, 13, 13, 18; 98 category participations, 102 before); 137 distinct provenance groups (133 before), 136 generating systems, 137 producers, 29 curators, 59 domains, 43 schema families, 148 category participations; the largest schema family holds 46.7 percent of the groups; C4 remains 53 percent business-process execution (8 of 15), C5 52 percent timetable feeds.
+
+**Verification.** Tests: `research/tests/test_experimental_views.py` and `test_view_builders.py` (new builders with unit tests, a golden manifest each, and the full-build fixture), plus the registry, readiness, target-framework and acquisition test files, all passing; `ruff check .` and `ruff format --check .` clean. Mutation testing was not run for the new view functions (`aqs_pick`, `aqs_hourly_view`, `_build_aqs`, `usgs_continuous_view`, `_build_usgs`, `wiki_revision_view`, `_wiki_row`, `gzip_members_lines`, `_build_wiki`; the STATS19 view is configuration of the existing table builder); they enter the next mutation round and carry no certification claim.
+The manuscript and slides quote no group counts of this wave, so they are unchanged.
