@@ -5330,6 +5330,46 @@
    "stratum": "C4",
    "system": "github_actions_ci_workflow_repository_log",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "wals_cldf",
+   "id": "wals_cldf",
+   "licence_class": "open",
+   "protocols": "P-REL on 7-table CLDF linguistic typology star/hierarchy schema (languages, parameters, codes, values, chapters, areas, countries; not GTFS)",
+   "publisher": "mpi_eva_wals",
+   "reason": "World Atlas of Language Structures CLDF v2020.3 (CC BY 4.0): 7 relational typology tables (3,573 languages, 192 parameters, 1,143 codes, 76,475 feature values, 152 chapters, 11 areas, 192 countries); 0 orphans on 6 relations and 290/2,652 (10.94%) natural multi-country orphans on languages.Country_ID; contributors/authors omitted",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "cldf-datasets/wals v2020.3 metadata (read 2026-11-22): CC BY 4.0",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "wals_cldf_linguistic_typology_database",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "cordis_horizon_europe",
+   "id": "cordis_horizon_europe",
+   "licence_class": "open",
+   "protocols": "P-REL on 6-table EU Horizon Europe research project & beneficiary schema (379,605 child rows, 0 orphans; not GTFS)",
+   "publisher": "ec_cordis",
+   "reason": "CORDIS Horizon Europe Projects Database (EC Decision 2011/833/EU, 2021-2026): 24,419 projects reconstructed cleanly across multiline quotes linked to 151,382 organization participations, 53,445 EuroSciVoc classifications, 24,419 topics, 31,403 legal bases and 118,956 policy priorities (0 orphans across all 5 FKs); organization identifying/contact columns dropped and organisationID pseudonymised",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CORDIS Legal Notice (read 2026-11-22): Decision 2011/833/EU / CC BY 4.0",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "cordis_horizon_europe_grant_database",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

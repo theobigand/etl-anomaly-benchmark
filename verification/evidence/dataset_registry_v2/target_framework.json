@@ -2,13 +2,13 @@
  "coverage": {
   "0.2": {
    "ALL": {
-    "curators": 46,
-    "domains": 83,
-    "effective_groups": 85.9321,
-    "groups": 164,
-    "largest_schema_family_share": 0.3902,
-    "producers": 164,
-    "schema_families": 70
+    "curators": 48,
+    "domains": 85,
+    "effective_groups": 87.9321,
+    "groups": 166,
+    "largest_schema_family_share": 0.3855,
+    "producers": 166,
+    "schema_families": 72
    },
    "C1": {
     "curators": 1,
@@ -56,13 +56,13 @@
     "schema_families": 11
    },
    "C5": {
-    "curators": 10,
-    "domains": 12,
-    "effective_groups": 16.0833,
-    "groups": 25,
-    "largest_schema_family_share": 0.48,
-    "producers": 25,
-    "schema_families": 12
+    "curators": 12,
+    "domains": 14,
+    "effective_groups": 18.0833,
+    "groups": 27,
+    "largest_schema_family_share": 0.4444,
+    "producers": 27,
+    "schema_families": 14
    },
    "C6": {
     "curators": 15,
@@ -76,13 +76,13 @@
   },
   "0.5": {
    "ALL": {
-    "curators": 46,
-    "domains": 83,
-    "effective_groups": 75.8074,
-    "groups": 164,
-    "largest_schema_family_share": 0.3902,
-    "producers": 164,
-    "schema_families": 70
+    "curators": 48,
+    "domains": 85,
+    "effective_groups": 77.8074,
+    "groups": 166,
+    "largest_schema_family_share": 0.3855,
+    "producers": 166,
+    "schema_families": 72
    },
    "C1": {
     "curators": 1,
@@ -130,13 +130,13 @@
     "schema_families": 11
    },
    "C5": {
-    "curators": 10,
-    "domains": 12,
-    "effective_groups": 13.5128,
-    "groups": 25,
-    "largest_schema_family_share": 0.48,
-    "producers": 25,
-    "schema_families": 12
+    "curators": 12,
+    "domains": 14,
+    "effective_groups": 15.5128,
+    "groups": 27,
+    "largest_schema_family_share": 0.4444,
+    "producers": 27,
+    "schema_families": 14
    },
    "C6": {
     "curators": 15,
@@ -304,15 +304,15 @@
   },
   "C5": {
    "diversity": true,
-   "domains": 12,
+   "domains": 14,
    "exploratory": true,
-   "families": 12,
-   "gap": 11,
-   "groups": 25,
+   "families": 14,
+   "gap": 9,
+   "groups": 27,
    "largest_family": "timetable network",
-   "largest_family_share": 0.48,
+   "largest_family_share": 0.4444,
    "missing": [
-    "groups: 25 of 36"
+    "groups: 27 of 36"
    ],
    "quota": false,
    "target": 36,

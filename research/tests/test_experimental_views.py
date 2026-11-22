@@ -1062,6 +1062,8 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _nhif_snapshot(root)
     _ingv_snapshot(root)
     _gha_snapshot(root)
+    _wals_snapshot(root)
+    _cordis_snapshot(root)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
@@ -1077,7 +1079,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -7205,3 +7207,397 @@ def test_gha_workflows_view_and_builder(tmp_path):
         "repos": 2,
     }
     assert view["source_snapshot"] == f"zen_gha_workflows/{ev.GHA_SNAPSHOT}"
+
+
+def _wals_raw_tables():
+    return {
+        "languages": pd.DataFrame(
+            [
+                {
+                    "ID": "02",
+                    "Name": "Lang B",
+                    "Macroarea": "Eurasia",
+                    "Latitude": "50.0",
+                    "Longitude": "10.0",
+                    "Glottocode": "abcd1235",
+                    "ISO639P3code": "bbb",
+                    "Family": "FamB",
+                    "Subfamily": "",
+                    "Genus": "GenB",
+                    "Country_ID": "FR;DE",
+                    "Parent_ID": "",
+                    "Source": "Author B",
+                },
+                {
+                    "ID": "01",
+                    "Name": "Lang A",
+                    "Macroarea": "Africa",
+                    "Latitude": "1.0",
+                    "Longitude": "2.0",
+                    "Glottocode": "abcd1234",
+                    "ISO639P3code": "aaa",
+                    "Family": "FamA",
+                    "Subfamily": "SubA",
+                    "Genus": "GenA",
+                    "Country_ID": "01",
+                    "Parent_ID": "",
+                    "Source": "Author A",
+                },
+            ]
+        ),
+        "parameters": pd.DataFrame(
+            [
+                {
+                    "ID": "1A",
+                    "Name": "Consonants",
+                    "Description": "drop me",
+                    "ColumnSpec": "drop",
+                    "Chapter_ID": "001",
+                }
+            ]
+        ),
+        "codes": pd.DataFrame(
+            [
+                {
+                    "ID": "1A-1",
+                    "Parameter_ID": "1A",
+                    "Name": "Small",
+                    "Description": "D",
+                    "Number": "1",
+                    "icon": "drop",
+                }
+            ]
+        ),
+        "values": pd.DataFrame(
+            [
+                {
+                    "ID": "1A-02",
+                    "Language_ID": "02",
+                    "Parameter_ID": "1A",
+                    "Value": "1",
+                    "Code_ID": "1A-1",
+                    "Source": "S2",
+                    "Comment": "C2",
+                },
+                {
+                    "ID": "1A-01",
+                    "Language_ID": "01",
+                    "Parameter_ID": "1A",
+                    "Value": "1",
+                    "Code_ID": "1A-1",
+                    "Source": "S1",
+                    "Comment": "C1",
+                },
+            ]
+        ),
+        "chapters": pd.DataFrame(
+            [
+                {
+                    "ID": "001",
+                    "Name": "Phonology",
+                    "Contributor": "Jane Doe",
+                    "Citation": "Cit",
+                    "Number": "1",
+                    "Area_ID": "01",
+                    "Contributor_ID": "c1",
+                    "With_Contributor_ID": "c2",
+                }
+            ]
+        ),
+        "areas": pd.DataFrame([{"ID": "01", "Name": "Phonology", "dbpedia_url": "drop"}]),
+        "countries": pd.DataFrame([{"ID": "01", "Name": "Testland"}]),
+    }
+
+
+def _wals_snapshot(root):
+    import zipfile
+
+    raw = root / "wals_cldf" / ev.WALS_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    with zipfile.ZipFile(raw / "wals_v2020.3.zip", "w") as zf:
+        for name, frame in _wals_raw_tables().items():
+            zf.writestr(f"{ev.WALS_PREFIX}{name}.csv", frame.to_csv(index=False))
+        zf.writestr(f"{ev.WALS_PREFIX}contributors.csv", "ID,Name\nc1,Jane Doe\n")
+
+
+def _cordis_raw_project_text():
+    hdr = (
+        '"id";"acronym";"status";"title";"startDate";"endDate";"totalCost";"ecMaxContribution";'
+        '"topics";"ecSignatureDate";"frameworkProgramme";"masterCall";"subCall";"fundingScheme";'
+        '"nature";"objective";"contentUpdateDate";"rcn";"grantDoi";"keywords";"Human-validated";'
+        '"legalBasis"'
+    )
+    r2_l1 = (
+        '"002";"ACR2";"CLOSED";"Secret Title 2";"2022-01-01";"2025-12-31";"1000,5";"1000,5";'
+        '"T2";"2022-01-01";"HORIZON";"M2";"S2";"CSA";"";""Wrapped objective'
+    )
+    r2_l2 = 'continues ""inside"" here"";"2025-02-01";"200";"10.3030/002";"kw2";"false";""'
+    r1 = (
+        '"001";"ACR1";"SIGNED";"Secret Title 1";"2021-01-01";"2024-12-31";"501";"500";'
+        '"T1";"2021-01-01";"HORIZON";"M1";"S1";"RIA";"NAT1";"Obj 1";"2024-01-01";"100";'
+        '"10.3030/001";"kw1";"true";"HORIZON.1"'
+    )
+    return "\n".join([hdr, r2_l1, r2_l2, r1]) + "\n"
+
+
+def _cordis_raw_tables():
+    return {
+        "project": ev.parse_cordis_projects(_cordis_raw_project_text()),
+        "organization": pd.DataFrame(
+            [
+                {
+                    "projectID": "002",
+                    "projectAcronym": "ACR2",
+                    "organisationID": "",
+                    "vatNumber": "V2",
+                    "name": "Secret Org 2",
+                    "shortName": "SO2",
+                    "SME": "false",
+                    "activityType": "HES",
+                    "street": "1 St",
+                    "postCode": "00",
+                    "city": "Lyon",
+                    "country": "FR",
+                    "nutsCode": "FRK26",
+                    "geolocation": "45,4",
+                    "organizationURL": "https://x.fr",
+                    "contactForm": "a@b.fr",
+                    "contentUpdateDate": "2025-02-01",
+                    "rcn": "2",
+                    "order": "1",
+                    "role": "coordinator",
+                    "ecContribution": "100,5",
+                    "netEcContribution": "100,5",
+                    "totalCost": "100,5",
+                    "endOfParticipation": "false",
+                    "active": "true",
+                },
+                {
+                    "projectID": "001",
+                    "projectAcronym": "ACR1",
+                    "organisationID": "0099",
+                    "vatNumber": "V1",
+                    "name": "Secret Org 1",
+                    "shortName": "SO1",
+                    "SME": "true",
+                    "activityType": "PRC",
+                    "street": "2 St",
+                    "postCode": "01",
+                    "city": "Paris",
+                    "country": "FR",
+                    "nutsCode": "FR101",
+                    "geolocation": "48,2",
+                    "organizationURL": "https://y.fr",
+                    "contactForm": "c@d.fr",
+                    "contentUpdateDate": "2024-01-01",
+                    "rcn": "1",
+                    "order": "1",
+                    "role": "participant",
+                    "ecContribution": "50,25",
+                    "netEcContribution": "50,25",
+                    "totalCost": "50,25",
+                    "endOfParticipation": "false",
+                    "active": "true",
+                },
+            ]
+        ),
+        "euroSciVoc": pd.DataFrame(
+            [
+                {
+                    "euroSciVocCode": "01",
+                    "euroSciVocPath": "/p",
+                    "euroSciVocTitle": "AI",
+                    "euroSciVocDescription": "Desc",
+                    "projectID": "001",
+                }
+            ]
+        ),
+        "topics": pd.DataFrame([{"topic": "T1", "title": "Topic 1", "projectID": "001"}]),
+        "legalBasis": pd.DataFrame(
+            [
+                {
+                    "legalBasis": "HORIZON.1",
+                    "title": "LB",
+                    "uniqueProgrammePart": "P1",
+                    "projectID": "001",
+                }
+            ]
+        ),
+        "policyPriorities": pd.DataFrame(
+            [
+                {
+                    "ai": "1",
+                    "biodiversity": "0",
+                    "cleanAir": "0",
+                    "climate": "1",
+                    "digitalAgenda": "1",
+                    "projectID": "001",
+                }
+            ]
+        ),
+    }
+
+
+def _cordis_snapshot(root):
+    import zipfile
+
+    raw = root / "cordis_horizon_europe" / ev.CORDIS_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    tables = _cordis_raw_tables()
+    with zipfile.ZipFile(raw / "cordis_horizon_csv.zip", "w") as zf:
+        zf.writestr("project.csv", _cordis_raw_project_text())
+        for name, frame in tables.items():
+            if name != "project":
+                zf.writestr(f"{name}.csv", frame.to_csv(sep=";", index=False))
+        zf.writestr("webLink.csv", '"physUrl";"projectID"\n"https://x";"001"\n')
+
+
+def test_wals_cldf_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no WALS CLDF zip archive in the snapshot$"):
+        ev._build_wals_cldf(tmp_path / "empty", tmp_path / "err", {})
+    tables = _wals_raw_tables()
+    views, rels = ev.wals_cldf_view(tables)
+    assert set(views) == set(ev.WALS_SPEC["tables"])
+    for tbl, rule in ev.WALS_SPEC["tables"].items():
+        assert views[tbl].columns.tolist() == rule["keep"]
+        assert views[tbl].index.tolist() == list(range(len(views[tbl])))
+    assert views["languages"]["ID"].tolist() == ["01", "02"]
+    assert views["values"]["ID"].tolist() == ["1A-01", "1A-02"]
+    assert "Source" not in views["languages"] and "Contributor_ID" not in views["chapters"]
+    by_child = {r["child"]: r for r in rels}
+    assert (
+        by_child["values.Language_ID"]["checked"] == 2
+        and by_child["values.Language_ID"]["orphans"] == 0
+    )
+    assert (
+        by_child["languages.Country_ID"]["checked"] == 2
+        and by_child["languages.Country_ID"]["orphans"] == 1
+    )
+    assert by_child["chapters.Area_ID"]["orphans"] == 0
+
+    root = tmp_path / "acq"
+    _wals_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_wals_cldf(root, out, manifest)
+    ev._build_wals_cldf(root, out, manifest)
+    assert not (out / "wals_cldf" / "contributors.csv").exists()
+    lang_df = pd.read_csv(out / "wals_cldf" / "languages.csv", dtype=str)
+    assert lang_df["ID"].tolist() == ["01", "02"]
+    view = manifest["wals_cldf"]
+    assert view["dropped"] == [
+        "contributors.csv",
+        "Contributor_ID",
+        "With_Contributor_ID",
+        "Contributor",
+        "Citation",
+        "Source",
+        "Comment",
+        "Description",
+        "examples.csv",
+        "media.csv",
+        "genealogy.csv",
+        "language_names.csv",
+    ]
+    assert view["pseudonymised"] == [] and len(view["relations"]) == 7
+    assert view["files"]["languages.csv"]["rows"] == 2 and view["files"]["values.csv"]["rows"] == 2
+    assert view["sampling"] == {
+        "method": "complete 7 core CLDF linguistic typology tables (no row sampling)"
+    }
+    assert view["source_snapshot"] == f"wals_cldf/{ev.WALS_SNAPSHOT}"
+
+
+def test_cordis_horizon_view_and_builder(tmp_path):
+    with pytest.raises(
+        ev.ViewError, match=r"^no CORDIS Horizon Europe zip archive in the snapshot$"
+    ):
+        ev._build_cordis_horizon(tmp_path / "empty", tmp_path / "err", {})
+    empty_proj = ev.parse_cordis_projects('"id";"acronym"\norphan line before record\n')
+    assert empty_proj.empty and empty_proj.columns.tolist() == list(ev.CORDIS_PROJECT_COLS)
+
+    tables = _cordis_raw_tables()
+    tables["organization"].loc[0, "organisationID"] = None
+    org_copy = tables["organization"].copy(deep=True)
+    tables["topics"] = pd.concat(
+        [tables["topics"], pd.DataFrame([{"topic": "T2", "title": "Orph", "projectID": "999"}])],
+        ignore_index=True,
+    )
+    views, rels = ev.cordis_horizon_view(tables)
+    pd.testing.assert_frame_equal(tables["organization"], org_copy)
+    assert set(views) == set(ev.CORDIS_SPEC["tables"])
+    for tbl, rule in ev.CORDIS_SPEC["tables"].items():
+        assert views[tbl].columns.tolist() == rule["keep"]
+        assert views[tbl].index.tolist() == list(range(len(views[tbl])))
+    assert views["project"]["id"].tolist() == ["001", "002"]
+    assert views["project"].iloc[0].to_dict() == {
+        "id": "001",
+        "acronym": "ACR1",
+        "status": "SIGNED",
+        "startDate": "2021-01-01",
+        "endDate": "2024-12-31",
+        "totalCost": "501",
+        "ecMaxContribution": "500",
+        "topics": "T1",
+        "ecSignatureDate": "2021-01-01",
+        "frameworkProgramme": "HORIZON",
+        "masterCall": "M1",
+        "subCall": "S1",
+        "fundingScheme": "RIA",
+        "nature": "NAT1",
+        "contentUpdateDate": "2024-01-01",
+        "rcn": "100",
+        "grantDoi": "10.3030/001",
+        "Human-validated": "true",
+        "legalBasis": "HORIZON.1",
+    }
+    assert views["project"]["legalBasis"].fillna("").tolist() == ["HORIZON.1", ""]
+    assert views["organization"]["org_id"].fillna("").tolist() == [ev.pseudonym("0099"), ""]
+    assert views["organization"]["ecContribution"].tolist() == ["50,25", "100,5"]
+    assert "name" not in views["organization"] and "title" not in views["project"]
+    by_child = {r["child"]: r for r in rels}
+    assert by_child["organization.projectID"]["orphans"] == 0
+    assert (
+        by_child["topics.projectID"]["checked"] == 2
+        and by_child["topics.projectID"]["orphans"] == 1
+    )
+
+    root = tmp_path / "acq"
+    _cordis_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_cordis_horizon(root, out, manifest)
+    ev._build_cordis_horizon(root, out, manifest)
+    proj_df = pd.read_csv(out / "cordis_horizon_europe" / "project.csv", dtype=str)
+    org_df = pd.read_csv(out / "cordis_horizon_europe" / "organization.csv", dtype=str)
+    assert proj_df["id"].tolist() == ["001", "002"]
+    assert org_df["org_id"].fillna("").tolist() == [ev.pseudonym("0099"), ""]
+    assert not (out / "cordis_horizon_europe" / "webLink.csv").exists()
+    view = manifest["cordis_horizon_europe"]
+    assert view["pseudonymised"] == ["organisationID"] and view["salt_label"] == ev.SALT
+    assert view["dropped"] == [
+        "project.title",
+        "project.objective",
+        "project.keywords",
+        "organization.name",
+        "organization.shortName",
+        "organization.vatNumber",
+        "organization.street",
+        "organization.postCode",
+        "organization.city",
+        "organization.geolocation",
+        "organization.organizationURL",
+        "organization.contactForm",
+        "webItem.csv",
+        "webLink.csv",
+    ]
+    assert len(view["relations"]) == 5 and all(r["orphans"] == 0 for r in view["relations"])
+    assert (
+        view["files"]["project.csv"]["rows"] == 2 and view["files"]["organization.csv"]["rows"] == 2
+    )
+    assert view["sampling"] == {
+        "method": (
+            "complete 6 core CORDIS Horizon Europe tables (no row sampling); "
+            "projects parsed across wrapped quotes"
+        )
+    }
+    assert view["source_snapshot"] == f"cordis_horizon_europe/{ev.CORDIS_SNAPSHOT}"

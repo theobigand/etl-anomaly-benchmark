@@ -396,6 +396,14 @@ def _gha(root, tmp):
     tev._gha_snapshot(root)
 
 
+def _wals(root, tmp):
+    tev._wals_snapshot(root)
+
+
+def _cordis(root, tmp):
+    tev._cordis_snapshot(root)
+
+
 def _tlc(root, tmp):
     tev._tlc_page(
         [{}, {"tpep_pickup_datetime": "2023-03-07T07:00:00.000", "total_amount": "0.0"}]
@@ -447,6 +455,8 @@ CASES = {
     "nhif": (_nhif, ev._build_nhif_cases, ["zen_nhif_hospital_cases"], {}),
     "ingv": (_ingv, ev._build_ingv_seismic, ["ingv_seismic_events"], {}),
     "gha": (_gha, ev._build_gha_workflows, ["zen_gha_workflows"], {}),
+    "wals": (_wals, ev._build_wals_cldf, ["wals_cldf"], {}),
+    "cordis": (_cordis, ev._build_cordis_horizon, ["cordis_horizon_europe"], {}),
     "tlc": (_tlc, ev._build_tlc, ["nyc_tlc_yellow"], {}),
     "maude": (_maude_case, ev._build_maude, ["openfda_device_event"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),

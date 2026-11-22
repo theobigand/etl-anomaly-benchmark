@@ -378,6 +378,95 @@
   "pseudonymised": [],
   "source_snapshot": "clinicaltrials_v2/2026-11-21"
  },
+ "cordis_horizon_europe": {
+  "dropped": [
+   "project.title",
+   "project.objective",
+   "project.keywords",
+   "organization.name",
+   "organization.shortName",
+   "organization.vatNumber",
+   "organization.street",
+   "organization.postCode",
+   "organization.city",
+   "organization.geolocation",
+   "organization.organizationURL",
+   "organization.contactForm",
+   "webItem.csv",
+   "webLink.csv"
+  ],
+  "files": {
+   "euroSciVoc.csv": {
+    "rows": 53445,
+    "sha256": "4f17938321794b58b0cb0da1e1afb67e896660d502101c5f3a11812ae30a4951"
+   },
+   "legalBasis.csv": {
+    "rows": 31403,
+    "sha256": "7d6a074d7795c92294e20d6977ba0a27da5d1891c69ab83b500604b57fa1e206"
+   },
+   "organization.csv": {
+    "rows": 151382,
+    "sha256": "67d2666f86c7edc8aa5e593f41a19df11459ed2430369446105be087b3dbfa59"
+   },
+   "policyPriorities.csv": {
+    "rows": 118956,
+    "sha256": "efdd0c453e875e4b36548bc95fcf55643d59a33b3e854a5182c49c30e2cdbea3"
+   },
+   "project.csv": {
+    "rows": 24419,
+    "sha256": "284bcd5827ebb789d3a767f2abb6f999f5b4a4f3efad33b2ba96c388ad079305"
+   },
+   "topics.csv": {
+    "rows": 24419,
+    "sha256": "7c17966fd2180cec10a2b5f4d31ee59529032c0561d825d0395b1c8592f4e637"
+   }
+  },
+  "pseudonymised": [
+   "organisationID"
+  ],
+  "relations": [
+   {
+    "checked": 151382,
+    "child": "organization.projectID",
+    "orphans": 0,
+    "parent": "project.id",
+    "share": 0.0
+   },
+   {
+    "checked": 53445,
+    "child": "euroSciVoc.projectID",
+    "orphans": 0,
+    "parent": "project.id",
+    "share": 0.0
+   },
+   {
+    "checked": 24419,
+    "child": "topics.projectID",
+    "orphans": 0,
+    "parent": "project.id",
+    "share": 0.0
+   },
+   {
+    "checked": 31403,
+    "child": "legalBasis.projectID",
+    "orphans": 0,
+    "parent": "project.id",
+    "share": 0.0
+   },
+   {
+    "checked": 118956,
+    "child": "policyPriorities.projectID",
+    "orphans": 0,
+    "parent": "project.id",
+    "share": 0.0
+   }
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "method": "complete 6 core CORDIS Horizon Europe tables (no row sampling); projects parsed across wrapped quotes"
+  },
+  "source_snapshot": "cordis_horizon_europe/2026-11-22"
+ },
  "crossref_works": {
   "dropped": [
    "author"
@@ -4184,6 +4273,108 @@
    "provisional_share": 0.0
   },
   "source_snapshot": "usgs_continuous_discharge/2026-11-22"
+ },
+ "wals_cldf": {
+  "dropped": [
+   "contributors.csv",
+   "Contributor_ID",
+   "With_Contributor_ID",
+   "Contributor",
+   "Citation",
+   "Source",
+   "Comment",
+   "Description",
+   "examples.csv",
+   "media.csv",
+   "genealogy.csv",
+   "language_names.csv"
+  ],
+  "files": {
+   "areas.csv": {
+    "rows": 11,
+    "sha256": "6fd029c71592733858cbbff77a605e60b1393f6eec3ac3c14b8da86c384c6a42"
+   },
+   "chapters.csv": {
+    "rows": 152,
+    "sha256": "d8f61808f15739f09cca11237e1ed80d355de0670ecb31dc06cb385ee26b5eb8"
+   },
+   "codes.csv": {
+    "rows": 1143,
+    "sha256": "a797ffc55782e406fe2bc3be34b5a83d5535e67e32a8c17517ec3a0a12f4a9b4"
+   },
+   "countries.csv": {
+    "rows": 192,
+    "sha256": "242eb73b5b340b40f4b494fce30b1501562cd0db4daedc4df6e564de74b286ad"
+   },
+   "languages.csv": {
+    "rows": 3573,
+    "sha256": "138a0b3bee74b3379d7190f6d1b78211de0f94b9cb4f984a8757e8328e04abcf"
+   },
+   "parameters.csv": {
+    "rows": 192,
+    "sha256": "b2ed72f9df3b975a39215b1d95ce11f1ad5c8fe000f383b22a3093149081dd6e"
+   },
+   "values.csv": {
+    "rows": 76475,
+    "sha256": "361ddabef3b6eabd403c12a787a5c22cb2e1e6c067fdfcbb2b274f4fcb5ca2a8"
+   }
+  },
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 76401,
+    "child": "values.Language_ID",
+    "orphans": 0,
+    "parent": "languages.ID",
+    "share": 0.0
+   },
+   {
+    "checked": 76475,
+    "child": "values.Parameter_ID",
+    "orphans": 0,
+    "parent": "parameters.ID",
+    "share": 0.0
+   },
+   {
+    "checked": 76475,
+    "child": "values.Code_ID",
+    "orphans": 0,
+    "parent": "codes.ID",
+    "share": 0.0
+   },
+   {
+    "checked": 1143,
+    "child": "codes.Parameter_ID",
+    "orphans": 0,
+    "parent": "parameters.ID",
+    "share": 0.0
+   },
+   {
+    "checked": 192,
+    "child": "parameters.Chapter_ID",
+    "orphans": 0,
+    "parent": "chapters.ID",
+    "share": 0.0
+   },
+   {
+    "checked": 144,
+    "child": "chapters.Area_ID",
+    "orphans": 0,
+    "parent": "areas.ID",
+    "share": 0.0
+   },
+   {
+    "checked": 2652,
+    "child": "languages.Country_ID",
+    "orphans": 290,
+    "parent": "countries.ID",
+    "share": 0.10935143288084465
+   }
+  ],
+  "sampling": {
+   "method": "complete 7 core CLDF linguistic typology tables (no row sampling)"
+  },
+  "source_snapshot": "wals_cldf/2026-11-22"
  },
  "wb_lending_projects": {
   "dropped": [

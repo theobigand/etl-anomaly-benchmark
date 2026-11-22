@@ -2276,6 +2276,20 @@
   },
   {
    "failed": null,
+   "group": "wals_cldf",
+   "id": "wals_cldf",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "cordis_horizon_europe",
+   "id": "cordis_horizon_europe",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2532,6 +2546,7 @@
   ],
   "C5": [
    "3pfl",
+   "cordis_horizon_europe",
    "eicu_philips",
    "georgia_procurement",
    "grouplens",
@@ -2555,6 +2570,7 @@
    "stackexchange",
    "uk_charity_commission",
    "usda_fdc",
+   "wals_cldf",
    "zambia_procurement"
   ],
   "C6": [
@@ -2625,13 +2641,13 @@
    "structurally_valid": 35
   },
   "C5": {
-   "acquired": 34,
-   "discovered": 34,
-   "experiment_ready": 34,
-   "protocol_ready": 34,
-   "rights_verified": 34,
-   "scientifically_eligible": 34,
-   "structurally_valid": 34
+   "acquired": 36,
+   "discovered": 36,
+   "experiment_ready": 36,
+   "protocol_ready": 36,
+   "rights_verified": 36,
+   "scientifically_eligible": 36,
+   "structurally_valid": 36
   },
   "C6": {
    "acquired": 18,

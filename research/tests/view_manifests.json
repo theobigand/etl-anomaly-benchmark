@@ -486,6 +486,99 @@
    "source_snapshot": "noaa_coops_tides/2026-11-22"
   }
  },
+ "cordis": {
+  "cordis_horizon_europe": {
+   "dropped": [
+    "project.title",
+    "project.objective",
+    "project.keywords",
+    "organization.name",
+    "organization.shortName",
+    "organization.vatNumber",
+    "organization.street",
+    "organization.postCode",
+    "organization.city",
+    "organization.geolocation",
+    "organization.organizationURL",
+    "organization.contactForm",
+    "webItem.csv",
+    "webLink.csv"
+   ],
+   "files": {
+    "euroSciVoc.csv": {
+     "rows": 1
+    },
+    "legalBasis.csv": {
+     "rows": 1
+    },
+    "organization.csv": {
+     "rows": 2
+    },
+    "policyPriorities.csv": {
+     "rows": 1
+    },
+    "project.csv": {
+     "rows": 2
+    },
+    "topics.csv": {
+     "rows": 1
+    }
+   },
+   "heads": {
+    "euroSciVoc.csv": "euroSciVocCode,euroSciVocPath,euroSciVocTitle,euroSciVocDescription,projectID",
+    "legalBasis.csv": "legalBasis,title,uniqueProgrammePart,projectID",
+    "organization.csv": "projectID,projectAcronym,org_id,SME,activityType,country,nutsCode,contentUpdateDate,rcn,order,role,ecContribution,netEcC",
+    "policyPriorities.csv": "ai,biodiversity,cleanAir,climate,digitalAgenda,projectID",
+    "project.csv": "id,acronym,status,startDate,endDate,totalCost,ecMaxContribution,topics,ecSignatureDate,frameworkProgramme,masterCall,sub",
+    "topics.csv": "topic,title,projectID"
+   },
+   "pseudonymised": [
+    "organisationID"
+   ],
+   "relations": [
+    {
+     "checked": 2,
+     "child": "organization.projectID",
+     "orphans": 0,
+     "parent": "project.id",
+     "share": 0.0
+    },
+    {
+     "checked": 1,
+     "child": "euroSciVoc.projectID",
+     "orphans": 0,
+     "parent": "project.id",
+     "share": 0.0
+    },
+    {
+     "checked": 1,
+     "child": "topics.projectID",
+     "orphans": 0,
+     "parent": "project.id",
+     "share": 0.0
+    },
+    {
+     "checked": 1,
+     "child": "legalBasis.projectID",
+     "orphans": 0,
+     "parent": "project.id",
+     "share": 0.0
+    },
+    {
+     "checked": 1,
+     "child": "policyPriorities.projectID",
+     "orphans": 0,
+     "parent": "project.id",
+     "share": 0.0
+    }
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "method": "complete 6 core CORDIS Horizon Europe tables (no row sampling); projects parsed across wrapped quotes"
+   },
+   "source_snapshot": "cordis_horizon_europe/2026-11-22"
+  }
+ },
  "csv_events": {
   "4tu_csv": {
    "dropped": [
@@ -1520,6 +1613,112 @@
     "provisional_share": 0.0
    },
    "source_snapshot": "usgs_continuous_discharge/2026-11-22"
+  }
+ },
+ "wals": {
+  "wals_cldf": {
+   "dropped": [
+    "contributors.csv",
+    "Contributor_ID",
+    "With_Contributor_ID",
+    "Contributor",
+    "Citation",
+    "Source",
+    "Comment",
+    "Description",
+    "examples.csv",
+    "media.csv",
+    "genealogy.csv",
+    "language_names.csv"
+   ],
+   "files": {
+    "areas.csv": {
+     "rows": 1
+    },
+    "chapters.csv": {
+     "rows": 1
+    },
+    "codes.csv": {
+     "rows": 1
+    },
+    "countries.csv": {
+     "rows": 1
+    },
+    "languages.csv": {
+     "rows": 2
+    },
+    "parameters.csv": {
+     "rows": 1
+    },
+    "values.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "areas.csv": "ID,Name",
+    "chapters.csv": "ID,Name,Number,Area_ID",
+    "codes.csv": "ID,Parameter_ID,Name,Description,Number",
+    "countries.csv": "ID,Name",
+    "languages.csv": "ID,Name,Macroarea,Latitude,Longitude,Glottocode,ISO639P3code,Family,Subfamily,Genus,Country_ID,Parent_ID",
+    "parameters.csv": "ID,Name,Chapter_ID",
+    "values.csv": "ID,Language_ID,Parameter_ID,Value,Code_ID"
+   },
+   "pseudonymised": [],
+   "relations": [
+    {
+     "checked": 2,
+     "child": "values.Language_ID",
+     "orphans": 0,
+     "parent": "languages.ID",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "values.Parameter_ID",
+     "orphans": 0,
+     "parent": "parameters.ID",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "values.Code_ID",
+     "orphans": 0,
+     "parent": "codes.ID",
+     "share": 0.0
+    },
+    {
+     "checked": 1,
+     "child": "codes.Parameter_ID",
+     "orphans": 0,
+     "parent": "parameters.ID",
+     "share": 0.0
+    },
+    {
+     "checked": 1,
+     "child": "parameters.Chapter_ID",
+     "orphans": 0,
+     "parent": "chapters.ID",
+     "share": 0.0
+    },
+    {
+     "checked": 1,
+     "child": "chapters.Area_ID",
+     "orphans": 0,
+     "parent": "areas.ID",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "languages.Country_ID",
+     "orphans": 1,
+     "parent": "countries.ID",
+     "share": 0.5
+    }
+   ],
+   "sampling": {
+    "method": "complete 7 core CLDF linguistic typology tables (no row sampling)"
+   },
+   "source_snapshot": "wals_cldf/2026-11-22"
   }
  },
  "wb": {

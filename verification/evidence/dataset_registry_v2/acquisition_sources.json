@@ -10021,6 +10021,63 @@
    "stratum": "C4",
    "upstream": "compiled open-source GitHub repository CI/CD workflow histories published under CC BY 4.0",
    "upstream_verified": true
+  },
+  {
+   "attribution": "Dryer, Matthew S. & Haspelmath, Martin (eds.) 2013/2020, The World Atlas of Language Structures Online (CLDF v2020.3, CC BY 4.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "wals_v2020.3.zip",
+     "observed": "2013-2020",
+     "url": "https://github.com/cldf-datasets/wals/archive/refs/tags/v2020.3.zip"
+    }
+   ],
+   "hosts": [
+    "github.com",
+    "codeload.github.com"
+   ],
+   "id": "wals_cldf",
+   "licence_class": "open",
+   "licence_location": "https://github.com/cldf-datasets/wals/blob/v2020.3/.zenodo.json",
+   "licence_text": "GitHub cldf-datasets/wals API & v2020.3 .zenodo.json metadata (read 2026-11-22): Creative Commons Attribution 4.0 International (CC-BY-4.0)",
+   "max_bytes": 33554432,
+   "method": "complete core 7-table Cross-Linguistic Data Formats (CLDF) linguistic typology release archive",
+   "min_interval": 1.0,
+   "privacy": "cross-linguistic structural features and geography only; contributors.csv and Contributor/Source/Comment author columns excluded from view",
+   "publisher": "Max Planck Institute for Evolutionary Anthropology / CLDF WALS Editors",
+   "rate_limit": "single release zip archive download, descriptive user agent",
+   "redistribution": "CC BY 4.0; raw archive stays local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: WALS editors and CLDF maintainers publish official release archives on GitHub",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "European Commission CORDIS Horizon Europe Projects and Participants CSV Export (Commission Decision 2011/833/EU, CC BY 4.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "cordis_horizon_csv.zip",
+     "observed": "2021-2026",
+     "url": "https://cordis.europa.eu/data/cordis-HORIZONprojects-csv.zip"
+    }
+   ],
+   "hosts": [
+    "cordis.europa.eu"
+   ],
+   "id": "cordis_horizon_europe",
+   "licence_class": "open",
+   "licence_location": "https://cordis.europa.eu/about/legal",
+   "licence_text": "CORDIS Legal Notice page (read 2026-11-22): European Commission reuse implemented by Decision 2011/833/EU and CC BY 4.0",
+   "max_bytes": 67108864,
+   "method": "complete 6 core semicolon-delimited Horizon Europe grant tables with multiline wrapped quote reconstruction on project.csv",
+   "min_interval": 1.0,
+   "privacy": "public EU research grant allocations; project titles/objectives/keywords and organization names/addresses/URLs/contacts/VAT/coords dropped; organisationID pseudonymised via salted SHA-256",
+   "publisher": "European Commission / Publications Office of the European Union (CORDIS)",
+   "rate_limit": "single bulk zip download, descriptive user agent",
+   "redistribution": "Decision 2011/833/EU / CC BY 4.0; raw archive stays local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: European Commission Publications Office publishes official CORDIS grant datasets directly",
+   "upstream_verified": true
   }
  ]
 }

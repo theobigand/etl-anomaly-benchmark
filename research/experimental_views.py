@@ -5391,6 +5391,279 @@ def _build_gha_workflows(root: Path, out: Path, manifest: dict[str, Any]) -> Non
     )
 
 
+WALS_SNAPSHOT = "2026-11-22"
+WALS_PREFIX = "wals-2020.3/cldf/"
+WALS_SPEC: dict[str, Any] = {
+    "tables": {
+        "languages": {
+            "keep": [
+                "ID",
+                "Name",
+                "Macroarea",
+                "Latitude",
+                "Longitude",
+                "Glottocode",
+                "ISO639P3code",
+                "Family",
+                "Subfamily",
+                "Genus",
+                "Country_ID",
+                "Parent_ID",
+            ]
+        },
+        "parameters": {"keep": ["ID", "Name", "Chapter_ID"]},
+        "codes": {"keep": ["ID", "Parameter_ID", "Name", "Description", "Number"]},
+        "values": {"keep": ["ID", "Language_ID", "Parameter_ID", "Value", "Code_ID"]},
+        "chapters": {"keep": ["ID", "Name", "Number", "Area_ID"]},
+        "areas": {"keep": ["ID", "Name"]},
+        "countries": {"keep": ["ID", "Name"]},
+    },
+    "relations": [
+        ["values", "Language_ID", "languages", "ID"],
+        ["values", "Parameter_ID", "parameters", "ID"],
+        ["values", "Code_ID", "codes", "ID"],
+        ["codes", "Parameter_ID", "parameters", "ID"],
+        ["parameters", "Chapter_ID", "chapters", "ID"],
+        ["chapters", "Area_ID", "areas", "ID"],
+        ["languages", "Country_ID", "countries", "ID"],
+    ],
+}
+
+
+def wals_cldf_view(
+    tables: dict[str, pd.DataFrame],
+) -> tuple[dict[str, pd.DataFrame], list[dict[str, Any]]]:
+    """Core seven-table WALS CLDF relational schema with contributor/author columns removed."""
+    views, relations = tables_view(tables, WALS_SPEC)
+    ordered = {
+        name: frame.sort_values(list(frame.columns)).reset_index(drop=True)
+        for name, frame in views.items()
+    }
+    return ordered, relations
+
+
+def _build_wals_cldf(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import zipfile
+
+    archive = root / "wals_cldf" / WALS_SNAPSHOT / "raw" / "wals_v2020.3.zip"
+    if not archive.exists():
+        raise ViewError("no WALS CLDF zip archive in the snapshot")
+    tables: dict[str, pd.DataFrame] = {}
+    with zipfile.ZipFile(archive) as zf:
+        for name in WALS_SPEC["tables"]:
+            with zf.open(f"{WALS_PREFIX}{name}.csv") as handle:
+                tables[name] = pd.read_csv(handle, dtype=str)
+    views, relations = wals_cldf_view(tables)
+    folder = out / "wals_cldf"
+    folder.mkdir(parents=True, exist_ok=True)
+    files: dict[str, tuple[Path, int]] = {}
+    for name, frame in views.items():
+        target = folder / f"{name}.csv"
+        frame.to_csv(target, index=False)
+        files[f"{name}.csv"] = (target, len(frame))
+    _record(
+        manifest,
+        "wals_cldf",
+        files,
+        dropped=[
+            "contributors.csv",
+            "Contributor_ID",
+            "With_Contributor_ID",
+            "Contributor",
+            "Citation",
+            "Source",
+            "Comment",
+            "Description",
+            "examples.csv",
+            "media.csv",
+            "genealogy.csv",
+            "language_names.csv",
+        ],
+        pseudonymised=[],
+        relations=relations,
+        sampling={"method": "complete 7 core CLDF linguistic typology tables (no row sampling)"},
+        source_snapshot=f"wals_cldf/{WALS_SNAPSHOT}",
+    )
+
+
+CORDIS_SNAPSHOT = "2026-11-22"
+CORDIS_PROJECT_COLS = (
+    "id",
+    "acronym",
+    "status",
+    "startDate",
+    "endDate",
+    "totalCost",
+    "ecMaxContribution",
+    "topics",
+    "ecSignatureDate",
+    "frameworkProgramme",
+    "masterCall",
+    "subCall",
+    "fundingScheme",
+    "nature",
+    "contentUpdateDate",
+    "rcn",
+    "grantDoi",
+    "Human-validated",
+    "legalBasis",
+)
+CORDIS_SPEC: dict[str, Any] = {
+    "tables": {
+        "project": {"keep": list(CORDIS_PROJECT_COLS)},
+        "organization": {
+            "keep": [
+                "projectID",
+                "projectAcronym",
+                "org_id",
+                "SME",
+                "activityType",
+                "country",
+                "nutsCode",
+                "contentUpdateDate",
+                "rcn",
+                "order",
+                "role",
+                "ecContribution",
+                "netEcContribution",
+                "totalCost",
+                "endOfParticipation",
+                "active",
+            ]
+        },
+        "euroSciVoc": {
+            "keep": [
+                "euroSciVocCode",
+                "euroSciVocPath",
+                "euroSciVocTitle",
+                "euroSciVocDescription",
+                "projectID",
+            ]
+        },
+        "topics": {"keep": ["topic", "title", "projectID"]},
+        "legalBasis": {"keep": ["legalBasis", "title", "uniqueProgrammePart", "projectID"]},
+        "policyPriorities": {
+            "keep": ["ai", "biodiversity", "cleanAir", "climate", "digitalAgenda", "projectID"]
+        },
+    },
+    "relations": [
+        ["organization", "projectID", "project", "id"],
+        ["euroSciVoc", "projectID", "project", "id"],
+        ["topics", "projectID", "project", "id"],
+        ["legalBasis", "projectID", "project", "id"],
+        ["policyPriorities", "projectID", "project", "id"],
+    ],
+}
+
+
+def parse_cordis_projects(text: str) -> pd.DataFrame:
+    """Reconstruct wrapped CORDIS ``project.csv`` lines and extract structured project columns."""
+    lines = text.splitlines()
+    records: list[str] = []
+    for line in lines[1:]:
+        if re.match(r'^"\d+";"', line):
+            records.append(line)
+        elif records:
+            records[-1] += " " + line
+    rows = []
+    for rec in records:
+        body = rec[1:-1]
+        head = body.split('";"', 15)
+        tail = body.rsplit('";"', 6)
+        rows.append(
+            [
+                head[0],
+                head[1],
+                head[2],
+                head[4],
+                head[5],
+                head[6],
+                head[7],
+                head[8],
+                head[9],
+                head[10],
+                head[11],
+                head[12],
+                head[13],
+                head[14],
+                tail[1],
+                tail[2],
+                tail[3],
+                tail[5],
+                tail[6],
+            ]
+        )
+    return pd.DataFrame(rows, columns=CORDIS_PROJECT_COLS)
+
+
+def cordis_horizon_view(
+    tables: dict[str, pd.DataFrame],
+) -> tuple[dict[str, pd.DataFrame], list[dict[str, Any]]]:
+    """Six-table CORDIS Horizon Europe schema without free text or identifying org fields."""
+    org = tables["organization"].copy()
+    org["org_id"] = [
+        pseudonym(str(v)) if pd.notna(v) and str(v) else "" for v in org["organisationID"]
+    ]
+    views, relations = tables_view({**tables, "organization": org}, CORDIS_SPEC)
+    ordered = {
+        name: frame.sort_values(list(frame.columns)).reset_index(drop=True)
+        for name, frame in views.items()
+    }
+    return ordered, relations
+
+
+def _build_cordis_horizon(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import zipfile
+
+    archive = root / "cordis_horizon_europe" / CORDIS_SNAPSHOT / "raw" / "cordis_horizon_csv.zip"
+    if not archive.exists():
+        raise ViewError("no CORDIS Horizon Europe zip archive in the snapshot")
+    tables: dict[str, pd.DataFrame] = {}
+    with zipfile.ZipFile(archive) as zf:
+        tables["project"] = parse_cordis_projects(zf.read("project.csv").decode("utf-8"))
+        for name in CORDIS_SPEC["tables"]:
+            if name == "project":
+                continue
+            with zf.open(f"{name}.csv") as handle:
+                tables[name] = pd.read_csv(handle, sep=";", dtype=str)
+    views, relations = cordis_horizon_view(tables)
+    folder = out / "cordis_horizon_europe"
+    folder.mkdir(parents=True, exist_ok=True)
+    files: dict[str, tuple[Path, int]] = {}
+    for name, frame in views.items():
+        target = folder / f"{name}.csv"
+        frame.to_csv(target, index=False)
+        files[f"{name}.csv"] = (target, len(frame))
+    _record(
+        manifest,
+        "cordis_horizon_europe",
+        files,
+        dropped=[
+            "project.title",
+            "project.objective",
+            "project.keywords",
+            "organization.name",
+            "organization.shortName",
+            "organization.vatNumber",
+            "organization.street",
+            "organization.postCode",
+            "organization.city",
+            "organization.geolocation",
+            "organization.organizationURL",
+            "organization.contactForm",
+            "webItem.csv",
+            "webLink.csv",
+        ],
+        pseudonymised=["organisationID"],
+        salt_label=SALT,
+        relations=relations,
+        sampling={
+            "method": "complete 6 core CORDIS Horizon Europe tables (no row sampling); projects parsed across wrapped quotes",  # noqa: E501
+        },
+        source_snapshot=f"cordis_horizon_europe/{CORDIS_SNAPSHOT}",
+    )
+
+
 BUILD_STEPS = (
     _build_openalex,
     _build_monash,
@@ -5460,6 +5733,8 @@ BUILD_STEPS = (
     _build_nhif_cases,
     _build_ingv_seismic,
     _build_gha_workflows,
+    _build_wals_cldf,
+    _build_cordis_horizon,
     _build_flat,
     _build_series,
     _build_ukspend,

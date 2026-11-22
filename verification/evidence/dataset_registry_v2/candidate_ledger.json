@@ -2091,6 +2091,36 @@
    "size": "85,430 kept events / 1,272 complete repos",
    "source_url": "https://zenodo.org/api/records/20340547",
    "status": "acquired"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "cldf:wals-v2020.3",
+   "licence": "CC BY 4.0",
+   "name": "World Atlas of Language Structures (WALS CLDF v2020.3)",
+   "next_step": "acquired and ready under P-REL",
+   "notes": "Integrated as wals_cldf (7 tables, 7 FKs; 6 relations 0 orphans, languages.Country_ID 290/2,652 natural orphans; contributors omitted)",
+   "publisher": "Max Planck Institute for Evolutionary Anthropology",
+   "reason": "Independent CC BY 4.0 non-GTFS linguistic typology relational schema",
+   "size": "3,573 languages / 76,475 feature values across 7 tables",
+   "source_url": "https://github.com/cldf-datasets/wals",
+   "status": "acquired"
+  },
+  {
+   "categories": [
+    "C5"
+   ],
+   "id": "cordis:horizon-europe",
+   "licence": "EC Decision 2011/833/EU (CC BY 4.0)",
+   "name": "CORDIS Horizon Europe Projects Database",
+   "next_step": "acquired and ready under P-REL",
+   "notes": "Integrated as cordis_horizon_europe (6 tables, 24,419 projects, 379,605 child rows, 0 FK orphans, organisationID pseudonymised)",
+   "publisher": "European Commission / CORDIS",
+   "reason": "Independent open EU research funding relational database (non-GTFS)",
+   "size": "24,419 projects / 151,382 participations across 6 tables",
+   "source_url": "https://cordis.europa.eu/data/cordis-HORIZONprojects-csv.zip",
+   "status": "acquired"
   }
  ],
  "date": "2026-11-21",

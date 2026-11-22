@@ -308,6 +308,22 @@
    "units": 12000,
    "view": "clinicaltrials_v2"
   },
+  "cordis_horizon_europe": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 6 core Horizon Europe tables across 2021-2026 (24,419 projects reconstructed across multiline quotes, 151,382 organization participations, 53,445 EuroSciVoc tags, 24,419 topics, 31,403 legal bases, 118,956 policy priority rows)",
+    "0 foreign-key orphans across all 5 child tables totaling 379,605 rows",
+    "project title/objective/keywords and organization name/shortName/vatNumber/street/postCode/city/geolocation/organizationURL/contactForm dropped; organisationID pseudonymised with salted SHA-256"
+   ],
+   "first_party": true,
+   "independent_group": "cordis_horizon_europe",
+   "min_units": 1000,
+   "partitions": "hash of project.id 70/15/15 keeping organizations, vocabularies, topics and priorities linked to their project",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 24419,
+   "view": "cordis_horizon_europe"
+  },
   "crossref_works": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -2963,6 +2979,22 @@
     "statements about the stability of seasonality over years"
    ],
    "view": "usgs_continuous_discharge"
+  },
+  "wals_cldf": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 7 core CLDF linguistic typology tables (3,573 languages, 192 parameters, 1,143 codes, 76,475 values, 152 chapters, 11 areas, 192 countries)",
+    "7 foreign-key relations verified: 0 orphans across 6 core typology links and 290/2,652 (10.94%) natural multi-country code orphans on languages.Country_ID preserved",
+    "contributors.csv and Contributor_ID / With_Contributor_ID / Contributor / Citation / Source / Comment / Description excluded"
+   ],
+   "first_party": true,
+   "independent_group": "wals_cldf",
+   "min_units": 1000,
+   "partitions": "hash of languages.ID 70/15/15 preserving chapters, parameters, codes and areas",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 3573,
+   "view": "wals_cldf"
   },
   "wb_lending_projects": {
    "anomaly_origin": "controlled_injection",

@@ -117,6 +117,20 @@
    "C4": "business process execution"
   }
  },
+ "cordis_horizon_europe": {
+  "curator": "CORDIS EU",
+  "descriptors": {
+   "relational_topology": "six-table grant schema (project + organization, euroSciVoc, topics, legalBasis, policyPriorities), 5 foreign-key relations across 379,605 child rows, 0 orphans"
+  },
+  "domain": "public research funding grants",
+  "generating_system": "European Commission CORDIS Horizon Europe research project and beneficiary registry",
+  "note": "Non-timetable European research grant relational database; independent producer, curator, continent, domain and schema from public procurement datasets",
+  "producer": "European Commission (CORDIS)",
+  "schema_family": "eu cordis horizon grant schema",
+  "structure": {
+   "C5": "EU funded project, beneficiary organization, scientific vocabulary and policy priority tables"
+  }
+ },
  "crossref": {
   "curator": "crossref",
   "descriptors": {
@@ -1853,6 +1867,20 @@
   "schema_family": "xes event log",
   "structure": {
    "C4": "IT service incident log"
+  }
+ },
+ "wals_cldf": {
+  "curator": "Zenodo / CLDF",
+  "descriptors": {
+   "relational_topology": "seven-table hierarchy/star schema (values -> languages, parameters, codes; codes -> parameters; parameters -> chapters -> areas; languages -> countries), 7 foreign-key relations, 290/2,652 (10.94%) natural orphans in languages.Country_ID and 0 orphans on 6 relations"
+  },
+  "domain": "linguistic typology",
+  "generating_system": "World Atlas of Language Structures (WALS) CLDF cross-linguistic typology database",
+  "note": "Non-timetable linguistic typology relational schema; natural multi-country orphan links preserved without filtering",
+  "producer": "Max Planck Institute for Evolutionary Anthropology (WALS Editors)",
+  "schema_family": "cldf linguistic typology",
+  "structure": {
+   "C5": "language feature values, codes, chapters, areas and countries relational tables"
   }
  },
  "wikimedia_simplewiki": {
