@@ -291,6 +291,21 @@
    "units": 319159,
    "view": "bikeshare_jc"
   },
+  "cftc_cot_disaggregated": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 2024-01-02 to 2025-12-30 weekly Disaggregated Futures Only release: 27,231 contract-week rows over 346 contracts, 21 of 194 columns (all-period positions only)",
+    "positions of reportable trader classes are aggregates per contract, not individual traders; publisher-reported zero and missing values preserved"
+   ],
+   "first_party": true,
+   "independent_group": "cftc_cot_disaggregated",
+   "min_units": 500,
+   "partitions": "hash of cftc_contract_market_code 70/15/15 so the weekly reports of one contract stay together",
+   "privacy": "not_needed",
+   "protocol_id": "P-TAB",
+   "units": 27231,
+   "view": "cftc_cot_disaggregated"
+  },
   "chembl_molecules": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -339,6 +354,21 @@
    "protocol_id": "P-REL",
    "units": 24419,
    "view": "cordis_horizon_europe"
+  },
+  "cpsc_recalls": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 2024-01-01 to 2025-12-31 recall release: 725 notices, depth 4, 47 paths of which 12 optional, 13 object-array fields",
+    "consumer contact line, image captions and page links dropped; e-mail addresses redacted at all depths; company names kept as publisher-stated parties"
+   ],
+   "first_party": true,
+   "independent_group": "cpsc_recall_notices",
+   "min_units": 500,
+   "partitions": "hash of RecallID 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-NEST",
+   "units": 725,
+   "view": "cpsc_recalls"
   },
   "crossref_works": {
    "anomaly_origin": "controlled_injection",
@@ -2207,6 +2237,22 @@
    "units": 111202,
    "view": "ncei_storm_events_2024"
   },
+  "ndbc_buoys_2023": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "fixed-station selection of 7 NDBC-operated moored buoys, calendar 2023, 360,156 ten-minute UTC rows (47,137 to 52,526 per station); not a random sample of the network",
+    "publisher missing codes (99, 999, 9999) mapped to NaN: wave columns are missing in about 68% of rows, VIS and TIDE in every row (dropped); real gaps and irregular reporting preserved",
+    "NDBC-specific licence page unreachable by automated clients; rights rest on the NWS public-domain disclaimer"
+   ],
+   "first_party": true,
+   "independent_group": "ndbc_moored_buoys",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 within each station_id",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "units": 360156,
+   "view": "ndbc_buoys_2023"
+  },
   "noaa_coops_tides": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -2539,6 +2585,22 @@
    "protocol_id": "P-NEST",
    "units": 4820,
    "view": "osv_go_advisories"
+  },
+  "ourairports_db": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 2026-11-22 OurAirports 6-table relational dump (86,377 airports, 48,437 runways, 30,400 frequencies, 11,008 navaids, 249 countries, 3,987 regions; 180,458 total rows)",
+    "0 orphans across all 9 foreign keys (airports to countries and regions, regions to countries, runways and frequencies to airports by id and ident, navaids to airports and countries); read with keep_default_na=False to preserve ISO-2 country code NA",
+    "crowd-sourced volunteer database: completeness and accuracy vary by country; link and keyword text dropped"
+   ],
+   "first_party": true,
+   "independent_group": "ourairports_db",
+   "min_units": 1000,
+   "partitions": "hash of airport ident 70/15/15 keeping runways, frequencies and navaids with their airport",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "units": 180458,
+   "view": "ourairports_db"
   },
   "paris_urban_trees": {
    "anomaly_origin": "controlled_injection",
@@ -3370,6 +3432,21 @@
     "annual seasonality"
    ],
    "view": "zen_cnc_milling"
+  },
+  "zen_daylight_events": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete events.csv: 1,763 contextual event intervals of 47 participants in a single equinox-week campaign (wear state, setting, daylight and electric-light condition, screen use); participatory convenience sample",
+    "participant ids re-pseudonymised with the project salt; local timestamps dropped; age, sex, coordinates and light series not acquired"
+   ],
+   "first_party": true,
+   "independent_group": "a_day_in_daylight",
+   "min_units": 1000,
+   "partitions": "hash of participant_id 70/15/15 so individual event sequences do not split across partitions",
+   "privacy": "handled",
+   "protocol_id": "P-SEQ",
+   "units": 1763,
+   "view": "zen_daylight_events"
   },
   "zen_dk_district_heating": {
    "anomaly_origin": "controlled_injection",

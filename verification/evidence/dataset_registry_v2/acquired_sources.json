@@ -5790,6 +5790,106 @@
    "stratum": "C5",
    "system": "noaa_ncei_storm_events",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "ourairports_db",
+   "id": "ourairports_db",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "ourairports",
+   "reason": "OurAirports 2026-11-22 daily dump: 6 relational tables (86,377 airports, 48,437 runways, 30,400 frequencies, 11,008 navaids, 249 countries, 3,987 regions), 9 foreign keys with 0 orphans, Public Domain; aviation infrastructure mechanism outside timetable networks",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "ourairports-data repository LICENSE (Unlicense, public domain) and producer data page: 'All data is released to the Public Domain'",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "ourairports_aviation_database",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "cftc_cot_disaggregated",
+   "id": "cftc_cot_disaggregated",
+   "licence_class": "open",
+   "protocols": "P-TAB on weekly CFTC Disaggregated Futures Only trader-class positions",
+   "publisher": "us_cftc",
+   "reason": "CFTC Commitments of Traders Disaggregated Futures Only (2024-2025, Public Domain): 27,231 weekly contract-level reports with producer, swap-dealer, managed-money, other-reportable and non-reportable long/short/spread positions; derivatives market positioning mechanism absent from C2b",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "CFTC web policy: 'Government information at the CFTC website is in the public domain'",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "cftc_large_trader_reporting",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "ndbc_moored_buoys",
+   "id": "ndbc_buoys_2023",
+   "licence_class": "open",
+   "protocols": "P-TS",
+   "publisher": "noaa_ndbc",
+   "reason": "NOAA NDBC standard meteorological 2023 files of 7 NDBC-operated moored buoys: 360,156 ten-minute observations of wind, gust, wave, pressure and temperature with publisher missing codes mapped to NaN; open-ocean buoy mechanism distinct from coastal tide gauges",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "NWS disclaimer: 'National Weather Service data ... are in the public domain' (NDBC is an NWS centre; NDBC-specific disclaimer returned Access Denied to automated requests)",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "ndbc_moored_buoy_network",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "a_day_in_daylight",
+   "id": "zen_daylight_events",
+   "licence_class": "open",
+   "protocols": "P-SEQ",
+   "publisher": "zenodo:24164071",
+   "reason": "A Day in Daylight 2025 (Zenodo 24164071): 1,763 contextual event intervals of 47 participants in 15 countries (wear state, social context, setting, daylight and electric-light condition); participatory human-behaviour diary mechanism, non-business-process",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Zenodo API metadata for record 24164071: cc-by-4.0 (CC BY 4.0)",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C4",
+   "system": "a_day_in_daylight_2025_study",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "cpsc_recall_notices",
+   "id": "cpsc_recalls",
+   "licence_class": "open",
+   "protocols": "P-NEST",
+   "publisher": "us_cpsc",
+   "reason": "CPSC Recall Retrieval API 2024-2025 recall notices: 725 nested records, depth 4, 47 paths, 12 optional paths, 13 object-array fields (products, hazards, remedies, manufacturers, retailers, importers, distributors); consumer product safety regulation mechanism",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "17 U.S.C. 105 U.S. Government work (CPSC); agency policy pages return HTTP 403 to automated clients, so rights rest on the statute",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C6",
+   "system": "cpsc_recall_program",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

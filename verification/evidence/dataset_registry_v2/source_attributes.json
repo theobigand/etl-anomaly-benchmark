@@ -10,6 +10,17 @@
    "C5": "contract-grant-patent linkage"
   }
  },
+ "a_day_in_daylight": {
+  "curator": "zenodo",
+  "domain": "chronobiology and light exposure",
+  "generating_system": "A Day in Daylight 2025 participatory wearable and diary study",
+  "note": "1,763 event intervals of 47 participants, September 2025 equinox campaign",
+  "producer": "TUM and TUMCREATE A Day in Daylight 2025 organisers (Zenodo 24164071)",
+  "schema_family": "participant context-event diary log",
+  "structure": {
+   "C4": "participant-level contextual event interval sequences"
+  }
+ },
  "ademe_dpe": {
   "curator": "data.ademe.fr",
   "domain": "building energy certification",
@@ -83,6 +94,17 @@
    "C4": "operational job trace"
   }
  },
+ "cftc_cot_disaggregated": {
+  "curator": "publicreporting.cftc.gov",
+  "domain": "commodity derivatives positioning",
+  "generating_system": "CFTC Large Trader Reporting Program and Commitments of Traders reports",
+  "note": "27,231 weekly contract-level rows, 2024-2025, 346 contracts, 21 columns",
+  "producer": "U.S. Commodity Futures Trading Commission (CFTC)",
+  "schema_family": "futures trader position report ledger",
+  "structure": {
+   "C2b": "weekly trader-class long, short and spread positions per futures contract"
+  }
+ },
  "chembl_molecules": {
   "curator": "ebi.ac.uk",
   "domain": "medicinal chemistry bioactivity",
@@ -140,6 +162,17 @@
   "schema_family": "research grant project tables",
   "structure": {
    "C5": "EU funded project, beneficiary organization, scientific vocabulary and policy priority tables"
+  }
+ },
+ "cpsc_recall_notices": {
+  "curator": "saferproducts.gov",
+  "domain": "consumer product safety regulation",
+  "generating_system": "U.S. CPSC recall program",
+  "note": "725 recall notices 2024-2025, depth 4, 12 optional paths",
+  "producer": "U.S. Consumer Product Safety Commission (CPSC)",
+  "schema_family": "product recall notice json",
+  "structure": {
+   "C6": "recall notice with array-of-object product, hazard, remedy and supply-chain party lists"
   }
  },
  "crossref": {
@@ -853,6 +886,17 @@
    "C4": "chromospheric solar radio burst event catalog"
   }
  },
+ "ndbc_moored_buoys": {
+  "curator": "noaa",
+  "domain": "marine surface meteorology and sea state",
+  "generating_system": "NOAA NDBC moored buoy network",
+  "note": "7 fixed NDBC-operated buoys, calendar 2023, 360,156 rows with publisher missing codes mapped to NaN",
+  "producer": "NOAA National Data Buoy Center (NDBC)",
+  "schema_family": "buoy standard meteorological series",
+  "structure": {
+   "C3": "ten-minute open-ocean wind, wave, pressure and temperature observations per buoy"
+  }
+ },
  "nhif_hospital_cases": {
   "curator": "zenodo",
   "domain": "public healthcare inpatient billing",
@@ -1004,6 +1048,17 @@
   "schema_family": "osv json",
   "structure": {
    "C6": "software vulnerability advisory with semver range events and CWE metadata"
+  }
+ },
+ "ourairports_db": {
+  "curator": "ourairports",
+  "domain": "aviation infrastructure",
+  "generating_system": "OurAirports volunteer-maintained aviation infrastructure database",
+  "note": "complete 6-table relational dump (86,377 airports, 48,437 runways, 30,400 frequencies, 11,008 navaids, 249 countries, 3,987 regions; 0 orphans across 9 FKs)",
+  "producer": "OurAirports (David Megginson and volunteer contributors)",
+  "schema_family": "aviation infrastructure relational tables",
+  "structure": {
+   "C5": "airport-runway-frequency-navaid-region hierarchy"
   }
  },
  "paleobiology_database": {

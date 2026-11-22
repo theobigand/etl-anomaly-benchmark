@@ -1,3 +1,4 @@
+import io
 import json
 import sys
 from pathlib import Path
@@ -1085,6 +1086,11 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _wind_fragility_snapshot(root)
     _terralore_snapshot(root)
     _ncei_storm_snapshot(root)
+    _ourairports_snapshot(root)
+    _cftc_snapshot(root)
+    _ndbc_snapshot(root)
+    _daylight_snapshot(root)
+    _cpsc_snapshot(root)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
@@ -1100,7 +1106,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "zen_telecom_kpis", "zen_dk_district_heating", "zen_water_demand", "zen_dmsp_auroral", "us_treasury_dts", "fdic_bank_financials", "sncf_tgv_regularite", "dgccrf_fuel_prices", "us_federal_register", "datacite_dois", "gbif_cc0_occurrences", "chembl_molecules", "zen_florida_bridges", "wri_power_plants", "paris_urban_trees", "zen_moodle_events", "zen_norp_solar_bursts", "zen_blazar_flares", "zen_wind_fragility", "zen_terralore_chronicle", "ncei_storm_events_2024", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "zen_telecom_kpis", "zen_dk_district_heating", "zen_water_demand", "zen_dmsp_auroral", "us_treasury_dts", "fdic_bank_financials", "sncf_tgv_regularite", "dgccrf_fuel_prices", "us_federal_register", "datacite_dois", "gbif_cc0_occurrences", "chembl_molecules", "zen_florida_bridges", "wri_power_plants", "paris_urban_trees", "zen_moodle_events", "zen_norp_solar_bursts", "zen_blazar_flares", "zen_wind_fragility", "zen_terralore_chronicle", "ncei_storm_events_2024", "ourairports_db", "cftc_cot_disaggregated", "ndbc_buoys_2023", "zen_daylight_events", "cpsc_recalls", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -9351,3 +9357,344 @@ def test_ncei_storm_events_view_and_builder(tmp_path):
         )
     }
     assert view["source_snapshot"] == f"ncei_storm_events_2024/{ev.WAVE24_SNAPSHOT}"
+
+
+# --- Wave 25 -----------------------------------------------------------------------------------
+
+
+def _wave25_raw(root, source):
+    raw = root / source / ev.WAVE25_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    return raw
+
+
+def _ourairports_snapshot(root):
+    raw = _wave25_raw(root, "ourairports_db")
+    _w(
+        raw / "airports.csv",
+        "id,ident,type,name,latitude_deg,longitude_deg,elevation_ft,continent,iso_country,"
+        "iso_region,municipality,scheduled_service,icao_code,iata_code,gps_code,local_code,"
+        "home_link,wikipedia_link,keywords\n"
+        "2,FYWH,large_airport,Windhoek,-22.4,17.4,5640,AF,NA,NA-KH,Windhoek,yes,FYWH,WDH,FYWH,,"
+        "http://h,http://w,kw\n"
+        "1,KJFK,large_airport,Kennedy,40.6,-73.7,13,NA,US,US-NY,New York,yes,KJFK,JFK,KJFK,"
+        "JFK,,,\n",
+    )
+    _w(
+        raw / "runways.csv",
+        "id,airport_ref,airport_ident,length_ft,width_ft,surface,lighted,closed,le_ident,"
+        "le_latitude_deg,le_longitude_deg,le_elevation_ft,le_heading_degT,"
+        "le_displaced_threshold_ft,he_ident,he_latitude_deg,he_longitude_deg,he_elevation_ft,"
+        "he_heading_degT,he_displaced_threshold_ft\n"
+        "7,1,KJFK,14511,200,ASP,1,0,04L,1,1,1,40,0,22R,1,1,1,220,0\n"
+        "6,9,GONE,100,50,GRS,0,0,01,,,,,,19,,,,,\n",
+    )
+    _w(
+        raw / "airport-frequencies.csv",
+        "id,airport_ref,airport_ident,type,description,frequency_mhz\n3,1,KJFK,TWR,Tower,119.10\n",
+    )
+    _w(
+        raw / "navaids.csv",
+        "id,filename,ident,name,type,frequency_khz,latitude_deg,longitude_deg,elevation_ft,"
+        "iso_country,dme_frequency_khz,dme_channel,dme_latitude_deg,dme_longitude_deg,"
+        "dme_elevation_ft,slaved_variation_deg,magnetic_variation_deg,usageType,power,"
+        "associated_airport\n"
+        "5,f,WDH,Windhoek,VOR,112000,-22,17,5640,NA,112000,57X,,,,,-10,BOTH,HIGH,FYWH\n"
+        "4,f,XXX,Nowhere,NDB,300,0,0,0,US,,,,,,,0,TERMINAL,LOW,\n",
+    )
+    _w(
+        raw / "countries.csv",
+        "id,code,name,continent,wikipedia_link,keywords\n"
+        "1,NA,Namibia,AF,http://w,kw\n2,US,United States,NA,,\n",
+    )
+    _w(
+        raw / "regions.csv",
+        "id,code,local_code,name,continent,iso_country,wikipedia_link,keywords\n"
+        "10,NA-KH,KH,Khomas,AF,NA,,\n11,US-NY,NY,New York,NA,US,,\n",
+    )
+
+
+def test_ourairports_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^missing OurAirports CSV tables in the snapshot$"):
+        ev._build_ourairports(tmp_path / "empty", tmp_path / "err", {})
+    partial_raw = tmp_path / "partial" / "ourairports_db" / ev.WAVE25_SNAPSHOT / "raw"
+    partial_raw.mkdir(parents=True)
+    (partial_raw / "airports.csv").write_text("x")
+    with pytest.raises(ev.ViewError, match=r"^missing OurAirports CSV tables in the snapshot$"):
+        ev._build_ourairports(tmp_path / "partial", tmp_path / "err2", {})
+    root = tmp_path / "acq"
+    _ourairports_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_ourairports(root, out, manifest)
+    ev._build_ourairports(root, out, manifest)
+    folder = out / "ourairports_db"
+    airports = pd.read_csv(folder / "airports.csv", dtype=str, keep_default_na=False)
+    runways = pd.read_csv(folder / "runways.csv", dtype=str, keep_default_na=False)
+    countries = pd.read_csv(folder / "countries.csv", dtype=str, keep_default_na=False)
+    assert airports["ident"].tolist() == ["KJFK", "FYWH"]  # sorted by id as text
+    assert airports["iso_country"].tolist() == ["US", "NA"]  # Namibia stays a value
+    assert countries["code"].tolist() == ["NA", "US"]
+    assert "home_link" not in airports and "le_latitude_deg" not in runways
+    written = (folder / "airport_frequencies.csv").read_text()
+    assert written.splitlines()[1] == "3,1,KJFK,TWR,Tower,119.10"  # text kept as published
+    assert "NA-KH" in (folder / "airports.csv").read_text()  # NA is a value, not a missing cell
+    assert list(pd.read_csv(folder / "airport_frequencies.csv").columns) == [
+        "id",
+        "airport_ref",
+        "airport_ident",
+        "type",
+        "description",
+        "frequency_mhz",
+    ]
+    view = manifest["ourairports_db"]
+    assert {n: f["rows"] for n, f in view["files"].items()} == {
+        "airports.csv": 2,
+        "runways.csv": 2,
+        "airport_frequencies.csv": 1,
+        "navaids.csv": 2,
+        "countries.csv": 2,
+        "regions.csv": 2,
+    }
+    by_child = {r["child"]: r for r in view["relations"]}
+    assert len(view["relations"]) == 9
+    assert by_child["airports.iso_country"]["orphans"] == 0
+    assert by_child["runways.airport_ref"]["orphans"] == 1  # a runway of an unknown airport
+    assert by_child["runways.airport_ident"]["orphans"] == 1
+    assert by_child["navaids.associated_airport"]["checked"] == 1  # the blank key is not checked
+    assert view["dropped"] == ev.OURAIRPORTS_DROPPED and view["pseudonymised"] == []
+    assert view["source_snapshot"] == f"ourairports_db/{ev.WAVE25_SNAPSHOT}"
+    assert "no row sampling" in view["sampling"]["method"]
+
+
+def _cftc_record(rid, date, code, **extra):
+    base = {c: "1" for c in ev.CFTC_NUM_COLS}
+    base.update(
+        id=rid,
+        report_date_as_yyyy_mm_dd=f"{date}T00:00:00.000",
+        market_and_exchange_names=f"M{code}",
+        contract_market_name=f"N{code}",
+        cftc_contract_market_code=code,
+        cftc_market_code="CBT",
+        commodity_name="WHEAT",
+    )
+    base.update(extra)
+    return base
+
+
+def _cftc_snapshot(root):
+    raw = _wave25_raw(root, "cftc_cot_disaggregated")
+    _w(
+        raw / "cftc_cot_2024_2025_p00.json",
+        json.dumps(
+            [
+                _cftc_record("b", "2024-01-09", "002"),
+                _cftc_record("a", "2024-01-02", "001", open_interest_all="12"),
+            ]
+        ),
+    )
+    _w(raw / "cftc_cot_2024_2025_p01.json", json.dumps([_cftc_record("a", "2024-01-02", "001")]))
+
+
+def test_cftc_cot_view_and_builder(tmp_path):
+    records = [
+        _cftc_record("b", "2024-01-09", "002"),
+        _cftc_record("a2", "2024-01-02", "002", open_interest_all="n/a"),
+        _cftc_record("a1", "2024-01-02", "001", open_interest_all="12"),
+        _cftc_record("a1", "2024-01-02", "001", open_interest_all="99"),  # repeated id
+    ]
+    records[2].pop("m_money_positions_spread")  # a missing field is a missing value
+    view = ev.cftc_cot_view(records)
+    assert list(view.columns) == [*ev.CFTC_TEXT_COLS, *ev.CFTC_NUM_COLS]
+    assert view["cftc_contract_market_code"].tolist() == ["001", "002", "002"]
+    assert view["report_date_as_yyyy_mm_dd"].tolist() == ["2024-01-02", "2024-01-02", "2024-01-09"]
+    assert view["open_interest_all"].tolist()[0] == 12  # first record of a repeated id wins
+    assert pd.isna(view["open_interest_all"].tolist()[1])  # not a number
+    assert pd.isna(view["m_money_positions_spread"].iloc[0])
+    empty = ev.cftc_cot_view([])
+    assert list(empty.columns) == [*ev.CFTC_TEXT_COLS, *ev.CFTC_NUM_COLS] and len(empty) == 0
+    with pytest.raises(ev.ViewError, match=r"^no CFTC Commitments of Traders JSON files"):
+        ev._build_cftc_cot(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _cftc_snapshot(root)
+    manifest: dict = {}
+    ev._build_cftc_cot(root, tmp_path / "out", manifest)
+    entry = manifest["cftc_cot_disaggregated"]
+    assert entry["files"]["cot_positions.csv"]["rows"] == 2
+    assert entry["sampling"]["first_date"] == "2024-01-02"
+    assert entry["sampling"]["last_date"] == "2024-01-09"
+    assert entry["sampling"]["pages"] == 2 and entry["pseudonymised"] == []
+    assert entry["source_snapshot"] == f"cftc_cot_disaggregated/{ev.WAVE25_SNAPSHOT}"
+
+
+NDBC_HEAD = (
+    "#YY  MM DD hh mm WDIR WSPD GST  WVHT   DPD   APD MWD   PRES  ATMP  WTMP  DEWP  VIS  TIDE\n"
+    "#yr  mo dy hr mn degT m/s  m/s     m   sec   sec degT   hPa  degC  degC  degC  mi    ft\n"
+)
+
+
+def _ndbc_snapshot(root):
+    import gzip
+
+    raw = _wave25_raw(root, "ndbc_buoys_2023")
+    body = (
+        "2023 01 01 00 10 314 17.2 22.3 99.00 99.00 99.00 999 1001.4 11.9 999.0 999.0 99.0 99.00\n"
+        "2023 01 01 00 00 100  1.0 2.0 1.50 8.00 6.00 200 9999.0 11.9 12.5 3.0 99.0 99.00\n"
+    )
+    for station in ev.NDBC_STATIONS:
+        (raw / f"ndbc_{station}_2023.txt.gz").write_bytes(
+            gzip.compress((NDBC_HEAD + body).encode())
+        )
+
+
+def test_ndbc_buoys_view_and_builder(tmp_path):
+    raw = pd.read_csv(
+        io.StringIO(
+            NDBC_HEAD
+            + "2023 01 01 00 10 314 17.2 22.3 99.00 99.00 99.00 999 1001.4 11.9 999.0 999.0 99.0 99.00\n"  # noqa: E501
+            + "2023 01 01 00 00 100 1.0 2.0 1.50 8.00 6.00 200 9999.0 11.9 12.5 3.0 99.0 99.00\n"
+            + "2023 01 01 00 00 101 1.0 2.0 1.50 8.00 6.00 200 9999.0 11.9 12.5 3.0 99.0 99.00\n"
+            + "2023 01 01 00 20 100 bad 2.0 1.50 8.00 6.00 200 9999.0 11.9 12.5 3.0 99.0 99.00\n"
+        ),
+        sep=r"\s+",
+        skiprows=[1],
+        dtype=str,
+    )
+    view = ev.ndbc_buoys_view({"46042": raw, "41002": raw.iloc[:1]})
+    assert view["station_id"].tolist() == ["41002", "46042", "46042", "46042"]
+    assert view["timestamp"].tolist() == [
+        "2023-01-01 00:10",
+        "2023-01-01 00:00",
+        "2023-01-01 00:10",
+        "2023-01-01 00:20",
+    ]
+    assert view["WSPD"].tolist()[3] != view["WSPD"].tolist()[3]  # text that is no number is NaN
+    first = view.iloc[1]  # 46042 at 00:00: the first of two rows with that time is kept
+    assert first["WDIR"] == 100 and first["PRES"] != first["PRES"]  # 9999.0 is a missing code
+    assert first["WVHT"] == 1.5 and first["WTMP"] == 12.5
+    gust = view.iloc[0]  # a real 17.2 m/s wind stays a value; the 99.0 wave codes become NaN
+    assert gust["WSPD"] == 17.2 and gust["WVHT"] != gust["WVHT"] and gust["WTMP"] != gust["WTMP"]
+    assert "VIS" not in view and "TIDE" not in view
+    with pytest.raises(ev.ViewError, match=r"^missing NDBC standard meteorological files"):
+        ev._build_ndbc_buoys(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _ndbc_snapshot(root)
+    manifest: dict = {}
+    ev._build_ndbc_buoys(root, tmp_path / "out", manifest)
+    entry = manifest["ndbc_buoys_2023"]
+    assert entry["files"]["buoy_observations.csv"]["rows"] == 14
+    assert entry["sampling"]["stations"] == 7 and entry["dropped"] == ["VIS", "TIDE"]
+    written = pd.read_csv(tmp_path / "out" / "ndbc_buoys_2023" / "buoy_observations.csv")
+    first = written[written["station_id"] == 41002]  # runs of spaces are one separator
+    assert first["timestamp"].tolist() == ["2023-01-01 00:00", "2023-01-01 00:10"]
+    assert first["WSPD"].tolist() == [1.0, 17.2]
+
+
+def _daylight_row(pid, start, **extra):
+    row = {c: "" for c in ev.DAYLIGHT_COLS}
+    row.update(
+        participant_id=pid,
+        event_start_local=start.replace("Z", "+02:00"),
+        event_start_utc=start,
+        event_end_utc=start,
+        event_duration_seconds="60",
+        wear_state="Wear",
+    )
+    row.update(extra)
+    return row
+
+
+def _daylight_snapshot(root):
+    raw = _wave25_raw(root, "zen_daylight_events")
+    frame = pd.DataFrame(
+        [
+            _daylight_row("ADID-B", "2025-09-21T10:00:00Z", screen_phone="TRUE"),
+            _daylight_row(
+                "ADID-A",
+                "2025-09-21T11:00:00Z",
+                setting="Indoors",
+                setting_specific="NA",
+                screen_phone="FALSE",
+            ),
+        ]
+    )
+    frame.to_csv(raw / "events.csv", index=False)
+
+
+def test_daylight_events_view_and_builder(tmp_path):
+    frame = pd.DataFrame(
+        [
+            _daylight_row("ADID-B", "2025-09-21T10:00:00Z"),
+            _daylight_row("ADID-A", "2025-09-21T12:00:00Z", setting="Indoors"),
+            _daylight_row("ADID-A", "2025-09-21T09:00:00Z"),
+        ]
+    )
+    view = ev.daylight_events_view(frame)
+    a, b = ev.pseudonym("ADID-A"), ev.pseudonym("ADID-B")
+    assert "event_start_local" not in view and "ADID-A" not in view["participant_id"].tolist()
+    assert view["participant_id"].tolist() == sorted([a, a, b])
+    mine = view[view["participant_id"] == a]
+    assert mine["event_start_utc"].tolist() == ["2025-09-21T09:00:00Z", "2025-09-21T12:00:00Z"]
+    assert list(view.columns) == ["participant_id", *ev.DAYLIGHT_COLS]
+    with pytest.raises(ev.ViewError, match=r"^no Day in Daylight events CSV in the snapshot$"):
+        ev._build_daylight_events(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _daylight_snapshot(root)
+    manifest: dict = {}
+    ev._build_daylight_events(root, tmp_path / "out", manifest)
+    entry = manifest["zen_daylight_events"]
+    assert entry["files"]["context_events.csv"]["rows"] == 2
+    assert entry["pseudonymised"] == ["participant_id"] and entry["salt_label"] == ev.SALT
+    assert entry["sampling"]["participants"] == 2 and entry["dropped"] == ["event_start_local"]
+    written = pd.read_csv(
+        tmp_path / "out" / "zen_daylight_events" / "context_events.csv",
+        dtype=str,
+        keep_default_na=False,
+    )
+    assert sorted(written["screen_phone"]) == ["FALSE", "TRUE"]  # tokens stay text, not booleans
+    assert "NA" in written["setting_specific"].tolist()  # a publisher token is not a missing cell
+
+
+def _cpsc_record(rid, **extra):
+    record = {
+        "RecallID": rid,
+        "RecallNumber": f"N{rid}",
+        "Title": f"Title {rid}",
+        "ConsumerContact": "call 555 or mail a@b.example",
+        "URL": "https://x",
+        "Images": [{"URL": "u", "Caption": "c"}],
+        "Description": "mail us at help@firm.example",
+        "Products": [{"Name": "P"}],
+        "Inconjunctions": [{"URL": "https://other"}],
+    }
+    record.update(extra)
+    return record
+
+
+def _cpsc_snapshot(root):
+    raw = _wave25_raw(root, "cpsc_recalls")
+    _w(raw / "cpsc_recalls_2024_2025.json", json.dumps([_cpsc_record(2), _cpsc_record(1)]))
+
+
+def test_cpsc_recalls_view_and_builder(tmp_path):
+    records = [_cpsc_record(2), _cpsc_record(1), _cpsc_record(2, Title="repeat")]
+    view = ev.cpsc_recalls_view(records)
+    assert [r["RecallID"] for r in view] == [1, 2]
+    assert view[1]["Title"] == "Title 2"  # the first record of a repeated id wins
+    assert all(not ({"ConsumerContact", "Images", "URL"} & set(r)) for r in view)
+    assert view[0]["Inconjunctions"] == [{"URL": "https://other"}]  # only top-level keys dropped
+    assert "help@firm.example" not in view[0]["Description"]
+    assert records[0]["ConsumerContact"]  # the input is untouched
+    with pytest.raises(ev.ViewError, match=r"^no CPSC recall JSON in the snapshot$"):
+        ev._build_cpsc_recalls(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _cpsc_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_cpsc_recalls(root, out, manifest)
+    entry = manifest["cpsc_recalls"]
+    assert entry["files"]["recalls.jsonl"]["rows"] == 2
+    assert entry["dropped"] == ["ConsumerContact", "Images", "URL"]
+    assert entry["sampling"]["recalls_in"] == 2 and entry["sampling"]["unique_recalls"] == 2
+    lines = (out / "cpsc_recalls" / "recalls.jsonl").read_text().splitlines()
+    assert [json.loads(line)["RecallID"] for line in lines] == [1, 2]

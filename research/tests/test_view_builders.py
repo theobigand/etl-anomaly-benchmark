@@ -488,6 +488,26 @@ def _ncei_storm_events(root, tmp):
     tev._ncei_storm_snapshot(root)
 
 
+def _ourairports(root, tmp):
+    tev._ourairports_snapshot(root)
+
+
+def _cftc_cot(root, tmp):
+    tev._cftc_snapshot(root)
+
+
+def _ndbc_buoys(root, tmp):
+    tev._ndbc_snapshot(root)
+
+
+def _daylight_events(root, tmp):
+    tev._daylight_snapshot(root)
+
+
+def _cpsc_recalls(root, tmp):
+    tev._cpsc_snapshot(root)
+
+
 def _tlc(root, tmp):
     tev._tlc_page(
         [{}, {"tpep_pickup_datetime": "2023-03-07T07:00:00.000", "total_amount": "0.0"}]
@@ -562,6 +582,11 @@ CASES = {
     "wind_fragility": (_wind_fragility, ev._build_wind_fragility, ["zen_wind_fragility"], {}),
     "terralore_chronicle": (_terralore_chronicle, ev._build_terralore_chronicle, ["zen_terralore_chronicle"], {}),  # noqa: E501
     "ncei_storm_events": (_ncei_storm_events, ev._build_ncei_storm_events, ["ncei_storm_events_2024"], {}),  # noqa: E501
+    "ourairports": (_ourairports, ev._build_ourairports, ["ourairports_db"], {}),
+    "cftc_cot": (_cftc_cot, ev._build_cftc_cot, ["cftc_cot_disaggregated"], {}),
+    "ndbc_buoys": (_ndbc_buoys, ev._build_ndbc_buoys, ["ndbc_buoys_2023"], {}),
+    "daylight_events": (_daylight_events, ev._build_daylight_events, ["zen_daylight_events"], {}),
+    "cpsc_recalls": (_cpsc_recalls, ev._build_cpsc_recalls, ["cpsc_recalls"], {}),
     "tlc": (_tlc, ev._build_tlc, ["nyc_tlc_yellow"], {}),
     "maude": (_maude_case, ev._build_maude, ["openfda_device_event"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),

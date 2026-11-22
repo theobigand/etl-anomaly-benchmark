@@ -2437,6 +2437,41 @@
   },
   {
    "failed": null,
+   "group": "ourairports_db",
+   "id": "ourairports_db",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "cftc_cot_disaggregated",
+   "id": "cftc_cot_disaggregated",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "ndbc_moored_buoys",
+   "id": "ndbc_buoys_2023",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "a_day_in_daylight",
+   "id": "zen_daylight_events",
+   "status": "experiment_ready",
+   "stratum": "C4"
+  },
+  {
+   "failed": null,
+   "group": "cpsc_recall_notices",
+   "id": "cpsc_recalls",
+   "status": "experiment_ready",
+   "stratum": "C6"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2628,6 +2663,7 @@
    "wri_global_power_plants"
   ],
   "C2b": [
+   "cftc_cot_disaggregated",
    "coatings_multinational",
    "dgccrf_fuel_prices",
    "dgfip_dvf",
@@ -2668,6 +2704,7 @@
    "gfz_potsdam_kp",
    "melbourne_pedestrian",
    "metropt_porto",
+   "ndbc_moored_buoys",
    "noaa_coops",
    "noaa_gml_co2",
    "pnnl_epri_bess",
@@ -2682,6 +2719,7 @@
    "vif_aegis"
   ],
   "C4": [
+   "a_day_in_daylight",
    "aoe_gameplay",
    "ccin2p3_slurm",
    "coatings_multinational",
@@ -2728,6 +2766,7 @@
    "mimic_iv_bidmc",
    "noaa_ncei_storm_events",
    "openalex",
+   "ourairports_db",
    "paleobiology_database",
    "stackexchange",
    "terralore_chronicle_db",
@@ -2740,6 +2779,7 @@
   "C6": [
    "chembl_molecules",
    "clinicaltrials_gov",
+   "cpsc_recall_notices",
    "crossref",
    "datacite_dois",
    "fda_maude",
@@ -2782,49 +2822,49 @@
    "structurally_valid": 22
   },
   "C2b": {
-   "acquired": 22,
-   "discovered": 28,
-   "experiment_ready": 22,
-   "protocol_ready": 22,
-   "rights_verified": 22,
-   "scientifically_eligible": 22,
-   "structurally_valid": 22
+   "acquired": 23,
+   "discovered": 29,
+   "experiment_ready": 23,
+   "protocol_ready": 23,
+   "rights_verified": 23,
+   "scientifically_eligible": 23,
+   "structurally_valid": 23
   },
   "C3": {
-   "acquired": 34,
-   "discovered": 55,
-   "experiment_ready": 31,
-   "protocol_ready": 31,
-   "rights_verified": 34,
-   "scientifically_eligible": 31,
-   "structurally_valid": 32
+   "acquired": 35,
+   "discovered": 56,
+   "experiment_ready": 32,
+   "protocol_ready": 32,
+   "rights_verified": 35,
+   "scientifically_eligible": 32,
+   "structurally_valid": 33
   },
   "C4": {
-   "acquired": 39,
-   "discovered": 40,
-   "experiment_ready": 38,
-   "protocol_ready": 38,
-   "rights_verified": 39,
-   "scientifically_eligible": 38,
-   "structurally_valid": 38
-  },
-  "C5": {
-   "acquired": 39,
-   "discovered": 39,
+   "acquired": 40,
+   "discovered": 41,
    "experiment_ready": 39,
    "protocol_ready": 39,
-   "rights_verified": 39,
+   "rights_verified": 40,
    "scientifically_eligible": 39,
    "structurally_valid": 39
   },
+  "C5": {
+   "acquired": 40,
+   "discovered": 40,
+   "experiment_ready": 40,
+   "protocol_ready": 40,
+   "rights_verified": 40,
+   "scientifically_eligible": 40,
+   "structurally_valid": 40
+  },
   "C6": {
-   "acquired": 22,
-   "discovered": 25,
-   "experiment_ready": 22,
-   "protocol_ready": 22,
-   "rights_verified": 22,
-   "scientifically_eligible": 22,
-   "structurally_valid": 22
+   "acquired": 23,
+   "discovered": 26,
+   "experiment_ready": 23,
+   "protocol_ready": 23,
+   "rights_verified": 23,
+   "scientifically_eligible": 23,
+   "structurally_valid": 23
   }
  }
 }

@@ -1,6 +1,6 @@
 {
  "licence_classes": {
-  "open": 270,
+  "open": 275,
   "research_only": 22
  },
  "strata": {
@@ -41,56 +41,56 @@
    "ambitious": 45,
    "minimum": 15,
    "missing_to_minimum": 0,
-   "missing_to_recommended": 9,
-   "publishers": 21,
+   "missing_to_recommended": 8,
+   "publishers": 22,
    "recommended": 30,
-   "sources": 21,
+   "sources": 22,
    "stratum": "transactional events",
-   "systems": 23
+   "systems": 24
   },
   "C3": {
    "ambitious": 55,
    "minimum": 15,
    "missing_to_minimum": 0,
    "missing_to_recommended": 0,
-   "publishers": 55,
+   "publishers": 56,
    "recommended": 40,
-   "sources": 61,
+   "sources": 62,
    "stratum": "time series",
-   "systems": 63
+   "systems": 64
   },
   "C4": {
    "ambitious": 40,
    "minimum": 15,
    "missing_to_minimum": 0,
    "missing_to_recommended": 0,
-   "publishers": 23,
+   "publishers": 24,
    "recommended": 28,
-   "sources": 39,
+   "sources": 40,
    "stratum": "logs and event sequences",
-   "systems": 38
+   "systems": 39
   },
   "C5": {
    "ambitious": 55,
    "minimum": 15,
    "missing_to_minimum": 0,
-   "missing_to_recommended": 17,
-   "publishers": 30,
+   "missing_to_recommended": 16,
+   "publishers": 31,
    "recommended": 36,
-   "sources": 19,
+   "sources": 20,
    "stratum": "relational",
-   "systems": 39
+   "systems": 40
   },
   "C6": {
    "ambitious": 45,
    "minimum": 15,
    "missing_to_minimum": 0,
-   "missing_to_recommended": 7,
-   "publishers": 22,
+   "missing_to_recommended": 6,
+   "publishers": 23,
    "recommended": 30,
-   "sources": 23,
+   "sources": 24,
    "stratum": "nested",
-   "systems": 23
+   "systems": 24
   }
  },
  "time_candidates_not_yet_verified": [
@@ -98,5 +98,5 @@
   "uci:755",
   "uci:760"
  ],
- "total_sources": 292
+ "total_sources": 297
 }

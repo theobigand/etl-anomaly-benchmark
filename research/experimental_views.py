@@ -7125,6 +7125,380 @@ def _build_ncei_storm_events(root: Path, out: Path, manifest: dict[str, Any]) ->
     )
 
 
+WAVE25_SNAPSHOT = "2026-11-22"
+
+OURAIRPORTS_TABLES = (
+    "airports",
+    "runways",
+    "airport_frequencies",
+    "navaids",
+    "countries",
+    "regions",
+)
+OURAIRPORTS_SPEC: dict[str, Any] = {
+    "tables": {
+        "airports": {
+            "keep": [
+                "id",
+                "ident",
+                "type",
+                "name",
+                "latitude_deg",
+                "longitude_deg",
+                "elevation_ft",
+                "continent",
+                "iso_country",
+                "iso_region",
+                "municipality",
+                "scheduled_service",
+                "icao_code",
+                "iata_code",
+                "gps_code",
+                "local_code",
+            ]
+        },
+        "runways": {
+            "keep": [
+                "id",
+                "airport_ref",
+                "airport_ident",
+                "length_ft",
+                "width_ft",
+                "surface",
+                "lighted",
+                "closed",
+                "le_ident",
+                "le_heading_degT",
+                "he_ident",
+                "he_heading_degT",
+            ]
+        },
+        "airport_frequencies": {
+            "keep": ["id", "airport_ref", "airport_ident", "type", "description", "frequency_mhz"]
+        },
+        "navaids": {
+            "keep": [
+                "id",
+                "ident",
+                "name",
+                "type",
+                "frequency_khz",
+                "latitude_deg",
+                "longitude_deg",
+                "elevation_ft",
+                "iso_country",
+                "dme_frequency_khz",
+                "dme_channel",
+                "magnetic_variation_deg",
+                "usageType",
+                "power",
+                "associated_airport",
+            ]
+        },
+        "countries": {"keep": ["id", "code", "name", "continent"]},
+        "regions": {"keep": ["id", "code", "local_code", "name", "continent", "iso_country"]},
+    },
+    "relations": [
+        ["airports", "iso_country", "countries", "code"],
+        ["airports", "iso_region", "regions", "code"],
+        ["regions", "iso_country", "countries", "code"],
+        ["runways", "airport_ref", "airports", "id"],
+        ["runways", "airport_ident", "airports", "ident"],
+        ["airport_frequencies", "airport_ref", "airports", "id"],
+        ["airport_frequencies", "airport_ident", "airports", "ident"],
+        ["navaids", "associated_airport", "airports", "ident"],
+        ["navaids", "iso_country", "countries", "code"],
+    ],
+}
+OURAIRPORTS_DROPPED = [
+    "airports.home_link",
+    "airports.wikipedia_link",
+    "airports.keywords",
+    "runways.le_latitude_deg",
+    "runways.le_longitude_deg",
+    "runways.le_elevation_ft",
+    "runways.le_displaced_threshold_ft",
+    "runways.he_latitude_deg",
+    "runways.he_longitude_deg",
+    "runways.he_elevation_ft",
+    "runways.he_displaced_threshold_ft",
+    "navaids.filename",
+    "navaids.dme_latitude_deg",
+    "navaids.dme_longitude_deg",
+    "navaids.dme_elevation_ft",
+    "navaids.slaved_variation_deg",
+    "countries.wikipedia_link",
+    "countries.keywords",
+    "regions.wikipedia_link",
+    "regions.keywords",
+]
+
+
+def ourairports_view(
+    tables: dict[str, pd.DataFrame],
+) -> tuple[dict[str, pd.DataFrame], list[dict[str, Any]]]:
+    """Six-table OurAirports aviation infrastructure schema without link and keyword text."""
+    views, relations = tables_view(tables, OURAIRPORTS_SPEC)
+    ordered = {
+        name: frame.sort_values(list(frame.columns)).reset_index(drop=True)
+        for name, frame in views.items()
+    }
+    return ordered, relations
+
+
+def _build_ourairports(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "ourairports_db" / WAVE25_SNAPSHOT / "raw"
+    paths = {name: raw / f"{name.replace('_', '-')}.csv" for name in OURAIRPORTS_TABLES}
+    if not all(p.exists() for p in paths.values()):
+        raise ViewError("missing OurAirports CSV tables in the snapshot")
+    # keep_default_na=False: the ISO 3166 country code NA (Namibia) is a value, not a missing cell
+    tables = {
+        name: pd.read_csv(path, dtype=str, keep_default_na=False) for name, path in paths.items()
+    }
+    views, relations = ourairports_view(tables)
+    folder = out / "ourairports_db"
+    folder.mkdir(parents=True, exist_ok=True)
+    files: dict[str, tuple[Path, int]] = {}
+    for name, frame in views.items():
+        target = folder / f"{name}.csv"
+        frame.to_csv(target, index=False)
+        files[f"{name}.csv"] = (target, len(frame))
+    _record(
+        manifest,
+        "ourairports_db",
+        files,
+        dropped=OURAIRPORTS_DROPPED,
+        pseudonymised=[],
+        relations=relations,
+        sampling={
+            "method": "complete 2026-11-22 daily dump of six OurAirports relational tables (no row sampling)"  # noqa: E501
+        },
+        source_snapshot=f"ourairports_db/{WAVE25_SNAPSHOT}",
+    )
+
+
+CFTC_TEXT_COLS = (
+    "report_date_as_yyyy_mm_dd",
+    "market_and_exchange_names",
+    "contract_market_name",
+    "cftc_contract_market_code",
+    "cftc_market_code",
+    "commodity_name",
+)
+CFTC_NUM_COLS = (
+    "open_interest_all",
+    "prod_merc_positions_long",
+    "prod_merc_positions_short",
+    "swap_positions_long_all",
+    "swap__positions_short_all",
+    "swap__positions_spread_all",
+    "m_money_positions_long_all",
+    "m_money_positions_short_all",
+    "m_money_positions_spread",
+    "other_rept_positions_long",
+    "other_rept_positions_short",
+    "other_rept_positions_spread",
+    "nonrept_positions_long_all",
+    "nonrept_positions_short_all",
+)
+
+
+def cftc_cot_view(records: list[dict[str, Any]]) -> pd.DataFrame:
+    """Weekly CFTC disaggregated futures-only trader-class positions, one row per report and contract."""  # noqa: E501
+    unique: dict[str, dict[str, Any]] = {}
+    for record in records:
+        unique.setdefault(record["id"], record)
+    rows = [{c: r.get(c) for c in (*CFTC_TEXT_COLS, *CFTC_NUM_COLS)} for r in unique.values()]
+    frame = pd.DataFrame(rows, columns=[*CFTC_TEXT_COLS, *CFTC_NUM_COLS])
+    frame["report_date_as_yyyy_mm_dd"] = frame["report_date_as_yyyy_mm_dd"].str[:10]
+    for col in CFTC_NUM_COLS:
+        frame[col] = pd.to_numeric(frame[col], errors="coerce")
+    return frame.sort_values(
+        ["report_date_as_yyyy_mm_dd", "cftc_contract_market_code"]
+    ).reset_index(drop=True)
+
+
+def _build_cftc_cot(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    files = sorted(
+        (root / "cftc_cot_disaggregated" / WAVE25_SNAPSHOT / "raw").glob(
+            "cftc_cot_2024_2025_p*.json"
+        )
+    )
+    if not files:
+        raise ViewError("no CFTC Commitments of Traders JSON files in the snapshot")
+    records: list[dict[str, Any]] = []
+    for path in files:
+        records.extend(json.loads(path.read_text()))
+    view = cftc_cot_view(records)
+    folder = out / "cftc_cot_disaggregated"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "cot_positions.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "cftc_cot_disaggregated",
+        {"cot_positions.csv": (target, len(view))},
+        dropped=[
+            "id",
+            "173 of 194 source columns (crop-year splits, changes, percentages, counts)",
+        ],
+        pseudonymised=[],
+        sampling={
+            "first_date": str(view["report_date_as_yyyy_mm_dd"].min()),
+            "last_date": str(view["report_date_as_yyyy_mm_dd"].max()),
+            "method": "complete 2024-01-01 to 2025-12-31 weekly Disaggregated Futures Only release, 21 of 194 columns",  # noqa: E501
+            "pages": len(files),
+        },
+        source_snapshot=f"cftc_cot_disaggregated/{WAVE25_SNAPSHOT}",
+    )
+
+
+NDBC_STATIONS = ("41002", "41004", "42040", "44025", "46013", "46042", "51001")
+#: publisher-defined missing-value codes of the NDBC standard meteorological files
+NDBC_MISSING = {
+    "WDIR": 999.0,
+    "WSPD": 99.0,
+    "GST": 99.0,
+    "WVHT": 99.0,
+    "DPD": 99.0,
+    "APD": 99.0,
+    "MWD": 999.0,
+    "PRES": 9999.0,
+    "ATMP": 999.0,
+    "WTMP": 999.0,
+    "DEWP": 999.0,
+}
+#: columns missing in every row of every selected station, not kept
+NDBC_EMPTY = ("VIS", "TIDE")
+
+
+def ndbc_buoys_view(frames: dict[str, pd.DataFrame]) -> pd.DataFrame:
+    """Ten-minute UTC buoy observations with the publisher missing codes turned into NaN."""
+    parts = []
+    for station, raw in sorted(frames.items()):
+        stamp = raw["#YY"] + "-" + raw["MM"] + "-" + raw["DD"] + " " + raw["hh"] + ":" + raw["mm"]
+        part = pd.DataFrame({"station_id": station, "timestamp": stamp})
+        for col, code in NDBC_MISSING.items():
+            values = pd.to_numeric(raw[col], errors="coerce")
+            part[col] = values.mask(values == code)
+        parts.append(part.drop_duplicates(["timestamp"]))
+    return pd.concat(parts).sort_values(["station_id", "timestamp"]).reset_index(drop=True)
+
+
+def _build_ndbc_buoys(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "ndbc_buoys_2023" / WAVE25_SNAPSHOT / "raw"
+    paths = {s: raw / f"ndbc_{s}_2023.txt.gz" for s in NDBC_STATIONS}
+    if not all(p.exists() for p in paths.values()):
+        raise ViewError("missing NDBC standard meteorological files in the snapshot")
+    frames = {s: pd.read_csv(p, sep=r"\s+", skiprows=[1], dtype=str) for s, p in paths.items()}
+    view = ndbc_buoys_view(frames)
+    folder = out / "ndbc_buoys_2023"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "buoy_observations.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "ndbc_buoys_2023",
+        {"buoy_observations.csv": (target, len(view))},
+        dropped=list(NDBC_EMPTY),
+        pseudonymised=[],
+        sampling={
+            "method": "fixed-station selection: calendar-2023 standard meteorological files of seven NDBC-operated moored buoys",  # noqa: E501
+            "stations": len(frames),
+        },
+        source_snapshot=f"ndbc_buoys_2023/{WAVE25_SNAPSHOT}",
+    )
+
+
+DAYLIGHT_COLS = (
+    "event_start_utc",
+    "event_end_utc",
+    "event_duration_seconds",
+    "wear_state",
+    "social_context",
+    "wear_activity",
+    "nonwear_storage",
+    "nighttime_position",
+    "setting",
+    "setting_location",
+    "setting_specific",
+    "daylight_condition",
+    "electric_light_condition",
+    "screen_phone",
+    "screen_tablet",
+    "screen_computer",
+    "screen_television",
+    "lighting_autonomy",
+)
+
+
+def daylight_events_view(raw: pd.DataFrame) -> pd.DataFrame:
+    """Contextual event intervals per participant in start order, participant ids re-pseudonymised."""  # noqa: E501
+    frame = raw[["participant_id", *DAYLIGHT_COLS]].copy()
+    frame["participant_id"] = frame["participant_id"].map(lambda v: pseudonym(str(v)))
+    return frame.sort_values(["participant_id", "event_start_utc", "event_end_utc"]).reset_index(
+        drop=True
+    )
+
+
+def _build_daylight_events(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    source = root / "zen_daylight_events" / WAVE25_SNAPSHOT / "raw" / "events.csv"
+    if not source.exists():
+        raise ViewError("no Day in Daylight events CSV in the snapshot")
+    view = daylight_events_view(pd.read_csv(source, dtype=str, keep_default_na=False))
+    folder = out / "zen_daylight_events"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "context_events.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "zen_daylight_events",
+        {"context_events.csv": (target, len(view))},
+        dropped=["event_start_local"],
+        pseudonymised=["participant_id"],
+        salt_label=SALT,
+        sampling={
+            "method": "complete events.csv contextual event intervals of the 2025 equinox study",
+            "participants": int(view["participant_id"].nunique()),
+        },
+        source_snapshot=f"zen_daylight_events/{WAVE25_SNAPSHOT}",
+    )
+
+
+CPSC_DROP = frozenset({"ConsumerContact", "Images", "URL"})
+
+
+def cpsc_recalls_view(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Unique CPSC recall notices by RecallID without contact line, images and page link."""
+    unique: dict[int, dict[str, Any]] = {}
+    for record in records:
+        unique.setdefault(record["RecallID"], record)
+    kept = [{k: v for k, v in r.items() if k not in CPSC_DROP} for r in unique.values()]
+    return redact_emails(sorted(kept, key=lambda r: r["RecallID"]))
+
+
+def _build_cpsc_recalls(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    source = root / "cpsc_recalls" / WAVE25_SNAPSHOT / "raw" / "cpsc_recalls_2024_2025.json"
+    if not source.exists():
+        raise ViewError("no CPSC recall JSON in the snapshot")
+    records = json.loads(source.read_text())
+    view = cpsc_recalls_view(records)
+    target = _write_jsonl(out / "cpsc_recalls", "recalls.jsonl", view)
+    _record(
+        manifest,
+        "cpsc_recalls",
+        {"recalls.jsonl": (target, len(view))},
+        dropped=sorted(CPSC_DROP),
+        pseudonymised=[],
+        sampling={
+            "method": "complete 2024-01-01 to 2025-12-31 recall-date release from the Recall Retrieval API",  # noqa: E501
+            "recalls_in": len(records),
+            "unique_recalls": len(view),
+        },
+        source_snapshot=f"cpsc_recalls/{WAVE25_SNAPSHOT}",
+    )
+
+
 BUILD_STEPS = (
     _build_openalex,
     _build_monash,
@@ -7217,6 +7591,11 @@ BUILD_STEPS = (
     _build_wind_fragility,
     _build_terralore_chronicle,
     _build_ncei_storm_events,
+    _build_ourairports,
+    _build_cftc_cot,
+    _build_ndbc_buoys,
+    _build_daylight_events,
+    _build_cpsc_recalls,
     _build_flat,
     _build_series,
     _build_ukspend,

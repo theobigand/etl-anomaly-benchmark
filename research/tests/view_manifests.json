@@ -360,6 +360,30 @@
    "source_snapshot": "zen_care_wind_a/2026-11-22"
   }
  },
+ "cftc_cot": {
+  "cftc_cot_disaggregated": {
+   "dropped": [
+    "id",
+    "173 of 194 source columns (crop-year splits, changes, percentages, counts)"
+   ],
+   "files": {
+    "cot_positions.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "cot_positions.csv": "report_date_as_yyyy_mm_dd,market_and_exchange_names,contract_market_name,cftc_contract_market_code,cftc_market_code,comm"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "first_date": "2024-01-02",
+    "last_date": "2024-01-09",
+    "method": "complete 2024-01-01 to 2025-12-31 weekly Disaggregated Futures Only release, 21 of 194 columns",
+    "pages": 2
+   },
+   "source_snapshot": "cftc_cot_disaggregated/2026-11-22"
+  }
+ },
  "charity": {
   "uk_charity_register": {
    "dropped": [
@@ -629,6 +653,30 @@
    "source_snapshot": "cordis_horizon_europe/2026-11-22"
   }
  },
+ "cpsc_recalls": {
+  "cpsc_recalls": {
+   "dropped": [
+    "ConsumerContact",
+    "Images",
+    "URL"
+   ],
+   "files": {
+    "recalls.jsonl": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "recalls.jsonl": "{\"Description\": \"mail us at [email]\", \"Inconjunctions\": [{\"URL\": \"https://other\"}], \"Products\": [{\"Name\": \"P\"}], \"Recall"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "complete 2024-01-01 to 2025-12-31 recall-date release from the Recall Retrieval API",
+    "recalls_in": 2,
+    "unique_recalls": 2
+   },
+   "source_snapshot": "cpsc_recalls/2026-11-22"
+  }
+ },
  "csv_events": {
   "4tu_csv": {
    "dropped": [
@@ -690,6 +738,30 @@
     "unique_dois": 2
    },
    "source_snapshot": "datacite_dois/2026-11-22"
+  }
+ },
+ "daylight_events": {
+  "zen_daylight_events": {
+   "dropped": [
+    "event_start_local"
+   ],
+   "files": {
+    "context_events.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "context_events.csv": "participant_id,event_start_utc,event_end_utc,event_duration_seconds,wear_state,social_context,wear_activity,nonwear_stor"
+   },
+   "pseudonymised": [
+    "participant_id"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "method": "complete events.csv contextual event intervals of the 2025 equinox study",
+    "participants": 2
+   },
+   "source_snapshot": "zen_daylight_events/2026-11-22"
   }
  },
  "dgccrf_fuel": {
@@ -1454,6 +1526,28 @@
    "source_snapshot": "ncei_storm_events_2024/2026-11-22"
   }
  },
+ "ndbc_buoys": {
+  "ndbc_buoys_2023": {
+   "dropped": [
+    "VIS",
+    "TIDE"
+   ],
+   "files": {
+    "buoy_observations.csv": {
+     "rows": 14
+    }
+   },
+   "heads": {
+    "buoy_observations.csv": "station_id,timestamp,WDIR,WSPD,GST,WVHT,DPD,APD,MWD,PRES,ATMP,WTMP,DEWP"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "fixed-station selection: calendar-2023 standard meteorological files of seven NDBC-operated moored buoys",
+    "stations": 7
+   },
+   "source_snapshot": "ndbc_buoys_2023/2026-11-22"
+  }
+ },
  "nhif": {
   "zen_nhif_hospital_cases": {
    "dropped": [],
@@ -1626,6 +1720,130 @@
     "method": "all GO-* Go Vulnerability Database advisories from Go/all.zip (non-GO prefixes excluded to stay under CC BY 4.0)"
    },
    "source_snapshot": "osv_go_advisories/2026-11-22"
+  }
+ },
+ "ourairports": {
+  "ourairports_db": {
+   "dropped": [
+    "airports.home_link",
+    "airports.wikipedia_link",
+    "airports.keywords",
+    "runways.le_latitude_deg",
+    "runways.le_longitude_deg",
+    "runways.le_elevation_ft",
+    "runways.le_displaced_threshold_ft",
+    "runways.he_latitude_deg",
+    "runways.he_longitude_deg",
+    "runways.he_elevation_ft",
+    "runways.he_displaced_threshold_ft",
+    "navaids.filename",
+    "navaids.dme_latitude_deg",
+    "navaids.dme_longitude_deg",
+    "navaids.dme_elevation_ft",
+    "navaids.slaved_variation_deg",
+    "countries.wikipedia_link",
+    "countries.keywords",
+    "regions.wikipedia_link",
+    "regions.keywords"
+   ],
+   "files": {
+    "airport_frequencies.csv": {
+     "rows": 1
+    },
+    "airports.csv": {
+     "rows": 2
+    },
+    "countries.csv": {
+     "rows": 2
+    },
+    "navaids.csv": {
+     "rows": 2
+    },
+    "regions.csv": {
+     "rows": 2
+    },
+    "runways.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "airport_frequencies.csv": "id,airport_ref,airport_ident,type,description,frequency_mhz",
+    "airports.csv": "id,ident,type,name,latitude_deg,longitude_deg,elevation_ft,continent,iso_country,iso_region,municipality,scheduled_servi",
+    "countries.csv": "id,code,name,continent",
+    "navaids.csv": "id,ident,name,type,frequency_khz,latitude_deg,longitude_deg,elevation_ft,iso_country,dme_frequency_khz,dme_channel,magne",
+    "regions.csv": "id,code,local_code,name,continent,iso_country",
+    "runways.csv": "id,airport_ref,airport_ident,length_ft,width_ft,surface,lighted,closed,le_ident,le_heading_degT,he_ident,he_heading_degT"
+   },
+   "pseudonymised": [],
+   "relations": [
+    {
+     "checked": 2,
+     "child": "airports.iso_country",
+     "orphans": 0,
+     "parent": "countries.code",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "airports.iso_region",
+     "orphans": 0,
+     "parent": "regions.code",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "regions.iso_country",
+     "orphans": 0,
+     "parent": "countries.code",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "runways.airport_ref",
+     "orphans": 1,
+     "parent": "airports.id",
+     "share": 0.5
+    },
+    {
+     "checked": 2,
+     "child": "runways.airport_ident",
+     "orphans": 1,
+     "parent": "airports.ident",
+     "share": 0.5
+    },
+    {
+     "checked": 1,
+     "child": "airport_frequencies.airport_ref",
+     "orphans": 0,
+     "parent": "airports.id",
+     "share": 0.0
+    },
+    {
+     "checked": 1,
+     "child": "airport_frequencies.airport_ident",
+     "orphans": 0,
+     "parent": "airports.ident",
+     "share": 0.0
+    },
+    {
+     "checked": 1,
+     "child": "navaids.associated_airport",
+     "orphans": 0,
+     "parent": "airports.ident",
+     "share": 0.0
+    },
+    {
+     "checked": 2,
+     "child": "navaids.iso_country",
+     "orphans": 0,
+     "parent": "countries.code",
+     "share": 0.0
+    }
+   ],
+   "sampling": {
+    "method": "complete 2026-11-22 daily dump of six OurAirports relational tables (no row sampling)"
+   },
+   "source_snapshot": "ourairports_db/2026-11-22"
   }
  },
  "panels": {

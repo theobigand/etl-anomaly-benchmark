@@ -10726,6 +10726,202 @@
    "stratum": "C5",
    "upstream": "first party: NOAA National Weather Service and NCEI publish official Storm Events relational tables in the U.S. public domain",
    "upstream_verified": true
+  },
+  {
+   "attribution": "OurAirports open data daily dump (airports, runways, frequencies, navaids, countries, regions; Public Domain); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "airports.csv",
+     "observed": "daily dump 2026-11-22",
+     "url": "https://davidmegginson.github.io/ourairports-data/airports.csv"
+    },
+    {
+     "name": "runways.csv",
+     "observed": "daily dump 2026-11-22",
+     "url": "https://davidmegginson.github.io/ourairports-data/runways.csv"
+    },
+    {
+     "name": "airport-frequencies.csv",
+     "observed": "daily dump 2026-11-22",
+     "url": "https://davidmegginson.github.io/ourairports-data/airport-frequencies.csv"
+    },
+    {
+     "name": "navaids.csv",
+     "observed": "daily dump 2026-11-22",
+     "url": "https://davidmegginson.github.io/ourairports-data/navaids.csv"
+    },
+    {
+     "name": "countries.csv",
+     "observed": "daily dump 2026-11-22",
+     "url": "https://davidmegginson.github.io/ourairports-data/countries.csv"
+    },
+    {
+     "name": "regions.csv",
+     "observed": "daily dump 2026-11-22",
+     "url": "https://davidmegginson.github.io/ourairports-data/regions.csv"
+    }
+   ],
+   "hosts": [
+    "davidmegginson.github.io"
+   ],
+   "id": "ourairports_db",
+   "licence_class": "open",
+   "licence_location": "https://github.com/davidmegginson/ourairports-data/blob/main/LICENSE",
+   "licence_text": "ourairports-data repository LICENSE: Unlicense public-domain dedication; producer data page (Wayback copy 2025, live page has an expired TLS certificate): 'All data is released to the Public Domain'",
+   "max_bytes": 33554432,
+   "method": "complete daily dump of six relational CSV tables of the OurAirports aviation infrastructure database (2026-11-22)",
+   "min_interval": 1.0,
+   "privacy": "airport, runway, frequency, navaid and administrative-region infrastructure records only; free-text keywords, home links and Wikipedia links dropped in the experimental view; no personal data",
+   "publisher": "OurAirports (David Megginson and volunteer contributors)",
+   "rate_limit": "six sequential CSV downloads at min_interval=1s with descriptive User-Agent",
+   "redistribution": "Public Domain; raw CSVs stay local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: the OurAirports community database is the original crowd-sourced producer and publishes its own daily relational dump",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "CFTC Commitments of Traders, Disaggregated Futures Only report (Socrata dataset 72hh-3qpy, U.S. Public Domain); accessed 2026-11-22",
+   "files": [],
+   "hosts": [
+    "publicreporting.cftc.gov"
+   ],
+   "id": "cftc_cot_disaggregated",
+   "licence_class": "open",
+   "licence_location": "https://www.cftc.gov/WebPolicy/index.htm",
+   "licence_text": "CFTC web policy, Copyright section (read 2026-11-22): 'Government information at the CFTC website is in the public domain'",
+   "max_bytes": 16777216,
+   "method": "complete date-restricted 2024-01-01 to 2025-12-31 weekly release (6 sequential pages x 5,000 rows ordered by report date and id; 21 of 194 columns selected)",
+   "min_interval": 0.5,
+   "pages": {
+    "count": 6,
+    "name": "cftc_cot_2024_2025_p{n:02d}.json",
+    "observed": "2024-2025",
+    "size": 5000,
+    "url": "https://publicreporting.cftc.gov/resource/72hh-3qpy.json?%24select=id%2Creport_date_as_yyyy_mm_dd%2Cmarket_and_exchange_names%2Ccontract_market_name%2Ccftc_contract_market_code%2Ccftc_market_code%2Ccommodity_name%2Copen_interest_all%2Cprod_merc_positions_long%2Cprod_merc_positions_short%2Cswap_positions_long_all%2Cswap__positions_short_all%2Cswap__positions_spread_all%2Cm_money_positions_long_all%2Cm_money_positions_short_all%2Cm_money_positions_spread%2Cother_rept_positions_long%2Cother_rept_positions_short%2Cother_rept_positions_spread%2Cnonrept_positions_long_all%2Cnonrept_positions_short_all&%24where=report_date_as_yyyy_mm_dd%20between%20%272024-01-01T00%3A00%3A00%27%20and%20%272025-12-31T00%3A00%3A00%27&%24order=report_date_as_yyyy_mm_dd%2Cid&%24limit=5000&%24offset={skip}"
+   },
+   "privacy": "aggregate weekly positions of trader classes per futures contract; no personal data",
+   "publisher": "U.S. Commodity Futures Trading Commission (CFTC)",
+   "rate_limit": "6 sequential paginated GET requests at min_interval=0.5s with descriptive User-Agent",
+   "redistribution": "U.S. Public Domain; API pages cached locally",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "first party: the CFTC publishes its own Commitments of Traders reports through publicreporting.cftc.gov",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "NOAA National Data Buoy Center standard meteorological historical data, 2023 annual files of seven NDBC moored buoys (U.S. Public Domain); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "ndbc_41002_2023.txt.gz",
+     "observed": "2023",
+     "url": "https://www.ndbc.noaa.gov/data/historical/stdmet/41002h2023.txt.gz"
+    },
+    {
+     "name": "ndbc_41004_2023.txt.gz",
+     "observed": "2023",
+     "url": "https://www.ndbc.noaa.gov/data/historical/stdmet/41004h2023.txt.gz"
+    },
+    {
+     "name": "ndbc_42040_2023.txt.gz",
+     "observed": "2023",
+     "url": "https://www.ndbc.noaa.gov/data/historical/stdmet/42040h2023.txt.gz"
+    },
+    {
+     "name": "ndbc_44025_2023.txt.gz",
+     "observed": "2023",
+     "url": "https://www.ndbc.noaa.gov/data/historical/stdmet/44025h2023.txt.gz"
+    },
+    {
+     "name": "ndbc_46013_2023.txt.gz",
+     "observed": "2023",
+     "url": "https://www.ndbc.noaa.gov/data/historical/stdmet/46013h2023.txt.gz"
+    },
+    {
+     "name": "ndbc_46042_2023.txt.gz",
+     "observed": "2023",
+     "url": "https://www.ndbc.noaa.gov/data/historical/stdmet/46042h2023.txt.gz"
+    },
+    {
+     "name": "ndbc_51001_2023.txt.gz",
+     "observed": "2023",
+     "url": "https://www.ndbc.noaa.gov/data/historical/stdmet/51001h2023.txt.gz"
+    }
+   ],
+   "hosts": [
+    "www.ndbc.noaa.gov"
+   ],
+   "id": "ndbc_buoys_2023",
+   "licence_class": "open",
+   "licence_location": "https://www.weather.gov/disclaimer",
+   "licence_text": "NWS disclaimer (read 2026-11-22): 'National Weather Service data ... are in the public domain'; NDBC is a National Weather Service centre; the NDBC-specific disclaimer page returned 'Access Denied' to automated requests",
+   "max_bytes": 4194304,
+   "method": "fixed-station selection: complete calendar-2023 standard meteorological files of seven NDBC-operated moored buoys (41002, 41004, 42040, 44025, 46013, 46042, 51001)",
+   "min_interval": 1.0,
+   "privacy": "ocean-buoy wind, wave, pressure and temperature observations only; no personal data",
+   "publisher": "NOAA National Data Buoy Center (NDBC)",
+   "rate_limit": "seven sequential gzip downloads at min_interval=1s with descriptive User-Agent",
+   "redistribution": "U.S. Federal public domain; raw gzip files stay local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party: NDBC operates the selected moored buoys and publishes their observations; stations operated by partner agencies were not selected",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "A Day in Daylight 2025 contextual event logs (Zenodo record 24164071, CC BY 4.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "events.csv",
+     "observed": "2025 September equinox participatory study",
+     "url": "https://zenodo.org/api/records/24164071/files/events.csv/content"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_daylight_events",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/24164071",
+   "licence_text": "Zenodo API metadata for record 24164071 (read 2026-11-22): license cc-by-4.0 (CC BY 4.0)",
+   "max_bytes": 4194304,
+   "method": "complete events.csv contextual event intervals of the study (light_1min.csv and participant metadata not acquired)",
+   "min_interval": 1.0,
+   "privacy": "publisher-pseudonymised participant ids only; age, sex, coordinates and light series not acquired; ids re-pseudonymised with the project salt in the view",
+   "publisher": "Zenodo 24164071 Authors (TUM and TUMCREATE A Day in Daylight 2025)",
+   "rate_limit": "single Zenodo CSV download with descriptive User-Agent",
+   "redistribution": "CC BY 4.0; raw CSV stays local",
+   "retries": 2,
+   "stratum": "C4",
+   "upstream": "first party: the study organisers deposited the contextual event logs under CC BY 4.0",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "U.S. Consumer Product Safety Commission recalls (SaferProducts.gov Recall Retrieval REST API, 2024-2025 recall dates, U.S. Federal Public Domain); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "cpsc_recalls_2024_2025.json",
+     "observed": "recall dates 2024-01-01 to 2025-12-31",
+     "url": "https://www.saferproducts.gov/RestWebServices/Recall?format=json&RecallDateStart=2024-01-01&RecallDateEnd=2025-12-31"
+    }
+   ],
+   "hosts": [
+    "www.saferproducts.gov"
+   ],
+   "id": "cpsc_recalls",
+   "licence_class": "open",
+   "licence_location": "https://www.saferproducts.gov/RestWebServices/Recall?format=json",
+   "licence_text": "U.S. Government work by a federal agency (17 U.S.C. 105 public domain); cpsc.gov and saferproducts.gov policy pages return HTTP 403 to automated clients and an archived copy carries no licence text, so rights rest on the statute",
+   "max_bytes": 8388608,
+   "method": "complete date-restricted 2024-01-01 to 2025-12-31 recall release in one API response",
+   "min_interval": 1.0,
+   "privacy": "consumer-product recall notices; consumer contact e-mails, image captions and free-text contact lines dropped and e-mail redaction applied in the view",
+   "publisher": "U.S. Consumer Product Safety Commission (CPSC)",
+   "rate_limit": "single GET request with descriptive User-Agent",
+   "redistribution": "U.S. Public Domain; raw JSON stays local",
+   "retries": 2,
+   "stratum": "C6",
+   "upstream": "first party: CPSC publishes its own recall notices through its Recall Retrieval API",
+   "upstream_verified": true
   }
  ]
 }

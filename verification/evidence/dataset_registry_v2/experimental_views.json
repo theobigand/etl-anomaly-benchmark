@@ -359,6 +359,26 @@
   "pseudonymised": [],
   "source_snapshot": "bikeshare_jc/2026-11-21"
  },
+ "cftc_cot_disaggregated": {
+  "dropped": [
+   "id",
+   "173 of 194 source columns (crop-year splits, changes, percentages, counts)"
+  ],
+  "files": {
+   "cot_positions.csv": {
+    "rows": 27231,
+    "sha256": "9735743b4ece5f56814ae0fd622b0d524a2239794e1c23d9d7fb8e224f78890b"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "first_date": "2024-01-02",
+   "last_date": "2025-12-30",
+   "method": "complete 2024-01-01 to 2025-12-31 weekly Disaggregated Futures Only release, 21 of 194 columns",
+   "pages": 6
+  },
+  "source_snapshot": "cftc_cot_disaggregated/2026-11-22"
+ },
  "chembl_molecules": {
   "dropped": [],
   "files": {
@@ -494,6 +514,26 @@
    "method": "complete 6 core CORDIS Horizon Europe tables (no row sampling); projects parsed across wrapped quotes"
   },
   "source_snapshot": "cordis_horizon_europe/2026-11-22"
+ },
+ "cpsc_recalls": {
+  "dropped": [
+   "ConsumerContact",
+   "Images",
+   "URL"
+  ],
+  "files": {
+   "recalls.jsonl": {
+    "rows": 725,
+    "sha256": "a8d76ed603c9f09af43f506c830d8401cef50f7610e4f74ab4f8229d0ba3ba18"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "complete 2024-01-01 to 2025-12-31 recall-date release from the Recall Retrieval API",
+   "recalls_in": 725,
+   "unique_recalls": 725
+  },
+  "source_snapshot": "cpsc_recalls/2026-11-22"
  },
  "crossref_works": {
   "dropped": [
@@ -3184,6 +3224,24 @@
   },
   "source_snapshot": "ncei_storm_events_2024/2026-11-22"
  },
+ "ndbc_buoys_2023": {
+  "dropped": [
+   "VIS",
+   "TIDE"
+  ],
+  "files": {
+   "buoy_observations.csv": {
+    "rows": 360156,
+    "sha256": "de96c9c891952c28d4d1b717313ac814d8b949ea2f6cde8ed386749976d61651"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "fixed-station selection: calendar-2023 standard meteorological files of seven NDBC-operated moored buoys",
+   "stations": 7
+  },
+  "source_snapshot": "ndbc_buoys_2023/2026-11-22"
+ },
  "noaa_coops_tides": {
   "dropped": [],
   "files": {
@@ -3576,6 +3634,126 @@
    "method": "all GO-* Go Vulnerability Database advisories from Go/all.zip (non-GO prefixes excluded to stay under CC BY 4.0)"
   },
   "source_snapshot": "osv_go_advisories/2026-11-22"
+ },
+ "ourairports_db": {
+  "dropped": [
+   "airports.home_link",
+   "airports.wikipedia_link",
+   "airports.keywords",
+   "runways.le_latitude_deg",
+   "runways.le_longitude_deg",
+   "runways.le_elevation_ft",
+   "runways.le_displaced_threshold_ft",
+   "runways.he_latitude_deg",
+   "runways.he_longitude_deg",
+   "runways.he_elevation_ft",
+   "runways.he_displaced_threshold_ft",
+   "navaids.filename",
+   "navaids.dme_latitude_deg",
+   "navaids.dme_longitude_deg",
+   "navaids.dme_elevation_ft",
+   "navaids.slaved_variation_deg",
+   "countries.wikipedia_link",
+   "countries.keywords",
+   "regions.wikipedia_link",
+   "regions.keywords"
+  ],
+  "files": {
+   "airport_frequencies.csv": {
+    "rows": 30400,
+    "sha256": "1c11b491ab284a97a15a0b3f3c6b179e3351ad742ac241d452d8794c319e0323"
+   },
+   "airports.csv": {
+    "rows": 86377,
+    "sha256": "f60b1974c4d402793d613822cbfc94d2aef50d5d9533480d5c30f0ea89b14fb9"
+   },
+   "countries.csv": {
+    "rows": 249,
+    "sha256": "5b9beb8119777eeae76eee464896877cb614d409fc3143253de1cd18d7c34038"
+   },
+   "navaids.csv": {
+    "rows": 11008,
+    "sha256": "519e8714d8e040d322b78ec99cc3acba9270a0a2b3ef360221445a832735fcc0"
+   },
+   "regions.csv": {
+    "rows": 3987,
+    "sha256": "3c6968ebd7e9befb6b9f9594861449c2a6889be0270437433bb1b6de3b72751f"
+   },
+   "runways.csv": {
+    "rows": 48437,
+    "sha256": "0cc02c8d291422c8e9e1e0c29e3dbeede83a550680343b7191b890b36466d366"
+   }
+  },
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 86377,
+    "child": "airports.iso_country",
+    "orphans": 0,
+    "parent": "countries.code",
+    "share": 0.0
+   },
+   {
+    "checked": 86377,
+    "child": "airports.iso_region",
+    "orphans": 0,
+    "parent": "regions.code",
+    "share": 0.0
+   },
+   {
+    "checked": 3987,
+    "child": "regions.iso_country",
+    "orphans": 0,
+    "parent": "countries.code",
+    "share": 0.0
+   },
+   {
+    "checked": 48437,
+    "child": "runways.airport_ref",
+    "orphans": 0,
+    "parent": "airports.id",
+    "share": 0.0
+   },
+   {
+    "checked": 48437,
+    "child": "runways.airport_ident",
+    "orphans": 0,
+    "parent": "airports.ident",
+    "share": 0.0
+   },
+   {
+    "checked": 30400,
+    "child": "airport_frequencies.airport_ref",
+    "orphans": 0,
+    "parent": "airports.id",
+    "share": 0.0
+   },
+   {
+    "checked": 30400,
+    "child": "airport_frequencies.airport_ident",
+    "orphans": 0,
+    "parent": "airports.ident",
+    "share": 0.0
+   },
+   {
+    "checked": 7375,
+    "child": "navaids.associated_airport",
+    "orphans": 0,
+    "parent": "airports.ident",
+    "share": 0.0
+   },
+   {
+    "checked": 11008,
+    "child": "navaids.iso_country",
+    "orphans": 0,
+    "parent": "countries.code",
+    "share": 0.0
+   }
+  ],
+  "sampling": {
+   "method": "complete 2026-11-22 daily dump of six OurAirports relational tables (no row sampling)"
+  },
+  "source_snapshot": "ourairports_db/2026-11-22"
  },
  "panels": {
   "dropped": [],
@@ -5086,6 +5264,26 @@
    "series_files": 13
   },
   "source_snapshot": "zen_cnc_milling/2026-11-22"
+ },
+ "zen_daylight_events": {
+  "dropped": [
+   "event_start_local"
+  ],
+  "files": {
+   "context_events.csv": {
+    "rows": 1763,
+    "sha256": "48051c5bbeb14c8ebef4042e92118a097a8338ca7ea415611ea40f9831a3e941"
+   }
+  },
+  "pseudonymised": [
+   "participant_id"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "method": "complete events.csv contextual event intervals of the 2025 equinox study",
+   "participants": 47
+  },
+  "source_snapshot": "zen_daylight_events/2026-11-22"
  },
  "zen_dk_district_heating": {
   "dropped": [
