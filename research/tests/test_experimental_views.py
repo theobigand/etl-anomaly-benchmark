@@ -1091,6 +1091,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _ndbc_snapshot(root)
     _daylight_snapshot(root)
     _cpsc_snapshot(root)
+    _nih_snapshot(root)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
@@ -1106,7 +1107,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "zen_telecom_kpis", "zen_dk_district_heating", "zen_water_demand", "zen_dmsp_auroral", "us_treasury_dts", "fdic_bank_financials", "sncf_tgv_regularite", "dgccrf_fuel_prices", "us_federal_register", "datacite_dois", "gbif_cc0_occurrences", "chembl_molecules", "zen_florida_bridges", "wri_power_plants", "paris_urban_trees", "zen_moodle_events", "zen_norp_solar_bursts", "zen_blazar_flares", "zen_wind_fragility", "zen_terralore_chronicle", "ncei_storm_events_2024", "ourairports_db", "cftc_cot_disaggregated", "ndbc_buoys_2023", "zen_daylight_events", "cpsc_recalls", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "zen_telecom_kpis", "zen_dk_district_heating", "zen_water_demand", "zen_dmsp_auroral", "us_treasury_dts", "fdic_bank_financials", "sncf_tgv_regularite", "dgccrf_fuel_prices", "us_federal_register", "datacite_dois", "gbif_cc0_occurrences", "chembl_molecules", "zen_florida_bridges", "wri_power_plants", "paris_urban_trees", "zen_moodle_events", "zen_norp_solar_bursts", "zen_blazar_flares", "zen_wind_fragility", "zen_terralore_chronicle", "ncei_storm_events_2024", "ourairports_db", "cftc_cot_disaggregated", "ndbc_buoys_2023", "zen_daylight_events", "cpsc_recalls", "nih_reporter_projects_fy2024", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -9698,3 +9699,54 @@ def test_cpsc_recalls_view_and_builder(tmp_path):
     assert entry["sampling"]["recalls_in"] == 2 and entry["sampling"]["unique_recalls"] == 2
     lines = (out / "cpsc_recalls" / "recalls.jsonl").read_text().splitlines()
     assert [json.loads(line)["RecallID"] for line in lines] == [1, 2]
+
+
+def _nih_frame(*ids):
+    rows = []
+    for app_id, notice in ids:
+        row = {col: f"v_{col}" for col in ev.NIH_KEEP}
+        row.update({"APPLICATION_ID": app_id, "AWARD_NOTICE_DATE": notice})
+        row.update({"PI_NAMEs": "DOE, JANE", "ORG_NAME": "SECRET UNIVERSITY", "PHR": "text"})
+        rows.append(row)
+    return pd.DataFrame(rows)
+
+
+def _nih_snapshot(root):
+    raw = root / "nih_reporter_projects_fy2024" / ev.WAVE26_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    frame = _nih_frame(("2", "2024-06-01"), ("007", "2024-04-01"), ("007", "2024-09-01"))
+    frame["CFDA_CODE"] = "093.001"
+    frame.to_csv(raw / "RePORTER_PRJ_C_FY2024.zip", index=False, compression="zip")
+
+
+def test_nih_reporter_view_projects_columns_pseudonymises_dedupes_and_sorts():
+    out = ev.nih_reporter_view(_nih_frame(("2", "2024-06-01"), ("1", "2024-04-01"), ("1", "x")))
+    assert out.columns.tolist() == list(ev.NIH_KEEP)
+    assert not ({"PI_NAMEs", "ORG_NAME", "PHR"} & set(out))
+    assert out["APPLICATION_ID"].tolist() == [ev.pseudonym("1"), ev.pseudonym("2")]
+    assert out["AWARD_NOTICE_DATE"].tolist() == ["2024-04-01", "2024-06-01"]
+    assert out.attrs == {"duplicates": 1}
+
+
+def test_nih_reporter_builder_reads_zip_writes_csv_manifest_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no NIH RePORTER ExPORTER file in the snapshot$"):
+        ev._build_nih_reporter(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _nih_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_nih_reporter(root, out, manifest)
+    ev._build_nih_reporter(root, out, manifest)
+    target = out / "nih_reporter_projects_fy2024" / "awards.csv"
+    assert target.read_text().splitlines()[0] == ",".join(ev.NIH_KEEP)
+    view = manifest["nih_reporter_projects_fy2024"]
+    assert view["files"]["awards.csv"]["rows"] == 2
+    written = pd.read_csv(target, dtype=str)
+    assert written["APPLICATION_ID"].tolist() == [ev.pseudonym("007"), ev.pseudonym("2")]
+    assert written["CFDA_CODE"].tolist() == ["093.001", "093.001"]  # codes stay text
+    assert written["APPLICATION_ID"].name == "APPLICATION_ID" and len(written.columns) == len(
+        ev.NIH_KEEP
+    )
+    assert "investigator_names_and_ids" in view["dropped"]
+    assert view["sampling"]["duplicates_dropped"] == 1
+    assert view["source_snapshot"] == f"nih_reporter_projects_fy2024/{ev.WAVE26_SNAPSHOT}"

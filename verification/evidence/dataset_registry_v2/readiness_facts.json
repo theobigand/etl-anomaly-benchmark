@@ -2253,6 +2253,22 @@
    "units": 360156,
    "view": "ndbc_buoys_2023"
   },
+  "nih_reporter_projects_fy2024": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete fiscal-year 2024 NIH ExPORTER projects file: 83,314 award records across 19 coded, date and cost columns",
+    "coded categoricals (activity code, administering institute, award type, funding mechanism, study section, institution type, state, country) with natural missingness in cost, institution type and state fields",
+    "investigator and programme officer names, organisation identity, titles, terms and public health relevance text dropped; application id pseudonymised"
+   ],
+   "first_party": true,
+   "independent_group": "nih_research_grants",
+   "min_units": 500,
+   "partitions": "hash of APPLICATION_ID 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 83314,
+   "view": "nih_reporter_projects_fy2024"
+  },
   "noaa_coops_tides": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [

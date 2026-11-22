@@ -508,6 +508,10 @@ def _cpsc_recalls(root, tmp):
     tev._cpsc_snapshot(root)
 
 
+def _nih_reporter(root, tmp):
+    tev._nih_snapshot(root)
+
+
 def _tlc(root, tmp):
     tev._tlc_page(
         [{}, {"tpep_pickup_datetime": "2023-03-07T07:00:00.000", "total_amount": "0.0"}]
@@ -587,6 +591,7 @@ CASES = {
     "ndbc_buoys": (_ndbc_buoys, ev._build_ndbc_buoys, ["ndbc_buoys_2023"], {}),
     "daylight_events": (_daylight_events, ev._build_daylight_events, ["zen_daylight_events"], {}),
     "cpsc_recalls": (_cpsc_recalls, ev._build_cpsc_recalls, ["cpsc_recalls"], {}),
+    "nih_reporter": (_nih_reporter, ev._build_nih_reporter, ["nih_reporter_projects_fy2024"], {}),
     "tlc": (_tlc, ev._build_tlc, ["nyc_tlc_yellow"], {}),
     "maude": (_maude_case, ev._build_maude, ["openfda_device_event"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),

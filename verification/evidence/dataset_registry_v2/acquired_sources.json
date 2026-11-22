@@ -5883,12 +5883,32 @@
     "collection_implemented": true,
     "data_acquired": true,
     "discovered": true,
-    "licence_verified": "17 U.S.C. 105 U.S. Government work (CPSC); agency policy pages return HTTP 403 to automated clients, so rights rest on the statute",
+    "licence_verified": "17 U.S.C. 105 CPSC policy permits free copying and distribution of recall notices (photographs excluded from the retained fields); 17 U.S.C. 105; the policy pages return HTTP 403 to this script but were read through a separate fetch on 2026-11-22",
     "ready_for_experiments": true,
     "structural_validation": true
    },
    "stratum": "C6",
    "system": "cpsc_recall_program",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "nih_research_grants",
+   "id": "nih_reporter_projects_fy2024",
+   "licence_class": "open",
+   "protocols": "P-TAB on NIH grant award categorical records",
+   "publisher": "us_nih",
+   "reason": "NIH RePORTER ExPORTER fiscal-year 2024 projects file: 83,314 unique award records across 19 coded administrative columns; investigator and programme officer names, organisation identity and grantee-authored text dropped, application id pseudonymised; obtained through the official bulk download, so no POST support was added to the acquisition framework",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "no licence text retrievable (ExPORTER page needs JavaScript, NIH disclaimer returns HTTP 403); api.reporter.nih.gov states the data are available to all public users for bulk download; retained fields are NIH-generated administrative records under 17 U.S.C. 105; grantee-authored text not retained",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "nih_grant_award_administration",
    "upstream_status": "verified"
   }
  ],

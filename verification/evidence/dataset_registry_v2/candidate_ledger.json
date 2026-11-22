@@ -2697,10 +2697,10 @@
     "C6"
    ],
    "id": "cpsc:recalls-2024-2025",
-   "licence": "U.S. Government work (17 U.S.C. 105); policy pages return HTTP 403 to automated clients",
+   "licence": "CPSC policy permits free copying and distribution of recall notices; 17 U.S.C. 105",
    "name": "CPSC Recall Retrieval API, 2024-2025 recall notices",
    "next_step": "acquired and ready under P-NEST",
-   "notes": "Integrated as cpsc_recalls (depth 4, 12 optional paths, 13 object-array fields; contact line, images and page link dropped; rights rest on the statute because no licence text was retrievable)",
+   "notes": "Integrated as cpsc_recalls (depth 4, 12 optional paths, 13 object-array fields; contact line, images and page link dropped; rights rest on the CPSC copyright policy for recall notices and 17 U.S.C. 105; photographs, image captions, page link and contact line are not retained)",
    "publisher": "U.S. Consumer Product Safety Commission",
    "reason": "Consumer product safety recall notices with array-of-object structure",
    "size": "725 nested recall notices",
@@ -2769,18 +2769,18 @@
   },
   {
    "categories": [
-    "C6"
+    "C2a"
    ],
    "id": "nih:reporter",
-   "licence": "U.S. Public Domain",
-   "name": "NIH RePORTER projects API",
-   "next_step": "skip",
-   "notes": "Excluded: search endpoint requires POST with a JSON body, which the acquisition framework does not support; extending the framework for one source was not justified",
+   "licence": "No licence text retrievable; NIH-generated administrative records, 17 U.S.C. 105",
+   "name": "NIH RePORTER ExPORTER projects, fiscal year 2024",
+   "next_step": "acquired and ready under P-TAB",
+   "notes": "The API search needs POST, but the official ExPORTER bulk file is a GET download (redirect to public.era.nih.gov), so the framework was not extended; coded administrative fields only, names and grantee text dropped; no licence text retrievable, rights rest on 17 U.S.C. 105 for NIH-generated records",
    "publisher": "U.S. National Institutes of Health",
-   "reason": "Acquisition framework supports GET only",
-   "size": "unknown",
-   "source_url": "https://api.reporter.nih.gov/v2/projects/search",
-   "status": "excluded"
+   "reason": "Coded categorical grant award records",
+   "size": "83,314 award records (67 MB zip)",
+   "source_url": "https://reporter.nih.gov/exporter/projects/download/2024",
+   "status": "experiment_ready"
   }
  ],
  "date": "2026-11-22",

@@ -3242,6 +3242,32 @@
   },
   "source_snapshot": "ndbc_buoys_2023/2026-11-22"
  },
+ "nih_reporter_projects_fy2024": {
+  "dropped": [
+   "investigator_names_and_ids",
+   "program_officer",
+   "titles_terms_and_abstract_fields",
+   "organisation_identity_and_street_location",
+   "study_section_names",
+   "constant_fiscal_year_and_arra_flag",
+   "spending_category_lists"
+  ],
+  "files": {
+   "awards.csv": {
+    "rows": 83314,
+    "sha256": "0f495d1a8181d0b044bc7dd2dba727c60cd7718afe702f7db9b0664356a76048"
+   }
+  },
+  "pseudonymised": [
+   "APPLICATION_ID"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "duplicates_dropped": 0,
+   "method": "complete fiscal-year 2024 ExPORTER projects file projected to 19 administrative columns"
+  },
+  "source_snapshot": "nih_reporter_projects_fy2024/2026-11-22"
+ },
  "noaa_coops_tides": {
   "dropped": [],
   "files": {

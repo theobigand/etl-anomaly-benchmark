@@ -908,6 +908,17 @@
    "C2a": "mixed administrative healthcare region/ICD-10 coding and case-count table"
   }
  },
+ "nih_research_grants": {
+  "curator": "reporter.nih.gov",
+  "domain": "biomedical research funding administration",
+  "generating_system": "NIH grant award administration system (RePORTER ExPORTER)",
+  "note": "federal grant award records; distinct producer and mechanism from the EU CORDIS programme register",
+  "producer": "U.S. National Institutes of Health (NIH)",
+  "schema_family": "grant award administrative register",
+  "structure": {
+   "C2a": "coded categorical award records (activity, institute, mechanism, study section, institution type) with date and cost fields"
+  }
+ },
  "nist_nvd": {
   "curator": "nist",
   "descriptors": {

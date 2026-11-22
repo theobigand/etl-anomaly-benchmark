@@ -1572,6 +1572,36 @@
    "source_snapshot": "zen_nhif_hospital_cases/2026-11-22"
   }
  },
+ "nih_reporter": {
+  "nih_reporter_projects_fy2024": {
+   "dropped": [
+    "investigator_names_and_ids",
+    "program_officer",
+    "titles_terms_and_abstract_fields",
+    "organisation_identity_and_street_location",
+    "study_section_names",
+    "constant_fiscal_year_and_arra_flag",
+    "spending_category_lists"
+   ],
+   "files": {
+    "awards.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "awards.csv": "APPLICATION_ID,ACTIVITY,ADMINISTERING_IC,APPLICATION_TYPE,AWARD_NOTICE_DATE,BUDGET_START,BUDGET_END,CFDA_CODE,ED_INST_TY"
+   },
+   "pseudonymised": [
+    "APPLICATION_ID"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "duplicates_dropped": 1,
+    "method": "complete fiscal-year 2024 ExPORTER projects file projected to 19 administrative columns"
+   },
+   "source_snapshot": "nih_reporter_projects_fy2024/2026-11-22"
+  }
+ },
  "norp_solar_bursts": {
   "zen_norp_solar_bursts": {
    "dropped": [

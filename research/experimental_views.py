@@ -7499,6 +7499,78 @@ def _build_cpsc_recalls(root: Path, out: Path, manifest: dict[str, Any]) -> None
     )
 
 
+WAVE26_SNAPSHOT = "2026-11-22"
+NIH_KEEP = (
+    "APPLICATION_ID",
+    "ACTIVITY",
+    "ADMINISTERING_IC",
+    "APPLICATION_TYPE",
+    "AWARD_NOTICE_DATE",
+    "BUDGET_START",
+    "BUDGET_END",
+    "CFDA_CODE",
+    "ED_INST_TYPE",
+    "FUNDING_MECHANISM",
+    "ORG_COUNTRY",
+    "ORG_STATE",
+    "PROJECT_START",
+    "PROJECT_END",
+    "STUDY_SECTION",
+    "SUPPORT_YEAR",
+    "DIRECT_COST_AMT",
+    "INDIRECT_COST_AMT",
+    "TOTAL_COST",
+)
+
+
+def nih_reporter_view(frame: pd.DataFrame) -> pd.DataFrame:
+    """NIH award administrative records without text, names or organisation identity."""
+    kept = frame[list(NIH_KEEP)].copy()
+    kept["APPLICATION_ID"] = kept["APPLICATION_ID"].map(pseudonym)
+    unique = kept.drop_duplicates("APPLICATION_ID")
+    ordered = unique.sort_values(["AWARD_NOTICE_DATE", "APPLICATION_ID"]).reset_index(drop=True)
+    ordered.attrs = {"duplicates": int(len(kept) - len(unique))}
+    return ordered
+
+
+def _build_nih_reporter(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    source = (
+        root
+        / "nih_reporter_projects_fy2024"
+        / WAVE26_SNAPSHOT
+        / "raw"
+        / "RePORTER_PRJ_C_FY2024.zip"
+    )
+    if not source.exists():
+        raise ViewError("no NIH RePORTER ExPORTER file in the snapshot")
+    view = nih_reporter_view(pd.read_csv(source, dtype=str))
+    folder = out / "nih_reporter_projects_fy2024"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "awards.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "nih_reporter_projects_fy2024",
+        {"awards.csv": (target, len(view))},
+        dropped=[
+            "investigator_names_and_ids",
+            "program_officer",
+            "titles_terms_and_abstract_fields",
+            "organisation_identity_and_street_location",
+            "study_section_names",
+            "constant_fiscal_year_and_arra_flag",
+            "spending_category_lists",
+        ],
+        pseudonymised=["APPLICATION_ID"],
+        salt_label=SALT,
+        sampling={
+            "duplicates_dropped": view.attrs["duplicates"],
+            "method": "complete fiscal-year 2024 ExPORTER projects file projected to 19 administrative columns",  # noqa: E501
+        },
+        source_snapshot=f"nih_reporter_projects_fy2024/{WAVE26_SNAPSHOT}",
+    )
+
+
 BUILD_STEPS = (
     _build_openalex,
     _build_monash,
@@ -7596,6 +7668,7 @@ BUILD_STEPS = (
     _build_ndbc_buoys,
     _build_daylight_events,
     _build_cpsc_recalls,
+    _build_nih_reporter,
     _build_flat,
     _build_series,
     _build_ukspend,

@@ -2472,6 +2472,13 @@
   },
   {
    "failed": null,
+   "group": "nih_research_grants",
+   "id": "nih_reporter_projects_fy2024",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2645,6 +2652,7 @@
    "florida_bridge_inspections",
    "kanto_landslides",
    "nhif_hospital_cases",
+   "nih_research_grants",
    "paleobiology_database",
    "paris_urban_trees",
    "port_noumea_stopovers",
@@ -2813,13 +2821,13 @@
    "structurally_valid": 52
   },
   "C2a": {
-   "acquired": 48,
-   "discovered": 48,
-   "experiment_ready": 22,
-   "protocol_ready": 22,
-   "rights_verified": 48,
-   "scientifically_eligible": 22,
-   "structurally_valid": 22
+   "acquired": 49,
+   "discovered": 49,
+   "experiment_ready": 23,
+   "protocol_ready": 23,
+   "rights_verified": 49,
+   "scientifically_eligible": 23,
+   "structurally_valid": 23
   },
   "C2b": {
    "acquired": 23,
