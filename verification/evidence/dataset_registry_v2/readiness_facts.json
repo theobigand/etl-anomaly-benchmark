@@ -2977,6 +2977,83 @@
    "protocol_id": "P-NEST",
    "units": 1500,
    "view": "uniprot_kb_reviewed"
+  },
+  "dwd_hourly_climate": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "twelve strided active German synoptic stations ending 2025-12-31 filtered to eight years (2018-2025)",
+    "-999 missing sentinels replaced by NaN (1,679 temperature and 1,978 relative humidity readings); quality codes kept",
+    "synoptic diurnal and annual temperature cycles are baseline dynamics"
+   ],
+   "first_party": true,
+   "independent_group": "dwd_germany",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 per station",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point, contextual and collective anomalies",
+    "level shift, sensor drift and trend over weeks to years",
+    "missing interval and delayed arrival",
+    "seasonal deviation and inter-annual shift across eight annual cycles"
+   ],
+   "temporal_span": "eight years hourly (2018-01-01 to 2025-12-31)",
+   "units": 838605,
+   "unsupported_fault_mechanisms": [
+    "sub-hourly high-frequency oscillations"
+   ],
+   "view": "dwd_hourly_climate"
+  },
+  "gfz_kp_index": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete published three-hourly geomagnetic Kp and ap series (1932-01-01 to 2026-11-21), strictly monotonic 3-hour steps",
+    "geomagnetic storms and 11-year solar-cycle extremes are physical baseline dynamics, not injected faults",
+    "recent tail contains 168 preliminary rows (D=0) alongside 277,104 definitive rows (D=1)"
+   ],
+   "first_party": true,
+   "independent_group": "gfz_potsdam_kp",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on UTC timestamp",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point, contextual and collective anomalies",
+    "level shift, secular drift and multi-decade regime shift",
+    "missing interval and timestamp permutation",
+    "solar-cycle seasonality and variance change"
+   ],
+   "temporal_span": "94 years three-hourly (1932-01-01 to 2026-11-21)",
+   "units": 277272,
+   "unsupported_fault_mechanisms": [
+    "sub-three-hour transient glitches"
+   ],
+   "view": "gfz_kp_index"
+  },
+  "rte_eco2mix_national": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "four complete calendar years (2020-2023) of French definitive half-hourly transmission grid telemetry",
+    "forecast-only quarter-hour rows without generation/consumption measurements dropped; eight spring-DST duplicate UTC pairs deduplicated",
+    "COVID-19 2020 lockdown demand dip and 2022 nuclear availability deficit are real historical baseline regimes"
+   ],
+   "first_party": true,
+   "independent_group": "rte_france_grid",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on UTC timestamp",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point, contextual and collective anomalies across 32 correlated generation/load/exchange series",
+    "level shift, seasonal deviation across four annual cycles and missing interval",
+    "cross-channel physical inconsistency and unit/sign corruption"
+   ],
+   "temporal_span": "four years half-hourly (2020-01-01 to 2023-12-31)",
+   "units": 70120,
+   "unsupported_fault_mechanisms": [
+    "sub-half-hourly grid frequency transients"
+   ],
+   "view": "rte_eco2mix_national"
   }
  }
 }

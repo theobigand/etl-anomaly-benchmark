@@ -2108,6 +2108,27 @@
   },
   {
    "failed": null,
+   "group": "gfz_potsdam_kp",
+   "id": "gfz_kp_index",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "dwd_germany",
+   "id": "dwd_hourly_climate",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "rte_france_grid",
+   "id": "rte_eco2mix_national",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2310,15 +2331,18 @@
    "backblaze",
    "candanedo_umons",
    "cubico_kelmarsh",
+   "dwd_germany",
    "ea_hydrology",
    "edp_wind_farm_portugal",
    "elder_home",
    "epa_aqs",
    "fraunhofer_iee_care_wind_b",
+   "gfz_potsdam_kp",
    "melbourne_pedestrian",
    "metropt_porto",
    "pnnl_epri_bess",
    "rki_surveillance",
+   "rte_france_grid",
    "seoul_bike",
    "steel_korea",
    "tetouan_power",
@@ -2415,13 +2439,13 @@
    "structurally_valid": 14
   },
   "C3": {
-   "acquired": 24,
-   "discovered": 45,
-   "experiment_ready": 21,
-   "protocol_ready": 21,
-   "rights_verified": 24,
-   "scientifically_eligible": 21,
-   "structurally_valid": 22
+   "acquired": 27,
+   "discovered": 48,
+   "experiment_ready": 24,
+   "protocol_ready": 24,
+   "rights_verified": 27,
+   "scientifically_eligible": 24,
+   "structurally_valid": 25
   },
   "C4": {
    "acquired": 32,

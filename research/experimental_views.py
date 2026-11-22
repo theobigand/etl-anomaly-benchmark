@@ -3731,6 +3731,189 @@ def _build_osv_go(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+GFZ_SNAPSHOT = "2026-11-22"
+
+
+def gfz_kp_view(lines: list[str]) -> pd.DataFrame:
+    """Three-hourly geomagnetic Kp and ap indices in UTC ordered by time."""
+    rows = []
+    for line in lines:
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#"):
+            continue
+        parts = stripped.split()
+        rows.append(
+            {
+                "timestamp": f"{parts[0]}-{parts[1]}-{parts[2]} {int(float(parts[3])):02d}:00:00",
+                "kp": parts[7],
+                "ap": parts[8],
+                "definitive": parts[9],
+            }
+        )
+    frame = pd.DataFrame(rows, columns=["timestamp", "kp", "ap", "definitive"])
+    frame["timestamp"] = pd.to_datetime(
+        frame["timestamp"], format="%Y-%m-%d %H:%M:%S", errors="coerce"
+    )
+    kp = pd.to_numeric(frame["kp"], errors="coerce")
+    ap = pd.to_numeric(frame["ap"], errors="coerce")
+    frame["kp"] = kp.mask(kp == -1.0)
+    frame["ap"] = ap.mask(ap == -1)
+    frame["definitive"] = pd.to_numeric(frame["definitive"], errors="coerce").astype("Int64")
+    return frame[frame["timestamp"].notna()].sort_values("timestamp").reset_index(drop=True)
+
+
+def _build_gfz_kp(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    source = root / "gfz_kp_index" / GFZ_SNAPSHOT / "raw" / "Kp_ap_since_1932.txt"
+    if not source.exists():
+        raise ViewError("no GFZ Kp file in the snapshot")
+    view = gfz_kp_view(source.read_text().splitlines())
+    folder = out / "gfz_kp_index"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "kp_ap.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "gfz_kp_index",
+        {"kp_ap.csv": (target, len(view))},
+        dropped=["half_hour_midpoint", "days_since_1932", "midpoint_days"],
+        pseudonymised=[],
+        sampling={
+            "definitive_rows": int((view["definitive"] == 1).sum()),
+            "first_timestamp": str(view["timestamp"].min()),
+            "last_timestamp": str(view["timestamp"].max()),
+            "method": "complete GFZ Niemegk 3-hourly Kp/ap time series",
+            "missing_kp_rows": int(view["kp"].isna().sum()),
+        },
+        source_snapshot=f"gfz_kp_index/{GFZ_SNAPSHOT}",
+    )
+
+
+DWD_SNAPSHOT = "2026-11-22"
+DWD_START = 2018010100
+
+
+def dwd_hourly_view(frames: list[pd.DataFrame], start: int = DWD_START) -> pd.DataFrame:
+    """Hourly DWD air temperature and humidity from ``start`` onward by station and UTC time."""
+    parts = []
+    for raw in frames:
+        sub = raw[raw["MESS_DATUM"] >= start]
+        temp = pd.to_numeric(sub["TT_TU"], errors="coerce")
+        humidity = pd.to_numeric(sub["RF_TU"], errors="coerce")
+        parts.append(
+            pd.DataFrame(
+                {
+                    "station_id": sub["STATIONS_ID"].astype(str).str.strip(),
+                    "timestamp": pd.to_datetime(
+                        sub["MESS_DATUM"], format="%Y%m%d%H", errors="coerce"
+                    ),
+                    "temp_c": temp.mask(temp == -999),
+                    "rel_humidity_pct": humidity.mask(humidity == -999),
+                    "quality_code": pd.to_numeric(sub["QN_9"], errors="coerce").astype("Int64"),
+                }
+            )
+        )
+    merged = pd.concat(parts)
+    valid = merged[merged["timestamp"].notna()]
+    unique = valid.drop_duplicates(["station_id", "timestamp"])
+    ordered = unique.sort_values(["station_id", "timestamp"]).reset_index(drop=True)
+    ordered.attrs = {"duplicates": int(len(valid) - len(unique))}
+    return ordered
+
+
+def _build_dwd(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import zipfile
+
+    raw = root / "dwd_hourly_climate" / DWD_SNAPSHOT / "raw"
+    files = sorted(raw.glob("stundenwerte_TU_*.zip"))
+    if not files:
+        raise ViewError("no DWD station archive in the snapshot")
+    frames = []
+    for path in files:
+        with zipfile.ZipFile(path) as archive:
+            members = sorted(
+                n
+                for n in archive.namelist()
+                if n.startswith("produkt_tu_stunde_") and n.endswith(".txt")
+            )
+            with archive.open(members[0]) as handle:
+                frames.append(pd.read_csv(handle, sep=";"))
+    view = dwd_hourly_view(frames)
+    folder = out / "dwd_hourly_climate"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "air_temperature.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "dwd_hourly_climate",
+        {"air_temperature.csv": (target, len(view))},
+        dropped=["eor_marker"],
+        pseudonymised=[],
+        sampling={
+            "archives": len(files),
+            "duplicates_dropped": view.attrs["duplicates"],
+            "first_timestamp": str(view["timestamp"].min()),
+            "last_timestamp": str(view["timestamp"].max()),
+            "method": "12 strided DWD hourly TU stations filtered from 2018-01-01 onward",
+            "stations": int(view["station_id"].nunique()),
+        },
+        source_snapshot=f"dwd_hourly_climate/{DWD_SNAPSHOT}",
+    )
+
+
+RTE_SNAPSHOT = "2026-11-22"
+RTE_DROP = ("perimetre", "nature", "date", "heure")
+
+
+def rte_eco2mix_view(frames: list[pd.DataFrame]) -> pd.DataFrame:
+    """Half-hourly RTE eco2mix national telemetry in UTC, sorted and deduplicated by time."""
+    merged = pd.concat(frames)
+    ts = pd.to_datetime(merged["date_heure"], utc=True, errors="coerce").dt.tz_localize(None)
+    valid = merged[ts.notna()].drop(columns=[*RTE_DROP, "date_heure"]).copy()
+    valid.insert(0, "timestamp", ts[ts.notna()].to_numpy())
+    for col in valid.columns:
+        if col != "timestamp":
+            valid[col] = pd.to_numeric(valid[col], errors="coerce")
+    half = valid[valid["consommation"].notna()]
+    unique = half.drop_duplicates("timestamp")
+    ordered = unique.sort_values("timestamp").reset_index(drop=True)
+    ordered.attrs = {
+        "duplicates": int(len(half) - len(unique)),
+        "quarter_hour_rows_dropped": int(len(valid) - len(half)),
+        "unreadable_timestamps": int(len(merged) - len(valid)),
+    }
+    return ordered
+
+
+def _build_rte(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "rte_eco2mix_national" / RTE_SNAPSHOT / "raw"
+    files = sorted(raw.glob("eco2mix_national_*.csv"))
+    if not files:
+        raise ViewError("no RTE eco2mix file in the snapshot")
+    frames = [pd.read_csv(p, sep=";", dtype=str) for p in files]
+    view = rte_eco2mix_view(frames)
+    folder = out / "rte_eco2mix_national"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "eco2mix.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "rte_eco2mix_national",
+        {"eco2mix.csv": (target, len(view))},
+        dropped=list(RTE_DROP),
+        pseudonymised=[],
+        sampling={
+            "duplicates_dropped": view.attrs["duplicates"],
+            "files": [p.name for p in files],
+            "first_timestamp": str(view["timestamp"].min()),
+            "last_timestamp": str(view["timestamp"].max()),
+            "method": "half-hourly definitive RTE eco2mix national grid series for 2020-2023",
+            "quarter_hour_rows_dropped": view.attrs["quarter_hour_rows_dropped"],
+            "unreadable_timestamps": view.attrs["unreadable_timestamps"],
+        },
+        source_snapshot=f"rte_eco2mix_national/{RTE_SNAPSHOT}",
+    )
+
+
 BUILD_STEPS = (
     _build_openalex,
     _build_monash,
@@ -3776,6 +3959,9 @@ BUILD_STEPS = (
     _build_wiki,
     _build_uniprot,
     _build_osv_go,
+    _build_gfz_kp,
+    _build_dwd,
+    _build_rte,
     _build_flat,
     _build_series,
     _build_ukspend,

@@ -8903,6 +8903,160 @@
    "stratum": "C6",
    "upstream": "first party: Go Security Team maintains the Go Vulnerability Database published in OSV format via Google Cloud Storage",
    "upstream_verified": true
+  },
+  {
+   "attribution": "Geomagnetic Observatory Niemegk, GFZ Helmholtz Centre for Geosciences, Kp and ap index since 1932 (CC BY 4.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "Kp_ap_since_1932.txt",
+     "observed": "1932-2026",
+     "url": "https://kp.gfz.de/app/files/Kp_ap_since_1932.txt"
+    }
+   ],
+   "hosts": [
+    "kp.gfz.de"
+   ],
+   "id": "gfz_kp_index",
+   "licence_class": "open",
+   "licence_location": "https://kp.gfz.de/en/",
+   "licence_text": "GFZ Potsdam Kp_ap_since_1932.txt file header (read 2026-11-22): '# LICENSE: CC BY 4.0 # SOURCE: Geomagnetic Observatory Niemegk, GFZ Helmholtz Centre for Geosciences'; pure GFZ file without external CC BY-NC sunspot or F10.7 columns",
+   "max_bytes": 26214400,
+   "method": "official GFZ ASCII three-hourly geomagnetic Kp and ap time series since 1932-01-01",
+   "min_interval": 2.0,
+   "privacy": "geomagnetic observatory measurements; no personal data",
+   "publisher": "GFZ Helmholtz Centre for Geosciences (Geomagnetic Observatory Niemegk)",
+   "rate_limit": "single file download, descriptive user agent",
+   "redistribution": "CC BY 4.0; raw file stays local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party: GFZ Geomagnetic Observatory Niemegk computes and publishes the planetary Kp and ap indices",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Deutscher Wetterdienst (DWD) Climate Data Center (CDC), historical hourly station observations of air temperature and relative humidity (TU) at 12 stations, release ending 2025-12-31 (CC BY 4.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "stundenwerte_TU_00044_20070401_20251231_hist.zip",
+     "observed": "2007-2025",
+     "url": "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/stundenwerte_TU_00044_20070401_20251231_hist.zip"
+    },
+    {
+     "name": "stundenwerte_TU_00460_19610101_20251231_hist.zip",
+     "observed": "1961-2025",
+     "url": "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/stundenwerte_TU_00460_19610101_20251231_hist.zip"
+    },
+    {
+     "name": "stundenwerte_TU_01107_20041201_20251231_hist.zip",
+     "observed": "2004-2025",
+     "url": "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/stundenwerte_TU_01107_20041201_20251231_hist.zip"
+    },
+    {
+     "name": "stundenwerte_TU_01639_19500101_20251231_hist.zip",
+     "observed": "1950-2025",
+     "url": "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/stundenwerte_TU_01639_19500101_20251231_hist.zip"
+    },
+    {
+     "name": "stundenwerte_TU_02410_19610102_20251231_hist.zip",
+     "observed": "1961-2025",
+     "url": "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/stundenwerte_TU_02410_19610102_20251231_hist.zip"
+    },
+    {
+     "name": "stundenwerte_TU_02932_19720501_20251231_hist.zip",
+     "observed": "1972-2025",
+     "url": "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/stundenwerte_TU_02932_19720501_20251231_hist.zip"
+    },
+    {
+     "name": "stundenwerte_TU_03319_20060901_20251231_hist.zip",
+     "observed": "2006-2025",
+     "url": "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/stundenwerte_TU_03319_20060901_20251231_hist.zip"
+    },
+    {
+     "name": "stundenwerte_TU_03925_20050901_20251231_hist.zip",
+     "observed": "2005-2025",
+     "url": "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/stundenwerte_TU_03925_20050901_20251231_hist.zip"
+    },
+    {
+     "name": "stundenwerte_TU_04548_20070701_20251231_hist.zip",
+     "observed": "2007-2025",
+     "url": "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/stundenwerte_TU_04548_20070701_20251231_hist.zip"
+    },
+    {
+     "name": "stundenwerte_TU_05229_20040801_20251231_hist.zip",
+     "observed": "2004-2025",
+     "url": "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/stundenwerte_TU_05229_20040801_20251231_hist.zip"
+    },
+    {
+     "name": "stundenwerte_TU_05839_19970701_20251231_hist.zip",
+     "observed": "1997-2025",
+     "url": "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/stundenwerte_TU_05839_19970701_20251231_hist.zip"
+    },
+    {
+     "name": "stundenwerte_TU_07187_20041201_20251231_hist.zip",
+     "observed": "2004-2025",
+     "url": "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/stundenwerte_TU_07187_20041201_20251231_hist.zip"
+    }
+   ],
+   "hosts": [
+    "opendata.dwd.de"
+   ],
+   "id": "dwd_hourly_climate",
+   "licence_class": "open",
+   "licence_location": "https://opendata.dwd.de/climate_environment/CDC/Terms_of_use.txt",
+   "licence_text": "DWD CDC Terms_of_use.txt (read 2026-11-22): 'The Creative Commons BY 4.0 - Licence \"CC BY 4.0\" apply. For detailed information see https://www.dwd.de/copyright'",
+   "max_bytes": 10485760,
+   "method": "twelve historical hourly station observation archives (TU: air temperature and relative humidity) strided across active German meteorological stations ending 2025-12-31; view retains 2018-01-01 to 2025-12-31",
+   "min_interval": 1.5,
+   "privacy": "public weather station observations; no personal data",
+   "publisher": "Deutscher Wetterdienst (DWD)",
+   "rate_limit": "twelve archive downloads, 1.5 s apart, descriptive user agent",
+   "redistribution": "CC BY 4.0; raw files stay local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party: DWD operates the German meteorological station network and publishes the CDC archives",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "RTE (Reseau de Transport d'Electricite), Donnees eco2mix nationales consolidees et definitives (2020-2023) via ODRE (Licence Ouverte v2.0 Etalab); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "eco2mix_national_2020.csv",
+     "observed": "2020",
+     "url": "https://odre.opendatasoft.com/api/explore/v2.1/catalog/datasets/eco2mix-national-cons-def/exports/csv?where=date_heure%3E%3D%272020-01-01%27%20AND%20date_heure%3C%272021-01-01%27"
+    },
+    {
+     "name": "eco2mix_national_2021.csv",
+     "observed": "2021",
+     "url": "https://odre.opendatasoft.com/api/explore/v2.1/catalog/datasets/eco2mix-national-cons-def/exports/csv?where=date_heure%3E%3D%272021-01-01%27%20AND%20date_heure%3C%272022-01-01%27"
+    },
+    {
+     "name": "eco2mix_national_2022.csv",
+     "observed": "2022",
+     "url": "https://odre.opendatasoft.com/api/explore/v2.1/catalog/datasets/eco2mix-national-cons-def/exports/csv?where=date_heure%3E%3D%272022-01-01%27%20AND%20date_heure%3C%272023-01-01%27"
+    },
+    {
+     "name": "eco2mix_national_2023.csv",
+     "observed": "2023",
+     "url": "https://odre.opendatasoft.com/api/explore/v2.1/catalog/datasets/eco2mix-national-cons-def/exports/csv?where=date_heure%3E%3D%272023-01-01%27%20AND%20date_heure%3C%272024-01-01%27"
+    }
+   ],
+   "hosts": [
+    "odre.opendatasoft.com"
+   ],
+   "id": "rte_eco2mix_national",
+   "licence_class": "open",
+   "licence_location": "https://odre.opendatasoft.com/api/explore/v2.1/catalog/datasets/eco2mix-national-cons-def",
+   "licence_text": "ODRE official dataset metadata for eco2mix-national-cons-def (read 2026-11-22): license 'Licence Ouverte v2.0 (Etalab)', publisher 'RTE'",
+   "max_bytes": 31457280,
+   "method": "official ODRE v2.1 CSV export filtered to complete calendar years 2020 through 2023 (definitive national grid telemetry)",
+   "min_interval": 3.0,
+   "privacy": "national electricity grid generation, demand, exchange and CO2 telemetry; no personal or household data",
+   "publisher": "RTE (Reseau de Transport d'Electricite)",
+   "rate_limit": "four yearly export requests, three seconds apart, descriptive user agent",
+   "redistribution": "Licence Ouverte v2.0; raw files stay local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party: RTE operates the French high-voltage transmission grid and publishes eco2mix definitive figures",
+   "upstream_verified": true
   }
  ]
 }

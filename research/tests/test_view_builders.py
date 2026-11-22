@@ -300,6 +300,18 @@ def _osv(root, tmp):
     tev._osv_snapshot(root)
 
 
+def _gfz(root, tmp):
+    tev._gfz_snapshot(root)
+
+
+def _dwd(root, tmp):
+    tev._dwd_snapshot(root)
+
+
+def _rte(root, tmp):
+    tev._rte_snapshot(root)
+
+
 def _tlc(root, tmp):
     tev._tlc_page(
         [{}, {"tpep_pickup_datetime": "2023-03-07T07:00:00.000", "total_amount": "0.0"}]
@@ -327,6 +339,9 @@ CASES = {
     "wiki": (_wiki, ev._build_wiki, ["wikimedia_simplewiki_edits"], {}),
     "uniprot": (_uniprot, ev._build_uniprot, ["uniprot_kb_reviewed"], {}),
     "osv": (_osv, ev._build_osv_go, ["osv_go_advisories"], {}),
+    "gfz": (_gfz, ev._build_gfz_kp, ["gfz_kp_index"], {}),
+    "dwd": (_dwd, ev._build_dwd, ["dwd_hourly_climate"], {}),
+    "rte": (_rte, ev._build_rte, ["rte_eco2mix_national"], {}),
     "tlc": (_tlc, ev._build_tlc, ["nyc_tlc_yellow"], {}),
     "maude": (_maude_case, ev._build_maude, ["openfda_device_event"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),

@@ -1686,6 +1686,51 @@
    "size": "13.0 MB zip (7.65 MB view)",
    "source_url": "https://osv-vulnerabilities.storage.googleapis.com/Go/all.zip",
    "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "gfz_kp_index",
+   "licence": "CC BY 4.0",
+   "name": "GFZ Niemegk geomagnetic Kp and ap index (1932-2026)",
+   "next_step": "none",
+   "notes": "277,272 three-hourly UTC rows, 0 missing sentinels; solar-flux file excluded due to CC BY-NC",
+   "publisher": "GFZ Helmholtz Centre for Geosciences",
+   "reason": "94-year three-hourly geomagnetic activity series with natural storm bursts",
+   "size": "16.6 MB text (8.3 MB view)",
+   "source_url": "https://kp.gfz.de/app/files/Kp_ap_since_1932.txt",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "dwd_hourly_climate",
+   "licence": "CC BY 4.0",
+   "name": "DWD CDC hourly air temperature and humidity (12 stations, 2018-2025)",
+   "next_step": "none",
+   "notes": "838,605 hourly rows across 12 strided German synoptic stations ending 2025-12-31",
+   "publisher": "Deutscher Wetterdienst (DWD)",
+   "reason": "multi-year hourly meteorological station observations with QC flags and -999 sentinel handling",
+   "size": "24.1 MB zip (35 MB view)",
+   "source_url": "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/",
+   "status": "experiment_ready"
+  },
+  {
+   "categories": [
+    "C3"
+   ],
+   "id": "rte_eco2mix_national",
+   "licence": "Licence Ouverte v2.0 (Etalab)",
+   "name": "RTE eco2mix definitive national electricity grid telemetry (2020-2023)",
+   "next_step": "none",
+   "notes": "70,120 half-hourly multivariate UTC rows across 32 power/demand/CO2/exchange series (DST duplicates and empty 15-min rows removed)",
+   "publisher": "RTE (Reseau de Transport d'Electricite)",
+   "reason": "four-year national transmission grid telemetry with multi-channel generation mix",
+   "size": "32.1 MB CSV (12.8 MB view)",
+   "source_url": "https://odre.opendatasoft.com/api/explore/v2.1/catalog/datasets/eco2mix-national-cons-def",
+   "status": "experiment_ready"
   }
  ],
  "date": "2026-11-21",

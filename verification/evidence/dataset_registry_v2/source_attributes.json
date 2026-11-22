@@ -143,6 +143,21 @@
    "C4": "business process execution"
   }
  },
+ "dwd_germany": {
+  "curator": "opendata.dwd.de",
+  "descriptors": {
+   "supported_temporal_scales": "hourly to multi-year synoptic seasonal and inter-annual regime shifts",
+   "temporal_span": "eight years hourly across twelve stations (2018-01-01 to 2025-12-31)"
+  },
+  "domain": "meteorology",
+  "generating_system": "DWD German synoptic hourly weather station network",
+  "note": "12 stations of one national synoptic network, one group",
+  "producer": "Deutscher Wetterdienst (DWD)",
+  "schema_family": "synoptic hourly climate archive",
+  "structure": {
+   "C3": "hourly air temperature and relative humidity with quality codes"
+  }
+ },
  "ea_hydrology": {
   "curator": "environment.data.gov.uk",
   "domain": "hydrology",
@@ -251,6 +266,21 @@
   "schema_family": "fugaku job records",
   "structure": {
    "C4": "operational job trace"
+  }
+ },
+ "gfz_potsdam_kp": {
+  "curator": "kp.gfz.de",
+  "descriptors": {
+   "supported_temporal_scales": "three-hourly storm transients through 11-year solar-cycle and secular drift",
+   "temporal_span": "94 years three-hourly (1932-01-01 to 2026-11-21)"
+  },
+  "domain": "geomagnetism and space weather",
+  "generating_system": "GFZ Niemegk geomagnetic planetary Kp and ap index",
+  "note": "pure GFZ geomagnetic index under CC BY 4.0; solar-flux file excluded due to CC BY-NC",
+  "producer": "GFZ Helmholtz Centre for Geosciences",
+  "schema_family": "three-hourly geomagnetic index",
+  "structure": {
+   "C3": "planetary geomagnetic Kp and ap activity time series"
   }
  },
  "georgia_procurement": {
@@ -681,6 +711,21 @@
   "schema_family": "surveillance panels",
   "structure": {
    "C3": "public health surveillance"
+  }
+ },
+ "rte_france_grid": {
+  "curator": "odre.opendatasoft.com",
+  "descriptors": {
+   "supported_temporal_scales": "half-hourly diurnal cycles through four-year seasonal and macro demand shifts",
+   "temporal_span": "four years half-hourly (2020-01-01 to 2023-12-31)"
+  },
+  "domain": "national electricity transmission grid",
+  "generating_system": "RTE France eco2mix national grid monitoring system",
+  "note": "",
+  "producer": "RTE (Reseau de Transport d'Electricite)",
+  "schema_family": "national electricity grid telemetry",
+  "structure": {
+   "C3": "half-hourly load, generation by fuel, CO2 rate and cross-border flows"
   }
  },
  "seoul_bike": {

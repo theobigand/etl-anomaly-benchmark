@@ -4850,6 +4850,66 @@
    "stratum": "C6",
    "system": "go_vulnerability_database",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "gfz_potsdam_kp",
+   "id": "gfz_kp_index",
+   "licence_class": "open",
+   "protocols": "P-TS on 3-hourly UTC Kp and ap geomagnetic indices (solar cycle and storm bursts are baseline dynamics)",
+   "publisher": "gfz_potsdam",
+   "reason": "GFZ Geomagnetic Observatory Niemegk 3-hourly Kp and ap series (1932-01-01 to 2026-11-21): 277,272 strictly monotonic 3-hour steps, 0 missing sentinels, 277,104 definitive and 168 preliminary rows; geomagnetic and space-weather domain absent from C3",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "GFZ Kp_ap_since_1932.txt header (read 2026-11-22): LICENSE: CC BY 4.0; excludes external CC BY-NC solar-flux file",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "gfz_geomagnetic_observatory_niemegk_kp",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "dwd_germany",
+   "id": "dwd_hourly_climate",
+   "licence_class": "open",
+   "protocols": "P-TS on hourly station air temperature and relative humidity (2018 to 2025, per station chronological)",
+   "publisher": "dwd_germany",
+   "reason": "Deutscher Wetterdienst (DWD) CDC hourly TU station series across 12 strided German meteorological stations ending 2025-12-31, filtered from 2018-01-01 onward: 838,605 rows, 0 duplicate keys, -999 missing sentinels mapped to NaN (1,679 temperature, 1,978 humidity); multi-year meteorological network",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "DWD CDC Terms_of_use.txt (read 2026-11-22): Creative Commons BY 4.0 Licence 'CC BY 4.0'",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "dwd_german_weather_station_network",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "rte_france_grid",
+   "id": "rte_eco2mix_national",
+   "licence_class": "open",
+   "protocols": "P-TS on half-hourly national grid load, generation mix, CO2 intensity and cross-border exchanges (2020-2023)",
+   "publisher": "rte_france",
+   "reason": "RTE France eco2mix definitive national transmission grid series (2020-2023): 70,120 unique half-hourly UTC rows with 32 numeric series (70,128 forecast-only quarter-hour rows and 8 spring-DST duplicate timestamps removed); national high-voltage grid telemetry",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "ODRE dataset catalog metadata (read 2026-11-22): Licence Ouverte v2.0 (Etalab), publisher RTE",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C3",
+   "system": "rte_french_transmission_grid_telemetry",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

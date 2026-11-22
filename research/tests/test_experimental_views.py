@@ -1038,6 +1038,9 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _wiki_snapshot(root)
     _uniprot_snapshot(root)
     _osv_snapshot(root)
+    _gfz_snapshot(root)
+    _dwd_snapshot(root)
+    _rte_snapshot(root)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
@@ -1053,7 +1056,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -4988,4 +4991,235 @@ def test_osv_go_builder_writes_sorted_jsonl_manifest_and_errors_when_missing(tmp
         "archive_records": 4,
         "go_records": 2,
         "method": "all GO-* Go Vulnerability Database advisories from Go/all.zip (non-GO prefixes excluded to stay under CC BY 4.0)",  # noqa: E501
+    }
+
+
+def _gfz_snapshot(root):
+    raw = root / "gfz_kp_index" / ev.GFZ_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    lines = [
+        "# LICENSE: CC BY 4.0",
+        "",
+        "2020 01 02 03.0 04.50 1 2 2.333 9 1",
+        "2020 01 01 00.0 01.50 1 2 -1.000 -1 0",
+        "2020 99 01 00.0 01.50 1 2 1.000 4 0",
+    ]
+    (raw / "Kp_ap_since_1932.txt").write_text("\n".join(lines) + "\n")
+
+
+def _dwd_snapshot(root):
+    import zipfile as _z
+
+    raw = root / "dwd_hourly_climate" / ev.DWD_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    with _z.ZipFile(raw / "stundenwerte_TU_00044_20070401_20251231_hist.zip", "w") as z:
+        z.writestr("Metadaten_Geographie.txt", "ignored\n")
+        z.writestr(
+            "produkt_tu_stunde_20070401_20251231_00044.txt",
+            (
+                "STATIONS_ID;MESS_DATUM;QN_9;TT_TU;RF_TU;eor\n"
+                "   44;2017123123;3;5.0;80.0;eor\n"
+                "   44;2018010101;3;-999;-999;eor\n"
+                "   44;2018010100;3;4.2;85.0;eor\n"
+                "   44;2018010100;3;9.9;99.0;eor\n"
+                "   44;2018990100;3;1.0;50.0;eor\n"
+            ),
+        )
+        z.writestr("produkt_tu_stunde_readme.info", "ignored\n")
+    (raw / "ignore.zip").write_bytes(b"")
+
+
+def _rte_snapshot(root):
+    raw = root / "rte_eco2mix_national" / ev.RTE_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    csv_text = (
+        "perimetre;nature;date;heure;date_heure;consommation;nucleaire\n"
+        "France;Donnees definitives;2020-03-29;03:00;2020-03-29T01:00:00+00:00;47000;30500\n"
+        "France;Donnees definitives;2020-03-29;02:00;2020-03-29T01:00:00+00:00;46000;30000\n"
+        "France;Donnees definitives;2020-01-01;00:15;2019-12-31T23:15:00+00:00;;\n"
+        "France;Donnees definitives;2020-01-01;00:00;2019-12-31T23:00:00+00:00;63000;49000\n"
+        "France;Donnees definitives;bad;00:00;not-a-date;50000;40000\n"
+    )
+    (raw / "eco2mix_national_2020.csv").write_bytes(csv_text.encode("utf-8-sig"))
+    (raw / "other.csv").write_text("x\n")
+
+
+def test_gfz_kp_view_parses_timestamps_sorts_and_maps_sentinels():
+    lines = [
+        "# header",
+        "   ",
+        "2020 01 02 03.0 04.50 1 2 2.333 9 1",
+        "2020 01 01 00.0 01.50 1 2 -1.000 -1 0",
+        "2020 01 03 06.0 07.50 1 2 bad bad bad",
+        "2020 13 01 00.0 01.50 1 2 1.000 5 1",
+    ]
+    out = ev.gfz_kp_view(lines)
+    assert out.columns.tolist() == ["timestamp", "kp", "ap", "definitive"]
+    assert out["timestamp"].tolist() == [
+        pd.Timestamp("2020-01-01 00:00:00"),
+        pd.Timestamp("2020-01-02 03:00:00"),
+        pd.Timestamp("2020-01-03 06:00:00"),
+    ]
+    assert pd.isna(out["kp"].iloc[0]) and pd.isna(out["ap"].iloc[0])
+    assert out["kp"].iloc[1] == 2.333 and out["ap"].iloc[1] == 9.0
+    assert pd.isna(out["kp"].iloc[2]) and pd.isna(out["ap"].iloc[2])
+    assert pd.isna(out["definitive"].iloc[2])
+    assert out["definitive"].iloc[:2].tolist() == [0, 1]
+    assert str(out["definitive"].dtype) == "Int64"
+
+
+def test_gfz_kp_builder_writes_csv_manifest_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no GFZ Kp file in the snapshot$"):
+        ev._build_gfz_kp(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _gfz_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_gfz_kp(root, out, manifest)
+    ev._build_gfz_kp(root, out, manifest)
+    target = out / "gfz_kp_index" / "kp_ap.csv"
+    assert target.read_text().splitlines()[0] == "timestamp,kp,ap,definitive"
+    view = manifest["gfz_kp_index"]
+    assert view["files"]["kp_ap.csv"]["rows"] == 2
+    assert view["dropped"] == ["half_hour_midpoint", "days_since_1932", "midpoint_days"]
+    assert view["pseudonymised"] == []
+    assert view["source_snapshot"] == f"gfz_kp_index/{ev.GFZ_SNAPSHOT}"
+    assert view["sampling"] == {
+        "definitive_rows": 1,
+        "first_timestamp": "2020-01-01 00:00:00",
+        "last_timestamp": "2020-01-02 03:00:00",
+        "method": "complete GFZ Niemegk 3-hourly Kp/ap time series",
+        "missing_kp_rows": 1,
+    }
+
+
+def test_dwd_hourly_view_filters_start_dedupes_sorts_and_maps_missing():
+    f1 = pd.DataFrame(
+        {
+            "STATIONS_ID": ["  44", "  44", "  44", "  44", " 10"],
+            "MESS_DATUM": [2017123123, 2018010101, 2018010100, 2018010100, 2018990100],
+            "QN_9": [3, 3, 3, 9, 1],
+            "TT_TU": [5.0, -999.0, 4.2, 8.8, 1.0],
+            "RF_TU": [80.0, -999.0, 85.0, 99.0, 50.0],
+        }
+    )
+    f2 = pd.DataFrame(
+        {
+            "STATIONS_ID": ["  10"],
+            "MESS_DATUM": [2018010200],
+            "QN_9": ["bad"],
+            "TT_TU": ["bad"],
+            "RF_TU": ["bad"],
+        }
+    )
+    out = ev.dwd_hourly_view([f1, f2])
+    assert out.columns.tolist() == [
+        "station_id",
+        "timestamp",
+        "temp_c",
+        "rel_humidity_pct",
+        "quality_code",
+    ]
+    assert out["station_id"].tolist() == ["10", "44", "44"]
+    assert out["timestamp"].tolist() == [
+        pd.Timestamp("2018-01-02 00:00:00"),
+        pd.Timestamp("2018-01-01 00:00:00"),
+        pd.Timestamp("2018-01-01 01:00:00"),
+    ]
+    assert out["temp_c"].iloc[1] == 4.2 and pd.isna(out["temp_c"].iloc[0])
+    assert pd.isna(out["temp_c"].iloc[2]) and pd.isna(out["rel_humidity_pct"].iloc[0])
+    assert out["rel_humidity_pct"].iloc[1] == 85.0 and pd.isna(out["rel_humidity_pct"].iloc[2])
+    assert pd.isna(out["quality_code"].iloc[0]) and out["quality_code"].iloc[1:].tolist() == [3, 3]
+    assert str(out["quality_code"].dtype) == "Int64"
+    assert out.attrs == {"duplicates": 1}
+
+
+def test_dwd_builder_writes_csv_manifest_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no DWD station archive in the snapshot$"):
+        ev._build_dwd(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _dwd_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_dwd(root, out, manifest)
+    ev._build_dwd(root, out, manifest)
+    target = out / "dwd_hourly_climate" / "air_temperature.csv"
+    assert (
+        target.read_text().splitlines()[0]
+        == "station_id,timestamp,temp_c,rel_humidity_pct,quality_code"
+    )  # noqa: E501
+    view = manifest["dwd_hourly_climate"]
+    assert view["files"]["air_temperature.csv"]["rows"] == 2
+    assert view["dropped"] == ["eor_marker"]
+    assert view["pseudonymised"] == []
+    assert view["source_snapshot"] == f"dwd_hourly_climate/{ev.DWD_SNAPSHOT}"
+    assert view["sampling"] == {
+        "archives": 1,
+        "duplicates_dropped": 1,
+        "first_timestamp": "2018-01-01 00:00:00",
+        "last_timestamp": "2018-01-01 01:00:00",
+        "method": "12 strided DWD hourly TU stations filtered from 2018-01-01 onward",
+        "stations": 1,
+    }
+
+
+def test_rte_eco2mix_view_filters_half_hourly_dedupes_dst_and_sorts():
+    df = pd.DataFrame(
+        {
+            "perimetre": ["France"] * 6,
+            "nature": ["Def"] * 6,
+            "date": ["d"] * 6,
+            "heure": ["h"] * 6,
+            "date_heure": [
+                "2020-03-29T01:00:00+00:00",
+                "2020-03-29T01:00:00+00:00",
+                "2020-01-01T00:15:00+00:00",
+                "2020-01-01T00:00:00+00:00",
+                "2020-06-01T02:00:00+02:00",
+                "bad",
+            ],
+            "consommation": [47000, 46000, None, 63000, 41000, 50000],
+            "nucleaire": [30500, 30000, None, 49000, "bad", 40000],
+        }
+    )
+    out = ev.rte_eco2mix_view([df])
+    assert out.columns.tolist() == ["timestamp", "consommation", "nucleaire"]
+    assert out["timestamp"].tolist() == [
+        pd.Timestamp("2020-01-01 00:00:00"),
+        pd.Timestamp("2020-03-29 01:00:00"),
+        pd.Timestamp("2020-06-01 00:00:00"),
+    ]
+    assert out["consommation"].tolist() == [63000.0, 47000.0, 41000.0]
+    assert pd.isna(out["nucleaire"].iloc[2])
+    assert out.attrs == {
+        "duplicates": 1,
+        "quarter_hour_rows_dropped": 1,
+        "unreadable_timestamps": 1,
+    }
+
+
+def test_rte_builder_writes_csv_manifest_and_errors_when_missing(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no RTE eco2mix file in the snapshot$"):
+        ev._build_rte(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _rte_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "deep" / "out"
+    ev._build_rte(root, out, manifest)
+    ev._build_rte(root, out, manifest)
+    target = out / "rte_eco2mix_national" / "eco2mix.csv"
+    assert target.read_text().splitlines()[0] == "timestamp,consommation,nucleaire"
+    view = manifest["rte_eco2mix_national"]
+    assert view["files"]["eco2mix.csv"]["rows"] == 2
+    assert view["dropped"] == ["perimetre", "nature", "date", "heure"]
+    assert view["pseudonymised"] == []
+    assert view["source_snapshot"] == f"rte_eco2mix_national/{ev.RTE_SNAPSHOT}"
+    assert view["sampling"] == {
+        "duplicates_dropped": 1,
+        "files": ["eco2mix_national_2020.csv"],
+        "first_timestamp": "2019-12-31 23:00:00",
+        "last_timestamp": "2020-03-29 01:00:00",
+        "method": "half-hourly definitive RTE eco2mix national grid series for 2020-2023",
+        "quarter_hour_rows_dropped": 1,
+        "unreadable_timestamps": 1,
     }

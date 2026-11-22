@@ -4239,5 +4239,78 @@
    "method": "250 reviewed Swiss-Prot entries per organism across six model organisms"
   },
   "source_snapshot": "uniprot_kb_reviewed/2026-11-22"
+ },
+ "dwd_hourly_climate": {
+  "dropped": [
+   "eor_marker"
+  ],
+  "files": {
+   "air_temperature.csv": {
+    "rows": 838605,
+    "sha256": "11315ad3f543074abe64f4c279a73680c7136f85c6c6f31ea4026ef90ee3a542"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "archives": 12,
+   "duplicates_dropped": 0,
+   "first_timestamp": "2018-01-01 00:00:00",
+   "last_timestamp": "2025-12-31 23:00:00",
+   "method": "12 strided DWD hourly TU stations filtered from 2018-01-01 onward",
+   "stations": 12
+  },
+  "source_snapshot": "dwd_hourly_climate/2026-11-22"
+ },
+ "gfz_kp_index": {
+  "dropped": [
+   "half_hour_midpoint",
+   "days_since_1932",
+   "midpoint_days"
+  ],
+  "files": {
+   "kp_ap.csv": {
+    "rows": 277272,
+    "sha256": "e95c4cc8f39345376e0a774b81104bfbc85c71dc462bee26f88831831a01d816"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "definitive_rows": 277104,
+   "first_timestamp": "1932-01-01 00:00:00",
+   "last_timestamp": "2026-11-21 21:00:00",
+   "method": "complete GFZ Niemegk 3-hourly Kp/ap time series",
+   "missing_kp_rows": 0
+  },
+  "source_snapshot": "gfz_kp_index/2026-11-22"
+ },
+ "rte_eco2mix_national": {
+  "dropped": [
+   "perimetre",
+   "nature",
+   "date",
+   "heure"
+  ],
+  "files": {
+   "eco2mix.csv": {
+    "rows": 70120,
+    "sha256": "4345ad70c11eec3208239456794649c2750f2b519295f12f35c4a98cee7acdb2"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "duplicates_dropped": 8,
+   "files": [
+    "eco2mix_national_2020.csv",
+    "eco2mix_national_2021.csv",
+    "eco2mix_national_2022.csv",
+    "eco2mix_national_2023.csv"
+   ],
+   "first_timestamp": "2020-01-01 00:00:00",
+   "last_timestamp": "2023-12-31 23:30:00",
+   "method": "half-hourly definitive RTE eco2mix national grid series for 2020-2023",
+   "quarter_hour_rows_dropped": 70128,
+   "unreadable_timestamps": 0
+  },
+  "source_snapshot": "rte_eco2mix_national/2026-11-22"
  }
 }
