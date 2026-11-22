@@ -1082,6 +1082,9 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _moodle_snapshot(root)
     _norp_snapshot(root)
     _blazar_snapshot(root)
+    _wind_fragility_snapshot(root)
+    _terralore_snapshot(root)
+    _ncei_storm_snapshot(root)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
@@ -1097,7 +1100,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "zen_telecom_kpis", "zen_dk_district_heating", "zen_water_demand", "zen_dmsp_auroral", "us_treasury_dts", "fdic_bank_financials", "sncf_tgv_regularite", "dgccrf_fuel_prices", "us_federal_register", "datacite_dois", "gbif_cc0_occurrences", "chembl_molecules", "zen_florida_bridges", "wri_power_plants", "paris_urban_trees", "zen_moodle_events", "zen_norp_solar_bursts", "zen_blazar_flares", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "zen_telecom_kpis", "zen_dk_district_heating", "zen_water_demand", "zen_dmsp_auroral", "us_treasury_dts", "fdic_bank_financials", "sncf_tgv_regularite", "dgccrf_fuel_prices", "us_federal_register", "datacite_dois", "gbif_cc0_occurrences", "chembl_molecules", "zen_florida_bridges", "wri_power_plants", "paris_urban_trees", "zen_moodle_events", "zen_norp_solar_bursts", "zen_blazar_flares", "zen_wind_fragility", "zen_terralore_chronicle", "ncei_storm_events_2024", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -8993,3 +8996,358 @@ def test_blazar_flares_view_and_builder(tmp_path):
         "sources": 2,
     }
     assert view["source_snapshot"] == f"zen_blazar_flares/{ev.WAVE24_SNAPSHOT}"
+
+
+def _wind_fragility_snapshot(root):
+    import zipfile
+
+    raw = root / "zen_wind_fragility" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    curves = pd.DataFrame(
+        [
+            {
+                **{c: f"c_{c}_2" for c in ev.WIND_FRAGILITY_SPEC["tables"]["curves"]["keep"]},
+                "Curve_ID": "002",
+                "Source_ID": "001",
+                "Source_Location": "drop",
+                "Notes": "drop",
+                "Limit_State_Definition": "drop",
+            },
+            {
+                **{c: f"c_{c}_1" for c in ev.WIND_FRAGILITY_SPEC["tables"]["curves"]["keep"]},
+                "Curve_ID": "001",
+                "Source_ID": "001",
+                "Source_Location": "drop",
+                "Notes": "drop",
+                "Limit_State_Definition": "drop",
+            },
+        ]
+    )
+    disc = pd.DataFrame(
+        [
+            {
+                **{c: "0.5" for c in ev.WIND_FRAGILITY_SPEC["tables"]["discretized"]["keep"]},
+                "Curve_ID": "002",
+                "Source_ID": "001",
+                "V1": "0.1",
+            },
+            {
+                **{c: "0.2" for c in ev.WIND_FRAGILITY_SPEC["tables"]["discretized"]["keep"]},
+                "Curve_ID": "001",
+                "Source_ID": "001",
+                "V1": "0.1",
+            },
+        ]
+    )
+    params = pd.DataFrame(
+        [
+            {
+                "Curve_ID": "002",
+                "Param_Name": "mu",
+                "Param_Value": "3.5",
+                "Param_Unit": "mps",
+                "Param_Applies_When": "all",
+            },
+            {
+                "Curve_ID": "001",
+                "Param_Name": "mu",
+                "Param_Value": "3.0",
+                "Param_Unit": "mps",
+                "Param_Applies_When": "all",
+            },
+        ]
+    )
+    points = pd.DataFrame(
+        [
+            {"Curve_ID": "002", "IM_Value": "40", "Probability": "0.5", "Point_Source": "fig1"},
+            {"Curve_ID": "001", "IM_Value": "30", "Probability": "0.2", "Point_Source": "fig1"},
+        ]
+    )
+    sources = pd.DataFrame(
+        [
+            {
+                "Source_ID": "001",
+                "DOI": "10.1000/1",
+                "Authors": "Alice",
+                "Year": "2024",
+                "Title": "Drop Title",
+                "Venue": "J",
+                "Publication_Type": "Article",
+                "N_Curves": "2",
+            }
+        ]
+    )
+    with zipfile.ZipFile(raw / "Wind_Fragility_Database_v2026.10.zip", "w") as zf:
+        for name, df in (
+            ("CURVES", curves),
+            ("DISCRETIZED", disc),
+            ("PARAMETERS", params),
+            ("POINTS", points),
+            ("SOURCES", sources),
+        ):
+            zf.writestr(f"{ev.WIND_FRAGILITY_PREFIX}{name}.csv", df.to_csv(index=False))
+
+
+def _terralore_snapshot(root):
+    import io
+    import tarfile
+
+    raw = root / "zen_terralore_chronicle" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    events = pd.DataFrame(
+        [
+            {
+                "claim_id": "002",
+                "country_code": "FR",
+                "country_name": "France",
+                "year": "1789",
+                "year_label": "1789",
+                "end_year": "1789",
+                "title": "drop",
+                "summary": "drop",
+                "category": "politics",
+                "era_id": "modern",
+                "canonical_url": "https://example.org/2",
+                "history_updated": "2025-01-01",
+            },
+            {
+                "claim_id": "001",
+                "country_code": "NA",
+                "country_name": "Namibia",
+                "year": "1990",
+                "year_label": "1990",
+                "end_year": "1990",
+                "title": "drop",
+                "summary": "drop",
+                "category": "independence",
+                "era_id": "contemporary",
+                "canonical_url": "https://example.org/1",
+                "history_updated": "2025-01-01",
+            },
+        ]
+    )
+    sources = pd.DataFrame(
+        [
+            {
+                "source_key": "001",
+                "country_code": "NA",
+                "source_id": "s1",
+                "label": "drop",
+                "publisher": "Archive",
+                "url": "https://example.org/s1",
+                "kind": "chronicle",
+                "license": "CC-BY-4.0",
+                "accessed": "2025-01-01",
+            }
+        ]
+    )
+    event_sources = pd.DataFrame(
+        [
+            {"claim_id": "002", "source_key": "001"},
+            {"claim_id": "001", "source_key": "001"},
+        ]
+    )
+    with tarfile.open(raw / "terralore-chronicle-events-1.0.0.tar.gz", "w:gz") as tf:
+        for member, df in (
+            ("1.0.0/events.csv", events),
+            ("1.0.0/sources.csv", sources),
+            ("1.0.0/event-sources.csv", event_sources),
+        ):
+            payload = df.to_csv(index=False).encode("utf-8")
+            info = tarfile.TarInfo(name=member)
+            info.size = len(payload)
+            tf.addfile(info, io.BytesIO(payload))
+
+
+def _ncei_storm_snapshot(root):
+    import gzip
+
+    raw = root / "ncei_storm_events_2024" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    details = pd.DataFrame(
+        [
+            {
+                **{c: f"d_{c}_2" for c in ev.NCEI_STORM_SPEC["tables"]["details"]["keep"]},
+                "EVENT_ID": "002",
+                "EPISODE_ID": "001",
+                "EPISODE_NARRATIVE": "drop",
+                "EVENT_NARRATIVE": "drop",
+                "DATA_SOURCE": "CSV",
+            },
+            {
+                **{c: f"d_{c}_1" for c in ev.NCEI_STORM_SPEC["tables"]["details"]["keep"]},
+                "EVENT_ID": "001",
+                "EPISODE_ID": "001",
+                "EPISODE_NARRATIVE": "drop",
+                "EVENT_NARRATIVE": "drop",
+                "DATA_SOURCE": "CSV",
+            },
+        ]
+    )
+    locations = pd.DataFrame(
+        [
+            {
+                **{c: f"l_{c}_2" for c in ev.NCEI_STORM_SPEC["tables"]["locations"]["keep"]},
+                "EVENT_ID": "002",
+                "EPISODE_ID": "001",
+                "LAT2": "0",
+                "LON2": "0",
+            },
+            {
+                **{c: f"l_{c}_1" for c in ev.NCEI_STORM_SPEC["tables"]["locations"]["keep"]},
+                "EVENT_ID": "001",
+                "EPISODE_ID": "001",
+                "LAT2": "0",
+                "LON2": "0",
+            },
+        ]
+    )
+    fatalities = pd.DataFrame(
+        [
+            {
+                **{c: f"f_{c}" for c in ev.NCEI_STORM_SPEC["tables"]["fatalities"]["keep"]},
+                "FATALITY_ID": "001",
+                "EVENT_ID": "001",
+                "FATALITY_AGE": "45",
+                "FATALITY_SEX": "M",
+                "FATALITY_DATE": "01/01/2024",
+            }
+        ]
+    )
+    for key, df in (
+        ("details", details),
+        ("locations", locations),
+        ("fatalities", fatalities),
+    ):
+        (raw / ev.NCEI_STORM_FILES[key]).write_bytes(
+            gzip.compress(df.to_csv(index=False).encode("utf-8"))
+        )
+
+
+def test_wind_fragility_view_and_builder(tmp_path):
+    with pytest.raises(
+        ev.ViewError, match=r"^no Wind Fragility Database zip archive in the snapshot$"
+    ):
+        ev._build_wind_fragility(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _wind_fragility_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_wind_fragility(root, out, manifest)
+    ev._build_wind_fragility(root, out, manifest)
+    curves = pd.read_csv(out / "zen_wind_fragility" / "curves.csv", dtype=str)
+    sources = pd.read_csv(out / "zen_wind_fragility" / "sources.csv", dtype=str)
+    disc = pd.read_csv(out / "zen_wind_fragility" / "discretized.csv", dtype=str)
+    assert curves["Curve_ID"].tolist() == ["001", "002"]
+    assert "Notes" not in curves and "Authors" not in sources and "V1" not in disc
+    assert sources["Source_ID"].tolist() == ["001"]
+    view = manifest["zen_wind_fragility"]
+    assert view["pseudonymised"] == []
+    assert view["dropped"] == [
+        "CURVES.Source_Location",
+        "CURVES.Notes",
+        "CURVES.Limit_State_Definition",
+        "DISCRETIZED.V1..V149_intermediate_grid",
+        "SOURCES.Authors",
+        "SOURCES.Title",
+    ]
+    assert len(view["relations"]) == 5 and all(r["orphans"] == 0 for r in view["relations"])
+    assert view["sampling"] == {
+        "method": (
+            "complete 5-table Wind Fragility Database v2026.10 relational release (no row sampling)"
+        )
+    }
+    assert view["source_snapshot"] == f"zen_wind_fragility/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_terralore_chronicle_view_and_builder(tmp_path):
+    with pytest.raises(
+        ev.ViewError, match=r"^no TerraLore chronicle tar\.gz archive in the snapshot$"
+    ):
+        ev._build_terralore_chronicle(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _terralore_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_terralore_chronicle(root, out, manifest)
+    ev._build_terralore_chronicle(root, out, manifest)
+    events = pd.read_csv(
+        out / "zen_terralore_chronicle" / "events.csv", dtype=str, keep_default_na=False
+    )
+    sources = pd.read_csv(
+        out / "zen_terralore_chronicle" / "sources.csv", dtype=str, keep_default_na=False
+    )
+    assert events["claim_id"].tolist() == ["001", "002"]
+    assert events["country_code"].tolist() == ["NA", "FR"]
+    assert sources["country_code"].tolist() == ["NA"]
+    assert "summary" not in events and "url" not in sources
+    view = manifest["zen_terralore_chronicle"]
+    assert view["pseudonymised"] == []
+    assert view["dropped"] == [
+        "events.title",
+        "events.summary",
+        "events.canonical_url",
+        "sources.label",
+        "sources.url",
+        "events.ndjson",
+    ]
+    assert len(view["relations"]) == 2 and all(r["orphans"] == 0 for r in view["relations"])
+    assert view["sampling"] == {
+        "method": (
+            "complete 3-table TerraLore v1.0.0 historical chronicle relational archive "
+            "(no row sampling)"
+        )
+    }
+    assert view["source_snapshot"] == f"zen_terralore_chronicle/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_ncei_storm_events_view_and_builder(tmp_path):
+    with pytest.raises(
+        ev.ViewError, match=r"^missing NOAA NCEI Storm Events CSV archives in the snapshot$"
+    ):
+        ev._build_ncei_storm_events(tmp_path / "empty", tmp_path / "err", {})
+    partial = tmp_path / "partial"
+    partial_raw = partial / "ncei_storm_events_2024" / ev.WAVE24_SNAPSHOT / "raw"
+    partial_raw.mkdir(parents=True)
+    (partial_raw / ev.NCEI_STORM_FILES["details"]).write_bytes(b"x")
+    with pytest.raises(
+        ev.ViewError, match=r"^missing NOAA NCEI Storm Events CSV archives in the snapshot$"
+    ):
+        ev._build_ncei_storm_events(partial, tmp_path / "err2", {})
+    root = tmp_path / "acq"
+    _ncei_storm_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_ncei_storm_events(root, out, manifest)
+    ev._build_ncei_storm_events(root, out, manifest)
+    details = pd.read_csv(out / "ncei_storm_events_2024" / "details.csv", dtype=str)
+    locations = pd.read_csv(out / "ncei_storm_events_2024" / "locations.csv", dtype=str)
+    fatalities = pd.read_csv(out / "ncei_storm_events_2024" / "fatalities.csv", dtype=str)
+    assert details["EVENT_ID"].tolist() == ["001", "002"]
+    assert locations["EVENT_ID"].tolist() == ["001", "002"]
+    assert fatalities["FATALITY_ID"].tolist() == ["001"]
+    assert (
+        "EVENT_NARRATIVE" not in details
+        and "LAT2" not in locations
+        and "FATALITY_AGE" not in fatalities
+    )
+    view = manifest["ncei_storm_events_2024"]
+    assert view["pseudonymised"] == []
+    assert view["dropped"] == [
+        "details.EPISODE_NARRATIVE",
+        "details.EVENT_NARRATIVE",
+        "details.DATA_SOURCE",
+        "locations.LAT2",
+        "locations.LON2",
+        "fatalities.FATALITY_AGE",
+        "fatalities.FATALITY_SEX",
+        "fatalities.FATALITY_DATE",
+    ]
+    assert len(view["relations"]) == 3 and all(r["orphans"] == 0 for r in view["relations"])
+    assert view["sampling"] == {
+        "method": (
+            "complete 2024 annual NOAA NCEI Storm Events 3-table relational release "
+            "(no row sampling)"
+        )
+    }
+    assert view["source_snapshot"] == f"ncei_storm_events_2024/{ev.WAVE24_SNAPSHOT}"

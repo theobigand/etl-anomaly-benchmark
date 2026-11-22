@@ -6756,6 +6756,375 @@ def _build_blazar_flares(root: Path, out: Path, manifest: dict[str, Any]) -> Non
     )
 
 
+WIND_FRAGILITY_PREFIX = "Wind_Fragility_Database_v2026.10/data/"
+WIND_FRAGILITY_SPEC: dict[str, Any] = {
+    "tables": {
+        "curves": {
+            "keep": [
+                "Curve_ID",
+                "Source_ID",
+                "Asset_Class",
+                "Material",
+                "Structure_Form",
+                "Structure_Function",
+                "Circuit_Count",
+                "Voltage_kV",
+                "Structure_Height_m",
+                "Span_Length_m",
+                "Hazard_Type",
+                "Damage_State",
+                "Damage_State_Count",
+                "Model_Form",
+                "Derivation_Method",
+                "Geography_Country",
+            ]
+        },
+        "discretized": {
+            "keep": [
+                "Curve_ID",
+                "Source_ID",
+                "Asset_Class",
+                "Damage_State",
+                "Model_Form",
+                "Median_mps",
+                "Brackets_P50",
+                "IM_Averaging_Time_s",
+                "IM_Reference_Height_m",
+                "IM_Exposure",
+                "Evaluation",
+                "V0",
+                "V25",
+                "V50",
+                "V75",
+                "V100",
+                "V150",
+            ]
+        },
+        "parameters": {
+            "keep": [
+                "Curve_ID",
+                "Param_Name",
+                "Param_Value",
+                "Param_Unit",
+                "Param_Applies_When",
+            ]
+        },
+        "points": {
+            "keep": [
+                "Curve_ID",
+                "IM_Value",
+                "Probability",
+                "Point_Source",
+            ]
+        },
+        "sources": {
+            "keep": [
+                "Source_ID",
+                "DOI",
+                "Year",
+                "Venue",
+                "Publication_Type",
+                "N_Curves",
+            ]
+        },
+    },
+    "relations": [
+        ["curves", "Source_ID", "sources", "Source_ID"],
+        ["discretized", "Curve_ID", "curves", "Curve_ID"],
+        ["discretized", "Source_ID", "sources", "Source_ID"],
+        ["parameters", "Curve_ID", "curves", "Curve_ID"],
+        ["points", "Curve_ID", "curves", "Curve_ID"],
+    ],
+}
+
+
+def wind_fragility_view(
+    tables: dict[str, pd.DataFrame],
+) -> tuple[dict[str, pd.DataFrame], list[dict[str, Any]]]:
+    """Five-table power infrastructure wind fragility relational schema without author lists."""
+    views, relations = tables_view(tables, WIND_FRAGILITY_SPEC)
+    ordered = {
+        name: frame.sort_values(list(frame.columns)).reset_index(drop=True)
+        for name, frame in views.items()
+    }
+    return ordered, relations
+
+
+def _build_wind_fragility(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import zipfile
+
+    archive = (
+        root
+        / "zen_wind_fragility"
+        / WAVE24_SNAPSHOT
+        / "raw"
+        / "Wind_Fragility_Database_v2026.10.zip"
+    )
+    if not archive.exists():
+        raise ViewError("no Wind Fragility Database zip archive in the snapshot")
+    tables: dict[str, pd.DataFrame] = {}
+    with zipfile.ZipFile(archive) as zf:
+        for name in WIND_FRAGILITY_SPEC["tables"]:
+            with zf.open(f"{WIND_FRAGILITY_PREFIX}{name.upper()}.csv") as handle:
+                tables[name] = pd.read_csv(handle, dtype=str)
+    views, relations = wind_fragility_view(tables)
+    folder = out / "zen_wind_fragility"
+    folder.mkdir(parents=True, exist_ok=True)
+    files: dict[str, tuple[Path, int]] = {}
+    for name, frame in views.items():
+        target = folder / f"{name}.csv"
+        frame.to_csv(target, index=False)
+        files[f"{name}.csv"] = (target, len(frame))
+    _record(
+        manifest,
+        "zen_wind_fragility",
+        files,
+        dropped=[
+            "CURVES.Source_Location",
+            "CURVES.Notes",
+            "CURVES.Limit_State_Definition",
+            "DISCRETIZED.V1..V149_intermediate_grid",
+            "SOURCES.Authors",
+            "SOURCES.Title",
+        ],
+        pseudonymised=[],
+        relations=relations,
+        sampling={
+            "method": "complete 5-table Wind Fragility Database v2026.10 relational release (no row sampling)"  # noqa: E501
+        },
+        source_snapshot=f"zen_wind_fragility/{WAVE24_SNAPSHOT}",
+    )
+
+
+TERRALORE_MEMBERS = {
+    "events": "1.0.0/events.csv",
+    "sources": "1.0.0/sources.csv",
+    "event_sources": "1.0.0/event-sources.csv",
+}
+TERRALORE_SPEC: dict[str, Any] = {
+    "tables": {
+        "events": {
+            "keep": [
+                "claim_id",
+                "country_code",
+                "country_name",
+                "year",
+                "year_label",
+                "end_year",
+                "category",
+                "era_id",
+                "history_updated",
+            ]
+        },
+        "sources": {
+            "keep": [
+                "source_key",
+                "country_code",
+                "source_id",
+                "publisher",
+                "kind",
+                "license",
+                "accessed",
+            ]
+        },
+        "event_sources": {
+            "keep": [
+                "claim_id",
+                "source_key",
+            ]
+        },
+    },
+    "relations": [
+        ["event_sources", "claim_id", "events", "claim_id"],
+        ["event_sources", "source_key", "sources", "source_key"],
+    ],
+}
+
+
+def terralore_chronicle_view(
+    tables: dict[str, pd.DataFrame],
+) -> tuple[dict[str, pd.DataFrame], list[dict[str, Any]]]:
+    """Three-table TerraLore historical chronicle relational schema preserving ISO-2 'NA'."""
+    views, relations = tables_view(tables, TERRALORE_SPEC)
+    ordered = {
+        name: frame.sort_values(list(frame.columns)).reset_index(drop=True)
+        for name, frame in views.items()
+    }
+    return ordered, relations
+
+
+def _build_terralore_chronicle(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import tarfile
+
+    archive = (
+        root
+        / "zen_terralore_chronicle"
+        / WAVE24_SNAPSHOT
+        / "raw"
+        / "terralore-chronicle-events-1.0.0.tar.gz"
+    )
+    if not archive.exists():
+        raise ViewError("no TerraLore chronicle tar.gz archive in the snapshot")
+    tables: dict[str, pd.DataFrame] = {}
+    with tarfile.open(archive) as tf:
+        for name, member in TERRALORE_MEMBERS.items():
+            tables[name] = pd.read_csv(tf.extractfile(member), dtype=str, keep_default_na=False)
+    views, relations = terralore_chronicle_view(tables)
+    folder = out / "zen_terralore_chronicle"
+    folder.mkdir(parents=True, exist_ok=True)
+    files: dict[str, tuple[Path, int]] = {}
+    for name, frame in views.items():
+        target = folder / f"{name}.csv"
+        frame.to_csv(target, index=False)
+        files[f"{name}.csv"] = (target, len(frame))
+    _record(
+        manifest,
+        "zen_terralore_chronicle",
+        files,
+        dropped=[
+            "events.title",
+            "events.summary",
+            "events.canonical_url",
+            "sources.label",
+            "sources.url",
+            "events.ndjson",
+        ],
+        pseudonymised=[],
+        relations=relations,
+        sampling={
+            "method": "complete 3-table TerraLore v1.0.0 historical chronicle relational archive (no row sampling)"  # noqa: E501
+        },
+        source_snapshot=f"zen_terralore_chronicle/{WAVE24_SNAPSHOT}",
+    )
+
+
+NCEI_STORM_FILES = {
+    "details": "StormEvents_details-ftp_v1.0_d2024_c20261119.csv.gz",
+    "locations": "StormEvents_locations-ftp_v1.0_d2024_c20261119.csv.gz",
+    "fatalities": "StormEvents_fatalities-ftp_v1.0_d2024_c20261119.csv.gz",
+}
+NCEI_STORM_SPEC: dict[str, Any] = {
+    "tables": {
+        "details": {
+            "keep": [
+                "EVENT_ID",
+                "EPISODE_ID",
+                "BEGIN_YEARMONTH",
+                "BEGIN_DAY",
+                "BEGIN_TIME",
+                "END_YEARMONTH",
+                "END_DAY",
+                "END_TIME",
+                "STATE",
+                "STATE_FIPS",
+                "YEAR",
+                "MONTH_NAME",
+                "EVENT_TYPE",
+                "CZ_TYPE",
+                "CZ_FIPS",
+                "CZ_NAME",
+                "WFO",
+                "CZ_TIMEZONE",
+                "INJURIES_DIRECT",
+                "INJURIES_INDIRECT",
+                "DEATHS_DIRECT",
+                "DEATHS_INDIRECT",
+                "DAMAGE_PROPERTY",
+                "DAMAGE_CROPS",
+                "SOURCE",
+                "MAGNITUDE",
+                "MAGNITUDE_TYPE",
+                "FLOOD_CAUSE",
+                "TOR_F_SCALE",
+                "BEGIN_LAT",
+                "BEGIN_LON",
+                "END_LAT",
+                "END_LON",
+            ]
+        },
+        "locations": {
+            "keep": [
+                "EVENT_ID",
+                "EPISODE_ID",
+                "YEARMONTH",
+                "LOCATION_INDEX",
+                "RANGE",
+                "AZIMUTH",
+                "LOCATION",
+                "LATITUDE",
+                "LONGITUDE",
+            ]
+        },
+        "fatalities": {
+            "keep": [
+                "FATALITY_ID",
+                "EVENT_ID",
+                "FAT_YEARMONTH",
+                "FAT_DAY",
+                "FAT_TIME",
+                "FATALITY_TYPE",
+                "FATALITY_LOCATION",
+                "EVENT_YEARMONTH",
+            ]
+        },
+    },
+    "relations": [
+        ["locations", "EVENT_ID", "details", "EVENT_ID"],
+        ["locations", "EPISODE_ID", "details", "EPISODE_ID"],
+        ["fatalities", "EVENT_ID", "details", "EVENT_ID"],
+    ],
+}
+
+
+def ncei_storm_events_view(
+    tables: dict[str, pd.DataFrame],
+) -> tuple[dict[str, pd.DataFrame], list[dict[str, Any]]]:
+    """Three-table NOAA NCEI 2024 Storm Events relational schema without narratives."""
+    views, relations = tables_view(tables, NCEI_STORM_SPEC)
+    ordered = {
+        name: frame.sort_values(list(frame.columns)).reset_index(drop=True)
+        for name, frame in views.items()
+    }
+    return ordered, relations
+
+
+def _build_ncei_storm_events(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "ncei_storm_events_2024" / WAVE24_SNAPSHOT / "raw"
+    paths = {name: raw / fname for name, fname in NCEI_STORM_FILES.items()}
+    if not all(p.exists() for p in paths.values()):
+        raise ViewError("missing NOAA NCEI Storm Events CSV archives in the snapshot")
+    tables = {name: pd.read_csv(path, dtype=str) for name, path in paths.items()}
+    views, relations = ncei_storm_events_view(tables)
+    folder = out / "ncei_storm_events_2024"
+    folder.mkdir(parents=True, exist_ok=True)
+    files: dict[str, tuple[Path, int]] = {}
+    for name, frame in views.items():
+        target = folder / f"{name}.csv"
+        frame.to_csv(target, index=False)
+        files[f"{name}.csv"] = (target, len(frame))
+    _record(
+        manifest,
+        "ncei_storm_events_2024",
+        files,
+        dropped=[
+            "details.EPISODE_NARRATIVE",
+            "details.EVENT_NARRATIVE",
+            "details.DATA_SOURCE",
+            "locations.LAT2",
+            "locations.LON2",
+            "fatalities.FATALITY_AGE",
+            "fatalities.FATALITY_SEX",
+            "fatalities.FATALITY_DATE",
+        ],
+        pseudonymised=[],
+        relations=relations,
+        sampling={
+            "method": "complete 2024 annual NOAA NCEI Storm Events 3-table relational release (no row sampling)"  # noqa: E501
+        },
+        source_snapshot=f"ncei_storm_events_2024/{WAVE24_SNAPSHOT}",
+    )
+
+
 BUILD_STEPS = (
     _build_openalex,
     _build_monash,
@@ -6845,6 +7214,9 @@ BUILD_STEPS = (
     _build_moodle_events,
     _build_norp_solar_bursts,
     _build_blazar_flares,
+    _build_wind_fragility,
+    _build_terralore_chronicle,
+    _build_ncei_storm_events,
     _build_flat,
     _build_series,
     _build_ukspend,

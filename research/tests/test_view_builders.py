@@ -476,6 +476,18 @@ def _blazar_flares(root, tmp):
     tev._blazar_snapshot(root)
 
 
+def _wind_fragility(root, tmp):
+    tev._wind_fragility_snapshot(root)
+
+
+def _terralore_chronicle(root, tmp):
+    tev._terralore_snapshot(root)
+
+
+def _ncei_storm_events(root, tmp):
+    tev._ncei_storm_snapshot(root)
+
+
 def _tlc(root, tmp):
     tev._tlc_page(
         [{}, {"tpep_pickup_datetime": "2023-03-07T07:00:00.000", "total_amount": "0.0"}]
@@ -547,6 +559,9 @@ CASES = {
     "moodle_events": (_moodle_events, ev._build_moodle_events, ["zen_moodle_events"], {}),
     "norp_solar_bursts": (_norp_solar_bursts, ev._build_norp_solar_bursts, ["zen_norp_solar_bursts"], {}),  # noqa: E501
     "blazar_flares": (_blazar_flares, ev._build_blazar_flares, ["zen_blazar_flares"], {}),
+    "wind_fragility": (_wind_fragility, ev._build_wind_fragility, ["zen_wind_fragility"], {}),
+    "terralore_chronicle": (_terralore_chronicle, ev._build_terralore_chronicle, ["zen_terralore_chronicle"], {}),  # noqa: E501
+    "ncei_storm_events": (_ncei_storm_events, ev._build_ncei_storm_events, ["ncei_storm_events_2024"], {}),  # noqa: E501
     "tlc": (_tlc, ev._build_tlc, ["nyc_tlc_yellow"], {}),
     "maude": (_maude_case, ev._build_maude, ["openfda_device_event"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),

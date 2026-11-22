@@ -2416,6 +2416,27 @@
   },
   {
    "failed": null,
+   "group": "wind_fragility_power_db",
+   "id": "zen_wind_fragility",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "terralore_chronicle_db",
+   "id": "zen_terralore_chronicle",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
+   "group": "noaa_ncei_storm_events",
+   "id": "ncei_storm_events_2024",
+   "status": "experiment_ready",
+   "stratum": "C5"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2705,12 +2726,15 @@
    "japan_reconstructed_buildings",
    "jolpica_f1",
    "mimic_iv_bidmc",
+   "noaa_ncei_storm_events",
    "openalex",
    "paleobiology_database",
    "stackexchange",
+   "terralore_chronicle_db",
    "uk_charity_commission",
    "usda_fdc",
    "wals_cldf",
+   "wind_fragility_power_db",
    "zambia_procurement"
   ],
   "C6": [
@@ -2785,13 +2809,13 @@
    "structurally_valid": 38
   },
   "C5": {
-   "acquired": 36,
-   "discovered": 36,
-   "experiment_ready": 36,
-   "protocol_ready": 36,
-   "rights_verified": 36,
-   "scientifically_eligible": 36,
-   "structurally_valid": 36
+   "acquired": 39,
+   "discovered": 39,
+   "experiment_ready": 39,
+   "protocol_ready": 39,
+   "rights_verified": 39,
+   "scientifically_eligible": 39,
+   "structurally_valid": 39
   },
   "C6": {
    "acquired": 22,

@@ -10632,6 +10632,100 @@
    "stratum": "C4",
    "upstream": "first party: astrophysics authors deposited complete Fermi-LAT gamma-ray blazar flare catalog on Zenodo 23039054 under CC BY 4.0",
    "upstream_verified": true
+  },
+  {
+   "attribution": "Wind Fragility Database for Power Infrastructure Assets v2026.10 (Zenodo record 23399966, CC BY 4.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "Wind_Fragility_Database_v2026.10.zip",
+     "observed": "v2026.10 complete 5-table relational database release",
+     "url": "https://zenodo.org/api/records/23399966/files/Wind_Fragility_Database_v2026.10.zip/content"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_wind_fragility",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/23399966",
+   "licence_text": "Zenodo API metadata for record 23399966 (read 2026-11-22): license cc-by-4.0 (CC BY 4.0)",
+   "max_bytes": 16777216,
+   "method": "complete 5-table relational wind fragility and vulnerability database (CURVES, DISCRETIZED, PARAMETERS, POINTS, SOURCES)",
+   "min_interval": 1.0,
+   "privacy": "engineering fragility curve parameters, wind-speed points and bibliographic source metadata; bibliographic author names and titles dropped in experimental view",
+   "publisher": "Zenodo 23399966 Authors (Power Infrastructure Wind Fragility Database)",
+   "rate_limit": "single Zenodo ZIP archive download with descriptive User-Agent",
+   "redistribution": "CC BY 4.0; raw archive stays local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: structural and power-systems engineering authors deposited curated Wind Fragility Database v2026.10 on Zenodo 23399966 under CC BY 4.0",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "TerraLore Historical Chronicle Events and Sources Relational Archive v1.0.0 (Zenodo record 22059347, CC BY 4.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "terralore-chronicle-events-1.0.0.tar.gz",
+     "observed": "v1.0.0 complete 3-table relational chronicle archive",
+     "url": "https://zenodo.org/api/records/22059347/files/terralore-chronicle-events-1.0.0.tar.gz/content"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_terralore_chronicle",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/22059347",
+   "licence_text": "Zenodo API metadata for record 22059347 (read 2026-11-22): license cc-by-4.0 (CC BY 4.0)",
+   "max_bytes": 16777216,
+   "method": "complete 3-table relational historical chronicle database (events, sources, event_sources junction table)",
+   "min_interval": 1.0,
+   "privacy": "historical chronicle events, country codes, dates and source provenance metadata; free-text summaries and external URLs dropped in experimental view",
+   "publisher": "TerraLore Project / Zenodo 22059347 Authors",
+   "rate_limit": "single Zenodo tar.gz archive download with descriptive User-Agent",
+   "redistribution": "CC BY 4.0; raw archive stays local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: TerraLore authors deposited v1.0.0 relational chronicle archive on Zenodo 22059347 under CC BY 4.0",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "NOAA National Centers for Environmental Information (NCEI) Storm Events Database 2024 Release (c20261119, U.S. Federal Public Domain); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "StormEvents_details-ftp_v1.0_d2024_c20261119.csv.gz",
+     "observed": "2024 annual details table (c20261119)",
+     "url": "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/StormEvents_details-ftp_v1.0_d2024_c20261119.csv.gz"
+    },
+    {
+     "name": "StormEvents_locations-ftp_v1.0_d2024_c20261119.csv.gz",
+     "observed": "2024 annual locations table (c20261119)",
+     "url": "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/StormEvents_locations-ftp_v1.0_d2024_c20261119.csv.gz"
+    },
+    {
+     "name": "StormEvents_fatalities-ftp_v1.0_d2024_c20261119.csv.gz",
+     "observed": "2024 annual fatalities table (c20261119)",
+     "url": "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/StormEvents_fatalities-ftp_v1.0_d2024_c20261119.csv.gz"
+    }
+   ],
+   "hosts": [
+    "www.ncei.noaa.gov"
+   ],
+   "id": "ncei_storm_events_2024",
+   "licence_class": "open",
+   "licence_location": "https://www.ncei.noaa.gov/pub/data/swdi/stormevents/csvfiles/",
+   "licence_text": "17 U.S.C. 105 U.S. Federal Government work (NOAA/NCEI Storm Events Database): public domain with no copyright restrictions",
+   "max_bytes": 33554432,
+   "method": "complete 2024 annual 3-table relational release (details, locations, fatalities)",
+   "min_interval": 1.0,
+   "privacy": "severe weather episode/event records, coordinates and aggregate fatality location context; narrative text fields and individual fatality age/sex attributes dropped in experimental view",
+   "publisher": "NOAA National Centers for Environmental Information (NCEI)",
+   "rate_limit": "three sequential gzipped CSV downloads with 1s interval and descriptive User-Agent",
+   "redistribution": "U.S. Federal public domain; raw gzipped CSVs stay local",
+   "retries": 2,
+   "stratum": "C5",
+   "upstream": "first party: NOAA National Weather Service and NCEI publish official Storm Events relational tables in the U.S. public domain",
+   "upstream_verified": true
   }
  ]
 }

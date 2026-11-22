@@ -3130,6 +3130,60 @@
   "pseudonymised": [],
   "source_snapshot": "monash_zenodo/2026-11-21"
  },
+ "ncei_storm_events_2024": {
+  "dropped": [
+   "details.EPISODE_NARRATIVE",
+   "details.EVENT_NARRATIVE",
+   "details.DATA_SOURCE",
+   "locations.LAT2",
+   "locations.LON2",
+   "fatalities.FATALITY_AGE",
+   "fatalities.FATALITY_SEX",
+   "fatalities.FATALITY_DATE"
+  ],
+  "files": {
+   "details.csv": {
+    "rows": 69802,
+    "sha256": "0294952e8a5205d84bf11ba5ff7c062ad99beb825a2806011fa0b500db514bab"
+   },
+   "fatalities.csv": {
+    "rows": 1142,
+    "sha256": "11b59d374193017faa959d932e60ee2587f89d402c95e65c32b8c51447a28794"
+   },
+   "locations.csv": {
+    "rows": 40258,
+    "sha256": "d803f3ad276520d84c264cc63cc539ccf05404ba300f31b4a2cef6a4ad52f7f7"
+   }
+  },
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 40258,
+    "child": "locations.EVENT_ID",
+    "orphans": 0,
+    "parent": "details.EVENT_ID",
+    "share": 0.0
+   },
+   {
+    "checked": 40258,
+    "child": "locations.EPISODE_ID",
+    "orphans": 0,
+    "parent": "details.EPISODE_ID",
+    "share": 0.0
+   },
+   {
+    "checked": 1142,
+    "child": "fatalities.EVENT_ID",
+    "orphans": 0,
+    "parent": "details.EVENT_ID",
+    "share": 0.0
+   }
+  ],
+  "sampling": {
+   "method": "complete 2024 annual NOAA NCEI Storm Events 3-table relational release (no row sampling)"
+  },
+  "source_snapshot": "ncei_storm_events_2024/2026-11-22"
+ },
  "noaa_coops_tides": {
   "dropped": [],
   "files": {
@@ -5518,6 +5572,51 @@
   },
   "source_snapshot": "zen_telecom_kpis/2026-11-22"
  },
+ "zen_terralore_chronicle": {
+  "dropped": [
+   "events.title",
+   "events.summary",
+   "events.canonical_url",
+   "sources.label",
+   "sources.url",
+   "events.ndjson"
+  ],
+  "files": {
+   "event_sources.csv": {
+    "rows": 8268,
+    "sha256": "43e24e1e011d693e055e92530e65accff7bc0a17314ee735c7eb3ca2bb66583f"
+   },
+   "events.csv": {
+    "rows": 4564,
+    "sha256": "10e1a3aa85e3ae9d7e3fb489416591d34d3b60cb9127ead40e43be6b5962d157"
+   },
+   "sources.csv": {
+    "rows": 3922,
+    "sha256": "1f262829a45ebb31df74c3e7d04faec2004f7543338b85546dc6e1602eb43262"
+   }
+  },
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 8268,
+    "child": "event_sources.claim_id",
+    "orphans": 0,
+    "parent": "events.claim_id",
+    "share": 0.0
+   },
+   {
+    "checked": 8268,
+    "child": "event_sources.source_key",
+    "orphans": 0,
+    "parent": "sources.source_key",
+    "share": 0.0
+   }
+  ],
+  "sampling": {
+   "method": "complete 3-table TerraLore v1.0.0 historical chronicle relational archive (no row sampling)"
+  },
+  "source_snapshot": "zen_terralore_chronicle/2026-11-22"
+ },
  "zen_unisg_factory": {
   "dropped": [
    "message identifiers"
@@ -5569,5 +5668,79 @@
    "missing_rain_rows": 25
   },
   "source_snapshot": "zen_water_demand/2026-11-22"
+ },
+ "zen_wind_fragility": {
+  "dropped": [
+   "CURVES.Source_Location",
+   "CURVES.Notes",
+   "CURVES.Limit_State_Definition",
+   "DISCRETIZED.V1..V149_intermediate_grid",
+   "SOURCES.Authors",
+   "SOURCES.Title"
+  ],
+  "files": {
+   "curves.csv": {
+    "rows": 507,
+    "sha256": "84da8a67eaa08c22119501a0aed132606b131b28b4c1510502e0ec7364943eb9"
+   },
+   "discretized.csv": {
+    "rows": 507,
+    "sha256": "7ded2590efe3c6f46341e6016bf0dbe7f97ccf5bfb91eac31f31b0b478d1de4f"
+   },
+   "parameters.csv": {
+    "rows": 1988,
+    "sha256": "373287a96aacdead489e3b134f1c7357ea61d03bc1c505b010668ba8f1d49574"
+   },
+   "points.csv": {
+    "rows": 45608,
+    "sha256": "fdc80998bb38eba6497b61e8af21e374526837c20448809e73bbba644c2a4b0e"
+   },
+   "sources.csv": {
+    "rows": 52,
+    "sha256": "3d87269cee9a21ae874b585dd4d7713ac6105515054a26ce5d46f4483c1607fb"
+   }
+  },
+  "pseudonymised": [],
+  "relations": [
+   {
+    "checked": 507,
+    "child": "curves.Source_ID",
+    "orphans": 0,
+    "parent": "sources.Source_ID",
+    "share": 0.0
+   },
+   {
+    "checked": 507,
+    "child": "discretized.Curve_ID",
+    "orphans": 0,
+    "parent": "curves.Curve_ID",
+    "share": 0.0
+   },
+   {
+    "checked": 507,
+    "child": "discretized.Source_ID",
+    "orphans": 0,
+    "parent": "sources.Source_ID",
+    "share": 0.0
+   },
+   {
+    "checked": 1988,
+    "child": "parameters.Curve_ID",
+    "orphans": 0,
+    "parent": "curves.Curve_ID",
+    "share": 0.0
+   },
+   {
+    "checked": 45608,
+    "child": "points.Curve_ID",
+    "orphans": 0,
+    "parent": "curves.Curve_ID",
+    "share": 0.0
+   }
+  ],
+  "sampling": {
+   "method": "complete 5-table Wind Fragility Database v2026.10 relational release (no row sampling)"
+  },
+  "source_snapshot": "zen_wind_fragility/2026-11-22"
  }
 }

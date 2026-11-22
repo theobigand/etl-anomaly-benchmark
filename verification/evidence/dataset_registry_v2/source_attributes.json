@@ -900,6 +900,17 @@
    "C3": "weekly atmospheric CO2 mole fraction time series"
   }
  },
+ "noaa_ncei_storm_events": {
+  "curator": "noaa",
+  "domain": "severe weather impact archives",
+  "generating_system": "NOAA National Weather Service / NCEI Storm Data Relational Archival System",
+  "note": "complete 2024 annual 3-table relational release (69,802 details, 40,258 locations, 1,142 fatalities; 0 orphans across 3 FKs)",
+  "producer": "NOAA National Centers for Environmental Information (NCEI)",
+  "schema_family": "storm event impact relational tables",
+  "structure": {
+   "C5": "meteorological episode-event-location-fatality hierarchy"
+  }
+ },
  "ntnu_ev_charging": {
   "curator": "zenodo",
   "domain": "electric vehicle charging",
@@ -1187,6 +1198,17 @@
   "schema_family": "telecom operator kpi time series",
   "structure": {
    "C3": "five-minute telecommunications operator infrastructure KPI time series"
+  }
+ },
+ "terralore_chronicle_db": {
+  "curator": "zenodo",
+  "domain": "historical chronicle archives",
+  "generating_system": "TerraLore Historical Chronicle Event-Source Curation & Verification Pipeline (v1.0.0)",
+  "note": "3-table relational historical chronicle database (4,564 events, 3,922 sources, 8,268 event_sources junction links; 0 orphans across 2 FKs)",
+  "producer": "TerraLore Historical Chronicle Project (Zenodo 22059347)",
+  "schema_family": "historical event-source relational tables",
+  "structure": {
+   "C5": "historical chronicle event-source junction linkage"
   }
  },
  "tetouan_power": {
@@ -2093,6 +2115,17 @@
   "schema_family": "wikidata entity json",
   "structure": {
    "C6": "entity documents with claims, qualifiers, references and sitelinks"
+  }
+ },
+ "wind_fragility_power_db": {
+  "curator": "zenodo",
+  "domain": "power infrastructure structural engineering",
+  "generating_system": "Power Infrastructure Wind Fragility & Vulnerability Curve Compilation Pipeline (v2026.10)",
+  "note": "5-table relational engineering fragility curve database (507 curves, 507 discretized curves, 1,988 parameters, 45,608 points, 52 sources; 0 orphans across 5 FKs)",
+  "producer": "Power Infrastructure Wind Fragility Database Consortium (Zenodo 23399966)",
+  "schema_family": "engineering fragility curve relational tables",
+  "structure": {
+   "C5": "engineering fragility curve relational compilation"
   }
  },
  "world_bank_projects": {

@@ -2191,6 +2191,22 @@
    "units": 98723,
    "view": "monash_pedestrian"
   },
+  "ncei_storm_events_2024": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 2024 annual NOAA NCEI Storm Events 3-table relational release (69,802 details, 40,258 locations, 1,142 fatalities; 111,202 total rows)",
+    "0 orphans across all 3 foreign keys (locations.EVENT_ID -> details.EVENT_ID, locations.EPISODE_ID -> details.EPISODE_ID, fatalities.EVENT_ID -> details.EVENT_ID)",
+    "episode/event free-text narratives and individual fatality age/sex attributes dropped"
+   ],
+   "first_party": true,
+   "independent_group": "noaa_ncei_storm_events",
+   "min_units": 1000,
+   "partitions": "hash of EPISODE_ID 70/15/15 keeping linked events, locations and fatalities together",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 111202,
+   "view": "ncei_storm_events_2024"
+  },
   "noaa_coops_tides": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -3677,6 +3693,22 @@
    ],
    "view": "zen_telecom_kpis"
   },
+  "zen_terralore_chronicle": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 3-table TerraLore v1.0.0 historical chronicle relational archive (4,564 events, 3,922 sources, 8,268 event_sources junction rows; 16,754 total rows)",
+    "0 orphans across both foreign keys (event_sources.claim_id -> events.claim_id, event_sources.source_key -> sources.source_key); read with keep_default_na=False to preserve ISO-2 country code NA",
+    "free-text summaries, titles, source labels and external URLs dropped"
+   ],
+   "first_party": true,
+   "independent_group": "terralore_chronicle_db",
+   "min_units": 1000,
+   "partitions": "hash of claim_id 70/15/15 keeping linked event_sources rows with their event",
+   "privacy": "not_needed",
+   "protocol_id": "P-REL",
+   "units": 16754,
+   "view": "zen_terralore_chronicle"
+  },
   "zen_unisg_factory": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -3748,6 +3780,22 @@
    "units": 46026,
    "unsupported_fault_mechanisms": [],
    "view": "zen_water_demand"
+  },
+  "zen_wind_fragility": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete 5-table Wind Fragility Database v2026.10 relational release (507 curves, 507 discretized curves, 1,988 parameters, 45,608 points, 52 sources; 48,662 total rows)",
+    "0 orphans across all 5 foreign keys (curves.Source_ID -> sources.Source_ID, discretized.Curve_ID -> curves.Curve_ID, discretized.Source_ID -> sources.Source_ID, parameters.Curve_ID -> curves.Curve_ID, points.Curve_ID -> curves.Curve_ID)",
+    "bibliographic author names, titles and free-text notes dropped"
+   ],
+   "first_party": true,
+   "independent_group": "wind_fragility_power_db",
+   "min_units": 500,
+   "partitions": "hash of Curve_ID 70/15/15 keeping linked discretized, parameters and points rows with their curve",
+   "privacy": "handled",
+   "protocol_id": "P-REL",
+   "units": 48662,
+   "view": "zen_wind_fragility"
   }
  }
 }

@@ -5730,6 +5730,66 @@
    "stratum": "C4",
    "system": "fermi_lat_blazar_flare_pipeline",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "wind_fragility_power_db",
+   "id": "zen_wind_fragility",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "zenodo:23399966",
+   "reason": "Wind Fragility Database v2026.10: 5 relational tables (507 curves, 507 discretized curves, 1,988 parameters, 45,608 points, 52 sources), 5 foreign keys with 0 orphans, CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Zenodo API metadata for record 23399966: cc-by-4.0 (CC BY 4.0)",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "wind_fragility_power_db",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "terralore_chronicle_db",
+   "id": "zen_terralore_chronicle",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "zenodo:22059347",
+   "reason": "TerraLore Historical Chronicle Events v1.0.0: 3 relational tables (4,564 events, 3,922 sources, 8,268 event_sources junction rows), 2 foreign keys with 0 orphans, CC BY 4.0",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Zenodo API metadata for record 22059347: cc-by-4.0 (CC BY 4.0)",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "terralore_chronicle_db",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "noaa_ncei_storm_events",
+   "id": "ncei_storm_events_2024",
+   "licence_class": "open",
+   "protocols": "P-REL",
+   "publisher": "noaa_ncei",
+   "reason": "NOAA NCEI Storm Events 2024 relational release (c20261119): 3 relational tables (69,802 details, 40,258 locations, 1,142 fatalities), 3 foreign keys with 0 orphans, U.S. Federal Public Domain",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "17 U.S.C. 105 U.S. Federal Government work (NOAA/NCEI public domain)",
+    "ready_for_experiments": true,
+    "structural_validation": true
+   },
+   "stratum": "C5",
+   "system": "noaa_ncei_storm_events",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"
