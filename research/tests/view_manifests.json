@@ -406,6 +406,30 @@
    "source_snapshot": "uk_charity_register/2026-11-22"
   }
  },
+ "chembl_molecules": {
+  "chembl_molecules": {
+   "dropped": [],
+   "files": {
+    "molecules.jsonl": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "molecules.jsonl": "{\"molecule_chembl_id\": \"CHEMBL1\", \"pref_name\": \"mail [email]\"}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "files": [
+     "chembl_mol_p00.json",
+     "chembl_mol_p01.json"
+    ],
+    "method": "identifier-ordered prefix 10 pages x 100 of ChEMBL_37 molecules",
+    "molecules_in": 3,
+    "unique_molecules": 2
+   },
+   "source_snapshot": "chembl_molecules/2026-11-22"
+  }
+ },
  "clue": {
   "zen_clue_lds": {
    "dropped": [
@@ -612,6 +636,34 @@
     "rows_without_time": 0
    },
    "source_snapshot": "4tu_csv/2026-11-21"
+  }
+ },
+ "datacite_dois": {
+  "datacite_dois": {
+   "dropped": [
+    "contributors",
+    "creators",
+    "descriptions"
+   ],
+   "files": {
+    "dois.jsonl": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "dois.jsonl": "{\"attributes\": {\"publisher\": \"Pub [email]\"}, \"id\": \"10.1/a\"}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "dois_in": 3,
+    "files": [
+     "datacite_2025_p00.json",
+     "datacite_2025_p01.json"
+    ],
+    "method": "created-ordered first 10 pages x 100 of published=2025 dataset DOIs",
+    "unique_dois": 2
+   },
+   "source_snapshot": "datacite_dois/2026-11-22"
   }
  },
  "dgccrf_fuel": {
@@ -831,6 +883,57 @@
    "source_snapshot": "fdic_bank_financials/2026-11-22"
   }
  },
+ "federal_register": {
+  "us_federal_register": {
+   "dropped": [],
+   "files": {
+    "documents.jsonl": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "documents.jsonl": "{\"action\": \"Ask [email]\", \"document_number\": \"2025-001\"}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "documents_in": 3,
+    "files": [
+     "fr_2025_p00.json",
+     "fr_2025_p01.json"
+    ],
+    "method": "oldest 20 pages x 100 published in 2025 from Federal Register API v1",
+    "unique_documents": 2
+   },
+   "source_snapshot": "us_federal_register/2026-11-22"
+  }
+ },
+ "florida_bridges": {
+  "zen_florida_bridges": {
+   "dropped": [
+    "objectid",
+    "location_009",
+    "fracture_last_date_093a",
+    "undwater_last_date_093b",
+    "spec_last_date_093c"
+   ],
+   "files": {
+    "bridges.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "bridges.csv": "bridge_id,highway_district_002,county_code_003,maintenance_021,owner_022,functional_class_026,service_on_042a,service_un"
+   },
+   "pseudonymised": [
+    "bridge_id"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "method": "complete Florida bridge structural inspection v1.0 release"
+   },
+   "source_snapshot": "zen_florida_bridges/2026-11-22"
+  }
+ },
  "fugaku": {
   "zen_fdata_fugaku": {
    "dropped": [
@@ -856,6 +959,45 @@
     "truncated": false
    },
    "source_snapshot": "zen_fdata_fugaku/2026-11-21"
+  }
+ },
+ "gbif_cc0": {
+  "gbif_cc0_occurrences": {
+   "dropped": [
+    "creator",
+    "eventRemarks",
+    "fieldNotes",
+    "georeferencedBy",
+    "identifiedBy",
+    "identifiedByIDs",
+    "locality",
+    "occurrenceRemarks",
+    "preparations",
+    "recordedBy",
+    "recordedByIDs",
+    "rightsHolder",
+    "verbatimIdentification",
+    "verbatimLocality"
+   ],
+   "files": {
+    "occurrences.jsonl": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "occurrences.jsonl": "{\"key\": 10, \"license\": \"http://creativecommons.org/publicdomain/zero/1.0/legalcode\", \"media\": [{}], \"note\": \"[email]\"}"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "files": [
+     "gbif_cc0_2024_p00.json",
+     "gbif_cc0_2024_p01.json"
+    ],
+    "method": "offset prefix 5 pages x 300 of 2024 georeferenced CC0_1_0 occurrences",
+    "records_in": 4,
+    "unique_occurrences": 2
+   },
+   "source_snapshot": "gbif_cc0_occurrences/2026-11-22"
   }
  },
  "gfz": {
@@ -1371,6 +1513,32 @@
     "p": 1
    },
    "source_snapshot": "zen_rki_* records of 2026-11-21 (the series are revised by the publisher)"
+  }
+ },
+ "paris_trees": {
+  "paris_urban_trees": {
+   "dropped": [
+    "typeemplacement",
+    "complementadresse",
+    "adresse",
+    "idemplacement",
+    "varieteoucultivar",
+    "geo_point_2d"
+   ],
+   "files": {
+    "trees.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "trees.csv": "idbase,domanialite,arrondissement,libellefrancais,genre,espece,stadedeveloppement,remarquable,circonferenceencm,hauteure"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "genera": 2,
+    "method": "first 25,000 trees ordered ascending by idbase"
+   },
+   "source_snapshot": "paris_urban_trees/2026-11-22"
   }
  },
  "pbdb": {
@@ -2032,6 +2200,38 @@
     "request_files": 1
    },
    "source_snapshot": "wikidata_entities/2026-11-21"
+  }
+ },
+ "wri_power_plants": {
+  "wri_power_plants": {
+   "dropped": [
+    "name",
+    "owner",
+    "url",
+    "wepp_id",
+    "other_fuel1",
+    "other_fuel2",
+    "other_fuel3",
+    "commissioning_year",
+    "year_of_capacity_data",
+    "generation_gwh_2013..2019",
+    "generation_data_source",
+    "estimated_generation_gwh_2013..2015"
+   ],
+   "files": {
+    "power_plants.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "power_plants.csv": "gppd_idnr,country,country_long,primary_fuel,source,geolocation_source,estimated_generation_note_2013,estimated_generatio"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "countries": 2,
+    "method": "complete Global Power Plant Database v1.3.0 CSV release"
+   },
+   "source_snapshot": "wri_power_plants/2026-11-22"
   }
  },
  "xes": {

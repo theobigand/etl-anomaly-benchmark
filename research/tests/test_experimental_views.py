@@ -1076,6 +1076,9 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _datacite_snapshot(root)
     _gbif_snapshot(root)
     _chembl_snapshot(root)
+    _florida_bridges_snapshot(root)
+    _wri_power_plants_snapshot(root)
+    _paris_trees_snapshot(root)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
@@ -1091,7 +1094,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "zen_telecom_kpis", "zen_dk_district_heating", "zen_water_demand", "zen_dmsp_auroral", "us_treasury_dts", "fdic_bank_financials", "sncf_tgv_regularite", "dgccrf_fuel_prices", "us_federal_register", "datacite_dois", "gbif_cc0_occurrences", "chembl_molecules", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "zen_telecom_kpis", "zen_dk_district_heating", "zen_water_demand", "zen_dmsp_auroral", "us_treasury_dts", "fdic_bank_financials", "sncf_tgv_regularite", "dgccrf_fuel_prices", "us_federal_register", "datacite_dois", "gbif_cc0_occurrences", "chembl_molecules", "zen_florida_bridges", "wri_power_plants", "paris_urban_trees", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -8574,3 +8577,219 @@ def test_chembl_molecules_view_and_builder(tmp_path):
         "unique_molecules": 2,
     }
     assert view["source_snapshot"] == f"chembl_molecules/{ev.WAVE24_SNAPSHOT}"
+
+
+def _florida_bridges_snapshot(root):
+    raw = root / "zen_florida_bridges" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    cols = [
+        "objectid",
+        "bridge_id",
+        "location_009",
+        "fracture_last_date_093a",
+        "undwater_last_date_093b",
+        "spec_last_date_093c",
+        *ev.FL_CAT_COLS,
+        *ev.FL_NUM_COLS,
+    ]
+    r1 = (
+        {
+            "objectid": "1",
+            "bridge_id": "B2",
+            "location_009": "drop",
+            "fracture_last_date_093a": "1",
+            "undwater_last_date_093b": "2",
+            "spec_last_date_093c": "3",
+        }  # noqa: E501
+        | {c: "01" for c in ev.FL_CAT_COLS}
+        | {
+            "deck_cond_058": "N",
+            "superstructure_cond_059": "N",
+            "substructure_cond_060": "N",
+            "bridge_condition": "F",
+            "flood_risk_class": "High",
+            "svi_class": "Low",
+        }  # noqa: E501
+        | {c: "bad" for c in ev.FL_NUM_COLS}
+    )
+    r2 = (
+        {
+            "objectid": "2",
+            "bridge_id": "B1",
+            "location_009": "drop2",
+            "fracture_last_date_093a": "",
+            "undwater_last_date_093b": "",
+            "spec_last_date_093c": "",
+        }  # noqa: E501
+        | {c: "02" for c in ev.FL_CAT_COLS}
+        | {
+            "deck_cond_058": "7",
+            "superstructure_cond_059": "8",
+            "substructure_cond_060": "6",
+            "bridge_condition": "G",
+            "flood_risk_class": "Low",
+            "svi_class": "High",
+        }  # noqa: E501
+        | {c: "5.5" for c in ev.FL_NUM_COLS}
+    )
+    pd.DataFrame([r1, r2], columns=cols).to_csv(
+        raw / "DATA_Florida_BridgeInspection_Version1_0.csv", index=False
+    )
+
+
+def _wri_power_plants_snapshot(root):
+    raw = root / "wri_power_plants" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    cols = ["name", "owner", "url", "wepp_id", *ev.WRI_TEXT_COLS, *ev.WRI_NUM_COLS]
+    r1 = (
+        {"name": "Plant B", "owner": "Owner B", "url": "http://b", "wepp_id": "9"}
+        | {c: "002" for c in ev.WRI_TEXT_COLS}
+        | {
+            "gppd_idnr": "W2",
+            "country": "AFG",
+            "country_long": "Afghanistan",
+            "primary_fuel": "Solar",
+        }  # noqa: E501
+        | {c: "bad" for c in ev.WRI_NUM_COLS}
+    )
+    r2 = (
+        {"name": "Plant A", "owner": "Owner A", "url": "http://a", "wepp_id": "8"}
+        | {c: "001" for c in ev.WRI_TEXT_COLS}
+        | {"gppd_idnr": "W1", "country": "NAM", "country_long": "Namibia", "primary_fuel": "Hydro"}  # noqa: E501
+        | {c: "42.5" for c in ev.WRI_NUM_COLS}
+    )
+    pd.DataFrame([r1, r2], columns=cols).to_csv(
+        raw / "global_power_plant_database.csv", index=False
+    )
+
+
+def _paris_trees_snapshot(root):
+    raw = root / "paris_urban_trees" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    cols = [
+        "typeemplacement",
+        "complementadresse",
+        "adresse",
+        "idemplacement",
+        "varieteoucultivar",
+        "geo_point_2d",
+        *ev.PARIS_TEXT_COLS,
+        *ev.PARIS_NUM_COLS,
+    ]
+    r1 = {
+        "typeemplacement": "Arbre",
+        "complementadresse": "x",
+        "adresse": "1 rue A",
+        "idemplacement": "001",
+        "varieteoucultivar": "v",
+        "geo_point_2d": "48.8,2.3",
+        "idbase": "002",
+        "domanialite": "Jardin",
+        "arrondissement": "PARIS 7E",
+        "libellefrancais": "If",
+        "genre": "Taxus",
+        "espece": "baccata",
+        "stadedeveloppement": "Adulte",
+        "remarquable": "NON",
+        "circonferenceencm": "bad",
+        "hauteurenm": "bad",
+    }
+    r2 = {
+        "typeemplacement": "Arbre",
+        "complementadresse": "",
+        "adresse": "2 rue B",
+        "idemplacement": "002",
+        "varieteoucultivar": "",
+        "geo_point_2d": "48.9,2.4",
+        "idbase": "001",
+        "domanialite": "Alignement",
+        "arrondissement": "PARIS 5E",
+        "libellefrancais": "Tilleul",
+        "genre": "Tilia",
+        "espece": "cordata",
+        "stadedeveloppement": "Mature",
+        "remarquable": "OUI",
+        "circonferenceencm": "120",
+        "hauteurenm": "15",
+    }
+    pd.DataFrame([r1, r2], columns=cols).to_csv(raw / "les_arbres_25k.csv", sep=";", index=False)
+
+
+def test_florida_bridges_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no Florida bridge inspection CSV in the snapshot$"):
+        ev._build_florida_bridges(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _florida_bridges_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_florida_bridges(root, out, manifest)
+    ev._build_florida_bridges(root, out, manifest)
+    dtypes = {c: str for c in ev.FL_CAT_COLS} | {"bridge_id": str}
+    written = pd.read_csv(out / "zen_florida_bridges" / "bridges.csv", dtype=dtypes)
+    assert written.columns.tolist() == ["bridge_id", *ev.FL_CAT_COLS, *ev.FL_NUM_COLS]
+    assert "objectid" not in written and "location_009" not in written
+    expected_ids = sorted([ev.pseudonym("B1"), ev.pseudonym("B2")])
+    assert written["bridge_id"].tolist() == expected_ids
+    b2 = written[written["bridge_id"] == ev.pseudonym("B2")].iloc[0]
+    b1 = written[written["bridge_id"] == ev.pseudonym("B1")].iloc[0]
+    assert b2["highway_district_002"] == "01" and b2["deck_cond_058"] == "N"
+    assert b2["superstructure_cond_059"] == "N" and b2["substructure_cond_060"] == "N"
+    assert all(pd.isna(b2[c]) for c in ev.FL_NUM_COLS)
+    assert all(b1[c] == 5.5 for c in ev.FL_NUM_COLS)
+    assert manifest["zen_florida_bridges"]["pseudonymised"] == ["bridge_id"]
+    assert manifest["zen_florida_bridges"]["salt_label"] == ev.SALT
+    assert manifest["zen_florida_bridges"]["source_snapshot"] == (
+        f"zen_florida_bridges/{ev.WAVE24_SNAPSHOT}"
+    )
+
+
+def test_wri_power_plants_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no WRI global power plant CSV in the snapshot$"):
+        ev._build_wri_power_plants(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _wri_power_plants_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_wri_power_plants(root, out, manifest)
+    ev._build_wri_power_plants(root, out, manifest)
+    dtypes = {c: str for c in ev.WRI_TEXT_COLS}
+    written = pd.read_csv(out / "wri_power_plants" / "power_plants.csv", dtype=dtypes)
+    assert written.columns.tolist() == [*ev.WRI_TEXT_COLS, *ev.WRI_NUM_COLS]
+    assert "name" not in written and "owner" not in written and "wepp_id" not in written
+    assert written["gppd_idnr"].tolist() == ["W1", "W2"]
+    assert written["source"].tolist() == ["001", "002"]
+    assert written.loc[0, "country"] == "NAM" and all(
+        written.loc[0, c] == 42.5 for c in ev.WRI_NUM_COLS
+    )
+    assert all(pd.isna(written.loc[1, c]) for c in ev.WRI_NUM_COLS)
+    view = manifest["wri_power_plants"]
+    assert view["sampling"] == {
+        "countries": 2,
+        "method": "complete Global Power Plant Database v1.3.0 CSV release",
+    }
+    assert view["source_snapshot"] == f"wri_power_plants/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_paris_trees_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no Paris urban trees CSV in the snapshot$"):
+        ev._build_paris_trees(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _paris_trees_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_paris_trees(root, out, manifest)
+    ev._build_paris_trees(root, out, manifest)
+    written = pd.read_csv(
+        out / "paris_urban_trees" / "trees.csv", dtype={c: str for c in ev.PARIS_TEXT_COLS}
+    )
+    assert written.columns.tolist() == [*ev.PARIS_TEXT_COLS, *ev.PARIS_NUM_COLS]
+    assert "adresse" not in written and "geo_point_2d" not in written
+    assert written["idbase"].tolist() == ["001", "002"]
+    assert written.loc[0, "circonferenceencm"] == 120.0 and written.loc[0, "hauteurenm"] == 15.0
+    assert pd.isna(written.loc[1, "circonferenceencm"]) and pd.isna(written.loc[1, "hauteurenm"])
+    view = manifest["paris_urban_trees"]
+    assert view["sampling"] == {
+        "genera": 2,
+        "method": "first 25,000 trees ordered ascending by idbase",
+    }
+    assert view["source_snapshot"] == f"paris_urban_trees/{ev.WAVE24_SNAPSHOT}"

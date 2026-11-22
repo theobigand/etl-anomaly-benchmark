@@ -2524,6 +2524,21 @@
    "units": 4820,
    "view": "osv_go_advisories"
   },
+  "paris_urban_trees": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "identifier-ordered prefix sample (first 25000 of 220,279 City of Paris municipal trees sorted ascending by idbase); non-random municipal zone ordering bias",
+    "addresses, placement ids, GPS coordinates, constant typeemplacement and >50%-missing columns dropped; raw and view stay local under ODbL"
+   ],
+   "first_party": true,
+   "independent_group": "paris_urban_trees",
+   "min_units": 500,
+   "partitions": "hash of idbase 70/15/15",
+   "privacy": "not_needed",
+   "protocol_id": "P-TAB",
+   "units": 25000,
+   "view": "paris_urban_trees"
+  },
   "physionet_eicu_demo": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -3169,6 +3184,21 @@
    "units": 1416,
    "view": "wikimedia_simplewiki_edits"
   },
+  "wri_power_plants": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete Global Power Plant Database v1.3.0 release (34936 facilities across 167 countries)",
+    "plant name, owner, URL, wepp_id and columns exceeding 50% missingness dropped cleanly; missing share reduced to minimal non-sparse attributes"
+   ],
+   "first_party": true,
+   "independent_group": "wri_global_power_plants",
+   "min_units": 500,
+   "partitions": "hash of country and primary_fuel 70/15/15",
+   "privacy": "not_needed",
+   "protocol_id": "P-TAB",
+   "units": 34936,
+   "view": "wri_power_plants"
+  },
   "zen_3pfl": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -3385,6 +3415,21 @@
    "protocol_id": "P-TAB",
    "units": 116977,
    "view": "zen_fdata_fugaku"
+  },
+  "zen_florida_bridges": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete v1.0 release of 12986 Florida NBI civil bridge structural inspections",
+    "preserves publisher-defined 'N' (Not Applicable) condition ratings on buried culverts alongside 0-9 structural ratings; bridge_id pseudonymised and objectid/location_009/>50%-missing columns dropped"
+   ],
+   "first_party": true,
+   "independent_group": "florida_bridge_inspections",
+   "min_units": 500,
+   "partitions": "hash of bridge_id 70/15/15",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 12986,
+   "view": "zen_florida_bridges"
   },
   "zen_gha_workflows": {
    "anomaly_origin": "controlled_injection",

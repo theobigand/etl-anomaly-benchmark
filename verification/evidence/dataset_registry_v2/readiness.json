@@ -2374,6 +2374,27 @@
   },
   {
    "failed": null,
+   "group": "florida_bridge_inspections",
+   "id": "zen_florida_bridges",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "wri_global_power_plants",
+   "id": "wri_power_plants",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
+   "group": "paris_urban_trees",
+   "id": "paris_urban_trees",
+   "status": "experiment_ready",
+   "stratum": "C2a"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2544,9 +2565,11 @@
    "ademe_dpe",
    "dft_stats19",
    "dgal_alimconfiance",
+   "florida_bridge_inspections",
    "kanto_landslides",
    "nhif_hospital_cases",
    "paleobiology_database",
+   "paris_urban_trees",
    "port_noumea_stopovers",
    "uci:101",
    "uci:19",
@@ -2559,7 +2582,8 @@
    "uci:73",
    "uci:76",
    "uci:911",
-   "uci:967"
+   "uci:967",
+   "wri_global_power_plants"
   ],
   "C2b": [
    "coatings_multinational",
@@ -2701,13 +2725,13 @@
    "structurally_valid": 52
   },
   "C2a": {
-   "acquired": 45,
-   "discovered": 45,
-   "experiment_ready": 19,
-   "protocol_ready": 19,
-   "rights_verified": 45,
-   "scientifically_eligible": 19,
-   "structurally_valid": 19
+   "acquired": 48,
+   "discovered": 48,
+   "experiment_ready": 22,
+   "protocol_ready": 22,
+   "rights_verified": 48,
+   "scientifically_eligible": 22,
+   "structurally_valid": 22
   },
   "C2b": {
    "acquired": 22,

@@ -10459,6 +10459,90 @@
    "stratum": "C6",
    "upstream": "first party: EMBL-EBI publishes ChEMBL medicinal chemistry compound records under CC BY-SA 3.0 (ftp.ebi.ac.uk/pub/databases/chembl/ChEMBLdb/latest/LICENSE)",
    "upstream_verified": true
+  },
+  {
+   "attribution": "Florida Bridge Inspection Database v1.0 (Zenodo record 18142339, CC BY 4.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "DATA_Florida_BridgeInspection_Version1_0.csv",
+     "observed": "v1.0 release",
+     "url": "https://zenodo.org/api/records/18142339/files/DATA_Florida_BridgeInspection_Version1_0.csv/content"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_florida_bridges",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/18142339",
+   "licence_text": "Zenodo API metadata for record 18142339 (read 2026-11-22): license cc-by-4.0 (CC BY 4.0)",
+   "max_bytes": 16777216,
+   "method": "complete DATA_Florida_BridgeInspection_Version1_0.csv release",
+   "min_interval": 1.0,
+   "privacy": "public civil bridge structural inspection inventory; free-text facility location_009 and >50%-missing columns dropped; bridge_id pseudonymised via salted SHA-256",
+   "publisher": "Florida Department of Transportation / Authors (Zenodo 18142339)",
+   "rate_limit": "single CSV download with descriptive User-Agent",
+   "redistribution": "CC BY 4.0; raw CSV stays local",
+   "retries": 2,
+   "stratum": "C2a",
+   "upstream": "first party: compiled and deposited on Zenodo 18142339 from Florida NBI bridge inspection records under CC BY 4.0",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Global Energy Observatory, Google, KTH, Enipedia, and World Resources Institute 2021, Global Power Plant Database v1.3.0 (CC BY 4.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "global_power_plant_database.csv",
+     "observed": "v1.3.0 release (2013-2019 generation/capacity)",
+     "url": "https://raw.githubusercontent.com/wri/global-power-plant-database/master/output_database/global_power_plant_database.csv"
+    }
+   ],
+   "hosts": [
+    "raw.githubusercontent.com"
+   ],
+   "id": "wri_power_plants",
+   "licence_class": "open",
+   "licence_location": "https://raw.githubusercontent.com/wri/global-power-plant-database/master/README.md",
+   "licence_text": "WRI Global Power Plant Database README.md (read 2026-11-22): Creative Commons-Attribution 4.0 (CC BY 4.0) license",
+   "max_bytes": 33554432,
+   "method": "complete Global Power Plant Database v1.3.0 CSV release (country ISO codes read with keep_default_na=False to preserve NA)",
+   "min_interval": 1.0,
+   "privacy": "power-plant capacity, fuel mix, commissioning year and country asset metadata only; plant name, owner, URL and wepp_id dropped in view",
+   "publisher": "World Resources Institute (WRI)",
+   "rate_limit": "single raw GitHub CSV download with descriptive User-Agent",
+   "redistribution": "CC BY 4.0; raw CSV stays local",
+   "retries": 2,
+   "stratum": "C2a",
+   "upstream": "first party: World Resources Institute publishes Global Power Plant Database v1.3.0 under Creative Commons Attribution 4.0 (README.md on github.com/wri/global-power-plant-database)",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Ville de Paris / DEVE, Les arbres de Paris via opendata.paris.fr (Open Database License ODbL); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "les_arbres_25k.csv",
+     "observed": "municipal tree asset snapshot (2026-11-22)",
+     "url": "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/les-arbres/exports/csv?delimiter=%3B&order_by=idbase%20ASC&limit=25000"
+    }
+   ],
+   "hosts": [
+    "opendata.paris.fr"
+   ],
+   "id": "paris_urban_trees",
+   "licence_class": "open",
+   "licence_location": "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/les-arbres",
+   "licence_text": "opendata.paris.fr API metadata (read 2026-11-22): Open Database License (ODbL)",
+   "max_bytes": 16777216,
+   "method": "identifier-ordered prefix sample (first 25,000 municipal trees ordered ascending by idbase out of 220,279 records; non-random)",
+   "min_interval": 1.0,
+   "privacy": "public municipal tree taxonomy, development stage, height and circumference attributes only; street addresses, placement ids and GPS coordinates dropped in view",
+   "publisher": "Ville de Paris (Direction des Espaces Verts et de l'Environnement)",
+   "rate_limit": "single CSV export request ordered by idbase ASC (limit=25000) with descriptive User-Agent",
+   "redistribution": "Open Database License (ODbL share-alike); raw CSV and view stay local",
+   "retries": 2,
+   "stratum": "C2a",
+   "upstream": "first party: Ville de Paris publishes municipal street and park tree asset inventories under ODbL on opendata.paris.fr",
+   "upstream_verified": true
   }
  ]
 }

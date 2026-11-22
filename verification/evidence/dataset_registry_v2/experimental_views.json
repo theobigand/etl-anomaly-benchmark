@@ -3542,6 +3542,28 @@
   },
   "source_snapshot": "zen_rki_* records of 2026-11-21 (the series are revised by the publisher)"
  },
+ "paris_urban_trees": {
+  "dropped": [
+   "typeemplacement",
+   "complementadresse",
+   "adresse",
+   "idemplacement",
+   "varieteoucultivar",
+   "geo_point_2d"
+  ],
+  "files": {
+   "trees.csv": {
+    "rows": 25000,
+    "sha256": "7d4b0a1d2f7eb176400763420844112c9c7337888e0f905312d83bfb8e75669e"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "genera": 150,
+   "method": "first 25,000 trees ordered ascending by idbase"
+  },
+  "source_snapshot": "paris_urban_trees/2026-11-22"
+ },
  "physionet_eicu_demo": {
   "dropped": [
    "free-text diagnosis and treatment strings",
@@ -4700,6 +4722,34 @@
   },
   "source_snapshot": "wikimedia_simplewiki_edits/2026-11-22 (dump of 2026-11-01)"
  },
+ "wri_power_plants": {
+  "dropped": [
+   "name",
+   "owner",
+   "url",
+   "wepp_id",
+   "other_fuel1",
+   "other_fuel2",
+   "other_fuel3",
+   "commissioning_year",
+   "year_of_capacity_data",
+   "generation_gwh_2013..2019",
+   "generation_data_source",
+   "estimated_generation_gwh_2013..2015"
+  ],
+  "files": {
+   "power_plants.csv": {
+    "rows": 34936,
+    "sha256": "9bec9f3ddb341aa326c32ce47b9b8046ef88f683ce30fb3625cbf95094acceee"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "countries": 167,
+   "method": "complete Global Power Plant Database v1.3.0 CSV release"
+  },
+  "source_snapshot": "wri_power_plants/2026-11-22"
+ },
  "zen_3pfl": {
   "dropped": [
    "names, street addresses, phone numbers, free-text descriptions",
@@ -5048,6 +5098,29 @@
    "truncated": false
   },
   "source_snapshot": "zen_fdata_fugaku/2026-11-21"
+ },
+ "zen_florida_bridges": {
+  "dropped": [
+   "objectid",
+   "location_009",
+   "fracture_last_date_093a",
+   "undwater_last_date_093b",
+   "spec_last_date_093c"
+  ],
+  "files": {
+   "bridges.csv": {
+    "rows": 12986,
+    "sha256": "4110530faca2729eae49fca46fa3da0d041e007a51b86d20fb296a4d610b3bcb"
+   }
+  },
+  "pseudonymised": [
+   "bridge_id"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "method": "complete Florida bridge structural inspection v1.0 release"
+  },
+  "source_snapshot": "zen_florida_bridges/2026-11-22"
  },
  "zen_gha_workflows": {
   "dropped": [

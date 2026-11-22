@@ -6380,6 +6380,205 @@ def _build_chembl_molecules(root: Path, out: Path, manifest: dict[str, Any]) -> 
     )
 
 
+FL_CAT_COLS = (
+    "highway_district_002",
+    "county_code_003",
+    "maintenance_021",
+    "owner_022",
+    "functional_class_026",
+    "service_on_042a",
+    "service_und_042b",
+    "structure_kind_043a",
+    "structure_type_043b",
+    "deck_cond_058",
+    "superstructure_cond_059",
+    "substructure_cond_060",
+    "date_of_inspect_090",
+    "traffic_direction_102",
+    "surface_type_108a",
+    "bridge_condition",
+    "date",
+    "flood_risk_class",
+    "svi_class",
+)
+FL_NUM_COLS = (
+    "year_built_027",
+    "adt_029",
+    "year_adt_030",
+    "structure_len_mt_049",
+    "inspect_freq_months_091",
+    "year_reconstructed_106",
+    "percent_adt_truck_109",
+    "future_adt_114",
+    "year_of_future_adt_115",
+    "lowest_rating",
+    "latitude",
+    "longitude",
+    "svi_score",
+)
+
+
+def florida_bridges_view(raw: pd.DataFrame) -> pd.DataFrame:
+    """Florida bridge inspection inventory preserving 'N' rating semantics and salted bridge ids."""  # noqa: E501
+    data: dict[str, Any] = {
+        "bridge_id": raw["bridge_id"].map(pseudonym),
+        **{col: raw[col] for col in FL_CAT_COLS},
+    }
+    for col in FL_NUM_COLS:
+        data[col] = pd.to_numeric(raw[col], errors="coerce")
+    return pd.DataFrame(data).sort_values("bridge_id").reset_index(drop=True)
+
+
+def _build_florida_bridges(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    source = (
+        root
+        / "zen_florida_bridges"
+        / WAVE24_SNAPSHOT
+        / "raw"
+        / "DATA_Florida_BridgeInspection_Version1_0.csv"
+    )
+    if not source.exists():
+        raise ViewError("no Florida bridge inspection CSV in the snapshot")
+    view = florida_bridges_view(pd.read_csv(source, dtype=str))
+    folder = out / "zen_florida_bridges"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "bridges.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "zen_florida_bridges",
+        {"bridges.csv": (target, len(view))},
+        dropped=[
+            "objectid",
+            "location_009",
+            "fracture_last_date_093a",
+            "undwater_last_date_093b",
+            "spec_last_date_093c",
+        ],
+        pseudonymised=["bridge_id"],
+        salt_label=SALT,
+        sampling={"method": "complete Florida bridge structural inspection v1.0 release"},
+        source_snapshot=f"zen_florida_bridges/{WAVE24_SNAPSHOT}",
+    )
+
+
+WRI_TEXT_COLS = (
+    "gppd_idnr",
+    "country",
+    "country_long",
+    "primary_fuel",
+    "source",
+    "geolocation_source",
+    "estimated_generation_note_2013",
+    "estimated_generation_note_2014",
+    "estimated_generation_note_2015",
+    "estimated_generation_note_2016",
+    "estimated_generation_note_2017",
+)
+WRI_NUM_COLS = (
+    "capacity_mw",
+    "latitude",
+    "longitude",
+    "estimated_generation_gwh_2016",
+    "estimated_generation_gwh_2017",
+)
+
+
+def wri_power_plants_view(raw: pd.DataFrame) -> pd.DataFrame:
+    """Global Power Plant Database v1.3.0 without identifying names/owners or >50%-missing cols."""  # noqa: E501
+    data: dict[str, Any] = {col: raw[col] for col in WRI_TEXT_COLS}
+    for col in WRI_NUM_COLS:
+        data[col] = pd.to_numeric(raw[col], errors="coerce")
+    return pd.DataFrame(data).sort_values("gppd_idnr").reset_index(drop=True)
+
+
+def _build_wri_power_plants(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    source = root / "wri_power_plants" / WAVE24_SNAPSHOT / "raw" / "global_power_plant_database.csv"
+    if not source.exists():
+        raise ViewError("no WRI global power plant CSV in the snapshot")
+    view = wri_power_plants_view(pd.read_csv(source, dtype=str))
+    folder = out / "wri_power_plants"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "power_plants.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "wri_power_plants",
+        {"power_plants.csv": (target, len(view))},
+        dropped=[
+            "name",
+            "owner",
+            "url",
+            "wepp_id",
+            "other_fuel1",
+            "other_fuel2",
+            "other_fuel3",
+            "commissioning_year",
+            "year_of_capacity_data",
+            "generation_gwh_2013..2019",
+            "generation_data_source",
+            "estimated_generation_gwh_2013..2015",
+        ],
+        pseudonymised=[],
+        sampling={
+            "countries": int(view["country"].nunique()),
+            "method": "complete Global Power Plant Database v1.3.0 CSV release",
+        },
+        source_snapshot=f"wri_power_plants/{WAVE24_SNAPSHOT}",
+    )
+
+
+PARIS_TEXT_COLS = (
+    "idbase",
+    "domanialite",
+    "arrondissement",
+    "libellefrancais",
+    "genre",
+    "espece",
+    "stadedeveloppement",
+    "remarquable",
+)
+PARIS_NUM_COLS = ("circonferenceencm", "hauteurenm")
+
+
+def paris_trees_view(raw: pd.DataFrame) -> pd.DataFrame:
+    """City of Paris tree inventory without addresses/coordinates or >50%-missing columns."""
+    data: dict[str, Any] = {col: raw[col] for col in PARIS_TEXT_COLS}
+    for col in PARIS_NUM_COLS:
+        data[col] = pd.to_numeric(raw[col], errors="coerce")
+    return pd.DataFrame(data).sort_values("idbase").reset_index(drop=True)
+
+
+def _build_paris_trees(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    source = root / "paris_urban_trees" / WAVE24_SNAPSHOT / "raw" / "les_arbres_25k.csv"
+    if not source.exists():
+        raise ViewError("no Paris urban trees CSV in the snapshot")
+    view = paris_trees_view(pd.read_csv(source, sep=";", dtype=str))
+    folder = out / "paris_urban_trees"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "trees.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "paris_urban_trees",
+        {"trees.csv": (target, len(view))},
+        dropped=[
+            "typeemplacement",
+            "complementadresse",
+            "adresse",
+            "idemplacement",
+            "varieteoucultivar",
+            "geo_point_2d",
+        ],
+        pseudonymised=[],
+        sampling={
+            "genera": int(view["genre"].nunique()),
+            "method": "first 25,000 trees ordered ascending by idbase",
+        },
+        source_snapshot=f"paris_urban_trees/{WAVE24_SNAPSHOT}",
+    )
+
+
 BUILD_STEPS = (
     _build_openalex,
     _build_monash,
@@ -6463,6 +6662,9 @@ BUILD_STEPS = (
     _build_datacite_dois,
     _build_gbif_cc0,
     _build_chembl_molecules,
+    _build_florida_bridges,
+    _build_wri_power_plants,
+    _build_paris_trees,
     _build_flat,
     _build_series,
     _build_ukspend,

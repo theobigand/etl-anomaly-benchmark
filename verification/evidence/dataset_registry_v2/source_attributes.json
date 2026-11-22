@@ -380,6 +380,17 @@
    "C4": "business process execution"
   }
  },
+ "florida_bridge_inspections": {
+  "curator": "zenodo",
+  "domain": "civil bridge infrastructure",
+  "generating_system": "Florida Department of Transportation National Bridge Inventory inspection registry",
+  "note": "Distinct civil infrastructure structural inspection domain from japanese reconstructed buildings",
+  "producer": "Florida Department of Transportation",
+  "schema_family": "bridge structural inspection inventory",
+  "structure": {
+   "C2a": "bridge inspection ratings and traffic class inventory"
+  }
+ },
  "fraunhofer_iee_care_wind_b": {
   "curator": "zenodo",
   "descriptors": {
@@ -964,6 +975,17 @@
   "structure": {
    "C2a": "fossil occurrences with high-cardinality taxonomy and geology",
    "C5": "occurrence-to-taxon references and taxon parent hierarchy"
+  }
+ },
+ "paris_urban_trees": {
+  "curator": "opendata.paris.fr",
+  "domain": "urban forestry and arboriculture",
+  "generating_system": "Ville de Paris municipal urban tree inventory system",
+  "note": "New municipal arboriculture producer, curator and schema family; local under ODbL",
+  "producer": "Ville de Paris (Direction des Espaces Verts et de l'Environnement)",
+  "schema_family": "municipal tree asset inventory",
+  "structure": {
+   "C2a": "municipal street and park tree taxonomy and dimensions"
   }
  },
  "pnnl_epri_bess": {
@@ -2049,6 +2071,17 @@
   "schema_family": "sovereign development lending records",
   "structure": {
    "C2b": "multilateral sovereign lending commitment records"
+  }
+ },
+ "wri_global_power_plants": {
+  "curator": "github",
+  "domain": "power generation infrastructure",
+  "generating_system": "World Resources Institute Global Power Plant Database asset inventory",
+  "note": "Multi-country facility asset and fuel-mix catalog; distinct from metered grid telemetry and SCADA series",
+  "producer": "World Resources Institute (WRI)",
+  "schema_family": "power generation asset registry",
+  "structure": {
+   "C2a": "global power plant capacity and primary fuel inventory"
   }
  },
  "zambia_procurement": {

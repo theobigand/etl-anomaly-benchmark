@@ -2,13 +2,13 @@
  "coverage": {
   "0.2": {
    "ALL": {
-    "curators": 53,
-    "domains": 95,
-    "effective_groups": 99.4083,
-    "groups": 178,
-    "largest_schema_family_share": 0.3596,
-    "producers": 178,
-    "schema_families": 83
+    "curators": 54,
+    "domains": 98,
+    "effective_groups": 102.4083,
+    "groups": 181,
+    "largest_schema_family_share": 0.3536,
+    "producers": 181,
+    "schema_families": 86
    },
    "C1": {
     "curators": 1,
@@ -20,13 +20,13 @@
     "schema_families": 1
    },
    "C2a": {
-    "curators": 5,
-    "domains": 14,
-    "effective_groups": 10.75,
-    "groups": 19,
-    "largest_schema_family_share": 0.6316,
-    "producers": 19,
-    "schema_families": 8
+    "curators": 7,
+    "domains": 17,
+    "effective_groups": 13.75,
+    "groups": 22,
+    "largest_schema_family_share": 0.5455,
+    "producers": 22,
+    "schema_families": 11
    },
    "C2b": {
     "curators": 14,
@@ -76,13 +76,13 @@
   },
   "0.5": {
    "ALL": {
-    "curators": 53,
-    "domains": 95,
-    "effective_groups": 88.9741,
-    "groups": 178,
-    "largest_schema_family_share": 0.3596,
-    "producers": 178,
-    "schema_families": 83
+    "curators": 54,
+    "domains": 98,
+    "effective_groups": 91.9741,
+    "groups": 181,
+    "largest_schema_family_share": 0.3536,
+    "producers": 181,
+    "schema_families": 86
    },
    "C1": {
     "curators": 1,
@@ -94,13 +94,13 @@
     "schema_families": 1
    },
    "C2a": {
-    "curators": 5,
-    "domains": 14,
-    "effective_groups": 8.8462,
-    "groups": 19,
-    "largest_schema_family_share": 0.6316,
-    "producers": 19,
-    "schema_families": 8
+    "curators": 7,
+    "domains": 17,
+    "effective_groups": 11.8462,
+    "groups": 22,
+    "largest_schema_family_share": 0.5455,
+    "producers": 22,
+    "schema_families": 11
    },
    "C2b": {
     "curators": 14,
@@ -240,15 +240,15 @@
   },
   "C2a": {
    "diversity": true,
-   "domains": 13,
+   "domains": 16,
    "exploratory": true,
-   "families": 11,
-   "gap": 11,
-   "groups": 19,
+   "families": 14,
+   "gap": 8,
+   "groups": 22,
    "largest_family": "administrative or survey records",
-   "largest_family_share": 0.1579,
+   "largest_family_share": 0.1364,
    "missing": [
-    "groups: 19 of 30"
+    "groups: 22 of 30"
    ],
    "quota": false,
    "target": 30,

@@ -5610,6 +5610,66 @@
    "stratum": "C6",
    "system": "embl_ebi_chembl_molecule_database",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "florida_bridge_inspections",
+   "id": "zen_florida_bridges",
+   "licence_class": "open",
+   "protocols": "P-TAB on Florida NBI civil bridge inspection inventory records",
+   "publisher": "zenodo_18142339_authors",
+   "reason": "Florida Bridge Inspection DB v1.0 (Zenodo 18142339, CC BY 4.0): 12986 bridge inspections with salted bridge_id, preserved 'N' culvert codes and flat_readiness C2a=[]",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "Zenodo API metadata for record 18142339 (read 2026-11-22): CC BY 4.0",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "florida_fdot_bridge_inspection_inventory",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "wri_global_power_plants",
+   "id": "wri_power_plants",
+   "licence_class": "open",
+   "protocols": "P-TAB on WRI Global Power Plant Database asset and generation-mix records",
+   "publisher": "world_resources_institute",
+   "reason": "WRI Global Power Plant Database v1.3.0 (CC BY 4.0): 34936 power plants across 167 countries, names/owners/urls and >50%-missing cols dropped, flat_readiness C2a=[]",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "WRI Global Power Plant Database README.md (read 2026-11-22): CC BY 4.0",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "wri_global_power_plant_registry",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "paris_urban_trees",
+   "id": "paris_urban_trees",
+   "licence_class": "open",
+   "protocols": "P-TAB on City of Paris municipal urban tree inventory records",
+   "publisher": "ville_de_paris",
+   "reason": "Ville de Paris Les Arbres (opendata.paris.fr, ODbL, local only): 25000 idbase-ordered prefix trees across 150 genera, addresses/coords dropped, flat_readiness C2a=[]",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "opendata.paris.fr API metadata (read 2026-11-22): Open Database License (ODbL)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2a",
+   "system": "paris_municipal_tree_asset_inventory",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

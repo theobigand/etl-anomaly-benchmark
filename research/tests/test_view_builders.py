@@ -452,6 +452,18 @@ def _chembl_molecules(root, tmp):
     tev._chembl_snapshot(root)
 
 
+def _florida_bridges(root, tmp):
+    tev._florida_bridges_snapshot(root)
+
+
+def _wri_power_plants(root, tmp):
+    tev._wri_power_plants_snapshot(root)
+
+
+def _paris_trees(root, tmp):
+    tev._paris_trees_snapshot(root)
+
+
 def _tlc(root, tmp):
     tev._tlc_page(
         [{}, {"tpep_pickup_datetime": "2023-03-07T07:00:00.000", "total_amount": "0.0"}]
@@ -517,6 +529,9 @@ CASES = {
     "datacite_dois": (_datacite_dois, ev._build_datacite_dois, ["datacite_dois"], {}),
     "gbif_cc0": (_gbif_cc0, ev._build_gbif_cc0, ["gbif_cc0_occurrences"], {}),
     "chembl_molecules": (_chembl_molecules, ev._build_chembl_molecules, ["chembl_molecules"], {}),
+    "florida_bridges": (_florida_bridges, ev._build_florida_bridges, ["zen_florida_bridges"], {}),
+    "wri_power_plants": (_wri_power_plants, ev._build_wri_power_plants, ["wri_power_plants"], {}),
+    "paris_trees": (_paris_trees, ev._build_paris_trees, ["paris_urban_trees"], {}),
     "tlc": (_tlc, ev._build_tlc, ["nyc_tlc_yellow"], {}),
     "maude": (_maude_case, ev._build_maude, ["openfda_device_event"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),
