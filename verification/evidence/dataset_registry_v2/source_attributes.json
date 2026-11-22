@@ -193,6 +193,17 @@
    "C2a": "coded categorical official food-safety inspection records"
   }
  },
+ "dgccrf_fuel_prices": {
+  "curator": "data economie gouv fr",
+  "domain": "retail motor fuel pricing",
+  "generating_system": "French DGCCRF statutory retail motor fuel price reporting feed",
+  "note": "Shares Ministry of Economy OpenDataSoft portal curator with dgfip_dvf and inpi_bce_ratios but independent agency and commodity pricing mechanism",
+  "producer": "Direction generale de la concurrence, de la consommation et de la repression des fraudes (DGCCRF)",
+  "schema_family": "retail fuel station price ledger",
+  "structure": {
+   "C2b": "per-station retail fuel price postings"
+  }
+ },
  "dgfip_dvf": {
   "curator": "data.gouv.fr",
   "domain": "real estate",
@@ -312,6 +323,17 @@
   "schema_family": "openfda device event json",
   "structure": {
    "C6": "device report with device, patient and problem arrays"
+  }
+ },
+ "fdic_bank_financials": {
+  "curator": "banks.data.fdic.gov",
+  "domain": "prudential banking supervision",
+  "generating_system": "FDIC quarterly Call Report prudential banking supervision system",
+  "note": "Distinct regulatory filing mechanism and supervisor from French corporate INPI/BCE accounts",
+  "producer": "Federal Deposit Insurance Corporation (FDIC)",
+  "schema_family": "bank regulatory call reports",
+  "structure": {
+   "C2b": "insured bank quarterly financial statement cross-sections"
   }
  },
  "fin_institute_nl": {
@@ -1011,6 +1033,17 @@
   "schema_family": "uci time series",
   "structure": {
    "C3": "urban mobility counts"
+  }
+ },
+ "sncf_tgv_regularite": {
+  "curator": "ressources.data.sncf.com",
+  "domain": "intercity rail operations",
+  "generating_system": "SNCF Voyageurs high-speed rail monthly route punctuality monitoring system",
+  "note": "Operational route-month punctuality metrics, not static GTFS timetables; kept local under ODbL",
+  "producer": "SNCF Voyageurs",
+  "schema_family": "rail route operational performance ledger",
+  "structure": {
+   "C2b": "monthly rail corridor delay and cancellation metrics"
   }
  },
  "stackexchange": {
@@ -1864,6 +1897,17 @@
   "structure": {
    "C3": "ten-hertz station sensor messages",
    "C4": "business process execution"
+  }
+ },
+ "us_treasury_dts": {
+  "curator": "fiscaldata.treasury.gov",
+  "domain": "sovereign fiscal cashflows",
+  "generating_system": "U.S. Treasury Bureau of the Fiscal Service Daily Treasury Statement ledger",
+  "note": "Independent federal sovereign cash ledger; shares neither curator nor schema with World Bank project loans",
+  "producer": "U.S. Department of the Treasury",
+  "schema_family": "sovereign treasury cash ledger",
+  "structure": {
+   "C2b": "daily government operating cash deposits and withdrawals ledger"
   }
  },
  "usda_fdc": {

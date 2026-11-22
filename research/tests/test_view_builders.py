@@ -420,6 +420,22 @@ def _dmsp_auroral(root, tmp):
     tev._dmsp_snapshot(root)
 
 
+def _treasury_dts(root, tmp):
+    tev._dts_snapshot(root)
+
+
+def _fdic_financials(root, tmp):
+    tev._fdic_snapshot(root)
+
+
+def _sncf_tgv(root, tmp):
+    tev._sncf_snapshot(root)
+
+
+def _dgccrf_fuel(root, tmp):
+    tev._dgccrf_snapshot(root)
+
+
 def _tlc(root, tmp):
     tev._tlc_page(
         [{}, {"tpep_pickup_datetime": "2023-03-07T07:00:00.000", "total_amount": "0.0"}]
@@ -477,6 +493,10 @@ CASES = {
     "dk_heating": (_dk_heating, ev._build_dk_heating, ["zen_dk_district_heating"], {}),
     "water_demand": (_water_demand, ev._build_water_demand, ["zen_water_demand"], {}),
     "dmsp_auroral": (_dmsp_auroral, ev._build_dmsp_auroral, ["zen_dmsp_auroral"], {}),
+    "treasury_dts": (_treasury_dts, ev._build_treasury_dts, ["us_treasury_dts"], {}),
+    "fdic_financials": (_fdic_financials, ev._build_fdic_financials, ["fdic_bank_financials"], {}),
+    "sncf_tgv": (_sncf_tgv, ev._build_sncf_tgv, ["sncf_tgv_regularite"], {}),
+    "dgccrf_fuel": (_dgccrf_fuel, ev._build_dgccrf_fuel, ["dgccrf_fuel_prices"], {}),
     "tlc": (_tlc, ev._build_tlc, ["nyc_tlc_yellow"], {}),
     "maude": (_maude_case, ev._build_maude, ["openfda_device_event"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),

@@ -5450,6 +5450,86 @@
    "stratum": "C3",
    "system": "dmsp_polar_orbit_ssj_particle_spectrometers",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "us_treasury_dts",
+   "id": "us_treasury_dts",
+   "licence_class": "open",
+   "protocols": "P-TAB on U.S. Daily Treasury Statement operating cash deposits and withdrawals",
+   "publisher": "us_treasury_fiscal_service",
+   "reason": "U.S. Treasury Fiscal Data API Daily Treasury Statement Table II (Public Domain): 91,119 operating cash ledger entries (2024-01-02 to 2025-12-31); sovereign fiscal cashflow mechanism absent from C2b",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "U.S. Government Works (17 U.S.C. 105 Public Domain) via fiscaldata.treasury.gov",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "us_treasury_operating_cash_ledger",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "fdic_bank_financials",
+   "id": "fdic_bank_financials",
+   "licence_class": "open",
+   "protocols": "P-TAB on FDIC bank regulatory Call Report financial statements",
+   "publisher": "us_fdic",
+   "reason": "FDIC BankFind Suite quarterly Call Report financials (2022Q4-2025Q4, Public Domain): 18,402 institution-period filings across 4,798 banks with salted pseudonymised CERT ids; prudential banking mechanism absent from C2b",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "U.S. Government Works (17 U.S.C. 105 Public Domain) via api.fdic.gov/banks/docs/",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "fdic_insured_bank_call_reports",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "sncf_tgv_regularite",
+   "id": "sncf_tgv_regularite",
+   "licence_class": "open",
+   "protocols": "P-TAB on SNCF monthly high-speed rail origin-destination punctuality and delay-cause counters",
+   "publisher": "sncf_voyageurs",
+   "reason": "SNCF Voyageurs monthly TGV regularity ledger (ODbL, local only): 12,907 route-month operational performance rows (2018-01 to 2026-09) without free-text comments; rail performance ledger absent from C2b",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "ressources.data.sncf.com API metadata (read 2026-11-22): Open Database License (ODbL)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "sncf_tgv_route_punctuality_ledger",
+   "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "dgccrf_fuel_prices",
+   "id": "dgccrf_fuel_prices",
+   "licence_class": "open",
+   "protocols": "P-TAB on French statutory retail fuel station price postings across six fuel grades",
+   "publisher": "france_dgccrf",
+   "reason": "DGCCRF flux instantane v2 (Licence Ouverte v2.0 Etalab): 32,699 active fuel-price postings across 9,593 pseudonymised stations (locations dropped); statutory retail commodity pricing ledger absent from C2b",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "data.economie.gouv.fr API metadata (read 2026-11-22): Licence Ouverte v2.0 (Etalab)",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "french_dgccrf_retail_fuel_pricing",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

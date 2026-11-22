@@ -1,6 +1,6 @@
 {
  "licence_classes": {
-  "open": 253,
+  "open": 257,
   "research_only": 22
  },
  "strata": {
@@ -41,12 +41,12 @@
    "ambitious": 45,
    "minimum": 15,
    "missing_to_minimum": 0,
-   "missing_to_recommended": 13,
-   "publishers": 17,
+   "missing_to_recommended": 9,
+   "publishers": 21,
    "recommended": 30,
-   "sources": 17,
+   "sources": 21,
    "stratum": "transactional events",
-   "systems": 19
+   "systems": 23
   },
   "C3": {
    "ambitious": 55,
@@ -98,5 +98,5 @@
   "uci:755",
   "uci:760"
  ],
- "total_sources": 275
+ "total_sources": 279
 }

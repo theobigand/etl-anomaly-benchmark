@@ -1068,6 +1068,10 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _dk_heating_snapshot(root)
     _water_demand_snapshot(root)
     _dmsp_snapshot(root)
+    _dts_snapshot(root)
+    _fdic_snapshot(root)
+    _sncf_snapshot(root)
+    _dgccrf_snapshot(root)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
@@ -1083,7 +1087,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "zen_telecom_kpis", "zen_dk_district_heating", "zen_water_demand", "zen_dmsp_auroral", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "zen_telecom_kpis", "zen_dk_district_heating", "zen_water_demand", "zen_dmsp_auroral", "us_treasury_dts", "fdic_bank_financials", "sncf_tgv_regularite", "dgccrf_fuel_prices", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -7910,3 +7914,400 @@ def test_dmsp_auroral_view_and_builder(tmp_path):
     view = manifest["zen_dmsp_auroral"]
     assert view["sampling"]["files_loaded"] == 2 and view["sampling"]["spacecrafts"] == 2
     assert view["source_snapshot"] == f"zen_dmsp_auroral/{ev.WAVE24_SNAPSHOT}"
+
+
+def _dts_snapshot(root):
+    raw = root / "us_treasury_dts" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    recs_p0 = [
+        {
+            "record_date": "2024-01-03",
+            "account_type": "TGA",
+            "transaction_type": "Withdrawals",
+            "transaction_catg": "B",
+            "transaction_catg_desc": "drop",
+            "table_nbr": "II",
+            "table_nm": "drop",
+            "transaction_today_amt": "50",
+            "transaction_mtd_amt": "100",
+            "transaction_fytd_amt": "1,500",
+            "record_fiscal_year": "2024",
+            "record_fiscal_quarter": "2",
+            "src_line_nbr": "2",
+        },
+        {
+            "record_date": "2024-01-02",
+            "account_type": "TGA",
+            "transaction_type": "Withdrawals",
+            "transaction_catg": "B",
+            "transaction_today_amt": "20",
+            "transaction_mtd_amt": "30",
+            "transaction_fytd_amt": "40",
+            "record_fiscal_year": "2024",
+            "record_fiscal_quarter": "2",
+            "src_line_nbr": "1",
+        },
+    ]
+    recs_p1 = [
+        {
+            "record_date": None,
+            "account_type": "TGA",
+            "transaction_type": "Deposits",
+            "transaction_catg": "X",
+            "transaction_today_amt": "1",
+            "transaction_mtd_amt": "1",
+            "transaction_fytd_amt": "1",
+            "record_fiscal_year": "2024",
+            "record_fiscal_quarter": "2",
+            "src_line_nbr": "9",
+        },
+        {
+            "record_date": "2024-01-02",
+            "account_type": "TGA",
+            "transaction_type": "Deposits",
+            "transaction_catg": "A",
+            "transaction_today_amt": "10",
+            "transaction_mtd_amt": "10",
+            "transaction_fytd_amt": "10",
+            "record_fiscal_year": "2024",
+            "record_fiscal_quarter": "2",
+            "src_line_nbr": "1",
+        },
+    ]
+    (raw / "dts_2024_2025_p00.json").write_text(json.dumps({"data": recs_p0}))
+    (raw / "dts_2024_2025_p01.json").write_text(json.dumps({"data": recs_p1}))
+
+
+def _fdic_snapshot(root):
+    raw = root / "fdic_bank_financials" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    base = {c: "10.5" for c in ev.FDIC_NUM_COLS}
+    (raw / "fdic_20241231.json").write_text(
+        json.dumps(
+            {
+                "data": [
+                    {
+                        "data": {
+                            "CERT": None,
+                            "REPDTE": "20241231",
+                            "BKCLASS": "N",
+                            "STALP": "NY",
+                            **base,
+                        }
+                    },  # noqa: E501
+                    {
+                        "data": {
+                            "ID": "20_2024",
+                            "CERT": "20",
+                            "REPDTE": "20241231",
+                            "BKCLASS": "NM",
+                            "STALP": "CA",
+                            **base,
+                        }
+                    },  # noqa: E501
+                ]
+            }
+        )
+    )
+    (raw / "fdic_20221231.json").write_text(
+        json.dumps(
+            {
+                "data": [
+                    {
+                        "data": {
+                            "ID": "10_2022",
+                            "CERT": "10",
+                            "REPDTE": "20221231",
+                            "BKCLASS": "N",
+                            "STALP": "NY",
+                            **base,
+                        }
+                    },  # noqa: E501
+                ]
+            }
+        )
+    )
+
+
+def _sncf_snapshot(root):
+    raw = root / "sncf_tgv_regularite" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    cols = [
+        *ev.SNCF_TEXT_COLS,
+        "commentaire_annulation",
+        "commentaire_retards_depart",
+        "commentaires_retard_arrivee",
+        *ev.SNCF_NUM_COLS,
+    ]
+    r1 = ["2024-02", "National", "020", "LYON PART DIEU", "c1", "c2", "c3"] + [
+        "12.5" for _ in ev.SNCF_NUM_COLS
+    ]
+    r2 = ["2024-01", "National", "010", "STRASBOURG", "", "", ""] + [
+        "5.0" for _ in ev.SNCF_NUM_COLS
+    ]
+    text = ";".join(cols) + "\n" + ";".join(r1) + "\n" + ";".join(r2) + "\n"
+    (raw / "sncf_tgv_regularite.csv").write_bytes(text.encode("utf-8-sig"))
+
+
+def _dgccrf_snapshot(root):
+    raw = root / "dgccrf_fuel_prices" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    cols = [
+        "id",
+        "adresse",
+        "ville",
+        "pop",
+        "code_departement",
+        "code_region",
+        "horaires_automate_24_24",
+    ]
+    for fuel in ev.DGCCRF_FUELS:
+        cols.extend([f"{fuel}_prix", f"{fuel}_maj", f"{fuel}_rupture_type"])
+    rows = [
+        {
+            "id": "2000001",
+            "adresse": "1 rue A",
+            "ville": "Ajaccio",
+            "pop": "R",
+            "code_departement": "2A",
+            "code_region": "94",
+            "horaires_automate_24_24": "Oui",
+            "gazole_prix": "1.899",
+            "gazole_maj": "2026-11-22T08:00:00Z",
+            "sp98_prix": "bad",
+            "sp98_maj": "2026-11-22T08:00:00Z",
+            "e10_prix": "1.799",
+            "e10_maj": "2026-11-22T07:00:00Z",
+        },
+        {
+            "id": "0100001",
+            "adresse": "2 rue B",
+            "ville": "Lyon",
+            "pop": "A",
+            "code_departement": "69",
+            "code_region": "84",
+            "horaires_automate_24_24": "Non",
+            "sp95_prix": "1.950",
+            "sp95_maj": "2026-11-22T09:00:00Z",
+            "e85_prix": "0.899",
+            "e85_maj": "2026-11-22T09:00:00Z",
+            "gplc_prix": "1.050",
+            "gplc_maj": "2026-11-22T09:00:00Z",
+        },
+    ]
+    pd.DataFrame(rows, columns=cols).to_csv(
+        raw / "dgccrf_fuel_prices.csv", sep=";", index=False, encoding="utf-8-sig"
+    )
+
+
+def test_treasury_dts_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no US Treasury DTS JSON files in the snapshot$"):
+        ev._build_treasury_dts(tmp_path / "empty", tmp_path / "err", {})
+    empty = ev.treasury_dts_view([])
+    assert empty.empty and empty.columns.tolist() == [*ev.DTS_TEXT_COLS, *ev.DTS_NUM_COLS]
+    df = ev.treasury_dts_view(
+        [
+            {"record_date": None, "src_line_nbr": "1"},
+            {
+                "record_date": "2024-01-02",
+                "account_type": "B",
+                "transaction_type": "W",
+                "transaction_catg": "Y",
+                **{c: "bad" for c in ev.DTS_NUM_COLS},
+                "src_line_nbr": "1",
+            },  # noqa: E501
+            {
+                "record_date": "2024-01-02",
+                "account_type": "A",
+                "transaction_type": "W",
+                "transaction_catg": "Z",
+                **{c: "2" for c in ev.DTS_NUM_COLS},
+                "src_line_nbr": "1",
+            },  # noqa: E501
+            {
+                "record_date": "2024-01-02",
+                "account_type": "A",
+                "transaction_type": "D",
+                "transaction_catg": "Z",
+                **{c: "1" for c in ev.DTS_NUM_COLS},
+                "src_line_nbr": "1",
+            },  # noqa: E501
+            {
+                "record_date": "2024-01-02",
+                "account_type": "A",
+                "transaction_type": "D",
+                "transaction_catg": "A",
+                **{c: "1" for c in ev.DTS_NUM_COLS},
+                "src_line_nbr": "1",
+            },  # noqa: E501
+            {
+                "record_date": "2024-01-02",
+                "account_type": "A",
+                "transaction_type": "D",
+                "transaction_catg": "A",
+                "transaction_today_amt": "1,250",
+                "transaction_mtd_amt": "5",
+                "transaction_fytd_amt": "9",
+                "record_fiscal_year": "2024",
+                "record_fiscal_quarter": "2",
+                "src_line_nbr": "0",
+            },  # noqa: E501
+        ]
+    )
+    assert len(df) == 5
+    assert df["transaction_catg"].tolist() == ["A", "A", "Z", "Z", "Y"]
+    assert df["transaction_type"].tolist() == ["D", "D", "D", "W", "W"]
+    assert df.loc[0, "transaction_today_amt"] == 1250.0 and df.loc[0, "src_line_nbr"] == 0.0
+    assert df.loc[0, "record_fiscal_year"] == 2024.0 and df.loc[0, "record_fiscal_quarter"] == 2.0
+    assert all(pd.isna(df.loc[4, c]) for c in ev.DTS_NUM_COLS if c != "src_line_nbr")
+
+    root = tmp_path / "acq"
+    _dts_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_treasury_dts(root, out, manifest)
+    ev._build_treasury_dts(root, out, manifest)
+    written = pd.read_csv(out / "us_treasury_dts" / "dts_operating_cash.csv")
+    assert len(written) == 3
+    assert written["record_date"].tolist() == ["2024-01-02", "2024-01-02", "2024-01-03"]
+    assert written["transaction_fytd_amt"].tolist() == [10.0, 40.0, 1500.0]
+    view = manifest["us_treasury_dts"]
+    assert view["pseudonymised"] == []
+    assert view["sampling"]["pages"] == 2 and view["sampling"]["first_date"] == "2024-01-02"
+    assert view["sampling"]["last_date"] == "2024-01-03"
+    assert view["source_snapshot"] == f"us_treasury_dts/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_fdic_financials_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no FDIC bank financials JSON files in the snapshot$"):
+        ev._build_fdic_financials(tmp_path / "empty", tmp_path / "err", {})
+    df = ev.fdic_financials_view(
+        [
+            {"REPDTE": "20241231"},
+            {
+                "CERT": "9",
+                "REPDTE": "20251231",
+                "BKCLASS": "N",
+                "STALP": "TX",
+                **{c: "bad" for c in ev.FDIC_NUM_COLS},
+            },  # noqa: E501
+            {
+                "CERT": "1",
+                "REPDTE": "20221231",
+                "BKCLASS": "SM",
+                "STALP": "MA",
+                **{c: "7.5" for c in ev.FDIC_NUM_COLS},
+            },  # noqa: E501
+        ]
+    )
+    assert len(df) == 2
+    assert df["cert_id"].tolist() == [ev.pseudonym("1"), ev.pseudonym("9")]
+    assert df["repdte"].tolist() == ["20221231", "20251231"]
+    assert df["bkclass"].tolist() == ["SM", "N"] and df["stalp"].tolist() == ["MA", "TX"]
+    assert all(df.loc[0, c.lower()] == 7.5 for c in ev.FDIC_NUM_COLS)
+    assert all(pd.isna(df.loc[1, c.lower()]) for c in ev.FDIC_NUM_COLS)
+
+    root = tmp_path / "acq"
+    _fdic_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_fdic_financials(root, out, manifest)
+    ev._build_fdic_financials(root, out, manifest)
+    written = pd.read_csv(out / "fdic_bank_financials" / "bank_financials.csv")
+    assert len(written) == 2 and "ID" not in written and "CERT" not in written
+    assert written["cert_id"].tolist() == [ev.pseudonym("10"), ev.pseudonym("20")]
+    view = manifest["fdic_bank_financials"]
+    assert view["dropped"] == ["ID"] and view["pseudonymised"] == ["CERT"]
+    assert view["salt_label"] == ev.SALT
+    assert view["sampling"]["institutions"] == 2 and view["sampling"]["snapshots"] == 2
+    assert view["source_snapshot"] == f"fdic_bank_financials/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_sncf_tgv_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no SNCF TGV regularity CSV in the snapshot$"):
+        ev._build_sncf_tgv(tmp_path / "empty", tmp_path / "err", {})
+    df = ev.sncf_tgv_view(
+        pd.DataFrame(
+            [
+                {c: "bad" for c in ev.SNCF_NUM_COLS}
+                | {
+                    "date": "2024-02",
+                    "service": "National",
+                    "gare_depart": "A",
+                    "gare_arrivee": "B",
+                    "commentaire_annulation": "drop",
+                },
+                {c: "3.5" for c in ev.SNCF_NUM_COLS}
+                | {
+                    "date": "2024-01",
+                    "service": "International",
+                    "gare_depart": "C",
+                    "gare_arrivee": "D",
+                    "commentaire_annulation": "drop",
+                },
+            ]
+        )
+    )
+    assert df.columns.tolist() == [*ev.SNCF_TEXT_COLS, *ev.SNCF_NUM_COLS]
+    assert df["date"].tolist() == ["2024-01", "2024-02"]
+    assert df["service"].tolist() == ["International", "National"]
+    assert all(df.loc[0, c] == 3.5 for c in ev.SNCF_NUM_COLS)
+    assert all(pd.isna(df.loc[1, c]) for c in ev.SNCF_NUM_COLS)
+
+    root = tmp_path / "acq"
+    _sncf_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_sncf_tgv(root, out, manifest)
+    ev._build_sncf_tgv(root, out, manifest)
+    written = pd.read_csv(out / "sncf_tgv_regularite" / "tgv_regularity.csv", dtype=str)
+    assert written["date"].tolist() == ["2024-01", "2024-02"]
+    assert written["gare_depart"].tolist() == ["010", "020"]
+    assert "commentaire_annulation" not in written
+    view = manifest["sncf_tgv_regularite"]
+    assert view["sampling"] == {
+        "first_month": "2024-01",
+        "last_month": "2024-02",
+        "method": "complete monthly SNCF TGV route punctuality and delay-cause ledger",
+    }
+    assert view["source_snapshot"] == f"sncf_tgv_regularite/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_dgccrf_fuel_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no DGCCRF fuel prices CSV in the snapshot$"):
+        ev._build_dgccrf_fuel(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _dgccrf_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_dgccrf_fuel(root, out, manifest)
+    ev._build_dgccrf_fuel(root, out, manifest)
+    written = pd.read_csv(
+        out / "dgccrf_fuel_prices" / "fuel_prices.csv", dtype={"code_departement": str}
+    )
+    assert written.columns.tolist() == list(ev.DGCCRF_COLS)
+    assert len(written) == 5
+    assert "adresse" not in written and "id" not in written
+    expected_pairs = sorted(
+        [
+            (ev.pseudonym("2000001"), "gazole"),
+            (ev.pseudonym("2000001"), "e10"),
+            (ev.pseudonym("0100001"), "sp95"),
+            (ev.pseudonym("0100001"), "e85"),
+            (ev.pseudonym("0100001"), "gplc"),
+        ]
+    )
+    assert (written["station_id"].tolist(), written["fuel_type"].tolist()) == tuple(
+        map(list, zip(*expected_pairs, strict=True))
+    )
+    assert "2A" in written["code_departement"].tolist()
+    row_2a = written[
+        (written["code_departement"] == "2A") & (written["fuel_type"] == "gazole")
+    ].iloc[0]
+    assert row_2a["price_eur"] == 1.899 and row_2a["automate_24_24"] == "Oui"
+    assert row_2a["pop"] == "R" and row_2a["code_region"] == 94
+    assert row_2a["price_updated_at"] == "2026-11-22T08:00:00Z"
+    view = manifest["dgccrf_fuel_prices"]
+    assert view["pseudonymised"] == ["id"] and view["salt_label"] == ev.SALT
+    assert view["sampling"]["stations"] == 2
+    assert view["source_snapshot"] == f"dgccrf_fuel_prices/{ev.WAVE24_SNAPSHOT}"

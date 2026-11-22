@@ -545,6 +545,41 @@
   },
   "source_snapshot": "dgal_alimconfiance/2026-11-22"
  },
+ "dgccrf_fuel_prices": {
+  "dropped": [
+   "adresse",
+   "ville",
+   "cp",
+   "latitude",
+   "longitude",
+   "horaires",
+   "services",
+   "prix",
+   "rupture",
+   "geom",
+   "horaires_jour",
+   "services_service",
+   "departement",
+   "region",
+   "carburants_*",
+   "*_rupture_*"
+  ],
+  "files": {
+   "fuel_prices.csv": {
+    "rows": 32699,
+    "sha256": "3cb6f6fd703ef32718df30aff482558b5374e3396e3101e319a8d82ac2290978"
+   }
+  },
+  "pseudonymised": [
+   "id"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "method": "point-in-time national convenience snapshot melted to non-null per-fuel price postings",
+   "stations": 9593
+  },
+  "source_snapshot": "dgccrf_fuel_prices/2026-11-22"
+ },
  "dgfip_dvf": {
   "dropped": [
    "address, street code, parcel ids, volume and lot numbers, coordinates"
@@ -679,6 +714,27 @@
    ]
   },
   "source_snapshot": "epa_aqs_ozone_hourly/2026-11-22"
+ },
+ "fdic_bank_financials": {
+  "dropped": [
+   "ID"
+  ],
+  "files": {
+   "bank_financials.csv": {
+    "rows": 18402,
+    "sha256": "aa11bea4880a39fdaeda28b3a233849f0ab6ec1ec38bdab97afa2875f74ef945"
+   }
+  },
+  "pseudonymised": [
+   "CERT"
+  ],
+  "salt_label": "etl-benchmark-views-v1",
+  "sampling": {
+   "institutions": 4798,
+   "method": "four complete year-end cross-sections (REPDTE 20221231-20251231)",
+   "snapshots": 4
+  },
+  "source_snapshot": "fdic_bank_financials/2026-11-22"
  },
  "flat_uci_101_C2a": {
   "dropped": [],
@@ -3711,6 +3767,26 @@
   "sampling": "jobs with job id % 20 == 0, by submit time",
   "source_snapshot": "slurm_ccin2p3/2026-11-21"
  },
+ "sncf_tgv_regularite": {
+  "dropped": [
+   "commentaire_annulation",
+   "commentaire_retards_depart",
+   "commentaires_retard_arrivee"
+  ],
+  "files": {
+   "tgv_regularity.csv": {
+    "rows": 12907,
+    "sha256": "d024377aa78e3bc97eaf3748e8bb79fe7455342dc3f913502d119dca883fea9b"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "first_month": "2018-01",
+   "last_month": "2026-09",
+   "method": "complete monthly SNCF TGV route punctuality and delay-cause ledger"
+  },
+  "source_snapshot": "sncf_tgv_regularite/2026-11-22"
+ },
  "stackexchange": {
   "dropped": [
    "Title",
@@ -4141,6 +4217,31 @@
    "method": "250 reviewed Swiss-Prot entries per organism across six model organisms"
   },
   "source_snapshot": "uniprot_kb_reviewed/2026-11-22"
+ },
+ "us_treasury_dts": {
+  "dropped": [
+   "transaction_catg_desc",
+   "table_nbr",
+   "table_nm",
+   "record_calendar_year",
+   "record_calendar_quarter",
+   "record_calendar_month",
+   "record_calendar_day"
+  ],
+  "files": {
+   "dts_operating_cash.csv": {
+    "rows": 91119,
+    "sha256": "6d5e0118798a425f9727a24cd967a08e0eb5949d2223a3db8ac81e53324890bc"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "first_date": "2024-01-02",
+   "last_date": "2025-12-31",
+   "method": "complete 2024-01-01 to 2025-12-31 Daily Treasury Statement Table II release",
+   "pages": 19
+  },
+  "source_snapshot": "us_treasury_dts/2026-11-22"
  },
  "usda_fdc_sr_legacy": {
   "dropped": [

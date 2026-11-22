@@ -614,6 +614,45 @@
    "source_snapshot": "4tu_csv/2026-11-21"
   }
  },
+ "dgccrf_fuel": {
+  "dgccrf_fuel_prices": {
+   "dropped": [
+    "adresse",
+    "ville",
+    "cp",
+    "latitude",
+    "longitude",
+    "horaires",
+    "services",
+    "prix",
+    "rupture",
+    "geom",
+    "horaires_jour",
+    "services_service",
+    "departement",
+    "region",
+    "carburants_*",
+    "*_rupture_*"
+   ],
+   "files": {
+    "fuel_prices.csv": {
+     "rows": 5
+    }
+   },
+   "heads": {
+    "fuel_prices.csv": "station_id,pop,code_departement,code_region,automate_24_24,fuel_type,price_eur,price_updated_at"
+   },
+   "pseudonymised": [
+    "id"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "method": "point-in-time national convenience snapshot melted to non-null per-fuel price postings",
+    "stations": 2
+   },
+   "source_snapshot": "dgccrf_fuel_prices/2026-11-22"
+  }
+ },
  "dk_heating": {
   "zen_dk_district_heating": {
    "dropped": [
@@ -765,6 +804,31 @@
     "users": 1
    },
    "source_snapshot": "zen_ev_charging/2026-11-22"
+  }
+ },
+ "fdic_financials": {
+  "fdic_bank_financials": {
+   "dropped": [
+    "ID"
+   ],
+   "files": {
+    "bank_financials.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "bank_financials.csv": "cert_id,repdte,bkclass,stalp,asset,dep,eq,netinc,intinc,eintexp,lnlsnet,roa,roe,rbcrwaj,numemp,offdom"
+   },
+   "pseudonymised": [
+    "CERT"
+   ],
+   "salt_label": "etl-benchmark-views-v1",
+   "sampling": {
+    "institutions": 2,
+    "method": "four complete year-end cross-sections (REPDTE 20221231-20251231)",
+    "snapshots": 2
+   },
+   "source_snapshot": "fdic_bank_financials/2026-11-22"
   }
  },
  "fugaku": {
@@ -1484,6 +1548,30 @@
    "source_snapshot": "rte_eco2mix_national/2026-11-22"
   }
  },
+ "sncf_tgv": {
+  "sncf_tgv_regularite": {
+   "dropped": [
+    "commentaire_annulation",
+    "commentaire_retards_depart",
+    "commentaires_retard_arrivee"
+   ],
+   "files": {
+    "tgv_regularity.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "tgv_regularity.csv": "date,service,gare_depart,gare_arrivee,duree_moyenne,nb_train_prevu,nb_annulation,nb_train_depart_retard,retard_moyen_dep"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "first_month": "2024-01",
+    "last_month": "2024-02",
+    "method": "complete monthly SNCF TGV route punctuality and delay-cause ledger"
+   },
+   "source_snapshot": "sncf_tgv_regularite/2026-11-22"
+  }
+ },
  "surf": {
   "zen_surf_lisa_slurm": {
    "dropped": [
@@ -1589,6 +1677,35 @@
     "zero_or_negative_totals": 1
    },
    "source_snapshot": "nyc_tlc_yellow/2026-11-22"
+  }
+ },
+ "treasury_dts": {
+  "us_treasury_dts": {
+   "dropped": [
+    "transaction_catg_desc",
+    "table_nbr",
+    "table_nm",
+    "record_calendar_year",
+    "record_calendar_quarter",
+    "record_calendar_month",
+    "record_calendar_day"
+   ],
+   "files": {
+    "dts_operating_cash.csv": {
+     "rows": 3
+    }
+   },
+   "heads": {
+    "dts_operating_cash.csv": "record_date,account_type,transaction_type,transaction_catg,transaction_today_amt,transaction_mtd_amt,transaction_fytd_am"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "first_date": "2024-01-02",
+    "last_date": "2024-01-03",
+    "method": "complete 2024-01-01 to 2025-12-31 Daily Treasury Statement Table II release",
+    "pages": 2
+   },
+   "source_snapshot": "us_treasury_dts/2026-11-22"
   }
  },
  "uniprot": {

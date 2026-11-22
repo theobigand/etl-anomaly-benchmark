@@ -5932,6 +5932,287 @@ def _build_dmsp_auroral(root: Path, out: Path, manifest: dict[str, Any]) -> None
     )
 
 
+DTS_TEXT_COLS = ("record_date", "account_type", "transaction_type", "transaction_catg")
+DTS_NUM_COLS = (
+    "transaction_today_amt",
+    "transaction_mtd_amt",
+    "transaction_fytd_amt",
+    "record_fiscal_year",
+    "record_fiscal_quarter",
+    "src_line_nbr",
+)
+
+
+def treasury_dts_view(records: list[dict[str, Any]]) -> pd.DataFrame:
+    """U.S. Daily Treasury Statement operating cash ledger rows sorted by date and line."""
+    rows = [{c: r.get(c) for c in (*DTS_TEXT_COLS, *DTS_NUM_COLS)} for r in records]
+    frame = pd.DataFrame(rows, columns=[*DTS_TEXT_COLS, *DTS_NUM_COLS])
+    for col in DTS_NUM_COLS:
+        frame[col] = _num_clean(frame[col])
+    return (
+        frame[frame["record_date"].notna()]
+        .sort_values(
+            [
+                "record_date",
+                "src_line_nbr",
+                "account_type",
+                "transaction_type",
+                "transaction_catg",
+            ]
+        )
+        .reset_index(drop=True)
+    )
+
+
+def _build_treasury_dts(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    files = sorted(
+        (root / "us_treasury_dts" / WAVE24_SNAPSHOT / "raw").glob("dts_2024_2025_p*.json")
+    )
+    if not files:
+        raise ViewError("no US Treasury DTS JSON files in the snapshot")
+    records: list[dict[str, Any]] = []
+    for path in files:
+        records.extend(json.loads(path.read_text()).get("data", []))
+    view = treasury_dts_view(records)
+    folder = out / "us_treasury_dts"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "dts_operating_cash.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "us_treasury_dts",
+        {"dts_operating_cash.csv": (target, len(view))},
+        dropped=[
+            "transaction_catg_desc",
+            "table_nbr",
+            "table_nm",
+            "record_calendar_year",
+            "record_calendar_quarter",
+            "record_calendar_month",
+            "record_calendar_day",
+        ],
+        pseudonymised=[],
+        sampling={
+            "first_date": str(view["record_date"].min()),
+            "last_date": str(view["record_date"].max()),
+            "method": "complete 2024-01-01 to 2025-12-31 Daily Treasury Statement Table II release",  # noqa: E501
+            "pages": len(files),
+        },
+        source_snapshot=f"us_treasury_dts/{WAVE24_SNAPSHOT}",
+    )
+
+
+FDIC_NUM_COLS = (
+    "ASSET",
+    "DEP",
+    "EQ",
+    "NETINC",
+    "INTINC",
+    "EINTEXP",
+    "LNLSNET",
+    "ROA",
+    "ROE",
+    "RBCRWAJ",
+    "NUMEMP",
+    "OFFDOM",
+)
+FDIC_OUT_COLS = (
+    "cert_id",
+    "repdte",
+    "bkclass",
+    "stalp",
+    *(c.lower() for c in FDIC_NUM_COLS),
+)
+
+
+def fdic_financials_view(records: list[dict[str, Any]]) -> pd.DataFrame:
+    """FDIC year-end Call Report bank financials with salted pseudonymised CERT ids."""
+    rows = []
+    for rec in records:
+        cert = rec.get("CERT")
+        if cert is None:
+            continue
+        row: dict[str, Any] = {
+            "cert_id": pseudonym(str(cert)),
+            "repdte": rec.get("REPDTE"),
+            "bkclass": rec.get("BKCLASS"),
+            "stalp": rec.get("STALP"),
+        }
+        for col in FDIC_NUM_COLS:
+            row[col.lower()] = rec.get(col)
+        rows.append(row)
+    frame = pd.DataFrame(rows, columns=list(FDIC_OUT_COLS))
+    for col in FDIC_NUM_COLS:
+        frame[col.lower()] = pd.to_numeric(frame[col.lower()], errors="coerce")
+    return frame.sort_values(["repdte", "cert_id"]).reset_index(drop=True)
+
+
+def _build_fdic_financials(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    files = sorted((root / "fdic_bank_financials" / WAVE24_SNAPSHOT / "raw").glob("fdic_*.json"))
+    if not files:
+        raise ViewError("no FDIC bank financials JSON files in the snapshot")
+    records: list[dict[str, Any]] = []
+    for path in files:
+        records.extend(item["data"] for item in json.loads(path.read_text()).get("data", []))
+    view = fdic_financials_view(records)
+    folder = out / "fdic_bank_financials"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "bank_financials.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "fdic_bank_financials",
+        {"bank_financials.csv": (target, len(view))},
+        dropped=["ID"],
+        pseudonymised=["CERT"],
+        salt_label=SALT,
+        sampling={
+            "institutions": int(view["cert_id"].nunique()),
+            "method": "four complete year-end cross-sections (REPDTE 20221231-20251231)",
+            "snapshots": len(files),
+        },
+        source_snapshot=f"fdic_bank_financials/{WAVE24_SNAPSHOT}",
+    )
+
+
+SNCF_TEXT_COLS = ("date", "service", "gare_depart", "gare_arrivee")
+SNCF_NUM_COLS = (
+    "duree_moyenne",
+    "nb_train_prevu",
+    "nb_annulation",
+    "nb_train_depart_retard",
+    "retard_moyen_depart",
+    "retard_moyen_tous_trains_depart",
+    "nb_train_retard_arrivee",
+    "retard_moyen_arrivee",
+    "retard_moyen_tous_trains_arrivee",
+    "nb_train_retard_sup_15",
+    "retard_moyen_trains_retard_sup15",
+    "nb_train_retard_sup_30",
+    "nb_train_retard_sup_60",
+    "prct_cause_externe",
+    "prct_cause_infra",
+    "prct_cause_gestion_trafic",
+    "prct_cause_materiel_roulant",
+    "prct_cause_gestion_gare",
+    "prct_cause_prise_en_charge_voyageurs",
+)
+
+
+def sncf_tgv_view(raw: pd.DataFrame) -> pd.DataFrame:
+    """Monthly SNCF TGV route punctuality ledger without free-text comments."""
+    data: dict[str, Any] = {col: raw[col].astype(str) for col in SNCF_TEXT_COLS}
+    for col in SNCF_NUM_COLS:
+        data[col] = pd.to_numeric(raw[col], errors="coerce")
+    frame = pd.DataFrame(data)
+    return frame.sort_values(list(SNCF_TEXT_COLS)).reset_index(drop=True)
+
+
+def _build_sncf_tgv(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    source = root / "sncf_tgv_regularite" / WAVE24_SNAPSHOT / "raw" / "sncf_tgv_regularite.csv"
+    if not source.exists():
+        raise ViewError("no SNCF TGV regularity CSV in the snapshot")
+    view = sncf_tgv_view(pd.read_csv(source, sep=";", dtype=str))
+    folder = out / "sncf_tgv_regularite"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "tgv_regularity.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "sncf_tgv_regularite",
+        {"tgv_regularity.csv": (target, len(view))},
+        dropped=[
+            "commentaire_annulation",
+            "commentaire_retards_depart",
+            "commentaires_retard_arrivee",
+        ],
+        pseudonymised=[],
+        sampling={
+            "first_month": str(view["date"].min()),
+            "last_month": str(view["date"].max()),
+            "method": "complete monthly SNCF TGV route punctuality and delay-cause ledger",
+        },
+        source_snapshot=f"sncf_tgv_regularite/{WAVE24_SNAPSHOT}",
+    )
+
+
+DGCCRF_FUELS = ("gazole", "sp95", "e85", "gplc", "e10", "sp98")
+DGCCRF_COLS = (
+    "station_id",
+    "pop",
+    "code_departement",
+    "code_region",
+    "automate_24_24",
+    "fuel_type",
+    "price_eur",
+    "price_updated_at",
+)
+
+
+def dgccrf_fuel_view(raw: pd.DataFrame) -> pd.DataFrame:
+    """French retail fuel station price postings melted across all six fuels with salted ids."""
+    station_ids = raw["id"].map(pseudonym)
+    parts = []
+    for fuel in DGCCRF_FUELS:
+        prices = pd.to_numeric(raw[f"{fuel}_prix"], errors="coerce")
+        sub = pd.DataFrame(
+            {
+                "station_id": station_ids,
+                "pop": raw["pop"],
+                "code_departement": raw["code_departement"],
+                "code_region": raw["code_region"],
+                "automate_24_24": raw["horaires_automate_24_24"],
+                "fuel_type": fuel,
+                "price_eur": prices,
+                "price_updated_at": raw[f"{fuel}_maj"],
+            }
+        )
+        parts.append(sub[prices.notna()])
+    frame = pd.concat(parts)
+    return frame[list(DGCCRF_COLS)].sort_values(["station_id", "fuel_type"]).reset_index(drop=True)
+
+
+def _build_dgccrf_fuel(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    source = root / "dgccrf_fuel_prices" / WAVE24_SNAPSHOT / "raw" / "dgccrf_fuel_prices.csv"
+    if not source.exists():
+        raise ViewError("no DGCCRF fuel prices CSV in the snapshot")
+    view = dgccrf_fuel_view(pd.read_csv(source, sep=";", dtype=str))
+    folder = out / "dgccrf_fuel_prices"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "fuel_prices.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "dgccrf_fuel_prices",
+        {"fuel_prices.csv": (target, len(view))},
+        dropped=[
+            "adresse",
+            "ville",
+            "cp",
+            "latitude",
+            "longitude",
+            "horaires",
+            "services",
+            "prix",
+            "rupture",
+            "geom",
+            "horaires_jour",
+            "services_service",
+            "departement",
+            "region",
+            "carburants_*",
+            "*_rupture_*",
+        ],
+        pseudonymised=["id"],
+        salt_label=SALT,
+        sampling={
+            "method": "point-in-time national convenience snapshot melted to non-null per-fuel price postings",  # noqa: E501
+            "stations": int(view["station_id"].nunique()),
+        },
+        source_snapshot=f"dgccrf_fuel_prices/{WAVE24_SNAPSHOT}",
+    )
+
+
 BUILD_STEPS = (
     _build_openalex,
     _build_monash,
@@ -6007,6 +6288,10 @@ BUILD_STEPS = (
     _build_dk_heating,
     _build_water_demand,
     _build_dmsp_auroral,
+    _build_treasury_dts,
+    _build_fdic_financials,
+    _build_sncf_tgv,
+    _build_dgccrf_fuel,
     _build_flat,
     _build_series,
     _build_ukspend,

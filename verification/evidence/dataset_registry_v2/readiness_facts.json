@@ -374,6 +374,21 @@
    "units": 71228,
    "view": "dgal_alimconfiance"
   },
+  "dgccrf_fuel_prices": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "point-in-time national convenience snapshot (2026-11-22) melted across six fuel grades into 32,699 active price postings over 9,593 stations; single-timestamp cross-section cannot evaluate long-term drift",
+    "station identifiers pseudonymised via salted SHA-256; addresses, municipalities and GPS coordinates dropped"
+   ],
+   "first_party": true,
+   "independent_group": "dgccrf_fuel_prices",
+   "min_units": 500,
+   "partitions": "hash of station_id 70/15/15 so fuel postings from the same station stay together",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 32699,
+   "view": "dgccrf_fuel_prices"
+  },
   "dgfip_dvf": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -460,6 +475,21 @@
     "statements about the stability of seasonality over years"
    ],
    "view": "epa_aqs_ozone_hourly"
+  },
+  "fdic_bank_financials": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "four complete year-end cross-sections (REPDTE 20221231, 20231231, 20241231, 20251231; 18,402 filings across 4,798 banks); year-end snapshot boundary excludes intra-year failed/merged banks outside Q4",
+    "CERT identifier pseudonymised via salted SHA-256 so multi-year bank balance sheets join across snapshots"
+   ],
+   "first_party": true,
+   "independent_group": "fdic_bank_financials",
+   "min_units": 500,
+   "partitions": "hash of cert_id 70/15/15 so multi-year regulatory filings stay together",
+   "privacy": "handled",
+   "protocol_id": "P-TAB",
+   "units": 18402,
+   "view": "fdic_bank_financials"
   },
   "flat:uci:101:C2a": {
    "anomaly_origin": "controlled_injection",
@@ -2582,6 +2612,21 @@
    "units": 233716,
    "view": "slurm_ccin2p3"
   },
+  "sncf_tgv_regularite": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "complete monthly SNCF TGV route punctuality ledger (2018-01 to 2026-09, 12,907 station-pair month rows); seasonal holiday surges and strikes shift baseline cancellation rates",
+    "commentaire* free-text columns dropped; six delay-cause percentage shares sum approximately to 100%"
+   ],
+   "first_party": true,
+   "independent_group": "sncf_tgv_regularite",
+   "min_units": 500,
+   "partitions": "chronological 70/15/15 on date",
+   "privacy": "not_needed",
+   "protocol_id": "P-TAB",
+   "units": 12907,
+   "view": "sncf_tgv_regularite"
+  },
   "stackexchange:3dprinting": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -2934,6 +2979,21 @@
    "protocol_id": "P-NEST",
    "units": 1500,
    "view": "uniprot_kb_reviewed"
+  },
+  "us_treasury_dts": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "date-restricted complete release (2024-01-01 to 2025-12-31, 91,119 Daily Treasury Statement Table II rows across 19 pages); fiscal-year-end settlement spikes and federal holiday zero-posting days are normal",
+    "daily, month-to-date and fiscal-year-to-date operating cash totals share accounting hierarchies across account_type and transaction_catg"
+   ],
+   "first_party": true,
+   "independent_group": "us_treasury_dts",
+   "min_units": 500,
+   "partitions": "chronological 70/15/15 on record_date",
+   "privacy": "not_needed",
+   "protocol_id": "P-TAB",
+   "units": 91119,
+   "view": "us_treasury_dts"
   },
   "usda_fdc_sr_legacy": {
    "anomaly_origin": "controlled_injection",

@@ -10215,6 +10215,134 @@
    "stratum": "C3",
    "upstream": "first party: Kilcommons, Redmon & Knipp published the DMSP SSJ auroral boundary archive under CC BY 4.0",
    "upstream_verified": true
+  },
+  {
+   "attribution": "U.S. Department of the Treasury, Daily Treasury Statement Table II: Deposits and Withdrawals of Operating Cash (Fiscal Data API, U.S. Federal Public Domain); accessed 2026-11-22",
+   "files": [],
+   "hosts": [
+    "api.fiscaldata.treasury.gov"
+   ],
+   "id": "us_treasury_dts",
+   "licence_class": "open",
+   "licence_location": "https://fiscaldata.treasury.gov/datasets/daily-treasury-statement/",
+   "licence_text": "U.S. Government Works (17 U.S.C. 105 Public Domain); Fiscal Data API serves uncopyrighted federal public-domain Treasury ledgers",
+   "max_bytes": 16777216,
+   "method": "complete date-restricted 2024-01-01 to 2025-12-31 release (19 sequential pages x 5,000 rows sorted by record_date,src_line_nbr)",
+   "min_interval": 0.5,
+   "pages": {
+    "count": 19,
+    "name": "dts_2024_2025_p{n:02d}.json",
+    "observed": "2024-2025",
+    "size": 5000,
+    "url": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/dts/deposits_withdrawals_operating_cash?filter=record_date:gte:2024-01-01,record_date:lte:2025-12-31&sort=record_date,src_line_nbr&page[size]=5000&page[number]={n1}"
+   },
+   "privacy": "public federal aggregate operating cash accounts and deposit/withdrawal categories only; no personal data",
+   "publisher": "U.S. Department of the Treasury / Bureau of the Fiscal Service",
+   "rate_limit": "sequential paginated GET at min_interval=0.5s with descriptive User-Agent",
+   "redistribution": "U.S. Public Domain; API pages cached locally",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "first party: Bureau of the Fiscal Service publishes official Daily Treasury Statement ledger tables via api.fiscaldata.treasury.gov",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Federal Deposit Insurance Corporation (FDIC), BankFind Suite Financial Reports (2022Q4-2025Q4, U.S. Federal Public Domain); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "fdic_20221231.json",
+     "observed": "2022",
+     "url": "https://api.fdic.gov/banks/financials?filters=REPDTE:20221231&fields=CERT,REPDTE,BKCLASS,STALP,ASSET,DEP,EQ,NETINC,INTINC,EINTEXP,LNLSNET,ROA,ROE,RBCRWAJ,NUMEMP,OFFDOM&limit=10000&sort_by=CERT&sort_order=ASC"
+    },
+    {
+     "name": "fdic_20231231.json",
+     "observed": "2023",
+     "url": "https://api.fdic.gov/banks/financials?filters=REPDTE:20231231&fields=CERT,REPDTE,BKCLASS,STALP,ASSET,DEP,EQ,NETINC,INTINC,EINTEXP,LNLSNET,ROA,ROE,RBCRWAJ,NUMEMP,OFFDOM&limit=10000&sort_by=CERT&sort_order=ASC"
+    },
+    {
+     "name": "fdic_20241231.json",
+     "observed": "2024",
+     "url": "https://api.fdic.gov/banks/financials?filters=REPDTE:20241231&fields=CERT,REPDTE,BKCLASS,STALP,ASSET,DEP,EQ,NETINC,INTINC,EINTEXP,LNLSNET,ROA,ROE,RBCRWAJ,NUMEMP,OFFDOM&limit=10000&sort_by=CERT&sort_order=ASC"
+    },
+    {
+     "name": "fdic_20251231.json",
+     "observed": "2025",
+     "url": "https://api.fdic.gov/banks/financials?filters=REPDTE:20251231&fields=CERT,REPDTE,BKCLASS,STALP,ASSET,DEP,EQ,NETINC,INTINC,EINTEXP,LNLSNET,ROA,ROE,RBCRWAJ,NUMEMP,OFFDOM&limit=10000&sort_by=CERT&sort_order=ASC"
+    }
+   ],
+   "hosts": [
+    "api.fdic.gov"
+   ],
+   "id": "fdic_bank_financials",
+   "licence_class": "open",
+   "licence_location": "https://api.fdic.gov/banks/docs/",
+   "licence_text": "U.S. Government Works (17 U.S.C. 105 Public Domain); FDIC BankFind Suite financial data API documentation confirms public federal release",
+   "max_bytes": 16777216,
+   "method": "four complete year-end cross-sections (REPDTE 20221231, 20231231, 20241231, 20251231) sorted ascending by CERT",
+   "min_interval": 0.5,
+   "privacy": "regulated institution balance-sheet and income metrics only; bank CERT identifiers pseudonymised via salted SHA-256 in view",
+   "publisher": "Federal Deposit Insurance Corporation (FDIC)",
+   "rate_limit": "4 annual report-date requests at min_interval=0.5s with descriptive User-Agent",
+   "redistribution": "U.S. Public Domain; API snapshots stay local",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "first party: FDIC publishes official quarterly Call Report financial statements via api.fdic.gov",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "SNCF Voyageurs, Regularite mensuelle TGV par liaisons via ressources.data.sncf.com (ODbL); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "sncf_tgv_regularite.csv",
+     "observed": "monthly TGV origin-destination series",
+     "url": "https://ressources.data.sncf.com/api/explore/v2.1/catalog/datasets/regularite-mensuelle-tgv-aqst/exports/csv?delimiter=%3B"
+    }
+   ],
+   "hosts": [
+    "ressources.data.sncf.com"
+   ],
+   "id": "sncf_tgv_regularite",
+   "licence_class": "open",
+   "licence_location": "https://ressources.data.sncf.com/api/explore/v2.1/catalog/datasets/regularite-mensuelle-tgv-aqst",
+   "licence_text": "ressources.data.sncf.com API metadata (read 2026-11-22): Open Database License (ODbL)",
+   "max_bytes": 16777216,
+   "method": "complete monthly TGV origin-destination punctuality release exported directly as semicolon-delimited CSV",
+   "min_interval": 1.0,
+   "privacy": "aggregate monthly route-level rail punctuality and delay-cause counters only; free-text comment fields dropped in view",
+   "publisher": "SNCF Voyageurs",
+   "rate_limit": "single CSV export request with descriptive User-Agent",
+   "redistribution": "Open Database License (ODbL share-alike); raw CSV and view stay local",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "first party: SNCF Voyageurs publishes official monthly TGV punctuality and delay-cause ledgers on ressources.data.sncf.com",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "DGCCRF / Ministere de l'Economie et des Finances, Prix des carburants en France - Flux instantane v2 (Licence Ouverte v2.0 Etalab); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "dgccrf_fuel_prices.csv",
+     "observed": "2026-11-22",
+     "url": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2/exports/csv?delimiter=%3B"
+    }
+   ],
+   "hosts": [
+    "data.economie.gouv.fr"
+   ],
+   "id": "dgccrf_fuel_prices",
+   "licence_class": "open",
+   "licence_location": "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/prix-des-carburants-en-france-flux-instantane-v2",
+   "licence_text": "data.economie.gouv.fr API metadata (read 2026-11-22): Licence Ouverte v2.0 (Etalab)",
+   "max_bytes": 33554432,
+   "method": "point-in-time national convenience snapshot of active French retail fuel stations and per-fuel price postings",
+   "min_interval": 1.0,
+   "privacy": "station addresses, municipalities, postal codes and GPS coordinates dropped in view; station id pseudonymised via salted SHA-256",
+   "publisher": "Direction generale de la concurrence, de la consommation et de la repression des fraudes (DGCCRF)",
+   "rate_limit": "single CSV export request with descriptive User-Agent",
+   "redistribution": "Licence Ouverte v2.0 (Etalab); raw CSV stays local",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "first party: DGCCRF publishes statutory retail fuel prices reported by French service stations on data.economie.gouv.fr",
+   "upstream_verified": true
   }
  ]
 }

@@ -2318,6 +2318,34 @@
   },
   {
    "failed": null,
+   "group": "us_treasury_dts",
+   "id": "us_treasury_dts",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "fdic_bank_financials",
+   "id": "fdic_bank_financials",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "sncf_tgv_regularite",
+   "id": "sncf_tgv_regularite",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
+   "group": "dgccrf_fuel_prices",
+   "id": "dgccrf_fuel_prices",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2507,7 +2535,9 @@
   ],
   "C2b": [
    "coatings_multinational",
+   "dgccrf_fuel_prices",
    "dgfip_dvf",
+   "fdic_bank_financials",
    "georgia_procurement",
    "german_paying_agency",
    "hm_land_registry",
@@ -2518,9 +2548,11 @@
    "ntnu_ev_charging",
    "nyc_tlc",
    "queensland_petroleum_production",
+   "sncf_tgv_regularite",
    "uci:352",
    "uk_ledger_mhra",
    "uk_ledger_nhsbsa",
+   "us_treasury_dts",
    "world_bank_projects",
    "zambia_procurement"
   ],
@@ -2646,13 +2678,13 @@
    "structurally_valid": 19
   },
   "C2b": {
-   "acquired": 18,
-   "discovered": 24,
-   "experiment_ready": 18,
-   "protocol_ready": 18,
-   "rights_verified": 18,
-   "scientifically_eligible": 18,
-   "structurally_valid": 18
+   "acquired": 22,
+   "discovered": 28,
+   "experiment_ready": 22,
+   "protocol_ready": 22,
+   "rights_verified": 22,
+   "scientifically_eligible": 22,
+   "structurally_valid": 22
   },
   "C3": {
    "acquired": 34,
