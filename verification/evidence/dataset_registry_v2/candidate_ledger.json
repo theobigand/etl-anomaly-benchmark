@@ -721,15 +721,15 @@
     "C2b"
    ],
    "id": "nyc:tlc",
-   "licence": "not verified: the TLC terms page returns Access Denied to automated and headless access (not bypassed); NYC Open Data mirrors the trip records (for example 2023 Yellow Taxi Trip Data, id 4b4i-vvec) with no licence field, under the nyc.gov Terms of Use that could not be read",
+   "licence": "NYC Open Data: Local Law 11 of 2012 (no registration, licence requirement or usage restriction); portal Terms of Use (source, version and modification identified on republication; no warranty); read 2026-11-22",
    "name": "NYC TLC trip records",
-   "next_step": "a human reading of the TLC page and the NYC Open Data terms by the owner, or written confirmation from the TLC; the Parquet files themselves are reachable over HTTP (content-length and range support seen) but are not fetched until rights are confirmed",
-   "notes": "2026-11-22: provenance would be one group (TLC) whatever the months or vehicle types; the yellow and green records hold fares, tips and tolls (C2b) from technology service providers; for-hire records lack the financial fields",
+   "next_step": "none; green taxi and other months would be the same provenance group",
+   "notes": "acquired through the NYC Open Data SODA API (dataset 4b4i-vvec) because the TLC page denies automated access; TLC-specific extra terms cannot be excluded and are recorded; fetched with TLS verification against the macOS system root store (the Python certificate bundle lacks the GlobalSign R46 root)",
    "publisher": "NYC TLC",
    "reason": "403 to automated requests",
    "size": null,
    "source_url": "",
-   "status": "blocked_access"
+   "status": "experiment_ready"
   },
   {
    "categories": [

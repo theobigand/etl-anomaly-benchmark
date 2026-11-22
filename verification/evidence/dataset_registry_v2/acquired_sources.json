@@ -4670,6 +4670,26 @@
    "stratum": "C3",
    "system": "backblaze_data_centre_drives",
    "upstream_status": "verified"
+  },
+  {
+   "eligible": true,
+   "family": "nyc_tlc",
+   "id": "nyc_tlc_yellow",
+   "licence_class": "open",
+   "protocols": "P-TAB on fare records (amount, code, time and duplicate faults)",
+   "publisher": "nyc_tlc",
+   "reason": "NYC Yellow Taxi trip records (2023 Yellow Taxi Trip Data on NYC Open Data, from the technology service providers to the TLC): three complete pickup days of March 2023 (Tue, Sat, Sun), 320,320 trips, fare, extras, tax, tip, tolls, surcharges, total and payment type; 2,917 trips with a zero or negative total kept as published. Taxi fare transactions, a transport-fare mechanism absent from the corpus",
+   "stages": {
+    "collection_implemented": true,
+    "data_acquired": true,
+    "discovered": true,
+    "licence_verified": "NYC Open Data policy (Local Law 11 of 2012: no registration, licence or usage restriction) and portal Terms of Use read on 2026-11-22; the TLC-specific page denies automated access and was not read",
+    "ready_for_experiments": false,
+    "structural_validation": true
+   },
+   "stratum": "C2b",
+   "system": "nyc_yellow_taxi_fares",
+   "upstream_status": "verified"
   }
  ],
  "note": "eligible = counted in the gap report; ready_for_experiments is false everywhere until a protocol is run; upstream_status says whether the original publisher's terms were read, not_verified entries stay provisional"

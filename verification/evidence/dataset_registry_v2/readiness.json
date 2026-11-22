@@ -2050,6 +2050,13 @@
   },
   {
    "failed": null,
+   "group": "nyc_tlc",
+   "id": "nyc_tlc_yellow",
+   "status": "experiment_ready",
+   "stratum": "C2b"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2240,6 +2247,7 @@
    "italian_road_fines",
    "lyft_bikeshare",
    "montreal_contracts",
+   "nyc_tlc",
    "uci:352",
    "uk_ledger_mhra",
    "uk_ledger_nhsbsa",
@@ -2338,13 +2346,13 @@
    "structurally_valid": 13
   },
   "C2b": {
-   "acquired": 13,
-   "discovered": 19,
-   "experiment_ready": 13,
-   "protocol_ready": 13,
-   "rights_verified": 13,
-   "scientifically_eligible": 13,
-   "structurally_valid": 13
+   "acquired": 14,
+   "discovered": 20,
+   "experiment_ready": 14,
+   "protocol_ready": 14,
+   "rights_verified": 14,
+   "scientifically_eligible": 14,
+   "structurally_valid": 14
   },
   "C3": {
    "acquired": 22,

@@ -1935,6 +1935,23 @@
    "units": 4194,
    "view": "nvd_cve"
   },
+  "nyc_tlc_yellow": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "three complete pickup days, a Tuesday and a weekend, not random",
+    "zero, negative and disputed totals, zero-passenger trips and unusual payment codes are published states",
+    "trip records have no transaction id; one row is one trip",
+    "pickup and dropoff are coarse taxi zone ids"
+   ],
+   "first_party": true,
+   "independent_group": "nyc_tlc",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 on the pickup time",
+   "privacy": "not_needed",
+   "protocol_id": "P-TAB",
+   "units": 320320,
+   "view": "nyc_tlc_yellow"
+  },
   "ocds_georgia": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [

@@ -2378,6 +2378,75 @@ def _build_backblaze(root: Path, out: Path, manifest: dict[str, Any]) -> None:
     )
 
 
+TLC_SNAPSHOT = "2026-11-22"
+TLC_COLUMNS = (
+    "vendorid", "tpep_pickup_datetime", "tpep_dropoff_datetime", "passenger_count", "trip_distance",
+    "ratecodeid", "store_and_fwd_flag", "pulocationid", "dolocationid", "payment_type",
+    "fare_amount", "extra", "mta_tax", "tip_amount", "tolls_amount", "improvement_surcharge",
+    "total_amount", "congestion_surcharge", "airport_fee",
+)  # fmt: skip
+TLC_CODES = ("vendorid", "ratecodeid", "payment_type", "pulocationid", "dolocationid")
+
+
+def taxi_trip_view(pages: list[pd.DataFrame]) -> pd.DataFrame:
+    """Yellow taxi trips with their fare components in pickup order, every trip kept as published.
+
+    Zero, negative and disputed fares, trips without passengers and unusual payment codes are
+    baseline properties of the source and are not removed. Codes stay integers, amounts stay
+    numbers, and unreadable values become missing. Rows with an unreadable pickup time are dropped.
+    """
+    frame = pd.concat(pages, ignore_index=True)
+    missing = [c for c in TLC_COLUMNS if c not in frame.columns]
+    if missing:
+        raise ViewError(f"columns not found: {missing}")
+    out = frame[list(TLC_COLUMNS)].copy()
+    for column in ("tpep_pickup_datetime", "tpep_dropoff_datetime"):
+        out[column] = pd.to_datetime(out[column], errors="coerce")
+    out = out[out["tpep_pickup_datetime"].notna()]
+    for column in TLC_CODES:
+        out[column] = pd.to_numeric(out[column], errors="coerce").astype("Int64")
+    numeric = [
+        c
+        for c in TLC_COLUMNS
+        if c
+        not in (*TLC_CODES, "tpep_pickup_datetime", "tpep_dropoff_datetime", "store_and_fwd_flag")
+    ]
+    for column in numeric:
+        out[column] = pd.to_numeric(out[column], errors="coerce").astype("float64")
+    out["store_and_fwd_flag"] = out["store_and_fwd_flag"].astype("string")
+    return out.sort_values("tpep_pickup_datetime", kind="stable").reset_index(drop=True)
+
+
+def _build_tlc(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw = root / "nyc_tlc_yellow" / TLC_SNAPSHOT / "raw"
+    files = sorted(raw.glob("yellow_*.csv"))
+    if not files:
+        raise ViewError("no trip page in the snapshot")
+    pages = [pd.read_csv(path, dtype=str) for path in files]
+    view = taxi_trip_view(pages)
+    days = view["tpep_pickup_datetime"].dt.date.astype(str).value_counts().sort_index()
+    folder = out / "nyc_tlc_yellow"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "trips.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "nyc_tlc_yellow",
+        {"trips.csv": (target, len(view))},
+        dropped=[],
+        pseudonymised=[],
+        sampling={
+            "method": "three complete pickup days (a Tuesday, a Saturday and a Sunday of March 2023) in stable row-id order, paged",  # noqa: E501
+            "pages": [p.name for p in files],
+            "rows_by_day": {d: int(n) for d, n in days.items()},
+            "rows_read": int(sum(len(p) for p in pages)),
+            "rows_without_pickup_time": int(sum(len(p) for p in pages) - len(view)),
+            "zero_or_negative_totals": int((view["total_amount"] <= 0).sum()),
+        },
+        source_snapshot=f"nyc_tlc_yellow/{TLC_SNAPSHOT}",
+    )
+
+
 UNISG_SNAPSHOT = "2026-11-22"
 UNISG_LOG = "training_tenhertz_log_20230411-095748.txt"
 UNISG_HEAD = (
@@ -3183,6 +3252,7 @@ BUILD_STEPS = (
     _build_nvd,
     _build_unisg,
     _build_backblaze,
+    _build_tlc,
     _build_flat,
     _build_series,
     _build_ukspend,

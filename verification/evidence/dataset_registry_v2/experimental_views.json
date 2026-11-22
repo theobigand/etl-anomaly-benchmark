@@ -2640,6 +2640,38 @@
   },
   "source_snapshot": "nvd_cve/2026-11-22"
  },
+ "nyc_tlc_yellow": {
+  "dropped": [],
+  "files": {
+   "trips.csv": {
+    "rows": 320320,
+    "sha256": "ff7a1e846662b914a24b90420730211873c7bf77a2fedfcc987947bdc72040fd"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "method": "three complete pickup days (a Tuesday, a Saturday and a Sunday of March 2023) in stable row-id order, paged",
+   "pages": [
+    "yellow_2023-03-07_p0.csv",
+    "yellow_2023-03-07_p1.csv",
+    "yellow_2023-03-07_p2.csv",
+    "yellow_2023-03-11_p0.csv",
+    "yellow_2023-03-11_p1.csv",
+    "yellow_2023-03-11_p2.csv",
+    "yellow_2023-03-12_p0.csv",
+    "yellow_2023-03-12_p1.csv"
+   ],
+   "rows_by_day": {
+    "2023-03-07": 113802,
+    "2023-03-11": 111369,
+    "2023-03-12": 95149
+   },
+   "rows_read": 320320,
+   "rows_without_pickup_time": 0,
+   "zero_or_negative_totals": 2917
+  },
+  "source_snapshot": "nyc_tlc_yellow/2026-11-22"
+ },
  "ocds_georgia": {
   "dropped": [
    "address",

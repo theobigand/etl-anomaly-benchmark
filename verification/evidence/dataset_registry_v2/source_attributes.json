@@ -511,6 +511,17 @@
    "C6": "vulnerability records with configurations, metrics and references"
   }
  },
+ "nyc_tlc": {
+  "curator": "nyc open data",
+  "domain": "urban taxi fares",
+  "generating_system": "NYC yellow taxi meters and technology service providers reporting to the TLC",
+  "note": "",
+  "producer": "NYC Taxi and Limousine Commission",
+  "schema_family": "trip fare records",
+  "structure": {
+   "C2b": "taxi fare transactions"
+  }
+ },
  "openalex": {
   "curator": "openalex",
   "domain": "scholarly metadata",

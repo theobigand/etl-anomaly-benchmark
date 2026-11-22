@@ -280,6 +280,12 @@ def _backblaze(root, tmp):
     tev._bb_zip(root)
 
 
+def _tlc(root, tmp):
+    tev._tlc_page(
+        [{}, {"tpep_pickup_datetime": "2023-03-07T07:00:00.000", "total_amount": "0.0"}]
+    ).to_csv(tev._tlc_dir(root), index=False)
+
+
 CASES = {
     "surf": (_surf, ev._build_surf, ["zen_surf_lisa_slurm"], {}),
     "pbdb": (_pbdb, ev._build_pbdb, ["zen_pbdb"], {"PBDB_STRIDE": 2}),
@@ -292,6 +298,7 @@ CASES = {
     "care_a": (_care_a, ev._build_care_a, ["zen_care_wind_a"], {}),
     "pbdb_relational": (_pbdb_relational, ev._build_pbdb_relational, ["zen_pbdb_relational"], {"PBDB_STRIDE": 1}),  # noqa: E501
     "backblaze": (_backblaze, ev._build_backblaze, ["backblaze_drive_stats"], {"BACKBLAZE_DAYS": 2}),  # noqa: E501
+    "tlc": (_tlc, ev._build_tlc, ["nyc_tlc_yellow"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),
     "metropt": (_metropt, ev._build_metropt, ["zen_metropt2"], {}),
     "openlibrary": (_openlibrary, ev._build_openlibrary, ["openlibrary_dump"], {"OPENLIBRARY_MODULO": 1}),  # noqa: E501

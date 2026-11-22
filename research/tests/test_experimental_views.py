@@ -1031,6 +1031,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     bs.mkdir(parents=True)
     _fe2.write_feather(_pa.Table.from_pandas(_bess_frame(), preserve_index=False), bs / "S.feather")
     _care_snapshot(root, ids=(1,))
+    _tlc_page([{}]).to_csv(_tlc_dir(root), index=False)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
@@ -1046,7 +1047,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -4125,3 +4126,108 @@ def test_the_backblaze_builder_reports_the_last_chosen_day_and_passes_the_extrac
     ]
     assert manifest["backblaze_drive_stats"]["sampling"]["day_files"] == 3
     assert seen == [{"max_bytes": 1 << 28, "max_ratio": 100}] * 3
+
+
+# --- NYC yellow taxi trips ---------------------------------------------------------------------------  # noqa: E501
+
+
+def _tlc_page(rows):
+    base = {c: "1" for c in ev.TLC_COLUMNS}
+    base.update(
+        {
+            "store_and_fwd_flag": "N",
+            "tpep_pickup_datetime": "2023-03-07T08:00:00.000",
+            "tpep_dropoff_datetime": "2023-03-07T08:10:00.000",
+            "total_amount": "10.5",
+        }
+    )  # noqa: E501
+    return pd.DataFrame([{**base, **r} for r in rows])
+
+
+def test_taxi_view_keeps_every_trip_with_its_amounts_codes_and_order():
+    page_a = _tlc_page(
+        [
+            {
+                "tpep_pickup_datetime": "2023-03-07T09:00:00.000",
+                "total_amount": "-5.0",
+                "payment_type": "4",
+            },
+            {
+                "tpep_pickup_datetime": "2023-03-07T07:00:00.000",
+                "total_amount": "0.0",
+                "passenger_count": "0.0",
+            },
+        ]
+    )  # noqa: E501
+    page_b = _tlc_page(
+        [
+            {
+                "tpep_pickup_datetime": "2023-03-07T08:00:00.000",
+                "fare_amount": "bad",
+                "vendorid": "x",
+                "store_and_fwd_flag": "Y",
+            },
+            {"tpep_pickup_datetime": "not a time"},
+        ]
+    )  # noqa: E501
+    out = ev.taxi_trip_view([page_a, page_b])
+    assert (
+        list(out.columns) == list(ev.TLC_COLUMNS) and len(out) == 3
+    )  # the unreadable pickup is dropped
+    assert out["tpep_pickup_datetime"].is_monotonic_increasing and out["total_amount"].tolist() == [
+        0.0,
+        10.5,
+        -5.0,
+    ]
+    assert str(out["payment_type"].dtype) == "Int64" and out["payment_type"].tolist() == [1, 1, 4]
+    assert out["fare_amount"].isna().tolist() == [False, True, False] and pd.isna(
+        out["vendorid"].iloc[1]
+    )
+    assert (
+        out["store_and_fwd_flag"].tolist() == ["N", "Y", "N"]
+        and out["passenger_count"].iloc[0] == 0.0
+    )
+    assert (
+        out["tpep_dropoff_datetime"].dtype.kind == "M" and out["trip_distance"].dtype == "float64"
+    )
+    with pytest.raises(ev.ViewError, match="^columns not found: \\['airport_fee'\\]$"):
+        ev.taxi_trip_view([_tlc_page([{}]).drop(columns=["airport_fee"])])
+
+
+def test_the_tlc_builder_reads_every_page_and_records_days_and_unusual_fares(tmp_path):
+    raw = tmp_path / "acquired" / "nyc_tlc_yellow" / ev.TLC_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    with pytest.raises(ev.ViewError, match="^no trip page in the snapshot$"):
+        ev._build_tlc(tmp_path / "acquired", tmp_path / "o", {})
+    _tlc_page(
+        [
+            {"tpep_pickup_datetime": "2023-03-07T10:00:00.000"},
+            {"tpep_pickup_datetime": "2023-03-07T11:00:00.000", "total_amount": "0.0"},
+        ]
+    ).to_csv(raw / "yellow_2023-03-07_p0.csv", index=False)
+    _tlc_page(
+        [
+            {"tpep_pickup_datetime": "2023-03-11T10:00:00.000", "total_amount": "-1.0"},
+            {"tpep_pickup_datetime": "bad"},
+        ]
+    ).to_csv(raw / "yellow_2023-03-11_p0.csv", index=False)
+    manifest: dict = {}
+    ev._build_tlc(tmp_path / "acquired", tmp_path / "o", manifest)
+    view = manifest["nyc_tlc_yellow"]
+    assert view["sampling"]["rows_by_day"] == {"2023-03-07": 2, "2023-03-11": 1}
+    assert view["sampling"]["rows_read"] == 4 and view["sampling"]["rows_without_pickup_time"] == 1
+    assert view["sampling"]["zero_or_negative_totals"] == 2 and view["sampling"]["pages"] == [
+        "yellow_2023-03-07_p0.csv",
+        "yellow_2023-03-11_p0.csv",
+    ]
+    assert (
+        view["files"]["trips.csv"]["rows"] == 3
+        and view["source_snapshot"] == f"nyc_tlc_yellow/{ev.TLC_SNAPSHOT}"
+    )
+    assert len(pd.read_csv(tmp_path / "o" / "nyc_tlc_yellow" / "trips.csv")) == 3
+
+
+def _tlc_dir(root):
+    raw = root / "nyc_tlc_yellow" / ev.TLC_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    return raw / "yellow_2023-03-07_p0.csv"

@@ -583,6 +583,33 @@
    "source_snapshot": "src_zip/2026-11-21"
   }
  },
+ "tlc": {
+  "nyc_tlc_yellow": {
+   "dropped": [],
+   "files": {
+    "trips.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "trips.csv": "vendorid,tpep_pickup_datetime,tpep_dropoff_datetime,passenger_count,trip_distance,ratecodeid,store_and_fwd_flag,pulocati"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "method": "three complete pickup days (a Tuesday, a Saturday and a Sunday of March 2023) in stable row-id order, paged",
+    "pages": [
+     "yellow_2023-03-07_p0.csv"
+    ],
+    "rows_by_day": {
+     "2023-03-07": 2
+    },
+    "rows_read": 2,
+    "rows_without_pickup_time": 0,
+    "zero_or_negative_totals": 1
+   },
+   "source_snapshot": "nyc_tlc_yellow/2026-11-22"
+  }
+ },
  "unisg": {
   "zen_unisg_factory": {
    "dropped": [

@@ -8462,6 +8462,69 @@
    "stratum": "C3",
    "upstream": "first party: Backblaze operates the drives and publishes the data",
    "upstream_verified": true
+  },
+  {
+   "attribution": "NYC Taxi and Limousine Commission (TLC), 2023 Yellow Taxi Trip Data on NYC Open Data (dataset 4b4i-vvec); records are supplied by the taxi technology service providers; accessed 2026-11-22",
+   "files": [
+    {
+     "name": "yellow_2023-03-07_p0.csv",
+     "observed": "2023-03-07",
+     "url": "https://data.cityofnewyork.us/resource/4b4i-vvec.csv?%24where=tpep_pickup_datetime%20%3E%3D%20%272023-03-07T00%3A00%3A00%27%20AND%20tpep_pickup_datetime%20%3C%20%272023-03-07T23%3A59%3A59.999%27&%24order=%3Aid&%24limit=50000&%24offset=0"
+    },
+    {
+     "name": "yellow_2023-03-07_p1.csv",
+     "observed": "2023-03-07",
+     "url": "https://data.cityofnewyork.us/resource/4b4i-vvec.csv?%24where=tpep_pickup_datetime%20%3E%3D%20%272023-03-07T00%3A00%3A00%27%20AND%20tpep_pickup_datetime%20%3C%20%272023-03-07T23%3A59%3A59.999%27&%24order=%3Aid&%24limit=50000&%24offset=50000"
+    },
+    {
+     "name": "yellow_2023-03-07_p2.csv",
+     "observed": "2023-03-07",
+     "url": "https://data.cityofnewyork.us/resource/4b4i-vvec.csv?%24where=tpep_pickup_datetime%20%3E%3D%20%272023-03-07T00%3A00%3A00%27%20AND%20tpep_pickup_datetime%20%3C%20%272023-03-07T23%3A59%3A59.999%27&%24order=%3Aid&%24limit=50000&%24offset=100000"
+    },
+    {
+     "name": "yellow_2023-03-11_p0.csv",
+     "observed": "2023-03-11",
+     "url": "https://data.cityofnewyork.us/resource/4b4i-vvec.csv?%24where=tpep_pickup_datetime%20%3E%3D%20%272023-03-11T00%3A00%3A00%27%20AND%20tpep_pickup_datetime%20%3C%20%272023-03-11T23%3A59%3A59.999%27&%24order=%3Aid&%24limit=50000&%24offset=0"
+    },
+    {
+     "name": "yellow_2023-03-11_p1.csv",
+     "observed": "2023-03-11",
+     "url": "https://data.cityofnewyork.us/resource/4b4i-vvec.csv?%24where=tpep_pickup_datetime%20%3E%3D%20%272023-03-11T00%3A00%3A00%27%20AND%20tpep_pickup_datetime%20%3C%20%272023-03-11T23%3A59%3A59.999%27&%24order=%3Aid&%24limit=50000&%24offset=50000"
+    },
+    {
+     "name": "yellow_2023-03-11_p2.csv",
+     "observed": "2023-03-11",
+     "url": "https://data.cityofnewyork.us/resource/4b4i-vvec.csv?%24where=tpep_pickup_datetime%20%3E%3D%20%272023-03-11T00%3A00%3A00%27%20AND%20tpep_pickup_datetime%20%3C%20%272023-03-11T23%3A59%3A59.999%27&%24order=%3Aid&%24limit=50000&%24offset=100000"
+    },
+    {
+     "name": "yellow_2023-03-12_p0.csv",
+     "observed": "2023-03-12",
+     "url": "https://data.cityofnewyork.us/resource/4b4i-vvec.csv?%24where=tpep_pickup_datetime%20%3E%3D%20%272023-03-12T00%3A00%3A00%27%20AND%20tpep_pickup_datetime%20%3C%20%272023-03-12T23%3A59%3A59.999%27&%24order=%3Aid&%24limit=50000&%24offset=0"
+    },
+    {
+     "name": "yellow_2023-03-12_p1.csv",
+     "observed": "2023-03-12",
+     "url": "https://data.cityofnewyork.us/resource/4b4i-vvec.csv?%24where=tpep_pickup_datetime%20%3E%3D%20%272023-03-12T00%3A00%3A00%27%20AND%20tpep_pickup_datetime%20%3C%20%272023-03-12T23%3A59%3A59.999%27&%24order=%3Aid&%24limit=50000&%24offset=50000"
+    }
+   ],
+   "hosts": [
+    "data.cityofnewyork.us"
+   ],
+   "id": "nyc_tlc_yellow",
+   "licence_class": "open",
+   "licence_location": "https://cityofnewyork.github.io/opendatatsm/publicpolicies.html",
+   "licence_text": "NYC Open Data Technical Standards Manual, Public Policies (read 2026-11-22): Local Law 11 of 2012 section 23-502 d requires that data sets be available without registration requirement, license requirement or usage restrictions; the portal Terms of Use (data.cityofnewyork.us/stories/s/Terms-of-Use/k9k7-3cje) bind the user to the nyc.gov Terms of Use and to additional terms defined by the providing entity, give no warranty, and require third parties who republish to identify source, version and modifications. The dataset's portal metadata declares no additional TLC terms; the TLC page itself denies automated access and was not read",
+   "max_bytes": 41943040,
+   "method": "NYC Open Data SODA API, three complete pickup days (Tuesday 2023-03-07, Saturday 2023-03-11, Sunday 2023-03-12), stable order by row id, pages of 50,000 rows",
+   "min_interval": 3.0,
+   "privacy": "trip records carry no driver or passenger identity; pickup and dropoff are coarse taxi zone ids",
+   "publisher": "NYC Taxi and Limousine Commission (records from technology service providers)",
+   "rate_limit": "nine paged requests, three seconds apart, descriptive user agent, no app token",
+   "redistribution": "no usage restriction by law; a public re-publication must name the source, version and modifications; raw files stay local",
+   "retries": 2,
+   "stratum": "C2b",
+   "upstream": "the data are the City's own public record; the TLC-specific page was not readable, so a TLC-only extra condition cannot be excluded and is recorded",
+   "upstream_verified": true
   }
  ]
 }
