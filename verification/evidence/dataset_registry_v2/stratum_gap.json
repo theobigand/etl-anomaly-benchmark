@@ -1,6 +1,6 @@
 {
  "licence_classes": {
-  "open": 249,
+  "open": 253,
   "research_only": 22
  },
  "strata": {
@@ -53,11 +53,11 @@
    "minimum": 15,
    "missing_to_minimum": 0,
    "missing_to_recommended": 0,
-   "publishers": 51,
+   "publishers": 55,
    "recommended": 40,
-   "sources": 57,
+   "sources": 61,
    "stratum": "time series",
-   "systems": 59
+   "systems": 63
   },
   "C4": {
    "ambitious": 40,
@@ -98,5 +98,5 @@
   "uci:755",
   "uci:760"
  ],
- "total_sources": 271
+ "total_sources": 275
 }

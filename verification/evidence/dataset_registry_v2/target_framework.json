@@ -3,12 +3,12 @@
   "0.2": {
    "ALL": {
     "curators": 46,
-    "domains": 84,
-    "effective_groups": 87.4083,
-    "groups": 166,
-    "largest_schema_family_share": 0.3855,
-    "producers": 166,
-    "schema_families": 71
+    "domains": 88,
+    "effective_groups": 91.4083,
+    "groups": 170,
+    "largest_schema_family_share": 0.3765,
+    "producers": 170,
+    "schema_families": 75
    },
    "C1": {
     "curators": 1,
@@ -39,12 +39,12 @@
    },
    "C3": {
     "curators": 11,
-    "domains": 20,
-    "effective_groups": 20.8095,
-    "groups": 25,
-    "largest_schema_family_share": 0.24,
-    "producers": 25,
-    "schema_families": 17
+    "domains": 24,
+    "effective_groups": 24.8095,
+    "groups": 29,
+    "largest_schema_family_share": 0.2069,
+    "producers": 29,
+    "schema_families": 21
    },
    "C4": {
     "curators": 6,
@@ -77,12 +77,12 @@
   "0.5": {
    "ALL": {
     "curators": 46,
-    "domains": 84,
-    "effective_groups": 76.9741,
-    "groups": 166,
-    "largest_schema_family_share": 0.3855,
-    "producers": 166,
-    "schema_families": 71
+    "domains": 88,
+    "effective_groups": 80.9741,
+    "groups": 170,
+    "largest_schema_family_share": 0.3765,
+    "producers": 170,
+    "schema_families": 75
    },
    "C1": {
     "curators": 1,
@@ -113,12 +113,12 @@
    },
    "C3": {
     "curators": 11,
-    "domains": 20,
-    "effective_groups": 18.5476,
-    "groups": 25,
-    "largest_schema_family_share": 0.24,
-    "producers": 25,
-    "schema_families": 17
+    "domains": 24,
+    "effective_groups": 22.5476,
+    "groups": 29,
+    "largest_schema_family_share": 0.2069,
+    "producers": 29,
+    "schema_families": 21
    },
    "C4": {
     "curators": 6,
@@ -272,15 +272,15 @@
   },
   "C3": {
    "diversity": true,
-   "domains": 20,
+   "domains": 24,
    "exploratory": true,
-   "families": 24,
-   "gap": 15,
-   "groups": 25,
+   "families": 28,
+   "gap": 11,
+   "groups": 29,
    "largest_family": "urban mobility counts",
-   "largest_family_share": 0.08,
+   "largest_family_share": 0.069,
    "missing": [
-    "groups: 25 of 40"
+    "groups: 29 of 40"
    ],
    "quota": false,
    "target": 40,

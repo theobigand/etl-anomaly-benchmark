@@ -4724,6 +4724,49 @@
   },
   "source_snapshot": "zen_cnc_milling/2026-11-22"
  },
+ "zen_dk_district_heating": {
+  "dropped": [
+   "dma_*_norm_aggregated.csv",
+   "weather.csv"
+  ],
+  "files": {
+   "district_heating.csv": {
+    "rows": 105192,
+    "sha256": "015b724090837098bbb459e80b34dd261e34a05dd7eb75076a26f32b7a7ba98f"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "dmas": 3,
+   "first_timestamp": "2016-01-01 00:00:00+00:00",
+   "last_timestamp": "2019-12-31 23:00:00+00:00",
+   "method": "complete 3-DMA hourly raw consumption and contributing-meter series (2016-2019 UTC)"
+  },
+  "source_snapshot": "zen_dk_district_heating/2026-11-22"
+ },
+ "zen_dmsp_auroral": {
+  "dropped": [
+   "UTSec EQ1",
+   "UTSec PO1",
+   "UTSec PO2",
+   "UTSec EQ2"
+  ],
+  "files": {
+   "dmsp_auroral.csv": {
+    "rows": 68034,
+    "sha256": "4313b0cc3f701757940af7e93325404590ee2b9e22085d3ddca70af08224984d"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "files_loaded": 4594,
+   "first_timestamp": "2010-01-01 00:05:43+00:00",
+   "last_timestamp": "2014-12-31 22:52:05+00:00",
+   "method": "complete 2010-2014 DMSP F16/F17/F18 polar-orbit auroral boundary passes",
+   "spacecrafts": 3
+  },
+  "source_snapshot": "zen_dmsp_auroral/2026-11-22"
+ },
  "zen_ev_charging": {
   "dropped": [],
   "files": {
@@ -5085,6 +5128,25 @@
   },
   "source_snapshot": "zen_surf_lisa_slurm/2026-11-21"
  },
+ "zen_telecom_kpis": {
+  "dropped": [
+   "data_series/"
+  ],
+  "files": {
+   "telecom_kpis.csv": {
+    "rows": 150332,
+    "sha256": "10902ff18aedce9ce70b2dd2999c9be3f57d23343692cf19f596b956f870588f"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "max_elapsed_s": 3221100,
+   "method": "complete 14 real telecom operator KPI traces from data_real/ (300s elapsed cadence)",
+   "min_elapsed_s": 0,
+   "series_count": 14
+  },
+  "source_snapshot": "zen_telecom_kpis/2026-11-22"
+ },
  "zen_unisg_factory": {
   "dropped": [
    "message identifiers"
@@ -5117,5 +5179,24 @@
    "unreadable_lines": 0
   },
   "source_snapshot": "zen_unisg_factory/2026-11-22"
+ },
+ "zen_water_demand": {
+  "dropped": [],
+  "files": {
+   "water_demand.csv": {
+    "rows": 46026,
+    "sha256": "8b5915c61e46c811e4f745c3092abe5c94f7957086e0773b1a8eac0ba36169c8"
+   }
+  },
+  "pseudonymised": [],
+  "sampling": {
+   "duplicates_dropped": 5,
+   "first_timestamp": "2016-01-01 00:00:00",
+   "last_timestamp": "2021-04-01 23:00:00",
+   "method": "complete un-imputed raw hourly water pumping series (2016-2021)",
+   "missing_consumption_rows": 509,
+   "missing_rain_rows": 25
+  },
+  "source_snapshot": "zen_water_demand/2026-11-22"
  }
 }

@@ -10078,6 +10078,143 @@
    "stratum": "C5",
    "upstream": "first party: European Commission Publications Office publishes official CORDIS grant datasets directly",
    "upstream_verified": true
+  },
+  {
+   "attribution": "Fondo-Ferreiro et al. 2023, Network operator KPIs time series dataset, Zenodo record 8147768 (CC BY 4.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "network_operator_KPIs_time_series_dataset.zip",
+     "observed": "real telecom operator 5-min KPI traces (>1 month per trace)",
+     "url": "https://zenodo.org/api/records/8147768/files/network_operator_KPIs_time_series_dataset.zip/content"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_telecom_kpis",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/8147768",
+   "licence_text": "Zenodo API metadata for record 8147768 (read 2026-11-22): license cc-by-4.0 (CC BY 4.0)",
+   "max_bytes": 10485760,
+   "method": "complete real-trace subset (14 data_real/*.txt series at 300s elapsed cadence) from Zenodo 8147768 archive; synthetic data_series excluded",
+   "min_interval": 1.0,
+   "privacy": "anonymised telecom infrastructure KPI magnitudes indexed by elapsed seconds; no personal data",
+   "publisher": "University of Vigo telecommunications operator study (Zenodo 8147768)",
+   "rate_limit": "single zip archive download, descriptive user agent",
+   "redistribution": "CC BY 4.0; raw archive stays local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party: authors collected and released real telecom operator KPI traces under CC BY 4.0",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Ramachandran et al. 2025, A Real World Multi Year Hourly District Heating Demand Data for Denmark, Zenodo record 17398331 (CC BY 4.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "dma_a_aggregated.csv",
+     "observed": "2016-2019",
+     "url": "https://zenodo.org/api/records/17398331/files/dma_a_aggregated.csv/content"
+    },
+    {
+     "name": "dma_a_contributing_meters.csv",
+     "observed": "2016-2019",
+     "url": "https://zenodo.org/api/records/17398331/files/dma_a_contributing_meters.csv/content"
+    },
+    {
+     "name": "dma_b_aggregated.csv",
+     "observed": "2016-2019",
+     "url": "https://zenodo.org/api/records/17398331/files/dma_b_aggregated.csv/content"
+    },
+    {
+     "name": "dma_b_contributing_meters.csv",
+     "observed": "2016-2019",
+     "url": "https://zenodo.org/api/records/17398331/files/dma_b_contributing_meters.csv/content"
+    },
+    {
+     "name": "dma_c_aggregated.csv",
+     "observed": "2016-2019",
+     "url": "https://zenodo.org/api/records/17398331/files/dma_c_aggregated.csv/content"
+    },
+    {
+     "name": "dma_c_contributing_meters.csv",
+     "observed": "2016-2019",
+     "url": "https://zenodo.org/api/records/17398331/files/dma_c_contributing_meters.csv/content"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_dk_district_heating",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/17398331",
+   "licence_text": "Zenodo API metadata for record 17398331 (read 2026-11-22): license cc-by-4.0 (CC BY 4.0)",
+   "max_bytes": 5242880,
+   "method": "complete 6 raw-unit hourly DMA consumption and contributing-meter CSV files across 3 Danish district metered areas (2016-2019)",
+   "min_interval": 1.0,
+   "privacy": "aggregated district heating zone totals (4,910 smart meters across 3 DMAs); no individual household data",
+   "publisher": "FAU Erlangen-Nuremberg / Danish district heating study (Zenodo 17398331)",
+   "rate_limit": "six CSV downloads, one second apart, descriptive user agent",
+   "redistribution": "CC BY 4.0; raw files stay local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party: authors published hourly Danish district heating DMA measurements under CC BY 4.0",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Weyrauch et al. 2024, Hourly Water Demand of a Mixed District Recorded by Supplier, Zenodo record 11045013 (CC BY 4.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "waterconsumption_rawdata.csv",
+     "observed": "2016-2021",
+     "url": "https://zenodo.org/api/records/11045013/files/waterconsumption_rawdata.csv/content"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_water_demand",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/11045013",
+   "licence_text": "Zenodo API metadata for record 11045013 (read 2026-11-22): license cc-by-4.0 (CC BY 4.0)",
+   "max_bytes": 5242880,
+   "method": "complete un-imputed raw hourly pumping-station water consumption and weather CSV (waterconsumption_rawdata.csv, 2016-2021) preserving missing values and DST transitions",
+   "min_interval": 1.0,
+   "privacy": "regional water-supplier pumping-station aggregate flow and meteorology; no personal data",
+   "publisher": "Karlsruhe Institute of Technology / regional water supplier (Zenodo 11045013)",
+   "rate_limit": "single CSV download, descriptive user agent",
+   "redistribution": "CC BY 4.0; raw file stays local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party: regional supplier measurements published by study authors under CC BY 4.0",
+   "upstream_verified": true
+  },
+  {
+   "attribution": "Kilcommons et al. 2019, Defense Meteorology Satellite Program (DMSP) Electron Precipitation (SSJ) Auroral Boundaries 2010-2014, Zenodo record 3373812 (CC BY 4.0); accessed 2026-11-22",
+   "files": [
+    {
+     "name": "fom_boundaries_F16_F17_F18_2010_2014.zip",
+     "observed": "2010-2014",
+     "url": "https://zenodo.org/api/records/3373812/files/fom_boundaries_F16_F17_F18_2010_2014.zip/content"
+    }
+   ],
+   "hosts": [
+    "zenodo.org"
+   ],
+   "id": "zen_dmsp_auroral",
+   "licence_class": "open",
+   "licence_location": "https://zenodo.org/api/records/3373812",
+   "licence_text": "Zenodo API metadata for record 3373812 (read 2026-11-22): license cc-by-4.0 (CC BY 4.0)",
+   "max_bytes": 12582912,
+   "method": "complete 2010-2014 DMSP F16/F17/F18 polar-orbit SSJ auroral boundary pass archive (4,594 daily CSV files)",
+   "min_interval": 1.0,
+   "privacy": "spacecraft orbital particle-spectrometer boundary physics only; no personal data",
+   "publisher": "University of Colorado Boulder / NOAA NCEI (Zenodo 3373812)",
+   "rate_limit": "single zip archive download, descriptive user agent",
+   "redistribution": "CC BY 4.0; raw archive stays local",
+   "retries": 2,
+   "stratum": "C3",
+   "upstream": "first party: Kilcommons, Redmon & Knipp published the DMSP SSJ auroral boundary archive under CC BY 4.0",
+   "upstream_verified": true
   }
  ]
 }

@@ -5685,6 +5685,253 @@ def _build_cordis_horizon(root: Path, out: Path, manifest: dict[str, Any]) -> No
     )
 
 
+WAVE24_SNAPSHOT = "2026-11-22"
+
+
+def telecom_kpis_view(named_texts: list[tuple[str, str]]) -> pd.DataFrame:
+    """Five-minute real telecom operator KPI time series ordered by series_id and elapsed_s."""
+    rows: list[tuple[str, int, float]] = []
+    for series_id, text in named_texts:
+        for line in text.splitlines():
+            parts = line.split()
+            if len(parts) == 2:
+                rows.append((series_id, int(parts[0]), float(parts[1])))
+    frame = pd.DataFrame(rows, columns=["series_id", "elapsed_s", "kpi_value"])
+    return frame.sort_values(["series_id", "elapsed_s"]).reset_index(drop=True)
+
+
+def _build_telecom_kpis(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import zipfile
+
+    archive = (
+        root
+        / "zen_telecom_kpis"
+        / WAVE24_SNAPSHOT
+        / "raw"
+        / "network_operator_KPIs_time_series_dataset.zip"  # noqa: E501
+    )
+    if not archive.exists():
+        raise ViewError("no telecom KPI archive in the snapshot")
+    with zipfile.ZipFile(archive) as zf:
+        members = sorted(n for n in zf.namelist() if "/data_real/" in n and n.endswith(".txt"))
+        named = [(Path(n).stem, zf.read(n).decode("utf-8")) for n in members]
+    view = telecom_kpis_view(named)
+    folder = out / "zen_telecom_kpis"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "telecom_kpis.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "zen_telecom_kpis",
+        {"telecom_kpis.csv": (target, len(view))},
+        dropped=["data_series/"],
+        pseudonymised=[],
+        sampling={
+            "max_elapsed_s": int(view["elapsed_s"].max()),
+            "method": "complete 14 real telecom operator KPI traces from data_real/ (300s elapsed cadence)",  # noqa: E501
+            "min_elapsed_s": int(view["elapsed_s"].min()),
+            "series_count": int(view["series_id"].nunique()),
+        },
+        source_snapshot=f"zen_telecom_kpis/{WAVE24_SNAPSHOT}",
+    )
+
+
+def dk_heating_view(dma_frames: list[tuple[str, pd.DataFrame, pd.DataFrame]]) -> pd.DataFrame:
+    """Hourly Danish district heating demand and active-meter counts per DMA in UTC."""
+    parts = []
+    for dma_id, agg, meters in dma_frames:
+        a = agg.rename(columns={"Unnamed: 0": "ts", "cons": "consumption_kwh"})
+        m = meters.rename(columns={"Unnamed: 0": "ts"})
+        merged = a.merge(m, how="outer")
+        parts.append(
+            pd.DataFrame(
+                {
+                    "dma_id": dma_id,
+                    "timestamp": pd.to_datetime(merged["ts"], utc=True, errors="coerce"),
+                    "consumption_kwh": pd.to_numeric(merged["consumption_kwh"], errors="coerce"),
+                    "contributing_meters": pd.to_numeric(
+                        merged["contributing_meters"], errors="coerce"
+                    ).astype("Int64"),
+                }
+            )
+        )
+    frame = pd.concat(parts)
+    return (
+        frame[frame["timestamp"].notna()]
+        .sort_values(["dma_id", "timestamp"])
+        .reset_index(drop=True)
+    )
+
+
+def _build_dk_heating(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    raw_dir = root / "zen_dk_district_heating" / WAVE24_SNAPSHOT / "raw"
+    dma_frames: list[tuple[str, pd.DataFrame, pd.DataFrame]] = []
+    for dma in ("a", "b", "c"):
+        agg_p = raw_dir / f"dma_{dma}_aggregated.csv"
+        met_p = raw_dir / f"dma_{dma}_contributing_meters.csv"
+        if not agg_p.exists() or not met_p.exists():
+            raise ViewError("no Danish district heating CSVs in the snapshot")
+        dma_frames.append((f"dma_{dma}", pd.read_csv(agg_p), pd.read_csv(met_p)))
+    view = dk_heating_view(dma_frames)
+    folder = out / "zen_dk_district_heating"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "district_heating.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "zen_dk_district_heating",
+        {"district_heating.csv": (target, len(view))},
+        dropped=["dma_*_norm_aggregated.csv", "weather.csv"],
+        pseudonymised=[],
+        sampling={
+            "dmas": int(view["dma_id"].nunique()),
+            "first_timestamp": str(view["timestamp"].min()),
+            "last_timestamp": str(view["timestamp"].max()),
+            "method": "complete 3-DMA hourly raw consumption and contributing-meter series (2016-2019 UTC)",  # noqa: E501
+        },
+        source_snapshot=f"zen_dk_district_heating/{WAVE24_SNAPSHOT}",
+    )
+
+
+def water_demand_view(raw: pd.DataFrame) -> tuple[pd.DataFrame, int]:
+    """Raw hourly municipal water pumping demand and local weather, deduplicated on DST fallback."""
+    hh = raw["Time"].astype(str).str.strip().str[:2]
+    ts = pd.to_datetime(
+        raw["Date"].astype(str).str.strip() + " " + hh,
+        format="%m/%d/%Y %H",
+        errors="coerce",
+    )
+    frame = pd.DataFrame(
+        {
+            "timestamp": ts,
+            "consumption_m3": pd.to_numeric(raw["Consumption"], errors="coerce"),
+            "temperature_c": pd.to_numeric(raw["Temperature"], errors="coerce"),
+            "rain_mm": pd.to_numeric(raw["Rain"], errors="coerce"),
+            "sun_min": pd.to_numeric(raw["Sun"], errors="coerce"),
+        }
+    )
+    valid = frame[frame["timestamp"].notna()]
+    dups = int(valid.duplicated("timestamp").sum())
+    deduped = valid.drop_duplicates("timestamp").sort_values("timestamp").reset_index(drop=True)
+    return deduped, dups
+
+
+def _build_water_demand(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    source = root / "zen_water_demand" / WAVE24_SNAPSHOT / "raw" / "waterconsumption_rawdata.csv"
+    if not source.exists():
+        raise ViewError("no water demand CSV in the snapshot")
+    view, dups = water_demand_view(pd.read_csv(source))
+    folder = out / "zen_water_demand"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "water_demand.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "zen_water_demand",
+        {"water_demand.csv": (target, len(view))},
+        dropped=[],
+        pseudonymised=[],
+        sampling={
+            "duplicates_dropped": dups,
+            "first_timestamp": str(view["timestamp"].min()),
+            "last_timestamp": str(view["timestamp"].max()),
+            "method": "complete un-imputed raw hourly water pumping series (2016-2021)",
+            "missing_consumption_rows": int(view["consumption_m3"].isna().sum()),
+            "missing_rain_rows": int(view["rain_mm"].isna().sum()),
+        },
+        source_snapshot=f"zen_water_demand/{WAVE24_SNAPSHOT}",
+    )
+
+
+DMSP_NUM_COLS: tuple[tuple[str, str], ...] = (
+    ("fom", "FOM"),
+    ("lat_eq1", "SC_GEOCENTRIC_LAT EQ1"),
+    ("lat_po1", "SC_GEOCENTRIC_LAT PO1"),
+    ("lat_po2", "SC_GEOCENTRIC_LAT PO2"),
+    ("lat_eq2", "SC_GEOCENTRIC_LAT EQ2"),
+    ("lon_eq1", "SC_GEOCENTRIC_LON EQ1"),
+    ("lon_po1", "SC_GEOCENTRIC_LON PO1"),
+    ("lon_po2", "SC_GEOCENTRIC_LON PO2"),
+    ("lon_eq2", "SC_GEOCENTRIC_LON EQ2"),
+    ("mlat_eq1", "mlat EQ1"),
+    ("mlat_po1", "mlat PO1"),
+    ("mlat_po2", "mlat PO2"),
+    ("mlat_eq2", "mlat EQ2"),
+    ("mlt_eq1", "mlt EQ1"),
+    ("mlt_po1", "mlt PO1"),
+    ("mlt_po2", "mlt PO2"),
+    ("mlt_eq2", "mlt EQ2"),
+)
+_DMSP_NAME = re.compile(r"dmsp-(f\d+)_.*?_(\d{8})_")
+
+
+def dmsp_auroral_view(named_frames: list[tuple[str, str, pd.DataFrame]]) -> pd.DataFrame:
+    """DMSP polar-orbit auroral boundary telemetry ordered by spacecraft and UTC pass start."""
+    parts = []
+    for spacecraft, day, raw in named_frames:
+        start_s = pd.to_numeric(raw["UTSecond Pass Start"], errors="coerce")
+        end_s = pd.to_numeric(raw["UTSecond Pass End"], errors="coerce")
+        data: dict[str, Any] = {
+            "spacecraft": spacecraft,
+            "timestamp": pd.to_datetime(day, format="%Y%m%d", utc=True)
+            + pd.to_timedelta(start_s, unit="s"),
+            "pass_duration_s": end_s - start_s,
+            "hemisphere": pd.to_numeric(raw["hemisphere"], errors="coerce").astype("Int64"),
+        }
+        for out_col, src_col in DMSP_NUM_COLS:
+            data[out_col] = pd.to_numeric(raw[src_col], errors="coerce")
+        parts.append(pd.DataFrame(data))
+    combined = pd.concat(parts)
+    return (
+        combined[combined["timestamp"].notna()]
+        .sort_values(["spacecraft", "timestamp"])
+        .reset_index(drop=True)
+    )
+
+
+def _build_dmsp_auroral(root: Path, out: Path, manifest: dict[str, Any]) -> None:
+    import zipfile
+
+    archive = (
+        root
+        / "zen_dmsp_auroral"
+        / WAVE24_SNAPSHOT
+        / "raw"
+        / "fom_boundaries_F16_F17_F18_2010_2014.zip"  # noqa: E501
+    )
+    if not archive.exists():
+        raise ViewError("no DMSP auroral archive in the snapshot")
+    named_frames: list[tuple[str, str, pd.DataFrame]] = []
+    with zipfile.ZipFile(archive) as zf:
+        for name in sorted(n for n in zf.namelist() if n.endswith(".csv")):
+            match = _DMSP_NAME.search(Path(name).name)
+            if not match:
+                continue
+            df = pd.read_csv(io.BytesIO(zf.read(name)), comment="#")
+            if not df.empty:
+                named_frames.append((match.group(1).upper(), match.group(2), df))
+    view = dmsp_auroral_view(named_frames)
+    folder = out / "zen_dmsp_auroral"
+    folder.mkdir(parents=True, exist_ok=True)
+    target = folder / "dmsp_auroral.csv"
+    view.to_csv(target, index=False)
+    _record(
+        manifest,
+        "zen_dmsp_auroral",
+        {"dmsp_auroral.csv": (target, len(view))},
+        dropped=["UTSec EQ1", "UTSec PO1", "UTSec PO2", "UTSec EQ2"],
+        pseudonymised=[],
+        sampling={
+            "files_loaded": len(named_frames),
+            "first_timestamp": str(view["timestamp"].min()),
+            "last_timestamp": str(view["timestamp"].max()),
+            "method": "complete 2010-2014 DMSP F16/F17/F18 polar-orbit auroral boundary passes",
+            "spacecrafts": int(view["spacecraft"].nunique()),
+        },
+        source_snapshot=f"zen_dmsp_auroral/{WAVE24_SNAPSHOT}",
+    )
+
+
 BUILD_STEPS = (
     _build_openalex,
     _build_monash,
@@ -5756,6 +6003,10 @@ BUILD_STEPS = (
     _build_gha_workflows,
     _build_wals_cldf,
     _build_cordis_horizon,
+    _build_telecom_kpis,
+    _build_dk_heating,
+    _build_water_demand,
+    _build_dmsp_auroral,
     _build_flat,
     _build_series,
     _build_ukspend,

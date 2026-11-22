@@ -3186,6 +3186,50 @@
    ],
    "view": "zen_cnc_milling"
   },
+  "zen_dk_district_heating": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "105,192 hourly UTC readings across 3 Danish district heating DMAs (2016-01-01 to 2019-12-31)",
+    "heating-season thermal cycles and changes in contributing smart-meter counts are natural baseline dynamics"
+   ],
+   "first_party": true,
+   "independent_group": "danish_district_heating",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 within each dma_id",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point, contextual and collective faults",
+    "level shift, drift and annual seasonality"
+   ],
+   "temporal_span": "4 full years hourly UTC (2016-2019)",
+   "units": 105192,
+   "unsupported_fault_mechanisms": [],
+   "view": "zen_dk_district_heating"
+  },
+  "zen_dmsp_auroral": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "68,034 polar-orbit pass records across DMSP F16, F17 and F18 (2010-2014 UTC)",
+    "geomagnetic storm equatorward expansions and polar orbital pass durations are natural space-environment baseline behavior"
+   ],
+   "first_party": true,
+   "independent_group": "dmsp_ssj_auroral",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 per spacecraft",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point, contextual and collective faults",
+    "level shift, drift and regime changes"
+   ],
+   "temporal_span": "5 full years across 3 polar-orbiting spacecraft (2010-2014)",
+   "units": 68034,
+   "unsupported_fault_mechanisms": [
+    "sub-hourly regular sampling"
+   ],
+   "view": "zen_dmsp_auroral"
+  },
   "zen_ev_charging": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -3395,6 +3439,30 @@
    "units": 199621,
    "view": "zen_surf_lisa_slurm"
   },
+  "zen_telecom_kpis": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "150,332 5-minute observations across 14 real telecom operator KPI traces (data_real/*.txt; 300s elapsed cadence)",
+    "synthetic data_series/ excluded; diurnal traffic swings and bursty operator loads are natural baseline behavior"
+   ],
+   "first_party": true,
+   "independent_group": "telecom_operator_kpis",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15 within each series_id",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point, contextual and collective faults",
+    "level shift, drift and variance changes"
+   ],
+   "temporal_span": ">1 month per trace at 300s elapsed cadence (no calendar dates published)",
+   "units": 150332,
+   "unsupported_fault_mechanisms": [
+    "annual seasonality",
+    "calendar-holiday effects"
+   ],
+   "view": "zen_telecom_kpis"
+  },
   "zen_unisg_factory": {
    "anomaly_origin": "controlled_injection",
    "baseline_properties": [
@@ -3445,6 +3513,27 @@
     "contextual faults that need weeks of history"
    ],
    "view": "zen_unisg_factory"
+  },
+  "zen_water_demand": {
+   "anomaly_origin": "controlled_injection",
+   "baseline_properties": [
+    "46,026 un-imputed raw hourly municipal water pumping and weather rows (2016-01-01 to 2021-04-01)",
+    "preserves 509 missing consumption rows and 25 missing rain rows; 5 autumn DST fallback duplicate hours dropped"
+   ],
+   "first_party": true,
+   "independent_group": "german_water_demand",
+   "min_units": 1000,
+   "partitions": "chronological 70/15/15",
+   "privacy": "not_needed",
+   "protocol_id": "P-TS",
+   "supported_fault_mechanisms": [
+    "point, contextual and collective faults",
+    "missing intervals, level shift, drift and annual seasonality"
+   ],
+   "temporal_span": "5.25 years hourly (2016-2021)",
+   "units": 46026,
+   "unsupported_fault_mechanisms": [],
+   "view": "zen_water_demand"
   }
  }
 }

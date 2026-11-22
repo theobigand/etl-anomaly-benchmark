@@ -2290,6 +2290,34 @@
   },
   {
    "failed": null,
+   "group": "telecom_operator_kpis",
+   "id": "zen_telecom_kpis",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "danish_district_heating",
+   "id": "zen_dk_district_heating",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "german_water_demand",
+   "id": "zen_water_demand",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
+   "group": "dmsp_ssj_auroral",
+   "id": "zen_dmsp_auroral",
+   "status": "experiment_ready",
+   "stratum": "C3"
+  },
+  {
+   "failed": null,
    "group": "loghub_collection",
    "id": "loghub:Android",
    "status": "experiment_ready",
@@ -2502,12 +2530,15 @@
    "candanedo_umons",
    "cnc_five_axis_milling",
    "cubico_kelmarsh",
+   "danish_district_heating",
+   "dmsp_ssj_auroral",
    "dwd_germany",
    "ea_hydrology",
    "edp_wind_farm_portugal",
    "elder_home",
    "epa_aqs",
    "fraunhofer_iee_care_wind_b",
+   "german_water_demand",
    "gfz_potsdam_kp",
    "melbourne_pedestrian",
    "metropt_porto",
@@ -2518,6 +2549,7 @@
    "rte_france_grid",
    "seoul_bike",
    "steel_korea",
+   "telecom_operator_kpis",
    "tetouan_power",
    "unisg_smart_factory",
    "usgs_water",
@@ -2623,13 +2655,13 @@
    "structurally_valid": 18
   },
   "C3": {
-   "acquired": 30,
-   "discovered": 51,
-   "experiment_ready": 27,
-   "protocol_ready": 27,
-   "rights_verified": 30,
-   "scientifically_eligible": 27,
-   "structurally_valid": 28
+   "acquired": 34,
+   "discovered": 55,
+   "experiment_ready": 31,
+   "protocol_ready": 31,
+   "rights_verified": 34,
+   "scientifically_eligible": 31,
+   "structurally_valid": 32
   },
   "C4": {
    "acquired": 36,

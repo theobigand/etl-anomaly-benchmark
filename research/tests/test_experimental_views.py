@@ -1064,6 +1064,10 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     _gha_snapshot(root)
     _wals_snapshot(root)
     _cordis_snapshot(root)
+    _telecom_snapshot(root)
+    _dk_heating_snapshot(root)
+    _water_demand_snapshot(root)
+    _dmsp_snapshot(root)
     _bb_zip(root)
     _pbdb_rel_snapshot_extra(root, tmp_path)
     _care_a_snapshot(root)
@@ -1079,7 +1083,7 @@ def test_build_runs_every_builder_in_order_and_main_writes_the_manifest(
     assert list(manifest) == [
         "openalex", "monash_pedestrian", "openfda_drug_event", "loghub", "openfoodfacts", "stackexchange",  # noqa: E501
         "ocds_montreal", "ocds_georgia", "ocds_zambia", "bikeshare_capital", "bikeshare_jc",
-        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "series", "ukspend",  # noqa: E501
+        "slurm_ccin2p3", "clinicaltrials_v2", "crossref_works", "google_cluster_2019a", "panels", "zen_t", "zen_surf_lisa_slurm", "zen_fdata_fugaku", "zen_metropt2", "openlibrary_dump", "zen_aegis_vehicle", "zen_clue_lds", "met_museum_objects", "ea_hydrology_flow", "dgfip_dvf", "hmlr_price_paid", "uci_online_retail", "zen_pbdb", "zen_pbdb_relational", "zen_kelmarsh", "wikidata_entities", "zen_bess", "zen_care_wind_b", "zen_care_wind_a", "nvd_cve", "zen_unisg_factory", "backblaze_drive_stats", "nyc_tlc_yellow", "openfda_device_event", "epa_aqs_ozone_hourly", "usgs_continuous_discharge", "wikimedia_simplewiki_edits", "uniprot_kb_reviewed", "osv_go_advisories", "gfz_kp_index", "dwd_hourly_climate", "rte_eco2mix_national", "ademe_dpe_existant", "dgal_alimconfiance", "zen_ev_charging", "azure_packing_2020", "zen_aoe_interactions", "uk_charity_register", "zen_japan_buildings", "noaa_coops_tides", "noaa_gml_co2_weekly", "zen_cnc_milling", "wb_lending_projects", "zen_queensland_petrol", "inpi_bce_ratios", "ror_organizations", "rcsb_pdb_entries", "nws_weather_alerts", "zen_port_noumea", "zen_kanto_landslides", "zen_nhif_hospital_cases", "ingv_seismic_events", "zen_gha_workflows", "wals_cldf", "cordis_horizon_europe", "zen_telecom_kpis", "zen_dk_district_heating", "zen_water_demand", "zen_dmsp_auroral", "series", "ukspend",  # noqa: E501
     ]  # fmt: skip
     target = tmp_path / "m.json"
     assert (
@@ -7627,3 +7631,282 @@ def test_cordis_horizon_view_and_builder(tmp_path):
         )
     }
     assert view["source_snapshot"] == f"cordis_horizon_europe/{ev.CORDIS_SNAPSHOT}"
+
+
+def _telecom_snapshot(root):
+    import zipfile
+
+    raw = root / "zen_telecom_kpis" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    with zipfile.ZipFile(raw / "network_operator_KPIs_time_series_dataset.zip", "w") as zf:
+        zf.writestr("network_operator_KPIs_time_series_dataset/data_series/s1.txt", "0 9.9\n")
+        zf.writestr("network_operator_KPIs_time_series_dataset/data_real/readme.md", "ignore\n")
+        zf.writestr(
+            "network_operator_KPIs_time_series_dataset/data_real/r2.txt",
+            "300 20.5\n0 10.0\n",
+        )
+        zf.writestr(
+            "network_operator_KPIs_time_series_dataset/data_real/r1.txt",
+            "\n0 5.5\n300 6.5\n",
+        )
+
+
+def _dk_heating_snapshot(root):
+    raw = root / "zen_dk_district_heating" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    for dma in ("a", "b", "c"):
+        pd.DataFrame(
+            [
+                {"Unnamed: 0": "2016-01-01 01:00:00+00:00", "cons": 12.5},
+                {"Unnamed: 0": "2016-01-01 00:00:00+00:00", "cons": 10.0},
+            ]
+        ).to_csv(raw / f"dma_{dma}_aggregated.csv", index=False)
+        pd.DataFrame(
+            [
+                {"Unnamed: 0": "2016-01-01 00:00:00+00:00", "contributing_meters": 100},
+                {"Unnamed: 0": "2016-01-01 01:00:00+00:00", "contributing_meters": 101},
+            ]
+        ).to_csv(raw / f"dma_{dma}_contributing_meters.csv", index=False)
+
+
+def _water_demand_snapshot(root):
+    raw = root / "zen_water_demand" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    pd.DataFrame(
+        [
+            {
+                "Date": "10/30/2016",
+                "Time": " 02:00-02:00 ",
+                "Consumption": 647.0,
+                "Temperature": 5.2,
+                "Rain": 0.0,
+                "Sun": 0,
+            },
+            {
+                "Date": "10/30/2016",
+                "Time": " 02:00-03:00 ",
+                "Consumption": 543.0,
+                "Temperature": 4.9,
+                "Rain": 1.0,
+                "Sun": 0,
+            },
+            {
+                "Date": "1/1/2016",
+                "Time": " 00:00-01:00 ",
+                "Consumption": None,
+                "Temperature": 0.6,
+                "Rain": None,
+                "Sun": 0,
+            },
+        ]
+    ).to_csv(raw / "waterconsumption_rawdata.csv", index=False)
+
+
+def _dmsp_snapshot(root):
+    import zipfile
+
+    raw = root / "zen_dmsp_auroral" / ev.WAVE24_SNAPSHOT / "raw"
+    raw.mkdir(parents=True)
+    header = (
+        "# comment\n"
+        "UTSecond Pass Start,UTSecond Pass End,hemisphere,UTSec EQ1,UTSec PO1,UTSec PO2,"
+        "UTSec EQ2,FOM,SC_GEOCENTRIC_LAT EQ1,SC_GEOCENTRIC_LAT PO1,SC_GEOCENTRIC_LAT PO2,"
+        "SC_GEOCENTRIC_LAT EQ2,SC_GEOCENTRIC_LON EQ1,SC_GEOCENTRIC_LON PO1,"
+        "SC_GEOCENTRIC_LON PO2,SC_GEOCENTRIC_LON EQ2,mlat EQ1,mlat PO1,mlat PO2,mlat EQ2,"
+        "mlt EQ1,mlt PO1,mlt PO2,mlt EQ2\n"
+    )
+    row1 = (
+        "60,120,1,70,80,90,100,3.1,64.0,67.0,81.0,76.0,260.0,259.0,174.0,136.0,"
+        "74.0,76.0,77.0,71.0,17.0,16.0,9.0,8.0\n"
+    )
+    row2 = (
+        "0,30,-1,5,10,15,20,2.5,-80.0,-77.0,-59.0,-57.0,231.0,184.0,151.0,150.0,"
+        "-72.0,-77.0,-71.0,-69.0,4.0,3.0,2.0,1.0\n"
+    )
+    with zipfile.ZipFile(raw / "fom_boundaries_F16_F17_F18_2010_2014.zip", "w") as zf:
+        zf.writestr("readme.txt", "ignore")
+        zf.writestr(
+            "dmsp-f18_ssj_precipitating-electrons-ions_20140102_v1.1.2_boundaries.csv",
+            header + row2,
+        )  # noqa: E501
+        zf.writestr(
+            "dmsp-f16_ssj_precipitating-electrons-ions_20100101_v1.1.2_boundaries.csv",
+            header + row1,
+        )  # noqa: E501
+        zf.writestr(
+            "dmsp-f17_ssj_precipitating-electrons-ions_20120101_v1.1.2_boundaries.csv", header
+        )  # noqa: E501
+        zf.writestr("other_name_20100101.csv", header + row1)
+
+
+def test_telecom_kpis_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no telecom KPI archive in the snapshot$"):
+        ev._build_telecom_kpis(tmp_path / "empty", tmp_path / "err", {})
+    df = ev.telecom_kpis_view([("r2", "300 2.0\n0 1.0\nbad\n"), ("r1", "0 0.5\n")])
+    assert df["series_id"].tolist() == ["r1", "r2", "r2"]
+    assert df["elapsed_s"].tolist() == [0, 0, 300]
+    assert df["kpi_value"].tolist() == [0.5, 1.0, 2.0]
+
+    root = tmp_path / "acq"
+    _telecom_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_telecom_kpis(root, out, manifest)
+    ev._build_telecom_kpis(root, out, manifest)
+    written = pd.read_csv(out / "zen_telecom_kpis" / "telecom_kpis.csv")
+    assert written["series_id"].tolist() == ["r1", "r1", "r2", "r2"]
+    assert written["elapsed_s"].tolist() == [0, 300, 0, 300]
+    view = manifest["zen_telecom_kpis"]
+    assert view["dropped"] == ["data_series/"] and view["pseudonymised"] == []
+    assert view["sampling"] == {
+        "max_elapsed_s": 300,
+        "method": "complete 14 real telecom operator KPI traces from data_real/ (300s elapsed cadence)",  # noqa: E501
+        "min_elapsed_s": 0,
+        "series_count": 2,
+    }
+    assert view["source_snapshot"] == f"zen_telecom_kpis/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_dk_heating_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no Danish district heating CSVs in the snapshot$"):
+        ev._build_dk_heating(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _dk_heating_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_dk_heating(root, out, manifest)
+    ev._build_dk_heating(root, out, manifest)
+    written = pd.read_csv(out / "zen_dk_district_heating" / "district_heating.csv")
+    assert len(written) == 6 and written["dma_id"].tolist()[:2] == ["dma_a", "dma_a"]
+    assert written["consumption_kwh"].tolist()[:2] == [10.0, 12.5]
+    assert written["contributing_meters"].tolist()[:2] == [100, 101]
+    bad = ev.dk_heating_view(
+        [
+            (
+                "dma_x",
+                pd.DataFrame(
+                    [
+                        {"Unnamed: 0": "bad", "cons": "1"},
+                        {"Unnamed: 0": "2016-01-01 00:00:00", "cons": "bad"},
+                    ]
+                ),  # noqa: E501
+                pd.DataFrame(
+                    [
+                        {"Unnamed: 0": "2016-01-01 00:00:00", "contributing_meters": "bad"},
+                    ]
+                ),
+            )
+        ]
+    )
+    assert len(bad) == 1 and str(bad["timestamp"].iloc[0]) == "2016-01-01 00:00:00+00:00"
+    assert pd.isna(bad["consumption_kwh"].iloc[0]) and pd.isna(bad["contributing_meters"].iloc[0])
+    assert bad["contributing_meters"].dtype == "Int64"
+    view = manifest["zen_dk_district_heating"]
+    assert view["dropped"] == ["dma_*_norm_aggregated.csv", "weather.csv"]
+    assert (
+        view["sampling"]["dmas"] == 3
+        and view["sampling"]["first_timestamp"] == "2016-01-01 00:00:00+00:00"
+    )  # noqa: E501
+    assert view["sampling"]["last_timestamp"] == "2016-01-01 01:00:00+00:00"
+    assert view["source_snapshot"] == f"zen_dk_district_heating/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_water_demand_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no water demand CSV in the snapshot$"):
+        ev._build_water_demand(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _water_demand_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_water_demand(root, out, manifest)
+    ev._build_water_demand(root, out, manifest)
+    written = pd.read_csv(out / "zen_water_demand" / "water_demand.csv")
+    assert len(written) == 2
+    assert written["timestamp"].tolist() == ["2016-01-01 00:00:00", "2016-10-30 02:00:00"]
+    assert pd.isna(written["consumption_m3"].iloc[0]) and written["consumption_m3"].iloc[1] == 647.0
+    assert written["temperature_c"].tolist() == [0.6, 5.2] and written["sun_min"].tolist() == [0, 0]
+    unit_df, unit_dups = ev.water_demand_view(
+        pd.DataFrame(
+            [
+                {
+                    "Date": "bad",
+                    "Time": "00:00-01:00",
+                    "Consumption": 1,
+                    "Temperature": 2,
+                    "Rain": 0,
+                    "Sun": 0,
+                },
+                {
+                    "Date": "02/01/2016",
+                    "Time": " 13:00-14:00 ",
+                    "Consumption": "bad",
+                    "Temperature": "bad",
+                    "Rain": "bad",
+                    "Sun": "bad",
+                },
+            ]
+        )
+    )
+    assert unit_dups == 0 and len(unit_df) == 1
+    assert str(unit_df["timestamp"].iloc[0]) == "2016-02-01 13:00:00"
+    assert all(
+        pd.isna(unit_df[c].iloc[0])
+        for c in ("consumption_m3", "temperature_c", "rain_mm", "sun_min")
+    )
+    view = manifest["zen_water_demand"]
+    assert view["sampling"]["duplicates_dropped"] == 1
+    assert (
+        view["sampling"]["missing_consumption_rows"] == 1
+        and view["sampling"]["missing_rain_rows"] == 1
+    )  # noqa: E501
+    assert view["source_snapshot"] == f"zen_water_demand/{ev.WAVE24_SNAPSHOT}"
+
+
+def test_dmsp_auroral_view_and_builder(tmp_path):
+    with pytest.raises(ev.ViewError, match=r"^no DMSP auroral archive in the snapshot$"):
+        ev._build_dmsp_auroral(tmp_path / "empty", tmp_path / "err", {})
+    root = tmp_path / "acq"
+    _dmsp_snapshot(root)
+    manifest: dict = {}
+    out = tmp_path / "out"
+    ev._build_dmsp_auroral(root, out, manifest)
+    ev._build_dmsp_auroral(root, out, manifest)
+    written = pd.read_csv(out / "zen_dmsp_auroral" / "dmsp_auroral.csv")
+    assert written["spacecraft"].tolist() == ["F16", "F18"]
+    assert written["pass_duration_s"].tolist() == [60, 30]
+    assert written["hemisphere"].tolist() == [1, -1]
+    assert written["fom"].tolist() == [3.1, 2.5] and written["lon_eq2"].tolist() == [136.0, 150.0]
+    assert written["timestamp"].tolist() == [
+        "2010-01-01 00:01:00+00:00",
+        "2014-01-02 00:00:00+00:00",
+    ]
+    bad = ev.dmsp_auroral_view(
+        [
+            (
+                "F16",
+                "20100101",
+                pd.DataFrame(
+                    [
+                        {c: "bad" for _, c in ev.DMSP_NUM_COLS}
+                        | {
+                            "UTSecond Pass Start": "bad",
+                            "UTSecond Pass End": "bad",
+                            "hemisphere": "bad",
+                        },
+                        {c: "bad" for _, c in ev.DMSP_NUM_COLS}
+                        | {
+                            "UTSecond Pass Start": "10",
+                            "UTSecond Pass End": "bad",
+                            "hemisphere": "bad",
+                        },
+                    ]
+                ),
+            )
+        ]
+    )
+    assert len(bad) == 1 and pd.isna(bad["pass_duration_s"].iloc[0])
+    assert pd.isna(bad["hemisphere"].iloc[0]) and bad["hemisphere"].dtype == "Int64"
+    assert pd.isna(bad["fom"].iloc[0])
+    view = manifest["zen_dmsp_auroral"]
+    assert view["sampling"]["files_loaded"] == 2 and view["sampling"]["spacecrafts"] == 2
+    assert view["source_snapshot"] == f"zen_dmsp_auroral/{ev.WAVE24_SNAPSHOT}"

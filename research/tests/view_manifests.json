@@ -614,6 +614,57 @@
    "source_snapshot": "4tu_csv/2026-11-21"
   }
  },
+ "dk_heating": {
+  "zen_dk_district_heating": {
+   "dropped": [
+    "dma_*_norm_aggregated.csv",
+    "weather.csv"
+   ],
+   "files": {
+    "district_heating.csv": {
+     "rows": 6
+    }
+   },
+   "heads": {
+    "district_heating.csv": "dma_id,timestamp,consumption_kwh,contributing_meters"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "dmas": 3,
+    "first_timestamp": "2016-01-01 00:00:00+00:00",
+    "last_timestamp": "2016-01-01 01:00:00+00:00",
+    "method": "complete 3-DMA hourly raw consumption and contributing-meter series (2016-2019 UTC)"
+   },
+   "source_snapshot": "zen_dk_district_heating/2026-11-22"
+  }
+ },
+ "dmsp_auroral": {
+  "zen_dmsp_auroral": {
+   "dropped": [
+    "UTSec EQ1",
+    "UTSec PO1",
+    "UTSec PO2",
+    "UTSec EQ2"
+   ],
+   "files": {
+    "dmsp_auroral.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "dmsp_auroral.csv": "spacecraft,timestamp,pass_duration_s,hemisphere,fom,lat_eq1,lat_po1,lat_po2,lat_eq2,lon_eq1,lon_po1,lon_po2,lon_eq2,mlat"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "files_loaded": 2,
+    "first_timestamp": "2010-01-01 00:01:00+00:00",
+    "last_timestamp": "2014-01-02 00:00:00+00:00",
+    "method": "complete 2010-2014 DMSP F16/F17/F18 polar-orbit auroral boundary passes",
+    "spacecrafts": 2
+   },
+   "source_snapshot": "zen_dmsp_auroral/2026-11-22"
+  }
+ },
  "dvf": {
   "dgfip_dvf": {
    "dropped": [
@@ -1490,6 +1541,29 @@
    "source_snapshot": "src_zip/2026-11-21"
   }
  },
+ "telecom_kpis": {
+  "zen_telecom_kpis": {
+   "dropped": [
+    "data_series/"
+   ],
+   "files": {
+    "telecom_kpis.csv": {
+     "rows": 4
+    }
+   },
+   "heads": {
+    "telecom_kpis.csv": "series_id,elapsed_s,kpi_value"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "max_elapsed_s": 300,
+    "method": "complete 14 real telecom operator KPI traces from data_real/ (300s elapsed cadence)",
+    "min_elapsed_s": 0,
+    "series_count": 2
+   },
+   "source_snapshot": "zen_telecom_kpis/2026-11-22"
+  }
+ },
  "tlc": {
   "nyc_tlc_yellow": {
    "dropped": [],
@@ -1737,6 +1811,29 @@
     "method": "complete 7 core CLDF linguistic typology tables plus normalized language_countries junction table (no row sampling)"
    },
    "source_snapshot": "wals_cldf/2026-11-22"
+  }
+ },
+ "water_demand": {
+  "zen_water_demand": {
+   "dropped": [],
+   "files": {
+    "water_demand.csv": {
+     "rows": 2
+    }
+   },
+   "heads": {
+    "water_demand.csv": "timestamp,consumption_m3,temperature_c,rain_mm,sun_min"
+   },
+   "pseudonymised": [],
+   "sampling": {
+    "duplicates_dropped": 1,
+    "first_timestamp": "2016-01-01 00:00:00",
+    "last_timestamp": "2016-10-30 02:00:00",
+    "method": "complete un-imputed raw hourly water pumping series (2016-2021)",
+    "missing_consumption_rows": 1,
+    "missing_rain_rows": 1
+   },
+   "source_snapshot": "zen_water_demand/2026-11-22"
   }
  },
  "wb": {

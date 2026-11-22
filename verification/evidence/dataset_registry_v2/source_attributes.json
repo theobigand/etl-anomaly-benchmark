@@ -160,6 +160,17 @@
    "C3": "wind turbine ten-minute SCADA"
   }
  },
+ "danish_district_heating": {
+  "curator": "zenodo",
+  "domain": "district heating infrastructure",
+  "generating_system": "Danish district heating three-DMA smart-meter aggregation telemetry (Zenodo 17398331)",
+  "note": "Thermal energy network metering distinct from electrical grid and gas production datasets",
+  "producer": "FAU Erlangen-Nuremberg / Danish district heating utility (Zenodo 17398331)",
+  "schema_family": "district thermal meter time series",
+  "structure": {
+   "C3": "hourly district heating thermal demand and active-meter time series"
+  }
+ },
  "dft_stats19": {
   "curator": "gov.uk",
   "domain": "road safety",
@@ -191,6 +202,17 @@
   "schema_family": "property register csv",
   "structure": {
    "C2b": "property sale"
+  }
+ },
+ "dmsp_ssj_auroral": {
+  "curator": "zenodo",
+  "domain": "spacecraft magnetospheric telemetry",
+  "generating_system": "DMSP F16/F17/F18 SSJ precipitating particle spectrometer auroral boundary detector",
+  "note": "Spacecraft orbital particle-precipitation boundary physics; distinct generating system, instrumentation and schema from ground-based GFZ Kp index",
+  "producer": "University of Colorado Boulder / NOAA NCEI (Zenodo 3373812)",
+  "schema_family": "polar satellite particle boundary series",
+  "structure": {
+   "C3": "spacecraft polar-orbit particle spectrometer auroral boundary time series"
   }
  },
  "dutch_municipalities": {
@@ -352,6 +374,17 @@
   "structure": {
    "C2b": "subsidy payment",
    "C4": "business process execution"
+  }
+ },
+ "german_water_demand": {
+  "curator": "zenodo",
+  "domain": "municipal water supply",
+  "generating_system": "German regional municipal water pumping station SCADA and weather series (Zenodo 11045013)",
+  "note": "Un-imputed raw pumping consumption series preserving missing intervals and DST transitions",
+  "producer": "Karlsruhe Institute of Technology / regional water supplier (Zenodo 11045013)",
+  "schema_family": "municipal utility pumping time series",
+  "structure": {
+   "C3": "hourly municipal water pumping demand with co-located weather observations"
   }
  },
  "gfz_potsdam_kp": {
@@ -1011,6 +1044,17 @@
   "schema_family": "slurm job accounting",
   "structure": {
    "C4": "operational job trace"
+  }
+ },
+ "telecom_operator_kpis": {
+  "curator": "zenodo",
+  "domain": "telecommunications infrastructure",
+  "generating_system": "Telecommunications operator infrastructure KPI monitoring probes (Zenodo 8147768)",
+  "note": "Real 5-minute network operator KPI traces (data_real only; synthetic series excluded)",
+  "producer": "University of Vigo telecommunications operator study (Zenodo 8147768)",
+  "schema_family": "telecom operator kpi time series",
+  "structure": {
+   "C3": "five-minute telecommunications operator infrastructure KPI time series"
   }
  },
  "tetouan_power": {

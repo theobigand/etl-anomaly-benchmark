@@ -404,6 +404,22 @@ def _cordis(root, tmp):
     tev._cordis_snapshot(root)
 
 
+def _telecom_kpis(root, tmp):
+    tev._telecom_snapshot(root)
+
+
+def _dk_heating(root, tmp):
+    tev._dk_heating_snapshot(root)
+
+
+def _water_demand(root, tmp):
+    tev._water_demand_snapshot(root)
+
+
+def _dmsp_auroral(root, tmp):
+    tev._dmsp_snapshot(root)
+
+
 def _tlc(root, tmp):
     tev._tlc_page(
         [{}, {"tpep_pickup_datetime": "2023-03-07T07:00:00.000", "total_amount": "0.0"}]
@@ -457,6 +473,10 @@ CASES = {
     "gha": (_gha, ev._build_gha_workflows, ["zen_gha_workflows"], {}),
     "wals": (_wals, ev._build_wals_cldf, ["wals_cldf"], {}),
     "cordis": (_cordis, ev._build_cordis_horizon, ["cordis_horizon_europe"], {}),
+    "telecom_kpis": (_telecom_kpis, ev._build_telecom_kpis, ["zen_telecom_kpis"], {}),
+    "dk_heating": (_dk_heating, ev._build_dk_heating, ["zen_dk_district_heating"], {}),
+    "water_demand": (_water_demand, ev._build_water_demand, ["zen_water_demand"], {}),
+    "dmsp_auroral": (_dmsp_auroral, ev._build_dmsp_auroral, ["zen_dmsp_auroral"], {}),
     "tlc": (_tlc, ev._build_tlc, ["nyc_tlc_yellow"], {}),
     "maude": (_maude_case, ev._build_maude, ["openfda_device_event"], {}),
     "fugaku": (_fugaku, ev._build_fugaku, ["zen_fdata_fugaku"], {}),
