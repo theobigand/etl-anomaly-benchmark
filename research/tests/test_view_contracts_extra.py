@@ -679,9 +679,10 @@ def test_the_relational_builder_coerces_unreadable_numbers_and_orders_by_occurre
     root = _rel_zip(tmp_path)
     raw = root / "zen_pbdb" / SNAP / "raw"
     occ = pd.DataFrame({c: ["x"] * n for c in ev.PBDB_REL_OCC})
-    occ["occurrence_no"] = "7"
+    occ["occurrence_no"] = [str(n - i) for i in range(n)]
     occ["accepted_no"] = "30"
     occ["collection_no"] = [str(i) for i in range(n)]
+    occ["max_ma"] = "1.5"
     occ.loc[0, "max_ma"] = "n/a"
     pq.write_table(pa.Table.from_pandas(occ, preserve_index=False), tmp_path / "big.parquet")
     with zipfile.ZipFile(raw / "pbdb_parquet.zip", "w") as z:
@@ -694,7 +695,13 @@ def test_the_relational_builder_coerces_unreadable_numbers_and_orders_by_occurre
         z.write(tmp_path / "t2.parquet", "t2.parquet")
     ev._build_pbdb_relational(root, tmp_path / "o", {})
     out = pd.read_csv(tmp_path / "o" / "zen_pbdb_relational" / "occurrences.csv")
-    assert out["collection_no"].tolist() == list(range(n)) and out["max_ma"].isna().iloc[0]
+    assert (
+        out["occurrence_no"].tolist() == list(range(1, n + 1))
+        and out["collection_no"].tolist() == list(range(n))[::-1]
+    )
+    assert out["max_ma"].isna().tolist() == [False] * (n - 1) + [
+        True
+    ]  # the unreadable value belongs to the last-sorted row
     kept = pd.read_csv(tmp_path / "o" / "zen_pbdb_relational" / "taxa.csv")
     assert kept["taxon_no"].tolist() == [30]
 
